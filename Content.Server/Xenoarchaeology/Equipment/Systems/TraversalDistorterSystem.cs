@@ -1,10 +1,5 @@
-﻿using Content.Server.Construction;
-using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
-using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Placeable;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
