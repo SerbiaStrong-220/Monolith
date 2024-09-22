@@ -1,0 +1,12 @@
+- type: soundCollection
+  id: ExodusLobbyMusic
+  files:
+  - /Audio/_Exodus/Lobby/flames.ogg
+  - /Audio/_Exodus/Lobby/hopeful.ogg
+  - /Audio/_Exodus/Lobby/larik.ogg
+  - /Audio/_Exodus/Lobby/owl.ogg
+  - /Audio/_Exodus/Lobby/space.ogg
+  - /Audio/_Exodus/Lobby/space_oddity.ogg
+  - /Audio/_Exodus/Lobby/voided.ogg
+  - /Audio/_Exodus/Lobby/weightlessness.ogg
+  - /Audio/_Exodus/Lobby/endless_space.ogg
