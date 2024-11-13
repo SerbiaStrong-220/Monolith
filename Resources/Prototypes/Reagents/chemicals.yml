@@ -80,11 +80,6 @@
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
-      effects:
-      - !type:NFActivateArtifact # Frontier: ActivateArtifact<NFActivateArtifact
-        conditions:
-        - !type:ReagentThreshold
-          min: 5
 
 - type: reagent
   id: Benzene
