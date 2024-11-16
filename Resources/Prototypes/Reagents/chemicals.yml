@@ -77,9 +77,6 @@
         damage:
           types:
             Caustic: 2
-  reactiveEffects:
-    Acidic:
-      methods: [ Touch ]
 
 - type: reagent
   id: Benzene
