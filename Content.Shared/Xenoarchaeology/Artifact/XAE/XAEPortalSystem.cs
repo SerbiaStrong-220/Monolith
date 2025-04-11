@@ -8,6 +8,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for xeno artifact effect that creates temporary portal between places on station.
+/// </summary>
 public sealed class XAEPortalSystem : BaseXAESystem<XAEPortalComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
