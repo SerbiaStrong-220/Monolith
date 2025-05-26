@@ -30,6 +30,8 @@ public sealed class GhostHearingSystem : SharedGhostHearingSystem
         SubscribeLocalEvent<GhostHearingComponent, RadioTtsSendAttemptEvent>(OnRadioAttempt);
 
         SubscribeLocalEvent<GhostHearingComponent, TelepathyTtsSendAttemptEvent>(OnTelepathyAttempt);
+
+        SubscribeLocalEvent<GhostHearingComponent, RadioTtsSendAttemptEvent>(OnRadioAttempt);
     }
 
     private void OnHearingStartup(Entity<GhostHearingComponent> ent, ref MapInitEvent args)
@@ -46,6 +48,10 @@ public sealed class GhostHearingSystem : SharedGhostHearingSystem
         var seenHandheld = false;
 
         foreach (var proto in allChannels)
+        var prototypes = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>();
+        var seenHandheld = false;
+
+        foreach (var proto in prototypes)
         {
             ent.Comp.RadioChannels[proto] = true;
 
@@ -105,13 +111,18 @@ public sealed class GhostHearingSystem : SharedGhostHearingSystem
         var ev = new GhostHearingSetListEvent(GetNetEntity(ent.Owner), GetSortedChannelList(ent.Comp));
         RaiseNetworkEvent(ev, actor.PlayerSession);
     }
-
     private void OnBoundOpen(Entity<GhostHearingComponent> ent, ref BoundUIOpenedEvent args)
     {
-        var ev = new GhostHearingSetListEvent(
-            GetNetEntity(ent.Owner),
-            GetSortedChannelList(ent.Comp));
+        var listChannels = new List<(string id, Color color, string name, bool enabled)>();
 
+        foreach (var (proto, enabled) in ent.Comp.DisplayChannels)
+        {
+            listChannels.Add((proto.ID, proto.Color, proto.LocalizedName, enabled));
+        }
+
+        listChannels.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.Ordinal));
+
+        var ev = new GhostHearingSetListEvent(GetNetEntity(ent.Owner), listChannels);
         RaiseNetworkEvent(ev, args.Actor);
     }
 

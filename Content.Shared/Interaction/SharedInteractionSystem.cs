@@ -23,6 +23,7 @@ using Content.Shared.Physics;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Popups;
 using Content.Shared.SS220.GhostHearing;
+using Content.Shared.SS220.Interaction;
 using Content.Shared.Storage;
 using Content.Shared.Strip;
 using Content.Shared.Tag;

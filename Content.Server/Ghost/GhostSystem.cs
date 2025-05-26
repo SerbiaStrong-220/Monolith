@@ -216,6 +216,10 @@ namespace Content.Server.Ghost
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
             Dirty(uid, component); // Frontier
+
+            //ss220 add filter tts for ghost start
+            EnsureComp<GhostHearingComponent>(uid);
+            //ss220 add filter tts for ghost end
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -235,6 +239,10 @@ namespace Content.Server.Ghost
             // Entity can't see ghosts anymore.
             _eye.RefreshVisibilityMask(uid);
             _actions.RemoveAction(uid, component.BooActionEntity);
+
+            //ss220 add filter tts for ghost start
+            RemComp<GhostHearingComponent>(uid);
+            //ss220 add filter tts for ghost end
         }
 
         private void OnMapInit(EntityUid uid, GhostComponent component, MapInitEvent args)
@@ -244,6 +252,9 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
+            //ss220 add filter tts
+            _actions.AddAction(uid, ref component.ToggleRadioChannelsUIEntity, component.ToggleRadioChannelsUI);
+            //ss220 add filter tts
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
