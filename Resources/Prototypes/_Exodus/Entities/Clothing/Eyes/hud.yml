@@ -5,7 +5,7 @@
   description: A heads-up display that scans the humanoids in view and provides accurate data about their health status and chemical composition of a solution.
   components:
   - type: Sprite
-    sprite: Exodus/Clothing/Eyes/Hud/chem-med.rsi
+    sprite: _Exodus/Clothing/Eyes/Hud/chem-med.rsi
   - type: Clothing
-    sprite: Exodus/Clothing/Eyes/Hud/chem-med.rsi
+    sprite: _Exodus/Clothing/Eyes/Hud/chem-med.rsi
   - type: SolutionScanner

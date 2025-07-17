@@ -5,9 +5,9 @@
   description: Short shoulder cape. The lining is hand embroidered.
   components:
   - type: Sprite
-    sprite: Exodus/Clothing/Neck/Cloaks/Talma_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/Talma_cloak.rsi
   - type: Clothing
-    sprite: Exodus/Clothing/Neck/Cloaks/Talma_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/Talma_cloak.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -16,9 +16,9 @@
   description: Short shoulder cape. The lining is hand embroidered.
   components:
   - type: Sprite
-    sprite: Exodus/Clothing/Neck/Cloaks/black_traveler's_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/black_traveler's_cloak.rsi
   - type: Clothing
-    sprite: Exodus/Clothing/Neck/Cloaks/black_traveler's_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/black_traveler's_cloak.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -27,9 +27,9 @@
   description: Short shoulder cape. The lining is hand embroidered.
   components:
   - type: Sprite
-    sprite: Exodus/Clothing/Neck/Cloaks/gold_traveler's_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/gold_traveler's_cloak.rsi
   - type: Clothing
-    sprite: Exodus/Clothing/Neck/Cloaks/gold_traveler's_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/gold_traveler's_cloak.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -38,9 +38,9 @@
   description: Short shoulder cape. The lining is hand embroidered.
   components:
   - type: Sprite
-    sprite: Exodus/Clothing/Neck/Cloaks/red_traveler's_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/red_traveler's_cloak.rsi
   - type: Clothing
-    sprite: Exodus/Clothing/Neck/Cloaks/red_traveler's_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/red_traveler's_cloak.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -49,9 +49,9 @@
   description: To the Arachnids, silk is more than mere material — it is a language frozen in patterns. Every thread, every curve is a tale woven from personal history, oaths, and the legacy of an entire bloodline. Such a gift is the rarest of honors, for to give another a piece of one's own fate is an act reserved only for those deemed equal... or worthy of becoming part of the Kin's story.
   components:
   - type: Sprite
-    sprite: Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
   - type: Clothing
-    sprite: Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
+    sprite: _Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
   - type: Armor
     modifiers:
       coefficients:
