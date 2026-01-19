@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Discord: Lokilife#3331",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "records"
+    },
+    {
+      "name": "crew"
+    },
+    {
+      "name": "supply"
+    },
+    {
+      "name": "comm"
+    },
+    {
+      "name": "solar"
+    }
+  ]
+}

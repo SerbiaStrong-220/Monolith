@@ -2,6 +2,6 @@
   id: Stasis
   icons:
   - sprite: /Textures/_Goobstation/Interface/Alerts/stasis.rsi
-    state: stasis
+    state: stasis_ru # Ru-Locale-Edit
   name: alerts-stasis-name
   description: alerts-stasis-desc
