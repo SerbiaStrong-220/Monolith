@@ -102,11 +102,11 @@
 - type: guideEntry
   id: ExodusRule13RP
   name: guide-entry-exodus-rule-thirteen-roleplay
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rules13_Roleplay.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule13_Roleplay.xml"
   ruleEntry: true
 
 - type: guideEntry
   id: ExodusRule14Respawn
   name: guide-entry-exodus-rule-fourteen-respawn
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rules14_Respawn.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule14_Respawn.xml"
   ruleEntry: true
