@@ -18,6 +18,7 @@
     - ExodusRule10Memory
     - ExodusRule11ERP
     - ExodusRule12Information
+    - ExodusRule13RP
 
 - type: guideEntry
   id: ExodusRule0DontBeAsshole
@@ -97,3 +98,8 @@
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule12_Information.xml"
   ruleEntry: true
 
+- type: guideEntry
+  id: ExodusRule13RP
+  name: guide-entry-exodus-rule-thirteen-roleplay
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rules13_Roleplay.xml"
+  ruleEntry: true
