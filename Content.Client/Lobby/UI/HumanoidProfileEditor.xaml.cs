@@ -467,7 +467,7 @@ namespace Content.Client.Lobby.UI
             // Add to TSF company dropdown
             for (var i = 0; i < companies.Count; i++)
             {
-                CompanyButton.AddItem(companies[i].Name, i);
+                CompanyButton.AddItem(Loc.GetString(companies[i].Name), i); // RU Locale
                 //Logger.Debug($"Added company to dropdown: {i} - {companies[i].ID} - {companies[i].Name}");
             }
 
@@ -2254,7 +2254,7 @@ namespace Content.Client.Lobby.UI
                 // Also reset the profile's company to None if the current one is disabled
                 if (_prototypeManager.TryIndex<CompanyPrototype>(Profile.Company, out var companyProto) && companyProto.Disabled)
                 {
-                    Profile = Profile.WithCompany("None");
+                    Profile = Profile.WithCompany(Loc.GetString("humanoid-profile-editor-company-none")); // RU Locale
                 }
             }
         }

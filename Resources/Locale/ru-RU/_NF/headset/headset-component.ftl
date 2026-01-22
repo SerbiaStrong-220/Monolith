@@ -1,3 +1,3 @@
-chat-radio-traffic = Shortband
+chat-radio-traffic = Локальный
 chat-radio-nfsd = NFSD
-chat-radio-ncmc = TSFMC
+chat-radio-ncmc = КВП ТСФ

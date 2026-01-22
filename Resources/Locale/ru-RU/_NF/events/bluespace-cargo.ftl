@@ -1,1 +1,2 @@
-bluespace-cargo-event-announcement = An error in bluespace shipping telemetry has caused random crates to teleport into the sector.
+bluespace-cargo-event-announcement = Сбой в телеметрии блюспейс-перевозок привёл к случайной телепортации грузовых контейнеров в данный сектор.
+    

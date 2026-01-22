@@ -1,5 +1,5 @@
 - type: collectiveMind
   id: Binary
   name: collective-mind-binary
-  keycode: 'b'
+  keycode: 'д' # RU-Localization
   color: "#5ed7aa"

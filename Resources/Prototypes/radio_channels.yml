@@ -51,7 +51,7 @@
 - type: radioChannel
   id: Service
   name: chat-radio-service
-  keycode: 'с' # RU-Localization
+  keycode: 'р' # RU-Localization
   frequency: 1349
   color: "#09b96d"
 

@@ -1,1 +1,1 @@
-station-event-vent-clog-nf-start-announcement = Attention. Shuttle scrubber networks are experiencing a backpressure surge. Some ejection of contents may occur.
+station-event-vent-clog-nf-start-announcement = Сеть скрубберов испытывает скачок обратного давления. Может произойти выброс содержимого.
