@@ -234,7 +234,7 @@
 - type: company
   id: TheViperGroup
   form: Antagonist
-  name: Вайпер # RU Locale
+  name: Вайпер #RU Locale
   description: viper-group-description
   color: "#D82918"
   image: /Textures/_Mono/Companies/thevipergroup.png # Example
