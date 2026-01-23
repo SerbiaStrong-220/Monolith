@@ -1,7 +1,7 @@
 - type: dataset
   id: NamesChitinidFirstFemale
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Амер'икс
   - Ан'бела
   - Ан'ора
@@ -33,4 +33,4 @@
   - Зан'ова
   - Зен'офи
   - Ззер'ак
-  # Ru-Locale-End
+  # Ru-Localization-End

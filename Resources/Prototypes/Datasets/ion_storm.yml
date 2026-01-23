@@ -2,7 +2,7 @@
 # 99% of this is just taken from tg and had sussy bits removed
 
 # not using uppercased version adjectives dataset since getting christmas-stealing as a syndicate codeword would suck
-# Ru-Locale-Start
+# Ru-Localization-Start
 # Все что идет дальше ПОЛНОСТЬЮ переведено нейронкой для некого соответсвия логики их появления и моей лени.
 - type: dataset
   id: IonStormAdjectives
@@ -1221,4 +1221,4 @@
   - ДРУЖИТ С
   - ПИКАЕТ НА
   # End Frontier
-# Ru-Locale-End
+# Ru-Localization-End

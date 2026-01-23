@@ -1,7 +1,7 @@
 - type: dataset
   id: names_yowie_male
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Коэн
   - Коа
   - Балун
@@ -45,4 +45,4 @@
   - Джарртджунтджун
   - Мангана
   - Пипипа
-  # Ru-Locale-End
+  # Ru-Localization-End

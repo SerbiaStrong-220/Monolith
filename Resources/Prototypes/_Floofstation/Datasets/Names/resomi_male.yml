@@ -1,7 +1,7 @@
 - type: dataset
   id: names_resomi_male
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Теван
   - Ниалор
   - Марик
@@ -52,4 +52,4 @@
   - Синар
   - Тевор
   - Ниалом
-  # Ru-Locale-End
+  # Ru-Localization-End

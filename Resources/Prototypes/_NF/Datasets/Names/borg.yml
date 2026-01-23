@@ -9,7 +9,7 @@
 - type: dataset
   id: NFNamesBorgUnlocalized
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Боб
   - Джо
   - Бип
@@ -72,4 +72,4 @@
   - Мисс Мастер
   - Гонк
   - Роберто
-  # Ru-Locale-End
+  # Ru-Localization-End

@@ -2,56 +2,56 @@
 
 - type: sourcePort
   id: device-button-1
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-1
   description: shuttle-console-device-button-1
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-2
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-2
   description: shuttle-console-device-button-2
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-3
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-3
   description: shuttle-console-device-button-3
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-4
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-4
   description: shuttle-console-device-button-4
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-5
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-5
   description: shuttle-console-device-button-5
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-6
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-6
   description: shuttle-console-device-button-6
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-7
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-7
   description: shuttle-console-device-button-7
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End
 
 - type: sourcePort
   id: device-button-8
-  # Ru-Locale-Add-Start
+  # Ru-Localization-Add-Start
   name: shuttle-console-device-button-8
   description: shuttle-console-device-button-8
-  # Ru-Locale-Add-End
+  # Ru-Localization-Add-End

@@ -1,17 +1,17 @@
 - type: collectiveMind
   id: Letoferol
   name: collective-mind-letoferol
-  keycode: 'л' # RU-Localization
+  keycode: 'л' # Ru-Localization
   color: "#ebba34"
 
 - type: collectiveMind
   id: CorticalBorer
   name: collective-mind-borer
-  keycode: 'б' # RU-Localization
+  keycode: 'б' # Ru-Localization
   color: "#9999ff"
 
 - type: collectiveMind
   id: MonolithicMind
   name: collective-mind-monolithic
-  keycode: 'м' # RU-Localization
+  keycode: 'м' # Ru-Localization
   color: "#a967f5"

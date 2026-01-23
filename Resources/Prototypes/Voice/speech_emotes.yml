@@ -25,7 +25,7 @@
     - yells
     - yelled
     - yelling
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - кричит
     - кричит.
     - кричит!
@@ -35,7 +35,7 @@
     - визжит
     - визжит.
     - визжит!
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Laugh
@@ -63,7 +63,7 @@
     - chortles
     - chortling
     - chortled # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - смеется
     - смеётся
     - смеются
@@ -73,7 +73,7 @@
     - хихикнула
     - хихикнуло
     - ржёт
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Honk
@@ -91,11 +91,11 @@
     - honks
     - honked
     - honking
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - хонк
     - хонкнул
     - хонкает
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Sigh
@@ -114,13 +114,13 @@
     - sighs
     - sighed
     - sighing # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - вздыхает
     - вздохнул
     - вздохнула
     - вздохнуло
     - вздохнули
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Whistle
@@ -139,13 +139,13 @@
     - whistles
     - whistleblowing
     - whistled # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - свистит
     - свистнул
     - свистнула
     - свистнуло
     - свистнули
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Crying
@@ -168,12 +168,12 @@
     - sobbing
     - sobbed # Frontier
     - cried # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - плачет
     - рыдает
     - хнычет
     - хнычут
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Squish
@@ -193,10 +193,10 @@
     - squishing
     - squishes
     - squished # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - хлюпает
     - хлюпают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Chitter
@@ -216,10 +216,10 @@
    - chitters
    - chittered
    - chittering # Frontier
-   # RU-Localization-Start
+   # Ru-Localization-Start
    - стрекочет
    - стрекочут
-   # RU-Localization-End
+   # Ru-Localization-End
 
 - type: emote
   id: Squeak
@@ -239,10 +239,10 @@
    - squeaks
    - squeaked
    - squeaking # Frontier
-   # RU-Localization-Start
+   # Ru-Localization-Start
    - пищит
    - пищат
-   # RU-Localization-End
+   # Ru-Localization-End
 
 - type: emote
   id: Click
@@ -262,10 +262,10 @@
    - clicks
    - clicked # Frontier
    - clicking # Frontier
-   # RU-Localization-Start
+   # Ru-Localization-Start
    - кликает
    - кликают
-   # RU-Localization-End
+   # Ru-Localization-End
 
 # hand emotes
 - type: emote
@@ -284,7 +284,7 @@
     - claps
     - clapping
     - clapped
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - хлопает
     - хлопнул
     - хлопнула
@@ -296,7 +296,7 @@
     - хлопнули в ладоши
     - апплодирует
     - апплодируют
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: ClapSingle
@@ -342,7 +342,7 @@
     - snaps its fingers
     - snapping fingers
     - snapped fingers
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - щелкает
     - щелкнул
     - щелкнула
@@ -363,7 +363,7 @@
     - щёлкнула пальцами
     - щёлкнуло пальцами
     - щёлкнули пальцами
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Thump
@@ -389,7 +389,7 @@
     - thumps her tail
     - thumps his tail
     - thumps its tail
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - стучит хвостом
     - стучат хвостом
     - стукнул хвостом
@@ -400,7 +400,7 @@
     - стукнула своим хвостом
     - стукнуло своим хвостом
     - стукнули своим хвостом
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Salute
@@ -419,7 +419,7 @@
     - salutes
     - saluted # Frontier
     - saluting # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - салютует
     - салютуют
     - отдаёт честь
@@ -428,7 +428,7 @@
     - отдала честь
     - отдало честь
     - отдали честь
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Gasp
@@ -442,10 +442,10 @@
    - gasps
    - gasped
    - gasping # Frontier
-   # RU-Localization-Start
+   # Ru-Localization-Start
    - задыхается
    - задыхаются
-   # RU-Localization-End
+   # Ru-Localization-End
 
 - type: emote
   id: DefaultDeathgasp
@@ -461,10 +461,10 @@
   chatMessages: ["chat-emote-msg-deathgasp"]
   chatTriggers: # Mono - D-V ready for some more 1984 - Readds deathgasp
     - deathgasp
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - умирает
     - умирают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: MonkeyDeathgasp
@@ -483,14 +483,14 @@
     - buzz
     - buzzed
     - buzzes
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - жужжит
     - жужжат
     - зажужжал
     - зажужжала
     - зажжужало
     - зажжужали
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Weh
@@ -507,11 +507,11 @@
   chatTriggers: # Floof - you can weh now
     - weh
     - wehs
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - вехает
     - вехают
     - вех
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Hew
@@ -539,10 +539,10 @@
     - chirps
     - chirped
     - chirping
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - чирикает
     - чирикают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 # Machine Emotes
 - type: emote
@@ -560,11 +560,11 @@
     - beeps
     - beeped
     - beeping
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - бип
     - бипает
     - бипают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Chime
@@ -581,11 +581,11 @@
     - chimes
     - chimed
     - chiming
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - дзынь
     - дзынькает
     - дзынькают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Buzz-Two
@@ -609,14 +609,14 @@
     - buzzing twice
     - buzzed twice
     - buzzedtwice # Frontier
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - бипбуп
     - бип буп
     - бип-буп
     - бипбип
     - бип бип
     - бип-бип
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Ping
@@ -633,6 +633,6 @@
     - pings
     - pinged
     - pinging
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - пинг
-    # RU-Localization-End
+    # Ru-Localization-End

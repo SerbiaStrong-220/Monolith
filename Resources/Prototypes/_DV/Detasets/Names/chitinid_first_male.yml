@@ -1,7 +1,7 @@
 - type: dataset
   id: NamesChitinidFirstMale
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Ал'вос
   - Амуэ'вал
   - Барма'тос
@@ -35,4 +35,4 @@
   - Ксикса'ба
   - Ярр'ват
   - Зей'зз
-  # Ru-Locale-End
+  # Ru-Localization-End

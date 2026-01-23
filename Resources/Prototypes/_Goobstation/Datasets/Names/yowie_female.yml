@@ -1,7 +1,7 @@
 - type: dataset
   id: names_yowie_female
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Бинди
   - Джедда
   - Кайли
@@ -37,4 +37,4 @@
   - Бриндабелла
   - Эланора
   - Майя
-  # Ru-Locale-End
+  # Ru-Localization-End

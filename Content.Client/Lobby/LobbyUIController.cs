@@ -255,11 +255,11 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         var companyId = humanoid.Company;
         if (_prototypeManager.TryIndex<CompanyPrototype>(companyId, out var company))
         {
-            PreviewPanel.SetCompanyText(Loc.GetString("company-lobby-menu", ("color", company.Color.ToHex()), ("name", Loc.GetString(company.Name)))); // RU Locale
+            PreviewPanel.SetCompanyText(Loc.GetString("company-lobby-menu", ("color", company.Color.ToHex()), ("name", Loc.GetString(company.Name)))); // Ru-Localization
         }
         else
         {
-            PreviewPanel.SetCompanyText(Loc.GetString("company-lobby-menu-none", ("id", companyId))); // RU Locale
+            PreviewPanel.SetCompanyText(Loc.GetString("company-lobby-menu-none", ("id", companyId))); // Ru-Localization
         }
 
         // MonoCoins Display - Request balance from server and update display

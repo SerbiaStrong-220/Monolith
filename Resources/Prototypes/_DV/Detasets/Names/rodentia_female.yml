@@ -2,7 +2,7 @@
   id: names_rodentia_female
   values:
   # generic names
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Сквикс
   - Сквикер
   - Ниблз
@@ -168,4 +168,4 @@
   - Вискершир
   - Вискерсноут
   - Вискервейл
-  # Ru-Locale-End
+  # Ru-Localization-End
