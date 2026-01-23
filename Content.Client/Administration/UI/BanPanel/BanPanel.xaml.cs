@@ -22,7 +22,7 @@ namespace Content.Client.Administration.UI.BanPanel;
 [GenerateTypedNameReferences]
 public sealed partial class BanPanel : DefaultWindow
 {
-    public event Action<string?, (IPAddress, int)?, bool, ImmutableTypedHwid?, bool, uint, string, NoteSeverity, string[]?, bool>? BanSubmitted;
+    public event Action<string?, (IPAddress, int)?, bool, ImmutableTypedHwid?, bool, uint, string, NoteSeverity, ProtoId<JobPrototype>[]?, ProtoId<AntagPrototype>[]?, bool>? BanSubmitted;
     public event Action<string>? PlayerChanged;
     private string? PlayerUsername { get; set; }
     private (IPAddress, int)? IpAddress { get; set; }
@@ -462,22 +462,36 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
     {
-        string[]? roles = null;
+        ProtoId<JobPrototype>[]? jobRoles = null;
+        ProtoId<AntagPrototype>[]? antagRoles = null;
         if (TypeOption.SelectedId == (int) Types.Role)
         {
-            var rolesList = new List<string>();
+            var jobList = new List<ProtoId<JobPrototype>>();
+            var antagList = new List<ProtoId<AntagPrototype>>();
             if (_roleCheckboxes.Count == 0)
                 throw new DebugAssertException("RoleCheckboxes was empty");
 
-            rolesList.AddRange(_roleCheckboxes.Where(c => c is { Pressed: true, Text: { } }).Select(c => c.Text!));
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            if (rolesList.Count == 0)
+            foreach (var c in _roleCheckboxes.Where(c => c is { Pressed: true, Text: { } }))
+            {
+                var roleId = c.Text!;
+                if (prototypeManager.HasIndex<JobPrototype>(roleId))
+                    jobList.Add(new ProtoId<JobPrototype>(roleId));
+                else if (prototypeManager.HasIndex<AntagPrototype>(roleId))
+                    antagList.Add(new ProtoId<AntagPrototype>(roleId));
+                else
+                    _banpanelSawmill.Warning($"Unknown role prototype ID: {roleId}");
+            }
+
+            if (jobList.Count == 0 && antagList.Count == 0)
             {
                 Tabs.CurrentTab = (int) TabNumbers.Roles;
                 return;
             }
 
-            roles = rolesList.ToArray();
+            jobRoles = jobList.Count > 0 ? jobList.ToArray() : null;
+            antagRoles = antagList.Count > 0 ? antagList.ToArray() : null;
         }
 
         if (TypeOption.SelectedId == (int) Types.None)
@@ -511,7 +525,7 @@ public sealed partial class BanPanel : DefaultWindow
         var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
         var severity = (NoteSeverity) SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
-        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, severity, roles, erase);
+        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, severity, jobRoles, antagRoles, erase);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
