@@ -18,6 +18,6 @@ chat-radio-handheld = Портативный
 chat-radio-binary = Двоичный
 chat-radio-xenoborg = Ксеноборги
 chat-radio-mothership = Материнский корабль
-chat-radio-vanguard-command = Фаэтон Командование
+chat-radio-vanguard-command = Командование Фаэтон
 # not headset but whatever
 

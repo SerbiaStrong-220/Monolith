@@ -27,8 +27,8 @@ bounty-contracts-announcement-service-create = Заключен новый ко�
 ## UI - List contracts
 
 bounty-contracts-ui-list-no-contracts = Контракты пока не объявлены...
-bounty-contracts-ui-list-no-description = Дополнительного описания не предоставлено...
-bounty-contracts-ui-list-create = Новый Контракт
+bounty-contracts-ui-list-no-description = Дополнительное описания не предоставлено...
+bounty-contracts-ui-list-create = Новый контракт
 bounty-contracts-ui-list-refresh = Обновить
 bounty-contracts-ui-list-category = Категория: { $category }
 bounty-contracts-ui-list-vessel = Шаттл: { $vessel }
@@ -53,9 +53,9 @@ bounty-contracts-ui-create-description = Описание:
 bounty-contracts-ui-create-description-placeholder = Дополнительные подробности...
 bounty-contracts-ui-create-button-cancel = Отменить
 bounty-contracts-ui-create-button-create = Создать
-bounty-contracts-ui-create-error-invalid-price = Ошибка: Неправильная цена!
-bounty-contracts-ui-create-error-name-too-long = Ошибка: Слишком длинное имя!
-bounty-contracts-ui-create-error-vessel-too-long = Ошибка: Судно слишком длинное!
-bounty-contracts-ui-create-error-description-too-long = Ошибка: Описание слишком длинное!
-bounty-contracts-ui-create-error-no-name = Ошибка: Неправильное название награды!
+bounty-contracts-ui-create-error-invalid-price = Ошибка: неправильная цена!
+bounty-contracts-ui-create-error-name-too-long = Ошибка: слишком длинное имя!
+bounty-contracts-ui-create-error-vessel-too-long = Ошибка: судно слишком длинное!
+bounty-contracts-ui-create-error-description-too-long = Ошибка: описание слишком длинное!
+bounty-contracts-ui-create-error-no-name = Ошибка: неправильное название награды!
 bounty-contracts-ui-create-ready = Ваш контракт готов к публикации!
