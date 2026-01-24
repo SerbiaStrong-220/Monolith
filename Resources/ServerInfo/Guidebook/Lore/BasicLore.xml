@@ -1,30 +1,24 @@
 <Document>
-# The Colossus Sector
-[bold]The Colossus Sector[/bold] is a remote and volatile region at the edge of the [bold]Perseus Arm[/bold], once dismissed by
-the [bold][color=cyan]Trans-Solarian Federation (TSF)[/bold][/color] as a lifeless prison zone. For decades, it served as a dumping ground
-for political dissidents, corporate failures, and war criminals — a cosmic oubliette where the forgotten
-were meant to die quietly. But the sector didnt wither. It adapted.
-What rose from the ashes was not just a survivor's enclave, but a nation: The [bold][color=#8B0000]Phaethon Dynasty[/bold][/color].
+# Сектор Колосс
+[bold]Сектор Колосс[/bold] - удалённый и нестабильный регион на краю [bold]Рукава Персея[/bold], который [bold][color=cyan]Транс-Солнечная Федерация[/bold][/color] когда-то объявила безжизненной тюремной зоной. Десятилетиями сюда свозили политических диссидентов, корпоративных банкротов и военных преступников, обрекая их на тихую смерть в космической пустоши. Но сектор не умер. Он выжил. И со временем - приспособился.
 
- # The Monolith
-At the heart of [bold]The Colossus Sector[/bold] lies the [bold][color=047ABD]Monolith[/bold][/color], an immense and ancient alien structure embedded
-floating through space. Its origin and purpose remain unclear, but its strange energy readings and
-resistance to modern analysis have made it the obsession of every major power. The [bold][color=047ABD]Monolith's[/bold][/color]
-discovery transformed the sector from irrelevant to strategic — sparking the latest war for control of its secrets.
+В своём высокомерии ТСФ не учла одного: "тюрьма" уже была занята. Остатки флотилии «Фаэтон» выживали там годами. И то, что восстало из пепла, стало не убежищем, а нацией - той самой [bold][color=#8B0000]Династией[/bold][/color].
+ 
+# Монолит
+В самом сердце сектора [bold]Колосс[/bold] парит [bold][color=047ABD]Монолит[/bold][/color] - громадная, застывшая древняя структура неизвестного происхождения. Его истинное предназначение остаётся тайной, однако странные энергетические сигнатуры и полная устойчивость к любому сканированию сделали его объектом одержимости для всех держав галактики. Именно его открытие превратило забытую тюрьму в стратегический приз, развязав новую войну - на этот раз за его непостижимые секреты.
 
-# Factions
-[bold]The Colossus Sector[/bold] teeters on the edge of open war. While the [bold][color=cyan]Trans-Solarian Federation (TSF)[/bold][/color] and the
-[bold][color=brown]Union of Soviet Socialist Planets (USSP)[/bold][/color] publicly claim to seek “stabilization” of the region, both have
-covertly deployed fleets and special operations units under the guise of research and peacekeeping.
-Tensions flare daily over disputed zones, with skirmishes erupting in orbital stations and mining worlds
-near the [bold][color=047ABD]Monolith[/bold][/color]. Meanwhile, the [bold][color=#D2B48C]Phaethon Dynasty[/bold][/color], though outgunned and fractured, has unified its
-cells under a common purpose: resistance at any cost. Sabotage, propaganda floods, and deep-cover
-infiltration have escalated across the sector. As diplomatic talks collapse and warships position in
-deadspace, a full-scale war looms — one that could spiral far beyond the sector and ignite a
-new galactic crisis.
+# Фракции
+[bold]Сектор Колосс[/bold] - пороховая бочка, готовая взорваться. Хотя [bold][color=cyan]Транс-Солнечная Федерация (ТСФ)[/bold][/color] и [bold][color=brown]Союз Советских Социалистических Планет (СССП)[/bold][/color] публично клянутся в стремлении "стабилизировать" регион, на деле обе державы уже тайно стянули сюда свои флоты и элитный спецназ, прикрывая их флагами исследовательских и миротворческих миссий.
 
- - [textlink="Trans-Solarian Federation (TSF)" link="Trans-SolarFederation"]
- - [textlink="Phaethon Dynasty (PDV)" link="PhaethonDynasty"]
- - [textlink="United Soviet Socialist Planets (USSP)" link="UnitedSovietSocialistPlanets"]
+
+Напряжённость выливается в ежедневные стычки в спорных зонах у самого подножия [bold][color=047ABD]Монолита[/bold][/color]. В этой тлеющей войне [bold][color=#D2B48C]Династия Фаэтон[/bold][/color], уступающая в огневой мощи и разрываемая взглядами собственных лидеров, нашла свою силу в единстве цели: сопротивляться любой ценой. Её акты саботажа, потоки пропаганды и глубокое оперативная деятельность опутали весь сектор. По мере того как дипломатические переговоры проваливаются, а военные шаттлы занимают позиции в мёртвом космосе, надвигается полномасштабная война. И эта война грозит не просто перекроить карту Колосса - она способна выплеснуться далеко за его пределы, разжигая кризис, способный охватить всю галактику.
+
+
+
+
+
+ - [textlink="Транс-Солнечная Федерация" link="Trans-SolarFederation"]
+ - [textlink="Династия Фаэтон" link="PhaethonDynasty"]
+ - [textlink="Союз Советских Социалистических Планет (СССП)" link="UnitedSovietSocialistPlanets"]
 
  </Document>
