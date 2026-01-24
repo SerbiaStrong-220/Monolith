@@ -63,10 +63,11 @@ public sealed class DynamicRoleSettingsSystem : EntitySystem
     {
         if (!_dynamicRolesEnabled)
         {
-            if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-                    _cfg.SetCVar(CCVars.GameRoleTimers, true);
-            if (!_cfg.GetCVar(CCVars.GameRoleWhitelist))
-                    _cfg.SetCVar(CCVars.GameRoleWhitelist, true);
+            // Exodus | FCKU
+            // if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+            //         _cfg.SetCVar(CCVars.GameRoleTimers, true);
+            // if (!_cfg.GetCVar(CCVars.GameRoleWhitelist))
+            //         _cfg.SetCVar(CCVars.GameRoleWhitelist, true);
 
             return;
         }
