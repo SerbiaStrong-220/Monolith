@@ -17,6 +17,7 @@ atmos-gas-Frezon = Фрезон
 atmos-gas-NitrousOxide = { gas-nitrous-oxide-abbreviation }
 atmos-gas-WaterVapor = { gas-water-vapor-abbreviation }
 atmos-gas-Ammonia = { gas-ammonia-abbreviation }
+atmos-gas-BZ = BZ
 atmos-gas-Healium = Хилиум
 atmos-gas-Nitrium = Нитриум
 atmos-gas-Pluoxium = Плюксиум
