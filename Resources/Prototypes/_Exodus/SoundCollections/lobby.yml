@@ -1,5 +1,5 @@
 - type: soundCollection
-  id: _ExodusLobbyMusic
+  id: ExodusLobbyMusic
   files:
   - /Audio/_Exodus/Lobby/flames.ogg
   - /Audio/_Exodus/Lobby/hopeful.ogg
