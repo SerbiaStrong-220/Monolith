@@ -101,6 +101,10 @@
       receiveFrequencyId: BasicDevice
     - type: WirelessNetworkConnection
       range: 200
+    # Exodus-QOL-Start
+    - type: MaterialStorageMagnetPickup
+      range: 1
+    # Exodus-QOL-End
 
 - type: entity
   abstract: true

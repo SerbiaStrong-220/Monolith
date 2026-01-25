@@ -67,3 +67,7 @@
   - type: WiresPanel
   - type: StaticPrice
     price: 1500
+  # Exodus-QOL-Start
+  - type: MaterialStorageMagnetPickup
+    range: 1
+  # Exodus-QOL-End
