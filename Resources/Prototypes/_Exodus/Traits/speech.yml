@@ -1,0 +1,8 @@
+- type: trait
+  id: BurrinessAccent
+  name: trait-burriness-name
+  description: trait-burriness-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: BurrinessAccent
