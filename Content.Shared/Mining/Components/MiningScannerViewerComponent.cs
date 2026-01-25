@@ -1,36 +1,42 @@
-using Robust.Shared.Audio;
+// Exodus-MiningScannerRefactor
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mining.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(MiningScannerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(MiningScannerViewerSystem)), AutoGenerateComponentState(true)]
 public sealed partial class MiningScannerViewerComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
+    public List<MiningScannerRecord> Records = new();
+}
+
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class MiningScannerRecord
+{
+    [DataField]
+    public MapCoordinates PingLocation;
+
+    [DataField]
     public float ViewRange;
 
-    [DataField, AutoNetworkedField]
-    public float AnimationDuration = 1.5f;
-
-    [DataField, AutoNetworkedField]
-    public TimeSpan PingDelay = TimeSpan.FromSeconds(5);
-
-    [DataField, AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextPingTime = TimeSpan.MaxValue;
+    [DataField]
+    public TimeSpan CreatedAt;
 
     [DataField]
-    public EntityCoordinates? LastPingLocation;
+    public TimeSpan AnimationDuration = TimeSpan.FromSeconds(1.5f);
 
-    [DataField, AutoNetworkedField]
-    public SoundSpecifier? PingSound = new SoundPathSpecifier("/Audio/Machines/sonar-ping.ogg")
-    {
-        Params = new AudioParams
-        {
-            Volume = -3,
-        }
-    };
-
+    /// <summary>
+    /// How long ores should be showing minus the duration of the animation
+    /// </summary>
     [DataField]
-    public bool QueueRemoval;
+    public TimeSpan Delay = TimeSpan.FromSeconds(3.5f);
+}
+
+[Serializable, NetSerializable]
+public sealed partial class MiningScannerViewerComponentState : ComponentState
+{
+    [DataField]
+    public List<MiningScannerRecord> Records = new();
 }

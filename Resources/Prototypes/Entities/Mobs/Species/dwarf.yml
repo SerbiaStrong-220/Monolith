@@ -70,7 +70,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: InnateMiningScannerViewer # Frontier
+  - type: MiningScannerViewer # Frontier # Exodus-MiningScannerRefactor
     pingSound: null # Frontier
     viewRange: 5 # Frontier
 
