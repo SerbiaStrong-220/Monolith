@@ -6,7 +6,7 @@
     slotFlags: MASK
     uiWindowPos: 0,2
     strippingWindowPos: 1,1
-    displayName: Mask
+    displayName: inventory-slot-mask
     whitelist:
       tags:
         - PetWearable
@@ -17,7 +17,7 @@
     stripTime: 3
     uiWindowPos: 0,1
     strippingWindowPos: 2,5
-    displayName: Suit Storage
+    displayName: inventory-slot-suit-storage
     whitelist:
       components:
         - GasTank

@@ -10,4 +10,4 @@
       stripTime: 999999 # "Not strippable"
       uiWindowPos: 2,1
       strippingWindowPos: 22,20
-      displayName: ID
+      displayName: inventory-slot-id # Ru-Localization
