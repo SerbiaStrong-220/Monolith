@@ -500,7 +500,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Mobs/Aliens/Asteroid/goliath.rsi
+    - sprite: _Exodus/Mobs/Aliens/Asteroid/goliath.rsi # Exodus-Resprite
       state: goliath
   - type: EntityTableSpawner
     table: !type:GroupSelector

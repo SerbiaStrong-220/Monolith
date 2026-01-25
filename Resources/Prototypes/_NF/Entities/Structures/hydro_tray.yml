@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     layers:
-      - sprite: _NF/Structures/Hydroponics/containers.rsi
+      - sprite: Structures/Hydroponics/containers.rsi # Exodus-Sprite
         state: hydrotrayanchored
       - sprite: Structures/Hydroponics/overlays.rsi
         state: lowhealth3

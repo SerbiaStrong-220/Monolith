@@ -151,7 +151,7 @@
     pack: CondimentInventory
     offState: off
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/condiments.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/condiments.rsi  # Exodus-Resprite
     drawdepth: SmallObjects
     layers:
     - state: "off"
@@ -223,7 +223,7 @@
   - type: SpeakOnUIClosed
     pack: BoozeOMatGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/boozeomat.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/boozeomat.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -257,7 +257,7 @@
   - type: SpeakOnUIClosed
     pack: BruiseOMatGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/bruiseomat.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/bruiseomat.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -287,7 +287,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cart.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cart.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -320,7 +320,7 @@
   - type: SpeakOnUIClosed
     pack: ChefvendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chefvend.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/chefvend.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -356,7 +356,7 @@
   - type: SpeakOnUIClosed
     pack: CigaretteMachineGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cigs.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cigs.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -383,7 +383,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/clothing.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/clothing.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -414,7 +414,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/winterdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/winterdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: [ "enum.VendingMachineVisualLayers.Base" ]
@@ -452,7 +452,7 @@
   - type: SpeakOnUIClosed
     pack: HotDrinksMachineGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/coffee.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/coffee.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -491,7 +491,7 @@
   - type: SpeakOnUIClosed
     pack: RobustSoftdrinksGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cola.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cola.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -511,7 +511,7 @@
   suffix: Black
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cola-black.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cola-black.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -532,7 +532,7 @@
   description: It vends cola, in space.
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cola-red.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cola-red.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -555,7 +555,7 @@
   - type: VendingMachine
     pack: SpaceUpInventory
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/spaceup.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/spaceup.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -577,7 +577,7 @@
   - type: VendingMachine
     pack: SodaInventory
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/soda.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/soda.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -600,7 +600,7 @@
   - type: VendingMachine
     pack: StarkistInventory
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/starkist.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/starkist.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -634,7 +634,7 @@
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/shamblersjuice.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -670,7 +670,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/pwrgame.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/pwrgame.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -706,7 +706,7 @@
   - type: SpeakOnUIClosed
     pack: DrGibbGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/gib.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/gib.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -727,7 +727,7 @@
   description: Popular with the administration.
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/smite.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/smite.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: [ "enum.VendingMachineVisualLayers.Base" ]
@@ -773,7 +773,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/dinnerware.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/dinnerware.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -807,7 +807,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/magivend.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/magivend.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -840,7 +840,7 @@
   - type: SpeakOnUIClosed
     pack: DiscountDansGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/discount.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/discount.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -868,7 +868,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/engivend.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/engivend.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -901,7 +901,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/medical.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/medical.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -938,7 +938,7 @@
   - type: SpeakOnUIClosed
     pack: NutriMaxGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/nutri.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/nutri.rsi  # Exodus-Respritetri.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -972,7 +972,7 @@
   - type: SpeakOnUIClosed
     pack: SecTechGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/sec.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/sec.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1013,7 +1013,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/seeds.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/seeds.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1058,7 +1058,7 @@
   - type: SpeakOnUIClosed
     pack: GetmoreChocolateCorpGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/snack.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/snack.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1088,7 +1088,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/sustenance.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/sustenance.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1108,7 +1108,7 @@
   suffix: Blue
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/snack-blue.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/snack-blue.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1128,7 +1128,7 @@
   suffix: Orange
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/snack-orange.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/snack-orange.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1148,7 +1148,7 @@
   suffix: Green
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/snack-green.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/snack-green.rsi  # Exodus-Respriteeen.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1168,7 +1168,7 @@
   suffix: Teal
   components:
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/snack-teal.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/snack-teal.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1203,7 +1203,7 @@
   - type: SpeakOnUIClosed
     pack: BodaGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/sovietsoda.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/sovietsoda.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1236,7 +1236,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/theater.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/theater.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1271,7 +1271,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/vendomat.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/vendomat.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1303,7 +1303,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/robotics.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/robotics.rsi  # Exodus-Respriteics.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1336,7 +1336,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/youtool.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/youtool.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1368,7 +1368,7 @@
   - type: SpeakOnUIClosed
     pack: GoodCleanFunGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/games.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/games.rsi  # Exodus-Respritemes.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1401,7 +1401,7 @@
   - type: SpeakOnUIClosed
     pack: ChangGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/changs.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/changs.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1428,7 +1428,7 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/mining.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/mining.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1468,7 +1468,7 @@
   - type: SpeakOnUIClosed
     pack: DonutGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/donut.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/donut.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1518,7 +1518,7 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/wallmed.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/wallmed.rsi  # Exodus-Respritemed.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1557,7 +1557,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/hydrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/hydrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1589,7 +1589,7 @@
   - type: SpeakOnUIClosed
     pack: LawDrobeGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/lawdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/lawdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1615,7 +1615,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/secdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/secdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1647,7 +1647,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/bardrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/bardrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1669,7 +1669,7 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/chapdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1694,12 +1694,13 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    denyState: deny-unshaded # Exodus-Resprite
   - type: Advertise
     pack: CargoDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cargodrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cargodrobe.rsi  # Exodus-Respriteobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1731,7 +1732,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/medidrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/medidrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1757,7 +1758,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chemdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/chemdrobe.rsi  # Exodus-Respriteobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1783,7 +1784,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/curadrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/curadrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1811,7 +1812,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/atmosdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/atmosdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1843,7 +1844,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/engidrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/engidrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1875,7 +1876,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chefdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/chefdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1901,7 +1902,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/detdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/detdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1927,7 +1928,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/janidrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/janidrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1959,7 +1960,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/scidrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/scidrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -1985,7 +1986,7 @@
   - type: SpeakOnUIClosed
     pack: SyndieDrobeGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/syndiedrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/syndiedrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2017,7 +2018,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/robodrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/robodrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2043,7 +2044,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/genedrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/genedrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2069,7 +2070,7 @@
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/virodrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/virodrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2091,7 +2092,7 @@
     brokenState: broken
     normalState: normal-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/centdrobe.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/centdrobe.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2125,7 +2126,7 @@
     soundVend: /Audio/Items/bikehorn.ogg
     initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/happyhonk.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/happyhonk.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2170,7 +2171,7 @@
     energy: 1.3 # reduced energy since the color is pure white
     color: "#FFFFFF"
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/pride.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/pride.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
@@ -2226,12 +2227,13 @@
     denyState: deny
     ejectDelay: 2
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chemvend.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/chemvend.rsi  # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: GuideHelp

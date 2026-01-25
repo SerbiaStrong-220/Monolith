@@ -14,10 +14,10 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
-    sprite: Structures/Machines/VendingMachines/cola.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cola.rsi  # Exodus-Resprite
     state: normal
   - type: Icon
-    sprite: Structures/Machines/VendingMachines/cola.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/cola.rsi  # Exodus-Resprite
     state: normal
   - type: Fixtures
     fixtures:
