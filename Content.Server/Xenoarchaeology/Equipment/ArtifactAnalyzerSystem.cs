@@ -37,9 +37,10 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly PaperSystem _paper = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -58,10 +59,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentStartup>(OnAnalyzeStart);
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentShutdown>(OnAnalyzeEnd);
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, PowerChangedEvent>(OnPowerChanged);
-
-        SubscribeLocalEvent<ArtifactAnalyzerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
-        SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleServerSelectionMessage>(OnServerSelectionMessage);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleScanButtonPressedMessage>(OnScanButton);
@@ -122,54 +119,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
     {
         if (!Resolve(uid, ref component))
             return;
-    }
-
-    private void OnMapInit(EntityUid uid, ArtifactAnalyzerComponent component, MapInitEvent args)
-    {
-        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sink))
-            return;
-
-        // Frontier: disable analyzer power draw when off
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower))
-        {
-            component.OriginalLoad = apcPower.Load;
-            SetPowerSwitch(component, apcPower, false);
-        }
-        // End Frontier
-
-        foreach (var source in sink.LinkedSources)
-        {
-            if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
-                continue;
-            component.Console = source;
-            analysis.AnalyzerEntity = GetNetEntity(uid);
-            return;
-        }
-    }
-
-    private void OnNewLink(EntityUid uid, AnalysisConsoleComponent component, NewLinkEvent args)
-    {
-        if (!TryComp<ArtifactAnalyzerComponent>(args.Sink, out var analyzer))
-            return;
-
-        component.AnalyzerEntity = GetNetEntity(args.Sink);
-        analyzer.Console = uid;
-        Dirty(uid, component);
-        Dirty(args.Sink, analyzer);
-
-        UpdateUserInterface(uid, component);
-    }
-
-    private void OnPortDisconnected(EntityUid uid, AnalysisConsoleComponent component, PortDisconnectedEvent args)
-    {
-        if (args.Port == component.LinkingPort && component.AnalyzerEntity != null)
-        {
-            // if (TryComp<ArtifactAnalyzerComponent>(component.AnalyzerEntity, out var analyzezr))
-            //     analyzezr.Console = null;
-            component.AnalyzerEntity = null;
-        }
-
-        UpdateUserInterface(uid, component);
     }
 
     private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null)
