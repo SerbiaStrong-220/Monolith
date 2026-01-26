@@ -361,6 +361,12 @@
       amount: 1
     Water:
       amount: 1
+#Exodus ChemicalEffects start
+  effects:
+  - !type:CreateGas
+    gas: WaterVapor
+    multiplier: 3
+#Exodus ChemicalEffects end
   products:
     ChloralHydrate: 1
 
