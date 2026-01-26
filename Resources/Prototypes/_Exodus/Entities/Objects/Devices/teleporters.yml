@@ -1,0 +1,102 @@
+# region Телепортеры
+
+- type: entity
+  id: SmallCarpHandTeleporter
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
+    layers:
+    - state: icon
+  - type: HandTeleporter
+    firstPortalPrototype: SmallPortalCarp
+    secondPortalPrototype: SmallPortalCarp
+    allowPortalsOnDifferentGrids: true
+
+- type: entity
+  id: BigCarpHandTeleporter
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
+    layers:
+    - state: icon
+  - type: HandTeleporter
+    firstPortalPrototype: BigPortalCarp
+    secondPortalPrototype: BigPortalCarp
+    allowPortalsOnDifferentGrids: true
+
+- type: entity
+  id: HandTeleporterInvisible
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
+    layers:
+    - state: icon
+  - type: HandTeleporter
+    firstPortalPrototype: PortalAdmemeInvisible
+    secondPortalPrototype: PortalAdmemeInvisible
+    allowPortalsOnDifferentGrids: true
+
+# region Порталы
+- type: entity
+  id: SmallPortalCarp
+  parent: BasePortal
+  categories: [HideSpawnMenu]
+  description: This one looks more like a redspace portal.
+  components:
+    - type: Sprite
+      layers:
+      - sprite: Structures/Specific/carp_rift.rsi
+        state: icon
+        color: "#569fff"
+        shader: unshaded
+    - type: PointLight
+      enabled: true
+      color: "#366db5"
+      radius: 10.0
+      energy: 5.0
+      netsync: false
+    - type: Portal
+      canTeleportToOtherMaps: true
+
+- type: entity
+  id: BigPortalCarp
+  parent: BasePortal
+  name: ???
+  categories: [HideSpawnMenu]
+  description: This one looks more like a redspace portal.
+  components:
+    - type: Sprite
+      layers:
+      - sprite: Structures/Specific/carp_rift.rsi
+        state: icon
+        color: "#569fff"
+        shader: unshaded
+        scale: 3.0,3.0
+    - type: PointLight
+      enabled: true
+      color: "#366db5"
+      radius: 10.0
+      energy: 5.0
+      netsync: false
+    - type: Portal
+      canTeleportToOtherMaps: true
+
+- type: entity
+  id: PortalAdmemeInvisible
+  parent: BasePortal
+  categories: [HideSpawnMenu]
+  description: This one looks more like a redspace portal.
+  components:
+    - type: Sprite
+      visible: false
+    - type: PointLight
+      enabled: true
+      color: "#366db5"
+      radius: 10.0
+      energy: 5.0
+      netsync: false
+    - type: Portal
+      canTeleportToOtherMaps: true
