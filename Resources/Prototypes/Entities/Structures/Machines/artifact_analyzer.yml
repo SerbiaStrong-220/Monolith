@@ -51,7 +51,6 @@
     powerLoad: 12000
     needsPower: true # Frontier: false<true - changes power draw when idle
   - type: ArtifactAnalyzer
-  - type: TraversalDistorter
   - type: ItemPlacer
     whitelist:
       components:
