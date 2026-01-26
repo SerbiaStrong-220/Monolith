@@ -55,7 +55,7 @@
   - type: ItemPlacer
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: BasicDevice
