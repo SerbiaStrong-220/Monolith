@@ -54,4 +54,9 @@ public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
         component = receiver;
         return true;
     }
+
+    public override bool IsPoweredShared(EntityUid uid)
+    {
+        return !TryComp<ApcPowerReceiverComponent>(uid, out var power) || power.Powered;
+    }
 }
