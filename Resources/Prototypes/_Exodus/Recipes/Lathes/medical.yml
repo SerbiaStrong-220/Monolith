@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: ClothingEyesHudChemMed
+  result: ClothingEyesHudChemMed
+  completetime: 10
+  materials:
+    Steel: 400
+    Plastic: 500
+    Glass: 500
+
