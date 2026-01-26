@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "by Askolot (discord:788252896016990219), owned by Space Exodus. Source https://github.com/space-exodus/space-station-14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "imperial",
+            "directions": 4
+        },
+        {
+            "name": "imperial_2",
+            "directions": 4
+        },
+        {
+            "name": "luxurious",
+            "directions": 4
+        },
+        {
+            "name": "luxurious_2",
+            "directions": 4
+        },
+        {
+            "name": "round_1",
+            "directions": 4
+        },
+        {
+            "name": "round_2",
+            "directions": 4
+        },
+        {
+            "name": "smoll",
+            "directions": 4
+        },
+        {
+            "name": "straight",
+            "directions": 4
+        },
+        {
+            "name": "straight_2",
+            "directions": 4
+        },
+        {
+            "name": "tail",
+            "directions": 4
+        },
+        {
+            "name": "tail_2",
+            "directions": 4
+        },
+        {
+            "name": "tail_3",
+            "directions": 4
+        }
+    ]
+}

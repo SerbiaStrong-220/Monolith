@@ -1,0 +1,137 @@
+- type: entity
+  id: BaseMobKidan
+  parent: BaseMobSpeciesOrganic
+  name: Urisst' McKidan
+  abstract: true
+  components:
+  - type: Sprite
+    scale: 1.04, 1.04
+  - type: HumanoidAppearance
+    species: Kidan
+  - type: Hunger
+  - type: Thirst
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatKidan
+      amount: 5
+  - type: Icon
+    sprite: _Exodus/Mobs/Species/Kidan/parts.rsi
+    state: full
+  - type: Speech
+    speechVerb: Kidan
+    speechSounds: Kidan
+    allowedEmotes: ['WigglesAntennae', 'WavesAntennaeSharply', 'JawsSnap', 'Grumble', 'Groan']
+  - type: TypingIndicator
+    proto: kidan
+  - type: Vocal
+    sounds:
+      Male: UnsexedKidan
+      Female: UnsexedKidan
+      Unsexed: UnsexedKidan
+  - type: Body
+    prototype: Kidan
+    requiredLegs: 2
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.35
+        Heat: 0.1
+  - type: Temperature
+    heatDamageThreshold: 370
+    coldDamageThreshold: 268
+  - type: Inventory
+    speciesId: kidan
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+  - type: PointLight
+    energy: 1.5
+    radius: 3
+    color: "#556b2f"
+    enabled: false
+  - type: Damageable
+    damageModifierSet: Kidan
+  - type: CollectiveMind
+    hearAll: true
+    seeAllNames: true
+    channels:
+    - Chitine
+    defaultChannel: Chitine
+  - type: Bioluminescence
+  - type: SensitiveEyes
+  - type: MineralResonance
+  - type: PheromonesCommunication
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [PestKiller]
+      methods: [Touch, Ingestion]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 17
+
+- type: entity
+  save: false
+  name: Urist McKidan
+  parent: BaseSpeciesDummy
+  id: MobKidanDummy
+  categories: [ HideSpawnMenu ]
+  description: A dummy kidan meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Kidan
+  - type: Inventory
+    speciesId: kidan
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes

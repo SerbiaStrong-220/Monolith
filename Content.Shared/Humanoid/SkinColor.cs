@@ -27,6 +27,11 @@ public static class SkinColor
     public const float MinFeathersValue = 36f / 100;
     public const float MaxFeathersValue = 55f / 100;
 
+    // Exodus-Kidans-Start
+    public const float MinChitinValue = 30f / 100;
+    public const float MaxChitinValue = 90f / 100;
+    // Exodus-Kidans-End
+
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
@@ -177,6 +182,23 @@ public static class SkinColor
         return Color.FromHsv(newColor);
     }
 
+    // Exodus-Kidans-Start
+    /// <summary>
+    ///     Converts a Color proportionally to the allowed kidan color range.
+    ///     Will NOT preserve the specific input color even if it is within the allowed kidan color range.
+    /// </summary>
+    /// <param name="color">Color to convert</param>
+    /// <returns>Vox feather coloration</returns>
+    public static Color ProportionalKidanColor(Color color)
+    {
+        var newColor = Color.ToHsv(color);
+
+        newColor.Z = newColor.Z * (MaxChitinValue - MinChitinValue) + MinChitinValue;
+
+        return Color.FromHsv(newColor);
+    }
+    // Exodus-Kidans-End
+
     // /// <summary>
     // ///      Ensures the input Color is within the allowed vox color range.
     // /// </summary>
@@ -192,6 +214,22 @@ public static class SkinColor
 
         return Color.FromHsv(hsv);
     }
+
+    // Exodus-Kidans-Start
+    /// <summary>
+    ///      Ensures the input Color is within the allowed kidan color range.
+    /// </summary>
+    /// <param name="color">Color to convert</param>
+    /// <returns>The same Color if it was within the allowed range, or the closest matching Color otherwise</returns>
+    public static Color ClosestKidanColor(Color color)
+    {
+        var hsv = Color.ToHsv(color);
+
+        hsv.Z = Math.Clamp(hsv.Z, MinChitinValue, MaxChitinValue);
+
+        return Color.FromHsv(hsv);
+    }
+    // Exodus-Kidans-End
 
     /// <summary>
     ///     Verify if this color is a valid vox feather coloration, or not.
@@ -213,6 +251,19 @@ public static class SkinColor
 
         return true;
     }
+
+    // Exodus-Kidans-Start
+    /// <summary>
+    ///     Verify if this color is a valid kidan chitin coloration, or not.
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns>True if valid, false if not</returns>
+    public static bool VerifyKidanChitin(Color color)
+    {
+        var hsv = Color.ToHsv(color);
+        return hsv.Z >= MinChitinValue && hsv.Z <= MaxChitinValue;
+    }
+    // Exodus-Kidans-End
 
 /// Goobstation Section Start - Tajaran
     /// <summary>
@@ -301,6 +352,7 @@ public static class SkinColor
             HumanoidSkinColor.Hues => VerifyHues(color),
             HumanoidSkinColor.VoxFeathers => VerifyVoxFeathers(color),
             HumanoidSkinColor.AnimalFur => VerifyAnimalFur(color),
+            HumanoidSkinColor.KidanChitin => VerifyKidanChitin(color), // Exodus-Kidans
             _ => false,
         };
     }
@@ -314,6 +366,7 @@ public static class SkinColor
             HumanoidSkinColor.Hues => MakeHueValid(color),
             HumanoidSkinColor.VoxFeathers => ClosestVoxColor(color),
             HumanoidSkinColor.AnimalFur => ClosestAnimalFurColor(color),
+            HumanoidSkinColor.KidanChitin => ClosestKidanColor(color), // Exodus-Kidans
             _ => color
         };
     }
@@ -326,4 +379,5 @@ public enum HumanoidSkinColor : byte
     VoxFeathers, // Vox feathers are limited to a specific color range
     TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
     AnimalFur, // Goob - Tajaran
+    KidanChitin, // Exodus-Kidans
 }

@@ -11,30 +11,6 @@ public sealed partial class MiningScannerViewerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MiningScannerViewerComponent, ComponentGetState>(GetState);
-        SubscribeLocalEvent<MiningScannerViewerComponent, ComponentHandleState>(HandleState);
-    }
-
-    private void GetState(EntityUid uid, MiningScannerViewerComponent comp, ref ComponentGetState args)
-    {
-        args.State = new MiningScannerViewerComponentState()
-        {
-            Records = comp.Records,
-        };
-    }
-
-    private void HandleState(EntityUid uid, MiningScannerViewerComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not MiningScannerViewerComponentState state)
-            return;
-
-        comp.Records = state.Records;
-    }
-
     public void CreateScan(EntityUid uid, float range, TimeSpan delay, float animationDuration = 1.5f)
     {
         var scan = new MiningScannerRecord()
@@ -48,6 +24,7 @@ public sealed partial class MiningScannerViewerSystem : EntitySystem
 
         var viewer = EnsureComp<MiningScannerViewerComponent>(uid);
         viewer.Records.Add(scan);
+        Dirty(uid, viewer);
     }
 
     public override void Update(float frameTime)
@@ -72,6 +49,7 @@ public sealed partial class MiningScannerViewerSystem : EntitySystem
             if (records.Count != viewer.Records.Count)
             {
                 viewer.Records = records;
+                Dirty(uid, viewer);
             }
         }
     }

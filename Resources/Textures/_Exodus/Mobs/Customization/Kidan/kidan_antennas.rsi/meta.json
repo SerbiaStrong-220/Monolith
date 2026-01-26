@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "by Askolot (discord:788252896016990219), owned by Space Exodus. Source https://github.com/space-exodus/space-station-14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "classic_ones",
+            "directions": 4
+        },
+        {
+            "name": "fan",
+            "directions": 4
+        },
+        {
+            "name": "long",
+            "directions": 4
+        },
+        {
+            "name": "may_bug",
+            "directions": 4
+        },
+        {
+            "name": "short",
+            "directions": 4
+        },
+        {
+            "name": "very_long",
+            "directions": 4
+        }
+    ]
+}
