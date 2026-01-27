@@ -39,7 +39,13 @@ public abstract partial class SharedInstrumentComponent : Component
 /// Component that indicates that musical instrument was activated (ui opened).
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ActiveInstrumentComponent : Component;
+[AutoGenerateComponentState(true)]
+public sealed partial class ActiveInstrumentComponent : Component
+{
+    [DataField]
+    [AutoNetworkedField]
+    public MidiTrack?[] Tracks = [];
+}
 
 [Serializable, NetSerializable]
 public sealed class InstrumentComponentState : ComponentState
