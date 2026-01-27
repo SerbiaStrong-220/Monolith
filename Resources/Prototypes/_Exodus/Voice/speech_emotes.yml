@@ -7,8 +7,8 @@
     components:
     - Vocal
   blacklist:
-    tags:
-    - SiliconEmotes
+    components:
+    - BorgChassis
   chatMessages: [ворчит]
   chatTriggers:
     - grumble
@@ -24,8 +24,8 @@
     components:
     - Vocal
   blacklist:
-    tags:
-    - SiliconEmotes
+    components:
+    - BorgChassis
   available: false
   chatMessages: [урчит]
   chatTriggers:
@@ -42,8 +42,8 @@
     components:
     - Vocal
   blacklist:
-    tags:
-    - SiliconEmotes
+    components:
+    - BorgChassis
   chatMessages: [шевелит антенками]
   chatTriggers:
     - waves antennae
@@ -63,8 +63,8 @@
     components:
     - Vocal
   blacklist:
-    tags:
-    - SiliconEmotes
+    components:
+    - BorgChassis
   chatMessages: [резко машет антенками]
   chatTriggers:
     - waves antennae sharply
@@ -81,8 +81,8 @@
     components:
     - Vocal
   blacklist:
-    tags:
-    - SiliconEmotes
+    components:
+    - BorgChassis
   chatMessages: [щёлкает челюстями]
   chatTriggers:
     - snaps his jaws
@@ -101,12 +101,10 @@
     components:
     - Vocal
   blacklist:
-    tags:
-    - SiliconEmotes
+    components:
+    - BorgChassis
   chatMessages: [устало стонет]
   chatTriggers:
     - groans
     - стонет
     - устало стонет
-
-#region Reptilian

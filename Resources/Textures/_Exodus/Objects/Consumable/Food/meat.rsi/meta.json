@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "owned by Space Exodus, made by Askolot (discord:788252896016990219)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "kidan-cooked"
+        },
+        {
+            "name": "kidan-cutlet-cooked"
+        },
+        {
+            "name": "kidan-cutlet"
+        },
+        {
+            "name": "kidan-rotten"
+        },
+        {
+            "name": "kidan"
+        }
+    ]
+}

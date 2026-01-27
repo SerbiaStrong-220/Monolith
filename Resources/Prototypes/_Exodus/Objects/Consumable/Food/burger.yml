@@ -1,0 +1,25 @@
+- type: entity
+  name: kidan burger
+  parent: FoodBurgerBase
+  id: FoodBurgerKidan
+  description: You wouldn't tell from the looks of it that the secret ingredient is kidan.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - friday
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/burger.rsi
+    state: kidan
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Protein
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat

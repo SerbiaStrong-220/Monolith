@@ -1,0 +1,59 @@
+
+- type: entity
+  name: eye cake
+  parent: FoodCakeBase
+  id: FoodCakeEyeKidan
+  description: A cake from someone else's eyes. You have a hard time holding back the tears when you look at it.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pain
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/Baked/cake.rsi
+    state: kidan-cake
+  - type: SliceableFood
+    slice: FoodCakeEyeKidanSlice
+  - type: Tag
+    tags:
+    - Cake
+    - Meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 20
+
+- type: entity
+  name: slice of eye cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeEyeKidanSlice
+  description: The stuffing raises questions.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/Baked/cake.rsi
+    state: kidan-cake-slice
+  - type: FlavorProfile
+    flavors:
+      - pain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Nutriment
+          Quantity: 4
+  - type: Tag
+    tags:
+    - Cake
+    - Meat
+    - Slice
