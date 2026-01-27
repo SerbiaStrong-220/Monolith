@@ -139,6 +139,10 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
         enabled: false
+  # Exodus-QOL-Start
+  - type: MaterialStorageMagnetPickup
+    range: 1
+  # Exodus-QOL-End
 
 - type: entity
   name: SKR CR-class Z-pinch nuclear fusion reactor
