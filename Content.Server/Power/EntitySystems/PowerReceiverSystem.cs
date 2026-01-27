@@ -169,15 +169,11 @@ namespace Content.Server.Power.EntitySystems
             return !_recQuery.Resolve(uid, ref receiver, false) || receiver.Powered;
         }
 
-        /// <summary>
-        /// Turn this machine on or off.
-        /// Returns true if we turned it on, false if we turned it off.
-        /// </summary>
-        public bool TogglePower(EntityUid uid, bool playSwitchSound = true, ApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
+        public override void SetLoad(SharedApcPowerReceiverComponent comp, float load) // Goobstation - override shared method
         {
             ((ApcPowerReceiverComponent) comp).Load = load; // Goobstation
         }
-        
+
         public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)
         {
             if (component != null)
