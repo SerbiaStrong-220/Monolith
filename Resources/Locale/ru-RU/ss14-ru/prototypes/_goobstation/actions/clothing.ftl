@@ -1,2 +1,2 @@
-ent-ActionClothingSeal = Seal clothing
-    .desc = Seals your current clothing.
+ent-ActionClothingSeal = Переключить режим
+    .desc = Переключает режим работы модульного скафандра.
