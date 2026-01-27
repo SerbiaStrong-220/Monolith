@@ -1,5 +1,3 @@
-// © Space Exodus, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/space-exodus/space-station-14/master/CLA.txt
-
 using Content.Client.Eui;
 using Content.Shared.Exodus.Gimmicks.Pheromones.UI;
 
