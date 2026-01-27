@@ -731,11 +731,12 @@
   components:
   - type: XAEApplyComponents
     components:
-    - type: Stealth
-      hadOutline: true
-    - type: StealthOnMove
-      passiveVisibilityRate: -0.10
-      movementVisibilityRate: 0.10
+    #Exodus - StealthRefactor - Begin
+    - type: InstantStealth
+      stealth:
+        passiveVisibilityRate: -0.10
+        movementVisibilityRate: 0.10
+    #Exodus - StealthRefactor - End
 
 - type: entity
   id: XenoArtifactRareMaterialSpawn
