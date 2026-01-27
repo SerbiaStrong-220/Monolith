@@ -108,7 +108,15 @@ namespace Content.Shared.Humanoid
 
         public string GetLastName(SpeciesPrototype speciesProto)
         {
-            return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.LastNames).Values);
+            // Exodus-Kidans-Start | Crutch to make localized datasets work along with just datasets
+            if (_prototypeManager.TryIndex<DatasetPrototype>(speciesProto.LastNames, out var dataset))
+                return _random.Pick(dataset.Values);
+
+            if (_prototypeManager.TryIndex<LocalizedDatasetPrototype>(speciesProto.LastNames, out var localizedDataset))
+                return Loc.GetString(_random.Pick(localizedDataset.Values));
+
+            throw new Exception($"Can't get prototype for LastNames of species prototype {speciesProto.ID}");
+            // Exodus-Kidans-End
         }
 
         // Exodus-Kidans-Start
