@@ -1,4 +1,4 @@
-namespace Content.Server._Forge.AutoSalarySystem;
+namespace Content.Server.Exodus.AutoSalarySystem;
 
 [RegisterComponent]
 public sealed partial class AutoSalaryComponent : Component
