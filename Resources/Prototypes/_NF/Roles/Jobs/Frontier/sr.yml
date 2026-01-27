@@ -16,6 +16,7 @@
   requireAdminNotify: true
   supervisors: job-supervisors-centcom
   weight: 170
+  salary: 17000 # Exodus-Salary
   displayWeight: 60 # Top
   canBeAntag: false
   accessGroups:

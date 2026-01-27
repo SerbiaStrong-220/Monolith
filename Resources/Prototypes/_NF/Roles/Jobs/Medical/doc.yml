@@ -16,6 +16,7 @@
   startingGear: DocGear
   alwaysUseSpawner: true
   icon: "JobIconDoc"
+  salary: 15000 # Exodus-Salary
   requireAdminNotify: true
   supervisors: job-supervisors-sr # Mono
   weight: 170
