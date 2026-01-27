@@ -149,12 +149,6 @@
     path: /Audio/_Exodus/Lobby/exodus.ogg
 
 - type: jukebox
-  id: erasedone
-  name: April Rain - Erased One
-  path:
-    path: /Audio/_Exodus/Lobby/erased-one.ogg
-
-- type: jukebox
   id: sevensummerdays
   name: April Rain - Seven Summer Days
   path:
