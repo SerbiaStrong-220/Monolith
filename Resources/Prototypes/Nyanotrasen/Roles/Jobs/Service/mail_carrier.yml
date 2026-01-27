@@ -11,6 +11,7 @@
   icon: "JobIconMailCarrier"
   supervisors: job-supervisors-sr
   weight: 90 # Frontier
+  salary: 7000 # Exodus-Salary
   displayWeight: 30 # Frontier
   canBeAntag: false
   access:
