@@ -67,10 +67,6 @@
     - state: tracheal-tubes
   - type: Metabolizer
     metabolismRateModifier: 1.5
-  - type: Organ
-    slotId: lungs
-  - type: Item
-    size: Small
 
 - type: entity
   id: OrganKidanLiver
@@ -118,10 +114,6 @@
     - state: kidneys
   - type: Metabolizer
     metabolismRateModifier: 1.5
-  - type: Organ
-    slotId: kidneys
-  - type: Item
-    size: Small
 
 - type: entity
   id: OrganKidanEyes
