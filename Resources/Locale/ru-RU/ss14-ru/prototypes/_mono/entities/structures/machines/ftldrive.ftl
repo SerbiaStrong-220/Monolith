@@ -1,6 +1,6 @@
-ent-MachineFTLDrive = CTLA-25 bluespace drive
-    .desc = A FTL drive that extends a ship's FTL range to ~5 kilometers. Does not stack.
-ent-MachineFTLDrive50 = CTLA-50 bluespace drive
-    .desc = A FTL drive that extends a ship's FTL range to ~10 kilometers. Does not stack.
-ent-MachineFTLDrive25S = CTLA-25s bluespace drive
-    .desc = An advanced FTL drive that extends a ship's FTL range to ~5 kilometers, but with upgrades to allow for faster recharge and flight times. Does not stack.
+ent-MachineFTLDrive = МБСБСС-25
+    .desc = Двигатель перемещения БСС, увеличивающий дальность прыжка корабля до ~5 километров. Эффекты не суммируются.
+ent-MachineFTLDrive50 = МБСБСС-50
+    .desc = Двигатель перемещения БСС, увеличивающий дальность прыжка корабля до ~10 километров. Эффекты не суммируются.
+ent-MachineFTLDrive25S = МБСБСС-25У
+    .desc = Улучшенный двигатель перемещения БСС, увеличивающий дальность прыжка корабля до ~5 километров с сокращённым временем перезарядки и повышенной скоростью прыжка. Эффекты не суммируются.
