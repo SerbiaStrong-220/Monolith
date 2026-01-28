@@ -1,0 +1,130 @@
+- type: entity
+  id: OrganKidanVertebralVessel
+  parent: BaseAnimalOrgan
+  name: kidan vertebral vessel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    state: heart
+  - type: Metabolizer
+    metabolismRateModifier: 1.5
+    maxReagents: 3
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Item
+    size: Small
+    heldPrefix: heart
+
+- type: entity
+  id: OrganKidanStomach
+  parent: BaseAnimalOrgan
+  name: kidan stomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+    isSpecialDigestibleExclusive: false
+    specialDigestible:
+      tags:
+      - DionaNymph
+  - type: Metabolizer
+    metabolismRateModifier: 1.5
+    maxReagents: 3
+    metabolizerTypes: [ Kidan ]
+    groups:
+    - id: Food
+    - id: Drink
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+
+- type: entity
+  id: OrganKidanTrachealTubes
+  parent: OrganAnimalLungs
+  name: kidan tracheal tubes
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    layers:
+    - state: tracheal-tubes
+  - type: Metabolizer
+    metabolismRateModifier: 1.5
+
+- type: entity
+  id: OrganKidanLiver
+  parent: BaseAnimalOrgan
+  name: kidan liver
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    state: liver
+  - type: Metabolizer
+    metabolismRateModifier: 1.5
+    maxReagents: 1
+    groups:
+    - id: Alcohol
+      rateModifier: 0.3
+  - type: Item
+    size: Small
+    heldPrefix: liver
+
+- type: entity
+  id: OrganKidanPheromoneGlands
+  parent: BaseAnimalOrgan
+  name: kidan pheromone glands
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    state: pheromone-glands
+
+- type: entity
+  id: OrganKidanKidneys
+  parent: OrganAnimalKidneys
+  name: kidan kidneys
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    layers:
+    - state: kidneys
+  - type: Metabolizer
+    metabolismRateModifier: 1.5
+
+- type: entity
+  id: OrganKidanEyes
+  parent: BaseAnimalOrgan
+  name: kidan eyes
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+
+- type: entity
+  id: OrganKidanBrain
+  parent: BaseAnimalOrgan
+  name: kidan brain
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    state: brain

@@ -169,6 +169,14 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField]
         public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+        // Exodus-Salary-Start
+        [DataField]
+        public int Salary = 0;
+
+        [DataField]
+        public TimeSpan SalaryInterval = TimeSpan.FromMinutes(20);
+        // Exodus-Salary-End
     }
 
     /// <summary>

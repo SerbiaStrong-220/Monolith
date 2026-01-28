@@ -1,0 +1,198 @@
+- type: jukebox
+  id: flames
+  name: Ramli - Flames
+  path:
+    path: /Audio/_Exodus/Lobby/flames.ogg
+
+- type: jukebox
+  id: hopeful
+  name: Ramli - Hopeful
+  path:
+    path: /Audio/_Exodus/Lobby/hopeful.ogg
+
+- type: jukebox
+  id: larik
+  name: Gundatsch - Larik
+  path:
+    path: /Audio/_Exodus/Lobby/larik.ogg
+
+- type: jukebox
+  id: owl
+  name: Ramli - Owl
+  path:
+    path: /Audio/_Exodus/Lobby/owl.ogg
+
+- type: jukebox
+  id: space
+  name: Gundatsch - Space
+  path:
+    path: /Audio/_Exodus/Lobby/space.ogg
+
+- type: jukebox
+  id: spaceoddity
+  name: David Bowie - Space Oddity
+  path:
+    path: /Audio/_Exodus/Lobby/space_oddity.ogg
+
+- type: jukebox
+  id: voided
+  name: Ramli - Voided
+  path:
+    path: /Audio/_Exodus/Lobby/voided.ogg
+
+- type: jukebox
+  id: weightlessness
+  name: Ramli - Weightlessness
+  path:
+    path: /Audio/_Exodus/Lobby/weightlessness.ogg
+
+- type: jukebox
+  id: endlessspace
+  name: Ramli - Endless Space (Remix)
+  path:
+    path: /Audio/_Exodus/Lobby/endless_space.ogg
+
+- type: jukebox
+  id: nuclearoperationsremake
+  name: A-Guy - Nuclear Operations (Remake)
+  path:
+    path: /Audio/_Exodus/Lobby/nuclearoperations_remake.ogg
+
+- type: jukebox
+  id: revolution
+  name: A-Guy - Revolution
+  path:
+    path: /Audio/_Exodus/Lobby/revolution_A-Guy.ogg
+
+- type: jukebox
+  id: corporaterats
+  name: Bolgarich - Corporate Rats
+  path:
+    path: /Audio/_Exodus/Lobby/corporate-rats.ogg
+
+- type: jukebox
+  id: terminatedcontracts
+  name: Qntum (Feat Z.W.E.I.) - Terminated Contracts
+  path:
+    path: /Audio/_Exodus/Lobby/terminated-contracts.ogg
+
+- type: jukebox
+  id: liberation
+  name: Bolgarich - Liberation
+  path:
+    path: /Audio/_Exodus/Lobby/liberation.ogg
+
+- type: jukebox
+  id: taypan
+  name: Bolgarich feat Haziness Codex - Taypan
+  path:
+    path: /Audio/_Exodus/Lobby/taypan.ogg
+
+- type: jukebox
+  id: tearofveil
+  name: Bolgarich - Tear Of Veil
+  path:
+    path: /Audio/_Exodus/Lobby/tear-of-veil.ogg
+
+- type: jukebox
+  id: nukeopstheme
+  name: Qntum (Feat Z.W.E.I.) - Nuke Ops Theme
+  path:
+    path: /Audio/_Exodus/Lobby/nuke-ops-theme.ogg
+
+- type: jukebox
+  id: despair
+  name: Bolgarich - Despair
+  path:
+    path: /Audio/_Exodus/Lobby/despair.ogg
+
+- type: jukebox
+  id: vordhosbn
+  name: Aphex Twin - Vordhosbn
+  path:
+    path: /Audio/_Exodus/Lobby/vordhosbn.ogg
+
+- type: jukebox
+  id: devourerofgods
+  name: DM DOKURO - Devourer Of Gods
+  path:
+    path: /Audio/_Exodus/Lobby/devourer-of-gods.ogg
+
+- type: jukebox
+  id: blessingofthemoon
+  name: DM DOKURO - Blessing Of The Moon
+  path:
+    path: /Audio/_Exodus/Lobby/blessing-of-the-moon.ogg
+
+- type: jukebox
+  id: heavensentabomination
+  name: DM DOKURO - Heaven Sent Abomination
+  path:
+    path: /Audio/_Exodus/Lobby/heaven-sent-abomination.ogg
+
+- type: jukebox
+  id: catastrophesbeforethecalamity
+  name: DM DOKURO - Catastrophes Before The Calamity
+  path:
+    path: /Audio/_Exodus/Lobby/catastrophes-before-the-calamity.ogg
+
+- type: jukebox
+  id: erasedone
+  name: April Rain - Erased One
+  path:
+    path: /Audio/_Exodus/Lobby/erased-one.ogg
+
+- type: jukebox
+  id: Exodus
+  name: April Rain - Exodus
+  path:
+    path: /Audio/_Exodus/Lobby/exodus.ogg
+
+- type: jukebox
+  id: sevensummerdays
+  name: April Rain - Seven Summer Days
+  path:
+    path: /Audio/_Exodus/Lobby/seven-summer-days.ogg
+
+- type: jukebox
+  id: sanati
+  name: April Rain - Sanati
+  path:
+    path: /Audio/_Exodus/Lobby/sanati.ogg
+
+- type: jukebox
+  id: tabularasa
+  name: April Rain - Tabula Rasa
+  path:
+    path: /Audio/_Exodus/Lobby/tabula-rasa.ogg
+
+- type: jukebox
+  id: willwemeetagain
+  name: April Rain - Will We Meet Again
+  path:
+    path: /Audio/_Exodus/Lobby/will-we-meet-again.ogg
+
+- type: jukebox
+  id: deadmanonvacation
+  name: April Rain - Deadman On Vacation
+  path:
+    path: /Audio/_Exodus/Lobby/deadman-on-vacation.ogg
+
+- type: jukebox
+  id: mysilentangel
+  name: April Rain - My Silent Angel
+  path:
+    path: /Audio/_Exodus/Lobby/my-silent-angel.ogg
+
+- type: jukebox
+  id: lavaland
+  name: A-Guy - Lavaland
+  path:
+    path: /Audio/_Exodus/Lobby/lavaland.ogg
+
+- type: jukebox
+  id: themeofspace
+  name: Gundatsch - Theme Of Space
+  path:
+    path: /Audio/_Exodus/Lobby/theme_of_space.ogg
+

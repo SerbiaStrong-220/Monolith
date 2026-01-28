@@ -11,6 +11,7 @@
   icon: "JobIconJanitor"
   supervisors: job-supervisors-sr
   weight: 100
+  salary: 5000 # Exodus-Salary
   displayWeight: 40
   canBeAntag: false
   access:

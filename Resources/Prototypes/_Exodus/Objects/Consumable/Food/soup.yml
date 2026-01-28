@@ -1,0 +1,28 @@
+- type: entity
+  name: ground soup
+  parent: FoodBowlBase
+  id: FoodSoupKidan
+  description: Fresh and refreshing, it has a slight earthy aftertaste. Great for breakfast.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - terrible
+      - invigoratingly
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/bowl.rsi
+    state: kidan-soup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 35
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 15
+        - ReagentId: Protein
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Soup
+    - Meat

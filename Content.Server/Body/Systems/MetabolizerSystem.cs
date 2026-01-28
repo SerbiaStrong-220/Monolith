@@ -178,7 +178,7 @@ namespace Content.Server.Body.Systems
                     if (!proto.Metabolisms.TryGetValue(group.Id, out var entry))
                         continue;
 
-                    var rate = entry.MetabolismRate * group.MetabolismRateModifier;
+                    var rate = entry.MetabolismRate * group.MetabolismRateModifier * ent.Comp1.MetabolismRateModifier; // Exodus-GlobalMetabolizerModifier-End
 
                     // Remove $rate, as long as there's enough reagent there to actually remove that much
                     mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);

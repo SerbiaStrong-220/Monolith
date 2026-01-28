@@ -1,0 +1,144 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: BaseKidanPart
+  parent: BaseItem
+  name: "kidan body part"
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/parts.rsi
+  - type: Icon
+    sprite: _Exodus/Mobs/Species/Kidan/parts.rsi
+  - type: BodyPart
+    species: Kidan
+  - type: Damageable
+    damageContainer: Biological
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: Tag
+    tags:
+      - Trash
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoKidan
+  name: "kidan torso"
+  parent: [BaseKidanPart, BaseTorso]
+  components:
+  - type: Sprite
+    state: torso
+  - type: Icon
+    state: torso
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadKidan
+  name: "kidan head"
+  parent: [BaseKidanPart, BaseHead]
+  components:
+  - type: Sprite
+    state: head
+  - type: Icon
+    state: head
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmKidan
+  name: "left Kidan arm"
+  parent: [BaseKidanPart, BaseLeftArm]
+  components:
+  - type: Sprite
+    state: "l_arm"
+  - type: Icon
+    state: "l_arm"
+
+- type: entity
+  id: RightArmKidan
+  name: "right Kidan arm"
+  parent: [BaseKidanPart, BaseRightArm]
+  components:
+  - type: Sprite
+    state: "r_arm"
+  - type: Icon
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandKidan
+  name: "left Kidan hand"
+  parent: [BaseKidanPart, BaseLeftHand]
+  components:
+  - type: Sprite
+    state: "l_hand"
+  - type: Icon
+    state: "l_hand"
+
+- type: entity
+  id: RightHandKidan
+  name: "right Kidan hand"
+  parent: [BaseKidanPart, BaseRightHand]
+  components:
+  - type: Sprite
+    state: "r_hand"
+  - type: Icon
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegKidan
+  name: "left Kidan leg"
+  parent: [BaseKidanPart, BaseLeftLeg]
+  components:
+  - type: Sprite
+    state: "l_leg"
+  - type: Icon
+    state: "l_leg"
+
+- type: entity
+  id: RightLegKidan
+  name: "right Kidan leg"
+  parent: [BaseKidanPart, BaseRightLeg]
+  components:
+  - type: Sprite
+    state: "r_leg"
+  - type: Icon
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootKidan
+  name: "left Kidan foot"
+  parent: [BaseKidanPart, BaseLeftFoot]
+  components:
+  - type: Sprite
+    state: "l_foot"
+  - type: Icon
+    state: "l_foot"
+
+- type: entity
+  id: RightFootKidan
+  name: "right Kidan foot"
+  parent: [BaseKidanPart, BaseRightFoot]
+  components:
+  - type: Sprite
+    state: "r_foot"
+  - type: Icon
+    state: "r_foot"

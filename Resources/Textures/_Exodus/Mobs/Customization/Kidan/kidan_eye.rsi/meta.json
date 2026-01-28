@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "by Askolot (discord:788252896016990219), owned by Space Exodus. Source https://github.com/space-exodus/space-station-14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "empty_eyes",
+            "directions": 4
+        },
+        {
+            "name": "eye_l",
+            "directions": 4
+        },
+        {
+            "name": "eye_r",
+            "directions": 4
+        }
+    ]
+}

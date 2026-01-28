@@ -46,6 +46,9 @@ namespace Content.Shared.Humanoid
                 case SpeciesNaming.LastFirst: // DeltaV: Rodentia name scheme
                     return Loc.GetString("namepreset-lastfirst",
                         ("last", GetLastName(speciesProto)), ("first", GetFirstName(speciesProto, gender)));
+                case SpeciesNaming.FirstDashMiddleDashLast:
+                    return Loc.GetString("namepreset-firstdashmiddledashfirst",
+                        ("first", GetFirstName(speciesProto, gender)), ("middle", GetMiddleName(speciesProto)), ("last", GetLastName(speciesProto))); // Exodus-Kidans
                 case SpeciesNaming.FirstLast:
                 default:
                     return Loc.GetString("namepreset-firstlast",
@@ -57,21 +60,70 @@ namespace Content.Shared.Humanoid
         {
             switch (gender)
             {
+                // Exodus-Kidans-Start | Crutch to make localized datasets work along with just datasets
                 case Gender.Male:
-                    return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.MaleFirstNames).Values);
+                    {
+                        if (_prototypeManager.TryIndex<DatasetPrototype>(speciesProto.MaleFirstNames, out var dataset))
+                            return _random.Pick(dataset.Values);
+
+                        if (_prototypeManager.TryIndex<LocalizedDatasetPrototype>(speciesProto.MaleFirstNames, out var localizedDataset))
+                            return Loc.GetString(_random.Pick(localizedDataset.Values));
+
+                        throw new Exception($"Can't get prototype for MaleFirstNames of species prototype {speciesProto.ID}");
+                    }
                 case Gender.Female:
-                    return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleFirstNames).Values);
+                    {
+                        if (_prototypeManager.TryIndex<DatasetPrototype>(speciesProto.FemaleFirstNames, out var dataset))
+                            return _random.Pick(dataset.Values);
+
+                        if (_prototypeManager.TryIndex<LocalizedDatasetPrototype>(speciesProto.FemaleFirstNames, out var localizedDataset))
+                            return Loc.GetString(_random.Pick(localizedDataset.Values));
+
+                        throw new Exception($"Can't get prototype for FemaleFirstNames of species prototype {speciesProto.ID}");
+                    }
                 default:
                     if (_random.Prob(0.5f))
-                        return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.MaleFirstNames).Values);
+                    {
+                        if (_prototypeManager.TryIndex<DatasetPrototype>(speciesProto.MaleFirstNames, out var dataset))
+                            return _random.Pick(dataset.Values);
+
+                        if (_prototypeManager.TryIndex<LocalizedDatasetPrototype>(speciesProto.MaleFirstNames, out var localizedDataset))
+                            return Loc.GetString(_random.Pick(localizedDataset.Values));
+
+                        throw new Exception($"Can't get prototype for MaleFirstNames of species prototype {speciesProto.ID}");
+                    }
                     else
-                        return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleFirstNames).Values);
+                    {
+                        if (_prototypeManager.TryIndex<DatasetPrototype>(speciesProto.FemaleFirstNames, out var dataset))
+                            return _random.Pick(dataset.Values);
+
+                        if (_prototypeManager.TryIndex<LocalizedDatasetPrototype>(speciesProto.FemaleFirstNames, out var localizedDataset))
+                            return Loc.GetString(_random.Pick(localizedDataset.Values));
+
+                        throw new Exception($"Can't get prototype for FemaleFirstNames of species prototype {speciesProto.ID}");
+                    }
+                // Exodus-Kidans-End
             }
         }
 
         public string GetLastName(SpeciesPrototype speciesProto)
         {
-            return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.LastNames).Values);
+            // Exodus-Kidans-Start | Crutch to make localized datasets work along with just datasets
+            if (_prototypeManager.TryIndex<DatasetPrototype>(speciesProto.LastNames, out var dataset))
+                return _random.Pick(dataset.Values);
+
+            if (_prototypeManager.TryIndex<LocalizedDatasetPrototype>(speciesProto.LastNames, out var localizedDataset))
+                return Loc.GetString(_random.Pick(localizedDataset.Values));
+
+            throw new Exception($"Can't get prototype for LastNames of species prototype {speciesProto.ID}");
+            // Exodus-Kidans-End
         }
+
+        // Exodus-Kidans-Start
+        public string GetMiddleName(SpeciesPrototype speciesProto)
+        {
+            return Loc.GetString(_random.Pick(_prototypeManager.Index(speciesProto.MiddleNames).Values));
+        }
+        // Exodus-Kidans-End
     }
 }

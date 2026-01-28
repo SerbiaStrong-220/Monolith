@@ -1,0 +1,66 @@
+- type: microwaveMealRecipe
+  id: RecipeKidanBurger
+  name: kidan burger
+  result: FoodBurgerKidan
+  time: 10
+  group: Savory
+  reagents:
+    BbqSauce: 5
+  solids:
+    FoodBreadBun: 1
+    FoodTomato: 1
+    FoodMeatKidan: 1
+
+- type: microwaveMealRecipe
+  id: RecipeKidanStick
+  name: kidan on a stick
+  result: FoodMealKidanStick
+  time: 15
+  group: Savory
+  reagents:
+    Sugar: 5
+    Vinegar: 5
+  solids:
+    FoodMeatKidan: 1
+
+- type: microwaveMealRecipe
+  id: RecipeKidanWonTonBowl
+  name: WonTon
+  result: FoodKidanWonTonBowl
+  time: 20
+  group: Savory
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodPlate: 1
+    FoodDoughSlice: 3
+    FoodMeatKidanCutlet: 3
+
+- type: microwaveMealRecipe
+  id: RecipeKidanSoup
+  name: ground soup
+  result: FoodSoupKidan
+  time: 10
+  group: Soup
+  reagents:
+    Vinegar: 5
+    Water: 15
+  solids:
+    FoodBowlBig: 1
+    FoodMeatKidanCutlet: 1
+    FoodCarrot: 1
+    FoodLime: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCakeEyeKidan
+  name: eye cake
+  result: FoodCakeEyeKidan
+  time: 5
+  group: Cake 
+  reagents:
+    Wine: 15
+  solids:
+    FoodCakePlain: 1
+    OrganKidanEyes: 1
+

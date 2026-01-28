@@ -1,3 +1,4 @@
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -90,6 +91,11 @@ public sealed partial class SpeciesPrototype : IPrototype
     [DataField]
     public string LastNames { get; private set; } = "names_last";
 
+    // Exodus-Kidans-Start
+    [DataField]
+    public ProtoId<LocalizedDatasetPrototype> MiddleNames { get; private set; } = "NamesMiddleBase";
+    // Exodus-Kidans-End
+
     [DataField]
     public SpeciesNaming Naming { get; private set; } = SpeciesNaming.FirstLast;
 
@@ -131,4 +137,5 @@ public enum SpeciesNaming : byte
     TheFirstofLast,
     LastFirst, // DeltaV
     FirstDashLast, // Goobstation
+    FirstDashMiddleDashLast, // Exodus-Kidans
 }
