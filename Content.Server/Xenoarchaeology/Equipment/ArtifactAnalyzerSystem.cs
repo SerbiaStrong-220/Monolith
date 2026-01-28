@@ -1,5 +1,6 @@
 using Content.Server.Research.Systems;
 using Content.Server.Xenoarchaeology.Artifact;
+using Content.Server.Power.Components;
 using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
@@ -48,28 +49,28 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
     }
 
     // Frontier: reduce analyzer load when not running
-    private void SetPowerSwitch(ArtifactAnalyzerComponent analyzer, ApcPowerReceiverComponent apc, bool state)
+    /*private void SetPowerSwitch(ArtifactAnalyzerComponent analyzer, ApcPowerReceiverComponent apc, bool state)
     {
         if (state)
             apc.Load = analyzer.OriginalLoad;
         else
             apc.Load = 1;
-    }
+    }*/
     // End Frontier
 
     //MONO: Upgradeable scan speed
-    private void OnRefreshParts(EntityUid uid, ArtifactAnalyzerComponent component, RefreshPartsEvent args)
+    /*private void OnRefreshParts(EntityUid uid, ArtifactAnalyzerComponent component, RefreshPartsEvent args)
     {
         var rating = args.PartRatings[component.MachinePartDuration];
         component.AnalysisDuration = TimeSpan.FromSeconds(component.BaseAnalysisDuration.TotalSeconds * MathF.Pow(component.PartRatingDurationMultiplier, rating - 1));
-    }
+    } */
 
-    private void OnUpgradeExamine(EntityUid uid, ArtifactAnalyzerComponent component, ref UpgradeExamineEvent args)
+    /*private void OnUpgradeExamine(EntityUid uid, ArtifactAnalyzerComponent component, ref UpgradeExamineEvent args)
     {
         var displaypercent = (float)(component.AnalysisDuration.TotalSeconds / component.BaseAnalysisDuration.TotalSeconds);
 
         args.AddPercentageUpgrade("artifact-analyzer-upgrade-duration", displaypercent);
-    }
+    }*/
     //Mono end
 }
 

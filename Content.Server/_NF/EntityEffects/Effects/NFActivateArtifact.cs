@@ -1,4 +1,4 @@
-using Content.Server.Xenoarchaeology.XenoArtifacts;
+/*using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
@@ -35,3 +35,4 @@ public sealed partial class NFActivateArtifact : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         null;
 }
+*/
