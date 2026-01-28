@@ -248,7 +248,7 @@
     checkCanInteract: false
     checkConsciousness: false
     temporary: true
-    icon: { sprite: _NF/Objects/Tools/multitool.rsi, state: icon } # Frontier: separate sprites (add _NF folder)
+    icon: { sprite: Objects/Tools/multitool.rsi, state: icon } # Exodus-Resprite-Delete
     event: !type:ClearAllOverlaysEvent
 
 - type: entity

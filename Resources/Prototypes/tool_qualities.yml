@@ -38,7 +38,7 @@
   name: tool-quality-pulsing-name
   toolName: tool-quality-pulsing-tool-name
   spawn: Multitool
-  icon: { sprite: _NF/Objects/Tools/multitool.rsi, state: icon } # Frontier: separate sprites (add _NF folder)
+  icon: { sprite: Objects/Tools/multitool.rsi, state: icon } # Exodus-Resprite-Delete
 
 - type: tool
   id: Slicing
