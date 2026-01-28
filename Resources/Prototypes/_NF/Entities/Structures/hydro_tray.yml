@@ -8,7 +8,7 @@
     layers:
       # Exodus-Sprite-Start
       - sprite: Structures/Hydroponics/containers.rsi
-        state: hydrotrayanchored
+        state: hydrotray3
       # Exodus-Sprite-End
       - sprite: Structures/Hydroponics/overlays.rsi
         state: lowhealth3
