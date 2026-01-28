@@ -78,7 +78,7 @@
       - ReagentId: Blood
         Quantity: 10
   - type: BodyPart
-    organs: # posibrain is stored in the torso
+    organs:
       eyes:
         id: "eyes"
       glands:
