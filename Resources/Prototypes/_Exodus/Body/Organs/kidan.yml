@@ -69,6 +69,8 @@
     metabolismRateModifier: 1.5
   - type: Organ
     slotId: lungs
+  - type: Item
+    size: Small
 
 - type: entity
   id: OrganKidanLiver
@@ -118,6 +120,8 @@
     metabolismRateModifier: 1.5
   - type: Organ
     slotId: kidneys
+  - type: Item
+    size: Small
 
 - type: entity
   id: OrganKidanEyes
