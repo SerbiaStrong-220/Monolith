@@ -6,8 +6,10 @@
   components:
   - type: Sprite
     layers:
-      - sprite: Structures/Hydroponics/containers.rsi # Exodus-Sprite
+      # Exodus-Sprite-Start
+      - sprite: Structures/Hydroponics/containers.rsi
         state: hydrotrayanchored
+      # Exodus-Sprite-End
       - sprite: Structures/Hydroponics/overlays.rsi
         state: lowhealth3
         map: [ "health_alert" ]
