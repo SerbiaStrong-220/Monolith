@@ -1,3 +1,3 @@
-namespace Content.Client.Exodus.Kidan.Components;
+namespace Content.Client.Exodus.Species.Kidan.Components;
 [RegisterComponent]
 public sealed partial class KidanBrainComponent : Component { }
