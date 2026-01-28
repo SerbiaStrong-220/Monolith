@@ -17,6 +17,7 @@
   - type: Item
     size: Small
     heldPrefix: heart
+  - type: Heart
 
 - type: entity
   id: OrganKidanStomach
@@ -51,6 +52,8 @@
   - type: Item
     size: Small
     heldPrefix: stomach
+  - type: Organ
+    slotId: stomach
 
 - type: entity
   id: OrganKidanTrachealTubes
@@ -64,6 +67,8 @@
     - state: tracheal-tubes
   - type: Metabolizer
     metabolismRateModifier: 1.5
+  - type: Organ
+    slotId: lungs
 
 - type: entity
   id: OrganKidanLiver
@@ -83,6 +88,9 @@
   - type: Item
     size: Small
     heldPrefix: liver
+  - type: Organ
+    slotId: liver
+  - type: Liver
 
 - type: entity
   id: OrganKidanPheromoneGlands
@@ -93,6 +101,8 @@
   - type: Sprite
     sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
     state: pheromone-glands
+  - type: Organ
+    slotId: glands
 
 - type: entity
   id: OrganKidanKidneys
@@ -106,6 +116,8 @@
     - state: kidneys
   - type: Metabolizer
     metabolismRateModifier: 1.5
+  - type: Organ
+    slotId: kidneys
 
 - type: entity
   id: OrganKidanEyes
@@ -118,6 +130,9 @@
     layers:
     - state: eyeball-l
     - state: eyeball-r
+  - type: Organ
+    slotId: eyes
+  - type: Eyes
 
 - type: entity
   id: OrganKidanBrain
@@ -128,3 +143,6 @@
   - type: Sprite
     sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
     state: brain
+  - type: Organ
+    slotId: kidanbrain
+  - type: KidanBrain
