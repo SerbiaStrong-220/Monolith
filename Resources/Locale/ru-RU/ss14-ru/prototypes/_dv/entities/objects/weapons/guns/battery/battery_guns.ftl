@@ -1,6 +1,6 @@
-ent-WeaponEnergyGun = energy gun
-    .desc = A basic hybrid energy gun with two settings: disable and kill. On the handle is a label that says 'for authorized use only.'
-ent-WeaponCyborgEnergyGun = cyborg energy gun
-    .desc = A basic hybrid energy gun with two settings: disable and kill. Designed for cyborgs. On the handle is a label that says 'for authorized use only.'
-ent-WeaponEnergyGunMultiphase = LWC X-01 multiphase energy gun
-    .desc = This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time in exchange for a larger battery. On the handle is a label that says 'for authorized use only.'
+ent-WeaponEnergyGun = энергетическая пушка
+    .desc = Стандартная модель энергетической пушки, есть два режима: летальный и нелетальный. На рукоятке надпись: "только для авторизованного персонала"
+ent-WeaponCyborgEnergyGun = энергетическая пушка борга
+    .desc = Стандартная модель энергетической пушки, есть два режима: летальный и нелетальный. Спроектирован для использования боргом. На рукоятке надпись: "только для авторизованного персонала"
+ent-WeaponEnergyGunMultiphase = LWC X-01 мультифазовая энергетическая пушка
+    .desc = Глубокая модернизация антикварного лазера. Имеет несколько режимов стрельбы. Данная модель лишена функции самозарядки со временем в обмен на более ёмкую батарею. На рукоятке надпись: "только для авторизованного персонала"

@@ -1,4 +1,4 @@
-ent-WeaponRifleAK410 = NCI AK-410 (7.62x54mmR)
-    .desc = Bullpup DMR feeding from 762x54mmR magazines, developed to modernize USSP long-range infantry weapons.
-ent-WeaponRifleLeeEnfield = MI Lee Enfield Mk 98 (7.62x51mm)
-    .desc = Reliable 762x51mm sniper rifle, designed and produced by Militia Ironworks to fit modern standards sniper rifle.
+ent-WeaponRifleAK410 = AK-410
+    .desc = Марксманская винтовка компановки булл-пап, созданная в рамках программы модернизации вооружения СССП. Использует патроны калибра 7.62х54R.
+ent-WeaponRifleLeeEnfield = Ли-Энфилд МК98
+    .desc = Глубоко модернизированная старая снайперская винтовка. Использует патроны калибра 7.62х51мм.

@@ -1,2 +1,2 @@
-ent-WeaponLauncherMk348 = NT-WS Mk.348 "Hailstorm" directed kinetic pulse weapon
-    .desc = A bulky multi-barreled weapon firing 9x19mm. Ammo is fed via boxes, which is moved inside the gun to each respective barrel. Be glad you aren't the one having to maintain this awful mechanism.
+ent-WeaponLauncherMk348 = НТ-ВС МК348 "Слюда"
+    .desc = Многоствольное орудие, патроны к которому подаются напрямую из упаковок. Радуйтесь, что вам не приходится его чистить. Использует патроны калибра 9х19мм.
