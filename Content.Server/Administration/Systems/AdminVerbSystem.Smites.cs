@@ -948,6 +948,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<StutteringAccentComponent>(args.Target);
                 // Exodus-Accent-Add-Start
                 EnsureComp<BurrinessAccentComponent>(args.Target);
+                EnsureComp<KidanAccentComponent>(args.Target);
                 // Exodus-Accent-Add-End
 
                 if (_random.Next(0, 8) == 0)
