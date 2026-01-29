@@ -96,9 +96,6 @@ public sealed partial class ShuttleSystem
     private EntityQuery<FTLSmashImmuneComponent> _immuneQuery;
     private EntityQuery<StatusEffectsComponent> _statusQuery;
 
-    [Dependency] private readonly IEntityManager _entManager = default!; // Mono
-    [Dependency] private readonly IPrototypeManager _protManager = default!; // Mono
-
     private void InitializeFTL()
     {
         SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
