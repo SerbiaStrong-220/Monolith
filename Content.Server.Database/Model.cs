@@ -414,7 +414,9 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
+        [Obsolete("Removed by Exodus | Isn't removed due to DB migration")]
         public float Height { get; set; } = 1.0f;
+        [Obsolete("Removed by Exodus | Isn't removed due to DB migration")]
         public float Width { get; set; } = 1.0f;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
@@ -424,7 +426,7 @@ namespace Content.Server.Database
         public List<ProfileRoleLoadout> Loadouts { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
-        
+
         public string Company { get; set; } = "None";
 
         public int PreferenceId { get; set; }
@@ -651,6 +653,7 @@ namespace Content.Server.Database
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
+        public string ShortName { get; set; } = default!; // Mono
 
         public List<Admin> Admins { get; set; } = default!;
         public List<AdminRankFlag> Flags { get; set; } = default!;

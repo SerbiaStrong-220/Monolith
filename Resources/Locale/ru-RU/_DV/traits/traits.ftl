@@ -1,12 +1,12 @@
 trait-scottish-accent-name = Scottish accent
 trait-scottish-accent-desc = Fer tha folk who come frae Hielan clan.
-trait-ultravision-name = Ultraviolet vision
+trait-ultravision-name = Ультрафиолетовое зрение
 trait-ultravision-desc =
-    Whether through custom bionic eyes, random mutation,
-    or being a Harpy, you perceive the world with ultraviolet light.
-trait-deuteranopia-name = Deuteranopia
+    Благодаря специальным бионическим глазам, случайной мутации или тому,
+    что ваш персонаж Гарпия, вы видите мир в ультрафиолетовом свете.
+trait-deuteranopia-name = Дейтеранопия
 trait-deuteranopia-desc =
-    Whether through custom bionic eyes, random mutation,
-    or being a Vulpkanin, you have red�green colour blindness.
-trait-uncloneable-name = Uncloneable
-trait-uncloneable-desc = Cannot be cloned
+    Из-за неисправного импланта, случайной мутации,
+    или из-за того, что ваш персонаж Вульпканин, вы имеете цветовую слепоту красного и зеленого цвета.
+trait-uncloneable-name = Неклонируемый
+trait-uncloneable-desc = Не может быть клонирован

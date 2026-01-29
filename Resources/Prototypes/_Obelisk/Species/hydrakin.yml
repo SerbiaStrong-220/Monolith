@@ -5,7 +5,7 @@
 - type: species
   id: Hydrakin
   name: species-name-hydrakin
-  roundStart: true
+  roundStart: false # Exodus
   prototype: MobHydrakin
   sprites: MobHydrakinSprites
   defaultSkinTone: "#ffffff"

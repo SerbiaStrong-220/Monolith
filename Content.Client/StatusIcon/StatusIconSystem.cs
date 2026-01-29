@@ -3,7 +3,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Content.Shared.Stealth.Components;
+using Content.Shared.Exodus.Stealth; //Exodus-RefactorStealthSystem
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -21,6 +21,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private readonly SharedStealthSystem _stealth = default!; //Exodus-RefactorStealthSystem
 
     private bool _globalEnabled;
     private bool _localEnabled;
@@ -84,7 +85,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (data.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
             return false;
 
-        if (data.HideOnStealth && TryComp<StealthComponent>(ent, out var stealth) && stealth.Enabled)
+        if (data.HideOnStealth && !_stealth.IsVisible(ent.Owner)) //Exodus-RefactorStealthSystem
             return false;
 
         if (TryComp<SpriteComponent>(ent, out var sprite) && !sprite.Visible)

@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.Stealth;
+using Content.Client.Exodus.Stealth; //Exodus-RefactorStealthSystem
 using Content.Shared._White.Overlays;
 using Content.Shared.Body.Components;
-using Content.Shared.Stealth.Components;
+using Content.Shared.Exodus.Stealth.Components; //Exodus-RefactorStealthSystem
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -146,8 +146,7 @@ public sealed class ThermalVisionOverlay : Overlay
 
     private bool CanSee(EntityUid uid, SpriteComponent sprite)
     {
-        return sprite.Visible && (!_entity.TryGetComponent(uid, out StealthComponent? stealth) ||
-                                  _stealth.GetVisibility(uid, stealth) > 0.5f);
+        return sprite.Visible && (_stealth.GetVisibility(uid) > 0.5f); //Exodus-RefactorStealthSystem
     }
 
     public void ResetLight(bool checkFirstTimePredicted = true)

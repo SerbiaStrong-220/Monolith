@@ -1,4 +1,4 @@
-using Content.Shared.Stealth.Components;
+using Content.Shared.Exodus.Stealth.Components; //Exodus-RefactorStealthSystem
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

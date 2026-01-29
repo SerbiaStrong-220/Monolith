@@ -1,22 +1,20 @@
 ## UI
 
-ghost-respawn-rules-window-title = Ghost Respawn Rules
-ghost-respawn-rules-window-confirm-button = I understand, respawn me
-ghost-gui-respawn-button-denied = Respawn ({ $time }s)
-ghost-gui-respawn-button-allowed = Respawn
+ghost-respawn-rules-window-title = Правила новой жизни
+ghost-respawn-rules-window-confirm-button = Я прочитал и согласен с этим
+ghost-gui-respawn-button-denied = Возрождение ({ $time }s)
+ghost-gui-respawn-button-allowed = Возрождение
 ghost-respawn-rules-window-rules =
-    Respawning follows a strict New Life Rule:
-    No matter which character you decide to return as,
-    Forget the last 30 minutes before death.
-    Do not seek revenge or act on information related to your death
-    or the last 30 minutes. You may remember earlier events,
-    but may not return for your previous life’s items
-    or to the location of your death during an ongoing situation.
-    You may not respawn as the same character on an opposing faction.
-    Review the rules for more info.
-
+    При возрождении вы обязуетесь соблюдать правила новой жизни:
+    Не важно за какого персонажа вы зайдете после этого,
+    Вы ПОЛНОСТЬЮ забываете прошлую жизнь,
+    Но при этом можете помнить крупные или общие события, как наличие пиратов и наличие определённых важных ролей.
+    Попытки обойти эти ограничения, как например, попытка найти свое тело чтобы забрать снаряжение,
+    Будут считаться нарушением правила о мета информации и к вам будут применены санкции следуя из этого нарушения.
+    Также запрещено заходить за одного и того же персонажа за противоборствующие стороны,
+    Например, умерев будучи сотрудником Фаэтона возродиться и пойти уже работать за ТСФ.
 ## COMMMANDS
 
-ghost-respawn-command-desc = Respawns you if you're an eligible ghost.
-ghost-respawn-not-a-ghost = You're not currently ghosted.
-ghost-respawn-ineligible = You're not currently eligible
+ghost-respawn-command-desc = Позволяет вам возродиться если вы призрак.
+ghost-respawn-not-a-ghost = Сейчас вы не являетесь призраком.
+ghost-respawn-ineligible = В настоящее время вы не соответствуете требованиям для этого.

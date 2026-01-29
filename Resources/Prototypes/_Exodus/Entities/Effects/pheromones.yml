@@ -1,0 +1,32 @@
+- type: entity
+  id: PheromonesEffect
+  name: pheromones cloud
+  description: Someone created this message, who it could be?
+  components:
+  - type: Sprite
+    sprite: _Exodus/Effects/pheromones.rsi
+    state: pheromones
+  - type: Pheromones
+    text: "*Sigh*"
+  - type: Physics
+    bodyType: Static
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        layer:
+        - GasImpassable
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [SpaceCleaner, Acetone]
+      methods: [Touch]
+      effects:
+      - !type:DeleteEntityReaction

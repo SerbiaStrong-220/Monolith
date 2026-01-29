@@ -59,10 +59,18 @@
         Heat: 0.95
   - type: ClothingGrantComponent
     component:
-    - type: Stealth
-      minVisibility: 0.15 # Mono: Changed to be not fully invisible
-      maxVisibility: 0.6 # Mono: Changed to be partially invisible
-    - type: StealthOnMove
-      passiveVisibilityRate: -0.4
-      movementVisibilityRate: 0.4
+    #- type: Stealth
+    #  minVisibility: 0.15 # Mono: Changed to be not fully invisible
+    #  maxVisibility: 0.6 # Mono: Changed to be partially invisible
+    #- type: StealthOnMove
+    #  passiveVisibilityRate: -0.4
+    #  movementVisibilityRate: 0.4
+#Exodus-RefactorStealthSystem-Begin
+    - type: InstantStealth
+      stealth:
+        minVisibility: 0.15
+        maxVisibility: 0.6
+        passiveVisibilityRate: -0.4
+        movementVisibilityRate: 0.4
+#Exodus-RefactorStealthSystem-End
 

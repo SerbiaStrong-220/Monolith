@@ -318,9 +318,12 @@
   - type: Reflect # gigatroll, gotta use melee on these guys
     reflectProb: 0.95
     spread: 20
-  - type: Stealth
-    minVisibility: 0.3
-    maxVisibility: 0.4
+#Exodus - RefactorStealthSystem - Begin
+  - type: InstantStealth
+    stealth:
+      minVisibility: 0.3
+      maxVisibility: 0.4
+#Exodus - RefactorStealthSystem - End
   - type: Fixtures
     fixtures:
       fix1:

@@ -1,3 +1,7 @@
+//This system was commented out after the stealth system was refactored.
+//You can find it on the path "Content.Client/_Exodus/Stealth/Components/StealthComponent.cs"
+
+/*
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Stealth.Components
@@ -41,3 +45,4 @@ namespace Content.Shared.Stealth.Components
         // </Goobstation>
     }
 }
+*/

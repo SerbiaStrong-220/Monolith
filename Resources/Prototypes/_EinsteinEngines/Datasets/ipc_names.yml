@@ -1,7 +1,7 @@
 - type: dataset
   id: IpcFirst
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - АБЕКС
   - АНКЛ
   - АНТР
@@ -102,7 +102,7 @@
   - ЗУМА
   - ЗИЛО
   - ЗИВА
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: IpcLast

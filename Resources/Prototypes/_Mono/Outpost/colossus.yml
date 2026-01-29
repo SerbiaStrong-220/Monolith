@@ -9,6 +9,11 @@
   stations:
     Frontier:
       stationProto: StandardFrontierStation
+      gridComponents:
+      - type: VesselMusic
+        ambientMusicPrototype: ColossusCentralMusic
+      - type: VesselInfo
+        description: "The closest thing to civilisation in this sector. You almost feel safe."
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Colossus Central'
@@ -16,7 +21,7 @@
 #            !type:NanotrasenNameGenerator
 #            prefixCreator: '14'
         - type: ExtraStationInformation
-          iconPath: /Textures/_Mono/Logo/icon/icon-256x256.png # used the biggest one, looks better when downscaling than upscaling
+          iconPath: /Textures/_Exodus/Logo/icon/icon-256x256.png # used the biggest one, looks better when downscaling than upscaling
           stationSubtext: 'frontier-lobby-frontier-subtext'
           stationDescription: 'frontier-lobby-frontier-description'
           lobbySortOrder: 1

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Exodus.Stealth.Components;//Exodus-RefactorStealthSystem
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -56,6 +57,11 @@ public sealed partial class CardboardBoxComponent : Component
     /// </summary>
     [DataField("cooldownDuration")]
     public TimeSpan CooldownDuration = TimeSpan.FromSeconds(5f);
+
+    //Exodus-RefactorStealthSystem-Begin
+    [DataField("stealth")]
+    public StealthData? Stealth;
+    //Exodus-RefactorStealthSystem-End
 }
 
 [Serializable, NetSerializable]

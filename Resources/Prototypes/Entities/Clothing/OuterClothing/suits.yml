@@ -159,14 +159,23 @@
     parent: true
     components:
     # Goobstation - Proper invisibility
-    - type: Stealth
-      maxVisibility: 0.1
-      hadOutline: true
-    - type: StealthOnMove
-      invisibilityPenalty: 3
-      maxInvisibilityPenalty: 1.6
-      passiveVisibilityRate: -1 # cloak very fast
-      movementVisibilityRate: 0.15 # only some cloak if moving
+#    - type: Stealth
+#      maxVisibility: 0.1
+#      hadOutline: true
+#    - type: StealthOnMove
+#      invisibilityPenalty: 3
+#      maxInvisibilityPenalty: 1.6
+#      passiveVisibilityRate: -1 # cloak very fast
+#      movementVisibilityRate: 0.15 # only some cloak if moving
+#Exodus-RefactorStealthSystem-Begin
+    - type: InstantStealth
+      stealth:
+        maxVisibility: 0.1
+        movementVisibilityRate: 0.15
+        passiveVisibilityRate: -1
+        invisibilityPenalty: 3
+        maxInvisibilityPenalty: 1.6
+#Exodus-RefactorStealthSystem-End
   - type: PowerCellDraw
     drawRate: 1.8 # 200 seconds on the default cell
   - type: ToggleCellDraw

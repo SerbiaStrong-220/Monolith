@@ -7,8 +7,10 @@ using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Stealth;
-using Content.Shared.Stealth.Components;
+//Exodus-RefactorStealthSystem-Begin
+using Content.Shared.Exodus.Stealth;
+using Content.Shared.Exodus.Stealth.Components;
+//Exodus-RefactorStealthSystem-End
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -40,7 +42,29 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
+
+        SubscribeLocalEvent<CardboardBoxComponent, MapInitEvent>(OnMapInit);//Exodus-RefactorStealthSystem
+        SubscribeLocalEvent<CardboardBoxComponent, ComponentShutdown>(OnShutdown);//Exodus-RefactorStealthSystem
     }
+
+    //Exodus-RefactorStealthSystem-Begin
+    private void OnMapInit(EntityUid uid, CardboardBoxComponent component, MapInitEvent args)
+    {
+        if (component.Stealth == null)
+            return;
+
+        if (TryComp<EntityStorageComponent>(uid, out var storage) && storage.Open)
+            return;
+
+        _stealth.RequestStealth(uid, nameof(CardboardBoxSystem), component.Stealth);
+    }
+
+    private void OnShutdown(EntityUid uid, CardboardBoxComponent component, ComponentShutdown args)
+    {
+        if (component.Stealth != null)
+            _stealth.RemoveRequest(nameof(CardboardBoxSystem), uid);
+    }
+    //Exodus-RefactorStealthSystem-End
 
     private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
     {
@@ -93,17 +117,23 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageAfterOpenEvent args)
     {
         // If this box has a stealth/chameleon effect, disable the stealth effect while the box is open.
-        _stealth.SetEnabled(uid, false);
+        //Exodus-RefactorStealthSystem-Begin
+        if (component.Stealth != null)
+        {
+            _stealth.RemoveRequest(nameof(CardboardBoxSystem), uid);
+        }
+        //Exodus-RefactorStealthSystem-End
     }
 
     private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, ref StorageAfterCloseEvent args)
     {
         // If this box has a stealth/chameleon effect, enable the stealth effect.
-        if (TryComp(uid, out StealthComponent? stealth))
+        //Exodus-RefactorStealthSystem-Begin
+        if (component.Stealth != null)
         {
-            _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
-            _stealth.SetEnabled(uid, true, stealth);
+            _stealth.RequestStealth(uid, nameof(CardboardBoxSystem), component.Stealth);
         }
+        //Exodus-RefactorStealthSystem-End
     }
 
     //Relay damage to the mover

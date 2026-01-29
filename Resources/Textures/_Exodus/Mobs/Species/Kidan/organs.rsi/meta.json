@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "by Askolot (discord:788252896016990219), owned by Space Exodus. Source https://github.com/space-exodus/space-station-14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "brain"
+        },
+        {
+            "name": "eyeball-l"
+        },
+        {
+            "name": "eyeball-r"
+        },
+        {
+            "name": "kidneys"
+        },
+        {
+            "name": "liver"
+        },
+        {
+            "name": "pheromone-glands"
+        },
+        {
+            "name": "stomach"
+        },
+        {
+            "name": "tracheal-tubes"
+        },
+        {
+            "name": "heart",
+            "delays": [
+                [
+                    0.3,
+                    0.12,
+                    0.12
+                ]
+            ]
+        }
+    ]
+}

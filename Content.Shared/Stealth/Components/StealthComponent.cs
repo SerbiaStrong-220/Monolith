@@ -1,4 +1,7 @@
-using Robust.Shared.GameStates;
+//This system was commented out after the stealth system was refactored.
+//You can find it on the path "Content.Client/_Exodus/Stealth/Components/StealthComponent.cs"
+
+/*using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -103,3 +106,4 @@ public sealed class StealthComponentState : ComponentState
         Enabled = enabled;
     }
 }
+*/

@@ -1,22 +1,16 @@
-contraband-price-gun-pricing-result =
-    The device deems { THE($object) } to be worth { $price ->
-        [0] no FMCs.
-        [one] { $price } FMC.
-       *[other] { $price } FMCs.
-    }
-contraband-price-gun-verb-text = Appraisal
-contraband-price-gun-verb-message = Appraise { THE($object) }.
-contraband-price-gun-pricing-result-none = The device deems { THE($object) } to be worth no FMCs.
-pirate-contraband-price-gun-pricing-result =
-    Skizzit's says { THE($object) } { $price ->
-        [0] isn't worth any data chits.
-        [one] is worth { $price } data chit.
-       *[other] is worth { $price } data chits.
-    }
-pirate-contraband-price-gun-verb-text = Appraisal
-pirate-contraband-price-gun-verb-message = Appraise { THE($object) }.
-pirate-contraband-price-gun-pricing-result-none = Skizzit's doesn't have an entry for { THE($object) }.
-medical-price-gun-pricing-result = The device claims { THE($object) } has an open bounty for { $price }.
-medical-price-gun-verb-text = Check bounty
-medical-price-gun-verb-message = Check bounties on { THE($object) }.
-medical-price-gun-pricing-result-none = The device claims { THE($object) } does not have a bounty.
+contraband-price-gun-pricing-result = Устройство показывает, что { $object } оценивается в { $price } ФКВ.
+contraband-price-gun-verb-text = Оценка предмета
+contraband-price-gun-verb-message = Оценить  { $object }.
+contraband-price-gun-pricing-result-none = Устройство показывает, что { $object } не имеет цены в ТК.
+pirate-contraband-price-gun-pricing-result = Железка говорит, что { $object } {$price ->
+    [0] не стоит ни одного ДЧ!
+    [one] стоит {$price} ДЧ.
+    *[other] стоит {$price} ДЧ.
+}
+pirate-contraband-price-gun-verb-text = Оценка
+pirate-contraband-price-gun-verb-message = Оценить {$object}.
+pirate-contraband-price-gun-pricing-result-none = Железка не знает ничего о {$object}.
+medical-price-gun-pricing-result = Устройство показывает, что { $object } оценивается в { $price }.
+medical-price-gun-verb-text = Оценка предмета
+medical-price-gun-verb-message = Оценить { $object }.
+medical-price-gun-pricing-result-none = Устройство показывает, что { $object } не имеет цены.

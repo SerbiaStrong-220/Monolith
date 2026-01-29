@@ -160,7 +160,7 @@ namespace Content.Client.PDA
                 {
                     PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner-with-company",
                         ("actualOwnerName", _pdaOwner),
-                        ("companyName", state.PdaOwnerInfo.CompanyName),
+                        ("companyName", Loc.GetString(state.PdaOwnerInfo.CompanyName)), // Ru-Localization
                         ("companyColor", state.PdaOwnerInfo.CompanyColor.ToHex())));
                 }
                 else

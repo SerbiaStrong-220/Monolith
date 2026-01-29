@@ -36,7 +36,7 @@ namespace Content.YAMLLinter
             {
                 foreach (var errorNode in errorHashset)
                 {
-                    Console.WriteLine($"::error file={file},line={errorNode.Node.Start.Line},col={errorNode.Node.Start.Column}::{file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
+                    Console.WriteLine($"::error file= Resources{file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})\n      Error: {errorNode.ErrorReason}"); // Exodus | I'm tired that I can't just Ctrl+RMB to the error from my terminal!
                 }
             }
 

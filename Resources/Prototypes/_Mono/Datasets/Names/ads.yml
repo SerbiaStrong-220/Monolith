@@ -1,17 +1,17 @@
 - type: dataset
   id: MonoRemnantBorgTitle
   values:
-  - АДМ # Ru-Locale
+  - АДМ # Ru-Localization
 
 - type: dataset
   id: MonoRemnantCoreTitle
   values:
-  - АДЦ # Ru-Locale
+  - АДЦ # Ru-Localization
 
 - type: dataset
   id: MonoRemnantAdjective
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Фиолетовый
   - Красный
   - Пурпурный
@@ -36,12 +36,12 @@
   - Призрачный
   - Пронзающий
   - Стеклянный
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: MonoRemnantNoun
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Меч
   - Страйдер
   - Курьер
@@ -68,12 +68,12 @@
   - Призрак
   - Линза
   - Пророк
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: MonoRemnantModifier
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Помощник
   - Соединение
   - Механизм
@@ -98,4 +98,4 @@
   - Процесс
   - Сервопривод
   - Черта
-  # Ru-Locale-End
+  # Ru-Localization-End

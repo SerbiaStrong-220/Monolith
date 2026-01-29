@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "by Askolot (discord:788252896016990219), owned by Space Exodus",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "kidans0",
+            "delays": [
+                [
+                    0.3,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "kidans1"
+        },
+        {
+            "name": "kidans2"
+        },
+        {
+            "name": "kidans3",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.05,
+                    0.05,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

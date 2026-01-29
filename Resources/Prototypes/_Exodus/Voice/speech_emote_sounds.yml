@@ -1,0 +1,40 @@
+# species
+- type: emoteSounds
+  id: UnsexedKidan
+  params:
+    variation: 0.125
+  sounds:
+    Sneeze:
+      collection: KidanSneeze
+    Cough:
+      collection: KidanCough
+    Scream:
+      collection: KidanScream
+    Laugh:
+      collection: KidanLaugh
+    Sigh:
+      collection: KidanSigh
+    Crying:
+      collection: KidanCry
+    Grumble:
+      collection: KidanGrumble
+    WigglesAntennae:
+      collection: KidanWigglesAtennae
+    WavesAntennaeSharply:
+      collection: KidanWavesAntennaeSharply
+    JawsSnap:
+      collection: KidanJawsSnap
+    Yawn:
+      collection: KidanYawn
+    Whistle:
+      collection: KidanWhistle
+    Groan:
+      collection: KidanGroan
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: KidanGasp
+    DefaultDeathgasp:
+      collection: KidanDeathGasp

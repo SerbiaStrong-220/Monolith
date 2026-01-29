@@ -9,16 +9,15 @@ chat-radio-engineering = Инженерный
 chat-radio-medical = Медицинский
 chat-radio-science = Научный
 chat-radio-security = Безопасность
-chat-radio-service = Сервис
+chat-radio-service = Аванпост
 chat-radio-supply = Снабжение
 chat-radio-syndicate = Синдикат
-chat-radio-freelance = Фриланс
+chat-radio-freelance = Фаэтон
 # not headset but whatever
 chat-radio-handheld = Портативный
 chat-radio-binary = Двоичный
 chat-radio-xenoborg = Ксеноборги
 chat-radio-mothership = Материнский корабль
-chat-radio-vanguard-command = Vanguard Command
-
+chat-radio-vanguard-command = Командование Фаэтон
 # not headset but whatever
 

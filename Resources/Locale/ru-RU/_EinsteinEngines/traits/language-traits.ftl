@@ -1,47 +1,24 @@
 # This file is only for the language traits. If we add species-specific languages to the list of traits,
 # we should add them here in the order they are in the list, for organization. Maybe add more languages later.
 
-trait-category-languages = Languages
-trait-language-foreigner-light-name = Foreigner Light
-trait-language-foreigner-light-desc =
-    You understand the common language, Andromeda Standard Basic, but you can't quite speak it yet.
-    You have a translator to help you with your basic understanding of the language, better keep it charged.
-trait-language-foreigner-name = Foreigner
-trait-language-foreigner-desc =
-    You can't understand the common language, Andromeda Standard, and you require a translator at all times to talk.
-    You have a translator to help you with your understanding and speaking, make sure to keep it charged.
-trait-language-signlanguage-name = Sign Language
-trait-language-signlanguage-desc =
-    The use of body language, hand signs, and other forms of dexterous movements to get your point across.
-    You can understand and use Andromeda Standard Basic Sign Language (TCB-SL).
-    If you are mute for any reason, you can still communicate with sign language.
-trait-language-solcommon-name = Sol Common
-trait-language-solcommon-desc =
-    With its roots in Mandarin Chinese - Common evolved as the official language of the Trans-Solar Federation - with officials working to tie it together with a common tongue.
-    It's spoken by state officials, the armed forces, by those who either feel a sense of national pride in the Federation or otherwise fell sway to the culture.
-trait-language-tradeband-name = Tradeband
-trait-language-tradeband-desc =
-    Descended from latin and romance languages of old Earth - Tradeband remains the main tongue of the upper class of humanity.
-    The language sounds elegant and well structured to most ears. It remains in popular use with traders - diplomats - and those seeking to hold onto a piece of a romantic past.
-trait-language-freespeak-name = Asher
-trait-language-freespeak-desc =
-    A rarely heard language outside of the colossus sector, developed over time through isolation from the main systems and lost colonies abandoned to die on this edge of civilized space.
-    Usually equated to slurred speach, relying more on tone to have the words mean something.
-trait-language-elyran-name = Elyran
-trait-language-elyran-desc = Constructed using elements of Farsi - Arabic - and Turkish - influence from all three of these languages can be seen throughout its grammar and vocabulary.
-trait-language-valyrianstandard-name = Valyrian Standard
-trait-language-valyrianstandard-desc =
-    A language descended from eastern european languages of old earth - Valyrian Standard is the commonly spoken tongue of Harpies brought up on their homeworld of Valyrian 4b
-    It is rarely spoken outside of the worlds of its native speakers, and has in modern times been supplanted by the 'Conlangs of the Trans-Solar Federation.
-    Its speakers are those who wish to uphold the traditions and beliefs of ancient peoples from before the colonial era.
-trait-language-novunederic-name = Novu-Nederic
-trait-language-novunederic-desc =
-    Once the language of seafarers and merchants, now the voice of spacers, terraformers, and pioneers.
-    Spoken in the New-Netherlands, this direct and pragmatic trade language carries the sharp consonants and clipped vowels of its old-world roots.
-    Built on centuries of seafaring, land reclamation, and commerce, it thrives among those who shape entire worlds — just as their ancestors shaped the land from the sea.
-trait-language-azaziba-name = Sinta'Azaziba
-trait-language-azaziba-desc =
-    A language of Moghes consisting of a combination of spoken word and gesticulation.
-    While waning since Moghes entered the galactic stage - it enjoys popular use by Unathi that never fell to the Hegemony's cultural dominance.
-trait-language-SiikMaas-name = Siik'maas
-trait-language-SiikMaas-desc = The ancient religious tongue of the Tajara, now the most widely spoken and taught language on Adhomai.
+trait-category-languages = Языки
+trait-language-foreigner-name = Чужестранец
+trait-language-foreigner-desc = Вы не понимаете общий язык, Стандарт Андромеды, и для общения вам постоянно требуется переводчик. У вас есть переводчик для понимания и речи, не забывайте его заряжать.
+trait-language-signlanguage-name = Язык жестов
+trait-language-signlanguage-desc = Язык жестов «Тау-Кита Бейсик». Сокращённо — TKB-ЯЖ. Этот язык жестов широко распространён среди немых и глухих людей.
+trait-language-solcommon-name = Общесолнечный
+trait-language-solcommon-desc = Уходящий корнями в китайский, Общесолнечный стал официальным языком Транс Солнечной Федерации - объединяющим все колонии. На нём говорят чиновники, его преподают в школах, и используют те, кто чувствует связь с ТСФ.
+trait-language-tradeband-name = Трейдбэнд
+trait-language-tradeband-desc = Происходящий от латыни и романских языков древней Земли, Трейдбэнд остаётся основным языком человеческой элиты. Для большинства слушателей он звучит элегантно и стройно. Он сохраняет популярность среди торговцев, дипломатов и тех, кто стремится удержать в руках осколок романтического прошлого.
+trait-language-freespeak-name = Ашер
+trait-language-freespeak-desc = Язык, редко слышимый за пределами сектора «Колосс», развившийся в изоляции от основных систем и среди потерянных колоний, брошенных умирать на этой окраине цивилизованного пространства. Его обычно приравнивают к невнятной речи, где смысл слов зависит больше от тона, чем от чёткого произношения.
+trait-language-elyran-name = Элиранский
+trait-language-elyran-desc = Сконструированный с использованием элементов фарси, арабского и турецкого языков. Влияние всех трёх языков прослеживается в его грамматике и лексике.
+trait-language-valyrianstandard-name = Валирийский
+trait-language-valyrianstandard-desc = Язык, произошедший от восточноевропейских языков древней Земли, — Валирийский является общеупотребительной речью гарпий, выросших на своей родной планете Валирия-4b. За пределами миров его коренных носителей на нём почти не говорят, и в современную эпоху он был вытеснен «конлангами» Транс-Солнечной Федерации. Его носители — те, кто стремится сохранить традиции и верования древних народов доколониальной эры.
+trait-language-novunederic-name = Ново-Недирик
+trait-language-novunederic-desc = Язык космических колонистов и терраформистов, сохранивший резкие согласные своих земных корней. Популярен среди тех, кто осваивает новые миры.
+trait-language-azaziba-name = Синта-Азазиба
+trait-language-azaziba-desc = Родной язык асакимов, представляющий собой сочетание устной речи и жестикуляции.
+trait-language-SiikMaas-name = Сиик'маас
+trait-language-SiikMaas-desc = Древний религиозный язык таяр, ныне наиболее распространённый и изучаемый язык Адхомаи.

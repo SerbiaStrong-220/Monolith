@@ -1,27 +1,27 @@
 - type: dataset
   id: MonoPDVBorgNameset
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Юнит Авангард
   - Миротворец
   - Сентинел
   - Защитник Династии
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: MonoTSFBorgNameset
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Федеративный Синтет
   - Образец подражания
   - Сержант Безрассудство
   - Судья
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: VesselCoreNameset
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Стивен
   - Робин
   - Алекс
@@ -30,12 +30,12 @@
   - Стив
   - Кира
   - Вар:Тим
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: TSFMCCoreNameset
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Смотритель
   - Блюститель
   - Робокоп
@@ -43,12 +43,12 @@
   - КМПТСФ.exe
   - Сторожевой Пёс
   - Юнит
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: PDVCoreNameset
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - НАДСмотрщик
   - Позитроник
   - Обломок
@@ -56,12 +56,12 @@
   - ДФ.sh
   - Манул
   - Экземпляр
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 - type: dataset
   id: MonoRemnantShipNameset # eventually this will have a use... randommetadata component dont work with grids though...
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - ADS-Мерцание
   - ADS-Орион
   - ADS-Простор
@@ -88,7 +88,7 @@
   - ADS-Прижигатель
   - ADS-Уклонение
   - ADS-Задержание
-  # Ru-Locale-End
+  # Ru-Localization-End
 
 # base stats for faction borgs
 

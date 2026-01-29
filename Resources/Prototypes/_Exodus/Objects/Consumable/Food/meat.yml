@@ -1,0 +1,128 @@
+- type: entity
+  name: raw kidan meat
+  parent: FoodMeat
+  id: FoodMeatKidan
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan
+  - type: RotInto
+    entity: FoodMeatKidanRotten
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatKidanCutlet
+  - type: Construction
+    graph: KidanSteak
+    node: start
+    defaultTarget: kidan steak
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 15
+
+- type: entity
+  name: kidan cooked tenderloin
+  parent: FoodMeatCooked
+  id: FoodMeatKidanCooked
+  description: Nutritionists recommend.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    layers:
+    - state: kidan-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Protein
+          Quantity: 30
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatKidanCutletCooked
+  - type: Construction
+    graph: KidanSteak
+    node: kidan steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatKidanBurger
+      Taco: KidanMeat
+
+- type: entity
+  name: rotten kidan meat
+  parent: FoodMeatRotten
+  id: FoodMeatKidanRotten
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan-rotten
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Mold
+          Quantity: 15
+
+- type: entity
+  name: raw kidan cutlet
+  id: FoodMeatKidanCutlet
+  parent: FoodMeatCutlet
+  description: Practically does not smell.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan-cutlet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: Construction
+    graph: KidanCutlet
+    node: start
+    defaultTarget: kidan cutlet
+
+- type: entity
+  name: kidan cooked cutlet
+  parent: FoodMeatBase
+  id: FoodMeatKidanCutletCooked
+  description: They say the meat contains a magic potion. It will make you the strongest wizard in the world.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan-cutlet-cooked
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Protein
+          Quantity: 10
+  - type: Construction
+    graph: KidanCutlet
+    node: kidan cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: KidanCutlet
+      Taco: KidanCutlet

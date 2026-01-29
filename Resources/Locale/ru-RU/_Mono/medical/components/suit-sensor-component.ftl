@@ -1,7 +1,7 @@
-suit-sensor-signature-toggle = { $status } radar signature
-suit-sensor-signature-toggled-off = Radar signature disabled!
-suit-sensor-signature-toggled-on = Radar signature enabled!
-suit-sensor-signature-examine-off = Its radar signature is toggled off.
-suit-sensor-signature-examine-on = Its radar signature is toggled on.
-suit-sensor-signature-verb-disable = Disable
-suit-sensor-signature-verb-enable = Enable
+suit-sensor-signature-toggle = { $status } сигнатуру на радаре
+suit-sensor-signature-toggled-off = Сигнатура на радаре отключена!
+suit-sensor-signature-toggled-on = Сигнатура на радаре включена!
+suit-sensor-signature-examine-off = Его сигнатура на радаре отключена.
+suit-sensor-signature-examine-on = Его сигнатура на радаре включена.
+suit-sensor-signature-verb-disable = Отключить
+suit-sensor-signature-verb-enable = Включить

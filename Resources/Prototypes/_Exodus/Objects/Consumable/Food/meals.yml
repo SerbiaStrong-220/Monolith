@@ -1,0 +1,55 @@
+- type: entity
+  name: kidan on a stick
+  parent: FoodMealBase
+  id: FoodMealKidanStick
+  description: Skewered pieces of meat. It looks delicious until you don't know whose meat has been cooked.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/meal.rsi
+    state: bbq-meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
+  name: WonTon
+  parent: FoodBowlBase
+  id: FoodKidanWonTonBowl
+  description: Are you sure it's oriental?
+  components:
+    - type: FlavorProfile
+      flavors:
+        - greedily
+    - type: Food
+      trash:
+        - FoodPlate
+      utensil:
+        - Spoon
+        - Fork
+    - type: Sprite
+      sprite: _Exodus/Objects/Consumable/Food/meal.rsi
+      state: kidan-wonton
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 35
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 10
+            - ReagentId: Protein
+              Quantity: 20
+    - type: Tag
+      tags:
+      - Meat

@@ -1,1 +1,1 @@
-borg-select-subtype-flavour-text = Available subtypes:
+borg-select-subtype-flavour-text = Доступные варианты:

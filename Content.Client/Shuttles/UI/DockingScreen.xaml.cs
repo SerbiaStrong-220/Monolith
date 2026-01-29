@@ -157,7 +157,7 @@ public sealed partial class DockingScreen : BoxContainer
                 continue;
 
             // Use the pressed button state to update indicators
-            lockIndicator.Text = enabled ? "LOCKED" : "UNLOCKED";
+            lockIndicator.Text = enabled ? Loc.GetString("shuttle-console-dock-state-locked") : Loc.GetString("shuttle-console-dock-state-unlocked"); // Ru-Localization
             lockIndicator.FontColorOverride = enabled ? Color.Red : Color.Green;
         }
     }
@@ -337,7 +337,7 @@ public sealed partial class DockingScreen : BoxContainer
             }
 
             // Update the lock indicator
-            lockIndicator.Text = isLocked ? "LOCKED" : "UNLOCKED";
+            lockIndicator.Text = isLocked ? Loc.GetString("shuttle-console-dock-state-locked") : Loc.GetString("shuttle-console-dock-state-unlocked"); // Ru-Localization
             lockIndicator.FontColorOverride = isLocked ? Color.Red : Color.Green;
         }
     }
@@ -376,7 +376,7 @@ public sealed partial class DockingScreen : BoxContainer
             idx++;
             dockText.Clear();
 
-            dockText.Append(dock.LabelName ?? dock.Name);
+            dockText.Append(dock.LabelName ?? Loc.GetString("shuttle-console-dock-label", ("idx", idx + 1))); // Ru-Localization
 
             // Create a BoxContainer to hold button text and lock indicator
             var buttonContainer = new BoxContainer
@@ -413,8 +413,9 @@ public sealed partial class DockingScreen : BoxContainer
                 // Add a lock icon/indicator for the connected grid
                 var lockIndicator = new Label
                 {
-                    Text = isLocked ? "LOCKED" : "UNLOCKED",
+                    Text = isLocked ? Loc.GetString("shuttle-console-dock-state-locked") : Loc.GetString("shuttle-console-dock-state-unlocked"), // Ru-Localization
                     HorizontalAlignment = Control.HAlignment.Right,
+                    Align = Label.AlignMode.Right, // Ru-Localization
                     VerticalAlignment = Control.VAlignment.Center,
                     Margin = new Thickness(2f, 0f),
                     FontColorOverride = isLocked ? Color.Red : Color.Green,

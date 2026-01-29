@@ -1,4 +1,4 @@
-mono-monolithic-event-fragment-start-announcement = Notice: Detecting unidentified data stream from local area of space. Likely constitutes the appearance of an anomalous space-time fragment. Be advised.
-mono-monolithic-event-fragment-warning-announcement = Warning, subspace signatures detected around the monolithic fragment.
-mono-monolithic-event-fragment-end-announcement = Notice: The monolithic fragment has dissapeared from trackers. Await further notice.
-mono-monolithic-event-name-MonolithicFragment = #$!@$[Monolithic Fragment]%$^$#
+mono-monolithic-event-fragment-start-announcement = Внимание всем экипажам шаттла. В районе данного сектора был обнаружен сигнал неизвестной природы, возможно, это след космической аномалии. Будьте осторожны и рекомендуем вам избегать возможный источник данного сигнала.
+mono-monolithic-event-fragment-warning-announcement = Внимание, вокруг источника сигнала неизвестной природы зафиксированы подпространственные сигнатурные изменения, будьте осторожны.
+mono-monolithic-event-fragment-end-announcement = Внимание, источника сигнал неизвестной природы более не виден по показаниям наших приборов. Рекомендуется повышенная бдительность и осторожность в зоне где он ранее фиксировался.
+mono-monolithic-event-name-MonolithicFragment = #$!@$[Фрагмент Монолита]%$^$#

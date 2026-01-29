@@ -70,13 +70,14 @@
   components:
   - type: Organ
     onAdd:
-    - type: Stealth
-      enabledOnDeath: false
-      minVisibility: 0.2
-      maxVisibility: 0.9
-    - type: StealthOnMove
-      passiveVisibilityRate: -0.25
-      movementVisibilityRate: 0.28
+#Exodus - RefactorStealthSystem - Begin
+    - type: InstantStealth
+      stealth:
+        minVisibility: 0.2
+        maxVisibility: 0.9
+        passiveVisibilityRate: -0.25
+        movementVisibilityRate: 0.28
+#Exodus - RefactorStealthSystem - End
     - type: PointLight # Mono
       radius: 1.2
       energy: 5

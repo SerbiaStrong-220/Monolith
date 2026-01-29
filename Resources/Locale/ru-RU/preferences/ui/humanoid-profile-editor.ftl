@@ -26,7 +26,7 @@ humanoid-profile-editor-spawn-priority-label = Приоритет спавна:
 humanoid-profile-editor-eyes-label = Цвет глаз:
 humanoid-profile-editor-jobs-tab = Должности
 humanoid-profile-editor-preference-unavailable-stay-in-lobby-button = Остаться в лобби, если должность недоступна.
-humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Получить должность "{ $overflowJob }", если должность недоступна.
+humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Начать на доступной должности, если приоритетная недоступна.
 humanoid-profile-editor-preference-jumpsuit = Комбинезон
 humanoid-profile-editor-preference-jumpskirt = Юбка-комбинезон
 humanoid-profile-editor-preference-backpack = Рюкзак
@@ -65,17 +65,19 @@ humanoid-profile-editor-mindset-chaoticallyangry-text = Хаотично-зло�
 trait-category-disabilities = Ограничения
 trait-category-speech = Черты речи
 trait-category-quirks = Причуды
-humanoid-profile-editor-clear-all-traits-button = Clear All Traits
-trait-category-physical = Physical
-humanoid-profile-editor-width-label = Width:
+humanoid-profile-editor-clear-all-traits-button = Сбросить все черты
+trait-category-physical = Физические
+expand-all-trait-button = Показать все
+collapse-all-trait-button = Скрыть
+humanoid-profile-editor-width-label = Ширина:
 
 # Mono End
 
-humanoid-profile-editor-traits-default-category = Uncategorized
-humanoid-profile-editor-clear-all-traits-confirm = Confirm Clear
-humanoid-profile-editor-height-label = Height:
-humanoid-profile-editor-company-tab = Company
-humanoid-profile-editor-company-label = Company:
-
+humanoid-profile-editor-traits-default-category = Без категории
+humanoid-profile-editor-clear-all-traits-confirm = Подтвердить сброс
+humanoid-profile-editor-height-label = Рост:
+humanoid-profile-editor-company-tab = Компания
+humanoid-profile-editor-company-label = Компания:
+humanoid-profile-editor-company-none = Нет
 # Traits
 

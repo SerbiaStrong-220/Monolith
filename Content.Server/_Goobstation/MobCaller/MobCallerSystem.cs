@@ -66,6 +66,12 @@ public sealed partial class MobCallerSystem : EntitySystem
             )
                 continue;
 
+            caller.SpawnAccumulator += TimeSpan.FromSeconds(frameTime);
+            if (caller.SpawnAccumulator < caller.SpawnSpacing)
+                continue;
+
+            caller.SpawnAccumulator -= caller.SpawnSpacing;
+
             // prune spawned entities list
             // has to be for-loop and not foreach since we may modify it on the fly
             for (var i = 0; i < caller.SpawnedEntities.Count; i++)

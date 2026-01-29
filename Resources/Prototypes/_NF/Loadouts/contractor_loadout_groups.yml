@@ -759,6 +759,7 @@
   - ContractorClothingEyesPunkInfoShades # Punkish (Randomized visuals)
   - ContractorClothingEyesEyepatchHudDiag
   - ContractorClothingEyesEyepatchHudMedical
+  - ContractorClothingEyesHudChemMed # Exodus-Better-Med-Hud
 
 - type: loadoutGroup
   id: ContractorUtility # Right Hand - 1 only

@@ -1,2 +1,2 @@
-department-PMC-description = Combat focused contractors, who have less restrictions on gear they can carry.
-department-Medical-description = Emergency medical responders, deployed across space for rapid aid and rescue.
+department-PMC-description = Контрактники, на которых распространяется меньше ограничений по боевому снаряжению.
+department-Medical-description = Сотрудники службы неотложной медицинской помощи, дислоцированные в космическом пространстве с целью оказания оперативной помощи и проведения спасательных операций.

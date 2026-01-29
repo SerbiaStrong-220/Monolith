@@ -10,17 +10,17 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-honk"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-honk"] # Ru-Localization-Start
   chatTriggers:
     - honk
     - honks
     - honking
     - honked
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - хонк
     - хонкнул
     - хонкает
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: HarpyRing
@@ -33,16 +33,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-ring"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-ring"] # Ru-Localization-Start
   chatTriggers:
     - ring
     - rings
     - ringing
     - ringed
     - rang
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - звонит
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: HarpyPew
@@ -55,14 +55,14 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-pew"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-pew"] # Ru-Localization-Start
   chatTriggers:
     - pew
     - pews
     - pewpew
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - пиу
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: HarpyBang
@@ -75,16 +75,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-bang"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-bang"] # Ru-Localization-Start
   chatTriggers:
     - bang
     - bangs
     - banging
     - banged
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - пау
     - паф
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: HarpyBeep
@@ -97,17 +97,17 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-beep"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-beep"] # Ru-Localization-Start
   chatTriggers:
     - beep
     - beeps
     - beeping
     - beeped
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - бип
     - бипает
     - бипают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: HarpyRev
@@ -120,16 +120,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-rev"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-rev"] # Ru-Localization-Start
   chatTriggers:
     - rev
     - revs
     - revving
     - revved
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - вжикает
     - вжикают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: HarpyCaw
@@ -142,16 +142,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-caw"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-caw"] # Ru-Localization-Start
   chatTriggers:
     - caw
     - caws
     - cawing
     - cawed
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - каркает
     - каркают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 #Vulpkanin
 - type: emote
@@ -165,16 +165,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-bark"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-bark"] # Ru-Localization-Start
   chatTriggers:
     - bark
     - barks
     - barked
     - barking
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - гавкает
     - гавкают
-    # RU-Localization-End
+    # Ru-Localization-End
 
 
 - type: emote
@@ -188,16 +188,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-snarl"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-snarl"] # Ru-Localization-Start
   chatTriggers:
     - snarl
     - snarls
     - snarled
     - snarling
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - рычит
     - рычат
-    # RU-Localization-End
+    # Ru-Localization-End
 
 - type: emote
   id: Whine
@@ -210,16 +210,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-whine"] # RU-Localization-Start
+  chatMessages: ["chat-emote-msg-whine"] # Ru-Localization-Start
   chatTriggers:
     - whine
     - whines
     - whined
     - whining
-    # RU-Localization-Start
+    # Ru-Localization-Start
     - скулит
     - скулят
-    # RU-Localization-End
+    # Ru-Localization-End
 
 
 - type: emote

@@ -3,7 +3,7 @@
 - type: dataset
   id: names_rodentia_last
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Agile
   - Beady-eyed
   - Berry-picking
@@ -91,4 +91,4 @@
   - Trash-eating
   - Tunnel-building
   - Whisker-twitching
-  # Ru-Locale-End
+  # Ru-Localization-End

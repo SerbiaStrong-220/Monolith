@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "by Askolot (discord: 788252896016990219), owned by Space Exodus",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "kidan-cake"
+    },
+    {
+      "name": "kidan-cake-slice"
+    }
+  ]
+}

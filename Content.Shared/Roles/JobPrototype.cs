@@ -98,7 +98,7 @@ namespace Content.Shared.Roles
         /// Nyano/DV: For e.g. prisoners, they'll never use their latejoin spawner.
         /// </summary>
         [DataField("alwaysUseSpawner")]
-        public bool AlwaysUseSpawner { get; } = false;
+        public bool AlwaysUseSpawner { get; private set; } = false;
 
         /// <summary>
         ///     The "weight" or importance of this job. If this number is large, the job system will assign this job
@@ -169,6 +169,14 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField]
         public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+        // Exodus-Salary-Start
+        [DataField]
+        public int Salary = 0;
+
+        [DataField]
+        public TimeSpan SalaryInterval = TimeSpan.FromMinutes(20);
+        // Exodus-Salary-End
     }
 
     /// <summary>

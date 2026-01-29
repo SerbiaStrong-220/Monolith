@@ -1,7 +1,7 @@
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Stealth.Components;
+using Content.Shared.Exodus.Stealth; //Exodus-RefactorStealthSystem
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -12,6 +12,7 @@ public sealed class WhistleSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedStealthSystem _stealth = default!; //Exodus-RefactorStealthSystem
 
     public override void Initialize()
     {
@@ -44,13 +45,11 @@ public sealed class WhistleSystem : EntitySystem
 
     private void MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
-        StealthComponent? stealth = null;
-
         foreach (var iterator in
             _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
             //Avoid pinging invisible entities
-            if (TryComp(iterator, out stealth) && stealth.Enabled)
+            if (!_stealth.IsVisible(iterator.Owner)) //Exodus-RefactorStealthSystem
                 continue;
 
             //We don't want to ping user of whistle

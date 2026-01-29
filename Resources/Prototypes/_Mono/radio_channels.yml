@@ -1,7 +1,7 @@
 - type: radioChannel
   id: Ussp
   name: chat-radio-ussp
-  keycode: 'p'
+  keycode: 'у' # Ru-Localization
   frequency: 1723
   color: "#b2224b"
   longRange: true
@@ -17,20 +17,20 @@
 - type: radioChannel
   id: Letoferol
   name: chat-radio-letoferol
-  keycode: 'l'
+  keycode: 'л' # Ru-Localization
   color: "#fcba03"
   longRange: true
 
 - type: radioChannel
   id: CorticalBorer
   name: chat-radio-cortical-borer
-  keycode: 'z'
+  keycode: 'б' # Ru-Localization
   color: "#d842fc"
   longRange: true
 
 - type: radioChannel
   id: Remnants
   name: chat-radio-remnants
-  keycode: 'j'
+  keycode: 'з' # Ru-Localization
   color: "#21b0a4"
   longRange: true

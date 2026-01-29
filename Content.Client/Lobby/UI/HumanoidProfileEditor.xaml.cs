@@ -362,34 +362,6 @@ namespace Content.Client.Lobby.UI
 
             #endregion SpawnPriority
 
-            #region Height
-
-            HeightSlider.OnValueChanged += args =>
-            {
-                SetHeight((float)args.Value);
-            };
-
-            HeightResetButton.OnPressed += _ =>
-            {
-                ResetHeight();
-            };
-
-            #endregion Height
-
-            #region Width
-
-            WidthSlider.OnValueChanged += args =>
-            {
-                SetWidth((float)args.Value);
-            };
-
-            WidthResetButton.OnPressed += _ =>
-            {
-                ResetWidth();
-            };
-
-            #endregion Width
-
             #region Eyes
 
             EyeColorPicker.OnEyeColorPicked += newColor =>
@@ -467,7 +439,7 @@ namespace Content.Client.Lobby.UI
             // Add to TSF company dropdown
             for (var i = 0; i < companies.Count; i++)
             {
-                CompanyButton.AddItem(companies[i].Name, i);
+                CompanyButton.AddItem(Loc.GetString(companies[i].Name), i); // Ru-Localization
                 //Logger.Debug($"Added company to dropdown: {i} - {companies[i].ID} - {companies[i].Name}");
             }
 
@@ -1189,8 +1161,6 @@ namespace Content.Client.Lobby.UI
             UpdateGenderControls();
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
-            UpdateHeightControls();
-            UpdateWidthControls();
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
@@ -1592,6 +1562,22 @@ namespace Content.Client.Lobby.UI
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
+                // Exodus-Kidans-Start
+                case HumanoidSkinColor.KidanChitin:
+                {
+                    if (!RgbSkinColorContainer.Visible)
+                    {
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = SkinColor.ClosestKidanColor(_rgbSkinColorSelector.Color);
+
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
+                // Exodus-Kidans-End
             }
 
             ReloadProfilePreview();
@@ -1712,32 +1698,6 @@ namespace Content.Client.Lobby.UI
         {
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
             SetDirty();
-        }
-
-        private void SetHeight(float newHeight)
-        {
-            Profile = Profile?.WithCharacterAppearance(Profile.Appearance.WithHeight(newHeight));
-            SetDirty();
-            ReloadPreview();
-        }
-
-        private void ResetHeight()
-        {
-            SetHeight(1.0f);
-            UpdateHeightControls();
-        }
-
-        private void SetWidth(float newWidth)
-        {
-            Profile = Profile?.WithCharacterAppearance(Profile.Appearance.WithWidth(newWidth));
-            SetDirty();
-            ReloadPreview();
-        }
-
-        private void ResetWidth()
-        {
-            SetWidth(1.0f);
-            UpdateWidthControls();
         }
 
         public bool IsDirty
@@ -1887,6 +1847,20 @@ namespace Content.Client.Lobby.UI
                         break;
                     }
                 // Goobstation Section End - Tajaran
+                // Exodus-Kidans-Start
+                case HumanoidSkinColor.KidanChitin:
+                    {
+                        if (!RgbSkinColorContainer.Visible)
+                        {
+                            Skin.Visible = false;
+                            RgbSkinColorContainer.Visible = true;
+                        }
+
+                        _rgbSkinColorSelector.Color = SkinColor.ClosestKidanColor(Profile.Appearance.SkinColor);
+
+                        break;
+                    }
+                // Exodus-Kidans-End
             }
 
         }
@@ -1940,26 +1914,6 @@ namespace Content.Client.Lobby.UI
             }
 
             SpawnPriorityButton.SelectId((int) Profile.SpawnPriority);
-        }
-
-        private void UpdateHeightControls()
-        {
-            if (Profile == null)
-            {
-                return;
-            }
-
-            HeightSlider.Value = Profile.Appearance.Height;
-        }
-
-        private void UpdateWidthControls()
-        {
-            if (Profile == null)
-            {
-                return;
-            }
-
-            WidthSlider.Value = Profile.Appearance.Width;
         }
 
         private void UpdateHairPickers()
@@ -2254,7 +2208,7 @@ namespace Content.Client.Lobby.UI
                 // Also reset the profile's company to None if the current one is disabled
                 if (_prototypeManager.TryIndex<CompanyPrototype>(Profile.Company, out var companyProto) && companyProto.Disabled)
                 {
-                    Profile = Profile.WithCompany("None");
+                    Profile = Profile.WithCompany(Loc.GetString("humanoid-profile-editor-company-none")); // Ru-Localization
                 }
             }
         }

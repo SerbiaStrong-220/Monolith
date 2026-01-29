@@ -1,0 +1,12 @@
+- type: entity
+  id: ActionPheromones
+  name: Pheromones
+  description: Spread your pheromones and ecrypt hidden message within it, only kidans like you can see and read it
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityWorldTargetAction
+    useDelay: 600
+    icon: { sprite: _Exodus/Interface/Actions/kidans.rsi, state: pheromones }
+    itemIconStyle: NoItem
+    priority: -11
+    event: !type:TryMarkWithPheromonesEvent {}

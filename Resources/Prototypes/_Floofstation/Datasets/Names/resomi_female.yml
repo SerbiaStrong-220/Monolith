@@ -1,7 +1,7 @@
 - type: dataset
   id: names_resomi_female
   values:
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Эалия
   - Ширема
   - Натани
@@ -52,4 +52,4 @@
   - Ралека
   - Ширема
   - Ниалеа
-  # Ru-Locale-End
+  # Ru-Localization-End

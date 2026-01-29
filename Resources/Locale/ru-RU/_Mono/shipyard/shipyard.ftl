@@ -1,2 +1,2 @@
-shipyard-direction-message = Your { $shipName } is relatively located { $distance } meter(s) to the { $direction }!
-ship-access-denied = You need the ship's deed to access this.
+shipyard-direction-message = Ваш { $shipName } расположен на расстоянии { $distance } метров, направление - { $direction }!
+ship-access-denied = Вам нужен доступ шаттла для этого.

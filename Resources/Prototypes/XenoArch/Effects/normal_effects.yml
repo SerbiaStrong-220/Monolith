@@ -294,12 +294,13 @@
   targetDepth: 2
   effectHint: artifact-effect-hint-visual
   components:
-  - type: Stealth
-    hadOutline: true
-    minVisibility: -1 # Goobstation - Proper invisibility
-  - type: StealthOnMove
-    passiveVisibilityRate: -0.10
-    movementVisibilityRate: 0.10
+#Exodus-RefactorStealthSystem-Begin
+    - type: InstantStealth
+      stealth:
+        passiveVisibilityRate: -0.1
+        movementVisibilityRate: 0.1
+        minVisibility: -1
+#Exodus-RefactorStealthSystem-End
 
 - type: artifactEffect
   id: EffectExplosionScary

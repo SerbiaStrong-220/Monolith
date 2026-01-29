@@ -17,7 +17,7 @@ chat-manager-no-radio-key = Не задан ключ канала!
 chat-manager-no-such-channel = Нет канала с ключём '{ $key }'!
 chat-manager-whisper-headset-on-message = Вы не можете шептать в радио!
 chat-manager-server-wrap-message = [bold]{ $message }[/bold]
-chat-manager-sender-announcement = Центральное командование
+chat-manager-sender-announcement = Секториальной Службы Оповещения
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]Объявление { $sender }:[/font][font size=12]
     { $message }[/bold][/font]
 chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{ $entityName }[/Name][/bold][/BubbleHeader] { $verb }, [font={ $fontType } size={ $fontSize } ]"[BubbleContent]{ $message }[/BubbleContent]"[/font]
@@ -130,7 +130,7 @@ chat-speech-verb-wawa-3 = объявляет
 chat-speech-verb-wawa-4 = размышляет
 chat-manager-too-much-special-characters = В вашем сообщении слишком много специальных символов!
 chat-manager-restricted-special-characters = Ваше сообщение содержит запрещённые специальные символы!
-chat-manager-send-collective-mind-chat-wrap-message = { $channel } collective mind: { $message }
-chat-manager-send-collective-mind-chat-wrap-message-admin = { $source } ({ $channel } collective mind): { $message }
-chat-manager-collective-mind-channel-name = collective mind
+chat-manager-send-collective-mind-chat-wrap-message = { $channel } телепатия: { $message }
+chat-manager-send-collective-mind-chat-wrap-message-admin = { $source } ({ $channel } телепатия): { $message }
+chat-manager-collective-mind-channel-name = телепатия
 chat-manager-send-hook-dead-wrap-message = ADMIN: [bold](DC) { $senderName }:[/bold] { $message }

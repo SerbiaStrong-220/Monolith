@@ -1,7 +1,7 @@
 - type: dataset
   id: names_tajaran_last
   values: # Randomly generated based on https://github.com/ParadiseSS13/Paradise/blob/5b516c3166a07cd10d035be1616248ba126e31a1/code/modules/mob/language.dm
-  # Ru-Locale-Start
+  # Ru-Localization-Start
   - Аасириррхэ
   - Аравах
   - Азуфарджри
@@ -37,4 +37,4 @@
   - Жан-Хазан
   - Ххарар
   - Нджарир'Ахан
-  # Ru-Locale-End
+  # Ru-Localization-End

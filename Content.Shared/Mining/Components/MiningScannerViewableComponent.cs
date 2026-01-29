@@ -1,9 +1,10 @@
+// Exodus-MiningScannerRefactor
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mining.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(MiningScannerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(MiningScannerViewerSystem))]
 public sealed partial class MiningScannerViewableComponent : Component;
 
 [Serializable, NetSerializable]

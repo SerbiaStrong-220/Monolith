@@ -1,3 +1,7 @@
+//This system was commented out after the stealth system was refactored.
+//You can find it on the path "Content.Client/_Exodus/Stealth/Systems/SharedStealhSystem.cs"
+
+/*
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
 using Content.Shared.Stealth.Components;
@@ -224,3 +228,4 @@ public abstract class SharedStealthSystem : EntitySystem
         }
     }
 }
+*/

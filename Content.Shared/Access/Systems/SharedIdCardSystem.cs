@@ -151,6 +151,22 @@ public abstract class SharedIdCardSystem : EntitySystem
         return true;
     }
 
+    // Exodus-Salary-Start: Fix IdCardComponent.JobPrototype property
+    /// <remarks>
+    /// Only changes JobPrototype in id card. To update job title use TryChangeJobTitle
+    /// </remarks>
+    public bool TryChangeJob(EntityUid uid, JobPrototype proto, IdCardComponent? id = null)
+    {
+        if (!Resolve(uid, ref id))
+            return false;
+
+        id.JobPrototype = proto;
+        Dirty(uid, id);
+
+        return true;
+    }
+    // Exodus-Salary-End
+
     public bool TryChangeJobIcon(EntityUid uid, JobIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
