@@ -94,7 +94,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
         if (early)
         {
-            AudioSystem.Stop(crusher.CrushingSoundEntity?.Item1, crusher.CrushingSoundEntity?.Item2);
+            AudioSystem.Stop(crusher.CrushingSoundEntity);
             crusher.CrushingSoundEntity = null;
         }
 

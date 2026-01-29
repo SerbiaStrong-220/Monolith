@@ -24,17 +24,21 @@ public sealed class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
         var map = _transform.GetMap(args.Coordinates);
         if (map == null || !TryComp<MapGridComponent>(grid, out var gridComp))
             return;
+        Log.Info("XAECreateGasSystem: OnActivated");
 
         var tile = _map.LocalToTile(grid.Value, gridComp, args.Coordinates);
 
         var mixtures = new ValueList<GasMixture>();
         if (_atmosphere.GetTileMixture(grid.Value, map.Value, tile, excite: true) is { } localMixture)
             mixtures.Add(localMixture);
+        Log.Info($"XAECreateGasSystem: Found local mixture");
 
         if (_atmosphere.GetAdjacentTileMixtures(grid.Value, tile, excite: true) is var adjacentTileMixtures)
         {
+            Log.Info("XAECreateGasSystem: Getting adjacent mixtures");
             while (adjacentTileMixtures.MoveNext(out var adjacentMixture))
             {
+                Log.Info("XAECreateGasSystem: Found adjacent mixture");
                 mixtures.Add(adjacentMixture);
             }
         }
@@ -45,6 +49,7 @@ public sealed class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
 
             foreach (var mixture in mixtures)
             {
+                Log.Info($"XAECreateGasSystem: Adjusting mixture: Adding {molesPerMixture} moles of gas {gas}");
                 mixture.AdjustMoles(gas, molesPerMixture);
             }
         }

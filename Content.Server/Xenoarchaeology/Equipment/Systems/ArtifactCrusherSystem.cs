@@ -36,23 +36,23 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         SubscribeLocalEvent<ArtifactCrusherComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnGetVerbs(Entity<ArtifactCrusherComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(EntityUid uid, ArtifactCrusherComponent comp, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Crushing)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || comp.Crushing)
             return;
 
-        if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) ||
+        if (!TryComp<EntityStorageComponent>(uid, out var entityStorageComp) ||
             entityStorageComp.Contents.ContainedEntities.Count == 0)
             return;
 
-        if (!this.IsPowered(ent, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return;
 
         var verb = new AlternativeVerb
         {
             Text = Loc.GetString("artifact-crusher-verb-start-crushing"),
             Priority = 2,
-            Act = () => StartCrushing((ent, ent.Comp, entityStorageComp))
+            Act = () => StartCrushing((uid, comp, entityStorageComp))
         };
         args.Verbs.Add(verb);
     }
@@ -76,7 +76,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
-        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent);
+        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent)?.Entity;
         Appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
         Dirty(ent, ent.Comp1);
     }
