@@ -45,6 +45,21 @@
         Quantity: 10
       - ReagentId: Blood
         Quantity: 20
+  - type: BodyPart
+    organs:
+      kidanbrain:
+        id: "kidanbrain"
+      heart:
+        id: "heart"
+      lungs:
+        id: "lungs"
+      stomach:
+        id: "stomach"
+      liver:
+        id: "liver"
+      kidneys:
+        id: "kidneys"
+
 
 - type: entity
   id: HeadKidan
@@ -62,6 +77,12 @@
         Quantity: 5
       - ReagentId: Blood
         Quantity: 10
+  - type: BodyPart
+    organs:
+      eyes:
+        id: "eyes"
+      glands:
+        id: "glands"
 
 - type: entity
   id: LeftArmKidan

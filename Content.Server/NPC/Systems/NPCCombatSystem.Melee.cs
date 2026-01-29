@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
 using Content.Shared.CombatMode;
 using Content.Shared.NPC;
 using Robust.Shared.Map;
@@ -10,7 +11,7 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
-    private const float TargetMeleeLostRange = 14f;
+    // private const float TargetMeleeLostRange = 14f; // Exodus: FUCK WIZDEN, I WASTED 8 HOURS OF DEBUGGING TO FIND OUT THAT THIS SHIT IS HARDCODED IN ANOTHER LOGIC DUPLICATE
 
     private void InitializeMelee()
     {
@@ -79,11 +80,21 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (distance > TargetMeleeLostRange)
+        // Exodus-Start: unhardcode agro radius constant but hardcode HTN component, fair exchange
+        if (!TryComp<HTNComponent>(uid, out var htn))
         {
             component.Status = CombatStatus.TargetUnreachable;
             return;
         }
+
+        var visionRadius = htn.Blackboard.GetValueOrDefault<float>(htn.Blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
+
+        if (distance > visionRadius)
+        {
+            component.Status = CombatStatus.TargetUnreachable;
+            return;
+        }
+        // Exodus-End
 
         if (TryComp<NPCSteeringComponent>(uid, out var steering) &&
             steering.Status == SteeringStatus.NoPath)

@@ -1,0 +1,104 @@
+# Ctrl C + Ctrl V from MeleeCombatCompound
+# modifier for leviathan
+
+- type: htnCompound
+  id: LeviathanCompound
+  branches:
+  - tasks:
+      - !type:HTNCompoundTask
+        task: LeviathanMeleeCombatCompound
+  - tasks:
+      - !type:HTNCompoundTask
+        task: FollowCompound
+  - tasks:
+      - !type:HTNCompoundTask
+        task: IdleCompound
+
+- type: htnCompound
+  id: LeviathanMeleeCombatCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyLeviathanMeleeTargets
+        - !type:HTNCompoundTask
+          task: LeviathanBeforeMeleeAttackTargetCompound
+
+- type: htnCompound
+  id: LeviathanBeforeMeleeAttackTargetCompound
+  branches:
+    - preconditions:
+        - !type:BuckledPrecondition
+          isBuckled: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UnbuckleOperator
+            shutdownState: TaskFinished
+
+    - preconditions:
+        - !type:PulledPrecondition
+          isPulled: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UnPullOperator
+            shutdownState: TaskFinished
+
+    - preconditions:
+        - !type:InContainerPrecondition
+          isInContainer: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: EscapeCompound
+
+    - tasks:
+        - !type:HTNCompoundTask
+          task: LeviathanMeleeAttackTargetCompound
+
+- type: utilityQuery
+  id: NearbyLeviathanMeleeTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+
+# Tries to melee attack our target.
+- type: htnCompound
+  id: LeviathanMeleeAttackTargetCompound
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            brakeMaxVelocity: null # Monolith - don't try to brake
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
+        - !type:HTNPrimitiveTask
+          operator: !type:MeleeOperator
+            targetKey: Target
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          services:
+            - !type:UtilityService
+              id: MeleeService
+              proto: NearbyLeviathanMeleeTargets
+              key: Target

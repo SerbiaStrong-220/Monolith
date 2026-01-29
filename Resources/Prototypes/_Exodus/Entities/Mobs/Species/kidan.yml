@@ -10,6 +10,7 @@
     species: Kidan
   - type: Hunger
   - type: Thirst
+  - type: KidanAccent
   - type: Butcherable
     butcheringType: Spike
     spawned:

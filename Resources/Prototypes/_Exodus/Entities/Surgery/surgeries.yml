@@ -1,0 +1,29 @@
+- type: entity
+  parent: SurgeryInsertBrain
+  id: SurgeryInsertKidanBrain
+  name: Insert Kidan Brain
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryOrganSlotCondition
+    organSlot: kidanbrain
+  - type: SurgeryOrganCondition
+    organ:
+    - type: KidanBrain
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryRemoveKidanBrain
+  name: Remove Kidan Brain
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepClampInternalBleeders
+    - SurgeryStepRemoveOrgan
+  - type: SurgeryPartCondition
+    part: Torso
+  - type: SurgeryOrganCondition
+    organ:
+    - type: KidanBrain

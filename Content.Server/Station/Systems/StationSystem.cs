@@ -524,6 +524,22 @@ public sealed class StationSystem : EntitySystem
 
         return null;
     }
+
+    // Exodus: Easy way to get specific station from outside systems
+    public EntityUid? GetStationById(string id)
+    {
+        var query = EntityQueryEnumerator<BecomesStationComponent, MapGridComponent>();
+
+        while (query.MoveNext(out var uid, out var station, out _))
+        {
+            if (station.Id == id)
+            {
+                return uid;
+            }
+        }
+
+        return null;
+    }
 }
 
 /// <summary>
