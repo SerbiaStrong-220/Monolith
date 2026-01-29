@@ -350,6 +350,8 @@ public abstract partial class SharedMoverController : VirtualController
         // Ensures that players do not spiiiiiiin
         PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
 
+        UpdateTailedMob(uid, frameTime); // Exodus-TailedMobs
+
         // Handle footsteps at the end
         if (wishDir != Vector2.Zero)
         {
