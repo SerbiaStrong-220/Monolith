@@ -1,4 +1,4 @@
-gunnery-window-title = Консоль контроля корабельных орудий
+gunnery-window-title = Консоль контроля орудий
 gunnery-window-disconnected = ОТКЛЮЧЕНО
 gunnery-window-connected = ПОДКЛЮЧЕНО
 gunnery-select-all = Выбрать все

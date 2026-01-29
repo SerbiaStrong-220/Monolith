@@ -64,25 +64,25 @@ salvage-dungeon-mod-snowy-labs = Снежная лаборатория
 salvage-dungeon-mod-experiment = Эксперимент
 salvage-dungeon-mod-haunted = Призраки
 salvage-dungeon-mod-mineshaft = Шахта
-salvage-expedition-type-Destruction = Destruction
+salvage-expedition-type-Destruction = Уничтожение
 salvage-expedition-desc-structure =
     { $count ->
-        [one] Destroy { $count } { $structure }.
-       *[other] Destroy { $count } { MAKEPLURAL($structure) }.
+        [one] Уничтожьте { $count } { $structure }.
+       *[other] Уничтожьте { $count } { $structure }.
     }
-salvage-expedition-window-claimed = Claimed
-salvage-expedition-type-Elimination = Elimination
-salvage-expedition-difficulty-Minor = Minor
-salvage-expedition-desc-mining = Collect resources inside the area.
+salvage-expedition-window-claimed = Выбрано
+salvage-expedition-type-Elimination = Устранение
+salvage-expedition-difficulty-Minor = Низкая
+salvage-expedition-desc-mining = Соберите все ресурсы в назначенной области.
 
 #  You will be taxed {$tax}% of the resources collected.
 
-salvage-expedition-desc-elimination = Kill a large and dangerous creature.
+salvage-expedition-desc-elimination = Убейте мегафауну в этой зоне.
 
 # End Frontier
 
-salvage-expedition-type-Mining = Mining
-salvage-expedition-window-rewards = Rewards:
-salvage-expedition-window-claim = Claim
-salvage-expedition-difficulty-Minimal = Minimal
-salvage-expedition-megafauna-remaining = { $count } targets remaining.
+salvage-expedition-type-Mining = Копание
+salvage-expedition-window-rewards = Награда:
+salvage-expedition-window-claim = Выбрать
+salvage-expedition-difficulty-Minimal = Минимальная
+salvage-expedition-megafauna-remaining = Осталось { $count } мегафауны.

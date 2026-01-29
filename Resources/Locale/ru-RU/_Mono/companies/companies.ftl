@@ -1,6 +1,7 @@
 # Lobby
-company-lobby-menu = [color=white] Компания:[/color] [color={ $color }]{ $name }[/color]
-company-lobby-menu-none = [color=white] Компания:[/color] [color=yellow]{ $id }[/color]
+company-lobby-menu = [color=white]Компания:[/color] [color={ $color }]{ $name }[/color]
+company-lobby-menu-none = [color=white]Компания:[/color] [color=yellow]{ $id }[/color]
+company-card-examine = [color={ $color }]{ $name }[/color]
 # Admin companies
 winter-solstice-name = Зимнее Солнцестояние
 winter-solstice-description =  Все три ветви корпуса военной полиции Транс-Солнечной Федерации подчиняются единому высшему командованию Федерации, известному как "Зимнее Солнцестояние".
@@ -66,3 +67,9 @@ viper-group-description = Ранее каперская компания, упр
 
 cerberus-surplus-name = Церберус
 cerberus-surplus-provisions = "Церберус" - это теневая компания, происходящая ИЗ Династии Фаэтон. Из своей "подпольной" штаб-квартиры проводят различные операции в преступном мире на пользу Династии Фаэтона посредством торговли любыми незаконными веществами, оружием или оборудованием, которые они могут выменять или найти. Компания сохраняет своё самоуважение, поддерживая сильный и гостеприимный публичный имидж для потенциальных покупателей и деловых партнёров. "Церберус" будет иметь дело с любым, кто готов заключить сделку со змеёй.
+
+none-name = Нет
+tsf-name = ТСФ
+pdv-name = Авангард Династии Фаэтон
+med-name = МЕД
+colonial-name = Сотрудники Аванпост
