@@ -50,24 +50,9 @@
         - !type:HTNCompoundTask
           task: EscapeCompound
 
-    # Pickup weapon if we don't have one.
-    - preconditions:
-        - !type:ActiveHandComponentPrecondition
-            components:
-              # Just serializer things
-              - type: MeleeWeapon
-                damage:
-                  types:
-                    Blunt: 0
-            invert: true
-      tasks:
-        - !type:HTNCompoundTask
-          task: PickupMeleeCompound
-
-    # Melee combat (unarmed or otherwise)
     - tasks:
         - !type:HTNCompoundTask
-          task: MeleeAttackTargetCompound
+          task: LeviathanMeleeAttackTargetCompound
 
 - type: utilityQuery
   id: NearbyLeviathanMeleeTargets
@@ -82,7 +67,38 @@
     - !type:TargetHealthCon
       curve: !type:PresetCurve
         preset: TargetHealth
-    # - !type:TargetAccessibleCon
-    #   curve: !type:BoolCurve
-    # - !type:TargetInLOSOrCurrentCon
-    #   curve: !type:BoolCurve
+
+# Tries to melee attack our target.
+- type: htnCompound
+  id: LeviathanMeleeAttackTargetCompound
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            brakeMaxVelocity: null # Monolith - don't try to brake
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
+        - !type:HTNPrimitiveTask
+          operator: !type:MeleeOperator
+            targetKey: Target
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          services:
+            - !type:UtilityService
+              id: MeleeService
+              proto: NearbyLeviathanMeleeTargets
+              key: Target

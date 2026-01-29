@@ -14,7 +14,6 @@
     energy: 3
   - type: TailedEntity
     amount: 65
-    speed: 13
     spacing: 1
     prototype: SpaceWhaleSegment
   - type: MovementSpeedModifier
@@ -37,7 +36,7 @@
       AggroVisionRadius: !type:Single
         1000
       RotateSpeed: !type:Single
-        2
+        3.141
     rootTask:
       task: LeviathanCompound
   - type: NpcFactionMember
