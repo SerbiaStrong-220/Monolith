@@ -39,8 +39,10 @@ public sealed class SpaceBiomeTextOverlay : Overlay
     public SpaceBiomeTextOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _font = _cache.GetFont("/Fonts/Iceberg/Iceberg-Regular.ttf", 25);
-        _descriptionfont = _cache.GetFont("/Fonts/Iceberg/Iceberg-Regular.ttf", 15);
+        // Exodus-Locale-Start
+        _font = _cache.GetFont("/Fonts/IMFellEnglish-Regular.otf", 25);
+        _descriptionfont = _cache.GetFont("/Fonts/IMFellEnglish-Regular.otf", 15);
+        // Exodus-Locale-End
     }
 
     public void Reset()
