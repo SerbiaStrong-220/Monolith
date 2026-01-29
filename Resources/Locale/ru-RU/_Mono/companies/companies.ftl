@@ -72,4 +72,4 @@ none-name = Нет
 tsf-name = ТСФ
 pdv-name = Авангард Династии Фаэтон
 med-name = МЕД
-colonial-name = Сотрудники Аванпост
+colonial-name = Сотрудник Аванпоста
