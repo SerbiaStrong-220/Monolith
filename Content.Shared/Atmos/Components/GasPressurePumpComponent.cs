@@ -4,7 +4,7 @@ using Content.Shared.Atmos.Piping.Binary.Components; // Frontier
 
 namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GasPressurePumpComponent : Component
 {
     [DataField, AutoNetworkedField]

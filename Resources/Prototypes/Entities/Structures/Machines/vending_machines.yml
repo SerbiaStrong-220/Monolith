@@ -918,7 +918,7 @@
     color: "#9dc5c9"
   - type: GuideHelp
     guides:
-    - MedicalDoctor
+    - Medical Doctor
 
 - type: entity
   parent: VendingMachine

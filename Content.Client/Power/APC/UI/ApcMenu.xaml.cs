@@ -11,7 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
-using System.Numerics;
 
 namespace Content.Client.Power.APC.UI
 {

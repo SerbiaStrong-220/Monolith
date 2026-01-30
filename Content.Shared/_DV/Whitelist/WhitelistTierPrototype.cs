@@ -5,10 +5,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._DV.Whitelist;
 
 [Prototype("whitelistTier")]
-public sealed partial class WhitelistTierPrototype : IPrototype
+public sealed class WhitelistTierPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; private set; } = default!;
+    public string ID { get; } = default!;
 
     [DataField]
     public string Name = string.Empty;

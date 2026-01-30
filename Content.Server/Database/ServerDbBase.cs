@@ -248,6 +248,8 @@ namespace Content.Server.Database
 
             // Validate height and width to prevent sprite scale errors
             // Database migration set default values to 0f for existing profiles
+            var height = profile.Height <= 0.005f ? 1.0f : profile.Height;
+            var width = profile.Width <= 0.005f ? 1.0f : profile.Width;
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
@@ -265,7 +267,9 @@ namespace Content.Server.Database
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
                     Color.FromHex(profile.SkinColor),
-                    markings
+                    markings,
+                    height,
+                    width
                 ),
                 spawnPriority,
                 jobs,
@@ -300,6 +304,8 @@ namespace Content.Server.Database
             profile.FacialHairColor = appearance.FacialHairColor.ToHex();
             profile.EyeColor = appearance.EyeColor.ToHex();
             profile.SkinColor = appearance.SkinColor.ToHex();
+            profile.Height = appearance.Height;
+            profile.Width = appearance.Width;
             profile.SpawnPriority = (int) humanoid.SpawnPriority;
             profile.Markings = markings;
             profile.Slot = slot;
@@ -635,7 +641,7 @@ namespace Content.Server.Database
             // This allows us to semi-efficiently load all entities we need in a single DB query.
             // Then we can update & insert without further round-trips to the DB.
 
-            var players = updates.Select(u => u.User.UserId).Distinct().ToList();
+            var players = updates.Select(u => u.User.UserId).Distinct().ToArray();
             var dbTimes = (await db.DbContext.PlayTime
                     .Where(p => players.Contains(p.PlayerId))
                     .ToArrayAsync())
@@ -869,10 +875,8 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var playerIdsList = playerIds.ToList();
-
             var players = await db.DbContext.Player
-                .Where(player => playerIdsList.Contains(player.UserId))
+                .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
             var round = new Round
@@ -903,11 +907,10 @@ namespace Content.Server.Database
         public async Task AddRoundPlayers(int id, Guid[] playerIds)
         {
             await using var db = await GetDb();
-            var playerIdsList = playerIds.ToList();
 
             // ReSharper disable once SuggestVarOrType_Elsewhere
             Dictionary<Guid, int> players = await db.DbContext.Player
-                .Where(player => playerIdsList.Contains(player.UserId))
+                .Where(player => playerIds.Contains(player.UserId))
                 .ToDictionaryAsync(player => player.UserId, player => player.Id);
 
             foreach (var player in playerIds)

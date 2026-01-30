@@ -37,6 +37,8 @@ namespace Content.Server.Cargo.Systems
         /// </summary>
         private float _timer;
 
+        [Dependency] private readonly BankSystem _bankSystem = default!;
+
         private void InitializeConsole()
         {
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
@@ -270,9 +272,9 @@ namespace Content.Server.Cargo.Systems
                 if (!float.IsFinite(taxCoeff) || taxCoeff <= 0.0f)
                     continue;
                 var tax = (int)Math.Floor(cost * taxCoeff);
-                _bank.TrySectorDeposit(account, tax, LedgerEntryType.CargoTax);
+                _bankSystem.TrySectorDeposit(account, tax, LedgerEntryType.CargoTax);
             }
-            _bank.TryBankWithdraw(player, cost);
+            _bankSystem.TryBankWithdraw(player, cost);
             // End Frontier
 
             UpdateOrders(station.Value);
