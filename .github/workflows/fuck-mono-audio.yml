@@ -5,7 +5,7 @@ on:
   pull_request:
     paths:
       - '**.ogg'
-      - '.github/workflows/check-ogg-audio.yml'
+      - '.github/workflows/fuck-mono-audio.yml'
 
 permissions:
   contents: write
