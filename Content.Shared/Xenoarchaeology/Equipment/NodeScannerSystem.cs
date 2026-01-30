@@ -28,14 +28,18 @@ public sealed class NodeScannerSystem : EntitySystem
         var scannerQuery = EntityQueryEnumerator<NodeScannerConnectedComponent, NodeScannerComponent, TransformComponent>();
         while (scannerQuery.MoveNext(out var uid, out var connected, out var scanner, out var transform))
         {
-            if (connected.NextUpdate > _timing.CurTime
-                || TerminatingOrDeleted(uid)
-                || !TryComp<TransformComponent>(uid, out var _))
+            if (connected.NextUpdate > _timing.CurTime)
                 continue;
 
             connected.NextUpdate = _timing.CurTime + connected.LinkUpdateInterval;
 
             var attachedArtifact = connected.AttachedTo;
+            if ( TerminatingOrDeleted(attachedArtifact) || !TryComp<TransformComponent>(attachedArtifact, out var artifactTransform))
+            {
+                RemCompDeferred(uid, connected);
+                continue;
+            }
+
             var artifactCoordinates = Transform(attachedArtifact).Coordinates;
             if (!_transform.InRange(artifactCoordinates, transform.Coordinates, scanner.MaxLinkedRange))
             {
