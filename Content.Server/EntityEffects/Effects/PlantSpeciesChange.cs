@@ -3,6 +3,7 @@ using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Serilog;
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -11,11 +12,9 @@ namespace Content.Server.EntityEffects.Effects;
 /// </summary>
 public sealed partial class PlantSpeciesChange : EntityEffect
 {
-
     public override void Effect(EntityEffectBaseArgs args)
     {
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        var log = IoCManager.Resolve<ILogManager>().GetSawmill(nameof(PlantSpeciesChange));
         var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
 
         if (plantholder.Seed == null)
@@ -30,7 +29,7 @@ public sealed partial class PlantSpeciesChange : EntityEffect
 
         if (protoSeed == null)
         {
-            log.Error($"Seed prototype could not be found: {targetProto}!");
+            Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;
         }
 

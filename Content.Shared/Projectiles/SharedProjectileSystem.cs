@@ -40,6 +40,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
 
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
@@ -365,7 +366,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private void OnEmbedRemove(Entity<EmbeddableProjectileComponent> embeddable, ref RemoveEmbeddedProjectileEvent args)
     {
         // Whacky prediction issues.
-        if (args.Cancelled || _net.IsClient)
+        if (args.Cancelled || _netManager.IsClient)
             return;
 
         EmbedDetach(embeddable, embeddable.Comp, args.User);

@@ -1,4 +1,5 @@
-using System.Numerics;
+using System.Security.Cryptography;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace Content.Shared.Humanoid;
 
