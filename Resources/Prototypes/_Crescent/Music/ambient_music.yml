@@ -96,6 +96,7 @@
   files:
     - /Audio/_Crescent/CombatMode/PDV_1.ogg
     - /Audio/_Crescent/CombatMode/PDV_2.ogg
+    - /Audio/_Exodus/CombatMode/tanc-a-lelek.ogg # Exodus-Music-Add
 
 ### TSFMC
 - type: ambientMusic
