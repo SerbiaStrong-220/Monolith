@@ -213,7 +213,6 @@ jobs:
           comment_body=$(cat comment_body.md)
           echo "comment_body<<EOF" >> $GITHUB_OUTPUT
           echo "$comment_body" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Post PR comment
         uses: actions/github-script@v7
