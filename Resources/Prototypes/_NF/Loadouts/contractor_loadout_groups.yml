@@ -700,6 +700,11 @@
   - ContractorClothingNeckMantleBH # Mono
   - ContractorClothingNeckCloakSanabi # Mono
   - ContractorClothingNeckUIOvercoat # Mono
+  # Exodus-Cloack-Add-Start
+  - ContractorClothingNeckCloakTravelerBlack
+  - ContractorClothingNeckCloakTravelerGold
+  - ContractorClothingNeckCloakTravelerRed
+  # Exodus-Cloack-Add-End
 
 - type: loadoutGroup
   id: ContractorPDA
