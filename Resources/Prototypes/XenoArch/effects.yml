@@ -269,11 +269,8 @@
       solution: beaker
     - type: SolutionTransfer
       canChangeTransferAmount: true
-    - type: Edible
-      edible: Drink
+    - type: Drink
       solution: beaker
-      destroyOnEmpty: false
-      utensil: None
 
 - type: entity
   id: XenoArtifactSpeedUp
@@ -330,9 +327,9 @@
     - type: RevolverAmmoProvider
       whitelist:
         tags:
-        - CartridgeMagnum
-        - SpeedLoaderMagnum
-      proto: CartridgeMagnum
+        - Cartridge45_magnumFMJ
+        - SpeedLoader45_magnumFMJ
+      proto: Cartridge45_magnumFMJ
       capacity: 7
       chambers: [ True, True, True, True, True, True, True ]
       ammoSlots: [ null, null, null, null, null, null, null ]
@@ -736,7 +733,7 @@
     components:
     - type: InstantStealth
       stealth:
-        passiceVisibilityRate: -0.10
+        passiveVisibilityRate: -0.10
         movementVisibilityRate: 0.10
 
 - type: entity
