@@ -1,0 +1,10 @@
+- type: construction
+  id: ClothingNeckCloakWeb
+  graph: WebCloak
+  startNode: start
+  targetNode: ClothingNeckCloakWebCloak
+  category: construction-category-clothing
+  objectType: Item
+  entityWhitelist:
+    tags:
+    - SpiderCraft

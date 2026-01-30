@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: WebCloak
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ClothingNeckCloakWebCloak
+          steps:
+            - material: WebSilk
+              amount: 15
+              doAfter: 3
+    - node: ClothingNeckCloakWebCloak
+      entity: ClothingNeckCloakWebCloak
