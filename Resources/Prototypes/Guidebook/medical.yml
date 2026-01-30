@@ -4,7 +4,7 @@
   text: "/ServerInfo/Guidebook/Medical/Medical.xml"
   children:
   - DirectorOfCare # Frontier
-  - MedicalDoctor
+  - Medical Doctor
   - Chemist
   - Cloning
   - Cryogenics # Note: Frontier changes inside
@@ -12,7 +12,7 @@
   - MedicalBounties # Frontier
 
 - type: guideEntry
-  id: MedicalDoctor
+  id: Medical Doctor
   name: guide-entry-medicaldoctor
   text: "/ServerInfo/Guidebook/Medical/MedicalDoctor.xml"
 
@@ -61,24 +61,24 @@
   name: guide-entry-surgery
   text: "/ServerInfo/_Shitmed/Guidebook/Medical/Surgery.xml"
   children:
-  - PartManipulation
-  - OrganManipulation
-  - UtilitySurgeries
+  - Part Manipulation
+  - Organ Manipulation
+  - Utility Surgeries
 
 - type: guideEntry
-  id: PartManipulation
+  id: Part Manipulation
   name: guide-entry-partmanipulation
   text: "/ServerInfo/_Shitmed/Guidebook/Medical/PartManipulation.xml"
   filterEnabled: true
 
 - type: guideEntry
-  id: OrganManipulation
+  id: Organ Manipulation
   name: guide-entry-organmanipulation
   text: "/ServerInfo/_Shitmed/Guidebook/Medical/OrganManipulation.xml"
   filterEnabled: true
 
 - type: guideEntry
-  id: UtilitySurgeries
+  id: Utility Surgeries
   name: guide-entry-utilitysurgeries
   text: "/ServerInfo/_Shitmed/Guidebook/Medical/UtilitySurgeries.xml"
   filterEnabled: true

@@ -59,7 +59,7 @@
         - LowImpassable
   - type: GuideHelp
     guides:
-    - MedicalDoctor
+    - Medical Doctor
   - type: PowerSwitch
   # Mono
   - type: ShipRepairable
