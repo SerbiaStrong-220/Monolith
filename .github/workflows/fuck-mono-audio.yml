@@ -57,7 +57,7 @@ jobs:
           echo "ogg_changed=true" >> $GITHUB_OUTPUT
 
           # Run validation on changed files
-          python Tools/Exodus/validate_ogg.py $changed_files
+          python Tools/Exodus/FuckMono/validate_ogg.py $changed_files
 
       - name: Convert stereo files to mono
         id: convert-stereo
@@ -67,7 +67,7 @@ jobs:
 
           # Convert files
           stereo_files="${{ steps.validate-ogg.outputs.stereo_files }}"
-          python Tools/Exodus/convert_to_mono.py $stereo_files
+          python Tools/Exodus/FuckMono/convert_to_mono.py $stereo_files
 
       - name: Commit and push converted files
         if: steps.convert-stereo.outputs.converted_count > 0
@@ -96,126 +96,17 @@ jobs:
 
       - name: Create PR comment
         id: pr-comment
-        if: always()
         run: |
-          echo "Creating PR comment..."
-
-          # Read validation report
-          report_json="{}"
-          if [ -f "ogg_validation_report.json" ]; then
-              report_json=$(cat ogg_validation_report.json)
-          fi
-
-          # Check if we have stereo files
-          has_stereo="${{ steps.validate-ogg.outputs.has_stereo }}"
-          converted_count="${{ steps.convert-stereo.outputs.converted_count || 0 }}"
-
-          # Create comment body
-          cat > comment_body.md << 'EOF'
-          ## 🎵 OGG Audio Validation Results
-
-          EOF
-
-          if [ "$has_stereo" = "true" ]; then
-              if [ "$converted_count" -gt 0 ]; then
-                  cat >> comment_body.md << 'EOF'
-                  ### ⚠️ Stereo Files Automatically Converted
-
-                  I found **${{ steps.convert-stereo.outputs.converted_count }}** stereo OGG file(s) and automatically converted them to mono.
-
-                  **Converted files:**
-                  EOF
-
-                  # List converted files
-                  stereo_files="${{ steps.validate-ogg.outputs.stereo_files }}"
-                  for file in $stereo_files; do
-                      echo "- \`$file\`" >> comment_body.md
-                  done
-
-                  cat >> comment_body.md << 'EOF'
-
-                  ### 📝 Next Steps
-
-                  1. **Review the changes**: The converted mono files have been automatically committed to your branch
-                  2. **Test the audio**: Ensure the mono conversion sounds good
-                  3. **If you need stereo**: Contact the maintainers to discuss if stereo is actually needed
-
-                  ### 🔧 How to Convert OGG to Mono Locally
-
-                  If you want to fix this yourself before submitting PRs:
-
-                  **Using FFmpeg:**
-                  ```bash
-                  ffmpeg -i input.ogg -ac 1 -c:a libvorbis -q:a 5 output.ogg
-                  ```
-
-                  **Using Audacity:**
-                  1. Open the OGG file in Audacity
-                  2. Go to Tracks → Mix → Mix Stereo Down to Mono
-                  3. Export as OGG
-
-                  EOF
-              else
-                  cat >> comment_body.md << 'EOF'
-                  ### ❌ Stereo Files Found
-
-                  I found stereo OGG file(s) in your PR. Only mono OGG files are allowed in this repository.
-
-                  **Stereo files detected:**
-                  EOF
-
-                  # Parse JSON report for stereo files
-                  if [ -f "ogg_validation_report.json" ]; then
-                      python3 -c "
-                      import json, sys
-                      with open('ogg_validation_report.json') as f:
-                          report = json.load(f)
-                      for sf in report.get('stereo_files', []):
-                          print(f'- \`{sf[\"file\"]}\`: {sf[\"channels\"]} channels, {sf[\"duration\"]}s, {sf[\"sample_rate\"]}Hz')
-                      " >> comment_body.md
-                  fi
-
-                  cat >> comment_body.md << 'EOF'
-
-                  ### 🔧 How to Fix
-
-                  Please convert these files to mono before merging:
-
-                  1. **Using FFmpeg** (recommended):
-                  ```bash
-                  ffmpeg -i stereo.ogg -ac 1 -c:a libvorbis -q:a 5 mono.ogg
-                  ```
-
-                  2. **Replace the file** with the mono version
-                  3. **Push the changes** to your branch
-
-                  The workflow will re-run and validate your changes.
-                  EOF
-              fi
-          else
-              cat >> comment_body.md << 'EOF'
-              ### ✅ All Good!
-
-              All OGG files in this PR are mono (single channel). No action needed.
-
-              **Checked files:** ${{ fromJson(steps.validate-ogg.outputs.report || '{}').total_checked || 0 }}
-              EOF
-          fi
-
-          # Add footer
-          cat >> comment_body.md << 'EOF'
-
-          ---
-
-          *This check ensures all OGG files are mono to maintain consistency and reduce file size.*
-          *Need stereo audio? Please discuss with maintainers first.*
-          EOF
-
-          # Output comment body
-          comment_body=$(cat comment_body.md)
-          echo "comment_body<<EOF" >> $GITHUB_OUTPUT
-          echo "$comment_body" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          python Tools/Exodus/FuckMono/create_pr_comment.py > comment_body.md
+          {
+            echo "comment_body<<EOF"
+            cat comment_body.md
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+        env:
+          HAS_STEREO: ${{ steps.validate-ogg.outputs.has_stereo }}
+          CONVERTED_COUNT: ${{ steps.convert-stereo.outputs.converted_count || 0 }}
+          STEREO_FILES: ${{ steps.validate-ogg.outputs.stereo_files }}
 
       - name: Post PR comment
         uses: actions/github-script@v7

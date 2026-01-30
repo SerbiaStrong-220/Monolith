@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Generated with DeepSeek, i don't give a fuck
 import subprocess
 import os
