@@ -9,27 +9,27 @@
     stripTime: 6
     uiWindowPos: 0,1
     strippingWindowPos: 0,2
-    displayName: Jumpsuit
+    displayName: inventory-slot-jumpsuit # Ru-Localization
   - name: outerClothing
     slotTexture: suit
     slotFlags: OUTERCLOTHING
     stripTime: 6
     uiWindowPos: 1,1
     strippingWindowPos: 1,2
-    displayName: Suit
+    displayName: inventory-slot-outer-clothing # Ru-Localization
   - name: mask
     slotTexture: mask
     slotFlags: MASK
     uiWindowPos: 1,2
     strippingWindowPos: 1,1
-    displayName: Mask
+    displayName: inventory-slot-mask # Ru-Localization
   - name: eyes
     slotTexture: glasses
     slotFlags: EYES
     stripTime: 3
     uiWindowPos: 0,3
     strippingWindowPos: 0,0
-    displayName: Eyes
+    displayName: inventory-slot-eyes # Ru-Localization
   - name: ears
     slotTexture: ears
     slotFlags: EARS
@@ -42,7 +42,7 @@
     slotFlags: HEAD
     uiWindowPos: 1,3
     strippingWindowPos: 1,0
-    displayName: Head
+    displayName: inventory-slot-head # Ru-Localization
   - name: pocket1
     slotTexture: pocket
     fullTextureName: template_small
@@ -52,7 +52,7 @@
     uiWindowPos: 0,3
     strippingWindowPos: 0,4
     dependsOn: jumpsuit
-    displayName: Pocket 1
+    displayName: inventory-slot-pocket-1 # Ru-Localization
     stripHidden: true
   - name: pocket2
     slotTexture: pocket
@@ -63,7 +63,7 @@
     uiWindowPos: 2,3
     strippingWindowPos: 1,4
     dependsOn: jumpsuit
-    displayName: Pocket 2
+    displayName: inventory-slot-pocket-2 # Ru-Localization
     stripHidden: true
   - name: suitstorage
     slotTexture: suit_storage
@@ -75,7 +75,7 @@
     dependsOn: outerClothing
     dependsOnComponents:
     - type: AllowSuitStorage
-    displayName: Suit Storage
+    displayName: inventory-slot-suit-storage # Ru-Localization
   - name: id
     slotTexture: id
     fullTextureName: template_small
@@ -85,7 +85,7 @@
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
     dependsOn: jumpsuit
-    displayName: ID
+    displayName: inventory-slot-id # Ru-Localization
   - name: belt
     slotTexture: belt
     fullTextureName: template_small
@@ -94,7 +94,7 @@
     stripTime: 6
     uiWindowPos: 3,1
     strippingWindowPos: 1,5
-    displayName: Belt
+    displayName: inventory-slot-belt # Ru-Localization
   - name: back
     slotTexture: back
     fullTextureName: template_small
@@ -103,4 +103,4 @@
     stripTime: 6
     uiWindowPos: 3,0
     strippingWindowPos: 0,5
-    displayName: Back
+    displayName: inventory-slot-back # Ru-Localization

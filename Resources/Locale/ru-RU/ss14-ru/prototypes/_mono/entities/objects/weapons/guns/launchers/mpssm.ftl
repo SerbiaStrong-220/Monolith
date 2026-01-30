@@ -1,6 +1,6 @@
-ent-WeaponLauncherMPSSM = NT-WS SM-27 MPSSM missile launcher
-    .desc = A multipurpose man-portable launcher, capable of firing both guided anti-ship and unguided HEAT warheads.
-    .suffix = HEAT
+ent-WeaponLauncherMPSSM = НТ-ВС СП-57 МППМУ
+    .desc = Модернизированная портативная пусковая многоцелевая установка, способная стрелять как и управляемыми, так и не управляемыми ракетами.
+    .suffix = КС
 ent-WeaponLauncherMPSSMASM = { ent-WeaponLauncherMPSSM }
-    .suffix = ASM
+    .suffix = В-П
     .desc = { ent-WeaponLauncherMPSSM.desc }

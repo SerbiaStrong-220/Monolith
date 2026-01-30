@@ -1,49 +1,49 @@
 #fallback, don't remove
 - type: ambientSpaceBiome
   id: BiomeDefault
-  name: Uncharted Space
+  name: Неизведанный космос
 
 #expedition biome - hardcoded in SpawnSalvageMissionJob.cs
 - type: ambientSpaceBiome
   id: BiomeExpedition
-  name: Expedition
-  description: "Uncharted land."
+  name: Экспедиция
+  description: "Неизведанные земли."
 
 #ftl biome - hardcoded in ShuttleSystem.FasterThanLight.cs
 - type: ambientSpaceBiome
   id: BiomeFTL
-  name: Hyperspace
-  description: "Upon the pale horse, with Hell behind you."
+  name: Гиперпространство
+  description: "...И я взглянул, и вот, конь бледный, и на нём всадник, которому имя «смерть», и ад следовал за ним..."
 
 #far reaches
 
 - type: ambientSpaceBiome
   id: BiomeFarReachesIII
-  name: Far Reaches III
-  description: "Things have learnt to walk that ought to crawl."
+  name: Дальние Рубежи III
+  description: "Не там чудовища, где мы их ищем. Они - в закоулках геометрии, куда не заглядывал свет ни одной звезды"
 
 - type: ambientSpaceBiome
   id: BiomeFarReachesII
-  name: Far Reaches II
-  description: "There's nothing this far out anymore. Or that's what you would find yourself wishing."
+  name: Дальние Рубежи II
+  description: "Здесь уже ничего нет. Или тебе хотелось бы в это верить."
 
 - type: ambientSpaceBiome
   id: BiomeFarReachesI
-  name: Far Reaches I
-  description: "You feel like the asteroids are moving even while you aren't. Or watching you. Or both."
+  name: Дальние Рубежи I
+  description: "Первый признак глубокого космоса - это паранойя. Второй - что она оправдана."
 
 #actual biomes
 - type: ambientSpaceBiome
   id: BiomeOuterRing
-  name: Outer Ring
-  description: "Far from radio range. Far from help. The stars here are dimmer."
+  name: Внешнее Кольцо
+  description: "Граница - это не линия на карте. Это место, где заканчиваются волны и свет звёзд слабее."
 
 - type: ambientSpaceBiome
   id: BiomeMiddleRing
-  name: Middle Ring
-  description: "Stellar outskirts, often crawling with riches and danger."
+  name: Среднее Кольцо
+  description: "Дикий закон рубежей: у каждой удачи есть цена, и счёт выставляется пулей или кредитом"
 
 - type: ambientSpaceBiome
   id: BiomeInnerRing
-  name: Inner Ring
-  description: "Civilised space. The constellations seen from here are burned into your memory."
+  name: Внутреннее Кольцо
+  description: "Ты всегда возвращаешься к тем же созвездиям. Это и есть твой настоящий дом - карта, залитая светом, за которой по-прежнему дышит тьм"

@@ -1,12 +1,12 @@
 - type: dataset
   id: MonoRemnantBorgTitle
   values:
-  - АДМ # Ru-Localization
+  - ОАО # Ru-Localization
 
 - type: dataset
   id: MonoRemnantCoreTitle
   values:
-  - АДЦ # Ru-Localization
+  - ЯАО # Ru-Localization
 
 - type: dataset
   id: MonoRemnantAdjective

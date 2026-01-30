@@ -21,9 +21,9 @@
                     Name="RefundButton"
                     MinWidth="64"
                     HorizontalAlignment="Right"
-                    Text="Refund" />
+                    Text="{Loc 'store-ui-default-refund-text'}" /> <!--Exodus Locale-->
             </BoxContainer>
-            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="Search" HorizontalExpand="True"/>
+            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="{Loc object-tab-object-search}" HorizontalExpand="True"/> <!--Exodus Locale-->
                 <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />

@@ -3,7 +3,8 @@
             SetSize="400 400"
             MinSize="400 400">
     <TabContainer Name="MasterTabContainer">
-        <BoxContainer Name="Scanner"
+        <!-- Exodus-Localization next line -->
+        <BoxContainer Name="{ Loc 'cloning-console-window-scanner-tab-name' }"
                       Orientation="Vertical"
                       VerticalExpand="True"
                       HorizontalExpand="True"

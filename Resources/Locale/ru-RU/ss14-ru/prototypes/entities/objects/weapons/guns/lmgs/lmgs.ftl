@@ -1,5 +1,5 @@
 ent-BaseWeaponLightMachineGun = BaseWeaponLightMachineGun
-    .desc = Дерзай — налетай, целься и стреляй.
+    .desc = Дерзай - налетай, целься и стреляй.
 ent-WeaponLightMachineGunL6 = L6 SAW
     .desc = Весьма традиционный лёгкий пулемёт с удобной лакированной деревянной пистолетной рукоятью. Использует патроны калибра 7.62х39мм.
     .suffix = Пулемёт

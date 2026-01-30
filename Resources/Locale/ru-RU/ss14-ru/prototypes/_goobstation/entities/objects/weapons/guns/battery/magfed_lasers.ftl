@@ -1,8 +1,8 @@
-ent-WeaponLaserCellSMG = ER-5 Torrent
-    .desc = A high-tech laser SMG, compatible with specialized SMG power cells.
-ent-WeaponLaserCellSniper = ES-7 Multilens
-    .desc = A high-tech burst laser sniper rifle, compatible with specialized sniper power cells.
-ent-WeaponLaserCellRevolver = EG-1 Taro
-    .desc = A high-tech laser revolver, compatible with specialized revolver power cells.
-ent-WeaponLaserLMG = EL-20 HAMRR
-    .desc = A high-tech laser LMG, that draws power from specialized backpack.
+ent-WeaponLaserCellSMG = ЕР-5 "Маршрутизатор"
+    .desc = Высокотехнологичный лазерный пистолет-пулемет.
+ent-WeaponLaserCellSniper = ЕР-7 "Кинескоп"
+    .desc = Высокотехнологичная лазерная снайперская винтовка.
+ent-WeaponLaserCellRevolver = EР-1 "Смитти"
+    .desc = Высокотехнологичный лазерный револьвер.
+ent-WeaponLaserLMG = EР-20 ХАМР-Р
+    .desc = Высокотехнологичный лазерный пулемет, использующий специальный рюкзак как аккумулятор.

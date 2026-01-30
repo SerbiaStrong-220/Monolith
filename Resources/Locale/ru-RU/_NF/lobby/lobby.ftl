@@ -1,50 +1,47 @@
-frontier-lobby-station-title = Station
-frontier-lobby-available-jobs = Available Jobs
-frontier-lobby-no-stations-available = There are no stations available at this time.
-frontier-lobby-no-crews-available = Currently there are no captains looking for crews.
-frontier-lobby-station-subtext = Wake up from cryosleep to become captain, find adventure, or employed as staff onboard a station such as janitor, mail carrier, or security staff.
-frontier-lobby-crew-title = Crew
-frontier-lobby-crew-subtext = Start your round aboard a ship amongst a crew that is looking for new crewmembers to give them a helping hand, whether you are a new or seasoned pilot!
-frontier-lobby-frontier-subtext = Main hub for many space pioneers.
+frontier-lobby-station-title = Станция
+frontier-lobby-available-jobs = Доступные должности
+frontier-lobby-no-stations-available = В настоящее время свободных станций нет.
+frontier-lobby-no-crews-available = В настоящее время ни один капитан не ищет команду.
+frontier-lobby-station-subtext = Пробудитесь от криосна и станьте капитаном, ищите приключения или работайте членом экипажа на космической станции, например, уборщиком, почтальоном или сотрудником службы безопасности.
+frontier-lobby-crew-title = Экипаж
+frontier-lobby-crew-subtext = Начните свой путь на борту корабля среди уже существующей команды, которая ищет новых членов экипажа. Протяните им руку помощи независимо от того, новичок вы или опытный пилот!
+frontier-lobby-frontier-subtext = Главный центр сектора "Колосс" и место начала своего путешествия для многих космических исследователей.
 frontier-lobby-frontier-description =
-    Awaken from cryosleep here to:
-      - Start your own crew and become captain
-      - Find a crew to join
-      - Purchase ships
-      - Socialize with other pioneers
-    Some of the roles on this station are whitelist-only and require an application in the discord to be accepted.
-frontier-lobby-exped-subtext = Where seasoned mercenaries gather.
+    Пробудитесь от криосна здесь, чтобы:
+      - Стать капитаном и собрать свою собственную команду
+      - Найти команду, к которой вы могли бы присоединиться
+      - Приобрести свой собственный шаттл
+      - Общаться с другими покорителями космоса
+frontier-lobby-exped-subtext = Место начала работы бывалых наёмников.
 frontier-lobby-exped-description =
-    This is base camp for mercenaries and alike. Here you can:
-    - Start a mercenary crew
-    - Find a crew to join
-    - Purchase weapons and gear
-    - Purchase expedition-ready ships
-    - Socialize with other mercenaries - or not.
-frontier-lobby-medical-subtext = The medical dispatch hub and search and rescue center.
+    Это базовый лагерь для наёмников и им подобных. Здесь ты можешь:
+    - Создать отряд наёмников
+    - Найти отряд для присоединения
+    - Приобрести оружие и снаряжение
+    - Приобрести шаттлы, готовые к экспедициям
+    - Пообщаться с другими наёмниками (ну или не общаться).
+frontier-lobby-medical-subtext = Центр медицинской диспетчеризации и поисково-спасательных операций Службы Неотложной Медицинской Помощи
 frontier-lobby-medical-description =
-    TSF civilian medical dispatch hub. Here you can:
-      - Start or find a medical response crew
-      - Socialize with other medics
-      - Purchase medical specialist ships
-      - Drop off medical bounties
-    Some of the roles on this station are whitelist-only and require an application in the discord to be accepted.
-frontier-lobby-nfsd-subtext = The center of operations for the TSFMC.
+    Гражданский медицинский диспетчерский центр ТСФ. Здесь ты можешь:
+      - Создать или найти медицинскую спасательную команду
+      - Пообщаться с другими медиками
+      - Приобрести корабли медицинского назначения
+      - Получить медицинское вознаграждение за спасённое тело, поместив его в специальное устройство
+frontier-lobby-nfsd-subtext = Передовая оперативная база Корпуса Военной Полиции ТСФ.
 frontier-lobby-nfsd-description =
-    The TFSMC-FOB is the center of operations for the TSF's armed expansion into the Colossus. Here you can:
-    - Join the TSFMC department
-    - Apply for a bounty hunting license
-    - Report crimes
-    - Turn in contraband
-frontier-lobby-pirate-subtext = The center of operations for the PDV.
+    ПОБ КВП ТСФ - это центр операций по сохранению порядка и законов ТСФ в секторе «Колосс». Здесь ты можешь:
+    - Вступить в подразделение Военной Полиции ТСФ
+    - Получить лицензию для совместной работы с КВП ТСФ
+    - Сообщить о преступлениях
+    - Сдать контрабанду
+frontier-lobby-pirate-subtext = Передовая оперативная база Авангарда Династии Фаэтон.
 frontier-lobby-pirate-description =
-    This is the ultimate hideout where Phaethon Imperial Forces gather. Here you can:
-    - Start an Imperial crew
-    - Find a crew to join
-    - Socialize with other Phaethon Dynasty soldiers
+    Это главная база, где собираются силы Династии Фаэтон. Здесь ты можешь:
+    - Найти экипаж для присоединения
+    - Пообщаться с другими солдатами Династии Фаэтон
 # Crew Menu
-frontier-lobby-crew-vessel = [bold][color=#A88B5E]Vessel:[/color][/bold] { $name }
-frontier-lobby-crew-class-prefix = [bold][color=#A88B5E]Classes:[/color][/bold]{ " " }
-frontier-lobby-crew-size = [bold][color=#A88B5E]Size:[/color][/bold] { $size }
-frontier-lobby-crew-class-advertisement = [bold][color=#A88B5E]Advertisement:[/color][/bold]
-frontier-lobby-crew-only-hide-jobless = Hide jobless ships
+frontier-lobby-crew-vessel = [bold][color=#A88B5E]Судно:[/color][/bold] {$name}
+frontier-lobby-crew-class-prefix = [bold][color=#A88B5E]Тип:[/color][/bold]{" "}
+frontier-lobby-crew-size = [bold][color=#A88B5E]Размер:[/color][/bold] {$size}
+frontier-lobby-crew-class-advertisement = [bold][color=#A88B5E]Реклама:[/color][/bold]
+frontier-lobby-crew-only-hide-jobless = Скрыть суда без доступной должности

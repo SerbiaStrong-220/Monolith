@@ -30,20 +30,20 @@
                     ToggleMode="True"
                     HorizontalExpand="True"
                     VerticalExpand="True"
-                    Text="NAV"
-                    StyleClasses="ButtonSquare"/>
+                    Text="{Loc shuttle-console-Nav}"
+                    StyleClasses="ButtonSquare"/> <!--Exodus Locale-->
             <Button Name="MapModeButton"
                     ToggleMode="True"
                     HorizontalExpand="True"
                     VerticalExpand="True"
-                    Text="MAP"
-                    StyleClasses="ButtonSquare"/>
+                    Text="{Loc shuttle-console-Map}"
+                    StyleClasses="ButtonSquare"/> <!--Exodus Locale-->
             <Button Name="DockModeButton"
                     ToggleMode="True"
                     HorizontalExpand="True"
                     VerticalExpand="True"
-                    Text="DOCK"
-                    StyleClasses="ButtonSquare"/>
+                    Text="{Loc shuttle-console-Dock}"
+                    StyleClasses="ButtonSquare"/> <!--Exodus Locale-->
         </BoxContainer>
         </PanelContainer>
         <!-- Contents box -->

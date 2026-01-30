@@ -56,7 +56,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     // MonoCoins Display
     public void SetMonoCoinsText(string value)
     {
-        MonoCoins.Text = value;
+        // MonoCoins.Text = value; // Exodus: Hide MonoCoins, they don't have any usage right now
     }
     // End MonoCoins Display
 
