@@ -51,4 +51,4 @@ ent-FoodPizzaCottonSlice = кусок хлопковой пиццы
 ent-FoodPizzaWorldpeas = пицца "Мир"
     .desc = Современная дипломатия в форме диска.
 ent-FoodPizzaWorldpeasSlice = кусок пиццы "Мир"
-    .desc = Разделить мир — небольшая плата за гармонию.
+    .desc = Разделить мир - небольшая плата за гармонию.

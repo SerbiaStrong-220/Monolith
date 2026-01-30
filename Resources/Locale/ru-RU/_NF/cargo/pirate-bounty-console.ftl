@@ -1,4 +1,4 @@
-pirate-bounty-console-menu-title = Консоль заказов Империи
+pirate-bounty-console-menu-title = Консоль заказов Династии Фаэтон
 pirate-bounty-console-accept-button-label = Принять
 pirate-bounty-console-skip-button-text = Пропустить
 pirate-bounty-console-skip-button-accepted = Отменить

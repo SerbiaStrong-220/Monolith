@@ -32,6 +32,10 @@ ui-options-ambience-volume = Громкость окружения:
 ui-options-lobby-volume = Громкость лобби и окончания раунда:
 ui-options-interface-volume = Громкость интерфейса:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
+ui-options-combat-music-volume = Громкость музыки в бою:
+ui-options-combat-music-windup = Время активации музыки в бою:
+ui-options-combat-music-winddown = Время деактивации музыки после боя:
+ui-options-combat-music-sec-format = { $value } сек
 ui-options-lobby-music = Музыка в лобби
 ui-options-restart-sounds = Звуки перезапуска раунда
 ui-options-event-music = Музыка событий
@@ -106,7 +110,7 @@ ui-options-hud-layout = Тип HUD:
 ## Controls menu
 
 ui-options-binds-reset-all = Сбросить ВСЕ привязки
-ui-options-binds-explanation = ЛКМ — изменить кнопку, ПКМ — убрать кнопку
+ui-options-binds-explanation = ЛКМ - изменить кнопку, ПКМ - убрать кнопку
 ui-options-unbound = Пусто
 ui-options-bind-reset = Сбросить
 ui-options-key-prompt = Нажмите кнопку...

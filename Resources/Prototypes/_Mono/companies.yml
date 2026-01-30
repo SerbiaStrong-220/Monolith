@@ -12,35 +12,35 @@
 - type: company
   id: TSF
   form: Protagonist
-  name: ТСФ # Ru-Localization
+  name: tsf-name # Ru-Localization
   color: "#047ABD"
   disabled: true
 
 - type: company
   id: PDV
   form: Antagonist
-  name: Авангард Династии Фаэтон # Ru-Localization
+  name: pdv-name # Ru-Localization
   color: "#D2B48C"
   disabled: true
 
 - type: company
   id: MD
   form: Protagonist
-  name: МЕД # Ru-Localization
+  name: med-name  # Ru-Localization
   color: "#3B8EEA"
   disabled: true
 
 - type: company
   id: Colonial
   form: Protagonist
-  name: Сотрудники Аванпоста # Ru-Localization
+  name: colonial-name # Ru-Localization
   color: "#279659"
   disabled: true
 
 - type: company
   id: TSFHighComm
   form: Protagonist
-  name: Зимнее Солнцестояние # Ru-Localization
+  name: winter-solstice-name # Ru-Localization
   description: winter-solstice-description
   color: "#008CE3"
   disabled: true
@@ -72,7 +72,7 @@
 - type: company
   id: DrakeIndustries
   form: Protagonist
-  name: Дрэйк Индастрис # Ru-Localization
+  name: drake-industries-name # Ru-Localization
   description: drake-industries-description
   color: "#C97D7D"
   image: /Textures/_Mono/Companies/drake_industries.png
@@ -80,7 +80,7 @@
 - type: company
   id: SteelHammerManufacturing
   form: Protagonist
-  name: Мануфактурный комплекс "Стальной молот" # Ru-Localization
+  name: steel-hammer-name # Ru-Localization
   description: steel-hammer-description
   color: "#92a2a1"
   image: /Textures/_Mono/Companies/steel_hammer.png
@@ -88,7 +88,7 @@
 - type: company
   id: HarmonyMedicalEnterprises
   form: Protagonist
-  name: Хармони Медикал Интерпрайзес # Ru-Localization
+  name: harmony-medical-enterprises-name # Ru-Localization
   description: harmony-medical-enterprises-description
   color: "#FC7303"
   image: /Textures/_Mono/Companies/HME.png
@@ -96,7 +96,7 @@
 - type: company
   id: MidnightArmsCo
   form: Protagonist
-  name: Миднайт Армс # Ru-Localization
+  name: midnight-arms-co-name # Ru-Localization
   description: midnight-arms-co-description
   color: "#FF2E2E"
   image: /Textures/_Mono/Companies/MACo.png
@@ -104,7 +104,7 @@
 - type: company
   id: USSP
   form: Antagonist
-  name: СССП # Ru-Localization
+  name: ussp-name # Ru-Localization
   color: "#B01340"
   disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
@@ -114,7 +114,7 @@
 - type: company
   id: DarkMatterEnterprises
   form: Protagonist
-  name: Дарк Маттер Интерпрайзес # Ru-Localization
+  name: dark-matter-enterprises-name # Ru-Localization
   description: dark-matter-enterprises-description
   color: "#BF00B9"
   image: /Textures/_Mono/Companies/dme.png #DME Logo
@@ -122,14 +122,14 @@
 - type: company
   id: AetherionDynamics
   form: Protagonist
-  name: Аэтеорион Динамикс # Ru-Localization
+  name: aetherion-dynamics-name # Ru-Localization
   description: aetherion-dynamics-description
   color: "#7E72B2"
 
 - type: company
   id: HorizonEnergy
   form: Protagonist
-  name: Горизонт Энерджи # Ru-Localization
+  name: horizon-energy-name # Ru-Localization
   description: horizon-energy-description
   color: "#69E37F"
   image: /Textures/_Mono/Companies/horizon_energy.png
@@ -140,7 +140,7 @@
 - type: company
   id: UniversalStatesOfAmerica
   form: Protagonist
-  name: Всемирные Штаты Америки # Ru-Localization
+  name: universal-states-of-america-name # Ru-Localization
   description: universal-states-of-america-description
   color: "#0A3161"
   image: /Textures/_Mono/Companies/UNSA.png
@@ -148,14 +148,14 @@
 - type: company
   id: CivilDefenseMilita
   form: Protagonist
-  name: ГражданОборон Милита # Ru-Localization
+  name: civil-defense-milita-name # Ru-Localization
   description: civil-defense-milita-description
   color: "#666600"
 
 - type: company
   id: UllmanIndustries
   form: Protagonist
-  name: Ульман Индастрис # Ru-Localization
+  name: ullman-industries-name # Ru-Localization
   description: ullman-industries-description
   color: "#52326A"
   image: /Textures/_Mono/Companies/ullman_industries.png
@@ -163,7 +163,7 @@
 - type: company
   id: NosskeEienResearchandDevelopment
   form: Protagonist
-  name: НИОКР "Носке-Эйен" # Ru-Localization
+  name: nosske-eien-rnd-name # Ru-Localization
   description: nosske-eien-rnd-description
   color: "#9573AF"
   image: /Textures/_Mono/Companies/ne_rd.png
@@ -171,7 +171,7 @@
 - type: company
   id: blackhawkpmc
   form: Protagonist
-  name: Военно-подрядная компания "Блэкхок" # Ru-Localization
+  name: blackhawkpmc-name # Ru-Localization
   description: blackhawkpmc-description
   color: "#419E23"
   image: /Textures/_Mono/Companies/BMC.png
@@ -197,7 +197,7 @@
 - type: company
   id: TheHive
   form: Protagonist
-  name: Улей # Ru-Localization
+  name: The-Hive-name # Ru-Localization
   description: The-Hive-description
   color: "#5918a8"
 
@@ -206,14 +206,14 @@
 - type: company
   id: paycheckbratva
   form: Antagonist
-  name: Бухгалтерия # Ru-Localization
+  name: paycheck-bratva-name # Ru-Localization
   description: paycheck-bratva-description
   color: "#7a0303"
 
 - type: company
   id: CerberusSurplusProvisions
   form: Antagonist
-  name: Церберус # Ru-Localization
+  name: cerberus-surplus-name # Ru-Localization
   description: cerberus-surplus-provisions
   color: "#aa1010"
   image: /Textures/_Mono/Companies/CSP.png
@@ -234,7 +234,7 @@
 - type: company
   id: TheViperGroup
   form: Antagonist
-  name: Вайпер #Ru-Localization
+  name: viper-group-name #Ru-Localization
   description: viper-group-description
   color: "#D82918"
   image: /Textures/_Mono/Companies/thevipergroup.png # Example

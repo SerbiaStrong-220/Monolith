@@ -1,2 +1,2 @@
-ent-WeaponSmartLmg = SKR-WS MLA-79 smart LMG (.160 smart)
-    .desc = A military prototype that saw rare use in front-lines field testing. This is a refined version for standard production.
+ent-WeaponSmartLmg = СКР-ВС МЛА-79
+    .desc = Прототип пулемета нового поколения. К сожалению или к счастью, никак не может покинуть этап испытаний. Использует патроны калибра .160 инт.

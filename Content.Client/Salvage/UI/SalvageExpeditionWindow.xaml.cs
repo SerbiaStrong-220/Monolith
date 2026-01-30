@@ -173,7 +173,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             lBox.AddChild(new Label
             {
-                Text = Loc.GetString(_prototype.Index<SalvageBiomeModPrototype>(biome).ID),
+                Text = Loc.GetString(_prototype.Index<SalvageBiomeModPrototype>(biome).Description),
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),

@@ -1,7 +1,7 @@
 - type: radioChannel
   id: Traffic
   name: chat-radio-traffic
-  keycode: 'д' # Ru-Localization
+  keycode: 'л' # Ru-Localization
   frequency: 1022
   color: "#CC6633"
   maxRange: 750

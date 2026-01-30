@@ -17,7 +17,7 @@
 - type: radioChannel
   id: Letoferol
   name: chat-radio-letoferol
-  keycode: 'л' # Ru-Localization
+  keycode: 'э' # Ru-Localization
   color: "#fcba03"
   longRange: true
 

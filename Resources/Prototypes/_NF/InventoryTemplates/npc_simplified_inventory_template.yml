@@ -9,7 +9,7 @@
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,0
-      displayName: Pocket 1
+      displayName: inventory-slot-pocket-1 # Ru-Localization
 
     - name: pocket2
       slotTexture: pocket
@@ -19,7 +19,7 @@
       stripTime: 3
       uiWindowPos: 2,3
       strippingWindowPos: 1,0
-      displayName: Pocket 2
+      displayName: inventory-slot-pocket-2 # Ru-Localization
 
     - name: belt
       slotTexture: belt
@@ -29,7 +29,7 @@
       stripTime: 6
       uiWindowPos: 3,1
       strippingWindowPos: 1,1
-      displayName: Belt
+      displayName: inventory-slot-belt # Ru-Localization
 
     - name: back
       slotTexture: back
@@ -39,7 +39,7 @@
       stripTime: 6
       uiWindowPos: 3,0
       strippingWindowPos: 0,1
-      displayName: Back
+      displayName: inventory-slot-back # Ru-Localization
 
 # "Not strippable", "hidden"
     - name: shoes
@@ -48,7 +48,7 @@
       stripTime: 999999
       uiWindowPos: 1,0
       strippingWindowPos: 21,23
-      displayName: Shoes
+      displayName: inventory-slot-shoes # Ru-Localization
 
     - name: gloves
       stripTime: 999999
@@ -56,7 +56,7 @@
       slotFlags: GLOVES
       uiWindowPos: 2,1
       strippingWindowPos: 22,22
-      displayName: Gloves
+      displayName: inventory-slot-gloves # Ru-Localization
 
     - name: id
       slotTexture: id
@@ -66,4 +66,4 @@
       stripTime: 999999 # "Not strippable"
       uiWindowPos: 2,1
       strippingWindowPos: 22,20
-      displayName: ID
+      displayName: inventory-slot-id # Ru-Localization

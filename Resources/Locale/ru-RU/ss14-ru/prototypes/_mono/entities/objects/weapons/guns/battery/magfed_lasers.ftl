@@ -1,4 +1,4 @@
-ent-WeaponLaserCellMG = EM72 Ashstorm
-    .desc = EM72 Ashstorm, The TSF-EM72 Ashstorm is a directed-energy light machine gun developed by Aetherion Dynamics under TSF weapons contract 934A. Designed for sustained suppressive fire in void or planetary combat. The signature green glow of the Ashstorm's thermal capacitors is feared across imperial lines in the Helion Belt.
-ent-WeaponLRC21PPL = NT-WS LRC-21 PPL
-    .desc = A heavy pulsed plasma lance rifle. Eviscerates targets with ease.
+ent-WeaponLaserCellMG = EM-72 "Шторм"
+    .desc = Ручной лазерный пулемет, разработанный компанией "Азерион Дайнамикс" по заказу ТСФ.
+ent-WeaponLRC21PPL = НТ-ВС М-223 ЛР
+    .desc = Тяжелая плазменная винтовка. С удивительной легкостью разорвет цель на части.

@@ -1,11 +1,11 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc 'palette-color-picker-window-title'}"
+               Title="{Loc 'decal-placer-window-palette'}"
                MinSize="250 500"
-               SetSize="250 500">
+               SetSize="250 500"> <!--Exodus Locale-->
     <BoxContainer Orientation="Vertical">
         <ItemList Name="PaletteList" VerticalExpand="True" Access="Public"/>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="Palette"/>
+            <Label Text="{Loc decal-placer-window-palette}"/><!--Exodus Locale-->
             <OptionButton Name="Palettes"/>
         </BoxContainer>
     </BoxContainer>

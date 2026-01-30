@@ -42,7 +42,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
         {
             if (_prototypeManager.TryIndex<CompanyPrototype>(component.CompanyName, out var companyProto))
             {
-                args.PushMarkup($"[color={companyProto.Color.ToHex()}]{companyProto.Name}[/color]");
+                args.PushMarkup(Loc.GetString("company-card-examine", ("color", companyProto.Color.ToHex()), ("name", Loc.GetString(companyProto.Name)))); // Ru-Localization
             }
             else
             {
