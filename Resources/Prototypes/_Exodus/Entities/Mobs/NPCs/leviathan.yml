@@ -8,6 +8,9 @@
   description: When the space becomes too quiet, there is no hope, there is no escape, but there is this.
   suffix: no despawn
   components:
+  - type: Damageable
+    damageModifierSet: Leviathan
+    damageContainer: Biological
   - type: PointLight
     color: "#FF8227FF"
     radius: 3
@@ -17,8 +20,8 @@
     spacing: 1
     prototype: SpaceWhaleSegment
   - type: MovementSpeedModifier
-    baseSprintSpeed: 30
-    baseWalkSpeed: 30
+    baseSprintSpeed: 70
+    baseWalkSpeed: 70
   - type: RadarBlip
     scale: 3
     shape: hexagon
@@ -90,12 +93,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      4000: Dead
+      8000: Dead
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 4000
+        damage: 8000
       behaviors:
       - !type:GibBehavior
   - type: Tag
@@ -104,7 +107,7 @@
   - type: DamageContacts
     damage:
       types:
-        Structural: 8000
+        Structural: 4000
         Blunt: 10
     ignoreWhitelist:
       tags:
@@ -114,9 +117,11 @@
   id: SpaceWhaleSegment
   parent:
   - FlyingMobBase
-  - MobDamageable
   suffix: do not spawn
   components:
+  - type: Damageable
+    damageModifierSet: Leviathan
+    damageContainer: Biological
   - type: PointLight
     color: "#FF8227FF"
     radius: 3
@@ -148,7 +153,7 @@
   - type: DamageContacts
     damage:
       types:
-        Structural: 5000
+        Structural: 2000
         Blunt: 10
     ignoreWhitelist:
       tags:
