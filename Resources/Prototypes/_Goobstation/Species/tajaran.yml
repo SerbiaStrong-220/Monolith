@@ -25,7 +25,7 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ TailM ]
+      defaultMarkings: [ TarajanTailM ]
     HeadTop:
       points: 1
       required: true

@@ -3,7 +3,7 @@ marking-TajaranEyeLeft-eye_l = Глаз (левый)
 marking-TajaranEyeRight = Глаз (правый)
 marking-TajaranEyeRight-eye_r = Глаз (правый)
 
-marking-TajaranEarsBased = Уши 
+marking-TajaranEarsBased = Уши
 marking-TajaranEarsBased-ears_based = Ушная кромка
 marking-TajaranEarsBased-ears_inside = Внутренняя часть уха
 marking-TajaranEarsScarLeft = Отсечённое ухо (Левое)
@@ -34,17 +34,17 @@ marking-TajaranHeadStar-star = Звезда
 marking-TajaranHeadStripes = Полоски
 marking-TajaranHeadStripes-stripes = Полоски
 
-marking-Belly2-belly2 = Отметина
-marking-Chest-chest = Отметина
-marking-Belly1-belly1 = Отметина
+marking-TajaranBelly2-belly2 = Отметина
+marking-TajaranChest-chest = Отметина
+marking-TajaranBelly1-belly1 = Отметина
 
-marking-TailM-tail_m = Основной
-marking-TailRing-tail_m = Основной
-marking-TailRing-tail_ring = Кольцо
-marking-TailSkeleton-tail_skeleton = Полосы
-marking-TailSkeleton-tail_m = Основной
-marking-TailTip-tail_tip = Кончик
-marking-TailTip-tail_m = Основной
+marking-TajaranTailM-tail_m = Основной
+marking-TajaranTailRing-tail_m = Основной
+marking-TajaranTailRing-tail_ring = Кольцо
+marking-TajaranTailSkeleton-tail_skeleton = Полосы
+marking-TajaranTailSkeleton-tail_m = Основной
+marking-TajaranTailTip-tail_tip = Кончик
+marking-TajaranTailTip-tail_m = Основной
 
-marking-TailFluffySkeleton-tail_fluffy = Основа
-marking-TailFluffySkeleton-tail_skeleton = Полосы
+marking-TajaranTailFluffySkeleton-tail_fluffy = Основа
+marking-TajaranTailFluffySkeleton-tail_skeleton = Полосы
