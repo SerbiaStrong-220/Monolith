@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "Created by Askolots (788252896016990219)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears_based",
+      "directions": 4
+    },
+    {
+      "name": "ears_inside",
+      "directions": 4
+    },
+    {
+      "name": "ears_oblique",
+      "directions": 4
+    },
+    {
+      "name": "ears_scarleft",
+      "directions": 4
+    },
+    {
+      "name": "ears_scarright",
+      "directions": 4
+    },
+    {
+      "name": "ears_tassels",
+      "directions": 4
+    },
+    {
+      "name": "ears_round",
+      "directions": 4
+    }
+  ]
+}

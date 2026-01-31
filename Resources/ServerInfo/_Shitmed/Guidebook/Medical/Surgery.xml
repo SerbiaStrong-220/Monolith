@@ -1,27 +1,28 @@
 <Document>
-# Surgery
-Your usual weekly activity. By performing surgical operations on your patients, you can heal wounds, remove or add body parts, organs, and more.
+# Хирургия
 
-## The Basics
-To start surgery your patient needs to be laying down, and ideally sedated.
+Ваша обычная, ежедневная деятельность. Выполняя хирургические операции на пациентах, вы можете лечить их раны, удалять или добавлять части тела, пересаживать органы и многое другое.
 
-If they are not sedated, they will be in a lot of pain, which decreases their mood, and will make surgical wounds worse.
+## Основы
+Чтобы начать операцию, ваш пациент должен лежать, и, в идеале, - находиться под наркозом.
+
+Если пациент находится в сознании, он будет испытывать сильную боль, что может серьёзно усугубить его состояние.
 
 <Box>
 <GuideEntityEmbed Entity="NitrousOxideTank" Caption="nitrous oxide"/>
 <GuideEntityEmbed Entity="ClothingMaskBreathMedical" Caption="any breathing tool"/>
 </Box>
 
-You also need to wear protective gear such as a mask and gloves to prevent harming the patient due to contamination.
+Не забывайте соблюдать стерильность - маска и перчатки помогут вам предотвратить возможное заражение открытых ран пациента.
 
 <Box>
 <GuideEntityEmbed Entity="ClothingMaskSterile" Caption="any mask"/>
 <GuideEntityEmbed Entity="ClothingHandsGlovesNitrile" Caption="any gloves"/>
 </Box>
 
-## Getting Started
+## Начало работы
 
-To engage in surgery, you'll need a set of surgical tools.
+Для проведения операций вам понадобится набор хирургических инструментов.
 
 <Box>
 <GuideEntityEmbed Entity="Scalpel" Caption="scalpel"/>
@@ -35,6 +36,6 @@ To engage in surgery, you'll need a set of surgical tools.
 <GuideEntityEmbed Entity="BoneGel" Caption="bone gel"/>
 </Box>
 
-Once you've got tools in hand, interact with your patient to begin surgery. You'll be able to choose which part you want to operate on.
+Берите инструмент в руку и начинайте взаимодействие с пациентом. Вы можете выбрать, на какой части тела возможно проводить операцию. 
 
 </Document>
