@@ -28,7 +28,6 @@ marking-KidanAntennasClassic = Усики (классика)
 marking-KidanAntennasClassic-classic_ones = Классические усики
 marking-KidanAntennasFan = Усики (пушистые)
 marking-KidanAntennasFan-fan = Пушистые усики
-marking-KidanAntennasLong = Усики (длинные)
 marking-KidanAntennasLong-long = Длинные усики
 marking-KidanAntennasMay = Усики (майский жук)
 marking-KidanAntennasMay-may_bug = Усики майского жука
