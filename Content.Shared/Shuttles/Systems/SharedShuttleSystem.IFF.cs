@@ -74,7 +74,7 @@ public abstract partial class SharedShuttleSystem
         if (companyName != null && companyColor != null)
         {
             // Return a formatted label that the client can parse properly
-            return $"{labelText}\n{companyName}";
+            return $"{labelText}\n{Loc.GetString(companyName)}"; // Ru-Localization
         }
 
         return labelText;
