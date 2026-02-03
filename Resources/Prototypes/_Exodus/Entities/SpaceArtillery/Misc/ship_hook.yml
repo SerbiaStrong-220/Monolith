@@ -1,0 +1,74 @@
+- type: entity
+  id: SpaceHook
+  name: space hook
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: ShipGrapplingGun
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 7000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 6000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 800
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Transform
+    anchored: true
+  - type: DeviceLinkSink
+    ports:
+    - SpaceArtilleryFire
+    - SpaceArtilleryLoad
+  - type: SpaceArtillery
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: FireControllable
+  - type: RadarBlip
+    visibleFromOtherGrids: false
+    radarColor: "#9999FF"
+    scale: 1
+  - type: Gun
+    projectileSpeed: 275
+    fireRate: 1
+    selectedMode: Burst
+    availableModes: Burst
+    shootThermalSignature: 48000000
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: ShipGunType
+    shipType: Ballistic
+  - type: ShipGunClass
+    shipClass: Medium
+  - type: BasicEntityAmmoProvider
+    proto: GrapplingHook
+    capacity: 1
