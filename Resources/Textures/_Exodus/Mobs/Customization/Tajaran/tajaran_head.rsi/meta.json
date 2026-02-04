@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "Created by Askolots (788252896016990219)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "belt",
+      "directions": 4
+    },
+    {
+      "name": "nose",
+      "directions": 4
+    },
+    {
+      "name": "eyebrows",
+      "directions": 4
+    },
+    {
+      "name": "markings",
+      "directions": 4
+    },
+    {
+      "name": "mask_l",
+      "directions": 4
+    },
+    {
+      "name": "mask_r",
+      "directions": 4
+    },
+    {
+      "name": "spot",
+      "directions": 4
+    },
+    {
+      "name": "star",
+      "directions": 4
+    },
+    {
+      "name": "stripes",
+      "directions": 4
+    }
+  ]
+}

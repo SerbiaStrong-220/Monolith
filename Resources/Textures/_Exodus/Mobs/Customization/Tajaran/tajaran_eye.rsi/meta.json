@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "Created by Askolots (788252896016990219)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eye",
+      "directions": 4
+    },
+    {
+      "name": "eye_l",
+      "directions": 4
+    },
+    {
+      "name": "eye_r",
+      "directions": 4
+    }
+  ]
+}
