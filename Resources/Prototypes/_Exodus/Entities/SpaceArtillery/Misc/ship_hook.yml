@@ -4,6 +4,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Sprite
+    sprite: _Mono/Objects/ShuttleWeapons/dravon.rsi
+    layers:
+    - state: space_artillery
   - type: ShipGrapplingGun
   - type: Damageable
     damageContainer: StructuralInorganic
