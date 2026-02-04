@@ -1,7 +1,9 @@
 // New Frontiers - This file is licensed under AGPLv3
 // Copyright (c) 2024 New Frontiers Contributors
 // See AGPLv3.txt for details.
+using System.Numerics;
 using Content.Shared._NF.Shuttles.Events;
+using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Shuttles.UI
@@ -12,6 +14,10 @@ namespace Content.Client.Shuttles.UI
         public event Action<NetEntity?, InertiaDampeningMode>? OnInertiaDampeningModeChanged;
         public event Action<NetEntity?, float>? OnMaxShuttleSpeedChanged;
         public event Action<string, string>? OnNetworkPortButtonPressed;
+        public event Action<NetEntity?, Vector2>? OnSetTargetCoordinates;
+        public event Action<NetEntity?, bool>? OnSetHideTarget;
+		
+        private bool _targetCoordsModified = false;
 
         private void NfInitialize()
         {
@@ -47,6 +53,11 @@ namespace Content.Client.Shuttles.UI
             // Send off a request to get the current dampening mode.
             _entManager.TryGetNetEntity(_shuttleEntity, out var shuttle);
             OnInertiaDampeningModeChanged?.Invoke(shuttle, InertiaDampeningMode.Query);
+			
+            TargetX.OnTextChanged += _ => _targetCoordsModified = true;
+            TargetY.OnTextChanged += _ => _targetCoordsModified = true;
+            TargetSet.OnPressed += _ => SetTargetCoords();
+            TargetShow.OnPressed += _ => SetHideTarget(!TargetShow.Pressed);
         }
 
         private void OnPortButtonPressed(string sourcePort, string targetPort)
@@ -61,7 +72,7 @@ namespace Content.Client.Shuttles.UI
             OnInertiaDampeningModeChanged?.Invoke(shuttle, mode);
         }
 
-        private void NfUpdateState()
+        private void NfUpdateState(NavInterfaceState state)
         {
             if (NavRadar.DampeningMode == InertiaDampeningMode.Station)
             {
@@ -90,12 +101,28 @@ namespace Content.Client.Shuttles.UI
                     AnchorOn.Disabled = false;
                 }
             }
+			
+            TargetShow.Pressed = !state.HideTarget;
+            if (!_targetCoordsModified)
+            {
+                if (state.Target != null)
+                {
+                    var target = state.Target.Value;
+                    TargetX.Text = target.X.ToString("F1");
+                    TargetY.Text = target.Y.ToString("F1");
+                }
+                else
+                {
+                    TargetX.Text = 0.0f.ToString("F1");
+                    TargetY.Text = 0.0f.ToString("F1");
+                }
+			}
         }
 
         // Frontier - Maximum IFF Distance
         private void OnRangeFilterChanged(int value)
         {
-            NavRadar.MaximumIFFDistance = (float) value;
+            NavRadar.MaximumIFFDistance = value;
         }
 
         // Frontier - Maximum Shuttle Speed
@@ -139,6 +166,27 @@ namespace Content.Client.Shuttles.UI
             }
             // End Frontier - PR #1284
         }
+		
+        private void SetTargetCoords()
+        {
+            Vector2 outputVector;
+            if (!float.TryParse(TargetX.Text, out outputVector.X))
+                outputVector.X = 0.0f;
 
+            if (!float.TryParse(TargetY.Text, out outputVector.Y))
+                outputVector.Y = 0.0f;
+
+            NavRadar.Target = outputVector;
+            NavRadar.TargetEntity = NetEntity.Invalid;
+            _entManager.TryGetNetEntity(_shuttleEntity, out var shuttle);
+            OnSetTargetCoordinates?.Invoke(shuttle, outputVector);
+            _targetCoordsModified = false;
+        }
+
+        private void SetHideTarget(bool hide)
+        {
+            _entManager.TryGetNetEntity(_shuttleEntity, out var shuttle);
+            OnSetHideTarget?.Invoke(shuttle, hide);
+        }
     }
 }

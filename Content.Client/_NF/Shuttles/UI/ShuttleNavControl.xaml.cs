@@ -15,6 +15,7 @@ namespace Content.Client.Shuttles.UI
 {
     public partial class ShuttleNavControl // Mono
     {
+	private static readonly Color TargetColor = Color.FromHex("#99ff66");
         public InertiaDampeningMode DampeningMode { get; set; }
 
         /// <summary>
@@ -22,13 +23,23 @@ namespace Content.Client.Shuttles.UI
         /// while in FTL to prevent parking while traveling.
         /// </summary>
         public bool InFtl { get; set; }
+		
+		public bool HideTarget { get; set; } = false;
+		public Vector2? Target { get; set; } = null;
+		public NetEntity? TargetEntity { get; set; } = null;
 
         private void NfUpdateState(NavInterfaceState state)
         {
+			if (state.MaxIffRange != null)
+				MaximumIFFDistance = state.MaxIffRange.Value;
+			HideCoords = state.HideCoords;
+			Target = state.Target;
+			TargetEntity = state.TargetEntity;
+			HideTarget = state.HideTarget;
 
             if (!EntManager.GetCoordinates(state.Coordinates).HasValue ||
                 !EntManager.TryGetComponent(EntManager.GetCoordinates(state.Coordinates).GetValueOrDefault().EntityId,out TransformComponent? transform) ||
-                !EntManager.TryGetComponent(transform.GridUid, out PhysicsComponent? physicsComponent))
+                !EntManager.HasComponent<PhysicsComponent>(transform.GridUid))
             {
                 return;
             }

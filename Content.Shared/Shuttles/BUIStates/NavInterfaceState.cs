@@ -1,6 +1,8 @@
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Content.Shared._NF.Shuttles.Events; // Frontier - InertiaDampeningMode access
+using Content.Shared._NF.Shuttles.Events; // Frontier
+using Content.Shared.Shuttles.Components; // Frontier
+using System.Numerics; // Frontier - InertiaDampeningMode access
 
 namespace Content.Shared.Shuttles.BUIStates;
 
@@ -29,7 +31,7 @@ public sealed class NavInterfaceState
     /// </summary>
     public Dictionary<string, string> NetworkPortNames = new();
 
-    // Frontier fields
+    /// Frontier fields
     /// <summary>
     /// Frontier - the state of the shuttle's inertial dampeners
     /// </summary>
@@ -44,6 +46,21 @@ public sealed class NavInterfaceState
     /// Frontier: settable coordinate visibility
     /// </summary>
     public bool HideCoords = false;
+	
+    /// <summary>
+    /// A settable target to show on radar
+    /// </summary>
+    public Vector2? Target { get; set; }
+
+    /// <summary>
+    /// A settable target to show on radar
+    /// </summary>
+    public NetEntity? TargetEntity { get; set; }
+
+    /// <summary>
+    /// Frontier: whether or not to show the target coords
+    /// </summary>
+    public bool HideTarget = true;
     // End Frontier fields
 
     public bool Pannable = true; // Mono
@@ -57,7 +74,10 @@ public sealed class NavInterfaceState
         InertiaDampeningMode dampeningMode, // Frontier: add dampeningMode
         Dictionary<string, string>? networkPortNames = null,
         bool pannable = true, // Mono
-        bool relativePan = false) // Mono
+        bool relativePan = false, // Mono
+        Vector2? target = null, // Frontier
+        NetEntity? targetEntity = null, // Frontier
+        bool hideTarget = true) // Frontier
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
@@ -67,6 +87,9 @@ public sealed class NavInterfaceState
         NetworkPortNames = networkPortNames ?? new Dictionary<string, string>();
         Pannable = pannable; // Mono
         RelativePanning = relativePan; // Mono
+        Target = target; // Frontier
+        TargetEntity = targetEntity; // Frontier
+        HideTarget = hideTarget; // Frontier
     }
 }
 

@@ -25,3 +25,12 @@ shuttle-console-device-button-5 = Port 5
 shuttle-console-device-button-6 = Port 6
 shuttle-console-device-button-7 = Port 7
 shuttle-console-device-button-8 = Port 8
+
+# Radar Target Buttons
+shuttle-console-target = Radar Target
+shuttle-console-set-target = Set
+shuttle-console-set-target-description = Sets a target waypoint coordinate on the radar console.
+shuttle-console-hide-target = Show
+shuttle-console-hide-target-description = Toggles the visibility of the target waypoint on the radar console.
+shuttle-console-target-name = Target
+shuttle-console-map-track = ⌖

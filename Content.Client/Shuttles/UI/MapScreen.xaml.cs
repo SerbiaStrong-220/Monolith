@@ -52,12 +52,13 @@ public sealed partial class MapScreen : BoxContainer
     private TimeSpan _nextMapDequeue;
 
     private float _minMapDequeue = 0.05f;
-    private float _maxMapDequeue = 0.25f;
+    private float _maxMapDequeue = 0.10f; // Frontier: 0.25<0.10
 
     private StyleBoxFlat _ftlStyle;
 
     public event Action<MapCoordinates, Angle>? RequestFTL;
     public event Action<NetEntity, Angle>? RequestBeaconFTL;
+    public event Action<NetEntity?, NetEntity>? RequestTrackEntity; // Frontier
 
     private readonly Dictionary<MapId, BoxContainer> _mapHeadings = new();
     private readonly Dictionary<MapId, List<IMapObject>> _mapObjects = new();
@@ -463,6 +464,16 @@ public sealed partial class MapScreen : BoxContainer
         // If it's our map then scroll, otherwise just set position there.
         MapRadar.SetMap(coordinates.MapId, coordinates.Position, recentering: true);
     }
+	
+    // Frontier: entity tracking
+    private void OnMapObjectTrackPress(IMapObject mapObject)
+    {
+        if (mapObject is not GridMapObject gridObj)
+            return;
+
+        RequestTrackEntity?.Invoke(_shuttleEntity is null ? null : _entManager.GetNetEntity(_shuttleEntity), _entManager.GetNetEntity(gridObj.Entity));
+    }
+    // End Frontier: entity tracking
 
     public void SetMap(MapId mapId, Vector2 position)
     {
@@ -485,6 +496,8 @@ public sealed partial class MapScreen : BoxContainer
             Text = mapObj.Name,
             HorizontalExpand = true,
         };
+		
+        gridButton.Label.ClipText = true; // Frontier
 
         var gridContainer = new BoxContainer()
         {
@@ -492,7 +505,7 @@ public sealed partial class MapScreen : BoxContainer
             {
                 new Control()
                 {
-                    MinWidth = 32f,
+                    MinWidth = 16f, // Frontier: 32<16
                 },
                 gridButton
             }
@@ -505,6 +518,23 @@ public sealed partial class MapScreen : BoxContainer
         {
             OnMapObjectPress(mapObj);
         };
+		
+        // Frontier: tracking button handler
+        if (mapObj is GridMapObject gridObj)
+        {
+            var trackButton = new Button()
+            {
+                Text = Loc.GetString("shuttle-console-map-track"),
+                MinWidth = 32,
+                MaxWidth = 32
+            };
+            trackButton.OnPressed += args =>
+            {
+                OnMapObjectTrackPress(mapObj);
+            };
+            gridContainer.Children.Add(trackButton);
+        }
+        // End Frontier: tracking button handler
 
         if (gridContents.ChildCount > 1)
         {
