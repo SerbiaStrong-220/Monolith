@@ -53,6 +53,9 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted || TerminatingOrDeleted(args.Weapon))
             return;
 
+        if (_netManager.IsClient)
+            return;
+
         if (!TryComp<ShipGrapplingGunComponent>(args.Weapon, out var grapComp))
             return;
 
