@@ -35,10 +35,12 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
     private void OnGrappleShot(EntityUid uid, ShipGrapplingGunComponent component, ref GunShotEvent args)
     {
+        Log.Info("Grappling gun shot!");
         foreach (var (shootUid, _) in args.Ammo)
         {
             if (!HasComp<GrapplingProjectileComponent>(shootUid))
                 continue;
+            Log.Info("Grappling gun shot with grapple projectile!");
 
             component.Projectile = shootUid.Value;
             var visuals = EnsureComp<JointVisualsComponent>(shootUid.Value);
@@ -50,20 +52,25 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted || TerminatingOrDeleted(args.Weapon))
+        Log.Info("Grappling gun projectile embedded!");
+        if (TerminatingOrDeleted(args.Weapon))
             return;
+        Log.Info("Grappling gun projectile embedded with valid weapon!");
 
         if (_netManager.IsClient)
             return;
+        Log.Info("Grappling gun projectile embedded on server!");
 
         if (!TryComp<ShipGrapplingGunComponent>(args.Weapon, out var grapComp))
             return;
+        Log.Info("Grappling gun projectile embedded with valid weapon component!");
 
         var gunGridUid = Transform(args.Weapon).GridUid;
         var targetGridUid = Transform(args.Embedded).GridUid;
 
         if (!gunGridUid.HasValue || !targetGridUid.HasValue)
             return;
+        Log.Info("Grappling gun projectile embedded with valid grid UIDs!");
 
         var gunPos = _transform.GetWorldPosition(args.Weapon);
         var targetPos = _transform.GetWorldPosition(args.Embedded);
