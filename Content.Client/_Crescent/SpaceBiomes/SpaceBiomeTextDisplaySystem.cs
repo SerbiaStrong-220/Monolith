@@ -32,11 +32,18 @@ public sealed class SpaceTextDisplaySystem : EntitySystem
         _overlay.ResetDescription();
         _overlay.Text = biome.Name;
         _overlay.TextDescription = biome.Description;
-        _overlay.CharInterval = TimeSpan.FromSeconds(2f / biome.Name.Length);
+
+        //Exodus - fix-spaceBiomeText - Begin
+
+        /*_overlay.CharInterval = TimeSpan.FromSeconds(2f / biome.Name.Length);
         if (_overlay.TextDescription == "")                   //if we have a biome with no description, it's default is "" and that has length 0.
             _overlay.CharIntervalDescription = TimeSpan.Zero;       //we need to calculate it here because otherwise...
         else
-            _overlay.CharIntervalDescription = TimeSpan.FromSeconds(2f / biome.Description.Length);      //this would throw an exception
+            _overlay.CharIntervalDescription = TimeSpan.FromSeconds(2f / biome.Description.Length);*/      //this would throw an exception
+
+        _overlay.CharInterval = GetCharInterval(biome.Name);
+        _overlay.CharIntervalDescription = GetCharInterval(biome.Description);
+        //Exodus - fix-spaceBiomeText - End
     }
 
     private void OnNewVesselEntered(ref PlayerParentChangedMessage ev)
@@ -58,11 +65,30 @@ public sealed class SpaceTextDisplaySystem : EntitySystem
 
         _overlay.Text = name;
         _overlay.TextDescription = description; // fallback is "" if no description is found.
+
+        //Exodus - fix-spaceBiomeText - Begin
+        
+        /*
         _overlay.CharInterval = TimeSpan.FromSeconds(2f / _overlay.Text.Length);
 
         if (_overlay.TextDescription == "")
             _overlay.CharIntervalDescription = TimeSpan.Zero; //if this is not done it tries dividing by 0 in the "else" clause
         else
             _overlay.CharIntervalDescription = TimeSpan.FromSeconds(2f / _overlay.TextDescription.Length);
+        */
+        
+        _overlay.CharInterval = GetCharInterval(_overlay.Text);
+        _overlay.CharIntervalDescription = GetCharInterval(_overlay.TextDescription);
+        //Exodus - fix-spaceBiomeText - End
     }
+
+    //Exodus - fix-spaceBiomeText - Begin
+    private static TimeSpan GetCharInterval(string? text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return TimeSpan.Zero;
+
+        return TimeSpan.FromSeconds(2f / text.Length);
+    }
+    //Exodus - fix-spaceBiomeText - End
 }
