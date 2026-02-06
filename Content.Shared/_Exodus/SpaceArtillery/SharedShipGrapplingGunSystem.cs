@@ -29,7 +29,7 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
+        SubscribeLocalEvent<ShipGrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
         SubscribeLocalEvent<ShipGrapplingGunComponent, GunShotEvent>(OnGrappleShot);
     }
 
@@ -38,7 +38,7 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         Log.Info("Grappling gun shot!");
         foreach (var (shootUid, _) in args.Ammo)
         {
-            if (!HasComp<GrapplingProjectileComponent>(shootUid))
+            if (!HasComp<ShipGrapplingProjectileComponent>(shootUid))
                 continue;
             Log.Info("Grappling gun shot with grapple projectile!");
 
@@ -50,7 +50,7 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         }
     }
 
-    private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
+    private void OnGrappleCollide(EntityUid uid, ShipGrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
         Log.Info("Grappling gun projectile embedded!");
         if (!_timing.IsFirstTimePredicted || TerminatingOrDeleted(args.Weapon))
