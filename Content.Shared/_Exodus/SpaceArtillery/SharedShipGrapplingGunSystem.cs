@@ -46,14 +46,14 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             var visuals = EnsureComp<JointVisualsComponent>(shootUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.Target = GetNetEntity(uid);
-            Dirty(uid, component);
+            Dirty(shootUid.Value, component);
         }
     }
 
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
         Log.Info("Grappling gun projectile embedded!");
-        if (TerminatingOrDeleted(args.Weapon))
+        if (!_timing.IsFirstTimePredicted || TerminatingOrDeleted(args.Weapon))
             return;
         Log.Info("Grappling gun projectile embedded with valid weapon!");
 
@@ -70,6 +70,15 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         if (!gunGridUid.HasValue || !targetGridUid.HasValue)
             return;
+
+        var gunMap = Transform(gunGridUid.Value).MapUid;
+        var targetMap = Transform(targetGridUid.Value).MapUid;
+
+        if (gunMap == null || gunMap != targetMap)
+        {
+            Log.Warning("Blocked cross-map grappling joint");
+            return;
+        }
         Log.Info("Grappling gun projectile embedded with valid grid UIDs!");
 
         var gunPos = _transform.GetWorldPosition(args.Weapon);
@@ -85,6 +94,6 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         joint.MaxLength = joint.Length + 25.0f;
         joint.Stiffness = 1f;
 
-        Dirty(args.Embedded, jointComp);
+        Dirty(targetGridUid.Value, jointComp);
     }
 }
