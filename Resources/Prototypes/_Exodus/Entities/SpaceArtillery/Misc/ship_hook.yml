@@ -74,5 +74,5 @@
   - type: ShipGunClass
     shipClass: Medium
   - type: BasicEntityAmmoProvider
-    proto: GrapplingHook
+    proto: ShipGrapplingHook
     capacity: 1
