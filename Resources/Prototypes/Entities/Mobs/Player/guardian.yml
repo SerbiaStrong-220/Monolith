@@ -256,7 +256,7 @@
       prototypes: [ HoloClownGear ]
     - type: RandomMetadata
       nameSegments:
-      - NamesClow
+      - NamesClown
     # - type: NpcFactionMember
       # factions:
         # - Syndicate

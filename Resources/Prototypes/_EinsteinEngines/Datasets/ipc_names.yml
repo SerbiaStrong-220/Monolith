@@ -8,4 +8,4 @@
   id: IpcLast
   values:
     prefix: names-ipc-last-
-    count: 1000
+    count: 999

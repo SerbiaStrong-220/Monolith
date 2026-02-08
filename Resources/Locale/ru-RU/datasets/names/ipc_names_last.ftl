@@ -1,4 +1,3 @@
-names-ipc-last-0 = 000
 names-ipc-last-1 = 001
 names-ipc-last-2 = 002
 names-ipc-last-3 = 003
