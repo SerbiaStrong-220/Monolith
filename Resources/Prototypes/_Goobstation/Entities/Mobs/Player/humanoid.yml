@@ -270,7 +270,7 @@
     - SolCommon
     - TauCetiBasic
 
-    
+
 # Navy Captain
 
 - type: entity
@@ -412,7 +412,7 @@
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryFirstPolitical
-    - names_last
+    - NamesLast
   - type: RandomHumanoidSpawner
     settings: DiplomatGear
 
@@ -432,7 +432,7 @@
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryFirstPolitical
-    - names_last
+    - NamesLast
   - type: LanguageKnowledge
     speaks:
     - SolCommon

@@ -322,7 +322,7 @@
   components:
   - type: RandomMetadata
     nameSegments:
-      # - names_borg # Frontier
+      # - NamesBorg # Frontier
       - NFNamesBorgUnlocalized # Frontier
   - type: NpcFactionMember
     factions:
