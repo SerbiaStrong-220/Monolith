@@ -62,6 +62,10 @@ public sealed partial class TailedEntitySystem : EntitySystem
         if (mapUid == null)
             return;
 
+        // Ensure the head entity has physics for joints
+        if (!HasComp<PhysicsComponent>(uid))
+            return;
+
         var headPos = _transform.GetWorldPosition(xform);
         var headRot = _transform.GetWorldRotation(xform);
 
@@ -86,6 +90,10 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
         foreach (var segment in comp.TailSegments)
         {
+            // Ensure segment has physics before creating joint
+            if (!HasComp<PhysicsComponent>(segment))
+                continue;
+
             var joint = _joint.CreateDistanceJoint(
                 bodyA: prev,
                 bodyB: segment,
