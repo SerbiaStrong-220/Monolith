@@ -708,209 +708,242 @@ public sealed partial class ShuttleSystem
         // If this is a linked shuttle, let the main shuttle handle the arrival
         if (comp.LinkedShuttle.HasValue)
             return;
-        var xform = _xformQuery.GetComponent(uid);
-        var body = _physicsQuery.GetComponent(uid);
-        DoTheDinosaur(xform);
-        _dockSystem.SetDockBolts(entity, false);
 
-        if (TryGetFTLDrive(entity, out _, out var globalDrive))
+        MapId mapId = MapId.Nullspace; // Exodus-FTLErrorShield
+
+        try // Exodus-FTLErrorShield | try/catch wrap and the most important finally block
         {
-            MassAdjustFTLCooldown(body, globalDrive, out var massAdjustedCooldown);
-            globalFtlCooldown = massAdjustedCooldown;
-        }
+            var xform = _xformQuery.GetComponent(uid);
+            var body = _physicsQuery.GetComponent(uid);
+            DoTheDinosaur(xform);
+            _dockSystem.SetDockBolts(entity, false);
 
-
-        // Get all docked shuttles
-        var dockedShuttles = new HashSet<EntityUid>();
-        GetAllDockedShuttles(uid, dockedShuttles);
-        // Store relative positions and docking info before moving main shuttle
-        var relativeTransforms = new Dictionary<EntityUid, (Vector2 Position, Angle Rotation, List<(EntityUid DockA, EntityUid DockB)> Docks)>();
-        foreach (var dockedUid in dockedShuttles)
-        {
-            if (dockedUid == uid) continue;
-
-            var dockedXform = _xformQuery.GetComponent(dockedUid);
-            var mainPos = _transform.GetWorldPosition(uid);
-            var dockedPos = _transform.GetWorldPosition(dockedUid);
-            var mainRot = _transform.GetWorldRotation(uid);
-            var dockedRot = _transform.GetWorldRotation(dockedUid);
-            var dockedBody = _physicsQuery.GetComponent(dockedUid);
-
-            // Store position and rotation relative to main shuttle
-            var dockConnections = new List<(EntityUid DockA, EntityUid DockB)>();
-            var docks = _dockSystem.GetDocks(dockedUid);
-            foreach (var dock in docks)
+            if (TryGetFTLDrive(entity, out _, out var globalDrive))
             {
-                if (!TryComp<DockingComponent>(dock, out var dockComp) || !dockComp.Docked || dockComp.DockedWith == null)
-                    continue;
-                dockConnections.Add((dock, dockComp.DockedWith.Value));
-                _dockSystem.Undock((dock, dockComp));
-            }
-            relativeTransforms[dockedUid] = (dockedPos - mainPos, dockedRot - mainRot, dockConnections);
-            _physics.SetLinearVelocity(dockedUid, Vector2.Zero, body: dockedBody);
-            _physics.SetAngularVelocity(dockedUid, 0f, body: dockedBody);
-        }
-
-        // Handle physics for main shuttle
-        _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-        _physics.SetAngularVelocity(uid, 0f, body: body);
-
-        var target = comp.TargetCoordinates;
-        MapId mapId;
-
-        QueueDel(comp.VisualizerEntity);
-        comp.VisualizerEntity = null;
-
-        if (!Exists(comp.TargetCoordinates.EntityId))
-        {
-            // Uhh good luck
-            // Pick earliest map?
-            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
-            var map = maps.Min(o => o.GetHashCode());
-            mapId = new MapId(map);
-            TryFTLProximity(uid, _mapSystem.GetMap(mapId));
-        }
-        // Docking FTL
-        else if (HasComp<MapGridComponent>(target.EntityId) && !HasComp<MapComponent>(target.EntityId))
-        {
-            var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target, comp.TargetAngle);
-            var mapCoordinates = _transform.ToMapCoordinates(target);
-
-            // Couldn't dock somehow so just fallback to regular position FTL.
-            if (config == null)
-            {
-                TryFTLProximity(uid, target.EntityId);
-            }
-            else
-            {
-                FTLDock((uid, xform), config);
+                MassAdjustFTLCooldown(body, globalDrive, out var massAdjustedCooldown);
+                globalFtlCooldown = massAdjustedCooldown;
             }
 
-            mapId = mapCoordinates.MapId;
-        }
-        // Position ftl
-        else
-        {
-            // TODO: This should now use tryftlproximity
-            mapId = _transform.GetMapId(target);
-            _transform.SetCoordinates(uid, xform, target, rotation: comp.TargetAngle.Reduced());
-        }
 
-        var handledShuttles = new HashSet<EntityUid>();
-        // Now move all docked shuttles to maintain their relative positions
-        var mainNewPos = _transform.GetWorldPosition(uid);
-        var mainNewRot = _transform.GetWorldRotation(uid);
-        foreach (var dockedUid in dockedShuttles)
-        {
-            if (dockedUid == uid) continue;
-            var dockedXform = _xformQuery.GetComponent(dockedUid);
-            var (relativePos, relativeRot, dockConnections) = relativeTransforms[dockedUid];
-            var ftlCooldown = 10f;
-
-            var newPos = mainNewPos + relativePos;
-            var newRot = mainNewRot + relativeRot;
-            if (xform.MapUid != null)
+            // Get all docked shuttles
+            var dockedShuttles = new HashSet<EntityUid>();
+            GetAllDockedShuttles(uid, dockedShuttles);
+            // Store relative positions and docking info before moving main shuttle
+            var relativeTransforms =
+                new Dictionary<EntityUid, (Vector2 Position, Angle Rotation, List<(EntityUid DockA, EntityUid DockB)>
+                    Docks)>();
+            foreach (var dockedUid in dockedShuttles)
             {
-                _transform.SetParent(dockedUid, dockedXform, xform.MapUid.Value);
-                _transform.SetWorldRotationNoLerp(dockedUid, newRot);
-                _transform.SetWorldPosition(dockedUid, newPos);
+                if (dockedUid == uid) continue;
 
+                var dockedXform = _xformQuery.GetComponent(dockedUid);
+                var mainPos = _transform.GetWorldPosition(uid);
+                var dockedPos = _transform.GetWorldPosition(dockedUid);
+                var mainRot = _transform.GetWorldRotation(uid);
+                var dockedRot = _transform.GetWorldRotation(dockedUid);
+                var dockedBody = _physicsQuery.GetComponent(dockedUid);
+
+                // Store position and rotation relative to main shuttle
+                var dockConnections = new List<(EntityUid DockA, EntityUid DockB)>();
+                var docks = _dockSystem.GetDocks(dockedUid);
+                foreach (var dock in docks)
+                {
+                    if (!TryComp<DockingComponent>(dock, out var dockComp) || !dockComp.Docked ||
+                        dockComp.DockedWith == null)
+                        continue;
+                    dockConnections.Add((dock, dockComp.DockedWith.Value));
+                    _dockSystem.Undock((dock, dockComp));
+                }
+
+                relativeTransforms[dockedUid] = (dockedPos - mainPos, dockedRot - mainRot, dockConnections);
+                _physics.SetLinearVelocity(dockedUid, Vector2.Zero, body: dockedBody);
+                _physics.SetAngularVelocity(dockedUid, 0f, body: dockedBody);
             }
+
+            // Handle physics for main shuttle
             _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
             _physics.SetAngularVelocity(uid, 0f, body: body);
 
-            if (TryComp<PhysicsComponent>(dockedUid, out var dockedBody))
+            var target = comp.TargetCoordinates;
+
+            QueueDel(comp.VisualizerEntity);
+            comp.VisualizerEntity = null;
+
+            if (!Exists(comp.TargetCoordinates.EntityId))
             {
-                _physics.SetLinearVelocity(dockedUid, Vector2.Zero, body: dockedBody);
-                _physics.SetAngularVelocity(dockedUid, 0f, body: dockedBody);
-                var dockedShuttle = Comp<ShuttleComponent>(dockedUid);
-                if (TryGetFTLDrive(dockedUid, out _, out var drive))
+                // Uhh good luck
+                // Pick earliest map?
+                var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
+                var map = maps.Min(o => o.GetHashCode());
+                mapId = new MapId(map);
+                TryFTLProximity(uid, _mapSystem.GetMap(mapId));
+            }
+            // Docking FTL
+            else if (HasComp<MapGridComponent>(target.EntityId) && !HasComp<MapComponent>(target.EntityId))
+            {
+                var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target, comp.TargetAngle);
+                var mapCoordinates = _transform.ToMapCoordinates(target);
+
+                // Couldn't dock somehow so just fallback to regular position FTL.
+                if (config == null)
                 {
-                    MassAdjustFTLCooldown(dockedBody, drive, out var massAdjustedCooldown);
-                    ftlCooldown = massAdjustedCooldown;
-                }
-                if (HasComp<MapGridComponent>(xform.MapUid))
-                {
-                    Disable(dockedUid, component: dockedBody);
+                    TryFTLProximity(uid, target.EntityId);
                 }
                 else
                 {
-                    Enable(dockedUid, component: dockedBody, shuttle: dockedShuttle);
+                    FTLDock((uid, xform), config);
+                }
+
+                mapId = mapCoordinates.MapId;
+            }
+            // Position ftl
+            else
+            {
+                // TODO: This should now use tryftlproximity
+                mapId = _transform.GetMapId(target);
+                _transform.SetCoordinates(uid, xform, target, rotation: comp.TargetAngle.Reduced());
+            }
+
+            var handledShuttles = new HashSet<EntityUid>();
+            // Now move all docked shuttles to maintain their relative positions
+            var mainNewPos = _transform.GetWorldPosition(uid);
+            var mainNewRot = _transform.GetWorldRotation(uid);
+            foreach (var dockedUid in dockedShuttles)
+            {
+                if (dockedUid == uid) continue;
+                var dockedXform = _xformQuery.GetComponent(dockedUid);
+                var (relativePos, relativeRot, dockConnections) = relativeTransforms[dockedUid];
+                var ftlCooldown = 10f;
+
+                var newPos = mainNewPos + relativePos;
+                var newRot = mainNewRot + relativeRot;
+                if (xform.MapUid != null)
+                {
+                    _transform.SetParent(dockedUid, dockedXform, xform.MapUid.Value);
+                    _transform.SetWorldRotationNoLerp(dockedUid, newRot);
+                    _transform.SetWorldPosition(dockedUid, newPos);
+
+                }
+
+                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
+                _physics.SetAngularVelocity(uid, 0f, body: body);
+
+                if (TryComp<PhysicsComponent>(dockedUid, out var dockedBody))
+                {
+                    _physics.SetLinearVelocity(dockedUid, Vector2.Zero, body: dockedBody);
+                    _physics.SetAngularVelocity(dockedUid, 0f, body: dockedBody);
+                    var dockedShuttle = Comp<ShuttleComponent>(dockedUid);
+                    if (TryGetFTLDrive(dockedUid, out _, out var drive))
+                    {
+                        MassAdjustFTLCooldown(dockedBody, drive, out var massAdjustedCooldown);
+                        ftlCooldown = massAdjustedCooldown;
+                    }
+
+                    if (HasComp<MapGridComponent>(xform.MapUid))
+                    {
+                        Disable(dockedUid, component: dockedBody);
+                    }
+                    else
+                    {
+                        Enable(dockedUid, component: dockedBody, shuttle: dockedShuttle);
+                    }
+                }
+
+                // Re-establish all docking connections
+                foreach (var (dockA, dockB) in dockConnections)
+                {
+                    if (!TryComp<DockingComponent>(dockA, out var dockCompA) ||
+                        !TryComp<DockingComponent>(dockB, out var dockCompB))
+                        continue;
+                    _dockSystem.Dock((dockA, dockCompA), (dockB, dockCompB));
+                    _dockSystem.Dock((dockB, dockCompB), (dockA, dockCompA));
+                }
+
+                // Put linked shuttles in cooldown state instead of immediately removing the component
+                if (ftlCooldown > 0f && TryComp<FTLComponent>(dockedUid, out var dockedFtl))
+                {
+                    dockedFtl.State = FTLState.Cooldown;
+                    dockedFtl.StateTime = StartEndTime.FromCurTime(_gameTiming, ftlCooldown);
+                }
+                else
+                {
+                    RemComp<FTLComponent>(dockedUid);
+                }
+
+                // Refresh consoles for this docked shuttle as well
+                _console.RefreshShuttleConsoles(dockedUid);
+            }
+
+            // Only remove visualizer after everything is in position
+            QueueDel(comp.VisualizerEntity);
+            comp.VisualizerEntity = null;
+            _thruster.DisableLinearThrusters(entity.Comp2);
+
+            comp.TravelStream = _audio.Stop(comp.TravelStream);
+            var audio = _audio.PlayPvs(_arrivalSound, uid);
+            _audio.SetGridAudio(audio);
+
+            // Re-enable map if it was paused.
+            if (TryComp<FTLDestinationComponent>(_mapManager.GetMapEntityId(mapId), out var dest))
+            {
+                dest.Enabled = true;
+            }
+
+            _mapManager.SetMapPaused(mapId, false);
+            Smimsh(uid, xform: xform);
+
+            // Add cooldown before removing the FTL component
+            if (globalFtlCooldown > 0f)
+            {
+                comp.State = FTLState.Cooldown;
+                comp.StateTime = StartEndTime.FromCurTime(_gameTiming, globalFtlCooldown);
+            }
+            else
+            {
+                RemComp(uid, comp);
+            }
+
+            var ftlEvent = new FTLCompletedEvent(uid, _mapSystem.GetMap(mapId));
+            RaiseLocalEvent(uid, ref ftlEvent, true);
+            _console.RefreshShuttleConsoles(uid);
+
+            if (_physicsQuery.TryGetComponent(uid, out body))
+            {
+                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
+                _physics.SetAngularVelocity(uid, 0f, body: body);
+
+                // Disable shuttle if it's on a planet; unfortunately can't do this in parent change messages due
+                // to event ordering and awake body shenanigans (at least for now).
+                if (HasComp<MapGridComponent>(xform.MapUid))
+                {
+                    Disable(uid, component: body);
+                }
+                else
+                {
+                    Enable(uid, component: body, shuttle: entity.Comp2);
                 }
             }
-
-            // Re-establish all docking connections
-            foreach (var (dockA, dockB) in dockConnections)
+        }
+        catch (Exception ex) // Exodus-FTLErrorShield | try/catch wrap and the most important finally block
+        {
+            Log.Error($"Exception during FTL arrival for {ToPrettyString(uid)}: {ex}");
+        }
+        finally // Exodus-FTLErrorShield | try/catch wrap and the most important finally block
+        {
+            if (mapId != MapId.Nullspace)
             {
-                if (!TryComp<DockingComponent>(dockA, out var dockCompA) ||
-                    !TryComp<DockingComponent>(dockB, out var dockCompB))
-                    continue;
-                _dockSystem.Dock((dockA, dockCompA), (dockB, dockCompB));
-                _dockSystem.Dock((dockB, dockCompB), (dockA, dockCompA));
+                if (TryComp<FTLDestinationComponent>(_mapManager.GetMapEntityId(mapId), out var dest))
+                {
+                    dest.Enabled = true;
+                }
+                _mapManager.SetMapPaused(mapId, false);
             }
 
-            // Put linked shuttles in cooldown state instead of immediately removing the component
-            if (ftlCooldown > 0f && TryComp<FTLComponent>(dockedUid, out var dockedFtl))
+            // Clean up state if we crashed
+            if (TryComp<FTLComponent>(uid, out var remainingComp) && remainingComp.State == FTLState.Arriving)
             {
-                dockedFtl.State = FTLState.Cooldown;
-                dockedFtl.StateTime = StartEndTime.FromCurTime(_gameTiming, ftlCooldown);
-            }
-            else
-            {
-                RemComp<FTLComponent>(dockedUid);
-            }
-
-            // Refresh consoles for this docked shuttle as well
-            _console.RefreshShuttleConsoles(dockedUid);
-        }
-
-        // Only remove visualizer after everything is in position
-        QueueDel(comp.VisualizerEntity);
-        comp.VisualizerEntity = null;
-        _thruster.DisableLinearThrusters(entity.Comp2);
-
-        comp.TravelStream = _audio.Stop(comp.TravelStream);
-        var audio = _audio.PlayPvs(_arrivalSound, uid);
-        _audio.SetGridAudio(audio);
-
-        // Re-enable map if it was paused.
-        if (TryComp<FTLDestinationComponent>(_mapManager.GetMapEntityId(mapId), out var dest))
-        {
-            dest.Enabled = true;
-        }
-
-        _mapManager.SetMapPaused(mapId, false);
-        Smimsh(uid, xform: xform);
-
-        // Add cooldown before removing the FTL component
-        if (globalFtlCooldown > 0f)
-        {
-            comp.State = FTLState.Cooldown;
-            comp.StateTime = StartEndTime.FromCurTime(_gameTiming, globalFtlCooldown);
-        }
-        else
-        {
-            RemComp(uid, comp);
-        }
-
-        var ftlEvent = new FTLCompletedEvent(uid, _mapSystem.GetMap(mapId));
-        RaiseLocalEvent(uid, ref ftlEvent, true);
-        _console.RefreshShuttleConsoles(uid);
-
-        if (_physicsQuery.TryGetComponent(uid, out body))
-        {
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-            _physics.SetAngularVelocity(uid, 0f, body: body);
-
-            // Disable shuttle if it's on a planet; unfortunately can't do this in parent change messages due
-            // to event ordering and awake body shenanigans (at least for now).
-            if (HasComp<MapGridComponent>(xform.MapUid))
-            {
-                Disable(uid, component: body);
-            }
-            else
-            {
-                Enable(uid, component: body, shuttle: entity.Comp2);
+                remainingComp.State = FTLState.Cooldown;
+                remainingComp.StateTime = StartEndTime.FromCurTime(_gameTiming, 10f);
             }
         }
     }
