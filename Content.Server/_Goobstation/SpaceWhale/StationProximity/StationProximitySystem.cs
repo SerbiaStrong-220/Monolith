@@ -54,11 +54,7 @@ public sealed class StationProximitySystem : EntitySystem
         var centralStation = _station.GetStationById(centralStationId);
 
         if (centralStation is not { } station)
-        {
-            Log.Warning($"Cannot find station with ID \"{centralStationId}\"; Space whales was disabled;");
-            _cfg.SetCVar(GoobCVars.SpaceWhaleSpawn, false);
             return;
-        }
 
         var stationXform = Transform(station);
 
