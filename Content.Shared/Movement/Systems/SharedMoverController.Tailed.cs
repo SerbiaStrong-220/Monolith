@@ -2,6 +2,7 @@
 // Authors: Lokilife
 using System.Numerics;
 using Content.Shared.Exodus.Tailed;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Movement.Systems;
@@ -58,6 +59,10 @@ public abstract partial class SharedMoverController
             var segment = tail.TailSegments[i];
 
             if (!TryComp<PhysicsComponent>(segment, out var physics))
+                continue;
+
+            var xform = Transform(segment);
+            if (!xform.ParentUid.IsValid())
                 continue;
 
             var currentPos = _transform.GetWorldPosition(segment);
@@ -129,6 +134,9 @@ public abstract partial class SharedMoverController
         {
             var segment = tail.TailSegments[i];
             var segmentPos = _transform.GetWorldPosition(segment);
+            var segmentXform = Transform(segment);
+            if (!segmentXform.ParentUid.IsValid())
+                continue;
 
             var direction = prevPos - segmentPos;
 

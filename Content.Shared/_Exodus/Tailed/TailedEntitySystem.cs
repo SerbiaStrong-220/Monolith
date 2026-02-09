@@ -70,8 +70,8 @@ public sealed partial class TailedEntitySystem : EntitySystem
     {
         var (uid, comp, xform) = ent;
 
-        var mapUid = xform.MapUid;
-        if (mapUid == null)
+        var parentUid = xform.ParentUid;
+        if (!parentUid.IsValid())
             return;
 
         // Ensure the head entity has physics for joints
@@ -88,7 +88,7 @@ public sealed partial class TailedEntitySystem : EntitySystem
             var offset = headRot.ToWorldVec() * comp.Spacing * (i + 1);
             var spawnPos = headPos - offset;
 
-            var segment = PredictedSpawnAtPosition(comp.Prototype, new EntityCoordinates(mapUid.Value, spawnPos));
+            var segment = PredictedSpawnAtPosition(comp.Prototype, new EntityCoordinates(parentUid, spawnPos));
 
             _transform.SetWorldRotation(segment, headRot);
 
