@@ -2,6 +2,7 @@
 // Authors: Lokilife
 using Content.Shared.Damage;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Exodus.Tailed;
