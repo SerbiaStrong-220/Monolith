@@ -15,8 +15,7 @@ namespace Content.Shared.Shuttles.Components;
 public sealed partial class FTLComponent : Component
 {
     // TODO Full game save / add datafields
-
-    [ViewVariables]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)] // Exodus-FixFTLErrors
     public FTLState State = FTLState.Available;
 
     /// <summary>
@@ -25,14 +24,14 @@ public sealed partial class FTLComponent : Component
     [DataField("linkedShuttle")]
     public EntityUid? LinkedShuttle;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)] // Exodus-FixFTLErrors
     public StartEndTime StateTime;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)] // Exodus-FixFTLErrors
     public float StartupTime = 0f;
 
     // Because of sphagetti, actual travel time is Math.Max(TravelTime, DefaultArrivalTime)
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)] // Exodus-FixFTLErrors
     public float TravelTime = 0f;
 
     [DataField]
