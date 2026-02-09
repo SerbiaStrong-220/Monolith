@@ -113,7 +113,6 @@ namespace Content.IntegrationTests.Tests
                 }
             });
             await server.WaitRunTicks(15);
-            await server.WaitIdleAsync(); // Exodus-Fix | Wait for physics to settle
             await server.WaitPost(() =>
             {
                 static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)

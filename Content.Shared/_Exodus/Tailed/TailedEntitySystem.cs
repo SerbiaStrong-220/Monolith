@@ -49,6 +49,17 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
     private void OnComponentShutdown(EntityUid uid, TailedEntityComponent component, ComponentShutdown args)
     {
+        // CRITICAL: Remove joints before deleting entities
+        // This prevents physics from trying to update positions of entities being deleted
+        var prev = uid;
+        foreach (var segment in component.TailSegments)
+        {
+            // Remove the joint between prev and this segment
+            _joint.RemoveJoint(prev, $"TailJoint_{prev}_{segment}");
+            prev = segment;
+        }
+
+        // Now safe to queue deletion
         foreach (var segment in component.TailSegments)
             QueueDel(segment);
 
