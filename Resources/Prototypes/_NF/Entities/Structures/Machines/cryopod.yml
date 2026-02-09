@@ -25,6 +25,10 @@
   - type: MaterialStorage
   - type: Appearance
   - type: Climbable
+  # Exodus-Fix-Start
+  - type: ExitContainerOnMove
+    containerId: body_container
+  # Exodus-Fix-End
   - type: CryoSleep
   - type: ContainerContainer
     containers:
