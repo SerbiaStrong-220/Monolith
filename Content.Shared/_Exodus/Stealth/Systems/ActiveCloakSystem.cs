@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Exodus.Stealth.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -15,7 +16,6 @@ namespace Content.Shared.Exodus.Stealth;
 
 public sealed partial class ActiveCloakSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
@@ -57,7 +57,9 @@ public sealed partial class ActiveCloakSystem : EntitySystem
         // Remove stealth if active
         if (comp.Enabled)
         {
-            _stealth.RemoveRequest(nameof(ActiveCloakSystem), uid);
+            var target = HasComp<StealthComponent>(uid) ? uid : Transform(uid).ParentUid;
+
+            _stealth.RemoveRequest(nameof(ActiveCloakSystem), target);
         }
     }
 
