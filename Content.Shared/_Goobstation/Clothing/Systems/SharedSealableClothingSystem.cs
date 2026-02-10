@@ -35,6 +35,7 @@ public abstract class SharedSealableClothingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPowerCellSystem _powerCellSystem = default!;
     [Dependency] private readonly ToggleableClothingSystem _toggleableSystem = default!;
+    [Dependency] private readonly ItemToggleSystem _item = default!; // Exodus
 
     public override void Initialize()
     {
@@ -64,7 +65,8 @@ public abstract class SharedSealableClothingSystem : EntitySystem
     /// <param name="args"></param>
     private void OnPartSealingComplete(Entity<SealableClothingComponent> part, ref ClothingPartSealCompleteEvent args)
     {
-        _componentTogglerSystem.ToggleComponent(part, args.IsSealed);
+        Log.Info($"{MetaData(part).EntityName} : part : is sealed : {args.IsSealed}");
+        _item.TrySetActive(part.Owner, args.IsSealed); // Exodus
     }
 
     /// <summary>
@@ -72,7 +74,8 @@ public abstract class SharedSealableClothingSystem : EntitySystem
     /// </summary>
     private void OnControlSealingComplete(Entity<SealableClothingControlComponent> control, ref ClothingControlSealCompleteEvent args)
     {
-        _componentTogglerSystem.ToggleComponent(control, args.IsSealed);
+        Log.Info($"{MetaData(control).EntityName} : control : is sealed : {args.IsSealed}");
+        _item.TrySetActive(control.Owner, args.IsSealed); // Exodus
     }
 
     /// <summary>

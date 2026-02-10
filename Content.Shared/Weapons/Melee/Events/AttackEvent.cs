@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Inventory;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -21,8 +22,10 @@ namespace Content.Shared.Weapons.Melee.Events
     /// <summary>
     ///     Event raised on entities that have been attacked.
     /// </summary>
-    public sealed class AttackedEvent : EntityEventArgs
+    public sealed class AttackedEvent : EntityEventArgs, IInventoryRelayEvent // Exodus | Make inventory relayed
     {
+        public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>

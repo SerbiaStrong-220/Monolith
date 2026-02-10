@@ -76,6 +76,7 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -172,6 +173,7 @@
         Piercing: 0.85
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -269,6 +271,7 @@
         Piercing: 0.85
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -357,6 +360,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -445,6 +449,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -541,6 +546,7 @@
         Piercing: 0.90
         Heat: 0.8
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -629,6 +635,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -725,6 +732,7 @@
         Piercing: 0.85
         Heat: 0.8
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask

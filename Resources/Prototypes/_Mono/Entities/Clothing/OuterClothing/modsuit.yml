@@ -42,6 +42,7 @@
         Heat: 0.75
         Radiation: 0.5
         Caustic: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -97,6 +98,7 @@
         Heat: 0.55
         Caustic: 0.4
         Radiation: 0.35
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -155,6 +157,8 @@
         Radiation: 0.2
         Caustic: 0.3
         Poison: 0.8
+  - type: ItemToggle # Exodus
+  - type: ActiveCloak # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -210,6 +214,7 @@
         Heat: 0.5
         Shock: 0.9
         Radiation: 0.7
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -226,7 +231,7 @@
 # Gallóglach
 
 - type: entity
-  parent: [ ClothingOuterBase ] # Mono 
+  parent: [ ClothingOuterBase ] # Mono
   id: ClothingModsuitChestplateMercenary
   name: mercenary modsuit chestplate
   description: A well rounded modsuit that focuses on mobility with its Actuator Enhancement System allowing its wearer to leap across the battlefield for rapid redeployment.
@@ -266,6 +271,7 @@
         Heat: 0.6
         Caustic: 0.45 # Mono
         Radiation: .75 # Mono
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection

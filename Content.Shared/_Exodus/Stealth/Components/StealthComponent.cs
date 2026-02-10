@@ -60,7 +60,7 @@ public sealed partial class StealthData
     public float PassiveVisibilityRate = -0.15f;
 
     [DataField]
-    public float MovementVisibilityRate = 0f;
+    public float MovementVisibilityRate = 0.1f;
 
     [DataField]
     public float InvisibilityPenalty = 1f;

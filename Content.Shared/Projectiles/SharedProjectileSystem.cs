@@ -134,7 +134,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             SetShooter(uid, component, target);
             return null;
         }
-        
+
         var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
         if (ev.Handled)
@@ -147,6 +147,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
             return null;
         }
+
+        // Exodus-Start
+        // entity hit confirmed
+        var targetEv = new ProjectileHitTargetEvent(component.Damage, target, component.Shooter);
+        RaiseLocalEvent(target, ref targetEv);
+        // Exodus-End
 
         var coordinates = collisionCoordinates != null
             ? _transform.ToCoordinates(collisionCoordinates.Value)
@@ -602,6 +608,17 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null, bool Handled = false);
+
+// Exodus-Start
+/// <summary>
+/// Raised when a projectile hits an entity
+/// </summary>
+[ByRefEvent]
+public record struct ProjectileHitTargetEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null) : IInventoryRelayEvent // Exodus | Make inventory relayed
+{
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+};
+// Exodus-End
 
 /// <summary>
 /// Raised when a projectile is about to collide with an entity, allowing systems to prevent the collision

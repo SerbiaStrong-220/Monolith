@@ -34,11 +34,11 @@ public sealed partial class InstantStealthSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, InstantStealthComponent comp, MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Alive && !comp.Stealth.EnabledOnCrit)
+        if (args.NewMobState == MobState.Critical && !comp.Stealth.EnabledOnCrit)
         {
             _stealthSystem.RequestStealth(uid, nameof(InstantStealthSystem), comp.Stealth);
         }
-        else if (args.NewMobState == MobState.Alive && !comp.Stealth.EnabledOnDeath)
+        else if (args.NewMobState == MobState.Dead && !comp.Stealth.EnabledOnDeath)
         {
             _stealthSystem.RequestStealth(uid, nameof(InstantStealthSystem), comp.Stealth);
         }

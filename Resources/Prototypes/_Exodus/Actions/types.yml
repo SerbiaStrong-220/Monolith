@@ -1,0 +1,17 @@
+- type: entity
+  id: ActionToggleActiveCloak
+  name: action-name-active-cloak-toggle
+  description: action-description-active-cloak-toggle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    priority: -20
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core
+    iconOn:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core_on
+    event: !type:ToggleActiveCloakEvent
