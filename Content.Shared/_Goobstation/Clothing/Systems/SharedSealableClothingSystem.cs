@@ -65,7 +65,6 @@ public abstract class SharedSealableClothingSystem : EntitySystem
     /// <param name="args"></param>
     private void OnPartSealingComplete(Entity<SealableClothingComponent> part, ref ClothingPartSealCompleteEvent args)
     {
-        Log.Info($"{MetaData(part).EntityName} : part : is sealed : {args.IsSealed}");
         _item.TrySetActive(part.Owner, args.IsSealed); // Exodus
     }
 
@@ -74,7 +73,6 @@ public abstract class SharedSealableClothingSystem : EntitySystem
     /// </summary>
     private void OnControlSealingComplete(Entity<SealableClothingControlComponent> control, ref ClothingControlSealCompleteEvent args)
     {
-        Log.Info($"{MetaData(control).EntityName} : control : is sealed : {args.IsSealed}");
         _item.TrySetActive(control.Owner, args.IsSealed); // Exodus
     }
 
