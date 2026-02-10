@@ -11,7 +11,4 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: ai_core
-    iconOn:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: ai_core_on
     event: !type:ToggleActiveCloakEvent

@@ -26,7 +26,7 @@ public sealed partial class ActiveCloakSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ActiveCloakComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ActiveCloakComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<ActiveCloakComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActiveCloakComponent, ToggleActiveCloakEvent>(OnToggleCloak);
         SubscribeLocalEvent<ActiveCloakComponent, ItemToggledEvent>(OnItemToggled);
@@ -44,16 +44,12 @@ public sealed partial class ActiveCloakSystem : EntitySystem
         SubscribeLocalEvent<ActiveCloakComponent, GunShotUserEvent>(OnGunShotDirect);
         SubscribeLocalEvent<ActiveCloakComponent, MeleeHitEvent>(OnMeleeHitDirect);
         SubscribeLocalEvent<ActiveCloakComponent, MobStateChangedEvent>(OnMobStateChangedDirect);
-
-        // Item actions when equipped
-        SubscribeLocalEvent<ActiveCloakComponent, GetItemActionsEvent>(OnGetItemActions);
     }
 
-    private void OnMapInit(EntityUid uid, ActiveCloakComponent comp, MapInitEvent args)
+    private void OnGetItemActions(EntityUid uid, ActiveCloakComponent comp, GetItemActionsEvent args)
     {
-        // Grant toggle action
         if (comp.ToggleActionId != null)
-            _actions.AddAction(uid, ref comp.ToggleAction, comp.ToggleActionId);
+            args.AddAction(ref comp.ToggleAction, comp.ToggleActionId, uid);
     }
 
     private void OnShutdown(EntityUid uid, ActiveCloakComponent comp, ComponentShutdown args)
@@ -91,7 +87,7 @@ public sealed partial class ActiveCloakSystem : EntitySystem
         if (!comp.Enabled)
             return;
 
-        BreakCloak(args.Args.User, comp);
+        BreakCloak(args.Args.Target, comp);
     }
 
     private void OnProjectileHit(EntityUid uid, ActiveCloakComponent comp, InventoryRelayedEvent<ProjectileHitTargetEvent> args)
@@ -170,13 +166,6 @@ public sealed partial class ActiveCloakSystem : EntitySystem
             return;
 
         BreakCloak(uid, comp);
-    }
-
-    private void OnGetItemActions(EntityUid uid, ActiveCloakComponent comp, GetItemActionsEvent args)
-    {
-        // Provide toggle action when equipped
-        if (comp.ToggleAction != null)
-            args.AddAction(comp.ToggleAction.Value);
     }
 
     private void TryEnableCloak(EntityUid target, EntityUid cloak, ActiveCloakComponent comp)

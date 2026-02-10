@@ -36,6 +36,13 @@ namespace Content.Shared.Weapons.Melee.Events
         /// </summary>
         public EntityUid User { get; }
 
+        // Exodus-Start | add target
+        /// <summary>
+        ///     Entity that have been attacked
+        /// </summary>
+        public EntityUid Target { get; }
+        // Exodus-End
+
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
@@ -43,11 +50,12 @@ namespace Content.Shared.Weapons.Melee.Events
 
         public DamageSpecifier BonusDamage = new();
 
-        public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
+        public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation, EntityUid target) // Exodus | add target
         {
             Used = used;
             User = user;
             ClickLocation = clickLocation;
+            Target = target; // Exodus | add target
         }
     }
 }
