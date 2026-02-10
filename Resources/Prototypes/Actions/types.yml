@@ -37,6 +37,7 @@
   description: Turn the light on and off.
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
@@ -48,6 +49,7 @@
   description: Opens or closes the storage implant embedded under your skin
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -110,6 +112,7 @@
   description: Opens the syndicate uplink embedded under your skin
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -138,9 +141,9 @@
   description: Randomly teleports you within a large distance.
   components:
   - type: InstantAction
-    # checkCanInteract: false # Goobstation - scrambler rework - start
+    checkCanInteract: false # Exodus
     # charges: 2
-    useDelay: 120 # Goobstation - scrambler rework - end
+    useDelay: 120
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -156,6 +159,7 @@
   - type: ConfirmableAction
     popup: dna-scrambler-action-popup
   - type: InstantAction
+    checkCanInteract: false # Exodus
     charges: 1
     itemIconStyle: BigAction
     priority: -20
@@ -279,6 +283,7 @@
   description: Activates your honking implant, which will produce the signature sound of the clown.
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 1
@@ -325,6 +330,7 @@
   description: Turn the Fake Mindshield implant's transmission on/off
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem

@@ -160,7 +160,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         {
             var valid = false;
 
-            var range = (float) Math.Sqrt(radius);
+            var range = radius * 2; // Exodus-Fix
             var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
             var tilesInRange = _mapSystem.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
