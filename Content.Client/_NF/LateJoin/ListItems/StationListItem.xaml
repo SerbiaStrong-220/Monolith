@@ -2,8 +2,8 @@
                 Access="Public"
                 Margin="0 2 0 2"
                 MaxWidth="360"
-                SetHeight="80"
-                HorizontalExpand="True">
+                SetHeight="120"
+                HorizontalExpand="True"> <!-- Ru-Localization: SetHeight `80` -> `120` -->
 
     <Button Name="StationButton"
             Access="Public"
