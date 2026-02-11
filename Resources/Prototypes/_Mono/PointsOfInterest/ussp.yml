@@ -11,7 +11,7 @@
 - type: pointOfInterest
   id: USSPCamelot
   parent: [BasePOI, BaseRepairablePOI]
-  name: 'Camelot Station'
+  name: 'Форт Камелот' # Ru-Localization
   minimumDistance: 10650
   maximumDistance: 12400
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: USSPCamelot
-  mapName: 'Camelot Station'
+  mapName: 'Форт Камелот' # Ru-Localization
   mapPath: /Maps/_Mono/POI/camelot.yml
   minPlayers: 0
   stations:
@@ -33,10 +33,10 @@
         - type: VesselMusic
           ambientMusicPrototype: CamelotMusic
         - type: VesselInfo
-          description: "A rickety old station once owned by a now decrepit interstellar power. Cold and dark."
+          description: "Ветхая станция, некогда принадлежавшая СССП. Холодно и темно." # Ru-Localization
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Camelot Station'
+          mapNameTemplate: 'Форт Камелот' # Ru-Localization
         - type: ExtraStationInformation
           iconPath: /Textures/_NF/Structures/Storage/Crates/secure_ammo.rsi/icon.png
           stationSubtext: 'frontier-lobby-camelot-subtext'

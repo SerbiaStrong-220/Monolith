@@ -85,7 +85,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: Colossus Central
+      name: Центральный Аванпост # Ru-Localization
     - type: Transform
       pos: 0.85276127,-0.66094494
       parent: 1
