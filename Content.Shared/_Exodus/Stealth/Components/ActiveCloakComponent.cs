@@ -63,5 +63,5 @@ public sealed partial class ActiveCloakComponent : Component
     /// Sound played when cloak breaks
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? BreakSound = null;
+    public SoundSpecifier? BreakSound = new SoundPathSpecifier("/Audio/_Exodus/Effects/electric_break.ogg");
 }
