@@ -46,7 +46,7 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             var visuals = EnsureComp<JointVisualsComponent>(shootUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.Target = GetNetEntity(uid);
-            Dirty(shootUid.Value, component);
+            Dirty(shootUid.Value, visuals);
         }
     }
 
@@ -88,11 +88,14 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         var anchorB = Vector2.Transform(targetPos, _transform.GetInvWorldMatrix(targetGridUid.Value));
 
         var jointComp = EnsureComp<JointComponent>(targetGridUid.Value);
-        var joint = _joints.CreateDistanceJoint(gunGridUid.Value, targetGridUid.Value, anchorA, anchorB);
+        var joint = _joints.CreateDistanceJoint(gunGridUid.Value, targetGridUid.Value, anchorA, anchorB, id:$"{ID}_{args.Weapon}");
 
         joint.ID = $"{ID}_{args.Weapon.ToString()}";
-        joint.MaxLength = joint.Length + 25.0f;
+        joint.MaxLength = joint.Length + 2.0f;
         joint.Stiffness = 1f;
+
+        _physics.WakeBody(gunGridUid.Value);
+        _physics.WakeBody(targetGridUid.Value);
 
         Dirty(targetGridUid.Value, jointComp);
     }
