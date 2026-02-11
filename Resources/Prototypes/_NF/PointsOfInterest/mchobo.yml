@@ -12,7 +12,7 @@
 - type: pointOfInterest
   id: McHobo
   parent: BasePOI
-  name: "Заброшенный МакХободьс" # Ru-Localization
+  name: "Заброшенный МакХобольдс" # Ru-Localization
   minimumDistance: 6250
   maximumDistance: 7600
   spawnGroup: Scrapyard
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: McHobo
-  mapName: "Заброшенный МакХободьс" # Ru-Localization
+  mapName: "Заброшенный МакХобольдс" # Ru-Localization
   mapPath: /Maps/_NF/POI/mchobo.yml
   minPlayers: 0
   stations:
@@ -28,4 +28,4 @@
       stationProto: DeadDropRecordsFrontierOutpost
       components:
         - type: StationNameSetup
-          mapNameTemplate: "Заброшенный МакХободьс" # Ru-Localization
+          mapNameTemplate: "Заброшенный МакХобольдс" # Ru-Localization
