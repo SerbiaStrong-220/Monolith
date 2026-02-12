@@ -19,8 +19,8 @@ comms-console-announcement-sent-by = Отправитель
 comms-console-announcement-unknown-sender = Неизвестный
 # Comms console variant titles
 comms-console-announcement-title-station = Консоль связи
-comms-console-announcement-title-centcom = Центрального Командования
+comms-console-announcement-title-centcom = Зимнего Солнцестояния
 comms-console-announcement-title-nukie = Синдиката
 comms-console-announcement-title-station-ai = Станционного ИИ
 comms-console-announcement-title-wizard = Мага
-comms-console-announcement-title-rogue = Phaethon Dynasty Imperial Vanguard
+comms-console-announcement-title-rogue = Авангарда Династии Фаэтон
