@@ -9,15 +9,11 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 
-COPY release/SS14.Server_linux-x64.zip .
-RUN unzip SS14.Server_linux-x64.zip -d server/ \
-    && rm SS14.Server_linux-x64.zip
+COPY release/SS14.Server_linux-x64.zip /tmp/server.zip
+RUN unzip /tmp/server.zip -d server/ \
+    && rm /tmp/server.zip
 
-
-RUN find /src/server/ -type f -name "*.zip" -delete \
-    && find /src/server/ -type f -name "*.tar.gz" -delete \
-    && chmod +x /src/server/Robust.Server
-
+RUN chmod +x /src/server/Robust.Server
 
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS final
 WORKDIR /app
