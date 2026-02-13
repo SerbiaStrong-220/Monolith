@@ -37,7 +37,7 @@ jobs:
       run: |
         if [[ ${{ github.ref }} == refs/tags/* ]]; then
           VERSION=${GITHUB_REF#refs/tags/}
-          VERSION=${VERSION#v}  # Убираем 'v' если есть
+          VERSION=${VERSION#v}
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
           echo "tag_with_v=v${VERSION}" >> $GITHUB_OUTPUT
         else
