@@ -39,20 +39,51 @@ jobs:
 
     - name: Package client
       run: dotnet run --project Content.Packaging client --no-wipe-release
+      
+    # --- Publish artifacts --- 
+    - name: Upload server artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ss14-server-linux
+        path: ./release/SS14.Server_linux-x64.zip
 
-    - name: Publish version
-      run: Tools/publish_multi_request.py
+    - name: Publish version  # Push client to CDN
+      run: Tools/publish_client.py
       env:
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+        PUBLISH_TOKEN : ${{ secrets.PUBLISH_TOKEN }}
+        ROBUST_CDN_URL: ${{ vars.ROBUST_CDN_URL }}
+        FORK_ID       : ${{ vars.FORK_ID }}
+  
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.6.0
 
-    - name: Publish changelog (Discord)
-      run: Tools/actions_changelogs_since_last_run.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+      - name: Download server artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ss14-server-linux
+          path: docker-build
 
-    #- name: Publish changelog (RSS)
-    #  run: Tools/actions_changelog_rss.py
-    #  env:
-    #    CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          build-args: |
+            SERVER_ZIP=./docker-build/SS14.Server_linux-x64.zip
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/monolith-server:latest
+            ghcr.io/${{ github.repository_owner }}/monolith-server:${{ github.sha }}
+  
