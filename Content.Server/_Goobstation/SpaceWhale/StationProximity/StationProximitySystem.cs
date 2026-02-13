@@ -11,7 +11,6 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Tag;
 using Content.Server.Station.Components;
 using System.Numerics;
-using System.Linq;
 
 namespace Content.Server._Goobstation.SpaceWhale.StationProximity;
 
@@ -76,14 +75,14 @@ public sealed class StationProximitySystem : EntitySystem
             if (isFar)
             {
                 // get closest station pos
-                var closest = stationPositions.First();
+                var closest = stationPositions[0];
 
                 foreach (var pos in stationPositions)
                 {
                     var prev = closest - humanoidPos;
                     var curr = pos - humanoidPos;
 
-                    if (curr.Length() > prev.Length())
+                    if (curr.Length() < prev.Length())
                     {
                         closest = pos;
                     }
