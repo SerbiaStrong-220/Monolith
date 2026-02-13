@@ -1,11 +1,7 @@
 using Content.Shared._Goobstation.CCVars;
-using Content.Server.Popups;
 using Content.Server._Goobstation.MobCaller;
-using Content.Shared.Popups;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
-using Content.Shared.Exodus.CCVar;
-using Content.Server.Station.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
@@ -14,7 +10,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Tag;
 using Content.Server.Station.Components;
-using Robust.Shared.Map;
 using System.Numerics;
 using System.Linq;
 
@@ -26,14 +21,12 @@ namespace Content.Server._Goobstation.SpaceWhale.StationProximity;
 public sealed class StationProximitySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
-    private readonly ProtoId<TagPrototype> POITag = "POI";
+    private readonly ProtoId<TagPrototype> _poiTag = "POI";
 
     private static readonly TimeSpan CheckInterval = TimeSpan.FromSeconds(60); // le hardcode major
     private TimeSpan _nextCheck = TimeSpan.Zero;
@@ -65,7 +58,7 @@ public sealed class StationProximitySystem : EntitySystem
 
         while (query.MoveNext(out var uid, out _))
         {
-            if (_tag.HasTag(uid, POITag))
+            if (_tag.HasTag(uid, _poiTag))
                 stationPositions.Add(_transform.GetWorldPosition(uid));
         }
 
@@ -98,7 +91,7 @@ public sealed class StationProximitySystem : EntitySystem
 
                 // is closest station far enough
                 var vec = closest - humanoidPos;
-                isFar = vec.Length() > _cfg.GetCVar(GoobCVars.SpaceWhaleSpawnDistance);
+                isFar = vec.Length() > _spawnDistance;
             }
 
             if (isFar)
