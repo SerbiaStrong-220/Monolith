@@ -43,9 +43,13 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             Log.Info("Grappling gun shot with grapple projectile!");
 
             component.Projectile = shootUid.Value;
+            PvsOverride(shootUid.Value);
             var visuals = EnsureComp<JointVisualsComponent>(shootUid.Value);
+            Log.Info("Ship EnsureComp<JointVisualsComponent>(shotUid.Value);");
             visuals.Sprite = component.RopeSprite;
             visuals.Target = GetNetEntity(uid);
+            visuals.OffsetA = new Vector2(0f, 0.5f);
+            Dirty(uid, component);
             Dirty(shootUid.Value, visuals);
         }
     }
@@ -99,4 +103,6 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         Dirty(targetGridUid.Value, jointComp);
     }
+
+    protected virtual void PvsOverride(EntityUid uid) {}
 }

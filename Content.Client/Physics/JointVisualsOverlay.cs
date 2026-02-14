@@ -3,6 +3,7 @@ using Content.Shared.Physics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Log;
 
 namespace Content.Client.Physics;
 
@@ -33,6 +34,7 @@ public sealed class JointVisualsOverlay : Overlay
 
         while (joints.MoveNext(out var visuals, out var xform))
         {
+            Logger.Debug("MoveNext");
             if (xform.MapID != args.MapId)
                 continue;
 
@@ -65,6 +67,8 @@ public sealed class JointVisualsOverlay : Overlay
             var angle = (posB - posA).ToWorldAngle();
             var box = new Box2(-width / 2f, -length / 2f, width / 2f, length / 2f);
             var rotate = new Box2Rotated(box.Translated(midPoint), angle, midPoint);
+
+            Logger.Debug($"JointVisualsOverlay: target={visuals.Target}, posA={posA}, posB={posB}, length={length:F2}, angle={angle}");
 
             worldHandle.DrawTextureRect(texture, rotate);
         }
