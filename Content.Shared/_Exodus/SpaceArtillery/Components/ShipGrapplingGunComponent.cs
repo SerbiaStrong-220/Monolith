@@ -2,6 +2,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
+using Robust.Shared.Physics.Dynamics.Joints;
 
 namespace Content.Shared.Exodus.SpaceArtillery.Components;
 
@@ -9,7 +10,7 @@ namespace Content.Shared.Exodus.SpaceArtillery.Components;
 public sealed partial class ShipGrapplingGunComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public string JointId = string.Empty;
+    public string? JointId = string.Empty;
 
     [DataField, AutoNetworkedField]
     public EntityUid? Projectile;
