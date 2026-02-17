@@ -9,7 +9,6 @@ public sealed class JointVisualsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        Log.Info("JointVisualsSystem AddOverlay!");
         _overlay.AddOverlay(new JointVisualsOverlay(EntityManager));
     }
 

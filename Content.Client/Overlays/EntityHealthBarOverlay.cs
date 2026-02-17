@@ -12,7 +12,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Log;
 using static Robust.Shared.Maths.Color;
 
 namespace Content.Client.Overlays;
@@ -49,7 +48,6 @@ public sealed class EntityHealthBarOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        Logger.Info("EntityHealthBarOverlay: Start Drawing");
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();

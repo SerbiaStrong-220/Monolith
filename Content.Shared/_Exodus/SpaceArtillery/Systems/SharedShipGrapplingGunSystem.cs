@@ -1,7 +1,9 @@
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
+using Content.Shared.Destructible;
 using Content.Shared.Weapons.Misc;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Exodus.SpaceArtillery.Components;
 using Robust.Shared.Physics;
@@ -11,6 +13,7 @@ using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Audio.Systems;
 using System.Numerics;
 
 namespace Content.Shared.Exodus.SpaceArtillery;
@@ -18,10 +21,12 @@ namespace Content.Shared.Exodus.SpaceArtillery;
 public abstract class SharedShipGrapplingGunSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private const string ID = "ship_grappling_gun";
 
@@ -31,21 +36,25 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         SubscribeLocalEvent<ShipGrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
         SubscribeLocalEvent<ShipGrapplingGunComponent, GunShotEvent>(OnGrappleShot);
+        SubscribeLocalEvent<ShipGrapplingGunComponent, OnEmptyGunShotEvent>(OnEmptyGrappleShot);
+        SubscribeLocalEvent<ShipGrapplingProjectileComponent, JointRemovedEvent>(OnJointRemoved);
+        SubscribeLocalEvent<ShipGrapplingGunTargetComponent, DestructionEventArgs>(OnTargetDestruction);
     }
 
     private void OnGrappleShot(EntityUid uid, ShipGrapplingGunComponent component, ref GunShotEvent args)
     {
-        Log.Info("Grappling gun shot!");
         foreach (var (shootUid, _) in args.Ammo)
         {
             if (!HasComp<ShipGrapplingProjectileComponent>(shootUid))
                 continue;
-            Log.Info("Grappling gun shot with grapple projectile!");
 
             component.Projectile = shootUid.Value;
+
+            if (component.Projectile != null)
+                Ungrapple((uid, component), false);
+
             PvsOverride(shootUid.Value);
             var visuals = EnsureComp<JointVisualsComponent>(shootUid.Value);
-            Log.Info("Ship EnsureComp<JointVisualsComponent>(shotUid.Value);");
             visuals.Sprite = component.RopeSprite;
             visuals.Target = GetNetEntity(uid);
             visuals.OffsetA = new Vector2(0f, 0.5f);
@@ -54,36 +63,31 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         }
     }
 
+    private void OnEmptyGrappleShot(EntityUid uid, ShipGrapplingGunComponent component, ref OnEmptyGunShotEvent args)
+    {
+        if (!TryComp<GunComponent>(uid, out var gunComp) || !_gun.CanShoot(gunComp))
+            return;
+
+        Ungrapple((uid, component), true);
+        _gun.AttemptShoot(uid, gunComp);
+    }
+
     private void OnGrappleCollide(EntityUid uid, ShipGrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
-        Log.Info("Grappling gun projectile embedded!");
         if (!_timing.IsFirstTimePredicted || TerminatingOrDeleted(args.Weapon))
             return;
-        Log.Info("Grappling gun projectile embedded with valid weapon!");
 
         if (_netManager.IsClient)
             return;
-        Log.Info("Grappling gun projectile embedded on server!");
 
         if (!TryComp<ShipGrapplingGunComponent>(args.Weapon, out var grapComp))
             return;
-        Log.Info("Grappling gun projectile embedded with valid weapon component!");
 
         var gunGridUid = Transform(args.Weapon).GridUid;
         var targetGridUid = Transform(args.Embedded).GridUid;
 
         if (!gunGridUid.HasValue || !targetGridUid.HasValue)
             return;
-
-        var gunMap = Transform(gunGridUid.Value).MapUid;
-        var targetMap = Transform(targetGridUid.Value).MapUid;
-
-        if (gunMap == null || gunMap != targetMap)
-        {
-            Log.Warning("Blocked cross-map grappling joint");
-            return;
-        }
-        Log.Info("Grappling gun projectile embedded with valid grid UIDs!");
 
         var gunPos = _transform.GetWorldPosition(args.Weapon);
         var targetPos = _transform.GetWorldPosition(args.Embedded);
@@ -92,17 +96,62 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         var anchorB = Vector2.Transform(targetPos, _transform.GetInvWorldMatrix(targetGridUid.Value));
 
         var jointComp = EnsureComp<JointComponent>(targetGridUid.Value);
-        var joint = _joints.CreateDistanceJoint(gunGridUid.Value, targetGridUid.Value, anchorA, anchorB, id:$"{ID}_{args.Weapon}");
-
-        joint.ID = $"{ID}_{args.Weapon.ToString()}";
-        joint.MaxLength = joint.Length + 2.0f;
+        var joint = _joints.CreateDistanceJoint(gunGridUid.Value, targetGridUid.Value, anchorA, anchorB, id: $"{ID}_{args.Weapon}");
+        grapComp.JointId = joint.ID;
+        joint.MaxLength = joint.Length + 10.0f;
         joint.Stiffness = 1f;
 
         _physics.WakeBody(gunGridUid.Value);
         _physics.WakeBody(targetGridUid.Value);
 
+        var targetComp = EnsureComp<ShipGrapplingGunTargetComponent>(args.Embedded);
+        targetComp.Gun = args.Weapon;
+        var targetGridComp = EnsureComp<ShipGrapplingTargetGridComponent>(targetGridUid.Value);
+        targetGridComp.Gun = args.Weapon;
+
+        grapComp.Target = args.Embedded;
+        grapComp.TargetGrid = targetGridUid.Value;
+
         Dirty(targetGridUid.Value, jointComp);
     }
 
-    protected virtual void PvsOverride(EntityUid uid) {}
+    private void OnJointRemoved(EntityUid uid, ShipGrapplingProjectileComponent component, ref JointRemovedEvent args)
+    {
+        if (_netManager.IsServer)
+            QueueDel(uid);
+    }
+
+    private void OnTargetDestruction(EntityUid uid, ShipGrapplingGunTargetComponent component, ref DestructionEventArgs args)
+    {
+        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+            return;
+
+        Ungrapple((component.Gun, grapComp), true);
+    }
+
+    public void Ungrapple(Entity<ShipGrapplingGunComponent> gun, bool isBreak)
+    {
+        if (!_timing.IsFirstTimePredicted || gun.Comp.Projectile is not { } projectile)
+            return;
+
+        if (isBreak)
+            _audio.PlayPvs(gun.Comp.BreakSound, gun.Owner);
+
+        if (_netManager.IsServer)
+        {
+            if (gun.Comp.Target != null && HasComp<ShipGrapplingGunTargetComponent>(gun.Comp.Target))
+                RemComp<ShipGrapplingGunTargetComponent>(gun.Comp.Target.Value);
+
+            if (gun.Comp.TargetGrid != null && HasComp<ShipGrapplingTargetGridComponent>(gun.Comp.TargetGrid))
+                RemComp<ShipGrapplingTargetGridComponent>(gun.Comp.TargetGrid.Value);
+
+            QueueDel(projectile);
+        }
+
+        gun.Comp.Projectile = null;
+        _gun.ChangeBasicEntityAmmoCount(gun.Owner, 1);
+        Dirty(gun.Owner, gun.Comp);
+    }
+
+    protected virtual void PvsOverride(EntityUid uid) { }
 }
