@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 namespace Content.Server.Exodus.AutoSalarySystem;
 
 [RegisterComponent]

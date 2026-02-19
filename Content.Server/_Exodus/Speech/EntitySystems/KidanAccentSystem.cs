@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife, Jidort (JunJun)
+using System.Text.RegularExpressions;
 using Content.Server.Exodus.Speech.Components;
 using Content.Server.Speech;
 using Robust.Shared.Random;
@@ -7,8 +9,6 @@ namespace Content.Server.Exodus.Speech.EntitySystems;
 
 public sealed class KidanAccentSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-
     public override void Initialize()
     {
         base.Initialize();

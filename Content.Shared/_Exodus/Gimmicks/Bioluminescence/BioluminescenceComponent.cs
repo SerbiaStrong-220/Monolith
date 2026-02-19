@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 

@@ -1,7 +1,7 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
 using Content.Shared.Exodus.Stealth.Components;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Exodus.Stealth;
 
 namespace Content.Server.Exodus.Stealth;

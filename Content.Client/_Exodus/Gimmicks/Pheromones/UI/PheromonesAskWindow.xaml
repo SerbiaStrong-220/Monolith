@@ -1,3 +1,7 @@
+<!--
+(c) Space Exodus Team - EXDS-RL with CLA
+Authors: Lokilife
+-->
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             x:Class="Content.Client.Exodus.Gimmicks.Pheromones.UI.PheromonesAskWindow"

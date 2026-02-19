@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Exodus.Gimmicks.Pheromones.UI;

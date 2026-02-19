@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne, Lokilife
 using Content.Shared.Exodus.Stealth;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;

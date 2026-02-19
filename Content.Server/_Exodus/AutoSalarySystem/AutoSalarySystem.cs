@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Server._NF.Bank;
 using Content.Server.Mind;
 using Content.Shared._NF.Bank.Components;

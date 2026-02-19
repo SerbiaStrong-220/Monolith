@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne, Lokilife
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Examine;

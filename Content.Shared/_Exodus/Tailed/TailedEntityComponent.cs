@@ -1,4 +1,4 @@
-// (c) Space Exodus Team - MPL-2.0 with CLA
+// (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
 using System.Numerics;
 using Robust.Shared.GameStates;

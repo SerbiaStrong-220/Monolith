@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Jidort (JunJun)
 using Content.Server.Exodus.Speech.Components;
 using Robust.Shared.Random;
 

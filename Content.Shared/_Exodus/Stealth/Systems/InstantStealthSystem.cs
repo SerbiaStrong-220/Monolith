@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne, Lokilife
 using Content.Shared.Exodus.Stealth.Components;
 using Content.Shared.Mobs;
 
