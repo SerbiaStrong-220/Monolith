@@ -1,7 +1,7 @@
 - type: gameMap
   id: Frontier
   mapName: 'Colossus Central'
-  mapPath: /Maps/_Mono/Outpost/colossus_central.yml # Mono
+  mapPath: /Maps/_Exodus/Outpost/colossus_central.yml # Exodus
   minPlayers: 0
   maxPlayers: 100
   randomRotation: false
