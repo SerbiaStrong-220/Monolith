@@ -35,7 +35,7 @@ jobs:
     - name: Extract version from tag
       id: version
       run: |
-        if [[ ${{ github.ref }} == refs/tags/* ]]; then
+        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
           VERSION=${GITHUB_REF#refs/tags/}
           VERSION=${VERSION#v}
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
@@ -44,6 +44,10 @@ jobs:
           echo "version=dev-${{ github.sha }}" >> $GITHUB_OUTPUT
           echo "tag_with_v=dev" >> $GITHUB_OUTPUT
         fi
+
+    - name: Get build date
+      id: date
+      run: echo "build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
     
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v5.1.0
@@ -102,6 +106,6 @@ jobs:
         cache-to: type=gha,mode=max
         build-args: |
           VERSION=${{ steps.version.outputs.version }}
-          BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          BUILD_DATE=${{ steps.date.outputs.build_date }}
           VCS_REF=${{ github.sha }}
     # ---
