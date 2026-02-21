@@ -24,7 +24,7 @@ RUN chmod +x /src/server/Robust.Server
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS final
 WORKDIR /app
 
-ARG VERSION=dev
+ARG VERSION=release
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -34,9 +34,11 @@ LABEL org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.title="Exodus Monolith Server" \
       org.opencontainers.image.description="SS14 Exodus Monolith Server"
 
+RUN groupadd -r ss14 && useradd -r -g ss14 -d /app ss14
+
 COPY --from=build /src/server/ .
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:1212/status || exit 1
+RUN chown -R ss14:ss14 /app
+USER ss14
 
 ENTRYPOINT [ "./Robust.Server" ]
