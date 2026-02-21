@@ -3,9 +3,6 @@
 FROM debian:trixie-slim AS build
 WORKDIR /src
 
-ARG VERSION=dev
-ARG BUILD_DATE
-ARG VCS_REF
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
@@ -24,7 +21,7 @@ RUN chmod +x /src/server/Robust.Server
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS final
 WORKDIR /app
 
-ARG VERSION=release
+ARG VERSION
 ARG BUILD_DATE
 ARG VCS_REF
 
