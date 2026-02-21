@@ -21,21 +21,20 @@ RUN chmod +x /src/server/Robust.Server
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS final
 WORKDIR /app
 
-ARG VERSION
-ARG BUILD_DATE
-ARG VCS_REF
+ARG VERSION=dev
+ARG BUILD_DATE=unknown
+ARG VCS_REF=unknown
 
-LABEL org.opencontainers.image.version="${VERSION}" \
+LABEL org.opencontainers.image.title="Exodus Monolith Server" \
+      org.opencontainers.image.description="SS14 Exodus Monolith Server" \
+      org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.revision="${VCS_REF}" \
-      org.opencontainers.image.title="Exodus Monolith Server" \
-      org.opencontainers.image.description="SS14 Exodus Monolith Server"
+      org.opencontainers.image.revision="${VCS_REF}" 
 
 RUN groupadd -r ss14 && useradd -r -g ss14 -d /app ss14
 
-COPY --from=build /src/server/ .
+COPY --chown=ss14:ss14 --from=build /src/server/ .
 
-RUN chown -R ss14:ss14 /app
 USER ss14
 
 ENTRYPOINT [ "./Robust.Server" ]
