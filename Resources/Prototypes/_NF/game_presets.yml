@@ -15,7 +15,7 @@
     - SmugglingEventScheduler
     - FrontierRoundstartVariation
     - MonoAISTCShuttleSpawnerScheduler # Mono
-    - MonoAsakimSTCShuttleSpawnerScheduler # Mono
+    # - MonoAsakimSTCShuttleSpawnerScheduler # Mono # Exodus-Delete-Asakim-From-Random-Spawn
 
 - type: gamePreset
   id: NFPirate
@@ -34,4 +34,4 @@
     - SmugglingEventScheduler
     - FrontierRoundstartVariation
     - MonoAISTCShuttleSpawnerScheduler # Mono
-    - MonoAsakimSTCShuttleSpawnerScheduler # Mono
+    # - MonoAsakimSTCShuttleSpawnerScheduler # Mono # Exodus-Delete-Asakim-From-Random-Spawn

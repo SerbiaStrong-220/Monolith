@@ -15,6 +15,7 @@
   icon: "JobIconStc"
   supervisors: job-supervisors-sr
   weight: 160
+  salary: 10000 # Exodus-Salary
   displayWeight: 50 # Second from the top
   setPreference: true
   access:

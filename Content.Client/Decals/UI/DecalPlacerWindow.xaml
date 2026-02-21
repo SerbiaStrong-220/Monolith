@@ -3,7 +3,7 @@
                MinSize="250 500"
                SetSize="250 500">
     <BoxContainer Orientation="Vertical">
-        <LineEdit Name="Search" />
+        <LineEdit Name="Search" PlaceHolder="{Loc entity-spawn-window-search-bar-placeholder}" /> <!--Exodus Locale-->
         <ScrollContainer VerticalExpand="True">
             <GridContainer Name="Grid" Columns="6">
                 <!-- Decals get added here by code -->

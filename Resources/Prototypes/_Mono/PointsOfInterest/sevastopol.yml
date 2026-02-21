@@ -1,34 +1,29 @@
-# Author Info
-# GitHub: starch70
-# Discord: _starch_
-
-# Maintainer Info
-# GitHub: starch70
-# Discord: _starch_
+# Based on Sevastopol by starch70 (Github) from Monolith
+# Edited and currently maintained by Space Exodus
 
 # Notes:
 - type: pointOfInterest
   id: Sevastopol
   parent: BasePOI
-  name: 'Sevastopol Data Storage Center'
+  name: 'Дата-центр Севастополь' # Ru-Localization
   minimumDistance: 3500
   maximumDistance: 7500
   spawnGroup: Required
-  gridPath: /Maps/_Mono/POI/sevastopol.yml
+  gridPath: /Maps/_Exodus/POI/sevastopol.yml # Exodus
   addComponents:
   - type: IFF
     color: "#009dff"
 
 - type: gameMap
   id: Sevastopol
-  mapName: 'Sevastopol Data Storage Center'
-  mapPath: /Maps/_Mono/POI/sevastopol.yml
+  mapName: 'Дата-центр Севастополь' # Ru-Localization
+  mapPath: /Maps/_Exodus/POI/sevastopol.yml # Exodus
   minPlayers: 0
   stations:
     Sevastopol:
       stationProto: RecordsFrontierOutpostCargo
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Sevastopol Data Storage Center'
+          mapNameTemplate: 'Дата-центр Севастополь' # Ru-Localization
         - type: StationDeadDrop
           maxDeadDrops: 6

@@ -455,6 +455,11 @@ public enum LogType
     /// </summary>
     AdminCommands = 98,
 
+    /// </summary>
+    /// Artifact node got activated.
+    /// </summary>
+    ArtifactNode = 99,
+
     // Frontier Station Specific
     ATMUsage = 200,
     ShipYardUsage = 201,

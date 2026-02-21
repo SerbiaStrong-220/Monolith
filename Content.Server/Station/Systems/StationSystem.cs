@@ -320,6 +320,10 @@ public sealed class StationSystem : EntitySystem
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
             AddGridToStation(station, grid, null, data, name);
+            // Crescent - used to add components directly to a grid from yaml
+            foreach (var (_, component) in stationConfig.gridComponents)
+                EntityManager.AddComponent(grid, component, true);
+            // Crescent
         }
 
         var ev = new StationPostInitEvent((station, data));
@@ -515,6 +519,22 @@ public sealed class StationSystem : EntitySystem
                 {
                     return uid;
                 }
+            }
+        }
+
+        return null;
+    }
+
+    // Exodus: Easy way to get specific station from outside systems
+    public EntityUid? GetStationById(string id)
+    {
+        var query = EntityQueryEnumerator<BecomesStationComponent, MapGridComponent>();
+
+        while (query.MoveNext(out var uid, out var station, out _))
+        {
+            if (station.Id == id)
+            {
+                return uid;
             }
         }
 

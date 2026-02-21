@@ -1,0 +1,30 @@
+# Kidan steak
+- type: constructionGraph
+  id: KidanSteak
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: kidan steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 335
+  - node: kidan steak
+    entity: FoodMeatKidanCooked
+
+- type: constructionGraph
+  id: KidanCutlet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: kidan cutlet
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 445
+  - node: kidan cutlet
+    entity: FoodMeatKidanCutletCooked

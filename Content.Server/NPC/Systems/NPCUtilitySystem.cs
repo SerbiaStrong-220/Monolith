@@ -33,6 +33,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.StatusEffect; // Frontier
+using Content.Shared.Exodus.Stealth; // Exodus
 
 namespace Content.Server.NPC.Systems;
 
@@ -58,6 +59,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!; // Frontier
+    [Dependency] private readonly SharedStealthSystem _stealth = default!; // Exodus
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -390,6 +392,17 @@ public sealed class NPCUtilitySystem : EntitySystem
                 return _statusEffectsSystem.HasStatusEffect(targetUid, "Stun") ? 1f : 0f;
             }
             // End Frontier
+            // Exodus-Start
+            case TargetVisibleCon visibleCon:
+            {
+                // Entities without stealth are always visible
+                if (!HasComp<Content.Shared.Exodus.Stealth.Components.StealthComponent>(targetUid))
+                    return 1f;
+
+                var visibility = _stealth.GetVisibility(targetUid);
+                return visibility >= visibleCon.VisibilityThreshold ? 1f : 0f;
+            }
+            // Exodus-End
             default:
                 throw new NotImplementedException();
         }

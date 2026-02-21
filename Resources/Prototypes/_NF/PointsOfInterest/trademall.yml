@@ -11,7 +11,7 @@
 - type: pointOfInterest
   id: TradeMall
   parent: [BasePOI, BaseRepairablePOI]
-  name: Trade Mall
+  name: "Торговый Центр" # Ru-Localization
   minimumDistance: 3500
   maximumDistance: 6500
   spawnGroup: MarketStation
@@ -35,7 +35,7 @@
 
 - type: gameMap
   id: TradeMall
-  mapName: 'Trade Mall'
+  mapName: "Торговый Центр" # Ru-Localization
   mapPath: /Maps/_NF/POI/trademall.yml
   minPlayers: 0
   stations:
@@ -43,7 +43,7 @@
       stationProto: MarketFrontierOutpost
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Trade Mall'
+          mapNameTemplate: "Торговый Центр" # Ru-Localization
         - type: StationDeadDrop
           maxDeadDrops: 2 # A few, its not as big as the original trade outpost
         - type: TradeCrateDestination

@@ -1,2 +1,2 @@
-ent-WeaponHeavyPulseCannon = NT-WS heavy pulse cannon
-    .desc = A rare, corporate war era weapon of Nanotrasen origin. A massive shoulder mounted pulse cannon, packing enough power in its punches to blow holes through organics, or when tuned to high power, blow holes clean into shuttle hulls.
+ent-WeaponHeavyPulseCannon = НТ-ВС тяжелая импульсная пушка
+    .desc = Редкое орудие эпохи корпоративной войны, созднанное корпорацией NanoTrasen. Массивная импульсная пушка, упираемая на плечо. Обладает достаточной мощностью для пробития дыр даже в корпусах шаттлов..

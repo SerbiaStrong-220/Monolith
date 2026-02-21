@@ -1,0 +1,13 @@
+- type: entity
+  id: ActionToggleBioluminescence
+  name: Bioluminescence
+  description: Begin or stop emitting light
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    icon: { sprite: _Exodus/Interface/Actions/kidans.rsi, state: light-off }
+    iconOn: { sprite: _Exodus/Interface/Actions/kidans.rsi, state: light-on }
+    itemIconStyle: NoItem
+    priority: -11
+    event: !type:ToggleBioluminescenceEvent {}

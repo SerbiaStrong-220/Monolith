@@ -1,16 +1,15 @@
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
-using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Equipment;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -22,7 +21,6 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -38,23 +36,23 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         SubscribeLocalEvent<ArtifactCrusherComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnGetVerbs(Entity<ArtifactCrusherComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(EntityUid uid, ArtifactCrusherComponent comp, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Crushing)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || comp.Crushing)
             return;
 
-        if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) ||
+        if (!TryComp<EntityStorageComponent>(uid, out var entityStorageComp) ||
             entityStorageComp.Contents.ContainedEntities.Count == 0)
             return;
 
-        if (!this.IsPowered(ent, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return;
 
         var verb = new AlternativeVerb
         {
             Text = Loc.GetString("artifact-crusher-verb-start-crushing"),
             Priority = 2,
-            Act = () => StartCrushing((ent, ent.Comp, entityStorageComp))
+            Act = () => StartCrushing((uid, comp, entityStorageComp))
         };
         args.Verbs.Add(verb);
     }
@@ -78,7 +76,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
-        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent);
+        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent)?.Entity;
         Appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
         Dirty(ent, ent.Comp1);
     }
@@ -103,7 +101,6 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                 {
                     ContainerSystem.Insert((stack, null, null, null), crusher.OutputContainer);
                 }
-                _artifact.ForceActivateArtifact(contained);
             }
 
             if (!TryComp<BodyComponent>(contained, out var body))

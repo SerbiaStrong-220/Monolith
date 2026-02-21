@@ -1,5 +1,5 @@
 ent-BaseWeaponSubMachineGun = BaseSMG
-    .desc = Дерзай — налетай, целься и стреляй.
+    .desc = Дерзай - налетай, целься и стреляй.
 ent-WeaponSubMachineGunAtreides = Атрейдес
     .desc = Пле-ке-ке-ке-ке! Использует патроны калибра 5.7х28мм.
     .suffix = Пистолет-пулемёт

@@ -1451,7 +1451,7 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = jobProto?.ID + "-loadout",
+                Title = Loc.GetString(jobProto?.ID + "-loadout"), // Exodus-Localization
             };
 
             // Refresh the buttons etc.
@@ -1592,6 +1592,22 @@ namespace Content.Client.Lobby.UI
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
+                // Exodus-Kidans-Start
+                case HumanoidSkinColor.KidanChitin:
+                {
+                    if (!RgbSkinColorContainer.Visible)
+                    {
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = SkinColor.ClosestKidanColor(_rgbSkinColorSelector.Color);
+
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
+                // Exodus-Kidans-End
             }
 
             ReloadProfilePreview();
@@ -1887,6 +1903,20 @@ namespace Content.Client.Lobby.UI
                         break;
                     }
                 // Goobstation Section End - Tajaran
+                // Exodus-Kidans-Start
+                case HumanoidSkinColor.KidanChitin:
+                    {
+                        if (!RgbSkinColorContainer.Visible)
+                        {
+                            Skin.Visible = false;
+                            RgbSkinColorContainer.Visible = true;
+                        }
+
+                        _rgbSkinColorSelector.Color = SkinColor.ClosestKidanColor(Profile.Appearance.SkinColor);
+
+                        break;
+                    }
+                // Exodus-Kidans-End
             }
 
         }

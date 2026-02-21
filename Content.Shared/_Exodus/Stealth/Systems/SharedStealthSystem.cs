@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne, Lokilife
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Examine;
@@ -228,7 +230,7 @@ public abstract class SharedStealthSystem : EntitySystem
     /// maximum stealth value if it is currently disabled.</returns>
     public float GetVisibility(EntityUid uid, StealthComponent? component = null)
     {
-        if (!Resolve(uid, ref component) || TerminatingOrDeleted(uid) || IsVisible(uid))
+        if (!Resolve(uid, ref component, false) || TerminatingOrDeleted(uid) || IsVisible(uid))
             return 1;
 
         if (!TryGetMinVisibilityData(uid, out var data))

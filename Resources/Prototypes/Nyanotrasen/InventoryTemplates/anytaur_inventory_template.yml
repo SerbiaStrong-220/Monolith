@@ -7,7 +7,7 @@
       stripTime: 5
       uiWindowPos: 0,2
       strippingWindowPos: 0,2
-      displayName: Jumpsuit
+      displayName: inventory-slot-jumpsuit # Ru-Localization
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
@@ -15,32 +15,32 @@
       stripTime: 6
       uiWindowPos: 1,2
       strippingWindowPos: 1,2
-      displayName: Suit
+      displayName: inventory-slot-outer-clothing # Ru-Localization
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
       uiWindowPos: 2,2
       strippingWindowPos: 2,2
-      displayName: Gloves
+      displayName: inventory-slot-gloves # Ru-Localization
     - name: neck
       slotTexture: neck
       slotFlags: NECK
       uiWindowPos: 0,1
       strippingWindowPos: 0,1
-      displayName: Neck
+      displayName: inventory-slot-neck # Ru-Localization
     - name: mask
       slotTexture: mask
       slotFlags: MASK
       uiWindowPos: 1,1
       strippingWindowPos: 1,1
-      displayName: Mask
+      displayName: inventory-slot-mask # Ru-Localization
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
       stripTime: 2
       uiWindowPos: 0,0
       strippingWindowPos: 0,0
-      displayName: Eyes
+      displayName: inventory-slot-eyes # Ru-Localization
     - name: ears
       slotTexture: ears
       slotFlags: EARS
@@ -53,7 +53,7 @@
       slotFlags: HEAD
       uiWindowPos: 1,0
       strippingWindowPos: 1,0
-      displayName: Head
+      displayName: inventory-slot-head # Ru-Localization
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
@@ -62,7 +62,7 @@
       uiWindowPos: 0,3
       strippingWindowPos: 0,3
       dependsOn: jumpsuit
-      displayName: Pocket 1
+      displayName: inventory-slot-pocket-1 # Ru-Localization
       stripHidden: true
     - name: pocket2
       slotTexture: pocket
@@ -72,7 +72,7 @@
       uiWindowPos: 2,3
       strippingWindowPos: 2,3
       dependsOn: jumpsuit
-      displayName: Pocket 2
+      displayName: inventory-slot-pocket-2 # Ru-Localization
       stripHidden: true
     - name: suitstorage
       slotTexture: suit_storage
@@ -81,7 +81,7 @@
       uiWindowPos: 2,0
       strippingWindowPos: 2,0
 #      dependsOn: outerClothing #Mono: Disable shoulder slot restrictions
-      displayName: Suit Storage
+      displayName: inventory-slot-suit-storage # Ru-Localization
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -90,7 +90,7 @@
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
       dependsOn: jumpsuit
-      displayName: ID
+      displayName: inventory-slot-id # Ru-Localization
     - name: belt
       slotTexture: belt
       slotFlags: BELT
@@ -98,7 +98,7 @@
       stripTime: 5
       uiWindowPos: 3,1
       strippingWindowPos: 1,3
-      displayName: Belt
+      displayName: inventory-slot-belt # Ru-Localization
     - name: back
       slotTexture: back
       slotFlags: BACK
@@ -106,7 +106,7 @@
       stripTime: 5
       uiWindowPos: 3,0
       strippingWindowPos: 0,4
-      displayName: Back
+      displayName: inventory-slot-back # Ru-Localization
     # Frontier: wallet slot
     - name: wallet
       slotTexture: wallet
@@ -115,7 +115,7 @@
       uiWindowPos: 2,0
       strippingWindowPos: 3,5
       dependsOn: jumpsuit
-      displayName: Wallet
+      displayName: inventory-slot-wallet# Ru-Localization
     # End Frontier: wallet slot
     #Mono slots
     - name: balaclava
@@ -124,21 +124,21 @@
       stripTime: 6
       uiWindowPos: 2,4
       strippingWindowPos: 3,0
-      displayName: Balaclava
+      displayName: inventory-slot-balaclava # Ru-Localization
     - name: leftarmband
       slotTexture: armband_left
       slotFlags: ARMBANDLEFT
       stripTime: 6
       uiWindowPos: 2,2
       strippingWindowPos: 3,1
-      displayName: Left_armband
+      displayName: inventory-slot-armband-left  # Ru-Localization
     - name: rightarmband
       slotTexture: armband_right
       slotFlags: ARMBANDRIGHT
       stripTime: 6
       uiWindowPos: 0,2
       strippingWindowPos: 3,2
-      displayName: Right_armband
+      displayName: inventory-slot-armband-right # Ru-Localization
     - name: helmetcover
       slotTexture: helmet_cover
       slotFlags: HELMETCOVER
@@ -146,7 +146,7 @@
       uiWindowPos: 1,5
       strippingWindowPos: 3,3
       dependsOn: head
-      displayName: Helmet cover
+      displayName: inventory-slot-helmet-cover # Ru-Localization
     - name: helmetattachment
       slotTexture: helmet_attachment
       slotFlags: HELMETATTACHMENT
@@ -154,5 +154,5 @@
       uiWindowPos: 0,5
       strippingWindowPos: 3,4
       dependsOn: head
-      displayName: Helmet_attachment
+      displayName: inventory-slot-helmet-attachment # Ru-Localization
     #End Mono

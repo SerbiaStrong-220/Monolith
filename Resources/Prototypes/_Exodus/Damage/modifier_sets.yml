@@ -1,0 +1,13 @@
+- type: damageModifierSet
+  id: Kidan
+  coefficients:
+    Blunt: 0.9
+    Slash: 0.9
+    Piercing: 0.9
+
+- type: damageModifierSet
+  id: Leviathan
+  coefficients:
+    Blunt: 0.1
+    Slash: 0.1
+    Piercing: 0.1

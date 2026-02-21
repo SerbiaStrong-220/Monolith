@@ -1,0 +1,15 @@
+- type: construction
+  id: ClothingNeckCloakWeb
+  graph: WebCloak
+  startNode: start
+  targetNode: ClothingNeckCloakWebCloak
+  category: construction-category-clothing
+  objectType: Item
+  name: mantle of the spider kin
+  description: To the Arachnids, silk is more than mere material — it is a language frozen in patterns. Every thread, every curve is a tale woven from personal history, oaths, and the legacy of an entire bloodline. Such a gift is the rarest of honors, for to give another a piece of one's own fate is an act reserved only for those deemed equal... or worthy of becoming part of the Kin's story.
+  icon:
+    sprite: _Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
+    state: icon
+  entityWhitelist:
+    tags:
+    - SpiderCraft

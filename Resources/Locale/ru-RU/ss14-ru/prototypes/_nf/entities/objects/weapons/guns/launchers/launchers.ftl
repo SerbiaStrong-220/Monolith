@@ -1,10 +1,10 @@
 ent-WeaponLauncherChinaLakeEmp = { ent-WeaponLauncherChinaLake }
-    .suffix = EMP
+    .suffix = ЭМИ
     .desc = { ent-WeaponLauncherChinaLake.desc }
 ent-WeaponLauncherRocketEmp = { ent-WeaponLauncherRocket }
-    .suffix = EMP
+    .suffix = ЭМИ
     .desc = { ent-WeaponLauncherRocket.desc }
-ent-WeaponMailLake = mail RPDS
-    .desc = Rap(b?)id Parcel Delivery System
-ent-WeaponLauncherNfsdLake = TSFMC grenade launcher
-    .desc = Able to lob both grenades and darts!
+ent-WeaponMailLake = почтовый РПДС
+    .desc = Новейшее оружие почтальонов. 
+ent-WeaponLauncherNfsdLake = гранатомет КВП ТСФ
+    .desc = Стреляет как гранатами, так и дротиками!

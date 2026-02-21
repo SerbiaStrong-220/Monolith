@@ -315,7 +315,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var enumerator = _inventory.GetSlotEnumerator(uid);
         while (enumerator.NextItem(out var item, out var slotDef))
         {
-            data.ItemSlots.Add(slotDef.Name, Name(item));
+            data.ItemSlots.Add(Loc.GetString(slotDef.DisplayName), Name(item)); // Exodus-Localization
         }
 
         foreach (var hand in _hands.EnumerateHands(uid))

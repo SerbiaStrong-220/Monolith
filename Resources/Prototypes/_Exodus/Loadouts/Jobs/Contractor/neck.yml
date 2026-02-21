@@ -1,0 +1,26 @@
+- type: loadout
+  id: ContractorClothingNeckCloakTravelerBlack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  price: 500
+  equipment:
+    neck: ClothingNeckCloakTravelerBlack
+
+- type: loadout
+  id: ContractorClothingNeckCloakTravelerGold
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  price: 500
+  equipment:
+    neck: ClothingNeckCloakTravelerGold
+
+- type: loadout
+  id: ContractorClothingNeckCloakTravelerRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  price: 500
+  equipment:
+    neck: ClothingNeckCloakTravelerRed

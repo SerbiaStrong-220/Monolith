@@ -3,6 +3,7 @@ using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -93,7 +94,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
         if (early)
         {
-            AudioSystem.Stop(crusher.CrushingSoundEntity?.Item1, crusher.CrushingSoundEntity?.Item2);
+            AudioSystem.Stop(crusher.CrushingSoundEntity);
             crusher.CrushingSoundEntity = null;
         }
 

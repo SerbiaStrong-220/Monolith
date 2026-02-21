@@ -1,6 +1,6 @@
-ent-EncryptionKeyTraffic = shortband encryption key
-    .desc = An encryption key for the shortband channel. Limited to a 750 meters range.
-ent-EncryptionKeyNfsd = TSFMC encryption key
-    .desc = An encryption key for the TSFMC channel.
-ent-EncryptionKeyDoc = medical dispatch encryption key
-    .desc = An encryption key for coordinating medical dispatch.
+ent-EncryptionKeyTraffic = ключ шифрования локальной частоты
+    .desc = Ключ шифрования локальной частоты. Область её работы - 750 метров.
+ent-EncryptionKeyNfsd = ключ шифрования КВП ТСФ
+    .desc = Ключ шифрования частоты ТСФ.
+ent-EncryptionKeyDoc = ключ шифрования СНМП
+    .desc = Ключ шифрования частоты СНМП.

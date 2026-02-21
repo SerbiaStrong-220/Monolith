@@ -173,7 +173,7 @@ namespace Content.Server.Power.EntitySystems
         {
             ((ApcPowerReceiverComponent) comp).Load = load; // Goobstation
         }
-        
+
         public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)
         {
             if (component != null)

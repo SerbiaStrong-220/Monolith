@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
 using Content.Shared.Exodus.Stealth;
 
 namespace Content.Shared.Exodus.Stealth.Components;

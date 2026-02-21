@@ -2,9 +2,11 @@
   id: DisplacedStencilDraw
   kind: source
   path: "/Textures/Shaders/displacement.swsl"
-  stencil:
-    ref: 1
-    op: Keep
-    func: NotEqual
+  # Exodus-Naked-Fix-Start
+  # stencil:
+  #   ref: 1
+  #   op: Keep
+  #   func: NotEqual
+  # Exodus-Naked-Fix-End
   params:
     displacementSize: 127

@@ -1,4 +1,5 @@
-using Content.Shared._NF.Mining.Components; // Frontier
+// Exodus-MiningScannerRefactor
+using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mining.Components;
@@ -9,13 +10,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Mining;
 
-public sealed partial class MiningScannerSystem : EntitySystem // Frontier: partial
+public sealed partial class MiningScannerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly MiningScannerViewerSystem _viewer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -23,8 +25,6 @@ public sealed partial class MiningScannerSystem : EntitySystem // Frontier: part
         SubscribeLocalEvent<MiningScannerComponent, EntGotInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<MiningScannerComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<MiningScannerComponent, ItemToggledEvent>(OnToggled);
-
-        NFInitialize(); // Frontier
     }
 
     private void OnInserted(Entity<MiningScannerComponent> ent, ref EntGotInsertedIntoContainerMessage args)
@@ -47,7 +47,7 @@ public sealed partial class MiningScannerSystem : EntitySystem // Frontier: part
     {
         Entity<MiningScannerComponent>? scannerEnt = null;
 
-        var ents = _inventory.GetHandOrInventoryEntities(uid);
+        var ents = _inventory.GetHandOrInventoryEntities(uid).Append(uid);
         foreach (var ent in ents)
         {
             if (!TryComp<MiningScannerComponent>(ent, out var scannerComponent) ||
@@ -61,21 +61,17 @@ public sealed partial class MiningScannerSystem : EntitySystem // Frontier: part
                 scannerEnt = (ent, scannerComponent);
         }
 
-        if (_net.IsServer)
+        if (scannerEnt == null)
         {
-            if (scannerEnt == null)
-            {
-                if (TryComp<MiningScannerViewerComponent>(uid, out var viewer))
-                    viewer.QueueRemoval = true;
-            }
-            else
-            {
-                var viewer = EnsureComp<MiningScannerViewerComponent>(uid);
-                viewer.ViewRange = scannerEnt.Value.Comp.Range;
-                viewer.QueueRemoval = false;
-                viewer.NextPingTime = _timing.CurTime + viewer.PingDelay;
-                Dirty(uid, viewer);
-            }
+            if (TryComp<MiningScannerUserComponent>(uid, out var scannerUser))
+                scannerUser.QueueRemoval = true;
+        }
+        else
+        {
+            var scannerUser = EnsureComp<MiningScannerUserComponent>(uid);
+            scannerUser.ViewRange = scannerEnt.Value.Comp.Range;
+            scannerUser.QueueRemoval = false;
+            scannerUser.NextPingTime = _timing.CurTime + scannerUser.PingDelay;
         }
     }
 
@@ -83,31 +79,21 @@ public sealed partial class MiningScannerSystem : EntitySystem // Frontier: part
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<MiningScannerViewerComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var viewer, out var xform))
+        var query = EntityQueryEnumerator<MiningScannerUserComponent>();
+        while (query.MoveNext(out var uid, out var scannerUser))
         {
-            if (viewer.QueueRemoval)
+            if (scannerUser.QueueRemoval)
             {
-                // Frontier: innate mining scanner
-                if (TryComp<InnateMiningScannerViewerComponent>(uid, out var innateViewer))
-                {
-                    SetupInnateMiningViewerComponent((uid, innateViewer));
-                }
-                else
-                {
-                    // End Frontier: innate mining scanner
-                    RemCompDeferred(uid, viewer);
-                    continue;
-                } // Frontier
+                RemCompDeferred(uid, scannerUser);
+                continue;
             }
 
-            if (_timing.CurTime < viewer.NextPingTime)
+            if (_timing.CurTime < scannerUser.NextPingTime)
                 continue;
 
-            viewer.NextPingTime = _timing.CurTime + viewer.PingDelay;
-            viewer.LastPingLocation = xform.Coordinates;
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _audio.PlayEntity(viewer.PingSound, uid, uid);
+            scannerUser.NextPingTime = _timing.CurTime + scannerUser.PingDelay + TimeSpan.FromSeconds(scannerUser.AnimationDuration);
+            _viewer.CreateScan(uid, scannerUser.ViewRange, scannerUser.PingDelay, scannerUser.AnimationDuration);
+            _audio.PlayPredicted(scannerUser.PingSound, uid, uid);
         }
     }
 }

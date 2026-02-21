@@ -1,0 +1,4 @@
+# 01.29.2026 - Replace rammers AI cores with smarter
+SpawnMobRammerCore: SpawnMobAttackerCore
+SpawnMobRammerCoreSmart: SpawnMobAttackerCoreSmart
+SpawnMobRammerCoreSmartDodging: SpawnMobAttackerCoreSmart

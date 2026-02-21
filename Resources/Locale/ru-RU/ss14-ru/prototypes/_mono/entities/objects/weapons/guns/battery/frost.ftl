@@ -1,2 +1,2 @@
-ent-WeaponEnergyGunFrost = VFD EN-5 FROST
-    .desc = A self-recharging energy gun with lethal rounds that can inflict serious damage. Comes with disabling munitions and improved accuracy compared to it's previous versions.
+ent-WeaponEnergyGunFrost = ВФД ЛА-5 "Буран"
+    .desc = Самозаряжающаяся лазерная винтовка, способная в короткие сроки наносить смертельные ранения. Имеет нелетальный и летальный режим стрельбы.

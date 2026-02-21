@@ -1,26 +1,31 @@
-gas-ammonia-abbreviation = NH₃
-gas-carbon-dioxide-abbreviation = CO₂
+gas-ammonia-abbreviation = NH3
+gas-carbon-dioxide-abbreviation = CO2
 gas-frezon-abbreviation = Fr
-gas-nitrogen-abbreviation = N₂
-gas-nitrous-oxide-abbreviation = N₂O
-gas-oxygen-abbreviation = O₂
+gas-nitrogen-abbreviation = N2
+gas-nitrous-oxide-abbreviation = N2O
+gas-oxygen-abbreviation = O2
 gas-plasma-abbreviation = Pl
 gas-tritium-abbreviation = T
-gas-water-vapor-abbreviation = H₂O
+gas-water-vapor-abbreviation = H2O
 gas-unknown-abbreviation = X
 atmos-gas-Oxygen = { gas-oxygen-abbreviation }
 atmos-gas-Nitrogen = { gas-nitrogen-abbreviation }
 atmos-gas-CarbonDioxide = { gas-carbon-dioxide-abbreviation }
-atmos-gas-Plasma = Plasma
-atmos-gas-Tritium = Tritium
-atmos-gas-Frezon = Frezon
+atmos-gas-Plasma = Плазма
+atmos-gas-Tritium = Тритий
+atmos-gas-Frezon = Фрезон
 atmos-gas-NitrousOxide = { gas-nitrous-oxide-abbreviation }
 atmos-gas-WaterVapor = { gas-water-vapor-abbreviation }
 atmos-gas-Ammonia = { gas-ammonia-abbreviation }
-gas-healium-abbreviation = PN₂OF
+atmos-gas-BZ = BZ
+atmos-gas-Healium = Хилиум
+atmos-gas-Nitrium = Нитриум
+atmos-gas-Pluoxium = Плюксиум
+gas-healium-abbreviation = PN2OF
+
 
 # Funky Station
 
-gas-nitrium-abbreviation = TPN₃O
-gas-pluoxium-abbreviation = C₂O₆
-gas-bz-abbreviation = PN₂O
+gas-nitrium-abbreviation = TPN3O
+gas-pluoxium-abbreviation = C2O6
+gas-bz-abbreviation = PN2O

@@ -1,0 +1,110 @@
+#region General
+- type: emote
+  id: Grumble
+  name: chat-emote-name-grumble
+  category: Vocal
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [ворчит]
+  chatTriggers:
+    - grumble
+    - grumbles
+    - grumbled
+    - ворчит
+
+- type: emote
+  id: Rumble
+  name: chat-emote-name-rumble
+  category: Vocal
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  available: false
+  chatMessages: [урчит]
+  chatTriggers:
+    - урчит
+
+#region Kidan
+- type: emote
+  id: WigglesAntennae
+  name: chat-emote-name-wiggle-antennae
+  category: General
+  available: false
+  icon: _Exodus/Interface/Emotes/wiggles_antennae.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [шевелит антенками]
+  chatTriggers:
+    - waves antennae
+    - wiggles antennae
+    - шевелит антенками
+    - машет антенками
+    - шевелит усиками
+    - машет усиками
+
+- type: emote
+  id: WavesAntennaeSharply
+  name: chat-emote-name-wave-antennae-sharply
+  category: General
+  available: false
+  icon: _Exodus/Interface/Emotes/moves_wiggles_antennae.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [резко машет антенками]
+  chatTriggers:
+    - waves antennae sharply
+    - резко машет усиками
+    - резко машет антенками
+
+- type: emote
+  id: JawsSnap
+  name: chat-emote-name-jaws-snap
+  category: Vocal
+  available: false
+  icon: _Exodus/Interface/Emotes/snaps_jaws.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [щёлкает челюстями]
+  chatTriggers:
+    - snaps his jaws
+    - snaps jaws
+    - щёлкает челюстями
+    - щелкает челюстями
+    - трещит челюстями
+
+- type: emote
+  id: Groan
+  name: chat-emote-name-groan
+  category: Vocal
+  available: false
+  icon: _Exodus/Interface/Emotes/groan.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [устало стонет]
+  chatTriggers:
+    - groans
+    - стонет
+    - устало стонет

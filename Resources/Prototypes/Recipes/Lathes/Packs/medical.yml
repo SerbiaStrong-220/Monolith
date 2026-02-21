@@ -43,6 +43,7 @@
   - DiseaseSwab
   - BodyBag
   - WhiteCane
+  - ClothingEyesHudChemMed # Exodus-Better-Med-Hud
 
 - type: latheRecipePack
   id: RollerBedsStatic

@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Weapons.Melee.Events;
@@ -9,8 +10,10 @@ namespace Content.Shared.Weapons.Melee.Events;
 ///     Raised directed on the melee weapon entity used to attack something in combat mode,
 ///     whether through a click attack or wide attack.
 /// </summary>
-public sealed class MeleeHitEvent : HandledEntityEventArgs
+public sealed class MeleeHitEvent : HandledEntityEventArgs, IInventoryRelayEvent // Exodus | Make inventory relayed
 {
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+
     /// <summary>
     ///     The base amount of damage dealt by the melee hit.
     /// </summary>

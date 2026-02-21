@@ -81,7 +81,7 @@
     Acidic:
       methods: [ Touch ]
       effects:
-      - !type:NFActivateArtifact # Frontier: ActivateArtifact<NFActivateArtifact
+      - !type:ArtifactUnlock
         conditions:
         - !type:ReagentThreshold
           min: 5

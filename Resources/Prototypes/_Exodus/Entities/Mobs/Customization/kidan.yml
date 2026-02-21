@@ -1,0 +1,268 @@
+#region Ears
+
+- type: marking
+  id: KidanAntennasClassic
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_antennas.rsi
+      state: classic_ones
+
+- type: marking
+  id: KidanAntennasFan
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_antennas.rsi
+      state: fan
+
+- type: marking
+  id: KidanAntennasLong
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_antennas.rsi
+      state: long
+
+- type: marking
+  id: KidanAntennasMay
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_antennas.rsi
+      state: may_bug
+
+- type: marking
+  id: KidanAntennasShort
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_antennas.rsi
+      state: short
+
+- type: marking
+  id: KidanAntennasVeryLong
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_antennas.rsi
+      state: very_long
+
+#region Eye
+
+- type: marking
+  id: KidanEyeEmpty
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_eye.rsi
+      state: empty_eyes
+
+- type: marking
+  id: KidanEyeLeft
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_eye.rsi
+      state: eye_l
+
+- type: marking
+  id: KidanEyeRight
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_eye.rsi
+      state: eye_r
+
+#region Snout
+
+- type: marking
+  id: KidanSnoutJaw
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_snout.rsi
+      state: jaw
+
+#region Foot
+
+- type: marking
+  id: KidanFootClawRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_foot.rsi
+      state: claw_r
+
+- type: marking
+  id: KidanFootClawLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_foot.rsi
+      state: claw_l
+
+#region HeadSide
+
+- type: marking
+  id: KidanHandACap
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_head.rsi
+      state: a_cap
+
+- type: marking
+  id: KidanHandSpot
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_head.rsi
+      state: spot
+
+- type: marking
+  id: KidanHandStripesThin
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_head.rsi
+      state: stripes_thin
+
+- type: marking
+  id: KidanHandStripes
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_head.rsi
+      state: stripes
+
+#region Tail
+
+- type: marking
+  id: KidanTailImperial
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: imperial
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: imperial_2
+
+- type: marking
+  id: KidanTailLuxurious
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: luxurious
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: luxurious_2
+
+- type: marking
+  id: KidanTailRound
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: round_1
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: round_2
+
+- type: marking
+  id: KidanTailSmoll
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: smoll
+
+- type: marking
+  id: KidanTailStraight
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: straight
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: straight_2
+
+- type: marking
+  id: KidanTailTailStripes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: tail
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: tail_2
+
+- type: marking
+  id: KidanTailTailAbdomen
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: tail
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_tail.rsi
+      state: tail_3
+
+#region Torso
+
+- type: marking
+  id: KidanChestBelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_torso.rsi
+      state: belly
+
+- type: marking
+  id: KidanChestCross
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_torso.rsi
+      state: cross
+
+- type: marking
+  id: KidanChestStrips
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_torso.rsi
+      state: strips
+
+- type: marking
+  id: KidanChestTorso
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Kidan]
+  sprites:
+    - sprite: _Exodus/Mobs/Customization/Kidan/kidan_torso.rsi
+      state: torso

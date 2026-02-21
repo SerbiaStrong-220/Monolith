@@ -1,6 +1,6 @@
-using System.Linq;
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
 using Content.Client.Interactable.Components;
-using Content.Client.StatusIcon;
 using Content.Shared.Exodus.Stealth;
 using Content.Shared.Exodus.Stealth.Components;
 using Robust.Client.GameObjects;

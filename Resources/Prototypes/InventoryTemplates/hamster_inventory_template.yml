@@ -6,7 +6,7 @@
     slotFlags: MASK
     uiWindowPos: 1,1
     strippingWindowPos: 1,1
-    displayName: Mask
+    displayName: inventory-slot-mask # Ru-Localization
     whitelist:
       tags:
         - PetWearable
@@ -18,7 +18,7 @@
     slotFlags: NECK
     uiWindowPos: 0,1
     strippingWindowPos: 0,1
-    displayName: Neck
+    displayName: inventory-slot-neck # Ru-Localization
     whitelist:
       tags:
         - HamsterWearable
@@ -28,7 +28,7 @@
     stripTime: 3
     uiWindowPos: 0,2
     strippingWindowPos: 0,0
-    displayName: Eyes
+    displayName: inventory-slot-eyes # Ru-Localization
     whitelist:
       tags:
         - HamsterWearable
@@ -40,7 +40,7 @@
     stripTime: 3
     uiWindowPos: 1,0
     strippingWindowPos: 2,5
-    displayName: Suit Storage
+    displayName: inventory-slot-suit-storage # Ru-Localization
     whitelist:
       components:
         - GasTank
@@ -49,7 +49,7 @@
     slotFlags: HEAD
     uiWindowPos: 1,2
     strippingWindowPos: 1,0
-    displayName: Head
+    displayName: inventory-slot-head # Ru-Localization
     whitelist:
       tags:
         - HamsterWearable

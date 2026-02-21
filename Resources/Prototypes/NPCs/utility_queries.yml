@@ -98,6 +98,8 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
+    - !type:TargetVisibleCon # Exodus
+      curve: !type:BoolCurve
 
 - type: utilityQuery
   id: OrderedTargets
@@ -118,6 +120,8 @@
       curve: !type:BoolCurve
     # they gotta be what we ordered
     - !type:OrderedTargetCon
+      curve: !type:BoolCurve
+    - !type:TargetVisibleCon # Exodus
       curve: !type:BoolCurve
 
 - type: utilityQuery
@@ -197,6 +201,8 @@
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+    - !type:TargetVisibleCon # Exodus
       curve: !type:BoolCurve
 
 #- type: utilityQuery

@@ -40,6 +40,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Spawners; // Mono
+using Content.Shared.Inventory; // Exodus
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -516,6 +518,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shotEv = new GunShotEvent(user, ev.Ammo, toCoordinates.Value); // Mono - pass coordinates
         RaiseLocalEvent(gunUid, ref shotEv);
 
+        // Exodus-Start
+        var shotUserEv = new GunShotUserEvent(user, gunUid, ev.Ammo, toCoordinates.Value);
+        RaiseLocalEvent(user, ref shotUserEv);
+        // Exodus-End
+
         CauseImpulse(toCoordinates.Value, (gunUid, gun), ev.Ammo.Count);
     }
 
@@ -613,6 +620,10 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (cartridge.DeleteOnSpawn) // Mono - No need to update appearance if cartridge is getting deleted anyways
             return;
+
+        if (cartridge.AutoTimedDespawn != 0)
+            EnsureComp<TimedDespawnComponent>(uid).Lifetime = cartridge.AutoTimedDespawn;
+        // End mono
 
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
@@ -811,6 +822,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 }
 
 /// <summary>
+/// Raised when a chamber-mag gun's bolt is opened or closed.
+/// </summary>
+public record struct BoltStateChangedEvent(EntityUid User, bool Closed); //Mono
+
+/// <summary>
 ///     Raised directed on the gun before firing to see if the shot should go through.
 /// </summary>
 /// <remarks>
@@ -829,6 +845,17 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo, EntityCoordinates ToCoordinates); // Mono - pass coordinates
 
+// Exodus-Start
+/// <summary>
+///     Raised directed on the user after firing.
+/// </summary>
+/// <param name="Gun">A gun this user fired.</param>
+[ByRefEvent]
+public record struct GunShotUserEvent(EntityUid User, EntityUid Gun, List<(EntityUid? Uid, IShootable Shootable)> Ammo, EntityCoordinates ToCoordinates) : IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+};
+// Exodus-End
 public enum EffectLayers : byte
 {
     Unshaded,

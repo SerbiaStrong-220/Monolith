@@ -1,0 +1,101 @@
+#region Kidans
+- type: soundCollection
+  id: KidanSpeaks
+  files:
+    - /Audio/_Exodus/Voice/Kidan/speak1.ogg
+    - /Audio/_Exodus/Voice/Kidan/speak2.ogg
+    - /Audio/_Exodus/Voice/Kidan/speak3.ogg
+
+- type: soundCollection
+  id: KidanSneeze
+  files:
+    - /Audio/_Exodus/Voice/Kidan/sneeze1.ogg
+    - /Audio/_Exodus/Voice/Kidan/sneeze2.ogg
+    - /Audio/_Exodus/Voice/Kidan/sneeze3.ogg
+    - /Audio/_Exodus/Voice/Kidan/sneeze4.ogg
+
+- type: soundCollection
+  id: KidanCough
+  files:
+    - /Audio/_Exodus/Voice/Kidan/cough1.ogg
+
+- type: soundCollection
+  id: KidanScream
+  files:
+    - /Audio/_Exodus/Voice/Kidan/scream1.ogg
+    - /Audio/_Exodus/Voice/Kidan/scream2.ogg
+    - /Audio/_Exodus/Voice/Kidan/scream3.ogg
+
+- type: soundCollection
+  id: KidanLaugh
+  files:
+    - /Audio/_Exodus/Voice/Kidan/laugh1.ogg
+    - /Audio/_Exodus/Voice/Kidan/laugh2.ogg
+    - /Audio/_Exodus/Voice/Kidan/laugh3.ogg
+    - /Audio/_Exodus/Voice/Kidan/laugh4.ogg
+    - /Audio/_Exodus/Voice/Kidan/giggles1.ogg
+    - /Audio/_Exodus/Voice/Kidan/giggles2.ogg
+
+- type: soundCollection
+  id: KidanSigh
+  files:
+    - /Audio/_Exodus/Voice/Kidan/sigh1.ogg
+    - /Audio/_Exodus/Voice/Kidan/sigh2.ogg
+
+- type: soundCollection
+  id: KidanCry
+  files:
+    - /Audio/_Exodus/Voice/Kidan/cry1.ogg
+
+- type: soundCollection
+  id: KidanGrumble
+  files:
+    - /Audio/_Exodus/Voice/Kidan/grumble1.ogg
+    - /Audio/_Exodus/Voice/Kidan/grumble2.ogg
+    - /Audio/_Exodus/Voice/Kidan/grumble3.ogg
+
+- type: soundCollection
+  id: KidanGroan
+  files:
+    - /Audio/_Exodus/Voice/Kidan/moan1.ogg
+
+- type: soundCollection
+  id: KidanWigglesAtennae
+  files:
+    - /Audio/_Exodus/Voice/Kidan/wiggles_antennae1.ogg
+    - /Audio/_Exodus/Voice/Kidan/wiggles_antennae2.ogg
+    - /Audio/_Exodus/Voice/Kidan/wiggles_antennae3.ogg
+
+- type: soundCollection
+  id: KidanWavesAntennaeSharply
+  files:
+    - /Audio/_Exodus/Voice/Kidan/waves_antennae_sharply1.ogg
+    - /Audio/_Exodus/Voice/Kidan/waves_antennae_sharply2.ogg
+
+- type: soundCollection
+  id: KidanJawsSnap
+  files:
+    - /Audio/_Exodus/Voice/Kidan/clicking.ogg
+    - /Audio/_Exodus/Voice/Kidan/clicking2.ogg
+    - /Audio/_Exodus/Voice/Kidan/clicking3.ogg
+
+- type: soundCollection
+  id: KidanYawn
+  files:
+    - /Audio/_Exodus/Voice/Kidan/yawn_k.ogg
+
+- type: soundCollection
+  id: KidanWhistle
+  files:
+    - /Audio/_Exodus/Voice/Kidan/whistle_k.ogg
+
+- type: soundCollection
+  id: KidanGasp
+  files:
+    - /Audio/_Exodus/Voice/Kidan/suffocation.ogg
+    - /Audio/_Exodus/Voice/Kidan/suffocation2.ogg
+
+- type: soundCollection
+  id: KidanDeathGasp
+  files:
+    - /Audio/_Exodus/Voice/Kidan/deathgasp.ogg

@@ -1,0 +1,17 @@
+- type: localizedDataset
+  id: NamesFirstKidan
+  values:
+    prefix: names-kidan-first-dataset-
+    count: 70
+
+- type: localizedDataset
+  id: NamesMiddleKidan
+  values:
+    prefix: names-kidan-first-dataset-
+    count: 70
+
+- type: localizedDataset
+  id: NamesLastKidan
+  values:
+    prefix: names-kidan-last-dataset-
+    count: 30

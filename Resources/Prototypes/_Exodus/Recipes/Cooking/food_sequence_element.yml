@@ -1,0 +1,30 @@
+- type: foodSequenceElement
+  id: KidanMeat
+  name: food-sequence-content-kidan
+  sprites:
+  - sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatKidanBurger
+  name: food-sequence-burger-content-kidan
+  sprites:
+  - sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: KidanCutlet
+  name: food-sequence-burger-content-kidan
+  sprites:
+  - sprite: _Exodus/Objects/Consumable/Food/meat.rsi
+    state: kidan-cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat

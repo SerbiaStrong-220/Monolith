@@ -1,0 +1,5 @@
+- type: loadout
+  id: ContractorClothingEyesHudChemMed
+  price: 1000
+  equipment:
+    eyes: ClothingEyesHudChemMed

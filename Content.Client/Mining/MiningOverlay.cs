@@ -1,3 +1,5 @@
+// Exodus-MiningScannerRefactor
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Mining.Components;
 using Robust.Client.GameObjects;
@@ -24,7 +26,7 @@ public sealed class MiningOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => false;
 
-    private readonly HashSet<Entity<MiningScannerViewableComponent>> _viewableEnts = new();
+    // private readonly HashSet<Entity<MiningScannerViewableComponent>> _viewableEnts = new(); // Exodus-MiningScannerRefactor
 
     public MiningOverlay()
     {
@@ -46,14 +48,45 @@ public sealed class MiningOverlay : Overlay
             !_entityManager.TryGetComponent<MiningScannerViewerComponent>(localEntity, out var viewerComp))
             return;
 
-        if (viewerComp.LastPingLocation == null)
+        // Exodus-Kidans-Start | Reimplement alpha channel calculating considering that player may make multiple scans in a row
+        //                     | Consider that theese scans may be made in different points
+        if (viewerComp.Records.Count == 0)
             return;
 
         var scaleMatrix = Matrix3Helpers.CreateScale(Vector2.One);
 
-        _viewableEnts.Clear();
-        _lookup.GetEntitiesInRange(viewerComp.LastPingLocation.Value, viewerComp.ViewRange, _viewableEnts);
-        foreach (var ore in _viewableEnts)
+        var ores = new Dictionary<Entity<MiningScannerViewableComponent>, float>();
+
+        // cuz we can have two active scans at time
+        // in data preparation step we have to calculate
+        // which entities alpha channel should rely to which scan
+        foreach (var record in viewerComp.Records)
+        {
+            var ents = new HashSet<Entity<MiningScannerViewableComponent>>();
+            _lookup.GetEntitiesInRange(record.PingLocation, record.ViewRange, ents);
+
+            // calculate entities alpha
+            var viewableEnts = ents.Select(ent => (ent, (float) Math.Clamp((record.CreatedAt + record.Delay - _timing.CurTime) / record.AnimationDuration, 0f, 1f)));
+
+            // decide which alpha better to use
+            foreach (var (ent, alpha) in viewableEnts)
+            {
+                if (!ores.TryGetValue(ent, out var savedAlpha))
+                {
+                    ores.Add(ent, alpha);
+                    continue;
+                }
+
+                if (savedAlpha < alpha)
+                {
+                    ores.Remove(ent);
+                    ores.Add(ent, alpha);
+                }
+            }
+        }
+
+        foreach (var (ore, alpha) in ores)
+        // Exodus-Kidans-End
         {
             if (!_xformQuery.TryComp(ore, out var xform) ||
                 !_spriteQuery.TryComp(ore, out var sprite))
@@ -80,12 +113,11 @@ public sealed class MiningOverlay : Overlay
             var spriteSpec = new SpriteSpecifier.Rsi(layer.ActualRsi.Path, layer.RsiState.Name);
             var texture = _sprite.GetFrame(spriteSpec, TimeSpan.FromSeconds(layer.AnimationTime));
 
-            var animTime = (viewerComp.NextPingTime - _timing.CurTime).TotalSeconds;
-
-
-            var alpha = animTime < viewerComp.AnimationDuration
-                ? 0
-                : (float) Math.Clamp((animTime - viewerComp.AnimationDuration) / viewerComp.AnimationDuration, 0f, 1f);
+            // Exodus-Kidans | Alpha channel is already calculated
+            // var animTime = (viewerComp.NextPingTime - _timing.CurTime).TotalSeconds;
+            // var alpha = animTime < viewerComp.AnimationDuration
+            //     ? 0
+            //     : (float) Math.Clamp((animTime - viewerComp.AnimationDuration) / viewerComp.AnimationDuration, 0f, 1f);
             var color = Color.White.WithAlpha(alpha);
 
             handle.DrawTexture(texture, -(Vector2) texture.Size / 2f / EyeManager.PixelsPerMeter, layer.Rotation, modulate: color);

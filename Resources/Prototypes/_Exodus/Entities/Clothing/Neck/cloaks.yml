@@ -1,0 +1,65 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakTalma
+  name: talma
+  description: Short shoulder cape. The lining is hand embroidered.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Neck/Cloaks/Talma_cloak.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Neck/Cloaks/Talma_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakTravelerBlack
+  name: mantle of timelessness
+  description: Short shoulder cape. The lining is hand embroidered.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Neck/Cloaks/black_traveler's_cloak.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Neck/Cloaks/black_traveler's_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakTravelerGold
+  name: mantle of the windsong
+  description: Short shoulder cape. The lining is hand embroidered.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Neck/Cloaks/gold_traveler's_cloak.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Neck/Cloaks/gold_traveler's_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakTravelerRed
+  name: mantle of memory
+  description: Short shoulder cape. The lining is hand embroidered.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Neck/Cloaks/red_traveler's_cloak.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Neck/Cloaks/red_traveler's_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakWebCloak
+  name: mantle of the spider kin
+  description: To the Arachnids, silk is more than mere material — it is a language frozen in patterns. Every thread, every curve is a tale woven from personal history, oaths, and the legacy of an entire bloodline. Such a gift is the rarest of honors, for to give another a piece of one's own fate is an act reserved only for those deemed equal... or worthy of becoming part of the Kin's story.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Neck/Cloaks/web_cloak.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
+        Heat: 0.9
+        Cold: 0.9
+  - type: Construction
+    graph: WebCloak
+    node: ClothingNeckCloakWebCloak
+
+

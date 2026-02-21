@@ -14,8 +14,8 @@ pda-bound-user-interface-lock-uplink-title = Закрыть аплинк
 pda-bound-user-interface-lock-uplink-description = Предотвратите доступ к вашему аплинку персон без кода
 comp-pda-ui-menu-title = КПК
 comp-pda-ui-footer = Карманный Персональный Компьютер
-comp-pda-ui-station = Станция: [color=white]{ $station }[/color]
-comp-pda-ui-station-alert-level = Уровень угрозы: [color={ $color }]{ $level }[/color]
+comp-pda-ui-station = Объект сектора: [color=white]{ $station }[/color]
+comp-pda-ui-station-alert-level = Уровень угрозы сектора: [color={ $color }]{ $level }[/color]
 comp-pda-ui-station-alert-level-instructions = Инструкции: [color=white]{ $instructions }[/color]
 comp-pda-ui-station-time = Продолжительность смены: [color=white]{ $time }[/color]
 comp-pda-ui-eject-id-button = Извлечь ID

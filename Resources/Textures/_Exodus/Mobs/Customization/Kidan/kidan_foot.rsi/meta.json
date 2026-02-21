@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "EXDS-RL",
+    "copyright": "made by Askolot (discord:788252896016990219)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "claw_l",
+            "directions": 4
+        },
+        {
+            "name": "claw_r",
+            "directions": 4
+        }
+    ]
+}

@@ -23,12 +23,10 @@
   copyright: "Made by Ramli"
   source: "https://www.youtube.com/watch?v=e1PkrzH-ybc"
 
-
 - files: ["theme_of_space.ogg"]
   license: "CC-BY-3.0"
   copyright: "Made by Gundatsch"
   source: "https://opengameart.org/users/gundatsch"
-
 
 - files: ["larik.ogg"]
   license: "CC-BY-3.0"
@@ -45,8 +43,127 @@
   copyright: "Made by Dawid Bowie"
   source: "https://opengameart.org/users/gundatsch"
 
-
 - files: ["endless_space.ogg"]
   license: "CC-BY-3.0"
   copyright: "Endless Space by SolusLunes, Remix by Ramli"
   source: "https://www.youtube.com/watch?v=x4uatkFdZoU"
+
+- files: ["nothing-wrong-with-megacorpos.ogg"]
+  license: "CC0-1.0"
+  copyright: "Made by A-Guy"
+  source: "https://youtu.be/pfiCQBIjLgo?si=rfdlsX-c1Hj6sCgt"
+
+- files: ["nuclearoperations_remake.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original taken from /tg/station, Remix by A-Guy"
+  source: "https://youtu.be/vG3c5CQchOY?si=SejLDNNpAdwJ9MxS"
+
+- files: ["revolution_A-Guy.ogg"]
+  license: "CC0-1.0"
+  copyright: "Made by A-Guy"
+  source: "https://youtu.be/S4lhWeI5d5o?si=CnGvnxNKE-yewuWT"
+
+- files: ["lavaland.ogg"]
+  license: "CC0-1.0"
+  copyright: "Made by A-Guy"
+  source: "https://youtu.be/JWLKK_REssc?si=zcUE4f6S2DkkVHqs"
+
+- files: ["corporate-rats.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Bolgarich"
+  source: "https://youtu.be/F4OkYAPaqeI?si=o6EtMBJQ8jYLC0bL"
+
+- files: ["liberation.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Bolgarich"
+  source: "https://youtu.be/R9kPrVKzFCw?si=HmoE5nmUGW1zeweB"
+
+- files: ["tear-of-veil.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Bolgarich"
+  source: "https://youtu.be/NqNHKfTAvcw?si=UStWtxBUj1QTZDfk"
+
+- files: ["taypan.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Bolgarich feat Haziness Codex"
+  source: "https://youtu.be/xAOatuanOfg?si=LRt7NG-6N9bBm-RV"
+
+- files: ["despair.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Bolgarich"
+  source: "https://youtu.be/bjFofq9j1DM?si=i5f3q17JhLm0FMwk"
+
+- files: ["nuke-ops-theme.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Qntum (Feat Z.W.E.I.)"
+  source: "https://youtu.be/AisGME8DRk0?si=KmDi7OHtJVYHkiTy"
+
+- files: ["terminated-contracts.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Qntum (Feat Z.W.E.I.)"
+  source: "https://youtu.be/BSoKxlBxHMw?si=hdY9XhQZm_Wkb-M_"
+
+- files: ["vordhosbn.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Aphex Twin"
+  source: "https://youtu.be/Woo8ZJU-SQw?si=HThGpTidkWkKtL9-"
+
+- files: ["devourer-of-gods.ogg"]
+  license: "Custom"
+  copyright: "Exclusive license from DM DOKURO, SixteenInMono"
+  source: "https://youtu.be/wjOj_6cMGEY?si=wWpJ_JJa8GnOPFRw"
+
+- files: ["blessing-of-the-moon.ogg"]
+  license: "Custom"
+  copyright: "Exclusive license from DM DOKURO, SixteenInMono"
+  source: "https://youtu.be/BvR7dzXBQSE?si=3_VsPFQkVWwOoJCx"
+
+- files: ["heaven-sent-abomination.ogg"]
+  license: "Custom"
+  copyright: "Exclusive license from DM DOKURO, SixteenInMono"
+  source: "https://youtu.be/cZ4Q2WLmUII?si=ymddbd3IbT-eQsXW"
+
+- files: ["catastrophes-before-the-calamity.ogg"]
+  license: "Custom"
+  copyright: "Exclusive license from DM DOKURO, SixteenInMono"
+  source: "https://youtu.be/QRuwCLF6rBM?si=kRAwD3t8quZz_uka"
+
+- files: ["erased-one.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/nWHQSi1j4zU?si=qItaifiLtxK274Sd"
+
+- files: ["exodus.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/kElDkXwngqI?si=YVYfxkjEJUV_8s9a"
+
+- files: ["seven-summer-days.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/T7sas95Qqo4?si=IRh9X7WjZf_AzLsC"
+
+- files: ["sanati.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/g4SZSI2cM3w?si=RPc03S3axcfhSpHy"
+
+- files: ["tabula-rasa.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/Y7DUFyDiOQI?si=g5iugR_SFe8OPT3K"
+
+- files: ["will-we-meet-again.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/xvjtrxg49kg?si=MMkIg3aAsv6oO5uK"
+
+- files: ["deadman-on-vacation.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/P7Areym8sls?si=Nr5cLkaIv1gJr595"
+
+- files: ["my-silent-angel.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Made by April Rain, license - https://vk.com/topic-45632628_35382902."
+  source: "https://youtu.be/-qjADANNHEY?si=qQpnxu_1ii1z5tma"

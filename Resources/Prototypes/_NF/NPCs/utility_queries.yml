@@ -17,3 +17,5 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
+    - !type:TargetVisibleCon # Exodus
+      curve: !type:BoolCurve

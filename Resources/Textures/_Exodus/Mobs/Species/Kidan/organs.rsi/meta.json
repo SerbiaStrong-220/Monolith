@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "license": "EXDS-RL",
+    "copyright": "made by Askolot (discord:788252896016990219)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "brain"
+        },
+        {
+            "name": "eyeball-l"
+        },
+        {
+            "name": "eyeball-r"
+        },
+        {
+            "name": "kidneys"
+        },
+        {
+            "name": "liver"
+        },
+        {
+            "name": "pheromone-glands"
+        },
+        {
+            "name": "stomach"
+        },
+        {
+            "name": "tracheal-tubes"
+        },
+        {
+            "name": "heart",
+            "delays": [
+                [
+                    0.3,
+                    0.12,
+                    0.12
+                ]
+            ]
+        }
+    ]
+}
