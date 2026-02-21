@@ -29,7 +29,7 @@ LABEL org.opencontainers.image.title="Exodus Monolith Server" \
       org.opencontainers.image.description="SS14 Exodus Monolith Server" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.revision="${VCS_REF}" 
+      org.opencontainers.image.revision="${VCS_REF}"
 
 RUN groupadd -r ss14 && useradd -r -g ss14 -d /app ss14
 
