@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
+using Content.Server.Exodus.GameTicking.Requirements;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
@@ -17,6 +18,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     // Not protected, just to be used in utility methods
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly GameRuleRequirementsSystem _ruleRequirements = default!; // Exodus
 
     public override void Initialize()
     {
@@ -38,7 +40,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
-            if (args.Players.Length >= minPlayers)
+            if (args.Players.Length >= minPlayers && _ruleRequirements.CheckRule(uid)) // Exodus-GameRuleRequirements
                 continue;
 
             if (gameRule.CancelPresetOnTooFewPlayers)

@@ -130,6 +130,9 @@ public sealed partial class GameTicker
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
             return false;
 
+        if (!_ruleRequirements.CheckRule(ruleEntity)) // Exodus
+            return false;
+
         // If we already have it, then we just skip the delay as it has already happened.
         if (!RemComp<DelayedStartRuleComponent>(ruleEntity) && ruleData.Delay != null)
         {

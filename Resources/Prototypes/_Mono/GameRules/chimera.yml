@@ -21,6 +21,11 @@
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraSakuratsu
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -36,6 +41,11 @@
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraOlympus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -51,6 +61,11 @@
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraTethys
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -66,4 +81,9 @@
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraLegionnaire
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 

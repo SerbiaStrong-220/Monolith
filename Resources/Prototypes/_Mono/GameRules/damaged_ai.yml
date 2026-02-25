@@ -31,6 +31,11 @@
     minPlayers: 32
   - type: LoadMapRule
     preloadedGrid: AIZenith
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -46,6 +51,11 @@
     minPlayers: 32
   - type: LoadMapRule
     preloadedGrid: AIZenithE
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -61,6 +71,11 @@
     minPlayers: 32
   - type: LoadMapRule
     preloadedGrid: AINebula
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -76,6 +91,11 @@
     minPlayers: 15
   - type: LoadMapRule
     preloadedGrid: AIRazor
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 2
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -91,6 +111,11 @@
     minPlayers: 32
   - type: LoadMapRule
     preloadedGrid: AIRazorN
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -106,3 +131,8 @@
     minPlayers: 60
   - type: LoadMapRule
     preloadedGrid: AIWyvern
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 8

@@ -19,6 +19,11 @@
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: AsakimSmall
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -34,3 +39,8 @@
     minPlayers: 60
   - type: LoadMapRule
     preloadedGrid: AsakimMedium
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 8

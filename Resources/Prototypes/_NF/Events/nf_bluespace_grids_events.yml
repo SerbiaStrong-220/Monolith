@@ -39,6 +39,11 @@
         - /Maps/_NF/Bluespace/cache.yml
     rewardAccounts:
       Nfsd: 1.0
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 4
 
 - type: entity
   id: BluespaceVaultError
@@ -79,6 +84,11 @@
         - /Maps/_NF/Bluespace/vault.yml
     rewardAccounts:
       Nfsd: 1.0
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 4
 
 - type: entity
   id: BluespaceVaultSmallError
@@ -120,6 +130,11 @@
         - /Maps/_NF/Bluespace/vaultsmall.yml
     rewardAccounts:
       Nfsd: 1.0
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 4
 
 - type: entity
   id: BluespaceSyndicateFTLInterception
@@ -159,6 +174,11 @@
 # Mono edit end
         paths:
         - /Maps/_NF/Bluespace/syndieftlintercept.yml
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 4
 
 # Mono edit - Mono UIV's
 - type: entity
@@ -190,6 +210,11 @@
         - type: LinkedLifecycleGridParent
         paths:
         - /Maps/_Mono/Bluespace/prefracture.yml
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 4
 # Mono edit end
 
 ## Mono edit - commenting out useless UIV's
