@@ -24,7 +24,7 @@
     shape: hexagon
     visibleFromOtherGrids: true
   - type: MovementIgnoreGravity
-    gravityState: true
+    weightless: true
   - type: WarpPoint
     follow: true
     location: space leviathan

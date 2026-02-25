@@ -2,7 +2,7 @@
 # TODO BODY: Part damage
 - type: entity
   id: BaseKidanPart
-  parent: BaseItem
+  parent: [BaseItem, BasePart]
   name: "kidan body part"
   abstract: true
   components:
@@ -12,15 +12,6 @@
     sprite: _Exodus/Mobs/Species/Kidan/parts.rsi
   - type: BodyPart
     species: Kidan
-  - type: Damageable
-    damageContainer: Biological
-  - type: ContainerContainer
-    containers:
-      bodypart: !type:Container
-        ents: []
-  - type: Tag
-    tags:
-      - Trash
   - type: Extractable
     juiceSolution:
       reagents:

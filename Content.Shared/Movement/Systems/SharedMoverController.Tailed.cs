@@ -1,4 +1,4 @@
-// (c) Space Exodus Team - MPL-2.0 with CLA
+// (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
 using System.Numerics;
 using Content.Shared.Exodus.Tailed;
@@ -63,12 +63,6 @@ public abstract partial class SharedMoverController
             var currentPos = _transform.GetWorldPosition(segment);
             Vector2 desiredVelocity;
 
-            if (i == 0)
-            {
-                if (!TryComp<TailedEntityComponent>(segment, out var tailComp))
-                    continue;
-            }
-
             if (prevEntity != null)
             {
                 var toPrev = prevPos - currentPos;
@@ -128,6 +122,7 @@ public abstract partial class SharedMoverController
         for (var i = 0; i < tail.TailSegments.Count; i++)
         {
             var segment = tail.TailSegments[i];
+
             var segmentPos = _transform.GetWorldPosition(segment);
 
             var direction = prevPos - segmentPos;

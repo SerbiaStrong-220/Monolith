@@ -50,8 +50,13 @@ public sealed partial class TailedEntitySystem : EntitySystem
     private void OnComponentShutdown(EntityUid uid, TailedEntityComponent component, ComponentShutdown args)
     {
         foreach (var segment in component.TailSegments)
-            QueueDel(segment);
-
+        {
+            if (Exists(segment) && !EntityManager.IsQueuedForDeletion(segment))
+            {
+                _joint.ClearJoints(segment);
+                Del(segment);
+            }
+        }
         component.TailSegments.Clear();
     }
 
