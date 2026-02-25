@@ -20,6 +20,7 @@
     - ExodusRule12Information
     - ExodusRule13RP
     - ExodusRule14Respawn
+    - ExodusRule15War
 
 - type: guideEntry
   id: ExodusRule0DontBeAsshole
@@ -109,4 +110,10 @@
   id: ExodusRule14Respawn
   name: guide-entry-exodus-rule-fourteen-respawn
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule14_Respawn.xml"
+  ruleEntry: true
+
+- type: guideEntry
+  id: ExodusRule15War
+  name: guide-entry-exodus-rule-fifteen-war
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule15_War.xml"
   ruleEntry: true

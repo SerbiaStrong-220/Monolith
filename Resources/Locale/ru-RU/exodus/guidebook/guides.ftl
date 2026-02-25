@@ -14,3 +14,4 @@ guide-entry-exodus-rule-eleven-erp = 11. ERP
 guide-entry-exodus-rule-twelve-information = 12. Доступная информация
 guide-entry-exodus-rule-thirteen-roleplay = 13. Игровая атмосфера
 guide-entry-exodus-rule-fourteen-respawn = 14. Возрождение
+guide-entry-exodus-rule-fifteen-war = 15. Фракционные столкновения
