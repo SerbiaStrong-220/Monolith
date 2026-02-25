@@ -1,4 +1,4 @@
-using Content.Shared.Exodus.GameTicking;
+using Content.Shared.Exodus.GameTicking.Requirements;
 using Content.Server._NF.CryoSleep;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -36,7 +36,7 @@ public sealed partial class JobGameRuleRequirement : GameRuleRequirement
                 continue;
 
             // mob checks
-            if (!mindSystem.TryGetMind(uid, out _, out var mind) || mind.Session != null)
+            if (!mindSystem.TryGetMind(uid, out _, out var mind) || mind.Session == null)
                 continue;
 
             if (mobSystem.IsIncapacitated(uid))
