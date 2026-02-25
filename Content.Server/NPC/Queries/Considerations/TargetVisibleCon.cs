@@ -13,5 +13,5 @@ public sealed partial class TargetVisibleCon : UtilityConsideration
     /// Visibility threshold for detection. Targets with visibility below this are not detected.
     /// </summary>
     [DataField("visibilityThreshold")]
-    public float VisibilityThreshold = 0.5f;
+    public float VisibilityThreshold = 0.75f;
 }

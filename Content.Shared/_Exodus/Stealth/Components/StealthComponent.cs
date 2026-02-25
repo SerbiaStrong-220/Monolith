@@ -62,7 +62,7 @@ public sealed partial class StealthData
     public float PassiveVisibilityRate = -0.15f;
 
     [DataField]
-    public float MovementVisibilityRate = 0.1f;
+    public float MovementVisibilityRate = 0.3f;
 
     [DataField]
     public float InvisibilityPenalty = 1f;
@@ -72,7 +72,7 @@ public sealed partial class StealthData
 
     public StealthData(float minVisibility = -1f, float maxVisibility = 1.5f, float lastVisibility = 1,
         bool enabledOnDeath = true, bool enabledOnCrit = true, float examineThreshold = 0.5f, string examinedDesc = "stealth-visual-effect",
-        float passiveVisibilityRate = -0.15f, float movementVisibilityRate = 0.1f, float invisibilityPenalty = 1f, float maxInvisibilityPenalty = 0.5f)
+        float passiveVisibilityRate = -0.15f, float movementVisibilityRate = 0.3f, float invisibilityPenalty = 1f, float maxInvisibilityPenalty = 0.5f)
     {
         MinVisibility = minVisibility;
         MaxVisibility = maxVisibility;
