@@ -115,7 +115,7 @@ public sealed class StationProximitySystem : EntitySystem
         if (HasComp<SpaceWhaleTargetComponent>(entity))
             return;
 
-        _audio.PlayEntity(new SoundPathSpecifier("/Audio/_Goobstation/Ambience/SpaceWhale/leviathan-appear.ogg"),
+        _audio.PlayEntity(new SoundPathSpecifier("/Audio/_Exodus/Ambience/Leviathan/leviathan-appear.ogg"),
             entity,
             entity,
             AudioParams.Default.WithVolume(1f));
