@@ -1,4 +1,4 @@
-using Content.Shared.Exodus.GameTicking;
+using Content.Shared.Exodus.GameTicking.Requirements;
 
 namespace Content.Server.Exodus.GameTicking.Requirements;
 
