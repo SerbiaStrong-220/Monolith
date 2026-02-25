@@ -78,7 +78,7 @@
   - FrontierRoundstartVariation
   - MonoAISTCShuttleSpawnerScheduler
   - MonoAISTCShuttleSpawnerSchedulerTier2
-  # - MonoAsakimSTCShuttleSpawnerScheduler # Exodus-Delete-Asakim-From-Random-Spawn
+  # - MonoAsakimSTCShuttleSpawnerScheduler # Exodus-Asakim-Disable
   - MonoMonolithicEventsScheduler
 
 - type: gamePreset
@@ -113,7 +113,7 @@
   - MonoChimeraSTCShuttleSpawnerSchedulerSlow
   - MonoAISTCShuttleSpawnerSchedulerSlow
   - MonoAISTCShuttleSpawnerSchedulerTier2Slow
-  # - MonoAsakimSTCShuttleSpawnerSchedulerSlow # Exodus-Delete-Asakim-From-Random-Spawn
+  # - MonoAsakimSTCShuttleSpawnerSchedulerSlow # Exodus-Asakim-Disable
   - MonoMonolithicEventsScheduler
 
 - type: gamePreset
@@ -131,6 +131,5 @@
   - FrontierRoundstartVariation
   - MonoChimeraSTCShuttleSpawnerSchedulerApocalypse
   - MonoAISTCShuttleSpawnerSchedulerApocalypse
-  # - MonoAsakimSTCShuttleSpawnerSchedulerApocalypse # Exodus-Delete-Asakim-From-Random-Spawn
+  # - MonoAsakimSTCShuttleSpawnerSchedulerApocalypse # Exodus-Asakim-Disable
   - MonoMonolithicEventsScheduler
-

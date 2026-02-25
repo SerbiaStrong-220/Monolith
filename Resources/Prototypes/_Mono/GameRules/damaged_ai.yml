@@ -15,7 +15,7 @@
     - id: UnknownShuttleRazor
     - id: UnknownShuttleRazorN
     - id: UnknownShuttleNebula
-    - id: UnknownShuttleWyvern
+    # - id: UnknownShuttleWyvern # Exodus-Asakim-Disable
 
 - type: entity
   parent: BaseRandomShuttleRule
