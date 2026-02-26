@@ -3,6 +3,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Robust.Shared.Physics.Dynamics.Joints;
+using System.Numerics;
 
 namespace Content.Shared.Exodus.SpaceArtillery.Components;
 
@@ -20,6 +21,9 @@ public sealed partial class ShipGrapplingGunComponent : Component
 
     [DataField, AutoNetworkedField]
     public EntityUid? Target;
+
+    [DataField, AutoNetworkedField]
+    public Vector2 GunVisualOffset = new Vector2(0f, 0.5f);
 
     [DataField, ViewVariables]
     public SpriteSpecifier RopeSprite =

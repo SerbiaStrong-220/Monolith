@@ -1,6 +1,7 @@
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Content.Shared.Destructible;
+using Content.Shared.Construction;
 using Content.Shared.Weapons.Misc;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -36,12 +37,8 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         SubscribeLocalEvent<ShipGrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
         SubscribeLocalEvent<ShipGrapplingGunComponent, GunShotEvent>(OnGrappleShot);
-        SubscribeLocalEvent<ShipGrapplingProjectileComponent, JointRemovedEvent>(OnJointRemoved);
+        SubscribeLocalEvent<ShipGrapplingGunTargetComponent, EntityTerminatingEvent>(OnTargetDeconstructed);
         SubscribeLocalEvent<ShipGrapplingGunTargetComponent, DestructionEventArgs>(OnTargetDestruction);
-
-        SubscribeLocalEvent<ShipGrapplingGunTargetComponent, EntityTerminatingEvent>(OnTargetTerminating);
-        SubscribeLocalEvent<ShipGrapplingGunComponent, EntityTerminatingEvent>(OnGunTerminating);
-        SubscribeLocalEvent<ShipGrapplingProjectileComponent, EntityTerminatingEvent>(OnProjectileTerminating);
     }
 
     private void OnGrappleShot(EntityUid uid, ShipGrapplingGunComponent component, ref GunShotEvent args)
@@ -55,12 +52,14 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
                 Ungrapple((uid, component), false);
 
             component.Projectile = shootUid.Value;
+            _gun.ChangeBasicEntityAmmoCount(uid, 1);
             PvsOverride(shootUid.Value);
             PvsOverride(uid);
             var visuals = EnsureComp<JointVisualsComponent>(shootUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.Target = GetNetEntity(uid);
             visuals.OffsetA = new Vector2(0f, 0.5f);
+            visuals.OffsetB = component.GunVisualOffset;
             Dirty(uid, component);
             Dirty(shootUid.Value, visuals);
         }
@@ -110,10 +109,14 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         Dirty(targetGridUid.Value, jointComp);
     }
 
-    private void OnJointRemoved(EntityUid uid, ShipGrapplingProjectileComponent component, ref JointRemovedEvent args)
+    private void OnTargetDeconstructed(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
     {
-        if (_netManager.IsServer)
-            QueueDel(uid);
+        Log.Info("OnTargetDeconstructed start");
+        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+            return;
+        Log.Info("OnTargetDeconstructed Ungrapple");
+
+        Ungrapple((component.Gun, grapComp), true);
     }
 
     private void OnTargetDestruction(EntityUid uid, ShipGrapplingGunTargetComponent component, ref DestructionEventArgs args)
@@ -122,28 +125,6 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             return;
 
         Ungrapple((component.Gun, grapComp), true);
-    }
-
-    private void OnTargetTerminating(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
-    {
-        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
-            return;
-
-        Ungrapple((component.Gun, grapComp), true);
-    }
-
-    private void OnGunTerminating(EntityUid uid, ShipGrapplingGunComponent component, ref EntityTerminatingEvent args)
-    {
-        if (component.Projectile != null)
-            QueueDel(component.Projectile.Value);
-    }
-
-    private void OnProjectileTerminating(EntityUid uid, ShipGrapplingProjectileComponent component, ref EntityTerminatingEvent args)
-    {
-        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
-            return;
-
-        Ungrapple((component.Gun, grapComp), false);
     }
 
     public void Ungrapple(Entity<ShipGrapplingGunComponent> gun, bool isBreak)
@@ -156,8 +137,10 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         if (_netManager.IsServer)
         {
-            if (gun.Comp.JointId != null)
-                _joints.RemoveJoint(gun.Owner, gun.Comp.JointId);
+            var gunGridUid = Transform(gun.Owner).GridUid;
+
+            if (gun.Comp.JointId != null && gunGridUid.HasValue)
+                _joints.RemoveJoint(gunGridUid.Value, gun.Comp.JointId);
 
             if (gun.Comp.Target != null && HasComp<ShipGrapplingGunTargetComponent>(gun.Comp.Target))
                 RemComp<ShipGrapplingGunTargetComponent>(gun.Comp.Target.Value);
@@ -165,10 +148,10 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             if (gun.Comp.TargetGrid != null && HasComp<ShipGrapplingTargetGridComponent>(gun.Comp.TargetGrid))
                 RemComp<ShipGrapplingTargetGridComponent>(gun.Comp.TargetGrid.Value);
 
-            QueueDel(projectile);
+                QueueDel(gun.Comp.Projectile.Value);
+                gun.Comp.Projectile = null;
         }
 
-        gun.Comp.Projectile = null;
         gun.Comp.JointId = null;
         gun.Comp.Target = null;
         gun.Comp.TargetGrid = null;
@@ -178,5 +161,6 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
     }
 
     protected virtual void PvsOverride(EntityUid uid) { }
+
     protected virtual void RemovePvsOverride(EntityUid uid) { }
 }

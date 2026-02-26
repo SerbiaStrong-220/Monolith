@@ -61,7 +61,7 @@
     scale: 1
   - type: Gun
     projectileSpeed: 275
-    fireRate: 10
+    fireRate: 0.1
     selectedMode: Burst
     availableModes: Burst
     shootThermalSignature: 48000000
