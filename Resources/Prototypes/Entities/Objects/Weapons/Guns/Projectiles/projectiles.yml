@@ -978,7 +978,7 @@
           mask:
             - Impassable
             - BulletImpassable # Mono
-      fly-by: *flybyfixture
+        fly-by: *flybyfixture
     - type: GrapplingProjectile
     # Mono - so you can grapple asteroids
     - type: ChunkLoader
