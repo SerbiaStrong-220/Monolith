@@ -69,7 +69,12 @@ public sealed class BackStabSystem : EntitySystem
         var v1 = new Vector3(-_transform.GetWorldRotation(xform).ToWorldVec(), 0);
         var v2 = new Vector3(_transform.GetWorldPosition(userXform) - _transform.GetWorldPosition(xform), 0);
 
-        var angle = MathF.Acos(Vector3.Dot(v1, v2) / (v1.Length() * v2.Length()));
+        var denom = v1.Length() * v2.Length();
+        if (denom <= float.Epsilon)
+            return false;
+        var cosine = Math.Clamp(Vector3.Dot(v1, v2) / denom, -1f, 1f);
+
+        var angle = MathF.Acos(cosine);
 
         if (angle > tolerance.Theta)
             return false;
