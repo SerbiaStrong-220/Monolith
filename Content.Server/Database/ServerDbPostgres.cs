@@ -258,7 +258,7 @@ namespace Content.Server.Database
             }
 
             return new UnbanDef(
-                unban.Id,
+                unban.BanId,
                 aUid,
                 unban.UnbanTime);
         }

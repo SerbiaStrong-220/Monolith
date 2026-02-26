@@ -40,7 +40,6 @@ def main():
     dump_play_time(cur, user_id, arg_output)
     dump_player(cur, user_id, arg_output)
     dump_preference(cur, user_id, arg_output)
-    dump_role_whitelists(cur, user_id, arg_output)
     dump_ban(cur, user_id, arg_output)
     dump_server_ban_exemption(cur, user_id, arg_output)
     dump_uploaded_resource_log(cur, user_id, arg_output)

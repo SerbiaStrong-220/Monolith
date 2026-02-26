@@ -263,7 +263,7 @@ namespace Content.Server.Database
             }
 
             return new UnbanDef(
-                unban.Id,
+                unban.BanId,
                 aUid,
                 // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
                 DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));

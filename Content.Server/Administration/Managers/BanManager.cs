@@ -384,7 +384,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             return response.ToString();
         }
 
-        await _db.AddUnbanAsync(new UnbanDef(banId, unbanningAdmin, DateTimeOffset.Now));
+        await _db.AddUnbanAsync(new UnbanDef(banId, unbanningAdmin, unbanTime));
 
         foreach (var user in ban.UserIds)
         {
