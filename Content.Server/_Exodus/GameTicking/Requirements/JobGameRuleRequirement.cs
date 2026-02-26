@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Shared.Exodus.GameTicking.Requirements;
 using Content.Server._NF.CryoSleep;
 using Content.Shared.Roles;
