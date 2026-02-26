@@ -18,7 +18,7 @@ RUN unzip /tmp/server.zip -d server/ \
 RUN chmod +x /src/server/Robust.Server
 
 
-FROM mcr.microsoft.com/dotnet/runtime:9.0 AS final
+FROM mcr.microsoft.com/dotnet/runtime:10.0 AS final
 WORKDIR /app
 
 ARG VERSION=dev
