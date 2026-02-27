@@ -1,6 +1,6 @@
 - type: gameMap
   id: Frontier
-  mapName: 'Colossus Central'
+  mapName: 'Колосс-Централ'
   mapPath: /Maps/_Exodus/Outpost/colossus_central.yml # Exodus
   minPlayers: 0
   maxPlayers: 100
@@ -13,10 +13,10 @@
       - type: VesselMusic
         ambientMusicPrototype: ColossusCentralMusic
       - type: VesselInfo
-        description: "The closest thing to civilisation in this sector. You almost feel safe."
+        description: "Последний рубеж цивилизации этого сектора. Ты чувствуешь себя в безопасности... почти."
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Colossus Central'
+          mapNameTemplate: 'Колосс-Централ'
 #          nameGenerator:
 #            !type:NanotrasenNameGenerator
 #            prefixCreator: '14'
