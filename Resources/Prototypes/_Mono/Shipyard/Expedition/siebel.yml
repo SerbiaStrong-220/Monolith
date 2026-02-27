@@ -1,28 +1,27 @@
-# Author Info
-# GitHub: Primusirius
-# Discord: Primusirius
+# Based on Siebel by Primusirius (Github) from Monolith
+# Edited and currently maintained by Space Exodus
 
 - type: vessel
   id: Siebel
   parent: BaseVessel
-  name: MI Siebel 
-  description: The Siebel is a militia owned and designed ship, designed with Chimera combat in mind, however; many use it for expeditionary exploration and combat. 
-  price: 175000 # 
+  name: MI Siebel
+  description: The Siebel is a militia owned and designed ship, designed with Chimera combat in mind, however; many use it for expeditionary exploration and combat.
+  price: 175000
   category: Medium
   group: Expedition
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/Expedition/siebel.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
   guidebookPage: null
   class:
   - Expedition
-  - Pursuit 
+  - Pursuit
   engine:
   - AME
 
 - type: gameMap
   id: Siebel
   mapName: 'MI Siebel'
-  mapPath: /Maps/_Mono/Shuttles/Expedition/siebel.yml
+  mapPath: /Maps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
   minPlayers: 0
   stations:
     Siebel:
