@@ -23,7 +23,7 @@ public sealed partial class ShipGrapplingGunComponent : Component
     public EntityUid? Target;
 
     [DataField, AutoNetworkedField]
-    public Vector2 GunVisualOffset = new Vector2(0f, 0.5f);
+    public Vector2 GunVisualOffset = new Vector2(0f, -0.5f);
 
     [DataField, ViewVariables]
     public SpriteSpecifier RopeSprite =

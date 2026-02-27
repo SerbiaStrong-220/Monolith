@@ -37,8 +37,8 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         SubscribeLocalEvent<ShipGrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
         SubscribeLocalEvent<ShipGrapplingGunComponent, GunShotEvent>(OnGrappleShot);
-        SubscribeLocalEvent<ShipGrapplingGunTargetComponent, EntityTerminatingEvent>(OnTargetDeconstructed);
-        SubscribeLocalEvent<ShipGrapplingGunTargetComponent, DestructionEventArgs>(OnTargetDestruction);
+        SubscribeLocalEvent<ShipGrapplingGunTargetComponent, EntityTerminatingEvent>(OnTargetTerminating);
+        SubscribeLocalEvent<ShipGrapplingProjectileComponent, EntityTerminatingEvent>(OnProjectileTerminating);
     }
 
     private void OnGrappleShot(EntityUid uid, ShipGrapplingGunComponent component, ref GunShotEvent args)
@@ -109,17 +109,15 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         Dirty(targetGridUid.Value, jointComp);
     }
 
-    private void OnTargetDeconstructed(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
+    private void OnTargetTerminating(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
     {
-        Log.Info("OnTargetDeconstructed start");
         if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
             return;
-        Log.Info("OnTargetDeconstructed Ungrapple");
 
         Ungrapple((component.Gun, grapComp), true);
     }
 
-    private void OnTargetDestruction(EntityUid uid, ShipGrapplingGunTargetComponent component, ref DestructionEventArgs args)
+    private void OnProjectileTerminating(EntityUid uid, ShipGrapplingProjectileComponent component, ref EntityTerminatingEvent args)
     {
         if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
             return;
