@@ -38,7 +38,8 @@ public sealed partial class DocumentParsingManager
 
         var whitespaceAndCommentParser = SkipWhitespaces.Then(Try(String("<!--").Then(Parser<char>.Any.SkipUntil(Try(String("-->"))))).SkipMany());
 
-        _controlParser = OneOf(_tagParser, TryHeaderControl, ListControlParser, TextControlParser)
+        _controlParser = OneOf(_tagParser, TryHeaderControl, TryListControl, TextControlParser)
+             .Before(whitespaceAndCommentParser);
             .Before(whitespaceAndCommentParser);
 
         foreach (var typ in _reflectionManager.GetAllChildren<IDocumentTag>())
