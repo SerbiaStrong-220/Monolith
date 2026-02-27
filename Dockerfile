@@ -21,6 +21,10 @@ RUN chmod +x /src/server/Robust.Server
 FROM mcr.microsoft.com/dotnet/runtime:10.0 AS final
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgssapi-krb5-2 \
+    && rm -rf /var/lib/apt/lists/*
+
 ARG VERSION=dev
 ARG BUILD_DATE=unknown
 ARG VCS_REF=unknown
