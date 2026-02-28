@@ -114,12 +114,18 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
             return;
 
+        if (grapComp.Target != uid)
+            return;
+
         Ungrapple((component.Gun, grapComp), true);
     }
 
     private void OnProjectileTerminating(EntityUid uid, ShipGrapplingProjectileComponent component, ref EntityTerminatingEvent args)
     {
         if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+            return;
+
+        if (grapComp.Projectile != uid)
             return;
 
         Ungrapple((component.Gun, grapComp), true);

@@ -55,6 +55,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: FireControllable
+  - type: FireControlRotate
   - type: RadarBlip
     visibleFromOtherGrids: false
     radarColor: "#9999FF"
@@ -62,8 +63,8 @@
   - type: Gun
     projectileSpeed: 275
     fireRate: 0.1
-    selectedMode: Burst
-    availableModes: Burst
+    selectedMode: FullAuto
+    availableModes: FullAuto
     shootThermalSignature: 48000000
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
