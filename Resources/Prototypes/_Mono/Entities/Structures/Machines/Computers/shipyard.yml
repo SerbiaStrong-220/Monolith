@@ -21,11 +21,11 @@
       state: shipyard_blackmarket
     - map: ["computerLayerKeys"]
       state: blackmarket_key
-  - type: ShipyardConsole
-    shipyardChannel: Ussp
-    secretShipyardChannel: Nfsd
-    ignoreBaseSaleRate: true # Fixed 70% sale rate.
-    canTransferDeed: false
+  # - type: ShipyardConsole # Exodus
+  #   shipyardChannel: Ussp
+  #   secretShipyardChannel: Nfsd
+  #   ignoreBaseSaleRate: true # Fixed 70% sale rate.
+  #   canTransferDeed: false
 
 - type: entity
   id: ComputerShipyardSHM
