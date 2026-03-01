@@ -1,6 +1,6 @@
 - type: entity
   id: ComputerShipyardUSSP
-  parent: ComputerShipyardBase
+  parent: ComputerShipyard # Exodus
   name: USSP shipyard console
   description: Used to buy ships from USSP naval reserves.
   components:
