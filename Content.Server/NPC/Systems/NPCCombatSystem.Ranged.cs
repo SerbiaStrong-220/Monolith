@@ -155,7 +155,7 @@ public sealed partial class NPCCombatSystem
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
                 // For consistency with NPC steering.
-                comp.TargetInLOS = IsEnemyInLOS(uid, comp.ObstructedMask, comp.BulletMask, comp.Target, distance + 0.1f); // Exodus
+                comp.TargetInLOS = IsEnemyInLOS(uid, comp.ObstructedMask, comp.BulletMask, comp.Target, distance); // Exodus
             }
 
             if (!comp.TargetInLOS)

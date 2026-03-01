@@ -3,7 +3,7 @@
 namespace Content.Server.NPC.Components;
 
 /// <summary>
-/// When given an NPC ignores stealth on mobs and can fire them
+/// When given an NPC ignores stealth can target and fire at stealthed mobs
 /// </summary>
 [RegisterComponent]
 public sealed partial class NPCIgnoreStealthComponent : Component
