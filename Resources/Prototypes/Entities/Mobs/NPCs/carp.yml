@@ -13,6 +13,7 @@
     blackboard:
       NavSmash: !type:Bool
         true
+  - type: NPCIgnoreStealth # Exodus
   - type: NpcFactionMember
     factions:
     - Dragon

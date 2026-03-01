@@ -33,7 +33,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.StatusEffect; // Frontier
-using Content.Shared.Exodus.Stealth; // Exodus
+using Content.Shared.Exodus.Stealth;
+using Content.Shared.Exodus.Stealth.Components;
+using Content.Server.NPC.Components; // Exodus
 
 namespace Content.Server.NPC.Systems;
 
@@ -395,8 +397,11 @@ public sealed class NPCUtilitySystem : EntitySystem
             // Exodus-Start
             case TargetVisibleCon visibleCon:
             {
+                if (HasComp<NPCIgnoreStealthComponent>(owner))
+                    return 1f;
+
                 // Entities without stealth are always visible
-                if (!HasComp<Content.Shared.Exodus.Stealth.Components.StealthComponent>(targetUid))
+                if (!HasComp<StealthComponent>(targetUid))
                     return 1f;
 
                 var visibility = _stealth.GetVisibility(targetUid);
