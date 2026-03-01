@@ -1,17 +1,12 @@
-using Content.Server.Interaction;
-using Content.Shared.Damage.Components;
+using Content.Server.NPC.Systems;
 using Content.Shared.Physics;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed partial class TargetInLOSPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private InteractionSystem _interaction = default!;
-    // Mono
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<RequireProjectileTargetComponent> _requireTargetQuery;
+    private NPCCombatSystem _npcCombat = default!; // Exodus
 
     [DataField("targetKey")]
     public string TargetKey = "Target";
@@ -30,10 +25,7 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _interaction = sysManager.GetEntitySystem<InteractionSystem>();
-        // Mono
-        _physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        _requireTargetQuery = _entManager.GetEntityQuery<RequireProjectileTargetComponent>();
+        _npcCombat = _entManager.System<NPCCombatSystem>(); // Exodus
     }
 
     public override bool IsMet(NPCBlackboard blackboard)
@@ -44,11 +36,6 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
             return false;
 
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
-                                                                      // Mono
-        return _interaction.InRangeUnobstructed(owner, target, range, ObstructedMask, predicate: (EntityUid entity) =>
-        {
-            return _physicsQuery.TryGetComponent(entity, out var physics) && (physics.CollisionLayer & (int)BulletMask) == 0 // ignore if it can't collide with bullets
-                || _requireTargetQuery.HasComponent(entity); // or if it requires targeting
-        });
+        return _npcCombat.IsEnemyInLOS(owner, ObstructedMask, BulletMask, target, range); // Exodus
     }
 }
