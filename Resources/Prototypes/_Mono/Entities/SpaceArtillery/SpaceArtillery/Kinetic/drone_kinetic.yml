@@ -63,6 +63,8 @@
     shipType: Ballistic
   - type: ShipGunClass
     shipClass: Light
+  - type: Anchorable # Exodus | override inherited component to make it unanchorable
+    flags: 0
 
 - type: entity
   id: WeaponTurretPinhole
@@ -135,3 +137,5 @@
     shipType: Ballistic
   - type: ShipGunClass
     shipClass: Medium
+  - type: Anchorable # Exodus | override inherited component to make it unanchorable
+    flags: 0
