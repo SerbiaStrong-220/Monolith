@@ -54,7 +54,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
             if (GameTicker.TryAddGameRule(rule, out var ruleEnt))
             {
                 if (GameTicker.RunLevel > GameRunLevel.InRound)
-                    GameTicker.StartGameRule(rule);
+                    GameTicker.StartGameRule(ruleEnt.Value);
 
                 component.AdditionalGameRules.Add(ruleEnt.Value);
             }

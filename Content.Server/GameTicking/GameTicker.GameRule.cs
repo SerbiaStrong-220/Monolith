@@ -9,8 +9,8 @@ using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking;
 
@@ -71,7 +71,10 @@ public sealed partial class GameTicker
     public EntityUid ForceAddGameRule(string ruleId)
     {
         if (!TryAddGameRule(ruleId, out var ruleEnt, true))
+        {
+            DebugTools.Assert($"Failed to force add game rule {ruleId}");
             return EntityUid.Invalid;
+        }
         return ruleEnt.Value;
     }
 
