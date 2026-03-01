@@ -50,7 +50,7 @@ public sealed class EventManagerSystem : EntitySystem
             return;
         }
 
-        GameTicker.AddGameRule(randomEvent);
+        GameTicker.TryAddGameRule(randomEvent); // Exodus
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public sealed class EventManagerSystem : EntitySystem
             return;
         }
 
-        GameTicker.AddGameRule(randomLimitedEvent);
+        GameTicker.TryAddGameRule(randomLimitedEvent); // Exodus
     }
 
     /// <summary>

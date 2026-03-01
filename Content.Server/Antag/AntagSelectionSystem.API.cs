@@ -349,7 +349,7 @@ public sealed partial class AntagSelectionSystem
         {
             return (uid, comp);
         }
-        var ruleEnt = GameTicker.AddGameRule(id);
+        var ruleEnt = GameTicker.ForceAddGameRule(id); // Exodus
         RemComp<LoadMapRuleComponent>(ruleEnt);
         var antag = Comp<AntagSelectionComponent>(ruleEnt);
         antag.SelectionsComplete = true; // don't do normal selection.

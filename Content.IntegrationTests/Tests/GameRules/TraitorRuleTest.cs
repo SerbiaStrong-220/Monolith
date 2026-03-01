@@ -81,7 +81,7 @@ public sealed class TraitorRuleTest
         TraitorRuleComponent traitorRule = null;
         await server.WaitPost(() =>
         {
-            var gameRuleEnt = ticker.AddGameRule(TraitorGameRuleProtoId);
+            var gameRuleEnt = ticker.ForceAddGameRule(TraitorGameRuleProtoId); // Exodus
             Assert.That(entMan.TryGetComponent<TraitorRuleComponent>(gameRuleEnt, out traitorRule));
 
             // Ready up
