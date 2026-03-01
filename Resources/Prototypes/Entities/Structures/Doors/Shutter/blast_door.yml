@@ -108,10 +108,7 @@
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 55
         mask:
-        - Impassable
-        - HighImpassable
-        layer:
-        - HighImpassable
+        - FullTileMask # Exodus
   - type: Transform
     noRot: true
   - type: Construction
