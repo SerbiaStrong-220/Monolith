@@ -1,0 +1,16 @@
+- type: entity
+  id: ClothingOuterRadioSlot
+  name: base armor with radio
+  abstract: true
+  components:
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-armor-radio
+        insertVerbText: armor-radio-insert-verb
+        ejectVerbText: armor-radio-eject-verb
+        insertSound: /Audio/_Exodus/Clothing/radio_equip.ogg
+        ejectSound: /Audio/_Exodus/Clothing/radio_equip_2.ogg
+        whitelist:
+          tags:
+          - HandicommsBounty

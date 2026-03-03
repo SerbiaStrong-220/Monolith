@@ -43,7 +43,7 @@
 
 #Detective's vest
 - type: entity
-  parent: ClothingOuterArmorBase
+  parent: [ClothingOuterArmorBase, ClothingOuterRadioSlot] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's armored vest.
@@ -79,7 +79,7 @@
 
 #(Bartender) vest
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ ClothingOuterBase, ClothingOuterRadioSlot ] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterVest
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.

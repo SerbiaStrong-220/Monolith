@@ -28,7 +28,7 @@
 
 #Standard armor vest, allowed for security and bartenders
 - type: entity
-  parent: [ClothingOuterArmorBase, ClothingArmorPlate] # Mono - armor plates
+  parent: [ClothingOuterArmorBase, ClothingArmorPlate, ClothingOuterRadioSlot ] # Mono - armor plates # Exodus-Armor-Tweak-Radio
   id: ClothingOuterArmorBasic
   components:
   - type: Tag  # Mono
@@ -49,7 +49,7 @@
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, ClothingOuterRadioSlot] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterArmorRiot
   name: riot suit
   description: A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Perfect for fighting delinquents around the station.
@@ -76,7 +76,7 @@
     - Kevlar
 
 - type: entity
-  parent: ClothingOuterArmorBase
+  parent: [ ClothingOuterArmorBase, ClothingOuterRadioSlot ] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterArmorBulletproof
   name: bulletproof vest
   description: A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent.
@@ -101,7 +101,7 @@
     - Kevlar
 
 - type: entity
-  parent: ClothingOuterArmorBase
+  parent: [ ClothingOuterArmorBase, ClothingOuterRadioSlot ] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterArmorReflective
   name: reflective vest
   description: An armored vest with advanced shielding to protect against energy weapons.
@@ -229,7 +229,7 @@
     coefficient: 0.2
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, ClothingOuterRadioSlot ] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterArmorHeavy
   name: heavy armor suit
   description: A heavily armored suit that protects against excessive damage.
@@ -299,7 +299,7 @@
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, ClothingOuterRadioSlot] # Exodus-Armor-Tweak-Radio
   id: ClothingOuterArmorCaptainCarapace
   name: "captain's carapace"
   description: "An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the captains of luxury vessels." # Frontier

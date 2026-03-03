@@ -128,7 +128,7 @@
 
 - type: entity
   abstract: true
-  parent: [RecyclableItemClothHardsuit, ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing, ClothingArmorPlate] # Frontier: added RecyclableItemClothHardsuit # Mono - armor plates.
+  parent: [RecyclableItemClothHardsuit, ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing, ClothingArmorPlate, ClothingOuterRadioSlot] # Frontier: added RecyclableItemClothHardsuit # Mono - armor plates. # Exodus-Armor-Tweak-Radio
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
