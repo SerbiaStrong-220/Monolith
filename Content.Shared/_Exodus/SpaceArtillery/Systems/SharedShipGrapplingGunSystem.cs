@@ -22,6 +22,7 @@ namespace Content.Shared.Exodus.SpaceArtillery;
 public abstract class SharedShipGrapplingGunSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
@@ -45,11 +46,12 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
     {
         foreach (var (shootUid, _) in args.Ammo)
         {
-            if (!HasComp<ShipGrapplingProjectileComponent>(shootUid))
+            if (!TryComp<ShipGrapplingProjectileComponent>(shootUid, out var projComp))
                 continue;
 
             if (component.Projectile != null)
                 Ungrapple((uid, component), false);
+
 
             component.Projectile = shootUid.Value;
             _gun.ChangeBasicEntityAmmoCount(uid, 1);
@@ -60,9 +62,14 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             visuals.Target = GetNetEntity(uid);
             visuals.OffsetA = new Vector2(0f, 0.5f);
             visuals.OffsetB = component.GunVisualOffset;
+            projComp.Gun = GetNetEntity(uid);
             Dirty(uid, component);
             Dirty(shootUid.Value, visuals);
+            Dirty(shootUid.Value, projComp);
         }
+
+        TryComp<AppearanceComponent>(uid, out var appearance);
+        _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, false, appearance);
     }
 
     private void OnGrappleCollide(EntityUid uid, ShipGrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
@@ -104,7 +111,6 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         grapComp.Target = args.Embedded;
         grapComp.TargetGrid = targetGridUid.Value;
-        component.Gun = args.Weapon;
 
         Dirty(targetGridUid.Value, jointComp);
     }
@@ -122,13 +128,13 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
     private void OnProjectileTerminating(EntityUid uid, ShipGrapplingProjectileComponent component, ref EntityTerminatingEvent args)
     {
-        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+        if (!TryComp<ShipGrapplingGunComponent>(GetEntity(component.Gun), out var grapComp))
             return;
 
         if (grapComp.Projectile != uid)
             return;
 
-        Ungrapple((component.Gun, grapComp), true);
+        Ungrapple((GetEntity(component.Gun), grapComp), true);
     }
 
     public void Ungrapple(Entity<ShipGrapplingGunComponent> gun, bool isBreak)
@@ -138,6 +144,8 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
 
         if (isBreak)
             _audio.PlayPvs(gun.Comp.BreakSound, gun.Owner);
+
+        _appearance.SetData(gun.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
         if (_netManager.IsServer)
         {

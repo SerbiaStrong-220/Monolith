@@ -659,13 +659,14 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var shipGrapplingGunQuery = EntManager.GetEntityQuery<ShipGrapplingGunComponent>();
         while (shipGrapplingGunProjectileQuery.MoveNext(out var uid, out var target, out var projXform))
         {
+            var gunUid = EntManager.GetEntity(target.Gun);
             Logger.Info("shipGrapplingGunProjectileQuery.MoveNext");
-            if (!shipGrapplingGunQuery.TryGetComponent(target.Gun, out var gunComp))
+            if (!shipGrapplingGunQuery.TryGetComponent(gunUid, out var gunComp))
                 continue;
 
             Logger.Info("shipGrapplingGunQuery.TryGetComponent");
 
-            if (!xformQuery.TryGetComponent(target.Gun, out var gunXform))
+            if (!xformQuery.TryGetComponent(gunUid, out var gunXform))
                 continue;
 
             Logger.Info("xformQuery.TryGetComponent");

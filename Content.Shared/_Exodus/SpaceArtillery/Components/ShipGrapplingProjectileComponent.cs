@@ -2,9 +2,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Exodus.SpaceArtillery.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShipGrapplingProjectileComponent : Component
 {
-    [DataField]
-    public EntityUid Gun;
+    [DataField, AutoNetworkedField]
+    public NetEntity Gun;
 }
