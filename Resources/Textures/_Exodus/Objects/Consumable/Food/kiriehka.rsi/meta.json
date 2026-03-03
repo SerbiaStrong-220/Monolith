@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CLA",
+    "copyright": "owned by Space Exodus, made by Askolot (discord:788252896016990219)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "kirieshki-closed"
+        },
+        {
+            "name": "kirieshki-open"
+        },
+        {
+            "name": "kirieshki-empty"
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+- type: entity
+  parent: FoodSnackBase
+  id: FoodSnackKirieshki
+  name: caesium kirieshki
+  description: BOMBtastic! Limited edition products from DonkCo in honour of some important person. Find the label with the code inside!
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/kiriehka.rsi
+    state: kirieshki-closed
+    scale: 0.75,0.75
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodSnackKirieshkiOpen:
+            min: 1
+            max: 1
+      - !type:ExplodeBehavior
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 3
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 0.01
+    intensitySlope: 1
+    totalIntensity: 0.01
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodSnackKirieshkiOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: caesium kirieshki
+  parent: FoodSnackBase
+  id: FoodSnackKirieshkiOpen
+  description: BOMBtastic! Limited edition products from DonkCo in honour of some important person. Find the label with the code inside!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - salty
+      - caesium
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/kiriehka.rsi
+    state: kirieshki-open
+    scale: 0.75,0.75
+  - type: Food
+    trash:
+    - FoodSnackKirieshkiTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodSnackKirieshkiTrash
+  name: caesium kirieshki
+  description: This is rubbish.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Food/kiriehka.rsi
+    state: kirieshki-empty
+
