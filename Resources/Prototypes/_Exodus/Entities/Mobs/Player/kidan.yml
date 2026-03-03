@@ -24,3 +24,18 @@
     - type: NpcFactionMember
       factions:
         - NanoTrasen
+
+
+- type: entity
+  parent: MobKidan
+  id: MobKidanRandom
+  name: Urisst' McKidan
+  suffix: Random Appearance
+  components:
+  - type: RandomHumanoidAppearance
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstKidan
+    - NamesMiddleKidan
+    - NamesLastKidan
+    nameFormat: name-format-kidan
