@@ -353,7 +353,10 @@ public sealed partial class FireControlWindow : FancyWindow
         _updateAccumulator += args.DeltaSeconds;
 
         if (_updateAccumulator > UpdateTimer)
+        {
             OnServerRefresh?.Invoke(); // a crutch, what can you make me?
+            _updateAccumulator = 0;
+        }
     }
     // Exodus-End
 }

@@ -284,7 +284,10 @@ public sealed partial class FireControlSystem : EntitySystem
         var array = controllables.ToArray();
 
         // Exodus | add shield state
-        var shieldState = _shields.GetShieldState(Transform(uid).ParentUid);
+        if (Transform(uid).GridUid is not { } gridUid) // shouldn't be possible for type safety
+            return;
+
+        var shieldState = _shields.GetShieldState(gridUid);
 
         var state = new FireControlConsoleBoundInterfaceState(component.ConnectedServer != null, array, navState, shieldState);
         _ui.SetUiState(uid, FireControlConsoleUiKey.Key, state);
