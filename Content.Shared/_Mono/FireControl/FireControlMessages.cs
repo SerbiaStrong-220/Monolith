@@ -1,6 +1,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Map;
 using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Exodus.ShipShields; // Exodus
 
 namespace Content.Shared._Mono.FireControl;
 
@@ -15,12 +16,14 @@ public sealed class FireControlConsoleBoundInterfaceState : BoundUserInterfaceSt
     public bool Connected;
     public FireControllableEntry[] FireControllables;
     public NavInterfaceState NavState;
+    public ShipShieldState? ShieldState; // Exodus
 
-    public FireControlConsoleBoundInterfaceState(bool connected, FireControllableEntry[] fireControllables, NavInterfaceState navState)
+    public FireControlConsoleBoundInterfaceState(bool connected, FireControllableEntry[] fireControllables, NavInterfaceState navState, ShipShieldState? shieldState) // Exodus | add shield state
     {
         Connected = connected;
         FireControllables = fireControllables;
         NavState = navState;
+        ShieldState = shieldState; // Exodus
     }
 }
 

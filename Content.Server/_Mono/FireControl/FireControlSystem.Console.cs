@@ -21,6 +21,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
+using Content.Server._Crescent.ShipShields; // Exodus
 
 namespace Content.Server._Mono.FireControl;
 
@@ -34,6 +35,7 @@ public sealed partial class FireControlSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly ShipShieldsSystem _shields = default!; // Exodus
 
     private bool _completedCheck = false;
 
@@ -281,7 +283,10 @@ public sealed partial class FireControlSystem : EntitySystem
 
         var array = controllables.ToArray();
 
-        var state = new FireControlConsoleBoundInterfaceState(component.ConnectedServer != null, array, navState);
+        // Exodus | add shield state
+        var shieldState = _shields.GetShieldState(Transform(uid).ParentUid);
+
+        var state = new FireControlConsoleBoundInterfaceState(component.ConnectedServer != null, array, navState, shieldState);
         _ui.SetUiState(uid, FireControlConsoleUiKey.Key, state);
     }
 

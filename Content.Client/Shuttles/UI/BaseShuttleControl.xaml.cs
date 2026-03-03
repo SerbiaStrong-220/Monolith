@@ -142,7 +142,7 @@ public partial class BaseShuttleControl : MapGridControl
     {
         var rator = Maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
         var minimapScale = MinimapScale;
-        var midpoint = new Vector2(MidPoint, MidPoint);
+        var midpoint = MidPointVector; // Exodus
         var tileSize = grid.Comp.TileSize;
 
         // Check if we even have data

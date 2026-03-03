@@ -9,14 +9,20 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Examine;
 using Content.Server.Explosion.Components;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Exodus.ShipShields; // Exodus
+using System.Linq; // Exodus
+using System.Diagnostics.CodeAnalysis; // Exodus
 
 namespace Content.Server._Crescent.ShipShields;
+
 public partial class ShipShieldsSystem
 {
     private const float MAX_EMP_DAMAGE = 10000f;
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Exodus
+
     public void InitializeEmitters()
     {
         SubscribeLocalEvent<ShipShieldEmitterComponent, ShieldDeflectedEvent>(OnShieldDeflected);
@@ -83,8 +89,50 @@ public partial class ShipShieldsSystem
             return;
 
         /// Raise damage to the power of the growth exponent
-        var additionalLoad = (float) Math.Clamp(Math.Pow(emitter.Damage, emitter.DamageExp), 0f, emitter.MaxDraw);
+        var additionalLoad = GetEmitterLoad(emitter); // Exodus
 
         receiver.Load = emitter.BaseDraw + additionalLoad;
     }
+
+    // Exodus-Start | add friendly public api
+    private float GetEmitterLoad(ShipShieldEmitterComponent emitter)
+    {
+        return (float) Math.Clamp(Math.Pow(emitter.Damage, emitter.DamageExp), 0f, emitter.MaxDraw);
+    }
+
+    public bool TryGetShieldEmitter(EntityUid grid, [NotNullWhen(true)] out EntityUid? emitter, [NotNullWhen(true)] out ShipShieldEmitterComponent? emitterComp)
+    {
+        emitter = null;
+        emitterComp = null;
+
+        if (TryComp<ShipShieldedComponent>(grid, out var shielded)
+            && shielded.Source != null
+            && TryComp(shielded.Source, out emitterComp))
+        {
+            emitter = shielded.Source.Value;
+            return true;
+        }
+
+        // if ship isn't shielded it doesn't means that ship doesn't have shield emitter
+        // take the first one you find on grid
+        var ents = new HashSet<Entity<ShipShieldEmitterComponent>>();
+        _lookup.GetGridEntities(grid, ents);
+
+        if (ents.Count < 1)
+            return false;
+
+        var emitterEnt = ents.First();
+        emitter = emitterEnt;
+        emitterComp = emitterEnt.Comp;
+        return true;
+    }
+
+    public ShipShieldState? GetShieldState(EntityUid ship)
+    {
+        if (!TryGetShieldEmitter(ship, out _, out var emitter))
+            return null;
+
+        return new(emitter.BaseDraw, GetEmitterLoad(emitter), emitter.MaxDraw, emitter.Recharging, emitter.OverloadAccumulator);
+    }
+    // Exodus-End
 }
