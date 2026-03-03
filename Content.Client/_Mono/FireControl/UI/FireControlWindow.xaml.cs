@@ -336,7 +336,7 @@ public sealed partial class FireControlWindow : FancyWindow
         }
 
         // load
-        ShieldLoad.Text = Loc.GetString("gunnery-shield-load", ("draw", Math.Round(shieldState.BaseDraw + shieldState.Draw) / 1000f));
+        ShieldLoad.Text = Loc.GetString("gunnery-shield-load", ("draw", Math.Round(shieldState.BaseDraw + shieldState.Draw / 1000f, 1)));
 
         // recovery label
         ShieldRecoveryLabel.Visible = shieldState.OverloadAccumulator > 0;
