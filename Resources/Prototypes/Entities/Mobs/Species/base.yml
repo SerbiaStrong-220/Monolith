@@ -228,6 +228,7 @@
   - type: Targeting # Shitmed Change
   - type: SurgeryTarget # Shitmed Change
   - type: ExaminableCharacter # WWDP
+  - type: OfferItem # CorvaxGoob-Offer
 
 - type: entity
   save: false
