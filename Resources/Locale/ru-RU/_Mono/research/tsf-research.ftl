@@ -7,7 +7,7 @@ research-technology-tsfmc-advanced-equipment = Продвинутое оснащ
 research-technology-tsfmc-experimental-equipment = Экспериментальное оснащение ТСФ
 research-technology-tsfmc-mopp-equipment = Химзащита
 # T1 TSFMC
-research-technology-tsfmc-guns = Производство стрелкового оружия
+research-technology-tsfmc-guns = Базовое огнестрельное оружие
 research-technology-tsfmc-forensics = Криминалистика
 research-technology-tsfmc-pocket-crowbar = Компактный лом
 research-technology-tsfmc-industrial-storage = Промышленное хранение материалов
@@ -15,10 +15,10 @@ research-technology-tsfmc-industrial-processing = Промышленная пе�
 research-technology-tsfmc-portable-recharger = Портативное зарядное устройство
 research-technology-tsfmc-nvd = Приборы ночного видения
 research-technology-tsfmc-motion-detector = Биоидентификация "свой-чужой"
-research-technology-tsfmc-basic-module = Базовый модуль киборга ТСФ
+research-technology-tsfmc-basic-module = Базовый модуль борга ТСФ
 # T2 TSFMC
 research-technology-tsfmc-annie = M-27 Анна
-research-technology-tsfmc-grizzly = MMG-68 Гризли
+research-technology-tsfmc-grizzly = РМП-68 Гризли
 research-technology-tsfmc-nanofoam = Формирование наноматериалов
 research-technology-tsfmc-demag = Технология сброса к заводским настройкам
 research-technology-tsfmc-eshield = Энергетическая защита
@@ -26,7 +26,7 @@ research-technology-tsfmc-advanced-meds = Регенеративные техн�
 research-technology-tsfmc-polaris-voucher = Ваучер шаттла ТСФ Polaris
 # T3 TSFMC
 research-technology-tsfmc-flyssa-voucher = Ваучер шаттла ТСФ Flyssa
-research-technology-tsfmc-mr8 = Огнестрельное оружие MARSOC
-research-technology-tsfmc-xlr556 = Пехотный комплекс XLR-556
+research-technology-tsfmc-mr8 = Огнестрельное оружие MP-8C
+research-technology-tsfmc-xlr556 = Пехотный комплекс АВР-556 ИСВ
 research-technology-tsfmc-synthalloy = Экспериментальное материаловедение
-research-technology-tsfmc-advanced-module = Продвинутый модуль киборга ТСФ
+research-technology-tsfmc-advanced-module = Продвинутый модуль борга ТСФ

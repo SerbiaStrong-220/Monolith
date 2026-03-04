@@ -1,5 +1,5 @@
 research-technology-xenopsychology = Ксенопсихология
-research-technology-bluespace-tethering = Блюспейс Связывание
-research-technology-basic-parts = Базовые Компоненты
-research-technology-basic-research = Базовое Исследование
-research-technology-advanced-research = Продвинутое Исследование
+research-technology-bluespace-tethering = Блюспейс-сцепление
+research-technology-basic-parts = Базовые компоненты
+research-technology-basic-research = Базовые исследования ксеноархеологии
+research-technology-advanced-research = Продвинутые исследования ксеноархеологии

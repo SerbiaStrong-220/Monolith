@@ -1,6 +1,6 @@
-research-technology-merc-armement-simple = Простое наёмническое вооружение
-research-technology-merc-armement-advanced = Продвинутое наёмническое вооружение
-research-technology-printable-explosives = Печатные заряды
+research-technology-merc-armement-simple = Базовое вооружение наёмников
+research-technology-merc-armement-advanced = Продвинутое вооружение наёмников
+research-technology-printable-explosives = Производство взрывчатки
 research-technology-ullmanpulse-adv = Продвинутое энергооружие U.I.
 research-technology-ullmanpulse-high-end = Высококлассное оружие U.I.
 research-technology-ullmansmart-magnum = Умный магнум MK5 U.I.
