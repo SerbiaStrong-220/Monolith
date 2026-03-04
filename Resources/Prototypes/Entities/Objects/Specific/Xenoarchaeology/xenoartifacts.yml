@@ -45,3 +45,15 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch]
+
+- type: entity
+  id: ActionArtifactActivate
+  name: Activate Artifact
+  description: Activate yourself, causing chaos to those near you.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      state: ano29
+    useDelay: 300
+    event: !type:ArtifactSelfActivateEvent

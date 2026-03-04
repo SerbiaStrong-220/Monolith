@@ -565,3 +565,10 @@ SellOnlyMothershipComputer: null # Mono
 GunneryServer: GunneryServerMedium # Mono
 
 # Frontier: put Frontier-related migrations in nf_migration.yml. Thank you.
+
+# 2025-04-15
+SimpleXenoArtifact: ComplexXenoArtifact
+MediumXenoArtifact: ComplexXenoArtifact
+SimpleXenoArtifactItem: ComplexXenoArtifactItem
+MediumXenoArtifactItem: ComplexXenoArtifactItem
+VariedXenoArtifactItem: ComplexXenoArtifactItem
