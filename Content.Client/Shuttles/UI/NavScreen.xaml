@@ -12,7 +12,7 @@
                                  Margin="5 4 10 5"
                                  MaxSize="648 648"/>
                 <!-- Nav controls -->
-                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="8 4 8 4">
                     <controls:PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#525252" BackgroundColor="#3d474d"/>
                     </controls:PanelContainer.PanelOverride>
@@ -26,7 +26,6 @@
                       VerticalExpand="True"
                       MinWidth="256"
                       MaxWidth="256"
-                      Margin="5 5 5 5"
                       Orientation="Vertical">
                     <controls1:StripeBack
                         MinSize="48 48">
@@ -34,11 +33,11 @@
                                VerticalExpand="True"
                                HorizontalAlignment="Center"/>
                     </controls1:StripeBack>
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="4" BorderColor="#333333" BackgroundColor="#141414"/>
                         </controls:PanelContainer.PanelOverride>
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="8 8 8 8">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#151515" BackgroundColor="#050505"/>
                         </controls:PanelContainer.PanelOverride>
@@ -46,7 +45,7 @@
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
                                    HorizontalExpand="True"
-                                   Margin="6 6 6 6"
+                                   Margin="3 3 3 3"
                                    Name="ReadonlyDisplay">
                         <controls:Label Text="{controls:Loc 'shuttle-console-designation'}" FontColorOverride="#00ff2a"/>
                         <controls:Label Name="ShuttleDesignation"
@@ -87,12 +86,11 @@
                                VerticalExpand="True"
                                HorizontalAlignment="Center"/>
                     </controls1:StripeBack>
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                         </controls:PanelContainer.PanelOverride>
-                        <controls:BoxContainer Orientation="Vertical"
-                                               Margin="2 2 2 2">
+                        <controls:BoxContainer Orientation="Vertical">
                     <controls:Button Name="IFFToggle"
                             Text="{controls:Loc 'shuttle-console-iff-toggle'}"
                             TextAlign="Center"
@@ -111,7 +109,7 @@
                         </controls:BoxContainer>
                     </controls:PanelContainer>
                     <!-- Frontier - Inertia dampener controls-->
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 0 2 0">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                         </controls:PanelContainer.PanelOverride>
@@ -143,24 +141,57 @@
                     </controls:PanelContainer>
                     <!-- End Frontier - Inertia dampener controls-->
                     <!-- Frontier - IFF search -->
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                         </controls:PanelContainer.PanelOverride>
-                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="IffSearchBox" Margin="4 4 4 4">
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="IffSearchBox" Margin="2 2 2 2">
                         <controls:Label Text="{controls:Loc 'shuttle-console-iff-search'}"/>
                         <controls:LineEdit Name="IffSearchCriteria" Access="Public" HorizontalExpand="True"/>
                     </controls:BoxContainer>
                     </controls:PanelContainer>
                     <!-- End Frontier - IFF search -->
 
+                    <!-- Frontier - settable target -->
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
+                        <controls:PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
+                        </controls:PanelContainer.PanelOverride>
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="TargetCoordsBox" Margin="2 2 2 2">
+                        <controls:Label Text="{controls:Loc 'shuttle-console-target'}"/>
+                        <controls:BoxContainer Orientation="Horizontal"
+                                               HorizontalExpand="True"
+                                               Align="Center"
+                                               Margin="0 0 0 3">
+                            <controls:LineEdit Name="TargetX" Access="Public" HorizontalExpand="True"/>
+                            <controls:LineEdit Name="TargetY" Access="Public" HorizontalExpand="True"/>
+                            <controls:Button Name="TargetSet"
+                                             Text="{controls:Loc 'shuttle-console-set-target'}"
+                                             TextAlign="Center"
+                                             MinWidth="20"
+                                             ToolTip="{controls:Loc 'shuttle-console-set-target-description'}"
+                                             StyleClasses="OpenRight"
+                                             Margin="0"/>
+                            <controls:Button Name="TargetHide"
+                                             Text="{controls:Loc 'shuttle-console-hide-target'}"
+                                             TextAlign="Center"
+                                             ToggleMode="True"
+                                             MinWidth="20"
+                                             ToolTip="{controls:Loc 'shuttle-console-hide-target-description'}"
+                                             StyleClasses="OpenLeft"
+                                             Margin="0"/>
+                        </controls:BoxContainer>
+                    </controls:BoxContainer>
+                    </controls:PanelContainer>
+                    <!-- End Frontier - settable target -->
+
                     <!-- Frontier - Maximum IFF Distance -->
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                         </controls:PanelContainer.PanelOverride>
                         <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="MaximumIFFDistanceBox" Margin="4 4 4 4">
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="MaximumIFFDistanceBox" Margin="2 2 2 2">
                         <controls:Label Text="{controls:Loc 'shuttle-console-maximum-iff-distance'}"/>
                         <controls:SliderIntInput Name="MaximumIFFDistanceValue"
                                                  Access="Public"
@@ -172,7 +203,7 @@
                     <!-- End Frontier - Maximum IFF Distance -->
 
                     <!-- Frontier - Maximum Shuttle Speed -->
-                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="MaximumShuttleSpeedBox" Margin="4 4 4 4">
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="MaximumShuttleSpeedBox" Margin="2 2 2 2">
                         <controls:Label Text="{controls:Loc 'shuttle-console-maximum-speed'}"/>
                         <controls:SliderIntInput Name="MaximumShuttleSpeedValue"
                                                  Access="Public"
@@ -186,7 +217,7 @@
                     <!-- End Frontier - Maximum Shuttle Speed -->
 
                     <!-- Network Port Buttons -->
-                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                         </controls:PanelContainer.PanelOverride>

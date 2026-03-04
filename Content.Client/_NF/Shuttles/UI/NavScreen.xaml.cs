@@ -1,7 +1,10 @@
 // New Frontiers - This file is licensed under AGPLv3
 // Copyright (c) 2024 New Frontiers Contributors
 // See AGPLv3.txt for details.
+using System.Numerics;
 using Content.Shared._NF.Shuttles.Events;
+using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.Components;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Shuttles.UI
@@ -12,6 +15,10 @@ namespace Content.Client.Shuttles.UI
         public event Action<NetEntity?, InertiaDampeningMode>? OnInertiaDampeningModeChanged;
         public event Action<NetEntity?, float>? OnMaxShuttleSpeedChanged;
         public event Action<string, string>? OnNetworkPortButtonPressed;
+        public event Action<NetEntity?, Vector2>? OnSetTargetCoordinates; // Frontier
+        public event Action<NetEntity?, bool>? OnSetHideTarget; // Frontier
+
+        private bool _targetCoordsModified = false; // Frontier
 
         private void NfInitialize()
         {
@@ -33,6 +40,13 @@ namespace Content.Client.Shuttles.UI
             DampenerOff.Group = _buttonGroup;
             DampenerOn.Group = _buttonGroup;
             AnchorOn.Group = _buttonGroup;
+
+            // Frontier target setting
+            TargetX.OnTextChanged += _ => _targetCoordsModified = true;
+            TargetY.OnTextChanged += _ => _targetCoordsModified = true;
+            TargetSet.OnPressed += _ => SetTargetCoords();
+            TargetHide.OnPressed += _ => SetHideTarget(TargetHide.Pressed);
+            // End Frontier
 
             // Network Port Buttons
             DeviceButton1.OnPressed += _ => OnPortButtonPressed("device-button-1", "button-1");
@@ -61,7 +75,7 @@ namespace Content.Client.Shuttles.UI
             OnInertiaDampeningModeChanged?.Invoke(shuttle, mode);
         }
 
-        private void NfUpdateState()
+        private void NfUpdateState(NavInterfaceState state)
         {
             if (NavRadar.DampeningMode == InertiaDampeningMode.Station)
             {
@@ -90,6 +104,22 @@ namespace Content.Client.Shuttles.UI
                     AnchorOn.Disabled = false;
                 }
             }
+
+            // Frontier target
+            if (!_targetCoordsModified)
+            {
+                if (state.Target != null)
+                {
+                    var target = state.Target.Value;
+                    TargetX.Text = target.X.ToString("F1");
+                    TargetY.Text = target.Y.ToString("F1");
+                }
+                else
+                {
+                    TargetX.Text = 0.0f.ToString("F1");
+                    TargetY.Text = 0.0f.ToString("F1");
+                }
+            }
         }
 
         // Frontier - Maximum IFF Distance
@@ -111,11 +141,11 @@ namespace Content.Client.Shuttles.UI
             if (_entManager.TryGetComponent<MetaDataComponent>(shuttle, out var metadata))
             {
                 var shipName = metadata.EntityName;
-                
+
                 // Try to find a designation in the format XXX-### (like CIV-748)
                 // by checking each word in the ship name
                 var shipNameParts = shipName.Split(' ');
-                
+
                 foreach (var part in shipNameParts)
                 {
                     // Check if this part matches the designation format (e.g., CIV-748)
@@ -132,12 +162,34 @@ namespace Content.Client.Shuttles.UI
                         }
                     }
                 }
-                
+
                 // If we get here, no designation was found, so just show the full name
                 NavDisplayLabel.Text = shipName;
                 // Leave ShuttleDesignation.Text as "Unknown" (the default)
             }
             // End Frontier - PR #1284
+        }
+
+        private void SetTargetCoords()
+        {
+            Vector2 outputVector;
+            if (!float.TryParse(TargetX.Text, out outputVector.X))
+                outputVector.X = 0.0f;
+
+            if (!float.TryParse(TargetY.Text, out outputVector.Y))
+                outputVector.Y = 0.0f;
+
+            NavRadar.Target = outputVector;
+            NavRadar.TargetEntity = NetEntity.Invalid;
+            _entManager.TryGetNetEntity(_shuttleEntity, out var shuttle);
+            OnSetTargetCoordinates?.Invoke(shuttle, outputVector);
+            _targetCoordsModified = false;
+        }
+
+        private void SetHideTarget(bool hide)
+        {
+            _entManager.TryGetNetEntity(_shuttleEntity, out var shuttle);
+            OnSetHideTarget?.Invoke(shuttle, hide);
         }
 
     }

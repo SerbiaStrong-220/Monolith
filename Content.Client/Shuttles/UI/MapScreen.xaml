@@ -9,8 +9,9 @@
                              Margin="5 4 10 5"
                              HorizontalExpand="True"
                              VerticalExpand="True"
-                             VerticalAlignment="Stretch"/>
-            <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                             VerticalAlignment="Stretch"
+                             MaxSize="648 648"/>
+            <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="8 4 8 4">
                 <controls:PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#525252" BackgroundColor="#3d474d"/>
                 </controls:PanelContainer.PanelOverride>
@@ -23,7 +24,6 @@
                           HorizontalAlignment="Center"
                           MinWidth="256"
                           MaxWidth="256"
-                          Margin="5 5 5 5"
                           Orientation="Vertical"
                           VerticalExpand="True">
                 <controls1:StripeBack
@@ -32,7 +32,7 @@
                                     VerticalExpand="True"
                                     HorizontalAlignment="Center"/>
                 </controls1:StripeBack>
-                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                     <controls:PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                     </controls:PanelContainer.PanelOverride>
@@ -65,7 +65,7 @@
                     <controls:Label Name="SettingsLabel" Text="{controls:Loc 'shuttle-console-map-settings'}"
                            HorizontalAlignment="Center"/>
                 </controls1:StripeBack>
-                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                     <controls:PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                     </controls:PanelContainer.PanelOverride>
@@ -93,7 +93,7 @@
                     <controls:Label Name="HyperspaceLabel" Text="{controls:Loc 'shuttle-console-map-objects'}"
                            HorizontalAlignment="Center"/>
                 </controls1:StripeBack>
-                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                     <controls:PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
                     </controls:PanelContainer.PanelOverride>

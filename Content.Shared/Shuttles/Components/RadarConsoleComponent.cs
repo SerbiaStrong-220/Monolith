@@ -1,5 +1,6 @@
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.GameStates;
+using System.Numerics;
 
 namespace Content.Shared.Shuttles.Components;
 
@@ -38,6 +39,19 @@ public sealed partial class RadarConsoleComponent : Component
     /// </summary>
     [DataField]
     public bool HideCoords = false;
+
+    // Frontier:
+    [DataField("hideTarget")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool HideTarget;
+
+    [DataField("target")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Vector2? Target;
+
+    [DataField("targetEntity")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid TargetEntity = EntityUid.Invalid;
     // End Frontier
 
     // <Mono>

@@ -9,8 +9,9 @@
                        VerticalAlignment="Stretch"
                        VerticalExpand="True"
                        HorizontalExpand="True"
-                       Margin="5 4 10 5"/>
-    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                       Margin="5 4 10 5"
+                       MaxSize="648 648"/>
+    <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="8 4 8 4">
         <controls:PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#525252" BackgroundColor="#3d474d"/>
         </controls:PanelContainer.PanelOverride>
@@ -24,13 +25,12 @@
                            MinWidth="256"
                            MaxWidth="256"
                            Align="Center"
-                           Margin="5 5 5 5"
                            Orientation="Vertical">
         <!-- FTL Lock Section -->
         <controls1:StripeBack MinSize="48 48">
             <controls:Label Text="{controls:Loc 'shuttle-console-ftl-lock'}" HorizontalAlignment="Center"/>
         </controls1:StripeBack> <!-- Ru-Localization -->
-        <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+        <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
             <controls:PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#121212"/>
             </controls:PanelContainer.PanelOverride>
@@ -52,12 +52,12 @@
         <controls1:StripeBack MinSize="48 48">
             <controls:Label Text="{controls:Loc 'shuttle-console-docks-label'}" HorizontalAlignment="Center"/> <!-- Ru-Localization -->
         </controls1:StripeBack>
-        <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+        <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
             <controls:PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
             </controls:PanelContainer.PanelOverride>
             <controls:BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="5 5 5 5">
-                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                     <controls:PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#121212"/>
                     </controls:PanelContainer.PanelOverride>
@@ -66,7 +66,7 @@
                          Margin="5 5 5 5"
                          StyleClasses="ButtonSquare"/> <!-- Ru-Localization -->
                 </controls:PanelContainer>
-                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
+                <controls:PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="2 2 2 2">
                     <controls:PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#121212"/>
                     </controls:PanelContainer.PanelOverride>

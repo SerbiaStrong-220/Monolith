@@ -17,6 +17,10 @@ namespace Content.Client.Shuttles.UI
     {
         public InertiaDampeningMode DampeningMode { get; set; }
 
+        public bool HideTarget { get; set; } = false;
+        public Vector2? Target { get; set; } = null;
+        public NetEntity? TargetEntity { get; set; } = null;
+
         /// <summary>
         /// Whether the shuttle is currently in FTL. This is used to disable the Park button
         /// while in FTL to prevent parking while traveling.
@@ -25,6 +29,12 @@ namespace Content.Client.Shuttles.UI
 
         private void NfUpdateState(NavInterfaceState state)
         {
+            if (state.MaxIffRange != null)
+                MaximumIFFDistance = state.MaxIffRange.Value;
+            HideCoords = state.HideCoords;
+            Target = state.Target;
+            TargetEntity = state.TargetEntity;
+            HideTarget = state.HideTarget;
 
             if (!EntManager.GetCoordinates(state.Coordinates).HasValue ||
                 !EntManager.TryGetComponent(EntManager.GetCoordinates(state.Coordinates).GetValueOrDefault().EntityId,out TransformComponent? transform) ||
