@@ -49,6 +49,10 @@
       - TrackingImplant # Moved Down, This is the TSFMC Tracker - Mono
       - FreelanceTrackingImplant # Mono
       - UsspTrackingImplant # Mono
+      # Exodus-Implants-Start
+      - StimulantsImplant
+      - CombatImplant
+      # Exodus-Implants-End
       deimplantFailureDamage:
         types:
 #          Cellular: 5 # 50->5 - Mono
