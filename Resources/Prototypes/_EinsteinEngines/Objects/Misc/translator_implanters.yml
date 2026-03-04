@@ -90,7 +90,7 @@
 - type: entity
   id: ElDwarfTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: valyrian standard translator implant
+  name: el'dwarf translator implant
   components:
   - type: Implanter
     implant: ElDwarfTranslatorImplant
@@ -111,13 +111,14 @@
   - type: Implanter
     implant: ChittinTranslatorImplant
 
-- type: entity
-  id: SiikMaasTranslatorImplanter
-  parent: [ BaseTranslatorImplanter ]
-  name: siik'maas translator implant
-  components:
-  - type: Implanter
-    implant: SiikMaasTranslatorImplant
+# Exodus
+# - type: entity
+#   id: SiikMaasTranslatorImplanter
+#   parent: [ BaseTranslatorImplanter ]
+#   name: siik'maas translator implant
+#   components:
+#   - type: Implanter
+#     implant: SiikMaasTranslatorImplant
 
 - type: entity
   id: MarishTranslatorImplanter

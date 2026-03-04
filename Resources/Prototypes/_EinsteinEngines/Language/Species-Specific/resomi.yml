@@ -5,7 +5,7 @@
   isVisibleLanguage: true
   speech:
     color: "#6e6cfedd"
-    # fontId: MinecraftEnchantment # It doesn't event exists
+    # fontId: MinecraftEnchantment # It doesn't even exists
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2

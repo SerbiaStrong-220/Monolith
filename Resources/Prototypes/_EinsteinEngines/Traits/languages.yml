@@ -12,18 +12,19 @@
 #    cantUnderstand: false
 #    baseTranslator: TranslatorForeigner
 
-- type: trait
-  id: SiikMaas
-  name: trait-language-SiikMaas-name
-  description: trait-language-SiikMaas-desc
-  category: LanguageTraits
-  cost: 1
-  components:
-  - type: LanguageSpeaker
-  languagesSpoken:
-    - SiikMaas
-  languagesUnderstood:
-   - SiikMaas
+# Exodus
+# - type: trait
+#   id: SiikMaas
+#   name: trait-language-SiikMaas-name
+#   description: trait-language-SiikMaas-desc
+#   category: LanguageTraits
+#   cost: 1
+#   components:
+#   - type: LanguageSpeaker
+#   languagesSpoken:
+#     - SiikMaas
+#   languagesUnderstood:
+#    - SiikMaas
 
 - type: trait
   id: Foreigner
