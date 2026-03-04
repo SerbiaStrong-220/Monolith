@@ -1,0 +1,34 @@
+- type: entity
+  parent: BallisticArtilleryBase
+  id: Harpoon
+  name: harpoon
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/SpaceArtillery/harpoon.rsi
+    layers:
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        visible: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { state: base-unshaded }
+          False: { state: base-unshaded-off }
+  - type: ShipGrapplingGun
+  - type: FireControlRotate
+  - type: Gun
+    projectileSpeed: 200
+    fireRate: 0.1
+    shootThermalSignature: 2000000
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+  - type: ShipGunType
+    shipType: Ballistic
+  - type: ShipGunClass
+    shipClass: Medium
+  - type: BasicEntityAmmoProvider
+    proto: ShipGrapplingHook
+    capacity: 1
