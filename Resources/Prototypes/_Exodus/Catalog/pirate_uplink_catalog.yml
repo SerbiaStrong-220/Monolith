@@ -1,0 +1,29 @@
+- type: listing
+  id: UplinkPirateStimulantsImplanter
+  name: uplink-stimulants-implant-name
+  description: uplink-stimulants-implant-desc
+  productEntity: StimulantsImplanter
+  cost:
+    Doubloon: 30
+  categories:
+  - UplinkPirateMedical
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateCombatImplanter
+  name: uplink-combat-implant-name
+  description: uplink-combat-implant-desc
+  productEntity: CombatImplanter
+  cost:
+    Doubloon: 30
+  categories:
+  - UplinkPirateMedical
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink

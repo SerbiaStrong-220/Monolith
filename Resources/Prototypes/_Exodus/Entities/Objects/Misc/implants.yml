@@ -1,0 +1,24 @@
+- type: entity
+  id: ChemicalsImplanter
+  parent: BaseImplantOnlyImplanter
+  suffix: Chemical
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Implanter
+      implant: ChemicalImplant
+
+- type: entity
+  id: StimulantsImplanter
+  parent: BaseImplantOnlyImplanterSyndi
+  suffix: Stimulants
+  components:
+    - type: Implanter
+      implant: StimulantsImplant
+
+- type: entity
+  id: CombatImplanter
+  parent: BaseImplantOnlyImplanterSyndi
+  suffix: Stimulants
+  components:
+    - type: Implanter
+      implant: CombatImplant
