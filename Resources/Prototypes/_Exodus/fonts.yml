@@ -1,0 +1,49 @@
+# keep these alphabetical or I will end you
+
+- type: font
+  id: Blackcraft # Vox
+  path: /Fonts/_Exodus/Blackcraft.ttf
+
+- type: font
+  id: CaesarDressing # Reptilian
+  path: /Fonts/_Exodus/CaesarDressing.ttf
+
+- type: font
+  id: Futurespore # Vulpkanins
+  path: /Fonts/_Exodus/Futurespore.ttf
+
+- type: font
+  id: Kompost # Tradeband
+  path: /Fonts/_Exodus/Kompost/Kompost.ttf
+
+- type: font
+  id: Mihey # USSP
+  path: /Fonts/_Exodus/Mihey/Mihey.otf
+
+- type: font
+  id: Pixelizer # RobotTalk
+  path: /Fonts/_Exodus/Pixelizer.ttf
+
+- type: font
+  id: Plantype # Diona
+  path: /Fonts/_Exodus/Plantype.otf
+
+- type: font
+  id: Propaniac # Arachnid
+  path: /Fonts/_Exodus/Propaniac.ttf
+
+- type: font
+  id: SpecialElite # Moth
+  path: /Fonts/_Exodus/SpecialElite.ttf
+
+- type: font
+  id: Testo # Bubblish
+  path: /Fonts/_Exodus/Testo.ttf
+
+- type: font
+  id: TopSecretC # Gatter
+  path: /Fonts/_Exodus/TopSecretC.otf
+
+- type: font
+  id: Veles # Tajaran
+  path: /Fonts/_Exodus/Veles.otf

@@ -4,6 +4,7 @@
   isVisibleLanguage: true
   speech:
     color: "#2aca2add"
+    fontId: "CaesarDressing" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2
@@ -100,6 +101,7 @@
   id: Azaziba
   speech:
     color: "#257bb0dd" # Mono
+    fontId: "CaesarDressing" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2

@@ -4,8 +4,8 @@
   id: NewKinPidgin
   isVisibleLanguage: true
   speech:
-    color: "#a489a0"
-    fontId: ChelseaMarket
+    color: "#5cffb3" # Exodus | toxic as supposed to be
+    fontId: Blackcraft # Exodus | inacurate and crooked
     fontSize: 12
   obfuscation:
     !type:SyllableObfuscation

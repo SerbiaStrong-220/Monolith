@@ -5,6 +5,8 @@
   isVisibleLanguage: true
   speech:
     color: "#d69b3dcc"
+    fontId: "Futurespore" # Exodus
+    fontSize: 14
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
