@@ -239,22 +239,23 @@
     - TauCetiBasic
     setLanguageOnInteract: false
 
+# Exodus
 - type: entity
-  id: ValyrianStandardTranslator
+  id: ElDwarfTranslator
   parent: [ TranslatorPoweredBase ]
-  name: Valyrian Standard translator
-  description: Translates speech between Valyrian Standard and Tau-Ceti Basic. For talking to Harpies!
+  name: El'Dwarf Standard translator
+  description: Translates speech between El'Dwarf and Tau-Ceti Basic. For talking to Dwarfes!
   components:
   - type: HandheldTranslator
     spoken:
     - TauCetiBasic
-    - ValyrianStandard
+    - ElDwarf
     understood:
     - TauCetiBasic
-    - ValyrianStandard
+    - ElDwarf
     requires:
     - TauCetiBasic
-    - ValyrianStandard
+    - ElDwarf
 
 - type: entity
   id: AzazibaTranslator

@@ -80,10 +80,8 @@
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
-    - Hydraspeak
     understands:
     - TauCetiBasic
-    - Hydraspeak
   - type: Inventory
     speciesId: hydrakin
     templateId: hydrakin

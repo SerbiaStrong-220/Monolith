@@ -1,12 +1,12 @@
-# Language spoken by Harpies and Squackroaches.
+# Language spoken by Dwarfes
+# Previously was ValyrianStandard but adapted for dwarfes
 # Based on Polish, Greek, Serbian, Turkish.
 - type: language
-  id: ValyrianStandard
+  id: ElDwarf
   isVisibleLanguage: true
   speech:
-   # fontId: Delius # Goob Edit - Different Font / Monolith Edit - FONTS NOT ALREADY HERE ARE NOT BEING ADDED
-   # fontSize: 13 # Goob Edit - Increased by 1 to account for slight size difference.
-    color: "#46ce83" # Goob Edit - Original "#008ecc"
+    fontId: "Mihey" # Exodus
+    color: "#c45f49" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2

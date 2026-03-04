@@ -24,7 +24,7 @@
     - DraconicTranslator # Lizards
     - RootSpeakTranslator # Dionae
     - MofficTranslator # Moths
-    - ValyrianStandardTranslator # Harpies
+    - ElDwarfTranslator # Dwarfes # Exodus
     - ChittinTranslator # Chitinids and arachnids
     - GaryTranslator # Trait language
     - NovaCygniTranslator # Trait language
@@ -57,7 +57,7 @@
     #- SolCommonTranslator # Rogues dont have craftable freespeak translators, why should TSF?
     - RootSpeakTranslator
     - MofficTranslator
-    - ValyrianStandardTranslator
+    - ElDwarfTranslator # Exodus
     - ChittinTranslator
     - GaryTranslator # Trait language
     - NovaCygniTranslator # Trait language
@@ -71,7 +71,7 @@
     #- SolCommonTranslatorImplanter # Rogues dont have craftable freespeak translators, why should TSF?
     - RootSpeakTranslatorImplanter
     - MofficTranslatorImplanter
-    - ValyrianStandardTranslatorImplanter
+    - ElDwarfTranslatorImplanter # Exodus
     - ChittinTranslatorImplanter
     - GaryTranslatorImplanter # Trait language
     - NovaCygniTranslatorImplanter # Trait language

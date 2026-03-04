@@ -1,10 +1,11 @@
-# Spoken by Hydrakin. Have fun.
+# Adopted Hydraspeak from Hydrakins
+# Spoken by Resomi. Have fun.
 - type: language
-  id: Hydraspeak
+  id: Skechi
   isVisibleLanguage: true
   speech:
     color: "#6e6cfedd"
-    fontId: MinecraftEnchantment
+    # fontId: MinecraftEnchantment # It doesn't event exists
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2

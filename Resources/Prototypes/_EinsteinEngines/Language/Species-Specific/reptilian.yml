@@ -3,7 +3,7 @@
   id: Draconic
   isVisibleLanguage: true
   speech:
-    color: "#2aca2add"
+    color: "#119155" # Exodus
     fontId: "CaesarDressing" # Exodus
   obfuscation:
     !type:SyllableObfuscation

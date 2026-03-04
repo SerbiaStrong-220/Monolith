@@ -1,26 +1,28 @@
-chat-language-Universal-name = Межгалактический
+chat-language-Universal-name = Общегалактический
 chat-language-Psychomantic-name = Психомантия
 chat-language-Bubblish-name = Пузырчатый
-chat-language-RootSpeak-name = Корнеречь
+chat-language-RootSpeak-name = Песнь корней
 chat-language-Nekomimetic-name = Некомиметика
-chat-language-Draconic-name = Синта-Унати
-chat-language-Azaziba-name = Синта-Азазиба
-chat-language-SolCommon-name = Общесолнечный
-chat-language-NovuNederic-name = Ново-Недирик
-chat-language-NovaCygniBasic-name = Нова-Синги
+chat-language-Draconic-name = Синта'Унати
+chat-language-Azaziba-name = Синта'Азазиба
+chat-language-SolCommon-name = Солярианский
+chat-language-NovuNederic-name = Ново-Нидерик
+chat-language-NovaCygniBasic-name = Нова-Сигни
 chat-language-TauCetiBasic-name = Андромеда-Стандарт
-chat-language-Tradeband-name = Трейдбэнд
+chat-language-Tradeband-name = Торговый
 chat-language-Freespeak-name = Ашер
 chat-language-Elyran-name = Элиранский
-chat-language-Canilunzt-name = Канилунцт
-chat-language-Moffic-name = Моффик
-chat-language-RobotTalk-name = Роборечь
+chat-language-Canilunzt-name = Канилунтц
+chat-language-Moffic-name = Ткачий
+chat-language-RobotTalk-name = Троичный
 chat-language-Calcic-name = Кальцик
-chat-language-ValyrianStandard-name = Валирийский
+chat-language-ElDwarf-name = Эл'Дварф
 chat-language-Sign-name = Язык жестов
 chat-language-Marish-name = Мариш
-chat-language-Chittin-name = Хитиновый
+chat-language-Chittin-name = Адар'Ра
 chat-language-Xeeplian-name = Зиплианский
+chat-language-NewKinPidgin-name = Вокс-Пиджин
+chat-language-Skechi-name = Скечи
 
 # Additional languges
 

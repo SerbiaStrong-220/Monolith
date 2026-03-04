@@ -4,7 +4,7 @@
   id: RootSpeak
   isVisibleLanguage: true
   speech:
-    color: "#a64e14dd" # Goob Edit - More uniqueness from Novu-Nederic
+    color: "#269978" # Exodus
     fontId: Plantype # Exodus
   obfuscation:
     !type:SyllableObfuscation

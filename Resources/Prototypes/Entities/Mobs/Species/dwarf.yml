@@ -56,8 +56,10 @@
   - type: LanguageKnowledge # Einstein Engines - Languages
     speaks:
     - TauCetiBasic
+    - ElDwarf # Exodus
     understands:
     - TauCetiBasic
+    - ElDwarf # Exodus
   - type: HumanoidAppearance
     species: Human
     hideLayersOnEquip:

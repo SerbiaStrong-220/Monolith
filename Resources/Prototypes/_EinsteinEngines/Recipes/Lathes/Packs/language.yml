@@ -10,7 +10,7 @@
   - MofficTranslator
   - XenoTranslator
   - AnimalTranslator
-  - ValyrianStandardTranslator
+  - ElDwarfTranslator # Exodus
   - ChittinTranslator
   - GaryTranslator # Mono
   - NovaCygniTranslator # Mono
@@ -30,7 +30,7 @@
 #  - SolCommonTranslatorImplanter
   - RootSpeakTranslatorImplanter
   - MofficTranslatorImplanter
-  - ValyrianStandardTranslatorImplanter
+  - ElDwarfTranslatorImplanter # Exodus
   - ChittinTranslatorImplanter
   - GaryTranslatorImplanter # Mono
   - NovaCygniTranslatorImplanter # Mono

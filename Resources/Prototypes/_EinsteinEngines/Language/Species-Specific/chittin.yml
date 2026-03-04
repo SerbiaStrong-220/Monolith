@@ -3,7 +3,7 @@
   id: Chittin
   isVisibleLanguage: true
   speech:
-    color: "#7d7d7d"
+    color: "#e4273c" # Exodus
     fontId: "Propaniac" # Exodus
   obfuscation:
     !type:SyllableObfuscation

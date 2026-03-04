@@ -4,7 +4,7 @@
   id: Bubblish
   isVisibleLanguage: true
   speech:
-    color: "#24d1b9" # Goob Edit - Original "#00a3e2dd"
+    color: "#21a7cd" # Exodus
     fontId: "Testo" # Exodus
   obfuscation:
     !type:SyllableObfuscation
