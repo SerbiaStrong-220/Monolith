@@ -451,6 +451,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 var uiXOffset = uiPosition.X - uiXCentre;
                 var uiYOffset = uiPosition.Y - uiYCentre;
                 var uiDistance = (int)Math.Sqrt(Math.Pow(uiXOffset, 2) + Math.Pow(uiYOffset, 2));
+                if (uiDistance == 0)
+                    uiDistance = 1;
                 var uiX = uiXCentre * uiXOffset / uiDistance;
                 var uiY = uiYCentre * uiYOffset / uiDistance;
 
@@ -612,6 +614,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             var uiXOffset = uiPosition.X - uiXCentre;
             var uiYOffset = uiPosition.Y - uiYCentre;
             var uiDistance = (int) Math.Sqrt(Math.Pow(uiXOffset, 2) + Math.Pow(uiYOffset, 2));
+            if (uiDistance == 0)
+                uiDistance = 1;
             var uiX = uiXCentre * uiXOffset / uiDistance;
             var uiY = uiYCentre * uiYOffset / uiDistance;
 
