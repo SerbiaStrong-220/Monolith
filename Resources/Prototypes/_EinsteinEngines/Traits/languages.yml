@@ -129,20 +129,20 @@
   languagesUnderstood:
     - NovuNederic
 
-# Exodus
-- type: trait
-  id: Azaziba
-  name: trait-language-azaziba-name
-  description: trait-language-azaziba-desc
-  category: LanguageTraits
-  cost: 1
-  requirements:
-    - !type:CharacterSpeciesRequirement
-      species:
-        - Reptilian
-  functions:
-    - !type:TraitModifyLanguages
-      languagesSpoken:
-        - Azaziba
-      languagesUnderstood:
-        - Azaziba
+# Exodus | commented out due to missing traits functions, waiting till upcoming traits system update
+# - type: trait
+#   id: Azaziba
+#   name: trait-language-azaziba-name
+#   description: trait-language-azaziba-desc
+#   category: LanguageTraits
+#   cost: 1
+#   requirements:
+#     - !type:CharacterSpeciesRequirement
+#       species:
+#         - Reptilian
+#   functions:
+#     - !type:TraitModifyLanguages
+#       languagesSpoken:
+#         - Azaziba
+#       languagesUnderstood:
+#         - Azaziba
