@@ -1,2 +1,2 @@
-research-technology-universal-ap-plastitanium = Plasteel Core Ammunition
-research-technology-universal-ap-rip = RIP Ammunition
+research-technology-universal-ap-plastitanium = Бронебойные боеприпасы из пластали
+research-technology-universal-ap-rip = Бронебойно-зажигательные боеприпасы
