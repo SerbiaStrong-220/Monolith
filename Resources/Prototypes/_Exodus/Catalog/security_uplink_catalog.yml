@@ -1,0 +1,29 @@
+- type: listing
+  id: UplinkSecurityStimulantsImplanter
+  name: uplink-stimulants-implant-name
+  description: uplink-stimulants-implant-desc
+  productEntity: StimulantsImplanter
+  cost:
+    FederationMilitaryCredit: 30
+  categories:
+    - UplinkSecurityUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityCombatImplanter
+  name: uplink-combat-implant-name
+  description: uplink-combat-implant-desc
+  productEntity: CombatImplanter
+  cost:
+    FederationMilitaryCredit: 30
+  categories:
+    - UplinkSecurityUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink

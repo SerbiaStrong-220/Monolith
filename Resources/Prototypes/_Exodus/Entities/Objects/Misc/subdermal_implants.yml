@@ -1,0 +1,58 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ChemicalImplant
+  name: Chemical implant
+  description: Inject to the bloodstream some chemicals
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionChemicalImplant
+  - type: TriggerImplantAction
+  - type: InjectOnTrigger
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: StimulantsImplant
+  name: Stimulants implant
+  description: Inject to the bloodstream some stimulant
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionStimulantsImplant
+  - type: TriggerImplantAction
+  - type: SolutionContainerManager
+    solutions:
+      sol1:
+        maxVol: 50
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 50
+  - type: InjectOnTrigger
+    solutions:
+    - name: sol1
+      charges: 5
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: CombatImplant
+  name: combat injector implant
+  description: Inject to the bloodstream some healing reagents
+  categories: [HideSpawnMenu]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionCombatImplant
+    - type: TriggerImplantAction
+    - type: SolutionContainerManager
+      solutions:
+        sol1:
+          maxVol: 110
+          reagents:
+            - ReagentId: Omnizine
+              Quantity: 100
+            - ReagentId: TranexamicAcid
+              Quantity: 20
+    - type: InjectOnTrigger
+      solutions:
+        - name: sol1
+          charges: 5
+          transferAmount: 30
