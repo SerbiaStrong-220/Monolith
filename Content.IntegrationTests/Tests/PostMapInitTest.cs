@@ -466,11 +466,18 @@ namespace Content.IntegrationTests.Tests
                 // Frontier: FIXME - hacky test fix
                 .Where(x =>
                     x.ID == PoolManager.TestMap || // Frontier: check test map
-                    (x.MapPath.ToString().StartsWith("/Maps/_Mono") || x.MapPath.ToString().StartsWith("/Maps/_Exodus")) && // Mono: check Mono maps only // Exodus | not mono only
+
+                    x.MapPath.ToString().StartsWith("/Maps/_Mono") && // Mono: check Mono maps only
                     !x.MapPath.ToString().StartsWith("/Maps/_Mono/Shuttles") && // Mono: skip shuttles (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Mono/Deprecated") && // Mono: skip deprecated (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Mono/ShuttleEvent") && // Mono: skip shuttleevents (not loaded as maps)
-                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/POI") // Mono: skip POIs (not loaded as maps)
+                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/POI") || // Mono: skip POIs (not loaded as maps)
+
+                    x.MapPath.ToString().StartsWith("/Maps/_Exodus") && // Exodus | not mono only
+                    !x.MapPath.ToString().StartsWith("/Maps/_Exodus/Shuttles") && // Exodus: skip shuttles (not loaded as maps)
+                    !x.MapPath.ToString().StartsWith("/Maps/_Exodus/Deprecated") && // Exodus: skip deprecated (not loaded as maps)
+                    !x.MapPath.ToString().StartsWith("/Maps/_Exodus/ShuttleEvent") && // Exodus: skip shuttleevents (not loaded as maps)
+                    !x.MapPath.ToString().StartsWith("/Maps/_Exodus/POI") // Exodus: skip POIs (not loaded as maps)
                     )
                 // End Frontier
                 .Select(x => x.ID)
