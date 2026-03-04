@@ -33,6 +33,7 @@
       toggleable-clothing: !type:Container {}
       storagebase: !type:Container
         ents: []
+      item: !type:ContainerSlot {} # Exodus
   - type: PhysicalComposition
     materialComposition:
       Durathread: 100

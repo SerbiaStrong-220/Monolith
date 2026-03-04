@@ -17,6 +17,7 @@
         showEnts: False
         occludes: True
         ents: []
+      item: !type:ContainerSlot {} # Exodus
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

@@ -57,6 +57,7 @@
     containers:
       storagebase: !type:Container
         ents: []
+      item: !type:ContainerSlot {} # Exodus
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -125,10 +126,11 @@
       toggleable-clothing: !type:Container {}
       storagebase: !type:Container
         ents: []
+      item: !type:ContainerSlot {} # Exodus
 
 - type: entity
   abstract: true
-  parent: [RecyclableItemClothHardsuit, ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing, ClothingArmorPlate, ClothingOuterRadioSlot] # Frontier: added RecyclableItemClothHardsuit # Mono - armor plates. # Exodus-Armor-Tweak-Radio
+  parent: [ RecyclableItemClothHardsuit, ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing, ClothingArmorPlate, ClothingOuterRadioSlot ] # Frontier: added RecyclableItemClothHardsuit # Mono - armor plates. # Exodus-Armor-Tweak-Radio
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
@@ -158,6 +160,7 @@
       toggleable-clothing: !type:Container {}
       storagebase: !type:Container
         ents: []
+      item: !type:ContainerSlot {} # Exodus
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

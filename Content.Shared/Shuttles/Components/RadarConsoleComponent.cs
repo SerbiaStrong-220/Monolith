@@ -51,7 +51,7 @@ public sealed partial class RadarConsoleComponent : Component
 
     [DataField("targetEntity")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid TargetEntity = EntityUid.Invalid;
+    public EntityUid? TargetEntity;
     // End Frontier
 
     // <Mono>

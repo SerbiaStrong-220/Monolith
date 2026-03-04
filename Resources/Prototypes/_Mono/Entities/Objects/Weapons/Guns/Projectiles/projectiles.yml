@@ -28,6 +28,15 @@
         hard: false
         mask:
         - Opaque
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
   - type: Projectile
     impactEffect: BulletImpactEffectRedDisabler
     damage:
@@ -156,6 +165,7 @@
         hard: false
         mask:
         - Opaque # Mono
+      fly-by: *flybyfixture
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser #imp
   - type: StaminaDamageOnCollide

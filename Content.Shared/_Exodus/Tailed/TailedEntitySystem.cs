@@ -51,10 +51,10 @@ public sealed partial class TailedEntitySystem : EntitySystem
     {
         foreach (var segment in component.TailSegments)
         {
-            if (Exists(segment) && !EntityManager.IsQueuedForDeletion(segment))
+            if (!TerminatingOrDeleted(segment) && !EntityManager.IsQueuedForDeletion(segment))
             {
                 _joint.ClearJoints(segment);
-                Del(segment);
+                QueueDel(segment);
             }
         }
         component.TailSegments.Clear();

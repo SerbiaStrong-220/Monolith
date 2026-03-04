@@ -3,6 +3,12 @@
   name: base armor with radio
   abstract: true
   components:
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container {}
+      storagebase: !type:Container
+        ents: []
+      item: !type:ContainerSlot {}
   - type: ItemSlots
     slots:
       item:

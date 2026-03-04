@@ -88,13 +88,13 @@ public sealed partial class RadarConsoleSystem : SharedRadarConsoleSystem // Fro
             && (!TryComp(targetUid, out IFFComponent? iff) || (iff.Flags & (IFFFlags.Hide | IFFFlags.HideLabel)) == 0)
             && TryComp(targetUid, out TransformComponent? xform))
         {
-            ent.Comp.TargetEntity = targetUid.Value;
+            ent.Comp.TargetEntity = targetUid;
             ent.Comp.Target = _transform.GetMapCoordinates(xform).Position;
         }
         else
         {
             ent.Comp.Target = target;
-            ent.Comp.TargetEntity = EntityUid.Invalid;
+            ent.Comp.TargetEntity = null;
         }
         Dirty(ent);
     }
