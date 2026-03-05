@@ -131,7 +131,7 @@
       stripTime: 6
       uiWindowPos: 2,2
       strippingWindowPos: 3,1
-      displayName: inventory-slot-armband-left  # Ru-Localization
+      displayName: inventory-slot-armband-left # Ru-Localization
     - name: rightarmband
       slotTexture: armband_right
       slotFlags: ARMBANDRIGHT

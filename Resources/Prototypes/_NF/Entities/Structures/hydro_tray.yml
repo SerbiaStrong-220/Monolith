@@ -31,4 +31,4 @@
         map: [ "harvest_alert" ]
         visible: false
   - type: Machine
-    board: Null
+    board: HydroponicsTrayMachineCircuitboard # Exodus-Sprite-End
