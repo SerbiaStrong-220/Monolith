@@ -655,6 +655,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Draw lines from grappling gun to target
         var shipGrapplingGunProjectileQuery = EntManager.EntityQueryEnumerator<ShipGrapplingGunTargetComponent, TransformComponent>();
         var shipGrapplingGunQuery = EntManager.GetEntityQuery<ShipGrapplingGunComponent>();
+        var worldToView = worldToShuttle * shuttleToView;
         while (shipGrapplingGunProjectileQuery.MoveNext(out var uid, out var grapTarget, out var targetXform))
         {
             var gunUid = EntManager.GetEntity(grapTarget.Gun);
@@ -664,8 +665,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (!xformQuery.TryGetComponent(gunUid, out var gunXform))
                 continue;
 
-            var gunPosInView = Vector2.Transform(gunXform.WorldPosition, worldToShuttle * shuttleToView);
-            var targetPosInView = Vector2.Transform(targetXform.WorldPosition, worldToShuttle * shuttleToView);
+            if (gunXform.MapID != xform.MapID || targetXform.MapID != xform.MapID)
+                continue;
+            var gunPosInView = Vector2.Transform(gunXform.WorldPosition, worldToView);
+            var targetPosInView = Vector2.Transform(targetXform.WorldPosition, worldToView);
 
             if (monoViewBounds.Contains(gunPosInView) || monoViewBounds.Contains(targetPosInView))
             {
