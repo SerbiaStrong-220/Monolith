@@ -24,8 +24,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-using Robust.Shared.Log;
-
 namespace Content.Client.Shuttles.UI;
 
 [GenerateTypedNameReferences]
