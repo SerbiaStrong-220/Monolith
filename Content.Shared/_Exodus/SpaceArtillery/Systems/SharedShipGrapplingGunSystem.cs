@@ -62,7 +62,7 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
             visuals.Target = GetNetEntity(uid);
             visuals.OffsetA = new Vector2(0f, 0.5f);
             visuals.OffsetB = component.GunVisualOffset;
-            projComp.Gun = GetNetEntity(uid);
+            projComp.Gun = uid;
             Dirty(uid, component);
             Dirty(shootUid.Value, visuals);
             Dirty(shootUid.Value, projComp);
@@ -105,36 +105,31 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         _physics.WakeBody(targetGridUid.Value);
 
         var targetComp = EnsureComp<ShipGrapplingGunTargetComponent>(args.Embedded);
-        targetComp.Gun = args.Weapon;
+        targetComp.Gun = GetNetEntity(args.Weapon);
         var targetGridComp = EnsureComp<ShipGrapplingTargetGridComponent>(targetGridUid.Value);
         targetGridComp.Gun = args.Weapon;
 
         grapComp.Target = args.Embedded;
         grapComp.TargetGrid = targetGridUid.Value;
 
+        Dirty(args.Embedded, targetComp);
         Dirty(targetGridUid.Value, jointComp);
     }
 
     private void OnTargetTerminating(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
     {
-        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+        if (!TryComp<ShipGrapplingGunComponent>(GetEntity(component.Gun), out var grapComp))
             return;
 
-        if (grapComp.Target != uid)
-            return;
-
-        Ungrapple((component.Gun, grapComp), true);
+        Ungrapple((GetEntity(component.Gun), grapComp), true);
     }
 
     private void OnProjectileTerminating(EntityUid uid, ShipGrapplingProjectileComponent component, ref EntityTerminatingEvent args)
     {
-        if (!TryComp<ShipGrapplingGunComponent>(GetEntity(component.Gun), out var grapComp))
+        if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
             return;
 
-        if (grapComp.Projectile != uid)
-            return;
-
-        Ungrapple((GetEntity(component.Gun), grapComp), true);
+        Ungrapple((component.Gun, grapComp), true);
     }
 
     public void Ungrapple(Entity<ShipGrapplingGunComponent> gun, bool isBreak)
@@ -167,6 +162,7 @@ public abstract class SharedShipGrapplingGunSystem : EntitySystem
         gun.Comp.JointId = null;
         gun.Comp.Target = null;
         gun.Comp.TargetGrid = null;
+
         _gun.ChangeBasicEntityAmmoCount(gun.Owner, 1);
         RemovePvsOverride(gun.Owner);
         Dirty(gun.Owner, gun.Comp);

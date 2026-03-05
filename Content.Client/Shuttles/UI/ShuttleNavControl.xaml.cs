@@ -654,30 +654,25 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         #endregion
 
         //Exodus - ShuttleHooks - Begin
-        // Draw lines from grappling gun to projectile
-        var shipGrapplingGunProjectileQuery = EntManager.EntityQueryEnumerator<ShipGrapplingProjectileComponent, TransformComponent>();
+        // Draw lines from grappling gun to target
+        var shipGrapplingGunProjectileQuery = EntManager.EntityQueryEnumerator<ShipGrapplingGunTargetComponent, TransformComponent>();
         var shipGrapplingGunQuery = EntManager.GetEntityQuery<ShipGrapplingGunComponent>();
-        while (shipGrapplingGunProjectileQuery.MoveNext(out var uid, out var target, out var projXform))
+        while (shipGrapplingGunProjectileQuery.MoveNext(out var uid, out var target, out var targetXform))
         {
             var gunUid = EntManager.GetEntity(target.Gun);
-            Logger.Info("shipGrapplingGunProjectileQuery.MoveNext");
             if (!shipGrapplingGunQuery.TryGetComponent(gunUid, out var gunComp))
                 continue;
-
-            Logger.Info("shipGrapplingGunQuery.TryGetComponent");
 
             if (!xformQuery.TryGetComponent(gunUid, out var gunXform))
                 continue;
 
-            Logger.Info("xformQuery.TryGetComponent");
-
             var gunPosInView = Vector2.Transform(gunXform.WorldPosition, worldToShuttle * shuttleToView);
-            var targetPosInView = Vector2.Transform(projXform.WorldPosition, worldToShuttle * shuttleToView);
+            var targetPosInView = Vector2.Transform(targetXform.WorldPosition, worldToShuttle * shuttleToView);
 
-            //if (monoViewBounds.Contains(gunPosInView) || monoViewBounds.Contains(targetPosInView))
-            //{
-            handle.DrawLine(gunPosInView, targetPosInView, Color.Magenta);
-            //}
+            if (monoViewBounds.Contains(gunPosInView) || monoViewBounds.Contains(targetPosInView))
+            {
+                handle.DrawLine(gunPosInView, targetPosInView, Color.Magenta);
+            }
         }
         //Exodus - ShuttleHooks - End
     }
