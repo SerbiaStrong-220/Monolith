@@ -655,9 +655,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Draw lines from grappling gun to target
         var shipGrapplingGunProjectileQuery = EntManager.EntityQueryEnumerator<ShipGrapplingGunTargetComponent, TransformComponent>();
         var shipGrapplingGunQuery = EntManager.GetEntityQuery<ShipGrapplingGunComponent>();
-        while (shipGrapplingGunProjectileQuery.MoveNext(out var uid, out var target, out var targetXform))
+        while (shipGrapplingGunProjectileQuery.MoveNext(out var uid, out var grapTarget, out var targetXform))
         {
-            var gunUid = EntManager.GetEntity(target.Gun);
+            var gunUid = EntManager.GetEntity(grapTarget.Gun);
             if (!shipGrapplingGunQuery.TryGetComponent(gunUid, out var gunComp))
                 continue;
 
