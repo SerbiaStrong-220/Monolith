@@ -1,7 +1,8 @@
 - type: entity
   parent: BallisticArtilleryBase
   id: Harpoon
-  name: harpoon
+  name: harpoon-gun
+  description: harpoon-gun-desc
   components:
   - type: Sprite
     sprite: _Exodus/Objects/SpaceArtillery/harpoon.rsi
@@ -21,7 +22,7 @@
   - type: FireControlRotate
   - type: Gun
     projectileSpeed: 200
-    fireRate: 0.1
+    fireRate: 0.2
     shootThermalSignature: 2000000
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
@@ -30,5 +31,5 @@
   - type: ShipGunClass
     shipClass: Medium
   - type: BasicEntityAmmoProvider
-    proto: ShipGrapplingHook
+    proto: HarpoonHook
     capacity: 1

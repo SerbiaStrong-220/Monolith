@@ -1,6 +1,6 @@
 - type: entity
-  id: ShipGrapplingHook
-  name: ship grappling hook
+  id: HarpoonHook
+  name: harpoon-hook
   categories: [ HideSpawnMenu ]
   components:
     - type: EmbeddableProjectile
