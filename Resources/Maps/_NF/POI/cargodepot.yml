@@ -55,6 +55,7 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: NoGridImpacts # Exodus-No-Ram-POI
     - type: BecomesStation
       id: CargoDepot
     - type: DecalGrid

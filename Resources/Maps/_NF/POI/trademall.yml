@@ -199,6 +199,7 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: NoGridImpacts # Exodus-No-Ram-POI
     - type: GridAtmosphere
       version: 2
       data:

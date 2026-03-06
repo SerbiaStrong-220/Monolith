@@ -57,6 +57,7 @@ entities:
     - type: SpreaderGrid
     - type: Shuttle
     - type: GridPathfinding
+    - type: NoGridImpacts # Exodus-No-Ram-POI
     - type: DecalGrid
       chunkCollection:
         version: 2
