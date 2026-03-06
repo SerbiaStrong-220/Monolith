@@ -1,6 +1,6 @@
 ent-StaticGeneratorBase = { ent-BaseStructure }
     .desc = { ent-BaseStructure.desc }
-ent-GeneratorCRPinch = Термоядерный реактор класса CR "Z-pinch"
+ent-GeneratorCRPinch = термоядерный реактор класса CR "Z-pinch"
     .desc =
         Промышленный миниатюрный термоядерный реактор, работающий на топливной плазме.
         Очень высокая эффективность. Номинальная мощность 105 кВт. Диапазон выработки

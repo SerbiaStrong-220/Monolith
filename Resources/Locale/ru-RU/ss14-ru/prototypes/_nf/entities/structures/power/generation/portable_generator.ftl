@@ -9,7 +9,7 @@ ent-PortableGeneratorSuperPacmanShuttle = { ent-PortableGeneratorSuperPacman }
 ent-PortableGeneratorJrPacmanShuttle = { ent-PortableGeneratorJrPacman }
     .suffix = Сварочное топливо, 6 кВт, Шаттл
     .desc = { ent-PortableGeneratorJrPacman.desc }
-ent-PortableGeneratorDK = Портативный генератор Данн-Кикко
+ent-PortableGeneratorDK = портативный генератор Данн-Кикко
     .desc =
         Экспериментальный реактор деления конструкции Данн-Кикко. Использовать с осторожностью.
         Работает на бананиуме. Максимальная мощность: 120 кВт. Крайне радиоактивен.
@@ -17,7 +17,7 @@ ent-PortableGeneratorDK = Портативный генератор Данн-К�
 ent-PortableGeneratorDKShuttle = { ent-PortableGeneratorDK }
     .suffix = Бананиум, Рад+, 60 кВт, Шаттл
     .desc = { ent-PortableGeneratorDK.desc }
-ent-PortableGeneratorDKJr = Портативный генератор Данн-Кикко младший
+ent-PortableGeneratorDKJr = портативный генератор Данн-Кикко младший
     .desc =
         Уменьшенная версия реактора деления Данн-Кикко. Использовать с осторожностью.
         Работает на бананиуме. Максимальная мощность: 100 кВт. Довольно радиоактивен.
