@@ -1,11 +1,11 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: DarkBanOne, Lokilife
-using Content.Shared.Exodus.Stealth;
+using Content.Shared._Exodus.Stealth.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Exodus.Stealth.Components;
+namespace Content.Shared._Exodus.Stealth.Components;
 /// <summary>
 /// Add this component to an entity that you want to be cloaked.
 /// It overlays a shader on the entity to give them an invisibility cloaked effect.

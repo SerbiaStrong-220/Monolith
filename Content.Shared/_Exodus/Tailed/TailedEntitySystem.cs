@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.Exodus.Tailed;
+namespace Content.Shared._Exodus.Tailed;
 
 /// <summary>
 /// This system connects all segments of tailed entity.

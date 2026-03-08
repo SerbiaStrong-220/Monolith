@@ -1,7 +1,7 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
 using System.Numerics;
-using Content.Shared.Exodus.Tailed;
+using Content.Shared._Exodus.Tailed;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Movement.Systems;

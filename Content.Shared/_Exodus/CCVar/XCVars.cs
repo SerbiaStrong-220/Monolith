@@ -2,7 +2,7 @@
 // Authors: Lokilife
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.Exodus.CCVar;
+namespace Content.Shared._Exodus.CCVar;
 
 [CVarDefs]
 public sealed partial class XCVars

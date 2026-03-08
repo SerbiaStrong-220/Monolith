@@ -1,11 +1,11 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
-using Content.Shared.Exodus.Gimmicks.Pheromones;
+using Content.Shared._Exodus.Gimmicks.Pheromones;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Player;
 
-namespace Content.Client.Exodus.Gimmicks.Pheromones;
+namespace Content.Client._Exodus.Gimmicks.Pheromones;
 
 public sealed partial class PheromonesSystem : SharedPheromonesSystem
 {

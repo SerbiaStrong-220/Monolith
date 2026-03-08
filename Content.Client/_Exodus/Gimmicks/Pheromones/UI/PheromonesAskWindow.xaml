@@ -3,8 +3,6 @@
 Authors: Lokilife
 -->
 <DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            x:Class="Content.Client.Exodus.Gimmicks.Pheromones.UI.PheromonesAskWindow"
             Title="{Loc 'pheromones-ask-menu-title'}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150" >
         <Label Text="{Loc 'pheromones-ask-menu-heading-label'}" />

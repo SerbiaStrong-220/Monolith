@@ -1,13 +1,13 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: DarkBanOne
 using Content.Client.Interactable.Components;
-using Content.Shared.Exodus.Stealth;
-using Content.Shared.Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Exodus.Stealth;
+namespace Content.Client._Exodus.Stealth;
 
 public sealed class StealthSystem : SharedStealthSystem
 {

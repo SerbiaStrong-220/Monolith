@@ -1,10 +1,10 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: DarkBanOne
-using Content.Shared.Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Systems;
 using Content.Shared.Hands;
-using Content.Shared.Exodus.Stealth;
 
-namespace Content.Server.Exodus.Stealth;
+namespace Content.Server._Exodus.Stealth;
 
 public sealed class StealthOnHeldSystem : EntitySystem
 {

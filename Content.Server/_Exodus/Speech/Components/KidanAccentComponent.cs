@@ -1,6 +1,6 @@
 ﻿// (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife, Jidort (JunJun)
-namespace Content.Server.Exodus.Speech.Components;
+namespace Content.Server._Exodus.Speech.Components;
 
 /// <summary>
 ///     Zziks!

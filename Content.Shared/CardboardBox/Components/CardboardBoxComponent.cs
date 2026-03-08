@@ -1,4 +1,4 @@
-﻿using Content.Shared.Exodus.Stealth.Components;//Exodus-RefactorStealthSystem
+﻿using Content.Shared._Exodus.Stealth.Components; //Exodus-RefactorStealthSystem
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;

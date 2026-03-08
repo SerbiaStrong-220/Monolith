@@ -1,6 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Server.Exodus.GameTicking.Requirements; // Exodus
+using Content.Server._Exodus.GameTicking.Requirements; // Exodus
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;

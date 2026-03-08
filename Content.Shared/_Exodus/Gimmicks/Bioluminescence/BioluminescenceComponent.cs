@@ -3,7 +3,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Exodus.Gimmicks.Bioluminescence;
+namespace Content.Shared._Exodus.Gimmicks.Bioluminescence;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class BioluminescenceComponent : Component

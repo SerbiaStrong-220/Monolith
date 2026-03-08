@@ -4,7 +4,7 @@ using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Exodus.Tailed;
+namespace Content.Shared._Exodus.Tailed;
 
 /// <summary>
 /// When given to an entity, creates X tailed entities that try to follow the entity with the component.

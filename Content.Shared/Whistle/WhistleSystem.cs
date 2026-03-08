@@ -1,9 +1,9 @@
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Exodus.Stealth; //Exodus-RefactorStealthSystem
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Content.Shared._Exodus.Stealth.Systems; // Exodus-RefactorStealthSystem
 
 namespace Content.Shared.Whistle;
 

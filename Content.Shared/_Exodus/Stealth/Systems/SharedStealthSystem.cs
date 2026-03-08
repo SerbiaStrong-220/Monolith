@@ -4,13 +4,12 @@ using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Exodus.Stealth;
+namespace Content.Shared._Exodus.Stealth.Systems;
 
 public abstract class SharedStealthSystem : EntitySystem
 {

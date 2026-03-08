@@ -2,7 +2,7 @@
 // Authors: Lokilife
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Exodus.Tailed;
+namespace Content.Shared._Exodus.Tailed;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TailedEntitySegmentComponent : Component

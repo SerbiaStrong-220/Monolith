@@ -16,7 +16,7 @@ using Content.Shared.Roles;
 using Robust.Shared.Timing;
 using Content.Server.Access.Components;
 
-namespace Content.Server.Exodus.AutoSalarySystem;
+namespace Content.Server._Exodus.AutoSalarySystem;
 
 public sealed class AutoSalarySystem : EntitySystem
 {

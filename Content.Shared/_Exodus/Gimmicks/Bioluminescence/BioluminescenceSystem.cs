@@ -3,7 +3,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Humanoid;
 
-namespace Content.Shared.Exodus.Gimmicks.Bioluminescence;
+namespace Content.Shared._Exodus.Gimmicks.Bioluminescence;
 
 public sealed partial class BioluminescenceSystem : EntitySystem
 {

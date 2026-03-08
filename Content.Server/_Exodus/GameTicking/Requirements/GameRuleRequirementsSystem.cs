@@ -1,9 +1,9 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
-using Content.Server.Exodus.GameTicking.Requirements;
+using Content.Server._Exodus.GameTicking.Requirements;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Exodus.GameTicking.Requirements;
+namespace Content.Server._Exodus.GameTicking.Requirements;
 
 // TODO: this system should probably be implemented via observer pattern but I'm too lazy currently
 public sealed partial class GameRuleRequirementsSystem : EntitySystem

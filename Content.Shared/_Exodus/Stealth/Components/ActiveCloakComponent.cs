@@ -1,10 +1,11 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
+using Content.Shared._Exodus.Stealth.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Exodus.Stealth.Components;
+namespace Content.Shared._Exodus.Stealth.Components;
 
 /// <summary>
 /// Active cloak that can be toggled on/off. Breaks when wearer is hit or attacks.

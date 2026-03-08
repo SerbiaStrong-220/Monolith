@@ -1,9 +1,9 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: DarkBanOne, Lokilife
-using Content.Shared.Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Components;
 using Content.Shared.Mobs;
 
-namespace Content.Shared.Exodus.Stealth;
+namespace Content.Shared._Exodus.Stealth.Systems;
 
 public sealed partial class InstantStealthSystem : EntitySystem
 {

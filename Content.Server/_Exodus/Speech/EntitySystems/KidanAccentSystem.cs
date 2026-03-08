@@ -1,11 +1,10 @@
 ﻿// (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife, Jidort (JunJun)
 using System.Text.RegularExpressions;
-using Content.Server.Exodus.Speech.Components;
+using Content.Server._Exodus.Speech.Components;
 using Content.Server.Speech;
-using Robust.Shared.Random;
 
-namespace Content.Server.Exodus.Speech.EntitySystems;
+namespace Content.Server._Exodus.Speech.EntitySystems;
 
 public sealed class KidanAccentSystem : EntitySystem
 {

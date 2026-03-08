@@ -33,9 +33,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.StatusEffect; // Frontier
-using Content.Shared.Exodus.Stealth;
-using Content.Shared.Exodus.Stealth.Components;
-using Content.Server.NPC.Components; // Exodus
+using Content.Shared._Exodus.Stealth.Systems; // Exodus
+using Content.Shared._Exodus.Stealth.Components; // Exodus
+using Content.Server.NPC.Components;
 
 namespace Content.Server.NPC.Systems;
 

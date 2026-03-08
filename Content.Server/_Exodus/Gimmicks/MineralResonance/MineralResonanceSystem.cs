@@ -2,10 +2,10 @@
 // Authors: Lokilife
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
-using Content.Shared.Exodus.Gimmicks.MineralResonance;
+using Content.Shared._Exodus.Gimmicks.MineralResonance;
 using Content.Shared.Mining;
 
-namespace Content.Server.Exodus.Gimmicks.MineralResonance;
+namespace Content.Server._Exodus.Gimmicks.MineralResonance;
 
 public sealed partial class MineralResonanceSystem : EntitySystem
 {

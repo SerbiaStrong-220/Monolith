@@ -1,7 +1,7 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
 using Content.Shared.Actions;
-using Content.Shared.Exodus.Stealth.Components;
+using Content.Shared._Exodus.Stealth.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle.Components;
@@ -14,7 +14,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Exodus.Stealth;
+namespace Content.Shared._Exodus.Stealth.Systems;
 
 public sealed partial class ActiveCloakSystem : EntitySystem
 {

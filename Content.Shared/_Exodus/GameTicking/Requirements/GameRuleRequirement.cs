@@ -2,7 +2,7 @@
 // Authors: Lokilife
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Exodus.GameTicking.Requirements;
+namespace Content.Shared._Exodus.GameTicking.Requirements;
 
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class GameRuleRequirement

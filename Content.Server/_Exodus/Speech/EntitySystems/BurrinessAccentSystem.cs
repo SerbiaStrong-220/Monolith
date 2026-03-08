@@ -1,22 +1,22 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Jidort (JunJun)
-using Content.Server.Exodus.Speech.Components;
+using Content.Server._Exodus.Speech.Components;
+using Content.Server.Speech;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems
+namespace Content.Server._Exodus.Speech.EntitySystems;
+
+public sealed class BurrinessAccentSystem : EntitySystem
 {
-    public sealed class BurrinessAccentSystem : EntitySystem
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        SubscribeLocalEvent<BurrinessAccentComponent, AccentGetEvent>(OnAccent);
+    }
 
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<BurrinessAccentComponent, AccentGetEvent>(OnAccent);
-        }
-
-        private void OnAccent(EntityUid uid, BurrinessAccentComponent component, AccentGetEvent args)
-        {
-            args.Message = args.Message.Replace("р", "в").Replace("Р", "В");
-        }
+    private void OnAccent(EntityUid uid, BurrinessAccentComponent component, AccentGetEvent args)
+    {
+        args.Message = args.Message.Replace("р", "в").Replace("Р", "В");
     }
 }

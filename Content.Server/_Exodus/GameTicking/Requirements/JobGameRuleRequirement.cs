@@ -1,13 +1,13 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
-using Content.Shared.Exodus.GameTicking.Requirements;
+using Content.Shared._Exodus.GameTicking.Requirements;
 using Content.Server._NF.CryoSleep;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Content.Server.Mind;
 using Content.Shared.Mobs.Systems;
 
-namespace Content.Server.Exodus.GameTicking.Requirements;
+namespace Content.Server._Exodus.GameTicking.Requirements;
 
 public sealed partial class JobGameRuleRequirement : GameRuleRequirement
 {

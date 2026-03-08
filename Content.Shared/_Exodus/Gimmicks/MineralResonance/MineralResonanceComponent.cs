@@ -5,7 +5,7 @@ using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Exodus.Gimmicks.MineralResonance;
+namespace Content.Shared._Exodus.Gimmicks.MineralResonance;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class MineralResonanceComponent : Component
