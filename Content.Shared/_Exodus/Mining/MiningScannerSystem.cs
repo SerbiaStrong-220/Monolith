@@ -1,14 +1,15 @@
-// Exodus-MiningScannerRefactor
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Mining.Components;
+using Content.Shared._Exodus.Mining.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Mining;
+namespace Content.Shared._Exodus.Mining;
 
 public sealed partial class MiningScannerSystem : EntitySystem
 {

@@ -3,7 +3,7 @@
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Shared._Exodus.Gimmicks.MineralResonance;
-using Content.Shared.Mining;
+using Content.Shared._Exodus.Mining;
 
 namespace Content.Server._Exodus.Gimmicks.MineralResonance;
 

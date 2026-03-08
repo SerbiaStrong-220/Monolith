@@ -1,8 +1,9 @@
-// Exodus-MiningScannerRefactor
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Mining.Components;
+namespace Content.Shared._Exodus.Mining.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(MiningScannerSystem))]
 public sealed partial class MiningScannerUserComponent : Component

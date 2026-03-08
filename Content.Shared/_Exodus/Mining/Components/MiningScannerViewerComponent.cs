@@ -1,9 +1,10 @@
-// Exodus-MiningScannerRefactor
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Mining.Components;
+namespace Content.Shared._Exodus.Mining.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(MiningScannerViewerSystem)), AutoGenerateComponentState(true)]
 public sealed partial class MiningScannerViewerComponent : Component

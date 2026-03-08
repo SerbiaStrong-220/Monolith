@@ -1,10 +1,10 @@
-// Exodus-MiningScannerRefactor
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using System.Linq;
-using Content.Shared.Mining.Components;
-using Robust.Shared.GameStates;
+using Content.Shared._Exodus.Mining.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Mining;
+namespace Content.Shared._Exodus.Mining;
 
 public sealed partial class MiningScannerViewerSystem : EntitySystem
 {

@@ -1,7 +1,8 @@
-// Exodus-MiningScannerRefactor
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using System.Linq;
 using System.Numerics;
-using Content.Shared.Mining.Components;
+using Content.Shared._Exodus.Mining.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -9,7 +10,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Mining;
+namespace Content.Client._Exodus.Mining;
 
 public sealed class MiningOverlay : Overlay
 {
