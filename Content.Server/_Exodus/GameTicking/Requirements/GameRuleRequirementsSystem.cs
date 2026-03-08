@@ -1,6 +1,5 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
-using Content.Server._Exodus.GameTicking.Requirements;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.GameTicking.Requirements;
