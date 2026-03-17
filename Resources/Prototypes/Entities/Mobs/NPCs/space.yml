@@ -298,6 +298,11 @@
   components:
     - type: Body # Shitmed Change
       prototype: SpaceCobra
+    - type: InstantStealth # Exodus
+      stealth:
+        maxVisibility: 1.2
+        passiveVisibilityRate: -0.25
+        movementVisibilityRate: 0.25
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Animals/spacecobra.rsi
