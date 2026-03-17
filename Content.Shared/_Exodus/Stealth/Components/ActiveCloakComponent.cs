@@ -36,7 +36,7 @@ public sealed partial class ActiveCloakComponent : Component
     /// Cooldown duration after cloak breaks
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(10);
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(20);
 
     /// <summary>
     /// Action entity for toggling cloak
