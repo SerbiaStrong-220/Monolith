@@ -19,6 +19,9 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD
+      head-vox:
+      - state: equipped-HEAD-vox
+      
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -68,6 +71,8 @@
       - state: equipped-HEAD-sealed
       head-resomi:
       - state: equipped-HEAD-sealed-resomi
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -76,6 +81,7 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -144,6 +150,8 @@
       - state: equipped-HEAD
       head-resomi:
       - state: equipped-HEAD-resomi
+      head-vox:
+      - state: equipped-HEAD-vox
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Modsuits/security.rsi
     layers:
@@ -164,6 +172,8 @@
       - state: equipped-HEAD-sealed
       head-resomi:
       - state: equipped-HEAD-sealed-resomi
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -172,6 +182,7 @@
         Piercing: 0.85
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -241,6 +252,8 @@
       - state: equipped-HEAD
       head-resomi:
       - state: equipped-HEAD-resomi
+      head-vox:
+      - state: equipped-HEAD-vox
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Modsuits/headofsecurity.rsi
     layers:
@@ -261,6 +274,8 @@
       - state: equipped-HEAD-sealed
       head-resomi:
       - state: equipped-HEAD-sealed-resomi
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -269,6 +284,7 @@
         Piercing: 0.85
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -349,6 +365,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -357,6 +375,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.75
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -437,6 +456,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -445,6 +466,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -523,6 +545,8 @@
       - state: equipped-HEAD
       head-resomi:
       - state: equipped-HEAD-resomi
+      head-vox:
+      - state: equipped-HEAD-vox
   - type: SealableClothing
     sealUpPopup: sealable-clothing-seal-up-helmet
     sealDownPopup: sealable-clothing-seal-down-helmet
@@ -533,6 +557,8 @@
       - state: equipped-HEAD-sealed
       head-resomi:
       - state: equipped-HEAD-sealed-resomi
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -541,6 +567,7 @@
         Piercing: 0.90
         Heat: 0.8
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -621,6 +648,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -629,6 +658,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -697,6 +727,8 @@
       - state: equipped-HEAD
       head-resomi:
       - state: equipped-HEAD-resomi
+      head-vox:
+      - state: equipped-HEAD-vox
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Modsuits/captain.rsi
     layers:
@@ -717,6 +749,8 @@
       - state: equipped-HEAD-sealed
       head-resomi:
       - state: equipped-HEAD-sealed-resomi
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -725,6 +759,7 @@
         Piercing: 0.85
         Heat: 0.8
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask

@@ -67,6 +67,11 @@ public sealed class PlateletFactoriesSystem : EntitySystem
 
         foreach (var (type, amount) in damage.Damage.DamageDict)
         {
+            // Exodus-Start
+            if (comp.IgnoredDamageTypes.Contains(type))
+                continue;
+            // Exodus-End
+
             if (amount <= 0)
                 continue;
 

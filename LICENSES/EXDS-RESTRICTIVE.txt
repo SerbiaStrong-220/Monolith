@@ -1,0 +1,174 @@
+Exodus Restrictive License
+
+Version 1.0, February 19, 2026
+
+Copyright (c) 2026 Maxim Bychkov and other contributors
+(contact: lokilife0002@gmail.com, https://t.me/lokilife)
+
+This license applies to all materials (software code, audio, sprites,
+graphics, documentation, and other content) that are distributed under
+the name "Exodus Restrictive License" by the Licensor defined below.
+
+By using, copying, or modifying any part of these materials, you
+(the Licensee) agree to be bound by the terms of this license.
+
+1. DEFINITIONS
+
+1.1 "Licensor" means Maxim Bychkov (Lokilife) and any other person or
+entity that has the right to grant rights under this license.
+
+1.2 "Licensee" means any individual or entity that exercises the rights
+granted under this license.
+
+1.3 "Space Exodus Projects" means the software projects hosted under
+the GitHub organization https://github.com/space-exodus/ (the URL may be
+changed by the Licensor without requiring an amendment to this license).
+Any project that is part of that organization is considered a Space
+Exodus Project.
+
+1.4 "Work" means any copyrightable work (including but not limited to
+source code, object code, audiovisual works, images, sprites, audio
+recordings, text, and documentation) made available by the Licensor under
+this license.
+
+1.5 "Local Hosting" means running the Work on a device or network that
+is not publicly accessible over the internet. Local hosting includes, for
+example, running the Work on a personal computer, a local area network
+without public exposure, or a private test server that requires
+authentication and is not intended for public use.
+
+1.6 "Public Hosting" means making the Work available to the general
+public over the internet or any other publicly accessible network,
+regardless of whether a fee is charged. Examples include, but are not
+limited to, running an online game server that can be joined by anyone,
+hosting the Work on a public website, or providing it as a cloud service.
+
+2. GRANT OF LICENSE
+
+Subject to the terms and conditions of this license, the Licensor hereby
+grants Licensee a worldwide, royalty-free, non-sublicensable,
+non-exclusive, and revocable (as provided in Section 8) license to use,
+copy, modify, and prepare derivative works of the Work solely:
+
+   (a) as part of a Space Exodus Project – i.e., the Work may only be
+       used, copied, modified, and distributed when it is integrated into
+       a project that is officially part of the Space Exodus Projects.
+       Any separate use or distribution of the Work (or a derivative
+       thereof) outside a Space Exodus Project is prohibited unless
+       explicitly permitted in writing by the Licensor.
+
+   (b) for Local Hosting for development and improvement purposes –
+       Licensee may host the Work locally, on a non-public network, for the
+       sole purpose of developing, testing, or improving the Work or a
+       Space Exodus Project. This right does not extend to Public Hosting.
+
+The Licensor reserves all rights not expressly granted in this license.
+
+3. RESTRICTIONS
+
+3.1 No Public Hosting. Licensee may not engage in Public Hosting of the
+Work or any derivative thereof, unless the Licensor has given separate,
+explicit written permission. Public Hosting includes, but is not limited to,
+operating a publicly accessible game server or offering the Work as a
+network service.
+
+3.2 No Separate Distribution. Licensee may not distribute, sublicense,
+or otherwise make available the Work (or any derivative) on a standalone
+basis, i.e., not integrated into a Space Exodus Project.
+
+3.3 No Removal of Notices. Licensee must retain all copyright, license,
+and other proprietary notices contained in the original Work in any
+authorized copy.
+
+3.4 No Trademark Use. This license does not grant permission to use the
+trade names, trademarks, service marks, or product names of the Licensor,
+except as required for reasonable and customary use in describing the
+origin of the Work.
+
+4. EXCEPTIONS
+
+Notwithstanding the above restrictions, the Licensor may, at their sole
+discretion, grant specific permissions to a Licensee (such as the right to
+engage in Public Hosting or to use the Work outside a Space Exodus Project).
+Any such permission must be in writing and signed by the Licensor (Maxim
+Bychkov, or a person authorized by him). In the absence of a separate
+written agreement, the terms of this license apply fully.
+
+5. DISCLAIMER OF WARRANTY
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. IN NO EVENT
+SHALL THE LICENSOR OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE,
+ARISING FROM, OUT OF, OR IN CONNECTION WITH THE WORK OR THE USE OR OTHER
+DEALINGS IN THE WORK.
+
+6. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+LICENSOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS WORK, EVEN IF ADVISED
+OF THE POSSIBILITY OF SUCH DAMAGE.
+
+7. TERMINATION
+
+Any violation of the terms of this license automatically terminates the
+rights granted to the Licensee under this license. Upon termination,
+Licensee must cease all use and distribution of the Work and destroy all
+copies in their possession. The Licensor may also seek any other remedies
+available under law.
+
+8. GOVERNING LAW AND DISPUTE RESOLUTION
+
+8.1 Governing Law. This license shall be governed by and construed in
+accordance with the laws of the Russian Federation, without regard to its
+conflict of laws provisions.
+
+8.2 Dispute Resolution. Any dispute, controversy, or claim arising out
+of or relating to this license, or the breach, termination, or invalidity
+thereof, shall be finally settled by arbitration in accordance with the
+Arbitration Rules of the International Commercial Arbitration Court at the
+Chamber of Commerce and Industry of the Russian Federation (ICAC at the RF
+CCI). The arbitration shall be conducted in Moscow, Russia, in English or
+Russian (at the choice of the Licensor), with three arbitrators appointed
+in accordance with the said Rules. The arbitral award shall be final and
+binding on both parties.
+
+8.3 Interim Relief. Nothing in this section shall prevent the Licensor
+from seeking interim or provisional measures from any court of competent
+jurisdiction to protect their intellectual property rights.
+
+9. MISCELLANEOUS
+
+9.1 Entire Agreement. This license constitutes the entire agreement
+between the Licensor and Licensee with respect to the Work and supersedes
+all prior agreements or understandings.
+
+9.2 Severability. If any provision of this license is held to be
+unenforceable or invalid, the remaining provisions shall continue in full
+force and effect.
+
+9.3 Waiver. No failure or delay by the Licensor in exercising any right
+under this license shall operate as a waiver thereof.
+
+9.4 Updates. The Licensor may publish new versions of this license from
+time to time. Licensee may choose to continue using the Work under the terms
+of the version under which it was originally received, or under any later
+version published by the Licensor. However, if the Licensee continues to
+receive updates of the Work after a new version is published, the new
+version may apply to those updates at the Licensor’s discretion.
+
+10. CONTACT INFORMATION
+
+For questions regarding this license, for seeking exceptions, or for
+reporting violations, please contact:
+
+   Maxim Bychkov
+   Email: lokilife0002@gmail.com
+   Telegram: https://t.me/lokilife
+   GitHub: https://github.com/Lokilife

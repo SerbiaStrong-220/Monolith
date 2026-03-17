@@ -4,6 +4,8 @@
   isVisibleLanguage: true
   speech:
     color: "#597d35"
+    fontId: "Kompost" # Exodus
+    fontSize: 14 # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1

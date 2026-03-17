@@ -1,6 +1,6 @@
 - type: guideEntry
   id: BasicLore
-  name: Lore
+  name: guide-entry-lore
   text: "/ServerInfo/Guidebook/Lore/BasicLore.xml"
   children:
   - PhaethonDynasty
@@ -9,15 +9,15 @@
 
 - type: guideEntry
   id: PhaethonDynasty
-  name: Phaethon Dynasty
+  name: guide-entry-phaethon-dynasty
   text: "/ServerInfo/Guidebook/Lore/PhaethonDynasty.xml"
 
 - type: guideEntry
   id: TransSolarFederation
-  name: Trans-Solar Federation
+  name: guide-entry-trans-solar-federation
   text: "/ServerInfo/Guidebook/Lore/TransSolarFederation.xml"
 
 - type: guideEntry
   id: UnitedSovietSocialistPlanets
-  name: United Soviet Socialist Planets
+  name: guide-entry-united-soviet-socialist-planets
   text: "/ServerInfo/Guidebook/Lore/UnitedSovietSocialistPlanets.xml"

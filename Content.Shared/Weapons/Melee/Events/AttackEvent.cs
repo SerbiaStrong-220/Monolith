@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Inventory;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -21,8 +22,10 @@ namespace Content.Shared.Weapons.Melee.Events
     /// <summary>
     ///     Event raised on entities that have been attacked.
     /// </summary>
-    public sealed class AttackedEvent : EntityEventArgs
+    public sealed class AttackedEvent : EntityEventArgs, IInventoryRelayEvent // Exodus | Make inventory relayed
     {
+        public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
@@ -33,6 +36,13 @@ namespace Content.Shared.Weapons.Melee.Events
         /// </summary>
         public EntityUid User { get; }
 
+        // Exodus-Start | add target
+        /// <summary>
+        ///     Entity that have been attacked
+        /// </summary>
+        public EntityUid Target { get; }
+        // Exodus-End
+
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
@@ -40,11 +50,12 @@ namespace Content.Shared.Weapons.Melee.Events
 
         public DamageSpecifier BonusDamage = new();
 
-        public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
+        public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation, EntityUid target) // Exodus | add target
         {
             Used = used;
             User = user;
             ClickLocation = clickLocation;
+            Target = target; // Exodus | add target
         }
     }
 }

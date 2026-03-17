@@ -1,8 +1,10 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Exodus.EntityEffects.Effects;
+namespace Content.Server._Exodus.EntityEffects.Effects;
 
 [UsedImplicitly]
 public sealed partial class DeleteEntityReaction : EntityEffect

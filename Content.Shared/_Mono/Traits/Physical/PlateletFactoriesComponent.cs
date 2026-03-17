@@ -1,3 +1,5 @@
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Mono.Traits.Physical;
@@ -32,6 +34,11 @@ public sealed partial class PlateletFactoriesComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    // Exodus-Start
+    [DataField]
+    public HashSet<ProtoId<DamageTypePrototype>> IgnoredDamageTypes = ["Asphyxiation"];
+    // Exodus-End
 }
 
 

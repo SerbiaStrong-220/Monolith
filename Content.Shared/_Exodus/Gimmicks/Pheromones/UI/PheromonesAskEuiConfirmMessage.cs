@@ -1,7 +1,9 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Exodus.Gimmicks.Pheromones.UI;
+namespace Content.Shared._Exodus.Gimmicks.Pheromones.UI;
 
 [Serializable, NetSerializable]
 public sealed partial class PheromonesAskEuiConfirmMessage : EuiMessageBase

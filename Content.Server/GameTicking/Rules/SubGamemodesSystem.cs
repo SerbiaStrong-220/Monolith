@@ -12,7 +12,7 @@ public sealed class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
         foreach (var id in picked)
         {
             Log.Info($"Starting gamerule {id} as a subgamemode of {ToPrettyString(uid):rule}");
-            GameTicker.AddGameRule(id);
+            GameTicker.TryAddGameRule(id); // Exodus
         }
     }
 }

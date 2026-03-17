@@ -19,6 +19,11 @@
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: AsakimSmall
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -29,8 +34,13 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
-    maxOccurrences: 4
+    maxOccurrences: 3
   - type: GameRule
     minPlayers: 60
   - type: LoadMapRule
     preloadedGrid: AsakimMedium
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 8

@@ -1,4 +1,6 @@
-namespace Content.Shared.Exodus.Gimmicks.Pheromones;
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
+namespace Content.Shared._Exodus.Gimmicks.Pheromones;
 
 public abstract partial class SharedPheromonesSystem : EntitySystem
 {

@@ -22,6 +22,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly IConfigurationManager _config = default!; // EE
+    [Dependency] private readonly SharedGravitySystem _gravity = default!; // Exodus
 
     public override void Initialize()
     {
@@ -119,7 +120,8 @@ public abstract class SharedJetpackSystem : EntitySystem
         // https://discord.com/channels/310555209753690112/310555209753690112/1270067921682694234
         if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack)
             && (!CanEnableOnGrid(args.Transform.GridUid)
-            || !UserNotParented(uid, jetpack))) // EE
+            || !UserNotParented(uid, jetpack) // EE
+            || !_gravity.IsWeightless(uid))) // Exodus
         {
             SetEnabled(component.Jetpack, jetpack, false, uid);
 

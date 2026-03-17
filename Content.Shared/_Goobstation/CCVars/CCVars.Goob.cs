@@ -27,7 +27,7 @@ public sealed partial class GoobCVars
     /// The distance to spawn a space whale from the station
     /// </summary>
     public static readonly CVarDef<int> SpaceWhaleSpawnDistance =
-        CVarDef.Create("misc.space_whale_spawn_distance", 6000, CVar.SERVER);
+        CVarDef.Create("misc.space_whale_spawn_distance", 1000, CVar.SERVER);
 
     public static readonly CVarDef<string> SpaceWhalePrototype =
         CVarDef.Create("misc.space_whale_prototype", "SpaceLeviathanDespawn", CVar.SERVER);

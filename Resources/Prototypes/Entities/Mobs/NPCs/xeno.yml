@@ -22,6 +22,7 @@
         true
       NavSmash: !type:Bool
         true
+  - type: NPCIgnoreStealth # Exodus
   - type: Prying
     pryPowered: true
     force: true

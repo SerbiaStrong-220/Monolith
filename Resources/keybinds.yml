@@ -615,3 +615,6 @@ binds:
   key: X
   mod1: Shift
 # endregion Frontier
+- function: OfferItem # CorvaxGoob-Offer
+  type: State
+  key: H

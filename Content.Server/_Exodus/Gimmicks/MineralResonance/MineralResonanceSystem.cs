@@ -1,9 +1,11 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
-using Content.Shared.Exodus.Gimmicks.MineralResonance;
-using Content.Shared.Mining;
+using Content.Shared._Exodus.Gimmicks.MineralResonance;
+using Content.Shared._Exodus.Mining;
 
-namespace Content.Server.Exodus.Gimmicks.MineralResonance;
+namespace Content.Server._Exodus.Gimmicks.MineralResonance;
 
 public sealed partial class MineralResonanceSystem : EntitySystem
 {

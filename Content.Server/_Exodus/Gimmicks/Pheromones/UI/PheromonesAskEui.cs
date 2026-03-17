@@ -1,9 +1,11 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Server.EUI;
 using Content.Shared.Eui;
-using Content.Shared.Exodus.Gimmicks.Pheromones.UI;
+using Content.Shared._Exodus.Gimmicks.Pheromones.UI;
 using Robust.Shared.Map;
 
-namespace Content.Server.Exodus.Gimmicks.Pheromones;
+namespace Content.Server._Exodus.Gimmicks.Pheromones;
 
 public sealed partial class PheromonesAskEui : BaseEui
 {

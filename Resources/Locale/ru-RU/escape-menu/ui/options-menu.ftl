@@ -335,6 +335,7 @@ ui-options-accessability-header-visuals = Визуальные эффекты
 ui-options-accessability-header-content = Содержание
 ui-options-reduced-motion = Снижение интенсивности визуальных эффектов
 ui-options-screen-shake-intensity = Интенсивность дрожания экрана
+ui-options-show-offer-mode-indicators = Показывать индикатор передачи предмета
 ui-options-chat-window-opacity = Непрозрачность окна чата
 ui-options-speech-bubble-text-opacity = Непрозрачность текста речевого пузыря
 ui-options-speech-bubble-speaker-opacity = Непрозрачность диктора речевого пузыря

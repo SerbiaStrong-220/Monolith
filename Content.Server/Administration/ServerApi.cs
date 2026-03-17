@@ -298,7 +298,7 @@ public sealed partial class ServerApi : IPostInjectInit
                 return;
             }
 
-            var ruleEntity = ticker.AddGameRule(body.GameRuleId);
+            var ruleEntity = ticker.ForceAddGameRule(body.GameRuleId); // Exodus
             _sawmill.Info($"Added game rule {body.GameRuleId} by {FormatLogActor(actor)}.");
             if (ticker.RunLevel == GameRunLevel.InRound)
             {

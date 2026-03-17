@@ -1,29 +1,27 @@
 ent-BaseGeneratorShuttle = { "" }
     .desc = { "" }
-ent-PortableGeneratorPacmanShuttle = { ent-BaseGeneratorShuttle }
-    .suffix = Plasma, 15 kW, Ship
-    .desc = { ent-BaseGeneratorShuttle.desc }
-ent-PortableGeneratorSuperPacmanShuttle = { ent-BaseGeneratorShuttle }
-    .suffix = Uranium, 30 kW, Ship
-    .desc = { ent-BaseGeneratorShuttle.desc }
-ent-PortableGeneratorJrPacmanShuttle = { ent-BaseGeneratorShuttle }
-    .suffix = Welding Fuel, 6 kW, Ship
-    .desc = { ent-BaseGeneratorShuttle.desc }
-ent-PortableGeneratorDK = D-K-type portable generator
+ent-PortableGeneratorPacmanShuttle = { ent-PortableGeneratorPacman }
+    .suffix = Плазма, 15 кВт, Шаттл
+    .desc = { ent-PortableGeneratorPacman.desc }
+ent-PortableGeneratorSuperPacmanShuttle = { ent-PortableGeneratorSuperPacman }
+    .suffix = Уран, 30 кВт, Шаттл
+    .desc = { ent-PortableGeneratorSuperPacman.desc }
+ent-PortableGeneratorJrPacmanShuttle = { ent-PortableGeneratorJrPacman }
+    .suffix = Сварочное топливо, 6 кВт, Шаттл
+    .desc = { ent-PortableGeneratorJrPacman.desc }
+ent-PortableGeneratorDK = портативный генератор Данн-Кикко
     .desc =
-        A prototype Dunn-Kikko fission reactor. Use with caution.
-        Runs off bananium and is rated for up to 120 kW.
-        Highly radioactive without protection.
-    .suffix = Bananium, Rad+, 60 kW
-ent-PortableGeneratorDKShuttle = { ent-BaseGeneratorShuttle }
-    .suffix = Bananium, Rad+, 60 kW, Ship
-    .desc = { ent-BaseGeneratorShuttle.desc }
-ent-PortableGeneratorDKJr = D-K Jr.-type portable generator
+        Экспериментальный реактор деления конструкции Данн-Кикко. Использовать с осторожностью.
+        Работает на бананиуме. Максимальная мощность: 120 кВт. Крайне радиоактивен.
+    .suffix = Бананиум, Рад+, 60 кВт
+ent-PortableGeneratorDKShuttle = { ent-PortableGeneratorDK }
+    .suffix = Бананиум, Рад+, 60 кВт, Шаттл
+    .desc = { ent-PortableGeneratorDK.desc }
+ent-PortableGeneratorDKJr = портативный генератор Данн-Кикко младший
     .desc =
-        A miniaturized Dunn-Kikko fission reactor. Use with caution.
-        Runs off bananium and is rated for up to 100 kW.
-        Quite radioactive without protection.
-    .suffix = Bananium, Rad-, 60 kW
-ent-PortableGeneratorDKJrShuttle = { ent-BaseGeneratorShuttle }
-    .suffix = Bananium, Rad-, 60 kW, Ship
-    .desc = { ent-BaseGeneratorShuttle.desc }
+        Уменьшенная версия реактора деления Данн-Кикко. Использовать с осторожностью.
+        Работает на бананиуме. Максимальная мощность: 100 кВт. Довольно радиоактивен.
+    .suffix = Бананиум, Рад-, 60 кВт
+ent-PortableGeneratorDKJrShuttle = { ent-PortableGeneratorDKJr }
+    .suffix = Бананиум, Рад-, 60 кВт, Шаттл
+    .desc = { ent-PortableGeneratorDKJr.desc }

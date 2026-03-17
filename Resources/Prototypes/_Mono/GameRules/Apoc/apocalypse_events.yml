@@ -6,7 +6,7 @@
     children:
     - id: UnknownShuttleZenithApoc
     - id: UnknownShuttleZenithEApoc
-    - id: UnknownShuttleRazorApoc
+    - id: UnknownShuttleWyrmApoc
     - id: UnknownShuttleNebulaApoc
     - id: UnknownShuttleWyvernApoc
 
@@ -19,11 +19,16 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 7
-    maxOccurrences: 12
+    maxOccurrences: 4
   - type: GameRule
     minPlayers: 32
   - type: LoadMapRule
     preloadedGrid: AIZenith
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 2
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -34,11 +39,16 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 7
-    maxOccurrences: 6
+    maxOccurrences: 2
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
     preloadedGrid: AIZenithE
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 2
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -49,26 +59,36 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 4
-    maxOccurrences: 8
+    maxOccurrences: 4
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
     preloadedGrid: AINebula
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 2
 
 - type: entity
   parent: BaseRandomShuttleRule
-  id: UnknownShuttleRazorApoc
+  id: UnknownShuttleWyrmApoc
   components:
   - type: StationEvent
     startAnnouncement: station-event-ai-shuttle-detected
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2 # Its boring to be honest.
-    maxOccurrences: 8
+    maxOccurrences: 6
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    preloadedGrid: AIRazor
+    preloadedGrid: AIWyrm
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 2
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -79,8 +99,13 @@
     startAudio:
       path: /Audio/Misc/delta_alt.ogg
     weight: 1 # Lower since it can spawn at any time in round on apoc, and it can spawn three times max.
-    maxOccurrences: 3
+    maxOccurrences: 1
   - type: GameRule
     minPlayers: 30
   - type: LoadMapRule
     preloadedGrid: AIWyvern
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6

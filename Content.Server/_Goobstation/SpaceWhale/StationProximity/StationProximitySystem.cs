@@ -1,16 +1,16 @@
 using Content.Shared._Goobstation.CCVars;
-using Content.Server.Popups;
 using Content.Server._Goobstation.MobCaller;
-using Content.Shared.Popups;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
-using Content.Shared.Exodus.CCVar;
-using Content.Server.Station.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
+using Content.Shared.Tag;
+using Content.Server.Station.Components;
+using System.Numerics;
 
 namespace Content.Server._Goobstation.SpaceWhale.StationProximity;
 
@@ -20,11 +20,12 @@ namespace Content.Server._Goobstation.SpaceWhale.StationProximity;
 public sealed class StationProximitySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+
+    private readonly ProtoId<TagPrototype> _poiTag = "POI";
 
     private static readonly TimeSpan CheckInterval = TimeSpan.FromSeconds(60); // le hardcode major
     private TimeSpan _nextCheck = TimeSpan.Zero;
@@ -50,28 +51,47 @@ public sealed class StationProximitySystem : EntitySystem
         if (!_cfg.GetCVar(GoobCVars.SpaceWhaleSpawn))
             return;
 
-        var centralStationId = _cfg.GetCVar(XCVars.CentralStationId);
-        var centralStation = _station.GetStationById(centralStationId);
+        var stationPositions = new List<Vector2>();
+        // get station positions
+        var query = EntityQueryEnumerator<BecomesStationComponent>();
 
-        if (centralStation is not { } station)
+        while (query.MoveNext(out var uid, out _))
         {
-            Log.Warning($"Cannot find station with ID \"{centralStationId}\"; Space whales was disabled;");
-            _cfg.SetCVar(GoobCVars.SpaceWhaleSpawn, false);
-            return;
+            if (_tag.HasTag(uid, _poiTag))
+                stationPositions.Add(_transform.GetWorldPosition(uid));
         }
 
-        var stationXform = Transform(station);
+        if (stationPositions.Count < 1)
+            return;
 
+        // iterate over humanoids
         var humanoidQuery = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
         while (humanoidQuery.MoveNext(out var uid, out _, out var mobState, out var humanoidXform))
         {
-            var stationPos = _transform.GetWorldPosition(stationXform);
             var humanoidPos = _transform.GetWorldPosition(humanoidXform);
-            var vec = stationPos - humanoidPos;
 
-            var isFar = mobState.CurrentState == MobState.Alive &&
-                        stationXform.MapUid == humanoidXform.MapUid &&
-                        vec.Length() > _spawnDistance;
+            var isFar = mobState.CurrentState == MobState.Alive;
+
+            if (isFar)
+            {
+                // get closest station pos
+                var closest = stationPositions[0];
+
+                foreach (var pos in stationPositions)
+                {
+                    var prev = closest - humanoidPos;
+                    var curr = pos - humanoidPos;
+
+                    if (curr.Length() < prev.Length())
+                    {
+                        closest = pos;
+                    }
+                }
+
+                // is closest station far enough
+                var vec = closest - humanoidPos;
+                isFar = vec.Length() > _spawnDistance;
+            }
 
             if (isFar)
             {
@@ -95,13 +115,7 @@ public sealed class StationProximitySystem : EntitySystem
         if (HasComp<SpaceWhaleTargetComponent>(entity))
             return;
 
-        _popup.PopupEntity(
-            Loc.GetString("station-proximity-far-from-station"),
-            entity,
-            entity,
-            PopupType.LargeCaution);
-
-        _audio.PlayEntity(new SoundPathSpecifier("/Audio/_Goobstation/Ambience/SpaceWhale/leviathan-appear.ogg"),
+        _audio.PlayEntity(new SoundPathSpecifier("/Audio/_Exodus/Ambience/Leviathan/leviathan-appear.ogg"),
             entity,
             entity,
             AudioParams.Default.WithVolume(1f));
@@ -113,7 +127,7 @@ public sealed class StationProximitySystem : EntitySystem
 
         mobCaller.SpawnProto = _cfg.GetCVar(GoobCVars.SpaceWhalePrototype);
         mobCaller.MaxAlive = 1; // nuh uh
-        mobCaller.MinDistance = 600f; // should be far away
+        mobCaller.MinDistance = 700f; // should be far away
         mobCaller.NeedAnchored = false;
         mobCaller.NeedPower = false;
         mobCaller.SpawnSpacing = TimeSpan.FromSeconds(65); // to give the guy some time to get back to the station + prevent him from like, QSI-ing to the station to summon the worm in the station lmao, also bru these 5 seconds are really important

@@ -86,13 +86,14 @@
   - type: Implanter
     implant: MofficTranslatorImplant
 
+# Exodus
 - type: entity
-  id: ValyrianStandardTranslatorImplanter
+  id: ElDwarfTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: valyrian standard translator implant
+  name: el'dwarf translator implant
   components:
   - type: Implanter
-    implant: ValyrianStandardTranslatorImplant
+    implant: ElDwarfTranslatorImplant
 
 - type: entity
   id: AzazibaTranslatorImplanter
@@ -110,13 +111,14 @@
   - type: Implanter
     implant: ChittinTranslatorImplant
 
-- type: entity
-  id: SiikMaasTranslatorImplanter
-  parent: [ BaseTranslatorImplanter ]
-  name: siik'maas translator implant
-  components:
-  - type: Implanter
-    implant: SiikMaasTranslatorImplant
+# Exodus
+# - type: entity
+#   id: SiikMaasTranslatorImplanter
+#   parent: [ BaseTranslatorImplanter ]
+#   name: siik'maas translator implant
+#   components:
+#   - type: Implanter
+#     implant: SiikMaasTranslatorImplant
 
 - type: entity
   id: MarishTranslatorImplanter
@@ -133,3 +135,11 @@
   components:
   - type: Implanter
     implant: NovaCygniTranslatorImplant
+
+- type: entity
+  id: NewKinPidginTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: ka'rakk translator implant
+  components:
+  - type: Implanter
+    implant: NewKinPidginTranslatorImplant

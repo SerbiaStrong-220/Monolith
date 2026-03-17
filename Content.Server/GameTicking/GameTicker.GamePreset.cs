@@ -171,7 +171,7 @@ namespace Content.Server.GameTicking
             CurrentPreset = Preset;
             foreach (var rule in Preset.Rules)
             {
-                AddGameRule(rule);
+                TryAddGameRule(rule); // Exodus
             }
 
             return true;

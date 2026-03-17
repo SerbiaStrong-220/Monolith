@@ -10,12 +10,13 @@
   - MofficTranslator
   - XenoTranslator
   - AnimalTranslator
-  - ValyrianStandardTranslator
+  - ElDwarfTranslator # Exodus
   - ChittinTranslator
   - GaryTranslator # Mono
   - NovaCygniTranslator # Mono
   # - SiikMaasTranslator
   # - MarishTranslator
+  - NewKinPidginTranslator
 
 - type: latheRecipePack
   id: TranslatorImplanters
@@ -29,9 +30,10 @@
 #  - SolCommonTranslatorImplanter
   - RootSpeakTranslatorImplanter
   - MofficTranslatorImplanter
-  - ValyrianStandardTranslatorImplanter
+  - ElDwarfTranslatorImplanter # Exodus
   - ChittinTranslatorImplanter
   - GaryTranslatorImplanter # Mono
   - NovaCygniTranslatorImplanter # Mono
 #  - SiikMaasTranslatorImplanter
 #  - MarishTranslatorImplanter
+  - NewKinPidginTranslatorImplanter

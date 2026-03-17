@@ -4,6 +4,8 @@
   abstract: true
   addComponents:
   - type: ForceAnchor
+  - type: Tag # Exodus
+    tags: [ POI ]
 
 # Mono
 

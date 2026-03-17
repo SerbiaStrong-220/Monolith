@@ -239,22 +239,23 @@
     - TauCetiBasic
     setLanguageOnInteract: false
 
+# Exodus
 - type: entity
-  id: ValyrianStandardTranslator
+  id: ElDwarfTranslator
   parent: [ TranslatorPoweredBase ]
-  name: Valyrian Standard translator
-  description: Translates speech between Valyrian Standard and Tau-Ceti Basic. For talking to Harpies!
+  name: El'Dwarf Standard translator
+  description: Translates speech between El'Dwarf and Tau-Ceti Basic. For talking to Dwarves!
   components:
   - type: HandheldTranslator
     spoken:
     - TauCetiBasic
-    - ValyrianStandard
+    - ElDwarf
     understood:
     - TauCetiBasic
-    - ValyrianStandard
+    - ElDwarf
     requires:
     - TauCetiBasic
-    - ValyrianStandard
+    - ElDwarf
 
 - type: entity
   id: AzazibaTranslator
@@ -290,22 +291,23 @@
     - TauCetiBasic
     - Chittin
 
-- type: entity
-  id: SiikMaasTranslator
-  parent: [ TranslatorPoweredBase ]
-  name: Siik'maas translator
-  description: Translates speech between Siik'maas and Tau-Ceti Basic. For talking to Tajara!
-  components:
-  - type: HandheldTranslator
-    spoken:
-    - TauCetiBasic
-    - SiikMaas
-    understood:
-    - TauCetiBasic
-    - SiikMaas
-    requires:
-    - TauCetiBasic
-    - SiikMaas
+ # Exodus
+# - type: entity
+#   id: SiikMaasTranslator
+#   parent: [ TranslatorPoweredBase ]
+#   name: Siik'maas translator
+#   description: Translates speech between Siik'maas and Tau-Ceti Basic. For talking to Tajara!
+#   components:
+#   - type: HandheldTranslator
+#     spoken:
+#     - TauCetiBasic
+#     - SiikMaas
+#     understood:
+#     - TauCetiBasic
+#     - SiikMaas
+#     requires:
+#     - TauCetiBasic
+#     - SiikMaas
 
 - type: entity
   id: MarishTranslator
@@ -323,3 +325,20 @@
     requires:
     - TauCetiBasic
     - Marish
+
+- type: entity                      # taken from Floofstation
+  id: NewKinPidginTranslator
+  parent: [ TranslatorPoweredBase ]
+  name: Ka'rakk translator
+  description: Interprets speech for, colloquially, Vox Pidgin. It almost sounds... Alive, inside. Atleast it takes batteries!
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - TauCetiBasic
+    - NewKinPidgin
+    understood:
+    - TauCetiBasic
+    - NewKinPidgin
+    requires:
+    - TauCetiBasic
+    - NewKinPidgin

@@ -55,7 +55,7 @@ public partial class MapGridControl : LayoutContainer
     protected float RecenterMinimum = 0.05f;
 
     /// <summary>
-    /// UI pixel radius.
+    /// Default UI pixel radius. Used as a minimum size fallback.
     /// </summary>
     public const int UIDisplayRadius = 320;
     protected const int MinimapMargin = 4;
@@ -79,11 +79,13 @@ public partial class MapGridControl : LayoutContainer
 
     public Vector2 MaxRadarRangeVector => new Vector2(MaxRadarRange, MaxRadarRange);
 
-    protected Vector2 MidPointVector => new Vector2(MidPoint, MidPoint);
+    // Exodus-Start: updated calculations for more size flexibility
+    protected Vector2 MidPointVector => (Vector2)PixelSize / 2f;
 
-    protected int MidPoint => SizeFull / 2;
-    protected int SizeFull => (int)((UIDisplayRadius + MinimapMargin) * 2 * UIScale);
-    protected int ScaledMinimapRadius => (int)(UIDisplayRadius * UIScale);
+    protected float MidPoint => MathF.Max(0, MathF.Min(PixelSize.X, PixelSize.Y)) / 2f;
+    protected float SizeFull => MathF.Max(0, MathF.Min(PixelSize.X, PixelSize.Y));
+    protected float ScaledMinimapRadius => MathF.Max(0, MidPoint - (MinimapMargin * UIScale));
+    // Exodus-End
     protected float MinimapScale => WorldRange != 0 ? ScaledMinimapRadius / WorldRange : 0f;
 
     public event Action<float>? WorldRangeChanged;
@@ -96,9 +98,11 @@ public partial class MapGridControl : LayoutContainer
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        SetSize = new Vector2(SizeFull, SizeFull);
+        MinSize = new Vector2(UIDisplayRadius, UIDisplayRadius); // Exodus
         RectClipContent = true;
         MouseFilter = MouseFilterMode.Stop;
+        HorizontalAlignment = HAlignment.Center; // Exodus
+        VerticalAlignment = VAlignment.Center; // Exodus
         ActualRadarRange = WorldRange;
         WorldMinRange = minRange;
         WorldMaxRange = maxRange;
@@ -115,6 +119,18 @@ public partial class MapGridControl : LayoutContainer
     {
         Recentering = true;
     }
+    // Exodus-Start
+    protected override Vector2 MeasureOverride(Vector2 availableSize)
+    {
+        var size = base.MeasureOverride(availableSize);
+
+        var x = float.IsInfinity(availableSize.X) ? MathF.Max(size.X, MinSize.X) : availableSize.X;
+        var y = float.IsInfinity(availableSize.Y) ? MathF.Max(size.Y, MinSize.Y) : availableSize.Y;
+
+        var min = MathF.Min(x, y);
+        return new Vector2(min, min);
+    }
+    // Exodus-End
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
@@ -247,7 +263,7 @@ public partial class MapGridControl : LayoutContainer
         for (var i = 0; i < lineCount; i++)
         {
             var angle = Angle.FromDegrees(45 + i * 360f / lineCount);
-            var distance = Width / 2f;
+            var distance = SizeFull / 2f; // Exodus
             var start = MidPointVector + angle.RotateVec(new Vector2(0f, 2.5f * distance / 4f));
             var end = MidPointVector + angle.RotateVec(new Vector2(0f, 4f * distance / 4f));
             handle.DrawLine(start, end, greyColor);

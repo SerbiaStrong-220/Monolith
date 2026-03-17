@@ -73,7 +73,7 @@
   - type: Damageable
     damageModifierSet: Kidan
   - type: CollectiveMind
-    hearAll: true
+    hearAll: false
     seeAllNames: true
     channels:
     - Chitine

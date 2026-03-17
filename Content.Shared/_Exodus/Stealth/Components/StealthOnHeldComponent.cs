@@ -1,4 +1,6 @@
-namespace Content.Shared.Exodus.Stealth.Components;
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
+namespace Content.Shared._Exodus.Stealth.Components;
 
 [RegisterComponent]
 public sealed partial class StealthOnHeldComponent : Component

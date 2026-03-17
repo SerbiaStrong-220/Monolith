@@ -41,6 +41,7 @@
     containers:
       toggleable-clothing: !type:Container
       storagebase: !type:Container
+      item: !type:ContainerSlot {} # Exodus
   - type: StaticPrice
     price: 65
   - type: Construction

@@ -22,4 +22,12 @@ public sealed partial class MagbootsComponent : Component
     /// </summary>
     [DataField]
     public string Slot = "shoes";
+
+    // Exodus-Start
+    /// <summary>
+    /// Prefix added to sprite and icon when magboots is active
+    /// </summary>
+    [DataField]
+    public string ActivePrefix = "on";
+    // Exodus-End
 }

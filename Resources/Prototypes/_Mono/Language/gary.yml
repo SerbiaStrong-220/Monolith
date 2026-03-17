@@ -2,7 +2,7 @@
   id: Gary
   isVisibleLanguage: true
   speech:
-    color: "#005effdd"
+    color: "#9da1a2" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1

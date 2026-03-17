@@ -24,7 +24,7 @@ public sealed class SecretStartsTest
         {
             // this mimics roundflow:
             // rules added, then round starts
-            gameTicker.AddGameRule("Secret");
+            gameTicker.ForceAddGameRule("Secret"); // Exodus
             gameTicker.StartGamePresetRules();
         });
 

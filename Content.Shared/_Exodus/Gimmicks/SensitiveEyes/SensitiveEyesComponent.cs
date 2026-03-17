@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Exodus.Gimmicks.SensitiveEyes;
+namespace Content.Shared._Exodus.Gimmicks.SensitiveEyes;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SensitiveEyesComponent : Component

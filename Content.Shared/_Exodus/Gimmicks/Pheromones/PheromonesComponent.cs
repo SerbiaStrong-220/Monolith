@@ -1,6 +1,8 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Exodus.Gimmicks.Pheromones;
+namespace Content.Shared._Exodus.Gimmicks.Pheromones;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PheromonesComponent : Component

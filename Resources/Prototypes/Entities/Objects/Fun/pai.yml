@@ -86,14 +86,15 @@
     - SolCommon
     - RootSpeak
     - Moffic
-    - ValyrianStandard
+    - ElDwarf # Exodus
     - Chittin
-    - SiikMaas
+    # - SiikMaas # Exodus
     - RobotTalk
     - DroneTalk
     - Marish
     - Freespeak
     - Tradeband
+    - NewKinPidgin
     understands:
     - TauCetiBasic # Add individual languages so they can understand without understanding animals.
     - Canilunzt
@@ -103,15 +104,16 @@
     - SolCommon
     - RootSpeak
     - Moffic
-    - ValyrianStandard
+    - ElDwarf # Exodus
     - Chittin
-    - SiikMaas
+    # - SiikMaas # Exodus
     - RobotTalk
     - DroneTalk
     - Marish
     - Freespeak
     - Tradeband
     - Sign # Should know it but not speak it, for obvious reasons.
+    - NewKinPidgin
   # Einstein Engines - Language end
 
 - type: entity

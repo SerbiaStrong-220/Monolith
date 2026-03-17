@@ -1,6 +1,8 @@
-using Content.Shared.Exodus.Stealth;
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
+using Content.Shared._Exodus.Stealth;
 
-namespace Content.Shared.Exodus.Stealth.Components;
+namespace Content.Shared._Exodus.Stealth.Components;
 
 [RegisterComponent]
 public sealed partial class InstantStealthComponent : Component

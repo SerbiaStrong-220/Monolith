@@ -53,6 +53,7 @@ flavor-base-terrible = terrible
 flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 
+
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
 
@@ -64,7 +65,6 @@ flavor-complex-honey = like honey
 flavor-complex-ketchunaise = like tomatoes and mayonnaise
 flavor-complex-mayonnaise = like mayonnaise
 flavor-complex-mustard = like mustard
-
 
 # Food-specific flavors.
 

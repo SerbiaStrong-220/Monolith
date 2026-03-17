@@ -7,13 +7,13 @@ By contributing to this repository, you agree to our Contributor License Agreeme
 **Key points of the CLA:**
 
 1. **You retain copyright** to your contributions
-2. **Your contributions are licensed under MPL-2.0** (without Exhibit B)
-3. **You grant us relicensing rights** - we may relicense your contributions (including to proprietary licenses) for future versions
+2. **Your contributions are licensed under EXDS-RL** ([EXDS-RESTRICTIVE.txt](LICENSES/EXDS-RESTRICTIVE.txt))
+3. **You grant us relicensing rights** - we may relicense your contributions for future versions
 4. **The CLA may be updated** - continued contributions constitute acceptance of updated terms
 
 The full text of the CLA is available in [CLA.txt](CLA.txt). Please read it before contributing.
 
-**Important for current contributors:** Due to inherited AGPLv3 code, the project as a whole is currently distributed under AGPLv3. However, new contributions are accepted under MPL-2.0 and may be relicensed in future versions once AGPLv3 dependencies are removed.
+**Important for current contributors:** Due to inherited AGPLv3 code, the project as a whole is currently distributed under AGPLv3. However, new contributions are accepted under EXDS-RL and may be relicensed in future versions once AGPLv3 dependencies are removed.
 
 ## Copyright
 
@@ -22,10 +22,12 @@ The Authors retain all copyright to their respective work here submitted.
 ## Code License Timeline
 
 ### Current Licensing
-**New Contributions (after January 12, 2026):** Mozilla Public License 2.0 (MPL-2.0) without Exhibit B.  
-See [LICENSE-MPL.txt](LICENSES/MPL-2.0.txt).
+**New Contributions (after January 12, 2026):** Exodus Restrictive License (EXDS-RL).
+See [EXDS-RESTRICTIVE.txt](LICENSES/EXDS-RESTRICTIVE.txt).
 
-**Note:** Although new contributions are licensed under MPL-2.0, the project as a whole must currently be distributed under AGPLv3 due to inherited code. This will change in future versions.
+**Note:** Although new contributions are licensed under EXDS-RL, the project as a whole must currently be distributed under AGPLv3 due to inherited code. This will change in future versions.
+
+**Note:** The project includes upstream code from the [Monolith repository](https://github.com/Monolith-Station/Monolith), which is licensed under MPL‑2.0. When incorporating changes from Monolith (especially those made after January 12, 2026), please obtain them directly from the original repository to ensure compliance with its license terms and to avoid confusion with the EXDS‑RL licensing of new contributions in this project.
 
 Most assets are licensed under [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) unless stated otherwise. Assets have their license and the copyright in the metadata file. [Example](https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json).
 
@@ -33,17 +35,22 @@ Note that some assets are licensed under the non-commercial [CC-BY-NC-SA 3.0](ht
 
 ### Historical Licensing
 
-**New Frontiers 14 Era (July 1, 2024 - January 11, 2026):**  
-Content contributed between commit `2fca06eaba205ae6fe3aceb8ae2a0594f0effee0` and `04d8ce483f638320d1b85a7aaacdf01442757363` is licensed under GNU Affero General Public License version 3.0, unless otherwise stated.  
+**Monolith Era (September 2, 2025 -  January 12, 2026):**
+Content contributed between commit `04d8ce483f638320d1b85a7aaacdf01442757363` and `fad16fd8f9c7123c312cb8a2f9ea808ad1007c5d` is licensed under Mozilla Public License 2.0 (MPL-2.0) without Exhibit B, unless otherwise stated.
+See [LICENSE-MPL.txt](LICENSES/MPL-2.0.txt).
+
+**New Frontiers 14 Era (July 1, 2024 - September 2, 2025):**
+Content contributed between commit `2fca06eaba205ae6fe3aceb8ae2a0594f0effee0` and `04d8ce483f638320d1b85a7aaacdf01442757363` is licensed under GNU Affero General Public License version 3.0, unless otherwise stated.
 See [LICENSE-AGPLv3.txt](LICENSES/AGPL-3.0-or-later.txt).
 
-**Space Station 14 Era (before July 1, 2024):**  
-Content contributed before commit `2fca06eaba205ae6fe3aceb8ae2a0594f0effee0` is licensed under the MIT license, unless otherwise stated.  
+**Space Station 14 Era (before July 1, 2024):**
+Content contributed before commit `2fca06eaba205ae6fe3aceb8ae2a0594f0effee0` is licensed under the MIT license, unless otherwise stated.
 See [LICENSE-MIT.txt](LICENSES/MIT.txt).
 
 ### Transition Commit References
 - [2fca06eaba205ae6fe3aceb8ae2a0594f0effee0](https://github.com/new-frontiers-14/frontier-station-14/commit/2fca06eaba205ae6fe3aceb8ae2a0594f0effee0) - July 1, 2024, 16:04 UTC (MIT → AGPLv3 transition)
-- [04d8ce483f638320d1b85a7aaacdf01442757363](https://github.com/space-exodus/Monolith/commit/04d8ce483f638320d1b85a7aaacdf01442757363) - January 12, 2026 (AGPLv3 → MPL-2.0 with CLA)
+- [04d8ce483f638320d1b85a7aaacdf01442757363](https://github.com/Monolith-Station/Monolith/commit/04d8ce483f638320d1b85a7aaacdf01442757363) - September 2, 2025 (AGPLv3 → MPL-2.0 transition)
+- [fad16fd8f9c7123c312cb8a2f9ea808ad1007c5d](https://github.com/space-exodus/Monolith/commit/fad16fd8f9c7123c312cb8a2f9ea808ad1007c5d) - January 12, 2026 (MPL-2.0 → EXDS-RL transition)
 
 ## Distribution Requirements
 
@@ -54,10 +61,12 @@ All distributed versions must include:
 3. Notice that the project contains AGPLv3 code
 
 ### Future Releases (after AGPLv3 removal)
-May be distributed under:
-1. MPL-2.0 (Community Edition)
-2. Proprietary licenses (Commercial Edition)
+Once all AGPL‑licensed code has been removed, future versions of the project may be distributed under multiple licensing schemes, including:
+1. MPL-2.0 (or another open source license)
+2. EXDS-RL (or other proprietary terms)
 3. Dual licensing models
+
+The exact terms will be specified in each release.
 
 ## Warranty Disclaimer
 

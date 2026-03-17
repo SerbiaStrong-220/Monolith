@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Celadon13 at https://github.com/CeladonSS13/Shiptest/blob/7bc2f72028772418ea610657b60092d0fc3a0420/icons/mob/lavaland/lavaland_monsters.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "basilisk",
+      "directions": 4
+    },
+    {
+      "name": "basilisk_dead"
+    }
+  ]
+}

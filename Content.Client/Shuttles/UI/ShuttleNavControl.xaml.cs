@@ -52,6 +52,17 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
     private Dictionary<NetEntity, List<DockingPortState>> _docks = new();
 
+    // temporary buffers to avoid per-frame heap churn
+    private readonly List<BlipData> _tempBlipDataList = new();
+    private readonly HashSet<EntityUid> _visibleGridsSet = new();
+    private static readonly Vector2[] RadarPosVertsCache =
+    [
+        new Vector2(0f, -2f),
+        new Vector2(1f, 0f),
+        new Vector2(0f, 2f),
+        new Vector2(-1f, 0f),
+    ];
+
     public bool ShowIFF { get; set; } = true;
     public bool ShowIFFShuttles { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
@@ -318,6 +329,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var shuttleToWorld = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
         Matrix3x2.Invert(shuttleToWorld, out var worldToShuttle);
         var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
+        var worldToView = worldToShuttle * shuttleToView;
 
         // Draw shields
         DrawShields(handle, xform, worldToShuttle);
@@ -341,14 +353,12 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         // Draw radar position on the station
-        const float radarVertRadius = 2f;
-        var radarPosVerts = new Vector2[]
+        // Mono - use precalculated verts and scale each point rather than allocating a fresh array
+        var radarPosVerts = new Vector2[RadarPosVertsCache.Length];
+        for (var i = 0; i < radarPosVerts.Length; i++)
         {
-            ScalePosition(new Vector2(0f, -radarVertRadius)),
-            ScalePosition(new Vector2(radarVertRadius / 2f, 0f)),
-            ScalePosition(new Vector2(0f, radarVertRadius)),
-            ScalePosition(new Vector2(radarVertRadius / -2f, 0f)),
-        };
+            radarPosVerts[i] = ScalePosition(RadarPosVertsCache[i]);
+        }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, radarPosVerts, Color.Lime);
 
@@ -358,8 +368,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _grids.Clear();
         _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
-        // Frontier - collect blip location data outside foreach - more changes ahead
-        var blipDataList = new List<BlipData>();
+        // Mono edited: Frontier - collect blip location data outside foreach - more changes ahead
+        _tempBlipDataList.Clear();
+
+        _visibleGridsSet.Clear();
 
         // Draw other grids... differently
         foreach (var grid in _grids)
@@ -382,8 +394,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (!detected)
                 continue;
 
+            if (!blipOnly)
+                _visibleGridsSet.Add(grid);
             var curGridToWorld = _transform.GetWorldMatrix(gUid);
-            var curGridToView = curGridToWorld * worldToShuttle * shuttleToView;
+            var curGridToView = curGridToWorld * worldToView;
 
             var hideColor = hideLabel && iff != null && (iff.Flags & IFFFlags.AlwaysShowColor) == 0x0;
             var labelColor = hideColor ? blipOnly ? Color.Orange : Color.White : _shuttles.GetIFFColor(grid, self: false, iff);
@@ -397,7 +411,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             var labelName = noLabel ? null : hideLabel ?
                 detectionLevel == DetectionLevel.PartialDetected ?
                     Loc.GetString($"shuttle-console-signature-infrared")
-                    : Loc.GetString($"shuttle-console-signature-unknown")
+                    : _detection.HandleUnknownMassLabel(grid.Owner)
                 : _shuttles.GetIFFLabel(grid, self: false, component: iff);
 
             var shouldDrawIFF = ShowIFF && labelName != null;
@@ -438,6 +452,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 var uiXOffset = uiPosition.X - uiXCentre;
                 var uiYOffset = uiPosition.Y - uiYCentre;
                 var uiDistance = (int)Math.Sqrt(Math.Pow(uiXOffset, 2) + Math.Pow(uiYOffset, 2));
+                if (uiDistance == 0)
+                    uiDistance = 1;
                 var uiX = uiXCentre * uiXOffset / uiDistance;
                 var uiY = uiYCentre * uiYOffset / uiDistance;
 
@@ -557,12 +573,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     }
                 }
 
-                NfAddBlipToList(blipDataList, isOutsideRadarCircle, uiPosition, uiXCentre, uiYCentre, labelColor, hideLabel ? default : gUid); // Frontier code
+                NfAddBlipToList(_tempBlipDataList, isOutsideRadarCircle, uiPosition, uiXCentre, uiYCentre, labelColor, hideLabel ? default : gUid); // Frontier code
                 // End Frontier: IFF drawing functions
             }
-
-            // Frontier Don't skip drawing blips if they're out of range.
-            NfDrawBlips(handle, blipDataList);
 
             // Detailed view
             var gridAABB = curGridToWorld.TransformBox(grid.Comp.LocalAABB);
@@ -579,6 +592,85 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             }
         }
 
+        // Frontier: draw target
+        if (!HideTarget && Target is { } target)
+        {
+            var targetEntity = EntManager.GetEntity(TargetEntity);
+
+            string targetName;
+            if (targetEntity != EntityUid.Invalid && EntManager.TryGetComponent<MetaDataComponent>(targetEntity, out var targetMeta))
+                targetName = targetMeta.EntityName;
+            else
+                targetName = Loc.GetString("shuttle-console-target-name");
+
+            var curGridToView = Matrix3Helpers.CreateTranslation(target) * worldToShuttle * shuttleToView;
+
+            var labelColor = Color.FromHex("#99ff66");
+            var coordColor = new Color(labelColor.R * 0.8f, labelColor.G * 0.8f, labelColor.B * 0.8f, 0.5f);
+
+            var uiPosition = Vector2.Transform(Vector2.Zero, curGridToView) / UIScale;
+
+            var uiXCentre = (int) Width / 2;
+            var uiYCentre = (int) Height / 2;
+            var uiXOffset = uiPosition.X - uiXCentre;
+            var uiYOffset = uiPosition.Y - uiYCentre;
+            var uiDistance = (int) Math.Sqrt(Math.Pow(uiXOffset, 2) + Math.Pow(uiYOffset, 2));
+            if (uiDistance == 0)
+                uiDistance = 1;
+            var uiX = uiXCentre * uiXOffset / uiDistance;
+            var uiY = uiYCentre * uiYOffset / uiDistance;
+
+            var isOutsideRadarCircle = uiDistance > Math.Abs(uiX) && uiDistance > Math.Abs(uiY);
+            if (isOutsideRadarCircle)
+            {
+                uiX = uiXCentre * uiXOffset / uiDistance * 0.95f;
+                uiY = uiYCentre * uiYOffset / uiDistance * 0.95f;
+                uiPosition = new Vector2(
+                    x: uiX + uiXCentre,
+                    y: uiY + uiYCentre
+                );
+            }
+
+            var scaledMousePosition = GetMouseCoordinatesFromCenter().Position * UIScale;
+            var isMouseOver = Vector2.Distance(scaledMousePosition, uiPosition * UIScale) < 30f;
+
+            var distance = Vector2.Distance(target, mapPos.Position);
+            var displayedDistance = distance < 50f ? $"{distance:0.0}" : distance < 1000 ? $"{distance:0}" : $"{distance / 1000:0.0}k";
+            var labelText = Loc.GetString("shuttle-console-iff-label", ("name", targetName)!, ("distance", displayedDistance));
+
+            var coordsText = $"({target.X:0.0}, {target.Y:0.0})";
+
+            var labelDimensions = handle.GetDimensions(Font, labelText, 0.9f);
+            var blipSize = RadarBlipSize * 0.7f;
+            var labelOffset = new Vector2()
+            {
+                X = uiPosition.X > Width / 2f
+                    ? -labelDimensions.X - blipSize
+                    : blipSize,
+                Y = -labelDimensions.Y / 2f
+            };
+
+            handle.DrawString(Font, (uiPosition + labelOffset) * UIScale, labelText, UIScale * 0.9f, labelColor);
+            if (isMouseOver && !HideCoords)
+            {
+                var coordDimensions = handle.GetDimensions(Font, coordsText, 0.7f);
+                var coordOffset = new Vector2()
+                {
+                    X = uiPosition.X > Width / 2f
+                        ? -coordDimensions.X - blipSize / 0.7f
+                        : blipSize,
+                    Y = coordDimensions.Y / 2
+                };
+                handle.DrawString(Font, (uiPosition + coordOffset) * UIScale, coordsText, 0.7f * UIScale, coordColor);
+            }
+
+            NfAddBlipToList(_tempBlipDataList, isOutsideRadarCircle, uiPosition, uiXCentre, uiYCentre, labelColor); // Frontier code
+        }
+
+        // Draw all blips on the map at this point.
+        NfDrawBlips(handle, _tempBlipDataList);
+        // End Frontier: draw target
+
         // If we've set the controlling console, and it's on a different grid
         // to the shuttle itself, then draw an additional marker to help the
         // player determine where they are relative to the shuttle.
@@ -587,7 +679,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (consoleXform.ParentUid != _coordinates.Value.EntityId)
             {
                 var consolePositionWorld = _transform.GetWorldPosition((EntityUid)_consoleEntity);
-                var p = Vector2.Transform(consolePositionWorld, worldToShuttle * shuttleToView);
+                var p = Vector2.Transform(consolePositionWorld, worldToView);
                 handle.DrawCircle(p, 5, Color.ToSrgb(Color.Cyan), true);
             }
         }
@@ -610,12 +702,25 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Draw blips using the same grid-relative transformation approach as docks
         foreach (var blip in rawBlips)
         {
-            var blipPosInView = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToShuttle * shuttleToView);
+            var position = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToView);
+            var color = blip.Config.Color.WithAlpha(0.8f);
+            var box = new Box2Rotated(blip.Config.Bounds, 0);
+            if (blip.Config.RespectZoom)
+                box.Box = new Box2(box.Box.BottomLeft * MinimapScale, box.Box.TopRight * MinimapScale);
+            if (blip.Config.Rotate)
+                box.Rotation = ourEntRot - blip.Rotation;
+
+            if (blip.GridUid is { } grid)
+            {
+                // check detection if we're on a grid and that grid isn't our grid
+                if (!_visibleGridsSet.Contains(grid) && grid != ourGridId)
+                    continue;
+            }
 
             // Check if this blip is within view bounds before drawing
-            if (monoViewBounds.Contains(blipPosInView))
+            if (monoViewBounds.Contains(position))
             {
-                DrawBlipShape(handle, blipPosInView, blip.Scale * 3f, blip.Color.WithAlpha(0.8f), blip.Shape);
+                DrawBlipShape(handle, position, box, color, blip.Config.Shape);
             }
         }
 
@@ -623,8 +728,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var hitscanLines = _blips.GetHitscanLines();
         foreach (var line in hitscanLines)
         {
-            var startPosInView = Vector2.Transform(line.Start, worldToShuttle * shuttleToView);
-            var endPosInView = Vector2.Transform(line.End, worldToShuttle * shuttleToView);
+            var startPosInView = Vector2.Transform(line.Start, worldToView);
+            var endPosInView = Vector2.Transform(line.End, worldToView);
 
             // Only draw lines if at least one endpoint is within view
             if (monoViewBounds.Contains(startPosInView) || monoViewBounds.Contains(endPosInView))
@@ -686,96 +791,126 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         return _consoleEntity == null ? DetectionLevel.Undetected : _detection.IsGridDetected(grid, _consoleEntity.Value);
     }
 
-    private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, float size, Color color, RadarBlipShape shape)
+    private (Vector2 Top, Vector2 Left, Vector2 Offset) GetSize(Box2Rotated bounds)
+    {
+        var top = (bounds.TopLeft + bounds.TopRight) * 0.5f;
+        var left = (bounds.TopLeft + bounds.BottomLeft) * 0.5f;
+        var offset = (bounds.TopRight + bounds.BottomLeft) * 0.5f;
+
+        return (top - offset, left - offset, offset);
+    }
+
+    private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color, RadarBlipShape shape)
     {
         switch (shape)
         {
             case RadarBlipShape.Circle:
-                handle.DrawCircle(position, size, color);
+                DrawCircle(handle, position, bounds, color);
                 break;
             case RadarBlipShape.Square:
-                var halfSize = size / 2;
-                var rect = new UIBox2(
-                    position.X - halfSize,
-                    position.Y - halfSize,
-                    position.X + halfSize,
-                    position.Y + halfSize
-                );
-                handle.DrawRect(rect, color);
+                var boxPoints = new Vector2[]
+                {
+                    position + bounds.TopLeft,
+                    position + bounds.TopRight,
+                    position + bounds.BottomRight,
+                    position + bounds.BottomLeft
+                };
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, boxPoints, color);
                 break;
             case RadarBlipShape.Triangle:
                 var points = new Vector2[]
                 {
-                    position + new Vector2(0, -size),
-                    position + new Vector2(-size * 0.866f, size * 0.5f),
-                    position + new Vector2(size * 0.866f, size * 0.5f)
+                    position + bounds.Origin + bounds.Rotation.RotateVec((bounds.TopLeft + bounds.TopRight) * 0.5f - bounds.Origin),
+                    position + bounds.BottomLeft,
+                    position + bounds.BottomRight
                 };
                 handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, points, color);
                 break;
             case RadarBlipShape.Star:
-                DrawStar(handle, position, size, color);
+                DrawStar(handle, position, bounds, color);
                 break;
             case RadarBlipShape.Diamond:
+                var size = GetSize(bounds);
                 var diamondPoints = new Vector2[]
                 {
-                    position + new Vector2(0, -size),
-                    position + new Vector2(size, 0),
-                    position + new Vector2(0, size),
-                    position + new Vector2(-size, 0)
+                    position + size.Offset + size.Top,
+                    position + size.Offset + size.Left,
+                    position + size.Offset - size.Top,
+                    position + size.Offset - size.Left
                 };
                 handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, diamondPoints, color);
                 break;
             case RadarBlipShape.Hexagon:
-                DrawHexagon(handle, position, size, color);
+                DrawHexagon(handle, position, bounds, color);
                 break;
             case RadarBlipShape.Arrow:
-                DrawArrow(handle, position, size, color);
+                DrawArrow(handle, position, bounds, color);
                 break;
         }
     }
 
-    private void DrawStar(DrawingHandleScreen handle, Vector2 position, float size, Color color)
+    private void DrawCircle(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
+    {
+        const int segments = 64;
+        var buffer = new Vector2[segments + 1];
+        var size = GetSize(bounds);
+        var offsetPos = position + size.Offset;
+
+        for (var i = 0; i <= segments; i++)
+        {
+            var angle = i * MathF.Tau / segments;
+            var pos = size.Left * MathF.Sin(angle) + size.Top * MathF.Cos(angle);
+
+            buffer[i] = offsetPos + pos;
+        }
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, buffer, color);
+    }
+
+    private void DrawStar(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {
         const int points = 5;
         const float innerRatio = 0.4f;
         var vertices = new Vector2[points * 2];
+        var size = GetSize(bounds);
+        var offsetPos = position + size.Offset;
 
         for (var i = 0; i < points * 2; i++)
         {
-            var angle = i * Math.PI / points;
-            var radius = i % 2 == 0 ? size : size * innerRatio;
-            vertices[i] = position + new Vector2(
-                (float)Math.Sin(angle) * radius,
-                -(float)Math.Cos(angle) * radius
-            );
+            var angle = i * MathF.PI / points;
+            var radius = i % 2 == 0 ? 1f : innerRatio;
+            vertices[i] = offsetPos + radius * MathF.Sin(angle) * size.Left - radius * MathF.Cos(angle) * size.Top;
         }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, vertices, color);
     }
 
-    private void DrawHexagon(DrawingHandleScreen handle, Vector2 position, float size, Color color)
+    private void DrawHexagon(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {
         var vertices = new Vector2[6];
+        var size = GetSize(bounds);
+        var offsetPos = position + size.Offset;
+
         for (var i = 0; i < 6; i++)
         {
-            var angle = i * Math.PI / 3;
-            vertices[i] = position + new Vector2(
-                (float)Math.Sin(angle) * size,
-                -(float)Math.Cos(angle) * size
-            );
+            var angle = i * MathF.PI / 3;
+            vertices[i] = offsetPos + MathF.Sin(angle) * size.Top - MathF.Cos(angle) * size.Left;
         }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, vertices, color);
     }
 
-    private void DrawArrow(DrawingHandleScreen handle, Vector2 position, float size, Color color)
+    private void DrawArrow(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {
+        var size = GetSize(bounds);
+        var offsetPos = position + size.Offset;
+
         var vertices = new Vector2[]
         {
-            position + new Vector2(0, -size),           // Tip
-            position + new Vector2(-size * 0.5f, 0),    // Left wing
-            position + new Vector2(0, size * 0.5f),     // Bottom
-            position + new Vector2(size * 0.5f, 0)      // Right wing
+            offsetPos - size.Top,                    // Tip
+            offsetPos + size.Left + size.Top * 0.5f, // Left wing
+            offsetPos + size.Top,                    // Bottom
+            offsetPos - size.Left + size.Top * 0.5f  // Right wing
         };
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, vertices, color);

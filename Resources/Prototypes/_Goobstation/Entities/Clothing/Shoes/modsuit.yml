@@ -35,12 +35,12 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
-
 - type: entity
   parent: ClothingShoesBase
   id: ClothingModsuitBootsSecurity
@@ -78,11 +78,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
   - type: ClothingSlowOnDamageModifier # Mono
     modifier: 0.75
 
@@ -123,11 +126,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
   - type: ClothingSlowOnDamageModifier # Mono
     modifier: 0.75
 
@@ -168,12 +174,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
-
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
 - type: entity
   parent: ClothingShoesBase
   id: ClothingModsuitBootsEngineer
@@ -211,11 +219,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
 
 - type: entity
   parent: ClothingShoesBase
@@ -254,11 +265,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
 
 - type: entity
   parent: ClothingShoesBase
@@ -297,12 +311,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
-
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
 - type: entity
   parent: ClothingShoesBase
   id: ClothingModsuitBootsCaptain
@@ -340,11 +356,14 @@
     components:
     - type: NoSlip
   - type: Magboots
+    activePrefix: "" # Exodus | empty prefix cuz no on/off versions exists
   - type: SealableClothingVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
+      shoes-vox:
+      - state: equipped-FEET-sealed-vox
   - type: ClothingSlowOnDamageModifier # Mono
     modifier: 0.75
 

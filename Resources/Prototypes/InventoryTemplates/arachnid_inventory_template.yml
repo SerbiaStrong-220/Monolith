@@ -69,7 +69,7 @@
       stripTime: 3
       uiWindowPos: 2,4
       strippingWindowPos: 2,3
-      displayName: Pocket 4
+      displayName: inventory-slot-pocket-4 # Ru-Localization
     - name: pocket3
       slotTexture: web
       fullTextureName: template_small
@@ -78,7 +78,7 @@
       stripTime: 3
       uiWindowPos: 0,4
       strippingWindowPos: 0,3
-      displayName: Pocket 3
+      displayName: inventory-slot-pocket-3 # Ru-Localization
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
@@ -153,10 +153,10 @@
       slotTexture: wallet
       slotFlags: WALLET
       stripTime: 6
-      uiWindowPos: 3,1
+      uiWindowPos: 1,0 # Exodus-Position-Fix
       strippingWindowPos: 3,5
       dependsOn: jumpsuit
-      displayName: inventory-slot-wallet# Ru-Localization
+      displayName: inventory-slot-wallet # Ru-Localization
     # End Frontier: wallet slot
     #Mono slots
     - name: balaclava
@@ -172,7 +172,7 @@
       stripTime: 6
       uiWindowPos: 2,2
       strippingWindowPos: 3,1
-      displayName: inventory-slot-armband-left  # Ru-Localization
+      displayName: inventory-slot-armband-left # Ru-Localization
     - name: rightarmband
       slotTexture: armband_right
       slotFlags: ARMBANDRIGHT

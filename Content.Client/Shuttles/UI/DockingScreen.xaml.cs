@@ -376,7 +376,7 @@ public sealed partial class DockingScreen : BoxContainer
             idx++;
             dockText.Clear();
 
-            dockText.Append(dock.LabelName ?? Loc.GetString("shuttle-console-dock-label", ("idx", idx + 1))); // Ru-Localization
+            dockText.Append(dock.LabelName ?? Loc.GetString("shuttle-console-dock-label", ("idx", idx))); // Ru-Localization
 
             // Create a BoxContainer to hold button text and lock indicator
             var buttonContainer = new BoxContainer

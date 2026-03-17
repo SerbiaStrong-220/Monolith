@@ -1,6 +1,6 @@
 - type: entity
   id: OrganKidanVertebralVessel
-  parent: BaseAnimalOrgan
+  parent: OrganAnimalHeart
   name: kidan vertebral vessel
   categories: [ HideSpawnMenu ]
   components:
@@ -14,10 +14,16 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+    - id: Cryogenic
   - type: Item
     size: Small
     heldPrefix: heart
   - type: Heart
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
 
 - type: entity
   id: OrganKidanStomach
@@ -89,6 +95,11 @@
   - type: Organ
     slotId: liver
   - type: Liver
+  - type: Tag
+    tags:
+    - Meat
+    - Organ
+    - Liver
 
 - type: entity
   id: OrganKidanPheromoneGlands
@@ -132,7 +143,7 @@
 
 - type: entity
   id: OrganKidanBrain
-  parent: BaseAnimalOrgan
+  parent: BaseAnimalOrganUnGibbable
   name: kidan brain
   categories: [ HideSpawnMenu ]
   components:
@@ -142,3 +153,24 @@
   - type: Organ
     slotId: kidanbrain
   - type: KidanBrain
+  - type: MindContainer
+    showExamineInfo: true
+  - type: Speech
+    enabled: false
+  - type: TypingIndicator
+    proto: empty
+  - type: Emoting
+    enabled: false
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag
+    tags:
+    - Meat
+  - type: Input
+    context: "ghost"
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain

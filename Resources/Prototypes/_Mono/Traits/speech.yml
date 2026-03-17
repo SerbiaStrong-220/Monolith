@@ -13,18 +13,19 @@
 
 # 1 Cost - Languages
 
-- type: trait
-  id: MonoNekomimetic
-  name: trait-language-nekomimetic-name
-  description: trait-language-nekomimetic-desc
-  category: LanguageTraits
-  cost: 1
-  components:
-  - type: LanguageSpeaker
-  languagesSpoken:
-  - Nekomimetic
-  languagesUnderstood:
-  - Nekomimetic
+# Exodus
+# - type: trait
+#   id: MonoNekomimetic
+#   name: trait-language-nekomimetic-name
+#   description: trait-language-nekomimetic-desc
+#   category: LanguageTraits
+#   cost: 1
+#   components:
+#   - type: LanguageSpeaker
+#   languagesSpoken:
+#   - Nekomimetic
+#   languagesUnderstood:
+#   - Nekomimetic
 
 - type: trait
   id: MonoElyran

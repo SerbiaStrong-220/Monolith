@@ -1,9 +1,11 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using Content.Shared.Actions;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Exodus.Gimmicks.MineralResonance;
+namespace Content.Shared._Exodus.Gimmicks.MineralResonance;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class MineralResonanceComponent : Component

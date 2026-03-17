@@ -1,10 +1,11 @@
-// (c) Space Exodus Team - MPL-2.0 with CLA
+// (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
 using Content.Shared.Damage;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.Exodus.Tailed;
+namespace Content.Shared._Exodus.Tailed;
 
 /// <summary>
 /// This system connects all segments of tailed entity.
@@ -49,8 +50,13 @@ public sealed partial class TailedEntitySystem : EntitySystem
     private void OnComponentShutdown(EntityUid uid, TailedEntityComponent component, ComponentShutdown args)
     {
         foreach (var segment in component.TailSegments)
-            QueueDel(segment);
-
+        {
+            if (!TerminatingOrDeleted(segment) && !EntityManager.IsQueuedForDeletion(segment))
+            {
+                _joint.ClearJoints(segment);
+                QueueDel(segment);
+            }
+        }
         component.TailSegments.Clear();
     }
 
@@ -60,6 +66,10 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
         var mapUid = xform.MapUid;
         if (mapUid == null)
+            return;
+
+        // Ensure the head entity has physics for joints
+        if (!HasComp<PhysicsComponent>(uid))
             return;
 
         var headPos = _transform.GetWorldPosition(xform);
@@ -86,6 +96,10 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
         foreach (var segment in comp.TailSegments)
         {
+            // Ensure segment has physics before creating joint
+            if (!HasComp<PhysicsComponent>(segment))
+                continue;
+
             var joint = _joint.CreateDistanceJoint(
                 bodyA: prev,
                 bodyB: segment,

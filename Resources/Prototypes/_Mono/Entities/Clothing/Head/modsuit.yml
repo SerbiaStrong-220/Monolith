@@ -24,6 +24,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -31,6 +33,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -111,6 +114,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -119,6 +124,7 @@
         Piercing: 0.95
         Heat: 0.95
         Radiation: 0.8
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -202,6 +208,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -218,6 +226,7 @@
   - type: NightVision
     flashDurationMultiplier: 3.5
     isEquipment: true
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -302,6 +311,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -310,6 +321,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask
@@ -370,7 +382,7 @@
   parent: BaseClothingModsuitHelmet
   id: ClothingModsuitHelmetMercenary
   name: mercenary modsuit helmet
-  description: The visor is sky blue, so your enemies don't realize you haven't put them on their backs yet.
+  description: The visor is sky blue, so your enemies don't realize you haven't put them on their backs yet. Comes with a built in Mass Scanner in its HUD.
   categories: [ HideSpawnMenu ]
   components:
   - type: Appearance
@@ -384,6 +396,18 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: RadarConsole
+    followEntity: true
+  - type: DetectionRangeMultiplier
+    infraredMultiplier: 0.5
+    visualMultiplier: 0.75
+  - type: ActivatableUI
+    key: enum.RadarConsoleUiKey.Key
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
   - type: SealableClothing
     sealUpPopup: sealable-clothing-seal-up-helmet
     sealDownPopup: sealable-clothing-seal-down-helmet
@@ -392,6 +416,8 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
   - type: Armor
     modifiers:
       coefficients:
@@ -400,6 +426,7 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.5
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: BreathMask

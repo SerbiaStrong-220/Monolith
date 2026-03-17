@@ -13,7 +13,7 @@
   id: RobotTalk
   isVisibleLanguage: true
   speech:
-    fontId: Monospace
+    fontId: Pixelizer # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -27,7 +27,7 @@
   id: DroneTalk
   isVisibleLanguage: true
   speech:
-    fontId: Monospace
+    fontId: Pixelizer # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -296,7 +296,7 @@
   speech:
     allowRadio: false
     requireSpeech: false
-    color: "#dddddd"
+    color: "#929ef8" # Exodus
     messageWrapOverrides:
       Speak: chat-sign-language-message-wrap
       Whisper: chat-sign-language-whisper-wrap

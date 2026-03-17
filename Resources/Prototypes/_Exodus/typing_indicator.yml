@@ -1,6 +1,6 @@
 - type: typingIndicator
   id: kidan
   typingState: kidans0
-  # idleState: kidans3
+  idleState: kidans3
   offset: 0, 0.125
   spritePath: /Textures/_Exodus/Effects/speech.rsi

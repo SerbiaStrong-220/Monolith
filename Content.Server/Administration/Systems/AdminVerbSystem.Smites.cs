@@ -13,7 +13,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
-using Content.Server.Exodus.Speech.Components; // Exodus-Accent-Add
+using Content.Server._Exodus.Speech.Components; // Exodus-Accent-Add
 using Content.Server.Speech.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;

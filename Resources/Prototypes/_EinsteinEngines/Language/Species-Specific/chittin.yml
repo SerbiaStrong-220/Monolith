@@ -1,10 +1,10 @@
-# Spoken by Chitinids.
+# Spoken by Arachnids.
 - type: language
   id: Chittin
   isVisibleLanguage: true
   speech:
-    color: "#7d7d7d"
-#    fontId: Only_You # TODO: If we use fonts, this needs to be changed because this underscore breaks parser and throws error.
+    color: "#e4273c" # Exodus
+    fontId: "Propaniac" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1 # Replacements are really short

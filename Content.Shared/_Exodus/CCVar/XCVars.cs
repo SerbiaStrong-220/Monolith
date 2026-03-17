@@ -1,8 +1,8 @@
-// (c) Space Exodus Team - MPL-2.0 with CLA
+// (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.Exodus.CCVar;
+namespace Content.Shared._Exodus.CCVar;
 
 [CVarDefs]
 public sealed partial class XCVars

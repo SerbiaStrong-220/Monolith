@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Lokilife
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Actions;
 using Content.Server.EUI;
@@ -5,13 +7,13 @@ using Content.Server.Forensics;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Shared.Examine;
-using Content.Shared.Exodus.Gimmicks.Bioluminescence;
-using Content.Shared.Exodus.Gimmicks.Pheromones;
+using Content.Shared._Exodus.Gimmicks.Bioluminescence;
+using Content.Shared._Exodus.Gimmicks.Pheromones;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Exodus.Gimmicks.Pheromones;
+namespace Content.Server._Exodus.Gimmicks.Pheromones;
 
 public sealed partial class PheromonesSystem : SharedPheromonesSystem
 {

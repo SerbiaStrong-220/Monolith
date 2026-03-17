@@ -38,7 +38,7 @@
       steps:
       - tag: Multitool
         icon:
-          sprite: _NF/Objects/Tools/multitool.rsi # Frontier: separate sprites (add _NF folder)
+          sprite: Objects/Tools/multitool.rsi # Exodus-Resprite-Delete
           state: icon
         name: a multitool
       - material: Cable

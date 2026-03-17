@@ -21,3 +21,11 @@ shuttle-console-device-button-5 = Порт 5
 shuttle-console-device-button-6 = Порт 6
 shuttle-console-device-button-7 = Порт 7
 shuttle-console-device-button-8 = Порт 8
+
+shuttle-console-target = Метка радара
+shuttle-console-set-target = Цель
+shuttle-console-set-target-description = Устанавливает целевые координаты.
+shuttle-console-hide-target = Показ
+shuttle-console-hide-target-description = Переключает видимость целевой точки на радаре.
+shuttle-console-target-name = Цель
+shuttle-console-map-track = ⌖

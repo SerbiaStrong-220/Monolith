@@ -1,6 +1,3 @@
-# (c) Space Exodus Team - MPL-2.0 with CLA
-# Authors: Lokilife
-
 - type: entity
   id: SpaceLeviathan
   parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]

@@ -1,4 +1,4 @@
-# Mono - modsuit overhaul - see #2755 
+# Mono - modsuit overhaul - see #2755
 
 - type: entity
   parent: [ ClothingOuterBase, GeigerCounterClothing ] # Mono - add geiger
@@ -21,7 +21,7 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
   - type: ClothingSpeedModifier
-    walkModifier: 1 
+    walkModifier: 1
     sprintModifier: 1
   - type: SealableClothing
     sealUpPopup: sealable-clothing-seal-up-chestplate
@@ -43,6 +43,7 @@
         Piercing: 0.85
         Heat: 0.85
         Radiation: 0.6
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -87,6 +88,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: StaminaDamageResistance
@@ -99,6 +102,7 @@
         Piercing: 0.45
         Heat: 0.6
         Radiation: 0.6
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -144,6 +148,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox     
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: StaminaDamageResistance
@@ -157,6 +163,7 @@
         Heat: 0.45
         Caustic: 0.5
         Radiation: 0.4
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -201,6 +208,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox     
   - type: ExplosionResistance
     damageCoefficient: 1
   - type: Armor
@@ -213,6 +222,7 @@
         Caustic: 0.6
         Radiation: 0.6
         Poison: 0.6
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -259,6 +269,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox     
   - type: ExplosionResistance
     damageCoefficient: 0.25 # Mono
   - type: Armor
@@ -271,6 +283,7 @@
         Shock: 0.4 # Mono
         Caustic: 0.4 # Mono
         Radiation: 0 # Mono
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -317,6 +330,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox     
   - type: ExplosionResistance
     damageCoefficient: 0.6
   - type: Armor
@@ -327,6 +342,7 @@
         Piercing: 0.85
         Heat: 0.2
         Radiation: 0.3
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -373,6 +389,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox     
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: Armor
@@ -385,6 +403,7 @@
         Shock: 0.8
         Caustic: 0.5
         Radiation: 0.1
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -431,6 +450,8 @@
       - state: equipped-OUTERCLOTHING-sealed
       outerClothing-resomi:
       - state: equipped-OUTERCLOTHING-sealed-resomi
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-sealed-vox     
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
@@ -441,6 +462,7 @@
         Piercing: 0.5
         Heat: 0.5
         Radiation: 0.4
+  - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
     - type: PressureProtection

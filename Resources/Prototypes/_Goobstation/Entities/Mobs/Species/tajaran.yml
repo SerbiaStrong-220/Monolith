@@ -84,10 +84,10 @@
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
-    - SiikMaas #Mono - Changed default, SiikTajr disabled
+    - SiikTajr # Exodus
     understands:
     - TauCetiBasic
-    - SiikMaas #Mono - Changed default, SiikTajr disabled
+    - SiikTajr # Exodus
   - type: Tag
     tags:
     - CanPilot

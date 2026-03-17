@@ -1,35 +1,35 @@
 # Base entries
-guide-entry-nf14 = Frontier Guide
-guide-entry-bank = TSF Central Bank
-guide-entry-piloting = Piloting
-guide-entry-startinggear = Starting Equipment
-guide-entry-hiring = Hiring Crew
-guide-entry-expeditions = Expeditions
-guide-entry-sector-topology = Sector Topology
-guide-entry-cargo-hauling = Cargo Hauling
-guide-entry-shipyard = Shipyard
-guide-entry-frontier-rules = Server Rules
+guide-entry-nf14 = Введение в Фронтир
+guide-entry-bank = Центральный банк ТСФ
+guide-entry-piloting = Пилотирование
+guide-entry-startinggear = Начальная экипировка
+guide-entry-hiring = Найм экипажа
+guide-entry-expeditions = Экспедиции
+guide-entry-sector-topology = Топология сектора
+guide-entry-cargo-hauling = Перевозка грузов
+guide-entry-shipyard = Верфь
+guide-entry-frontier-rules = Правила сервера
 # Engineering entries
-guide-entry-gas-mining = Gas Mining
+guide-entry-gas-mining = Добыча газов
 # Security entries
-guide-entry-nfsd-smuggling = Smuggling
+guide-entry-nfsd-smuggling = Контрабанда
 # Medical entries
-guide-entry-medical-bounties = Medical Bounties
-guide-entry-medical-doc = Director of Care
+guide-entry-medical-bounties = Медицинские вознаграждения
+guide-entry-medical-doc = Заведующий СНМП
 # Reference entries
-guide-entry-medicalrecipes = Medical Recipes
+guide-entry-medicalrecipes = Медицинские рецепты
 # Expedition faction entries
-guide-entry-expedition-aberrant-flesh = Aberrant Flesh
-guide-entry-expedition-argocytes = Argocytes
-guide-entry-expedition-blood-cultists = Blood Cultists
-guide-entry-expedition-carps = Carps
-guide-entry-expedition-dinosaurs = Dinosaurs
-guide-entry-expedition-explorers = Explorers
-guide-entry-expedition-mercenaries = Mercenaries
-guide-entry-expedition-gangers = Punks
-guide-entry-expedition-silicons = Rogue Silicons
-guide-entry-expedition-syndicate-naval-forces = Syndicate Naval Forces
-guide-entry-expedition-xenos = Xenos
+guide-entry-expedition-aberrant-flesh = Аномальная плоть
+guide-entry-expedition-argocytes = Аргоциты
+guide-entry-expedition-blood-cultists = Кровавый культ
+guide-entry-expedition-carps = Карпы
+guide-entry-expedition-dinosaurs = Динозавры
+guide-entry-expedition-explorers = Исследователи
+guide-entry-expedition-mercenaries = Наёмники
+guide-entry-expedition-gangers = Панки
+guide-entry-expedition-silicons = Сбойный ИИ
+guide-entry-expedition-syndicate-naval-forces = Военные силы Синдиката
+guide-entry-expedition-xenos = Ксеносы
 # Shipyard entries
 guide-entry-shipyard-akupara = Akupara
 guide-entry-shipyard-ambition = Ambition

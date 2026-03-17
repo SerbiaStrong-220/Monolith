@@ -89,8 +89,26 @@
     </BoxContainer>
 
         <!-- Radar Display -->
-        <BoxContainer Name="RadarContainer" Orientation="Horizontal" HorizontalExpand="True" Margin="50 50 50 50">
+        <!-- Exodus-Start: Shield status -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10 10 10 10">
+            <!-- Shields status -->
+            <BoxContainer Name="ShieldContainer" Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 10">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{ Loc 'gunnery-shield-status-label' }" Margin="0 0 5 0" />
+                    <Label Name="ShieldStatus" Text="" FontColorOverride="Red" />
+                    <BoxContainer HorizontalAlignment="Right" HorizontalExpand="True">
+                        <Label Name="ShieldRecoveryLabel" Text="" FontColorOverride="Gray" />
+                    </BoxContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{ Loc 'gunnery-shield-load-label' }" Margin="0 0 5 0" />
+                    <Label Name="ShieldLoad" Text="" FontColorOverride="Red" />
+                </BoxContainer>
+                <ProgressBar Name="ShieldLoadBar" MaxValue="100" Value="100" SetHeight="35" HorizontalExpand="True" />
+            </BoxContainer>
+            <!-- Radar itself -->
             <ui:FireControlNavControl Name="NavRadar" />
         </BoxContainer>
+        <!-- Exodus-End -->
     </BoxContainer>
 </controls:FancyWindow>

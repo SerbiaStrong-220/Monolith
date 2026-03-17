@@ -1,6 +1,6 @@
 using Content.Shared._Goobstation.Flashbang;
 
-namespace Content.Shared.Exodus.Gimmicks.SensitiveEyes;
+namespace Content.Shared._Exodus.Gimmicks.SensitiveEyes;
 
 public sealed partial class SensitiveEyesSystem : EntitySystem
 {

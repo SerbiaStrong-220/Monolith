@@ -1,4 +1,4 @@
-﻿using Content.Shared.Exodus.Stealth; //Exodus-RefactorStealthSystem
+﻿using Content.Shared._Exodus.Stealth.Systems; // Exodus-RefactorStealthSystem
 
 namespace Content.Server.Stealth;
 

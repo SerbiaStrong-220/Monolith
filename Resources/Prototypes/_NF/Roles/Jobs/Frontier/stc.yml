@@ -28,6 +28,11 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: FrontierBirthday
     prototype: FrontierBirthdayGift
+  - !type:AddLanguageSpecial # Monolith - Languages
+    languagesSpoken:
+    - SolCommon
+    languagesUnderstood:
+    - SolCommon
 
 - type: startingGear
   id: StcGear
@@ -38,3 +43,4 @@
     - Flash
     - RubberStampStc
     - EncryptionKeyStationMaster
+    - PhoneInstrumentHigh

@@ -4,6 +4,7 @@ using Content.Shared._Goobstation.Weapons.SmartGun;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -18,6 +19,7 @@ public sealed partial class NPCCombatSystem
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
     [Dependency] private readonly SharedLaserPointerSystem _pointer = default!; // Goobstation
+    [Dependency] private readonly NpcFactionSystem _faction = default!; // Exodus
 
     private EntityQuery<CombatModeComponent> _combatQuery;
     private EntityQuery<NPCSteeringComponent> _steeringQuery;
@@ -152,12 +154,8 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
-                // For consistency with NPC steering.                                                  // Mono
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, comp.Target, distance + 0.1f, comp.ObstructedMask, predicate: (EntityUid entity) =>
-                {
-                    return _physicsQuery.TryGetComponent(entity, out var physics) && (physics.CollisionLayer & (int)comp.BulletMask) == 0 // ignore if it can't collide with bullets
-                        || _requireTargetQuery.HasComponent(entity); // or if it requires targeting
-                });
+                // For consistency with NPC steering.
+                comp.TargetInLOS = IsEnemyInLOS(uid, comp.ObstructedMask, comp.BulletMask, comp.Target, distance); // Exodus
             }
 
             if (!comp.TargetInLOS)
@@ -265,4 +263,16 @@ public sealed partial class NPCCombatSystem
                 target);
         }
     }
+
+    // Exodus-Start
+    public bool IsEnemyInLOS(EntityUid uid, CollisionGroup obstructedMask, CollisionGroup bulletMask, EntityUid target, float distance)
+    {
+        return _interaction.InRangeUnobstructed(uid, target, distance + 0.1f, obstructedMask, predicate: (EntityUid entity) =>
+                _physicsQuery.TryGetComponent(entity, out var physics) && (physics.CollisionLayer & (int)bulletMask) == 0 // ignore if it can't collide with bullets
+                || _requireTargetQuery.HasComponent(entity) // or if it requires targeting
+                || _xformQuery.TryGetComponent(entity, out var xform) && !xform.Anchored) // or if it's unanchored
+            && _interaction.InRangeUnobstructed(uid, target, distance, bulletMask, // if friendly mob is in LOS it blocks LOS
+                (ent) => !_faction.IsEntityFriendly(uid, ent));
+    }
+    // Exodus-End
 }

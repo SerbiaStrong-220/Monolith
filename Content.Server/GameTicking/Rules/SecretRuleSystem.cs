@@ -47,17 +47,18 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
         foreach (var rule in preset.Rules)
         {
-            EntityUid ruleEnt;
-
+            // Exodus-Start
             // if we're pre-round (i.e. will only be added)
             // then just add rules. if we're added in the middle of the round (or at any other point really)
             // then we want to start them as well
-            if (GameTicker.RunLevel <= GameRunLevel.InRound)
-                ruleEnt = GameTicker.AddGameRule(rule);
-            else
-                GameTicker.StartGameRule(rule, out ruleEnt);
+            if (GameTicker.TryAddGameRule(rule, out var ruleEnt))
+            {
+                if (GameTicker.RunLevel > GameRunLevel.InRound)
+                    GameTicker.StartGameRule(ruleEnt.Value);
 
-            component.AdditionalGameRules.Add(ruleEnt);
+                component.AdditionalGameRules.Add(ruleEnt.Value);
+            }
+            // Exodus-End
         }
     }
 

@@ -1,11 +1,11 @@
 ent-StaticGeneratorBase = { ent-BaseStructure }
     .desc = { ent-BaseStructure.desc }
-ent-GeneratorCRPinch = SKR CR-class Z-pinch nuclear fusion reactor
+ent-GeneratorCRPinch = термоядерный реактор класса CR "Z-pinch"
     .desc =
-        Industrial fuel-grade plasma burning miniature fusion reactor. Highly efficient
-        Ideal power production is 105 kW. Minimum and maximum power production is 60 and 160 kW.
-        Highly radioactive without protection due to the light Iridite frame of the reactor.
-    .suffix = Plasma, Rad+, 105 kW
-ent-GeneratorCRPinchShuttle = { ent-BaseGeneratorShuttle }
-    .suffix = Plasma, Rad+, 105 kW, Ship
-    .desc = { ent-BaseGeneratorShuttle.desc }
+        Промышленный миниатюрный термоядерный реактор, работающий на топливной плазме.
+        Очень высокая эффективность. Номинальная мощность 105 кВт. Диапазон выработки
+        от 60 до 160 кВт. Из-за лёгкого иридиевого корпуса реактор крайне радиоактивен.
+    .suffix = Плазма, Рад+, 105 кВт
+ent-GeneratorCRPinchShuttle = { ent-GeneratorCRPinch }
+    .suffix = Плазма, Рад+, 105 кВт, Шаттл
+    .desc = { ent-GeneratorCRPinch.desc }

@@ -4,6 +4,7 @@
   description: Utter unharmonious and disquieting whispers giving form to eldritch horrors.
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 5

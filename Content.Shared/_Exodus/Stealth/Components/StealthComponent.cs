@@ -1,9 +1,11 @@
-using Content.Shared.Exodus.Stealth;
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne, Lokilife
+using Content.Shared._Exodus.Stealth.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Exodus.Stealth.Components;
+namespace Content.Shared._Exodus.Stealth.Components;
 /// <summary>
 /// Add this component to an entity that you want to be cloaked.
 /// It overlays a shader on the entity to give them an invisibility cloaked effect.
@@ -60,7 +62,7 @@ public sealed partial class StealthData
     public float PassiveVisibilityRate = -0.15f;
 
     [DataField]
-    public float MovementVisibilityRate = 0f;
+    public float MovementVisibilityRate = 0.3f;
 
     [DataField]
     public float InvisibilityPenalty = 1f;
@@ -70,7 +72,7 @@ public sealed partial class StealthData
 
     public StealthData(float minVisibility = -1f, float maxVisibility = 1.5f, float lastVisibility = 1,
         bool enabledOnDeath = true, bool enabledOnCrit = true, float examineThreshold = 0.5f, string examinedDesc = "stealth-visual-effect",
-        float passiveVisibilityRate = -0.15f, float movementVisibilityRate = 0.2f, float invisibilityPenalty = 1f, float maxInvisibilityPenalty = 0.5f)
+        float passiveVisibilityRate = -0.15f, float movementVisibilityRate = 0.3f, float invisibilityPenalty = 1f, float maxInvisibilityPenalty = 0.5f)
     {
         MinVisibility = minVisibility;
         MaxVisibility = maxVisibility;

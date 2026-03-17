@@ -1,40 +1,40 @@
 chat-sign-language-message-wrap = [italic][BubbleHeader][Name]{ $entityName }[/Name][/BubbleHeader] [BubbleContent]{ $verb } "[font="{ $fontType }" size={ $fontSize }][color={ $color }]{ $message }[/color][/font]"[/italic][/BubbleContent]
-chat-sign-language-whisper-wrap = [italic][BubbleHeader][Name]{ $entityName }[/Name][/BubbleHeader] [BubbleContent]subtly gestures "[font="{ $fontType }" size={ $fontSize }][color={ $color }]{ $message }[/color][/font]"[/italic][/BubbleContent]
-chat-speech-verb-sign-1 = gestures
-chat-speech-verb-sign-2 = signs
-chat-speech-verb-sign-3 = waves
+chat-sign-language-whisper-wrap = [italic][BubbleHeader][Name]{ $entityName }[/Name][/BubbleHeader] [BubbleContent]еле заметно жестикулирует "[font="{ $fontType }" size={ $fontSize }][color={ $color }]{ $message }[/color][/font]"[/italic][/BubbleContent]
+chat-speech-verb-sign-1 = жестикулирует
+chat-speech-verb-sign-2 = показывает знаки
+chat-speech-verb-sign-3 = махает
 # Tajaran stuffs
 chat-sign-tajaran-language-message-wrap = [italic][BubbleHeader][Name]{ $entityName }[/Name][/BubbleHeader] [BubbleContent]{ $verb } "[font="{ $fontType }" size={ $fontSize }][color={ $color }]{ $message }[/color][/font]"[/italic][/BubbleContent]
-chat-sign-tajaran-language-whisper-wrap = [italic][BubbleHeader][Name]{ $entityName }[/Name][/BubbleHeader] [BubbleContent]subtly { $verb } "[font="{ $fontType }" size={ $fontSize }][color={ $color }]{ $message }[/color][/font]"[/italic][/BubbleContent]
+chat-sign-tajaran-language-whisper-wrap = [italic][BubbleHeader][Name]{ $entityName }[/Name][/BubbleHeader] [BubbleContent]жестикулирует и { $verb } "[font="{ $fontType }" size={ $fontSize }][color={ $color }]{ $message }[/color][/font]"[/italic][/BubbleContent]
 # Did I ever tell you the definition of insanity?
 # Basically we have to get around the message formatter, and unless we decide to make an entire new system just for this language, we can't do anything else.
-chat-speech-verb-sign-nalrasan-1 = moves their tail
-chat-speech-verb-sign-nalrasan-2 = moves their tail briefly
-chat-speech-verb-sign-nalrasan-3 = moves their tail several times in quick succession
-chat-speech-verb-sign-nalrasan-4 = flicks their ears
-chat-speech-verb-sign-nalrasan-5 = flicks their ears a few times
-chat-speech-verb-sign-nalrasan-6 = flicks their ears several times in quick succession
-chat-speech-verb-sign-nalrasan-7 = swivels their ears
-chat-speech-verb-sign-nalrasan-8 = swivels their ears a few times
-chat-speech-verb-sign-nalrasan-9 = swivels their ears several times in quick succession
-chat-speech-verb-sign-nalrasan-10 = swivels their ears for a while
-chat-speech-verb-sign-nalrasan-11 = flicks their tail
-chat-speech-verb-sign-nalrasan-12 = flicks their tail a few times
-chat-speech-verb-sign-nalrasan-13 = flicks their tail several times in quick succession
-chat-speech-verb-sign-nalrasan-14 = shifts their ears and tail
-chat-speech-verb-sign-nalrasan-15 = shifts their ears and tail briefly
-chat-speech-verb-sign-nalrasan-16 = shifts their ears and tail for a while
-chat-speech-verb-sign-nalrasan-17 = shifts their ears and tail several times in quick succession
+chat-speech-verb-sign-nalrasan-1 = повёл хвостом
+chat-speech-verb-sign-nalrasan-2 = коротко повёл хвостом
+chat-speech-verb-sign-nalrasan-3 = быстро двигает хвостом несколько мгновений
+chat-speech-verb-sign-nalrasan-4 = шевелит ушами
+chat-speech-verb-sign-nalrasan-5 = шевелит ушами пару мгновений
+chat-speech-verb-sign-nalrasan-6 = быстро шевелит ушами несколько мгновений
+chat-speech-verb-sign-nalrasan-7 = крутит ушами
+chat-speech-verb-sign-nalrasan-8 = крутит ушами пару мгновений
+chat-speech-verb-sign-nalrasan-9 = крутит ушами несколько мгновений
+chat-speech-verb-sign-nalrasan-10 = некоторое время крутит ушами
+chat-speech-verb-sign-nalrasan-11 = подёргивает хвостом
+chat-speech-verb-sign-nalrasan-12 = подёргивает хвостом пару мгновений
+chat-speech-verb-sign-nalrasan-13 = подёргивает хвостом несколько мгновений
+chat-speech-verb-sign-nalrasan-14 = шевелит ушами и хвостом
+chat-speech-verb-sign-nalrasan-15 = быстро шевелит ушами и хвостом
+chat-speech-verb-sign-nalrasan-16 = некоторое время шевелит ушами и хвостом
+chat-speech-verb-sign-nalrasan-17 = шевелит ушами и хвостом несколько мгновений
 
 # There has to be a better way
 
-chat-speech-verb-sign-siiktajr-1 = moves their tail and purrs out
-chat-speech-verb-sign-siiktajr-2 = moves their tail and mews
-chat-speech-verb-sign-siiktajr-3 = flicks their ears and meows
-chat-speech-verb-sign-siiktajr-4 = flicks their ears and mraows
-chat-speech-verb-sign-siiktajr-5 = swivels their ears and purrs out
-chat-speech-verb-sign-siiktajr-6 = swivels their ears and mews
-chat-speech-verb-sign-siiktajr-7 = flicks their tail and meows
-chat-speech-verb-sign-siiktajr-8 = flicks their tail and mraows
-chat-speech-verb-sign-siiktajr-9 = shifts their ears and tail and purrs out
-chat-speech-verb-sign-siiktajr-10 = shifts their ears and tail and mews
+chat-speech-verb-sign-siiktajr-1 = шевелит хвостом и мурлычет
+chat-speech-verb-sign-siiktajr-2 = шевелит хвостом и мявчет
+chat-speech-verb-sign-siiktajr-3 = шевелит ушами и мявчет
+chat-speech-verb-sign-siiktajr-4 = шевелит ушами и мрявчет
+chat-speech-verb-sign-siiktajr-5 = шевелит ушами и мурлычет
+chat-speech-verb-sign-siiktajr-6 = шевелит ушами и мявчет
+chat-speech-verb-sign-siiktajr-7 = подёргивает хвостом и мявчет
+chat-speech-verb-sign-siiktajr-8 = подёргивает хвостом и мрявчет
+chat-speech-verb-sign-siiktajr-9 = шевелит ушами и хвостом и мурлычет
+chat-speech-verb-sign-siiktajr-10 = шевелит ушами и хвостом и мявчет

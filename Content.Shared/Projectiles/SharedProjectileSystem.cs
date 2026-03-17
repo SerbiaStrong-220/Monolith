@@ -124,13 +124,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     public virtual DamageSpecifier? ProjectileCollide(Entity<ProjectileComponent, PhysicsComponent> projectile, EntityUid target, MapCoordinates? collisionCoordinates, bool predicted = false)
     {
         var (uid, component, ourBody) = projectile;
-        if (projectile.Comp1.DamagedEntity)
-        {
-            if (_net.IsServer && component.DeleteOnCollide)
-                QueueDel(uid);
-
-            return null;
-        }
 
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
@@ -145,6 +138,20 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         if (ev.Handled)
             return null;
+
+        if (projectile.Comp1.DamagedEntity)
+        {
+            if (_net.IsServer && component.DeleteOnCollide)
+                QueueDel(uid);
+
+            return null;
+        }
+
+        // Exodus-Start
+        // entity hit confirmed
+        var targetEv = new ProjectileHitTargetEvent(component.Damage, target, component.Shooter);
+        RaiseLocalEvent(target, ref targetEv);
+        // Exodus-End
 
         var coordinates = collisionCoordinates != null
             ? _transform.ToCoordinates(collisionCoordinates.Value)
@@ -206,7 +213,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         component.DamagedEntity = true;
         Dirty(uid, component);
-
         if (!predicted && component.DeleteOnCollide && (_net.IsServer || IsClientSide(uid)))
             QueueDel(uid);
         else if (_net.IsServer && component.DeleteOnCollide)
@@ -604,6 +610,17 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null, bool Handled = false);
+
+// Exodus-Start
+/// <summary>
+/// Raised when a projectile hits an entity
+/// </summary>
+[ByRefEvent]
+public record struct ProjectileHitTargetEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null) : IInventoryRelayEvent // Exodus | Make inventory relayed
+{
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+};
+// Exodus-End
 
 /// <summary>
 /// Raised when a projectile is about to collide with an entity, allowing systems to prevent the collision

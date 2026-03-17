@@ -7,10 +7,8 @@ using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-//Exodus-RefactorStealthSystem-Begin
-using Content.Shared.Exodus.Stealth;
-using Content.Shared.Exodus.Stealth.Components;
-//Exodus-RefactorStealthSystem-End
+using Content.Shared._Exodus.Stealth.Systems; // Exodus-RefactorStealthSystem
+using Content.Shared._Exodus.Stealth.Components; // Exodus-RefactorStealthSystem
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -43,11 +41,11 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
 
-        SubscribeLocalEvent<CardboardBoxComponent, MapInitEvent>(OnMapInit);//Exodus-RefactorStealthSystem
-        SubscribeLocalEvent<CardboardBoxComponent, ComponentShutdown>(OnShutdown);//Exodus-RefactorStealthSystem
+        SubscribeLocalEvent<CardboardBoxComponent, MapInitEvent>(OnMapInit); // Exodus-RefactorStealthSystem
+        SubscribeLocalEvent<CardboardBoxComponent, ComponentShutdown>(OnShutdown); // Exodus-RefactorStealthSystem
     }
 
-    //Exodus-RefactorStealthSystem-Begin
+    // Exodus-RefactorStealthSystem-Start
     private void OnMapInit(EntityUid uid, CardboardBoxComponent component, MapInitEvent args)
     {
         if (component.Stealth == null)
@@ -64,7 +62,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (component.Stealth != null)
             _stealth.RemoveRequest(nameof(CardboardBoxSystem), uid);
     }
-    //Exodus-RefactorStealthSystem-End
+    // Exodus-RefactorStealthSystem-End
 
     private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
     {
@@ -128,12 +126,12 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, ref StorageAfterCloseEvent args)
     {
         // If this box has a stealth/chameleon effect, enable the stealth effect.
-        //Exodus-RefactorStealthSystem-Begin
+        // Exodus-RefactorStealthSystem-Begin
         if (component.Stealth != null)
         {
             _stealth.RequestStealth(uid, nameof(CardboardBoxSystem), component.Stealth);
         }
-        //Exodus-RefactorStealthSystem-End
+        // Exodus-RefactorStealthSystem-End
     }
 
     //Relay damage to the mover

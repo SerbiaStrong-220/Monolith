@@ -91,9 +91,10 @@
     Plasma: 50
     Silver: 5
 
+# Exodus
 - type: latheRecipe
-  id: ValyrianStandardTranslator
-  result: ValyrianStandardTranslator
+  id: ElDwarfTranslator
+  result: ElDwarfTranslator
   completetime: 2
   materials:
     Steel: 500
@@ -111,9 +112,20 @@
     Plastic: 50
     Gold: 50
 
+# Exodus
+# - type: latheRecipe
+#   id: SiikMaasTranslator
+#   result: SiikMaasTranslator
+#   completetime: 2
+#   materials:
+#     Steel: 500
+#     Glass: 100
+#     Plastic: 50
+#     Gold: 50
+
 - type: latheRecipe
-  id: SiikMaasTranslator
-  result: SiikMaasTranslator
+  id: MarishTranslator
+  result: MarishTranslator
   completetime: 2
   materials:
     Steel: 500
@@ -122,8 +134,8 @@
     Gold: 50
 
 - type: latheRecipe
-  id: MarishTranslator
-  result: MarishTranslator
+  id: NewKinPidginTranslator
+  result: NewKinPidginTranslator
   completetime: 2
   materials:
     Steel: 500
@@ -231,9 +243,10 @@
     Gold: 50
     Silver: 50
 
+# Exodus
 - type: latheRecipe
-  id: ValyrianStandardTranslatorImplanter
-  result: ValyrianStandardTranslatorImplanter
+  id: ElDwarfTranslatorImplanter
+  result: ElDwarfTranslatorImplanter
   completetime: 2
   materials:
     Steel: 500
@@ -253,9 +266,21 @@
     Gold: 50
     Silver: 50
 
+# Exodus
+# - type: latheRecipe
+#   id: SiikMaasTranslatorImplanter
+#   result: SiikMaasTranslatorImplanter
+#   completetime: 2
+#   materials:
+#     Steel: 500
+#     Glass: 500
+#     Plastic: 100
+#     Gold: 50
+#     Silver: 50
+
 - type: latheRecipe
-  id: SiikMaasTranslatorImplanter
-  result: SiikMaasTranslatorImplanter
+  id: MarishTranslatorImplanter
+  result: MarishTranslatorImplanter
   completetime: 2
   materials:
     Steel: 500
@@ -265,8 +290,8 @@
     Silver: 50
 
 - type: latheRecipe
-  id: MarishTranslatorImplanter
-  result: MarishTranslatorImplanter
+  id: NewKinPidginTranslatorImplanter
+  result: NewKinPidginTranslatorImplanter
   completetime: 2
   materials:
     Steel: 500

@@ -1,7 +1,7 @@
 - type: entity
   id: WeaponTurretShard
   name: Light mass driver "Shard"
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable # Exodus
   description: Ultralight mass driver weapon of unknown origin, designated "Shard" during initial reverse engineering attempts. Light damage, but long range and little upkeep to mount on ships.
   suffix: DRONE ONLY
   components:
@@ -56,7 +56,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#FF0000"
+    radarColor: "#0080FF"
     scale: 1.5
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -67,7 +67,7 @@
 - type: entity
   id: WeaponTurretPinhole
   name: Pinhole-class railgun
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable # Exodus
   description: Mass driver weapon of unknown origin. Reverse engineering attempts have indicated extremely high projectile velocity and high-mass projectiles with unresolved ship-pushing payload.
   suffix: DRONE ONLY
   components:
@@ -123,8 +123,14 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#FF0000"
+    radarColor: "#4080FF"
     scale: 2.5
+    gridConfig:
+      color: "#4080FF"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1,-1.5,1,1.5"
   - type: ShipGunType
     shipType: Ballistic
   - type: ShipGunClass

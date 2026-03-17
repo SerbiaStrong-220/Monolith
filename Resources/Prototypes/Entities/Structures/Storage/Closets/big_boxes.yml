@@ -37,7 +37,7 @@
       damageContainer: Box
     - type: Sprite
       noRot: true
-      sprite: Structures/Storage/closet.rsi
+      sprite: _Exodus/Structures/Storage/closet.rsi # Exodus-Resprite
       layers:
       - state: cardboard
         map: ["enum.StorageVisualLayers.Base"]

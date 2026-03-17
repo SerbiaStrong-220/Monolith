@@ -1,5 +1,5 @@
-research-technology-xenopsychology = Xenopsychology
-research-technology-bluespace-tethering = Bluespace Tethering
-research-technology-basic-parts = Basic Components
-research-technology-basic-research = Basic Research
-research-technology-advanced-research = Advanced Research
+research-technology-xenopsychology = Ксенопсихология
+research-technology-bluespace-tethering = Блюспейс-сцепление
+research-technology-basic-parts = Базовые компоненты
+research-technology-basic-research = Базовые исследования ксеноархеологии
+research-technology-advanced-research = Продвинутые исследования ксеноархеологии

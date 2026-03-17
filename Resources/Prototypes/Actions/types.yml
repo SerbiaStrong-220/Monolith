@@ -15,10 +15,11 @@
   description: AAAAAAAAAAAAAAAAAAAAAAAAA
   components:
   - type: InstantAction
-    useDelay: 1 # 10->1
+    useDelay: 3 # Mono: 10->3
     icon: Interface/Actions/scream.png
     event: !type:ScreamActionEvent
     checkCanInteract: false
+    autoPopulate: false # Mono
 
 - type: entity
   id: ActionTurnUndead
@@ -37,6 +38,7 @@
   description: Turn the light on and off.
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
@@ -48,6 +50,7 @@
   description: Opens or closes the storage implant embedded under your skin
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -110,6 +113,7 @@
   description: Opens the syndicate uplink embedded under your skin
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -138,9 +142,9 @@
   description: Randomly teleports you within a large distance.
   components:
   - type: InstantAction
-    # checkCanInteract: false # Goobstation - scrambler rework - start
+    checkCanInteract: false # Exodus
     # charges: 2
-    useDelay: 120 # Goobstation - scrambler rework - end
+    useDelay: 120
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -156,6 +160,7 @@
   - type: ConfirmableAction
     popup: dna-scrambler-action-popup
   - type: InstantAction
+    checkCanInteract: false # Exodus
     charges: 1
     itemIconStyle: BigAction
     priority: -20
@@ -223,7 +228,7 @@
   components:
   - type: InstantAction
     icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-    iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
+    iconOn: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-on }
     event: !type:ToggleActionEvent
 
 - type: entity
@@ -236,7 +241,7 @@
     checkCanInteract: false
     checkConsciousness: false
     temporary: true
-    icon: { sprite: _NF/Objects/Tools/multitool.rsi, state: icon } # Frontier: separate sprites (add _NF folder)
+    icon: { sprite: Objects/Tools/multitool.rsi, state: icon } # Exodus-Resprite-Delete
     event: !type:ClearAllOverlaysEvent
 
 - type: entity
@@ -279,6 +284,7 @@
   description: Activates your honking implant, which will produce the signature sound of the clown.
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 1
@@ -325,6 +331,7 @@
   description: Turn the Fake Mindshield implant's transmission on/off
   components:
   - type: InstantAction
+    checkCanInteract: false # Exodus
     icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
@@ -343,3 +350,15 @@
     useDelay: 1
     itemIconStyle: BigAction
     event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionGravityJump
+  name: Jump
+  description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
+  components:
+  - type: InstantAction
+    useDelay: 8
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+    event: !type:GravityJumpEvent {}

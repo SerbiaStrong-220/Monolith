@@ -9,7 +9,8 @@ using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
+using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking;
 
@@ -62,14 +63,45 @@ public sealed partial class GameTicker
         _consoleHost.UnregisterCommand("listgamerules");
     }
 
+    // Exodus-Start
+    /// <summary>
+    /// Adds a game rule to the list skipping any game rule checks, but does not
+    /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
+    /// </summary>
+    public EntityUid ForceAddGameRule(string ruleId)
+    {
+        if (!TryAddGameRule(ruleId, out var ruleEnt, true))
+        {
+            DebugTools.Assert($"Failed to force add game rule {ruleId}");
+            return EntityUid.Invalid;
+        }
+        return ruleEnt.Value;
+    }
+
     /// <summary>
     /// Adds a game rule to the list, but does not
     /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
     /// </summary>
-    /// <returns>The entity for the added gamerule</returns>
-    public EntityUid AddGameRule(string ruleId)
+    public bool TryAddGameRule(string ruleId, bool force = false)
     {
+        return TryAddGameRule(ruleId, out _, force);
+    }
+
+    /// <summary>
+    /// Adds a game rule to the list, but does not
+    /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
+    /// </summary>
+    public bool TryAddGameRule(string ruleId, [NotNullWhen(true)] out EntityUid? rule, bool force = false)
+    {
+        rule = null;
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
+
+        if (!force && !_ruleRequirements.CheckRule(ruleEntity)) // Exodus
+        {
+            QueueDel(ruleEntity);
+            return false;
+        }
+
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
@@ -92,8 +124,10 @@ public sealed partial class GameTicker
             _allPreviousGameRules.Add((currentTime, ruleId + " (Pending)"));
         }
 
-        return ruleEntity;
+        rule = ruleEntity;
+        return true;
     }
+    // Exodus-End
 
     /// <summary>
     /// Game rules can be 'started' separately from being added. 'Starting' them usually
@@ -110,7 +144,14 @@ public sealed partial class GameTicker
     /// </summary>
     public bool StartGameRule(string ruleId, out EntityUid ruleEntity)
     {
-        ruleEntity = AddGameRule(ruleId);
+        // Exodus
+        ruleEntity = EntityUid.Invalid;
+
+        if (!TryAddGameRule(ruleId, out var ruleEntityResult))
+            return false;
+
+        ruleEntity = ruleEntityResult.Value;
+
         return StartGameRule(ruleEntity);
     }
 
@@ -351,7 +392,7 @@ public sealed partial class GameTicker
             {
                 _adminLogger.Add(LogType.EventStarted, $"Unknown tried to add game rule [{rule}] via command");
             }
-            var ent = AddGameRule(rule);
+            var ent = ForceAddGameRule(rule); // Exodus
 
             // Start rule if we're already in the middle of a round
             if(RunLevel == GameRunLevel.InRound)

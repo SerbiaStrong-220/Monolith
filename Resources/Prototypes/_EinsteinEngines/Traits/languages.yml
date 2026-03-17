@@ -12,18 +12,19 @@
 #    cantUnderstand: false
 #    baseTranslator: TranslatorForeigner
 
-- type: trait
-  id: SiikMaas
-  name: trait-language-SiikMaas-name
-  description: trait-language-SiikMaas-desc
-  category: LanguageTraits
-  cost: 1
-  components:
-  - type: LanguageSpeaker
-  languagesSpoken:
-    - SiikMaas
-  languagesUnderstood:
-   - SiikMaas
+# Exodus
+# - type: trait
+#   id: SiikMaas
+#   name: trait-language-SiikMaas-name
+#   description: trait-language-SiikMaas-desc
+#   category: LanguageTraits
+#   cost: 1
+#   components:
+#   - type: LanguageSpeaker
+#   languagesSpoken:
+#     - SiikMaas
+#   languagesUnderstood:
+#    - SiikMaas
 
 - type: trait
   id: Foreigner
@@ -129,17 +130,17 @@
   languagesUnderstood:
     - NovuNederic
 
-# Commented out since it's species-specific.
+# Exodus | commented out due to missing traits functions, waiting till upcoming traits system update
 # - type: trait
 #   id: Azaziba
-#   name:
+#   name: trait-language-azaziba-name
 #   description: trait-language-azaziba-desc
 #   category: LanguageTraits
 #   cost: 1
-#   # requirements:
-#   #   - !type:CharacterSpeciesRequirement
-#   #     species:
-#   #       - Reptilian
+#   requirements:
+#     - !type:CharacterSpeciesRequirement
+#       species:
+#         - Reptilian
 #   functions:
 #     - !type:TraitModifyLanguages
 #       languagesSpoken:

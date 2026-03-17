@@ -16,11 +16,16 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
-    maxOccurrences: 6 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
+    maxOccurrences: 4 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
   - type: GameRule
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraSakuratsu
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -31,11 +36,16 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
-    maxOccurrences: 3 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
+    maxOccurrences: 2 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
   - type: GameRule
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraOlympus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -46,11 +56,16 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
-    maxOccurrences: 6 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
+    maxOccurrences: 4 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
   - type: GameRule
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraTethys
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -61,9 +76,14 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
-    maxOccurrences: 6 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
+    maxOccurrences: 4 # You may think this is absurd, but it can only spawn 4 events max in normal schedulers anyways.
   - type: GameRule
     minPlayers: 40
   - type: LoadMapRule
     preloadedGrid: ChimeraLegionnaire
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Security
+      minDepartmentPlayers: 6
 

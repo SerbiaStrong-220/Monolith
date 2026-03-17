@@ -11,7 +11,7 @@
 - type: pointOfInterest
   id: CargoDepot
   parent: [BasePOI, BaseRepairablePOI]
-  name: Cargo Depot
+  name: 'Грузовое Депо' # Ru-Localization
   minimumDistance: 8000
   maximumDistance: 10000
   spawnGroup: CargoDepot
@@ -35,7 +35,7 @@
 - type: pointOfInterest
   id: CargoDepotAlt
   parent: [BasePOI, BaseRepairablePOI]
-  name: Cargo Depot
+  name: 'Грузовое Депо' # Ru-Localization
   minimumDistance: 8000
   maximumDistance: 10000
   spawnGroup: CargoDepot
@@ -52,13 +52,13 @@
       stationProto: StandardFrontierOutpost
       components: &cargoStationComponents
         - type: StationNameSetup
-          mapNameTemplate: 'Cargo Depot' # Has a letter appended in PointOfInterestSystem
+          mapNameTemplate: 'Грузовое Депо' # Ru-Localization # Has a letter appended in PointOfInterestSystem
         - type: TradeCrateDestination
           destinationProto: CargoA # Redefined in PointOfInterestSystem
 
 - type: gameMap
   id: CargoDepotAlt
-  mapName: 'Cargo Depot' # Has a letter appended in PointOfInterestSystem
+  mapName: 'Грузовое Депо' # Ru-Localization # Has a letter appended in PointOfInterestSystem
   mapPath: /Maps/_NF/POI/cargodepotalt.yml
   minPlayers: 0
   stations:
