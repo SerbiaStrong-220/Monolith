@@ -31,16 +31,16 @@ scramble-implant-activated-popup = Ваша внешность преображ�
 ## Implant Messages
 
 deathrattle-implant-dead-message = Зафиксирована смерть { $user }{ $specie ->
-        [{""}] {""}
+        [null] {""}
         *[default] {" "}{ $specie }
     }, местоположение { $grid ->
-        [{""}] {""}
+        [null] {""}
         *[default] { $grid }{" "}
     }{ $position }.
 deathrattle-implant-critical-message = Жизненные показатели { $user }{ $specie ->
-        [{""}] {""}
+        [null] {""}
         *[default] {" "}{ $specie }
     } критические, требуется немедленная помощь { $grid ->
-        [{""}] {""}
+        [null] {""}
         *[default] { $grid }{" "}
     }{ $position }.
