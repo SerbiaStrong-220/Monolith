@@ -30,6 +30,8 @@ using Content.Server.Station.Components;
 using Content.Shared._Mono.FireControl;
 using Content.Shared._Mono.Ships.Components;
 using Content.Shared.Verbs;
+using Content.Shared._Exodus.BUIStates; // Exodus
+using Content.Shared._Exodus.SpaceArtillery.Components; //Exodus
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -544,6 +546,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public NavInterfaceState GetNavState(
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
+        List<GrapplingLinkState> grapLinks,
         EntityCoordinates coordinates,
         Angle angle,
         Dictionary<string, string>? portNames = null)
@@ -556,6 +559,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             GetNetCoordinates(coordinates),
             angle,
             docks,
+            grapLinks, // Exodus - ShuttleHooks
             _shuttle.NfGetInertiaDampeningMode(entity), // Frontier: inertia dampening
             entity.Comp1.HideTarget, // Frontier
             entity.Comp1.Target, // Frontier
@@ -727,4 +731,29 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         jobSlotsComp.SavedJobSlots.Clear();
         jobSlotsComp.OwningStation = null;
     }
+
+    //Exodus - ShuttleHooks - Start
+    public Dictionary<NetEntity, GrapplingLinkState> GetAllGrapLinks()
+    {
+        var result = new List<GrapplingLinkState>();
+        var query = AllEntityQuery<ShipGrapplingGunTargetComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var targetComp, out var xform))
+        {
+            var grapXform = Transform(targetComp.Gun);
+
+            if (gunXform.MapID != xform.MapID || targetXform.MapID != xform.MapID)
+                continue;
+
+            var gunPos = grapXform.WorldPosition;
+            var targetPos = xform.WorldPosition;
+
+            var state = new GrapplingLinkState(gunPos, targetPos);
+
+            result.Add(state);
+        }
+
+        return result;
+    }
+    //Exodus - ShuttleHooks - End
 }
