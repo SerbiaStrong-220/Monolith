@@ -25,6 +25,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.SS220.Discord;
+using Content.Server.SS220.JoinQueue;
 using Content.Server.SS220.TTS;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
@@ -54,6 +55,7 @@ namespace Content.Server.Entry
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
 
+        private JoinQueueManager _joinQueueManager = default!; // Corvax-Queue
         private TTSManager _ttsManager = default!; // Corvax-TTS
         private DiscordPlayerManager _discordPlayerManager = default!; // SS220 discord player manager
 
@@ -108,6 +110,7 @@ namespace Content.Server.Entry
 
                 _ttsManager = IoCManager.Resolve<TTSManager>();
                 _discordPlayerManager = IoCManager.Resolve<DiscordPlayerManager>();
+                _joinQueueManager = IoCManager.Resolve<JoinQueueManager>();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -132,6 +135,7 @@ namespace Content.Server.Entry
 
                 _ttsManager.Initialize(); // Corvax-TTS
                 _discordPlayerManager.Initialize(); // SS220 discord player manager
+                _joinQueueManager.Initialize(); // Corvax-Queue
             }
         }
 
