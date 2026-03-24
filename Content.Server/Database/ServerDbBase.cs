@@ -203,6 +203,12 @@ namespace Content.Server.Database
 
             var balance = profile.BankBalance;
 
+            // Corvax-TTS-Start
+            var voice = profile.Voice;
+            if (string.IsNullOrEmpty(voice))
+                voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
+            // Corvax-TTS-End
+
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             var markingsRaw = profile.Markings?.Deserialize<List<string>>();
 
@@ -253,6 +259,7 @@ namespace Content.Server.Database
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
+                voice, // Corvax-TTS
                 profile.Age,
                 sex,
                 gender,

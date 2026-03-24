@@ -26,4 +26,17 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+  <ItemGroup>
+    <EmbeddedResource Remove="SS220\JoinQueue\QueueGui.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Update="SS220\JoinQueue\QueueGui.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="SS220\UserInterface\DiscordLink\DiscordLinkRequiredGui.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

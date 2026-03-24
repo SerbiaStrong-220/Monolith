@@ -29,6 +29,7 @@ namespace Content.Server.Connection
 {
     public interface IConnectionManager
     {
+        Task<bool> HavePrivilegedJoin(NetUserId userId); // Corvax-Queue
         void Initialize();
         void PostInit();
 
@@ -401,5 +402,19 @@ namespace Content.Server.Connection
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
         }
+
+        // Corvax-Queue-Start: Make these conditions in one place, for checks in the connection and in the queue
+        public async Task<bool> HavePrivilegedJoin(NetUserId userId)
+        {
+            var isAdmin = await _db.GetAdminDataForAsync(userId) != null;
+            // var havePriorityJoin = _sponsorsManager.TryGetInfo(userId, out var sponsor) && sponsor.HavePriorityJoin; // SS220 Sponsors
+            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
+                            ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
+                            status == PlayerGameStatus.JoinedGame;
+            return isAdmin ||
+                   //havePriorityJoin || // SS220 Sponsors
+                   wasInGame;
+        }
+        // Corvax-Queue-End
     }
 }

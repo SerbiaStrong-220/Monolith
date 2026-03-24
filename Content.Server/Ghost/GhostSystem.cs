@@ -125,20 +125,25 @@ namespace Content.Server.Ghost
         {
             args.Handled = true;
 
-            if (HasComp<GhostHearingComponent>(uid))
+            //ss220 add filter tts for ghost start
+            if (!TryComp<GhostHearingComponent>(uid, out var ghostHearingComponent))
+                return;
+
+            if (ghostHearingComponent.IsEnabled)
             {
-                RemComp<GhostHearingComponent>(uid);
                 _actions.SetToggled(component.ToggleGhostHearingActionEntity, true);
+                ghostHearingComponent.IsEnabled = false;
             }
             else
             {
-                AddComp<GhostHearingComponent>(uid);
                 _actions.SetToggled(component.ToggleGhostHearingActionEntity, false);
+                ghostHearingComponent.IsEnabled = true;
             }
 
-            var str = HasComp<GhostHearingComponent>(uid)
+            var str = ghostHearingComponent.IsEnabled
                 ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
                 : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
+            //ss220 add filter tts for ghost end
 
             Popup.PopupEntity(str, uid, uid);
             Dirty(uid, component);
