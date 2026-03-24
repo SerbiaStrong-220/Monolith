@@ -406,12 +406,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         if (shuttleGridUid != null && entity != null)
         {
-            navState = GetNavState(entity.Value, dockState.Docks);
+            navState = GetNavState(entity.Value, dockState.Docks, GetAllGrapLinks()); // Exodus - ShuttleHooks
             mapState = GetMapState(shuttleGridUid.Value);
         }
         else
         {
-            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: inertia dampening);
+            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<GrapplingLinkState>(), InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: inertia dampening); // Exodus - ShuttleHooks
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -523,10 +523,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <summary>
     /// Specific for a particular shuttle.
     /// </summary>
-    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity, Dictionary<NetEntity, List<DockingPortState>> docks)
+    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity, Dictionary<NetEntity, List<DockingPortState>> docks, List<GrapplingLinkState> grapLinks) // Exodus - ShuttleHooks
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, Shared._NF.Shuttles.Events.InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertia dampening
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, grapLinks, Shared._NF.Shuttles.Events.InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertia dampening // Exodus - ShuttleHooks
 
         // Get port names from the console component if available
         var portNames = new Dictionary<string, string>();
@@ -538,6 +538,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         return GetNavState(
             entity,
             docks,
+            grapLinks, // Exodus - ShuttleHooks
             entity.Comp2.Coordinates,
             entity.Comp2.LocalRotation,
             portNames);
@@ -546,13 +547,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public NavInterfaceState GetNavState(
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
-        List<GrapplingLinkState> grapLinks,
+        List<GrapplingLinkState> grapLinks, // Exodus - ShuttleHooks
         EntityCoordinates coordinates,
         Angle angle,
         Dictionary<string, string>? portNames = null)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertial dampening
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, grapLinks, InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertial dampening // Exodus - ShutlleHooks
 
         return new NavInterfaceState(
             entity.Comp1.MaxRange,
@@ -733,7 +734,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     }
 
     //Exodus - ShuttleHooks - Start
-    public Dictionary<NetEntity, GrapplingLinkState> GetAllGrapLinks()
+    public List<GrapplingLinkState> GetAllGrapLinks()
     {
         var result = new List<GrapplingLinkState>();
         var query = AllEntityQuery<ShipGrapplingGunTargetComponent, TransformComponent>();
@@ -742,7 +743,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             var grapXform = Transform(targetComp.Gun);
 
-            if (gunXform.MapID != xform.MapID || targetXform.MapID != xform.MapID)
+            if (grapXform.MapID != xform.MapID)
                 continue;
 
             var gunPos = grapXform.WorldPosition;

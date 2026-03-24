@@ -258,7 +258,7 @@ public sealed partial class FireControlSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        NavInterfaceState navState = _shuttleConsoleSystem.GetNavState(uid, _shuttleConsoleSystem.GetAllDocks());
+        NavInterfaceState navState = _shuttleConsoleSystem.GetNavState(uid, _shuttleConsoleSystem.GetAllDocks(), _shuttleConsoleSystem.GetAllGrapLinks()); // Exodus - ShuttleHooks
 
         List<FireControllableEntry> controllables = new();
         if (component.ConnectedServer != null && TryComp<FireControlServerComponent>(component.ConnectedServer, out var server))

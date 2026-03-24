@@ -106,7 +106,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     protected float _lastFireTime;
     protected const float FireRateLimit = 0.1f; // 100ms between shots
 
-    private List<GrapplingLinkState> _grapLinks; // Exodus - ShuttleHooks
+    private List<GrapplingLinkState> _grapLinks = new(); // Exodus - ShuttleHooks
 
     public ShuttleNavControl() : this(64f, 256f, 256f) { } // Mono
 

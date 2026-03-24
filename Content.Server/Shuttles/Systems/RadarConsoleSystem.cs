@@ -55,18 +55,15 @@ public sealed partial class RadarConsoleSystem : SharedRadarConsoleSystem // Fro
             NavInterfaceState state;
             var docks = _console.GetAllDocks();
 
-            // Exodus - ShuttleHooks - Start
-            var grapLinks = _console.GetAllGrapLinks();
-            state.GrapLinks = grapLinks;
-            // Expdus - ShuttleHooks - End
+            var grapLinks = _console.GetAllGrapLinks(); // Exodus - ShuttleHooks
 
             if (coordinates != null && angle != null)
             {
-                state = _console.GetNavState(uid, docks, grapLinks, coordinates.Value, angle.Value);
+                state = _console.GetNavState(uid, docks, grapLinks, coordinates.Value, angle.Value); // Exodus - ShuttleHooks
             }
             else
             {
-                state = _console.GetNavState(uid, docks, grapLinks);
+                state = _console.GetNavState(uid, docks, grapLinks); // Exodus - ShuttleHooks
             }
 
             state.RotateWithEntity = !component.FollowEntity;

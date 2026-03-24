@@ -163,7 +163,7 @@ public sealed class DroneControlSystem : EntitySystem
 
     private void UpdateState(EntityUid console)
     {
-        var nav = _shuttleConsole.GetNavState(console, _shuttleConsole.GetAllDocks());
+        var nav = _shuttleConsole.GetNavState(console, _shuttleConsole.GetAllDocks(), _shuttleConsole.GetAllGrapLinks()); // Exodus - ShuttleHooks
 
         var drones = new List<(NetEntity, NetEntity)>();
         var toRemove = new List<EntityUid>();
