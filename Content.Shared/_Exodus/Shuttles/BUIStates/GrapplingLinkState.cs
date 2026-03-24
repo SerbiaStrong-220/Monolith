@@ -1,3 +1,6 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
+
 using Robust.Shared.Serialization;
 namespace Content.Shared._Exodus.BUIStates;
 

@@ -1,3 +1,6 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
+
 using Content.Server.Shuttles.Events;
 using Content.Server._Exodus.SpaceArtillery.Components;
 using Content.Shared.Projectiles;
@@ -102,6 +105,9 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
         var targetGridComp = EnsureComp<ShipGrapplingTargetGridComponent>(targetGridUid.Value);
         targetGridComp.Gun = args.Weapon;
 
+        var ev = new ShipGrappleEvent();
+        RaiseLocalEvent(ev);
+
         Dirty(args.Embedded, targetComp);
     }
 
@@ -113,9 +119,12 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
         Ungrapple((component.Gun, grapComp), true);
     }
 
-        private void OnTargetTerminating(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
+    private void OnTargetTerminating(EntityUid uid, ShipGrapplingGunTargetComponent component, ref EntityTerminatingEvent args)
     {
         if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+            return;
+
+        if (grapComp.Target != uid)
             return;
 
         Ungrapple((component.Gun, grapComp), true);
@@ -124,6 +133,9 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
     private void OnProjectileTerminating(EntityUid uid, ShipGrapplingProjectileComponent component, ref EntityTerminatingEvent args)
     {
         if (!TryComp<ShipGrapplingGunComponent>(component.Gun, out var grapComp))
+            return;
+
+        if (grapComp.Projectile != uid)
             return;
 
         Ungrapple((component.Gun, grapComp), true);
@@ -161,9 +173,10 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
 
         _gun.ChangeBasicEntityAmmoCount(gun.Owner, 1);
 
-        Dirty(gun.Owner, gun.Comp);
+        var ev = new ShipUngrappleEvent();
+        RaiseLocalEvent(ev);
 
-        return;
+        Dirty(gun.Owner, gun.Comp);
     }
 
     protected override void PvsOverride(EntityUid uid)
@@ -180,3 +193,7 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
         _override.RemoveGlobalOverride(uid);
     }
 }
+
+public sealed class ShipGrappleEvent : EntityEventArgs {}
+
+public sealed class ShipUngrappleEvent : EntityEventArgs {}

@@ -32,6 +32,7 @@ using Content.Shared._Mono.Ships.Components;
 using Content.Shared.Verbs;
 using Content.Shared._Exodus.BUIStates; // Exodus
 using Content.Shared._Exodus.SpaceArtillery.Components; //Exodus
+using Content.Server._Exodus.SpaceArtillery; // Exodus
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -101,6 +102,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<FTLDestinationComponent, ComponentStartup>(OnFtlDestStartup);
         SubscribeLocalEvent<FTLDestinationComponent, ComponentShutdown>(OnFtlDestShutdown);
 
+        SubscribeLocalEvent<ShipGrappleEvent>(OnShipGrapple);
+        SubscribeLocalEvent<ShipUngrappleEvent>(OnShipUngrapple);
+
         InitializeFTL();
 
         InitializeNFDrone(); // Frontier: add our drone subscriptions
@@ -125,6 +129,18 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         RefreshShuttleConsoles();
     }
+
+    // Exodus - ShuttleHooks - Start
+    private void OnShipGrapple(ShipGrappleEvent ev)
+    {
+        RefreshShuttleConsoles();
+    }
+
+    private void OnShipUngrapple(ShipUngrappleEvent ev)
+    {
+        RefreshShuttleConsoles();
+    }
+    // Exodus - ShuttleHooks - End
 
     /// <summary>
     /// Refreshes all the shuttle console data for a particular grid.

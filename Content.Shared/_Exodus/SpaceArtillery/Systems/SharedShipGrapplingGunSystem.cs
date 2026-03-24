@@ -1,3 +1,6 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
+
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Misc;

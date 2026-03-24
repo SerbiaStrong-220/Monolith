@@ -1,3 +1,6 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: DarkBanOne
+
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
