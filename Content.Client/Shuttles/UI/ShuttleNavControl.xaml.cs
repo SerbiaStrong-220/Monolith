@@ -299,7 +299,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         _docks = state.Docks;
 
-        _grapLinks = state.GrapLinks;
+        _grapLinks = state.GrapLinks; // Exodus - ShuttleHooks
 
         NfUpdateState(state); // Frontier Update State
     }
@@ -1031,8 +1031,12 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     {
         foreach ( var link in _grapLinks)
         {
-            var gunPosInView = Vector2.Transform(link.GunPos, worldToView);
-            var targetPosInView = Vector2.Transform(link.TargetPos, worldToView);
+            if (!EntManager.TryGetComponent<TransformComponent>(EntManager.GetEntity(link.Gun), out var gunXform)
+                || !EntManager.TryGetComponent<TransformComponent>(EntManager.GetEntity(link.Target), out var targetXform))
+                continue;
+
+            var gunPosInView = Vector2.Transform(_transform.GetWorldPosition(EntManager.GetEntity(link.Gun)), worldToView);
+            var targetPosInView = Vector2.Transform(_transform.GetWorldPosition(EntManager.GetEntity(link.Target)), worldToView);
 
             if (monoViewBounds.Contains(gunPosInView) || monoViewBounds.Contains(targetPosInView))
             {

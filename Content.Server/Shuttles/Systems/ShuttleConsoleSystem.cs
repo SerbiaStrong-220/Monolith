@@ -737,19 +737,11 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public List<GrapplingLinkState> GetAllGrapLinks()
     {
         var result = new List<GrapplingLinkState>();
-        var query = AllEntityQuery<ShipGrapplingGunTargetComponent, TransformComponent>();
+        var query = AllEntityQuery<ShipGrapplingGunTargetComponent>();
 
-        while (query.MoveNext(out var uid, out var targetComp, out var xform))
+        while (query.MoveNext(out var uid, out var targetComp))
         {
-            var grapXform = Transform(targetComp.Gun);
-
-            if (grapXform.MapID != xform.MapID)
-                continue;
-
-            var gunPos = grapXform.WorldPosition;
-            var targetPos = xform.WorldPosition;
-
-            var state = new GrapplingLinkState(gunPos, targetPos);
+            var state = new GrapplingLinkState(GetNetEntity(targetComp.Gun), GetNetEntity(uid));
 
             result.Add(state);
         }

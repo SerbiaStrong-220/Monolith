@@ -1,6 +1,4 @@
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using System.Numerics;
 namespace Content.Shared._Exodus.BUIStates;
 
 /// <summary>
@@ -9,12 +7,12 @@ namespace Content.Shared._Exodus.BUIStates;
 [Serializable, NetSerializable]
 public sealed class GrapplingLinkState
 {
-    public Vector2 GunPos;
-    public Vector2 TargetPos;
+    public NetEntity Gun;
+    public NetEntity Target;
 
-    public GrapplingLinkState(Vector2 gunPos, Vector2 targetPos)
+    public GrapplingLinkState(NetEntity gun, NetEntity target)
     {
-        GunPos = gunPos;
-        TargetPos = targetPos;
+        Gun = gun;
+        Target = target;
     }
 }
