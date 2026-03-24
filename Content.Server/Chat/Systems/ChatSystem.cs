@@ -752,11 +752,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         var ev = new EntitySpokeEvent(source, message, originalMessage, null, null, language); // Einstein Engines - Languages
         RaiseLocalEvent(source, ev, true);
 
-        // SS220 languages begin
-        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, obfuscatedMessage, languageMessage, frequency);
-        RaiseLocalEvent(source, ev, true);
-
-        // SS220 languages end
         if (!hideLog)
             if (originalMessage == message)
             {
