@@ -49,6 +49,6 @@
   id: WeaponHarpoonBorodinskiy
   name: KA-H BORODINSKIY
   description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
-  compoennts:
+  components:
   - type: ShipGrapplingGun
     maxLength: 700
