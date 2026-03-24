@@ -33,7 +33,6 @@
         hard: false
         mask:
           - Impassable
-          - HighImpassable
   - type: RadarBlip
     scale: 1.5
     requireNoGrid: true

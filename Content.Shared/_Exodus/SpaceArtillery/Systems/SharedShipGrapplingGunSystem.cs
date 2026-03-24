@@ -2,10 +2,7 @@
 // Authors: DarkBanOne
 
 using Content.Shared.Physics;
-using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Misc;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared._Exodus.SpaceArtillery.Components;
 using System.Numerics;

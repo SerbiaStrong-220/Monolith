@@ -4,20 +4,13 @@
 using Content.Server.Shuttles.Events;
 using Content.Server._Exodus.SpaceArtillery.Components;
 using Content.Shared.Projectiles;
-using Content.Shared.Physics;
 using Content.Shared.Weapons.Misc;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared._Exodus.SpaceArtillery;
 using Content.Shared._Exodus.SpaceArtillery.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Server.GameStates;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Physics.Dynamics.Joints;
 using System.Numerics;
 
 namespace Content.Server._Exodus.SpaceArtillery;
@@ -32,7 +25,9 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PvsOverrideSystem _override = default!;
 
-    private const string ID = "ship_grappling_gun";
+    private EntityQuery<ShipGrapplingGunComponent> _grapQuerry;
+
+    private const string JointID = "ship_grappling_gun";
 
     public override void Initialize()
     {
@@ -43,18 +38,19 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
 
         SubscribeLocalEvent<ShipGrapplingGunTargetComponent, EntityTerminatingEvent>(OnTargetTerminating);
         SubscribeLocalEvent<ShipGrapplingProjectileComponent, EntityTerminatingEvent>(OnProjectileTerminating);
+
+        _grapQuerry = GetEntityQuery<ShipGrapplingGunComponent>();
     }
 
     public override void Update(float frameTime)
     {
-        var projQuerry = EntityManager.EntityQueryEnumerator<ShipGrapplingProjectileComponent, TransformComponent>();
-        var grapQuerry = EntityManager.GetEntityQuery<ShipGrapplingGunComponent>();
+        var projQuerry = EntityQueryEnumerator<ShipGrapplingProjectileComponent, TransformComponent>();
 
         while (projQuerry.MoveNext(out var uid, out var projComp, out var xform))
         {
             var gunUid = projComp.Gun;
 
-            if (!grapQuerry.TryGetComponent(gunUid, out var grapComp))
+            if (!_grapQuerry.TryGetComponent(gunUid, out var grapComp))
                 continue;
 
             var currentCoords = xform.Coordinates;
@@ -63,7 +59,7 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
                 continue;
 
             if (distance >= grapComp.MaxLength)
-                Ungrapple(new Entity<ShipGrapplingGunComponent>(gunUid, grapComp), false);
+                Ungrapple((gunUid, grapComp), false);
         }
     }
 
@@ -87,8 +83,9 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
         var anchorA = Vector2.Transform(gunPos, _transform.GetInvWorldMatrix(gunGridUid.Value));
         var anchorB = Vector2.Transform(targetPos, _transform.GetInvWorldMatrix(targetGridUid.Value));
 
-        var joint = _joints.CreateDistanceJoint(gunGridUid.Value, targetGridUid.Value, anchorA, anchorB, id: $"{ID}_{args.Weapon}");
+        var joint = _joints.CreateDistanceJoint(gunGridUid.Value, targetGridUid.Value, anchorA, anchorB, id: $"{JointID}_{args.Weapon}");
 
+        joint.MinLength = 0;
         joint.MaxLength = joint.Length + grapComp.JointOffset;
         joint.Stiffness = grapComp.Stiffness;
 

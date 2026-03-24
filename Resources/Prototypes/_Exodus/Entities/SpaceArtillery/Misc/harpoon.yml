@@ -3,7 +3,8 @@
 
 - type: entity
   parent: BallisticArtilleryBase
-  id: Harpoon
+  id: WeaponHarpoonBase
+  abstract: true
   name: harpoon
   description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
   components:
@@ -36,3 +37,18 @@
   - type: BasicEntityAmmoProvider
     proto: HarpoonHook
     capacity: 1
+
+- type: entity
+  parent: WeaponHarpoonBase
+  id: WeaponHarpoonGusar
+  name: KA-S1 GUSAR
+  description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
+
+- type: entity
+  parent: WeaponHarpoonBase
+  id: WeaponHarpoonBorodinskiy
+  name: KA-H BORODINSKIY
+  description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
+  compoennts:
+  - type: ShipGrapplingGun
+    maxLength: 700
