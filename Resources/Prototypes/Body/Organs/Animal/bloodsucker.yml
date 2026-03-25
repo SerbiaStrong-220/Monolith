@@ -18,7 +18,7 @@
 
 - type: entity
   id: OrganBloodsuckerHeart
-  parent: OrganSpaceAnimalHeart # Mono Edit - Immunity to Pressure Loss
+  parent: OrganAnimalHeart # Exodus | no access to space organs
   name: space bloodsucker heart # Mono
 #  categories: [ HideSpawnMenu ]
   components:
