@@ -78,6 +78,10 @@
       state: default
   - type: ShowJobIcons
   - type: AdvancedPilot # can use both gunnery and shuttle console even on capitals
+  # SS220 Holopad adapt begin
+  - type: TTS
+    randomVoicesList: Borg
+  # SS220 Holopad adapt end
 
 - type: entity
   id: AiHeldIntellicard

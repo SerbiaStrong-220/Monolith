@@ -42,6 +42,7 @@
   - type: CameraRecoil
   - type: MindContainer
   - type: MovementSpeedModifier
+  - type: TTS # Corvax-TTS
   - type: RequireProjectileTarget
     active: False
   - type: AnimatedEmotes # goob edit - animated emotes

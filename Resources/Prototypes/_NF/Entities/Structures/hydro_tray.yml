@@ -32,3 +32,5 @@
         visible: false
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard # Exodus-Sprite-End
+  - type: TTS # Corvax-TTS
+    voice: adventure_core
