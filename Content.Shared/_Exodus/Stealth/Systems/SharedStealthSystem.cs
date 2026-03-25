@@ -25,37 +25,8 @@ public abstract class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, GetVisibilityModifiersEvent>(OnGetVisibilityModifiers);
         SubscribeLocalEvent<StealthComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<StealthComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
         SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
-    }
-
-    private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
-    {
-        if (IsVisible(uid))
-            return;
-
-        if (!TryGetMinVisibilityData(uid, out var data))
-            return;
-
-        if (data != null)
-        {
-            if (GetVisibility(uid, component) > data.ExamineThreshold)
-                return;
-
-            // Don't block examine for owner or children of the cloaked entity.
-            // Containers and the like should already block examining, so not bothering to check for occluding containers.
-            var source = args.Examiner;
-            do
-            {
-                if (source == uid)
-                    return;
-                source = Transform(source).ParentUid;
-            }
-            while (source.IsValid());
-
-            args.Cancel();
-        }
     }
 
     private void OnExamined(EntityUid uid, StealthComponent component, ExaminedEvent args)
