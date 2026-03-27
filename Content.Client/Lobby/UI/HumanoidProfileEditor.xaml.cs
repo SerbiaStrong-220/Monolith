@@ -220,6 +220,10 @@ namespace Content.Client.Lobby.UI
 
             RefreshSpecies();
 
+            // Corvax-TTS-Start
+            InitializeVoice();
+            // Corvax-TTS-End
+
             SpeciesButton.OnItemSelected += args =>
             {
                 SpeciesButton.SelectId(args.Id);
