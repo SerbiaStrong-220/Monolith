@@ -34,7 +34,8 @@ def main():
 
     data = {
         "version": VERSION,
-        "engineVersion": get_engine_version(),
+        # В репозитории нет тегов. Пока не смог выяснить почему, поэтому версия Robust задана жёстко
+        "engineVersion": "272.0.0" # get_engine_version(),
     }
     headers = {
         "Content-Type": "application/json"
