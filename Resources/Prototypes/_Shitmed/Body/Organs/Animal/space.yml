@@ -70,14 +70,12 @@
   components:
   - type: Organ
     onAdd:
-#Exodus - RefactorStealthSystem - Begin
-    - type: InstantStealth
+    - type: ActiveCloak # Exodus-Balance
       stealth:
         minVisibility: 0.2
         maxVisibility: 0.9
-        passiveVisibilityRate: -0.25
+        passiveVisibilityRate: -0.20
         movementVisibilityRate: 0.28
-#Exodus - RefactorStealthSystem - End
     - type: PointLight # Mono
       radius: 1.2
       energy: 5

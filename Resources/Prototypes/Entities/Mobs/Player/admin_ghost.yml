@@ -20,6 +20,7 @@
   - type: Ghost
     canInteract: true
   - type: GhostHearing
+  - type: GhostHiding # Exodus-Better-Aghost
   - type: Hands
   - type: ComplexInteraction
   - type: Puller
@@ -42,18 +43,18 @@
     - Pirate # Frontier
   - type: UserInterface
     interfaces:
+      # enum.SolarControlConsoleUiKey.Key: # Exodus-Better-Aghost
+      #   type: SolarControlConsoleBoundUserInterface
       #ss220 add filter tts for ghost start
       enum.GhostHearingKey.Key:
         type: GhostHearingBoundUserInterface
       #ss220 add filter tts for ghost end
-      enum.SolarControlConsoleUiKey.Key:
-        type: SolarControlConsoleBoundUserInterface
       enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
-      enum.CargoConsoleUiKey.Orders:
-        type: CargoOrderConsoleBoundUserInterface
+      # enum.CargoConsoleUiKey.Orders: # Exodus-Better-Aghost
+      #   type: CargoOrderConsoleBoundUserInterface
       enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
       enum.GeneralStationRecordConsoleKey.Key:
@@ -61,19 +62,19 @@
         type: GeneralStationRecordConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
-      enum.SolarControlConsoleUiKey.Key:
-        toggleAction: ActionAGhostShowSolar
+      # enum.SolarControlConsoleUiKey.Key: # Exodus-Better-Aghost
+      #   toggleAction: ActionAGhostShowSolar
       enum.CommunicationsConsoleUiKey.Key:
         toggleAction: ActionAGhostShowCommunications
       enum.RadarConsoleUiKey.Key:
         toggleAction: ActionAGhostShowRadar
-      enum.CargoConsoleUiKey.Orders:
-        toggleAction: ActionAGhostShowCargo
+      # enum.CargoConsoleUiKey.Orders: # Exodus-Better-Aghost
+      #   toggleAction: ActionAGhostShowCargo
       enum.CrewMonitoringUIKey.Key:
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
-  - type: SolarControlConsole # look ma i AM the computer!
+  # - type: SolarControlConsole # look ma i AM the computer! # Exodus-Better-Aghost
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
@@ -86,10 +87,11 @@
     maxIffRange: null # Frontier
   - type: DetectionRangeMultiplier # Mono
     alwaysDetect: true
-  - type: CargoOrderConsole
-    taxAccounts: # Frontier
-      Frontier: 0 # Mono - Tax Removed
-      Nfsd: 0 # Mono - Tax removed
+  # Exodus-Better-Aghost
+  # - type: CargoOrderConsole
+  #   taxAccounts: # Frontier
+  #     Frontier: 0 # Mono - Tax Removed
+  #     Nfsd: 0 # Mono - Tax removed
   - type: BankClient
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole

@@ -1,0 +1,54 @@
+# (c) Space Exodus Team - EXDS-RL with CLA
+# Authors: DarkBanOne
+
+- type: entity
+  parent: BallisticArtilleryBase
+  id: WeaponHarpoonBase
+  abstract: true
+  name: harpoon
+  description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/SpaceArtillery/harpoon.rsi
+    layers:
+      - state: base
+      - state: base-unshaded
+        map: [ "unshaded" ]
+        visible: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { state: base-unshaded }
+          False: { state: base-unshaded-off }
+  - type: ShipGrapplingGun
+  - type: FireControlRotate
+  - type: Gun
+    projectileSpeed: 200
+    fireRate: 0.2
+    shootThermalSignature: 2000000
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+  - type: ShipGunType
+    shipType: Ballistic
+  - type: ShipGunClass
+    shipClass: Medium
+  - type: BasicEntityAmmoProvider
+    proto: HarpoonHook
+    capacity: 1
+
+- type: entity
+  parent: WeaponHarpoonBase
+  id: WeaponHarpoonGusar
+  name: KA-S1 GUSAR
+  description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
+
+- type: entity
+  parent: WeaponHarpoonBase
+  id: WeaponHarpoonBorodinskiy
+  name: KA-H BORODINSKIY
+  description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
+  components:
+  - type: ShipGrapplingGun
+    maxLength: 700

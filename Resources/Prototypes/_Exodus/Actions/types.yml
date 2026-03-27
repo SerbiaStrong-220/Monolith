@@ -1,7 +1,7 @@
 - type: entity
   id: ActionToggleActiveCloak
-  name: action-name-active-cloak-toggle
-  description: action-description-active-cloak-toggle
+  name: Toggle active cloak
+  description: Turn on or off your active cloak device
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -12,3 +12,16 @@
       sprite: Interface/Actions/actions_ai.rsi
       state: ai_core
     event: !type:ToggleActiveCloakEvent
+
+- type: entity
+  id: ActionToggleGhostHiding
+  name: Toggle hiding
+  description: Hides you from other observers making you visible only for admins
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core
+    event: !type:ToggleGhostHidingActionEvent {}

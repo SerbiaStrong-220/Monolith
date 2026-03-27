@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "Created by neo33o1 (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "hook"
+    }
+  ]
+}

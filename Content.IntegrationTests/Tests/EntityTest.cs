@@ -42,6 +42,7 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !pair.IsTestPrototype(p))
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
+                    .Where(p => p.Categories.All(x => x.ID != SpawnerCategory)) // mono
                     .Select(p => p.ID)
                     .ToList();
 
@@ -107,6 +108,7 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
                     .Where(p => !p.Components.ContainsKey("GridSpawner")) // Mono - We shouldn't spawn grids.
                     .Where(p => !p.Components.ContainsKey("TailedEntity")) // Exodus | Honestly I don't know what is broking test, call stack doesn't gives anything usefull, the error is outside of any changed code for TailedEntitySystem
+                    .Where(p => p.Categories.All(x => x.ID != SpawnerCategory)) // mono
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -168,6 +170,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
+                .Where(p => p.Categories.All(x => x.ID != SpawnerCategory)) // mono
                 .Select(p => p.ID)
                 .ToList();
 
@@ -399,6 +402,7 @@ namespace Content.IntegrationTests.Tests
                 "ActivatableUI", // Frontier: Requires enum key
                 "AlertLevel", // Frontier: requires alert set
                 "BluespaceErrorRule", // Frontier
+                "GridSpawner", // mono - i wouldn't
             };
 
             await using var pair = await PoolManager.GetServerClient();

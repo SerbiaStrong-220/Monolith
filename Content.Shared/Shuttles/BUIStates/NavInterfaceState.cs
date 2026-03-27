@@ -2,6 +2,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using System.Numerics;
 using Content.Shared._NF.Shuttles.Events; // Frontier - InertiaDampeningMode access
+using Content.Shared._Exodus.BUIStates; // Exodus - ShuttleHooks
 
 namespace Content.Shared.Shuttles.BUIStates;
 
@@ -54,11 +55,14 @@ public sealed class NavInterfaceState
     public bool Pannable = true; // Mono
     public bool RelativePanning = false; // Mono
 
+    public List<GrapplingLinkState> GrapLinks; //Exodus - ShuttleHooks
+
     public NavInterfaceState(
         float maxRange,
         NetCoordinates? coordinates,
         Angle? angle,
         Dictionary<NetEntity, List<DockingPortState>> docks,
+        List<GrapplingLinkState> grapLinks,// Exodus - ShuttleHooks
         InertiaDampeningMode dampeningMode, // Frontier: add dampeningMode
         bool hideTarget, // Frontier
         Vector2? target, // Frontier
@@ -67,7 +71,8 @@ public sealed class NavInterfaceState
         bool hideCoords, // Frontier
         Dictionary<string, string>? networkPortNames = null,
         bool pannable = true, // Mono
-        bool relativePan = false) // Mono
+        bool relativePan = false // Mono
+        )
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
@@ -82,6 +87,7 @@ public sealed class NavInterfaceState
         NetworkPortNames = networkPortNames ?? new Dictionary<string, string>();
         Pannable = pannable; // Mono
         RelativePanning = relativePan; // Mono
+        GrapLinks = grapLinks;
     }
 }
 

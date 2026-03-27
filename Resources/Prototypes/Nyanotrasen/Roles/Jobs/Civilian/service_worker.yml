@@ -13,6 +13,7 @@
   weight: 60 # Frontier
   displayWeight: 10 # Frontier
   salary: 7000 # Exodus-Salary
+  assignedCompany: Colonial
   canBeAntag: false
   access:
   - Maintenance

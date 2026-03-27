@@ -30,6 +30,9 @@ using Content.Server.Station.Components;
 using Content.Shared._Mono.FireControl;
 using Content.Shared._Mono.Ships.Components;
 using Content.Shared.Verbs;
+using Content.Shared._Exodus.BUIStates; // Exodus
+using Content.Shared._Exodus.SpaceArtillery.Components; //Exodus
+using Content.Server._Exodus.SpaceArtillery; // Exodus
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -99,6 +102,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<FTLDestinationComponent, ComponentStartup>(OnFtlDestStartup);
         SubscribeLocalEvent<FTLDestinationComponent, ComponentShutdown>(OnFtlDestShutdown);
 
+        SubscribeLocalEvent<ShipGrappleEvent>(OnShipGrapple);
+        SubscribeLocalEvent<ShipUngrappleEvent>(OnShipUngrapple);
+
         InitializeFTL();
 
         InitializeNFDrone(); // Frontier: add our drone subscriptions
@@ -123,6 +129,18 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         RefreshShuttleConsoles();
     }
+
+    // Exodus - ShuttleHooks - Start
+    private void OnShipGrapple(ShipGrappleEvent ev)
+    {
+        RefreshShuttleConsoles();
+    }
+
+    private void OnShipUngrapple(ShipUngrappleEvent ev)
+    {
+        RefreshShuttleConsoles();
+    }
+    // Exodus - ShuttleHooks - End
 
     /// <summary>
     /// Refreshes all the shuttle console data for a particular grid.
@@ -404,12 +422,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         if (shuttleGridUid != null && entity != null)
         {
-            navState = GetNavState(entity.Value, dockState.Docks);
+            navState = GetNavState(entity.Value, dockState.Docks, GetAllGrapLinks()); // Exodus - ShuttleHooks
             mapState = GetMapState(shuttleGridUid.Value);
         }
         else
         {
-            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: inertia dampening);
+            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<GrapplingLinkState>(), InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: inertia dampening); // Exodus - ShuttleHooks
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -521,10 +539,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <summary>
     /// Specific for a particular shuttle.
     /// </summary>
-    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity, Dictionary<NetEntity, List<DockingPortState>> docks)
+    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity, Dictionary<NetEntity, List<DockingPortState>> docks, List<GrapplingLinkState> grapLinks) // Exodus - ShuttleHooks
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, Shared._NF.Shuttles.Events.InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertia dampening
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, grapLinks, Shared._NF.Shuttles.Events.InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertia dampening // Exodus - ShuttleHooks
 
         // Get port names from the console component if available
         var portNames = new Dictionary<string, string>();
@@ -536,6 +554,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         return GetNavState(
             entity,
             docks,
+            grapLinks, // Exodus - ShuttleHooks
             entity.Comp2.Coordinates,
             entity.Comp2.LocalRotation,
             portNames);
@@ -544,18 +563,20 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public NavInterfaceState GetNavState(
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
+        List<GrapplingLinkState> grapLinks, // Exodus - ShuttleHooks
         EntityCoordinates coordinates,
         Angle angle,
         Dictionary<string, string>? portNames = null)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertial dampening
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, grapLinks, InertiaDampeningMode.Dampen, true, null, null, null, false); // Frontier: add inertial dampening // Exodus - ShutlleHooks
 
         return new NavInterfaceState(
             entity.Comp1.MaxRange,
             GetNetCoordinates(coordinates),
             angle,
             docks,
+            grapLinks, // Exodus - ShuttleHooks
             _shuttle.NfGetInertiaDampeningMode(entity), // Frontier: inertia dampening
             entity.Comp1.HideTarget, // Frontier
             entity.Comp1.Target, // Frontier
@@ -727,4 +748,21 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         jobSlotsComp.SavedJobSlots.Clear();
         jobSlotsComp.OwningStation = null;
     }
+
+    //Exodus - ShuttleHooks - Start
+    public List<GrapplingLinkState> GetAllGrapLinks()
+    {
+        var result = new List<GrapplingLinkState>();
+        var query = AllEntityQuery<ShipGrapplingGunTargetComponent>();
+
+        while (query.MoveNext(out var uid, out var targetComp))
+        {
+            var state = new GrapplingLinkState(GetNetEntity(targetComp.Gun), GetNetEntity(uid));
+
+            result.Add(state);
+        }
+
+        return result;
+    }
+    //Exodus - ShuttleHooks - End
 }

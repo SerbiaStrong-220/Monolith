@@ -87,13 +87,14 @@
     interactFailureSound:
       path: /Audio/Effects/bite.ogg
   - type: Carriable # DeltaV
-  - type: Body # Shitmed: Special carp organs
-    prototype: Carp
-  - type: SurgeryTarget # Shitmed
-  - type: UserInterface # Shitmed
-    interfaces:
-      enum.SurgeryUIKey.Key:
-        type: SurgeryBui
+  # Exodus | no access to space organs
+  # - type: Body # Shitmed: Special carp organs
+  #   prototype: Carp
+  # - type: SurgeryTarget # Shitmed
+  # - type: UserInterface # Shitmed
+  #   interfaces:
+  #     enum.SurgeryUIKey.Key:
+  #       type: SurgeryBui
   - type: NightVision # Goobstation - Nigthvision
     activateSound: null
     deactivateSound: null

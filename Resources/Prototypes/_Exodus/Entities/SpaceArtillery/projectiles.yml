@@ -1,0 +1,41 @@
+# (c) Space Exodus Team - EXDS-RL with CLA
+# Authors: DarkBanOne
+
+- type: entity
+  id: HarpoonHook
+  name: harpoon hook
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EmbeddableProjectile
+    deleteOnRemove: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: false
+    sprite: _Exodus/Objects/SpaceArtillery/hook.rsi
+    layers:
+      - state: hook
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+          - Impassable
+  - type: RadarBlip
+    scale: 1.5
+    requireNoGrid: true
+    shape: triangle
+    radarColor: "#1df1f5"
+  - type: ShipGrapplingProjectile

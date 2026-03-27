@@ -481,6 +481,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
     {
+        if (_net.IsClient) //Exodus: space hooks
+            return;
+
         foreach (var embedded in container.Comp.EmbeddedObjects)
         {
             if (!TryComp<EmbeddableProjectileComponent>(embedded, out var embeddedComp))

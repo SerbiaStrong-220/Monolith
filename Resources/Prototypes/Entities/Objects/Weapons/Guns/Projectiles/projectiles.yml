@@ -170,7 +170,7 @@
     radius: 2.0
     energy: 7.0
   - type: IgniteOnCollide
-    fireStacks: 0.25
+    fireStacks: 0.4 # Mono
   - type: Tracer # Mono
     color: "#D1B479FF"
     length: 3
@@ -492,6 +492,8 @@
     muzzleFlash: HitscanEffect
   - type: TimedDespawn
     lifetime: 1.5 # Frontier 1.5<1, Monolith 1<1.5
+  - type: ChunkLoader
+    loadingDistance: 16
   - type: PointLight
     radius: 2.5
     color: "#FF8888" # Frontier: white<FF8888
@@ -499,6 +501,16 @@
   - type: GatheringProjectile
   - type: MiningGatheringSoft # mono
   - type: MiningGatheringHard # mono
+
+- type: entity # Mono, splits exo PKA from ship PKA
+  id: BulletKineticExosuit
+  parent: BulletKineticShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    noDamageDelete: false
+  - type: GatheringProjectile
+    amount: 8
 
 - type: entity
   id: BulletCharge

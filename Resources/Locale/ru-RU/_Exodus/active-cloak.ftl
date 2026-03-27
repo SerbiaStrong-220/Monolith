@@ -1,5 +1,5 @@
-action-name-active-cloak-toggle = Переключить активный камуфляж
-action-description-active-cloak-toggle = Активировать или деактивировать ваше устройство активного камуфляжа.
+ent-ActionToggleActiveCloak = Переключить активный камуфляж
+    .desc = Активировать или деактивировать ваше устройство активного камуфляжа.
 
 active-cloak-enabled = Камуфляж активирован.
 active-cloak-disabled = Камуфляж деактивирован.

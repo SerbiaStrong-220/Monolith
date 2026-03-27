@@ -39,5 +39,5 @@ hud-chatbox-highlights-placeholder =
     @УристМакЧеловек
     "Капитан"
     МедОтдел
-hud-chatbox-select-channel-CollectiveMind = Collective Mind
-hud-chatbox-channel-CollectiveMind = Collective Mind
+hud-chatbox-select-channel-CollectiveMind = Телепатия
+hud-chatbox-channel-CollectiveMind = Телепатия

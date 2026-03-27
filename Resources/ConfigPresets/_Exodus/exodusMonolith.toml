@@ -1,0 +1,76 @@
+[net]
+tickrate = 30
+max_connections = 60
+lidgren_log_warning = false
+lidgren_log_error = false
+log_late_msg = false
+
+[game]
+hostname = "[RU] ✨ Exodus: Monolith [Frontier]"
+desc = "✨ \"Exodus: Monolith\" - это проект режима Frontier построенный вокруг игрока и кораблей, эпичных корабельных сражений, а также имеющий простой и ясный набор правил.\nУ нас вы встретите:\n- ☄️ Блюспейс прыжки по карте\n- ⚔️ Мощная корабельная артиллерия\n- 📥 Авто-погрузчики боеприпасов\n- 🛡 Корабельные щиты\n- 💥 Коллизии шаттлов\n- 📜 Новый запоминающийся лор\n\nПовышенный ролевой отыгрыш поощряется, но строгих требований нет, просто соблюдайте правила\n\nПроект \"Исход\" давний проект, что вновь возродился. Сервер работает в сессионном формате, проводя раунды лишь по определённым дням.\nПрисоединяйтесь к нашему Discord, чтобы быть в курсе о времени сессий и обновлениях!"
+lobbyenabled = true
+role_timers = false
+soft_max_players = 70
+
+[hub]
+advertise = 1
+tags = "lang:ru, rp:med, region:eu_w"
+hub_urls = "https://hub.spacestation14.com/,https://hub.singularity14.co.uk/"
+
+[game.dynamic_roles]
+enabled = false
+
+[chat]
+motd = "Добро пожаловать на открытую сессию Space Exodus!\nРусская локализация неполная. Пожалуйста, сообщайте о багах.\nЕсли вам нужна помощь, то не стесняйтесь просить помощи в AHelp.\nВ нашем Discord доступны рендеры всех шаттлов.\nУ нас также открыт OOC канал для помощи по игровым механикам, избегайте его использования для общения.\nПриятной игры!"
+
+[server]
+rules_file = "ExodusRuleset"
+
+[console]
+loginlocal = false
+login_host_user = "Fragoler"
+
+[admin]
+new_player_join_sound = true
+deadmin_on_join = true
+server_ban_erase_player = true
+admins_count_in_playercount = true
+see_own_notes = true
+
+[atmos]
+space_wind = true
+
+[shuttle]
+auto_call_time = 470
+mass_limit = 0
+
+[shuttle.impact]
+minimum_velocity = 105
+
+[viewport]
+maximum_width = 30
+
+[infolinks]
+discord = "https://discord.gg/yZKf8cQVHC"
+
+[ooc]
+show_ooc_patron_color = false
+enabled = false
+
+[rules]
+time = 30
+
+[replay]
+auto_record = false
+
+[ic]
+flavor_text = true
+
+[vote]
+preset_enabled = false
+
+[surgery]
+can_operate_on_self = false
+
+[nf14.salvage]
+expedition_rewards_enabled = true

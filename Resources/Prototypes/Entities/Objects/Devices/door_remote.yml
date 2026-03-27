@@ -158,7 +158,13 @@
   - type: Access
     groups:
     - AllAccess
+    - USSPAA # Exodus
     tags:
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard # Exodus
+    - Pirate # Exodus
+    - TsfmcEngineering # Exodus
+    - GrandVizier # Exodus
+    - PDVCommand # Exodus

@@ -1,0 +1,23 @@
+- type: guideEntry
+  id: BasicLore
+  name: guide-entry-lore
+  text: "/ServerInfo/_Exodus/Guidebook/Lore/BasicLore.xml"
+  children:
+  - PhaethonDynasty
+  - TransSolarFederation
+  - UnitedSovietSocialistPlanets
+
+- type: guideEntry
+  id: PhaethonDynasty
+  name: guide-entry-phaethon-dynasty
+  text: "/ServerInfo/_Exodus/Guidebook/Lore/PhaethonDynasty.xml"
+
+- type: guideEntry
+  id: TransSolarFederation
+  name: guide-entry-trans-solar-federation
+  text: "/ServerInfo/_Exodus/Guidebook/Lore/TransSolarFederation.xml"
+
+- type: guideEntry
+  id: UnitedSovietSocialistPlanets
+  name: guide-entry-united-soviet-socialist-planets
+  text: "/ServerInfo/_Exodus/Guidebook/Lore/UnitedSovietSocialistPlanets.xml"

@@ -13,6 +13,7 @@
   weight: 100
   salary: 5000 # Exodus-Salary
   displayWeight: 40
+  assignedCompany: Colonial
   canBeAntag: false
   access:
   - Service

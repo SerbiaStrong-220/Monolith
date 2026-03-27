@@ -864,7 +864,7 @@
     - Wizard
     - Pirate # Mono
     - TsfmcEngineering # Mono
-    - GrandVizier
+    - GrandVizier # Mono
     - PDVCommand # Mono
   - type: Tag #  Ignore Chameleon tags
     tags:

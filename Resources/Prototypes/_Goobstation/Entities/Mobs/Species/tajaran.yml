@@ -107,7 +107,7 @@
     normalBodyTemperature: 311.76
   - type: Inventory
     speciesId: reptilian
-    # WWDP-Edit-Start
+    # Exodus-Start
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
@@ -130,7 +130,8 @@
           32:
             sprite: _White/Mobs/Species/displacement.rsi
             state: shoes
-    # WWDP-Edit-End
+    # Exodus-End
+  - type: Wagging # Exodus
   - type: Reactive
     groups:
       Flammable: [ Touch ]

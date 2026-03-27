@@ -10,6 +10,7 @@
   alwaysUseSpawner: true
   icon: "JobIconSecurityGuard"
   supervisors: job-supervisors-sr
+  assignedCompany: Colonial
   weight: 80
   salary: 8000 # Exodus-Salary
   displayWeight: 20 # Second from the bottom
