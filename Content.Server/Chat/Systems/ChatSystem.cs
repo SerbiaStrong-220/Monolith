@@ -163,9 +163,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         IConsoleShell? shell = null,
         ICommonSession? player = null, string? nameOverride = null,
         bool checkRadioPrefix = true,
-        bool ignoreActionBlocker = false)
+        bool ignoreActionBlocker = false,
+        bool bypassEnglishFilter = false)
     {
-        TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, hideLog, shell, player, nameOverride, checkRadioPrefix, ignoreActionBlocker);
+        TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, hideLog, shell, player, nameOverride, checkRadioPrefix, ignoreActionBlocker, bypassEnglishFilter: bypassEnglishFilter);
     }
 
     /// <summary>
@@ -190,7 +191,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? nameOverride = null,
         bool checkRadioPrefix = true,
         bool ignoreActionBlocker = false,
-        LanguagePrototype? languageOverride = null // Einstein Engines - Language
+        LanguagePrototype? languageOverride = null, // Einstein Engines - Language
+        bool bypassEnglishFilter = false
         )
     {
         if (HasComp<GhostComponent>(source))
@@ -246,7 +248,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
             || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
 
-        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
+        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI, bypassEnglishFilter);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -1047,7 +1049,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true, bool bypassEnglishFilter = false)
     {
         var newMessage = SanitizeMessageReplaceWords(message.Trim());
 
@@ -1056,14 +1058,45 @@ public sealed partial class ChatSystem : SharedChatSystem
         // Sanitize it first as it might change the word order
         _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
 
-        if (capitalize)
-            newMessage = SanitizeMessageCapital(newMessage);
-        if (capitalizeTheWordI)
-            newMessage = SanitizeMessageCapitalizeTheWordI(newMessage, "i");
-        if (punctuate)
-            newMessage = SanitizeMessagePeriod(newMessage);
+        var foundEnglish = false;
+
+        newMessage = SanitizeMessage(message, true, capitalize, punctuate, capitalizeTheWordI);
+
+        if (foundEnglish)
+        {
+            emoteStr = "кашляет";
+            return string.Empty;
+        }
+
+        //if (capitalize)
+        //    newMessage = SanitizeMessageCapital(newMessage);
+        //if (capitalizeTheWordI)
+        //    newMessage = SanitizeMessageCapitalizeTheWordI(newMessage, "i");
+        //if (punctuate)
+        //    newMessage = SanitizeMessagePeriod(newMessage);
 
         return prefix + newMessage;
+
+        string SanitizeMessage(string message, bool getRadioKeycodePrefix, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
+        {
+            var newMessage = ReplaceWords(message);
+            newMessage = SanitizeMessageReplaceWords(newMessage);
+
+            if (getRadioKeycodePrefix)
+                GetRadioKeycodePrefix(source, newMessage, out newMessage, out prefix);
+
+            if (!bypassEnglishFilter && !_sanitizer.CheckNoEnglish(source, newMessage)) // SS220 FIX wizard spell speak
+                foundEnglish = true;
+
+            if (capitalize)
+                newMessage = SanitizeMessageCapital(newMessage);
+            if (capitalizeTheWordI)
+                newMessage = SanitizeMessageCapitalizeTheWordI(newMessage, "i");
+            if (punctuate)
+                newMessage = SanitizeMessagePeriod(newMessage);
+
+            return newMessage;
+        }
     }
 
     private string SanitizeInGameOOCMessage(string message)
