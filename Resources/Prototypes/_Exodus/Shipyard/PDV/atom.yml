@@ -1,0 +1,37 @@
+#Author: Mihich228 on Github, Mihich228 on Discord.
+
+- type: vessel
+  id: Atom
+  parent: BaseVesselAntag
+  name: BT-Y Atom
+  description: No description yet
+  price: 148000
+  category: Small
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /Maps/_Exodus/Shuttles/PDV/atom.yml
+  guidebookPage: Null
+  class:
+  - Pirate
+  - Pursuit
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Atom
+  mapName: 'BT-Y Atom'
+  mapPath: /Maps/_Exodus/Shuttles/PDV/atom.yml
+  minPlayers: 0
+  stations:
+    Atom:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Atom PDV{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Pirate: [ 0, 0 ]
+            PdvBorg: [ 0, 0 ]

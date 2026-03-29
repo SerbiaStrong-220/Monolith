@@ -15,3 +15,5 @@ guide-entry-exodus-rule-twelve-information = 12. Доступная информ
 guide-entry-exodus-rule-thirteen-roleplay = 13. Игровая атмосфера
 guide-entry-exodus-rule-fourteen-respawn = 14. Возрождение
 guide-entry-exodus-rule-fifteen-war = 15. Фракционные столкновения
+guide-entry-exodus-rule-sixteen-safezones = 16. Безопасные зоны
+guide-entry-exodus-rule-seventeen-faction-roles = 17. Правила ролей во фракциях

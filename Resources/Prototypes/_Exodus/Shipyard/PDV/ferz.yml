@@ -1,0 +1,38 @@
+#Author: Mihich228 on Github, Mihich228 on Discord.
+
+- type: vessel
+  id: Ferz
+  parent: BaseVesselAntag
+  name: PDW Ferz
+  description: No description yet
+  price: 267000
+  category: Small
+  group: BlackMarket
+  access: Pirate
+  purchasable: false # voucher only
+  shuttlePath: /Maps/_Exodus/Shuttles/PDV/ferz.yml
+  guidebookPage: Null
+  class:
+  - Pirate
+  - Pursuit
+  engine:
+  - AME
+
+- type: gameMap
+  id: Ferz
+  mapName: 'PDW Ferz'
+  mapPath: /Maps/_Exodus/Shuttles/PDV/ferz.yml
+  minPlayers: 0
+  stations:
+    Ferz:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Ferz PDV{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Pirate: [ 0, 0 ]
+            PdvBorg: [ 0, 0 ]

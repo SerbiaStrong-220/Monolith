@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherLadya
+  name: TSF ladya LPC
+  description: A small card that contains the data for the procurement of a Ladya-class supporter from the flagship's reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: htech
+    - state: stripetsfmc
+    - state: vouchermilitary
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - Ladya
+  - type: StaticPrice
+    vendPrice: 200000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherFerz
+  name: PDV ferz LPC
+  description: A small card that authorizes the procurement of a Ferz.
+  components:
+  - type: Sprite
+    layers:
+    - state: mtech
+    - state: stripepdv
+    - state: vouchermilitary
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: BlackMarket
+    companyName: PDV
+    vessels:
+    - Ferz
+  - type: StaticPrice
+    vendPrice: 325000

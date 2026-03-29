@@ -21,6 +21,8 @@
     - ExodusRule13RP
     - ExodusRule14Respawn
     - ExodusRule15War
+    - ExodusRule16Safezones
+    - ExodusRule17FactionRoles
 
 - type: guideEntry
   id: ExodusRule0DontBeAsshole
@@ -116,4 +118,16 @@
   id: ExodusRule15War
   name: guide-entry-exodus-rule-fifteen-war
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule15_War.xml"
+  ruleEntry: true
+
+- type: guideEntry
+  id: ExodusRule16Safezones
+  name: guide-entry-exodus-rule-sixteen-safezones
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule16_Safezones.xml"
+  ruleEntry: true
+
+- type: guideEntry
+  id: ExodusRule17FactionRoles
+  name: guide-entry-exodus-rule-seventeen-faction-roles
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule17_FactionRoles.xml"
   ruleEntry: true

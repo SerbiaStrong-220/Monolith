@@ -1,5 +1,5 @@
 [net]
-tickrate = 30
+tickrate = 60
 max_connections = 60
 lidgren_log_warning = false
 lidgren_log_error = false
@@ -55,7 +55,8 @@ discord = "https://discord.gg/yZKf8cQVHC"
 
 [ooc]
 show_ooc_patron_color = false
-enabled = false
+enabled = true
+enable_during_round = true
 
 [rules]
 time = 30
