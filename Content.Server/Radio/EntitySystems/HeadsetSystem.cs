@@ -130,8 +130,6 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             RaiseNetworkEvent(radioNoiseEvent, actor.PlayerSession);
 
             // SS220 TTS-Radio begin
-            _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
-
             if (parent != args.MessageSource && TryComp(args.MessageSource, out TTSComponent? _))
             {
                 args.Receivers.Add(new(parent));
