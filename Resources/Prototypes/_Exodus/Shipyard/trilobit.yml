@@ -21,8 +21,8 @@
   mapPath: /Maps/_Exodus/Shuttles/trilobit.yml
   minPlayers: 0
   stations:
-    Archer:
-      stationProto: StandardFrontierVessel
+    Trilobit:
+      stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Trilobit MIL{1}'

@@ -71,6 +71,8 @@ entities:
     - type: Transform
       pos: 57.476562,36.429688
       parent: invalid
+    - type: BecomesStation
+      id: Trilobit
     - type: MapGrid
       chunks:
         0,0:
