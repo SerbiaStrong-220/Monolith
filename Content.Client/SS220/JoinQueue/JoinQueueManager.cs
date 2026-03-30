@@ -1,4 +1,3 @@
-using Content.Client.Corvax.JoinQueue;
 using Content.Shared.SS220.JoinQueue;
 using Robust.Client.State;
 using Robust.Shared.Network;

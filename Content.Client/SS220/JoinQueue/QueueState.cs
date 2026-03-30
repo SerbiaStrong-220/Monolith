@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
-namespace Content.Client.Corvax.JoinQueue;
+namespace Content.Client.SS220.JoinQueue;
 
 public sealed class QueueState : State
 {
