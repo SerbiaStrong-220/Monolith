@@ -751,7 +751,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, replayWrap, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
         // Einstein Engines - Languages end
 
-        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, null, language); // Einstein Engines - Languages
+        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, languageObfuscatedMessage, language); // Einstein Engines - Languages
         RaiseLocalEvent(source, ev, true);
 
         if (!hideLog)
