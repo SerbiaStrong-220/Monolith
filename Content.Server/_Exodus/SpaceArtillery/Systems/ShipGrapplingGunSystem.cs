@@ -8,6 +8,7 @@ using Content.Shared.Weapons.Misc;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared._Exodus.SpaceArtillery;
 using Content.Shared._Exodus.SpaceArtillery.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Server.GameStates;
 using Robust.Shared.Physics.Systems;
@@ -38,6 +39,9 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
 
         SubscribeLocalEvent<ShipGrapplingGunTargetComponent, EntityTerminatingEvent>(OnTargetTerminating);
         SubscribeLocalEvent<ShipGrapplingProjectileComponent, EntityTerminatingEvent>(OnProjectileTerminating);
+        SubscribeLocalEvent<ShipGrapplingGunComponent, EntityTerminatingEvent>(OnGunTerminating);
+
+        SubscribeLocalEvent<ShipGrapplingGunComponent, GetVerbsEvent<ActivationVerb>>(OnGetUngrappleVerbs);
 
         _grapQuerry = GetEntityQuery<ShipGrapplingGunComponent>();
     }
@@ -61,6 +65,24 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
             if (distance >= grapComp.MaxLength)
                 Ungrapple((gunUid, grapComp), false);
         }
+    }
+
+    private void OnGetUngrappleVerbs(Entity<ShipGrapplingGunComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var gunGrid = Transform(ent).GridUid;
+        var targetGrid = ent.Comp.TargetGrid;
+
+        if (ent.Comp.Projectile == null || !gunGrid.HasValue || !targetGrid.HasValue || gunGrid == targetGrid)
+            return;
+
+        args.Verbs.Add(new ActivationVerb
+        {
+            Text = Loc.GetString("ship-grappling-gun-verb-ungrapple"),
+            Act = () => Ungrapple(ent, false),
+        });
     }
 
     private void OnGrappleCollide(EntityUid uid, ShipGrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
@@ -136,6 +158,11 @@ public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
             return;
 
         Ungrapple((component.Gun, grapComp), true);
+    }
+
+    private void OnGunTerminating(EntityUid uid, ShipGrapplingGunComponent component, ref EntityTerminatingEvent args)
+    {
+        Ungrapple((uid, component), true);
     }
 
     protected override void Ungrapple(Entity<ShipGrapplingGunComponent> gun, bool isBreak)

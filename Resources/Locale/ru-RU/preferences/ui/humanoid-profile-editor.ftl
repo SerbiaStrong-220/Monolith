@@ -79,5 +79,31 @@ humanoid-profile-editor-height-label = Рост:
 humanoid-profile-editor-company-tab = Компания
 humanoid-profile-editor-company-label = Компания:
 humanoid-profile-editor-company-none = Нет
-# Traits
 
+Contractor-loadout = Снаряжение авантюриста
+Pilot-loadout = Снаряжение пилота
+Mercenary-loadout = Снаряжение наёмника
+Borg-loadout = Снаряжение киборга
+StationRepresentative-loadout = Снаряжение коменданта
+StationTrafficController-loadout = Снаряжение диспетчера
+SecurityGuard-loadout = Снаряжение охранника
+NFJanitor-loadout = Снаряжение уборщика
+MailCarrier-loadout = Снаряжение почтальона
+CCServiceWorker-loadout = Снаряжение сервисного работника
+Sheriff-loadout = Снаряжение полковника КВП ТСФ
+Bailiff-loadout = Снаряжение капитана КВП ТСФ
+SeniorOfficer-loadout = Снаряжение инструктора КВП ТСФ
+Brigmedic-loadout = Снаряжение санитара КВП ТСФ
+TsfEngineer-loadout = Снаряжение инженера КВП ТСФ
+Deputy-loadout = Снаряжение сержанта КВП ТСФ
+PirateCaptain-loadout = Снаряжение великого Визиря
+PirateFirstMate-loadout = Снаряжение асварана
+PDVDenasvar-loadout = Снаряжение денасфара
+PDVInfiltrator-loadout = Снаряжение cпасаки
+Pirate-loadout = Снаряжение рахкшакана
+DirectorOfCare-loadout = Снаряжение заведующего СНМП
+MdMedic-loadout = Снаряжение парамедика СНМП
+
+# Traits
+race-trait-blacklist = Вы должны быть не:
+trait-blacklist = Вы должны не обладать ни одной из этих черт:

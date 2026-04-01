@@ -4,7 +4,7 @@
   isVisibleLanguage: true
   speech:
     color: "#119155" # Exodus
-    fontId: "CaesarDressing" # Exodus
+    fontId: "CorrectionTape" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2
@@ -101,7 +101,7 @@
   id: Azaziba
   speech:
     color: "#257bb0dd" # Mono
-    fontId: "CaesarDressing" # Exodus
+    fontId: "CorrectionTape" # Exodus
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2
