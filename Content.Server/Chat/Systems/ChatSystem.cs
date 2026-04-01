@@ -644,7 +644,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SendInVoiceRange(ChatChannel.Local, name, message, wrappedMessage, obfuscated, wrappedObfuscated, source, range, languageOverride: language); // Einstein Engines - Language
 
-        var ev = new EntitySpokeEvent(source, message, originalMessage, null, null, language); // Einstein Engines - Language
+        var ev = new EntitySpokeEvent(source, message, originalMessage, null, null, false, language); // Einstein Engines - Language
         RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
@@ -751,7 +751,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, replayWrap, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
         // Einstein Engines - Languages end
 
-        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, languageObfuscatedMessage, language); // Einstein Engines - Languages
+        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, languageObfuscatedMessage, true, language); // Einstein Engines - Languages
         RaiseLocalEvent(source, ev, true);
 
         if (!hideLog)
@@ -1346,7 +1346,10 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     public readonly string OriginalMessage;
     //public readonly LanguageMessage? LanguageMessage; // SS220 languages
     public readonly LanguagePrototype Language;
-    public readonly string? ObfuscatedMessage; // not null if this was a whisper
+    /// <summary>
+    /// Readability obfuscated message
+    /// </summary>
+    public readonly string? ObfuscatedMessage;
     public readonly bool IsRadio; // radio message is always a whisper
 
     public FixedPoint2? Frequency;// SS220-frequency-radio
@@ -1357,7 +1360,15 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     /// </summary>
     public RadioChannelPrototype? Channel;
 
-    public EntitySpokeEvent(EntityUid source, string message, string originalMessage, RadioChannelPrototype? channel, string? obfuscatedMessage, LanguagePrototype language /*LanguageMessage? languageMessage = null /* SS220 languages */, FixedPoint2? frequency = null /* SS220-frequency-radio */)
+    public EntitySpokeEvent(
+        EntityUid source,
+        string message,
+        string originalMessage,
+        RadioChannelPrototype? channel,
+        string? obfuscatedMessage,
+        bool isWhisper, // SS220 TTS
+        LanguagePrototype language, // LanguageMessage? languageMessage = null, // SS220 languages
+        FixedPoint2? frequency = null) // SS220-frequency-radio
     {
         Source = source;
         Message = message;
@@ -1366,6 +1377,7 @@ public sealed class EntitySpokeEvent : EntityEventArgs
         Language = language;
         Channel = channel;
         ObfuscatedMessage = obfuscatedMessage;
+        IsWhisper = isWhisper; // SS220 TTS
         IsRadio = channel != null;
         Frequency = frequency;
     }
