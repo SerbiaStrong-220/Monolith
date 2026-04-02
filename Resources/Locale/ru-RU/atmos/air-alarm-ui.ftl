@@ -2,6 +2,7 @@
 
 
 ## Window
+
 air-alarm-ui-window-title = Воздушная сигнализация
 air-alarm-ui-access-denied = Недостаточный уровень доступа!
 air-alarm-ui-window-pressure-label = Давление
@@ -18,13 +19,14 @@ air-alarm-ui-window-temperature = { $tempC } °C ({ $temperature } К)
 air-alarm-ui-window-temperature-indicator = Температура: [color={ $color }]{ $tempC } °C ({ $temperature } К)[/color]
 air-alarm-ui-window-alarm-state = [color={ $color }]{ $state }[/color]
 air-alarm-ui-window-alarm-state-indicator = Статус: [color={ $color }]{ $state }[/color]
-air-alarm-ui-window-alarm-type = { $type ->
-  *[Invalid] Невалидный
-  [Normal] Отлично
-  [Warning] Потенциальная опасность
-  [Danger] Опасность
-  [Emagged] Взломан
-}
+air-alarm-ui-window-alarm-type =
+    { $type ->
+       *[Invalid] Невалидный
+        [Normal] Отлично
+        [Warning] Потенциальная опасность
+        [Danger] Опасность
+        [Emagged] Взломан
+    }
 air-alarm-ui-window-tab-vents = Вентиляции
 air-alarm-ui-window-tab-scrubbers = Скрубберы
 air-alarm-ui-window-tab-sensors = Сенсоры
@@ -50,33 +52,36 @@ air-alarm-ui-atmos-net-device-label = Адрес: { $address }
 ### Vent pumps
 
 air-alarm-ui-vent-pump-label = Направление вентиляции
-air-alarm-ui-vent-pump-direction = { $dir ->
-  [0] Перекачивание
-  *[1] Выпускание
-}
+air-alarm-ui-vent-pump-direction =
+    { $dir ->
+        [0] Перекачивание
+       *[1] Выпускание
+    }
 air-alarm-ui-vent-pressure-label = Ограничение давления
-air-alarm-ui-vent-pressure-bound = { $bound ->
-  *[0] Отсутствует
-  [1] Внутренняя граница
-  [2] Внешняя граница
-  [3] Внутренняя и внешняя граница
-}
+air-alarm-ui-vent-pressure-bound =
+    { $bound ->
+       *[0] Отсутствует
+        [1] Внутренняя граница
+        [2] Внешняя граница
+        [3] Внутренняя и внешняя граница
+    }
 air-alarm-ui-vent-external-bound-label = Внешняя граница
 air-alarm-ui-vent-internal-bound-label = Внутренняя граница
 
 ### Scrubbers
 
 air-alarm-ui-scrubber-pump-direction-label = Направление скруббера
-air-alarm-ui-scrubber-pump-direction = { $dir ->
-  [Siphoning] Перекачивание
-  *[Scrubbing] Выпускание
-}
+air-alarm-ui-scrubber-pump-direction =
+    { $dir ->
+        [Siphoning] Перекачивание
+       *[Scrubbing] Выпускание
+    }
 air-alarm-ui-scrubber-volume-rate-label = Объём (Л)
 air-alarm-ui-scrubber-wide-net-label = ШирокаяСеть
-
 air-alarm-ui-scrubber-gas-filters-title = Фильтрация газов
 
 ### Thresholds
+
 air-alarm-ui-sensor-gases = Газы
 air-alarm-ui-sensor-thresholds = Границы
 air-alarm-ui-thresholds-enabled = Включено

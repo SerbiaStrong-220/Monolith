@@ -2,6 +2,10 @@
 # we should add them here in the order they are in the list, for organization. Maybe add more languages later.
 
 trait-category-languages = Языки
+trait-language-foreigner-light-name = Подготовленный чужестранец
+trait-language-foreigner-light-desc =
+    Вы понимаете основной язык, общегалактический, но всё ещё плохо на нём разговариваете.
+    У вас есть переводчик, чтобы вам помочь в коммуникации, лучше держать его заряженным.
 trait-language-foreigner-name = Чужестранец
 trait-language-foreigner-desc = Вы не понимаете общий язык, Стандарт Андромеды, и для общения вам постоянно требуется переводчик. У вас есть переводчик для понимания и речи, не забывайте его заряжать.
 trait-language-signlanguage-name = Язык жестов

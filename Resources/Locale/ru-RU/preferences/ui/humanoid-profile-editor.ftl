@@ -79,7 +79,6 @@ humanoid-profile-editor-height-label = Рост:
 humanoid-profile-editor-company-tab = Компания
 humanoid-profile-editor-company-label = Компания:
 humanoid-profile-editor-company-none = Нет
-
 Contractor-loadout = Снаряжение авантюриста
 Pilot-loadout = Снаряжение пилота
 Mercenary-loadout = Снаряжение наёмника
@@ -103,7 +102,6 @@ PDVInfiltrator-loadout = Снаряжение cпасаки
 Pirate-loadout = Снаряжение рахкшакана
 DirectorOfCare-loadout = Снаряжение заведующего СНМП
 MdMedic-loadout = Снаряжение парамедика СНМП
-
 # Traits
 race-trait-blacklist = Вы должны быть не:
 trait-blacklist = Вы должны не обладать ни одной из этих черт:

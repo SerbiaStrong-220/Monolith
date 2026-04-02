@@ -43,6 +43,9 @@ trait-painnumbness-name = Отсутствие боли
 trait-painnumbness-desc = Вы не чувствуете боли и не осознаёте, насколько вам больно.
 trait-monochromacy-name = Монохромазия
 trait-monochromacy-desc = Вы полный дальтоник, всё, что вы видите, сводится к оттенкам от чёрного до белого.
+# Mono
+trait-russian-name = Russian accent
+trait-russian-desc = You reek of vodka smell.
 trait-impaired-mobility-name = Ограниченная подвижность
 trait-impaired-mobility-desc = Вам сложно передвигаться без помощи от существ или устройств.
 trait-wheelchair-bound-desc = Вы не можете передвигаться без своей инвалидной коляски. Коляска идёт в комплекте.

@@ -2,7 +2,6 @@ ent-SpawnPointContractor = contractor
     .desc = { ent-SpawnPointPassenger.desc }
 ent-SpawnPointMercenary = mercenary
     .desc = { ent-SpawnPointJobBase.desc }
-
 ent-SpawnPointPirate = pirate
     .desc = { ent-SpawnPointJobBase.desc }
 ent-SpawnPointPirateFirstMate = pirate first mate

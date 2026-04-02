@@ -1,6 +1,7 @@
 # Frontier: all entries capitalized
 # head markings
 
+
 ## patterns
 
 marking-RodentiaHeadBlaze = Head - Blaze
@@ -83,6 +84,7 @@ marking-RodentiaCheeksWhiskers = Whiskers
 marking-RodentiaCheeksWhiskers-whiskers = Whiskers
 
 # body markings
+
 
 ## tail
 

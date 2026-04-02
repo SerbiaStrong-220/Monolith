@@ -1,7 +1,7 @@
 salvage-expedition-window-finish = Закончить экспедицию
-salvage-expedition-announcement-early-finish = Экспедиция была окончена. Шаттл покинет планету через {$departTime} секунд.
+salvage-expedition-announcement-early-finish = Экспедиция была окончена. Шаттл покинет планету через { $departTime } секунд.
 salvage-expedition-shuttle-not-found = Не обнаружен шаттл.
-salvage-expedition-not-everyone-aboard = Не вся команда на шаттле! {$target} всё еще отсутствует!
+salvage-expedition-not-everyone-aboard = Не вся команда на шаттле! { $target } всё еще отсутствует!
 # Salvage mods
 salvage-time-mod-standard-time = Нормальная продолжительность
 salvage-time-mod-rush = Ускоренный режим

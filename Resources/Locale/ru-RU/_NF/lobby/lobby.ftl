@@ -40,8 +40,8 @@ frontier-lobby-pirate-description =
     - Найти экипаж для присоединения
     - Пообщаться с другими солдатами Династии Фаэтон
 # Crew Menu
-frontier-lobby-crew-vessel = [bold][color=#A88B5E]Судно:[/color][/bold] {$name}
-frontier-lobby-crew-class-prefix = [bold][color=#A88B5E]Тип:[/color][/bold]{" "}
-frontier-lobby-crew-size = [bold][color=#A88B5E]Размер:[/color][/bold] {$size}
+frontier-lobby-crew-vessel = [bold][color=#A88B5E]Судно:[/color][/bold] { $name }
+frontier-lobby-crew-class-prefix = [bold][color=#A88B5E]Тип:[/color][/bold]{ " " }
+frontier-lobby-crew-size = [bold][color=#A88B5E]Размер:[/color][/bold] { $size }
 frontier-lobby-crew-class-advertisement = [bold][color=#A88B5E]Реклама:[/color][/bold]
 frontier-lobby-crew-only-hide-jobless = Скрыть суда без доступной должности

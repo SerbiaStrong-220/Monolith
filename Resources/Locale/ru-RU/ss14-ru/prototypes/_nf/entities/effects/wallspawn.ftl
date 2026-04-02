@@ -1,6 +1,5 @@
 ent-WallSpawnAsteroidBananiumCrab = { ent-WallSpawnAsteroid }
     .desc = { ent-WallSpawnAsteroid.desc }
-
 ent-WallSpawnAsteroidPlasmaCrab = { ent-WallSpawnAsteroid }
     .desc = { ent-WallSpawnAsteroid.desc }
 ent-WallSpawnAsteroidSaltCrab = { ent-WallSpawnAsteroid }
@@ -25,7 +24,6 @@ ent-WallSpawnAsteroidSaltCrabNF = { ent-WallSpawnAsteroid }
     .desc = { ent-WallSpawnAsteroid.desc }
 ent-WallSpawnAsteroidBananium = { ent-WallSpawnAsteroid }
     .desc = { ent-WallSpawnAsteroid.desc }
-
 ent-WallSpawnAsteroidPlasma = { ent-WallSpawnAsteroid }
     .desc = { ent-WallSpawnAsteroid.desc }
 ent-WallSpawnAsteroidSalt = { ent-WallSpawnAsteroid }

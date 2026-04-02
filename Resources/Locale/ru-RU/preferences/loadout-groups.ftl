@@ -118,6 +118,10 @@ loadout-group-scientist-shoes = Scientist shoes
 loadout-group-scientist-id = Scientist ID
 loadout-group-research-assistant-jumpsuit = Research Assistant jumpsuit
 # Security
+loadout-group-head-of-security-head = Head of Security head
+loadout-group-head-of-security-jumpsuit = Head of Security jumpsuit
+loadout-group-head-of-security-neck = Head of Security neck
+# Security
 loadout-group-head-of-security-outerclothing = Head of Security outer clothing
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit

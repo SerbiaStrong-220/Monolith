@@ -31,6 +31,7 @@ hud-chatbox-channel-Damage = Повреждения
 hud-chatbox-channel-Unspecified = Неопределённый
 hud-chatbox-highlights = Подсветка текста:
 hud-chatbox-highlights-button = Подтвердить
+hud-chatbox-autofill-highlights = Авто-заполнение
 hud-chatbox-highlights-tooltip =
     Каждое слово должно писаться с новой строки,
     если слово обернуто в кавычки  ("...") то оно

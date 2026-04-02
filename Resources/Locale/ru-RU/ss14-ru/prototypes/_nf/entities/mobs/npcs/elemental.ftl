@@ -1,5 +1,3 @@
-
-
 ent-MobPlasmaCrab = { ent-MobOreCrab }
     .desc = An ore crab made from plasma.
 ent-MobSaltCrab = { ent-MobOreCrab }

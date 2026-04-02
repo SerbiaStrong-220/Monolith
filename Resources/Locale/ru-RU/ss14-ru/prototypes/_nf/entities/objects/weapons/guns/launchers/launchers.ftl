@@ -5,6 +5,6 @@ ent-WeaponLauncherRocketEmp = { ent-WeaponLauncherRocket }
     .suffix = ЭМИ
     .desc = { ent-WeaponLauncherRocket.desc }
 ent-WeaponMailLake = почтовый РПДС
-    .desc = Новейшее оружие почтальонов. 
+    .desc = Новейшее оружие почтальонов.
 ent-WeaponLauncherNfsdLake = гранатомет КВП ТСФ
     .desc = Стреляет как гранатами, так и дротиками!

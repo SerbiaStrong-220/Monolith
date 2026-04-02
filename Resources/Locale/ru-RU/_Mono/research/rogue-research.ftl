@@ -19,9 +19,11 @@ research-technology-rogue-emag = Базовые методы взлома
 research-technology-rogue-hristov = Тяжёлое огнестрельное оружие
 research-technology-rogue-stealthsuit = Метаматериальные волокна
 research-technology-rogue-subsonic = Дозвуковое оружие
-research-technology-rogue-saintie-voucher = Ваучер шаттла Авангарда ДФ Saintie
+research-technology-rogue-saintie-voucher = Ваучер шаттла Saintie
+research-technology-rogue-motley-anne-voucher = Ваучер шаттла Motley Anne
+research-technology-rogue-motley-anne-fighters = Дроны для Motley Anne
 # T3 rogue
-research-technology-rogue-saturn-voucher = Ваучер шаттла Авангарда ДФ Saturn
+research-technology-rogue-saturn-voucher = Ваучер шаттла Saturn
 research-technology-rogue-energy-weapon = Продвинутое плазменное оружие
 research-technology-rogue-access-breaker = Продвинутые методы взлома
 research-technology-rogue-hf-sword = Технология резонанса

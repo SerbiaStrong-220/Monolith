@@ -27,7 +27,7 @@
   - type: GameRule
     minPlayers: 32
   - type: LoadMapRule
-    preloadedGrid: AIZenith
+    gridPath: /Maps/_Mono/ShuttleEvent/zenith.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -47,7 +47,7 @@
   - type: GameRule
     minPlayers: 32
   - type: LoadMapRule
-    preloadedGrid: AIZenithE
+    gridPath: /Maps/_Mono/ShuttleEvent/zenith_e.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -67,7 +67,7 @@
   - type: GameRule
     minPlayers: 32
   - type: LoadMapRule
-    preloadedGrid: AINebula
+    gridPath: /Maps/_Mono/ShuttleEvent/nebula.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -87,7 +87,7 @@
   - type: GameRule
     minPlayers: 15
   - type: LoadMapRule
-    preloadedGrid: AIWyrm
+    gridPath: /Maps/_Mono/ShuttleEvent/wyrm.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -107,7 +107,7 @@
   - type: GameRule
     minPlayers: 15
   - type: LoadMapRule
-    preloadedGrid: AIRazorN
+    gridPath: /Maps/_Mono/ShuttleEvent/razorn.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -127,7 +127,7 @@
   - type: GameRule
     minPlayers: 60
   - type: LoadMapRule
-    preloadedGrid: AIWyvern
+    gridPath: /Maps/_Mono/ShuttleEvent/wyvern.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement

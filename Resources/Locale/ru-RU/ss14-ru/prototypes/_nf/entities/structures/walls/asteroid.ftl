@@ -14,7 +14,6 @@ ent-NFWallRockChromiteOre = { ent-WallRockChromite }
     .desc = { ent-WallRockChromite.desc }
 ent-NFWallRockAndesiteOre = { ent-WallRockAndesite }
     .desc = { ent-WallRockAndesite.desc }
-
 ent-AsteroidRockPlasmaCrab = { ent-AsteroidRockPlasma }
     .suffix = Plasma Crab
     .desc = { ent-AsteroidRockPlasma.desc }

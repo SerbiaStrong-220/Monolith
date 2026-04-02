@@ -1,5 +1,3 @@
-
-
 ent-40mmGrenadeBaton = 40mm baton grenade
     .desc = { ent-BaseGrenade.desc }
 ent-40mmGrenadeThermobaric = 40mm thermobaric grenade
@@ -10,7 +8,6 @@ ent-40mmGrenadeFragmentation = 40mm Fragmentation grenade
     .desc = { ent-BaseGrenade.desc }
 ent-40mmGrenadeEMP = 40mm EMP grenade
     .desc = { ent-BaseGrenade.desc }
-
 ent-CartridgeRocketEmp = PG-7VL emp
     .desc = A 1.5 emp warhead designed for the RPG-7 launcher. Has tubular shape.
 ent-CannonBallEmp = shockshot

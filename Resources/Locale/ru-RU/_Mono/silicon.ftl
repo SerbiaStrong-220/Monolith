@@ -28,3 +28,15 @@ law-entertainer-3 = You must consult with the Performers before making any major
 # Cyborg Lawsets
 
 law-tsfmc-borg-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
+borg-type-pdvassault-name = PDV Assault Cyborg
+borg-type-pdvassault-desc = An assault-configured cyborg armed with PDV weapons and equipment. Up-armored and specialized to carry extra firepower.
+borg-type-pdvengineer-name = PDV Engineer Cyborg
+borg-type-pdvengineer-desc = A cyborg specialized in construction and repair projects.
+borg-type-pdvmedical-name = PDV Medical Cyborg
+borg-type-pdvmedical-desc = An emergency response clinical care cyborg designed for active wound care and rapid response.
+borg-type-tsfassault-name = TSFMC Assault Cyborg
+borg-type-tsfassault-desc = An assault-configured cyborg armed with TSFMC weapons and equipment. Up-armored and specialized to carry extra firepower.
+borg-type-tsfengineer-name = TSFMC Engineer Cyborg
+borg-type-tsfengineer-desc = A cyborg specialized in construction and repair projects.
+borg-type-tsfmedical-name = TSFMC Medical Cyborg
+borg-type-tsfmedical-desc = An emergency response clinical care cyborg designed for active wound care and rapid response.

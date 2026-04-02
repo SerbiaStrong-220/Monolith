@@ -65,7 +65,6 @@ shuttle-console-iffshuttles-toggle = Показывать шаттлы
 
 shuttle-console-ftl-lock-disabled = Выключено
 shuttle-console-undock-all = Отстыковать все
-
 shuttle-console-dock-state-locked = СТЫК
 shuttle-console-dock-state-unlocked = ОТСТЫК
 shuttle-console-dock-label = Шлюз #{ $idx }
