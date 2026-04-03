@@ -34,7 +34,7 @@ highlights-botanist = Ботаник, Гидропоник, Сервис
 highlights-chaplain = Священник, "Свящ", Церковь, Сервис
 highlights-chef = Шеф, Шэф, Шеф-Повар, Шэф-Повар, Кухн, Сервис
 highlights-clown = Клоун, Клуня, Шут, Клун
-highlights-janitor = Уборка, Уборщик
+# highlights-janitor = Уборка, Уборщик
 highlights-lawyer = Авокат, Юрист
 highlights-librarian = библиотекар, библиотека
 highlights-mime = мим
@@ -47,5 +47,5 @@ highlights-zookeeper = зоотехник, зоо
 highlights-psychologist = психолог
 # Silicon
 highlights-personal-ai = персональный ии, "пии"
-highlights-cyborg = киборг, "борг"
+# highlights-cyborg = киборг, "борг"
 highlights-station-ai = станционный ии, "ии", "сии", "ции"
