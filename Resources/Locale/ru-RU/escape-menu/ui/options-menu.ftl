@@ -136,7 +136,6 @@ ui-options-hotkey-toggle-walk = Переключать шаг\бег
 ui-options-function-move-up = Двигаться вверх
 ui-options-function-move-left = Двигаться налево
 ui-options-function-move-down = Двигаться вниз
-ui-options-function-toggle-focus = Переключить фокусирование
 ui-options-function-move-right = Двигаться направо
 ui-options-function-walk = Идти
 ui-options-function-camera-rotate-left = Повернуть налево
