@@ -3,14 +3,17 @@
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <PanelContainer StyleClasses="BackgroundDark">
         <SplitContainer Orientation="Horizontal" VerticalExpand="True">
-            <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+            <!-- SS220-ahelp-channel-selector-fix -->
+            <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" MinWidth="100" />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
-                <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True"/>
+                <!-- SS220-ahelp-window-fix-bgn -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,0,5">
                     <CheckBox Name="AdminOnly" Access="Public" Text="{Loc 'admin-ahelp-admin-only'}" ToolTip="{Loc 'admin-ahelp-admin-only-tooltip'}" />
+                    <CheckBox Name="PlaySound" Access="Public" Text="{Loc 'admin-bwoink-play-sound'}" Pressed="True" Margin="5,0,0,0"/>
                     <Control HorizontalExpand="True" MinWidth="5" />
-                    <CheckBox Name="PlaySound" Access="Public" Text="{Loc 'admin-bwoink-play-sound'}" Pressed="True" />
-                    <Control HorizontalExpand="True" MinWidth="5" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <Button Visible="True" Name="PopOut" Access="Public" Text="{Loc 'admin-logs-pop-out'}" StyleClasses="OpenBoth" HorizontalAlignment="Left" />
                     <Control HorizontalExpand="True" />
                     <Button Visible="False" Name="Bans" Text="{Loc 'admin-player-actions-bans'}" StyleClasses="OpenRight" />
@@ -20,6 +23,7 @@
                     <Button Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" StyleClasses="OpenBoth" />
                     <Button Visible="False" Name="Follow" Text="{Loc 'admin-player-actions-follow'}" StyleClasses="OpenLeft" />
                 </BoxContainer>
+                <!-- SS220-ahelp-window-fix-end -->
             </BoxContainer>
         </SplitContainer>
     </PanelContainer>
