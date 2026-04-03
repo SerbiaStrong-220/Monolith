@@ -1097,7 +1097,7 @@ entities:
     - type: Transform
       pos: -0.4330094,11.50383
       parent: 1
-- proto: ComputerIFFSyndicate
+- proto: ComputerIFF
   entities:
   - uid: 122
     components:

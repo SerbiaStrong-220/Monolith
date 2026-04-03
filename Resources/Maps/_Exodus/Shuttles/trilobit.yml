@@ -7213,7 +7213,7 @@ entities:
       powerLoad: 5
     - type: Battery
       startingCharge: 0
-- proto: ComputerIFFSyndicate
+- proto: ComputerIFF
   entities:
   - uid: 560
     components:
