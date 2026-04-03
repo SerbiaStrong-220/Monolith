@@ -12,8 +12,8 @@ namespace Content.Server._Exodus.GameTicking.Requirements;
 public sealed partial class JobGameRuleRequirement : GameRuleRequirement
 {
     // TODO: these should be splitten into two separte classes but currently are not
-    [DataField] public ProtoId<JobPrototype> Job;
-    [DataField] public ProtoId<DepartmentPrototype> Department;
+    [DataField] public ProtoId<JobPrototype>? Job;
+    [DataField] public ProtoId<DepartmentPrototype>? Department;
     [DataField] public int MinJobPlayers = 0;
     [DataField] public int MinDepartmentPlayers = 0;
 
