@@ -15,6 +15,8 @@ using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Robust.Shared.Enums;
+using Content.Shared._EinsteinEngines.Language;
+using Content.Server._EinsteinEngines.Language;
 
 namespace Content.Server.SS220.TTS;
 
@@ -29,6 +31,8 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly IServerNetManager _netManager = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly TTSManager _ttsManager = default!;
+    [Dependency] private readonly LanguageSystem _language = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     private int _maxMessageChars;
     private int _maxAnnounceMessageChars;
@@ -223,32 +227,31 @@ public sealed partial class TTSSystem : EntitySystem
         if (!context.SpeakerContext.Valid)
             return;
 
-        //if (args.LanguageMessage is { } languageMessage)
-        //    HandleEntitySpokeWithLanguage(receivers, languageMessage, context, args.ObfuscatedMessage);
-        //else
-            HandleEntitySpoke(receivers, args.Message, context, args.ObfuscatedMessage);
+        HandleEntitySpokeWithLanguage(receivers, context, args.Language, args.Message, args.ObfuscatedMessage);
     }
 
-    //private async void HandleEntitySpokeWithLanguage(IEnumerable<EntityUid> receivers, LanguageMessage languageMessage, TtsContext context, string? obfuscatedMessage = null)
-    //{
-    //    Dictionary<string, (HashSet<EntityUid>, string?)> messageListenersDict = new();
-    //    foreach (var receiver in receivers)
-    //    {
-    //        string sanitizedMessage = languageMessage.GetMessage(receiver, true, false);
-    //        if (obfuscatedMessage != null)
-    //            obfuscatedMessage = languageMessage.GetObfuscatedMessage(receiver, true);
+    private async void HandleEntitySpokeWithLanguage(IEnumerable<EntityUid> receivers, TtsContext context, LanguagePrototype language, string sanitizedMessage, string? obfuscatedMessage = null)
+    {
+        var messageListenersDict = new Dictionary<string, (HashSet<EntityUid>, string?)>();
 
-    //        if (messageListenersDict.TryGetValue(sanitizedMessage, out var listeners))
-    //            listeners.Item1.Add(receiver);
-    //        else
-    //            messageListenersDict[sanitizedMessage] = ([receiver], obfuscatedMessage);
-    //    }
+        foreach (var receiver in receivers)
+        {
+            var canUnderstand = _language.CanUnderstand(receiver, language);
+            var message = canUnderstand ? sanitizedMessage : _language.ObfuscateSpeech(sanitizedMessage, language);
+            if (obfuscatedMessage != null)
+                obfuscatedMessage = canUnderstand ? obfuscatedMessage : _chat.ObfuscateMessageReadability(message);
 
-    //    foreach (var (key, value) in messageListenersDict)
-    //    {
-    //        HandleEntitySpoke(value.Item1, key, context, value.Item2);
-    //    }
-    //}
+            if (messageListenersDict.TryGetValue(message, out var listeners))
+                listeners.Item1.Add(receiver);
+            else
+                messageListenersDict[message] = ([receiver], obfuscatedMessage);
+        }
+
+        foreach (var (key, value) in messageListenersDict)
+        {
+            HandleEntitySpoke(value.Item1, key, context, value.Item2);
+        }
+    }
 
     private async void HandleEntitySpoke(EntityUid listener, string message, TtsContext context, string? obfuscatedMessage = null)
     {

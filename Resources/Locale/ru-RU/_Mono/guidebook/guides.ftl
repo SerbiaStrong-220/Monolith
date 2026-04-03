@@ -4,6 +4,8 @@ guide-entry-shipyard-judiciary = Judiciary
 guide-entry-shipyard-sabine = Sabine
 guide-entry-shipyard-takeaway = Takeaway
 guide-entry-shipyard-ruby = Ruby
+guide-entry-shipyard-motley-anne = Motley Anne
+guide-entry-shipyard-fenrir = Fenrir
 # Gunnery Guides
 guide-entry-gunnery = Артиллерийское орудие
 guide-entry-ballistics = Баллистика
@@ -22,3 +24,8 @@ guide-entry-monolith-rules = Monolith Rules
 # Creatures
 guide-entry-creatures = Создания сектора
 guide-entry-cortical-borer = Бореры
+# Mechs
+guide-entry-mechs = Мехи
+guide-entry-s1mechs = Мехи 1 серии
+guide-entry-s2mechs = Мехи 2 серии
+guide-entry-s4mechs = Мехи 4 серии

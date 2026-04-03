@@ -1,5 +1,3 @@
-
-
 ent-CratePirateChestCannonBall = cannonball chest
     .suffix = Filled
     .desc = { ent-CratePirateGrey.desc }

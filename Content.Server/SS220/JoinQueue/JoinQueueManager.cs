@@ -34,7 +34,7 @@ public sealed class JoinQueueManager
         "Timings of players in queue",
         new HistogramConfiguration()
         {
-            LabelNames = new[] { "type" },
+            LabelNames = new[] {"type"},
             Buckets = Histogram.ExponentialBuckets(1, 2, 14),
         });
 

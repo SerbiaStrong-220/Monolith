@@ -5,8 +5,8 @@
   path: /Fonts/_Exodus/Blackcraft.ttf
 
 - type: font
-  id: CaesarDressing # Reptilian
-  path: /Fonts/_Exodus/CaesarDressing.ttf
+  id: CorrectionTape # Reptilian
+  path: /Fonts/_Exodus/CorrectionTape/CorrectionTape.otf
 
 - type: font
   id: Futurespore # Vulpkanins

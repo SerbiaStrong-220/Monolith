@@ -1,2 +1,2 @@
-frontier-loadout-cost = Total Loadout Cost: { $cost }
-frontier-loadout-balance = Available Balance: { $balance }
+frontier-loadout-cost = Общая стоимость снаряжения: { $cost }
+frontier-loadout-balance = Доступный баланс: { $balance }

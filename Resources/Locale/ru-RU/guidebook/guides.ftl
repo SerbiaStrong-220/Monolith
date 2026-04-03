@@ -59,7 +59,6 @@ guide-entry-teslaengine = Генератор Теслы
 guide-entry-solarpanels = Солнечнные панели
 guide-entry-teg = Термоэлектрический генератор (ТЭГ)
 guide-entry-rtg = РИТЭГ
-
 # Научный отдел
 guide-entry-science = Научный отдел
 guide-entry-machine-upgrading = Улучшение оборудования
@@ -72,12 +71,10 @@ guide-entry-artifact-reports = Отчёты об артефактах
 guide-entry-traversal-distorter = Поперечный искатель
 guide-entry-robotics = Робототехника
 guide-entry-cyborgs = Борги
-
 # Отдел снабжения
 guide-entry-cargo = Отдел снабжения
 guide-entry-cargo-bounties = Запросы отдела снабжения
 guide-entry-salvage = Утилизация обломков
-
 # Медицина и химия
 guide-entry-chemicals = Химические вещества
 guide-entry-elements = Элементы
@@ -97,7 +94,6 @@ guide-entry-brute =
     механических повреждений
 guide-entry-cloning = Клонирование
 guide-entry-cryogenics = Криогеника
-
 # Роли
 guide-entry-jobs = Должности
 guide-entry-command = Командование
@@ -105,7 +101,6 @@ guide-entry-janitorial = Уборка станции
 guide-entry-bartender = Бармен
 guide-entry-chef = Шеф-повар
 guide-entry-service = Сервис
-
 # Прочее
 guide-entry-radio = Радиосвязь
 guide-entry-controls = Управление
@@ -117,7 +112,6 @@ guide-entry-charactercreation = Создание персонажа
 guide-entry-yourfirstcharacter = Ваш первый персонаж
 guide-entry-ss14 = Станции и смены
 guide-entry-species = Расы
-
 # Рецепты
 guide-entry-references = Таблицы и референсы
 guide-entry-drinks = Напитки
@@ -136,14 +130,12 @@ guide-entry-salad-recipes = Салаты
 guide-entry-medicinal-recipes = Лечебные
 guide-entry-other-recipes = Другие
 guide-entry-secret-recipes = Секретные
-
 # Служба Безопасности
 guide-entry-security = Безопасность станции
 guide-entry-forensics = Криминалистика
 guide-entry-special = Специальные
 guide-entry-defusal = Обезвреживание крупной бомбы
 guide-entry-criminal-records = Криминальные записи
-
 # Антагонисты
 guide-entry-antagonists = Антагонисты
 guide-entry-nuclear-operatives = Ядерные оперативники
@@ -154,26 +146,21 @@ guide-entry-minor-antagonists = Малые антагонисты
 guide-entry-space-ninja = Космический ниндзя
 guide-entry-wizard = Маг
 guide-entry-thieves = Воры
-
 guide-entry-writing = Разметка письма
 guide-entry-glossary = Словарь терминов
-
 # Хирургия
 guide-entry-surgery = Хирургия
 guide-entry-utilitysurgeries = Вспомогательные операции
 guide-entry-partmanipulation = Операции с конечностями
 guide-entry-organmanipulation = Операции с органами
-
 # Лор
 guide-entry-lore = Лор
 guide-entry-phaethon-dynasty = Династия Фаэтон
 guide-entry-trans-solar-federation = Транс-Солнечная Федерация
 # "Советский Союз Социалистических Планет" не умещается в интерфейс и растягивает таблицу на половину окна гайдбука
 guide-entry-united-soviet-socialist-planets = СССП
-
 guide-entry-rules = Правила сервера
 guide-entry-rules-space-law = Космический закон
-
 # Правила Space Wizards
 guide-entry-rules-sl-controlled-substances = Контролируемые вещества
 guide-entry-rules-sl-restricted-gear = Ограниченное снаряжение

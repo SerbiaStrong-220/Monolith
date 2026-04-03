@@ -18,7 +18,7 @@
   - type: GameRule
     minPlayers: 40
   - type: LoadMapRule
-    preloadedGrid: AsakimSmall
+    gridPath: /Maps/_Mono/ShuttleEvent/asakim_small.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -38,7 +38,7 @@
   - type: GameRule
     minPlayers: 60
   - type: LoadMapRule
-    preloadedGrid: AsakimMedium
+    gridPath: /Maps/_Mono/ShuttleEvent/asakim_medium.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement

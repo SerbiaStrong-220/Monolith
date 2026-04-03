@@ -4,7 +4,6 @@ ent-NFAdminPDA = { ent-MusicBasePDA }
     .desc = { ent-MusicBasePDA.desc }
 ent-MercenaryPDA = mercenary PDA
     .desc = This PDA smells of war.
-
 ent-StcPDA = station traffic controller PDA
     .desc = Declare emergencies in style!
 ent-SecurityGuardPDA = security guard PDA

@@ -708,7 +708,7 @@ namespace Content.Client.Lobby.UI
                                     names.Add($"[color=#ADD8E6]{Loc.GetString(exProto.Name)}[/color]");
                             }
                             if (names.Count > 0)
-                                tooltipParts.Add($"You must not have one of these traits: {string.Join(", ", names)}");
+                                tooltipParts.Add(Loc.GetString("trait-blacklist") + $" {string.Join(", ", names)}"); // Ru-Localization
                         }
 
                         if (trait.SpeciesBlacklist.Count > 0)
@@ -720,7 +720,7 @@ namespace Content.Client.Lobby.UI
                                     names.Add($"[color=#087209]{Loc.GetString(speciesProto.Name)}[/color]");
                             }
                             if (names.Count > 0)
-                                tooltipParts.Add($"You must not be: {string.Join(", ", names)}");
+                                tooltipParts.Add(Loc.GetString("race-trait-blacklist") + $" {string.Join(", ", names)}"); // Ru-Localization
                         }
 
                         if (tooltipParts.Count > 0)

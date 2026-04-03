@@ -36,5 +36,3 @@
         - type: StationNameSetup
           mapNameTemplate: 'Шахтёрский Аванпост Ланцелот' # Ru-Localization
         - type: StationDeadDropHintExempt
-        - type: TradeCrateWildcardDestination
-          valueMultiplier: 0.1
