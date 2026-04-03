@@ -215,6 +215,6 @@
   name: Toggle channel filter
   components:
   - type: InstantAction
-    icon: { sprite: _NF/Objects/Devices/communication.rsi, state: icon }
+    icon: { sprite: _NF/Objects/Devices/communication.rsi, state: base }
     checkCanInteract: false
     event: !type:ToggleGhostRadioChannels
