@@ -4,6 +4,6 @@
             HeaderClass="windowHeaderAlert"
             TitleClass="windowTitleAlert"
             Title="{Loc 'bwoink-user-title'}" >
-                <!-- SS220-minsize-windos-fix -->
+                <!-- SS220-minsize-windows-fix -->
     <cc:BwoinkControl Name="Bwoink" Access="Public"/>
 </DefaultWindow>
