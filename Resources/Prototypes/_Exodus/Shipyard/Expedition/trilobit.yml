@@ -5,7 +5,7 @@
   description: No description yet
   price: 265200
   category: Medium
-  group: Shipyard
+  group: Expedition
   access: Mercenary
   shuttlePath: /Maps/_Exodus/Shuttles/trilobit.yml
   guidebookPage: Null
