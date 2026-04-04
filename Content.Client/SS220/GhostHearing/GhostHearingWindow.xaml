@@ -1,26 +1,22 @@
 <ui:FancyWindow  xmlns="https://spacestation14.io"
-                        xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                        MinSize="250 500"
-                        Title="{Loc headset-ui-title}">
+                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                 MinSize="250 500"
+                 Title="{Loc headset-ui-title}">
 
     <PanelContainer>
-        <BoxContainer Orientation="Vertical">
-            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="5">
-                <Button Name="ToggleAllChannels"
-                        VerticalAlignment="Top"
-                        SetSize="230 40"
-                        StyleClasses="OpenBoth"/>
-            </BoxContainer>
+        <BoxContainer Orientation="Vertical" Margin="8 4 8 4">
+            <Button Name="ToggleAllChannels"
+                    HorizontalExpand="True"
+                    StyleClasses="OpenBoth"/>
 
             <PanelContainer StyleClasses="HighDivider" Margin="0 5 0 5"/>
 
-            <ScrollContainer VerticalExpand="true">
+            <ScrollContainer VerticalExpand="true" HScrollEnabled="False">
                 <BoxContainer Access="Public"
                               Name="ChannelsList"
-                              MinSize="130 500"
                               Orientation="Vertical"
-                              VerticalAlignment="Top"
-                              HorizontalAlignment="Center"/>
+                              HorizontalExpand="True"
+                              VerticalAlignment="Top"/>
             </ScrollContainer>
 
         </BoxContainer>
