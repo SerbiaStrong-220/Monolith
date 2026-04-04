@@ -61,3 +61,5 @@
   - type: Actions
   - type: Appearance
   - type: WiresVisuals
+  - type: TTS # Corvax-TTS
+    voice: fact_core

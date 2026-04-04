@@ -8,4 +8,11 @@ namespace Content.Server.Radio.Components;
 [RegisterComponent]
 public sealed partial class IntrinsicRadioReceiverComponent : Component
 {
+    //SS220 Silicon TTS fix begin
+    /// <summary>
+    ///     Optional entity that will act as a place to play radio messages
+    ///     (e.g. AI eye instead of AI core).
+    /// </summary>
+    public EntityUid? ReceiverEntityOverride { get; set; }
+    //SS220 Silicon TTS fix end
 }

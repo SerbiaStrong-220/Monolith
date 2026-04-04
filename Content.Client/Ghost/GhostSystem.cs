@@ -154,6 +154,8 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
+            //ss220 add filter tts for ghost
+            _actions.RemoveAction(uid, component.ToggleRadioChannelsUIEntity);
 
             if (uid != _playerManager.LocalEntity)
                 return;

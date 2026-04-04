@@ -46,6 +46,8 @@
         acts: [ "Destruction" ]
   - type: ExplosionResistance
     damageCoefficient: 0.6
+  - type: TTS # SS220-TTS
+    randomVoicesList: Borg
 
 - type: entity
   id: BaseBorgChassisTSF

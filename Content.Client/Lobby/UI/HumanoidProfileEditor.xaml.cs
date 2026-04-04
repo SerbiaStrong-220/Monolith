@@ -7,8 +7,8 @@ using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
-using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared._Mono.Company;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
@@ -33,6 +33,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 
@@ -50,6 +51,7 @@ namespace Content.Client.Lobby.UI
         private readonly IResourceManager _resManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
+        private readonly IRobustRandom _random;
         private readonly LobbyUIController _controller;
         private readonly EntityWhitelistSystem _whitelist; // Frontier
 
@@ -129,6 +131,7 @@ namespace Content.Client.Lobby.UI
             _preferencesManager = preferencesManager;
             _resManager = resManager;
             _requirements = requirements;
+            _random = IoCManager.Resolve<IRobustRandom>();
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
 
             _whitelist = _entManager.System<EntityWhitelistSystem>(); // Frontier
@@ -216,6 +219,10 @@ namespace Content.Client.Lobby.UI
             #endregion Gender
 
             RefreshSpecies();
+
+            // Corvax-TTS-Start
+            InitializeVoice();
+            // Corvax-TTS-End
 
             SpeciesButton.OnItemSelected += args =>
             {
@@ -1165,6 +1172,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
+            UpdateTTSVoicesControls(); // Corvax-TTS
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -1630,6 +1638,7 @@ namespace Content.Client.Lobby.UI
             }
 
             UpdateGenderControls();
+            UpdateTTSVoicesControls(); // Corvax-TTS
             Markings.SetSex(newSex);
             ReloadPreview();
         }
@@ -1639,6 +1648,14 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithGender(newGender);
             ReloadPreview();
         }
+
+        // Corvax-TTS-Start
+        private void SetVoice(string newVoice)
+        {
+            Profile = Profile?.WithVoice(newVoice);
+            IsDirty = true;
+        }
+        // Corvax-TTS-End
 
         private void SetSpecies(string newSpecies)
         {

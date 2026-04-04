@@ -49,8 +49,17 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         // we don't want to send to players who aren't in game (i.e. in the lobby)
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
+        // SS220-better-TTS-announcement-begin
+        //if (stationEvent.StartAnnouncement != null)
+        //   ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
+        // Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true);
+
         if (stationEvent.StartAnnouncement != null)
-            ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(stationEvent.StartAnnouncement), sender: stationEvent.AnnounceSender is { } send ? Loc.GetString(send) : null, playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
+            ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(stationEvent.StartAnnouncement), playSound: true, sender: stationEvent.AnnounceSender is { } send ? Loc.GetString(send) : null,
+                        announcementSound: stationEvent.StartAudio, colorOverride: stationEvent.StartAnnouncementColor, playTTS: stationEvent.PlayTTS);
+        else
+            Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true);
+        // SS220-better-TTS-announcement-end
 
         // Frontier
         if (stationEvent.StartRadioAnnouncement != null)
@@ -59,8 +68,6 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
             var mapUid = MapSystem.GetMap(GameTicker.DefaultMap); // Hack: need a reference to a valid entity on the default map - the map itself works.
             RadioSystem.SendRadioMessage(uid, message, stationEvent.StartRadioAnnouncementChannel, mapUid, escapeMarkup: false);
         }
-
-        Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true);
     }
 
     /// <inheritdoc/>

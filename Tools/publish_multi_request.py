@@ -15,8 +15,8 @@ RELEASE_DIR = "release"
 # CONFIGURATION PARAMETERS
 # Forks should change these to publish to their own infrastructure.
 #
-ROBUST_CDN_URL = "https://cdn.goobstation.com/"
-FORK_ID = "Monolith"
+ROBUST_CDN_URL = "https://lk.ss220.club/cdn/"
+FORK_ID = "SS220ExodusRelease"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -34,7 +34,8 @@ def main():
 
     data = {
         "version": VERSION,
-        "engineVersion": get_engine_version(),
+        # В репозитории нет тегов. Пока не смог выяснить почему, поэтому версия Robust задана жёстко
+        "engineVersion": "272.0.0" # get_engine_version(),
     }
     headers = {
         "Content-Type": "application/json"

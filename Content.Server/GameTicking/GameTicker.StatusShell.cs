@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text.Json.Nodes;
+using Content.Server.SS220.JoinQueue;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Server.ServerStatus;
@@ -29,6 +30,8 @@ namespace Content.Server.GameTicking
         /// </summary>
         [Dependency] private readonly SharedGameTicker _gameTicker = default!;
 
+        [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
+
         private void InitializeStatusShell()
         {
             IoCManager.Resolve<IStatusHost>().OnStatusRequest += GetStatusResponse;
@@ -45,8 +48,8 @@ namespace Content.Server.GameTicking
                 jObject["map"] = _gameMapManager.GetSelectedMap()?.MapName;
                 jObject["round_id"] = _gameTicker.RoundId;
                 jObject["players"] = _cfg.GetCVar(CCVars.AdminsCountInReportedPlayerCount)
-                    ? _playerManager.PlayerCount
-                    : _playerManager.PlayerCount - _adminManager.ActiveAdmins.Count();
+                     ? _queueManager.ActualPlayersCount // Corvax-Queue
+                     : _queueManager.ActualPlayersCount - _adminManager.ActiveAdmins.Count(); // Corvax-Queue
                 jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
                 jObject["panic_bunker"] = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
                 jObject["run_level"] = (int) _runLevel;

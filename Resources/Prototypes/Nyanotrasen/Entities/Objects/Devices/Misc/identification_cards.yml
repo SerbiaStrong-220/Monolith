@@ -31,6 +31,10 @@
       state: nyanoprisoner
   - type: PresetIdCard
     job: Prisoner
+  #SS220-add-tts-to-prisoner-card-start
+  - type: TTS
+    voice: sentrybot
+  #SS220-add-tts-to-prisoner-card-end
 
 - type: entity
   parent: IDCardStandard

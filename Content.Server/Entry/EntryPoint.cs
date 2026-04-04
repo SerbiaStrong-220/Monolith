@@ -24,6 +24,9 @@ using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
+using Content.Server.SS220.Discord;
+using Content.Server.SS220.JoinQueue;
+using Content.Server.SS220.TTS;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
@@ -51,6 +54,11 @@ namespace Content.Server.Entry
         private IServerDbManager? _dbManager;
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
+
+        private JoinQueueManager _joinQueueManager = default!; // Corvax-Queue
+        private TTSManager _ttsManager = default!; // Corvax-TTS
+        private DiscordPlayerManager _discordPlayerManager = default!; // SS220 discord player manager
+
 
         /// <inheritdoc />
         public override void Init()
@@ -100,6 +108,10 @@ namespace Content.Server.Entry
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
 
+                _ttsManager = IoCManager.Resolve<TTSManager>();
+                _discordPlayerManager = IoCManager.Resolve<DiscordPlayerManager>();
+                _joinQueueManager = IoCManager.Resolve<JoinQueueManager>();
+
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
@@ -120,6 +132,10 @@ namespace Content.Server.Entry
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+
+                _ttsManager.Initialize(); // Corvax-TTS
+                _discordPlayerManager.Initialize(); // SS220 discord player manager
+                _joinQueueManager.Initialize(); // Corvax-Queue
             }
         }
 

@@ -1,3 +1,4 @@
+using Content.Server._NF.SectorServices; // Frontier
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
@@ -17,9 +18,9 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.SS220.TTS;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Content.Server._NF.SectorServices; // Frontier
 
 namespace Content.Server.Communications
 {
@@ -234,6 +235,7 @@ namespace Content.Server.Communications
             var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxLength);
             var author = Loc.GetString("comms-console-announcement-unknown-sender");
+            var voiceId = string.Empty;
             if (message.Actor is { Valid: true } mob)
             {
                 if (!CanAnnounce(comp))
@@ -250,6 +252,11 @@ namespace Content.Server.Communications
                 var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, mob);
                 RaiseLocalEvent(tryGetIdentityShortInfoEvent);
                 author = tryGetIdentityShortInfoEvent.Title;
+
+                if (TryComp<TTSComponent>(mob, out var tts))
+                {
+                    voiceId = tts.VoicePrototypeId;
+                }
             }
 
             comp.AnnouncementCooldownRemaining = comp.Delay;
@@ -271,7 +278,7 @@ namespace Content.Server.Communications
                 return;
             }
 
-            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color);
+            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color, voiceId: voiceId);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
 

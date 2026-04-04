@@ -1,14 +1,15 @@
+using Content.Server._EinsteinEngines.Language;
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Radio.Components;
+using Content.Server.Speech;
 using Content.Shared._Mono.Radio;
+using Content.Shared.Chat;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
-using Content.Server.Speech;
-using Content.Server._EinsteinEngines.Language;
-using Content.Shared.Chat;
 using Content.Shared.Radio.EntitySystems;
+using Content.Shared.SS220.TTS;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -105,7 +106,9 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        var parent = Transform(uid).ParentUid;
+
+        if (TryComp(parent, out ActorComponent? actor))
         {
             // Einstein Engines - Language begin
             var canUnderstand = _language.CanUnderstand(Transform(uid).ParentUid, args.Language.ID);
@@ -125,6 +128,13 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             // Send radio noise event to client
             var radioNoiseEvent = new RadioNoiseEvent(GetNetEntity(uid), args.Channel.ID);
             RaiseNetworkEvent(radioNoiseEvent, actor.PlayerSession);
+
+            // SS220 TTS-Radio begin
+            if (parent != args.MessageSource && TryComp(args.MessageSource, out TTSComponent? _))
+            {
+                args.Receivers.Add(new(parent));
+            }
+            // SS220 TTS-Radio end
         }
     }
 

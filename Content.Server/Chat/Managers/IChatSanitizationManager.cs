@@ -10,4 +10,6 @@ public interface IChatSanitizationManager
         EntityUid speaker,
         out string sanitized,
         [NotNullWhen(true)] out string? emote);
+
+    public bool CheckNoEnglish(EntityUid speaker, string message); // SS220 no English
 }

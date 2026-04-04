@@ -168,6 +168,7 @@
     damage:
       types:
         Blunt: 5
+  - type: TTS # Corvax-TTS
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
@@ -373,3 +374,4 @@
     interfaces:
       enum.HumanoidMarkingModifierKey.Key: # sure, this can go here too
         type: HumanoidMarkingModifierBoundUserInterface
+  - type: TTS # Corvax-TTS

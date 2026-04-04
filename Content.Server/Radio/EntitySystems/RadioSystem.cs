@@ -88,6 +88,13 @@ public sealed class RadioSystem : EntitySystem
             // Send radio noise event to client for IPCs
             var radioNoiseEvent = new RadioNoiseEvent(GetNetEntity(uid), args.Channel.ID);
             RaiseNetworkEvent(radioNoiseEvent, actor.PlayerSession);
+
+            // SS220 Silicon TTS fix begin
+            if (component.ReceiverEntityOverride is { } receiverOverride && !TerminatingOrDeleted(receiverOverride))
+                args.Receivers.Add(new(uid, new(receiverOverride, 0, 0)));
+            else
+                args.Receivers.Add(new(uid));
+            // SS220 Silicon TTS fix end
         }
     }
 
@@ -189,7 +196,7 @@ public sealed class RadioSystem : EntitySystem
         var obfuscated = _language.ObfuscateSpeech(content, language);
         var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, NetEntity.Invalid, null);
-        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
+        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource, new());
         // Einstein Engines - Language end
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
@@ -247,6 +254,12 @@ public sealed class RadioSystem : EntitySystem
             // send the message
             RaiseLocalEvent(receiver, ref ev);
         }
+
+        // Dispatch TTS radio speech event for every receiver
+        //ss220 add filter tts for ghost start
+        var radioSpokeEvent = new RadioSpokeEvent(messageSource, message, channel, ev.Receivers.ToArray(), frequency  /* SS220-add-frequency-radio */);
+        RaiseLocalEvent(ref radioSpokeEvent);
+        //ss220 add filter tts for ghost end
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");

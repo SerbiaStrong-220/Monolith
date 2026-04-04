@@ -34,6 +34,14 @@ public sealed partial class GhostComponent : Component
     [DataField]
     public EntityUid? ToggleGhostHearingActionEntity;
 
+    //ss220 add filter tts for ghost start
+    [DataField]
+    public EntProtoId ToggleRadioChannelsUI = "ActionToggleRadioChannelsUI";
+
+    [DataField]
+    public EntityUid? ToggleRadioChannelsUIEntity;
+    //ss220 add filter tts for ghost end
+
     [DataField]
     public EntProtoId BooAction = "ActionGhostBoo";
 

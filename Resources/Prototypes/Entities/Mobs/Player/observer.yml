@@ -112,6 +112,10 @@
     interfaces:
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
+  #ss220 add filter tts for ghost start
+      enum.GhostHearingKey.Key:
+        type: GhostHearingBoundUserInterface
+  #ss220 add filter tts for ghost end
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -205,3 +209,12 @@
       state: icon
     iconOn: Interface/Actions/ghostHearingToggled.png
     event: !type:ToggleGhostHearingActionEvent
+
+- type: entity
+  id: ActionToggleRadioChannelsUI
+  name: Toggle channel filter
+  components:
+  - type: InstantAction
+    icon: { sprite: _NF/Objects/Devices/communication.rsi, state: base }
+    checkCanInteract: false
+    event: !type:ToggleGhostRadioChannels

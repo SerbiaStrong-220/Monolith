@@ -25,6 +25,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         _window.AddVerbs();
 
         _window.OnNameChange += OnNameSelected;
+        _window.OnVoiceChange += (value) => SendMessage(new VoiceMaskChangeVoiceMessage(value)); // Corvax-TTS
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
     }
 
@@ -40,7 +41,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Verb);
+        _window.UpdateState(cast.Name, cast.Verb, cast.Voice); // Corvax-TTS
     }
 
     protected override void Dispose(bool disposing)
