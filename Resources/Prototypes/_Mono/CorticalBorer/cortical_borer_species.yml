@@ -101,6 +101,8 @@
   - type: Body
     thermalVisibility: false
   - type: UniversalLanguageSpeaker
+  - type: TTS # SS220-TTS
+    randomVoicesList: Demons
 
 - type: entity
   parent: BaseItem
