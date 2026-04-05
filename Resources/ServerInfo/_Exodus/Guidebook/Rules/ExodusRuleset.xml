@@ -1,6 +1,6 @@
 <Document>
 
-# Правила Exodus
+# Основные правила сервера
 
 ## Предисловие
 
@@ -18,27 +18,26 @@
 Все перечисленные ниже правила действуют постоянно, включая время между раундами, непосредственно в игре и в других частях нашего сообщества.
 
 [color=red][italic]Если какие-либо ссылки не работают, используйте версию руководства в гайдбуке через меню (ESC) или (Numpad 0).[/italic][/color]
-[color=red][italic]Ожидается, что данные правила будут прочитаны полностью.[/italic][/color]
+
+[color=red][italic]Все перечисленные ниже правила действуют постоянно — включая время между раундами, непосредственно в игре и в других частях нашего сообщества. Ожидается, что данные правила будут прочитаны полностью.[/italic][/color]
 
 ## Основные правила
 Вам необходимо следовать следующим правилам Exodus:
-- 0. [textlink="Не будь мудаком" link="ExodusRule0DontBeAsshole"]
-- 1. [textlink="Уклонение от наказаний" link="ExodusRule1PunishmentEvasion"]
-- 2. [textlink="Игнорирование/Злоупотребление AHelp (F1)" link="ExodusRule2Ahelp"]
-- 3. [textlink="Элитизм" link="ExodusRule3Elitism"]
-- 4. [textlink="Мета-гейминг/мета-кооп" link="ExodusRule4Metagaming"]
-- 5. [textlink="Злоупотребление OOC, LOOC, эмоциями" link="ExodusRule5OOCAbuse"]
-- 6. [textlink="Злоупотребление багами/сторонним ПО" link="ExodusRule6BugAbuse"]
-- 7. [textlink="Мульти-аккаунтинг" link="ExodusRule7Twinks"]
-- 8. [textlink="Самоантагонизм" link="ExodusRule8SelfAntagonist"]
-- 9. [textlink="Конфликты" link="ExodusRule9Conflicts"]
-- 10. [textlink="Память" link="ExodusRule10Memory"]
-- 11. [textlink="ERP" link="ExodusRule11ERP"]
-- 12. [textlink="Доступность информации" link="ExodusRule12Information"]
-- 13. [textlink="Игровая атмосфера" link="ExodusRule13RP"]
-- 14. [textlink="Возрождение" link="ExodusRule14Respawn"]
-- 15. [textlink="Фракционные столкновения" link="ExodusRule15War"]
-- 16. [textlink="Безопасные зоны" link="ExodusRule16Safezones"]
-- 17. [textlink="Правила ролей во фракциях" link="ExodusRule17FactionRoles"]
+- 0. [textlink="Не быть мудаком" link="EX_Rule0_DontBeAsshole"]
+- 1. [textlink="Гриф" link="EX_Rule1_Vulture"]
+- 2. [textlink="Конфликты" link="EX_Rule2_Conflicts"]
+- 3. [textlink="Нарушение игровой атмосферы" link="EX_Rule3_Metagaming"]
+- 3.1 [textlink="Метагейм — Метакооп" link="EX_Rule3_Metagaming"]
+- 3.2 [textlink="Злоупотребление LOOC, OOC и чатом эмоций" link="EX_Rule3_Metagaming"]
+- 3.3 [textlink="Поддержание уважительной обстановки" link="EX_Rule3_Metagaming"]
+- 3.4 [textlink="Безграмотность" link="EX_Rule3_Metagaming"]
+- 4. [textlink="Логика персонажей" link="EX_Rule4_InCharacter"]
+- 4.1 [textlink="Фракционные столкновения" link="EX_Rule4_InCharacter"]
+- 4.2 [textlink="Нападение на пустой аванпост" link="EX_Rule4_InCharacter"]
+- 4.3 [textlink="Безопасные зоны" link="EX_Rule4_InCharacter"]
+- 5. [textlink="Игроки в АФК и ССД" link="EX_Rule5_SSD"]
+- 6. [textlink="Память и возрождение" link="EX_Rule6_Respawn"]
+- 7. [textlink="ERP" link="EX_Rule7_ERP"]
+- 8. [textlink="Нечестная игра" link="EX_Rule8_Abuse"]
 
 </Document>
