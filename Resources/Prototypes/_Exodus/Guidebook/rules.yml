@@ -5,66 +5,66 @@
   priority: -2
   ruleEntry: true
   children:
-    - EX_Rule0_DontBeAsshole
-    - EX_Rule1_Vulture
-    - EX_Rule2_Conflicts
-    - EX_Rule3_Metagaming
-    - EX_Rule4_InCharacter
-    - EX_Rule5_SSD
-    - EX_Rule6_Respawn
-    - EX_Rule7_ERP
-    - EX_Rule8_Abuse
+    - EXRule0DontBeAsshole
+    - EXRule1Vulture
+    - EXRule2Conflicts
+    - EXRule3Metagaming
+    - EXRule4InCharacter
+    - EXRule5SSD
+    - EXRule6Respawn
+    - EXRule7ERP
+    - EXRule8Abuse
 
 - type: guideEntry
-  id: EX_Rule0_DontBeAsshole
+  id: EXRule0DontBeAsshole
   name: guide-entry-exodus-rule-zero-dont-be-asshole
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule0_DontBeAsshole.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule1_Vulture
+  id: EXRule1Vulture
   name: guide-entry-exodus-rule-one-punishment-evasion
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule1_Vulture.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule2_Conflicts
+  id: EXRule2Conflicts
   name: guide-entry-exodus-rule-two-ahelp
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule2_Conflicts.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule3_Metagaming
+  id: EXRule3Metagaming
   name: guide-entry-exodus-rule-three-elitism
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule3_Metagaming.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule4_InCharacter
+  id: EXRule4InCharacter
   name: guide-entry-exodus-rule-four-metagaming
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule4_InCharacter.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule5_SSD
+  id: EXRule5SSD
   name: guide-entry-exodus-rule-five-ooc-abuse
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule5_SSD.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule6_Respawn
+  id: EXRule6Respawn
   name: guide-entry-exodus-rule-six-bug-abuse
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule6_Respawn.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule7_ERP
+  id: EXRule7ERP
   name: guide-entry-exodus-rule-seven-twinks
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule7_ERP.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: EX_Rule8_Abuse
+  id: EXRule8Abuse
   name: guide-entry-exodus-rule-eight-self-antagonist
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule8_Abuse.xml"
   ruleEntry: true
