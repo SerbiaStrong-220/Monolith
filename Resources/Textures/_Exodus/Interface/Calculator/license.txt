@@ -1,0 +1,1 @@
+calculator-body.png, calculator-digits.png: made by stalengd, licensed under EXDS-RL.

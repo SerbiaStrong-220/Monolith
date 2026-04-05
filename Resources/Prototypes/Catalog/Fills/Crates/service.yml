@@ -156,6 +156,7 @@
     - id: BoxReamBright
     - id: BoxPaper #Mono in
     - id: RubberStampCaptain # Frontier
+    - id: DeviceCalculator # Exodus Calculator
 
 - type: entity
   id: CrateServiceFaxMachine

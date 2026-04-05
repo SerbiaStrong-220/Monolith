@@ -1,0 +1,12 @@
+- type: latheRecipePack
+  id: DeviceCalculatorStatic
+  recipes:
+  - DeviceCalculator
+
+- type: latheRecipe
+  id: DeviceCalculator
+  result: DeviceCalculator
+  completetime: 4
+  materials:
+    Steel: 200
+    Plastic: 200

@@ -75,6 +75,7 @@ namespace Content.Server.Entry
             factory.RegisterIgnore(IgnoredComponents.List);
 
             prototypes.RegisterIgnore("parallax");
+            prototypes.RegisterIgnore("spriteFont"); // Exodus Calculator
 
             ServerContentIoC.Register();
 

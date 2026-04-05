@@ -1,0 +1,45 @@
+using Content.Client.Resources;
+using Content.Client._Exodus.Fonts;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+
+namespace Content.Client._Exodus.StyleTools;
+
+public abstract class QuickStyle
+{
+    protected StylesheetBuilder Builder { get; private set; } = default!;
+    protected IResourceCache Resources { get; private set; } = default!;
+
+    public Stylesheet Create(Stylesheet? baseStylesheet, IResourceCache resourceCache)
+    {
+        Builder = StylesheetBuilder.FromBase(baseStylesheet);
+        Resources = resourceCache;
+        CreateRules();
+        return Builder.Build();
+    }
+
+    protected abstract void CreateRules();
+
+    protected Texture Tex(string path) => Resources.GetTexture(path);
+    protected Texture Tex(ResPath path) => Resources.GetTexture(path);
+    protected SpriteSpecifier Sprite(string path, string state) => new SpriteSpecifier.Rsi(new(path), state);
+    protected SpriteSpecifier Sprite(ResPath path, string state) => new SpriteSpecifier.Rsi(path, state);
+    protected SpriteSpecifier Sprite(string path) => new SpriteSpecifier.Texture(new(path));
+    protected SpriteSpecifier Sprite(ResPath path) => new SpriteSpecifier.Texture(path);
+    protected Font VectorFont(string path, int size) => Resources.GetFont(path, size);
+    protected Font VectorFont(ResPath path, int size) => Resources.GetFont(path, size);
+    protected SpriteFont SpriteFont(ProtoId<SpriteFontPrototype> id) => Fonts.SpriteFont.Load(id, Resources);
+
+    protected StyleBoxTexture StrechedStyleBoxTexture(Texture texture)
+    {
+        var box = new StyleBoxTexture()
+        {
+            Texture = texture,
+        };
+        box.SetPatchMargin(StyleBox.Margin.All, 0);
+        return box;
+    }
+}

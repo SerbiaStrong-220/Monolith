@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "EXDS-RL",
+    "copyright": "Made by stalengd",
+    "size": {
+        "x": 54,
+        "y": 33
+    },
+    "states": [
+        {
+            "name": "0"
+        },
+        {
+            "name": "0_pressed"
+        },
+        {
+            "name": "equals"
+        },
+        {
+            "name": "equals_pressed"
+        }
+    ]
+}

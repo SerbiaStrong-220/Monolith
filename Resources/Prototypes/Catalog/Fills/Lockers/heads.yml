@@ -22,6 +22,7 @@
     - id: Pickaxe # Mono
     #    - id: AstroNavCartridge # Frontier
     - id: ClothingBeltUtilityEngineering # Frontier
+    - id: DeviceCalculator # Exodus Calculator
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -174,6 +175,7 @@
     #    - id: ShipyardRCD # Mono
     #    - id: ShipyardRCDAmmo # Mono
     - id: trayScanner # Frontier
+    - id: DeviceCalculator # Exodus Calculator
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -294,6 +296,7 @@
     #    - id: ProtolatheMachineCircuitboard # Frontier
     #    - id: ResearchComputerCircuitboard # Frontier
     - id: RubberStampRd
+    - id: DeviceCalculator # Exodus Calculator
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

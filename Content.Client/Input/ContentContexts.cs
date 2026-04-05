@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Input;
 using Content.Shared.Input;
 using Robust.Shared.Input;
 
@@ -124,6 +125,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.TargetRightFoot);
             // Shitmed Change End
             human.AddFunction(ContentKeyFunctions.OfferItem); // CorvaxGoob-OfferItem
+            human.AddCalculatorKeys(); // Exodus Calculator
 
             // actions should be common (for ghosts, mobs, etc)
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
