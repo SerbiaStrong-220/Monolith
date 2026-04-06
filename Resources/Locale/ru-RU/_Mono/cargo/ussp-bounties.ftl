@@ -13,6 +13,7 @@ ussp-bounty-name-vodka = Vodka
 ussp-bounty-name-biomass = Biomass
 ussp-bounty-name-civilian-mech = Civilian Mech
 ussp-bounty-name-military-mech = Military Mech
+
 ussp-bounty-desc-generic = USSP needs this for the fight!
 ussp-bounty-desc-nova = Nova Cygni command needs this!
 ussp-bounty-desc-artifact = Sell in a artifact container.

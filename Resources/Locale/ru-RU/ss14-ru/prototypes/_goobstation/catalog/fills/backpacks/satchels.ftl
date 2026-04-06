@@ -4,3 +4,4 @@ ent-ClothingBackpackSatchelLeatherFilledSpecOps = { ent-ClothingBackpackSatchelL
     .desc = { ent-ClothingBackpackSatchelLeather.desc }
 ent-ClothingBackpackChameleonFilledUndercover = { ent-ClothingBackpackChameleon }
     .desc = { ent-ClothingBackpackChameleon.desc }
+    .suffix = { ent-ClothingBackpackChameleon.suffix }

@@ -1,12 +1,12 @@
 ent-ClosetO2N2FilledRandom = { ent-ClosetO2N2 }
+    .desc = { ent-ClosetO2N2.desc }
     .suffix = Filled, Random
-    .desc = { ent-ClosetO2N2.desc }
 ent-ClosetO2N2Filled = { ent-ClosetO2N2 }
-    .suffix = Filled
     .desc = { ent-ClosetO2N2.desc }
+    .suffix = Filled
 ent-ClosetO2Filled = { ent-ClosetEmergency }
-    .suffix = Filled
     .desc = { ent-ClosetEmergency.desc }
-ent-ClosetFsbEvaFilled = { ent-ClosetFsbEva }
     .suffix = Filled
+ent-ClosetFsbEvaFilled = { ent-ClosetFsbEva }
     .desc = { ent-ClosetFsbEva.desc }
+    .suffix = Filled

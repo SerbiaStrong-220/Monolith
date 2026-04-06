@@ -1,10 +1,14 @@
+
 ### Interaction Messages
 
 # When trying to eat food without the required utensil... but you gotta hold it
 food-you-need-to-hold-utensil = You need to be holding a { $utensil } to eat that!
+
 food-nom = Ням. { $flavors }
 food-swallow = Вы проглатываете { $food }. { $flavors }
+
 food-has-used-storage = Вы не можете есть { $food }, пока внутри что-то есть.
+
 food-system-remove-mask = Сначала необходимо снять { $entity }, прежде чем есть.
 
 ## System
@@ -15,6 +19,7 @@ food-system-try-use-food-is-empty = { CAPITALIZE(THE($entity)) } не имеет
 food-system-wrong-utensil = Вы не можете есть { $food } используя { INDEFINITE($utensil) } { $utensil }.
 food-system-cant-digest = Вы не можете съесть и переварить { $entity }!
 food-system-cant-digest-other = { CAPITALIZE(SUBJECT($target)) } не может съесть и переварить { $entity }!
+
 food-system-verb-eat = Eat
 
 ## Force feeding

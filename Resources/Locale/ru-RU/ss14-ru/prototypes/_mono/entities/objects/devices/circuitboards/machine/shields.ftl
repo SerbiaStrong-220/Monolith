@@ -1,6 +1,9 @@
 ent-MachineShieldMS100Circuitboard = MS-100 shield generator board
     .desc = A machine board for a shield generator.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-MachineShieldMS250Circuitboard = MS-250 shield generator board
     .desc = A machine board for a shield generator.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-MachineShieldMS500Circuitboard = MS-500 shield generator board
     .desc = A machine board for a shield generator.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }

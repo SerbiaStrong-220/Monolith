@@ -1,7 +1,9 @@
 ent-AutodocCircuitboard = autodoc machine board
     .desc = A machine printed circuit board for an autodoc.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-AutodocSyndieCircuitboard = { ent-AutodocCircuitboard }
-    .suffix = Syndie
     .desc = { ent-AutodocCircuitboard.desc }
+    .suffix = Syndie
 ent-OperatingTableCircuitboard = operating table machine board
     .desc = A machine printed circuit board for an operating table.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }

@@ -1,6 +1,9 @@
 ent-CarpCallerMachineCircuitboard = carp caller machine board
     .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-ContainmentFieldGeneratorCircuitboard = containment field generator machine board
     .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-SmartfridgeCircuitboard = smartfridge machine board
     .desc = A machine printed circuit board for a smartfridge.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }

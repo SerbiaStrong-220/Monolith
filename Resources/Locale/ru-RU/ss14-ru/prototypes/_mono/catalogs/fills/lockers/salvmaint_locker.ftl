@@ -1,9 +1,9 @@
 ent-MonoMaintenanceFluffSpawner = Mono Maint Loot Spawner
+    .desc = { ent-MarkerBase.desc }
     .suffix = UNUSED,Fluff+Clothes
-    .desc = { ent-MarkerBase.desc }
 ent-MonoMaintenanceToolSpawner = Mono Maint Loot Spawner
+    .desc = { ent-MarkerBase.desc }
     .suffix = UNUSED,Tools+Cells+Mats
-    .desc = { ent-MarkerBase.desc }
 ent-MonoMaintenanceWeaponSpawner = Mono Maint Loot Spawner
-    .suffix = UNUSED,Scrap+Weapons
     .desc = { ent-MarkerBase.desc }
+    .suffix = UNUSED,Scrap+Weapons

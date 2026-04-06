@@ -4,3 +4,7 @@ ent-CrateNanotrasen = NT crate
     .desc = A white and blue crate with the Nanotrasen Symbol.
 ent-CrateNanotrasenDS = menacing NT crate
     .desc = A red and black crate with a menacing aura, it sends chills down your spine looking at it
+ent-CrateMilitaryEquipment = military equipment crate
+    .desc = { ent-CrateGenericSteel.desc }
+ent-CratePDVEquippment = PDV equipment crate
+    .desc = A black and brown crate used by the Vanguard, used to store miscellaneous equippment.

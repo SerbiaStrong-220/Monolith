@@ -1,6 +1,6 @@
-ent-ShuttleGunFriendshipNfsd = { ent-BaseStructureDisableToolUse }
+ent-ShuttleGunFriendshipNfsd = { ent-ShuttleGunFriendship }
+    .desc = { ent-ShuttleGunFriendship.desc }
     .suffix = TSFMC
-    .desc = { ent-BaseStructureDisableToolUse.desc }
-ent-ShuttleGunDusterNfsd = { ent-BaseStructureDisableToolUse }
+ent-ShuttleGunDusterNfsd = { ent-ShuttleGunDuster }
+    .desc = { ent-ShuttleGunDuster.desc }
     .suffix = TSFMC
-    .desc = { ent-BaseStructureDisableToolUse.desc }

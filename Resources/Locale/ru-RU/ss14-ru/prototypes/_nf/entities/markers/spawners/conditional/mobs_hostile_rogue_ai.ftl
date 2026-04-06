@@ -1,9 +1,9 @@
 ent-SpawnMobViscerator = viscerator unit spawner
-    .suffix = AI, Hostile
     .desc = { ent-MarkerBase.desc }
+    .suffix = AI, Hostile
 ent-SpawnMobRogueSiliconBoss = one star unit spawner
-    .suffix = AI, Hostile
     .desc = { ent-MarkerBase.desc }
+    .suffix = AI, Hostile
 ent-SpawnMobRogueSiliconGuardian = guardian unit spawner
-    .suffix = AI, Hostile
     .desc = { ent-MarkerBase.desc }
+    .suffix = AI, Hostile

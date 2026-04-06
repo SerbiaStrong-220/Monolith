@@ -1,10 +1,10 @@
 ent-BaseMobAsakim = Urist McAsakim
     .desc = { ent-BaseMobSpeciesOrganic.desc }
 ent-MobAsakim = Urist McAsakim
+    .desc = { ent-BaseMobAsakim.desc }
     .suffix = Urisst' MzAsakim
-    .desc = { ent-BaseMobAsakim.desc }
 ent-MobAsakimRandom = Urist McAsakim
-    .suffix = Random Appearance
     .desc = { ent-BaseMobAsakim.desc }
+    .suffix = Random Appearance
 ent-MobAsakimDummy = { ent-BaseSpeciesDummy }
     .desc = A dummy Asakim meant to be used in character setup.

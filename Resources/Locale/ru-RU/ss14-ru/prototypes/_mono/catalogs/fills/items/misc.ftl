@@ -1,3 +1,9 @@
 ent-SyringeCaseAltFilled = { ent-SyringeCaseAlt }
-    .suffix = Filled
     .desc = { ent-SyringeCaseAlt.desc }
+    .suffix = Filled
+ent-WeaponCaseHeavyAmmo150EMP = { ent-WeaponCaseHeavyAmmo }
+    .desc = { ent-WeaponCaseHeavyAmmo.desc }
+    .suffix = Heavy, Ship, 150mm EMP
+ent-WeaponCaseHeavyAmmo150AP = { ent-WeaponCaseHeavyAmmo }
+    .desc = { ent-WeaponCaseHeavyAmmo.desc }
+    .suffix = Heavy, Ship, 150mm AP

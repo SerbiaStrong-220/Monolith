@@ -1,6 +1,7 @@
 ## Components
 
 stamp-component-signee-name = { $user }
+
 stamp-component-stamped-name-doctor = Doctor
 stamp-component-stamped-name-engineer = Engineer
 stamp-component-stamped-name-doc = Director of Care

@@ -1,0 +1,11 @@
+ent-GooglyEyes = googly eyes
+    .desc = Stick on things to make them look funny.
+ent-GooglyEyesAdmeme = { ent-GooglyEyes }
+    .desc = { ent-GooglyEyes.desc }
+    .suffix = Admeme
+ent-GooglyEyesWatchful = { ent-GooglyEyes }
+    .desc = { ent-GooglyEyes.desc }
+    .suffix = Watchful
+ent-GooglyEyesWatchfulAdmeme = { ent-GooglyEyesWatchful }
+    .desc = { ent-GooglyEyesWatchful.desc }
+    .suffix = Admeme, Watchful

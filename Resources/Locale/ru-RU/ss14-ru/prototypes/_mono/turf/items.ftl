@@ -22,3 +22,7 @@ ent-FloorTileItemGreySteelCommercial = commercial grey steel tile
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemSteelGreyMonoCommercial = commercial mono grey steel tile
     .desc = { ent-FloorTileItemBase.desc }
+ent-FloorTileItemCatwalkHorizontal = horizontal catwalk tile
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorTileItemCatwalkVertical = vertical catwalk tile
+    .desc = { ent-FloorTileItemBase.desc }

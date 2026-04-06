@@ -1,9 +1,9 @@
-ent-JukeboxShip = корабельный музыкальный автомат
+ent-JukeboxShip = { ent-Jukebox }
+    .desc = { ent-Jukebox.desc }
     .suffix = Корабельный
+ent-JukeboxWallmount = { ent-Jukebox }
     .desc = { ent-Jukebox.desc }
-ent-JukeboxWallmount = настенный музыкальный автомат
     .suffix = Настенный
-    .desc = { ent-Jukebox.desc }
-ent-JukeboxWallmountShip = корабельный настенный музыкальный автомат
+ent-JukeboxWallmountShip = { ent-JukeboxWallmount }
+    .desc = { ent-JukeboxWallmount.desc }
     .suffix = Настенный, Корабельный
-    .desc = { ent-Jukebox.desc }

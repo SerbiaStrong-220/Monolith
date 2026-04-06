@@ -1,10 +1,10 @@
 ent-ClothingBackpackStasisBattery = stasis storage
     .desc = Stores energy to freeze time flow, warping the space inside for more capacity.
 ent-ClothingBackpackStasisBatteryUnremoveable = { ent-ClothingBackpackStasisBattery }
-    .suffix = Unremoveable
     .desc = { ent-ClothingBackpackStasisBattery.desc }
+    .suffix = Unremoveable
 ent-ClothingBackpackStasisBatteryUnremoveableFilled = { ent-ClothingBackpackStasisBatteryUnremoveable }
-    .suffix = Filled, Unremoveable
     .desc = { ent-ClothingBackpackStasisBatteryUnremoveable.desc }
+    .suffix = Filled, Unremoveable
 ent-ClothingBackpackLMGBattery = EL-20 storage
     .desc = Accepts specialized car batteries to power the EL-20 HAMRR LMG.

@@ -8,20 +8,22 @@ implanter-draw-failed-catastrophically = Имплантер ничего не н
 implanter-component-implant-already = { $target } уже имеет { $implant }!
 
 ## UI
-
 implanter-set-draw-verb = Установить извлечение импланта
 implanter-set-draw-window = Установить извлечение импланта
 implanter-set-draw-info = Выберите тип импланта, который должен быть извлечён.
 implanter-set-draw-type = Тип импланта:
+
 implanter-draw-text = Извлечение
 implanter-inject-text = Установка
+
 implanter-empty-text = Пусто
+
 implanter-label-inject = [color=green]{ $implantName }[/color]
     Режим: [color=white]{ $modeString }[/color]
+
 implanter-label-draw = [color=red]{ $implantName }[/color]
     Режим: [color=white]{ $modeString }[/color]
-implanter-label = [color=green]{ $implantName }[/color]
-    Режим: [color=white]{ $modeString }[/color]
+
 implanter-contained-implant-text = [color=green]{ $desc }[/color]
 
 ## Implant Popups
@@ -30,19 +32,17 @@ scramble-implant-activated-popup = Ваша внешность преображ�
 
 ## Implant Messages
 
-deathrattle-implant-dead-message =
-    Зафиксирована смерть { $user }{ $specie ->
-        [null] { "" }
-       *[default] { " " }({ $specie })
-    }, местоположение { $grid ->
-        [null] { "" }
-       *[default] { $grid }{ " " }
-    }{ $position }.
-deathrattle-implant-critical-message =
-    Жизненные показатели { $user }{ $specie ->
-        [null] { "" }
-       *[default] { " " }({ $specie })
-    } критические, требуется немедленная помощь на { $grid ->
-        [null] { "" }
-       *[default] { $grid }{ " " }
-    }{ $position }.
+deathrattle-implant-dead-message = Зафиксирована смерть { $user }{ $specie ->
+    [null] { "" }
+    *[default] { " " }({ $specie })
+}, местоположение { $grid ->
+    [null] { "" }
+    *[default] { $grid }{ " " }
+}{ $position }.
+deathrattle-implant-critical-message = Жизненные показатели { $user }{ $specie ->
+    [null] { "" }
+    *[default] { " " }({ $specie })
+} критические, требуется немедленная помощь на { $grid ->
+    [null] { "" }
+    *[default] { $grid }{ " " }
+}{ $position }.

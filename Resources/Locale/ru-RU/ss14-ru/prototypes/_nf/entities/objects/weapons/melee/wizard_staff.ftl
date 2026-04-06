@@ -9,5 +9,5 @@ ent-WizardStaffMeleeSoap = inert soap wizard staff
 ent-WizardStaffMeleeBlood = inert cultist staff
     .desc = { ent-WizardStaffMeleeRed.desc }
 ent-WizardStaffDarkBolt = cultist staff
-    .suffix = Dark bolt
     .desc = { ent-WizardStaffMeleeBlood.desc }
+    .suffix = Dark bolt

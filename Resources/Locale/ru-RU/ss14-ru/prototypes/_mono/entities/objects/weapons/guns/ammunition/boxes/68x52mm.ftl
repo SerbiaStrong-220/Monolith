@@ -7,5 +7,5 @@ ent-AmmoBox68x52mmCaselessPractice = ammunition box (6.8x52mm STANAG Caseless pr
 ent-AmmoBox68x52mmCaselessRubber = ammunition box (6.8x52mm STANAG Caseless rubber)
     .desc = { ent-BaseAmmoBox68x52mmCaseless.desc }
 ent-AmmoBox68x52mmCaselessBig = big ammunition box (6.8x52mm STANAG Caseless)
-    .suffix = Big
     .desc = { ent-BaseAmmoBox68x52mmCaseless.desc }
+    .suffix = Big

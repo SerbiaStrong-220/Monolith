@@ -6,5 +6,6 @@ gas-sale-menu-mixture-title = Stored Mixture:
 gas-sale-menu-no-gases = No gas
 gas-sale-menu-quantity = { GASQUANTITY($value) }
 gas-sale-menu-temperature = { $value } K
+
 gas-sale-refresh-button = Appraise
 gas-sale-sell-button = Sell

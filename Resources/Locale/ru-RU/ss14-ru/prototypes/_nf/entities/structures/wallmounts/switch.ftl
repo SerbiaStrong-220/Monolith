@@ -1,6 +1,9 @@
 ent-LockableButtonMailCarrier = { ent-LockableButton }
+    .desc = { ent-LockableButton.desc }
     .suffix = Mail
-    .desc = { ent-LockableButton.desc }
 ent-LockableButtonPirate = { ent-LockableButton }
-    .suffix = Rogue
     .desc = { ent-LockableButton.desc }
+    .suffix = Rogue
+ent-LockableButtonTSFMC = { ent-LockableButton }
+    .desc = { ent-LockableButton.desc }
+    .suffix = TSFMC

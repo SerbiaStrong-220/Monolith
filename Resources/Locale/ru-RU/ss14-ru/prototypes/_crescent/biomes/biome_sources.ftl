@@ -1,0 +1,16 @@
+ent-BaseBiomeSource = base biome source
+    .desc = { "" }
+ent-BiomeSourceFallback = fallback biome source
+    .desc = { ent-BaseBiomeSource.desc }
+ent-BiomeSourceFarReachesIII = far reaches III biome source
+    .desc = { ent-BaseBiomeSource.desc }
+ent-BiomeSourceFarReachesII = far reaches II biome source
+    .desc = { ent-BaseBiomeSource.desc }
+ent-BiomeSourceFarReachesI = far reaches I biome source
+    .desc = { ent-BaseBiomeSource.desc }
+ent-BiomeSourceOuterRing = outer ring biome source
+    .desc = { ent-BaseBiomeSource.desc }
+ent-BiomeSourceMiddleRing = middle ring biome source
+    .desc = { ent-BaseBiomeSource.desc }
+ent-BiomeSourceInnerRing = inner ring biome source
+    .desc = { ent-BaseBiomeSource.desc }

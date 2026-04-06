@@ -1,5 +1,4 @@
 ## Shuttle Console Lock Component
-
 shuttle-console-locked-examine = Консоль [color=red]заблокирована[/color]. Используйте ID-карту с привязкой к данному шаттлу для её разблокировки.
 shuttle-console-unlocked-examine = Консоль [color=green]разблокирована[/color].
 shuttle-console-locked = Консоль заблокирована! Вам нужно разблокировать её используя ID-карту с привязкой к данному шаттлу.
@@ -21,7 +20,6 @@ shuttle-console-ship-access-disabled = Контроль доступа на ша
 shuttle-console-access-denied = В доступе отказано.
 
 ## Shuttle Console Lock Verbs
-
 shuttle-console-verb-unlock = Разблокировать консоль
 shuttle-console-verb-lock = Заблокировать консоль
 shuttle-console-verb-reset-guest-access = Сбросить гостевой доступ
@@ -30,5 +28,4 @@ shuttle-console-verb-lock-ship = Заблокировать шаттл
 shuttle-console-verb-unlock-ship = Разблокировать шаттл
 
 ## Shuttle Console FTL
-
 shuttle-ftl-proximity = Невозможно совершить БСС прыжок пока рядом есть другие шаттлы.

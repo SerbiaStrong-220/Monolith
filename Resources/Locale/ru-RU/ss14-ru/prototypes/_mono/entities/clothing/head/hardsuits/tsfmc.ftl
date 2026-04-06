@@ -1,0 +1,10 @@
+ent-ClothingHeadHelmetHardsuitM82 = M82 helmet
+    .desc = The interchangeable helmet system for the majority of M82 hardsuits. Outfitted with a basic NVG system.
+ent-ClothingHeadHelmetHardsuitM86 = M86 helmet
+    .desc = Modified from M82 series helmets, outfitted with night-vision equipment and refined gel-layers.
+ent-ClothingHeadHelmetHardsuitNfsdSheriff = TSFMC M92 tacsuit helmet
+    .desc = An armored tacsuit helmet used by the TSFMC.
+ent-ClothingHeadHelmetHardsuitNfsdExperimental = TSFMC M92-X tacsuit helmet
+    .desc = Heavily armored hardsuit helmet for TSFMC raids.
+ent-ClothingHeadHelmetHardsuitNfsdCommand = TSFMC M93-C tacsuit helmet
+    .desc = Medium armored hardsuit helmet for TSFMC raids.

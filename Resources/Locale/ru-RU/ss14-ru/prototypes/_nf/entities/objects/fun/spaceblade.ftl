@@ -32,6 +32,7 @@ ent-SpaceBladeTesla = { ent-SpaceBlade }
     .desc = { ent-SpaceBlade.desc }
 ent-SpaceBladePizza = space blade
     .desc = Let it mama mia, not safe for ages under 3
+    .suffix = { ent-PlasticBanana.suffix }
 ent-SpaceBladeSingularity = space blade
     .desc = Let it consume
 ent-SpaceBladeClown = space blade

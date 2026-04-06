@@ -1,5 +1,7 @@
-ent-BaseMachine = { ent-BaseStructure }
+ent-BaseMachineIndestructible = { ent-BaseStructure }
     .desc = { ent-BaseStructure.desc }
+ent-BaseMachine = { ent-BaseMachineIndestructible }
+    .desc = { ent-BaseMachineIndestructible.desc }
 ent-BaseMachinePowered = { ent-BaseMachine }
     .desc = { ent-BaseMachine.desc }
 ent-ConstructibleMachine = { "" }

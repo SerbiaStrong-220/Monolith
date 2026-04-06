@@ -1,6 +1,6 @@
 ent-SpawnShuttleGearSuitStorageUnitsMercenary = random suit storage unit
+    .desc = { ent-MarkerBase.desc }
     .suffix = Shuttle, Mercenary
-    .desc = { ent-MarkerBase.desc }
 ent-SpawnShuttleVendomatsClothes = random vendomat
-    .suffix = Shuttle, Clothes
     .desc = { ent-MarkerBase.desc }
+    .suffix = Shuttle, Clothes

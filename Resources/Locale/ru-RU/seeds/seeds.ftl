@@ -1,6 +1,8 @@
 # Nouns
+# Nouns
 seeds-noun-seeds = семян
 seeds-noun-spores = спор
+
 # Seeds
 seeds-wheat-name = пшеница
 seeds-wheat-display-name = стебли пшеницы
@@ -20,7 +22,6 @@ seeds-garlic-name = чеснок
 seeds-garlic-display-name = чесночный стебель
 seeds-lemon-name = лимон
 seeds-lemon-display-name = лимонное дерево
-seeds-lemoon-name = лилун
 seeds-lime-name = лайм
 seeds-lime-display-name = лаймовое дерево
 seeds-orange-name = апельсин
@@ -139,5 +140,3 @@ seeds-cherry-name = вишня
 seeds-cherry-display-name = вишнёвое дерево
 seeds-anomaly-berry-name = аномальные ягоды
 seeds-anomaly-berry-display-name = куст аномальных ягод
-seeds-bloonion-name = лук-летун
-seeds-bloonion-display-name = луковицы лука-летуна

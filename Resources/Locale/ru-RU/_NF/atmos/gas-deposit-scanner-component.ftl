@@ -6,10 +6,12 @@ gas-deposit-scanner-window-density-column-name = Density
 gas-deposit-scanner-window-error-text = Error: { $errorText }
 gas-deposit-scanner-window-gas-column-name = Gases
 gas-deposit-scanner-window-deposit-title-capitalized = Deposit
+
 gas-deposit-scanner-window-deposit-size-trace = Trace
 gas-deposit-scanner-window-deposit-size-small = Small
 gas-deposit-scanner-window-deposit-size-medium = Medium
 gas-deposit-scanner-window-deposit-size-large = Large
 gas-deposit-scanner-window-deposit-size-enormous = Enormous
+
 gas-deposit-scanner-object-out-of-range = The deposit went out of range.
 gas-deposit-scanner-shutoff = The gas deposit scanner shuts off.

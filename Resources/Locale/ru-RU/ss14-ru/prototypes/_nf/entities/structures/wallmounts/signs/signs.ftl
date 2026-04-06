@@ -47,4 +47,4 @@ ent-NFSignEms1 = emergency medical service sign
 ent-NFSignEms2 = emergency medical service sign
     .desc = A sign that indicates emergency medical services.
 ent-SignNfsdInterrogation = interrogation sign
-    .desc = { ent-NFBaseSign.desc }
+    .desc = { ent-SignInterrogation.desc }

@@ -1,9 +1,9 @@
-ent-FaxMachineUSSP = { ent-BaseStructureDisableToolUse }
+ent-FaxMachineUSSP = { ent-FaxMachineBase }
+    .desc = { ent-FaxMachineBase.desc }
     .suffix = POI, USSP
-    .desc = { ent-BaseStructureDisableToolUse.desc }
-ent-FaxMachineUSSPCommisar = { ent-BaseStructureDisableToolUse }
+ent-FaxMachineUSSPCommisar = { ent-FaxMachineBase }
+    .desc = { ent-FaxMachineBase.desc }
     .suffix = POI, USSP Commisar
-    .desc = { ent-BaseStructureDisableToolUse.desc }
-ent-FaxMachinePDVJupiter = { ent-BaseStructureDisableToolUse }
+ent-FaxMachinePDVJupiter = { ent-FaxMachineBase }
+    .desc = { ent-FaxMachineBase.desc }
     .suffix = POI, PDV Jupiter
-    .desc = { ent-BaseStructureDisableToolUse.desc }

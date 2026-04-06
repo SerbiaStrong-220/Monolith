@@ -1,6 +1,8 @@
 spray-painter-window-title = Краскопульт
+
 spray-painter-style-not-available = Выбранный стиль нельзя применить к этому объекту.
 spray-painter-selected-style = Выбранный стиль:
+
 spray-painter-selected-color = Выбранный цвет:
 spray-painter-color-red = красный
 spray-painter-color-yellow = жёлтый

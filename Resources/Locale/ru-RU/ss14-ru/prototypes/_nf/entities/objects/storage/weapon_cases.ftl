@@ -16,3 +16,6 @@ ent-WeaponCaseShortDocuments = document case
 ent-WeaponCaseHeavy = weapon case
     .desc = A reinforced casing for storing heavy armaments.
     .suffix = Heavy
+ent-WeaponCaseHeavyAmmo = ammo case
+    .desc = A reinforced casing for storing heavy cannon shells or bulk low caliber munitions.
+    .suffix = Heavy

@@ -1,12 +1,12 @@
 ent-LockerQuarterMasterFilledHardsuit = { ent-LockerQuarterMaster }
-    .suffix = Filled, Hardsuit
     .desc = { ent-LockerQuarterMaster.desc }
+    .suffix = Filled, Hardsuit
 ent-LockerStationRepresentativeFilled = { ent-LockerStationRepresentative }
-    .suffix = Filled
     .desc = { ent-LockerStationRepresentative.desc }
+    .suffix = Filled
 ent-LockerNfsdSheriffFilled = { ent-LockerNfsdSheriff }
-    .suffix = Filled
     .desc = { ent-LockerNfsdSheriff.desc }
-ent-GunSafeSr = overseer heavy gun safe
     .suffix = Filled
+ent-GunSafeSr = overseer heavy gun safe
     .desc = { ent-GunSafe.desc }
+    .suffix = Filled

@@ -19,5 +19,5 @@ ent-AmmoBox9x19mmRIP = ammunition box (9x19mm RIP)
 ent-AmmoBox9x19mmPlasteelAP = ammunition box (9x19mm AP)
     .desc = { ent-BaseAmmoBox9x19mm.desc }
 ent-AmmoBox9x19mmBigFMJ = big ammunition box (9x19mm FMJ)
-    .suffix = Big
     .desc = { ent-BaseAmmoBox9x19mm.desc }
+    .suffix = Big

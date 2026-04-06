@@ -1,8 +1,9 @@
 ent-BaseStructureComputerWallmount = { ent-BaseStructureWallmount }
-    .suffix = Настенный
     .desc = { ent-BaseStructureWallmount.desc }
+    .suffix = Настенный
 ent-ComputerWallmountFrame = компьютер
     .desc = { ent-BaseStructureComputerWallmount.desc }
-ent-ComputerWallmountBroken = { ent-BaseStructureWallmount }
+    .suffix = { ent-BaseStructureComputerWallmount.suffix }
+ent-ComputerWallmountBroken = { ent-ComputerBroken }
+    .desc = { ent-ComputerBroken.desc }
     .suffix = Настенный
-    .desc = { ent-BaseStructureWallmount.desc }

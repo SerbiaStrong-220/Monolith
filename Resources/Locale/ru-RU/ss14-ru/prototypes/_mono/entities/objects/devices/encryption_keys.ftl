@@ -4,3 +4,7 @@ ent-EncryptionKeyUsspCommand = USSP command encryption key
     .desc = An encryption key for the USSP command channel. Due to USSP higher-level networking being defunct, it instead provides access to tactical command.
 ent-EncryptionKeyVanguardCommand = vanguard command encryption key
     .desc = An encryption key used by officers in the vanguard.
+ent-EncryptionKeyStationMasterSR = { ent-EncryptionKeyStationMaster }
+    .desc = { ent-EncryptionKeyStationMaster.desc }
+ent-EncryptionKeyDiplomacy = diplomatic encryption key
+    .desc = A direct communications channel to the heads of the sector's warring states.

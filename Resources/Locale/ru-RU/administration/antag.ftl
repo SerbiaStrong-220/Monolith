@@ -6,8 +6,7 @@ admin-verb-make-nuclear-operative = Сделать цель одиноким Я�
 admin-verb-make-pirate = Сделать цель пиратом\капером. Учтите, что это не меняет игровой режим.
 admin-verb-make-head-rev = Сделать цель главой революции.
 admin-verb-make-thief = Сделать цель вором.
-admin-verb-make-paradox-clone = Создать парадоксального клона выбранной цели в виде призрачной роли.
-admin-verb-make-changeling = Сделать цель метаморфом.
+
 admin-verb-text-make-traitor = Сделать предателем
 admin-verb-text-make-initial-infected = Сделать нулевым пациентом
 admin-verb-text-make-zombie = Сделать зомби
@@ -15,6 +14,5 @@ admin-verb-text-make-nuclear-operative = Сделать ядерным опер�
 admin-verb-text-make-pirate = Сделать пиратом
 admin-verb-text-make-head-rev = Сделать Главой революции
 admin-verb-text-make-thief = Сделать вором
-admin-verb-text-make-paradox-clone = Создать парадоксального клона
-admin-verb-text-make-changeling = Создать Метаморфа (WIP)
+
 admin-overlay-antag-classic = АНТАГ

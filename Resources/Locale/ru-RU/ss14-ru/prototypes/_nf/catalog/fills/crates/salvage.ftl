@@ -1,7 +1,9 @@
 ent-NFCrateSalvageAssortedGoodies = { ent-CrateGenericSteel }
-    .suffix = Filled, Salvage Random
     .desc = { ent-CrateGenericSteel.desc }
+    .suffix = Filled, Salvage Random
 ent-NFCrateSalvageAssortedGoodiesPlastic = { ent-CratePlastic }
     .desc = { ent-CratePlastic.desc }
+    .suffix = { ent-NFCrateSalvageAssortedGoodies.suffix }
 ent-NFCrateSalvageAssortedGoodiesTrashCart = { ent-CrateTrashCart }
     .desc = { ent-CrateTrashCart.desc }
+    .suffix = { ent-NFCrateSalvageAssortedGoodies.suffix }

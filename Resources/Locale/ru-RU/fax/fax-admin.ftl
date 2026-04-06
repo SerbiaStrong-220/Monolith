@@ -1,6 +1,7 @@
 # Command
 cmd-faxui-desc = Открыть админ окно отправки факсов
 cmd-faxui-help = Использование: faxui
+
 # Window
 admin-fax-title = Менеджер админ факса
 admin-fax-fax = Факс:
@@ -11,10 +12,12 @@ admin-fax-message-placeholder = Текст документа...
 admin-fax-stamp = Печать:
 admin-fax-stamp-color = Цвет печати:
 admin-fax-send = Отправить
+# Frontier: edit lock page 
 admin-fax-lock-page = Защитить страницу
 admin-fax-lock-page-tooltip = Защитить бумагу от редактирования, чтобы её нельзя было изменить даже такими вещами, как ручка cybersun.
-admin-fax-stamp-protect-page-tooltip = Prevent the paper from being edited by Cybersun pens.
+# End Frontier
 
-# End Frontier: stamp protection
-
+# Frontier: stamp protection
 admin-fax-stamp-protect-page = Block Cybersun Pen
+admin-fax-stamp-protect-page-tooltip = Prevent the paper from being edited by Cybersun pens.
+# End Frontier: stamp protection

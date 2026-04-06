@@ -6,5 +6,6 @@ round-end-system-shuttle-auto-called-announcement = Процедура смен�
 round-end-system-shuttle-recalled-announcement = Руководство сектора приняло решение о продлении смены.
 round-end-system-shuttle-sender-announcement = Автоматическое Управление Сектора
 round-end-system-round-restart-eta-announcement = Раунд перезапустится через { $time } { $units }...
+
 eta-units-minutes = минут
 eta-units-seconds = секунд

@@ -1,5 +1,4 @@
 ## UI
-
 shipyard-console-invalid-vessel = Cannot purchase vessel:
 shipyard-console-menu-title = Меню верфи
 shipyard-console-menu-listing-free = Бесплатно
@@ -26,13 +25,16 @@ shipyard-console-no-voucher-redemptions = Ваучер был использов
 shipyard-console-invalid-voucher-type = Этот ваучер не может быть применен в этой консоли.
 shipyard-console-denied = В данный момент вы не можете купить этот шаттл.
 shipyard-console-limited = Сейчас используется слишком много шаттлов этого типа и мы не можем предоставить ещё, попробуйте позже!
+
 shipyard-console-contraband-onboard = На борту обнаружена контрабанда, избавьтесь от неё для возможности продажи шаттла.
 shipyard-console-station-resources = На борту обнаружены важные для работы станции предметы, верните их на место для продажи шаттла.
 shipyard-console-dangerous-materials = На борту обнаружены крайне опасные предметы, верните их на место для возможности продажи шаттла.
 shipyard-console-fallback-prevent-sale = Обнаружены ошибки класса YML на борту. Пожалуйста, сообщите о них, когда вам удобно.
+
 shipyard-console-menu-size-label = Размер:{ " " }
 shipyard-console-menu-class-label = Класс:{ " " }
 shipyard-console-menu-engine-label = Тип двигателя:{ " " }
+
 shipyard-console-purchase-available = Купить
 shipyard-console-guidebook = Описание
 shipyard-console-unassign-deed = Отвязать
@@ -42,12 +44,14 @@ shipyard-console-name-placeholder = Название
 shipyard-console-deed-unassigned = Привязка шаттла к данной ID-карте была успешна удалена.
 shipyard-console-confirm-unassign = Вы уверены?
 shipyard-console-unassign-cooldown = Подождите { $minutes } минут перед следующей отвязкой шаттла.
+
 # Keep these in enum order for ease of validation.
 shipyard-console-category-All = Все
 shipyard-console-category-Micro = Мини
 shipyard-console-category-Small = Маленький
 shipyard-console-category-Medium = Средний
 shipyard-console-category-Large = Большой
+
 shipyard-console-class-All = Все
 shipyard-console-class-Expedition = Экспедиционный
 shipyard-console-class-Scrapyard = Полуразрушенный
@@ -76,7 +80,6 @@ shipyard-console-class-Corvette = Корвет
 shipyard-console-class-Frigate = Фрегат
 shipyard-console-class-Destroyer = Эсминец
 shipyard-console-class-Cruiser = Крейсер
-
 # Mono changes end
 
 shipyard-console-engine-All = Все

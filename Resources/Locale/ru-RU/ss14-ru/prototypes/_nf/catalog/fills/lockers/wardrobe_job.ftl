@@ -1,6 +1,6 @@
 ent-NFWardrobePrisonFilled = { ent-NFWardrobePrison }
-    .suffix = Filled
     .desc = { ent-NFWardrobePrison.desc }
-ent-NFPrisonerClosetWallOrangeFilled = { ent-NFPrisonerClosetWallOrange }
     .suffix = Filled
+ent-NFPrisonerClosetWallOrangeFilled = { ent-NFPrisonerClosetWallOrange }
     .desc = { ent-NFPrisonerClosetWallOrange.desc }
+    .suffix = Filled

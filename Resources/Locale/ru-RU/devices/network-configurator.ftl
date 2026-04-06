@@ -11,6 +11,7 @@ network-configurator-link-mode-stopped = Прекращено соединени
 network-configurator-mode-link = Соединение
 network-configurator-mode-list = Список
 network-configurator-switched-mode = Режим переключён на: { $mode }
+
 # Verbs
 network-configurator-save-device = Сохранить устройство
 network-configurator-configure = Настроить
@@ -41,12 +42,13 @@ network-configurator-tooltip-edit = Редактирование списка ц
 network-configurator-tooltip-clear = Очистка списка целевых устройств
 network-configurator-tooltip-copy = Копирование списка целевых устройств в мультитул
 network-configurator-tooltip-show = Показывать голографическую визуализацию списка целевых устройств
+
 # examine
 network-configurator-examine-mode-link = [color=red]Соединение[/color]
 network-configurator-examine-mode-list = [color=green]Список[/color]
 network-configurator-examine-current-mode = Текущий режим: { $mode }
 network-configurator-examine-switch-modes = Нажмите { $key } чтобы переключить режим
+
 # item status
-network-configurator-item-status-label =
-    Режим: { $mode }
+network-configurator-item-status-label = Режим: { $mode }
     Переключить: { $keybinding }

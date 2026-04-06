@@ -1,9 +1,9 @@
 ent-WeaponLauncherChinaLakeEmp = { ent-WeaponLauncherChinaLake }
-    .suffix = ЭМИ
     .desc = { ent-WeaponLauncherChinaLake.desc }
-ent-WeaponLauncherRocketEmp = { ent-WeaponLauncherRocket }
     .suffix = ЭМИ
+ent-WeaponLauncherRocketEmp = { ent-WeaponLauncherRocket }
     .desc = { ent-WeaponLauncherRocket.desc }
+    .suffix = ЭМИ
 ent-WeaponMailLake = почтовый РПДС
     .desc = Новейшее оружие почтальонов.
 ent-WeaponLauncherNfsdLake = гранатомет КВП ТСФ

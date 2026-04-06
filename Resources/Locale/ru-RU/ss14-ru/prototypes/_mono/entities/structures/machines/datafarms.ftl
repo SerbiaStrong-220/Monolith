@@ -1,0 +1,12 @@
+ent-BaseDataFarmIndestructible = base datafarm
+    .desc = { ent-BaseMachineIndestructible.desc }
+ent-BaseDataFarm = base datafarm
+    .desc = { ent-BaseDataFarmIndestructible.desc }
+ent-BaseDataFarmResearch = { ent-BaseDataFarm }
+    .desc = { ent-BaseDataFarm.desc }
+ent-DatafarmResearchFaction = bolted data farm (Research)
+    .desc = A power-hungry server dedicated towards scraping data from... somewhere. This one generates research points at a rate of 35 per second. It seems to be bolted to the floor.
+ent-DatafarmResearch = data farm (Research)
+    .desc = A power-hungry server dedicated towards scraping data from... somewhere. This one generates research points at a rate of 10 per second.
+ent-DatafarmCrypto = data farm (Crypto)
+    .desc = A power-hungry server dedicated towards scraping data from... somewhere. This one generates valuable but random cryptocurrency at a rate of one every 10 minutes.

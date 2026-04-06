@@ -10,3 +10,5 @@ ent-ClothingHeadHatWideBrimmedBlue = blue wide-brimmed hat
     .desc = Works great as frisbee substitute.
 ent-ClothingHeadHatWideBrimmedYellow = yellow wide-brimmed hat
     .desc = Works great as frisbee substitute.
+ent-ClothingHeadHatCapVizierPurple = vizier cap
+    .desc = A fashionable cap worn by the Vizier to denote his official status in the Phaethon dynasty above the rest of the Imperials.

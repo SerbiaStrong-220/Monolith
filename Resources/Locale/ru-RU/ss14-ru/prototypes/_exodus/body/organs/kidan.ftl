@@ -1,0 +1,16 @@
+ent-OrganKidanVertebralVessel = спинной сосуд
+    .desc = { ent-OrganAnimalHeart.desc }
+ent-OrganKidanStomach = желудок
+    .desc = { ent-BaseAnimalOrgan.desc }
+ent-OrganKidanTrachealTubes = трахеальные трубки
+    .desc = { ent-OrganAnimalLungs.desc }
+ent-OrganKidanLiver = печень
+    .desc = { ent-BaseAnimalOrgan.desc }
+ent-OrganKidanPheromoneGlands = феромонные железы
+    .desc = { ent-BaseAnimalOrgan.desc }
+ent-OrganKidanKidneys = почки
+    .desc = { ent-OrganAnimalKidneys.desc }
+ent-OrganKidanEyes = глаза
+    .desc = { ent-BaseAnimalOrgan.desc }
+ent-OrganKidanBrain = мозг
+    .desc = { ent-BaseAnimalOrganUnGibbable.desc }

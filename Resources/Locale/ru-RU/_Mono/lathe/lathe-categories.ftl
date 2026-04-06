@@ -2,8 +2,10 @@
 lathe-category-species = Species
 lathe-category-animals = Animals
 lathe-category-dangerous-animals = Dangerous Animals
+
 # Misc
 lathe-category-vouchers = Ship Vouchers
+
 # Mechs
 lathe-category-mech-weapons-s2s4 = S2/4 Mech Equipment
 lathe-category-mono-mech-weapons-light = Light Mech Weaponry
@@ -13,6 +15,7 @@ lathe-category-s2-mechs = S2 Mechs
 lathe-category-s4-mechs = S4 Mechs
 lathe-category-combat-eva = Combat Hardsuits
 lathe-category-faction-gear = Faction Equipment
+
 # Ammo
 lathe-category-fmj-ammo = Full Metal Jacket Ammunition
 lathe-category-incen-ammo = Incendiary payload Ammunition
@@ -23,6 +26,7 @@ lathe-category-ship-ammo = Ship Weapon Ammunition
 lathe-category-plasteelap-ammo = Plasteel armor-piercing Ammunition
 lathe-category-hp-ammo = Hollow-point Ammunition
 lathe-category-rip-ammo = Radically Invasive Projectile Ammunition
+
 # Weapons
 lathe-category-guns-rifles = Rifles
 lathe-category-guns-smgs = Submachine Guns

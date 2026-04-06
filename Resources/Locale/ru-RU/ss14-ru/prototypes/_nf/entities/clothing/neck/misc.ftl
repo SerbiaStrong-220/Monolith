@@ -1,7 +1,5 @@
 ent-ClothingNeckCrucifix = crucifix
     .desc = Damn, it feels good to be so pious.
-ent-ClothingNeckBellCollar = bell collar
-    .desc = A way to inform others about your presence, or just to annoy everyone around you!
 ent-ClothingNeckAmuletBloodCult = ascended cultist amulet
     .desc = Every time you gaze upon it, you feel as if it is gazing back at you. Summons a drained one that follows the user for a brief period of time. Has a cooldown.
 ent-ClothingNeckIFFNeutral = IFF white strobe
@@ -18,3 +16,5 @@ ent-ClothingNeckIFFOrange = IFF orange strobe
     .desc = { ent-ClothingNeckIFFNeutral.desc }
 ent-ClothingNeckIFFPurple = IFF purple strobe
     .desc = { ent-ClothingNeckIFFNeutral.desc }
+ent-ClothingNeckBellCollar = bell collar
+    .desc = A way to inform others about your presence, or just to annoy everyone around you!

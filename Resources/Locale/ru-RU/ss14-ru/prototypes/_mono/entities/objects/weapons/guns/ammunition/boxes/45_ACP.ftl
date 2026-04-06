@@ -19,5 +19,5 @@ ent-AmmoBox45_ACPRIP = ammunition box (.45 ACP RIP)
 ent-AmmoBox45_ACPPlasteelAP = ammunition box (.45 ACP AP)
     .desc = { ent-BaseAmmoBox45_ACP.desc }
 ent-AmmoBox45_ACPBigFMJ = big ammunition box (.45 ACP FMJ)
-    .suffix = Big
     .desc = { ent-BaseAmmoBox45_ACP.desc }
+    .suffix = Big

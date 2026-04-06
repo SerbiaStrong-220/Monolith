@@ -1,8 +1,12 @@
 ent-SpawnPointMailCarrier = mailcarrier
     .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { ent-SpawnPointJobBase.suffix }
 ent-SpawnPointPrisoner = prisoner
     .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { ent-SpawnPointJobBase.suffix }
 ent-SpawnPointCCServiceWorker = valet
     .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { ent-SpawnPointJobBase.suffix }
 ent-SpawnPointPrisonGuard = prison guard
     .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { ent-SpawnPointJobBase.suffix }

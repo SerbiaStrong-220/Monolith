@@ -7,6 +7,6 @@ ent-EmblemDrakeIndustries = Drake Industries Emblem
 ent-EmblemBrokenDrakeIndustries = Silvery metal bits
     .desc = A few scraps of shattered metal inteweaved with welding marks, uncovering some cheap pale red alloys underneath a thin silver layer.
 ent-EmblemSteelHammer = Steel Hammer Manufacturing Emblem
-    .desc = The emblem of Steel Hammer Manufacturing, made in painted plasteel - just like their hulls.
+    .desc = The emblem of Steel Hammer Manufacturing, made in painted plasteel — just like their hulls.
 ent-EmblemBrokenSteelHammer = Silvery metal bits
     .desc = A few scraps of chipped paint and shattered metal, the remnants of a plasteel symbol.

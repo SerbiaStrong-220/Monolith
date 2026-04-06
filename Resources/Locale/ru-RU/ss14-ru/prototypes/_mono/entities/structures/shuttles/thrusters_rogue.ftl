@@ -1,9 +1,9 @@
 ent-ThrusterRogue = { ent-ThrusterSecurity }
-    .suffix = Rogue
     .desc = { ent-ThrusterSecurity.desc }
-ent-DebugThrusterRogue = { ent-DebugThrusterSecurity }
-    .suffix = DEBUG, Rogue
-    .desc = { ent-DebugThrusterSecurity.desc }
-ent-ThrusterLargeRogue = { ent-ThrusterLarge }
     .suffix = Rogue
+ent-DebugThrusterRogue = { ent-DebugThrusterSecurity }
+    .desc = { ent-DebugThrusterSecurity.desc }
+    .suffix = DEBUG, Rogue
+ent-ThrusterLargeRogue = { ent-ThrusterLarge }
     .desc = { ent-ThrusterLarge.desc }
+    .suffix = Rogue

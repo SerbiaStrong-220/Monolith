@@ -6,4 +6,5 @@ smart-fridge-component-title = Умный холодильник
 smart-fridge-list-item = { $item } [{ $amount }]
 #Mono
 smart-fridge-request-generic = Возвраты не принимаются!
+#Mono
 smart-fridge-request-chemistry = Запрашивайте пополнения у химиков.

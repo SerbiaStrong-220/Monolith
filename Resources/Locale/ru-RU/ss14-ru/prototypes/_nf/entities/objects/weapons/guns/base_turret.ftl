@@ -1,11 +1,14 @@
 ent-BaseWeaponTurretNF = turret
-    .suffix = Frontier
     .desc = { ent-BaseStructure.desc }
+    .suffix = Frontier
 ent-BaseTurretSearchBeam = { "" }
     .desc = { "" }
 ent-BaseWeaponTurretBallisticNF = ballistic turret
     .desc = { ent-BaseWeaponTurretNF.desc }
+    .suffix = { ent-BaseWeaponTurretNF.suffix }
 ent-BaseWeaponTurretMagazineFed = ballistic turret (magazine-fed)
     .desc = A ballistic machine gun auto-turret with replaceable magazine.
+    .suffix = { ent-BaseWeaponTurretNF.suffix }
 ent-BaseWeaponTurretEnergyNF = energy turret
     .desc = { ent-BaseWeaponTurretNF.desc }
+    .suffix = { ent-BaseWeaponTurretNF.suffix }

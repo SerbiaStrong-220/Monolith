@@ -14,3 +14,5 @@ ent-ClothingHeadsetUSSP = USSP headset
     .desc = The standard-issue headset of the USSP Defensive Navy for decades. This headset will accept standard encryption keys and comes prefitted with a key for USSP Tactical Communications.
 ent-ClothingHeadsetAltVanguardCommand = vanguard command over-ear headset
     .desc = { ent-ClothingHeadsetAlt.desc }
+ent-ClothingHeadsetAltCentComSR = { ent-ClothingHeadsetAltCentCom }
+    .desc = { ent-ClothingHeadsetAltCentCom.desc }

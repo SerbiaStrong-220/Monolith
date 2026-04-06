@@ -25,5 +25,5 @@ ent-PDVAsvaranIDCard = PDV asvaran ID card
 ent-PDVGrandVizierIDCard = PDV grand vizier ID card
     .desc = { ent-PirateIDCard.desc }
 ent-PDVSpasakaIDCard = spasaka ID card
-    .suffix = Chameleon
     .desc = { ent-IDCardStandard.desc }
+    .suffix = Chameleon

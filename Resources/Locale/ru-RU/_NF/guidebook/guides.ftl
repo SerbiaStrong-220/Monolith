@@ -9,15 +9,20 @@ guide-entry-sector-topology = Топология сектора
 guide-entry-cargo-hauling = Перевозка грузов
 guide-entry-shipyard = Верфь
 guide-entry-frontier-rules = Правила сервера
+
 # Engineering entries
 guide-entry-gas-mining = Добыча газов
+
 # Security entries
 guide-entry-nfsd-smuggling = Контрабанда
+
 # Medical entries
 guide-entry-medical-bounties = Медицинские вознаграждения
 guide-entry-medical-doc = Заведующий СНМП
+
 # Reference entries
 guide-entry-medicalrecipes = Медицинские рецепты
+
 # Expedition faction entries
 guide-entry-expedition-aberrant-flesh = Аномальная плоть
 guide-entry-expedition-argocytes = Аргоциты
@@ -30,6 +35,7 @@ guide-entry-expedition-gangers = Панки
 guide-entry-expedition-silicons = Сбойный ИИ
 guide-entry-expedition-syndicate-naval-forces = Военные силы Синдиката
 guide-entry-expedition-xenos = Ксеносы
+
 # Shipyard entries
 guide-entry-shipyard-akupara = Akupara
 guide-entry-shipyard-ambition = Ambition
@@ -76,6 +82,7 @@ guide-entry-shipyard-spirit = Spirit
 guide-entry-shipyard-stasis = Stasis
 guide-entry-shipyard-tide = Tide
 guide-entry-shipyard-vagabond = Vagabond
+
 # Rules entries
 guide-entry-frontier-rule-zero-tolerance = Zero Tolerance
 guide-entry-frontier-rule-1 = 1. Community

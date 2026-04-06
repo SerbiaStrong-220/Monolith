@@ -1,12 +1,12 @@
 ent-AirlockUSSPGlass = { ent-AirlockSecurityGlass }
+    .desc = { ent-AirlockSecurityGlass.desc }
     .suffix = USSP, Locked
-    .desc = { ent-AirlockSecurityGlass.desc }
 ent-AirlockUSSPSecureGlass = { ent-AirlockSecurityGlass }
+    .desc = { ent-AirlockSecurityGlass.desc }
     .suffix = USSP Secure, Locked
-    .desc = { ent-AirlockSecurityGlass.desc }
 ent-AirlockUSSPCommandGlass = { ent-AirlockSecurityGlass }
-    .suffix = USSP Command, Locked
     .desc = { ent-AirlockSecurityGlass.desc }
+    .suffix = USSP Command, Locked
 ent-AirlockTsfEngineeringGlass = { ent-AirlockNfsdGlass }
-    .suffix = TSF Engineering, Locked
     .desc = { ent-AirlockNfsdGlass.desc }
+    .suffix = TSF Engineering, Locked

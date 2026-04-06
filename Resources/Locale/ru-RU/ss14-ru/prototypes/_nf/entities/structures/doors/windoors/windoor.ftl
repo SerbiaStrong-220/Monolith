@@ -1,12 +1,12 @@
 ent-WindoorSecureMercenaryLocked = { ent-WindoorSecure }
+    .desc = { ent-WindoorSecure.desc }
     .suffix = Mercenary, Locked
-    .desc = { ent-WindoorSecure.desc }
 ent-WindoorSecureFrontierLocked = { ent-WindoorSecure }
+    .desc = { ent-WindoorSecure.desc }
     .suffix = Frontier, Locked
-    .desc = { ent-WindoorSecure.desc }
 ent-WindoorSecureFrontierCommandLocked = { ent-WindoorSecure }
+    .desc = { ent-WindoorSecure.desc }
     .suffix = Frontier Command, Locked
-    .desc = { ent-WindoorSecure.desc }
 ent-WindoorSecureHeadOfSecurityLocked = { ent-WindoorSecure }
-    .suffix = Colonel, Locked
     .desc = { ent-WindoorSecure.desc }
+    .suffix = Colonel, Locked
