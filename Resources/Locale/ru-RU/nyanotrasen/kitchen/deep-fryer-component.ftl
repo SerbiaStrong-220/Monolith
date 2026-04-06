@@ -4,13 +4,17 @@ deep-fryer-blacklist-item-failed = { CAPITALIZE(THE($item)) } fails to be covere
 deep-fryer-oil-purity-low = { CAPITALIZE(THE($deepFryer)) } sputters to no effect.
 deep-fryer-oil-volume-low = { CAPITALIZE(THE($deepFryer)) } burns and spews smoke!
 deep-fryer-oil-no-slag = There's no slag to drain.
+
 deep-fryer-storage-full = All of the baskets are full.
 deep-fryer-storage-no-fit = { CAPITALIZE(THE($item)) } won't fit inside one of the baskets.
 deep-fryer-interact-using-not-item = That doesn't seem to be an item.
+
 deep-fryer-need-liquid-container-in-hand = You need to first hold a liquid container like a beaker or bowl in your active hand.
+
 deep-fryer-thrown-missed = Missed!
 deep-fryer-thrown-hit-oil = Plop!
 deep-fryer-thrown-hit-oil-low = Plonk!
+
 deep-fryer-entity-escape = { CAPITALIZE(THE($victim)) } leaps out of { THE($deepFryer) }!
 
 ## DeepFryer UI
@@ -32,16 +36,19 @@ deep-fryer-button-remove-all-items-tooltip = Remove all of the items from the de
 
 deep-fried-crispy-item = crispy { $entity }
 deep-fried-crispy-item-examine = It's covered in a crispy, oily texture.
+
 deep-fried-fried-item = deep-fried { $entity }
 deep-fried-fried-item-examine = It's covered in a thick, crispy layer.
+
 deep-fried-burned-item = burned { $entity }
 deep-fried-burned-item-examine = It's blackened with char.
+
 # Frontier: cauldron definitions
 deep-fried-spooky-item = spooky { $entity }
 deep-fried-spooky-item-examine = It's slick with oil and translucent.
+
 deep-fried-spectral-item = spectral { $entity }
 deep-fried-spectral-item-examine = It's oily, transparent, and unnaturally light.
-
 # Set reuses burned item from above
 # End Frontier
 

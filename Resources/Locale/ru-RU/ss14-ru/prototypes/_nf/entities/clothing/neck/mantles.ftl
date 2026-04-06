@@ -1,8 +1,8 @@
 ent-ClothingNeckCloakJanitor = janitor's cloak
     .desc = How did you even get this? did you make it yourself?
 ent-ClothingNeckCloakJanitorFilled = { ent-ClothingNeckCloakJanitor }
-    .suffix = Filled
     .desc = { ent-ClothingNeckCloakJanitor.desc }
+    .suffix = Filled
 ent-ClothingNeckMantleSheriff = colonel's mantle
     .desc = This mantle is a symbol of commitment to the TSF.
 ent-ClothingNeckMantleSr = colonial liaison's mantle

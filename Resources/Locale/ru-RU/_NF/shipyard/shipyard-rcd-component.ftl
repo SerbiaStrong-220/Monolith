@@ -1,5 +1,4 @@
 ## UI
-
 rcd-component-missing-id-deed = К этой ID-карте не привязан шаттл.
 rcd-component-can-only-build-authorized-ship = Строительство разрешено только на привязанных шаттлах!
 rcd-component-no-id-swiped = Проведите ID-картой по РСУ для авторизации.

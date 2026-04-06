@@ -1,6 +1,9 @@
 ent-EngineeringTechFabCircuitboard = engineering techfab machine board
     .desc = A machine printed circuit board for a engineering techfab
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-ServiceTechFabCircuitboard = service techfab machine board
     .desc = A machine printed circuit board for a service techfab
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-DeepFryerMachineCircuitboard = deep fryer machine board
     .desc = { ent-BaseMachineCircuitboard.desc }
+    .suffix = { ent-BaseMachineCircuitboard.suffix }

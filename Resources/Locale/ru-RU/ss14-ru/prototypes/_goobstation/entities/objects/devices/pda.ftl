@@ -1,5 +1,6 @@
 ent-ChronoPDA = futuristic PDA
     .desc = A powerful quantum computer disguised as a regular pda for disguise.
+    .suffix = { ent-AdminPDA.suffix }
 ent-NavyCaptainPDA = Winter Solstice HiCom's PDA
     .desc = The devil's in the details.
 ent-NavyOfficerPDA = Winter Solstice Officer's PDA
@@ -10,3 +11,4 @@ ent-DiplomatPDA = diplomat's PDA
     .desc = { ent-NavyCaptainPDA.desc }
 ent-GmanPDA = strange PDA
     .desc = Your mind can't quite comprehend this.
+    .suffix = { ent-AdminPDA.suffix }

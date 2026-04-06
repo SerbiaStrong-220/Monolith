@@ -1,5 +1,4 @@
 ## Nyano
-
 flavor-base-acidic = acidic
 flavor-complex-nuggie = like "chicken"
 flavor-complex-enthralling = enthralling
@@ -20,7 +19,6 @@ flavor-complex-bubbletea = like creamy sweetness
 flavor-complex-corncob = like a sick joke
 
 ## Delta
-
 flavor-complex-gunmetal = bittersweet and creamy
 flavor-complex-lemondrop = refreshingly tart
 flavor-complex-greengrass = like a holiday in the sun

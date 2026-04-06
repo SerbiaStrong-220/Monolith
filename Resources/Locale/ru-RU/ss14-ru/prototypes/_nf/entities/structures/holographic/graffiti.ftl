@@ -1,8 +1,8 @@
 ent-PunkHoloGraffitiOverlay = { "" }
     .desc = { "" }
 ent-SpawnerHoloGraffitiRandom = holograffiti
-    .suffix = Random
     .desc = { ent-MarkerBase.desc }
+    .suffix = Random
 ent-HoloGraffiti = holograffiti
     .desc = A graffiti composed of hard light. Can be easily removed by force.
 ent-HoloGraffitiSimple01 = { ent-HoloGraffiti }

@@ -1,2 +1,0 @@
-﻿Copyright (C) Corvax. Licensed under the MIT license.
-All files from this folder was taken from https://github.com/space-syndicate/space-station-14/tree/aad5613341df4bd34b24db1b4c5a99a411f92cb6.

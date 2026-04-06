@@ -1,8 +1,5 @@
 ent-MonkeyCubeBox = коробка кубиков обезьян
     .desc = Кубики обезьян фирмы Drymate. Просто добавь воды!
-ent-BaseWrappedCube = { ent-BaseItem }
-    .suffix = Завёрнутый
-    .desc = { ent-BaseItem.desc }
 ent-MonkeyCubeWrapped = кубик обезьяны
     .desc = Разверните его, чтобы получить кубик обезьяны.
     .suffix = Завёрнутый
@@ -19,3 +16,6 @@ ent-SyndicateSpongeBox = коробка кубиков обезьян
 ent-SyndicateSpongeWrapped = кубик обезьяны
     .desc = Разверните его, чтобы получить кубик обезьяны.
     .suffix = Завёрнутый, Синдикат
+ent-BaseWrappedCube = { ent-BaseItem }
+    .suffix = Завёрнутый
+    .desc = { ent-BaseItem.desc }

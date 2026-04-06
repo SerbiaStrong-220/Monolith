@@ -44,6 +44,7 @@ ent-WeaponSubMachineGunTypewriterExpedition = { ent-WeaponSubMachineGunTypewrite
     .desc = { ent-WeaponSubMachineGunTypewriter.desc }
 ent-WeaponLaserGunExpedition = { ent-WeaponLaserPistolNF }
     .desc = { ent-WeaponLaserPistolNF.desc }
+    .suffix = { ent-WeaponLaserPistolNF.suffix }
 ent-WeaponLaserSvalinnExpedition = { ent-WeaponLaserSvalinn }
     .desc = { ent-WeaponLaserSvalinn.desc }
 ent-WeaponEnergyGunExpedition = { ent-WeaponEnergyGun }

@@ -1,6 +1,7 @@
 atmos-pipe-layers-component-layer-primary = первичный
 atmos-pipe-layers-component-layer-secondary = вторичный
 atmos-pipe-layers-component-layer-tertiary = третьичный
+
 atmos-pipe-layers-component-change-layer = Теперь выбран { $layerName } слой.
 atmos-pipe-layers-component-current-layer = Выбран { $layerName } слой.
 atmos-pipe-layers-component-select-layer = { CAPITALIZE($layerName) } слой

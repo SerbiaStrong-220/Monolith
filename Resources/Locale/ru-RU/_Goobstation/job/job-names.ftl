@@ -1,5 +1,6 @@
 job-name-overall = Общее
 job-name-futureagent = Future Agent
+
 # Navy Stuff
 # All of those changed from Goob
 job-name-navyofficer = Офицер Зимнего Солнцестояние

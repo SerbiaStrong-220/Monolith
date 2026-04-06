@@ -8,3 +8,5 @@ ent-WeaponLMGGrizzly = РМП-68 "Гризли"
     .desc = Ручной пулемет, модифицированный для использования нескольких видов патрон. Использует патроны калибра 6.8х52мм безгильзовые, 5.56х45мм, 7.62х39мм.
 ent-WeaponLMGRatel = ПСВ "Каратель"
     .desc = Высокоточная винтовка, модифицированная для использования как обычных магазинов, так и упаковок патрон. Использует патроны калибра 7.62х51мм.
+ent-CyborgWeaponMinigun = Cyborg minigun
+    .desc = Old highly-inaccurate rotary mini-gun chambered in a small caliber.

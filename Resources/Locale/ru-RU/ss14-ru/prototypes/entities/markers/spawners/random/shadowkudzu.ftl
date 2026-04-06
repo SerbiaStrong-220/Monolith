@@ -1,2 +1,2 @@
-ent-ShadowKudzuLootSpawner = спавнер случайный объект теневой аномалии
+ent-ShadowKudzuLootSpawner = { ent-MarkerBase }
     .desc = { ent-MarkerBase.desc }

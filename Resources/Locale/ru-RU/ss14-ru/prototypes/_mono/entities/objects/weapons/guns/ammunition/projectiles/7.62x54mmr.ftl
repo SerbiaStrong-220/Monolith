@@ -1,0 +1,16 @@
+ent-Bullet762x54mmRFMJ = bullet (7.62x54mmR FMJ)
+    .desc = { ent-BaseBullet.desc }
+ent-Bullet762x54mmRPractice = bullet (7.62x54mmR practice)
+    .desc = { ent-BaseBulletPractice.desc }
+ent-Bullet762x54mmRRubber = bullet (7.62x54mmR rubber)
+    .desc = { ent-BaseBulletRubber.desc }
+ent-Bullet762x54mmRIncendiary = bullet (7.62x54mmR incendiary)
+    .desc = { ent-BaseBulletIncendiary.desc }
+ent-Bullet762x54mmRUranium = bullet (7.62x54mmR uranium)
+    .desc = { ent-BaseBulletUranium.desc }
+ent-Bullet762x54mmRHP = bullet (7.62x54mmR hollow-point)
+    .desc = { ent-BaseBullet.desc }
+ent-Bullet762x54mmRRIP = bullet (7.62x54mmR RIP)
+    .desc = { ent-BaseBullet.desc }
+ent-Bullet762x54mmRPlasteelAP = bullet (7.62x54mmR AP)
+    .desc = { ent-BaseBullet.desc }

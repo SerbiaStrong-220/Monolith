@@ -1,3 +1,9 @@
 ent-PillCanisterStrange = pill canister
-    .suffix = Strange, 10
     .desc = { ent-PillCanister.desc }
+    .suffix = Strange, 10
+ent-PillMesotaxinide = pill
+    .desc = { ent-Pill.desc }
+    .suffix = Mesotaxinide
+ent-PillCanisterMesotaxinide = pill canister
+    .desc = { ent-PillCanister.desc }
+    .suffix = Mesotaxinide 15u, 5

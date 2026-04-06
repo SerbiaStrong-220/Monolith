@@ -1,6 +1,6 @@
 ent-BluespaceOre = bluespace ore
-    .suffix = Full
     .desc = { ent-OreBase.desc }
+    .suffix = Full
 ent-BluespaceOre1 = { ent-BluespaceOre }
-    .suffix = Single
     .desc = { ent-BluespaceOre.desc }
+    .suffix = Single

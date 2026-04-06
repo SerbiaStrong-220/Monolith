@@ -1,7 +1,10 @@
 department-Cargo = Отдел снабжения
 department-Civilian = Свободные представители
+# department-Command = Command # Frontier: redefined in _NF
 department-CentralCommand = Центральное командование
 department-Engineering = Инженерный отдел
+# department-Medical = Medical # Mono: redefined in _NF
+# department-Security = Security # Frontier: redefined in _NF
 department-Science = Научный отдел
 department-Silicon = Синтетики
 department-Specific = На определённых станциях

@@ -1,7 +1,9 @@
 ent-MobLetoferolHorror = chimera fleshbeast
     .desc = { ent-MonoBaseMobLetoferolHumanoid.desc }
+    .suffix = { ent-MonoBaseMobLetoferolHumanoid.suffix }
 ent-MobLetoferolHorrorGhostrole = chimera fleshbeast
-    .suffix = Ghostrole
     .desc = { ent-MobLetoferolHorror.desc }
+    .suffix = Ghostrole
 ent-MobLetoferolBeast = chimera fleshbeast
     .desc = { ent-MonoBaseMobLetoferol.desc }
+    .suffix = { ent-MonoBaseMobLetoferol.suffix }

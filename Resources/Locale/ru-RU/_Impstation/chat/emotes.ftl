@@ -3,6 +3,7 @@ chat-emote-name-bubble = Bubble
 chat-emote-name-pop = Pop
 chat-emote-name-crack = Crack Knuckles
 chat-emote-name-reptilian-hiss = Hiss
+
 # Message
 chat-emote-msg-bubble = bubbles.
 chat-emote-msg-pop = pops!

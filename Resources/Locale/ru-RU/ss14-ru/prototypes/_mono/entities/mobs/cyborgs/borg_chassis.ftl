@@ -1,0 +1,16 @@
+ent-BorgChassisSelectablePDV = PDV cyborg
+    .desc = A purpose built cyborg used by the PDV.
+ent-PDVBorgChassisAssault = PDV assault cyborg
+    .desc = { ent-BorgChassisSelectable.desc }
+ent-PDVBorgChassisEngineer = PDV engineer cyborg
+    .desc = { ent-BorgChassisSelectable.desc }
+ent-PDVBorgChassisMedical = PDV medical cyborg
+    .desc = { ent-BorgChassisSelectable.desc }
+ent-BorgChassisSelectableTSF = TSF cyborg
+    .desc = A purpose built cyborg used by the TSF.
+ent-TSFBorgChassisAssault = TSF assault cyborg
+    .desc = { ent-BorgChassisSelectable.desc }
+ent-TSFBorgChassisEngineer = TSF engineer cyborg
+    .desc = { ent-BorgChassisSelectable.desc }
+ent-TSFBorgChassisMedical = TSF medical cyborg
+    .desc = { ent-BorgChassisSelectable.desc }

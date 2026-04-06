@@ -1,11 +1,11 @@
 ent-ClothingNeckPonchoBlack = black cold weather poncho
-    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy - but at least it's not cold. This one is black.
+    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy — but at least it's not cold. This one is black.
 ent-ClothingNeckPonchoBlackStripe = rogue cold weather poncho
-    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy - but at least it's not cold. This one is black with red markings.
+    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy — but at least it's not cold. This one is black with red markings.
 ent-ClothingNeckPonchoArctic = cold weather poncho
-    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy - but at least it's not cold.
+    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy — but at least it's not cold.
 ent-ClothingNeckPonchoSyndicate = black and red cold weather poncho
-    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy - but at least it's not cold. This one seems vaguely sinister...
+    .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy — but at least it's not cold. This one seems vaguely sinister...
 ent-ClothingNeckPonchoSmallPink = small pink cold weather poncho
     .desc = The Cold Weather Poncho, advertised as a masterpiece of elemental protection. This stylish rendition comes in a smaller size. This one is pink and white.
 ent-ClothingNeckPonchoSmallRed = small red cold weather poncho

@@ -1,3 +1,3 @@
 ent-BriefcaseCentcomm = { ent-BriefcaseBrown }
-    .suffix = Admeme, DO NOT MAP
     .desc = { ent-BriefcaseBrown.desc }
+    .suffix = Admeme, DO NOT MAP

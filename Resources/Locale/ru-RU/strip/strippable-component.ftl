@@ -10,11 +10,12 @@ strippable-component-alert-owner = { CAPITALIZE($user) } снимает с ва�
 strippable-component-alert-owner-hidden = Вы чувствуете, как кто-то копается в вашем { $slot }!
 strippable-component-alert-owner-insert = { CAPITALIZE($user) } надевает на вас { $item }!
 strippable-component-alert-owner-insert-hand = { CAPITALIZE($user) } вкладывает { $item } в вашу руку!
+
 # generic warning for when a user interacts with your equipped items.
 strippable-component-alert-owner-interact = { CAPITALIZE($user) } возится с вашим { $item }!
+
 # StripVerb
 strip-verb-get-data-text = Обыскать
-strip-all-verb-get-data-text = Раздеть
 
 ## UI
 

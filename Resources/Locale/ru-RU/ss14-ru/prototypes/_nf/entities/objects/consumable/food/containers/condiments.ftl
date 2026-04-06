@@ -8,3 +8,4 @@ ent-FoodCondimentSqueezeBottleClear = { ent-BaseFoodCondimentSqueezeBottle }
     .desc = When it comes to squeeze bottles this is the clear choice.
 ent-FoodCondimentBottleSoysauce = soy sauce bottle
     .desc = Used to season dishes to umami perfection. With extra sodium!
+    .suffix = { ent-DrinkBottleGlassBaseFull.suffix }

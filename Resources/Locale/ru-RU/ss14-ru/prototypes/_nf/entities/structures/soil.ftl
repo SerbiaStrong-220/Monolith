@@ -1,6 +1,6 @@
 ent-HydroponicsSoilEmpty = { ent-hydroponicsSoil }
+    .desc = { ent-hydroponicsSoil.desc }
     .suffix = Empty
-    .desc = { ent-hydroponicsSoil.desc }
 ent-HydroponicsSoilNutrition = { ent-hydroponicsSoil }
-    .suffix = 0 water, 100 nutrition
     .desc = { ent-hydroponicsSoil.desc }
+    .suffix = 0 water, 100 nutrition

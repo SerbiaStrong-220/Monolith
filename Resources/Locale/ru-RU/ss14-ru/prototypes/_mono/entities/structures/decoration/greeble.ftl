@@ -1,0 +1,12 @@
+ent-BaseGreeble = { "" }
+    .desc = { "" }
+ent-GreebleAntenna1 = Antenna
+    .desc = Like antennas to hell.
+ent-GreebleAntenna2 = Antenna
+    .desc = Like antennas to hell.
+ent-GreebleElint1 = ELINT
+    .desc = Like antennas to hell.
+ent-GreebleRadarpanel1 = radar panel
+    .desc = Like antennas to hell.
+ent-GreebleRadarpanel2 = radar panel
+    .desc = Like antennas to hell.

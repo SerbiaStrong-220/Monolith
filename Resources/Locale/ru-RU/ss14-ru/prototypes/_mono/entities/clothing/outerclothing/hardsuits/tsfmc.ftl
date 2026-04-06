@@ -1,0 +1,12 @@
+ent-ClothingOuterHardsuitM82c = M82c hardsuit
+    .desc = A hardsuit issued to marines operating in low-pressure and high-risk environments. Specialized in bullet protection.
+ent-ClothingOuterHardsuitM82b = M82b hardsuit
+    .desc = Corpsman variant of the M82c outfitted with caustic and radiological shielding. Some of the blunt-absorbent gel layer is sacrificed for the NBC protection.
+ent-ClothingOuterHardsuitM86 = M86 Mk.3(R) hardsuit
+    .desc = An armored hardsuit, designed to be an upgrade for the M82 series. The extra armor gives it some more weight to move around.
+ent-ClothingOuterHardsuitNfsdSheriff = TSFMC M92 colonel tacsuit
+    .desc = A heavy, gilded tacsuit, capable of taking a lot of physical damage. Usually assigned to commanding officers of TSF flagships.
+ent-ClothingOuterHardsuitNfsdExperimental = TSFMC M92-X tacsuit
+    .desc = An experimental modification of the M92 tacsuit for spec-ops units of the TSFMC. Durable, and comes with an integrated soft-shield, but at the cost of insulation and heft.
+ent-ClothingOuterHardsuitM86Mk4 = M86 Mk.4(B) hardsuit
+    .desc = A limited-production redesign proposal for the M86 Mk.3(R), outfitted with an inbuilt personal shield generator.

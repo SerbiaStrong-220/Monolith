@@ -7,6 +7,6 @@ ent-OrganChimeraBrain = мозг химеры
 ent-OrganChimeraLiver = шиповидная железа химеры
     .desc = Заменяет печень в организме и перепрофилирует её в железу для выращивания костяных шипов.
 ent-OrganChimeraHeart = сердце химеры
-    .desc = { ent-BaseChimeraOrgan.desc }
+    .desc = { ent-OrganHumanHeart.desc }
 ent-OrganChimeraLungs = феромопод химеры
     .desc = Выделяет феромоны, позволяя общаться с другими химерами с помощью коллективного разума. Также служит как лёгкие для химеры.

@@ -1,6 +1,6 @@
 ent-RandomHumanoidSpawnerERTMailCarrier = ERT mail carrier
-    .suffix = ERTRole, Basic
     .desc = { ent-RandomHumanoidSpawnerERTLeader.desc }
+    .suffix = ERTRole, Basic
 ent-RandomHumanoidSpawnerERTMailCarrierEVA = ERT mail carrier
-    .suffix = ERTRole, Enviro EVA
     .desc = { ent-RandomHumanoidSpawnerERTMailCarrier.desc }
+    .suffix = ERTRole, Enviro EVA

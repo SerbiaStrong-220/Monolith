@@ -1,3 +1,5 @@
+ent-ActionSmite = Кара
+    .desc = Мгновенно поражает цель.
 ent-ActionSmiteNoReq = { ent-ActionSmite }
     .desc = { ent-ActionSmite.desc }
 ent-ActionCluwne = Проклятия Клувня

@@ -8,3 +8,4 @@ ui-escape-wiki = Wiki
 ui-escape-reset-tts = Очистить TTS
 ui-escape-disconnect = Отключиться
 ui-escape-quit = Выйти
+

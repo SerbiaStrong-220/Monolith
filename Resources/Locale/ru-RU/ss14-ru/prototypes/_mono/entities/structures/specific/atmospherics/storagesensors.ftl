@@ -1,0 +1,12 @@
+ent-AirSensorDistroStoreBase = { ent-AirSensorBase }
+    .desc = { ent-AirSensorBase.desc }
+    .suffix = Distro Storage
+ent-AirSensorIndustrialStoreBase = { ent-AirSensorBase }
+    .desc = { ent-AirSensorBase.desc }
+    .suffix = Industrial Storage
+ent-AirSensorDistroStore = { ent-AirSensor }
+    .desc = { ent-AirSensor.desc }
+    .suffix = { ent-AirSensorDistroStoreBase.suffix }
+ent-AirSensorIndustrialStore = { ent-AirSensor }
+    .desc = { ent-AirSensor.desc }
+    .suffix = { ent-AirSensorIndustrialStoreBase.suffix }

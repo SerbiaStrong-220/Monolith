@@ -23,4 +23,5 @@ ent-ClothingOuterCoatPirateCaptain = pirate captain's coat
 ent-ClothingOuterCoatArcadiaTrench = arcadia flak trenchcoat
     .desc = A flak trenchcoat produced by Arcadia Industries, enhanced with a bulletproof alloy for some extra protection.
 ent-ClothingOuterCoatArcadiaTrenchOpened = arcadia flak trenchcoat
-    .desc = { ent-ClothingOuterStorageFoldableBaseOpened.desc }
+    .desc = { ent-ClothingOuterCoatArcadiaTrench.desc }
+    .suffix = { ent-ClothingOuterStorageFoldableBaseOpened.suffix }

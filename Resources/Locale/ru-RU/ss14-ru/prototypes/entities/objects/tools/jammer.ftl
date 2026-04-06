@@ -1,7 +1,5 @@
-# Corvax-HiddenDesc-Start
-ent-RadioJammer = { ent-AppraisalTool }
-    .desc = { ent-AppraisalTool.desc } Устройство имеет огромную антенну и сменный аккумулятор.
-    .suffix = Глушитель связи
+ent-RadioJammer = radio jammer
+    .desc = This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
 ent-XenoborgRadioJammer = глушитель связи ксеноборгов
     .desc = { ent-RadioJammer.desc }
 

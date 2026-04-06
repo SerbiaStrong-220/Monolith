@@ -2,9 +2,11 @@ salvage-expedition-window-finish = Закончить экспедицию
 salvage-expedition-announcement-early-finish = Экспедиция была окончена. Шаттл покинет планету через { $departTime } секунд.
 salvage-expedition-shuttle-not-found = Не обнаружен шаттл.
 salvage-expedition-not-everyone-aboard = Не вся команда на шаттле! { $target } всё еще отсутствует!
+
 # Salvage mods
 salvage-time-mod-standard-time = Нормальная продолжительность
 salvage-time-mod-rush = Ускоренный режим
+
 salvage-weather-mod-heavy-snowfall = Сильный снегопад
 salvage-weather-mod-medium-snowfall = Умеренный снегопад
 salvage-weather-mod-light-snowfall = Слабый снегопад
@@ -19,13 +21,16 @@ salvage-weather-mod-rain-light = Лёгкий дождь
 salvage-weather-mod-rain = Дождь
 salvage-weather-mod-storm = Шторм
 salvage-weather-mod-none = Ясная погода
+
 salvage-biome-mod-shadow = Тени
+
 salvage-dungeon-mod-cave-factory = Пещерная фабрика
 salvage-dungeon-mod-med-sci = Научно медицинская база
 salvage-dungeon-mod-factory-dorms = Заводские общежития
 salvage-dungeon-mod-lava-mercenary = База наемников в "Аду"
 salvage-dungeon-mod-virology-lab = Вирусологическая лаборатория
 salvage-dungeon-mod-salvage-outpost = Утилизационный аванпост
+
 salvage-air-mod-1 = 82 N2, 21 O2
 salvage-air-mod-2 = 72 N2, 21 O2, 10 N2O
 salvage-air-mod-3 = 72 N2, 21 O2, 10 H2O

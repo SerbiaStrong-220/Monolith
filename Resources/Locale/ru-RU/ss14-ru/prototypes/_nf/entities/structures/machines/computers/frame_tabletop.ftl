@@ -1,8 +1,9 @@
 ent-BaseStructureComputerTabletop = { ent-BaseStructure }
-    .suffix = Настольный
     .desc = { ent-BaseStructure.desc }
+    .suffix = Настольный
 ent-ComputerTabletopFrame = компьютер
     .desc = { ent-BaseStructureComputerTabletop.desc }
+    .suffix = { ent-BaseStructureComputerTabletop.suffix }
 ent-ComputerTabletopBroken = { ent-ComputerBroken }
-    .suffix = Настольный
     .desc = { ent-ComputerBroken.desc }
+    .suffix = Настольный

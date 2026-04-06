@@ -1,8 +1,12 @@
 ent-RoboticArmCircuitboard = robotic arm machine board
     .desc = A machine printed circuit board for a robotic arm.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-ConstructorCircuitboard = constructor machine board
     .desc = A machine printed circuit board for a constructor.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-StorageBinCircuitboard = storage bin machine board
     .desc = A machine printed circuit board for a storage bin.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }
 ent-InteractorCircuitboard = interactor machine board
     .desc = A machine printed circuit board for an interactor.
+    .suffix = { ent-BaseMachineCircuitboard.suffix }

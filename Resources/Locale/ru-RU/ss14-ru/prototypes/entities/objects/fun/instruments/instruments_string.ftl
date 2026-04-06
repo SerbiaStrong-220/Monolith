@@ -1,7 +1,3 @@
-ent-BaseStringInstrument = { ent-BaseHandheldInstrument }
-    .desc = { ent-BaseHandheldInstrument.desc }
-ent-BaseStringInstrumentClothing = { ent-BaseStringInstrument }
-    .desc = { ent-BaseStringInstrument.desc }
 ent-ElectricGuitarInstrument = электрогитара
     .desc = Почувствуйте себя рок-звездой!
 ent-BassGuitarInstrument = бас-гитара
@@ -21,3 +17,7 @@ ent-ViolaInstrument = виола
     .desc = Как скрипка, только хуже.
 ent-CelloInstrument = виолончель
     .desc = Пижоны называют такие chell'ями.
+ent-BaseStringInstrument = { ent-BaseHandheldInstrument }
+    .desc = { ent-BaseHandheldInstrument.desc }
+ent-BaseStringInstrumentClothing = { ent-BaseStringInstrument }
+    .desc = { ent-BaseStringInstrument.desc }

@@ -19,5 +19,5 @@ ent-AmmoBox45_magnumRIP = ammunition box (.45 magnum RIP)
 ent-AmmoBox45_magnumPlasteelAP = ammunition box (.45 magnum AP)
     .desc = { ent-BaseAmmoBox45_magnum.desc }
 ent-AmmoBox45_magnumBigFMJ = big ammunition box (.45 magnum FMJ)
-    .suffix = Big
     .desc = { ent-BaseAmmoBox45_magnum.desc }
+    .suffix = Big

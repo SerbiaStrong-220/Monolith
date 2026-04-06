@@ -3,4 +3,4 @@ ent-ClothingHeadHelmetCultJanitor = cult janitor helmet
 ent-ClothingHeadHatHoodBloodCulthood = cult hood
     .desc = { ent-ClothingHeadBase.desc }
 ent-ClothingHeadHatHoodBloodCulthoodUnremoveable = cult hood
-    .desc = { ent-ClothingHeadHatHoodBloodCulthood.desc }
+    .desc = { ent-ClothingHeadHelmetBasic.desc }

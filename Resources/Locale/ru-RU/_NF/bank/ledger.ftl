@@ -8,4 +8,3 @@ ledger-printout-total-expenses = **Total Expenses: { $amount }**
 ledger-printout-balance = **Ending Balance: { $amount }**
 
 # Note: cartridge UI left in cartridge-loader/cartridges.ftl
-

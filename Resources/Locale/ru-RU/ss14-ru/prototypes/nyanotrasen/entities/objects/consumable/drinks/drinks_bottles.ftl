@@ -1,0 +1,3 @@
+ent-DrinkSakeBottleFull = бутылочка саке
+    .desc = Похоже, сожаление о завтрашнем утре тоже накладывает свой отпечаток на бутылку.
+    .suffix = { ent-DrinkBottleBaseEmpty.suffix }

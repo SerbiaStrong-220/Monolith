@@ -1,5 +1,4 @@
 ## UI
-
 ghost-respawn-rules-window-title = Правила новой жизни
 ghost-respawn-rules-window-confirm-button = Я прочитал и согласен с этим
 ghost-gui-respawn-button-denied = Возрождение ({ $time }s)
@@ -12,7 +11,6 @@ ghost-respawn-rules-window-rules =
     Заход за другие роли после смерти в целом разрешён. Однако [color=red]запрещено заходить за одного и того же персонажа[/color], используйте хотя бы другое имя
 
 ## COMMMANDS
-
 ghost-respawn-command-desc = Позволяет вам возродиться если вы призрак.
 ghost-respawn-not-a-ghost = Сейчас вы не являетесь призраком.
 ghost-respawn-ineligible = В настоящее время вы не соответствуете требованиям для этого.

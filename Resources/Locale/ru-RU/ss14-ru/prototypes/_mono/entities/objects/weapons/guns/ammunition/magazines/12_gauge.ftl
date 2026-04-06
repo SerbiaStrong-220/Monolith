@@ -1,8 +1,8 @@
 ent-BaseMagazine12_gauge = ammo drum (12 gauge shells)
     .desc = { ent-BaseItem.desc }
 ent-Magazine12_gaugeEmpty = ammo drum (12 gauge shells any)
-    .suffix = empty
     .desc = { ent-BaseMagazine12_gauge.desc }
+    .suffix = empty
 ent-Magazine12_gaugeBuckshot = ammo drum (12 gauge buckshot)
     .desc = { ent-BaseMagazine12_gauge.desc }
 ent-Magazine12_gaugeBeanbag = ammo drum (12 gauge beanbags)

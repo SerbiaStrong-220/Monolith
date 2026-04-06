@@ -1,8 +1,8 @@
 ent-BlueLobster = blue lobster plushie
     .desc = It's him.
 ent-BlueLobsterUncursed = { ent-BlueLobster }
-    .suffix = Uncursed
     .desc = { ent-BlueLobster.desc }
+    .suffix = Uncursed
 ent-BlueLobsterExploding = Blue Lobster
     .desc = It's him.
     .suffix = Embeddable Minibomb

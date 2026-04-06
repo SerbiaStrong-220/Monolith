@@ -1,6 +1,6 @@
 ent-WarpPointAdmin = { ent-WarpPoint }
+    .desc = { ent-WarpPoint.desc }
     .suffix = Admin-only
-    .desc = { ent-WarpPoint.desc }
 ent-WarpPointDungeon = { ent-WarpPoint }
-    .suffix = Dungeon
     .desc = { ent-WarpPoint.desc }
+    .suffix = Dungeon

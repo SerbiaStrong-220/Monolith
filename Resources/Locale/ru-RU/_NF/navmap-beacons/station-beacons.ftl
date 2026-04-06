@@ -2,6 +2,7 @@ station-beacon-atm = ATM
 station-beacon-shipyard = Shipyard
 station-beacon-sr-office = CL's Office
 station-beacon-sr-quarters = CL's Quarters
+
 station-beacon-cargobay-one = Cargo Bay 1
 station-beacon-cargobay-two = Cargo Bay 2
 station-beacon-cargobay-three = Cargo Bay 3
@@ -24,6 +25,7 @@ station-beacon-atmos-burn = Burn Chamber
 station-beacon-atmos-collector = Gas Collector Array
 station-beacon-lobby = Lobby
 station-beacon-doc-office = DoC's Office
+
 station-beacon-eva-access = EVA Access
 station-beacon-dock-one = Dock 1
 station-beacon-dock-two = Dock 2

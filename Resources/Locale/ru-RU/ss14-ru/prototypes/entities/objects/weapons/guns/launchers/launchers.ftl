@@ -1,9 +1,7 @@
 ent-BaseWeaponLauncher = BaseWeaponLauncher
-    .desc = Дерзай - налетай, целься и стреляй.
+    .desc = Дерзай — налетай, целься и стреляй.
 ent-WeaponLauncherChinaLake = China Lake
     .desc = БЛУП.
-ent-WeaponLauncherHydra = Гидра
-    .desc = БЛУП... Фшшшшш...
 ent-WeaponLauncherRocket = РПГ-7
     .desc = Древний ручной реактивный гранатомёт.
 ent-WeaponLauncherMultipleRocket = система залпового пуска
@@ -28,3 +26,5 @@ ent-WeaponLauncherAdmemeMeteorLarge = пускатель метеоритов
 ent-WeaponLauncherAdmemeImmovableRodSlow = пускатель неподвижного жезла
     .desc = Стреляет неподвижными жезлами.
     .suffix = Адмемы
+ent-WeaponLauncherHydra = Гидра
+    .desc = БЛУП... Фшшшшш...

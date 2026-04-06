@@ -10,6 +10,9 @@ role-timer-whitelisted-species = Ваш персонаж должен быть �
 role-timer-blacklisted-species = Ваш персонаж не должен быть одной из следующих рас, чтобы выбрать это:
 role-timer-whitelisted-traits = Ваш персонаж должен иметь одну из следующих черт, чтобы выбрать это:
 role-timer-blacklisted-traits = Ваш персонаж не должен иметь ни одну из следующих черт, чтобы выбрать это:
+
 role-timer-locked = Закрыто (наведите курсор для подробностей)
+
 role-timer-department-unknown = Неизвестный отдел
+
 role-ban = Вам заблокировали эту роль.

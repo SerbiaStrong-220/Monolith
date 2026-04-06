@@ -1,9 +1,9 @@
 ent-WeaponCaseHeavyCdet = { ent-WeaponCaseHeavy }
+    .desc = { ent-WeaponCaseHeavy.desc }
     .suffix = packed CDET
-    .desc = { ent-WeaponCaseHeavy.desc }
 ent-WeaponCaseHeavySlat = { ent-WeaponCaseHeavy }
+    .desc = { ent-WeaponCaseHeavy.desc }
     .suffix = packed SLAT
-    .desc = { ent-WeaponCaseHeavy.desc }
 ent-WeaponCaseHeavyAsmgt = { ent-WeaponCaseHeavy }
-    .suffix = packed ASMGT
     .desc = { ent-WeaponCaseHeavy.desc }
+    .suffix = packed ASMGT

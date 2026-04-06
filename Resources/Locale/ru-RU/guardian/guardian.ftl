@@ -1,3 +1,4 @@
+
 ## Guardian host specific
 
 guardian-created = Вы чувствуете... Одержимость.
@@ -5,6 +6,7 @@ guardian-already-present-invalid-creation = Вы НЕ переживёте за�
 guardian-no-actions-invalid-creation = У вас нет возможности содержать в себе стража!
 guardian-activator-empty-invalid-creation = Инъектор израсходован.
 guardian-activator-empty-examine = [color=#ba1919]Инъектор израсходован.[/color].
+# TODO: Change this once other species can inject it?
 guardian-activator-invalid-target = { CAPITALIZE($entity) } не может быть имплантирован!
 guardian-no-soul = У вашего стража нет души.
 guardian-available = У вашего стража теперь есть душа.
@@ -16,8 +18,8 @@ guardian-entity-recall = Страж исчезает в воздухе!
 guardian-entity-taking-damage = Ваш страж получает урон!
 
 ## Health warnings
-
 guardian-host-critical-warn = ВАШ ХОЗЯИН РАНЕН!
 guardian-host-death-warn = ВЫ ПЕРЕСТАЁТЕ СУЩЕСТВОВАТЬ
 guardian-death-warn = ВАШЕ ТЕЛО ПРОНЗАЕТ СУБАТОМНАЯ БОЛЬ, КОГДА ОНО РАСПАДАЕТСЯ!
 guardian-attack-host = Вы не можете атаковать своего хозяина.
+

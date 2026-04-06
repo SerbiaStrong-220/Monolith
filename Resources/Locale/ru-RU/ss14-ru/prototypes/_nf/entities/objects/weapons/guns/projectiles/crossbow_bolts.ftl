@@ -36,3 +36,4 @@ ent-CrossbowBoltShrapnelSpread = { "" }
     .desc = { "" }
 ent-CrossbowBoltBloodDrinker = blood drinker bolt
     .desc = A razor-sharp bolt with a serrated tip. Unquestionably unethical.
+    .suffix = { ent-ConjuredObject10.suffix }

@@ -1,3 +1,3 @@
 ent-MobMimic = Мимик
     .desc = Сюрприз.
-    .suffix = ИИ
+    .suffix = { ent-SimpleMobBase.suffix }

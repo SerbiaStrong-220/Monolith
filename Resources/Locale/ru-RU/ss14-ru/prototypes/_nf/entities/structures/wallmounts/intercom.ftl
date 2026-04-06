@@ -7,5 +7,5 @@ ent-ShuttleIntercomAntag = { ent-BaseShuttleIntercom }
 ent-ShuttleIntercomSyndicate = { ent-BaseShuttleIntercom }
     .desc = { ent-BaseShuttleIntercom.desc }
 ent-IntercomNfsd = { ent-IntercomSecurity }
-    .suffix = TSFMC
     .desc = { ent-IntercomSecurity.desc }
+    .suffix = TSFMC

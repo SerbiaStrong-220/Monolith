@@ -1,9 +1,9 @@
 ent-SpawnContrabandCrate = Contraband Crate Spawner
+    .desc = { ent-MarkerBase.desc }
     .suffix = DeadDrop
-    .desc = { ent-MarkerBase.desc }
 ent-SpawnEventContrabandCrate = Contraband Crate Spawner
+    .desc = { ent-MarkerBase.desc }
     .suffix = Event
-    .desc = { ent-MarkerBase.desc }
 ent-PinpointerSyndicatePOISpawner = Syndicate POI Pinpointer
-    .suffix = 10
     .desc = { ent-MarkerBase.desc }
+    .suffix = 10

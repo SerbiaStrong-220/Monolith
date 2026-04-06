@@ -1,12 +1,12 @@
 ent-SpawnMobPunkT1 = spawn punk
+    .desc = { ent-MarkerBasePlaceFree.desc }
     .suffix = AI, Hostile, T1
-    .desc = { ent-MarkerBasePlaceFree.desc }
 ent-SpawnMobPunkT2 = spawn punk
+    .desc = { ent-MarkerBasePlaceFree.desc }
     .suffix = AI, Hostile, T2
-    .desc = { ent-MarkerBasePlaceFree.desc }
 ent-SpawnMobPunkT3 = spawn punk
+    .desc = { ent-MarkerBasePlaceFree.desc }
     .suffix = AI, Hostile, T3
-    .desc = { ent-MarkerBasePlaceFree.desc }
 ent-SpawnMobPunkLeader = spawn punk leader
-    .suffix = AI, Hostile
     .desc = { ent-MarkerBasePlaceFree.desc }
+    .suffix = AI, Hostile

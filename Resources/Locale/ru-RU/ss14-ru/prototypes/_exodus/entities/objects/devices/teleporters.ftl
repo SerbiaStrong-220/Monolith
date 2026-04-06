@@ -1,0 +1,12 @@
+ent-SmallCarpHandTeleporter = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-BigCarpHandTeleporter = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-HandTeleporterInvisible = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-SmallPortalCarp = { ent-BasePortal }
+    .desc = Активное проявление блюспейс активности... Или нет?
+ent-BigPortalCarp = ???
+    .desc = Активное проявление блюспейс активности... Или нет?
+ent-PortalAdmemeInvisible = { ent-BasePortal }
+    .desc = Активное проявление блюспейс активности... Или нет?

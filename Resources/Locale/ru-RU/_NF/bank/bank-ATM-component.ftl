@@ -1,5 +1,4 @@
 ## UI
-
 bank-atm-menu-title = ЦентроБанк ТСФ
 bank-atm-menu-balance-label = Баланс:{ " " }
 bank-atm-menu-no-bank = Нет аккаунта в банке!
@@ -11,7 +10,9 @@ bank-atm-menu-deposit-button = Внести
 bank-atm-reason-label = Для:{ " " }
 bank-atm-description-label = Описание:{ " " }
 bank-atm-menu-withdraw-amount = Сумма вывода
+
 vending-machine-menu-cash-slot-label = Наличные:{ " " }
+
 bank-insufficient-funds = Недостаточная сумма
 bank-atm-menu-transaction-denied = Транзакция отклонена
 bank-atm-menu-deposit-successful = Депозит принят
@@ -30,11 +31,11 @@ station-bank-assets-sold = Проданные активы
 # Misc reasons (withdrawal and deposit)
 station-bank-required = (Необходимо)
 station-bank-other = Другое
+
 station-bank-requires-reason = Требуются детали транзакции
 station-bank-unauthorized = Не авторизировано!
 bank-atm-menu-cash-error = ОШИБКА: НЕИЗВЕСТНО
 
 ## ATM entity
-
 bank-ATM-cashSlot = Слот наличных
 station-bank-ATM-cashSlot = Слот наличных

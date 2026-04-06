@@ -1,3 +1,3 @@
 ent-MobHellspawn = адское отродье
     .desc = Неудержимая сила резни.
-    .suffix = ИИ
+    .suffix = { ent-BaseSimpleMob.suffix }

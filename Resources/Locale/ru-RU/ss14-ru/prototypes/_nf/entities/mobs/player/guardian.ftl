@@ -1,9 +1,9 @@
 ent-MobHoloparasiteGuardianAI = { ent-MobHoloparasiteGuardian }
-    .suffix = Ghost, AI
     .desc = { ent-MobHoloparasiteGuardian.desc }
+    .suffix = Ghost, AI
 ent-MobIfritGuardianAI = { ent-MobIfritGuardian }
-    .suffix = Ghost, AI
     .desc = { ent-MobIfritGuardian.desc }
-ent-MobHoloClownGuardianAI = { ent-MobHoloClownGuardian }
     .suffix = Ghost, AI
+ent-MobHoloClownGuardianAI = { ent-MobHoloClownGuardian }
     .desc = { ent-MobHoloClownGuardian.desc }
+    .suffix = Ghost, AI

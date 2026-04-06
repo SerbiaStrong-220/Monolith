@@ -6,5 +6,5 @@ ent-DrinkTeapotEmpty = teapot
     .desc = An elegant teapot. It simply oozes class.
     .suffix = Empty
 ent-DrinkTeaGlassEmpty = { ent-DrinkGlass }
-    .suffix = Empty
     .desc = { ent-DrinkGlass.desc }
+    .suffix = Empty

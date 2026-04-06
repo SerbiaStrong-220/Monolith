@@ -1,0 +1,10 @@
+ent-RoundEndRuleHour3 = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+ent-PortstrikeAnnounceRuleHour4 = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+ent-PortstrikeAnnounceRuleHour1 = { ent-PortstrikeAnnounceRuleHour4 }
+    .desc = { ent-PortstrikeAnnounceRuleHour4.desc }
+ent-RoundEndRuleMinute2 = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+ent-PortstrikeAnnounceRuleSeconds20 = { ent-PortstrikeAnnounceRuleHour4 }
+    .desc = { ent-PortstrikeAnnounceRuleHour4.desc }

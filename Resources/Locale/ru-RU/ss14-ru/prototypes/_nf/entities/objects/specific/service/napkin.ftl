@@ -1,5 +1,6 @@
 ent-NapkinDrum = napkin drum
     .desc = Holds napkins.
+    .suffix = { ent-PaperBin.suffix }
 ent-NapkinDrum5 = napkin drum
     .desc = Holds napkins.
     .suffix = 5

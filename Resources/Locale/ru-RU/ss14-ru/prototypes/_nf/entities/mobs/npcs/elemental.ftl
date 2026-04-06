@@ -1,3 +1,9 @@
+ent-MobBananiumCrab = { ent-MobOreCrab }
+    .desc = Рудный краб, состоящий из баниума.
+ent-MobCoalCrab = { ent-MobOreCrab }
+    .desc = Рудный краб, состоящий из угля.
+ent-MobGoldCrab = { ent-MobOreCrab }
+    .desc = Рудный краб, состоящий из золота.
 ent-MobPlasmaCrab = { ent-MobOreCrab }
     .desc = An ore crab made from plasma.
 ent-MobSaltCrab = { ent-MobOreCrab }

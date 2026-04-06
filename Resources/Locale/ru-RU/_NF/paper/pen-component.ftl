@@ -4,7 +4,6 @@ pen-mode-write = Write
 pen-mode-sign = Sign
 
 ## Popups
-
 pen-mode-state = The pen ready to { $mode }
 
 ## Examine

@@ -6,6 +6,7 @@ plant-analyzer-window-tab-mutations = Mutations
 plant-analyzer-window-scanmode = Advanced scan mode:
 plant-analyzer-window-mode-on = On
 plant-analyzer-window-mode-off = Off
+
 plant-analyzer-window-label-name-scanned-plant = Scanned plant: { $seedName }
 plant-analyzer-window-label-name-scanned-seed = Scanned seed: { $seedName }
 plant-analyzer-unknown-plant = Unknown
@@ -21,6 +22,7 @@ plant-analyzer-plant-lifespan-text = Lifespan: { $lifespan }
 plant-analyzer-plant-maturation-text = Maturation: { $maturation }
 plant-analyzer-plant-production-text = Production: { $production }
 plant-analyzer-plant-growthstages-text = Growth stages: { $growthStages }
+
 plant-analyzer-tolerance-nutrient-usage = Nutrient usage: { $nutrientUsage } u/stage
 plant-analyzer-tolerance-water-usage = Water usage: { $waterUsage } u/stage
 plant-analyzer-tolerance-ideal-heat = Ideal heat: { $idealHeat } K
@@ -32,8 +34,10 @@ plant-analyzer-tolerance-low-pressure = Low pressure: { $lowPressureTolerance } 
 plant-analyzer-tolerance-high-pressure = High pressure: { $highPressureTolerance } kPa
 plant-analyzer-tolerance-pest-tolerance = Pest tolerance: { $pestTolerance }
 plant-analyzer-tolerance-weed-tolerance = Weed tolerance: { $weedTolerance }
+
 plant-analyzer-plant-mutations-text = Mutations: { $traits }
 plant-analyzer-plant-speciation-text = Possible subtypes: { $speciation }
+
 plant-analyzer-mutation-unviable = Unviable
 plant-analyzer-mutation-turnintokudzu = Kudzufication
 plant-analyzer-mutation-seedless = Seedless
@@ -42,6 +46,7 @@ plant-analyzer-mutation-sentient = Sentient
 plant-analyzer-mutation-ligneous = Ligneous
 plant-analyzer-mutation-bioluminescent = Bioluminescent
 plant-analyzer-mutation-canscream = Mandragora
+
 plant-analyzer-harvest-Unknown = Unknown
 plant-analyzer-harvest-Repeat = Perennial
 plant-analyzer-harvest-NoRepeat = Ephemeral

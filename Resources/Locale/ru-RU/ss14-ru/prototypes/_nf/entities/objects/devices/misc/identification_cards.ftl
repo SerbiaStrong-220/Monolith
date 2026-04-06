@@ -1,5 +1,7 @@
 ent-MercenaryIDCard = mercenary ID card
     .desc = { ent-IDCardStandard.desc }
+ent-PilotIDCard = ID-карта пилота
+    .desc = { ent-IDCardStandard.desc }
 ent-StcIDCard = station traffic controller ID card
     .desc = { ent-IDCardStandard.desc }
 ent-PublicAffairsIDCard = public affairs liaison ID card

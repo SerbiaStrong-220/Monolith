@@ -1,12 +1,12 @@
 ent-GasPressurePumpOn = { ent-GasPressurePump }
-    .suffix = On
     .desc = { ent-GasPressurePump.desc }
-ent-GasPressurePumpOnMax = { ent-GasPressurePumpOn }
-    .suffix = On, Max
-    .desc = { ent-GasPressurePumpOn.desc }
-ent-GasVolumePumpOn = { ent-GasVolumePump }
     .suffix = On
+ent-GasPressurePumpOnMax = { ent-GasPressurePumpOn }
+    .desc = { ent-GasPressurePumpOn.desc }
+    .suffix = On, Max
+ent-GasVolumePumpOn = { ent-GasVolumePump }
     .desc = { ent-GasVolumePump.desc }
+    .suffix = On
 ent-BaseGaslock = gaslock
     .desc = { ent-BaseStructure.desc }
 ent-BasePressurePumpGaslock = external gaslock

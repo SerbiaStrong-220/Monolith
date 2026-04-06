@@ -10,6 +10,7 @@ marking-SpiderEyesMulti-spidereyesmulti1 = Top
 marking-SpiderEyesMulti-spidereyesmulti2 = Middle Top
 marking-SpiderEyesMulti-spidereyesmulti3 = Middle Bottom
 marking-SpiderEyesMulti-spidereyesmulti4 = Bottom
+
 # diona
 marking-DionaLivingNymph = Living Nymphs
 marking-DionaLivingNymph-dionalivingnymph = Living Nymphs
@@ -23,6 +24,7 @@ marking-DionaFirefly = Fireflies
 marking-DionaFirefly-dionafirefly = Fireflies
 marking-DionaPollenDust = Pollen Cloud
 marking-DionaPollenDust-dionapollendust = Pollen Cloud
+
 # dwarves
 marking-DwarfBearCheeks = Glowing Cheeks
 marking-DwarfBearCheeks-dwarfbearcheeks = Glowing Cheeks
@@ -66,6 +68,7 @@ marking-DwarfMarkCobra = Mark of the Cobra
 marking-DwarfMarkCobra-dwarfmarkcobra = Mark of the Cobra
 marking-DwarfMarkSpider = Mark of the Spider
 marking-DwarfMarkSpider-dwafmarkspider = Mark of the Spider
+
 # humans
 marking-VitiligoHeadL = Vitiligo (Left Eye)
 marking-VitiligoHeadR = Vitiligo (Right Eye)
@@ -78,6 +81,7 @@ marking-VitiligoArmL = Vitiligo (Left Arm)
 marking-VitiligoLegL = Vitiligo (Left)
 marking-VitiligoChestF = Vitiligo Spread
 marking-VitiligoChestSpots = Vitiligo Spots
+
 # moths
 marking-MothTrueButterfly = Wings (Rainbow)
 marking-MothTrueButterfly-mothtruebutterfly1 = Stripes
@@ -116,6 +120,7 @@ marking-MothRhinoBeetle = Beetle Wings (Rhino)
 marking-MothRhinoBeetle-rhinobeetle1 = Outline
 marking-MothRhinoBeetle-rhinobeetle2 = Shine
 marking-MothRhinoBeetle-rhinobeetle3 = Wings
+
 # slimes
 marking-fizz = Fizz
 marking-fizz-fizz = Fizz
@@ -129,6 +134,7 @@ marking-FadingStars = Fading Starlight
 marking-FadingStars-fadingstars1 = Brightest
 marking-FadingStars-fadingstars2 = Middling
 marking-FadingStars-fadingstars3 = Darkest
+
 # vox
 marking-VoxCocktail = Cocktail
 marking-VoxCocktail-voxcocktail1 = Feathers
@@ -205,6 +211,7 @@ marking-VoxTailBalled = Thrasher
 marking-VoxTailBalled-voxtailballed = Thrasher
 marking-VoxTailSplit = Вокс, Хвост (Разделённый)
 marking-VoxTailSplit-voxtailsplit = Вокс, Хвост (Разделённый)
+
 # upstream vox markings dont have localized names. lmfao
 # these are just straight up broken and shouldnt be visible from the markings menu period but ALAS im not skilled enough to remove them so you get this stupid botch job instead
 marking-VoxBeak = Default Beak [DO NOT USE]

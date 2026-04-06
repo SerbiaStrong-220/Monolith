@@ -1,0 +1,10 @@
+ent-FoodMeatKidan = сырое киданье мясо
+    .desc = { ent-FoodMeat.desc }
+ent-FoodMeatKidanCooked = приготовленная киданья вырезка
+    .desc = Диетологи рекомендуют.
+ent-FoodMeatKidanRotten = тухлое мясо кидана
+    .desc = { ent-FoodMeatRotten.desc }
+ent-FoodMeatKidanCutlet = сырая киданья вырезка
+    .desc = Практически не пахнет.
+ent-FoodMeatKidanCutletCooked = приготовленная киданья вырезка
+    .desc = Говорят, в мясе содержится волшебный элексир. Именно он сделает вас самым сильным волшебником в мире.

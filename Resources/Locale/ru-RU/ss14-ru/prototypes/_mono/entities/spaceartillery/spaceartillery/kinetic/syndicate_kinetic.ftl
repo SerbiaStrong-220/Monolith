@@ -1,6 +1,12 @@
 ent-WeaponTurretAdderScattercannon = Adder scattercannon
     .desc = A large, twin-barrelled scatter cannon, firing bursts of canister shot to shred any incoming missiles or potential boarders. Uses a self loading mechanism similar to the anaconda handgun.
+    .suffix = PDV ONLY, SYN ONLY
 ent-WeaponTurretFang = Fang heavy 90mm autocannon
     .desc = A heavy 90mm autocannon of syndicate design, created during the corporate war. Made for shattering opponent destroyers. Uses a self loading mechanism similar to the anaconda handgun.
+    .suffix = PDV ONLY, SYN ONLY
 ent-WeaponTurretHydra = Hydra 220mm battery
     .desc = A main cannonade of syndicate origin, the hydra is a monstrous tri-barreled battery of 220-millimeter pain, designed to shatter corpations' toughest vessels. Loads with a similar mechanism as the anaconda handgun.
+    .suffix = PDV ONLY, SYN ONLY
+ent-WeaponTurretLeviathan = LEVIATHAN 520mm howitzer
+    .desc = A heavy artillery gun of syndicate origin, the leviathan is tyrannic testiment of Syndicate ingenuity, designed to send a message. Able to crack NanoTrasen battleships, and small fighters in a single shell. Loads with a similar mechanism as the anaconda handgun.
+    .suffix = PDV ONLY, SYN ONLY

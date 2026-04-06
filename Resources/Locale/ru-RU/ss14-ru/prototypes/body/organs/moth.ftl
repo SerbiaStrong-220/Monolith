@@ -1,3 +1,2 @@
-ent-OrganMothStomach = { ent-OrganAnimalStomach }
+ent-OrganMothStomach = moth stomach
     .desc = { ent-OrganAnimalStomach.desc }
-    .suffix = Ниан

@@ -7,5 +7,5 @@ ent-GeneratorCRPinch = термоядерный реактор класса CR "
         от 60 до 160 кВт. Из-за лёгкого иридиевого корпуса реактор крайне радиоактивен.
     .suffix = Плазма, Рад+, 105 кВт
 ent-GeneratorCRPinchShuttle = { ent-GeneratorCRPinch }
-    .suffix = Плазма, Рад+, 105 кВт, Шаттл
     .desc = { ent-GeneratorCRPinch.desc }
+    .suffix = Плазма, Рад+, 105 кВт, Шаттл

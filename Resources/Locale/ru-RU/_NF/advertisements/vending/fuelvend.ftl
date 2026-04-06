@@ -10,6 +10,7 @@ advertisement-fuelvend-9 = Need energy? No time? Buy some fuel!
 advertisement-fuelvend-10 = Locally sourced? Ha. Get some fuel.
 advertisement-fuelvend-11 = Is your generator running? Better go and fuel it!
 advertisement-fuelvend-12 = What's the anti-matter? No fuel?
+
 goodbye-fuelvend-1 = Another dissatisfied customer.
 goodbye-fuelvend-2 = You'll be back.
 goodbye-fuelvend-3 = Hit the road, you're taking up my time.

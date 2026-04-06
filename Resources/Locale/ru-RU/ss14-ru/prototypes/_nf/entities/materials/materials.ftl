@@ -1,8 +1,8 @@
 ent-MaterialHideRosyMothroach = rosy maple mothroach hide
     .desc = A thin layer of rosy maple mothroach hide.
 ent-MaterialBiomass50 = { ent-MaterialBiomass }
-    .suffix = 50
     .desc = { ent-MaterialBiomass.desc }
+    .suffix = 50
 ent-CrateMaterialBiomass50 = biomass crate
     .desc = 50 units of biomass. Yum.
     .suffix = 50

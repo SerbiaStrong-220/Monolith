@@ -1,6 +1,6 @@
 ent-PinpointerUniversalDebug = { ent-PinpointerUniversal }
-    .suffix = DEBUG
     .desc = { ent-PinpointerUniversal.desc }
+    .suffix = DEBUG
 ent-PinpointerSyndicatePOI = { ent-PinpointerSyndicateNuclear }
     .desc = Pointing to some unknown place.
     .suffix = Syndicate FOB

@@ -28,3 +28,7 @@ ent-FoodRiceDough = rice dough
     .desc = You're pretty sure this is just rice and water. You have no idea how it's holding together.
 ent-FoodRiceDoughSlice = rice dough slice
     .desc = A slice of rice dough.
+ent-FoodSausageRaw = raw sausage
+    .desc = A simple sausage. Who knows what's in this thing?
+ent-FoodSausageCasing = sausage casing
+    .desc = The intestine or some equivalent of some poor creature out there..

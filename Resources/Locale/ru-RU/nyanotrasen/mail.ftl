@@ -15,6 +15,7 @@ mail-penalty-fragile = INTEGRITY COMPROMISED. STATION BANK ACCOUNT PENALIZED BY 
 mail-penalty-expired = DELIVERY PAST DUE. STATION BANK ACCOUNT PENALIZED BY { $credits } CREDITS.
 mail-item-name-unaddressed = mail
 mail-item-name-addressed = mail ({ $recipient })
+
 # Frontier: reworded description, does not need to be a container.
 command-mailto-description = Queue an item to be delivered to a recipient. Example usage: `mailto 1234 5678 false false`. If the target entity is a container, its contents will be transferred to an actual mail parcel.
 # Frontier: add is-large description, container<contents
@@ -26,13 +27,13 @@ command-mailto-invalid-container = Target container entity does not have a { $re
 command-mailto-unable-to-receive = Target recipient entity was unable to be setup for receiving mail. ID may be missing.
 command-mailto-no-teleporter-found = Target recipient entity was unable to be matched to any station's mail teleporter. Recipient may be off-station.
 command-mailto-success = Success! Mail parcel has been queued for next teleport in { $timeToTeleport } seconds.
+
 # Frontier: mailto command completions
 command-mailto-completion-recipient = <recipient entityUid>
 command-mailto-completion-container = <contents entityUid>
 command-mailto-completion-fragile = [is-fragile: true|false]
 command-mailto-completion-priority = [is-priority: true|false]
 command-mailto-completion-large = [is-large: true|false]
-
 # End Frontier
 
 command-mailnow = Force all mail teleporters to deliver another round of mail as soon as possible. This will not bypass the undelivered mail limit.

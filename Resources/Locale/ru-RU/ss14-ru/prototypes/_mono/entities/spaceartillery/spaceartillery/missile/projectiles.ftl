@@ -6,3 +6,5 @@ ent-ShipMissileASM557 = ASM-557 Hybrid EMP Missile
     .desc = { ent-BaseBulletTrigger.desc }
 ent-ShipMissileSerpent = serpent torpedo
     .desc = { ent-BaseTorpedo.desc }
+ent-ShipMissileEntropy = electron torpedo
+    .desc = { ent-BaseTorpedo.desc }

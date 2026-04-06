@@ -1,6 +1,9 @@
+ent-ClothingBeltMilitaryWebbingCMOFilled = { ent-ClothingBeltMilitaryWebbingCMO }
+    .desc = { ent-ClothingBeltMilitaryWebbingCMO.desc }
+    .suffix = Filled, DO NOT MAP
 ent-ClothingBeltHolsterFilledCentComm = { ent-ClothingBeltHolster }
-    .suffix = Filled, N1984
     .desc = { ent-ClothingBeltHolster.desc }
+    .suffix = Filled, N1984
 ent-ClothingBeltSheathFilledNavyOfficer = { ent-ClothingBeltSheath }
-    .suffix = Filled, Winter Solstice Officer
     .desc = { ent-ClothingBeltSheath.desc }
+    .suffix = Filled, Winter Solstice Officer

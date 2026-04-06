@@ -1,3 +1,7 @@
+ent-MaintenanceJack = maintenance jack
+    .desc = A mighty tool for ruling maints. Pries tile and plating and can anchor.
+ent-NFShovel = the people's shovel
+    .desc = An old relic from the Glorious Leader. Capable of 18 functions, including digging, chopping, cutting, picking, prying, wire cutting, shoveling.
 ent-ShipyardRCD = shipyard RCD
     .desc = An advanced construction device which can place/remove walls, floors, and airlocks quickly. It has a slot to swipe ID cards.
 ent-ShipyardRCDEmpty = { ent-ShipyardRCD }
@@ -5,7 +9,3 @@ ent-ShipyardRCDEmpty = { ent-ShipyardRCD }
     .desc = { ent-ShipyardRCD.desc }
 ent-ShipyardRCDAmmo = shipyard compressed matter
     .desc = Ammo cartridge for a shipyard RCD.
-ent-MaintenanceJack = maintenance jack
-    .desc = A mighty tool for ruling maints. Pries tile and plating and can anchor.
-ent-NFShovel = the people's shovel
-    .desc = An old relic from the Glorious Leader. Capable of 18 functions, including digging, chopping, cutting, picking, prying, wire cutting, shoveling.

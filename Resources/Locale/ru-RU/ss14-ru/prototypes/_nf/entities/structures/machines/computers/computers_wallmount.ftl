@@ -1,8 +1,12 @@
-ent-ComputerWallmountRadar = настенная консоль сканера масс
+ent-ComputerWallmountRadar = { ent-ComputerRadar }
     .desc = { ent-ComputerRadar.desc }
-ent-ComputerWallmountAdvancedRadar = настенная консоль продвинутого сканера масс
+    .suffix = { ent-BaseStructureComputerWallmount.suffix }
+ent-ComputerWallmountAdvancedRadar = { ent-ComputerAdvancedRadar }
     .desc = { ent-ComputerAdvancedRadar.desc }
-ent-ComputerWallmountStationRecords = настенная консоль учёта экипажа
+    .suffix = { ent-BaseStructureComputerWallmount.suffix }
+ent-ComputerWallmountStationRecords = { ent-ComputerStationRecords }
     .desc = { ent-ComputerStationRecords.desc }
-ent-ComputerWallmountCrewMonitoring = настенная консоль мониторинга экипажа
+    .suffix = { ent-BaseStructureComputerWallmount.suffix }
+ent-ComputerWallmountCrewMonitoring = { ent-ComputerCrewMonitoring }
     .desc = { ent-ComputerCrewMonitoring.desc }
+    .suffix = { ent-BaseStructureComputerWallmount.suffix }

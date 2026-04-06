@@ -48,7 +48,7 @@ job-name-ertjanitor = Уборщик ОБР
 job-name-boxer = Боксёр
 job-name-zookeeper = Зоотехник
 job-name-visitor = Посетитель
-job-name-cluwne = Клувень
+
 # unused jobs
 # these are required for the agent ID job icon tooltips
 # I am keeping them for roleplaying opportunities
@@ -60,10 +60,12 @@ job-name-syndicate = Синдикат
 job-name-unknown = Неизвестно
 job-name-virologist = Вирусолог
 job-name-zombie = Зомби
+
 # Job titles
 job-title-visitor = Посетитель
 job-title-cluwne = Клувень
 job-title-universal = Универсальная
+
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Атмосферный Техник
 JobBartender = Бармен
@@ -87,7 +89,9 @@ JobERTJanitor = Уборщик ОБР
 JobERTLeader = Лидер ОБР
 JobERTMedical = Медик ОБР
 JobERTSecurity = Офицер Безопасности ОБР
+# Frontier: Head of Personnel<Station Representative
 JobHeadOfPersonnel = Комендант
+# Mono: Head of Security<TSFMC Colonel
 JobHeadOfSecurity = Полковник КВП ТСФ
 JobJanitor = Уборщик
 JobLawyer = Адвокат
@@ -97,6 +101,7 @@ JobMedicalIntern = Интерн
 JobMime = Мим
 JobMusician = Музыкант
 JobParamedic = Парамедик
+# Frontier: Passenger<Contractor
 JobPassenger = Авантюрист
 JobPsychologist = Психолог
 JobQuartermaster = Квартирмейстер
@@ -105,12 +110,15 @@ JobResearchAssistant = Научный Ассистент
 JobResearchDirector = Научный Руководитель
 JobSalvageSpecialist = Утилизатор
 JobScientist = Учёный
+# Frontier: Security Cadet<Cadet
 JobSecurityCadet = Рядовой КВП ТСФ
+# Mono: Security Officer<TSFMC Corporal
 JobSecurityOfficer = Сержант КВП ТСФ
 JobServiceWorker = Сервисный Работник
 JobStationAi = Станционный ИИ
 JobStationEngineer = Инженер
 JobTechnicalAssistant = Технический Ассистент
 JobVisitor = Посетитель
+# Mono: Warden<TSFMC Captain
 JobWarden = Смотритель
 JobZookeeper = Зоотехник

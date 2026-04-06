@@ -33,3 +33,7 @@ ent-FoodMealSpicyNoodles = spicy noodles
     .desc = A not-so-simple ramen bowl of noodles, broth, and tofu. Hot!
 ent-FoodMealTonkatsuNoodles = tonkatsu noodles
     .desc = Pork bone broth with garlic and pork. Rich!
+ent-FoodMeatSausage = cooked sausage
+    .desc = A simple sausage. Who knows what's in this thing?
+ent-FoodMealHotdog = hotdog
+    .desc = Hot diggity dog!

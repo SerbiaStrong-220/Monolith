@@ -1,0 +1,10 @@
+ent-ClothingOuterHardsuitPirateScaf = PDV SCAF hardsuit
+    .desc = An old SCAF suit painted in an PDV tan color scheme. The armor feels degraded, but lighter.
+ent-ClothingOuterHardsuitAshen = PDV CV-32 combat tacsuit
+    .desc = A combat tacsuit designed by the Phaethon Dynasty. A heavier but still general-purpose hardsuit.
+ent-ClothingOuterHardsuitPDVMedic = PDV CV-82 combat tacsuit
+    .desc = A field medic combat hardsuit designed by the Phaethon Dynasty. The armor features various reinforced plating in vital areas.
+ent-ClothingOuterHardsuitVizier = PDV CV-67 combat tacsuit
+    .desc = An adorned tacsuit designed with an imperfect nanolaminate composition. High maneuverability, sturdy armor.
+ent-ClothingOuterHardsuitAshenElite = PDV CV-53 combat hardsuit
+    .desc = Originally based off of the CV-32, the CV-53 sacrifices conventional armor plating for environmental protection, and a rechargeable hard-shield.

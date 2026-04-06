@@ -1,3 +1,6 @@
+ent-WeaponMechCombatPulseRifleTSF = CL-94 Pulse Emitter
+    .desc = Fires a heavy pulse laser.
+    .suffix = Mech Weapon, Gun, Combat, Pulse
 ent-LightMechaAutocannon = LAC-29 20mm autocannon
     .desc = The everyman's mecha rifle. Chambered in 20mm, with balanced stats to tackle both Armored Frames and do light damage against ships. Fits on Light Hardpoints.
     .suffix = Mech Weapon, Gun, Combat, Rifle

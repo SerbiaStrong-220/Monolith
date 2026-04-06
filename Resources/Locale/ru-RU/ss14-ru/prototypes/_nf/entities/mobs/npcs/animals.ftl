@@ -1,10 +1,12 @@
 ent-MobParrotNF = parrot
     .desc = { ent-MobParrot.desc }
+    .suffix = { ent-MobParrot.suffix }
 ent-CageParrot = parrot carrying cage
     .desc = A home away from home for your squawking feathered friend.
-    .suffix = null
+    .suffix = { ent-PetRockCarrier.suffix }
 ent-MobRosyMothroach = rosy mothroach
     .desc = This is the adorable by-product of mult- wait, why's this one pink?
+    .suffix = { ent-MobMothroach.suffix }
 ent-MobAngryBeeTimed = bee
-    .suffix = Angry, Timed
     .desc = { ent-MobAngryBee.desc }
+    .suffix = Angry, Timed
