@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Adminbus.WebAPI; // Exodus-WebAPI
 using Content.Server._NF.Auth;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -81,6 +82,8 @@ namespace Content.Server.IoC
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
+
+            IoCManager.Register<WebAPI>(); // Exodus-WebAPI
         }
     }
 }

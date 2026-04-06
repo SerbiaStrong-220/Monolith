@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Adminbus.WebAPI; // Exodus-WebAPI
 using Content.Server._NF.Auth;
 using Content.Server.Acz;
 using Content.Server.Administration;
@@ -120,6 +121,7 @@ namespace Content.Server.Entry
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+                IoCManager.Resolve<WebAPI>().Initialize(); // Exodus-WebAPI
             }
         }
 
