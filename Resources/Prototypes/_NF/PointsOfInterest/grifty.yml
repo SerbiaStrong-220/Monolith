@@ -21,6 +21,8 @@
     trackOnInit: true
     doNotCull: true
   - type: StationTransit # Mono
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
 
 - type: gameMap
   id: Grifty
