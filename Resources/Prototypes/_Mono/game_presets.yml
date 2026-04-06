@@ -17,7 +17,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoRogueTSF
@@ -33,7 +33,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoRogueUSSP
@@ -49,7 +49,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoTSFUSSP
@@ -65,7 +65,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoADS
@@ -84,7 +84,7 @@
   - MonoAISTCShuttleSpawnerSchedulerTier2
   # - MonoAsakimSTCShuttleSpawnerScheduler # Exodus-Asakim-Disable
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoChimera
@@ -101,7 +101,7 @@
   - FrontierRoundstartVariation
   - MonoChimeraSTCShuttleSpawnerScheduler
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoMixed
@@ -121,7 +121,7 @@
   - MonoAISTCShuttleSpawnerSchedulerTier2Slow
   # - MonoAsakimSTCShuttleSpawnerSchedulerSlow # Exodus-Asakim-Disable
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour2 # Exodus | two hours
+  # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoAllAtOnce
