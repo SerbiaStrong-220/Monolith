@@ -23,6 +23,18 @@
     scale: 3
     shape: hexagon
     visibleFromOtherGrids: true
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
+  - type: RadarConsole
+    followEntity: true
+    hideCoords: false # Frontier
+    maxIffRange: null # Frontier
   - type: MovementIgnoreGravity
     gravityState: true
   - type: WarpPoint
