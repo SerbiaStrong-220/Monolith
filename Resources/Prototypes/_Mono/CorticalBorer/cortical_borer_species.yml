@@ -75,6 +75,7 @@
   - type: CorticalBorer
     eggProto: "CorticalBorerEgg"
     addOnInfest:
+    - type: Godmode
     - type: PressureImmunity
     removeOnInfest:
     - type: CanEscapeInventory
@@ -101,6 +102,8 @@
   - type: Body
     thermalVisibility: false
   - type: UniversalLanguageSpeaker
+  - type: TTS # SS220-TTS
+    randomVoicesList: Demons
 
 - type: entity
   parent: BaseItem
