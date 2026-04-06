@@ -117,12 +117,6 @@ public sealed partial class CCVars220
         CVarDef.Create("date.game_year_delta", 544, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    /// How many sponsors can connect to the server beyond the player limit
-    /// </summary>
-    public static readonly CVarDef<int> MaxSponsorsBypass =
-        CVarDef.Create("game.max_sponsors_bypass", 10, CVar.SERVER);
-
-    /// <summary>
     /// How many languages can be used in one message
     /// </summary>
     public static readonly CVarDef<int> MaxLanguagesInOneMessage =

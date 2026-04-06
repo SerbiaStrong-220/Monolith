@@ -47,14 +47,6 @@ public sealed class DiscordPlayerManager : IPostInjectInit, IDisposable
 
     private volatile Dictionary<NetUserId, DiscordSponsorInfo?> _cachedSponsorInfo = new();
 
-    public List<SponsorTier> PriorityJoinTiers =
-    [
-        SponsorTier.BigShlopa,
-        SponsorTier.HugeShlopa,
-        SponsorTier.GoldenShlopa,
-        SponsorTier.CriticalMassShlopa
-    ];
-
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("DiscordPlayerManager");
@@ -347,39 +339,8 @@ public sealed class DiscordPlayerManager : IPostInjectInit, IDisposable
         _cachedSponsorInfo[userId] = sponsorInfo;
     }
 
-    public async Task<bool> HasPriorityJoinTierAsync(NetUserId userId)
-    {
-        await UpdateSponsorInfo(userId);
-        return HasPriorityJoinTier(await GetSponsorInfo(userId));
-    }
-
-    public bool HasPriorityJoinTier(NetUserId userId)
-    {
-        TryGetSponsorTierFromCache(userId, out var info);
-        return HasPriorityJoinTier(info);
-    }
-
-    public bool HasPriorityJoinTier(DiscordSponsorInfo? info)
-    {
-        return info != null && info.Tiers.Any(t => PriorityJoinTiers.Contains(t));
-    }
-
     public bool TryGetSponsorTierFromCache(NetUserId userId, [NotNullWhen(true)] out DiscordSponsorInfo? info)
     {
         return _cachedSponsorInfo.TryGetValue(userId, out info) && info != null;
-    }
-
-    public bool HaveFreeSponsorSlot()
-    {
-        var maxPlayers = _cfg.GetCVar(CCVars.SoftMaxPlayers);
-        var maxLimitExcending = _cfg.GetCVar(CCVars220.MaxSponsorsBypass);
-
-        var playerCount = _playerManager.Sessions.Where(s => s.Status is SessionStatus.InGame).Count();
-        if (!_cfg.GetCVar(CCVars.AdminsCountForMaxPlayers))
-        {
-            playerCount -= _adminManager.ActiveAdmins.Count();
-        }
-
-        return playerCount < maxPlayers + maxLimitExcending;
     }
 }

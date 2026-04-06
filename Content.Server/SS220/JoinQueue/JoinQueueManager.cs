@@ -2,8 +2,6 @@ using System.Linq;
 using Content.Server.Connection;
 using Content.Server.SS220.Discord;
 using Content.Shared.CCVar;
-using Content.Shared.Corvax.CCCVars;
-using Content.Shared.Destructible;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.SS220.JoinQueue;
 using Prometheus;
@@ -86,10 +84,9 @@ public sealed class JoinQueueManager
         }
 
         var isPrivileged = await _connectionManager.HavePrivilegedJoin(session.UserId);
-        var sponsorBypass = await _discordPlayerManager.HasPriorityJoinTierAsync(session.UserId) && _discordPlayerManager.HaveFreeSponsorSlot(); // SS220 Sponsor
         var currentOnline = _playerManager.PlayerCount - 1; // Do not count current session in general online, because we are still deciding her fate
         var haveFreeSlot = currentOnline < _cfg.GetCVar(CCVars.SoftMaxPlayers);
-        if (isPrivileged || haveFreeSlot || sponsorBypass) // SS220 Sponsor
+        if (isPrivileged || haveFreeSlot)
         {
             SendToGame(session);
 
@@ -128,26 +125,11 @@ public sealed class JoinQueueManager
     {
         var players = ActualPlayersCount;
         if (isDisconnect)
-            players--; // Decrease currently disconnected session but that has not yet been deleted
-
-        // SS220 sponsors begin
-        //var haveFreeSlot = players < _cfg.GetCVar(CCVars.SoftMaxPlayers);
-        //var haveFreeSponsorSlot = _connectionManager.HaveFreeSponsorSlot(); // SS220 sponsors
-        //var queueContains = _queue.Count > 0;
-        //if (haveFreeSlot && queueContains)
-        //{
-        //    var session = _queue.First();
-        //    _queue.Remove(session);
-
-        //    SendToGame(session);
-
-        //    QueueTimings.WithLabels("Waited").Observe((DateTime.UtcNow - connectedTime).TotalSeconds);
-        //}
+            players--;
 
         var queueContains = _queue.Count > 0;
         if (queueContains)
         {
-            SortQueueBySponsors();
             var session = _queue.First();
 
             var canDequeue = CanDequeue(players, session);
@@ -160,7 +142,6 @@ public sealed class JoinQueueManager
                 QueueTimings.WithLabels("Waited").Observe((DateTime.UtcNow - connectedTime).TotalSeconds);
             }
         }
-        // SS220 sponsors end
 
         SendUpdateMessages();
         QueueCount.Set(_queue.Count);
@@ -190,25 +171,9 @@ public sealed class JoinQueueManager
         Timer.Spawn(0, () => _playerManager.JoinGame(s));
     }
 
-    // SS220 sponsors begin
-    private void SortQueueBySponsors()
-    {
-        _queue.Sort((ICommonSession s1, ICommonSession s2) =>
-        {
-            var s1HasPriorityJoin = _discordPlayerManager.HasPriorityJoinTier(s1.UserId);
-            var s2HasPriorityJoin = _discordPlayerManager.HasPriorityJoinTier(s2.UserId);
-            if (s1HasPriorityJoin && !s2HasPriorityJoin) return -1;
-            else if (!s1HasPriorityJoin && s2HasPriorityJoin) return 1;
-            else return 0;
-        });
-    }
-
     private bool CanDequeue(int actualPlayers, ICommonSession session)
     {
-        var sponsorBypass = _discordPlayerManager.HasPriorityJoinTier(session.UserId) && _discordPlayerManager.HaveFreeSponsorSlot();
         var haveFreeSlot = actualPlayers < _cfg.GetCVar(CCVars.SoftMaxPlayers);
-
-        return haveFreeSlot || sponsorBypass;
+        return haveFreeSlot;
     }
-    // SS220 sponsors end
 }
