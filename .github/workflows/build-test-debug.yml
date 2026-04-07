@@ -6,11 +6,11 @@ concurrency:
 
 on:
   push:
-    branches: [ main, staging, stable ]
+    branches: [ master, staging, stable ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ main, staging, stable ]
+    branches: [ master, staging, stable ]
 
 jobs:
   build:

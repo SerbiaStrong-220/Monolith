@@ -166,6 +166,7 @@
     guides:
     - Letoferol
   - type: MovementAlwaysTouching
+  - type: Tower7GTarget # Exodus-Adminbus
 
 - type: entity
   parent:

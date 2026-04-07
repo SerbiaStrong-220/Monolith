@@ -32,6 +32,8 @@
         prob: 0.0
       - maxDistance: 1000
         prob: 0.3
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
 
 - type: gameMap
   id: TradeMall

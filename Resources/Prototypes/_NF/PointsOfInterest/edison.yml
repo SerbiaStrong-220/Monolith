@@ -22,6 +22,8 @@
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
 
 - type: gameMap
   id: Edison
