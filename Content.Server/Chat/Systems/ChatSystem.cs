@@ -1060,11 +1060,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var foundEnglish = false;
 
-        newMessage = SanitizeMessage(message, true, capitalize, punctuate, capitalizeTheWordI);
+        newMessage = SanitizeMessage(newMessage, false, capitalize, punctuate, capitalizeTheWordI);
 
         if (foundEnglish)
         {
-            emoteStr = "кашляет";
+            emoteStr = "кашляет"; // TODO: unhardcode
             return string.Empty;
         }
 
