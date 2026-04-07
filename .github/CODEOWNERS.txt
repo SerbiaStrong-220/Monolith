@@ -2,7 +2,3 @@
 
 # Ping for all PRs
 * @Lokilife
-
-# Locale
-/Resources/Locale/** @Jidort
-
