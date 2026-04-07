@@ -1,4 +1,6 @@
-﻿namespace Content.Server.SS220.TTS;
+﻿// (c) Space Exodus Team - EXDS-RL with CLA
+
+namespace Content.Server.SS220.TTS;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem

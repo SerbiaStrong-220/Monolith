@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Radio;

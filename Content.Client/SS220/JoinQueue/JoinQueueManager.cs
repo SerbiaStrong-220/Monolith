@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Content.Shared.SS220.JoinQueue;
 using Robust.Client.State;
 using Robust.Shared.Network;

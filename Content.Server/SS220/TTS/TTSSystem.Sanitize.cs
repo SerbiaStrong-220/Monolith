@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿// (c) Space Exodus Team - EXDS-RL with CLA
+
+using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Chat.Systems;
 

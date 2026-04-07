@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 

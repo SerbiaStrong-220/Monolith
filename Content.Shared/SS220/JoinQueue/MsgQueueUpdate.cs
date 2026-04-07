@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;

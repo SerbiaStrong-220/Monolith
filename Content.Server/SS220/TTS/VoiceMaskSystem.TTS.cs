@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Content.Server.Speech.Components;
 using Content.Server.SS220.TTS;
 using Content.Shared.VoiceMask;

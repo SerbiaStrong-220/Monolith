@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// (c) Space Exodus Team - EXDS-RL with CLA
+
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Corvax.Sponsors;
 using Robust.Shared.Network;
 

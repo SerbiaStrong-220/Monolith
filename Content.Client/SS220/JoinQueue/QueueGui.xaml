@@ -1,4 +1,5 @@
-﻿<Control xmlns="https://spacestation14.io"
+﻿<!-- (c) Space Exodus Team - EXDS-RL with CLA -->
+<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          xmlns:parallax="clr-namespace:Content.Client.Parallax"

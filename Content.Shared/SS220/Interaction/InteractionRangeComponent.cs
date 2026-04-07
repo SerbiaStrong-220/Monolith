@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.SS220.Interaction;

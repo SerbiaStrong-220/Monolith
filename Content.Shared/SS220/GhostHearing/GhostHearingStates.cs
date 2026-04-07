@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Content.Shared.Actions;
 using Robust.Shared.Serialization;
 

@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.GhostHearing;

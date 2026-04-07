@@ -1,3 +1,4 @@
+<!-- (c) Space Exodus Team - EXDS-RL with CLA -->
 <ui:FancyWindow  xmlns="https://spacestation14.io"
                  xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                  MinSize="250 500"

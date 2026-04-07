@@ -1,4 +1,5 @@
-// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;

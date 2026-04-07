@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

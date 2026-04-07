@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Serialization;
+﻿// (c) Space Exodus Team - EXDS-RL with CLA
+
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.VoiceMask;
 
