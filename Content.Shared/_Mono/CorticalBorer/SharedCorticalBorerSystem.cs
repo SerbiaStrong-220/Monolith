@@ -161,7 +161,7 @@ public abstract class SharedCorticalBorerSystem : EntitySystem
         var spawnedEgg = Spawn(egg, coordinates);
     }
 
-    public abstract void EndControl(Entity<CorticalBorerComponent> worm);
+    public abstract void EndControl(Entity<CorticalBorerComponent> worm); // Exodus: Make server-side EndControl callable from Shared
 }
 
 public sealed class InfestHostAttempt : CancellableEntityEventArgs

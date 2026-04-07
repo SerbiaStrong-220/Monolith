@@ -25,7 +25,7 @@ public sealed class CorticalBorerSystem : SharedCorticalBorerSystem
         args.Amount = ent.Comp.ChemicalPoints;
     }
 
-    // Exodus-Start: Make server-side EndControl callable from Shared
+    // Exodus-Begin: Make server-side EndControl callable from Shared
     public override void EndControl(Entity<CorticalBorerComponent> worm)
     {
         // empty implementation for client side
