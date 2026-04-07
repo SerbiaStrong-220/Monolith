@@ -2,7 +2,7 @@ name: Map Prototype Checker
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
     # Entity pathspecs - If any of these change (i.e. suffix changes etc), this check should run.
     - "Resources/Prototypes/Entities/**/*.yml"

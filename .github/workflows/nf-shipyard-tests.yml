@@ -2,7 +2,7 @@ name: Build & Run Shipyard Tests
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - "Resources/Maps/_Mono/Shuttles/**/*.yml" # Ship grids, Mono - set to mono files
       - "Resources/Prototypes/_Mono/Shipyard/**/*.yml" # Shipyard prototypes, Mono - set to mono files

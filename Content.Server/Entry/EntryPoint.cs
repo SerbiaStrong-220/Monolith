@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Adminbus.WebAPI; // Exodus-WebAPI
 using Content.Server._NF.Auth;
 using Content.Server.Acz;
 using Content.Server.Administration;
@@ -136,6 +137,7 @@ namespace Content.Server.Entry
                 _ttsManager.Initialize(); // Corvax-TTS
                 _discordPlayerManager.Initialize(); // SS220 discord player manager
                 _joinQueueManager.Initialize(); // Corvax-Queue
+                IoCManager.Resolve<WebAPI>().Initialize(); // Exodus-WebAPI
             }
         }
 

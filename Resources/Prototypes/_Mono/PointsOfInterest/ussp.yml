@@ -20,6 +20,8 @@
   addComponents:
   - type: IFF
     color: "#ccaa55"
+  - type: Tower7G # Exodus-Adminbus
+    range: 128
 
 - type: gameMap
   id: USSPCamelot

@@ -14,6 +14,7 @@
         ambientMusicPrototype: ColossusCentralMusic
       - type: VesselInfo
         description: "Последний рубеж цивилизации этого сектора. Ты чувствуешь себя в безопасности... почти." # Ru-Localization
+      - type: Tower7G # Exodus-Adminbus
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Колосс-Централ' # Ru-Localization

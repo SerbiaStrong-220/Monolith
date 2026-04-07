@@ -20,6 +20,7 @@
   - type: IFF
     color: "#00b7eb"
   - type: StationTransit
+  - type: Tower7G
 
 - type: gameMap
   id: Medical
