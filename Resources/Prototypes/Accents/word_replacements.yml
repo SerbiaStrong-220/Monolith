@@ -448,30 +448,6 @@
     chatsan-word-65: chatsan-replacement-65
     chatsan-word-66: chatsan-replacement-66
     chatsan-word-67: chatsan-replacement-67
-    # Exodus-Banwords
-    exodus-chatsan-banword-1: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-2: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-3: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-4: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-5: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-6: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-7: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-8: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-9: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-10: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-11: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-12: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-13: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-14: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-15: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-16: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-17: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-18: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-19: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-20: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-21: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-22: exodus-chatsan-replacement-ahem-ahem
-    exodus-chatsan-banword-23: exodus-chatsan-replacement-ahem-ahem
 
 - type: accent
   id: liar
