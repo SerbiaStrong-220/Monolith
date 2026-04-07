@@ -5,129 +5,66 @@
   priority: -2
   ruleEntry: true
   children:
-    - ExodusRule0DontBeAsshole
-    - ExodusRule1PunishmentEvasion
-    - ExodusRule2Ahelp
-    - ExodusRule3Elitism
-    - ExodusRule4Metagaming
-    - ExodusRule5OOCAbuse
-    - ExodusRule6BugAbuse
-    - ExodusRule7Twinks
-    - ExodusRule8SelfAntagonist
-    - ExodusRule9Conflicts
-    - ExodusRule10Memory
-    - ExodusRule11ERP
-    - ExodusRule12Information
-    - ExodusRule13RP
-    - ExodusRule14Respawn
-    - ExodusRule15War
-    - ExodusRule16Safezones
-    - ExodusRule17FactionRoles
+    - EXRule0DontBeAsshole
+    - EXRule1Vulture
+    - EXRule2Conflicts
+    - EXRule3Metagaming
+    - EXRule4InCharacter
+    - EXRule5SSD
+    - EXRule6Respawn
+    - EXRule7ERP
+    - EXRule8Abuse
 
 - type: guideEntry
-  id: ExodusRule0DontBeAsshole
+  id: EXRule0DontBeAsshole
   name: guide-entry-exodus-rule-zero-dont-be-asshole
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule0_DontBeAsshole.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule1PunishmentEvasion
+  id: EXRule1Vulture
   name: guide-entry-exodus-rule-one-punishment-evasion
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule1_PunishmentEvasion.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule1_Vulture.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule2Ahelp
+  id: EXRule2Conflicts
   name: guide-entry-exodus-rule-two-ahelp
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule2_Ahelp.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule2_Conflicts.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule3Elitism
+  id: EXRule3Metagaming
   name: guide-entry-exodus-rule-three-elitism
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule3_Elitism.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule3_Metagaming.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule4Metagaming
+  id: EXRule4InCharacter
   name: guide-entry-exodus-rule-four-metagaming
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule4_Metagaming.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule4_InCharacter.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule5OOCAbuse
+  id: EXRule5SSD
   name: guide-entry-exodus-rule-five-ooc-abuse
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule5_OOCAbuse.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule5_SSD.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule6BugAbuse
+  id: EXRule6Respawn
   name: guide-entry-exodus-rule-six-bug-abuse
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule6_BugAbuse.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule6_Respawn.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule7Twinks
+  id: EXRule7ERP
   name: guide-entry-exodus-rule-seven-twinks
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule7_Twinks.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule7_ERP.xml"
   ruleEntry: true
 
 - type: guideEntry
-  id: ExodusRule8SelfAntagonist
+  id: EXRule8Abuse
   name: guide-entry-exodus-rule-eight-self-antagonist
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule8_SelfAntagonist.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule9Conflicts
-  name: guide-entry-exodus-rule-nine-conflicts
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule9_Conflicts.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule10Memory
-  name: guide-entry-exodus-rule-ten-memory
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule10_Memory.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule11ERP
-  name: guide-entry-exodus-rule-eleven-erp
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule11_ERP.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule12Information
-  name: guide-entry-exodus-rule-twelve-information
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule12_Information.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule13RP
-  name: guide-entry-exodus-rule-thirteen-roleplay
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule13_Roleplay.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule14Respawn
-  name: guide-entry-exodus-rule-fourteen-respawn
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule14_Respawn.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule15War
-  name: guide-entry-exodus-rule-fifteen-war
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule15_War.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule16Safezones
-  name: guide-entry-exodus-rule-sixteen-safezones
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule16_Safezones.xml"
-  ruleEntry: true
-
-- type: guideEntry
-  id: ExodusRule17FactionRoles
-  name: guide-entry-exodus-rule-seventeen-faction-roles
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule17_FactionRoles.xml"
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule8_Abuse.xml"
   ruleEntry: true
