@@ -175,3 +175,17 @@
   components:
   - type: TimedDespawn
     lifetime: 300
+
+- type: entity
+  id: SpaceLeviathanSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - sprite: _Exodus/Mobs/Monolith/leviathan.rsi
+      state: head
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - SpaceLeviathanDespawn
