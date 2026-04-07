@@ -188,7 +188,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         UpdateChems(ent, -((int)chemAmount * chemicalPrototype.Cost));
         return true;
     }
-    
+
     private void OnInjectReagentMessage(Entity<CorticalBorerComponent> ent, ref CorticalBorerDispenserInjectMessage message)
     {
         CorticalBorerChemicalPrototype? chemProto = null;
@@ -359,7 +359,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         _chat.SendAdminAlert(str);
     }
 
-    public void EndControl(Entity<CorticalBorerComponent> worm)
+    public override void EndControl(Entity<CorticalBorerComponent> worm) // Exodus: Make server-side EndControl callable from Shared
     {
         var (uid, comp) = worm;
 

@@ -115,6 +115,8 @@ public abstract class SharedCorticalBorerSystem : EntitySystem
         if (!_container.TryRemoveFromContainer(uid))
             return false;
 
+        EndControl(ent); // Exodus: Fix borer taking soul of player when ejected while control
+
         // close all the UIs that relate to host
         if (TryComp<UserInterfaceComponent>(ent, out var uic))
         {
@@ -158,6 +160,8 @@ public abstract class SharedCorticalBorerSystem : EntitySystem
         var coordinates = _transform.ToMapCoordinates(host.ToCoordinates());
         var spawnedEgg = Spawn(egg, coordinates);
     }
+
+    public abstract void EndControl(Entity<CorticalBorerComponent> worm);
 }
 
 public sealed class InfestHostAttempt : CancellableEntityEventArgs
