@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Server.RoundEnd;
+using Content.Shared._Exodus.CCVar;
 using JetBrains.Annotations;
 using Robust.Server.ServerStatus;
 using Robust.Shared;
@@ -21,7 +22,7 @@ public sealed partial class WebAPI : IPostInjectInit
     [Dependency] private readonly ITaskManager _task = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
 
-    private string? _watchdogToken;
+    private string? _webapiToken;
     private ISawmill _sawmill = default!;
     private RoundEndSystem? _roundEnd;
 
@@ -34,8 +35,8 @@ public sealed partial class WebAPI : IPostInjectInit
 
     private void UpdateToken()
     {
-        var tok = _config.GetCVar(CVars.WatchdogToken);
-        _watchdogToken = string.IsNullOrEmpty(tok) ? null : tok;
+        var tok = _config.GetCVar(XCVars.WebAPIToken);
+        _webapiToken = string.IsNullOrEmpty(tok) ? null : tok;
     }
 
     void IPostInjectInit.PostInject()
@@ -52,7 +53,7 @@ public sealed partial class WebAPI : IPostInjectInit
             return false;
         }
 
-        if (_watchdogToken == null)
+        if (_webapiToken == null)
         {
             _sawmill.Warning("Watchdog token is unset but received POST /endround API call. Ignoring");
             return false;
@@ -60,10 +61,10 @@ public sealed partial class WebAPI : IPostInjectInit
 
         var auth = context.RequestHeaders["WatchdogToken"];
 
-        if (auth != _watchdogToken)
+        if (auth != _webapiToken)
         {
             // Holy shit nobody read these logs please.
-            _sawmill.Verbose(@"Failed auth: ""{0}"" vs ""{1}""", auth, _watchdogToken);
+            _sawmill.Verbose(@"Failed auth: ""{0}"" vs ""{1}""", auth, _webapiToken);
             await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
         }

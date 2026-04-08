@@ -13,4 +13,6 @@ public sealed partial class XCVars
     public static readonly CVarDef<string> CentralStationId =
         CVarDef.Create("exds.central_station_id", "Frontier", CVar.SERVER | CVar.REPLICATED);
 
+    public static readonly CVarDef<string> WebAPIToken =
+        CVarDef.Create("exds.webapi_token", "", CVar.SERVERONLY);
 }
