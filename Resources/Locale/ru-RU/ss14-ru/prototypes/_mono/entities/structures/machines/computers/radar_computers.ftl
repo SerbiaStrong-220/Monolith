@@ -1,4 +1,4 @@
-ent-ComputerEliteRadar = elite radar computer
-    .desc = A radar using rare, pre-fracture bluespace technology to detect enemies from even farther away.
-ent-ComputerStationRadar = overwatch radar computer
-    .desc = A visual uplink to a station's advanced, long-range intelligence suite, allowing commanders to have eyes on unfolding combat at all times.
+ent-ComputerEliteRadar = Улучшенный радар 
+    .desc = Радар, использующий редкие, доисторические технологии обнаружения объектов в космическом пространстве, позволяет выявлять врагов на ещё большем расстоянии.
+ent-ComputerStationRadar = Компьютер радарного наблюдения
+    .desc = Визуальная связь с передовой системой дальней разведки станции, позволяющая командирам постоянно следить за развитием боевых действий.
