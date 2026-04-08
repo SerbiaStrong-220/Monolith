@@ -59,7 +59,7 @@ public sealed partial class WebAPI : IPostInjectInit
             return false;
         }
 
-        var auth = context.RequestHeaders["WatchdogToken"];
+        var auth = context.RequestHeaders["WebAPIToken"];
 
         if (auth != _webapiToken)
         {
