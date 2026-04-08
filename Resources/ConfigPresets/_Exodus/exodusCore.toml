@@ -7,7 +7,6 @@ lidgren_log_error = false
 [game]
 hostname = "[RU][SS220] ✨ Exodus: Core [Frontier]"
 desc = "Русский язык, 60+ голосов, MRP"
-role_timers = false
 lobbyduration = 360
 
 [game.panic_bunker]
