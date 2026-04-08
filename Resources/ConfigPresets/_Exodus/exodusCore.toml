@@ -1,0 +1,72 @@
+[net]
+tickrate = 30
+log_late_msg = false
+lidgren_log_warning = false
+lidgren_log_error = false
+
+[game]
+hostname = "[RU][SS220] ✨ Exodus: Core [Frontier]"
+desc = "Русский язык, 60+ голосов, MRP"
+role_timers = false
+lobbyduration = 360
+
+[game.panic_bunker]
+disable_with_admins = true
+enable_without_admins = false
+count_deadminned_admins = true
+show_reason = true
+
+[game.dynamic_roles]
+enabled = false
+
+[movement]
+mob_pushing = false
+
+[vote]
+enabled = false
+map_enabled = false
+auto_map_vote = true
+
+[atmos]
+space_wind = true
+
+[shuttle]
+auto_call_time = 0
+mass_limit = 0
+
+[shuttle.impact]
+minimum_velocity = 105
+
+[viewport]
+maximum_width = 30
+
+[ooc]
+show_ooc_patron_color = false
+enabled = true
+enable_during_round = true
+
+[rules]
+time = 30
+
+[ic]
+flavor_text = true
+
+[surgery]
+can_operate_on_self = false
+
+[nf14.salvage]
+expedition_rewards_enabled = true
+
+[admin]
+note_fresh_days = 0
+
+[chat]
+motd = "Тестовый запуск Фронтир сервера на SS220, подробнее можно прочитать в официальном дискорде проекта!\nЗаходите на наш дискорд сервер!\nhttps://discord.gg/ss220"
+
+[console]
+loginlocal = true
+
+[infolinks]
+discord = "https://discord.gg/ss220"
+# wiki = "https://wiki14.ss220.club"
+github = "https://github.com/SerbiaStrong-220/Monolith"
