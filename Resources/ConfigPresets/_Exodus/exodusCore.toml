@@ -24,7 +24,7 @@ mob_pushing = false
 [vote]
 enabled = false
 map_enabled = false
-auto_map_vote = true
+auto_map_vote = false
 
 [atmos]
 space_wind = true
