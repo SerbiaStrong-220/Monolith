@@ -11,18 +11,18 @@
   - Reptilian # Monolith changes inside
   - SlimePerson
   - Vox
-  - Goblin # Frontier
+  # - Goblin # Frontier # Exodus-Removed
   - Vulpkanin # DeltaV
-  - Harpy # DeltaV
-  - Felinid # DeltaV
-  - Oni # DeltaV
-  - Chitinid # DeltaV
-  - Resomi # Floof
-  - Protogen # Mono
+  # - Harpy # DeltaV # Exodus-Removed
+  # - Felinid # DeltaV # Exodus-Removed
+  # - Oni # DeltaV # Exodus-Removed
+  # - Chitinid # DeltaV # Exodus-Removed
+  # - Resomi # Floof # Exodus-Removed
+  # - Protogen # Mono # Exodus-Removed
   - IPC # EE
-  - Rodentia # DeltaV
+  # - Rodentia # DeltaV # Exodus-Removed
   - Tajaran # Goobstation
-  - Hydrakin # Monolith/Obelisk
+  # - Hydrakin # Monolith/Obelisk # Exodus-Removed
 
 - type: guideEntry
   id: Arachnid
