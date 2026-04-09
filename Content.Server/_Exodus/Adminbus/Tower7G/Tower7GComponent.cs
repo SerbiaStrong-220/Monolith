@@ -11,10 +11,10 @@ public sealed partial class Tower7GComponent : Component
     public float Range = 512;
 
     [DataField]
-    public float MinDamage = 25f;
+    public float MinDamage = 15f;
 
     [DataField]
-    public float MaxDamage = 60f;
+    public float MaxDamage = 40f;
 
     [DataField]
     public DamageSpecifier BaseDamage = new()
