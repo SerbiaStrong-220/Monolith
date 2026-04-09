@@ -28,6 +28,7 @@ public sealed partial class TailedEntitySystem : EntitySystem
         SubscribeLocalEvent<TailedEntityComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<TailedEntityComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<TailedEntitySegmentComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<TailedEntitySegmentComponent, ComponentShutdown>(OnSegmentShutdown);
     }
 
     private void OnDamageChanged(EntityUid uid, TailedEntitySegmentComponent component, DamageChangedEvent args)
@@ -58,6 +59,12 @@ public sealed partial class TailedEntitySystem : EntitySystem
             }
         }
         component.TailSegments.Clear();
+    }
+
+    private void OnSegmentShutdown(EntityUid uid, TailedEntitySegmentComponent component, ComponentShutdown args)
+    {
+        _joint.ClearJoints(uid);
+        QueueDel(component.HeadEntity);
     }
 
     private void InitializeTailSegments(Entity<TailedEntityComponent, TransformComponent> ent)

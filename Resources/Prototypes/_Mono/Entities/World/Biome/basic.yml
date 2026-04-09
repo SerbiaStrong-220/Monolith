@@ -149,6 +149,9 @@
     - id: MonoDroneSpawnerT1
       prob: 3
       orGroup: wreck
+    - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
+      prob: 1
+      orGroup: wreck
 
 - type: spaceBiome
   id: MonoWorldgenVeryFarT2Inner
@@ -178,7 +181,7 @@
       prob: 2.5
       orGroup: wreck
     - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
-      prob: 0.1
+      prob: 1
       orGroup: wreck
 
 - type: spaceBiome
@@ -209,5 +212,5 @@
       prob: 2.5
       orGroup: wreck
     - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
-      prob: 0.1
+      prob: 1
       orGroup: wreck
