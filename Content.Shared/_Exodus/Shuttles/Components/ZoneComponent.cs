@@ -12,10 +12,13 @@ public sealed partial class ZoneComponent : Component
     public float Radius = 256;
 
     [DataField]
-    public string Text = "SAFE ZONE";
+    public LocId Text = "zone-component-safe-zone";
 
     [DataField]
     public Color Color = Color.LightGreen;
+
+    [DataField]
+    public Color TextColor = Color.OrangeRed;
 
     [DataField]
     public bool ShouldShowText = true;

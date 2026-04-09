@@ -1095,7 +1095,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 var textMargin = 6f;
                 var pos = new Vector2(textMargin, textMargin);
 
-                handle.DrawString(Font, pos * UIScale, Loc.GetString(zoneComp.Text), UIScale * 2f, zoneComp.Color);
+                handle.DrawString(Font, pos * UIScale, Loc.GetString(zoneComp.Text), UIScale * 2f, zoneComp.TextColor);
             }
         }
     }
