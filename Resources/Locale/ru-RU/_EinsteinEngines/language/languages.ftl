@@ -184,3 +184,6 @@ language-Blob-description = Глорп!
 
 language-NewKinPidgin-name = Вокс-Пиджин
 language-NewKinPidgin-description = Для человека он звучит как помесь чириканья, крика, визга и звуков, похожих на скрип металла по стеклу. Родной язык воксов.
+
+language-Skechi-name = Скечи
+language-Skechi-description = Сравнительно простой язык, состоящий из различных хрипов, тресков и писков. Родной язык для представителей вида резоми.
