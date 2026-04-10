@@ -33,14 +33,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     // Exodus-Begin: Metrics
     private EntityQuery<ShipWeaponProjectileComponent> _shipProjQuery;
     private static readonly Gauge BulletsCountGauge = Metrics.CreateGauge(
-        "exds_bullets_total_count",
-        "Number of currently existing bullets.");
-    private static readonly Gauge BulletsCountShipGauge = Metrics.CreateGauge(
-        "exds_bullets_ship_count",
-        "Number of currently existing bullets fired by ship weapons.");
-    private static readonly Gauge BulletsCountOtherGauge = Metrics.CreateGauge(
-        "exds_bullets_other_count",
-        "Number of currently existing bullets that isn't fired by ship weapons.");
+        "exds_bullets_count",
+        "Number of currently existing bullets.",
+        new GaugeConfiguration
+        {
+            LabelNames = ["type"]
+        });
     // Exodus-End
 
     /// <summary>
@@ -73,28 +71,15 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     protected override void IncMetricsCount(EntityUid uid)
     {
         base.IncMetricsCount(uid);
-        BulletsCountGauge.Inc();
-
-        if (_shipProjQuery.HasComp(uid))
-        {
-            BulletsCountShipGauge.Inc();
-        }
-        else
-            BulletsCountOtherGauge.Inc();
+        var type = _shipProjQuery.HasComp(uid) ? "ship" : "other";
+        BulletsCountGauge.WithLabels(type).Inc();
     }
 
     protected override void DecMetricsCount(EntityUid uid)
     {
         base.DecMetricsCount(uid);
-
-        BulletsCountGauge.Dec();
-
-        if (_shipProjQuery.HasComp(uid))
-        {
-            BulletsCountShipGauge.Dec();
-        }
-        else
-            BulletsCountOtherGauge.Dec();
+        var type = _shipProjQuery.HasComp(uid) ? "ship" : "other";
+        BulletsCountGauge.WithLabels(type).Dec();
     }
     // Exodus-End
 
