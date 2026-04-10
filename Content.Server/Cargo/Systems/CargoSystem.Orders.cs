@@ -212,7 +212,7 @@ namespace Content.Server.Cargo.Systems
             var cost = order.Price * order.OrderQuantity;
 
             // Not enough balance
-            if (cost > bankAccount.Balance)
+            if (!_bank.TryBankWithdraw(player, cost, dry: true)) // Exodus: Correct bank check
             {
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
                 PlayDenySound(uid, component);

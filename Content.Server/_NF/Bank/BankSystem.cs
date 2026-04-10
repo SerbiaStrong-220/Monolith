@@ -59,7 +59,7 @@ public sealed partial class BankSystem : SharedBankSystem
     /// <param name="mobUid">The UID that the bank account is attached to, typically the player controlled mob</param>
     /// <param name="amount">The integer amount of which to decrease the bank account</param>
     /// <returns>true if the transaction was successful, false if it was not</returns>
-    public bool TryBankWithdraw(EntityUid mobUid, int amount)
+    public bool TryBankWithdraw(EntityUid mobUid, int amount, bool dry = false) // Exodus: dry withdrawal
     {
         if (amount <= 0)
         {
@@ -98,8 +98,11 @@ public sealed partial class BankSystem : SharedBankSystem
             return false;
         }
 
-        if (TryBankWithdraw(session, prefs, profile, amount, out var newBalance))
+        if (TryBankWithdraw(session, prefs, profile, amount, out var newBalance, dry)) // Exodus: dry withdrawal
         {
+            if (dry) // Exodus: dry withdrawal
+                return true;
+
             bank.Balance = newBalance.Value;
             Dirty(mobUid, bank);
             _log.Info($"{mobUid} withdrew {amount}");
@@ -167,7 +170,7 @@ public sealed partial class BankSystem : SharedBankSystem
     /// <param name="amount">The number of spesos to be withdrawn.</param>
     /// <param name="newBalance">The new value of the bank account.</param>
     /// <returns>true if the transaction was successful, false if it was not.  When successful, newBalance contains the character's new balance.</returns>
-    public bool TryBankWithdraw(ICommonSession session, PlayerPreferences prefs, HumanoidCharacterProfile profile, int amount, [NotNullWhen(true)] out int? newBalance)
+    public bool TryBankWithdraw(ICommonSession session, PlayerPreferences prefs, HumanoidCharacterProfile profile, int amount, [NotNullWhen(true)] out int? newBalance, bool dry = false) // Exodus: dry withdrawal
     {
         newBalance = null; // Default return
         if (amount <= 0)
@@ -193,8 +196,16 @@ public sealed partial class BankSystem : SharedBankSystem
             _log.Info($"TryBankWithdraw: {session.UserId} tried to adjust the balance of {profile.Name}, but they were not in the user's character set.");
             return false;
         }
-        _prefsManager.SetProfile(session.UserId, index, newProfile);
+
+        // Exodus-Begin: dry withdrawal
         newBalance = balance;
+
+        if (dry)
+            return true;
+
+        _prefsManager.SetProfile(session.UserId, index, newProfile);
+        // Exodus-End
+
         // Update any active admin UI with new balance
         RaiseLocalEvent(new BalanceChangedEvent(session, newBalance.Value));
         return true;
