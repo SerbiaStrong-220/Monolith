@@ -161,6 +161,7 @@ chat-speech-verb-ghost-2 = дышит
 chat-speech-verb-ghost-3 = воет
 chat-speech-verb-ghost-4 = бормочет
 
+chat-speech-verb-name-kidan = Кидан
 chat-speech-verb-name-electricity = Электричество
 chat-speech-verb-electricity-1 = трещит
 chat-speech-verb-electricity-2 = гудит
