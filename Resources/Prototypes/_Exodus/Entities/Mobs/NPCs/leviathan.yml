@@ -102,12 +102,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      8000: Dead
+      16000: Dead
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 8000
+        damage: 16000
       behaviors:
       - !type:GibBehavior
   - type: Tag
