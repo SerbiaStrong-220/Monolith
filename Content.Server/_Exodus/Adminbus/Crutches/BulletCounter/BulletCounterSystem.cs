@@ -41,7 +41,7 @@ public sealed partial class BulletCounterSystem : EntitySystem
 
         // TODO: instead of wasting precious CPU time for counting, it's should be placed in engine to print out statistics for every component type which will be easier for CPU without extra iterations
 
-        var enumerator = new AllEntityQueryEnumerator<ProjectileComponent>();
+        var enumerator = EntityQueryEnumerator<ProjectileComponent>();
         var total = 0;
         var ship = 0;
         var other = 0;
