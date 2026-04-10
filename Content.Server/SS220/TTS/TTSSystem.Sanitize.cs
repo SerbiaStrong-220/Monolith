@@ -429,7 +429,22 @@ public sealed partial class TTSSystem
             {"poco", "Поко"},
             {"borracho", "Боррратё"},
             // ss220 fix spanish end
-
+            // Exodus-Edit-Start  
+            {"дф", "Дэ Эф"}, 
+            {"дфа", "Дэ Эф А"},
+            {"тсф", "Тэ Эс Эф"},
+            {"тсфа", "Тэ Эс Эф А"},
+            {"тц", "Тэ Цэ"},
+            {"ии", "И И"},
+            {"квп", "Кэ Вэ Пэ"},
+            {"снмп", "Эс Эн Эм Пэ"},
+            {"адс", "А Дэ Эс"},
+            {"мбсбсс", "Эм Бэ Эс Бэ Эс Эс"},
+            {"дч", "Дэ Чэ"},
+            {"вкф", "Вэ Ка Эф"},
+            {"мц", "Эм Цэ"},
+            {"бб", "Бэ Бэ"},
+            // Exodus-Edit-End  
         };
 
     private static readonly IReadOnlyDictionary<string, string> ReverseTranslit =
