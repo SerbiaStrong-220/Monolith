@@ -1,37 +1,36 @@
+<!-- Рекомендации: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
 
-## About the PR
-<!-- What did you change? -->
-<!-- If this is a code change, summarize at high level how your new code works. This makes it easier to review. -->
+## Описание PR
+<!-- Что вы изменили? -->
 
-## Why / Balance
-<!-- Discuss how this would affect game balance or explain why it was changed. Link any relevant discussions or issues. -->
+## Почему / Баланс
+<!-- Обсудите, как это повлияет на баланс игры или объясните, почему это было изменено. Укажите ссылки на соответствующие обсуждения или issue. -->
 
-## Media
-<!-- Attach media if the PR makes ingame changes (clothing, items, features, etc). 
-Small fixes/refactors are exempt. Media may be used in SS14 progress reports with credit. -->
+## Технические детали
+<!-- Краткое описание изменений в коде для облегчения проверки. -->
 
-## Requirements
-<!-- Confirm the following by placing an X in the brackets [X]: -->
-- [ ] I have read relevant guidelines/documentation to this PR found on [our devwiki](https://monolith-station.github.io/mono-docs/).
-- [ ] I have added media to this PR or it does not require an ingame showcase.
-- [ ] I can confirm this PR contains either no AI-generated content, or AI-generated content that meets our guidelines.
-<!-- You should understand that not following the above may get your PR closed at maintainer’s discretion -->
-<!-- When using AI, make sure you are already proficient in creating whatever content you are attempting to generate and that you already have experience contributing to SS14. This means using AI to enhance your preexisting workflow, not vibecoding. -->
+## Медиа
+<!-- Прикрепите медиафайлы, если PR вносит изменения в игру (одежда, предметы, механики и т.д.).
+Небольшие исправления/рефакторинг освобождаются от этого требования. -->
 
-## How to test
-<!-- Describe the way it can be tested -->
+## Требования
+<!-- Подтвердите следующее, поставив X в скобках [X]: -->
+- [ ] Я прочитал(а) и следую [Рекомендациям по оформлению Pull Request и Changelog](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
+- [ ] Я добавил(а) медиафайлы к этому PR или он не требует демонстрации в игре.
+- [ ] Я подтверждаю, что мои изменения находятся под лицензией [Exodus CLA](https://github.com/SerbiaStrong-220/Monolith/blob/master/LICENSES/CLA.txt) и соглашаюсь с её условиями.
+<!-- Вы должны понимать, что несоблюдение вышеуказанного может привести к закрытию вашего PR по усмотрению сопровождающего -->
 
-## Breaking changes
-<!-- List any breaking changes, including namespaces, public class/method/field changes, prototype renames; and provide instructions for fixing them. -->
+## Критические изменения
+<!-- Перечислите все критические изменения, включая изменения пространств имен, публичных классов/методов/полей, переименования прототипов; и предоставьте инструкции по их исправлению. -->
 
-**Changelog**
-<!-- Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
-Make sure to read the guidelines and take this Changelog template out of the comment block in order for it to show up.
-Changelog must have a :cl: symbol, so the bot recognizes the changes and adds them to the game's changelog. -->
+**Список изменений**
+<!-- Добавьте запись в Changelog, чтобы игроки знали о новых функциях или изменениях, которые могут повлиять на игровой процесс.
+Убедитесь, что вы прочитали рекомендации и вынесли этот шаблон Changelog из блока комментариев, чтобы он отображался.
+Changelog должен иметь символ :cl:, чтобы бот распознал изменения и добавил их в список изменений игры. -->
 <!--
 :cl:
-- add: Added fun!
-- remove: Removed fun!
-- tweak: Changed fun!
-- fix: Fixed fun!
+- add: Добавлено веселье!
+- remove: Удалено веселье!
+- tweak: Изменено веселье!
+- fix: Исправлено веселье!
 -->
