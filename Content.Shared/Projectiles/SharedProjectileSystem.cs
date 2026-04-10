@@ -83,6 +83,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         // Mono
         SubscribeLocalEvent<ProjectileComponent, TileFrictionEvent>(OnTileFriction);
+
+        // Exodus
+        SubscribeLocalEvent<ProjectileComponent, ComponentShutdown>(OnProjectileShutdown);
     }
 
     /// <summary>
@@ -104,7 +107,25 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
 
         EnsureComp<MetaDataComponent>(uid);
+        IncMetricsCount(uid); // Exodus
     }
+
+    // Exodus-Begin: Update metrics counter for every projectile creation and deletion
+    private void OnProjectileShutdown(EntityUid uid, ProjectileComponent component, ComponentShutdown args)
+    {
+        DecMetricsCount(uid);
+    }
+
+    protected virtual void IncMetricsCount(EntityUid uid)
+    {
+        // side-specific implementation
+    }
+
+    protected virtual void DecMetricsCount(EntityUid uid)
+    {
+        // side-specific implementation
+    }
+    // Exodus-End
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
