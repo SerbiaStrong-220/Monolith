@@ -11,7 +11,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server._Lua.Physics;
+namespace Content.Server._Exodus.AutoUnstuck;
 
 public sealed class AutoUnstuckSystem : EntitySystem
 {
@@ -84,7 +84,7 @@ public sealed class AutoUnstuckSystem : EntitySystem
                 continue;
 
             var pos = _transform.GetWorldPosition(xform);
-            var hasStaticHardContact = false;
+            var hasHardContact = false;
             var dirSum = Vector2.Zero;
 
             var contacts = _physics.GetContacts((uid, fixtures));
@@ -106,10 +106,10 @@ public sealed class AutoUnstuckSystem : EntitySystem
                 if (vec != Vector2.Zero)
                     dirSum += Vector2.Normalize(vec);
 
-                hasStaticHardContact = true;
+                hasHardContact = true;
             }
 
-            if (!hasStaticHardContact)
+            if (!hasHardContact)
             {
                 RemCompDeferred<StuckedComponent>(uid);
                 continue;
