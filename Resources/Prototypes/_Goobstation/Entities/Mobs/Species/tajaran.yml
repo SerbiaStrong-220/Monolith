@@ -38,9 +38,10 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
-  - type: NightVision
-    activateSound: null
-    deactivateSound: null
+  # Exodus Change    
+  #- type: NightVision 
+  #  activateSound: null
+  #  deactivateSound: null 
   - type: MeleeWeapon
     soundHit:
       collection: Punch

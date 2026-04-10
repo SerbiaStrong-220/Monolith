@@ -1,0 +1,18 @@
+# Exodus
+- type: entity
+  id: OrganTajaranEyes
+  parent: BaseAnimalOrgan
+  name: Tajaran eyes
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: Organ
+    onAdd:
+    - type: NightVision
+      activateSound: null
+      deactivateSound: null
+    slotId: eyes
+  - type: Eyes
