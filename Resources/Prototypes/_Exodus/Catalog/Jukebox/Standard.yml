@@ -196,3 +196,8 @@
   path:
     path: /Audio/_Exodus/Lobby/theme_of_space.ogg
 
+- type: jukebox
+  id: tankalelek
+  name: Turjan Aylahn - Tank A Lelek
+  path:
+    path: /Audio/_Exodus/CombatMode/tanc-a-lelek.ogg
