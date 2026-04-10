@@ -1,4 +1,5 @@
 [game]
-hostname = "[RU][TTS] SS220 Exodus | Frontier ✅"
-desc = "Русский язык, 60+ голосов, MRP"
 role_timers = false
+
+[chat]
+motd = "Тестовый запуск сервера Frontier на SS220, подробнее можно прочитать в официальном Discord проекта!\nЗаходите на наш Discord-сервер!\nhttps://discord.gg/ss220"

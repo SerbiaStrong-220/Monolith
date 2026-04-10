@@ -58,9 +58,10 @@ expedition_rewards_enabled = true
 
 [admin]
 note_fresh_days = 0
+allow_multi_server_play = false
 
 [chat]
-motd = "Тестовый запуск Фронтир сервера на SS220, подробнее можно прочитать в официальном дискорде проекта!\nЗаходите на наш дискорд сервер!\nhttps://discord.gg/ss220"
+motd = "Добро пожаловать на Exodus! Ваша история разворачивается в секторе Колосс. Присоединяйтесь к нашему Discord!\nhttps://discord.gg/ss220"
 
 [console]
 loginlocal = true
