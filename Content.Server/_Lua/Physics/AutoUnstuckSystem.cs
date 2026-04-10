@@ -9,8 +9,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Map.Components;
-using Content.Server.Shuttles.Components;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server._Lua.Physics;
 
@@ -28,72 +27,89 @@ public sealed class AutoUnstuckSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+
     private readonly Dictionary<EntityUid, float> _stuckTime = new();
     private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
-    private readonly List<EntityUid> _toClear = new();
-    private readonly List<EntityUid> _awake = new();
+    private EntityQuery<FixturesComponent> _fixturesQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+        _fixturesQuery = GetEntityQuery<FixturesComponent>();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        _toClear.Clear();
-        _awake.Clear();
 
-        foreach (var ent in _physics.AwakeBodies)
-        {
-            _awake.Add(ent.Owner);
-        }
+        var query = EntityQueryEnumerator<MobStateComponent>();
 
-        foreach (var uid in _awake)
+        while (query.MoveNext(out var uid, out _))
         {
-            if (!_physicsQuery.TryGetComponent(uid, out var body)) continue;
-            if (body.BodyType == BodyType.Static || !body.CanCollide) continue;
-            if (HasComp<MapGridComponent>(uid) || HasComp<MapComponent>(uid) || HasComp<ShuttleComponent>(uid)) continue;
-            if (IsPaused(uid)) continue;
+            if (IsPaused(uid))
+                continue;
+
+            if (!_physicsQuery.TryGetComponent(uid, out var body))
+                continue;
+
+            if (!_fixturesQuery.TryGetComponent(uid, out var fixtures))
+                continue;
+
+            if (body.BodyType == BodyType.Static || !body.CanCollide)
+                continue;
+
+            var xform = Transform(uid);
+
             var hasStaticHardContact = false;
             var dirSum = Vector2.Zero;
-            var contacts = _physics.GetContacts(uid);
+            var contacts = _physics.GetContacts((uid, fixtures));
+
             while (contacts.MoveNext(out var contact))
             {
-                if (!contact.IsTouching || !contact.Hard) continue;
+                if (!contact.IsTouching || !contact.Hard)
+                    continue;
+
                 var other = contact.OtherEnt(uid);
                 var otherBody = contact.OtherBody(uid);
-                if (otherBody.BodyType != BodyType.Static) continue;
-                var selfTx = _physics.GetPhysicsTransform(uid);
-                var otherTx = _physics.GetPhysicsTransform(other);
-                var dir = selfTx.Position - otherTx.Position;
-                if (dir != Vector2.Zero) dirSum += Vector2.Normalize(dir);
+
+                if (otherBody.BodyType != BodyType.Static)
+                    continue;
+
+                var selfTx = _physics.GetPhysicsTransform(uid, xform);
+                var otherTx = _physics.GetPhysicsTransform(other, xform);
+                var vec = selfTx.Position - otherTx.Position;
+
+                if (vec != Vector2.Zero)
+                    dirSum += Vector2.Normalize(vec);
+
                 hasStaticHardContact = true;
             }
+
             if (!hasStaticHardContact)
             {
-                _toClear.Add(uid);
+                _stuckTime.Remove(uid);
                 continue;
             }
-            if (_stuckTime.TryGetValue(uid, out var t)) _stuckTime[uid] = t + frameTime;
-            else _stuckTime[uid] = frameTime;
-            if (_stuckTime[uid] < 15f) continue;
-            if (_xformQuery.TryGetComponent(uid, out var xform))
-            {
-                var offset = _random.Pick(StuckOffsets);
-                _physics.SetCanCollide(uid, false, body: body);
-                _xform.SetCoordinates(uid, xform, xform.Coordinates.Offset(offset));
-                _physics.SetCanCollide(uid, true, body: body);
-                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-                _physics.WakeBody(uid, body: body);
-            }
-            _toClear.Add(uid);
-        }
-        foreach (var uid in _toClear)
-        {
+
+            if (_stuckTime.TryGetValue(uid, out var t))
+                _stuckTime[uid] = t + frameTime;
+            else
+                _stuckTime[uid] = frameTime;
+
+            if (_stuckTime[uid] < 15f)
+                continue;
+
+            var dir = dirSum.Normalized();
+
+            var offset = dir.Length() < 0.05f ? _random.Pick(StuckOffsets) : dir;
+            _physics.SetCanCollide(uid, false, manager: fixtures, body: body);
+            _xform.SetCoordinates(uid, xform, xform.Coordinates.Offset(offset));
+            _physics.SetCanCollide(uid, true, manager: fixtures, body: body);
+            _physics.SetLinearVelocity(uid, Vector2.Zero, manager: fixtures, body: body);
+            _physics.WakeBody(uid, manager: fixtures, body: body);
+
             _stuckTime.Remove(uid);
         }
     }
