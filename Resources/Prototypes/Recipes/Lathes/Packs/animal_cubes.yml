@@ -25,18 +25,18 @@
   recipes:
   - HumanCube
   - DionaCube
-  - FelinidCube
+  # - FelinidCube # Exodus-Removed
   - GingerbreadCube
   - MothCube
   - DwarfCube
-  - HarpyCube
-  - RodentiaCube
+  # - HarpyCube # Exodus-Removed
+  # - RodentiaCube # Exodus-Removed
   - ReptilianCube
   - VulpkaninCube
   - SlimePersonCube
-  - YowieCube
+  # - YowieCube # Exodus-Removed
   - VoxCube
-  - ResomiCube
-  - GoblinCube
-  - ChitinidCube
+  # - ResomiCube # Exodus-Removed
+  # - GoblinCube # Exodus-Removed
+  # - ChitinidCube # Exodus-Removed
 #  - ProtogenCube #mono: retired
