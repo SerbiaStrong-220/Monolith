@@ -64,15 +64,15 @@
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
 
-- type: guideEntry
-  id: Resomi
-  name: species-name-resomi
-  text: "/ServerInfo/Guidebook/Mobs/Resomi.xml"
+# - type: guideEntry # Exodus-Removed
+#   id: Resomi
+#   name: species-name-resomi
+#   text: "/ServerInfo/Guidebook/Mobs/Resomi.xml"
 
-- type: guideEntry
-  id: Protogen
-  name: species-name-protogen
-  text: "/ServerInfo/Guidebook/Mobs/Protogen.xml"
+# - type: guideEntry
+#   id: Protogen
+#   name: species-name-protogen
+#   text: "/ServerInfo/Guidebook/Mobs/Protogen.xml"
 
 - type: guideEntry
   id: IPC
@@ -84,7 +84,7 @@
   name: species-name-tajaran
   text: "/ServerInfo/Guidebook/Mobs/Tajaran.xml"
 
-- type: guideEntry
-  id: Hydrakin
-  name: species-name-hydrakin
-  text: "/ServerInfo/Guidebook/Mobs/Hydrakin.xml"
+# - type: guideEntry # Exodus-Removed
+#   id: Hydrakin
+#   name: species-name-hydrakin
+#   text: "/ServerInfo/Guidebook/Mobs/Hydrakin.xml"
