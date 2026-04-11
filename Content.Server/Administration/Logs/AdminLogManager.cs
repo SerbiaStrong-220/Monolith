@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +12,9 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
+using Robust.Shared.Map;
+using System.Linq;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Logs;
 
@@ -330,8 +333,31 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
-        var (json, players) = ToJson(handler.Values);
+        // Exodus-AdminQoL-Begin: Log player position for every log entry
+        var (json, players, entities) = ToJson(handler.Values);
         var message = handler.ToStringAndClear();
+
+        var xformSystem = _entityManager.System<SharedTransformSystem>();
+        foreach (var entity in entities)
+        {
+            // note only players
+            if (!_entityManager.HasComponent<ActorComponent>(entity))
+                continue;
+
+            if (_entityManager.TryGetComponent<TransformComponent>(entity, out var xform))
+            {
+                var mapCoords = xformSystem.GetMapCoordinates(entity, xform);
+
+                message += $"\n{_entityManager.ToPrettyString(entity)} ";
+
+                if (_entityManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var gridMeta))
+                    message += $"at grid {gridMeta.EntityName} ({xform.GridUid})";
+
+                message += $"at pos ({mapCoords.Position.X:F1}, {mapCoords.Position.Y:F1}) MapID: {mapCoords.MapId};";
+                break;
+            }
+        }
+        // Exodus-AdminQoL-End
 
         Add(type, impact, message, json, players);
     }

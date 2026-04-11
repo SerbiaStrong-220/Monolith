@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.Server.Administration.Logs.Converters;
@@ -33,10 +33,11 @@ public sealed partial class AdminLogManager
         _sawmill.Debug($"Admin log converters found: {string.Join(" ", converterNames)}");
     }
 
-    private (JsonDocument Json, HashSet<Guid> Players) ToJson(
+    private (JsonDocument Json, HashSet<Guid> Players, HashSet<EntityUid> Entities) ToJson( // Exodus-AdminQoL: Log player position for every log entry
         Dictionary<string, object?> properties)
     {
         var players = new HashSet<Guid>();
+        var entities = new HashSet<EntityUid>(); // Exodus-AdminQoL
         var parsed = new Dictionary<string, object?>();
 
         foreach (var key in properties.Keys)
@@ -61,6 +62,9 @@ public sealed partial class AdminLogManager
                 _ => null
             };
 
+            if (entityId is { Valid: true } uid) // Exodus-AdminQoL
+                entities.Add(uid);
+
             if (_entityManager.TryGetComponent(entityId, out ActorComponent? actor))
             {
                 players.Add(actor.PlayerSession.UserId.UserId);
@@ -71,6 +75,6 @@ public sealed partial class AdminLogManager
             }
         }
 
-        return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players);
+        return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players, entities); // Exodus-AdminQoL
     }
 }
