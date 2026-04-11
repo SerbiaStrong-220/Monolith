@@ -15,6 +15,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Map;
 using System.Linq;
 using Robust.Shared.Player;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Administration.Logs;
 
@@ -28,6 +29,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
     [Dependency] private readonly IDependencyCollection _dependencies = default!;
+
+    private TransformSystem _transformSystem = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -110,6 +113,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             QueueCapReached.Set(0);
             LogsSent.Set(0);
         }
+
+        _transformSystem = _entityManager.System<TransformSystem>(); // Exodus-AdminQoL
     }
 
     public async Task Shutdown()
@@ -337,7 +342,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         var (json, players, entities) = ToJson(handler.Values);
         var message = handler.ToStringAndClear();
 
-        var xformSystem = _entityManager.System<SharedTransformSystem>();
         foreach (var entity in entities)
         {
             // note only players
@@ -346,14 +350,14 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
             if (_entityManager.TryGetComponent<TransformComponent>(entity, out var xform))
             {
-                var mapCoords = xformSystem.GetMapCoordinates(entity, xform);
+                var pos = _transformSystem.GetWorldPosition(xform);
 
                 message += $"\n{_entityManager.ToPrettyString(entity)} ";
 
                 if (_entityManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var gridMeta))
                     message += $"at grid {gridMeta.EntityName} ({xform.GridUid}) ";
 
-                message += $"at pos ({mapCoords.Position.X:F1}, {mapCoords.Position.Y:F1}) MapID: {mapCoords.MapId};";
+                message += $"at pos ({pos.X:F1}, {pos.Y:F1}) MapID: {xform.MapID};";
                 break;
             }
         }
