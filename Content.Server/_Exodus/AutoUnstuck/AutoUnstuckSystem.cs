@@ -129,7 +129,7 @@ public sealed class AutoUnstuckSystem : EntitySystem
             var offset = dir.Length() < 0.05f ? _random.Pick(StuckOffsets) : dir;
 
             _physics.SetCanCollide(uid, false, manager: fixtures, body: body);
-            _xform.SetCoordinates(uid, xform, xform.Coordinates.Offset(offset));
+            _transform.SetWorldPosition(uid, pos + offset);
             _physics.SetCanCollide(uid, true, manager: fixtures, body: body);
             _physics.SetLinearVelocity(uid, Vector2.Zero, manager: fixtures, body: body);
             _physics.WakeBody(uid, manager: fixtures, body: body);
