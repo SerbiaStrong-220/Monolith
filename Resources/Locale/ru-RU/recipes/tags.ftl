@@ -26,7 +26,6 @@ construction-graph-tag-medical-hud = медицинский визор
 construction-graph-tag-sun-glasses = солнцезащитные очки
 construction-graph-tag-security-helmet = шлем СБ
 # materials
-construction-graph-tag-manipulator = модульная машинная часть
 construction-graph-tag-voice-trigger = голосовой триггер
 construction-graph-tag-signal-trigger = сигнальный триггер
 construction-graph-tag-proximity-sensor = датчик движения
@@ -138,3 +137,60 @@ construction-graph-tag-backpack = рюкзак
 
 construction-graph-tag-toolbox = ящик инструментов
 construction-graph-ore = руда
+construction-graph-tag-green-crayon = зелёный мелок
+construction-graph-tag-blue-crayon = синий мелок
+construction-graph-tag-modsuit-core = ядро модульного скафандра
+construction-graph-tag-modsuit-helmet = шлем модульного скафандра
+construction-graph-tag-modsuit-chestplate = грудная пластина модульного скафандра
+construction-graph-tag-modsuit-gauntlets = перчатки модульного скафандра
+construction-graph-tag-modsuit-boots = ботинки модульного скафандра
+construction-graph-tag-modsuit-plating-external = оболочка модульного скафандра
+construction-graph-tag-welder-industrial = промышленный сварочный аппарат
+construction-graph-tag-welder-experimental = экспериментальный сварочный аппарат
+construction-graph-tag-manipulator = манипулятор
+construction-graph-tag-capacitor = конденсатор
+construction-graph-tag-matter-bin = хранилище материи
+construction-graph-tag-rock-material = камень
+construction-graph-tag-sand-material = песок
+construction-graph-tag-remote-signaller = передатчик сигналов
+construction-graph-tag-drink-bottle = бутылка
+construction-graph-tag-small-aI-chip = сверхкомпактный чип ИИ
+construction-graph-tag-katana = катана
+construction-graph-tag-advanced-laser-pistol = продвинутый лазерный пистолет
+construction-graph-tag-hotdog = хотдог
+construction-graph-tag-syringe = щприц
+construction-graph-tag-shell-shotgun-12_gauge-buckshot = патрон 12 калибра
+construction-graph-tag-flare = фальшфейер
+construction-graph-tag-brass-knuckles-NF = латунные кастеты
+construction-graph-tag-whoopie-cushion = подушка-пердушка
+construction-graph-tag-clothing-robes-goblin = гоблинская роба
+construction-graph-tag-medal = медаль
+construction-graph-tag-material-hide-rosy-mothroach = шкура розовой таракамоли
+construction-graph-tag-material-hide-mothroach = шкура таракамоли
+construction-graph-tag-small-thruster-machine-circuitboard = плата ракетного двигателя
+
+construction-graph-tag-mech-air-tank = газовый баллон экзокостюма
+construction-graph-component-clarke-central-control = центральный модуль управления Кларка
+construction-graph-component-clarke-peripherals-control = модуль управления периферией Кларка
+
+construction-graph-component-gygax-central-control = центральный модуль управления Гигакса
+construction-graph-component-gygax-peripherals-control = модуль управления периферией Гигакса
+construction-graph-component-gygax-weapon-control = модуль управления оружием Гигакса
+construction-graph-component-gygax-armor = бронепластины Гигакса
+
+construction-graph-component-durand-central-control = центральный модуль управления Дюранда
+construction-graph-component-durand-peripherals-control = модуль управления периферией Дюранда
+construction-graph-component-durand-weapon-control = модуль управления оружием Дюранда
+construction-graph-component-durand-armor = бронепластины Дюранда
+
+construction-graph-component-broadsword-central-control = центральный модуль управления Бродсворда
+construction-graph-component-broadsword-peripherals-control = модуль управления периферией Бродсворда
+construction-graph-component-broadsword-weapon-control = модуль управления оружием Бродсворда
+
+construction-graph-component-flail-central-control = центральный модуль управления Флейла
+construction-graph-component-flail-peripherals-control = модуль управления периферией Флейла
+construction-graph-component-flail-weapon-control = модуль управления оружием Флейла
+
+construction-graph-component-exosuit-thruster = джетпак экзоскелета
+construction-graph-component-mech-IFF-TSF = система идентификации экзокостюма ТСФ
+construction-graph-component-Mech-IFF-PDV = система идентификации экзокостюма ДФ

@@ -257,14 +257,6 @@
   placementMode: AlignAtmosPipeLayers
   objectType: Structure
   canRotate: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
-    state: base
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
-    state: base
   alternativePrototypes:
   - GasPipeSensor
   - GasPipeSensorAlt1

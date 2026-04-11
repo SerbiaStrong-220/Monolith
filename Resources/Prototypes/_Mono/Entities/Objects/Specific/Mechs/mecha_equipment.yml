@@ -61,7 +61,7 @@
 - type: entity
   id: MechIFFTSF
   parent: BaseExosuitParts
-  name: TSF Mech IFF
+  name: construction-graph-component-mech-IFF-TSF
   description: Apply before the final weld of a standard mech to give it blue IFF on radar and give it a coat of blue paint.
   components:
     - type: Item
@@ -75,7 +75,7 @@
 - type: entity
   id: MechIFFPDV
   parent: BaseExosuitParts
-  name: PDV Mech IFF
+  name: construction-graph-component-Mech-IFF-PDV
   description: Apply before the final weld of a standard mech to give it yellow IFF on radar and give it a coat of tan paint.
   components:
     - type: Item

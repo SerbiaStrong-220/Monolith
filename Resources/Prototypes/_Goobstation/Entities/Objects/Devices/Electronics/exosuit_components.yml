@@ -72,7 +72,7 @@
 - type: entity
   id: MechAirTank
   parent: BaseExosuitParts
-  name: exosuit air tank
+  name: construction-graph-tag-mech-air-tank
   description: A special air canister capable of holding a large amount of air.
   components:
     - type: Item
@@ -89,7 +89,7 @@
 - type: entity
   id: MechThruster
   parent: BaseExosuitParts
-  name: exosuit thruster
+  name: construction-graph-component-exosuit-thruster
   description: A thruster with which the exosuit can safely move in the absence of gravity.
   components:
     - type: Item

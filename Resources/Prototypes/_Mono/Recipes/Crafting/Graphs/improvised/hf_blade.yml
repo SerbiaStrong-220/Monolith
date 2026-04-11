@@ -13,19 +13,19 @@
           state: icon
         doAfter: 1
       - tag: Igniter
-        name: igniter
+        name: construction-graph-tag-igniter
         icon:
           sprite: Objects/Devices/igniter.rsi
           state: icon
         doAfter: 1
       - tag: SmallAIChip
-        name: a super-compact AI chip
+        name: construction-graph-tag-small-aI-chip 
         icon:
           sprite: Objects/Misc/potatoai_chip.rsi
           state: icon
         doAfter: 1
       - tag: AdvancedLaserPistol
-        name: an advanced laser pistol
+        name: construction-graph-tag-advanced-laser-pistol
         icon:
           sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
           state: icon

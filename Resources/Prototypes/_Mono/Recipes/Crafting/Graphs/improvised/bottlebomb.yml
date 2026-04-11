@@ -7,7 +7,7 @@
     - to: bottlebombempty
       steps:
       - tag: DrinkBottle
-        name: an empty bottle
+        name: construction-graph-tag-drink-bottle
         icon:
           sprite: Objects/Consumable/Drinks/vodkabottle.rsi
           state: icon

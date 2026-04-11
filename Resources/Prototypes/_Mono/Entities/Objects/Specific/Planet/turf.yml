@@ -124,7 +124,7 @@
       - !type:SnapToGrid { }
       steps:
       - tag: SandMaterial
-        name: desert sand
+        name: construction-graph-tag-sand-material
         icon:
           sprite: _Mono/Objects/Misc/desert_sand.rsi
           state: icon
