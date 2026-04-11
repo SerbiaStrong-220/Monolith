@@ -1,5 +1,5 @@
-ent-TableFolding = folding table
-    .desc = If you carry six of these you become the coolest kid at church.
+ent-TableFolding = складывающийся столик
+    .desc = Если вы тащите шесть таких одновременно, то вы самый крутой среди детей.
 ent-TableFoldingSpawnFolded = { ent-TableFolding }
-    .suffix = folded
+    .suffix = Сложенный
     .desc = { ent-TableFolding.desc }

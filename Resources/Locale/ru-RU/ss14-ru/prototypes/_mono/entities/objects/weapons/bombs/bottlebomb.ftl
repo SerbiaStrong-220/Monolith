@@ -1,5 +1,5 @@
-ent-BottleBomb = bottle bomb
-    .desc = Cheap alternative to nukes.
-ent-BottleBombEmpty = bottle bomb
-    .desc = Cheap alternative to nukes. This one has no fuel.
-    .suffix = empty
+ent-BottleBomb = граната из бутылки
+    .desc = Дешевая альтернатива взрывчатки.
+ent-BottleBombEmpty = { ent-BottleBomb }
+    .desc = Дешевая альтернатива взрывчатки. В этой бутылке нет топлива
+    .suffix = Пустая

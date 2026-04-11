@@ -112,13 +112,11 @@
       - tool: Cutting
 
 - type: construction
-  name: steel mono catwalk
   id: SteelMonoCatwalk
   graph: SteelMonoCatwalk
   startNode: start
   targetNode: MonoCatwalk
   category: construction-category-structures
-  description: Just like a lattice. Except it looks better.
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false
@@ -126,9 +124,6 @@
     targets:
     - Lattice
     - Plating
-  icon:
-    sprite: _Mono/Structures/steel_catwalk.rsi
-    state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -160,13 +155,11 @@
       - tool: Cutting
 
 - type: construction
-  name: dark mono catwalk
   id: DarkMonoCatwalk
   graph: DarkMonoCatwalk
   startNode: start
   targetNode: MonoCatwalk
   category: construction-category-structures
-  description: Just like a lattice. Except it looks better.
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false
@@ -174,9 +167,6 @@
     targets:
     - Lattice
     - Plating
-  icon:
-    sprite: _Mono/Structures/dark_steel_catwalk.rsi
-    state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -208,13 +198,11 @@
       - tool: Cutting
 
 - type: construction
-  name: white mono catwalk
   id: WhiteMonoCatwalk
   graph: WhiteMonoCatwalk
   startNode: start
   targetNode: MonoCatwalk
   category: construction-category-structures
-  description: Just like a lattice. Except it looks better.
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false
@@ -222,9 +210,6 @@
     targets:
     - Lattice
     - Plating
-  icon:
-    sprite: _Mono/Structures/white_steel_catwalk.rsi
-    state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

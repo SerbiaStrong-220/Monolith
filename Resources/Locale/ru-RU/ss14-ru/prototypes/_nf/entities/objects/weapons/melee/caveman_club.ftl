@@ -1,5 +1,5 @@
-ent-CavemanClub = caveman club
-    .desc = Big stick make big hurt.
-ent-CavemanClubCursed = caveman club
-    .desc = Big stick make big... this no wood?
-    .suffix = Unremoveable, Foam
+ent-CavemanClub = дубина пещерного человека
+    .desc = Большая палка больно бить.
+ent-CavemanClubCursed = дубина пещерного человека
+    .desc = Большая палка больно... Это дерево?
+    .suffix = Неснимаемая, Пенопласт

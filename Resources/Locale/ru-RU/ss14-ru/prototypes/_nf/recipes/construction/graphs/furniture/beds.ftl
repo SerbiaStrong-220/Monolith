@@ -1,2 +1,2 @@
-ent-WebNest = web nest
-    .desc = You got webbed.
+ent-WebNest = паутинное гнездо
+    .desc = Вас окутывает паутина.

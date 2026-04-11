@@ -75,15 +75,10 @@
 
 - type: construction
   id: Forge
-  name: forge
-  description: Primitive method for refining ore.
   graph: ForgeGraph
   startNode: start
   targetNode: ForgeNode
   category: construction-category-furniture
-  icon:
-    sprite: _Mono/Structures/Machines/forge.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

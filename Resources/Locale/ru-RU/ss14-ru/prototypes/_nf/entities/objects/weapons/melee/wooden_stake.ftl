@@ -1,2 +1,2 @@
-ent-WoodenStake = wooden stake
-    .desc = Essential appliance for pitching tents and killing vampires.
+ent-WoodenStake = деревянный кол
+    .desc = Незаменимая вещь для установки палаток и убийства вампиров.

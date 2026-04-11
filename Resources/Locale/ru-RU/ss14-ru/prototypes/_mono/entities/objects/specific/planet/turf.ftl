@@ -12,5 +12,5 @@ ent-DesertSand50 = { ent-DesertSand }
 ent-FloraRockSolidPlanet = { ent-FloraRockSolid }
     .suffix = planet
     .desc = { ent-FloraRockSolid.desc }
-ent-hydroponicsSand = sand
+ent-hydroponicsSand = песчаная куча
     .desc = { ent-hydroponicsSoil.desc }

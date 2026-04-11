@@ -1,3 +1,3 @@
-ent-RandomPosterConstructed = random poster spawner
-    .suffix = Constructed
+ent-RandomPosterConstructed = случайный плакат
+    .suffix = Построенный
     .desc = { ent-MarkerBase.desc }

@@ -1,4 +1,4 @@
-ent-WeaponBrassKnuckles = brass knuckles
-    .desc = When you need to punch just a little harder.
-ent-WeaponBrassKnucklesWhoopie = crass knuckles
-    .desc = Questionably silent, questionably deadly.
+ent-WeaponBrassKnuckles = латунные кастеты
+    .desc = Когда нужно ударить чуть-чуть сильнее.
+ent-WeaponBrassKnucklesWhoopie = вульгарные кастеты
+    .desc = Бесшумность и смертоносность под вопросом.

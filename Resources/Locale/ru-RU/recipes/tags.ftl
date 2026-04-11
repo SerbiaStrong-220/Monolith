@@ -133,3 +133,8 @@ construction-graph-tag-fire-helmet = пожарный шлем
 construction-graph-tag-spationaut-hardsuit = лёгкий скафандр утилизатора
 # clothing
 construction-graph-tag-backpack = рюкзак
+
+
+
+construction-graph-tag-toolbox = ящик инструментов
+construction-graph-ore = руда

@@ -1,6 +1,6 @@
-ent-BannerNfsd = TSFMC banner
-    .desc = A banner displaying the colors of the Trans-Solar Federation Marine Corps' Department.
-ent-FlagNfsd = TSFMC flag
-    .desc = A flag displaying the colors of the Trans-Solar Federation Marine Corps.
-ent-BannerGoblin01 = goblin banner
-    .desc = A banner displaying one of goblin clan symbols.
+ent-BannerNfsd = знамя КВП ТСФ
+    .desc = Знамя, демонстрирующее цвета Корпуса Военной Полиции Транс-Солнечной Федерации.
+ent-FlagNfsd = флаг ТСФ
+    .desc = Флаг, демонстрирующее цвета Корпуса Военной Полиции Транс-Солнечной Федерации.
+ent-BannerGoblin01 = гоблинское знамя
+    .desc = Знамя, демонстрирующее символ одного из гоблинских кланов.

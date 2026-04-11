@@ -1,5 +1,5 @@
-ent-PyrogelBomb = pyrogel bomb
-    .desc = Experimental bottle bomb technology.
-ent-PyrogelBombEmpty = pyrogel bomb
-    .desc = Cheap alternative to nukes. This one has no fuel.
-    .suffix = empty
+ent-PyrogelBomb = пирогельная бомба
+    .desc = Экспереминтальный пример бомбы с опасным веществом.
+ent-PyrogelBombEmpty = { ent-PyrogelBomb }
+    .desc = Экспереминтальный пример бомбы с опасным веществом. Правда пока его нет.
+    .suffix = Пустой

@@ -1,6 +1,4 @@
 - type: construction
-  name: machine frame (2x1)
-  description: A machine under construction. Needs more parts.
   id: MachineFrame2x1
   graph: Machine2x1
   startNode: start
@@ -8,13 +6,8 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _Mono/Structures/Machines/frames/frame_2x1_icon.rsi
-    state: "icon"
 
 - type: construction
-  name: machine frame (2x2)
-  description: A machine under construction. Needs more parts.
   id: MachineFrame2x2
   graph: Machine2x2
   startNode: start
@@ -22,13 +15,8 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _Mono/Structures/Machines/frames/frame_2x2_icon.rsi
-    state: "icon"
 
 - type: construction
-  name: machine frame (3x2)
-  description: A machine under construction. Needs more parts.
   id: MachineFrame3x2
   graph: Machine3x2
   startNode: start
@@ -36,13 +24,8 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _Mono/Structures/Machines/frames/frame_3x2_icon.rsi
-    state: "icon"
     
 - type: construction
-  name: machine frame (3x3)
-  description: A machine under construction. Needs more parts.
   id: MachineFrame3x3
   graph: Machine3x3
   startNode: start
@@ -50,6 +33,3 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _Mono/Structures/Machines/frames/frame_3x3_icon.rsi
-    state: "icon"

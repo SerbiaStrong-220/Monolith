@@ -1,5 +1,5 @@
-ent-WeaponHFKatana = high-frequency blade
-    .desc = A high-frequency blade. It's incredibly powerful.
+ent-WeaponHFKatana = высокочастотный клинок
+    .desc = Мощный высокочастотный клинок.
 ent-WeaponVT7 = VT-7 high-frequency blade
     .desc = A high-frequency blade tuned with ill-advised modifications designed to sunder armor.
 ent-WeaponMurasama = VT-7 HF blade "Murasama"

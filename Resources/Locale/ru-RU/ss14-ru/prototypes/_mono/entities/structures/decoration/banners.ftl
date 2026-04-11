@@ -1,4 +1,6 @@
-ent-BannerNGC = TSF banner
-    .desc = A banner proudly displaying the stars of the Trans-Solar Federation.
-ent-BannerSHM = SHM banner
-    .desc = A banner effectively representing the iconography of Steel Hammer Manufacturing Inc.
+ent-BannerNGC = знамя ТСФ
+    .desc = Знамя, на котором гордо красуются звёзды Транс-Солнечной Федерации.
+ent-BannerSHM = знамя "Стальной Молот"
+    .desc = Знамя, эффективно отражающий символику Мануфактурного комплекса "Стальной Молот".
+ent-BannerDrakeIndustries = знамя "Дрэйк Индастрис"
+    .desc = Знамя с эмблемой Дрэйк Индастрис. Символ мегакорпорации вплетён в текстиль высочайшего качества, какого вы вряд ли где-либо ещё встречали в секторе. Должно быть, поэтому баннер не прикреплён к древку, а буквально является с ним одним целым.

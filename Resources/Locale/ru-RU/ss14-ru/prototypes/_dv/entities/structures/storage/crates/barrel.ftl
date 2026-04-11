@@ -1,7 +1,7 @@
-ent-WoodenBarrel = wooden barrel
-    .desc = A musty old wooden barrel.
-ent-WoodenKeg = wooden keg
-    .desc = A musty old wooden keg, with a tap attached to the front.
+ent-WoodenBarrel = деревянная бочка
+    .desc = Засохшая старая деревянная бочка.
+ent-WoodenKeg = деревянная бочка
+    .desc = Старая затхлая бочка с краником спереди.
 ent-WoodenKegRootBeer = root beer keg
     .desc = A musty old wooden keg, with a tap attached to the front. Smells like root beer.
 ent-WoodenKegBeer = beer keg

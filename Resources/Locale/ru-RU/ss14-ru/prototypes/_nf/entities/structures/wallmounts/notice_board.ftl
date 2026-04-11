@@ -1,3 +1,3 @@
-ent-NoticeBoardNF = notice board
-    .desc = You wish you could wear this on your back but alas.
-    .suffix = Frontier
+ent-NoticeBoardNF = информационная доска
+    .desc = Как бы хотелось носить это на спине, но, увы.
+    .suffix = Фронтир

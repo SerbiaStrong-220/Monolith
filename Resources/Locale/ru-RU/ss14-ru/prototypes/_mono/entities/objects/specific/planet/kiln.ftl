@@ -1,2 +1,2 @@
-ent-Forge = forge
-    .desc = A primitive method of refining ores. Barely hot enough to make steel.
+ent-Forge = печь
+    .desc = Примитивный способ переработки руды. Еле-еле хватает тепла, чтобы сварить сталь.

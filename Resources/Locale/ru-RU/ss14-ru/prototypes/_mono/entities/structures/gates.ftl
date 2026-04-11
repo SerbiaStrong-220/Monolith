@@ -1,2 +1,2 @@
-ent-SignalTimerItem = timer
-    .desc = Sends a signal after a specified time after receiving a signal.
+ent-SignalTimerItem = таймер
+    .desc = После получения сигнала отправляет другой сигнал с заданной задержкой.

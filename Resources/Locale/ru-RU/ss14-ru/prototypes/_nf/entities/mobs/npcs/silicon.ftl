@@ -1,4 +1,4 @@
-ent-MobHoverTaxiBot = hovertaxibot
-    .desc = Give a ride? IN SPAAAAACE!
-ent-MobCleanBotSyndie = syndicate cleanbot
-    .desc = The creep of automation now threatening space janitors with a knife.
+ent-MobHoverTaxiBot = ховер-таксибот
+    .desc = Подвезти? В КОСМОООООС!
+ent-MobCleanBotSyndie = чистобот синдиката
+    .desc = Ползучая автоматизация, теперь угрожающая уборщикам ножом.
