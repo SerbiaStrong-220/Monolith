@@ -12,8 +12,10 @@
   id: LPBravo
   parent: BasePOI
   name: 'Прослушивающий Пункт Браво' # Ru-Localization
-  minimumDistance: 10000
-  maximumDistance: 13000
+  # Exodus-Change-SP-Bravo-For-"Peace"-Start
+  minimumDistance: 15000
+  maximumDistance: 18000
+  # Exodus-Change-SP-Bravo-For-"Peace"-End
   spawnGroup: SyndicateFOB
   gridPath: /Maps/_NF/POI/lpbravo.yml
   hideWarp: true
