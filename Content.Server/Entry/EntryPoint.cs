@@ -116,7 +116,7 @@ namespace Content.Server.Entry
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
-                IoCManager.Resolve<IAdminLogManager>().Initialize();
+                // IoCManager.Resolve<IAdminLogManager>().Initialize(); // Exodus: Move from Init to PostInit
                 IoCManager.Resolve<IConnectionManager>().Initialize();
                 _dbManager.Init();
                 IoCManager.Resolve<IServerPreferencesManager>().Init();
@@ -179,6 +179,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
                 IoCManager.Resolve<CVarControlManager>().Initialize();
+                IoCManager.Resolve<IAdminLogManager>().Initialize(); // Exodus: Move from Init to PostInit
             }
         }
 
