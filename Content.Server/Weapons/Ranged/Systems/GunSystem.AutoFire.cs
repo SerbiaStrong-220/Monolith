@@ -36,11 +36,20 @@ public sealed partial class GunSystem
         {
             if (gun.BurstActivated)
             {
-                var parent = _transform.GetParentUid(uid);
-                if (HasComp<DamageableComponent>(parent))
-                    AttemptShoot(parent, uid, gun, gun.ShootCoordinates ?? new EntityCoordinates(uid, gun.DefaultDirection));
+                // Exodus-AdminQoL-Begin: Provide user triggered auto-shooting
+                var shooter = uid;
+                if (TryComp(uid, out AutoShootGunComponent? autoShoot) && autoShoot.User != null)
+                {
+                    shooter = autoShoot.User.Value;
+                }
                 else
-                    AttemptShoot(uid, uid, gun);
+                {
+                    var parent = _transform.GetParentUid(uid);
+                    if (HasComp<DamageableComponent>(parent))
+                        shooter = parent;
+                }
+                AttemptShoot(shooter, uid, gun, gun.ShootCoordinates ?? new EntityCoordinates(uid, gun.DefaultDirection));
+                // Exodus-End
             }
             else if (TryComp(uid, out AutoShootGunComponent? autoShoot))
             {
@@ -55,7 +64,7 @@ public sealed partial class GunSystem
                     autoShoot.RemainingTime -= TimeSpan.FromSeconds(frameTime);
                 }
 
-                AttemptShoot(uid, uid, gun);
+                AttemptShoot(autoShoot.User ?? uid, uid, gun); // Exodus-AdminQoL: Provide user triggered auto-shooting
             }
         }
     }

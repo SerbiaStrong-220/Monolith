@@ -218,12 +218,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             var shooterOrWeapon = EntityManager.EntityExists(component.Shooter) ? component.Shooter!.Value : component.Weapon!.Value;
 
             var projectileName = ToPrettyString(uid);
+            var weaponName = ToPrettyString(component.Weapon!.Value); // Exodus-AdminQoL
             var shooterName = ToPrettyString(shooterOrWeapon);
             var targetName = ToPrettyString(target);
             var damageAmount = modifiedDamage.GetTotal();
             _adminLogger.Add(LogType.BulletHit,
                 HasComp<ActorComponent>(target) ? LogImpact.Extreme : LogImpact.High,
-                $"Projectile {projectileName:projectile} shot by {shooterName:source} hit {targetName:target} and dealt {damageAmount:damage} damage");
+                $"Projectile {projectileName:projectile} shot by {shooterName:source} via {weaponName:weapon} hit {targetName:target} and dealt {damageAmount:damage} damage"); // Exodus-AdminQoL
         }
 
         if (!deleted)

@@ -344,6 +344,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         gun.ShootCoordinates = toCoordinates;
         var autoShoot = EnsureComp<AutoShootGunComponent>(gunUid);
+        autoShoot.User = user; // Exodus-AdminQoL: Provide user triggered auto-shooting
         if (autoShoot.RemainingTime < duration)
             autoShoot.RemainingTime = duration;
     }

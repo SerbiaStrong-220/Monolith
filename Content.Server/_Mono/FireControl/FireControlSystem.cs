@@ -395,7 +395,7 @@ public sealed partial class FireControlSystem : EntitySystem
         return true;
     }
 
-    public void FireWeapons(EntityUid server, List<NetEntity> weapons, NetCoordinates coordinates, FireControlServerComponent? component = null)
+    public void FireWeapons(EntityUid server, List<NetEntity> weapons, NetCoordinates coordinates, EntityUid user, FireControlServerComponent? component = null) // Exodus-AdminQoL: Provide user triggered auto-shooting
     {
         if (!Resolve(server, ref component))
             return;
@@ -413,7 +413,7 @@ public sealed partial class FireControlSystem : EntitySystem
             if (!Exists(localWeapon) || !component.Controlled.Contains(localWeapon))
                 continue;
 
-            var fired = AttemptFire(localWeapon, localWeapon, targetCoords);
+            var fired = AttemptFire(localWeapon, user, targetCoords); // Exodus-AdminQoL
 
             artilleryFired |= _artilleryQuery.HasComp(localWeapon) && fired;
         }

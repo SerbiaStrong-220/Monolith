@@ -351,7 +351,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 message += $"\n{_entityManager.ToPrettyString(entity)} ";
 
                 if (_entityManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var gridMeta))
-                    message += $"at grid {gridMeta.EntityName} ({xform.GridUid})";
+                    message += $"at grid {gridMeta.EntityName} ({xform.GridUid}) ";
 
                 message += $"at pos ({mapCoords.Position.X:F1}, {mapCoords.Position.Y:F1}) MapID: {mapCoords.MapId};";
                 break;

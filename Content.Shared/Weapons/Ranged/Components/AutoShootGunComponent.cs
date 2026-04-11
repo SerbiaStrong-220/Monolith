@@ -40,4 +40,9 @@ public sealed partial class AutoShootGunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan RemainingTime = TimeSpan.FromSeconds(0);
+
+    /// <summary>
+    /// Exodus - The player that started shooting
+    /// </summary>
+    public EntityUid? User;
 }

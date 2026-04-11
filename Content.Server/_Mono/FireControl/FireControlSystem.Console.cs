@@ -140,7 +140,7 @@ public sealed partial class FireControlSystem : EntitySystem
             return;
 
         // Fire the actual weapons
-        FireWeapons((EntityUid)component.ConnectedServer, args.Selected, args.Coordinates, server);
+        FireWeapons((EntityUid)component.ConnectedServer, args.Selected, args.Coordinates, args.Actor, server); // Exodus-AdminQoL: Provide user triggered auto-shooting
         if ((component.NextLog == null || component.NextLog < _timing.CurTime) && args.Selected.Any())
         {
             var firePos = _transform.ToMapCoordinates(GetCoordinates(args.Coordinates)).Position;
