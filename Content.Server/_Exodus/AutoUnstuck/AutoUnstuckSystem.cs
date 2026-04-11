@@ -28,7 +28,6 @@ public sealed class AutoUnstuckSystem : EntitySystem
     };
 
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
