@@ -27,6 +27,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 
     private void OnHitscanFired(Entity<HitscanBasicRaycastComponent> ent, ref HitscanTraceEvent args)
     {
+        var gun = args.Gun; // Exodus: for usage in lamda later
         var shooter = args.Shooter ?? args.Gun;
         var mapCords = _transform.ToMapCoordinates(args.FromCoordinates);
         var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) ent.Comp.CollisionMask);
@@ -39,8 +40,9 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
         var result = _container.IsEntityOrParentInContainer(shooter)
             ? rayCastResults.FirstOrNull()
-            : rayCastResults.FirstOrNull(hit => hit.HitEntity == target
-                                                || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true);
+            : rayCastResults.FirstOrNull(hit => hit.HitEntity != gun && // Exodus: ensure the gun itself is skipped
+                                                (hit.HitEntity == target
+                                                || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true));
 
         var trace = new HitscanRaycastFiredEvent
         {
