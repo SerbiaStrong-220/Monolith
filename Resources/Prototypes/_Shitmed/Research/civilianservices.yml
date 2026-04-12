@@ -13,7 +13,7 @@
   cost: 45000
   recipeUnlocks:
   - ShitmedOmnimedTool
-  - AutodocCircuitboard
+  # - AutodocCircuitboard # Exodus-Remove-Autodoc
   technologyPrerequisites:
   - CyberneticEnhancements
   position: -2, 13
