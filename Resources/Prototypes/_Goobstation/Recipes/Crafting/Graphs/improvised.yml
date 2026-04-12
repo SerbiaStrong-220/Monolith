@@ -354,7 +354,7 @@
     - to: mid
       steps:
       - tag: Payload
-        name: remote signaller
+        name: construction-graph-tag-remote-signaller
         icon:
           sprite: Objects/Devices/signaller.rsi
           state: signaller

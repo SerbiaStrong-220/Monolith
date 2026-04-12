@@ -395,9 +395,115 @@ stack-xenoborg = ксеноборг-плитка
 stack-dark-astro-grass-floor = тёмная астро-трава
 stack-light-astro-grass-floor = светлая астро-трава
 stack-desert-astro-sand-floor = пустынный астро-песок
-stack-xeno-steel-corner = xeno steel corner tile
-stack-dark-squiggly = dark steel squiggly tile
-stack-xeno-steel = xeno steel tile
-stack-xeno-floor = xeno floor
-stack-techmaint-floor-dark = dark techmaint floor
-stack-xeno-maint = xeno techmaint
+
+stack-uranium-fissile =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } делящегося урана 
+stack-uranium-depleted =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } обеднённого урана 
+stack-plastitanium =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } пластитана 
+stack-iridite =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } иридиевого композита
+stack-desert-sand = песок
+stack-steel-hex = 
+    { $amount ->
+        [1] гайка
+       *[other] гаек
+    }
+stack-screw = 
+    { $amount ->
+        [1] винт
+       *[other] винтов
+    }
+stack-bluespace-ore = блюспейс руда
+stack-scrap-ore = 
+    { $amount ->
+        [1] кусок
+        [few] куска 
+       *[other] кусков
+    } рудного лома
+stack-pyrogel = пирогель
+stack-creditt = 
+    { $amount ->
+        [1] кредит
+       *[other] кредитов
+    }
+stack-fuel-grade-plasma =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } топливной плазмы
+stack-fuel-grade-uranium =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } топливного урана
+stack-fuel-grade-bananium =
+    { $amount ->
+        [1] лист
+        [few] листа
+       *[other] листов
+    } топливного бананиума
+stack-iron-coin = 
+    {$amount ->
+        [1] железная монета
+        *[other] железных монеты
+    }
+stack-silver-coin = 
+    {$amount ->
+        [1] серебряная монета
+        *[other] серебряные монеты
+    }
+stack-gold-coin = 
+    {$amount ->
+        [1] золотая монета
+        *[other] золотые монеты
+    }
+stack-adamantine-coin = 
+    {$amount ->
+        [1] адамантиевая монета
+        *[other] адамантиевые монеты
+    }
+stack-diamond-coin = 
+    {$amount ->
+        [1] алмазная монета
+        *[other] алмазные монеты
+    }
+
+stack-stonecut-tobacco = стоункат табак
+stack-dried-shrooms = сушёные грибы
+stack-fungal-whiff-tobacco = грибной табак "Фунгал Вифф"
+stack-sweet-dreams-tobacco = табак "Сладкие сны"
+
+stack-floor-techmaint-sterile-tile = стерильная техническая плитка
+stack-floor-maint-sterile = стерильная техническая плитка
+stack-floor-maint-mono-sterile = стерильная моно-техническая плитка
+stack-floor-maint-grid = решётчатая техническая плитка
+stack-floor-maint-grid-dark = тёмная решётчатая техническая плитка
+stack-floor-steel-alt = офисная стальная плитка
+stack-floor-steel-mono-alt = офисная моно-стальная плитка
+stack-floor-dark-steel-alt = офисная тёмная стальная плитка
+stack-floor-dark-steel-mono-alt = офисная моно-тёмная стальная плитка
+stack-floor-tech-maint-alt = механическая техническая плитка
+stack-floor-grey-steel-alt = офисная серая стальная плитка
+stack-floor-grey-steel-mono-alt = офисная моно-серая стальная плитка
+stack-floor-catwalk-horizontal = горизонтальная плитка катка
+stack-floor-catwalk-vertical = вертикальная плитка катка

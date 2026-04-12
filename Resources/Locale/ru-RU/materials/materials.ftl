@@ -36,3 +36,8 @@ materials-raw-uranium = руда урана
 materials-raw-bananium = руда бананиума
 materials-raw-salt = каменная соль
 materials-raw-diamond = необработанные алмазы
+
+materials-creditt = кредиты
+materials-fuel-grade-plasma = топливная плазма
+materials-fuel-grade-uranium =  топливный уран
+materials-fuel-grade-bananium = топливный бананиум

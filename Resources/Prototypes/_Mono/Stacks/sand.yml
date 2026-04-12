@@ -3,7 +3,7 @@
 
 - type: stack
   id: DesertSand
-  name: sand
+  name: stack-desert-sand
   icon: { sprite: /Textures/_Mono/Objects/Misc/desert_sand.rsi, state: icon }
   spawn: DesertSand1
   maxCount: 250

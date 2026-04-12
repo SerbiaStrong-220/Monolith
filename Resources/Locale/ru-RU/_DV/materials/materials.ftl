@@ -1,1 +1,1 @@
-materials-raw-bluespace = raw bluespace
+materials-raw-bluespace = блюспейс руда

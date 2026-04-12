@@ -1,4 +1,4 @@
 # Metals
-materials-scrap = scrap
+materials-scrap = мусор
 # Ores
-materials-raw-scrap = unsorted scrap
+materials-raw-scrap = несортированный мусор

@@ -18,7 +18,7 @@
 
 - type: stack
   id: FloorTileTechmaintSterile
-  name: sterile techmaint tile
+  name: stack-floor-techmaint-sterile-tile
   spawn: FloorTileItemTechmaintSterile
   maxCount: 30
 
@@ -42,7 +42,7 @@
 
 - type: stack
   id: FloorTileMaintSterile
-  name: sterile maint tile
+  name: stack-floor-maint-sterile
   spawn: FloorTileItemMaintSterile
   maxCount: 30
 
@@ -66,7 +66,7 @@
 
 - type: stack
   id: FloorTileMaintMonoSterile
-  name: sterile maint mono tile
+  name: stack-floor-maint-mono-sterile
   spawn: FloorTileItemMaintMonoSterile
   maxCount: 30
 
@@ -90,7 +90,7 @@
 
 - type: stack
   id: FloorTileGrid
-  name: maintenance grid tile
+  name: stack-floor-maint-grid
   spawn: FloorTileItemGrid
   maxCount: 30
 
@@ -112,7 +112,7 @@
 
 - type: stack
   id: FloorTileGridDark
-  name: dark maintenance grid tile
+  name: stack-floor-maint-grid-dark
   spawn: FloorTileItemGridDark
   maxCount: 30
 
@@ -138,7 +138,7 @@
 
 - type: stack
   id: FloorSteelAlt
-  name: commercial steel tile
+  name: stack-floor-steel-alt
   spawn: FloorTileItemSteelCommercial
   maxCount: 30
 
@@ -162,7 +162,7 @@
 
 - type: stack
   id: FloorTileSteelMonoAlt
-  name: commercial mono steel tile
+  name: stack-floor-steel-mono-alt
   spawn: FloorTileItemSteelMonoCommercial
   maxCount: 30
 
@@ -186,7 +186,7 @@
 
 - type: stack
   id: FloorDarkSteelAlt
-  name: commercial dark steel tile
+  name: stack-floor-dark-steel-alt
   spawn: FloorTileItemDarkSteelCommercial
   maxCount: 30
 
@@ -210,7 +210,7 @@
 
 - type: stack
   id: FloorTileDarkSteelMonoAlt
-  name: commercial mono dark steel tile
+  name: stack-floor-dark-steel-mono-alt
   spawn: FloorTileItemSteelDarkMonoCommercial
   maxCount: 30
 
@@ -234,7 +234,7 @@
 
 - type: stack
   id: FloorTileTechMaintAlt
-  name: mechanical maintenance tile
+  name: stack-floor-tech-maint-alt
   spawn: FloorTileItemTechMaintAlt
   maxCount: 30
 
@@ -258,7 +258,7 @@
 
 - type: stack
   id: FloorGreySteelAlt
-  name: commercial grey steel tile
+  name: stack-floor-grey-steel-alt
   spawn: FloorTileItemGreySteelCommercial
   maxCount: 30
 
@@ -282,7 +282,7 @@
 
 - type: stack
   id: FloorTileGreySteelMonoAlt
-  name: commercial mono grey steel tile
+  name: stack-floor-grey-steel-mono-alt
   spawn: FloorTileItemSteelGreyMonoCommercial
   maxCount: 30
 
@@ -307,7 +307,7 @@
 
 - type: stack
   id: FloorTileCatwalkHorizontal
-  name: horizontal catwalk tile
+  name: stack-floor-catwalk-horizontal
   spawn: FloorTileItemCatwalkHorizontal
   maxCount: 30
 
@@ -330,6 +330,6 @@
 
 - type: stack
   id: FloorTileCatwalkVertical
-  name: vertical catwalk tile
+  name: stack-floor-catwalk-vertical
   spawn: FloorTileItemCatwalkVertical
   maxCount: 30

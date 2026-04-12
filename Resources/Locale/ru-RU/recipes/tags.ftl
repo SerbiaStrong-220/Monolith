@@ -168,6 +168,8 @@ construction-graph-tag-medal = медаль
 construction-graph-tag-material-hide-rosy-mothroach = шкура розовой таракамоли
 construction-graph-tag-material-hide-mothroach = шкура таракамоли
 construction-graph-tag-small-thruster-machine-circuitboard = плата ракетного двигателя
+construction-graph-tag-NF-butter-stick = брусок сливочного масла
+construction-graph-tag-posibrain = позитронный мозг
 
 construction-graph-tag-mech-air-tank = газовый баллон экзокостюма
 construction-graph-component-clarke-central-control = центральный модуль управления Кларка

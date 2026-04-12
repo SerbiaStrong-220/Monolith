@@ -256,7 +256,7 @@
       - !type:EntityAnchored {}
       steps:
       - component: Dice
-        name: construction-graph-component-dic
+        name: construction-graph-component-dice
         store: altar_component
         icon:
           sprite: Objects/Fun/dice.rsi

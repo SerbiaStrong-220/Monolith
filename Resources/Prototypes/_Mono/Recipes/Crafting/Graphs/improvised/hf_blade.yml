@@ -7,7 +7,7 @@
     - to: WeaponHFKatana
       steps:
       - tag: Katana
-        name: a katana
+        name: construction-graph-tag-katana
         icon:
           sprite: Objects/Weapons/Melee/katana.rsi
           state: icon

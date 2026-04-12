@@ -97,7 +97,7 @@
 
 - type: material
   id: CreditCounterfeit
-  name: creditt
+  name: materials-creditt
   unit: materials-unit-bill
   stackEntity: SpaceCashCounterfeit
   icon: { sprite: _NF/Objects/Economy/counterfeit_cash.rsi, state: cash }
@@ -105,7 +105,7 @@
 
 - type: stack
   id: CreditCounterfeit
-  name: creditt
+  name: stack-creditt
   icon: { sprite: _NF/Objects/Economy/counterfeit_cash.rsi, state: cash }
   spawn: SpaceCashCounterfeit
 
