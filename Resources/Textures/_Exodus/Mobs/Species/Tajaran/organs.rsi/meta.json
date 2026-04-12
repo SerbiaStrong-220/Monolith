@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "license": "EXDS-RL",
+    "license": null,
     "copyright": "made by Homiks",
     "size": {
         "x": 32,
@@ -11,8 +11,7 @@
             "name": "eyeball-l"
         },
         {
-            "name": "eyeball-r",
-	        "directions": 1
+            "name": "eyeball-r"
         }
     ]
 }
