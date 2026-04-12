@@ -49,7 +49,7 @@
   id: ComputerShipyard
   components:
   - type: ShipyardConsole
-    newJobTitle: Captain
+    # newJobTitle: Captain # Exodus-Remove-From-Id-Captain
 
 - type: entity
   id: ComputerShipyardSecurity
