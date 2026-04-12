@@ -2,6 +2,7 @@
   id: OrganTajaranEyes
   parent: BaseAnimalOrgan
   name: tajaran eyes
+  description: "Looks like this cat has one less life."
   components:
   - type: Sprite
     sprite: _Exodus/Mobs/Species/Tajaran/organs.rsi

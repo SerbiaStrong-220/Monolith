@@ -9,7 +9,7 @@
       - torso
       organs:
         brain: OrganHumanBrain
-        eyes: OrganTajaranEyes # Exodus change
+        eyes: OrganTajaranEyes # Exodus-Change
     torso:
       part: TorsoTajaran
       connections:
