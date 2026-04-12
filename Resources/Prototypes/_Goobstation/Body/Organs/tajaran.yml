@@ -1,11 +1,10 @@
-# Exodus
 - type: entity
   id: OrganTajaranEyes
   parent: BaseAnimalOrgan
-  name: Tajaran eyes
+  name: tajaran eyes
   components:
   - type: Sprite
-    sprite: _Exodus/Mobs/Species/Kidan/organs.rsi
+    sprite: _Exodus\Mobs\Species\Tajaran\organs.rsi
     layers:
     - state: eyeball-l
     - state: eyeball-r
