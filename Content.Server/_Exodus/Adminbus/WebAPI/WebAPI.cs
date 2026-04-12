@@ -66,8 +66,6 @@ public sealed partial class WebAPI : IPostInjectInit
 
         if (auth != _webapiToken)
         {
-            // Holy shit nobody read these logs please.
-            _sawmill.Verbose(@"Failed auth: ""{0}"" vs ""{1}""", auth, _webapiToken);
             await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
         }
@@ -123,8 +121,6 @@ public sealed partial class WebAPI : IPostInjectInit
 
         if (auth != _webapiToken)
         {
-            // Holy shit nobody read these logs please.
-            _sawmill.Verbose(@"Failed auth: ""{0}"" vs ""{1}""", auth, _webapiToken);
             await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
             return true;
         }
