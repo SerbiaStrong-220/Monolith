@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Administration.Logs;
+using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Shared._Exodus.CCVar;
 using Content.Shared.Database;
@@ -7,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -45,6 +47,8 @@ public sealed class AutoUnstuckSystem : EntitySystem
     private float _timer;
     private const float UpdateTimer = 1f;
 
+    private List<Entity<PhysicsComponent, TransformComponent>> _bodies = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -67,7 +71,14 @@ public sealed class AutoUnstuckSystem : EntitySystem
             return;
         _timer = 0;
 
+        _bodies.Clear();
+
         foreach (var ent in _physics.AwakeBodies)
+        {
+            _bodies.Add(ent);
+        }
+
+        foreach (var ent in _bodies)
         {
             var (uid, body, xform) = ent;
 
