@@ -81,9 +81,7 @@ public sealed partial class WebAPI : IPostInjectInit
                     return false;
                 }
 
-                var auth = context.RequestHeaders["WebAPIToken"];
-
-                if (auth != _webapiToken)
+                if (!context.RequestHeaders.TryGetValue("WebAPIToken", out var auth) || auth != _webapiToken)
                 {
                     await context.RespondErrorAsync(HttpStatusCode.Unauthorized);
                     return true;
@@ -92,7 +90,11 @@ public sealed partial class WebAPI : IPostInjectInit
 
             // TODO: handle request params validation
 
-            handler?.Invoke(context);
+            if (handler == null)
+                return false;
+
+            await handler.Invoke(context);
+
             return true;
         }
 
@@ -169,9 +171,8 @@ public sealed partial class WebAPI : IPostInjectInit
     {
         _ticker ??= _entity.System<GameTicker>();
 
-        var adminsList = _admin.ActiveAdmins
-            .Select(a => _admin.GetAdminData(a));
-        var adminCount = adminsList.Count(a => a != null && !a.Stealth);
+        var adminCount = _admin.ActiveAdmins
+            .Count(a => _admin.GetAdminData(a) is { Stealth: false });
         var playerCount = _player.PlayerCount;
         var admins = _admin.ActiveAdmins.ToDictionary(a => a.Name, a => _admin.GetAdminData(a)?.Stealth ?? true);
 
