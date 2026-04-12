@@ -487,7 +487,62 @@ stack-diamond-coin =
         [1] алмазная монета
         *[other] алмазные монеты
     }
+stack-federation-military-credit = 
+    {$amount ->
+        [1] военный кредит
+        [few] военных кредита
+        *[other] военных кредитов
+    } федерации
+stack-doubloon = 
+    {$amount ->
+        [1] дата чип
+        [few] дата чипа
+        *[other] дата чипов
+    }
+stack-advanced-capacitor = {$amount ->
+    [1] продвинутый конденсатор
+    *[other] продвинутых конденсатора
+    } 
+stack-advanced-manipulator = {$amount ->
+    [1] продвинутый манипулятор
+    *[other] продвинутых манипулятора
+}
+stack-advanced-matter-bin = {$amount ->
+    [1] продвинутая ёмкость материи
+    *[other] продвинутых ёмкости материи
+}
+stack-super-capacitor = {$amount ->
+    [1] супер конденсатор
+    *[other] супер конденсатора
+}
+stack-super-manipulator = {$amount ->
+    [1] супер манипулятор
+    *[other] супер манипулятора
+}
+stack-super-matter-bin = {$amount ->
+    [1] супер ёмкость материи
+    *[other] супер ёмкости материи
+}
+stack-bluespace-capacitor = {$amount ->
+    [1] блюспейс конденсатор
+    *[other] блюспейс конденсатора
+}
+stack-bluespace-manipulator = {$amount ->
+    [1] блюспейс манипулятор
+    *[other] блюспейс манипулятора
+}
+stack-bluespace-matter-bin = {$amount ->
+    [1] блюспейс ёмкость материи
+    *[other] блюспейс ёмкости материи
+}
+stack-prize-ticket = {$amount ->
+    [1] призовой билет
+    [few] призовых билета
+    *[other] призовых билетов
+}
 
+
+stack-bluespace = блюспейс кристалл
 stack-stonecut-tobacco = стоункат табак
 stack-dried-shrooms = сушёные грибы
 stack-fungal-whiff-tobacco = грибной табак "Фунгал Вифф"
@@ -507,3 +562,13 @@ stack-floor-grey-steel-alt = офисная серая стальная плит
 stack-floor-grey-steel-mono-alt = офисная моно-серая стальная плитка
 stack-floor-catwalk-horizontal = горизонтальная плитка катка
 stack-floor-catwalk-vertical = вертикальная плитка катка
+stack-dark-squiggly = тёмная волнистая стальная плитка
+stack-xeno-floor = ксенопол
+stack-xeno-steel = стальной ксенопол
+stack-xeno-steel-corner = стальной угловой ксенопол
+stack-techmaint-floor-dark = тёмная техническая плитка
+stack-xeno-maint = технический ксенопол
+stack-floor-grass-dark = тёмная травяная плитка
+stack-floor-grass-light = светлая травяная плитка
+stack-floor-dirt = земляная плитка
+stack-floor-bedrock = плитка коренной породы

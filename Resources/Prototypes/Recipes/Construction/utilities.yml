@@ -272,14 +272,6 @@
   placementMode: AlignAtmosPipeLayers
   objectType: Structure
   canRotate: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
-    state: base
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
-    state: base
   alternativePrototypes:
   - GasPipeSensor
   - GasPipeSensorAlt1
@@ -295,14 +287,6 @@
   placementMode: AlignAtmosPipeLayers
   objectType: Structure
   canRotate: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
-    state: base
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
-    state: base
   alternativePrototypes:
   - GasPipeSensor
   - GasPipeSensorAlt1
@@ -580,14 +564,6 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
-    state: vent_off
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeHalf
-  - sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
-    state: vent_off
   conditions:
   - !type:NoUnstackableInTile
 
@@ -599,14 +575,6 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
-    state: vent_passive
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeHalf
-  - sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
-    state: vent_passive
   conditions:
   - !type:NoUnstackableInTile
 
@@ -618,14 +586,6 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _NF/Structures/Piping/Atmospherics/scrubber.rsi # Frontier
-    state: scrub_off
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeHalf
-  - sprite: _NF/Structures/Piping/Atmospherics/scrubber.rsi # Frontier
-    state: scrub_off
   conditions:
   - !type:NoUnstackableInTile
 
@@ -649,14 +609,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpPressure
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpPressure
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -673,14 +625,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPressure
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPressure
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -697,14 +641,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpPressure
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpPressure
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -720,14 +656,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpVolume
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpVolume
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -744,14 +672,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpVolume
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpVolume
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -768,14 +688,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpVolume
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpVolume
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -791,14 +703,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpPassiveGate
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpPassiveGate
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -815,14 +719,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPassiveGate
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPassiveGate
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -839,14 +735,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpPassiveGate
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpPassiveGate
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -862,14 +750,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpPressureRegulator
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpPressureRegulator
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -886,14 +766,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPressureRegulator
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPressureRegulator
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -910,14 +782,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPressureRegulator
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpPressureRegulator
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -933,14 +797,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpManualValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -957,14 +813,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpManualValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -981,14 +829,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpManualValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -1004,14 +844,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpSignalValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpSignalValve
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -1028,14 +860,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpSignalValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    state: pumpSignalValve
   conditions:
     - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -1052,14 +876,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpSignalValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    state: pumpSignalValve
   conditions:
     - !type:NoUnstackableInTile
   alternativePrototypes:
@@ -1086,14 +902,6 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
-    state: vent_off
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
-    state: vent_off
 
 - type: construction
   id: HeatExchanger
