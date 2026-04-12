@@ -22,3 +22,6 @@ ent-OrganKidanEyes = глаза
 ent-OrganKidanBrain = мозг
     .desc = Источник невероятного, бесконечного интеллекта. Хонк.
     .suffix = Кидан
+ent-OrganTajaranEyes = глаза
+    .desc = Ты ведь не собираешся делать из этого оберег... Ведь так?
+    .suffix = Таяр
