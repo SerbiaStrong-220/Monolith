@@ -145,6 +145,7 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
+            IoCManager.Resolve<IAdminLogManager>().Initialize(); // Exodus: Move from Init to PostInit
             IoCManager.Resolve<IChatSanitizationManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
@@ -179,7 +180,6 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
                 IoCManager.Resolve<CVarControlManager>().Initialize();
-                IoCManager.Resolve<IAdminLogManager>().Initialize(); // Exodus: Move from Init to PostInit
             }
         }
 
