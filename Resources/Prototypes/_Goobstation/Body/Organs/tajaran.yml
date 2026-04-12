@@ -4,7 +4,7 @@
   name: tajaran eyes
   components:
   - type: Sprite
-    sprite: _Exodus\Mobs\Species\Tajaran\organs.rsi
+    sprite: _Exodus/Mobs/Species/Tajaran/organs.rsi
     layers:
     - state: eyeball-l
     - state: eyeball-r
