@@ -1,0 +1,64 @@
+[net]
+tickrate = 30
+log_late_msg = false
+lidgren_log_warning = false
+lidgren_log_error = false
+
+[game]
+hostname = "Exodus: Sandbox"
+role_timers = false
+role_whitelist = false
+map = "NFDev"
+defaultpreset = "Sandbox"
+
+[game.dynamic_roles]
+enabled = false
+
+[movement]
+mob_pushing = false
+
+[vote]
+enabled = false
+map_enabled = false
+auto_map_vote = false
+preset_autovote_enabled = false
+
+[physics]
+target_minimum_tickrate = 30
+
+[atmos]
+space_wind = true
+
+[admin]
+admins_count_in_playercount = true
+
+[adminlogs]
+enabled = false
+
+[worldgen]
+enabled = false
+
+[procgen]
+preload = false
+
+[shuttle]
+preload_grids = false
+auto_call_time = 0
+mass_limit = 0
+
+[shuttle.impact]
+enabled = false
+
+[viewport]
+maximum_width = 30
+
+[ooc]
+show_ooc_patron_color = false
+enabled = true
+enable_during_round = true
+
+[rules]
+time = 2
+
+[whitelist]
+enabled = true
