@@ -4,10 +4,10 @@ appraisal-label-name = Предмет
 appraisal-label-price = Оценочная стоимость
 # Ledger cartridge
 ledger-program-name = ФинПоток Лайт
-ledger-header = Sector Ledger
+ledger-header = Финансовая сводка сектора
 ledger-total-income = Общий доход
 ledger-no-income = Нет
-ledger-total-expenses = Общий убыток
+ledger-total-expenses = Общий расход
 ledger-no-expenses = Нет
 ledger-balance = Баланс:
 ledger-no-balance = N/A

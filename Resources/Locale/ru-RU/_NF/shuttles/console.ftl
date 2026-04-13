@@ -1,8 +1,8 @@
 shuttle-console-designation = Кодовый номер:
 shuttle-console-designation-unknown = ???
-shuttle-console-maximum-iff-distance = Дальность опознования
+shuttle-console-maximum-iff-distance = Дальность опознавания
 shuttle-console-maximum-speed = Максимум скорости шаттла
-shuttle-console-iff-search = Поиск по системе опознования
+shuttle-console-iff-search = Поиск по системе опознавания
 shuttle-console-inertia-dampener-off = Круиз
 shuttle-console-inertia-dampener-dampen = Полёт
 shuttle-console-inertia-dampener-anchor = Парковка
