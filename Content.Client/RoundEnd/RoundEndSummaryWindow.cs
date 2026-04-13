@@ -228,7 +228,7 @@ namespace Content.Client.RoundEnd
                         >= 1000 => "round-end-summary-damage-1000",
                         >= 750 => "round-end-summary-damage-750",
                         >= 500 => "round-end-summary-damage-500",
-                        >= 300 => "round-end-summary-damage-300 ",
+                        >= 300 => "round-end-summary-damage-300",
                         >= 200 => "round-end-summary-damage-200",
                         _ => "round-end-summary-damage-empty"
                         // Ru-Localization-End
