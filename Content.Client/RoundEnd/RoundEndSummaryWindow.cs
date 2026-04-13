@@ -224,12 +224,14 @@ namespace Content.Client.RoundEnd
                     var totalDamage = playerInfo.DamagePerGroup.Values.Sum(static v => (decimal) v);
                     var severityAdj = totalDamage switch
                     {
-                        >= 1000 => "catastrophic",
-                        >= 750 => "devastating",
-                        >= 500 => "agonizing",
-                        >= 300 => "painful",
-                        >= 200 => "brutal",
-                        _ => "tragic"
+                        // Ru-Localization-Start
+                        >= 1000 => "round-end-summary-damage-1000",
+                        >= 750 => "round-end-summary-damage-750",
+                        >= 500 => "round-end-summary-damage-500",
+                        >= 300 => "round-end-summary-damage-300 ",
+                        >= 200 => "round-end-summary-damage-200",
+                        _ => "round-end-summary-damage-empty"
+                        // Ru-Localization-End
                     };
 
                     var highestDamage = playerInfo.DamagePerGroup
@@ -237,20 +239,24 @@ namespace Content.Client.RoundEnd
                         .First();
                     var typeAdj = highestDamage.Key switch
                     {
-                        "Burn" => "fiery",
-                        "Brute" => "crushing",
-                        "Toxin" => "poisonous",
-                        "Airloss" => "suffocating",
-                        "Genetic" => "twisted",
-                        "Metaphysical" => "otherworldly",
-                        "Electronic" => "shocking",
-                        _ => "mysterious",
+                        // Ru-Localization-Start
+                        "Burn" => "round-end-summary-most-damage-burn",
+                        "Brute" => "round-end-summary-most-damage-brute",
+                        "Toxin" => "round-end-summary-most-damage-toxin",
+                        "Airloss" => "round-end-summary-most-damage-airloss",
+                        "Genetic" => "round-end-summary-most-damage-genetic",
+                        "Metaphysical" => "round-end-summary-most-damage-metaphysical",
+                        "Electronic" => "round-end-summary-most-damage-electronic",
+                        _ => "round-end-summary-most-damage-none",
+                        // Ru-Localization-End
                     };
 
                     deathLabel.SetMarkup(
                         Loc.GetString("round-end-summary-window-death",
-                            ("severity", severityAdj),
-                            ("type", typeAdj)));
+                        // Ru-Localization-Start
+                            ("severity", Loc.GetString(severityAdj)),
+                            ("type", Loc.GetString(typeAdj))));
+                        // Ru-Localization-End
 
                     var damageTable = new GridContainer
                     {
@@ -273,6 +279,19 @@ namespace Content.Client.RoundEnd
                             "Electronic" => Color.DarkOrange,
                             _ => Color.White,
                         };
+                        // Ru-Localization-Start
+                        var headerLabelText = damage.Key switch
+                        {
+                            "Burn" => "burn-death-damage",
+                            "Brute" => "brute-death-damage",
+                            "Toxin" => "toxin-death-damage",
+                            "Airloss" => "airloss-death-damage",
+                            "Genetic" => "genetic-death-damage",
+                            "Metaphysical" => "metaphysical-death-damage",
+                            "Electronic" => "electronic-death-damage",
+                            _ => "other-death-damage",
+                        };
+                        // Ru-Localization-End
                         var damagePanel = new PanelContainer
                         {
                             StyleClasses = { StyleNano.StyleClassBackgroundBaseLight },
@@ -292,7 +311,7 @@ namespace Content.Client.RoundEnd
                         };
                         var headerLabel = new Label
                         {
-                            Text = damage.Key,
+                            Text = Loc.GetString(headerLabelText), // Ru-Localization
                             FontColorOverride = Color.Gray,
                             HorizontalAlignment = HAlignment.Center,
                             VerticalAlignment = VAlignment.Center,

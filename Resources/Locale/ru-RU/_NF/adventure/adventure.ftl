@@ -1,18 +1,18 @@
 ## UI
 
-adventure-list-start = [color=gold]TSF Central Bank[/color]
-adventure-list-profit = made a total profit of [color=#d19e5e]{ $amount }[/color].
-adventure-list-loss = lost a total of [color=#659cc9]{ $amount }[/color].
-adventure-webhook-list-start = TSF Central Bank
-adventure-webhook-list-high = This Shift's Top Earners:
-adventure-webhook-list-low = This Shift's Biggest Spenders:
-adventure-webhook-list-no-entries = No entries found.
-adventure-webhook-top-profit = made a total profit of { $amount }.
-adventure-webhook-top-loss = lost a total of { $amount }.
-adventure-webhook-ledger-start = Ledger Summary
+adventure-list-start = [color=gold]Центральный банк ТСФ[/color]
+adventure-list-profit = Прибыль составила: [color=#d19e5e]{$amount}[/color].
+adventure-list-loss = Убыток составил: [color=#659cc9]{$amount}[/color].
+adventure-webhook-list-start = Центральный банк ТСФ
+adventure-webhook-list-high = Больше всего заработали:
+adventure-webhook-list-low = Больше всего потратили:
+adventure-webhook-list-no-entries = Записи не найдены.
+adventure-webhook-top-profit = Прибыль составила: {$amount}.
+adventure-webhook-top-loss = Убыток составил: {$amount}.
+adventure-webhook-ledger-start = Финансовая сводка
 adventure-webhook-footer =
-    Server: { $serverName }
-    Round: #{ $roundId }
+    Сервер: { $serverName }
+    Раунд: #{ $roundId }
 nf-adventure-title = Adventure
 nf-adventure-description = Join a ship crew or buy your own and explore, research, salvage, or haul your way to riches!
 nf-pirate-title = Arms Race
@@ -30,7 +30,7 @@ shuttle-ftl-recharge = FTL drives still spooling down!
 shuttle-ftl-too-many = Too many shuttles already on expedition!
 changelog-tab-title-Upstream = Upstream Changelog
 multiauth-already-connected = Already connected to Monolith Official servers.
-public-transit-shuttle-name = Bus
+public-transit-shuttle-name = Автобус
 public-transit-departure = Now departing for { $destination }. Estimated travel time: { $flytime } seconds.
 public-transit-arrival = Thank you for choosing NT Public Transit. Next transfer to { $destination } departs in { $waittime } seconds.
 public-transit-instant = Arrived at { $destination }. Next destination in { $waittime } seconds.

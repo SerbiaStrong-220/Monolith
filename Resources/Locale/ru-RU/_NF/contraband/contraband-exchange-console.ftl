@@ -1,6 +1,6 @@
 # Contraband Exchange Console
 contraband-pallet-console-menu-title = Обменник контрабанды
-contraband-console-menu-points-amount = { $amount } ФКВ
+contraband-console-menu-points-amount = { $amount } ВКФ
 contraband-pallet-menu-no-goods-text = Не найдена контрабанда для продажи.
 contraband-pallet-menu-appraisal-label = Оценочная стоимость:{ " " }
 contraband-pallet-menu-count-label = Количество предметов:{ " " }
