@@ -10,7 +10,7 @@ using GhostSystem = Content.Server.Ghost.GhostSystem;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.Admin)]
+[AdminCommand(AdminFlags.Adminhelp)] // Exodus-AdminQoL
 public sealed class AGhostCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
