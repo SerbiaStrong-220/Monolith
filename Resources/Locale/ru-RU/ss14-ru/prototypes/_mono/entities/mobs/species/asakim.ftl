@@ -1,9 +1,9 @@
-ent-BaseMobAsakim = Урист Мак Азаким
+ent-BaseMobAsakim = Урист Мак-Азаким
     .desc = { ent-BaseMobSpeciesOrganic.desc }
-ent-MobAsakim = Урист Мак Азаким
+ent-MobAsakim = Урист Мак-Азаким
     .suffix = Urisst' MzAsakim
     .desc = { ent-BaseMobAsakim.desc }
-ent-MobAsakimRandom = Урист Мак Азаким
+ent-MobAsakimRandom = Урист Мак-Азаким
     .suffix = Случайная внешность
     .desc = { ent-BaseMobAsakim.desc }
 ent-MobAsakimDummy = { ent-BaseSpeciesDummy }
