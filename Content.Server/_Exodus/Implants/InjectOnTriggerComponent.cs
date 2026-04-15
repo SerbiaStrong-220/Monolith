@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Exodus.Implants;
+namespace Content.Server._Exodus.Implants;
 
 [RegisterComponent]
 public sealed partial class InjectOnTriggerComponent : Component
