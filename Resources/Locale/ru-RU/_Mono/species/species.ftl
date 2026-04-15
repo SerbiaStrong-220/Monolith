@@ -1,4 +1,4 @@
 ## Species Names
 
 species-name-protogen = Protogen
-species-name-asakim = Asakim
+species-name-asakim = Азаким

@@ -1,6 +1,6 @@
-ent-ClothingOuterHardsuitAsakim = kasature-pattern combat harness
-    .desc = An advanced pre-fracture harness. Incredibly rare, and practically alien in technology compared to modern tacsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release.
-    .suffix = SelfUnremovable
+ent-ClothingOuterHardsuitAsakim = боевой скафандр "Касатура"
+    .desc = Продвинутый боевой скафандр эпохи до Раскола. Невероятно редкий, его технология практически чужеродна по сравнению с современными тактическими скафандрами. После экипировки скафандр связывается с носителем и не может быть снят без внешнего воздействия.
+    .suffix = Самонеснимаемый
 ent-ClothingOuterHardsuitAsakimUnremoveable = { ent-ClothingOuterHardsuitAsakim }
-    .desc = An advanced pre-fracture harness. Incredibly rare, and practically alien in technology compared to modern tacsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release. This one is fully binded to a warrior, and will take a long time to remove.
-    .suffix = 120 stripDelay
+    .desc = Продвинутый боевой скафандр эпохи до Раскола. Невероятно редкий, его технология практически чужеродна по сравнению с современными тактическими скафандрами. После экипировки скафандр связывается с носителем и не может быть снят без внешнего воздействия. Этот экземпляр полностью связан с владельцем, и его снятие займёт много времени.
+    .suffix = 120 сек снятия

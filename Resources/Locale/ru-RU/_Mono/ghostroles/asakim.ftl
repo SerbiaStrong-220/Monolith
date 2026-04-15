@@ -1,14 +1,14 @@
-ghost-role-information-asakim-name = Asakim Warrior
-ghost-role-information-asakim-description = A pre-fracture genetically enhanced super soldier, stranded in the sector after cryostasis failure.
+ghost-role-information-asakim-name = Воин Азаким
+ghost-role-information-asakim-description = Генетически улучшенный суперсолдат эпохи до Раскола, оказавшийся в секторе после ошибки в работе криогенного сна.
 ghost-role-information-asakim-rules =
-    You are an [color=#05e6ff][bold]Asakim[/bold][/color], a genetically engineered super soldier, awoken in deep space after a random cryostasis failure. It has been centuries since your last mission. Your allies are other Asakim warriors and the [color=#00CCFF]ADS fleet[/color].
-    Your objectives are to [color=red]claim territory (POIs)[/bold][/color], protect it from hostile forces, and maintain your technological supremacy.
+    Вы - [color=#05e6ff][bold]Асаким[/bold][/color], генно-модифицированный суперсолдат, что очнулся в глубоком космосе после ошибки в работе криогенного сна. С вашего последнего задания прошли столетия. Ваши союзники - другие воины-азакимы и [color=#00CCFF]флот АСО[/color].
+    Ваши задачи: [color=red]захватывать территорию (точки интереса)[/color], защищать её от враждебных сил и попытаться связаться с командованием, сохраняя при этом своё технологическое превосходство.
     
-    1. Follow the orders of the ADC command & control network.
-    2. Claim Points of Interest that can benefit or help accomplish your goals. (Excluding Safezones)
-    3. Secure the region against hostile factions. (TSF, PDV, Chimera)
-    4. Confiscate pre-fracture technology. (Data Disks, Weaponry, MS-250/MS-500 shields, ect)
+    1. Следуйте приказам операторов и ядер АСО.
+    2. Захватывайте точки интереса, которые могут принести пользу или помочь достичь ваших целей (исключая безопасные зоны).
+    3. Очищайте регион от враждебных фракций (КВП ТСФ, ДФ, Химеры).
+    4. Конфискуйте технологии эпохи до Раскола (диски с данными, оружие, щиты MS-250 / MS-500 и т.д.).
     
-    Reading the guidebook [color=red][bold]is expected for this role[/bold][/color].
-    You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
-    You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+    Прочтение руководства [color=red][bold]обязательно для этой роли[/bold][/color].
+    Вы не помните свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.
+    Вам разрешено помнить общие знания об игре: например, как готовить, как пользоваться предметами и т.п, но все же помниты что вы генно-модифицированный суперсолдат, а не обычный космонавт.
