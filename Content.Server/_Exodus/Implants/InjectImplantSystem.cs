@@ -12,7 +12,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Popups;
 
 
-namespace Content.Server.Exodus.Implants
+namespace Content.Server._Exodus.Implants
 {
 
     public sealed partial class InjectImplantSystem : EntitySystem
