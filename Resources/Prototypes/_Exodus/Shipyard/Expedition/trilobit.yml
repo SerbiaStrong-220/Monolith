@@ -1,13 +1,13 @@
 - type: vessel
   id: Trilobit
   parent: BaseVessel
-  name: TSF-SKR Trilobit
-  description: No description yet
-  price: 265200
+  name: Trilobit
+  description: The "Trilobit" is a massive long-range expedition vessel. Equipped with a full suite of autonomous life support, navigation, and defense systems, allowing the crew to exist in isolation for years without external support.
+  price: 314159
   category: Medium
   group: Expedition
   access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/trilobit.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/Expedition/trilobit.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -17,8 +17,8 @@
 
 - type: gameMap
   id: Trilobit
-  mapName: 'TSF-SKR Trilobit'
-  mapPath: /Maps/_Exodus/Shuttles/trilobit.yml
+  mapName: 'Trilobit'
+  mapPath: /Maps/_Exodus/Shuttles/Expedition/trilobit.yml
   minPlayers: 0
   stations:
     Trilobit:

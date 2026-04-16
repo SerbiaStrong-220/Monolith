@@ -12,7 +12,7 @@
   price: 120000
   category: Large
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/tokarev.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   guidebookPage: null
   class:
   - Science
@@ -23,7 +23,7 @@
 - type: gameMap
   id: Tokarev
   mapName: 'VIN Tokarev'
-  mapPath: /Maps/_Mono/Shuttles/tokarev.yml
+  mapPath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   minPlayers: 0
   stations:
     Tokarev:
