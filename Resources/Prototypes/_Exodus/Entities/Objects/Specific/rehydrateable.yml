@@ -1,0 +1,8 @@
+- type: entity
+  parent: MonkeyCube
+  id: KidanCube
+  name: kidan cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobKidanRandom

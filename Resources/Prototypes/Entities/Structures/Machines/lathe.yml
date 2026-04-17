@@ -890,6 +890,7 @@
     runningState: limbgrower_idleon
     staticPacks:
     - MedicalSynthLimbsStatic
+    - SpeciesCubesStatic # Exodus-Add
   - type: EmagLatheRecipes
     emagStaticPacks:
     - MedicalPizzaLimbsStatic
