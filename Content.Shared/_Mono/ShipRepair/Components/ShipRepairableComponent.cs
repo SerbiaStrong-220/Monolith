@@ -10,6 +10,9 @@ namespace Content.Shared._Mono.ShipRepair.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShipRepairableComponent : Component
 {
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
+
     /// <summary>
     /// If not null, what entity should be placed when this is repaired.
     /// </summary>

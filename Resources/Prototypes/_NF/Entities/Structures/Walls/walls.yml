@@ -8,6 +8,9 @@
   components:
   - type: Destructible
     thresholds: []
+  - type: ShipRepairable
+    enabled: false
+    repairCost: 0
   - type: SoundOnGather
   - type: Gatherable
     toolWhitelist:

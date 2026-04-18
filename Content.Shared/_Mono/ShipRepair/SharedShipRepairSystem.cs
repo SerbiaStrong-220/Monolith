@@ -74,6 +74,9 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
             if (TerminatingOrDeleted(childEnt))
                 continue;
 
+            if (!childEnt.Comp.Enabled)
+                continue;
+
             var childXform = Transform(childEnt);
             // only ents directly parented to grid and anchored
             if (childXform.ParentUid != gridUid || !childXform.Anchored)
