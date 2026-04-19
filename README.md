@@ -1,6 +1,6 @@
 <p align="center"><img alt="Space Exodus" height="300" src="https://raw.githubusercontent.com/space-exodus/Monolith/0ddfa161945b7dda8c9cea018b7e72066225fae6/Resources/Textures/_Exodus/Logo/logo.png?raw=true" /><img alt="Monolith" height="50" src="https://raw.githubusercontent.com/Monolith-Station/Monolith/89d435f0d2c54c4b0e6c3b1bf4493c9c908a6ac7/Resources/Textures/_Mono/Logo/logo.png?raw=true" /></p>
 
-"Exodus: Monolith" это репозиторий англоязычного фронтира [Monolith](https://github.com/Monolith-Station/Monolith) который работает на собственном движке [Robust Toolbox](https://github.com/space-wizards/RobustToolbox) написанном на C#.
+"Exodus: Monolith" это репозиторий англоязычного фронтира [Monolith](https://github.com/Monolith-Station/Monolith) который работает на движке [Robust Toolbox](https://github.com/space-wizards/RobustToolbox) от Space Wizards написанном на C#.
 
 
 Это основной репозиторий проекта "SS220 Exodus: Monolith".
