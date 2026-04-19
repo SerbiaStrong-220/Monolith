@@ -10,7 +10,7 @@
     allowMovement: true
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 180000 # 50 hrs - THIS IS WHY WE CANT HAVE NICE THINGS
+      time: 72000 # 20 hrs # Exodus-Rework-Time-Roles
     name: cortical-borer-ghostrole-name
     description: cortical-borer-ghostrole-desc
     rules: cortical-borer-ghostrole-rules

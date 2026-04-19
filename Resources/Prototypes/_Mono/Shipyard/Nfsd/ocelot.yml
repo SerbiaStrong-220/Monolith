@@ -8,7 +8,7 @@
   price: 68500
   category: Small
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/ocelot.yml
   guidebookPage: Null
   class:

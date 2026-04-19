@@ -43,19 +43,18 @@ ghost-role-information-hovertaxibot-description = Fly passengers to where they n
 # Adopted from space-wizards #26265 (Thank you, PolterTzi)
 ghost-role-information-yipyip-name = Yip Yip
 ghost-role-information-yipyip-description = Notorious lounge lizard and bartender at Bahama Mama's. This drink-slinging kobold lives to serve his patrons.
-ghost-role-information-aberrant-flesh-horror-dungeon-name = Aberrant flesh horror
-ghost-role-information-aberrant-flesh-horror-dungeon-description = Defend the expedition dungeon with other flesh monstrosities!
-ghost-role-information-explorer-captain-dungeon-name = Explorer Captain
-ghost-role-information-explorer-captain-dungeon-description = You got to this facility first! Defend the expedition dungeon and your loot with other explorers!
-ghost-role-information-punk-boss-dungeon-name = Punk gang leader
-ghost-role-information-punk-boss-dungeon-description = Defend the expedition dungeon and your loot with other punks from NT squares!
-ghost-role-information-dungeon-boss-rules =
-    You are a [color=red][bold]Team Antagonist[/bold][/color] with all dungeon mobs.
-    Fight players within the dungeon, defend your dungeon.
-    Please note that [color=yellow]all server rules still apply.[/color] Additionally:
-    - [color=red]DO NOT[/color] hide from players to run down the expedition timer.
-    - [color=red]DO NOT[/color] gib players. Once they're dead, leave them be.
-    - [color=red]DO NOT[/color] destroy or hide valuable loot in the dungeon.
+ghost-role-information-aberrant-flesh-horror-dungeon-name = Порождение плоти
+ghost-role-information-aberrant-flesh-horror-dungeon-description = Защищайте этот комплекс вместе с другими чудовищами из плоти и крови!
+ghost-role-information-explorer-captain-dungeon-name = Капитан-исследователь
+ghost-role-information-explorer-captain-dungeon-description = Вы добрались до этого объекта первыми! Защищайте этот комплекс и свою добычу вместе с другими исследователями!
+ghost-role-information-punk-boss-dungeon-name = Лидер панк-банды
+ghost-role-information-punk-boss-dungeon-description = Защищайте этот комплекс и свою добычу вместе с другими панками!
+ghost-role-information-dungeon-boss-rules = Вы - [color=red][bold]Командный Антагонист[/bold][/color] для всех монстров этой экспедиции.
+    Сражайтесь с игроками в комплексе, защищая свой комплекс.
+    Обратите внимание, что [color=yellow]все правила сервера по-прежнему применяются к вам.[/color] Кроме того:
+    - [color=red]НЕ[/color] прячьтесь от игроков, чтобы растянуть время экспедиции.
+    - [color=red]НЕ[/color] разрывайте игроков на части. Когда они умрут, оставьте их в покое.
+    - [color=red]НЕ[/color] уничтожайте и не прячьте ценную добычу в подземелье.
 nf-ghost-role-information-derelict-cyborg-description = You are a cyborg that's been stranded on a wreck for years, exposed to countless ion storms.
 nf-ghost-role-information-buddy-name = Buddy
 nf-ghost-role-information-buddy-description = You were constructed from a Build-A-Buddy kit. Become someone's best friend today!

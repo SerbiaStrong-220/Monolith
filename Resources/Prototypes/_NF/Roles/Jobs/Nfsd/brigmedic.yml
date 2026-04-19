@@ -4,15 +4,20 @@
   description: job-description-brigmedic-nf
   playTimeTracker: JobBrigmedic
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 72000 # 20 hours - mono
+  # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 72000 # 20 hours - mono
+    # - !type:DepartmentTimeRequirement
+    #   department: Security
+    #   time: 7200 # 2 hours - mono
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 7200 # 2 hours - mono
-  alternateRequirementSets:
-    longerPlaytimeLessSec:
-    - !type:OverallPlaytimeRequirement
-      time: 108000 # 30 hours - mono
+      time: 36000 # 10 hours
+  # alternateRequirementSets:
+  #   longerPlaytimeLessSec:
+  #   - !type:OverallPlaytimeRequirement
+  #     time: 108000 # 30 hours - mono
+  # Exodus-Rework-Time-Roles-End
   startingGear: BrigmedicGear
   icon: JobIconBrigmedicNF
   supervisors: job-supervisors-bailiff

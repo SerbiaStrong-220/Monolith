@@ -4,12 +4,14 @@
   description: job-description-cadet-nf
   playTimeTracker: JobSecurityCadet
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 32400 # 9 hours # mono
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 72000 # 20 hours # mono
-      inverted: true # Leave slots open for newer, less confident players.
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 32400 # 9 hours # mono
+    # - !type:DepartmentTimeRequirement
+    #   department: Security
+    #   time: 72000 # 20 hours # mono
+    #   inverted: true # Leave slots open for newer, less confident players.
+    # Exodus-Rework-Time-Roles-End
   startingGear: CadetGear
   icon: JobIconCadetNF
   supervisors: job-supervisors-cadet
@@ -17,7 +19,7 @@
   displayWeight: 10
   assignedCompany: TSF
   canBeAntag: false
-  setPreference: false # mono
+  # setPreference: false # Exodus-Cadet-Return
   accessGroups:
   - CadetNfsdAccess
   special:
@@ -46,5 +48,5 @@
     back:
     - Magazine45_ACPPistolFMJ
     - FederationMilitaryCredit50
-    - BaseSecurityUplinkRadio
+    # - BaseSecurityUplinkRadio # Exodus-Cadet-Return
     - RadioHandheldNF # Mono

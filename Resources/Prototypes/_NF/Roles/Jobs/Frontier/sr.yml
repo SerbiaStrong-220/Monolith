@@ -8,8 +8,8 @@
       time: 72000 # 20 hrs
     - !type:RoleTimeRequirement
       role: JobSecurityGuard
-      time: 7200 # 2 hrs as security guard - mono
-  whitelisted: true
+      time: 36000 # 10 hrs Exodus-Rework-Time-Roles
+  whitelisted: false # Exodus-Rework-Whitelist-Roles-End
   startingGear: SrGear
   alwaysUseSpawner: true
   assignedCompany: Colonial

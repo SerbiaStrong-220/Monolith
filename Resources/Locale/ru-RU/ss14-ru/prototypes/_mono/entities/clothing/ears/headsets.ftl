@@ -1,8 +1,8 @@
-ent-ClothingHeadsetAltTsfmc = TSFMC over-ear headset
+ent-ClothingHeadsetAltTsfmc = полноразмерная гарнитура КВП ТСФ
     .desc = { ent-ClothingHeadsetAlt.desc }
-ent-ClothingHeadsetAltTsfmcCommander = TSFMC command over-ear headset
+ent-ClothingHeadsetAltTsfmcCommander = полноразмерная гарнитура командования КВП ТСФ
     .desc = { ent-ClothingHeadsetAlt.desc }
-ent-ClothingHeadsetTsfmc = TSFMC headset
+ent-ClothingHeadsetTsfmc = гарнитура КВП ТСФ
     .desc = { ent-ClothingHeadset.desc }
 ent-ClothingHeadsetAltTsfmcMarsoc = TSFMC MARSOC over-ear headset
     .desc = { ent-ClothingHeadsetAlt.desc }
