@@ -4,7 +4,7 @@
   description: ghost-role-information-redacted-borg-description
   rules: ghost-role-information-silicon-rules
   entityPrototype: PlayerBorgRedacted
-  whitelisted: true
+  whitelisted: false # Exodus-Rework-Whitelist-Roles-End
 
 - type: ghostRole
   id: RemnantAICore
@@ -12,4 +12,4 @@
   description: ghost-role-information-redacted-core-description
   rules: ghost-role-information-silicon-rules
   entityPrototype: StationAiBrainRedacted
-  whitelisted: true
+  whitelisted: false # Exodus-Rework-Whitelist-Roles-End

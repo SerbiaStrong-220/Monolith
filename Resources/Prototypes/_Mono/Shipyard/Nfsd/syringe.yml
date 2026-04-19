@@ -8,7 +8,7 @@
   price: 58500
   category: Small
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/syringe.yml
   guidebookPage: Null
   class:

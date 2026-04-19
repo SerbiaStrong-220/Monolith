@@ -308,6 +308,11 @@
     raffle:
       settings: default
     prototype: RedactedBorg
+     # Exodus-Rework-Time-Roles-Start
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -321,9 +326,14 @@
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
+    # Exodus-Rework-Time-Roles-Start
+    # requirements:
+    # - !type:OverallPlaytimeRequirement
+    #   time: 180000 # 50 hrs
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 180000 # 50 hrs
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
 
 # Remnant AI core
@@ -363,6 +373,11 @@
     raffle:
       settings: default
     prototype: RemnantAICore
+     # Exodus-Rework-Time-Roles-Start
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
@@ -461,9 +476,14 @@
     raffle:
       settings: default
     prototype: VesselAICore
+    # Exodus-Rework-Time-Roles-Start
+    # requirements:
+    # - !type:OverallPlaytimeRequirement
+    #   time: 180000 # 50 hrs
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 180000 # 50 hrs
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [ VesselCoreNameset ]
@@ -531,12 +551,17 @@
     raffle:
       settings: default
     prototype: TSFMCAICore
+    # Exodus-Rework-Time-Roles-Start
+    # requirements:
+    # - !type:OverallPlaytimeRequirement
+    #   time: 180000 # 50 hrs
+    # - !type:RoleTimeRequirement
+    #   role: JobWarden
+    #   time: 54000 # 15 hours
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 180000 # 50 hrs
-    - !type:RoleTimeRequirement
-      role: JobWarden
-      time: 54000 # 15 hours
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [ TSFMCCoreNameset ]
@@ -617,12 +642,6 @@
     raffle:
       settings: default
     prototype: PDVAICore
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 180000 # 50 hrs
-    - !type:RoleTimeRequirement
-      role: JobPirateFirstMate
-      time: 54000 # 15 hours
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [ PDVCoreNameset ]

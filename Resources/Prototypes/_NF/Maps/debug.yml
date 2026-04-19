@@ -47,7 +47,7 @@
             Brigmedic: [ -1, -1]
             # NFDetective: [ -1, -1] Mono
             Deputy: [ -1, -1]
-            # Cadet: [ -1, -1] Mono
+            Cadet: [ -1, -1] # Exodus-Cadet-Return
             # PublicAffairsLiaison: [ -1, -1] Mono
             PirateCaptain: [ -1, -1]
             PirateFirstMate: [ -1, -1]

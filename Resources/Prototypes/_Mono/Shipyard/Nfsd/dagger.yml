@@ -8,7 +8,7 @@
   price: 120000
   category: Medium
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/dagger.yml
   guidebookPage: Null
   class:

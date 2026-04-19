@@ -8,7 +8,7 @@
   price: 117000
   category: Small
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/spica.yml
   guidebookPage: Null
   class:

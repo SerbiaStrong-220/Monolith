@@ -8,7 +8,7 @@
   price: 78200
   category: Small
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/welder.yml
   guidebookPage: Null
   class:

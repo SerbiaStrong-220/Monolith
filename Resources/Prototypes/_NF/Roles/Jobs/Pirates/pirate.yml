@@ -4,8 +4,10 @@
   description: job-description-pirate
   playTimeTracker: JobPirate
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 36000 # 10 hrs - mono
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 36000 # 10 hrs - monoЂ
+    # Exodus-Rework-Time-Roles-End
   startingGear: PirateNFGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

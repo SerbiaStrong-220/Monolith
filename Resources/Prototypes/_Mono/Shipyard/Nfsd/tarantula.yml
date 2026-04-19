@@ -10,7 +10,7 @@
   price: 140850
   category: Medium
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
   guidebookPage: Null
   class:

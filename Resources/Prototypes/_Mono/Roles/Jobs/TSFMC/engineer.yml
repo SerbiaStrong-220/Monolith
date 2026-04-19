@@ -4,8 +4,13 @@
   description: job-description-tsf-engineer
   playTimeTracker: JobTsfEngineer
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 21600 # 6 hours # mono
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 21600 # 6 hours # mono
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hours
+    # Exodus-Rework-Time-Roles-End
   startingGear: TsfEngiGear
   icon: JobIconTSFEngi
   supervisors: job-supervisors-sergeant

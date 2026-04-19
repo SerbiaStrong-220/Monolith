@@ -8,7 +8,7 @@
   purchasable: false # voucher only
   category: Large
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Capitals/flyssa.yml
   guidebookPage: Null
   class:

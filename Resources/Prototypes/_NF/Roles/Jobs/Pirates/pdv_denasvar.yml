@@ -19,11 +19,16 @@
   description: job-description-pdv-denasvar
   playTimeTracker: JobPDVDenasvar
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 72000 # 20 hours # mono
-    - !type:RoleTimeRequirement
-      role: JobPirate
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 72000 # 20 hours # mono
+    # - !type:RoleTimeRequirement
+    #   role: JobPirate
+    #   time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Antag
       time: 36000 # 10 hours
+    # Exodus-Rework-Time-Roles-End
   startingGear: PDVDenasvarGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

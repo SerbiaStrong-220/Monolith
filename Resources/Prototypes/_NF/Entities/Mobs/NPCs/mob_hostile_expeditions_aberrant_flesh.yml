@@ -392,6 +392,11 @@
       settings: default
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    # Exodus-Rework-Time-Roles-Start
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
   - type: ActionGun
     action: ActionBoneSpike

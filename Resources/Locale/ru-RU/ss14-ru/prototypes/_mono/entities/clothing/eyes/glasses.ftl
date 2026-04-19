@@ -11,4 +11,4 @@ ent-ClothingEyesBallisticGogglesOrange = orange ballistic goggles
 ent-ClothingEyesBallisticGlassesOrange = orange ballistic glasses
     .desc = A pair of ballistic glasses with orange lenses and integrated health scanning microchips.
 ent-ClothingEyesTSFOfficerGlasses = TSF commander shades
-    .desc = A high tech heads up display purpose built for Federation officers. Usually issued to the commanding officer of a company.
+    .desc = Высокотехнологичный прибор ночного и термального зрения, специально разработанный для офицеров Транс-Солнечной Федерации. Обычно выдаётся полевому командованию.
