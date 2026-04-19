@@ -15,6 +15,8 @@
       - MiningGatheringHard
   - type: MiningScannerViewable
 
+# Exodus-Begin
+# Separate resource wall parents avoid inheriting ShipRepairable from regular wall tiers.
 - type: entity
   parent: BaseWall
   id: NFBaseWallResources
@@ -171,6 +173,7 @@
   - type: IconSmooth
     key: cobblebricks
     base: cobblebrick
+# Exodus-End
 
 - type: entity
   parent: [NFAsteroidWall, NFBaseWallIce]
