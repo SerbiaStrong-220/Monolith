@@ -561,7 +561,7 @@
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 108000 # 30 hrs
-     # Exodus-Rework-Time-Roles-End
+    # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [ TSFMCCoreNameset ]
@@ -642,6 +642,11 @@
     raffle:
       settings: default
     prototype: PDVAICore
+    # Exodus-Rework-Time-Roles-Start
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [ PDVCoreNameset ]
