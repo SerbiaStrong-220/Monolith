@@ -149,12 +149,12 @@
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Remnants
     - Traffic
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Remnants
     - Traffic
   - type: CollectiveMind
@@ -397,12 +397,12 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Remnants
     - Traffic
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Remnants
     - Traffic
   - type: CollectiveMind
@@ -475,7 +475,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -483,7 +483,7 @@
     - Medical
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -557,7 +557,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -567,7 +567,7 @@
     - Command
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -648,7 +648,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -657,7 +657,7 @@
     - Freelance
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -724,7 +724,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply
@@ -734,7 +734,7 @@
     - Service
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Science
     - Supply

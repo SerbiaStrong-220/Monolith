@@ -34,7 +34,7 @@
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
-    - Common
+    - Traffic # Exodus
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -503,5 +503,5 @@
     - Bot
   - type: ActiveRadio
     channels:
-    - Common
+    - Traffic # Exodus
     - Supply

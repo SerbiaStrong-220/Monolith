@@ -21,7 +21,7 @@
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
-    - Common
+    - Traffic # Exodus: replace common channel
   - type: CollectiveMind
     channels:
     - Binary
@@ -113,7 +113,7 @@
     - type: IntrinsicRadioReceiver
     - type: ActiveRadio
       channels:
-      - Common
+      - Traffic # Exodus
     - type: CollectiveMind
       channels:
       - Binary

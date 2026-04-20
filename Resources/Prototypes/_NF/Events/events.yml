@@ -19,7 +19,7 @@
     # - id: PowerGridCheck
     - id: RandomSentience
     # - id: SlimesSpawn
-    - id: SolarFlare
+    # - id: SolarFlare # Exodus
     # - id: SnakeSpawn
     # - id: SpiderClownSpawn
     # - id: SpiderSpawn
@@ -369,8 +369,8 @@
     maxDuration: 240
   - type: SolarFlareRule
     onlyJamHeadsets: true
-    affectedChannels:
-    - Common
+    # affectedChannels: # Exodus
+    # - Common
     extraChannels:
     - Command
     - Engineering

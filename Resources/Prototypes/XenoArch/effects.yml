@@ -187,7 +187,7 @@
     - type: Intercom
       requiresPower: false
       supportedChannels:
-      - Common
+      - Traffic # Exodus: replace common channel
       - CentCom
       - Command
       - Engineering
