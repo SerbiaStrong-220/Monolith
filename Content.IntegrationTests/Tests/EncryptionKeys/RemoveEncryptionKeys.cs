@@ -31,7 +31,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Check that the key was ejected and not just deleted or something.
-        await AssertEntityLookup(("EncryptionKeyCommon", 1));
+        await AssertEntityLookup(("EncryptionKeyTraffic", 1)); // Exodus: replace common channel
 
         // Re-insert a key.
         await InteractUsing("EncryptionKeyCentCom");
