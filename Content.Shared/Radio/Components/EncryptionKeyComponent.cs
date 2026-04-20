@@ -29,7 +29,7 @@ public partial record struct RadioChannelEntry
     [DataField(required: true)]
     public ProtoId<RadioChannelPrototype> Channel;
     [DataField]
-    public bool CanSpeak;
+    public bool CanSpeak = true;
 
     public RadioChannelEntry(ProtoId<RadioChannelPrototype> channel, bool canSpeak = true)
     {

@@ -48,7 +48,7 @@
     channels: # Exodus
     - channel: Medical
     - channel: Command
-    defaultChannel: Common
+    defaultChannel: Medical
   - type: Item
     sprite: _NF/Objects/Devices/encryption_keys.rsi
   - type: Sprite

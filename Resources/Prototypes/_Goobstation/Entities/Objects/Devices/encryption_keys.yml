@@ -6,7 +6,7 @@
   components:
   - type: EncryptionKey
     channels: # Exodus
-    - channel: Common
+    # - channel: Common # Exodus
     - channel: Command
     - channel: Engineering
     - channel: Medical

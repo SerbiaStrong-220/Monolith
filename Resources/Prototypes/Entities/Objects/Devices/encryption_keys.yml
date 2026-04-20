@@ -73,7 +73,7 @@
   components:
   - type: EncryptionKey
     channels: # Exodus
-    - channel: Common
+    # - channel: Common
     - channel: Command
     - channel: Engineering
     - channel: Medical
