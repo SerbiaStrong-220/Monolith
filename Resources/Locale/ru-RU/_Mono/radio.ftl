@@ -3,4 +3,4 @@ chat-radio-ussp-command = Командование СССП
 chat-radio-letoferol = Химеры
 chat-radio-cortical-borer = Бореры
 chat-radio-remnants = АСО
-chat-radio-monolithic = Monolith Connection
+chat-radio-monolithic = Разум Монолита
