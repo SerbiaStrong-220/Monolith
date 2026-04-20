@@ -16,9 +16,9 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
-            Assert.That(comp.DefaultChannel, Is.EqualTo("Common"));
+            Assert.That(comp.DefaultChannel, Is.EqualTo("Traffic")); // Exodus: replace common channel
             Assert.That(comp.Channels, Has.Count.EqualTo(1));
-            Assert.That(comp.Channels.First().Channel, Is.EqualTo("Common")); // Exodus: Use of RadioChannelEntry
+            Assert.That(comp.Channels.First().Channel, Is.EqualTo("Traffic")); // Exodus: Use of RadioChannelEntry
         });
 
         // Remove the key
