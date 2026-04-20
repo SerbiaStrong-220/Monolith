@@ -5,8 +5,9 @@
   description: An encryption key for the USSP tactical-level communications channel.
   components:
   - type: EncryptionKey
-    channels:
-    - Ussp
+    channels: # Exodus
+    - channel: Ussp
+      canSpeak: false # cause USSP left this sector
     defaultChannel: Ussp
   - type: Item
     sprite: Objects/Devices/encryption_keys.rsi
@@ -25,8 +26,9 @@
   description: An encryption key for the USSP command channel. Due to USSP higher-level networking being defunct, it instead provides access to tactical command.
   components:
   - type: EncryptionKey
-    channels:
-    - Ussp
+    channels: # Exodus
+    - channel: Ussp
+      canSpeak: false # cause USSP left this sector
     defaultChannel: Ussp
   - type: Item
     sprite: Objects/Devices/encryption_keys.rsi
@@ -45,8 +47,8 @@
   description: An encryption key used by officers in the vanguard. # Mono
   components:
     - type: EncryptionKey
-      channels:
-        - VanguardCommand
+      channels: # Exodus
+        - channel: VanguardCommand
       defaultChannel: VanguardCommand
     - type: Sprite
       layers:
@@ -60,16 +62,19 @@
   id: EncryptionKeyStationMasterSR
   components:
   - type: EncryptionKey
-    channels:
-    - Common
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
-    - Traffic
-    defaultChannel: Service
+    channels: # Exodus
+    - channel: Engineering
+      canSpeak: false
+    - channel: Medical
+    - channel: Science
+      canSpeak: false
+    - channel: Security
+    - channel: Service
+      canSpeak: false
+    - channel: Supply
+      canSpeak: false
+    - channel: Traffic
+    defaultChannel: Security # Exodus
 
  # Diplomacy with faction heads, seperated from master key to allow toggling off
 - type: entity
@@ -79,9 +84,9 @@
   description: A direct communications channel to the heads of the sector's warring states.
   components:
   - type: EncryptionKey
-    channels:
-    - Command
-    - VanguardCommand
+    channels: # Exodus
+    - channel: Command
+    - channel: VanguardCommand
     #- Nfsd #Deliberately excluded: You don't command them
     #- Freelance
     defaultChannel: Command

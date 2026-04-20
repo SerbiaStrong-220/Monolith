@@ -1,0 +1,11 @@
+- type: entity
+  parent: EncryptionKeyMedical
+  id: EncryptionKeyMedicalSpeak
+  name: medical encryption key
+  description: An encryption key used by those who save lives.
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: Medical
+      canSpeak: true
+    defaultChannel: Medical

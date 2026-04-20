@@ -20,6 +20,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -310,7 +311,7 @@ public sealed class RadioSystem : EntitySystem
         {
             if (transform.MapID == mapId &&
                 power.Powered &&
-                keys.Channels.Contains(channelId))
+                keys.Channels.Any(c => c.Channel == channelId)) // Exodus: Use of RadioChannelEntry
             {
                 return true;
             }

@@ -68,6 +68,6 @@
       board:
       - IntercomElectronics
       key_slots:
-      - EncryptionKeyCommon
+      # - EncryptionKeyCommon # Exodus: replace common channel
       - EncryptionKeyNfsd
       - EncryptionKeyTraffic # Frontier
