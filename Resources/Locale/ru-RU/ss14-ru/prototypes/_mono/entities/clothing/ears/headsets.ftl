@@ -12,5 +12,5 @@ ent-ClothingHeadsetUSSPCommand = USSP command headset
     .desc = A modular headset issued exclusively to high ranking USSP personnel. This headset will accept standard encryption keys and comes prefitted with a key for USSP Tactical Communications. Switching to the Strategic channel produces only static.
 ent-ClothingHeadsetUSSP = USSP headset
     .desc = The standard-issue headset of the USSP Defensive Navy for decades. This headset will accept standard encryption keys and comes prefitted with a key for USSP Tactical Communications.
-ent-ClothingHeadsetAltVanguardCommand = vanguard command over-ear headset
+ent-ClothingHeadsetAltVanguardCommand = полноразмерная гарнитура Династии Фаэтон
     .desc = { ent-ClothingHeadsetAlt.desc }
