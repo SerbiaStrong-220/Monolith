@@ -58,7 +58,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     {
         if (args.Channel != null
             && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && keys.Channels.Any(c => c.Channel == args.Channel.ID)) // Exodus
+            && keys.Channels.Any(c => c.Channel == args.Channel.ID && c.CanSpeak)) // Exodus: read-only channels
         {
             _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
             args.Channel = null; // prevent duplicate messages from other listeners.
