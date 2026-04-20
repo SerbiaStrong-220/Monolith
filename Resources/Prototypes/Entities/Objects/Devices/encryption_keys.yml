@@ -217,9 +217,8 @@
   description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.
   components:
   - type: EncryptionKey
-    channels: # Exodus
+    channels: # Exodus: service is the frequency used for central outpost, and can't be easily accessed
     - channel: Service
-      canSpeak: false
     defaultChannel: Service
   - type: Sprite
     layers:
