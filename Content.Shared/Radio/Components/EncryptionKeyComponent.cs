@@ -24,7 +24,7 @@ public sealed partial class EncryptionKeyComponent : Component
 
 // Exodus-Begin
 [DataDefinition]
-public partial struct RadioChannelEntry
+public partial record struct RadioChannelEntry
 {
     [DataField(required: true)]
     public ProtoId<RadioChannelPrototype> Channel;

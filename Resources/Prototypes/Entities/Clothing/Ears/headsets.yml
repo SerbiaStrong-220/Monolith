@@ -160,7 +160,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
+      - EncryptionKeyMedicalSpeak # Exodus
 #      - EncryptionKeyCommand # Frontier
       - EncryptionKeyTraffic # Exodus: replace common channel
 
@@ -250,7 +250,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
+      - EncryptionKeyMedicalSpeak # Exodus
       - EncryptionKeySecurity
       - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite

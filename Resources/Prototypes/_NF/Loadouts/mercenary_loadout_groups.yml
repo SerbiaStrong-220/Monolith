@@ -100,7 +100,7 @@
   loadouts:
   - MercenaryClothingHeadsetAltMercenaryCommon
   - MercenaryClothingHeadsetSecurityCommon
-  - MercenaryClothingHeadsetBrigmedicCommon
+  # - MercenaryClothingHeadsetBrigmedicCommon # Exodus: only for medics
   - MercenaryClothingHeadsetAltSecurityCommon
   subgroups:
   - PilotEars
