@@ -34,7 +34,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: ADS Zenith
+      name: АСО Зенит
     - type: InitRepairSnapshot
     - type: ShipRepairRestrict
       toolWhitelist:
