@@ -61,7 +61,7 @@ note_fresh_days = 0
 allow_multi_server_play = false
 
 [chat]
-motd = "Добро пожаловать на Exodus! Ваша история разворачивается в секторе Колосс. Присоединяйтесь к нашему Discord!\nhttps://discord.gg/ss220"
+motd = "Добро пожаловать на Exodus! Ваша история разворачивается в секторе Колосс. Присоединяйтесь к нашему Discord!\nhttps://discord.gg/ss220\n\nУ нас также присутствует удобная веб-карта для просмотра шаттлов: клик на сервер в лаунчере > вебсайт.\nПриятной игры!"
 
 [console]
 loginlocal = true
@@ -70,3 +70,4 @@ loginlocal = true
 discord = "https://discord.gg/ss220"
 # wiki = "https://wiki14.ss220.club"
 github = "https://github.com/SerbiaStrong-220/Monolith"
+website = "https://serbiastrong-220.github.io/webmap-exodus"
