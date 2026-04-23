@@ -10,7 +10,7 @@
     - id: UnknownShuttleNebulaApoc
     - id: UnknownShuttleWyvernApoc
     - id: UnknownShuttleRazorNApoc
-    - id: UnknownShuttleConcordXApoc
+    - id: UnknownShuttleConcordXApoc # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -131,13 +131,13 @@
     - !type:JobGameRuleRequirement
       department: Security
       minDepartmentPlayers: 6
-
+# Exodus
 - type: entity
   parent: BaseRandomShuttleRule
   id: UnknownShuttleConcordXApoc
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ai-frigate-detected
+    startAnnouncement: station-event-ai-frigate-detected # Exodus
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2.5
@@ -145,7 +145,7 @@
   - type: GameRule
     minPlayers: 25
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/concord_x.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/concord_x.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
