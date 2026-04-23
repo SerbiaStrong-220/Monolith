@@ -84,7 +84,7 @@
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Exodus/ShuttleEvent/wyrm.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/wyrm.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
