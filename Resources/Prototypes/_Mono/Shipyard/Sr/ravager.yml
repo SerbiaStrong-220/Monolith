@@ -6,7 +6,7 @@
   id: Ravager
   parent: BaseVessel
   name: Опустошитель # Ru-Localization
-  description: Большоц материнский корабль безопасности класса, созданный для быстрой нейтрализации угроз гражданам. # Ru-Localization
+  description: Большой материнский корабль безопасности класса, созданный для быстрой нейтрализации угроз гражданам. # Ru-Localization
   price: 875800
   purchasable: false # voucher only
   category: Large
