@@ -10,8 +10,8 @@
 - type: vessel
   id: Phaeron
   parent: BaseVessel
-  name: HES Phaeron
-  description: Part of Horizon Energy's latest gas mining initiative, this gigantic gas tanker is able to harvest and store a frightening amount of gas. Perfect for plasma harvesting in the Colossus sector.
+  name: Фарон # Ru-Localization
+  description: Часть новой инициативы Горизонт Энерджи по добыче газа. Этот гигантский газовоз способен добывать и хранить пугающее количество газа. Идеален для добычи плазмы в секторе Колосс. # Ru-Localization
   price: 52450
   category: Medium
   group: Shipyard
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Phaeron
-  mapName: 'HES Phaeron'
+  mapName: 'Фарон' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/phaeron.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Phaeron CIV{1}'
+          mapNameTemplate: 'Фарон{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -2,8 +2,8 @@
 - type: vessel
   id: Spyglass
   parent: BaseVessel
-  name: UI Spyglass
-  description:  A Ullman Industries research ship. This baby is capable of Xenoarcheology and not a whole lot more.
+  name: СпайГласс # Ru-Localization
+  description: Исследовательский корабль Ульман Индастрис. Эта малютка способна заниматься ксеноархеологией - и ничем больше. # Ru-Localization
   price: 47500
   category: Small
   group: Shipyard
@@ -16,7 +16,7 @@
 
 - type: gameMap
   id: Spyglass
-  mapName: 'UI Spyglass'
+  mapName: 'СпайГласс' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/spyglass.yml
   minPlayers: 0
   stations:
@@ -24,7 +24,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Spyglass CIV{1}'
+          mapNameTemplate: 'СпайГласс{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

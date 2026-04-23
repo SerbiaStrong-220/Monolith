@@ -190,7 +190,7 @@
 
 - type: company
   id: RedSailCorsairs
-  name: RedSail Corsairs
+  name: redsail-corsairs-name # Ru-Localization
   description: redsail-corsairs-description
   color: "#930000"
   image: /Textures/_Mono/Companies/redsailcorsairs.png

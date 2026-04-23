@@ -6,8 +6,8 @@
 - type: vessel
   id: Noble
   parent: BaseVessel
-  name: SKR Noble
-  description: A salvage vessel outfitted with both a scrap and ore processor, plus 4 mining pulsers. Outside of that, its quite lacking, outside of a highly efficient pinch-fusion generator.
+  name: Нобл # Ru-Localization
+  description: Утилизаторский шаттл, оснащённый как переработчиком металлолома, так и рудоперерабатывающим оборудованием, а также четырьмя шахтёрскими  М25. В остальном он довольно скуден, если не считать термоядерный реактор. # Ru-Localization
   price: 52100
   category: Medium
   group: Shipyard
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Noble
-  mapName: 'SKR Noble'
+  mapName: 'Нобл' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/noble.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Noble CIV{1}'
+          mapNameTemplate: 'Нобл{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

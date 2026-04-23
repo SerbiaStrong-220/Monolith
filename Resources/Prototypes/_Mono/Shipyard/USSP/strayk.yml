@@ -3,8 +3,8 @@
 - type: vessel
   id: Strayk
   parent: BaseVesselAntag
-  name: NCS Strayk
-  description: A poorly equipped and cramped strike craft. Outfitted with 2 torpedo launchers and 1 30mm chaingun, and capable of detecting invisible targets.
+  name: Страус # Ru-Localization
+  description: Плохо оснащённый и тесный ударный шаттл. Оснащён двумя торпедными установками и одним 30-мм орудием. # Ru-Localization
   price: 45820
   category: Small
   group: Ussp
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Strayk
-  mapName: 'Strayk'
+  mapName: 'Страус' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/strayk.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Strayk MIL{1}'
+          mapNameTemplate: 'Страус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -9,8 +9,8 @@
 - type: vessel
   id: Worm
   parent: BaseVessel
-  name: Worm
-  description: Micro-fighter equipped with EMP Launcher. Drone server included.
+  name: Червь # Ru-Localization
+  description: Дрон, оснащённый ЭМИ-пусковой установкой. # Ru-Localization
   price: 12500
   category: Small
   group: Custom
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Worm
-  mapName: 'Worm'
+  mapName: 'Червь' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/worm.yml
   minPlayers: 0
   stations:
@@ -33,6 +33,6 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Worm SEC{1}'
+        mapNameTemplate: 'Червь{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'

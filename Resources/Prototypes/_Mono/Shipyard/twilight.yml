@@ -7,8 +7,8 @@
 - type: vessel
   id: Twilight
   parent: BaseVessel
-  name: SKR Twilight
-  description: A small, fast jump-capable cargo transport with light rear-facing defensive armament.
+  name: Сумрак # Ru-Localization
+  description: Небольшой, быстрый прыжковый грузовой шаттл с лёгким кормовым оборонительным вооружением. # Ru-Localization
   price: 50000
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Twilight
-  mapName: 'SKR Twilight'
+  mapName: 'Сумрак' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/twilight.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Twilight CIV{1}'
+          mapNameTemplate: 'Сумрак{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

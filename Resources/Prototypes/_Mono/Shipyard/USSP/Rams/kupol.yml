@@ -1,8 +1,8 @@
 - type: vessel
   id: Kupol
   parent: BaseVesselAntag
-  name: BYP Kupol
-  description: A gunnery unit made to make up for the lacking fire-power of the Ledokol.
+  name: М-Купол # Ru-Localization
+  description: Оружейный модуль, созданный для компенсации недостаточной огневой мощи Ледокола. # Ru-Localization
   limit: 1
   price: 90000
   category: Small
@@ -13,7 +13,7 @@
 
 - type: gameMap
   id: Kupol
-  mapName: 'Kupol'
+  mapName: 'М-Купол' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/Ledokol/Attatchments/kupol.yml
   minPlayers: 0
   stations:
@@ -21,7 +21,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Kupol MIL Ram{1}'
+          mapNameTemplate: 'М-Купол{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

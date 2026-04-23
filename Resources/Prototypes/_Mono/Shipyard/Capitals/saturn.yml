@@ -9,8 +9,8 @@
 - type: vessel
   id: Saturn
   parent: BaseVesselAntag
-  name: PDW-HSS Saturn
-  description: Commissioned by the Sultanate for dire need for heavy firepower against the Federation on their borders. A one of a kind ship, specifically designed with the vanguard stationed in Helios.
+  name: Сатурн # Ru-Localization
+  description: Заказан Династией Фаэтон ввиду острой необходимости в тяжёлой огневой мощи против Федерации. Уникальный шаттл, специально разработанный с учётом запросово Династии, расквартированного на Гелиосе. # Ru-Localization
   limit: 1
   price: 1540950
   purchasable: false # voucher only
@@ -32,7 +32,7 @@
 
 - type: gameMap
   id: Saturn
-  mapName: 'PDW-HSS Saturn'
+  mapName: 'Сатурн' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Capitals/saturn.yml
   minPlayers: 0
   stations:
@@ -40,10 +40,10 @@
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "The Sultan's answer to TSFMC invaders. She takes punishment like no other hull. Praise the Sultan."
+        description: "Ответ Династии Фаэтон захватчикам из ТСФ. Она выдерживает удары, как никакой другой шаттл. Слава Династии!" # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Saturn HSS{1}'
+        mapNameTemplate: 'Сатурн{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

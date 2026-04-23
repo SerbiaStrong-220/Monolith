@@ -7,8 +7,8 @@
 - type: vessel
   id: Promise
   parent: BaseVessel
-  name: DFNT Promise
-  description: An old Medical Ship design dating back from the fracture era. It comes equipped with everything a hospital ship would want, as well as a spacious crew accomodations for long term shifts.
+  name: Обещание # Ru-Localization
+  description: Старая вариация медицинского корабля, относящаяся ещё к эпохе Раскола. Оснащён всем, что только можно пожелать от медицинского судна, а также просторными жилыми помещениями для экипажа на время долгих смен. # Ru-Localization
   price: 106500
   category: Medium
   group: Medical
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Promise
-  mapName: 'DFNT Promise'
+  mapName: 'Обещание' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/promise.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Promise MED{1}'
+          mapNameTemplate: 'Обещание{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

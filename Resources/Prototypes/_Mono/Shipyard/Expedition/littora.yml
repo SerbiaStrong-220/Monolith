@@ -7,8 +7,8 @@
 - type: vessel
   id: Littora
   parent: BaseVessel
-  name: SKR Littora
-  description: A medium-to-large sized expedition ship with salvage equipment.
+  name: Литтора # Ru-Localization
+  description: Экспедиционный шаттл среднего-крупного размера с утилизаторским оборудованием. # Ru-Localization
   price: 76000
   category: Large
   group: Expedition
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Littora
-  mapName: 'Littora'
+  mapName: 'Литтора' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/littora.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Littora EXP{1}'
+          mapNameTemplate: 'Литтора{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

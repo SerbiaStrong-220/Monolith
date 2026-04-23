@@ -8,8 +8,8 @@
 - type: vessel
   id: Mock
   parent: BaseVessel
-  name: IED Brawler Drone 'Mock'
-  description: A lightly armored fighter equipped with 2 90mm autocannons for harassing targets and taking down enemy fighters.
+  name: Мак # Ru-Localization
+  description: Легкобронированный дрон, оснащённый двумя 90-мм автопушками для подавления целей и уничтожения вражеских истребителей. # Ru-Localization
   limit: 4
   price: 13500
   purchasable: false #voucher only
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Mock
-  mapName: 'Mock'
+  mapName: 'Мак' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/mock.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Mock PDV{1}'
+        mapNameTemplate: 'Мак{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

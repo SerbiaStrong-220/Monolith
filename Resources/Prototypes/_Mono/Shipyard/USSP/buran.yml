@@ -3,8 +3,8 @@
 - type: vessel
   id: Buran
   parent: BaseVesselAntag
-  name: VEF Buran
-  description: USSP capital-sized frigate with tremendous broadside firepower and thick armor. Glory to commissariat.
+  name: Буран # Ru-Localization
+  description: Фрегат СССП с огромной бортовой огневой мощью и толстой бронёй. Слава великому комиссариату! # Ru-Localization
   price: 320000
   category: Large
   group: Ussp
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Buran
-  mapName: 'Buran'
+  mapName: 'Буран' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/buran.yml
   minPlayers: 0
   stations:
@@ -26,10 +26,10 @@
       stationProto: StandardFrontierVessel
       gridComponents:
       - type: VesselInfo
-        description: "Outdated, yet still reliable."
+        description: "Старый, но не бесполезный." # Ru-Localization
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Buran MIL{1}'
+          mapNameTemplate: 'Буран' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

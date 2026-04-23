@@ -7,8 +7,8 @@
 - type: vessel
   id: Tzipora
   parent: BaseVessel
-  name: SKR Tzipora
-  description: An advanced medical ship, outfitted with cryo, chem, and surgical capabilities.
+  name: Тзипора # Ru-Localization
+  description: Продвинутый медицинский шаттл, оснащённый криокапсулой, химической лабораторией и другим хирургическим оборудованием. # Ru-Localization
   price: 145530
   category: Large
   group: Medical
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Tzipora
-  mapName: 'SKR Tzipora'
+  mapName: 'Тзипора' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/tzipora.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tzipora MED{1}'
+          mapNameTemplate: 'Тзипора{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

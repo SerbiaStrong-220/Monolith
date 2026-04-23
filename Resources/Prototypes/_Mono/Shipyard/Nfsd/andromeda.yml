@@ -3,8 +3,8 @@
 - type: vessel
   id: Andromeda
   parent: BaseVesselAntag
-  name: TSF-CRSW Andromeda
-  description: A experimental heavy frigate, with heavy burst frontal firepower and fast maneuveability.
+  name: Андромеда # Ru-Localization
+  description: Экспериментальный тяжёлый фрегат с мощным залповым носовым вооружением и высокой манёвренностью. # Ru-Localization
   limit: 3
   price: 320000
   category: Large
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Andromeda
-  mapName: 'Andromeda'
+  mapName: 'Андромеда' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/andromeda.yml
   minPlayers: 0
   stations:
@@ -27,10 +27,10 @@
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "Enough guns to blot out the stars."
+        description: "Достаточно орудий, чтобы затмить звёзды." # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Andromeda TSF{1}'
+        mapNameTemplate: 'Андромеда{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

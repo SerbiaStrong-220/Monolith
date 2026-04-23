@@ -1,8 +1,8 @@
 - type: vessel
   id: Infiltrator
   parent: BaseVesselAntag
-  name: Infiltrator
-  description: A light syndicate frigate meant for raiding enemy stations. Armed to the teeth with missiles and Hydras.
+  name: Лазутчик # Ru-Localization
+  description: Лёгкий фрегат Синдиката, предназначенный для нападения на вражеские станции. Вооружён до зубов ракетами и Гидрами. # Ru-Localization
   price: 275000
   category: Large
   group: Syndicate
@@ -15,7 +15,7 @@
 
 - type: gameMap
   id: Infiltrator
-  mapName: 'Infiltrator'
+  mapName: 'Лазутчик' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Syndicate/infiltrator.yml
   minPlayers: 0
   stations:
@@ -23,7 +23,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Infiltrator SYN{1}'
+          mapNameTemplate: 'Лазутчик{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

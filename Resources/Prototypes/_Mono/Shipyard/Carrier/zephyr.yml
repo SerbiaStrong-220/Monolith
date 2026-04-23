@@ -3,8 +3,8 @@
 - type: vessel
   id: Zephyr
   parent: BaseVesselAntag
-  name: TSF-SKR Zephyr
-  description: A fighter refurbished from recovered remnant Razor hulls.
+  name: Зефир # Ru-Localization
+  description: Шаттл, сделанный наспех из обломков старых шаттлов. # Ru-Localization
   price: 16400
   category: Small
   group: Custom
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Zephyr
-  mapName: 'Zephyr'
+  mapName: 'Зефир' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/zephyr.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Zephyr TSF{1}'
+        mapNameTemplate: 'Зефир{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

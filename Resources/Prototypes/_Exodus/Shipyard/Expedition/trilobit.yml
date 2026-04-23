@@ -1,8 +1,8 @@
 - type: vessel
   id: Trilobit
   parent: BaseVessel
-  name: Trilobit
-  description: The "Trilobit" is a massive long-range expedition vessel. Equipped with a full suite of autonomous life support, navigation, and defense systems, allowing the crew to exist in isolation for years without external support.
+  name: Трилобит
+  description: Трилобит представляет собой массивный корабль для дальних экспедиций. Оснащен полным спектром автономных систем жизнеобеспечения, навигации и защиты, позволяющим экипажу годами существовать в изоляции без внешней поддержки.
   price: 314159
   category: Medium
   group: Expedition
@@ -17,7 +17,7 @@
 
 - type: gameMap
   id: Trilobit
-  mapName: 'Trilobit'
+  mapName: 'Трилобит'
   mapPath: /Maps/_Exodus/Shuttles/Expedition/trilobit.yml
   minPlayers: 0
   stations:
@@ -25,7 +25,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Trilobit MIL{1}'
+          mapNameTemplate: 'Трилобит{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

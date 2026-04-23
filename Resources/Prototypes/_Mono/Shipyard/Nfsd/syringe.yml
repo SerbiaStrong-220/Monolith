@@ -3,8 +3,8 @@
 - type: vessel
   id: Syringe
   parent: BaseVesselAntag
-  name: TSF-SKR Syringe
-  description: A small ship meant as an escort and render aid to other TSF vessels. It has a small interior and is lightly armed.
+  name: Сиренж # Ru-Localization
+  description: Небольшой шаттл, предназначенный для сопровождения и оказания помощи другим шаттлам ТСФ. Имеет тесный интерьер и лёгкое вооружение. # Ru-Localization
   price: 58500
   category: Small
   group: Security
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Syringe
-  mapName: 'Syringe'
+  mapName: 'Сиренж' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/syringe.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Syringe TSF{1}'
+        mapNameTemplate: 'Сиренж{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

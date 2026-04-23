@@ -7,8 +7,8 @@
 - type: vessel
   id: Notch
   parent: BaseVessel
-  name: DIS Notch
-  description: A small salvage shuttle featuring the bare minimum for any fresh aspiring scavenger in the sector. Fast and compact. A proud piece of Drake Industries' civilian spacecrafts collection.
+  name: Нотч # Ru-Localization
+  description: Небольшой утилизаторский шаттл с самым необходимым для любого начинающего старателя в секторе. Быстрый и компактный. Гордая часть коллекции гражданских космических кораблей Дрэйк Индастрис. # Ru-Localization
   price: 25900
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Notch
-  mapName: 'DIS Notch'
+  mapName: 'Нотч' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/notch.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Notch CIV{1}'
+          mapNameTemplate: 'Нотч{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

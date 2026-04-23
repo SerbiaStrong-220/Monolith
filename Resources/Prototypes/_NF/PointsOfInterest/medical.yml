@@ -34,7 +34,7 @@
       stationProto: RecordsFrontierOutpost
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Медицинский Центр' # Ru-Localization
+          mapNameTemplate: 'Госпиталь' # Ru-Localization
         - type: ExtraStationInformation
           icon:
             sprite: _NF/Markers/jobs.rsi

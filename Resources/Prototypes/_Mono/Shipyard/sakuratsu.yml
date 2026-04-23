@@ -7,8 +7,8 @@
 - type: vessel
   id: Sakuratsu
   parent: BaseVessel
-  name: SKR Sakuratsu
-  description: A xenoarcheology ship with a dedicated, reinforced chamber. Contains mining equipment too.
+  name: Сакуратсу # Ru-Localization
+  description: Ксеноархеологический шаттл с отдельным усиленным для этого отсеком. Также оснащён шахтёрским оборудованием. # Ru-Localization
   price: 58250
   category: Medium
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Sakuratsu
-  mapName: 'SKR Sakuratsu'
+  mapName: 'Сакуратсу' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/sakuratsu.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Sakuratsu CIV{1}'
+          mapNameTemplate: 'Сакуратсу{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

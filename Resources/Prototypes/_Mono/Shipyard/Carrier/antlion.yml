@@ -1,8 +1,8 @@
 - type: vessel
   id: Antlion
   parent: BaseVessel
-  name: DIS Antlion
-  description: A mining drone commissioned by Horizon Energy to the DIS. Basically a chunk of metal with a mining pulser slapped onto it. EVA suit and oxygen not included.
+  name: Муравьиный лев # Ru-Localization
+  description: Добывающий дрон. По сути — кусок металла с приделанным шахтёрским орудием. Скафандр и кислород в комплект не входят. # Ru-Localization
   price: 7250
   category: Micro
   group: Custom
@@ -17,7 +17,7 @@
 
 - type: gameMap
   id: Antlion
-  mapName: 'Antlion'
+  mapName: 'Муравьиный лев' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/antlion.yml
   minPlayers: 0
   stations:
@@ -25,7 +25,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Antlion DIS{1}'
+        mapNameTemplate: 'Муравьиный лев{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

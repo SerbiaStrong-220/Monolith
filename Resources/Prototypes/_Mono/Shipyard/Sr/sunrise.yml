@@ -5,8 +5,8 @@
 - type: vessel
   id: Sunrise
   parent: BaseVessel
-  name: Sunrise
-  description: A private investigator's ship. Comes equiped with a suite of forensic tools for investigative work. Capable of subduing smugglers and CIV ships with it's EMP launchers, and running away from anything more dangerous.
+  name: Восход # Ru-Localization
+  description: Шаттл оборудованный под нужды частного детектива. Оснащён набором криминалистических инструментов для расследований. Способен останавливать контрабандистов и гражданские корабли с помощью М220 Рубикон и сбегать от всего, что опаснее его самого. # Ru-Localization
   price: 59000
   category: Small
   group: Sr
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Sunrise
-  mapName: 'Sunrise'
+  mapName: 'Восход' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/sunrise.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Sunrise SEC{1}'
+          mapNameTemplate: 'Восход{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

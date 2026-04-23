@@ -1,8 +1,8 @@
 - type: vessel
   id: Bucket
   parent: BaseVessel
-  name: Bucket
-  description: The janitorial wing of the combined service ship.
+  name: Бакет # Ru-Localization
+  description: Шаттл, используемый уборщиками для выполнения их работы. # Ru-Localization
   price: 18000
   category: Micro
   group: Sr
@@ -16,7 +16,7 @@
 
 - type: gameMap
   id: Bucket
-  mapName: 'Bucket'
+  mapName: 'Бакет' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/bucket.yml
   minPlayers: 0
   stations:
@@ -24,7 +24,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Bucket SRV{1}'
+          mapNameTemplate: 'Бакет{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -3,9 +3,8 @@
 - type: vessel
   id: Saintie
   parent: BaseVesselAntag
-  name: PDW Saintie
-  description: An expensive Frigate designed by the Phaethon Divine Shipworks, utilised by imperial vanguard for swift ambush attacks against enemy fleets.
-  limit: 2
+  name: Сэнти # Ru-Localization
+  description: Дорогостоящий фрегат, разработанный верфью Династии Фаэтона. Используется для стремительных атак на вражеские шаттлы. # Ru-Localization
   price: 345000
   purchasable: false # Voucher only
   category: Large
@@ -20,7 +19,7 @@
 
 - type: gameMap
   id: Saintie
-  mapName: 'Saintie'
+  mapName: 'Сэнти' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/saintie.yml
   minPlayers: 0
   stations:
@@ -28,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Saintie PDV{1}'
+          mapNameTemplate: 'Сэнти{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

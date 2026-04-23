@@ -1,8 +1,8 @@
 - type: vessel
   id: Hunter
   parent: BaseVesselAntag
-  name: Hunter
-  description: A cheap, armored personnel carrier armed with 4 100mm autocannons.
+  name: Охотник # Ru-Localization
+  description: Дешёвый бронированный шаттл, вооружённый четырьмя 90мм орудиями. # Ru-Localization
   price: 50000
   category: Small
   group: Syndicate
@@ -15,7 +15,7 @@
 
 - type: gameMap
   id: Hunter
-  mapName: 'Hunter'
+  mapName: 'Охотник' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Syndicate/hunter.yml
   minPlayers: 0
   stations:
@@ -23,7 +23,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Hunter SYN{1}'
+          mapNameTemplate: 'Охотник{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

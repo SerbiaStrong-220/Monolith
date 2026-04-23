@@ -18,7 +18,7 @@ comms-console-message-too-long = Сообщение слишком длинно�
 comms-console-announcement-sent-by = Отправитель
 comms-console-announcement-unknown-sender = Неизвестный
 # Comms console variant titles
-comms-console-announcement-title-station = Консоль связи
+comms-console-announcement-title-station = Консоли связи
 comms-console-announcement-title-centcom = Зимнего Солнцестояния
 comms-console-announcement-title-nukie = Синдиката
 comms-console-announcement-title-station-ai = Станционного ИИ

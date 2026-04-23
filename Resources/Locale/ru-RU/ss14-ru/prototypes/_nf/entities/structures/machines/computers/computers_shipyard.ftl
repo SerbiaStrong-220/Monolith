@@ -1,5 +1,5 @@
 ent-ComputerShipyardBase = консоль верфи
-    .desc = Used to purchase and sell shuttles
+    .desc = Используется для покупки шаттлов.
 ent-ComputerShipyard = { ent-ComputerShipyardBase }
     .desc = { ent-ComputerShipyardBase.desc }
 ent-ComputerShipyardSecurity = консоль верфи службы безопасности

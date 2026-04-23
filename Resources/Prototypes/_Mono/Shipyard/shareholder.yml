@@ -7,8 +7,8 @@
 - type: vessel
   id: Shareholder
   parent: BaseVessel
-  name: DME Shareholder
-  description: Cheap and affordable salvage vessel that comes with a comfortable lounge at the cost of leaving no budget for the rest.
+  name: Пайщик # Ru-Localization
+  description: Дешёвый и доступный утилизаторский шаттл, который оснащён удобной гостиной в ущерб всему остальному (на остальное бюджета просто не хватило). # Ru-Localization
   price: 19000
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Shareholder
-  mapName: 'DME Shareholder'
+  mapName: 'Пайщик' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/shareholder.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Shareholder CIV{1}'
+          mapNameTemplate: 'Пайщик{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

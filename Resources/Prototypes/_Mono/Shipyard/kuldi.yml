@@ -9,8 +9,8 @@
 - type: vessel
   id: Kuldi
   parent: BaseVessel
-  name: DWI Kuldi
-  description: Equipped with a full chemistry lab and cryogenics, this ship is Dornan-Weryl Industrial's solution to most medical care.
+  name: Мороз # Ru-Localization
+  description: Оснащённый полной химической лабораторией и криокапсулой, этот корабль - хорошее решение для большинства медицинских потребностей. # Ru-Localization
   price: 95000 # A bit higher than the grid appraisal +vendors
   category: Medium
   group: Medical
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Kuldi
-  mapName: 'DWI Kuldi'
+  mapName: 'Мороз' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/kuldi.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Kuldi MED{1}'
+          mapNameTemplate: 'Мороз{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

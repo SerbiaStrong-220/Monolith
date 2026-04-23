@@ -1,8 +1,8 @@
 - type: vessel
   id: Windreign
   parent: BaseVessel
-  name: HES Windreign
-  description: A massive, high-end Horizon Energy vessel built for long-term atmospheric work and gas mining. Carrier-capable with a small fleet of gas mining and salvage shuttles. Features a large, luxurious crew area. Recommended crew is 2-6.
+  name: Виндрейн # Ru-Localization
+  description: Огромный высококлассный корабль Горизонт Энерджи, созданный для длительных атмосферных работ и добычи газа. Является носителем с небольшим флотом газодобывающих и утилизаторских шаттлов. Оснащён большой роскошной зоной отдыха для экипажа. Рекомендуемый экипаж - 2–6 человек. # Ru-Localization
   price: 250000
   category: Large
   group: Shipyard
@@ -17,7 +17,7 @@
 
 - type: gameMap
   id: Windreign
-  mapName: 'HES Windreign'
+  mapName: 'Виндрейн' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/windreign.yml
   minPlayers: 0
   stations:
@@ -25,7 +25,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Windreign CIV{1}'
+          mapNameTemplate: 'Виндрейн{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

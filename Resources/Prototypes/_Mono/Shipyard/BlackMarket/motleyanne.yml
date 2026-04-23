@@ -3,8 +3,8 @@
 - type: vessel
   id: MotleyAnne
   parent: BaseVesselAntag
-  name: PDV-IED Motley Anne
-  description: A support mothership designed to reinforce an engagements back-line with mech and drone ensemble or closer resupplies.
+  name: Матерь Анна # Ru-Localization
+  description: Шаттл поддержки, предназначенный для усиления тыла с помощью отряда мехов и дронов, платящий за это отсутвием нормального вооружения. # Ru-Localization
   price: 280000
   limit: 2
   purchasable: false
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: MotleyAnne
-  mapName: 'PDV Motley Anne'
+  mapName: 'Матерь Анна' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/motleyanne.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Motley Anne PDV{1}'
+        mapNameTemplate: 'Матерь Анна{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
