@@ -55,7 +55,7 @@
             SeniorOfficer: [ 3, 3 ] # Mono
             Brigmedic: [ 2, 2 ] # Mono
             Deputy: [ -1, -1 ] # Mono
-            Cadet: [ 0, 0 ] # Exodus-Cadet-Return
+            Cadet: [ 6, 6 ] # Exodus-Cadet-Return
             TsfEngineer: [ 2, 2 ]
             TsfBorg: [ 2, 2 ]
           tags:

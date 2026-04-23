@@ -59,7 +59,7 @@
   name: department-Command
   description: department-NFCommand-description # Frontier
   color: "#334E6D"
-  roles:
+  # roles: # Exodus-Delete
   # - Captain # Frontier
   # - ChiefEngineer # Frontier
   # - ChiefMedicalOfficer # Frontier
@@ -76,12 +76,13 @@
   # - ERTSecurity # Frontier
   # - ERTEngineer # Frontier
   # - DeathSquad # Frontier
-  - StationRepresentative # Frontier
-  - Sheriff  # Frontier
-  - StationTrafficController # Frontier
-  - DirectorOfCare # Mono
+  # -  StationRepresentative # Exodus-Delete
+  # -  Sheriff  # Exodus-Delete
+  # -  StationTrafficController # Exodus-Delete
+  # -  DirectorOfCare # Exodus-Delete
   primary: false
   weight: 100
+  editorHidden: true # Exodus-Delete
 
 - type: department
   id: Engineering
