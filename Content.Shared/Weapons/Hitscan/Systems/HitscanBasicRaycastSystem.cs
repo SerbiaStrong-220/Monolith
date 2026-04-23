@@ -39,8 +39,10 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         //  1.) Hit the first entity that you targeted.
         //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
         var result = _container.IsEntityOrParentInContainer(shooter)
-            ? rayCastResults.FirstOrNull()
-            : rayCastResults.FirstOrNull(hit => hit.HitEntity != gun && // Exodus: ensure the gun itself is skipped
+            ? rayCastResults.FirstOrNull(hit => hit.HitEntity != gun &&
+                                                (hit.HitEntity == target
+                                                || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true))
+            : rayCastResults.FirstOrNull(hit => hit.HitEntity != gun &&
                                                 (hit.HitEntity == target
                                                 || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true));
 
