@@ -4,7 +4,6 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
-using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
@@ -14,7 +13,6 @@ namespace Content.Shared.Weapons.Hitscan.Systems;
 public sealed class HitscanBasicRaycastSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly ISharedAdminLogManager _log = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -27,24 +25,16 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 
     private void OnHitscanFired(Entity<HitscanBasicRaycastComponent> ent, ref HitscanTraceEvent args)
     {
-        var gun = args.Gun; // Exodus: for usage in lamda later
+        var gun = args.Gun; // Exodus-hitscan-ai-fix
         var shooter = args.Shooter ?? args.Gun;
         var mapCords = _transform.ToMapCoordinates(args.FromCoordinates);
         var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) ent.Comp.CollisionMask);
         var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, shooter, false);
 
         var target = args.Target;
-        // If you are in a container, use the raycast result
-        // Otherwise:
-        //  1.) Hit the first entity that you targeted.
-        //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
-        var result = _container.IsEntityOrParentInContainer(shooter)
-            ? rayCastResults.FirstOrNull(hit => hit.HitEntity != gun &&
-                                                (hit.HitEntity == target
-                                                || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true))
-            : rayCastResults.FirstOrNull(hit => hit.HitEntity != gun &&
-                                                (hit.HitEntity == target
-                                                || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true));
+        var result = rayCastResults.FirstOrNull(hit => hit.HitEntity != gun &&
+                                                       (hit.HitEntity == target
+                                                       || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true));
 
         var trace = new HitscanRaycastFiredEvent
         {
