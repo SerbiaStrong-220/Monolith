@@ -90,7 +90,7 @@
   - type: GameRule
     minPlayers: 15
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/wyrm.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/wyrm.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
