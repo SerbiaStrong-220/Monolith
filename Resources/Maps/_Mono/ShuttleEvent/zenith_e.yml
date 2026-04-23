@@ -34,7 +34,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: АСО Зенит
+      name: АСО Зенит # Ru-Localization
     - type: InitRepairSnapshot
     - type: ShipRepairRestrict
       toolWhitelist:

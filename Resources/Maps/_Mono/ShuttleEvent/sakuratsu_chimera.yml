@@ -33,7 +33,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Sakuratsu
+      name: Сакуратсу  # Ru-Localization
     - type: Transform
       parent: invalid
     - type: MapGrid

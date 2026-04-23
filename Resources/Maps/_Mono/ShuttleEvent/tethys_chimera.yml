@@ -32,7 +32,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Tethys
+      name: Тефида # Ru-Localization
     - type: Transform
       parent: invalid
     - type: MapGrid
