@@ -32,7 +32,12 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, shooter, false);
 
         var target = args.Target;
-        var result = rayCastResults.FirstOrNull(hit => hit.HitEntity != gun &&
+        var shooterOrGun = gunComp.UseUserPosition ? shooter : args.Gun;
+        var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, shooterOrGun, false);
+        var target = args.Target;
+        var result = _container.IsEntityOrParentInContainer(shooterOrGun)
+            ? rayCastResults.FirstOrNull()
+            : rayCastResults.FirstOrNull(hit => hit.HitEntity == target || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true);
                                                        (hit.HitEntity == target
                                                        || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true));
 
