@@ -128,6 +128,33 @@
   - TsfBorg # Mono
 
 - type: department
+  id: Combatant
+  name: department-Security
+  description: department-NFSecurity-description # Frontier
+  color: "#326DA8"
+  weight: 120
+  primary: false
+  editorHidden: true
+  roles:
+  - PrisonGuard
+  - Brigmedic
+  - NFDetective
+  - Cadet
+  - Deputy
+  - Bailiff
+  - Sheriff
+  - SeniorOfficer
+  - PublicAffairsLiaison
+  - TsfEngineer
+  - TsfBorg
+  - Pirate
+  - PirateFirstMate
+  - PirateCaptain
+  - PDVDenasvar
+  - PDVInfiltrator
+  - PdvBorg
+
+- type: department
   id: Science
   name: department-Science
   description: department-Science-description

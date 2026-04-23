@@ -42,7 +42,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 4
 
 - type: entity
@@ -87,7 +87,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 4
 
 - type: entity
@@ -133,7 +133,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 4
 
 - type: entity
@@ -177,7 +177,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 4
 
 # Mono edit - Mono UIV's
@@ -213,7 +213,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 4
 # Mono edit end
 

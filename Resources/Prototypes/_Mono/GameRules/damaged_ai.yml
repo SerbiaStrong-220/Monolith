@@ -34,7 +34,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 6
 
 - type: entity
@@ -54,7 +54,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 6
 
 - type: entity
@@ -74,7 +74,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 6
 
 - type: entity
@@ -94,7 +94,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 2
 
 - type: entity
@@ -114,7 +114,7 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 6
 
 - type: entity
@@ -134,5 +134,5 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
       minDepartmentPlayers: 8
