@@ -43,7 +43,7 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 4
+      minDepartmentPlayers: 5
 
 - type: entity
   id: BluespaceVaultError
@@ -88,7 +88,7 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 4
+      minDepartmentPlayers: 5
 
 - type: entity
   id: BluespaceVaultSmallError
@@ -134,7 +134,7 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 4
+      minDepartmentPlayers: 5
 
 - type: entity
   id: BluespaceSyndicateFTLInterception
@@ -178,7 +178,7 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 4
+      minDepartmentPlayers: 5
 
 # Mono edit - Mono UIV's
 - type: entity
@@ -214,7 +214,7 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 4
+      minDepartmentPlayers: 5
 # Mono edit end
 
 ## Mono edit - commenting out useless UIV's
