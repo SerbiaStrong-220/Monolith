@@ -4,7 +4,7 @@
   id: QJ340
   parent: BaseVesselAntag
   name: КД-340 # Ru-Localization
-  description: Шаттл с усиленным носовым вооружением: две Л-1 Фаланга, АСМ-302 Ванек и М220 Рубикон. # Ru-Localization
+  description: Шаттл с усиленным носовым вооружением две Л-1 Фаланга, АСМ-302 Ванек и М220 Рубикон. # Ru-Localization
   price: 33600 #Rounded up to 28K, with a 20% tax
   category: Small
   group: Custom
