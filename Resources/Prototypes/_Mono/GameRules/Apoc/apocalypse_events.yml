@@ -64,7 +64,7 @@
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/nebula.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/nebula.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
