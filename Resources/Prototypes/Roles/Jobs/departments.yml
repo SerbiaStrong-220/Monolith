@@ -127,9 +127,10 @@
   - TsfEngineer # Mono
   - TsfBorg # Mono
 
+# Exodus
 - type: department
   id: Combatant
-  name: department-Security
+  name: department-Combatant
   description: department-NFSecurity-description # Frontier
   color: "#326DA8"
   weight: 120
