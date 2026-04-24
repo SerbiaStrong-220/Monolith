@@ -9,7 +9,7 @@
   id: Snakelet
   parent: BaseVessel
   name: Змеёныш # Ru-Localization
-  description: Дрон с усиленным носовым вооружением и бомбовым отсеком с ручной перезарядкой. Предназначен для быстрых бомбардировочных ударов. # Ru-Localization
+  description: Дрон с усиленным носовым вооружением и малым боевым отсеком вооружения с ручной перезарядкой. Предназначен для быстрых бомбардировочных ударов. # Ru-Localization
   limit: 4
   price: 20000
   purchasable: false #voucher only

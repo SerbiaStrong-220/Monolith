@@ -7,7 +7,7 @@
   id: Peregrine
   parent: BaseVessel
   name: Перегрин # Ru-Localization
-  description: Специализированный утилизаторский шаттл с "вооружением" ввиде шести шахтёрских автопульсаторов М25. Оснащён МБСБСС. # Ru-Localization
+  description: Специализированный утилизаторский шаттл с "вооружением" ввиде шести шахтёрских автопульсаторов М25. Оснащён модулем БСС. # Ru-Localization
   price: 59525
   category: Medium
   group: Shipyard

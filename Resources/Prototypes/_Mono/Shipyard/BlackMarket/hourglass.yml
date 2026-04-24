@@ -4,7 +4,7 @@
   id: Hourglass
   parent: BaseVesselAntag
   name: Аургласс # Ru-Localization
-  description: Аургласс - громоздкий тихоходный шаттл с двумя 90-мм орудиями в носовой части. Оснащён медицинским отсеком и камбузом. Имеет МБСБСС. # Ru-Localization
+  description: Аургласс - громоздкий тихоходный шаттл с двумя 90-мм орудиями в носовой части. Оснащён медицинским отсеком и камбузом. Имеет модуль БСС. # Ru-Localization
   price: 120000 #96k appraisegrid
   category: Medium
   group: BlackMarket

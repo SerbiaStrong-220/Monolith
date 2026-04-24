@@ -4,7 +4,7 @@
   id: Carrion
   parent: BaseVesselAntag
   name: Керрион # Ru-Localization
-  description: Истребитель, вооружённый четырьмя 90-мм Дравонами и малым бомбовый отсек. Создан для разведки и скоротечных боёв на больших скоростях. # Ru-Localization
+  description: Истребитель, вооружённый четырьмя 90-мм Дравонами и малым боевым отсеком вооружения. Создан для разведки и скоротечных боёв на больших скоростях. # Ru-Localization
   price: 29000 #Appraised at 26000-ish
   category: Small
   group: BlackMarket

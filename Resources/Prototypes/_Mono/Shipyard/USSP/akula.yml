@@ -4,7 +4,7 @@
   id: Akula
   parent: BaseVesselAntag
   name: Акула # Ru-Localization
-  description: Дальнобойный шаттл КССП, предназначенный для быстрых боёв. Оснащён двумя Дравонами и МБСБСС-25. # Ru-Localization
+  description: Дальнобойный шаттл СССП, предназначенный для быстрых боёв. Оснащён двумя Дравонами и модулем БСС-25. # Ru-Localization
   price: 64000
   category: Medium
   group: Ussp

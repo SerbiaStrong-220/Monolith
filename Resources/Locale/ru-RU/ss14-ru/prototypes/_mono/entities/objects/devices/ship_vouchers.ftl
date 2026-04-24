@@ -1,11 +1,11 @@
 ent-BaseShipLPC = ship LPC
     .desc = Contains the necessary data for a shipyard console to produce a certain design.
-ent-ShipVoucherFrontierIronMan = ваучер Баега
-    .desc = Позволяет приобрести один бесплатный Баег на верфи. Уничтожается при продаже.
+ent-ShipVoucherFrontierIronMan = ваучер Железного человека
+    .desc = Позволяет приобрести бесплатно Остов или Баег на верфи. Уничтожается при продаже.
 ent-ShipVoucherUSSPBasic = ваучер базового шаттла СССП
     .desc = Небольшой ваучер, дающий право на получение базового шаттла СССП.
-ent-ShipVoucherUSSPIntermediate = ваучер промежуточного шаттла СССП
-    .desc = Небольшой ваучер, дающий право на получение промежуточного шаттла СССП.
+ent-ShipVoucherUSSPIntermediate = ваучер среднего шаттла СССП
+    .desc = Небольшой ваучер, дающий право на получение среднего шаттла СССП.
 ent-ShipVoucherUSSPAdvanced = ваучер продвинутого шаттла СССП
     .desc = Небольшой ваучер, дающий право на получение продвинутого шаттла СССП.
 ent-ShipVoucherUSSPLedokol = ваучер Ледокола

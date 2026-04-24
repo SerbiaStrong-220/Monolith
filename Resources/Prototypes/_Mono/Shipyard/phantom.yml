@@ -8,7 +8,7 @@
   id: Phantom
   parent: BaseVessel
   name: Фантом # Ru-Localization
-  description: Экспериментальный шаттл с  возможностью развития огромных скоростей. Имеет МБСБСС-25У. # Ru-Localization
+  description: Экспериментальный шаттл с  возможностью развития огромных скоростей. Имеет модуль БСС-25У. # Ru-Localization
   price: 90000
   category: Small
   group: Medical

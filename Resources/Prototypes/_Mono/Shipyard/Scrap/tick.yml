@@ -8,7 +8,7 @@
   id: Tick
   parent: BaseVessel
   name: Жук # Ru-Localization
-  description: верхлёгкий бомбардировщик из металлолома, оснащённый малым бомбовым отсеком и двумя 57-мм орудиями. # Ru-Localization
+  description: Сверхлёгкий бомбардировщик из металлолома, оснащённый малым боевым отсеком вооружения и двумя 57-мм орудиями. # Ru-Localization
   price: 15000 # it's a heap of scrap
   category: Small
   group: Scrap

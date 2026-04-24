@@ -4,7 +4,7 @@
   id: QJ490
   parent: BaseVesselAntag
   name: КД-490 # Ru-Localization
-  description: Оснащён четырьмя орудиями Тип-54С и малым бомбовым отсеком. # Ru-Localization
+  description: Оснащён четырьмя орудиями Тип-54С и малым малым боевым отсеком вооружения. # Ru-Localization
   price: 36500
   category: Small
   group: Custom

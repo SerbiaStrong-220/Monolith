@@ -9,9 +9,9 @@ station-event-asakim-shuttle-detected = Внимание, в сектор при
 
 # redacted AI ship borg stuff
 
-ghost-role-information-redacted-borg = Оператор автоматической обороны
+ghost-role-information-redacted-borg = Оператор автоматической защиты
 ghost-role-information-redacted-borg-description = Деградировавший синтетик автоматического оборонительного шаттла, долгое время находившийся в неактивном состоянии.
-ghost-role-information-redacted-core = Ядро автоматической обороны
+ghost-role-information-redacted-core = Ядро автоматической защиты
 ghost-role-information-redacted-core-description = Деградировавшее ядро с искусственным интеллектом автоматического оборонительного шаттла, долгое время находившееся в неактивном состоянии.
 
 # Lawsets

@@ -32,7 +32,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: АСО Разор # Ru-Localization
+      name: АСЗ Разор # Ru-Localization
     # bet
     - type: InitRepairSnapshot
     - type: ShipRepairRestrict
