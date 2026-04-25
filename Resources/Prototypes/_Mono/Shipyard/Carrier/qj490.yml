@@ -3,8 +3,8 @@
 - type: vessel
   id: QJ490
   parent: BaseVesselAntag
-  name: SKR QJ-490 Air Superiority Fighter
-  description: Equipped with 4 Type-54C autopulsers and a light munitions bay.
+  name: КД-490 # Ru-Localization
+  description: Оснащён четырьмя орудиями Тип-54С и малым малым боевым отсеком вооружения. # Ru-Localization
   price: 36500
   category: Small
   group: Custom
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: QJ490
-  mapName: 'QJ-490'
+  mapName: 'КД-490' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/qj490.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'QJ-490 TSF{1}'
+        mapNameTemplate: 'КД-490{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

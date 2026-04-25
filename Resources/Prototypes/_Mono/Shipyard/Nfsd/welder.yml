@@ -3,8 +3,8 @@
 - type: vessel
   id: Welder
   parent: BaseVesselAntag
-  name: TSF-ENG Welder
-  description: A multipurpose, utilitarian but cramped vessel envisioned as an all-in-one multitool for ship repair and resource extraction. Capable of detecting cloaked vessels.
+  name: Велдер # Ru-Localization
+  description: Многоцелевой, утилитарный, но тесный шаттл, задуманный как универсальный инструмент для ремонта шаттлов и добычи ресурсов. Способен обнаруживать замаскированные шаттлы. # Ru-Localization
   price: 78200
   category: Small
   group: Security
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Welder
-  mapName: 'Welder'
+  mapName: 'Велдер' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/welder.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Welder TSF{1}'
+        mapNameTemplate: 'Велдер{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

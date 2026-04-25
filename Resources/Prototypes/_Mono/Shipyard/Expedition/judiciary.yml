@@ -7,8 +7,8 @@
 - type: vessel
   id: Judiciary
   parent: BaseVessel
-  name: SHM Judiciary
-  description: A refitted research vessel armed with expedition-rated combat equipment.
+  name: Судья # Ru-Localization
+  description: Переоборудованное исследовательское судно, оснащённое экспедиционным и боевым оборудованием. # Ru-Localization
   price: 70001 # ~20,000$ markup
   category: Medium
   group: Expedition
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Judiciary
-  mapName: 'Judiciary'
+  mapName: 'Судья' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/judiciary.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Judiciary EXP{1}'
+          mapNameTemplate: 'Судья{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

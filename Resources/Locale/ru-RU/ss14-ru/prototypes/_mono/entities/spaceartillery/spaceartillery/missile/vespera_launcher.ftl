@@ -1,2 +1,2 @@
-ent-WeaponTurretVespera = ADMP-27 VESPERA 50mm Rapid-Fire Missile Rack
-    .desc = A rapid-fire swarm missile rack manufactured by Aetherion Dynamics. Saturates targets with guided warheads to overwhelm defenses. Limited ammo, but deadly. Can be remotely activated or linked to a GCS.
+ent-WeaponTurretVespera = АДМП-27 Венера
+    .desc = Пусковая установка залпового огня производства "Аэтерион Динамикс". Обрушивает на цели шквал управляемых ракет, прорывая любую оборону. Боезапас ограничен, но этого достаточно, чтобы сеять смерть. Может активироваться дистанционно или подключаться к консоли управления корабельными орудиями.

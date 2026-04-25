@@ -7,8 +7,8 @@
 - type: vessel
   id: Brute
   parent: BaseVessel
-  name: DIS Brute
-  description: What is essentially a heavy-class cargo freighter is being advertised by the DIS marketing department as a new wonder of cargo transportation. With quadruple the layer of walls to protect your precious cargo while drunk driving.
+  name: Брут # Ru-Localization
+  description: То, что по сути является большегрузом, отдел маркетинга Дрейк Индастрис рекламирует как новое чудо грузоперевозок. Имеет четыре слоя стен для защиты вашего драгоценного груза во время пьяного вождения. # Ru-Localization
   price: 77850
   category: Medium
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Brute
-  mapName: 'DIS Brute'
+  mapName: 'Брут' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/brute.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Brute CIV{1}'
+          mapNameTemplate: 'Брут{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

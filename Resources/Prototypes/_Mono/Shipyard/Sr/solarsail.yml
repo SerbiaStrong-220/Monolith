@@ -1,8 +1,8 @@
 - type: vessel
   id: Solarsail
   parent: BaseVessel
-  name: Solarsail
-  description: A personal transport and mobile office for the colonial liaison. Part of the combined service ship.
+  name: Парусник # Ru-Localization
+  description: Личный транспорт и мобильный офис Коменданта. # Ru-Localization
   price: 25500
   category: Small
   group: Sr
@@ -16,7 +16,7 @@
 
 - type: gameMap
   id: Solarsail
-  mapName: 'Solarsail'
+  mapName: 'Парусник' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/solarsail.yml
   minPlayers: 0
   stations:
@@ -24,7 +24,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Solarsail SRV{1}'
+          mapNameTemplate: 'Парусник{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

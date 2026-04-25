@@ -7,8 +7,8 @@
 - type: vessel
   id: Argent
   parent: BaseVessel
-  name: TSF-SKR Argent
-  description: A retired frigate gutted out and refurbished for cargo transport.
+  name: Аргент # Ru-Localization
+  description: Списанный фрегат, полностью переоборудованный для грузовых перевозок. # Ru-Localization
   price: 61150
   category: Medium
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Argent
-  mapName: 'TSF-SKR Argent'
+  mapName: 'Аргент' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/argent.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Argent CIV{1}'
+          mapNameTemplate: 'Аргент{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

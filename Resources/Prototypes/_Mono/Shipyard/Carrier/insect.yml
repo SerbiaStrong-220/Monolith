@@ -9,8 +9,8 @@
 - type: vessel
   id: Insect
   parent: BaseVessel
-  name: Insect
-  description: Micro-fighter equipped with AK570. Drone server included.
+  name: Жук # Ru-Localization
+  description: Дрон, испольщующий АК-570 как основное вооружение. # Ru-Localization
   price: 10500
   category: Small
   group: Custom
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Insect
-  mapName: 'Insect'
+  mapName: 'Жук' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/insect.yml
   minPlayers: 0
   stations:
@@ -33,6 +33,6 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Insect SEC{1}'
+        mapNameTemplate: 'Жук{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'

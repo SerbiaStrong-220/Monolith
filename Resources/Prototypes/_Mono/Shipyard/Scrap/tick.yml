@@ -7,8 +7,8 @@
 - type: vessel
   id: Tick
   parent: BaseVessel
-  name: GSI Tick
-  description: A hyperlight bomber made of scrap, fitted with a GPOB-L fighter bay and 2 57mms, it has no will to live.
+  name: Жук # Ru-Localization
+  description: Сверхлёгкий бомбардировщик из металлолома, оснащённый малым боевым отсеком вооружения и двумя 57-мм орудиями. # Ru-Localization
   price: 15000 # it's a heap of scrap
   category: Small
   group: Scrap
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Tick
-  mapName: 'GSI Tick'
+  mapName: 'Жук' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Scrap/tick.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tick SRP-MIL{1}'
+          mapNameTemplate: 'Жук{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

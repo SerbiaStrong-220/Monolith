@@ -127,6 +127,27 @@
   - TsfEngineer # Mono
   - TsfBorg # Mono
 
+# Exodus
+- type: department
+  id: Combatant
+  name: department-Combatant
+  description: department-NFSecurity-description # Frontier
+  color: "#326DA8"
+  weight: 120
+  primary: false
+  editorHidden: true
+  roles:
+  - Cadet
+  - Deputy
+  - Bailiff
+  - Sheriff
+  - SeniorOfficer
+  - Pirate
+  - PirateFirstMate
+  - PirateCaptain
+  - PDVDenasvar
+  - PDVInfiltrator
+
 - type: department
   id: Science
   name: department-Science

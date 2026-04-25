@@ -7,8 +7,8 @@
 - type: vessel
   id: Phantom
   parent: BaseVessel
-  name: IB Phantom
-  description: Experimental ship with enormous thruster power. CTLA-25s included.
+  name: Фантом # Ru-Localization
+  description: Экспериментальный шаттл с  возможностью развития огромных скоростей. Имеет модуль БСС-25У. # Ru-Localization
   price: 90000
   category: Small
   group: Medical
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Phantom
-  mapName: 'IB Phantom'
+  mapName: 'Фантом' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/phantom.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Phantom MED{1}'
+          mapNameTemplate: 'Фантом{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

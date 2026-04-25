@@ -12,8 +12,8 @@
 - type: vessel
   id: Bratan
   parent: BaseVessel
-  name: PB Bratan
-  description: A mobile nightclub, cafeteria, hydroponics, and secret drug lab and smuggling ship, all in one package! Brought to you by the Paycheck Bratva. 
+  name: Братан # Ru-Localization
+  description: Передвижной ночной клуб, кафетерий, гидропоника, секретная лаборатория по производству наркотиков и контрабандный шаттл - всё в одном флаконе! Предоставлено вам Бухгалтерией. # Ru-Localization
   price: 142000
   category: Large
   group: Shipyard
@@ -33,7 +33,7 @@
 
 - type: gameMap
   id: Bratan
-  mapName: 'PB Bratan'
+  mapName: 'Братан' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/bratan.yml
   minPlayers: 0
   stations:
@@ -41,7 +41,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Bratan CIV{1}'
+          mapNameTemplate: 'Братан{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

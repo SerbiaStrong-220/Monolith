@@ -3,8 +3,8 @@
 - type: vessel
   id: Sagittarius
   parent: BaseVessel
-  name: HT Sagittarius
-  description: The Sagittarius is the sirius' big brother, heavier firepower and more space while maintaing its chemistry bay.
+  name: Сагиттариус # Ru-Localization
+  description: Сагиттариус - старший брат Сириуса. Его фишки - более мощное вооружение и большее свободное пространства. # Ru-Localization
   price: 165000
   category: Large
   group: Expedition
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Sagittarius
-  mapName: 'HT Sagittarius'
+  mapName: 'Сагиттариус' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/sagittarius.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'HT Sagittarius EXP{1}'
+          mapNameTemplate: 'Сагиттариус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

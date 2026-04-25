@@ -3,8 +3,8 @@
 - type: vessel
   id: Ocelot
   parent: BaseVesselAntag
-  name: TSF-SKR Ocelot
-  description: Designed to work as a upgrade to the Spear for escort duty and patrols. Capable of revealing fully cloaked ships, and armed with 2x ASM-220s and 4x Type-54C autopulsers.
+  name: Оцелот # Ru-Localization
+  description: Разработан как улучшение другого шаттла для патрульной службы. Способен обнаруживать полностью замаскированные корабли. Вооружён двумя АСМ-220 Трезубец и четырьмя Тип-54С. # Ru-Localization
   price: 68500
   category: Small
   group: Security
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Ocelot
-  mapName: 'Ocelot'
+  mapName: 'Оцелот' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/ocelot.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Ocelot TSF{1}'
+        mapNameTemplate: 'Оцелот{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

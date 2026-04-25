@@ -3,8 +3,8 @@
 - type: vessel
   id: SpyglassMKII
   parent: BaseVesselAntag
-  name: PDV Spyglass MKII
-  description: One of salvage ships you'll see from the Phaethon Dynasty. This baby is capable of Xenoarcheology and salvage work.
+  name: СпайГласс М2
+  description: Один из немногочисленных утилизаторских шаттлов, которые можно встретить у Династии Фаэтона. Эта малютка способна заниматься ксеноархеологией и утилизаторскими работами. # Ru-Localization
   price: 62500
   category: Small
   group: BlackMarket
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: SpyglassMKII
-  mapName: 'PDV Spyglass MKII'
+  mapName: 'СпайГласс М2'
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/spyglassmk2.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Spyglass MKII PDV{1}'
+          mapNameTemplate: 'СпайГласс М2{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

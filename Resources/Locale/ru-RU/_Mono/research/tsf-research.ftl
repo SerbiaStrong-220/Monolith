@@ -23,9 +23,9 @@ research-technology-tsfmc-nanofoam = Формирование наноматер
 research-technology-tsfmc-demag = Технология сброса к заводским настройкам
 research-technology-tsfmc-eshield = Энергетическая защита
 research-technology-tsfmc-advanced-meds = Регенеративные технологии
-research-technology-tsfmc-altair-voucher = Ваучер шаттла Altair
+research-technology-tsfmc-altair-voucher = Ваучер шаттла Альтаир
 # T3 TSFMC
-research-technology-tsfmc-flyssa-voucher = Ваучер шаттла Flyssa
+research-technology-tsfmc-flyssa-voucher = Ваучер шаттла Флисса
 research-technology-tsfmc-mr8 = Огнестрельное оружие MP-8C
 research-technology-tsfmc-xlr556 = Пехотный комплекс АВР-556 ИСВ
 research-technology-tsfmc-synthalloy = Экспериментальное материаловедение

@@ -5,8 +5,8 @@
 - type: vessel
   id: Ravager
   parent: BaseVessel
-  name: Ravager
-  description: Capital class security mothership made for fast neutralization of civilian threats.
+  name: Опустошитель # Ru-Localization
+  description: Большой материнский корабль безопасности класса, созданный для быстрой нейтрализации угроз гражданам. # Ru-Localization
   price: 875800
   purchasable: false # voucher only
   category: Large
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Ravager
-  mapName: 'Ravager'
+  mapName: 'Опустошитель' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/ravager.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Ravager SEC{1}'
+        mapNameTemplate: 'Опустошитель{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'
       - type: StationJobs

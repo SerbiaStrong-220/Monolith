@@ -7,8 +7,8 @@
 - type: vessel
   id: Arribane
   parent: BaseVessel
-  name: HES Arribane
-  description: A shuttle purpose built by Horizon Energy for atmospheric work and gas mining. Living quarters are cramped, but comfortable.
+  name: Аррибан # Ru-Localization
+  description: Шаттл, специально построенный Горизонт Энерджи для атмосферных работ и добычи газа. Жилые отсеки тесные, но удобные. # Ru-Localization
   price: 97500
   category: Large
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Arribane
-  mapName: 'HES Arribane'
+  mapName: 'Аррибан' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/arribane.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Arribane CIV{1}'
+          mapNameTemplate: 'Аррибан{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

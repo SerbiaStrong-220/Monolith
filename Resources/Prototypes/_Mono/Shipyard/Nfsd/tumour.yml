@@ -3,8 +3,8 @@
 - type: vessel
   id: Tumour
   parent: BaseVesselAntag
-  name: TSF-SKR Tumour
-  description: A ugly potato of a carrier. Little armament to defend itself, but carries lathes to support its fighters and other ships.
+  name: Тумор # Ru-Localization
+  description: Уродливая картофелина-носитель. Почти не имеет вооружения для самообороны, но оснащена техфаюами для поддержки своих шаттлов. # Ru-Localization
   price: 68250
   category: Medium
   group: Security
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Tumour
-  mapName: 'Tumour'
+  mapName: 'Тумор' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/tumour.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Tumour TSF{1}'
+        mapNameTemplate: 'Тумор{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

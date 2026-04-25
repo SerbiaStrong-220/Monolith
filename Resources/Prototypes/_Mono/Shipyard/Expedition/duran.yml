@@ -5,8 +5,8 @@
 - type: vessel
   id: Duran
   parent: BaseVessel
-  name: SRA Duran
-  description: A general-purpose expeditionary vessel with a complementary kitchen. Cheap, slow, and has the structural integrity of a crunchy autumn leaf, but by god does it have soul.
+  name: Дюран # Ru-Localization
+  description: Экспедиционный шаттл общего назначения с дополнительным камбузом. Дешёвый, медленный, а по прочности корпуса — как хрустящий осенний лист. Но, боже, он шикарен. # Ru-Localization
   price: 40600
   category: Medium
   group: Expedition
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Duran
-  mapName: 'Duran'
+  mapName: 'Дюран' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/duran.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Duran EXP{1}'
+          mapNameTemplate: 'Дюран{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

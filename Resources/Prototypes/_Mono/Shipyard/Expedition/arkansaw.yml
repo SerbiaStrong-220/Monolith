@@ -7,8 +7,8 @@
 - type: vessel
   id: Arkansaw
   parent: BaseVessel
-  name: COG Arkansaw
-  description: Made by a forgotten cult; it is a Capital sized mech carrier with a dedicated science and mining bay with mining pulsars. Relatively thin armor and runs on 3 bananium generators wired together. 
+  name: Аркансоу # Ru-Localization
+  description: Шаттл, используемый как транспортёр мехов с отдельными научным и добывающим отсеками, оснащённый шахтёрскими пушками. Не имеет какой либо брони. Питается от трёх соединённых между собой генераторов на бананиуме.  # Ru-Localization
   price: 262000 # engine is fueled with bananium, extremely radioactive engine room, thin armor, extremely vulnerable rear thrusters. 
   category: Large
   group: Expedition
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Arkansaw
-  mapName: 'COG Arkansaw'
+  mapName: 'Аркансоу' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/arkansaw.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Arkansaw EXP{1}'
+          mapNameTemplate: 'Аркансоу{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

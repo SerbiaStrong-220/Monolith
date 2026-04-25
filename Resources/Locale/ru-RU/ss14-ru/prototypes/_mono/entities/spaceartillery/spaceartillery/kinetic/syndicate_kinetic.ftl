@@ -1,6 +1,9 @@
-ent-WeaponTurretAdderScattercannon = Adder scattercannon
-    .desc = A large, twin-barrelled scatter cannon, firing bursts of canister shot to shred any incoming missiles or potential boarders. Uses a self loading mechanism similar to the anaconda handgun.
-ent-WeaponTurretFang = Fang heavy 90mm autocannon
-    .desc = A heavy 90mm autocannon of syndicate design, created during the corporate war. Made for shattering opponent destroyers. Uses a self loading mechanism similar to the anaconda handgun.
-ent-WeaponTurretHydra = Hydra 220mm battery
-    .desc = A main cannonade of syndicate origin, the hydra is a monstrous tri-barreled battery of 220-millimeter pain, designed to shatter corpations' toughest vessels. Loads with a similar mechanism as the anaconda handgun.
+ent-WeaponTurretAdderScattercannon = Гадюка
+    .desc = Двухствольное корабельное орудие, стреляющее очередями снарядов, похожими на картечь. Используется для уничтожения любых приближающихся ракет или потенциальных абордажников. Использует механизм самозарядки, аналогичный пистолету "Анаконда". Может активироваться дистанционно или подключаться к консоли контроля орудиями.
+ent-WeaponTurretFang = Клык
+    .desc = Тяжёлое 90-мм двухствольное орудие, сделанное на основе разработки Синдиката, созданной во время Корпоративной войны. Предназначена для уничтожения вражеских эсминцев. Использует механизм самозарядки, аналогичный пистолету "Анаконда". Может активироваться дистанционно или подключаться к консоли контроля орудиями.
+ent-WeaponTurretHydra = Гидра
+    .desc = Самое мощное корабельное орудие из когда-либо созданных Синдикатом. Гидра - чудовищная трёхствольная батарея 220-миллиметровой боли, созданная для уничтожения самых прочных шаттлов. Использует механизм самозарядки, аналогичный пистолету "Анаконда". Может активироваться дистанционно или подключаться к консоли контроля орудиями.
+ent-WeaponTurretLeviathan = Левиафан
+    .desc = Тяжёлое артиллерийское орудие Синдиката. Левиафан - главное свидетельство изобретательности Синдиката, созданное для доказательства этого силой. Способно расколоть боевой шаттл и уничтожить малый дрон одним снарядом. Использует механизм самозарядки, аналогичный пистолету "Анаконда". Может активироваться дистанционно или подключаться к консоли контроля орудиями.
+

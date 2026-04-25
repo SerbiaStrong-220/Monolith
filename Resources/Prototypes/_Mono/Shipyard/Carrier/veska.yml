@@ -3,8 +3,8 @@
 - type: vessel
   id: Veska
   parent: BaseVesselAntag
-  name: RG Veska
-  description: A modified Ample that tears out the mining equipment and installs a light autocannon.
+  name: Веска # Ru-Localization
+  description: Модифицированный Эмпл, из которого убрали рудодобывающее оборудование и установили лёгкое корабельное орудие. # Ru-Localization
   price: 6500
   category: Micro
   group: Custom
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Veska
-  mapName: 'Veska'
+  mapName: 'Веска' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/veska.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Veska MIL{1}'
+        mapNameTemplate: 'Веска{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

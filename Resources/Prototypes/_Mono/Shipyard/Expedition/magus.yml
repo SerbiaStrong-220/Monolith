@@ -7,8 +7,8 @@
 - type: vessel
   id: Magus
   parent: BaseVessel
-  name: SHM Magus
-  description: An armed, PMC-rated medical lighter designed for planetary expeditions.
+  name: Магус # Ru-Localization
+  description: Экспедиционный шаттл, на удивление имеющий много медицинского оборудования для своего вида. # Ru-Localization
   price: 69420 # ~20,000$ markup
   category: Medium
   group: Expedition
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Magus
-  mapName: 'Magus'
+  mapName: 'Магус' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/magus.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Magus EXP{1}'
+          mapNameTemplate: 'Магус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

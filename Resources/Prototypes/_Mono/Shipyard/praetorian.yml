@@ -7,8 +7,8 @@
 - type: vessel
   id: Praetorian
   parent: BaseVessel
-  name: TSF-SKR Praetorian
-  description: A more compact and advanced Archer, outfitted with a shield gen, 4 AK570s, 2 L85s, and 2 MARAUDERS. This ship has a military IFF designation.
+  name: Преторианец # Ru-Localization
+  description: Более компактный и продвинутый Арчер, оснащённый генератором щита, четырьмя АК570, двумя Л85 и двумя Мародёрами. # Ru-Localization
   price: 101520
   category: Medium
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Praetorian
-  mapName: 'TSF-SKR Praetorian'
+  mapName: 'Преторианец' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/praetorian.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Praetorian MIL{1}'
+          mapNameTemplate: 'Преторианец{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

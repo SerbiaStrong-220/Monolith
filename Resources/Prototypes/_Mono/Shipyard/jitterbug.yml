@@ -9,8 +9,8 @@
 - type: vessel
   id: Jitterbug
   parent: BaseVessel
-  name: SE Jitterbug
-  description: A Botanical shuttle, comes with ten trays and some supplies to get you going. Comes in the unique shape of a bug, how cute.
+  name: Джиттербаг # Ru-Localization
+  description: Ботанический шаттл с десятью лотками и некоторым количеством материалов для старта. Имеет уникальную форму жука - как мило. # Ru-Localization
   price: 36050
   category: Small
   group: Shipyard
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Jitterbug
-  mapName: 'SE Jitterbug'
+  mapName: 'Джиттербаг' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/jitterbug.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Jitterbug CIV{1}'
+          mapNameTemplate: 'Джиттербаг{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

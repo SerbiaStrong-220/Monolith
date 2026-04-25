@@ -7,8 +7,8 @@
 - type: vessel
   id: Leaf
   parent: BaseVessel
-  name: PTR Leaf
-  description: A retired warship, the majority of it's hull is carved out to live it's twilight years as a botany/chemistry ship.
+  name: Лист # Ru-Localization
+  description: Списанный военный шаттл, большая часть обшивки которого убрана, чтобы он доживал свои дни в качестве ботанического и химического судна. # Ru-Localization
   price: 69500
   category: Medium
   group: Medical
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Leaf
-  mapName: 'PTR Leaf'
+  mapName: 'Лист' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/leaf.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Leaf MED{1}'
+          mapNameTemplate: 'Лист{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

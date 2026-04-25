@@ -7,8 +7,8 @@
 - type: vessel
   id: Sirius
   parent: BaseVessel
-  name: SKR Sirius
-  description: An expedition ship outfitted with 4 57mms, 2 90mms, and a full chemistry setup.
+  name: Сириус # Ru-Localization
+  description: Экспедиционный шаттл, оснащённый четырьмя 57-мм орудиями, двумя 90-мм орудиями и полным коплектом химического оборудования. # Ru-Localization
   price: 80750
   category: Medium
   group: Expedition
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Sirius
-  mapName: 'Sirius'
+  mapName: 'Сириус' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/sirius.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Sirius EXP{1}'
+          mapNameTemplate: 'Сириус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

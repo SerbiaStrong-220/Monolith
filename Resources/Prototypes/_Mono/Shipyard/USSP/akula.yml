@@ -3,8 +3,8 @@
 - type: vessel
   id: Akula
   parent: BaseVesselAntag
-  name: PPU Akula
-  description: A USSP long range harasser, meant for hit and runs. Comes with two dravons and CTLA-25.
+  name: Акула # Ru-Localization
+  description: Дальнобойный шаттл СССП, предназначенный для быстрых боёв. Оснащён двумя Дравонами и модулем БСС-25. # Ru-Localization
   price: 64000
   category: Medium
   group: Ussp
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Akula
-  mapName: 'Akula'
+  mapName: 'Акула' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/akula.yml
   minPlayers: 0
   stations:
@@ -26,7 +26,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Akula MIL{1}'
+          mapNameTemplate: 'Акула{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

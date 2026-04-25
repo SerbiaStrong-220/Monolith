@@ -3,8 +3,8 @@
 - type: vessel
   id: Bastion
   parent: BaseVesselAntag
-  name: PDV Bastion
-  description: A long ranged design using 2 Hydra 220mm Cannons and 4 AK570 57mm autocannons, stand firm and sink the invaders.
+  name: Бастион # Ru-Localization
+  description: Дальнобойный шаттл, ооружённый двумя 220-мм пушками Гидра и четырьмя 57-мм автопушками АК570. Ваша задача — стоять насмерть и топить врага. # Ru-Localization
   price: 95500
   category: Medium
   group: BlackMarket
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Bastion
-  mapName: 'PDV Bastion'
+  mapName: 'Бастион' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/bastion.yml
   minPlayers: 0
   stations:
@@ -26,7 +26,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Bastion PDV{1}'
+          mapNameTemplate: 'Бастион{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

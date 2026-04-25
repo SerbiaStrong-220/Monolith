@@ -6,8 +6,8 @@
 - type: vessel
   id: McChicken
   parent: BaseVessel
-  name: AES McChicken
-  description: A cheap, fried food ship. For those who enjoy ungodly ammounts of calories, now made on the go!.
+  name: МакЧикен # Ru-Localization
+  description: Дешёвый фастфуд шаттл-ресторан. Для тех, кто любит немыслимое количество калорий - теперь прямо на лету! # Ru-Localization
   price: 28875
   category: Medium
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: McChicken
-  mapName: 'AES McChicken'
+  mapName: 'МакЧикен' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/mcchicken.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'McChicken CIV{1}'
+          mapNameTemplate: 'МакЧикен{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

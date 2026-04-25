@@ -2,8 +2,8 @@
 - type: vessel
   id: Hoplite
   parent: BaseVesselAntag
-  name: TSF-PIN Hoplite
-  description: A patrol craft meant to intercept smugglers and light enemy craft with powerful engines and EMPs. It is equipped with 2 RUBICON, two plasma pulsers and two MARAUDER plasma cannons
+  name: Гоплит # Ru-Localization
+  description: Патрульный шаттл, предназначенный для перехвата контрабандистов и легких вражеских кораблей, оснащённый мощными двигателями и ЭМИ-орудиями. Вооружён двумя Рубиконами, двумя плазменными пульсаторами и двумя Мародёрами. # Ru-Localization
   price: 78500
   category: Small
   group: Security
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Hoplite
-  mapName: 'Hoplite'
+  mapName: 'Гоплит' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/hoplite.yml
   minPlayers: 0
   stations:
@@ -26,7 +26,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Hoplite TSF{1}'
+        mapNameTemplate: 'Гоплит{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

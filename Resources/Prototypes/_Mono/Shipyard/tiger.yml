@@ -7,8 +7,8 @@
 - type: vessel
   id: Tiger
   parent: BaseVessel
-  name: NSK Tiger
-  description: A retired racing ship, the Tiger hull has been found in use by the Nova Sharks as both a hotrod, as well as a ludicriously fast haulcraft. 
+  name: Тигр # Ru-Localization
+  description: Списанный гоночный шаттл. Используется компанией Нова Шаркс как хотрод и как безумно быстрый грузовой шаттл. # Ru-Localization
   price: 32000 # race ship tax since its gonna be used for smuggling. 
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Tiger
-  mapName: 'NSK Tiger'
+  mapName: 'Тигр' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/tiger.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tiger CIV{1}'
+          mapNameTemplate: 'Тигр{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

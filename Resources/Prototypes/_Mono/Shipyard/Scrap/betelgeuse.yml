@@ -6,8 +6,8 @@
 - type: vessel
   id: Betelgeuse
   parent: BaseVessel
-  name: Betelgeuse
-  description: Cramped salvage vessel that is ran on hopes and dreams, but includes one of the most powerful mining-grade shipguns in this sector.
+  name: Бетельгейзе # Ru-Localization
+  description: Тесный утилизаторский шаттл, работающий на надеждах и мечтах, но оснащённый одним из самых мощных шахтёрских орудий в этом секторе. # Ru-Localization
   price: 43500
   category: Small
   group: Scrap
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Betelgeuse
-  mapName: 'Betelgeuse'
+  mapName: 'Бетельгейзе' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/betelgeuse.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Betelgeuse CIV{1}'
+          mapNameTemplate: 'Бетельгейзе{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

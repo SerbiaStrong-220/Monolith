@@ -42,7 +42,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Olympus
+      name: Олимпус  # Ru-Localization
     - type: Transform
       pos: -0.8541667,1.5
       parent: invalid

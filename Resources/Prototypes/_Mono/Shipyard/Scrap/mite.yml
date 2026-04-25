@@ -7,8 +7,8 @@
 - type: vessel
   id: Mite
   parent: BaseVessel
-  name: Mite
-  description: A heap of scrap of unknown origin, seemingly retrofitted by salvagers into a military ship using salvage weaponry. Was found as a derelict in space and now is being resold without even as much as a cleanup.
+  name: Клещ # Ru-Localization
+  description: Куча металлолома неизвестного происхождения, по-видимому, переоборудованная утилизаторами в военный шаттл с использованием утилизаторского вооружения. Был найден брошенным в космосе, а теперь его перепродают даже без минимальной подготовки. # Ru-Localization
   price: 45000 # it's a heap of scrap
   category: Small
   group: Scrap
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Mite
-  mapName: 'Mite'
+  mapName: 'Клещ' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Scrap/mite.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Mite MIL{1}'
+          mapNameTemplate: 'Клещ{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

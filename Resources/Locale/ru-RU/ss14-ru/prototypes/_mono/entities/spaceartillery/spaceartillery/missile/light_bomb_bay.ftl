@@ -1,2 +1,2 @@
-ent-WeaponTurretLightMunitionsBay = GPOB-L Light Munitions Bay
-    .desc = A relatively small, armored munitions bay capable of holding up to two lightweight ordinance packages. Typically found on light spacecraft, particularly bombers, and provide a limited use method of damaging targets far above the user's weight class.
+ent-WeaponTurretLightMunitionsBay = малый боевой отсек вооружения
+    .desc = Относительно небольшой бронированный боевой отсек вооружения, способный нести до двух лёгких боевых снарядов. Обычно устанавливается на малых шаттлах, особенно на бомбардировщиках, и предоставляет ограниченный способ нанесения урона целям, значительно превосходящим носитель по классу.

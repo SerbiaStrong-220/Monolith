@@ -1,8 +1,8 @@
 - type: vessel
   id: Kopye
   parent: BaseVesselAntag
-  name: BYP Kopye
-  description: A thin, pointed ram made to fit the connection port of the Ledokol.
+  name: М-Копьё # Ru-Localization
+  description: Тонкий заострённый таран, подходящий для стыковочного порта Ледокола. # Ru-Localization
   price: 45000
   purchasable: false # voucher only
   category: Large
@@ -13,7 +13,7 @@
 
 - type: gameMap
   id: Kopye
-  mapName: 'Kopye'
+  mapName: 'М-Копьё' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/Ledokol/Attatchments/kopye.yml
   minPlayers: 0
   stations:
@@ -21,7 +21,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Kopye MIL Ram{1}'
+          mapNameTemplate: 'М-Копьё{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

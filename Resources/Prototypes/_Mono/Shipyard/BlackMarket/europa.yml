@@ -3,8 +3,8 @@
 - type: vessel
   id: Europa
   parent: BaseVesselAntag
-  name: IDY Europa
-  description: A repurposed interdyne medical frigate, with a focus on broadside firepower and armor.
+  name: Европа # Ru-Localization
+  description: Переоборудованный медицинский шаттл с акцентом на бортовую огневую мощь и броню. # Ru-Localization
   limit: 3
   price: 280650
   category: Large
@@ -20,18 +20,18 @@
 
 - type: gameMap
   id: Europa
-  mapName: 'PDV Europa'
+  mapName: 'Европа' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/europa.yml
   minPlayers: 0
   stations:
     Europa:
       gridComponents:
       - type: VesselInfo
-        description: "The Saturn's Sister ship."
+        description: "Сестринский шаттл Сатурна" # Ru-Localization
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Europa PDV{1}'
+          mapNameTemplate: 'Европа{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

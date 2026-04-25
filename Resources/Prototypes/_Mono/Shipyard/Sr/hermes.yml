@@ -1,8 +1,8 @@
 - type: vessel
   id: Hermes
   parent: BaseVessel
-  name: Hermes
-  description: The mailing segment of the combined service ship, designed for speed above all. This one is designed and produced by The Pantheon Collective.
+  name: Гермес # Ru-Localization
+  description: Почтовый многофункциональный служебный шаттл, спроектированный с приоритетом его скорости в ушерб некоторых других элементов. Разработан и произведён Пантеон Коллектив. # Ru-Localization
   price: 37500
   category: Small
   group: Sr
@@ -16,7 +16,7 @@
 
 - type: gameMap
   id: Hermes
-  mapName: 'TPC Hermes'
+  mapName: 'Гермес' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/hermes.yml
   minPlayers: 0
   stations:
@@ -24,7 +24,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Hermes SRV{1}'
+          mapNameTemplate: 'Гермес{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

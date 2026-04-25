@@ -1,3 +1,6 @@
-ent-WeaponTurretShard = Light mass driver "Shard"
-    .desc = Ultralight mass driver weapon of unknown origin, designated "Shard" during initial reverse engineering attempts. Light damage, but long range and little upkeep to mount on ships.
-    .suffix = DRONE ONLY
+ent-WeaponTurretShard = Шард
+    .desc = Сверхлёгкий рельсотрон, чьё происхождение остаётся загадкой. Обозначение Шард было присвоено при первых попытках обратной разработки. Наносит небольшой урон, но славится своей дальнобойностью и неприхотливостью при установке на шаттлы.
+    .suffix = Только Дроны
+ent-WeaponTurretPinhole = Пинхол
+    .desc = Рельсотрон неизвестного происхождения. Попытки изучения показывают чрезвычайно высокую скорость и массу снарядов, а также неразрешённую боевую часть, способную сдвигать корабли с места.
+    .suffix = Только Дроны

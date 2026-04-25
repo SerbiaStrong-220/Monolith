@@ -11,7 +11,7 @@
 - type: pointOfInterest
   id: Medical
   parent: [BasePOI, BaseRepairablePOI]
-  name: 'Медицинский Центр' # Ru-Localization
+  name: 'Госпиталь' # Ru-Localization
   minimumDistance: 1650
   maximumDistance: 2700
   spawnGroup: Required
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Medical
-  mapName: 'Медицинский Центр' # Ru-Localization
+  mapName: 'Госпиталь' # Ru-Localization
   mapPath: /Maps/_NF/POI/medical.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: RecordsFrontierOutpost
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Медицинский Центр' # Ru-Localization
+          mapNameTemplate: 'Госпиталь' # Ru-Localization
         - type: ExtraStationInformation
           icon:
             sprite: _NF/Markers/jobs.rsi

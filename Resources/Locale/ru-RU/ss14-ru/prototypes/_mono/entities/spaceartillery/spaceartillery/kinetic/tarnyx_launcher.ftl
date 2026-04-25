@@ -1,6 +1,7 @@
-ent-WeaponTurretTarnyx = ADBX-31 TARNYX 150mm EMP Cannon
-    .desc = A heavy EMP cannon made by Aetherion Dynamics, designed to disable large sections of enemy ships with a single, powerful shot. Effective in asymmetric combat. Can be remotely activated or linked up to a GCS.
-    .suffix = Station, Recharging Ammo, EMP
-ent-WeaponTurretTarnyxReload = ADBX-31 TARNYX 150mm EMP Cannon
-    .desc = A heavy EMP cannon made by Aetherion Dynamics, designed to disable large sections of enemy ships with a single, powerful shot. Effective in asymmetric combat. Can be remotely activated or linked up to a GCS.
-    .suffix = Ship, Manual Reload
+# ЭМИ Орудие Аэтеорион Динамикс
+ent-WeaponTurretTarnyx = ЭМИ ОАД-31 Тарникс
+    .desc = Тяжёлое ЭМИ-орудие производства "Аэтеорион Динамикс". Предназначена для временного выведения из строя шаттлов противника одним мощным ЭМИ выстрелом. Эффективна в асимметричном бою. Может активироваться дистанционно или подключаться к консоли контроля орудиями.
+    .suffix = Станция, Автоматическая Перезарядка, ЭМИ
+ent-WeaponTurretTarnyxReload = { ent-WeaponTurretTarnyx }
+    .desc = { ent-WeaponTurretTarnyx.desc }
+    .suffix = Шаттл, Ручная Перезарядка, ЭМИ

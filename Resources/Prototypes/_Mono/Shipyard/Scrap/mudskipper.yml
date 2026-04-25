@@ -6,8 +6,8 @@
 - type: vessel
   id: Mudskipper
   parent: BaseVessel
-  name: SKR Mudskipper
-  description: A heavily modified Peregrine for combat usage. The inner bays have had the outermost layers collapsed for an additional layer of armor, the interior has been rearranged for a shield generator, and the weapon mounts now carry 4 Draupnir rotary cannons.
+  name: Мурекс # Ru-Localization
+  description: Сильно модифицированный шаттл для боевого использования. Внешние слои внутренних отсеков обрушены ради дополнительного слоя брони, интерьер перестроен для установки генератора щитов, а на обшивку теперь установлены четыре Драупнира. # Ru-Localization
   price: 75000
   category: Medium
   group: Scrap
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Mudskipper
-  mapName: 'SKR Mudskipper'
+  mapName: 'Мурекс' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Scrap/mudskipper.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Mudskipper SRP{1}'
+          mapNameTemplate: 'Мурекс{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

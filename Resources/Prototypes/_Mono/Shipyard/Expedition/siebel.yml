@@ -4,8 +4,8 @@
 - type: vessel
   id: Siebel
   parent: BaseVessel
-  name: MI Siebel
-  description: The Siebel is a militia owned and designed ship, designed with Chimera combat in mind, however; many use it for expeditionary exploration and combat.
+  name: Зибель # Ru-Localization
+  description: Зибель - шаттл, созданный для борьбы с химерами, однако многие используют его для экспедиционных исследований. # Ru-Localization
   price: 175000
   category: Medium
   group: Expedition
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Siebel
-  mapName: 'MI Siebel'
+  mapName: 'Зибель' # Ru-Localization
   mapPath: /Maps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Siebel MIL{1}'
+          mapNameTemplate: 'Зибель{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

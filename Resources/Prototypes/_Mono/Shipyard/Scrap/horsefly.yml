@@ -7,8 +7,8 @@
 - type: vessel
   id: Horsefly
   parent: BaseVessel
-  name: GSI Horsefly
-  description: A light artillery ship made of scrap fused by a deranged group of mercenaries, it's designed to fire a single shell then die. Isn't supplied with any form of atmosphere, bring your own suit.
+  name: Слепень # Ru-Localization
+  description: Лёгкий вооруженный шаттл, сваренный из металлолома шайкой безумных наёмников. Спроектирован так, чтобы сделать один выстрел и умереть. Не оснащён никакой атмосферой - берите свой скафандр. # Ru-Localization
   price: 32500 # it's a heap of scrap
   category: Small
   group: Scrap
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Horsefly
-  mapName: 'Horsefly'
+  mapName: 'Слепень' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Scrap/horsefly.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Horsefly SRP-MIL{1}'
+          mapNameTemplate: 'Слепень{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

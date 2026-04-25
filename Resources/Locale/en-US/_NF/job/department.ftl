@@ -3,3 +3,4 @@ department-Antag = Phaethon Dynasty Imperial Vanguard
 department-Command = Central Command
 department-Frontier = Colossus Frontier Colonization
 department-Security = TSF Marine Corps Detachment
+department-Combatant = Combatant

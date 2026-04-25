@@ -8,8 +8,8 @@
 - type: vessel
   id: Zeros
   parent: BaseVessel
-  name: JIN Zeros
-  description: A truck stop diner ship designed to resemble a semi-truck, complete with a EVA accessable dining room and a small cargo bay.
+  name: Зерос # Ru-Localization
+  description: Шаттл-закусочная, стилизованный под тягач с полуприцепом. Имеет обеденный зал с доступом из открытого космоса и небольшой грузовой отсек. # Ru-Localization
   price: 112500
   category: Large
   group: Shipyard
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Zeros
-  mapName: 'JIN Zeros'
+  mapName: 'Зерос' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/zeros.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Zeros CIV{1}'
+          mapNameTemplate: 'Зерос{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
