@@ -137,23 +137,16 @@
   primary: false
   editorHidden: true
   roles:
-  - PrisonGuard
-  - Brigmedic
-  - NFDetective
   - Cadet
   - Deputy
   - Bailiff
   - Sheriff
   - SeniorOfficer
-  - PublicAffairsLiaison
-  - TsfEngineer
-  - TsfBorg
   - Pirate
   - PirateFirstMate
   - PirateCaptain
   - PDVDenasvar
   - PDVInfiltrator
-  - PdvBorg
 
 - type: department
   id: Science
