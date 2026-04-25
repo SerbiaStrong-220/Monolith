@@ -9,7 +9,7 @@
   category: Large
   group: Ussp
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/buran.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   guidebookPage: Null
   class:
   - Frigate
@@ -19,7 +19,7 @@
 - type: gameMap
   id: Buran
   mapName: 'Буран' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/buran.yml
+  mapPath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   minPlayers: 0
   stations:
     Buran:

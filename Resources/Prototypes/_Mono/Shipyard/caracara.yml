@@ -2,7 +2,7 @@
 # GitHub: UnicornOnLSD
 # Discord: unicornonlsd
 
-# Shuttle Notes: base is around 59K with 12K added markup 
+# Shuttle Notes: base is around 59K with 12K added markup
 #
 - type: vessel
   id: caracara
@@ -12,18 +12,18 @@
   price: 71000
   category: Medium
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/caracara.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/caracara.yml # Exodus
   guidebookPage: null
   class:
   - Salvage
-  - frigate 
+  - frigate
   engine:
-  - plasma 
+  - plasma
 
 - type: gameMap
   id: caracara
   mapName: 'КараКара' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/caracara.yml
+  mapPath: /Maps/_Exodus/Shuttles/caracara.yml #  Exodus
   minPlayers: 0
   stations:
     caracara:

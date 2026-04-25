@@ -9,7 +9,7 @@
   category: Medium
   group: Ussp
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/drakon.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
   guidebookPage: Null
   class:
   - Pursuit
@@ -20,7 +20,7 @@
 - type: gameMap
   id: Drakon
   mapName: 'Дракон' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/drakon.yml
+  mapPath: /Maps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
   minPlayers: 0
   stations:
     Drakon:
