@@ -16,7 +16,7 @@
     - id: UnknownShuttleZenith
     - id: UnknownShuttleWyrm
     - id: UnknownShuttleNebula
-    - id: UnknownShuttleConcordXApoc
+    - id: UnknownShuttleConcordX
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -138,9 +138,9 @@
       department: Combatant
       minDepartmentPlayers: 9
 
-  - type: entity
+- type: entity
   parent: BaseRandomShuttleRule
-  id: UnknownShuttleConcordXApoc
+  id: UnknownShuttleConcordX
   components:
   - type: StationEvent
     startAnnouncement: station-event-ai-frigate-detected

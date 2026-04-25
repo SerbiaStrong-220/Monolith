@@ -132,7 +132,7 @@
       department: Combatant
       minDepartmentPlayers: 7
 
-  - type: entity
+- type: entity
   parent: BaseRandomShuttleRule
   id: UnknownShuttleConcordXApoc
   components:
