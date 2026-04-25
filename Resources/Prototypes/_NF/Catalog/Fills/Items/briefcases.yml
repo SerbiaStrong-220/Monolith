@@ -83,7 +83,6 @@
       - id: SpaceCash25000
         amount: 2
       - id: SpaceCash20000
-        amount: 1
     sound:
       collection: storageRustle
   - type: StaticPrice # Require since you can still sell a ship that have it on it
