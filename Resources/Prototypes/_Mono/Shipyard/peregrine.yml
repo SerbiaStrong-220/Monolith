@@ -6,8 +6,8 @@
 - type: vessel
   id: Peregrine
   parent: BaseVessel
-  name: SKR Peregrine
-  description: A dedicated salvage vessel w/ 6 mining autopulsers. No defensive armaments outside of that. Comes with an FTL drive.
+  name: Перегрин # Ru-Localization
+  description: Специализированный утилизаторский шаттл с "вооружением" ввиде шести шахтёрских автопульсаторов М25. Оснащён модулем БСС. # Ru-Localization
   price: 59525
   category: Medium
   group: Shipyard
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Peregrine
-  mapName: 'SKR Peregrine'
+  mapName: 'Перегрин' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/peregrine.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Peregrine CIV{1}'
+          mapNameTemplate: 'Перегрин{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -16,6 +16,6 @@ research-technology-ussp-explosives-medium = Военная взрывчатка
 # T3 USSP
 research-technology-ussp-guns-advanced = Продвинутое вооружение СССП
 research-technology-ussp-ships-advanced = Корабли СССП III уровня
-research-technology-ussp-ships-ledokol = Ваучер на шаттл Ledokol
+research-technology-ussp-ships-ledokol = Ваучер на шаттл Ледокол
 research-technology-ussp-suits-advanced = Продвинутое снаряжение СССП
 research-technology-ussp-ammo-advanced = Продвинутые боеприпасы СССП

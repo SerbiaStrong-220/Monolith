@@ -3,13 +3,13 @@
 - type: vessel
   id: Buran
   parent: BaseVesselAntag
-  name: VEF Buran
-  description: USSP capital-sized frigate with tremendous broadside firepower and thick armor. Glory to commissariat.
+  name: Буран # Ru-Localization
+  description: Фрегат СССП с огромной бортовой огневой мощью и толстой бронёй. Слава великому комиссариату! # Ru-Localization
   price: 320000
   category: Large
   group: Ussp
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/buran.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   guidebookPage: Null
   class:
   - Frigate
@@ -18,18 +18,18 @@
 
 - type: gameMap
   id: Buran
-  mapName: 'Buran'
-  mapPath: /Maps/_Mono/Shuttles/USSP/buran.yml
+  mapName: 'Буран' # Ru-Localization
+  mapPath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   minPlayers: 0
   stations:
     Buran:
       stationProto: StandardFrontierVessel
       gridComponents:
       - type: VesselInfo
-        description: "Outdated, yet still reliable."
+        description: "Старый, но не бесполезный." # Ru-Localization
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Buran MIL{1}'
+          mapNameTemplate: 'Буран' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

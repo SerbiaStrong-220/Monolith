@@ -3,8 +3,8 @@
 - type: vessel
   id: Scorpion
   parent: BaseVesselAntag
-  name: PDV Scorpion
-  description: An unusual variant from the same shipyards manufacturing Anacondas, using a mix of missile pods and 2 large-caliber cannons.
+  name: Скорпион # Ru-Localization
+  description: Необычный вариант шаттла, использующий комбинацию ракетных пусковых установок и двух крупнокалиберных пушек. # Ru-Localization
   price: 113200
   category: Medium
   group: BlackMarket
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Scorpion
-  mapName: 'PDV Scorpion'
+  mapName: 'Скорпион'
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/scorpion.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Scorpion PDV{1}'
+          mapNameTemplate: 'Скорпион{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

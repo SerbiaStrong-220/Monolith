@@ -3,13 +3,13 @@
 - type: vessel
   id: Drakon
   parent: BaseVesselAntag
-  name: NCS Drakon
-  description: A fast brawler with heavy armor and ballistic armaments.
+  name: Дракон # Ru-Localization
+  description: Быстрый боевой шаттл с довольно опасным баллистическим арсеналом орудий. # Ru-Localization
   price: 85290
   category: Medium
   group: Ussp
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/drakon.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
   guidebookPage: Null
   class:
   - Pursuit
@@ -19,15 +19,15 @@
 
 - type: gameMap
   id: Drakon
-  mapName: 'Drakon'
-  mapPath: /Maps/_Mono/Shuttles/USSP/drakon.yml
+  mapName: 'Дракон' # Ru-Localization
+  mapPath: /Maps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
   minPlayers: 0
   stations:
     Drakon:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Drakon MIL{1}'
+          mapNameTemplate: 'Дракон{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

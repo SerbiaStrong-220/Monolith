@@ -9,8 +9,8 @@
 - type: vessel
   id: Spessbite
   parent: BaseVessel
-  name: PTI Spessbite
-  description: A food truck, equipped with all manners of amenities cramped into an almost claustrophobic interior. Very cozy, though.
+  name: Спексбит # Ru-Localization
+  description: Фудтрак, оснащённый всевозможными удобствами, втиснутыми в почти клаустрофобический интерьер. Зато очень уютно. # Ru-Localization
   price: 35000
   category: Small
   group: Shipyard
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Spessbite
-  mapName: 'PTI Spessbite'
+  mapName: 'Спексбит' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/spessbite.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Spessbite CIV{1}'
+          mapNameTemplate: 'Спексбит{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

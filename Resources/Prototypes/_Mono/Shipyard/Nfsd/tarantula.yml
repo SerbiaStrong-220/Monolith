@@ -5,8 +5,8 @@
 - type: vessel
   id: Tarantula
   parent: BaseVesselAntag
-  name: TSF-SVE Tarantula
-  description: A durable ship built for sustained close-range engagements, equipped with 4 Cerberus plasma scattercannons and 2 Marauders to melt ships away.
+  name: Тарантула # Ru-Localization
+  description: Живучий шаттл, созданный для затяжных боев на ближней дистанции. Оснащён четырьмя Цербера и двумя Мародёрами, чтобы испепелять корабли противника. # Ru-Localization
   price: 140850
   category: Medium
   group: Security
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Tarantula
-  mapName: 'Tarantula'
+  mapName: 'Тарантула' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Tarantula TSF{1}'
+        mapNameTemplate: 'Тарантула{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

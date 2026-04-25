@@ -3,8 +3,8 @@
 - type: vessel
   id: Shiv
   parent: BaseVesselAntag
-  name: TSF-PIN Shiv
-  description: The workhorse of industry of the Solarian fleets, comes with an artifact research bay and good mining capabilities.
+  name: Шив # Ru-Localization
+  description: Рабочая лошадка флота ТСФ. Оснащена исследовательским отсеком для изучения артефактов и хорошими рудодобывающими возможностями. # Ru-Localization
   price: 60000
   category: Small
   group: Security
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Shiv
-  mapName: 'Shiv'
+  mapName: 'Шив' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/shiv.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Shiv TSF{1}'
+        mapNameTemplate: 'Шив{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

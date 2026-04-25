@@ -1,2 +1,4 @@
-ent-WeaponTurretSerpentMissile = Serpent torpedo launcher
-    .desc = A light torpedo launcher developed by the Syndicate during the corporate war, uses similar systems to the anaconda for self loading munitons.
+ent-WeaponTurretSerpentMissile = Змей
+    .desc = Лёгкий торпедный аппарат, разработанный Синдикатом в годы Корпоративной войны. Использует механизм самозарядки, аналогичный пистолету "Анаконда". Может активироваться дистанционно или подключаться к консоли контроля орудиями.
+ent-WeaponTurretTorpedoEntropy = Кьюрион-1602 Энтропия
+    .desc = Эпоха до Раскола подарила миру много странного оружия. Это - одно из них. Выпускает тучу электронов, которые сами находят положительные заряды. Системы - в перегруз, корпус - в щепки. Против классической брони слабо, против электроники - смерть. Может активироваться дистанционно или подключаться к консоли контроля орудиями.

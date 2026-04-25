@@ -3,8 +3,8 @@
 - type: vessel
   id: QJ270
   parent: BaseVesselAntag
-  name: SKR QJ-270 Heavy Fighter
-  description: Equipped with 2 57mms, and 2 light munitions bays. Unlike other fighters, the hull is plastitanium instead of plasteel, bringing much better survivability.
+  name: КД-270 # Ru-Localization
+  description: Оснащён двумя 57-мм орудиями и двумя малыми малыми боевыми отсеками вооружения. В отличие от других шаттлов, его корпус выполнен из пластитана вместо пластали, что обеспечивает гораздо большую защиту. # Ru-Localization
   price: 30300
   category: Small
   group: Custom
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: QJ270
-  mapName: 'QJ-270'
+  mapName: 'КД-270' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/qj270.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'QJ-270 TSF{1}'
+        mapNameTemplate: 'КД-270{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

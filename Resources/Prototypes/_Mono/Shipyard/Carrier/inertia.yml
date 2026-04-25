@@ -8,8 +8,8 @@
 - type: vessel
   id: Inertia
   parent: BaseVessel
-  name: IED Interceptor Drone 'Inertia'
-  description: A fighter equipped with high mobility and two RAC-30 Draupnirs for shooting down artillery fire.
+  name: Инерция # Ru-Localization
+  description: Шаттл с высокой манёвренностью и двумя Драупнирами для отвлечениря огня врага. # Ru-Localization
   limit: 6
   price: 15000
   purchasable: false #voucher only
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Inertia
-  mapName: 'QJ-490'
+  mapName: 'Инерция' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/inertia.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Inertia PDV{1}'
+        mapNameTemplate: 'Инерция{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

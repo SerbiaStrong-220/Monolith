@@ -1,2 +1,4 @@
-ent-RogueComputerComms = imperial vanguard communications computer
-    .desc = A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
+ent-RogueComputerComms = консоль связи Династии Фаэтон
+    .desc = Устройство, способное удалённо взламывать коммуникационные системы сектора. Его использование оповестит станцию о вашем присутствии.
+ent-TSFComputerComms = консоль связи КВП ТСФ
+    .desc = Коммуникационная консоль, используемая Транс-Солнечной Федерацией для трансляции объявлений по всему сектору.

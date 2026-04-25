@@ -42,8 +42,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 4
+      department: Combatant
+      minDepartmentPlayers: 5
 
 - type: entity
   id: BluespaceVaultError
@@ -87,8 +87,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 4
+      department: Combatant
+      minDepartmentPlayers: 5
 
 - type: entity
   id: BluespaceVaultSmallError
@@ -133,8 +133,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 4
+      department: Combatant
+      minDepartmentPlayers: 5
 
 - type: entity
   id: BluespaceSyndicateFTLInterception
@@ -177,8 +177,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 4
+      department: Combatant
+      minDepartmentPlayers: 5
 
 # Mono edit - Mono UIV's
 - type: entity
@@ -213,8 +213,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 4
+      department: Combatant
+      minDepartmentPlayers: 5
 # Mono edit end
 
 ## Mono edit - commenting out useless UIV's

@@ -11,8 +11,8 @@
 - type: vessel
   id: Framework
   parent: BaseVessel
-  name: UNJ Framework
-  description: The cheapest hunk of junk this side of the Rogue. Not meant to last, but has the potential to be anything.
+  name: Остов # Ru-Localization
+  description: Самая дешёвая груда металлолома в этом секторе. Не создана для долгой жизни, но может стать кем угодно. # Ru-Localization
   price: 10000
   category: Small
   group: Shipyard
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Framework
-  mapName: 'UNJ Framework'
+  mapName: 'Остов' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/framework.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Framework CIV{1}'
+          mapNameTemplate: 'Остов{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -6,8 +6,8 @@
 - type: vessel
   id: Olympus
   parent: BaseVessel
-  name: DIS Olympus
-  description: A massive cargo freighter, the pride and joy of DIS. Furnished with an 185 tile dedicated cargo space, a 50 type drive and dedicated shield & point defense system. In sum all you need to run smooth, large scale transport operations.
+  name: Олимп # Ru-Localization
+  description: Огромный грузовой шаттл, гордость и отрада Дрейк Индастрис. Оснащён 185 квадратными метрами специального грузового пространства, модулем БСС-50, а также собственной системой щитов и обороны. В общем - всё, что нужно для бесперебойных крупных транспортных поставок. # Ru-Localization
   price: 225500
   category: Large
   group: Shipyard
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Olympus
-  mapName: 'DIS Olympus'
+  mapName: 'Олимп' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/olympus.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Olympus CIV{1}'
+          mapNameTemplate: 'Олимп{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

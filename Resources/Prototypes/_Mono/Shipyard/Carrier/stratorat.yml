@@ -1,8 +1,8 @@
 - type: vessel
   id: StratoRat
   parent: BaseVessel
-  name: HES Strato-Rat
-  description: A extremley basic, cost cutting gas mining vessel. Features a 120 KMol gas chamber, and single M25 Mining Pulser.
+  name: Страто-Рат # Ru-Localization
+  description: Крайне простой газодобывающий шаттл. Оснащён газовой камерой на 120 КМоль и одним М25. # Ru-Localization
   price: 15000
   category: Micro
   group: Custom
@@ -16,7 +16,7 @@
 
 - type: gameMap
   id: StratoRat
-  mapName: 'HES Strato-Rat'
+  mapName: 'Страто-Рат' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/stratorat.yml
   minPlayers: 0
   stations:
@@ -24,7 +24,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Strato-Rat SNB{1}'
+        mapNameTemplate: 'Страто-Рат{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

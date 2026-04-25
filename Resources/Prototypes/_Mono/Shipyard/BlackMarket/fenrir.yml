@@ -3,8 +3,8 @@
 - type: vessel
   id: Fenrir
   parent: BaseVesselAntag
-  name: BT-Y Fenrir
-  description: A versalite support destroyer armed with an M381 Mass Driver, 2 Dravons, 2 Scattercannons, 4 20mm autocannons and outfitted with 2 Medium Size Mechbays capable of deploying S-2 and S-1 Mechs but does not come with Mechs. Well armored but slow.
+  name: Фенрир # Ru-Localization
+  description: Универсальный шаттл поддержки, вооружённый M381 Харон, двумя АОЭД-7 Дравон, двумя Гадюками, четырьмя 20-мм орудиями и имеющий два средних мех-ангара, способных нести мехов S2 и S1 (мехи в комплект не входят). Хорошо бронирован, но медлителен. # Ru-Localization
   price: 149500
   category: Medium
   group: BlackMarket
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Fenrir
-  mapName: 'PDV Fenrir'
+  mapName: 'Фенрир' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/fenrir.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Fenrir PDV{1}'
+          mapNameTemplate: 'Фенрир{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

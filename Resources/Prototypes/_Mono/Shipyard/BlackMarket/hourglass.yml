@@ -3,8 +3,8 @@
 - type: vessel
   id: Hourglass
   parent: BaseVesselAntag
-  name: BSB Hourglass
-  description: The Hourglass is a bulky slow ship with two 90mm autocannons in the front. It has a medbay and a kitchen. Comes with FTL.
+  name: Аургласс # Ru-Localization
+  description: Аургласс - громоздкий тихоходный шаттл с двумя 90-мм орудиями в носовой части. Оснащён медицинским отсеком и камбузом. Имеет модуль БСС. # Ru-Localization
   price: 120000 #96k appraisegrid
   category: Medium
   group: BlackMarket
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Hourglass
-  mapName: 'BSB Hourglass'
+  mapName: 'Аургласс' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/hourglass.yml
   minPlayers: 0
   stations:
@@ -26,7 +26,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Hourglass PDV{1}'
+          mapNameTemplate: 'Аургласс{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -3,8 +3,8 @@
 - type: vessel
   id: QJ340
   parent: BaseVesselAntag
-  name: GS QJ-340 Support Fighter
-  description: A frontloaded fighter with 2 L1 Phalanxes, a Vanyk Missile pod and a Rubicon EMP launcher.
+  name: КД-340 # Ru-Localization
+  description: Шаттл с усиленным носовым вооружением две Л-1 Фаланга, АСМ-302 Ванек и М220 Рубикон. # Ru-Localization
   price: 33600 #Rounded up to 28K, with a 20% tax
   category: Small
   group: Custom
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: QJ340
-  mapName: 'QJ-340'
+  mapName: 'КД-340' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/qj340.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'QJ-340 TSF{1}'
+        mapNameTemplate: 'КД-340{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

@@ -3,8 +3,8 @@
 - type: vessel
   id: Sekunda
   parent: BaseVesselAntag
-  name: PPU Sekunda
-  description: A USSP corpsman and fire support ship, comes with an FTL drive, tiny medical and chemical bay, light armament and a cramped interior. Produced by People's Production Union.
+  name: Секунда # Ru-Localization
+  description: Корабль медицинской и огневой поддержки СССП. Оснащён модулем БСС, небольшим медицинским и химическим отсеками, лёгким вооружением и тесным интерьером. Произведён народным производственным союзом. # Ru-Localization
   price: 60000
   category: Medium
   group: Ussp
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Sekunda
-  mapName: 'Sekunda'
+  mapName: 'Секунда' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/sekunda.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Sekunda MIL{1}'
+          mapNameTemplate: 'Секунда{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

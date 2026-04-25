@@ -3,8 +3,8 @@
 - type: vessel
   id: Ferz
   parent: BaseVesselAntag
-  name: PDW Ferz
-  description: No description yet
+  name: Ферзь
+  description: Пока нет описания, но оно обязательно скоро появится!
   price: 267000
   category: Small
   group: BlackMarket
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Ferz
-  mapName: 'PDW Ferz'
+  mapName: 'Ферзь'
   mapPath: /Maps/_Exodus/Shuttles/PDV/ferz.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Ferz PDV{1}'
+          mapNameTemplate: 'Ферзь'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

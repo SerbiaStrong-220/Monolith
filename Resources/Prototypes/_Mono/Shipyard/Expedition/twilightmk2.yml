@@ -7,8 +7,8 @@
 - type: vessel
   id: twilightmk2
   parent: BaseVessel
-  name: ZOB Twilight MkII
-  description: A CIV-Twilight hull modified with ill-advised retrofits to be a combat capable ship. Mostly used by the desperate and the cheap. EVA protection is required.
+  name: Сумрак М2 # Ru-Localization
+  description: Шаттл, переоборудованный сомнительными методами в боеспособный корабль. В основном используется отчаявшимися или экономными. # Ru-Localization
   price: 59000 # its not more expensive because 2/3s of the ship is actively spaced.
   category: Medium
   group: Expedition
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: twilightmk2
-  mapName: 'Twilight MkII'
+  mapName: 'Сумрак М2' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/twilightmk2.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Twilight MkII MIL{1}'
+          mapNameTemplate: 'Сумрак М2{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

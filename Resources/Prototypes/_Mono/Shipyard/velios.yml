@@ -7,8 +7,8 @@
 - type: vessel
   id: Velios
   parent: BaseVessel
-  name: WLV-Velios
-  description: A medical vessel designed for multifunction capabilities. Includes a medbay, cryogenics setup, surgery room, and a rescue supply room. While large in size and reinforced with plastitanium walls, the thrusters still provide enough speed for rapid response to medical calls.
+  name: Велиос # Ru-Localization
+  description: Медицинский шаттл многофункционального назначения. Включает медотсек, криокапсулу, операционную и отсек для спасательного снаряжения. Несмотря на большие размеры и усиленные пластиатновые стены, двигатели обеспечивают достаточную скорость для быстрого реагирования на медицинские вызовы. # Ru-Localization
   price: 76080 # Appraises at 50721 but capabilities are good, + it's replacing the shirokami (112000).
   category: Medium
   group: Medical
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Velios
-  mapName: 'WLV-Velios'
+  mapName: 'Велиос' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/velios.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Velios MED{1}'
+          mapNameTemplate: 'Велиос{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

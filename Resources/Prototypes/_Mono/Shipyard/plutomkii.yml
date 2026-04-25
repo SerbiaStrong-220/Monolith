@@ -7,8 +7,8 @@
 - type: vessel
   id: Plutomkii
   parent: BaseVessel
-  name: DIS Pluto MK. II
-  description: A light-weight cargo runner manufactured by DIS. The replacement of the venerable Pluto. Performing better than it's predecessor in every way. Larger cargo bay, tougher hull, faster top speed and sleeker design.
+  name: Плутон М2 # Ru-Localization
+  description: Лёгкий грузовой скоростной шаттл производства Дрейк Индастрис. Замена легендарному Плутону. Превосходит своего предшественника по всем параметрам, а именно у него больший грузовой отсек, более прочный корпус, выше максимальная скорость и более обтекаемый дизайн. # Ru-Localization
   price: 32900
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Plutomkii
-  mapName: 'DIS Pluto MK. II'
+  mapName: 'Плутон М2' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/plutomkii.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Pluto MK. II CIV{1}'
+          mapNameTemplate: 'Плутон М2{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

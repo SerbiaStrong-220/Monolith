@@ -5,8 +5,8 @@
 - type: vessel
   id: Caput
   parent: BaseVessel
-  name: Caput
-  description: Small drone-like vessel for "Hit&Run" strikes.
+  name: Капут # Ru-Localization
+  description: Дроноподобный шаттл для стратегии "бей-беги". # Ru-Localization
   price: 19500
   category: Small
   group: Sr
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Caput
-  mapName: 'Caput'
+  mapName: 'Капут' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/caput.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Caput SEC{1}'
+          mapNameTemplate: 'Капут{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

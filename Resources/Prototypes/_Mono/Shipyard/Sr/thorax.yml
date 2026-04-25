@@ -5,8 +5,8 @@
 - type: vessel
   id: Thorax
   parent: BaseVessel
-  name: Thorax
-  description: A light mech carrier and factory, including 4 different docks for assistance.
+  name: Торакс # Ru-Localization
+  description: Лёгкий носитель мехов с заранее построенной фабрикой, включающая 4 различных дока для обеспечения поддержки. # Ru-Localization
   price: 63450
   category: Medium
   group: Sr
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Thorax
-  mapName: 'Thorax'
+  mapName: 'Торакс' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/thorax.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Thorax SEC{1}'
+          mapNameTemplate: 'Торакс{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -7,8 +7,8 @@
 - type: vessel
   id: Hammerhead
   parent: BaseVessel
-  name: UI-SKR Hammerhead
-  description: A multipurpose mercenary ship with an armament of 4 225mm cannons, 4 20mm PD guns, and 6 57mm autocannons. Lacks a bit in protection compared to proper military ships of this size.
+  name: Молотоглав # Ru-Localization
+  description: Многоцелевой наёмнический шаттл с вооружением из четырёх 225-мм пушек, четырёх 20-мм орудий и шести 57-мм. Немного уступает в защите полноценным военным шаттлам такого же размера. # Ru-Localization
   price: 200000 # Its a ~10k markup, it really is that expensive.
   category: Large
   group: Shipyard
@@ -27,7 +27,7 @@
 
 - type: gameMap
   id: Hammerhead
-  mapName: 'UI-SKR Hammerhead'
+  mapName: 'Молотоглав' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/hammerhead.yml
   minPlayers: 0
   stations:
@@ -35,7 +35,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Hammerhead MIL{1}'
+          mapNameTemplate: 'Молотоглав{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -3,8 +3,8 @@
 - type: vessel
   id: Neptune
   parent: BaseVesselAntag
-  name: PDW Neptune
-  description: Equipped with heavy frontal armor, 6 Fang heavy 90mms, and 2 Trident torpedoes. Good for dealing with heavier targets in head on brawls, but it lacks capabilities to fight nimble and small targets.
+  name: Нептун # Ru-Localization
+  description: Оснащён тяжёлой лобовой бронёй, шестью тяжёлыми 90-мм орудиями Клык и двумя АСМ-220 Трезубец. Хорош для борьбы с крупными целями в лобовых столкновениях, но неспособен эффективно сражаться с юркими и мелкими целями. # Ru-Localization
   price: 152555 #126k appraisal
   category: Medium
   group: BlackMarket
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Neptune
-  mapName: 'PDV Neptune'
+  mapName: 'Нептун' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/neptune.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Neptune PDV{1}'
+          mapNameTemplate: 'Нептун{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

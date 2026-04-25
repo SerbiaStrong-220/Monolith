@@ -7,8 +7,8 @@
 - type: vessel
   id: Picses
   parent: BaseVessel
-  name: SKR Picses
-  description: A compact but capable expedition ship, with durable hull plating too. This ship has a military IFF designation.
+  name: Пиксес # Ru-Localization
+  description: Компактный, но вместительный экспедиционный шаттл, обладающий прочным корпусом. Также шаттл имеет военную систему "свой-чужой". # Ru-Localization
   price: 77150
   category: Medium
   group: Expedition
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Picses
-  mapName: 'Picses'
+  mapName: 'Пиксес' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/picses.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Picses EXP{1}'
+          mapNameTemplate: 'Пиксес{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

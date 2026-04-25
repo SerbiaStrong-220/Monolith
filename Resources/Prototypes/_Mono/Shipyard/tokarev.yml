@@ -7,8 +7,8 @@
 - type: vessel
   id: Tokarev
   parent: BaseVessel
-  name: VIN Tokarev
-  description: A multipurpose ship that can acompany medical staff in exploring the new frontier in research while allways being ready to help those in need.
+  name: Токарев # Ru-Localization
+  description: Многоцелевой шаттл, который может сопровождать медицинский персонал в исследовании новых рубежей, всегда оставаясь готовым прийти на помощь нуждающимся. Имеет в своем снаряжении кинетический якорь, что может помочб вытащить и отбуксировать шаттл пострадавшего если это нужно. # Ru-Localization
   price: 120000
   category: Large
   group: Medical
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Tokarev
-  mapName: 'VIN Tokarev'
+  mapName: 'Токарев' # Ru-Localization
   mapPath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tokarev MED{1}'
+          mapNameTemplate: 'Токарев{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

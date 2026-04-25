@@ -16,8 +16,7 @@
     - id: UnknownShuttleZenith
     - id: UnknownShuttleWyrm
     - id: UnknownShuttleNebula
-    - id: UnknownShuttleConcordX # Exodus
-    
+
 - type: entity
   parent: BaseRandomShuttleRule
   id: UnknownShuttleZenith
@@ -35,8 +34,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 6
+      department: Combatant
+      minDepartmentPlayers: 7
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -55,8 +54,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 6
+      department: Combatant
+      minDepartmentPlayers: 7
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -75,8 +74,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 6
+      department: Combatant
+      minDepartmentPlayers: 7
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -95,8 +94,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 2
+      department: Combatant
+      minDepartmentPlayers: 3
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -115,8 +114,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 6
+      department: Combatant
+      minDepartmentPlayers: 7
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -135,25 +134,5 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 8
-# Exodus
-- type: entity
-  parent: BaseRandomShuttleRule
-  id: UnknownShuttleConcordX
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-ai-frigate-detected # Exodus
-    startAudio:
-      path: /Audio/Misc/notice1.ogg
-    weight: 2.5
-    maxOccurrences: 2
-  - type: GameRule
-    minPlayers: 25
-  - type: LoadMapRule
-    gridPath: /Maps/_Exodus/ShuttleEvent/concord_x.yml # Exodus
-  - type: GameRuleRequirements # Exodus
-    requirements:
-    - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 5
+      department: Combatant
+      minDepartmentPlayers: 9

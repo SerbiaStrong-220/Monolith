@@ -1,8 +1,8 @@
 - type: vessel
   id: Pillbox
   parent: BaseVessel
-  name: TPC Pillbox
-  description: A modified Takeaway shuttle, turned from a nice little restaurant into a travelling pharmacy and bar, with everything a chemist would need to peddle their wares. The Solars were sniped, and the generator replaced with a Pinch Fusion reactor
+  name: Пилюля # Ru-Localization
+  description: Модифицированная версия шаттла Вынос, превращённый из уютного ресторанчика в передвижную аптеку и бар, со всем необходимым для химика, желающего сбывать свои товары. Солнечные панели сняты, а генератор заменён на термоядерный реактор. # Ru-Localization
   price: 91000
   category: Medium
   group: Shipyard
@@ -15,7 +15,7 @@
 
 - type: gameMap
   id: Pillbox
-  mapName: 'TPC Pillbox'
+  mapName: 'Пилюля' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/pillbox.yml
   minPlayers: 0
   stations:
@@ -23,7 +23,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Pillbox CIV{1}'
+          mapNameTemplate: 'Пилюля{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

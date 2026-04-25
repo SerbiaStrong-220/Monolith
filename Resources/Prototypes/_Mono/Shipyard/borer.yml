@@ -7,8 +7,8 @@
 - type: vessel
   id: Borer
   parent: BaseVessel
-  name: SHS-DIS Borer
-  description: designed by SHM and produced in cooperation with DI, the borer is a cost effective ship for salvaging and derilect scrapping.
+  name: Борер # Ru-Localization
+  description: Разработанный мануфактурным комплекс Стальной молот и произведённый в сотрудничестве с Дрэйк Индастрис, Борер - экономичный шаттл для утилизации брошенных шаттлов. # Ru-Localization
   price: 20525
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Borer
-  mapName: 'SHS-DIS Borer'
+  mapName: 'Борер' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/borer.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Borer CIV{1}'
+          mapNameTemplate: 'Борер{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -7,8 +7,8 @@
 - type: vessel
   id: Femur
   parent: BaseVessel
-  name: DIS Femur
-  description: A power hungry menace, the DIS Femur is a medium-class FTL capable vessel. Shaped for and equipped with all the necessary tools for aggressive boarding operations. While Drake Industries is generally known for their non aggression policy within the sector, they recently started pumping out this mean hull, no public statements were given by the board of directives.
+  name: Фемур # Ru-Localization
+  description: Фемур - шаттл среднего класса с модулем БСС, созданный Дрейк Индастрис. Спроектирован и оснащён всеми необходимыми средствами для агрессивных абордажных операций. Хотя Дрэйк Индастрис в целом известна своей политикой ненападения в секторе, недавно они начали выпускать этот агрессивный шаттл. Совет директоров не сделал о этом никаких публичных заявлений. # Ru-Localization
   price: 93900
   category: Medium
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Femur
-  mapName: 'DIS Femur'
+  mapName: 'Фемур' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/femur.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Femur MIL{1}'
+          mapNameTemplate: 'Фемур{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

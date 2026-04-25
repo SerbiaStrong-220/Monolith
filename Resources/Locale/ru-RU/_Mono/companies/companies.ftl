@@ -28,9 +28,10 @@ southern-peak-mercenaries-description = “A good rogue is a dead rogue.” says
 dark-matter-enterprises-name = Дарк Маттер Интерпрайзес
 dark-matter-enterprises-description = Из пепла Корпоративной войны возникла "Дарк Маттер Интерпрайзес" - маяк прагматичных амбиций в галактике, всё ещё оправляющейся от межзвёздного ландшафта, разорённого корпоративной жадностью и идеологическими разногласиями. Пока ТСФ и СССП боролись за галактическое господство, группа дальновидных корпоративных подрядчиков увидела вакуум власти, оставленный исчезнувшими старыми силами. Эти люди создали ДМЕ с единственной целью: превзойти старые порядки, контролируя и усиливая поток знаний и ресурсов. Позиционируя себя как незаменимых для всех, но не подвластных никому. Их централизованная структура - прямой ответ на хаотичную раздробленность их предшественников, обеспечивающая оперативное принятие решений и единое стратегическое видение.
 
-aetherion-dynamics-name = Аэтеорион Динамикс
 zealots-of-balaam-description = The Zealots and pilgrims of Balaam are luddites with a extreme aversion to the use of Hi-tech and Hi-tech beings. As a follower of Balaam, work underneath a senior zealot or a Bishop to help them levy their tithes and perform inspections for heretical thinking machines. Never listen to the blasphemy of the other companies. Destroy or remove all shield tech you find, and take any FTL used by non-believers. Be sure to pick your targets for these actions wisely, you will often be outnumbered. Know this; Balaam loves our organic forms, mass killing potential converts does nothing to help the Bishops. Keep any dead organics to a minimum. But if they refuse you, and continue to harbor heretical machines, more forceful methods of persuasion could prove useful in Balaam's schemes.
 cult-of-the-machine-god-description = The flesh is weak. To walk the path of the Cult of the Machine God is to reject the chaos of flesh and embrace the divine order of logic. The faithful act with precision and purpose, never swayed by emotion or impulse. Advancement comes not through passion, but through calculated improvement and unwavering discipline. Those who command in the Cult do so through algorithmic clarity, deploying Ascended operatives with mechanical efficiency and spreading influence through hidden Devotees or roaming Vessels led by Techpriests. Whether enforcing doctrine in distant sectors or executing cold, strategic dominion, every action must serve the grand equation. In all things, reason must rule, and through it, the Machine God's will is made manifest...
+
+aetherion-dynamics-name = Аэтеорион Динамикс
 aetherion-dynamics-description = Олицетворяя передовые технологические инновации, "Аэтеорион Динамикс" известна своим изобретением системы запуска сжатым газом, используемой в турболазерной батарее ADEX-9 "Даймир", а также другими инновационными видами оружия без особой философии дизайна. Помимо всех своих знаменитых корабельных орудий, они начали "Артиллерийскую революцию" в преддверии конфликта в секторе "Колосс". Они имеют репутацию производителей и конструкторов высокого качества, больше заинтересованных в создании эффективного продукта, чем в получении прибыли.
 
 horizon-energy-name = Горизонт Энерджи
@@ -72,10 +73,10 @@ cerberus-surplus-name = Церберус
 cerberus-surplus-provisions = "Церберус" - это теневая компания, происходящая ИЗ Династии Фаэтон. Из своей "подпольной" штаб-квартиры проводят различные операции в преступном мире на пользу Династии Фаэтона посредством торговли любыми незаконными веществами, оружием или оборудованием, которые они могут выменять или найти. Компания сохраняет своё самоуважение, поддерживая сильный и гостеприимный публичный имидж для потенциальных покупателей и деловых партнёров. "Церберус" будет иметь дело с любым, кто готов заключить сделку со змеёй.
 
 redsail-corsairs-name = Корсары Красного Паруса
-redsail-corsairs-description = The RedSail Corsairs, or RSC, are a dangerous and influential group of pirates and brigands, who are publicly known to engage in illegal and violent activities against civilians, officials, and military personnel alike. Their source of income and specialization is hijacking, cargo theft, hostage-taking, and armed robbery. They are openly marked by Colossus Central as a criminal organization. As a whole, the Corsairs function as a union between freebooting raiders of all walks of life who have sworn loyalty to each other.
+redsail-corsairs-description = Корсары Красного Паруса - опасная и влиятельная группа пиратов и разбойников, публично известная своими незаконными и жестокими действиями против гражданских лиц и представителей государств. Их источник дохода и специализация - угон кораблей, кража грузов, захват заложников и вооружённые ограбления. В целом Корсары функционируют как союз вольных налётчиков всех мастей, поклявшихся в верности друг другу. Администрация сектора "Колосс" открыто объявила их преступной организацией.
 
 none-name = Нет
 tsf-name = КВП ТСФ
-pdv-name = Авангард Династии Фаэтон
+pdv-name = Династия Фаэтон
 med-name = МЕД
-colonial-name = Сотрудник Аванпоста
+colonial-name = Колосс Централ

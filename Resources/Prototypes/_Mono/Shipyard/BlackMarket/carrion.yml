@@ -3,8 +3,8 @@
 - type: vessel
   id: Carrion
   parent: BaseVesselAntag
-  name: ELH Carrion
-  description: A fighter armed with 4x 90mm DRAVON autocannons and a GPOB-L bomb bay, built for reconnaissance and extreme-speed skirmishing.
+  name: Керрион # Ru-Localization
+  description: Истребитель, вооружённый четырьмя 90-мм Дравонами и малым боевым отсеком вооружения. Создан для разведки и скоротечных боёв на больших скоростях. # Ru-Localization
   price: 29000 #Appraised at 26000-ish
   category: Small
   group: BlackMarket
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Carrion
-  mapName: 'ELH Carrion'
+  mapName: 'Керрион' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/carrion.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Carrion PDV{1}'
+          mapNameTemplate: 'Керрион{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -8,8 +8,8 @@
 - type: vessel
   id: Snakelet
   parent: BaseVessel
-  name: IED Bomber Drone 'Snakelet'
-  description: A front-heavy fighter with a manually reloaded torpedo bay. Designed for hit-and-run bombardments.
+  name: Змеёныш # Ru-Localization
+  description: Дрон с усиленным носовым вооружением и малым боевым отсеком вооружения с ручной перезарядкой. Предназначен для быстрых бомбардировочных ударов. # Ru-Localization
   limit: 4
   price: 20000
   purchasable: false #voucher only
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Snakelet
-  mapName: 'Snakelet'
+  mapName: 'Змеёныш' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/snakelet.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Snakelet PDV{1}'
+        mapNameTemplate: 'Змеёныш {1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

@@ -2,8 +2,8 @@
 - type: vessel
   id: Altair
   parent: BaseVesselAntag
-  name: TSF-PIN Altair
-  description: A heavily-armed frigate with 4 cyrexa, laser cannons and its main armament, a CHARON mass driver. Made as a heavy frontline brawler and to serve as a fleet anchor for smaller forces.
+  name: Альтаир # Ru-Localization
+  description: Тяжеловооружённый фрегат с четырьмя Цирексами, лазерными орудиями и главной фишкой — рельсотроном Харон. Создан как тяжёлый фронтовой боец и основа небольшого флота. # Ru-Localization
   limit: 2
   price: 425000
   purchasable: false # voucher only
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Altair
-  mapName: 'Altair'
+  mapName: 'Альтаир' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/altair.yml
   minPlayers: 0
   stations:
@@ -29,10 +29,10 @@
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "Is all this really worth it? A sense of regret washes over you, then dissapears."
+        description: "Стоит ли оно того? Волна сожаления накрывает вас, а затем отступает." # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Altair TSFN{1}'
+        mapNameTemplate: 'Альтаир{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
