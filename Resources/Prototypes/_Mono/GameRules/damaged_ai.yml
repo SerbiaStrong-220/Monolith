@@ -151,7 +151,7 @@
   - type: GameRule
     minPlayers: 25
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/concord_x.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/concord_x.yml # Exodus
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
