@@ -149,11 +149,11 @@
     - TechDiskTSFDrozd
     - TechDiskM90
     - TechDiskTSFICWS
-    - TechDiskShields 
+    - TechDiskShields
     chance: 0.85
     offset: 0.0
     rarePrototypes:
     - TechDiskMla73
-    - TechDiskShields     
+    - TechDiskShields
     - ResearchDisk65000
     rareChance: 0.15

@@ -17,7 +17,7 @@ ent-MobFleshClampExpeditions = { ent-BaseMobFleshExpeditions }
 ent-MobFleshClampOldExpeditions = { ent-MobFleshClampExpeditions }
     .desc = { ent-MobFleshClampExpeditions.desc }
 ent-MobFleshLoverExpeditions = { ent-BaseMobFleshExpeditions }
-    .desc = Лёгкиое тело делает его хрупким, но способным к полёту.
+    .desc = Лёгкое тело делает его хрупким, но способным к полёту.
 ent-MobHorrorExpeditions = аномальное мясное чудовище
     .desc = Более крепкий и выносливый, чем большинство аномальных плотоядных монстров. Имеет острые костные выступы и высокоразвитую мускулатуру.
 ent-BoneSpikeGun = костяной шип
@@ -25,7 +25,7 @@ ent-BoneSpikeGun = костяной шип
 ent-ActionBoneSpike = [color=yellow]Костяной Шип[/color]
     .desc = Выпустите короткий залп костяных шипов, пропитанных токсинами. [color=yellow]5 секунд перезарядка.[/color]
 ent-MobMawExpeditions = аномальная мясная пасть
-    .desc = Неподвижные существа, набрасывающиеся на жертву и вгрызающиеся в её плоть намертво, откреплясь от неё уже после смерти. Не смейте сувать в них пальцы.
+    .desc = Неподвижные существа, набрасывающиеся на жертву и вгрызающиеся в её плоть намертво, открепляясь от неё уже после смерти. Не смейте совать в них пальцы.
 ent-BaseMobFleshExpeditionsNewborn = новорождённая аномальная плоть
     .desc = Это новорожденное чудовище покрыто самыми разными гадкими жидкостями, а его движения хоть и вялые, но размеренные,  а его конечности хоть и слабы, тем не менее, смертельно опасны.
 ent-MobFleshJaredExpeditionsNewborn = { ent-BaseMobFleshExpeditionsNewborn }

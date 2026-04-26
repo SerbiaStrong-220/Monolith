@@ -1,11 +1,11 @@
 ent-MobExplorerBaseT1 = исследователь
     .desc = { ent-MobNonHumanHostileBase.desc }
 ent-MobExplorerBaseT2 = исследователь
-    .desc = { ent-MobNonHumanHostileBaseT1.desc }
+    .desc = { ent-MobNonHumanHostileBase.desc }
 ent-MobExplorerBaseT3 = исследователь
-    .desc = { ent-MobNonHumanHostileBaseT1.desc }
+    .desc = { ent-MobNonHumanHostileBase.desc }
 ent-MobExplorerBaseT4 = исследователь
-    .desc = { ent-MobNonHumanHostileBaseT1.desc }
+    .desc = { ent-MobNonHumanHostileBase.desc }
 ent-MobExplorerMeleeT1 = копатель
     .desc = Вооружён старой доброй киркой и жадностью. Каждой группе нужна грубая сила.
 ent-MobExplorerRangedT1 = мусорщик
@@ -23,6 +23,6 @@ ent-MobExplorerHauler = грузовой мех
 ent-MobExplorerBoss = капитан исследователей
     .desc = Бесстрашный и закалённый в боях лидер команды, годами ползал в самых тёмных углах галактики и работал с жестокими криминальными бандами чтобы стать капитаном. Не недооценивать.
 ent-SeismicChargeGun = Пускатель сейсмического заряда
-    .desc = Нужна чтобы выстрелить сейсмическим зарядом.
+    .desc = Нужен чтобы выстрелить сейсмическим зарядом.
 ent-ActionSeismicCharge = [color=yellow]Метнуть Сейсмический Заряд[/color]
     .desc = Пускает сейсмический заряд, который взрывается при контакте. [color=yellow]50 секунд перезарядка.[/color]
