@@ -1,12 +1,12 @@
 # Timers
-- type: loadoutEffectGroup
-  id: Command
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 3600 # 1 hour
+# - type: loadoutEffectGroup # Exodus-Delete-Command-Department
+#   id: Command
+#   effects:
+#   - !type:JobRequirementLoadoutEffect
+#     requirement:
+#       !type:DepartmentTimeRequirement
+#       department: Command
+#       time: 3600 # 1 hour
 
 # Flowers
 - type: loadout
@@ -83,18 +83,18 @@
 
 - type: loadout
   id: CigarCase
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
+  # effects: # Exodus-Delete-Command-Department
+  # - !type:GroupLoadoutEffect
+  #   proto: Command
   storage:
     back:
     - CigarCase
 
 - type: loadout
   id: CigarGold
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
+  # effects: # Exodus-Delete-Command-Department
+  # - !type:GroupLoadoutEffect
+  #   proto: Command
   storage:
     back:
     - CigarGold
@@ -250,12 +250,12 @@
 
 - type: loadout
   id: TowelColorDarkBlue
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 360000 # 100hr
+  # effects: # Exodus-Delete-Command-Department
+  # - !type:JobRequirementLoadoutEffect
+  #   requirement:
+  #     !type:DepartmentTimeRequirement
+  #     department: Command
+  #     time: 360000 # 100hr
   storage:
     back:
     - TowelColorDarkBlue

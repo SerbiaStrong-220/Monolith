@@ -19,7 +19,7 @@
   - type: Contraband
     severity: Class1
     # Pretty much everyone.
-    allowedDepartments: [ Civilian, Security, Command, Frontier, CentralCommand ]
+    allowedDepartments: [ Civilian, Security, Frontier, CentralCommand ] # Exodus-Delete-Command-Department
 
 - type: entity
   parent: BaseC1Contraband
@@ -42,7 +42,7 @@
   - type: Contraband
     severity: Class2
     # Security and heads only (finally, shotgun traffic controller)
-    allowedDepartments: [ Security, Command ]
+    allowedDepartments: [ Security ] # Exodus-Delete-Command-Department
 
 - type: entity
   parent: BaseC2ContrabandUnredeemable

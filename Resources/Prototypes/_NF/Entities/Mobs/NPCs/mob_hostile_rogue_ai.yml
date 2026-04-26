@@ -47,9 +47,9 @@
   - MobNonHumanHostileBase
   - MobHumanoidInvetorySimplified
   - MobRogueSiliconAISimpleRanged
-  #- MobLaserReflect # Added to prevent laser abuse from players
+  - MobLaserReflect # Exodus-Exp-Balance, chrome chassis u know
   - NFMobRestrictionsSilicon
-  id: MobRogueSiliconBase
+  id: MobRogueSiliconBaseT1 # Exodus-Exp-Balance
   components:
   - type: Damageable
     damageContainer: Silicon
@@ -70,7 +70,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead #Mono, health adjustments
+      110: Dead # Exodus-Exp-Balance
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -134,9 +134,55 @@
     baseWalkSpeed : 4.5
     baseSprintSpeed : 4.5
 
+# Exodus-Exp-Balance-start
+- type: entity
+  name: hivemind unit
+  abstract: true
+  parent:
+  - MobRogueSiliconBaseT1
+  id: MobRogueSiliconBaseT2
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      130: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      80: 0.7
+      100: 0.5
+
+- type: entity
+  name: hivemind unit
+  abstract: true
+  parent:
+  - MobRogueSiliconBaseT1
+  id: MobRogueSiliconBaseT3
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      160: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      100: 0.7
+      140: 0.5
+
+- type: entity
+  name: hivemind unit
+  abstract: true
+  parent:
+  - MobRogueSiliconBaseT1
+  id: MobRogueSiliconBaseT4
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      550: Dead
+# Exodus-Exp-Balance-end
+
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT1 # Exodus-Exp-Balance
   id: MobRogueSiliconScrapBase
   name: scrap unit
   description: These bots come in various shapes and forms, reflecting a wide range of designs and purposes. Many seem to be put together using locally available materials, leading to their disparate appearances. Notably, some units are equipped with thrusters and embedded laser weapons.
@@ -177,10 +223,12 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      85: Dead #Mono, health adjustments
+  # Exodus-Exp-Balance-start
+  #- type: MobThresholds
+  #  thresholds:
+  #    0: Alive
+  #    85: Dead #Mono, health adjustments
+  # Exodus-Exp-Balance-end
   - type: SlowOnDamage
     speedModifierThresholds:
       36: 0.7
@@ -206,7 +254,7 @@
 
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT1 # Exodus-Exp-Balance
   id: MobRogueSiliconDroneBase
   name: drone
   description: Hacked and reprogrammed by a rogue AI departmental drones.
@@ -235,11 +283,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      54: Dead #Mono, health adjustments
+      75: Dead # Exodus-Exp-Balance 
   - type: SlowOnDamage
     speedModifierThresholds:
-      18: 0.7
-      24: 0.5
+      40: 0.7 # Exodus-Exp-Balance
+      55: 0.5 # Exodus-Exp-Balance
   - type: Stamina
     critThreshold: 600
   - type: Gun
@@ -671,7 +719,7 @@
 ## Tier 2
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT2 # Exodus-Exp-Balance
   - MobPassiveRegen
   - MobRogueSiliconAISimpleMelee
   id: MobRogueSiliconServo
@@ -709,7 +757,7 @@
 
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT2 # Exodus-Exp-Balance
   - MobPassiveRegen
   - MobRogueSiliconAISimpleMelee
   id: MobRogueSiliconHerder
@@ -823,7 +871,7 @@
 
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT2 # Exodus-Exp-Balance
   - MobPassiveRegen
   id: MobRogueSiliconCatcher
   name: catcher unit
@@ -886,7 +934,7 @@
 ## Tier 3
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT3 # Exodus-Exp-Balance
   - MobPassiveRegen
   - MobRogueSiliconAISimpleMelee
   id: MobRogueSiliconTesla
@@ -1028,11 +1076,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      350: Dead #Mono, health adjustments
+      450: Dead # Exodus-Exp-Balance
   - type: SlowOnDamage
     speedModifierThresholds:
-      120: 0.7
-      160: 0.5
+      320: 0.7 # Exodus-Exp-Balance
+      400: 0.5 # Exodus-Exp-Balance
   - type: Stamina
     critThreshold: 600
   - type: HitscanBatteryAmmoProvider
@@ -1057,7 +1105,7 @@
 
 - type: entity
   parent:
-  - MobRogueSiliconBase
+  - MobRogueSiliconBaseT4 # Exodus-Exp-Balance
   - MobPassiveRegen
   id: MobRogueSiliconBoss
   name: one star unit
@@ -1083,11 +1131,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      400: Dead #Mono, health adjustments
+      550: Dead # Exodus-Exp-Balance
   - type: SlowOnDamage
     speedModifierThresholds:
-      200: 0.7
-      260: 0.5
+      350: 0.7 # Exodus-Exp-Balance
+      450: 0.5 # Exodus-Exp-Balance
   - type: Stamina
     critThreshold: 600
   - type: BasicEntityAmmoProvider

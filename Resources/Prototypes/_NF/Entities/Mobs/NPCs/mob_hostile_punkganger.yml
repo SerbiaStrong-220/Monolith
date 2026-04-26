@@ -12,7 +12,7 @@
     maximumEntitiesSpawned: 1
 
 - type: entity
-  id: MobPunkBase
+  id: MobPunkBaseT1 # Exodus-Exp-Balance
   name: punk
   abstract: true
   parent:
@@ -23,6 +23,17 @@
   description: |-
    "Criminally-inclined individuals", as NT Security documents call them, these are armed with a variety of weapons. These weapons range from makeshift shivs and machined truncheons to rusty pistols and shotguns. Some may be armored, so plan appropriately.
   components:
+  # Exodus-Exp-Balance-start
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      130: Critical
+      180: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      90: 0.7
+      110: 0.5
+  # Exodus-Exp-Balance-end
   - type: RandomHumanoidAppearance
     randomizeName: true
   - type: NpcFactionMember
@@ -58,12 +69,71 @@
     baseWalkSpeed : 4.5
     baseSprintSpeed : 4.5
 
+# Exodus-Exp-Balance-start
+- type: entity
+  id: MobPunkBaseT2
+  name: punk
+  abstract: true
+  parent:
+  - MobPunkBaseT1
+  description: |-
+   "Criminally-inclined individuals", as NT Security documents call them, these are armed with a variety of weapons. These weapons range from makeshift shivs and machined truncheons to rusty pistols and shotguns. Some may be armored, so plan appropriately.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      130: Critical
+      180: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      90: 0.7
+      110: 0.5
+
+- type: entity
+  id: MobPunkBaseT3 
+  name: punk
+  abstract: true
+  parent:
+  - MobPunkBaseT1
+  description: |-
+   "Criminally-inclined individuals", as NT Security documents call them, these are armed with a variety of weapons. These weapons range from makeshift shivs and machined truncheons to rusty pistols and shotguns. Some may be armored, so plan appropriately.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      160: Critical
+      210: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      120: 0.7
+      140: 0.5
+
+- type: entity
+  id: MobPunkBaseT4 
+  name: punk
+  abstract: true
+  parent:
+  - MobPunkBaseT1
+  description: |-
+   "Criminally-inclined individuals", as NT Security documents call them, these are armed with a variety of weapons. These weapons range from makeshift shivs and machined truncheons to rusty pistols and shotguns. Some may be armored, so plan appropriately.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Critical
+      300: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      225: 0.5
+# Exodus-Exp-Balance end
+
 # Humans
 ## Tier 1
 - type: entity
   id: MobPunkGangerMeleeT1
   parent:
-  - MobPunkBase
+  - MobPunkBaseT1 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleMelee
   categories: [ HideSpawnMenu ]
   components:
@@ -74,7 +144,7 @@
 - type: entity
   id: MobPunkGangerPistol
   parent:
-  - MobPunkBase
+  - MobPunkBaseT1 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleRanged
   categories: [ HideSpawnMenu ]
   components:
@@ -100,7 +170,7 @@
 - type: entity
   id: MobPunkGangerMeleeT2
   parent:
-  - MobPunkBase
+  - MobPunkBaseT2 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleMelee
   categories: [ HideSpawnMenu ]
   components:
@@ -116,7 +186,7 @@
 - type: entity
   id: MobPunkGangerShotgun
   parent:
-  - MobPunkBase
+  - MobPunkBaseT2 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleRanged
   categories: [ HideSpawnMenu ]
   components:
@@ -142,7 +212,7 @@
 - type: entity
   id: MobPunkGangerMeleeT3
   parent:
-  - MobPunkBase
+  - MobPunkBaseT3 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleMelee
   categories: [ HideSpawnMenu ]
   components:
@@ -157,7 +227,7 @@
 
 - type: entity
   parent:
-  - MobPunkBase
+  - MobPunkBaseT3 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleRanged
   id: MobPunkGangerSmg
   categories: [ HideSpawnMenu ]
@@ -189,7 +259,7 @@
   id: MobPunkGangerLeader
   parent:
   - MobHostileBossBase
-  - MobPunkBase
+  - MobPunkBaseT4 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleRanged
   - NFMobBossRestrictions
   name: punk gang leader
@@ -221,22 +291,18 @@
     - SemiAuto
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Jittering
-  # Ghost role stuff
-  - type: GhostRole
-    allowMovement: true
-    name: ghost-role-information-punk-boss-dungeon-name
-    description: ghost-role-information-punk-boss-dungeon-description
-    rules: ghost-role-information-dungeon-boss-rules
-    raffle:
-      settings: default
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
-    # Exodus-Rework-Time-Roles-Start
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 36000 # 10 hrs
-     # Exodus-Rework-Time-Roles-End
-  - type: GhostTakeoverAvailable
+  # Exodus-Exp-Balance-start
+  # - type: GhostRole
+  #  allowMovement: true
+  #  name: ghost-role-information-punk-boss-dungeon-name
+  #  description: ghost-role-information-punk-boss-dungeon-description
+  #  rules: ghost-role-information-dungeon-boss-rules
+  #  raffle:
+  #    settings: default
+  #  mindRoles:
+  #  - MindRoleGhostRoleTeamAntagonist
+  #- type: GhostTakeoverAvailable
+  # Exodus-Exp-Balance-end
   - type: ActionGun
     action: ActionThrowPartyNade
     gunProto: PartyNadeGun

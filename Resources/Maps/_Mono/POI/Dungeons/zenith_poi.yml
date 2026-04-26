@@ -2685,13 +2685,16 @@ entities:
     - type: Transform
       pos: -0.20697188,-0.14015603
       parent: 1
-- proto: TechDiskShields
-  entities:
-  - uid: 624
-    components:
-    - type: Transform
-      pos: -1.441217,-0.46731663
-      parent: 1
+# Exodus-Exp-Balance-start
+# roundstart top tier shield, too op.
+#- proto: TechDiskShields
+#  entities:
+#  - uid: 624
+#    components:
+#    - type: Transform
+#      pos: -1.441217,-0.46731663
+#      parent: 1
+# Exodus-Exp-Balance-end
 - proto: ThrusterSecurity
   entities:
   - uid: 412
