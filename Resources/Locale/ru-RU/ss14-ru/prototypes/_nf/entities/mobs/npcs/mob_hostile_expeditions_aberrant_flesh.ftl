@@ -1,33 +1,33 @@
-ent-BaseMobFleshExpeditions = aberrant flesh
-    .desc = A shambling mass of flesh, animated through anomalous energy.
+ent-BaseMobFleshExpeditions = аномальная плоть
+    .desc = Неуклюжая масса плоти, оживленная аномальной энергией.
 ent-MobFleshJaredExpeditions = { ent-BaseMobFleshExpeditions }
-    .desc = A mindless meat shield who charges threats directly. Weaker than the average human.
+    .desc = Бездумная масса плоти, живой щит, атакующий угрозы напрямую. Слабее среднестатистического человека.
 ent-MobFleshJaredOldExpeditions = { ent-MobFleshJaredExpeditions }
     .desc = { ent-MobFleshJaredExpeditions.desc }
 ent-MobFleshGolemExpeditions = { ent-BaseMobFleshExpeditions }
-    .desc = A mindless brute with a heavy build. A bit more resilient than other flesh monsters, but less agile.
+    .desc = Безмозглый громила тяжелого телосложения. Немного выносливее других плотоядных монстров, но менее ловок.
 ent-MobFleshGolemAltExpeditions = { ent-MobFleshGolemExpeditions }
     .desc = { ent-MobFleshGolemExpeditions.desc }
 ent-MobFleshGolemOldExpeditions = { ent-MobFleshGolemExpeditions }
     .desc = { ent-MobFleshGolemExpeditions.desc }
 ent-MobFleshAssimilatedMiner = { ent-BaseMobFleshExpeditions }
-    .desc = An unfortunate miner that was infected upon contact with aberrant flesh and has been slowly assimilated.
+    .desc = Несчастный шахтер, заразившийся при контакте с аномальной плотью и постепенно ассимилированный.
 ent-MobFleshClampExpeditions = { ent-BaseMobFleshExpeditions }
-    .desc = A flying flesh monster that can shoot spikes or toothy creatures that can latch on.
+    .desc = Летающее чудовище из плоти, метает зубастых существ, которые цепляются за добычу и пожирают её.
 ent-MobFleshClampOldExpeditions = { ent-MobFleshClampExpeditions }
     .desc = { ent-MobFleshClampExpeditions.desc }
 ent-MobFleshLoverExpeditions = { ent-BaseMobFleshExpeditions }
-    .desc = The Lover's light frame makes it fragile, but capable of flight.
-ent-MobHorrorExpeditions = aberrant flesh horror
-    .desc = Tougher and more resilient than most aberrant flesh monsters. Has sharp, bony protrusions and highly developed musculature.
-ent-BoneSpikeGun = bone spike
-    .desc = Shoots a short salvo of bone spikes.
-ent-ActionBoneSpike = [color=yellow]Bone Spike[/color]
-    .desc = Shoot a short salvo of bone spikes laced with toxins. [color=yellow]5 second cooldown.[/color]
-ent-MobMawExpeditions = aberrant flesh maw
-    .desc = Immobile, flesh-boring creatures that are launched at victims. Latches on until killed or shaken off. Don't put your fingers in it.
-ent-BaseMobFleshExpeditionsNewborn = aberrant flesh newborn
-    .desc = This newborn monster is dripping with amniotic fluid; its movements are sluggish yet deliberate; its limbs, though weak, are lethal nonetheless.
+    .desc = Лёгкое тело делает его хрупким, но способным к полёту.
+ent-MobHorrorExpeditions = аномальное мясное чудовище
+    .desc = Более крепкий и выносливый, чем большинство аномальных плотоядных монстров. Имеет острые костные выступы и высокоразвитую мускулатуру.
+ent-BoneSpikeGun = костяной шип
+    .desc = Выпускает короткий залп костяных шипов.
+ent-ActionBoneSpike = [color=yellow]Костяной Шип[/color]
+    .desc = Выпустите короткий залп костяных шипов, пропитанных токсинами. [color=yellow]5 секунд перезарядка.[/color]
+ent-MobMawExpeditions = аномальная мясная пасть
+    .desc = Неподвижные существа, набрасывающиеся на жертву и вгрызающиеся в её плоть намертво, открепляясь от неё уже после смерти. Не смейте совать в них пальцы.
+ent-BaseMobFleshExpeditionsNewborn = новорождённая аномальная плоть
+    .desc = Это новорожденное чудовище покрыто самыми разными гадкими жидкостями, а его движения хоть и вялые, но размеренные,  а его конечности хоть и слабы, тем не менее, смертельно опасны.
 ent-MobFleshJaredExpeditionsNewborn = { ent-BaseMobFleshExpeditionsNewborn }
     .desc = { ent-BaseMobFleshExpeditionsNewborn.desc }
 ent-MobFleshJaredOldExpeditionsNewborn = { ent-BaseMobFleshExpeditionsNewborn }

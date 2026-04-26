@@ -54,34 +54,7 @@
   editorHidden: true
   weight: 120
 
-- type: department
-  id: Command
-  name: department-Command
-  description: department-NFCommand-description # Frontier
-  color: "#334E6D"
-  roles:
-  # - Captain # Frontier
-  # - ChiefEngineer # Frontier
-  # - ChiefMedicalOfficer # Frontier
-  # - HeadOfPersonnel # Frontier
-  # - HeadOfSecurity # Frontier
-  # - ResearchDirector # Frontier
-  # - Quartermaster # Frontier
-  # - CentralCommandOfficial # Frontier
-  # - CBURN # Frontier
-  # - ERTLeader # Frontier
-  # - ERTChaplain # Frontier
-  # - ERTJanitor # Frontier
-  # - ERTMedical # Frontier
-  # - ERTSecurity # Frontier
-  # - ERTEngineer # Frontier
-  # - DeathSquad # Frontier
-  - StationRepresentative # Frontier
-  - Sheriff  # Frontier
-  - StationTrafficController # Frontier
-  - DirectorOfCare # Mono
-  primary: false
-  weight: 100
+# Exodus-Delete-Command-Department-Start
 
 - type: department
   id: Engineering

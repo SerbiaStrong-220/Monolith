@@ -1065,7 +1065,7 @@
     - ComputerResearchAndDevelopmentFlatpack
     - ResearchAndDevelopmentServerFlatpack
     - MercenaryTechFabFlatpack
-    - LaserDrillFlatpack
+#   - LaserDrillFlatpack # Exodus-Exp-Balance, too strong, moving laserdrill to explorer mobs
     chance: 0.95
     offset: 0.0
     rarePrototypes:

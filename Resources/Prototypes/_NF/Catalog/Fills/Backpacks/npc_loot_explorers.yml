@@ -39,6 +39,14 @@
       prob: 0.2
     - id: ClothingNeckIFFCyan
       prob: 0.1
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.1
+    - id: SpawnDungeonLootOresFull
+      prob: 0.5
+    - id: SpawnDungeonLootOresSingle
+      prob: 1
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
@@ -69,6 +77,14 @@
       prob: 0.2
     - id: ClothingNeckIFFCyan
       prob: 0.1
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.1
+    - id: SpawnDungeonLootOresFull
+      prob: 0.5
+    - id: SpawnDungeonLootOresSingle
+      prob: 1
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
@@ -109,6 +125,18 @@
       prob: 0.7
     - id: SpawnDungeonLootPartsEngi
       prob: 0.7
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.2
+    - id: SpawnDungeonLootOresFull
+      prob: 0.5
+    - id: SpawnDungeonLootOresFull
+      prob: 1
+    - id: SpawnDungeonLootOresSingle
+      prob: 1
+    - id: SpawnDungeonLootOresSingle
+      prob: 0.7
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
@@ -149,6 +177,18 @@
       prob: 0.7
     - id: SpawnDungeonLootPartsEngi
       prob: 0.7
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.2
+    - id: SpawnDungeonLootOresFull
+      prob: 0.7
+    - id: SpawnDungeonLootOresFull
+      prob: 1
+    - id: SpawnDungeonLootOresSingle
+      prob: 1
+    - id: SpawnDungeonLootOresSingle
+      prob: 0.7
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
@@ -196,6 +236,20 @@
       prob: 0.7
     - id: SpawnDungeonLootToolsAdvancedEngineering
       prob: 0.3
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.3
+    - id: SpawnDungeonLootOresFull
+      prob: 0.7
+    - id: SpawnDungeonLootOresFull
+      amount: 2
+      prob: 1
+    - id: SpawnDungeonLootOresSingle
+      amount: 2
+      prob: 1    
+    - id: LaserDrillFlatpack
+      prob: 0.1
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
@@ -244,6 +298,20 @@
       prob: 0.7
     - id: SpawnDungeonLootToolsAdvancedEngineering
       prob: 0.3
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.3
+    - id: SpawnDungeonLootOresFull
+      prob: 0.7
+    - id: SpawnDungeonLootOresFull
+      amount: 2
+      prob: 1
+    - id: SpawnDungeonLootOresSingle
+      amount: 2
+      prob: 1
+    - id: LaserDrillFlatpack
+      prob: 0.1
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
@@ -298,5 +366,19 @@
       prob: 0.5
     - id: SpawnDungeonLootToolsAdvancedEngineering
       prob: 0.4
+    # Exodus-Exp-Balance-start
+    - id: SpawnLootTechDisksExplorersT1
+      prob: 0.3
+    - id: SpawnDungeonLootOresFull
+      prob: 0.7
+    - id: SpawnDungeonLootOresFull
+      amount: 3
+      prob: 1
+    - id: LaserDrillFlatpack
+      prob: 0.5
+    - id: SpawnDungeonLootOresSingle
+      amount: 5
+      prob: 1
+    # Exodus-Exp-Balance-end
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg

@@ -8,7 +8,7 @@
   - MobHumanoidInvetorySimplified
   - MobHumanoidHostileAISimpleRanged
   - NFMobRestrictions
-  id: MobMercenaryBase
+  id: MobMercenaryBaseT1 # Exodus-Exp-Balance
   description: A mercenary, merc, soldier of fortune, hired gun, dog of war.
   components:
   - type: Damageable
@@ -19,8 +19,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
-      130: Dead
+      130: Critical # Exodus-Exp-Balance
+      180: Dead # Exodus-Exp-Balance
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.7
@@ -64,12 +64,57 @@
     baseWalkSpeed : 4.5
     baseSprintSpeed : 4.5
 
+# Exodus-Exp-Balance-start
+- type: entity
+  name: mercenary
+  abstract: true
+  parent:
+  - MobMercenaryBaseT1
+  id: MobMercenaryBaseT2
+  description: A mercenary, merc, soldier of fortune, hired gun, dog of war.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+
+- type: entity
+  name: mercenary
+  abstract: true
+  parent:
+  - MobMercenaryBaseT1
+  id: MobMercenaryBaseT3
+  description: A mercenary, merc, soldier of fortune, hired gun, dog of war.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      160: Critical
+      210: Dead
+
+- type: entity
+  name: mercenary
+  abstract: true
+  parent:
+  - MobMercenaryBaseT1
+  id: MobMercenaryBaseT4
+  description: A mercenary, merc, soldier of fortune, hired gun, dog of war.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      160: Critical
+      210: Dead
+# Exodus-Exp-Balance-end 
+
 # Variations
 ## Tier 1
 - type: entity
   name: mercenary soldier
   parent:
-  - MobMercenaryBase
+  - MobLaserReflect # Exodus-Exp-Balance reflecting shield u know
+  - MobMercenaryBaseT1 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleMelee
   id: MobMercenarySoldierKnife
   description: Low-ranking soldiers armed with a variety of surplus weapons.
@@ -113,7 +158,7 @@
 
 - type: entity
   name: mercenary soldier
-  parent: MobMercenaryBase
+  parent: MobMercenaryBaseT1 # Exodus-Exp-Balance
   id: MobMercenarySoldierPistol
   description: Low-ranking soldiers armed with a variety of surplus weapons.
   categories: [ HideSpawnMenu ]
@@ -155,7 +200,7 @@
 
 - type: entity
   name: mercenary soldier
-  parent: MobMercenaryBase
+  parent: MobMercenaryBaseT1 # Exodus-Exp-Balance
   id: MobMercenarySoldierNovalite # No mosin: novalite rifle now
   description: Low-ranking soldiers armed with a variety of surplus weapons.
   categories: [ HideSpawnMenu ]
@@ -201,7 +246,8 @@
 - type: entity
   name: mercenary breacher
   parent:
-  - MobMercenaryBase
+  - MobLaserReflect # Exodus-Exp-Balance reflecting shield u know
+  - MobMercenaryBaseT2 # Exodus-Exp-Balance
   - MobHumanoidHostileAISimpleMelee
   id: MobMercenaryBreacherMachete
   description: Shock troopers that specialize in using the element of surprise and swift, aggressive action to achieve their objectives.
@@ -246,7 +292,7 @@
 
 - type: entity
   name: mercenary breacher
-  parent: MobMercenaryBase
+  parent: MobMercenaryBaseT2 # Exodus-Exp-Balance
   id: MobMercenarySoldierRevolver
   description: Shock troopers that specialize in using the element of surprise and swift, aggressive action to achieve their objectives.
   categories: [ HideSpawnMenu ]
@@ -292,7 +338,7 @@
 
 - type: entity
   name: mercenary breacher
-  parent: MobMercenaryBase
+  parent: MobMercenaryBaseT2 # Exodus-Exp-Balance
   id: MobMercenaryBreacherShotgun
   description: Shock troopers that specialize in using the element of surprise and swift, aggressive action to achieve their objectives.
   categories: [ HideSpawnMenu ]
@@ -341,7 +387,7 @@
 ## Tier 3
 - type: entity
   name: mercenary paramedic
-  parent: MobMercenaryBase
+  parent: MobMercenaryBaseT3 # Exodus-Exp-Balance
   id: MobMercenarySpecialistMedic
   description: Experienced mercenaries, specialists are practised and proficient in combat or support roles, possibly both.
   categories: [ HideSpawnMenu ]
@@ -403,7 +449,7 @@
 
 - type: entity
   name: mercenary ranger
-  parent: MobMercenaryBase
+  parent: MobMercenaryBaseT3 # Exodus-Exp-Balance
   id: MobMercenarySpecialistAssault
   categories: [ HideSpawnMenu ]
   components:
@@ -454,7 +500,7 @@
 ## Tier 4 - Boss
 - type: entity
   name: mercenary captain
-  parent: [ MobMercenaryBase, NFMobBossRestrictions ]
+  parent: [ MobMercenaryBaseT4, NFMobBossRestrictions ] # Exodus-Exp-Balance
   id: MobMercenaryCaptain
   description: The leaders of these bands of brigands, a mercenary captain is both cruel and lethally effective. Exercise caution.
   categories: [ HideSpawnMenu ]

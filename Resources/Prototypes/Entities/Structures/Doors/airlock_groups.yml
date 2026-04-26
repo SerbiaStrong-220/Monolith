@@ -74,7 +74,7 @@
     basic: Civilian
     cargo: Cargo
     chemistry: Medical
-    command: Command
+    command: Security # Exodus-Delete-Command-Department
     engineering: Engineering
     freezer: Civilian
     glass: Civilian

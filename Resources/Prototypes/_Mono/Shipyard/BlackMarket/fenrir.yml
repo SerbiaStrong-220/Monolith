@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Фенрир # Ru-Localization
   description: Универсальный шаттл поддержки, вооружённый M381 Харон, двумя АОЭД-7 Дравон, двумя Гадюками, четырьмя 20-мм орудиями и имеющий два средних мех-ангара, способных нести мехов S2 и S1 (мехи в комплект не входят). Хорошо бронирован, но медлителен. # Ru-Localization
-  price: 149500
+  price: 150750
   category: Medium
   group: BlackMarket
   access: Pirate

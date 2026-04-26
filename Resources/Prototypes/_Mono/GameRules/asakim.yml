@@ -16,14 +16,14 @@
     weight: 2
     maxOccurrences: 4
   - type: GameRule
-    minPlayers: 40
+    minPlayers: 20 # Exodus-Tweak
   - type: LoadMapRule
     gridPath: /Maps/_Mono/ShuttleEvent/asakim_small.yml
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 6
+      minDepartmentPlayers: 4
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -36,7 +36,7 @@
     weight: 2
     maxOccurrences: 3
   - type: GameRule
-    minPlayers: 60
+    minPlayers: 40 # Exodus-Tweak
   - type: LoadMapRule
     gridPath: /Maps/_Mono/ShuttleEvent/asakim_medium.yml
   - type: GameRuleRequirements # Exodus
