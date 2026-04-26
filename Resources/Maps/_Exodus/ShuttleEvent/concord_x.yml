@@ -4,7 +4,7 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/26/2026 15:20:32
+  time: 04/26/2026 17:43:26
   entityCount: 1777
 maps: []
 grids:
@@ -70,10 +70,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
+        MetalFoam: []
         Smoke: []
         Kudzu: []
         Puddle: []
-        MetalFoam: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
