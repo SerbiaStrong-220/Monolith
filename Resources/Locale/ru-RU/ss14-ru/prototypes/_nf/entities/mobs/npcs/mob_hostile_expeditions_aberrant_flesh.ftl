@@ -26,8 +26,8 @@ ent-ActionBoneSpike = [color=yellow]Костяной Шип[/color]
     .desc = Выпустите короткий залп костяных шипов, пропитанных токсинами. [color=yellow]5 секунд перезарядка.[/color]
 ent-MobMawExpeditions = аномальная мясная пасть
     .desc = Неподвижные существа, набрасывающиеся на жертву и вгрызающиеся в её плоть намертво, откреплясь от неё уже после смерти. Не смейте сувать в них пальцы.
-ent-BaseMobFleshExpeditionsNewborn = новорождённая аномальной плоть
-    .desc = Это новорожденное чудовище покрыто самыми разными гадкими жидкостями, а его движения хоть и вялые, но размеренные,  а его конечности хоть и слабыы, тем не менее, смертельно опасны.
+ent-BaseMobFleshExpeditionsNewborn = новорождённая аномальная плоть
+    .desc = Это новорожденное чудовище покрыто самыми разными гадкими жидкостями, а его движения хоть и вялые, но размеренные,  а его конечности хоть и слабы, тем не менее, смертельно опасны.
 ent-MobFleshJaredExpeditionsNewborn = { ent-BaseMobFleshExpeditionsNewborn }
     .desc = { ent-BaseMobFleshExpeditionsNewborn.desc }
 ent-MobFleshJaredOldExpeditionsNewborn = { ent-BaseMobFleshExpeditionsNewborn }
