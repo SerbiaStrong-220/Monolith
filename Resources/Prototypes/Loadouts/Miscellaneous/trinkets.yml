@@ -248,17 +248,17 @@
     back:
     - TowelColorGreen
 
-# - type: loadout # Exodus-Delete-Command-Department
-#   id: TowelColorDarkBlue
-#   effects:
-#   - !type:JobRequirementLoadoutEffect
-#     requirement:
-#       !type:DepartmentTimeRequirement
-#       department: Command
-#       time: 360000 # 100hr
-#   storage:
-#     back:
-#     - TowelColorDarkBlue
+- type: loadout
+  id: TowelColorDarkBlue
+  # effects: # Exodus-Delete-Command-Department
+  # - !type:JobRequirementLoadoutEffect
+  #   requirement:
+  #     !type:DepartmentTimeRequirement
+  #     department: Command
+  #     time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorDarkBlue
 
 - type: loadout
   id: TowelColorOrange
