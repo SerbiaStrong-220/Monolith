@@ -84,17 +84,17 @@
 - type: loadout
   id: CigarCase
   effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
+  # - !type:GroupLoadoutEffect # Exodus-Delete-Command-Department
+  #   proto: Command
   storage:
     back:
     - CigarCase
 
 - type: loadout
   id: CigarGold
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
+  # effects:
+  # - !type:GroupLoadoutEffect # Exodus-Delete-Command-Department
+  #   proto: Command
   storage:
     back:
     - CigarGold
