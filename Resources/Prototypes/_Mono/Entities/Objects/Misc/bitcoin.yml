@@ -1,8 +1,9 @@
 - type: entity
   parent: BaseItem
   id: BaseBitcoin
-  # Exodus: name and description are localized in FTL.
+  name: basic bitcoin
   abstract: true
+  description: A valuable bitcoin, composed of arbitrary data. Definitely a good investment.
   components:
   - type: EmitSoundOnPickup
     sound:
@@ -34,7 +35,8 @@
 - type: entity
   parent: BaseBitcoin
   id: BitcoinContribcoin
-  # Exodus: name and description are localized in FTL.
+  name: Contribcoin™
+  description: A weirdly valuable bitcoin composed of many generic definitions, raw data and operating presets. Slightly volatile.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/bitcoin.rsi
@@ -45,7 +47,8 @@
 - type: entity
   parent: BaseBitcoin
   id: BitcoinIdeascoin
-  # Exodus: name and description are localized in FTL.
+  name: Ideascoin™
+  description: A strangely valuable bitcoin composed of raw conceptual data of a multitude of completely hypothetical things. Moderately volatile.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/bitcoin.rsi
@@ -62,7 +65,8 @@
 - type: entity
   parent: BaseBitcoin
   id: BitcoinLuxurycoin # Exodus
-  # Exodus: name and description are localized in FTL.
+  name: Luxurycoin™ # Exodus
+  description: An absurdly valuable and rare bitcoin, made up of tons of high(?)-quality code and generic systems. Highly volatile. # Exodus
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/bitcoin.rsi
