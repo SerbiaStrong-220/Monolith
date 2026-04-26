@@ -34,7 +34,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: ADS Zenith-E
+      name: АСЗ Зенит-Е
     - type: Transform
       pos: 0.5,0.5
       parent: invalid

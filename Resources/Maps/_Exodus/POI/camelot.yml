@@ -65,7 +65,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Camelot Station
+      name: Форт Камелот
     - type: Transform
       pos: 0.5,0.5
       parent: invalid
