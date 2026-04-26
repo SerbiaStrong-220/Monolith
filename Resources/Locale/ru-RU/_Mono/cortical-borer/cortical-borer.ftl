@@ -25,7 +25,7 @@ cortical-borer-vomit = { $name } отложил { $egg }!
 cortical-borer-dispenser-window-cost = { $cost } химикатов
 cortical-borer-ghostrole-name = Борер
 cortical-borer-ghostrole-desc = Космический червяк, стремящийся обрести носителя для вынашивания и откладывания яиц.
-cortical-borer-ghostrole-rules = Откладывайте яйца и расширяйте улей. Кроме того, вы можете [head=3][color=#04bf5e]ЗАРАЖАТЬ[/color][/head] на [color=#e8d905]Аванпосте[/color] или в [color=#2093b0]Госпитале[/color]. [head=3]Убийство на роли борера строго [color=red]ЗАПРЕЩЕНО[/color] без исключений.[/head]
+cortical-borer-ghostrole-rules = Откладывайте яйца и расширяйте улей. Кроме того, вы можете [head=3][color=#04bf5e]ЗАРАЖАТЬ[/color][/head] на [color=#e8d905]Аванпосте[/color] или в [color=#2093b0]Госпитале[/color]. [head=3]На роли борера [color=red]ЗАПРЕЩЕНО[/color] убивать в любом случае[/head]. Все действия, которые ведут к смерти носителя (напрямую или косвенно) - нарушение.
 
 ## Examine Text
 
