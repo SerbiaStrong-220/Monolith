@@ -16,7 +16,7 @@
     - id: UnknownShuttleZenith
     - id: UnknownShuttleWyrm
     - id: UnknownShuttleNebula
-    - id: UnknownShuttleConcordX
+    - id: UnknownShuttleConcordX # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
