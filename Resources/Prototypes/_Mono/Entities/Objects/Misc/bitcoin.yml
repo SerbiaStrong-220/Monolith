@@ -64,9 +64,9 @@
 
 - type: entity
   parent: BaseBitcoin
-  id: BitcoinGoidacoin
-  name: Goidacoin™
-  description: An absurdly valuable and rare bitcoin, made up of tons of high(?)-quality code and generic systems. Highly volatile.
+  id: BitcoinLuxurycoin # Exodus
+  name: Luxurycoin™ # Exodus
+  description: An absurdly valuable and rare bitcoin, made up of tons of high(?)-quality code and generic systems. Highly volatile. # Exodus
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/bitcoin.rsi
