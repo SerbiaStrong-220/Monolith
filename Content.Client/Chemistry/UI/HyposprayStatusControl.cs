@@ -48,12 +48,12 @@ public sealed class HyposprayStatusControl : Control
         PrevInjectOnly = _parent.Comp.InjectOnly; // Exodus borg-paramedic-hypo
 
         // Exodus-begin borg-paramedic-hypo
-        var modeStringLocalized = Loc.GetString(_parent.Comp.InjectOnly
-            ? "hypospray-all-mode-text"
-            : _parent.Comp.OnlyAffectsMobs switch
+        var modeStringLocalized = Loc.GetString((_parent.Comp.InjectOnly, _parent.Comp.OnlyAffectsMobs) switch
         {
-            false => "hypospray-all-mode-text",
-            true => "hypospray-mobs-only-mode-text",
+            (true, true) => "hypospray-mobs-only-inject-only-mode-text",
+            (true, false) => "hypospray-all-mode-text",
+            (false, true) => "hypospray-mobs-only-mode-text",
+            (false, false) => "hypospray-all-mode-text",
         });
         // Exodus-end
 
