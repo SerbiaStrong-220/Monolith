@@ -499,6 +499,7 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+  - type: BorgModuleStackRecharger # Exodus borg-medical-recharge
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
@@ -535,6 +536,7 @@
     # - Beaker # Frontier
     - BorgDropper
     - BorgHypo
+  - type: BorgModuleStackRecharger # Exodus borg-medical-recharge
   # Frontier: droppable borg items
   - type: DroppableBorgModule
     moduleId: AdvancedTreatment
