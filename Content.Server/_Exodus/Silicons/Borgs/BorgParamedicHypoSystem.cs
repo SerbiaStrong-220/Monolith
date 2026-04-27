@@ -86,7 +86,7 @@ public sealed class BorgParamedicHypoSystem : EntitySystem
         if (HasComp<MobStateComponent>(args.Target.Value))
             return;
 
-        _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
+        _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Name(args.Target.Value, EntityManager))), args.Target.Value, args.User);
         args.Handled = true;
     }
 
