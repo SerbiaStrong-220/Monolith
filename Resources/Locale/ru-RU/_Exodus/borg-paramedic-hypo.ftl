@@ -1,4 +1,4 @@
-ent-BorgParamedicHypo = борг-гипоспрей парамедика
+ent-BorgParamedicHypo = улучшенный гипоспрей борга
     .desc = Стерильный инъектор для быстрого введения синтезированных экстренных медикаментов.
 
 borg-paramedic-hypo-selected = Гипоспрей выбран: {$reagent}.
