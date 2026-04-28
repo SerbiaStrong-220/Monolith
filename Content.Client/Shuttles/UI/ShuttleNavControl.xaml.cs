@@ -1180,7 +1180,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (config.Points == null || config.Points.Count < 3)
             return;
 
-        var fillBuffer = new Vector2[config.Points.Count + 1];
+        var fillBuffer = new Vector2[config.Points.Count + 2];
         fillBuffer[0] = position;
 
         for (var i = 0; i < config.Points.Count; i++)
@@ -1192,6 +1192,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             fillBuffer[i + 1] = position + point;
         }
 
+        fillBuffer[^1] = fillBuffer[1];
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, fillBuffer, color.WithAlpha(0.18f));
 
         var lineBuffer = new Vector2[config.Points.Count + 1];

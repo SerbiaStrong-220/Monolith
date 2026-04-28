@@ -31,4 +31,7 @@ public sealed partial class NebulaMapComponent : Component
 
     [ViewVariables]
     public bool Complete;
+
+    [ViewVariables]
+    public TimeSpan NextMarkerValidation;
 }

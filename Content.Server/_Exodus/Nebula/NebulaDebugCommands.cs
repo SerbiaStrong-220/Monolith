@@ -80,3 +80,31 @@ public sealed class NebulaDebugClearCommand : IConsoleCommand
         shell.WriteLine($"Deleted {count} nebula debug visual markers.");
     }
 }
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaStatusCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public string Command => "nebula_status";
+    public string Description => "Prints generated nebula and marker status.";
+    public string Help => "Usage: nebula_status";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 0)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        var system = _entityManager.System<NebulaGenerationSystem>();
+        if (!system.TryGetStatus(out var message))
+        {
+            shell.WriteError(message);
+            return;
+        }
+
+        shell.WriteLine(message);
+    }
+}

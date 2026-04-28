@@ -15,6 +15,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula;
 
@@ -25,6 +26,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
     private const float NebulaRadarMaxDistance = 250_000f;
     private const int NebulaRadarContourSamples = 96;
+    private static readonly TimeSpan MarkerValidationInterval = TimeSpan.FromSeconds(30);
 
     private static readonly Color NebulaRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
 
@@ -33,6 +35,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private static readonly string[] ProtectedStationIds =
@@ -83,8 +86,29 @@ public sealed class NebulaGenerationSystem : EntitySystem
         component.ProtectedAreas.AddRange(protectedAreas);
 
         SpawnNebulaMarkers(mapId, component);
+        component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
 
         Logger.InfoS("nebula", $"Generated {component.Nebulas.Count}/{component.RequestedCount} nebulas and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts} attempts.");
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<NebulaMapComponent, MapComponent>();
+        while (query.MoveNext(out var uid, out var component, out var map))
+        {
+            if (component.Nebulas.Count == 0 || _timing.CurTime < component.NextMarkerValidation)
+                continue;
+
+            component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
+
+            if (HasValidMarkers(component))
+                continue;
+
+            ClearNebulaMarkers(component);
+            SpawnNebulaMarkers(map.MapId, component);
+
+            Logger.WarningS("nebula", $"Restored {component.NebulaMarkers.Count} nebula markers on map {map.MapId}.");
+        }
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
@@ -248,6 +272,33 @@ public sealed class NebulaGenerationSystem : EntitySystem
         return count;
     }
 
+    public bool TryGetStatus(out string message)
+    {
+        var mapId = _ticker.DefaultMap;
+        if (!_mapManager.MapExists(mapId))
+        {
+            message = $"Default map {mapId} does not exist.";
+            return false;
+        }
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        if (!TryComp<NebulaMapComponent>(mapUid, out var component))
+        {
+            message = "No NebulaMapComponent found on the default map.";
+            return false;
+        }
+
+        var validMarkers = 0;
+        for (var i = 0; i < component.NebulaMarkers.Count; i++)
+        {
+            if (IsValidMarker(component.NebulaMarkers[i]))
+                validMarkers++;
+        }
+
+        message = $"Nebulas: {component.Nebulas.Count}/{component.RequestedCount}; markers: {validMarkers}/{component.NebulaMarkers.Count}; seed: {component.Seed}; complete: {component.Complete}.";
+        return true;
+    }
+
     private void SpawnNebulaMarkers(MapId mapId, NebulaMapComponent component)
     {
         for (var i = 0; i < component.Nebulas.Count; i++)
@@ -295,6 +346,28 @@ public sealed class NebulaGenerationSystem : EntitySystem
         }
 
         return points;
+    }
+
+    private bool HasValidMarkers(NebulaMapComponent component)
+    {
+        if (component.NebulaMarkers.Count != component.Nebulas.Count)
+            return false;
+
+        for (var i = 0; i < component.NebulaMarkers.Count; i++)
+        {
+            if (!IsValidMarker(component.NebulaMarkers[i]))
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool IsValidMarker(EntityUid uid)
+    {
+        return !Deleted(uid) &&
+               HasComp<NebulaComponent>(uid) &&
+               HasComp<RadarBlipComponent>(uid) &&
+               HasComp<PhysicsComponent>(uid);
     }
 
     private void ClearNebulaMarkers(NebulaMapComponent component)
