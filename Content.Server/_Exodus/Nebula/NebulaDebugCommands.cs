@@ -1,0 +1,82 @@
+using Content.Server.Administration;
+using Content.Shared.Administration;
+using Robust.Shared.Console;
+
+namespace Content.Server._Exodus.Nebula;
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaDebugVisualizeCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public string Command => "nebula_debug_visualize";
+    public string Description => "Spawns temporary debug points for generated nebula contours.";
+    public string Help => "Usage: nebula_debug_visualize [all|index] [samples=64] [lifetime=180]";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length > 3)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        int? nebulaIndex = null;
+        if (args.Length >= 1 && !string.Equals(args[0], "all", StringComparison.OrdinalIgnoreCase))
+        {
+            if (!int.TryParse(args[0], out var parsedIndex) || parsedIndex <= 0)
+            {
+                shell.WriteError("Nebula index must be a positive one-based number or 'all'.");
+                return;
+            }
+
+            nebulaIndex = parsedIndex - 1;
+        }
+
+        var samples = 64;
+        if (args.Length >= 2 && (!int.TryParse(args[1], out samples) || samples < 8 || samples > 256))
+        {
+            shell.WriteError("Samples must be an integer from 8 to 256.");
+            return;
+        }
+
+        var lifetime = 180f;
+        if (args.Length >= 3 && (!float.TryParse(args[2], out lifetime) || lifetime < 5f || lifetime > 600f))
+        {
+            shell.WriteError("Lifetime must be a number from 5 to 600 seconds.");
+            return;
+        }
+
+        var system = _entityManager.System<NebulaGenerationSystem>();
+        if (!system.TrySpawnDebugVisualization(nebulaIndex, samples, lifetime, out var count, out var message))
+        {
+            shell.WriteError(message);
+            return;
+        }
+
+        shell.WriteLine($"Spawned {count} nebula debug visual markers for {lifetime:0.#} seconds.");
+    }
+}
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaDebugClearCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public string Command => "nebula_debug_clear";
+    public string Description => "Deletes temporary nebula debug points.";
+    public string Help => "Usage: nebula_debug_clear";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 0)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        var system = _entityManager.System<NebulaGenerationSystem>();
+        var count = system.ClearDebugVisuals();
+        shell.WriteLine($"Deleted {count} nebula debug visual markers.");
+    }
+}

@@ -10,12 +10,18 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Spawners;
 
 namespace Content.Server._Exodus.Nebula;
 
 public sealed class NebulaGenerationSystem : EntitySystem
 {
+    private const string DebugContourPointPrototype = "NebulaDebugContourPoint";
+    private const string DebugBoundingPointPrototype = "NebulaDebugBoundingPoint";
+    private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
+
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -54,6 +60,8 @@ public sealed class NebulaGenerationSystem : EntitySystem
         var mapUid = _mapManager.GetMapEntityId(mapId);
         var component = EnsureComp<NebulaMapComponent>(mapUid);
 
+        ClearNebulaMarkers(component);
+
         component.Seed = seed;
         component.Attempts = result.Attempts;
         component.RequestedCount = result.RequestedCount;
@@ -66,15 +74,24 @@ public sealed class NebulaGenerationSystem : EntitySystem
         component.ProtectedAreas.Clear();
         component.ProtectedAreas.AddRange(protectedAreas);
 
-        Logger.InfoS("nebula", $"Generated {component.Nebulas.Count}/{component.RequestedCount} nebulas on map {mapId} with seed {seed} after {component.Attempts} attempts.");
+        SpawnNebulaMarkers(mapId, component);
+
+        Logger.InfoS("nebula", $"Generated {component.Nebulas.Count}/{component.RequestedCount} nebulas and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts} attempts.");
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
         var query = EntityQueryEnumerator<NebulaMapComponent>();
-        while (query.MoveNext(out var uid, out _))
+        while (query.MoveNext(out var uid, out var component))
         {
+            ClearNebulaMarkers(component);
             RemCompDeferred<NebulaMapComponent>(uid);
+        }
+
+        var markerQuery = EntityQueryEnumerator<NebulaComponent>();
+        while (markerQuery.MoveNext(out var uid, out _))
+        {
+            QueueDel(uid);
         }
     }
 
@@ -165,5 +182,150 @@ public sealed class NebulaGenerationSystem : EntitySystem
         }
 
         protectedAreas.Add(area);
+    }
+
+    public bool TrySpawnDebugVisualization(int? nebulaIndex, int sampleCount, float lifetime, out int count, out string message)
+    {
+        count = 0;
+        message = string.Empty;
+
+        var mapId = _ticker.DefaultMap;
+        if (!_mapManager.MapExists(mapId))
+        {
+            message = $"Default map {mapId} does not exist.";
+            return false;
+        }
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        if (!TryComp<NebulaMapComponent>(mapUid, out var component) || component.Nebulas.Count == 0)
+        {
+            message = "No generated nebulas found on the default map.";
+            return false;
+        }
+
+        if (nebulaIndex is { } index && (index < 0 || index >= component.Nebulas.Count))
+        {
+            message = $"Nebula index must be between 1 and {component.Nebulas.Count}.";
+            return false;
+        }
+
+        var start = nebulaIndex ?? 0;
+        var end = nebulaIndex + 1 ?? component.Nebulas.Count;
+
+        for (var i = start; i < end; i++)
+        {
+            var nebula = component.Nebulas[i];
+            count += SpawnNebulaDebugPoints(mapId, i, nebula, sampleCount, lifetime);
+        }
+
+        var protectedSampleCount = Math.Min(sampleCount, 64);
+        for (var i = 0; i < component.ProtectedAreas.Count; i++)
+        {
+            count += SpawnProtectedAreaDebugPoints(mapId, component.ProtectedAreas[i], protectedSampleCount, lifetime);
+        }
+
+        return true;
+    }
+
+    public int ClearDebugVisuals()
+    {
+        var count = 0;
+        var query = EntityQueryEnumerator<NebulaDebugVisualComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            QueueDel(uid);
+            count++;
+        }
+
+        return count;
+    }
+
+    private void SpawnNebulaMarkers(MapId mapId, NebulaMapComponent component)
+    {
+        for (var i = 0; i < component.Nebulas.Count; i++)
+        {
+            var nebula = component.Nebulas[i];
+            var marker = Spawn(null, new MapCoordinates(nebula.Center, mapId));
+            var nebulaComponent = EnsureComp<NebulaComponent>(marker);
+
+            nebulaComponent.Index = i;
+            nebulaComponent.Shape = nebula;
+            component.NebulaMarkers.Add(marker);
+
+            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1}");
+        }
+    }
+
+    private void ClearNebulaMarkers(NebulaMapComponent component)
+    {
+        for (var i = 0; i < component.NebulaMarkers.Count; i++)
+        {
+            var marker = component.NebulaMarkers[i];
+            if (!Deleted(marker))
+                QueueDel(marker);
+        }
+
+        component.NebulaMarkers.Clear();
+    }
+
+    private int SpawnNebulaDebugPoints(MapId mapId, int nebulaIndex, NebulaShape nebula, int sampleCount, float lifetime)
+    {
+        var count = 0;
+
+        for (var i = 0; i < sampleCount; i++)
+        {
+            var theta = MathF.Tau * i / sampleCount;
+            var contourPoint = nebula.GetBoundaryPoint(theta);
+            SpawnDebugPoint(
+                DebugContourPointPrototype,
+                new MapCoordinates(contourPoint, mapId),
+                nebulaIndex,
+                "contour",
+                lifetime);
+            count++;
+
+            var boundingPoint = nebula.Center + new Vector2(
+                MathF.Cos(theta) * nebula.BoundingRadius,
+                MathF.Sin(theta) * nebula.BoundingRadius);
+            SpawnDebugPoint(
+                DebugBoundingPointPrototype,
+                new MapCoordinates(boundingPoint, mapId),
+                nebulaIndex,
+                "bounding",
+                lifetime);
+            count++;
+        }
+
+        return count;
+    }
+
+    private int SpawnProtectedAreaDebugPoints(MapId mapId, NebulaProtectedArea area, int sampleCount, float lifetime)
+    {
+        for (var i = 0; i < sampleCount; i++)
+        {
+            var theta = MathF.Tau * i / sampleCount;
+            var point = area.Position + new Vector2(
+                MathF.Cos(theta) * area.Radius,
+                MathF.Sin(theta) * area.Radius);
+            SpawnDebugPoint(
+                DebugProtectedPointPrototype,
+                new MapCoordinates(point, mapId),
+                -1,
+                "protected",
+                lifetime);
+        }
+
+        return sampleCount;
+    }
+
+    private void SpawnDebugPoint(string prototype, MapCoordinates coordinates, int nebulaIndex, string kind, float lifetime)
+    {
+        var uid = Spawn(prototype, coordinates);
+        var debug = EnsureComp<NebulaDebugVisualComponent>(uid);
+        debug.NebulaIndex = nebulaIndex;
+        debug.Kind = kind;
+
+        var despawn = EnsureComp<TimedDespawnComponent>(uid);
+        despawn.Lifetime = lifetime;
     }
 }

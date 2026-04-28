@@ -156,6 +156,21 @@ public readonly record struct NebulaShape
         return BaseRadius * boundary / MathF.Sqrt(BoundaryMeanSquare);
     }
 
+    public Vector2 GetBoundaryPoint(float theta)
+    {
+        var radius = GetRadius(theta);
+        var local = new Vector2(
+            radius * MathF.Cos(theta) * Stretch,
+            radius * MathF.Sin(theta) / Stretch);
+        var cos = MathF.Cos(Rotation);
+        var sin = MathF.Sin(Rotation);
+        var rotated = new Vector2(
+            local.X * cos - local.Y * sin,
+            local.X * sin + local.Y * cos);
+
+        return Center + rotated;
+    }
+
     private (float Theta, float Rho) ToNebulaPolar(Vector2 point)
     {
         var delta = point - Center;
