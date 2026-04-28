@@ -16,7 +16,8 @@ public enum RadarBlipShape
     Diamond,
     Hexagon,
     Arrow,
-    Ring
+    Ring,
+    NebulaPolygon // Exodus nebula-radar-visualization
 }
 
 [Serializable, NetSerializable]
@@ -94,6 +95,9 @@ public partial record struct BlipConfig
 
     [DataField]
     public RadarBlipShape Shape = RadarBlipShape.Circle;
+
+    [DataField]
+    public List<Vector2>? Points = null; // Exodus nebula-radar-visualization
 
     [DataField]
     public bool RespectZoom = false;

@@ -1038,7 +1038,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             // Check if this blip is within view bounds before drawing
             if (blipViewBounds.Contains(position)) // Exodus nebula-radar-visualization
             {
-                DrawBlipShape(handle, position, box, color, blip.Config.Shape);
+                DrawBlipShape(handle, position, box, color, blip.Config); // Exodus nebula-radar-visualization
             }
         }
 
@@ -1099,9 +1099,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         return (top - offset, left - offset, offset);
     }
 
-    private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color, RadarBlipShape shape)
+    private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color, BlipConfig config) // Exodus nebula-radar-visualization
     {
-        switch (shape)
+        switch (config.Shape) // Exodus nebula-radar-visualization
         {
             case RadarBlipShape.Circle:
                 DrawCircle(handle, position, bounds, color);
@@ -1109,6 +1109,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             // Exodus-begin nebula-radar-visualization
             case RadarBlipShape.Ring:
                 DrawRing(handle, position, bounds, color);
+                break;
+            case RadarBlipShape.NebulaPolygon:
+                DrawNebulaPolygon(handle, position, config, color);
                 break;
             // Exodus-end
             case RadarBlipShape.Square:
@@ -1172,6 +1175,39 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     }
 
     // Exodus-begin nebula-radar-visualization
+    private void DrawNebulaPolygon(DrawingHandleScreen handle, Vector2 position, BlipConfig config, Color color)
+    {
+        if (config.Points == null || config.Points.Count < 3)
+            return;
+
+        var fillBuffer = new Vector2[config.Points.Count + 1];
+        fillBuffer[0] = position;
+
+        for (var i = 0; i < config.Points.Count; i++)
+        {
+            var point = config.Points[i];
+            if (config.RespectZoom)
+                point *= MinimapScale;
+
+            fillBuffer[i + 1] = position + point;
+        }
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, fillBuffer, color.WithAlpha(0.18f));
+
+        var lineBuffer = new Vector2[config.Points.Count + 1];
+        for (var i = 0; i < config.Points.Count; i++)
+        {
+            var point = config.Points[i];
+            if (config.RespectZoom)
+                point *= MinimapScale;
+
+            lineBuffer[i] = position + point;
+        }
+
+        lineBuffer[^1] = lineBuffer[0];
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, lineBuffer, color.WithAlpha(0.9f));
+    }
+
     private void DrawRing(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {
         const int segments = 96;

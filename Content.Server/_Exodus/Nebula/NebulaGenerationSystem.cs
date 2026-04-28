@@ -24,6 +24,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const string DebugBoundingPointPrototype = "NebulaDebugBoundingPoint";
     private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
     private const float NebulaRadarMaxDistance = 250_000f;
+    private const int NebulaRadarContourSamples = 96;
 
     private static readonly Color NebulaRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
 
@@ -276,10 +277,24 @@ public sealed class NebulaGenerationSystem : EntitySystem
         {
             Bounds = new Box2(-radius, -radius, radius, radius),
             Color = NebulaRadarColor,
-            Shape = RadarBlipShape.Ring,
+            Shape = RadarBlipShape.NebulaPolygon,
+            Points = BuildRadarContourPoints(nebula),
             RespectZoom = true,
             Rotate = false,
         };
+    }
+
+    private static List<Vector2> BuildRadarContourPoints(NebulaShape nebula)
+    {
+        var points = new List<Vector2>(NebulaRadarContourSamples);
+
+        for (var i = 0; i < NebulaRadarContourSamples; i++)
+        {
+            var theta = MathF.Tau * i / NebulaRadarContourSamples;
+            points.Add(nebula.GetBoundaryPoint(theta) - nebula.Center);
+        }
+
+        return points;
     }
 
     private void ClearNebulaMarkers(NebulaMapComponent component)
