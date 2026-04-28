@@ -84,10 +84,12 @@ public sealed class DamageExamineSystem : EntitySystem
         {
             msg.PushNewline();
 
-            if (float.IsPositive(armorPenetration.Value))
-                msg.AddMarkupOrThrow(Loc.GetString("damage-positive-armor-penetration", ("value", Math.Round(armorPenetration.Value * 100, 1))));
-            else
-                msg.AddMarkupOrThrow(Loc.GetString("damage-negative-armor-penetration", ("value", Math.Round(armorPenetration.Value * -100, 1))));
+            var ap = Math.Round(armorPenetration.Value, 5);
+
+            if (ap > 0)
+                msg.AddMarkupOrThrow(Loc.GetString("damage-positive-armor-penetration", ("value", ap)));
+            else if (ap < 0)
+                msg.AddMarkupOrThrow(Loc.GetString("damage-negative-armor-penetration", ("value", ap)));
         }
         //Exodus AdvancedWeaponExamine End
 
