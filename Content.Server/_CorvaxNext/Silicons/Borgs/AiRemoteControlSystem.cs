@@ -105,9 +105,10 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
     // Exodus-begin ai-remote-power-check
     private void OnPowerCellSlotEmpty(Entity<AiRemoteControllerComponent> entity, ref PowerCellSlotEmptyEvent args)
     {
-        if (entity.Comp.AiHolder != null)
-            SendAiRemoteChat(entity, "ai-remote-control-lost-power");
+        if (entity.Comp.AiHolder == null)
+            return;
 
+        SendAiRemoteChat(entity, "ai-remote-control-lost-power");
         ReturnMindIntoAi(entity);
     }
 
