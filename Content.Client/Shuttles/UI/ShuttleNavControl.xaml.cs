@@ -1024,8 +1024,19 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     continue;
             }
 
+            // Exodus-begin nebula-radar-visualization
+            var blipViewBounds = monoViewBounds;
+            if (blip.Config.RespectZoom)
+            {
+                var maxOffset = MathF.Max(
+                    MathF.Max(box.TopLeft.Length(), box.TopRight.Length()),
+                    MathF.Max(box.BottomLeft.Length(), box.BottomRight.Length()));
+                blipViewBounds = blipViewBounds.Enlarged(maxOffset);
+            }
+            // Exodus-end
+
             // Check if this blip is within view bounds before drawing
-            if (monoViewBounds.Contains(position))
+            if (blipViewBounds.Contains(position)) // Exodus nebula-radar-visualization
             {
                 DrawBlipShape(handle, position, box, color, blip.Config.Shape);
             }
@@ -1095,6 +1106,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             case RadarBlipShape.Circle:
                 DrawCircle(handle, position, bounds, color);
                 break;
+            // Exodus-begin nebula-radar-visualization
+            case RadarBlipShape.Ring:
+                DrawRing(handle, position, bounds, color);
+                break;
+            // Exodus-end
             case RadarBlipShape.Square:
                 var boxPoints = new Vector2[]
                 {
@@ -1154,6 +1170,26 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, buffer, color);
     }
+
+    // Exodus-begin nebula-radar-visualization
+    private void DrawRing(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
+    {
+        const int segments = 96;
+        var buffer = new Vector2[segments + 1];
+        var size = GetSize(bounds);
+        var offsetPos = position + size.Offset;
+
+        for (var i = 0; i <= segments; i++)
+        {
+            var angle = i * MathF.Tau / segments;
+            var pos = size.Left * MathF.Sin(angle) + size.Top * MathF.Cos(angle);
+
+            buffer[i] = offsetPos + pos;
+        }
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, buffer, color);
+    }
+    // Exodus-end
 
     private void DrawStar(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {

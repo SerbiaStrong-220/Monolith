@@ -1,13 +1,17 @@
 using System.Numerics;
+using Content.Server._Mono.Radar;
 using Content.Server._NF.GameRule;
 using Content.Server._NF.GameTicking.Events;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Station.Components;
 using Content.Shared._Exodus.Nebula;
+using Content.Shared._Mono.Radar;
 using Content.Shared.GameTicking;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
@@ -19,6 +23,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const string DebugContourPointPrototype = "NebulaDebugContourPoint";
     private const string DebugBoundingPointPrototype = "NebulaDebugBoundingPoint";
     private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
+    private const float NebulaRadarMaxDistance = 250_000f;
+
+    private static readonly Color NebulaRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -252,8 +259,27 @@ public sealed class NebulaGenerationSystem : EntitySystem
             nebulaComponent.Shape = nebula;
             component.NebulaMarkers.Add(marker);
 
+            EnsureComp<PhysicsComponent>(marker);
+            ConfigureRadarBlip(EnsureComp<RadarBlipComponent>(marker), nebula);
+
             _metadata.SetEntityName(marker, $"Nebula Marker {i + 1}");
         }
+    }
+
+    private static void ConfigureRadarBlip(RadarBlipComponent blip, NebulaShape nebula)
+    {
+        var radius = nebula.BoundingRadius;
+        blip.MaxDistance = NebulaRadarMaxDistance;
+        blip.RequireNoGrid = true;
+        blip.VisibleFromOtherGrids = true;
+        blip.Config = new BlipConfig
+        {
+            Bounds = new Box2(-radius, -radius, radius, radius),
+            Color = NebulaRadarColor,
+            Shape = RadarBlipShape.Ring,
+            RespectZoom = true,
+            Rotate = false,
+        };
     }
 
     private void ClearNebulaMarkers(NebulaMapComponent component)
