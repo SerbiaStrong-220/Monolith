@@ -5,4 +5,3 @@ ai-remote-control = Take control
 # Exodus ai-remote-power-check
 ai-remote-control-no-power-cell = Cannot remotely control {$borg}: no power cell installed.
 ai-remote-control-insufficient-power = Cannot remotely control {$borg}: insufficient power.
-ai-remote-control-lost-power = Remote control of {$borg} lost: cyborg power depleted.
