@@ -50,6 +50,7 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
         SubscribeLocalEvent<AiRemoteControllerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AiRemoteControllerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AiRemoteControllerComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty); // Exodus ai-remote-power-check
+        SubscribeLocalEvent<AiRemoteControllerComponent, PowerCellChangedEvent>(OnPowerCellChanged); // Exodus ai-remote-power-check
         SubscribeLocalEvent<AiRemoteControllerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<StationAiHeldComponent, AiRemoteControllerComponent.RemoteDeviceActionMessage>(OnUiRemoteAction);
         SubscribeLocalEvent<StationAiHeldComponent, ToggleRemoteDevicesScreenEvent>(OnToggleRemoteDevicesScreen);
@@ -112,6 +113,18 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
         ReturnMindIntoAi(entity);
     }
 
+    private void OnPowerCellChanged(Entity<AiRemoteControllerComponent> entity, ref PowerCellChangedEvent args)
+    {
+        if (entity.Comp.AiHolder == null)
+            return;
+
+        if (HasRemotePower(entity, out _))
+            return;
+
+        SendAiRemoteChat(entity, "ai-remote-control-lost-power");
+        ReturnMindIntoAi(entity);
+    }
+
     private bool HasRemotePower(EntityUid entity, out string? failMessage)
     {
         failMessage = null;
@@ -126,7 +139,7 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
             return false;
         }
 
-        if (battery.CurrentCharge >= draw.DrawRate)
+        if (battery.CurrentCharge > 0f && battery.CurrentCharge >= draw.DrawRate)
             return true;
 
         failMessage = "ai-remote-control-insufficient-power";
