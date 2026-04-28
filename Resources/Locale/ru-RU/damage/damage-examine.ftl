@@ -9,3 +9,7 @@ damage-examine = Наносит следующие повреждения:
 damage-examine-type = Наносит следующие повреждения ([color=cyan]{ $type }[/color]):
 damage-value = - [color=red]{ $amount }[/color] единиц [color=yellow]{ $type }[/color].
 damage-none = Не наносит урона.
+
+#Exodus ArmorPiercingExamine
+damage-positive-armor-penetration = Пробиваемая броня на [color=green]{ $value }%[/color] менее эффективна.
+damage-negative-armor-penetration = Пробиваемая броня на [color=red]{ $value }%[/color] более эффективна.

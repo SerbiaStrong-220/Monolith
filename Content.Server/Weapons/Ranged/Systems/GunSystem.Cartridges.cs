@@ -25,7 +25,28 @@ public sealed partial class GunSystem
             return;
 
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
+        //Exodus ArmorPiercingExamine Start
+        _damageExamine.AddDamageExamine(
+            args.Message,
+            Damageable.ApplyUniversalAllModifiers(damageSpec),
+            armorPenetration: GetProjectileArmorPiercing(component.Prototype),
+            type: Loc.GetString("damage-projectile"));
+        //Exodus ArmorPiercingExamine End
     }
+
+    //Exodus ArmorPiercingExamine Start
+    private float? GetProjectileArmorPiercing(string proto)
+    {
+        if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
+            return null;
+
+        if (!entityProto.Components
+            .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
+            return null;
+
+        return ((ProjectileComponent)projectile.Component).ArmorPenetration;
+    }
+    //Exodus ArmorPiercingExamine End
 
     private DamageSpecifier? GetProjectileDamage(string proto)
     {

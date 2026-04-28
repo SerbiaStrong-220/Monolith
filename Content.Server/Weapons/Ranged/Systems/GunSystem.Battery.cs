@@ -97,7 +97,7 @@ public sealed partial class GunSystem
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), damageType);
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), type: damageType); //Exodus ArmorPiercingExamine
     }
 
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)
