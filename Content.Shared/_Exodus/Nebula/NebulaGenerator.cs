@@ -12,6 +12,19 @@ public static class NebulaGenerator
         IReadOnlyList<Vector2> protectedPositions,
         NebulaGenerationSettings? settings = null)
     {
+        var protectedAreas = new List<NebulaProtectedArea>(protectedPositions.Count);
+
+        for (var i = 0; i < protectedPositions.Count; i++)
+            protectedAreas.Add(new NebulaProtectedArea(protectedPositions[i], settings?.ProtectedRadius ?? new NebulaGenerationSettings().ProtectedRadius));
+
+        return Generate(seed, protectedAreas, settings);
+    }
+
+    public static NebulaGenerationResult Generate(
+        int seed,
+        IReadOnlyList<NebulaProtectedArea> protectedAreas,
+        NebulaGenerationSettings? settings = null)
+    {
         settings ??= new NebulaGenerationSettings();
 
         var result = new NebulaGenerationResult
@@ -44,7 +57,7 @@ public static class NebulaGenerator
                 continue;
             }
 
-            if (IntersectsProtectedArea(candidate, protectedPositions, settings.ProtectedRadius))
+            if (IntersectsProtectedArea(candidate, protectedAreas))
             {
                 result.Rejections.ProtectedArea++;
                 continue;
@@ -72,12 +85,28 @@ public static class NebulaGenerator
     {
         for (var i = 0; i < protectedPositions.Count; i++)
         {
-            var distance = Vector2.Distance(shape.Center, protectedPositions[i]);
-            if (distance < shape.BoundingRadius + protectedRadius)
+            if (IntersectsProtectedArea(shape, new NebulaProtectedArea(protectedPositions[i], protectedRadius)))
                 return true;
         }
 
         return false;
+    }
+
+    public static bool IntersectsProtectedArea(NebulaShape shape, IReadOnlyList<NebulaProtectedArea> protectedAreas)
+    {
+        for (var i = 0; i < protectedAreas.Count; i++)
+        {
+            if (IntersectsProtectedArea(shape, protectedAreas[i]))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static bool IntersectsProtectedArea(NebulaShape shape, NebulaProtectedArea protectedArea)
+    {
+        var distance = Vector2.Distance(shape.Center, protectedArea.Position);
+        return distance < shape.BoundingRadius + protectedArea.Radius;
     }
 
     public static bool IntersectsExistingNebula(NebulaShape shape, IReadOnlyList<NebulaShape> existing, float separation)

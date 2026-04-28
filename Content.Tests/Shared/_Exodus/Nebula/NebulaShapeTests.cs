@@ -117,15 +117,15 @@ public sealed class NebulaShapeTests
     [Test]
     public void GeneratorCreatesCompleteNonOverlappingSet()
     {
-        var protectedPositions = new[]
+        var protectedAreas = new[]
         {
-            Vector2.Zero,
-            new Vector2(8000f, 8000f),
-            new Vector2(-8000f, 8000f),
-            new Vector2(8000f, -8000f),
+            new NebulaProtectedArea(Vector2.Zero, 1_000f),
+            new NebulaProtectedArea(new Vector2(8000f, 8000f), 1_000f),
+            new NebulaProtectedArea(new Vector2(-8000f, 8000f), 1_000f),
+            new NebulaProtectedArea(new Vector2(8000f, -8000f), 1_000f),
         };
 
-        var result = NebulaGenerator.Generate(12345, protectedPositions);
+        var result = NebulaGenerator.Generate(12345, protectedAreas);
 
         Assert.Multiple(() =>
         {
@@ -141,7 +141,7 @@ public sealed class NebulaShapeTests
             {
                 Assert.That(nebula.Area, Is.InRange(13_000_000f, 300_000_000f));
                 Assert.That(NebulaGenerator.IsInsideCoordinateLimit(nebula, 75_000f), Is.True);
-                Assert.That(NebulaGenerator.IntersectsProtectedArea(nebula, protectedPositions, 1_000f), Is.False);
+                Assert.That(NebulaGenerator.IntersectsProtectedArea(nebula, protectedAreas), Is.False);
             });
 
             for (var j = i + 1; j < result.Nebulas.Count; j++)
