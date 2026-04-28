@@ -35,6 +35,8 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/_Goobstation/Items/handling/ammobox_drop.ogg
+  - type: StaticPrice # Exodus-Price-Rebalance
+    price: 30
 
 #small ammo boxes
 - type: entity
