@@ -24,7 +24,6 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
         //Exodus ArmorPiercingExamine Start
         _damageExamine.AddDamageExamine(
             args.Message,
