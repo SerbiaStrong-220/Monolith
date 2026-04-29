@@ -4,7 +4,7 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/Red_Nebula_Background.png"
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Background.png"
       slowness: 0.998046875
       scale: "1, 1"
     - texture:
@@ -14,7 +14,7 @@
       slowness: 0.996625
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/Red_Nebula_Cloud_1.png"
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud_1.png"
       slowness: 0.984
       scale: "1, 1"
       scrolling: "0.006, -0.003"
@@ -25,19 +25,19 @@
       slowness: 0.979375
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/Red_Nebula_Cloud_2.png"
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud_2.png"
       slowness: 0.967
       scale: "1, 1"
       scrolling: "-0.004, 0.005"
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/Red_Nebula_Cloud_3.png"
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud_3.png"
       slowness: 0.942
       scale: "1, 1"
       scrolling: "0.0025, 0.004"
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/Red_Nebula_Cloud_4.png"
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud_4.png"
       slowness: 0.918
       scale: "1, 1"
       scrolling: "-0.003, -0.002"
