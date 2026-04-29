@@ -1,11 +1,9 @@
 using System.Numerics;
 using Content.Server._Crescent.ShipShields;
 using Content.Server.Beam;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared._Exodus.Nebula;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
@@ -25,11 +23,10 @@ namespace Content.Server._Exodus.Nebula;
 public sealed class NebulaGridHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
-    private const float StrikeSourceDistance = 8f;
     private const string SparksPrototype = "EffectSparks";
 
     [Dependency] private readonly BeamSystem _beam = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly ExplosionSystem _explosions = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -39,19 +36,13 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NebulaPresenceSystem _presence = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShipShieldsSystem _shields = default!;
 
-    private readonly HashSet<Entity<TransformComponent>> _entitiesOnTile = new();
-    private readonly HashSet<EntityUid> _damagedEntities = new();
-    private EntityQuery<DamageableComponent> _damageableQuery;
     private TimeSpan _nextUpdate;
 
     public override void Initialize()
     {
-        _damageableQuery = GetEntityQuery<DamageableComponent>();
-
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
@@ -135,7 +126,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         NebulaMapComponent mapComponent,
         bool heavy)
     {
-        if (!TrySelectStrikeTile(grid, mapId, mapComponent, out var tile, out var targetCoords))
+        if (!TrySelectStrikeTile(grid, mapId, mapComponent, out _, out var targetCoords))
             return false;
 
         var hazard = grid.Comp3;
@@ -150,11 +141,10 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         }
 
         var lightning = heavy ? hazard.HeavyLightningPrototype : hazard.SmallLightningPrototype;
-        var tileRadius = heavy ? hazard.HeavyTileRadius : hazard.SmallTileRadius;
-        var damage = heavy ? hazard.HeavyDamage : hazard.SmallDamage;
+        var lightningLength = heavy ? hazard.HeavyLightningLength : hazard.SmallLightningLength;
 
-        SpawnLightning(targetCoords, lightning);
-        DamageStrikeArea(grid.Owner, grid.Comp1, tile.GridIndices, tileRadius, damage);
+        SpawnLightning(targetCoords, lightning, lightningLength);
+        QueueExplosion(targetCoords, hazard, heavy);
         Spawn(SparksPrototype, targetCoords);
         return true;
     }
@@ -191,9 +181,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         return candidates > 0;
     }
 
-    private void SpawnLightning(MapCoordinates targetCoords, EntProtoId lightningPrototype)
+    private void SpawnLightning(MapCoordinates targetCoords, EntProtoId lightningPrototype, float length)
     {
-        var offset = _random.NextAngle().ToWorldVec() * StrikeSourceDistance;
+        var offset = _random.NextAngle().ToWorldVec() * length;
         var source = Spawn(null, targetCoords.Offset(offset));
         var target = Spawn(null, targetCoords);
 
@@ -203,41 +193,21 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         QueueDel(target);
     }
 
-    private void DamageStrikeArea(
-        EntityUid gridUid,
-        MapGridComponent grid,
-        Vector2i centerTile,
-        int tileRadius,
-        DamageSpecifier damage)
+    private void QueueExplosion(MapCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
     {
-        _damagedEntities.Clear();
+        var explosionType = heavy ? hazard.HeavyExplosionType : hazard.SmallExplosionType;
+        var totalIntensity = heavy ? hazard.HeavyExplosionTotalIntensity : hazard.SmallExplosionTotalIntensity;
+        var slope = heavy ? hazard.HeavyExplosionIntensitySlope : hazard.SmallExplosionIntensitySlope;
+        var maxTileIntensity = heavy ? hazard.HeavyExplosionMaxTileIntensity : hazard.SmallExplosionMaxTileIntensity;
 
-        for (var x = -tileRadius; x <= tileRadius; x++)
-        {
-            for (var y = -tileRadius; y <= tileRadius; y++)
-            {
-                var tile = centerTile + new Vector2i(x, y);
-                if (!_map.TryGetTileRef(gridUid, grid, tile, out var tileRef) ||
-                    tileRef.Tile.IsEmpty)
-                {
-                    continue;
-                }
-
-                _entitiesOnTile.Clear();
-                _lookup.GetLocalEntitiesIntersecting(gridUid, tile, _entitiesOnTile, gridComp: grid);
-
-                foreach (var entity in _entitiesOnTile)
-                {
-                    if (!_damagedEntities.Add(entity.Owner) ||
-                        !_damageableQuery.TryComp(entity.Owner, out var damageable))
-                    {
-                        continue;
-                    }
-
-                    _damageable.TryChangeDamage(entity.Owner, damage, damageable: damageable);
-                }
-            }
-        }
+        _explosions.QueueExplosion(
+            targetCoords,
+            explosionType,
+            totalIntensity,
+            slope,
+            maxTileIntensity,
+            null,
+            addLog: false);
     }
 
     private bool HasNearbyPlayer(Entity<MapGridComponent, TransformComponent> grid, MapId mapId, float range)

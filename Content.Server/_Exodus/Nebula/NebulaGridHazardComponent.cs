@@ -1,4 +1,4 @@
-using Content.Shared.Damage;
+using Content.Shared.Explosion;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -23,32 +23,35 @@ public sealed partial class NebulaGridHazardComponent : Component
     public float HeavyShieldLoad = 200f;
 
     [DataField]
-    public int SmallTileRadius;
+    public ProtoId<ExplosionPrototype> SmallExplosionType = "Minibomb";
 
     [DataField]
-    public int HeavyTileRadius = 1;
+    public float SmallExplosionTotalIntensity = 200f;
 
     [DataField]
-    public DamageSpecifier SmallDamage = new()
-    {
-        DamageDict =
-        {
-            ["Shock"] = 20,
-            ["Heat"] = 10,
-            ["Structural"] = 50,
-        },
-    };
+    public float SmallExplosionIntensitySlope = 30f;
 
     [DataField]
-    public DamageSpecifier HeavyDamage = new()
-    {
-        DamageDict =
-        {
-            ["Shock"] = 60,
-            ["Heat"] = 30,
-            ["Structural"] = 250,
-        },
-    };
+    public float SmallExplosionMaxTileIntensity = 60f;
+
+    [DataField]
+    public ProtoId<ExplosionPrototype> HeavyExplosionType = "Minibomb";
+
+    [DataField]
+    public float HeavyExplosionTotalIntensity = 1600f;
+
+    [DataField]
+    public float HeavyExplosionIntensitySlope = 30f;
+
+    [DataField]
+    public float HeavyExplosionMaxTileIntensity = 120f;
+
+    // Temporary visual stretch until dedicated heavy lightning sprites are added.
+    [DataField]
+    public float SmallLightningLength = 8f;
+
+    [DataField]
+    public float HeavyLightningLength = 16f;
 
     [DataField]
     public EntProtoId SmallLightningPrototype = "NebulaRedSmallLightning";
