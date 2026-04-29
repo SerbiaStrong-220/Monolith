@@ -1025,6 +1025,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             }
 
             // Exodus-begin nebula-radar-visualization
+            // RespectZoom blips can be huge; cull against their screen-space bounds, not only their center.
             var blipViewBounds = monoViewBounds;
             if (blip.Config.RespectZoom)
             {
@@ -1099,6 +1100,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         return (top - offset, left - offset, offset);
     }
 
+    // Exodus nebula-radar-visualization: pass the full config so custom blip shapes can read extra data.
     private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color, BlipConfig config) // Exodus nebula-radar-visualization
     {
         switch (config.Shape) // Exodus nebula-radar-visualization
@@ -1192,6 +1194,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             fillBuffer[i + 1] = position + point;
         }
 
+        // TriangleFan does not close the last wedge by itself.
         fillBuffer[^1] = fillBuffer[1];
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, fillBuffer, color.WithAlpha(0.18f));
 

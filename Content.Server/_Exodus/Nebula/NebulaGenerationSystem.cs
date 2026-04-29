@@ -94,13 +94,14 @@ public sealed class NebulaGenerationSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<NebulaMapComponent, MapComponent>();
-        while (query.MoveNext(out var uid, out var component, out var map))
+        while (query.MoveNext(out _, out var component, out var map))
         {
             if (component.Nebulas.Count == 0 || _timing.CurTime < component.NextMarkerValidation)
                 continue;
 
             component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
 
+            // Shape data lives on the map component; marker entities are runtime radar/VV handles and can be restored.
             if (HasValidMarkers(component))
                 continue;
 
