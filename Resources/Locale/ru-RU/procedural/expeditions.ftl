@@ -26,8 +26,8 @@ salvage-expedition-not-all-present = Не все утилизаторы верн
 salvage-expedition-announcement-countdown-minutes =
     До окончания экспедиции  { $duration ->
         [one] осталась { $duration } минута
-        [few] осталась { $duration } минуты
-       *[other] осталась { $duration } минут
+        [few] осталось { $duration } минуты
+       *[other] осталось { $duration } минут
     }.
 salvage-expedition-announcement-countdown-seconds =
     До окончания экспедиции { $duration ->
