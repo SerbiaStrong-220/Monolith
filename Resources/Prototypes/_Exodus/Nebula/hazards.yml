@@ -1,16 +1,55 @@
 # Exodus nebula hazards
 - type: entity
-  id: NebulaRedSmallLightning
-  parent: HyperchargedLightning
+  name: nebula lightning
+  id: NebulaRedSmallStrikeVisual
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "red_lightning"
+      shader: unshaded
+  - type: Physics
+    canCollide: false
+  - type: PointLight
+    enabled: true
+    color: "#ff0000"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
   - type: Beam
-    sound: /Audio/_Exodus/Nebula/small_lighting_impact.mp3
+  - type: TimedDespawn
+    lifetime: 3
+  - type: Tag
+    tags:
+    - HideContextMenu
 
 - type: entity
-  id: NebulaRedHeavyLightning
-  parent: HyperchargedLightning
+  name: heavy nebula lightning
+  id: NebulaRedHeavyStrikeVisual
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    scale: 2,2
+    layers:
+    - state: "red_lightning"
+      shader: unshaded
+  - type: Physics
+    canCollide: false
+  - type: PointLight
+    enabled: true
+    color: "#ff0000"
+    radius: 5.5
+    softness: 1
+    autoRot: true
+    castShadows: false
   - type: Beam
-    sound: /Audio/_Exodus/Nebula/medium_lighting_impact.mp3
+  - type: TimedDespawn
+    lifetime: 3
+  - type: Tag
+    tags:
+    - HideContextMenu

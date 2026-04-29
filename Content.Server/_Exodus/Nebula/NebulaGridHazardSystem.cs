@@ -23,6 +23,10 @@ namespace Content.Server._Exodus.Nebula;
 public sealed class NebulaGridHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    private const string LegacySmallLightningPrototype = "NebulaRedSmallLightning";
+    private const string LegacyHeavyLightningPrototype = "NebulaRedHeavyLightning";
+    private const string SmallLightningPrototype = "NebulaRedSmallStrikeVisual";
+    private const string HeavyLightningPrototype = "NebulaRedHeavyStrikeVisual";
     private const string SparksPrototype = "EffectSparks";
 
     [Dependency] private readonly BeamSystem _beam = default!;
@@ -77,6 +81,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             }
 
             InitializeTimers(hazard);
+            UpdateLegacyVisualPrototypes(hazard);
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent);
         }
     }
@@ -94,6 +99,15 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         hazard.TimersInitialized = true;
         hazard.NextSmallStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(1f, (float)hazard.SmallStrikeInterval.TotalSeconds));
         hazard.NextHeavyStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(5f, (float)hazard.HeavyStrikeInterval.TotalSeconds));
+    }
+
+    private void UpdateLegacyVisualPrototypes(NebulaGridHazardComponent hazard)
+    {
+        if (hazard.SmallLightningPrototype.ToString() == LegacySmallLightningPrototype)
+            hazard.SmallLightningPrototype = SmallLightningPrototype;
+
+        if (hazard.HeavyLightningPrototype.ToString() == LegacyHeavyLightningPrototype)
+            hazard.HeavyLightningPrototype = HeavyLightningPrototype;
     }
 
     private void UpdateHazard(
@@ -126,7 +140,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         NebulaMapComponent mapComponent,
         bool heavy)
     {
-        if (!TrySelectStrikeTile(grid, mapId, mapComponent, out _, out var targetCoords))
+        if (!TrySelectStrikeTile(grid, mapId, mapComponent, out _, out var targetCoords, out var targetGridCoords))
             return false;
 
         var hazard = grid.Comp3;
@@ -142,9 +156,11 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
         var lightning = heavy ? hazard.HeavyLightningPrototype : hazard.SmallLightningPrototype;
         var lightningLength = heavy ? hazard.HeavyLightningLength : hazard.SmallLightningLength;
+        var impactSound = heavy ? hazard.HeavyImpactSound : hazard.SmallImpactSound;
 
         SpawnLightning(targetCoords, lightning, lightningLength);
-        QueueExplosion(targetCoords, hazard, heavy);
+        QueueExplosion(targetGridCoords, hazard, heavy);
+        _audio.PlayPvs(impactSound, targetGridCoords);
         Spawn(SparksPrototype, targetCoords);
         return true;
     }
@@ -154,10 +170,12 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         MapId mapId,
         NebulaMapComponent mapComponent,
         out TileRef selected,
-        out MapCoordinates selectedCoords)
+        out MapCoordinates selectedCoords,
+        out EntityCoordinates selectedGridCoords)
     {
         selected = default;
         selectedCoords = default;
+        selectedGridCoords = default;
         var candidates = 0;
 
         var tiles = _map.GetAllTilesEnumerator(grid.Owner, grid.Comp1, true);
@@ -166,7 +184,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             if (tile is not { } tileRef)
                 continue;
 
-            var coords = _transform.ToMapCoordinates(_map.GridTileToLocal(grid.Owner, grid.Comp1, tileRef.GridIndices));
+            var gridCoords = _map.GridTileToLocal(grid.Owner, grid.Comp1, tileRef.GridIndices);
+            var coords = _transform.ToMapCoordinates(gridCoords);
             if (coords.MapId != mapId || !IsRedNebulaAt(coords.Position, mapComponent))
                 continue;
 
@@ -176,6 +195,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
             selected = tileRef;
             selectedCoords = coords;
+            selectedGridCoords = gridCoords;
         }
 
         return candidates > 0;
@@ -193,21 +213,22 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         QueueDel(target);
     }
 
-    private void QueueExplosion(MapCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
+    private void QueueExplosion(EntityCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
     {
         var explosionType = heavy ? hazard.HeavyExplosionType : hazard.SmallExplosionType;
         var totalIntensity = heavy ? hazard.HeavyExplosionTotalIntensity : hazard.SmallExplosionTotalIntensity;
         var slope = heavy ? hazard.HeavyExplosionIntensitySlope : hazard.SmallExplosionIntensitySlope;
         var maxTileIntensity = heavy ? hazard.HeavyExplosionMaxTileIntensity : hazard.SmallExplosionMaxTileIntensity;
 
+        var marker = Spawn(null, targetCoords);
         _explosions.QueueExplosion(
-            targetCoords,
+            marker,
             explosionType,
             totalIntensity,
             slope,
             maxTileIntensity,
-            null,
             addLog: false);
+        QueueDel(marker);
     }
 
     private bool HasNearbyPlayer(Entity<MapGridComponent, TransformComponent> grid, MapId mapId, float range)
