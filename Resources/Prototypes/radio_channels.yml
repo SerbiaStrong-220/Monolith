@@ -1,9 +1,10 @@
-- type: radioChannel
-  id: Common
-  name: chat-radio-common
-  keycode: ";" # Ru-Localization
-  frequency: 1459
-  color: "#2cdb2c"
+# Exodus
+# - type: radioChannel
+#   id: Common
+#   name: chat-radio-common
+#   keycode: ";" # Ru-Localization
+#   frequency: 1459
+#   color: "#2cdb2c"
 
 - type: radioChannel
   id: CentCom
