@@ -76,4 +76,22 @@ public sealed partial class NebulaGridHazardComponent : Component
 
     [ViewVariables]
     public TimeSpan NextHeavyStrike;
+
+    [ViewVariables]
+    public TimeSpan LastSmallStrike;
+
+    [ViewVariables]
+    public TimeSpan LastHeavyStrike;
+
+    [ViewVariables]
+    public TimeSpan LastSmallDelta;
+
+    [ViewVariables]
+    public TimeSpan LastHeavyDelta;
+
+    [ViewVariables]
+    public int SmallStrikeCount;
+
+    [ViewVariables]
+    public int HeavyStrikeCount;
 }

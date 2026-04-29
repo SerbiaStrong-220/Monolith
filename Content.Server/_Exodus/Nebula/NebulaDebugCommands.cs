@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula;
 
@@ -175,5 +176,68 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
         }
 
         shell.WriteLine($"Inside {presence.Type} nebula {presence.NebulaIndex + 1}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
+    }
+}
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaHazardStatusCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    public string Command => "nebula_hazard_status";
+    public string Description => "Prints red nebula lightning hazard timers for the grid you are standing on.";
+    public string Help => "Usage: nebula_hazard_status";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 0)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        if (shell.Player?.AttachedEntity is not { Valid: true } entity)
+        {
+            shell.WriteError("No attached entity.");
+            return;
+        }
+
+        if (!_entityManager.TryGetComponent<TransformComponent>(entity, out var xform))
+        {
+            shell.WriteError("Attached entity has no transform.");
+            return;
+        }
+
+        if (xform.GridUid is not { Valid: true } gridUid)
+        {
+            shell.WriteLine("You are not standing on a grid.");
+            return;
+        }
+
+        if (!_entityManager.TryGetComponent<NebulaGridHazardComponent>(gridUid, out var hazard))
+        {
+            shell.WriteLine($"Grid {gridUid} has no NebulaGridHazardComponent.");
+            return;
+        }
+
+        var curTime = _timing.CurTime;
+        shell.WriteLine(
+            $"Grid {gridUid} nebula hazard:\n" +
+            $"Small: interval {FormatDuration(hazard.SmallStrikeInterval)}, next in {FormatDuration(hazard.NextSmallStrike - curTime)}, count {hazard.SmallStrikeCount}, last {FormatOptionalDuration(hazard.LastSmallStrike)}, delta {FormatOptionalDuration(hazard.LastSmallDelta)}.\n" +
+            $"Heavy: interval {FormatDuration(hazard.HeavyStrikeInterval)}, next in {FormatDuration(hazard.NextHeavyStrike - curTime)}, count {hazard.HeavyStrikeCount}, last {FormatOptionalDuration(hazard.LastHeavyStrike)}, delta {FormatOptionalDuration(hazard.LastHeavyDelta)}.\n" +
+            $"Player range: {hazard.PlayerRange:0.##}; shield load: small {hazard.SmallShieldLoad:0.##}, heavy {hazard.HeavyShieldLoad:0.##}.");
+    }
+
+    private static string FormatOptionalDuration(TimeSpan value)
+    {
+        return value == TimeSpan.Zero ? "n/a" : FormatDuration(value);
+    }
+
+    private static string FormatDuration(TimeSpan value)
+    {
+        var sign = value < TimeSpan.Zero ? "-" : "";
+        value = value.Duration();
+        return $"{sign}{value.TotalSeconds:0.##}s";
     }
 }

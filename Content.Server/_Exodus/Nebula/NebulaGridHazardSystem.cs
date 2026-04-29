@@ -33,8 +33,10 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
     private static readonly TimeSpan SmallStrikeInterval = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan HeavyStrikeInterval = TimeSpan.FromSeconds(30);
-    private static readonly TimeSpan LegacySmallStrikeInterval = TimeSpan.FromSeconds(20);
-    private static readonly TimeSpan LegacyHeavyStrikeInterval = TimeSpan.FromSeconds(120);
+    private static readonly TimeSpan LongTestSmallStrikeInterval = TimeSpan.FromSeconds(50);
+    private static readonly TimeSpan LongTestHeavyStrikeInterval = TimeSpan.FromSeconds(300);
+    private static readonly TimeSpan OldTestSmallStrikeInterval = TimeSpan.FromSeconds(20);
+    private static readonly TimeSpan OldTestHeavyStrikeInterval = TimeSpan.FromSeconds(120);
     private const string LegacySmallLightningPrototype = "NebulaRedSmallLightning";
     private const string LegacyHeavyLightningPrototype = "NebulaRedHeavyLightning";
     private const string SmallLightningPrototype = "NebulaRedSmallStrikeVisual";
@@ -94,7 +96,10 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             InitializeTimers(hazard);
 
             if (!HasNearbyPlayer((uid, grid, xform), mapId, hazard.PlayerRange))
+            {
+                ResetOverdueTimers(hazard);
                 continue;
+            }
 
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent);
         }
@@ -115,6 +120,15 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
     }
 
+    private void ResetOverdueTimers(NebulaGridHazardComponent hazard)
+    {
+        if (hazard.NextSmallStrike <= _timing.CurTime)
+            hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
+
+        if (hazard.NextHeavyStrike <= _timing.CurTime)
+            hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
+    }
+
     private void UpdateLegacyHazardSettings(NebulaGridHazardComponent hazard)
     {
         if (hazard.SmallLightningPrototype.ToString() == LegacySmallLightningPrototype)
@@ -123,11 +137,17 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         if (hazard.HeavyLightningPrototype.ToString() == LegacyHeavyLightningPrototype)
             hazard.HeavyLightningPrototype = HeavyLightningPrototype;
 
-        if (hazard.SmallStrikeInterval == LegacySmallStrikeInterval)
+        if (hazard.SmallStrikeInterval == LongTestSmallStrikeInterval ||
+            hazard.SmallStrikeInterval == OldTestSmallStrikeInterval)
+        {
             hazard.SmallStrikeInterval = SmallStrikeInterval;
+        }
 
-        if (hazard.HeavyStrikeInterval == LegacyHeavyStrikeInterval)
+        if (hazard.HeavyStrikeInterval == LongTestHeavyStrikeInterval ||
+            hazard.HeavyStrikeInterval == OldTestHeavyStrikeInterval)
+        {
             hazard.HeavyStrikeInterval = HeavyStrikeInterval;
+        }
 
         if (hazard.TimersInitialized)
         {
@@ -159,22 +179,40 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         NebulaMapComponent mapComponent)
     {
         var hazard = grid.Comp3;
+        if (_timing.CurTime >= hazard.NextSmallStrike)
+        {
+            if (TryStrikeGrid(grid, mapId, mapComponent, false))
+                RecordStrike(hazard, false);
+
+            hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
+        }
+
         if (_timing.CurTime >= hazard.NextHeavyStrike)
         {
-            TryStrikeGrid(grid, mapId, mapComponent, true);
+            if (TryStrikeGrid(grid, mapId, mapComponent, true))
+                RecordStrike(hazard, true);
+
             hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
+        }
+    }
 
-            if (hazard.NextSmallStrike <= _timing.CurTime)
-                hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
+    private void RecordStrike(NebulaGridHazardComponent hazard, bool heavy)
+    {
+        if (heavy)
+        {
+            if (hazard.LastHeavyStrike != TimeSpan.Zero)
+                hazard.LastHeavyDelta = _timing.CurTime - hazard.LastHeavyStrike;
 
+            hazard.LastHeavyStrike = _timing.CurTime;
+            hazard.HeavyStrikeCount++;
             return;
         }
 
-        if (_timing.CurTime < hazard.NextSmallStrike)
-            return;
+        if (hazard.LastSmallStrike != TimeSpan.Zero)
+            hazard.LastSmallDelta = _timing.CurTime - hazard.LastSmallStrike;
 
-        TryStrikeGrid(grid, mapId, mapComponent, false);
-        hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
+        hazard.LastSmallStrike = _timing.CurTime;
+        hazard.SmallStrikeCount++;
     }
 
     private bool TryStrikeGrid(
@@ -311,8 +349,14 @@ public sealed class NebulaGridHazardSystem : EntitySystem
                 continue;
             }
 
-            if (playerXform.GridUid == grid.Owner)
-                return true;
+            if (playerXform.GridUid != null)
+            {
+                // A player standing on a grid should only arm that grid; nearby docked grids would multiply strike rate.
+                if (playerXform.GridUid == grid.Owner)
+                    return true;
+
+                continue;
+            }
 
             var playerLocal = Vector2.Transform(_transform.GetWorldPosition(playerXform), inverseMatrix);
             if (!enlargedBounds.Contains(playerLocal))
