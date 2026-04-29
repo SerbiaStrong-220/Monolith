@@ -9,7 +9,7 @@
   category: Medium
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Exodus/Shuttles/Nfsd/sentinel.yml # Exodus
+  shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
   guidebookPage: Null
   class:
   - Patrol
@@ -20,7 +20,7 @@
 - type: gameMap
   id: Sentinel
   mapName: 'Центинел' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Nfsd/sentinel.yml # Exodus
+  mapPath: /Maps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
   minPlayers: 0
   stations:
     Sentinel:

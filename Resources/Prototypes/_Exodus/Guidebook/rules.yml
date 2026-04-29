@@ -3,68 +3,102 @@
   name: guide-entry-exodus-rules
   text: "/ServerInfo/_Exodus/Guidebook/Rules/ExodusRuleset.xml"
   priority: -2
-  ruleEntry: true
   children:
     - EXRule0DontBeAsshole
-    - EXRule1Vulture
+    - EXRule1Grief
     - EXRule2Conflicts
-    - EXRule3Metagaming
-    - EXRule4InCharacter
+    - EXRule3InGameAtmosphere
+    - EXRule4FractionInteractions
     - EXRule5SSD
     - EXRule6Respawn
     - EXRule7ERP
-    - EXRule8Abuse
+    - EXRule8BugAbuse
+    - EXRuleGhostRoles
 
 - type: guideEntry
   id: EXRule0DontBeAsshole
   name: guide-entry-exodus-rule-zero-dont-be-asshole
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule0_DontBeAsshole.xml"
-  ruleEntry: true
 
 - type: guideEntry
-  id: EXRule1Vulture
-  name: guide-entry-exodus-rule-one-punishment-evasion
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule1_Vulture.xml"
-  ruleEntry: true
+  id: EXRule1Grief
+  name: guide-entry-exodus-rule-one-grief
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule1_Grief.xml"
 
 - type: guideEntry
   id: EXRule2Conflicts
-  name: guide-entry-exodus-rule-two-ahelp
+  name: guide-entry-exodus-rule-two-conflicts
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule2_Conflicts.xml"
-  ruleEntry: true
 
 - type: guideEntry
-  id: EXRule3Metagaming
-  name: guide-entry-exodus-rule-three-elitism
-  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule3_Metagaming.xml"
-  ruleEntry: true
+  id: EXRule3InGameAtmosphere
+  name: guide-entry-exodus-rule-three-in-game-atmosphere
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule3_InGameAtmosphere.xml"
 
 - type: guideEntry
-  id: EXRule4InCharacter
-  name: guide-entry-exodus-rule-four-metagaming
+  id: EXRule4FractionInteractions
+  name: guide-entry-exodus-rule-four-fraction-interactions
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule4_InCharacter.xml"
-  ruleEntry: true
 
 - type: guideEntry
   id: EXRule5SSD
-  name: guide-entry-exodus-rule-five-ooc-abuse
+  name: guide-entry-exodus-rule-five-ssd
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule5_SSD.xml"
   ruleEntry: true
 
 - type: guideEntry
   id: EXRule6Respawn
-  name: guide-entry-exodus-rule-six-bug-abuse
+  name: guide-entry-exodus-rule-six-memory
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule6_Respawn.xml"
-  ruleEntry: true
 
 - type: guideEntry
   id: EXRule7ERP
-  name: guide-entry-exodus-rule-seven-twinks
+  name: guide-entry-exodus-rule-seven-erp
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule7_ERP.xml"
-  ruleEntry: true
 
 - type: guideEntry
-  id: EXRule8Abuse
-  name: guide-entry-exodus-rule-eight-self-antagonist
+  id: EXRule8BugAbuse
+  name: guide-entry-exodus-rule-eight-bug-abuse
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule8_Abuse.xml"
-  ruleEntry: true
+
+- type: guideEntry
+  id: EXRuleGhostRoles
+  name: guide-entry-exodus-rule-ghost-roles
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRoles.xml"
+  children:
+    - EXRuleGhostRoleBorer
+    - EXRuleGhostRoleAsakim
+    - EXRuleGhostRoleOperator
+    - EXRuleGhostRoleCore
+    - EXRuleGhostRoleChimera
+    - EXRuleGhostRoleBorg
+    
+- type: guideEntry
+  id: EXRuleGhostRoleBorer
+  name: guide-entry-exodus-rule-ghost-roles-borer
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesBorer.xml"
+  
+- type: guideEntry
+  id: EXRuleGhostRoleAsakim
+  name: guide-entry-exodus-rule-ghost-roles-asakim
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesAsakim.xml"
+  
+- type: guideEntry
+  id: EXRuleGhostRoleOperator
+  name: guide-entry-exodus-rule-ghost-roles-operator
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesOperator.xml"
+  
+- type: guideEntry
+  id: EXRuleGhostRoleCore
+  name: guide-entry-exodus-rule-ghost-roles-core
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCore.xml"
+  
+- type: guideEntry
+  id: EXRuleGhostRoleChimera
+  name: guide-entry-exodus-rule-ghost-roles-chimera
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesChimera.xml"
+  
+- type: guideEntry
+  id: EXRuleGhostRoleBorg
+  name: guide-entry-exodus-rule-ghost-roles-borg
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesBorg.xml"

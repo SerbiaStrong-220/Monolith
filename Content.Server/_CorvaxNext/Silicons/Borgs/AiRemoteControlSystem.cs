@@ -7,11 +7,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Radio.Components;
+using Content.Server.PowerCell; // Exodus ai-remote-power-check
+using Content.Shared.PowerCell.Components; // Exodus ai-remote-power-check
+using Content.Server.Chat.Managers; // Exodus ai-remote-power-check
 using Content.Server.Silicons.Laws;
 using Content.Shared._CorvaxNext.Silicons.Borgs;
 using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
 using Content.Shared.Actions;
+using Content.Shared.Chat; // Exodus ai-remote-power-check
+using Content.Shared.IdentityManagement; // Exodus ai-remote-power-check
 using Content.Shared.Mind;
+using Content.Shared.PowerCell; // Exodus ai-remote-power-check
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
@@ -29,6 +35,8 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
     [Dependency] private readonly SiliconLawSystem _lawSystem = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!; // Exodus ai-remote-power-check
+    [Dependency] private readonly IChatManager _chatManager = default!; // Exodus ai-remote-power-check
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
@@ -93,6 +101,42 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
     private void OnReturnMindIntoAi(Entity<AiRemoteControllerComponent> entity, ref ReturnMindIntoAiEvent args) =>
         ReturnMindIntoAi(entity);
 
+    // Exodus-begin ai-remote-power-check
+    private bool HasRemotePower(EntityUid entity, out string? failMessage)
+    {
+        failMessage = null;
+
+        if (!TryComp<PowerCellDrawComponent>(entity, out var draw)
+            || !TryComp<PowerCellSlotComponent>(entity, out var slot))
+            return true;
+
+        if (!_powerCell.TryGetBatteryFromSlot(entity, out var battery, slot))
+        {
+            failMessage = "ai-remote-control-no-power-cell";
+            return false;
+        }
+
+        if (battery.CurrentCharge > 0f && battery.CurrentCharge >= draw.DrawRate)
+            return true;
+
+        failMessage = "ai-remote-control-insufficient-power";
+        return false;
+    }
+
+    private void SendAiRemoteChat(EntityUid recipient, string locId, EntityUid? borg = null)
+    {
+        if (!TryComp<ActorComponent>(recipient, out var actor))
+            return;
+
+        var msg = Loc.GetString(
+            locId,
+            ("borg", Identity.Name(borg ?? recipient, EntityManager)));
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel);
+    }
+    // Exodus-end
+
     public void AiTakeControl(EntityUid ai, EntityUid entity)
     {
         if (!_mind.TryGetMind(ai, out var mindId, out var mind))
@@ -109,6 +153,14 @@ public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
 
         if (!_map.TryFindGridAt(Transform(ai).MapPosition, out var grid, out var _) || Transform(entity).GridUid != grid)
             return; // Mono no controlling borgs outside the ai's grid.
+
+        // Exodus-begin ai-remote-power-check
+        if (!HasRemotePower(entity, out var failMessage))
+        {
+            SendAiRemoteChat(ai, failMessage!, entity);
+            return;
+        }
+        // Exodus-end
 
         if (TryComp(entity, out IntrinsicRadioTransmitterComponent? transmitter))
         {
