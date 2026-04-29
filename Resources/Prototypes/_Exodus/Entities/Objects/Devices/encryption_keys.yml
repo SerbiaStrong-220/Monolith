@@ -6,7 +6,7 @@
   components:
   - type: EncryptionKey
     channels:
-    - ExCommon
+    - channel: ExCommon
     defaultChannel: ExCommon
   - type: Sprite
     sprite: _NF/Objects/Devices/encryption_keys.rsi # Frontier
