@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Shared._Exodus.Nebula;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -106,5 +107,38 @@ public sealed class NebulaStatusCommand : IConsoleCommand
         }
 
         shell.WriteLine(message);
+    }
+}
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaPresenceCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public string Command => "nebula_presence";
+    public string Description => "Prints nebula presence for your attached entity.";
+    public string Help => "Usage: nebula_presence";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 0)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        if (shell.Player?.AttachedEntity is not { Valid: true } entity)
+        {
+            shell.WriteError("No attached entity.");
+            return;
+        }
+
+        if (!_entityManager.TryGetComponent<NebulaPresenceComponent>(entity, out var presence))
+        {
+            shell.WriteLine("Outside nebula.");
+            return;
+        }
+
+        shell.WriteLine($"Inside nebula {presence.NebulaIndex + 1}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
     }
 }

@@ -70,6 +70,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     // temporary buffers to avoid per-frame heap churn
     private readonly List<BlipData> _tempBlipDataList = new();
     private readonly HashSet<EntityUid> _visibleGridsSet = new();
+    // Exodus-begin nebula-radar-visualization
+    private Vector2[] _nebulaFillBuffer = [];
+    private Vector2[] _nebulaLineBuffer = [];
+    // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
         new Vector2(0f, -2f),
@@ -1182,8 +1186,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (config.Points == null || config.Points.Count < 3)
             return;
 
-        var fillBuffer = new Vector2[config.Points.Count + 2];
-        fillBuffer[0] = position;
+        var fillCount = config.Points.Count + 2;
+        if (_nebulaFillBuffer.Length < fillCount)
+            _nebulaFillBuffer = new Vector2[fillCount];
+
+        _nebulaFillBuffer[0] = position;
 
         for (var i = 0; i < config.Points.Count; i++)
         {
@@ -1191,25 +1198,28 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (config.RespectZoom)
                 point *= MinimapScale;
 
-            fillBuffer[i + 1] = position + point;
+            _nebulaFillBuffer[i + 1] = position + point;
         }
 
         // TriangleFan does not close the last wedge by itself.
-        fillBuffer[^1] = fillBuffer[1];
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, fillBuffer, color.WithAlpha(0.18f));
+        _nebulaFillBuffer[fillCount - 1] = _nebulaFillBuffer[1];
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), color.WithAlpha(0.18f));
 
-        var lineBuffer = new Vector2[config.Points.Count + 1];
+        var lineCount = config.Points.Count + 1;
+        if (_nebulaLineBuffer.Length < lineCount)
+            _nebulaLineBuffer = new Vector2[lineCount];
+
         for (var i = 0; i < config.Points.Count; i++)
         {
             var point = config.Points[i];
             if (config.RespectZoom)
                 point *= MinimapScale;
 
-            lineBuffer[i] = position + point;
+            _nebulaLineBuffer[i] = position + point;
         }
 
-        lineBuffer[^1] = lineBuffer[0];
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, lineBuffer, color.WithAlpha(0.9f));
+        _nebulaLineBuffer[lineCount - 1] = _nebulaLineBuffer[0];
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_nebulaLineBuffer, 0, lineCount), color.WithAlpha(0.9f));
     }
 
     private void DrawRing(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
