@@ -86,6 +86,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
         component.Nebulas.Clear();
         component.Nebulas.AddRange(result.Nebulas);
 
+        component.NebulaTypes.Clear();
+        component.NebulaTypes.AddRange(result.NebulaTypes);
+
         component.ProtectedAreas.Clear();
         component.ProtectedAreas.AddRange(protectedAreas);
 
@@ -308,7 +311,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         for (var i = 0; i < component.Nebulas.Count; i++)
         {
             var nebula = component.Nebulas[i];
-            var type = NebulaTypeHelpers.GetTestNebulaType(i);
+            var type = GetNebulaType(component, i);
             var marker = Spawn(null, new MapCoordinates(nebula.Center, mapId));
             var nebulaComponent = EnsureComp<NebulaComponent>(marker);
 
@@ -377,6 +380,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
         while (component.NebulaMarkers.Count < component.Nebulas.Count)
             component.NebulaMarkers.Add(EntityUid.Invalid);
 
+        while (component.NebulaTypes.Count < component.Nebulas.Count)
+            component.NebulaTypes.Add(NebulaType.Blue);
+
         for (var i = 0; i < component.NebulaMarkers.Count; i++)
         {
             if (i >= component.Nebulas.Count)
@@ -384,7 +390,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
 
             var marker = component.NebulaMarkers[i];
             var nebula = component.Nebulas[i];
-            var type = NebulaTypeHelpers.GetTestNebulaType(i);
+            var type = GetNebulaType(component, i);
 
             if (!Deleted(marker) && HasComp<NebulaComponent>(marker))
             {
@@ -421,7 +427,15 @@ public sealed class NebulaGenerationSystem : EntitySystem
             restored++;
         }
 
+        if (component.NebulaTypes.Count > component.Nebulas.Count)
+            component.NebulaTypes.RemoveRange(component.Nebulas.Count, component.NebulaTypes.Count - component.Nebulas.Count);
+
         return restored;
+    }
+
+    private static NebulaType GetNebulaType(NebulaMapComponent component, int index)
+    {
+        return NebulaTypeHelpers.GetOrDefault(component.NebulaTypes, index);
     }
 
     private bool IsValidMarker(EntityUid uid)

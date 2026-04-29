@@ -126,12 +126,15 @@ public sealed class NebulaShapeTests
             new NebulaProtectedArea(new Vector2(8000f, -8000f), 1_000f),
         };
 
-        var result = NebulaGenerator.Generate(12345, protectedAreas);
+        var settings = new NebulaGenerationSettings();
+        var result = NebulaGenerator.Generate(12345, protectedAreas, settings);
 
         Assert.Multiple(() =>
         {
             Assert.That(result.Complete, Is.True);
-            Assert.That(result.Nebulas, Has.Count.EqualTo(4));
+            Assert.That(result.RequestedCount, Is.InRange(settings.MinCount, settings.MaxCount));
+            Assert.That(result.Nebulas, Has.Count.EqualTo(result.RequestedCount));
+            Assert.That(result.NebulaTypes, Has.Count.EqualTo(result.Nebulas.Count));
         });
 
         for (var i = 0; i < result.Nebulas.Count; i++)

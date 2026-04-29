@@ -6,6 +6,7 @@ namespace Content.Shared._Exodus.Nebula;
 public sealed class NebulaGenerationResult
 {
     public readonly List<NebulaShape> Nebulas = new();
+    public readonly List<NebulaType> NebulaTypes = new();
     public NebulaGenerationRejections Rejections;
     public int Attempts;
     public int RequestedCount;

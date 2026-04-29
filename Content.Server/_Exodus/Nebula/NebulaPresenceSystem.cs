@@ -138,7 +138,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
                 continue;
 
             index = i;
-            type = NebulaTypeHelpers.GetTestNebulaType(i);
+            type = NebulaTypeHelpers.GetOrDefault(mapComponent.NebulaTypes, i);
             density = nebula.GetDensity(position);
             alpha = nebula.GetAlpha(position);
             return true;

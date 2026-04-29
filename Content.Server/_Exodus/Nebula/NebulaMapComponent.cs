@@ -15,6 +15,9 @@ public sealed partial class NebulaMapComponent : Component
     public List<NebulaShape> Nebulas = new();
 
     [ViewVariables]
+    public List<NebulaType> NebulaTypes = new();
+
+    [ViewVariables]
     public List<EntityUid> NebulaMarkers = new();
 
     [ViewVariables]

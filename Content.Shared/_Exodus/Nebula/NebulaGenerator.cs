@@ -26,11 +26,7 @@ public static class NebulaGenerator
         NebulaGenerationSettings? settings = null)
     {
         settings ??= new NebulaGenerationSettings();
-
-        var result = new NebulaGenerationResult
-        {
-            RequestedCount = settings.Count,
-        };
+        var result = new NebulaGenerationResult();
 
         if (!IsValid(settings))
         {
@@ -39,9 +35,11 @@ public static class NebulaGenerator
         }
 
         var random = new global::System.Random(seed);
-        var maxAttempts = settings.Count * settings.MaxAttemptsPerNebula;
+        var requestedCount = random.Next(settings.MinCount, settings.MaxCount + 1);
+        result.RequestedCount = requestedCount;
+        var maxAttempts = requestedCount * settings.MaxAttemptsPerNebula;
 
-        while (result.Nebulas.Count < settings.Count && result.Attempts < maxAttempts)
+        while (result.Nebulas.Count < requestedCount && result.Attempts < maxAttempts)
         {
             result.Attempts++;
 
@@ -70,6 +68,7 @@ public static class NebulaGenerator
             }
 
             result.Nebulas.Add(candidate);
+            result.NebulaTypes.Add(NebulaTypeHelpers.GetRandomNebulaType(random));
         }
 
         return result;
@@ -184,7 +183,8 @@ public static class NebulaGenerator
 
     private static bool IsValid(NebulaGenerationSettings settings)
     {
-        return settings.Count >= 0 &&
+        return settings.MinCount >= 0 &&
+            settings.MaxCount >= settings.MinCount &&
             settings.MaxAttemptsPerNebula > 0 &&
             settings.SampleCount > 0 &&
             settings.MinArea > 0f &&
