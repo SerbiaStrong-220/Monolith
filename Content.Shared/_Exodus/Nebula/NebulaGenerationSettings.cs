@@ -7,10 +7,7 @@ public sealed class NebulaGenerationSettings
 {
     public double[] MaxTotalAreaOptions =
     [
-        6_000_000_000d,
-        5_500_000_000d,
-        5_000_000_000d,
-        4_500_000_000d,
+        8_000_000_000d,
     ];
 
     public int MaxAttempts = 8_192;
