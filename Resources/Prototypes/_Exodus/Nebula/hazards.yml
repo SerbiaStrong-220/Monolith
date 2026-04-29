@@ -10,8 +10,6 @@
     layers:
     - state: "red_lightning"
       shader: unshaded
-  - type: Physics
-    canCollide: false
   - type: PointLight
     enabled: true
     color: "#ff0000"
@@ -19,7 +17,6 @@
     softness: 1
     autoRot: true
     castShadows: false
-  - type: Beam
   - type: TimedDespawn
     lifetime: 3
   - type: Tag
@@ -38,8 +35,6 @@
     layers:
     - state: "red_lightning"
       shader: unshaded
-  - type: Physics
-    canCollide: false
   - type: PointLight
     enabled: true
     color: "#ff0000"
@@ -47,7 +42,6 @@
     softness: 1
     autoRot: true
     castShadows: false
-  - type: Beam
   - type: TimedDespawn
     lifetime: 3
   - type: Tag

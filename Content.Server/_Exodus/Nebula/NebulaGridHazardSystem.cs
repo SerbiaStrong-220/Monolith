@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server._Crescent.ShipShields;
-using Content.Server.Beam;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared._Exodus.Nebula;
@@ -47,7 +46,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float HeavyExplosionMaxTileIntensity = 80f;
     private const string SparksPrototype = "EffectSparks";
 
-    [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -181,18 +179,35 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var hazard = grid.Comp3;
         if (_timing.CurTime >= hazard.NextSmallStrike)
         {
-            if (TryStrikeGrid(grid, mapId, mapComponent, false))
-                RecordStrike(hazard, false);
-
             hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
+
+            if (TryStrikeGridSafely(grid, mapId, mapComponent, false))
+                RecordStrike(hazard, false);
         }
 
         if (_timing.CurTime >= hazard.NextHeavyStrike)
         {
-            if (TryStrikeGrid(grid, mapId, mapComponent, true))
-                RecordStrike(hazard, true);
-
             hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
+
+            if (TryStrikeGridSafely(grid, mapId, mapComponent, true))
+                RecordStrike(hazard, true);
+        }
+    }
+
+    private bool TryStrikeGridSafely(
+        Entity<MapGridComponent, TransformComponent, NebulaGridHazardComponent> grid,
+        MapId mapId,
+        NebulaMapComponent mapComponent,
+        bool heavy)
+    {
+        try
+        {
+            return TryStrikeGrid(grid, mapId, mapComponent, heavy);
+        }
+        catch (Exception ex)
+        {
+            Logger.ErrorS("nebula", $"Failed to process red nebula lightning strike on {ToPrettyString(grid.Owner)}: {ex}");
+            return false;
         }
     }
 
@@ -303,14 +318,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var direction = sourceDirection.LengthSquared() > 0.01f
             ? Vector2.Normalize(sourceDirection)
             : _random.NextAngle().ToWorldVec();
-        var offset = direction * length;
-        var source = Spawn(null, targetCoords.Offset(offset));
-        var target = Spawn(null, targetCoords);
-
-        _beam.TryCreateBeam(source, target, lightningPrototype);
-
-        QueueDel(source);
-        QueueDel(target);
+        var visual = Spawn(lightningPrototype, targetCoords.Offset(direction * length * 0.5f));
+        _transform.SetWorldRotation(visual, direction.ToWorldAngle());
     }
 
     private void QueueExplosion(EntityCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
