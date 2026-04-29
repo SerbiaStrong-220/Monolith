@@ -191,7 +191,7 @@
     detectionRange: 600
     scanArc: 30
     launchSpeed: 25
-    maxSpeed: 30
+    maxSpeed: 75 # Exodus-Speed-Fix
     trackDelay: 2
 
 # Pre-Fracture

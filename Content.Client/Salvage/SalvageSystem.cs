@@ -24,6 +24,7 @@ public sealed class SalvageSystem : SharedSalvageSystem
             return;
 
         component.Stage = state.Stage;
+        component.EndTime = state.EndTime; // Exodus-add-exp-time-to-pda
 
         if (component.Stage >= ExpeditionStage.MusicCountdown)
         {

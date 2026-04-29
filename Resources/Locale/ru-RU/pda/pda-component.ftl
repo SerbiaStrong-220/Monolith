@@ -18,6 +18,9 @@ comp-pda-ui-station = Объект сектора: [color=white]{ $station }[/co
 comp-pda-ui-station-alert-level = Уровень угрозы сектора: [color={ $color }]{ $level }[/color]
 comp-pda-ui-station-alert-level-instructions = Инструкции: [color=white]{ $instructions }[/color]
 comp-pda-ui-station-time = Продолжительность смены: [color=white]{ $time }[/color]
+# Exodus-add-exp-time-to-pda-start
+comp-pda-ui-expedition-time = До конца экспедиции: [color=white]{ $time }[/color]
+# Exodus-add-exp-time-to-pda-end
 comp-pda-ui-eject-id-button = Извлечь ID
 comp-pda-ui-eject-pen-button = Извлечь ручку
 comp-pda-ui-ringtone-button-description = Измените рингтон вашего КПК

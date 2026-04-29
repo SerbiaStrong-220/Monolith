@@ -113,9 +113,9 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
             return;
 
         var serverComp = (EntityStorageComponent) component;
-        var tile = GetOffsetTileRef(uid, serverComp);
+        // var tile = GetOffsetTileRef(uid, serverComp); // Exodus-Fix-Entity-Storage-Atmosphere-Merge
 
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        if (_atmos.GetTileMixture(uid, true) is {} environment) // Exodus-Fix-Entity-Storage-Atmosphere-Merge
         {
             _atmos.Merge(serverComp.Air, environment.RemoveVolume(serverComp.Air.Volume));
         }
@@ -128,15 +128,16 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         if (!serverComp.Airtight)
             return;
 
-        var tile = GetOffsetTileRef(uid, serverComp);
+        // var tile = GetOffsetTileRef(uid, serverComp); // Exodus-Fix-Entity-Storage-Atmosphere-Merge
 
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        if (_atmos.GetTileMixture(uid, true) is {} environment) // Exodus-Fix-Entity-Storage-Atmosphere-Merge
         {
             _atmos.Merge(environment, serverComp.Air);
             serverComp.Air.Clear();
         }
     }
 
+    /* Exodus-Fix-Entity-Storage-Atmosphere-Merge-Start
     private TileRef? GetOffsetTileRef(EntityUid uid, EntityStorageComponent component)
     {
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager, TransformSystem);
@@ -148,6 +149,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         return null;
     }
+    Exodus-Fix-Entity-Storage-Atmosphere-Merge-End */
 
     private void OnRemoved(EntityUid uid, InsideEntityStorageComponent component, EntGotRemovedFromContainerMessage args)
     {
