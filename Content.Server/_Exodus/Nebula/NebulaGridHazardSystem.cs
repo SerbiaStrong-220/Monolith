@@ -150,11 +150,11 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         }
 
         var lightning = heavy ? hazard.HeavyLightningPrototype : hazard.SmallLightningPrototype;
-        var radius = heavy ? hazard.HeavyRadius : hazard.SmallRadius;
+        var tileRadius = heavy ? hazard.HeavyTileRadius : hazard.SmallTileRadius;
         var damage = heavy ? hazard.HeavyDamage : hazard.SmallDamage;
 
         SpawnLightning(targetCoords, lightning);
-        DamageStrikeArea(grid.Owner, grid.Comp1, tile.GridIndices, radius, damage);
+        DamageStrikeArea(grid.Owner, grid.Comp1, tile.GridIndices, tileRadius, damage);
         Spawn(SparksPrototype, targetCoords);
         return true;
     }
@@ -207,30 +207,35 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         EntityUid gridUid,
         MapGridComponent grid,
         Vector2i centerTile,
-        float radius,
+        int tileRadius,
         DamageSpecifier damage)
     {
         _damagedEntities.Clear();
 
-        foreach (var tile in _map.GetLocalTilesIntersecting(gridUid, grid, new Circle(centerTile, radius)))
+        for (var x = -tileRadius; x <= tileRadius; x++)
         {
-            var distance = (tile.GridIndices - centerTile).Length;
-            var falloff = Math.Clamp(1f - distance / (radius + 0.5f), 0f, 1f);
-            if (falloff <= 0f)
-                continue;
-
-            _entitiesOnTile.Clear();
-            _lookup.GetLocalEntitiesIntersecting(gridUid, tile.GridIndices, _entitiesOnTile, gridComp: grid);
-
-            foreach (var entity in _entitiesOnTile)
+            for (var y = -tileRadius; y <= tileRadius; y++)
             {
-                if (!_damagedEntities.Add(entity.Owner) ||
-                    !_damageableQuery.TryComp(entity.Owner, out var damageable))
+                var tile = centerTile + new Vector2i(x, y);
+                if (!_map.TryGetTileRef(gridUid, grid, tile, out var tileRef) ||
+                    tileRef.Tile.IsEmpty)
                 {
                     continue;
                 }
 
-                _damageable.TryChangeDamage(entity.Owner, damage * falloff, damageable: damageable);
+                _entitiesOnTile.Clear();
+                _lookup.GetLocalEntitiesIntersecting(gridUid, tile, _entitiesOnTile, gridComp: grid);
+
+                foreach (var entity in _entitiesOnTile)
+                {
+                    if (!_damagedEntities.Add(entity.Owner) ||
+                        !_damageableQuery.TryComp(entity.Owner, out var damageable))
+                    {
+                        continue;
+                    }
+
+                    _damageable.TryChangeDamage(entity.Owner, damage, damageable: damageable);
+                }
             }
         }
     }

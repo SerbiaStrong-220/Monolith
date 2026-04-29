@@ -23,10 +23,10 @@ public sealed partial class NebulaGridHazardComponent : Component
     public float HeavyShieldLoad = 200f;
 
     [DataField]
-    public float SmallRadius = 0.5f;
+    public int SmallTileRadius;
 
     [DataField]
-    public float HeavyRadius = 1.5f;
+    public int HeavyTileRadius = 1;
 
     [DataField]
     public DamageSpecifier SmallDamage = new()
