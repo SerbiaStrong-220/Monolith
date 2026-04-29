@@ -1,6 +1,6 @@
 - type: radioChannel
-  id: Emergency
-  name: chat-radio-emergency
-  keycode: "б" # Ru-Localization
+  id: ExCommon
+  name: chat-radio-common
+  keycode: ";" # Ru-Localization
   frequency: 1312
-  color: "#c92a2a"
+  color: "#2cdb2c"

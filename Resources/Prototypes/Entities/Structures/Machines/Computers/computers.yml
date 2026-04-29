@@ -236,7 +236,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyEmergency # Exodus
+      - ExEncryptionKeyCommon # Exodus
       - EncryptionKeyTraffic
   # End Frontier
 

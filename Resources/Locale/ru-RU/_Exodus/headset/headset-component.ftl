@@ -1,1 +1,0 @@
-chat-radio-emergency = Бедствие
