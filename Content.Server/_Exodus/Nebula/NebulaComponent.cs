@@ -12,5 +12,8 @@ public sealed partial class NebulaComponent : Component
     public int Index;
 
     [ViewVariables]
+    public NebulaType Type;
+
+    [ViewVariables]
     public NebulaShape Shape;
 }

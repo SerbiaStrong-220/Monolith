@@ -96,6 +96,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly Dictionary<Color, List<(Vector2, string, bool)>> _strings = new();
     private readonly List<ShuttleExclusionObject> _viewportExclusions = new();
     // Exodus-begin nebula-ftl-map
+    private const float NebulaFillAlpha = 0.08f;
     private Vector2[] _nebulaFillBuffer = [];
     private Vector2[] _nebulaLineBuffer = [];
     // Exodus-end
@@ -761,7 +762,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         }
 
         _nebulaFillBuffer[fillCount - 1] = _nebulaFillBuffer[1];
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), config.Color.WithAlpha(0.18f));
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), config.Color.WithAlpha(NebulaFillAlpha));
 
         var lineCount = config.Points.Count + 1;
         if (_nebulaLineBuffer.Length < lineCount)

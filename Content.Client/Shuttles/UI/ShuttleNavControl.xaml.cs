@@ -71,6 +71,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private readonly List<BlipData> _tempBlipDataList = new();
     private readonly HashSet<EntityUid> _visibleGridsSet = new();
     // Exodus-begin nebula-radar-visualization
+    private const float NebulaFillAlpha = 0.08f;
     private Vector2[] _nebulaFillBuffer = [];
     private Vector2[] _nebulaLineBuffer = [];
     // Exodus-end
@@ -1203,7 +1204,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         // TriangleFan does not close the last wedge by itself.
         _nebulaFillBuffer[fillCount - 1] = _nebulaFillBuffer[1];
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), color.WithAlpha(0.18f));
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), color.WithAlpha(NebulaFillAlpha));
 
         var lineCount = config.Points.Count + 1;
         if (_nebulaLineBuffer.Length < lineCount)

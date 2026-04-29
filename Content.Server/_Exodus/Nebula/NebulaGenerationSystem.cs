@@ -28,7 +28,10 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const int NebulaRadarContourSamples = 96;
     private static readonly TimeSpan MarkerValidationInterval = TimeSpan.FromSeconds(30);
 
-    private static readonly Color NebulaRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
+    private static readonly Color BlueNebulaRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
+    private static readonly Color RedNebulaRadarColor = new(1f, 0.30f, 0.26f, 0.85f);
+    private static readonly Color GreenNebulaRadarColor = new(0.32f, 0.90f, 0.48f, 0.85f);
+    private static readonly Color PurpleNebulaRadarColor = new(0.73f, 0.40f, 1f, 0.85f);
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -305,21 +308,23 @@ public sealed class NebulaGenerationSystem : EntitySystem
         for (var i = 0; i < component.Nebulas.Count; i++)
         {
             var nebula = component.Nebulas[i];
+            var type = GetTestNebulaType(i);
             var marker = Spawn(null, new MapCoordinates(nebula.Center, mapId));
             var nebulaComponent = EnsureComp<NebulaComponent>(marker);
 
             nebulaComponent.Index = i;
+            nebulaComponent.Type = type;
             nebulaComponent.Shape = nebula;
             component.NebulaMarkers.Add(marker);
 
             EnsureComp<PhysicsComponent>(marker);
-            ConfigureRadarBlip(EnsureComp<RadarBlipComponent>(marker), nebula);
+            ConfigureRadarBlip(EnsureComp<RadarBlipComponent>(marker), nebula, type);
 
-            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1}");
+            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1} ({type})");
         }
     }
 
-    private static void ConfigureRadarBlip(RadarBlipComponent blip, NebulaShape nebula)
+    private static void ConfigureRadarBlip(RadarBlipComponent blip, NebulaShape nebula, NebulaType type)
     {
         var radius = nebula.BoundingRadius;
         blip.MaxDistance = NebulaRadarMaxDistance;
@@ -328,11 +333,28 @@ public sealed class NebulaGenerationSystem : EntitySystem
         blip.Config = new BlipConfig
         {
             Bounds = new Box2(-radius, -radius, radius, radius),
-            Color = NebulaRadarColor,
+            Color = GetNebulaRadarColor(type),
             Shape = RadarBlipShape.NebulaPolygon,
             Points = BuildRadarContourPoints(nebula),
             RespectZoom = true,
             Rotate = false,
+        };
+    }
+
+    private static NebulaType GetTestNebulaType(int index)
+    {
+        // Exodus TODO nebula-types: replace this test cycle with random type selection once generation balance is configured.
+        return (NebulaType) (index % Enum.GetValues<NebulaType>().Length);
+    }
+
+    private static Color GetNebulaRadarColor(NebulaType type)
+    {
+        return type switch
+        {
+            NebulaType.Red => RedNebulaRadarColor,
+            NebulaType.Green => GreenNebulaRadarColor,
+            NebulaType.Purple => PurpleNebulaRadarColor,
+            _ => BlueNebulaRadarColor,
         };
     }
 
