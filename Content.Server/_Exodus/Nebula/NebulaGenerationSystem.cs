@@ -106,6 +106,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
             component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
 
             // Shape data lives on the map component; marker entities are runtime radar/VV handles and can be restored.
+            // CleanupImmune prevents normal cleanup; this extra pass repairs manual or unexpected component loss.
             var restored = EnsureValidMarkers(map.MapId, component);
             if (restored == 0)
                 continue;
