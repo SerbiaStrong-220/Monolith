@@ -5,9 +5,15 @@ namespace Content.Shared._Exodus.Nebula;
 /// </summary>
 public sealed class NebulaGenerationSettings
 {
-    public int MinCount = 8;
-    public int MaxCount = 12;
-    public int MaxAttemptsPerNebula = 128;
+    public double[] MaxTotalAreaOptions =
+    [
+        6_000_000_000d,
+        5_500_000_000d,
+        5_000_000_000d,
+        4_500_000_000d,
+    ];
+
+    public int MaxAttempts = 8_192;
     public int SampleCount = NebulaShape.DefaultSampleCount;
 
     public float MinArea = 13_000_000f;

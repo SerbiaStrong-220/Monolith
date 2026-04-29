@@ -79,7 +79,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
 
         component.Seed = seed;
         component.Attempts = result.Attempts;
-        component.RequestedCount = result.RequestedCount;
+        component.MaxAttempts = result.MaxAttempts;
+        component.MaxTotalArea = result.MaxTotalArea;
+        component.TotalArea = result.TotalArea;
         component.Complete = result.Complete;
         component.Rejections = result.Rejections;
 
@@ -95,7 +97,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         SpawnNebulaMarkers(mapId, component);
         component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
 
-        Logger.InfoS("nebula", $"Generated {component.Nebulas.Count}/{component.RequestedCount} nebulas and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts} attempts.");
+        Logger.InfoS("nebula", $"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
     }
 
     public override void Update(float frameTime)
@@ -302,7 +304,41 @@ public sealed class NebulaGenerationSystem : EntitySystem
                 validMarkers++;
         }
 
-        message = $"Nebulas: {component.Nebulas.Count}/{component.RequestedCount}; markers: {validMarkers}/{component.NebulaMarkers.Count}; seed: {component.Seed}; complete: {component.Complete}.";
+        message = $"Nebulas: {component.Nebulas.Count}; area: {component.TotalArea:0}/{component.MaxTotalArea:0}; markers: {validMarkers}/{component.NebulaMarkers.Count}; seed: {component.Seed}; attempts: {component.Attempts}/{component.MaxAttempts}; complete: {component.Complete}.";
+        return true;
+    }
+
+    public bool TryGetAreaStatus(bool details, out string message)
+    {
+        var mapId = _ticker.DefaultMap;
+        if (!_mapManager.MapExists(mapId))
+        {
+            message = $"Default map {mapId} does not exist.";
+            return false;
+        }
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        if (!TryComp<NebulaMapComponent>(mapUid, out var component))
+        {
+            message = "No NebulaMapComponent found on the default map.";
+            return false;
+        }
+
+        var percent = component.MaxTotalArea > 0d
+            ? component.TotalArea / component.MaxTotalArea * 100d
+            : 0d;
+
+        message = $"Total nebula area: {component.TotalArea:0}; max selected area: {component.MaxTotalArea:0}; budget fill: {percent:0.##}%; nebulas: {component.Nebulas.Count}.";
+
+        if (!details)
+            return true;
+
+        for (var i = 0; i < component.Nebulas.Count; i++)
+        {
+            var type = GetNebulaType(component, i);
+            message += $"\n{i + 1}. {type}: area {component.Nebulas[i].Area:0}; center {component.Nebulas[i].Center}; bounding radius {component.Nebulas[i].BoundingRadius:0}.";
+        }
+
         return true;
     }
 

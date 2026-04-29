@@ -116,7 +116,7 @@ public sealed class NebulaShapeTests
     }
 
     [Test]
-    public void GeneratorCreatesCompleteNonOverlappingSet()
+    public void GeneratorCreatesNonOverlappingSetWithinAreaBudget()
     {
         var protectedAreas = new[]
         {
@@ -132,9 +132,11 @@ public sealed class NebulaShapeTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Complete, Is.True);
-            Assert.That(result.RequestedCount, Is.InRange(settings.MinCount, settings.MaxCount));
-            Assert.That(result.Nebulas, Has.Count.EqualTo(result.RequestedCount));
+            Assert.That(settings.MaxTotalAreaOptions, Does.Contain(result.MaxTotalArea));
+            Assert.That(result.TotalArea, Is.GreaterThan(result.MaxTotalArea));
+            Assert.That(result.Rejections.AreaLimit, Is.EqualTo(1));
             Assert.That(result.NebulaTypes, Has.Count.EqualTo(result.Nebulas.Count));
+            Assert.That(result.Nebulas, Is.Not.Empty);
         });
 
         for (var i = 0; i < result.Nebulas.Count; i++)

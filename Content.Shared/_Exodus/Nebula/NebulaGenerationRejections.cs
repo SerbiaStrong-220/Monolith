@@ -10,4 +10,5 @@ public record struct NebulaGenerationRejections
     public int OutOfBounds;
     public int ProtectedArea;
     public int Overlap;
+    public int AreaLimit;
 }

@@ -9,7 +9,10 @@ public sealed class NebulaGenerationResult
     public readonly List<NebulaType> NebulaTypes = new();
     public NebulaGenerationRejections Rejections;
     public int Attempts;
-    public int RequestedCount;
+    public int MaxAttempts;
+    public double MaxTotalArea;
+    public double TotalArea;
+    public bool HitAreaLimit;
 
-    public bool Complete => Nebulas.Count >= RequestedCount;
+    public bool Complete => HitAreaLimit || Attempts < MaxAttempts;
 }

@@ -111,6 +111,41 @@ public sealed class NebulaStatusCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaAreaCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public string Command => "nebula_area";
+    public string Description => "Prints total generated nebula area.";
+    public string Help => "Usage: nebula_area [details]";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length > 1)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        var details = args.Length == 1 && string.Equals(args[0], "details", StringComparison.OrdinalIgnoreCase);
+        if (args.Length == 1 && !details)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        var system = _entityManager.System<NebulaGenerationSystem>();
+        if (!system.TryGetAreaStatus(details, out var message))
+        {
+            shell.WriteError(message);
+            return;
+        }
+
+        shell.WriteLine(message);
+    }
+}
+
+[AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaPresenceCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;

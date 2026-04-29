@@ -30,7 +30,13 @@ public sealed partial class NebulaMapComponent : Component
     public int Attempts;
 
     [ViewVariables]
-    public int RequestedCount;
+    public int MaxAttempts;
+
+    [ViewVariables]
+    public double MaxTotalArea;
+
+    [ViewVariables]
+    public double TotalArea;
 
     [ViewVariables]
     public bool Complete;

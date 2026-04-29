@@ -35,11 +35,11 @@ public static class NebulaGenerator
         }
 
         var random = new global::System.Random(seed);
-        var requestedCount = random.Next(settings.MinCount, settings.MaxCount + 1);
-        result.RequestedCount = requestedCount;
-        var maxAttempts = requestedCount * settings.MaxAttemptsPerNebula;
+        var maxTotalArea = settings.MaxTotalAreaOptions[random.Next(settings.MaxTotalAreaOptions.Length)];
+        result.MaxTotalArea = maxTotalArea;
+        result.MaxAttempts = settings.MaxAttempts;
 
-        while (result.Nebulas.Count < requestedCount && result.Attempts < maxAttempts)
+        while (result.Attempts < settings.MaxAttempts)
         {
             result.Attempts++;
 
@@ -69,6 +69,14 @@ public static class NebulaGenerator
 
             result.Nebulas.Add(candidate);
             result.NebulaTypes.Add(NebulaTypeHelpers.GetRandomNebulaType(random));
+            result.TotalArea += candidate.Area;
+
+            if (result.TotalArea <= maxTotalArea)
+                continue;
+
+            result.Rejections.AreaLimit++;
+            result.HitAreaLimit = true;
+            break;
         }
 
         return result;
@@ -183,9 +191,16 @@ public static class NebulaGenerator
 
     private static bool IsValid(NebulaGenerationSettings settings)
     {
-        return settings.MinCount >= 0 &&
-            settings.MaxCount >= settings.MinCount &&
-            settings.MaxAttemptsPerNebula > 0 &&
+        if (settings.MaxTotalAreaOptions == null || settings.MaxTotalAreaOptions.Length == 0)
+            return false;
+
+        for (var i = 0; i < settings.MaxTotalAreaOptions.Length; i++)
+        {
+            if (settings.MaxTotalAreaOptions[i] <= 0d)
+                return false;
+        }
+
+        return settings.MaxAttempts > 0 &&
             settings.SampleCount > 0 &&
             settings.MinArea > 0f &&
             settings.MaxArea >= settings.MinArea &&
