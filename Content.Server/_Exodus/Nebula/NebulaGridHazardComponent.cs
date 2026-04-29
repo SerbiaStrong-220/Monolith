@@ -26,25 +26,25 @@ public sealed partial class NebulaGridHazardComponent : Component
     public ProtoId<ExplosionPrototype> SmallExplosionType = "Minibomb";
 
     [DataField]
-    public float SmallExplosionTotalIntensity = 200f;
+    public float SmallExplosionTotalIntensity = 133.333f;
 
     [DataField]
     public float SmallExplosionIntensitySlope = 30f;
 
     [DataField]
-    public float SmallExplosionMaxTileIntensity = 60f;
+    public float SmallExplosionMaxTileIntensity = 40f;
 
     [DataField]
     public ProtoId<ExplosionPrototype> HeavyExplosionType = "Minibomb";
 
     [DataField]
-    public float HeavyExplosionTotalIntensity = 1600f;
+    public float HeavyExplosionTotalIntensity = 1066.667f;
 
     [DataField]
     public float HeavyExplosionIntensitySlope = 30f;
 
     [DataField]
-    public float HeavyExplosionMaxTileIntensity = 120f;
+    public float HeavyExplosionMaxTileIntensity = 80f;
 
     // Temporary visual stretch until dedicated heavy lightning sprites are added.
     [DataField]

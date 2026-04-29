@@ -23,10 +23,26 @@ namespace Content.Server._Exodus.Nebula;
 public sealed class NebulaGridHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    private static readonly Vector2i[] CardinalOffsets =
+    {
+        new(1, 0),
+        new(-1, 0),
+        new(0, 1),
+        new(0, -1),
+    };
+
+    private static readonly TimeSpan SmallStrikeInterval = TimeSpan.FromSeconds(5);
+    private static readonly TimeSpan HeavyStrikeInterval = TimeSpan.FromSeconds(30);
+    private static readonly TimeSpan LegacySmallStrikeInterval = TimeSpan.FromSeconds(20);
+    private static readonly TimeSpan LegacyHeavyStrikeInterval = TimeSpan.FromSeconds(120);
     private const string LegacySmallLightningPrototype = "NebulaRedSmallLightning";
     private const string LegacyHeavyLightningPrototype = "NebulaRedHeavyLightning";
     private const string SmallLightningPrototype = "NebulaRedSmallStrikeVisual";
     private const string HeavyLightningPrototype = "NebulaRedHeavyStrikeVisual";
+    private const float SmallExplosionTotalIntensity = 133.333f;
+    private const float SmallExplosionMaxTileIntensity = 40f;
+    private const float HeavyExplosionTotalIntensity = 1066.667f;
+    private const float HeavyExplosionMaxTileIntensity = 80f;
     private const string SparksPrototype = "EffectSparks";
 
     [Dependency] private readonly BeamSystem _beam = default!;
@@ -74,14 +90,12 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             }
 
             var hazard = EnsureComp<NebulaGridHazardComponent>(uid);
-            if (!HasNearbyPlayer((uid, grid, xform), mapId, hazard.PlayerRange))
-            {
-                RemCompDeferred<NebulaGridHazardComponent>(uid);
-                continue;
-            }
-
+            UpdateLegacyHazardSettings(hazard);
             InitializeTimers(hazard);
-            UpdateLegacyVisualPrototypes(hazard);
+
+            if (!HasNearbyPlayer((uid, grid, xform), mapId, hazard.PlayerRange))
+                continue;
+
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent);
         }
     }
@@ -97,17 +111,46 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             return;
 
         hazard.TimersInitialized = true;
-        hazard.NextSmallStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(1f, (float)hazard.SmallStrikeInterval.TotalSeconds));
-        hazard.NextHeavyStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(5f, (float)hazard.HeavyStrikeInterval.TotalSeconds));
+        hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
+        hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
     }
 
-    private void UpdateLegacyVisualPrototypes(NebulaGridHazardComponent hazard)
+    private void UpdateLegacyHazardSettings(NebulaGridHazardComponent hazard)
     {
         if (hazard.SmallLightningPrototype.ToString() == LegacySmallLightningPrototype)
             hazard.SmallLightningPrototype = SmallLightningPrototype;
 
         if (hazard.HeavyLightningPrototype.ToString() == LegacyHeavyLightningPrototype)
             hazard.HeavyLightningPrototype = HeavyLightningPrototype;
+
+        if (hazard.SmallStrikeInterval == LegacySmallStrikeInterval)
+            hazard.SmallStrikeInterval = SmallStrikeInterval;
+
+        if (hazard.HeavyStrikeInterval == LegacyHeavyStrikeInterval)
+            hazard.HeavyStrikeInterval = HeavyStrikeInterval;
+
+        if (hazard.TimersInitialized)
+        {
+            var nextSmallLimit = _timing.CurTime + hazard.SmallStrikeInterval;
+            if (hazard.NextSmallStrike > nextSmallLimit)
+                hazard.NextSmallStrike = nextSmallLimit;
+
+            var nextHeavyLimit = _timing.CurTime + hazard.HeavyStrikeInterval;
+            if (hazard.NextHeavyStrike > nextHeavyLimit)
+                hazard.NextHeavyStrike = nextHeavyLimit;
+        }
+
+        if (MathHelper.CloseTo(hazard.SmallExplosionTotalIntensity, 200f))
+            hazard.SmallExplosionTotalIntensity = SmallExplosionTotalIntensity;
+
+        if (MathHelper.CloseTo(hazard.SmallExplosionMaxTileIntensity, 60f))
+            hazard.SmallExplosionMaxTileIntensity = SmallExplosionMaxTileIntensity;
+
+        if (MathHelper.CloseTo(hazard.HeavyExplosionTotalIntensity, 1600f))
+            hazard.HeavyExplosionTotalIntensity = HeavyExplosionTotalIntensity;
+
+        if (MathHelper.CloseTo(hazard.HeavyExplosionMaxTileIntensity, 120f))
+            hazard.HeavyExplosionMaxTileIntensity = HeavyExplosionMaxTileIntensity;
     }
 
     private void UpdateHazard(
@@ -158,7 +201,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var lightningLength = heavy ? hazard.HeavyLightningLength : hazard.SmallLightningLength;
         var impactSound = heavy ? hazard.HeavyImpactSound : hazard.SmallImpactSound;
 
-        SpawnLightning(targetCoords, lightning, lightningLength);
+        var sourceDirection = targetCoords.Position - _transform.GetWorldPosition(grid.Comp2);
+        SpawnLightning(targetCoords, lightning, lightningLength, sourceDirection);
         QueueExplosion(targetGridCoords, hazard, heavy);
         _audio.PlayPvs(impactSound, targetGridCoords);
         Spawn(SparksPrototype, targetCoords);
@@ -184,6 +228,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             if (tile is not { } tileRef)
                 continue;
 
+            if (tileRef.Tile.IsEmpty || !IsEdgeTile(grid.Owner, grid.Comp1, tileRef.GridIndices))
+                continue;
+
             var gridCoords = _map.GridTileToLocal(grid.Owner, grid.Comp1, tileRef.GridIndices);
             var coords = _transform.ToMapCoordinates(gridCoords);
             if (coords.MapId != mapId || !IsRedNebulaAt(coords.Position, mapComponent))
@@ -201,9 +248,24 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         return candidates > 0;
     }
 
-    private void SpawnLightning(MapCoordinates targetCoords, EntProtoId lightningPrototype, float length)
+    private bool IsEdgeTile(EntityUid gridUid, MapGridComponent grid, Vector2i tile)
     {
-        var offset = _random.NextAngle().ToWorldVec() * length;
+        for (var i = 0; i < CardinalOffsets.Length; i++)
+        {
+            var neighbor = tile + CardinalOffsets[i];
+            if (!_map.TryGetTileRef(gridUid, grid, neighbor, out var tileRef) || tileRef.Tile.IsEmpty)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void SpawnLightning(MapCoordinates targetCoords, EntProtoId lightningPrototype, float length, Vector2 sourceDirection)
+    {
+        var direction = sourceDirection.LengthSquared() > 0.01f
+            ? Vector2.Normalize(sourceDirection)
+            : _random.NextAngle().ToWorldVec();
+        var offset = direction * length;
         var source = Spawn(null, targetCoords.Offset(offset));
         var target = Spawn(null, targetCoords);
 
