@@ -12,6 +12,9 @@ public sealed partial class NebulaPresenceComponent : Component
     public int NebulaIndex = -1;
 
     [DataField, AutoNetworkedField, ViewVariables]
+    public NebulaType Type;
+
+    [DataField, AutoNetworkedField, ViewVariables]
     public float Density;
 
     [DataField, AutoNetworkedField, ViewVariables]

@@ -1,0 +1,44 @@
+# Exodus nebula-parallax
+- type: parallax
+  id: RedNebula
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Red_Nebula_Background.png"
+      slowness: 0.998046875
+      scale: "1, 1"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_red_nebula_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.996625
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Red_Nebula_Cloud_1.png"
+      slowness: 0.984
+      scale: "1, 1"
+      scrolling: "0.006, -0.003"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_red_nebula_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.979375
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Red_Nebula_Cloud_2.png"
+      slowness: 0.967
+      scale: "1, 1"
+      scrolling: "-0.004, 0.005"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Red_Nebula_Cloud_3.png"
+      slowness: 0.942
+      scale: "1, 1"
+      scrolling: "0.0025, 0.004"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Red_Nebula_Cloud_4.png"
+      slowness: 0.918
+      scale: "1, 1"
+      scrolling: "-0.003, -0.002"
+  layersLQUseHQ: true

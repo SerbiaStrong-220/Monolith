@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client._Exodus.Nebula;
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
@@ -20,6 +21,7 @@ public sealed class ParallaxOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
     private readonly ParallaxSystem _parallax;
+    private readonly NebulaParallaxSystem _nebulaParallax; // Exodus nebula-parallax
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
@@ -28,6 +30,7 @@ public sealed class ParallaxOverlay : Overlay
         ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
         _parallax = _entManager.System<ParallaxSystem>();
+        _nebulaParallax = _entManager.System<NebulaParallaxSystem>(); // Exodus nebula-parallax
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -49,7 +52,11 @@ public sealed class ParallaxOverlay : Overlay
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
         var worldHandle = args.WorldHandle;
 
-        var layers = _parallax.GetParallaxLayers(args.MapId);
+        // Exodus-begin nebula-parallax
+        var layers = _nebulaParallax.TryGetParallaxLayers(out var nebulaLayers)
+            ? nebulaLayers
+            : _parallax.GetParallaxLayers(args.MapId);
+        // Exodus-end
         var realTime = (float) _timing.RealTime.TotalSeconds;
 
         foreach (var layer in layers)

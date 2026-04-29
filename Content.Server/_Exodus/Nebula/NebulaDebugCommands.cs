@@ -139,6 +139,6 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
             return;
         }
 
-        shell.WriteLine($"Inside nebula {presence.NebulaIndex + 1}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
+        shell.WriteLine($"Inside {presence.Type} nebula {presence.NebulaIndex + 1}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
     }
 }

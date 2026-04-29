@@ -308,7 +308,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         for (var i = 0; i < component.Nebulas.Count; i++)
         {
             var nebula = component.Nebulas[i];
-            var type = GetTestNebulaType(i);
+            var type = NebulaTypeHelpers.GetTestNebulaType(i);
             var marker = Spawn(null, new MapCoordinates(nebula.Center, mapId));
             var nebulaComponent = EnsureComp<NebulaComponent>(marker);
 
@@ -345,12 +345,6 @@ public sealed class NebulaGenerationSystem : EntitySystem
             RespectZoom = true,
             Rotate = false,
         };
-    }
-
-    private static NebulaType GetTestNebulaType(int index)
-    {
-        // Exodus TODO nebula-types: replace this test cycle with random type selection once generation balance is configured.
-        return (NebulaType) (index % Enum.GetValues<NebulaType>().Length);
     }
 
     private static Color GetNebulaRadarColor(NebulaType type)
@@ -390,7 +384,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
 
             var marker = component.NebulaMarkers[i];
             var nebula = component.Nebulas[i];
-            var type = GetTestNebulaType(i);
+            var type = NebulaTypeHelpers.GetTestNebulaType(i);
 
             if (!Deleted(marker) && HasComp<NebulaComponent>(marker))
             {
