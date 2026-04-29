@@ -9,6 +9,7 @@ using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -44,7 +45,13 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float SmallExplosionMaxTileIntensity = 40f;
     private const float HeavyExplosionTotalIntensity = 1066.667f;
     private const float HeavyExplosionMaxTileIntensity = 80f;
+    private const float SmallShieldLoad = 400f;
+    private const float HeavyShieldLoad = 1500f;
+    private const float LegacySmallShieldLoad = 50f;
+    private const float LegacyHeavyShieldLoad = 200f;
+    private const float LightningSegmentSpacing = 1f;
     private const string SparksPrototype = "EffectSparks";
+    private static readonly AudioParams LightningAudioParams = AudioParams.Default.WithVolume(4f).WithMaxDistance(64f);
 
     [Dependency] private readonly ExplosionSystem _explosions = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -169,6 +176,12 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
         if (MathHelper.CloseTo(hazard.HeavyExplosionMaxTileIntensity, 120f))
             hazard.HeavyExplosionMaxTileIntensity = HeavyExplosionMaxTileIntensity;
+
+        if (MathHelper.CloseTo(hazard.SmallShieldLoad, LegacySmallShieldLoad))
+            hazard.SmallShieldLoad = SmallShieldLoad;
+
+        if (MathHelper.CloseTo(hazard.HeavyShieldLoad, LegacyHeavyShieldLoad))
+            hazard.HeavyShieldLoad = HeavyShieldLoad;
     }
 
     private void UpdateHazard(
@@ -241,11 +254,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
         var hazard = grid.Comp3;
         var shieldLoad = heavy ? hazard.HeavyShieldLoad : hazard.SmallShieldLoad;
-        if (_shields.TryAbsorbNebulaStrike(grid.Owner, shieldLoad, out var shield))
+        if (_shields.TryAbsorbNebulaStrike(grid.Owner, shieldLoad, out _))
         {
-            if (!Deleted(shield))
-                _audio.PlayPvs(hazard.ShieldImpactSound, shield);
-
+            _audio.PlayPvs(hazard.ShieldImpactSound, targetGridCoords, LightningAudioParams);
             Spawn(SparksPrototype, targetCoords);
             return true;
         }
@@ -257,7 +268,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var sourceDirection = targetCoords.Position - _transform.GetWorldPosition(grid.Comp2);
         SpawnLightning(targetCoords, lightning, lightningLength, sourceDirection);
         QueueExplosion(targetGridCoords, hazard, heavy);
-        _audio.PlayPvs(impactSound, targetGridCoords);
+        _audio.PlayPvs(impactSound, targetGridCoords, LightningAudioParams);
         Spawn(SparksPrototype, targetCoords);
         return true;
     }
@@ -318,8 +329,15 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var direction = sourceDirection.LengthSquared() > 0.01f
             ? Vector2.Normalize(sourceDirection)
             : _random.NextAngle().ToWorldVec();
-        var visual = Spawn(lightningPrototype, targetCoords.Offset(direction * length * 0.5f));
-        _transform.SetWorldRotation(visual, direction.ToWorldAngle());
+
+        // Sprite-only segments keep the old beam-like look without BeamSystem physics contacts.
+        var segmentCount = Math.Max(1, (int) MathF.Ceiling(length / LightningSegmentSpacing));
+        for (var i = 0; i < segmentCount; i++)
+        {
+            var distance = Math.Min(length, i * LightningSegmentSpacing + LightningSegmentSpacing * 0.5f);
+            var visual = Spawn(lightningPrototype, targetCoords.Offset(direction * distance));
+            _transform.SetWorldRotation(visual, direction.ToWorldAngle());
+        }
     }
 
     private void QueueExplosion(EntityCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
