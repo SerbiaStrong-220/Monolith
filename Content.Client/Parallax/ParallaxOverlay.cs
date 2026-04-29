@@ -52,12 +52,37 @@ public sealed class ParallaxOverlay : Overlay
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
         var worldHandle = args.WorldHandle;
 
-        // Exodus-begin nebula-parallax
-        var layers = _nebulaParallax.TryGetParallaxLayers(out var nebulaLayers)
-            ? nebulaLayers
-            : _parallax.GetParallaxLayers(args.MapId);
-        // Exodus-end
+        var layers = _parallax.GetParallaxLayers(args.MapId);
         var realTime = (float) _timing.RealTime.TotalSeconds;
+
+        // Exodus-begin nebula-parallax
+        if (_nebulaParallax.TryGetParallaxLayers(out var nebulaLayers, out var nebulaBlend))
+        {
+            DrawLayers(args, layers, position, realTime);
+            DrawLayers(args, nebulaLayers, position, realTime, nebulaBlend);
+            worldHandle.UseShader(null);
+            return;
+        }
+        // Exodus-end
+
+        DrawLayers(args, layers, position, realTime);
+        worldHandle.UseShader(null);
+    }
+
+    // Exodus-begin nebula-parallax
+    private void DrawLayers(
+        in OverlayDrawArgs args,
+        ParallaxLayerPrepared[] layers,
+        Vector2 position,
+        float realTime,
+        float alpha = 1f)
+    {
+        if (alpha <= 0f)
+            return;
+
+        var worldHandle = args.WorldHandle;
+        Color? modulate = alpha >= 1f ? null : Color.White.WithAlpha(alpha);
+        // Exodus-end
 
         foreach (var layer in layers)
         {
@@ -109,17 +134,15 @@ public sealed class ParallaxOverlay : Overlay
                 {
                     for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
                     {
-                        worldHandle.DrawTextureRect(tex, Box2.FromDimensions(new Vector2(x, y), size));
+                        worldHandle.DrawTextureRect(tex, Box2.FromDimensions(new Vector2(x, y), size), modulate); // Exodus nebula-parallax
                     }
                 }
             }
             else
             {
-                worldHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
+                worldHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size), modulate); // Exodus nebula-parallax
             }
         }
-
-        worldHandle.UseShader(null);
     }
 }
 

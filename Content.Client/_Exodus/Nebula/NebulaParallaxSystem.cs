@@ -10,23 +10,51 @@ namespace Content.Client._Exodus.Nebula;
 public sealed class NebulaParallaxSystem : EntitySystem
 {
     private static readonly ProtoId<ParallaxPrototype> RedNebulaParallax = "RedNebula";
+    private const float TransitionSeconds = 2f;
 
     [Dependency] private readonly IParallaxManager _parallax = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    public bool TryGetParallaxLayers(out ParallaxLayerPrepared[] layers)
-    {
-        layers = Array.Empty<ParallaxLayerPrepared>();
+    private ProtoId<ParallaxPrototype>? _activeParallax;
+    private float _blend;
 
-        if (!TryGetLocalPresence(out var presence) ||
-            !TryGetParallaxPrototype(presence.Type, out var parallax))
+    public override void Update(float frameTime)
+    {
+        var targetActive = TryGetLocalPresence(out var presence) &&
+                           TryGetParallaxPrototype(presence.Type, out var targetParallax);
+
+        if (targetActive)
         {
-            return false;
+            if (_parallax.IsLoaded(targetParallax))
+                _activeParallax = targetParallax;
+            else
+            {
+                _ = _parallax.LoadParallaxByName(targetParallax);
+                targetActive = false;
+            }
         }
 
-        if (!_parallax.IsLoaded(parallax))
+        var targetBlend = targetActive ? 1f : 0f;
+        var step = frameTime / TransitionSeconds;
+
+        if (_blend < targetBlend)
+            _blend = Math.Min(targetBlend, _blend + step);
+        else if (_blend > targetBlend)
+            _blend = Math.Max(targetBlend, _blend - step);
+
+        if (_blend <= 0f && !targetActive)
+            _activeParallax = null;
+    }
+
+    public bool TryGetParallaxLayers(out ParallaxLayerPrepared[] layers, out float blend)
+    {
+        layers = Array.Empty<ParallaxLayerPrepared>();
+        blend = _blend;
+
+        if (_activeParallax is not { } parallax ||
+            _blend <= 0f ||
+            !_parallax.IsLoaded(parallax))
         {
-            _ = _parallax.LoadParallaxByName(parallax);
             return false;
         }
 
