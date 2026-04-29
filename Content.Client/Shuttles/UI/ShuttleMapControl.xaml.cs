@@ -718,9 +718,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private void DrawNebulaBlips(DrawingHandleScreen handle, Matrix3x2 mapTransform)
     {
         if (_console != null)
-            _blips.RequestBlips(_console.Value);
+            _blips.RequestNebulaMapBlips(_console.Value, ViewingMap);
 
-        var blips = _blips.GetCurrentBlips();
+        var blips = _blips.GetCurrentNebulaMapBlips();
         foreach (var blip in blips)
         {
             if (blip.Config.Shape != RadarBlipShape.NebulaPolygon ||

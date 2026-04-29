@@ -1043,7 +1043,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             // Check if this blip is within view bounds before drawing
             if (blipViewBounds.Contains(position)) // Exodus nebula-radar-visualization
             {
-                DrawBlipShape(handle, position, box, color, blip.Config); // Exodus nebula-radar-visualization
+                DrawBlipShape(handle, position, box, color, blip.Config, worldRot); // Exodus nebula-radar-visualization
             }
         }
 
@@ -1105,7 +1105,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     }
 
     // Exodus nebula-radar-visualization: pass the full config so custom blip shapes can read extra data.
-    private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color, BlipConfig config) // Exodus nebula-radar-visualization
+    private void DrawBlipShape(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color, BlipConfig config, Angle worldRotation) // Exodus nebula-radar-visualization
     {
         switch (config.Shape) // Exodus nebula-radar-visualization
         {
@@ -1117,7 +1117,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 DrawRing(handle, position, bounds, color);
                 break;
             case RadarBlipShape.NebulaPolygon:
-                DrawNebulaPolygon(handle, position, config, color);
+                DrawNebulaPolygon(handle, position, config, color, worldRotation);
                 break;
             // Exodus-end
             case RadarBlipShape.Square:
@@ -1181,7 +1181,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     }
 
     // Exodus-begin nebula-radar-visualization
-    private void DrawNebulaPolygon(DrawingHandleScreen handle, Vector2 position, BlipConfig config, Color color)
+    private void DrawNebulaPolygon(DrawingHandleScreen handle, Vector2 position, BlipConfig config, Color color, Angle worldRotation)
     {
         if (config.Points == null || config.Points.Count < 3)
             return;
@@ -1194,11 +1194,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         for (var i = 0; i < config.Points.Count; i++)
         {
-            var point = config.Points[i];
+            var point = (-worldRotation).RotateVec(config.Points[i]);
             if (config.RespectZoom)
                 point *= MinimapScale;
 
-            _nebulaFillBuffer[i + 1] = position + point;
+            _nebulaFillBuffer[i + 1] = position + (point with { Y = -point.Y });
         }
 
         // TriangleFan does not close the last wedge by itself.
@@ -1211,11 +1211,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         for (var i = 0; i < config.Points.Count; i++)
         {
-            var point = config.Points[i];
+            var point = (-worldRotation).RotateVec(config.Points[i]);
             if (config.RespectZoom)
                 point *= MinimapScale;
 
-            _nebulaLineBuffer[i] = position + point;
+            _nebulaLineBuffer[i] = position + (point with { Y = -point.Y });
         }
 
         _nebulaLineBuffer[lineCount - 1] = _nebulaLineBuffer[0];

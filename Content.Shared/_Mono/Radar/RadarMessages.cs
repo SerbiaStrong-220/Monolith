@@ -40,14 +40,23 @@ public sealed class GiveBlipsEvent : EntityEventArgs
     /// </summary>
     public readonly List<HitscanNetData> HitscanLines;
 
+    // Exodus-begin nebula-ftl-map
+    public readonly int? RequestedMapId;
+    public readonly bool NebulaOnly;
+    // Exodus-end
+
     public GiveBlipsEvent(
         List<BlipConfig> configPalette,
         List<BlipNetData> blips,
-        List<HitscanNetData> hitscans)
+        List<HitscanNetData> hitscans,
+        int? requestedMapId = null, // Exodus nebula-ftl-map
+        bool nebulaOnly = false) // Exodus nebula-ftl-map
     {
         ConfigPalette = configPalette;
         Blips = blips;
         HitscanLines = hitscans;
+        RequestedMapId = requestedMapId; // Exodus nebula-ftl-map
+        NebulaOnly = nebulaOnly; // Exodus nebula-ftl-map
     }
 }
 
@@ -55,9 +64,16 @@ public sealed class GiveBlipsEvent : EntityEventArgs
 public sealed class RequestBlipsEvent : EntityEventArgs
 {
     public NetEntity Radar;
-    public RequestBlipsEvent(NetEntity radar)
+    // Exodus-begin nebula-ftl-map
+    public int? RequestedMapId;
+    public bool NebulaOnly;
+    // Exodus-end
+
+    public RequestBlipsEvent(NetEntity radar, int? requestedMapId = null, bool nebulaOnly = false) // Exodus nebula-ftl-map
     {
         Radar = radar;
+        RequestedMapId = requestedMapId; // Exodus nebula-ftl-map
+        NebulaOnly = nebulaOnly; // Exodus nebula-ftl-map
     }
 }
 
