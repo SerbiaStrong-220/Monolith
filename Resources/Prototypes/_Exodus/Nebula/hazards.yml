@@ -1,0 +1,16 @@
+# Exodus nebula hazards
+- type: entity
+  id: NebulaRedSmallLightning
+  parent: HyperchargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Beam
+    sound: /Audio/_Exodus/Nebula/small_lighting_impact.mp3
+
+- type: entity
+  id: NebulaRedHeavyLightning
+  parent: HyperchargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Beam
+    sound: /Audio/_Exodus/Nebula/medium_lighting_impact.mp3
