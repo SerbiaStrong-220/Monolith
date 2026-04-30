@@ -60,13 +60,13 @@ public sealed partial class NebulaGridHazardComponent : Component
     public EntProtoId HeavyLightningPrototype = "NebulaRedHeavyStrikeVisual";
 
     [DataField]
-    public SoundSpecifier SmallImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lighting_impact.mp3");
+    public SoundSpecifier SmallImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lighting_impact.ogg");
 
     [DataField]
-    public SoundSpecifier HeavyImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/medium_lighting_impact.mp3");
+    public SoundSpecifier HeavyImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/medium_lighting_impact.ogg");
 
     [DataField]
-    public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lighting_impact.mp3");
+    public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lighting_impact.ogg");
 
     [ViewVariables]
     public bool TimersInitialized;
