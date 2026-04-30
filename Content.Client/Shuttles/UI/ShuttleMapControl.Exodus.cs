@@ -16,6 +16,15 @@ public sealed partial class ShuttleMapControl
 
     private bool CanFTLToNebulaPreview(EntityUid shuttleUid, MapGridComponent grid, EntityCoordinates targetCoordinates, Angle targetAngle)
     {
+        var blips = _blips.GetCurrentNebulaMapBlips();
+
+        if (EntManager.TryGetComponent(shuttleUid, out TransformComponent? xform))
+        {
+            var (currentOrigin, currentRotation) = _xformSystem.GetWorldPositionRotation(xform);
+            if (DoesFTLFootprintHitBlockedNebula(grid.LocalAABB, currentOrigin, currentRotation, xform.MapID, blips))
+                return false;
+        }
+
         var targetMap = _xformSystem.ToMapCoordinates(targetCoordinates);
         if (targetMap == MapCoordinates.Nullspace)
             return true;
@@ -24,7 +33,6 @@ public sealed partial class ShuttleMapControl
             return true;
 
         var targetOrigin = targetMap.Position - targetAngle.RotateVec(physics.LocalCenter);
-        var blips = _blips.GetCurrentNebulaMapBlips();
         return !DoesFTLFootprintHitBlockedNebula(grid.LocalAABB, targetOrigin, targetAngle, targetMap.MapId, blips);
     }
 

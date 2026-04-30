@@ -13,8 +13,24 @@ public sealed partial class ShuttleConsoleSystem
 
     [Dependency] private readonly NebulaPresenceSystem _nebulaPresence = default!;
 
-    private bool CanFTLToNebula(EntityUid shuttleUid, EntityCoordinates targetCoordinates, Angle targetAngle)
+    private bool CanFTLToNebula(EntityUid shuttleUid, EntityCoordinates targetCoordinates, Angle targetAngle, out string rejection)
     {
+        rejection = string.Empty;
+
+        if (!TryComp<MapGridComponent>(shuttleUid, out var grid) ||
+            !TryComp<PhysicsComponent>(shuttleUid, out var physics) ||
+            !TryComp<TransformComponent>(shuttleUid, out var xform))
+        {
+            return true;
+        }
+
+        var (currentOrigin, currentRotation) = _transform.GetWorldPositionRotation(xform);
+        if (DoesShuttleFootprintHitBlockedNebula(grid.LocalAABB, currentOrigin, currentRotation, xform.MapID))
+        {
+            rejection = "shuttle-ftl-nebula-source";
+            return false;
+        }
+
         var mapCoords = _transform.ToMapCoordinates(targetCoordinates);
         if (mapCoords == MapCoordinates.Nullspace ||
             !_mapManager.MapExists(mapCoords.MapId))
@@ -22,21 +38,29 @@ public sealed partial class ShuttleConsoleSystem
             return true;
         }
 
-        var mapUid = _mapManager.GetMapEntityId(mapCoords.MapId);
-        if (!TryComp<NebulaMapComponent>(mapUid, out var nebulaMap) || nebulaMap.Nebulas.Count == 0)
+        if (!TryGetNebulaMap(mapCoords.MapId, out var nebulaMap))
             return true;
 
         if (IsBlockedNebulaAt(mapCoords.Position, nebulaMap))
-            return false;
-
-        if (!TryComp<MapGridComponent>(shuttleUid, out var grid) ||
-            !TryComp<PhysicsComponent>(shuttleUid, out var physics))
         {
-            return true;
+            rejection = "shuttle-ftl-nebula";
+            return false;
         }
 
         var targetOrigin = mapCoords.Position - targetAngle.RotateVec(physics.LocalCenter);
-        return !DoesFootprintHitBlockedNebula(grid.LocalAABB, targetOrigin, targetAngle, nebulaMap);
+        if (!DoesFootprintHitBlockedNebula(grid.LocalAABB, targetOrigin, targetAngle, nebulaMap))
+            return true;
+
+        rejection = "shuttle-ftl-nebula";
+        return false;
+    }
+
+    private bool DoesShuttleFootprintHitBlockedNebula(Box2 localBounds, Vector2 origin, Angle rotation, MapId mapId)
+    {
+        if (!TryGetNebulaMap(mapId, out var nebulaMap))
+            return false;
+
+        return DoesFootprintHitBlockedNebula(localBounds, origin, rotation, nebulaMap);
     }
 
     private bool DoesFootprintHitBlockedNebula(Box2 localBounds, Vector2 targetOrigin, Angle targetAngle, NebulaMapComponent nebulaMap)
@@ -109,6 +133,24 @@ public sealed partial class ShuttleConsoleSystem
     {
         return _nebulaPresence.TryGetNebulaAt(position, nebulaMap, out _, out var type, out _, out _) &&
                IsFTLBlockedNebulaType(type);
+    }
+
+    private bool TryGetNebulaMap(MapId mapId, out NebulaMapComponent nebulaMap)
+    {
+        nebulaMap = default!;
+
+        if (!_mapManager.MapExists(mapId))
+            return false;
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        if (!TryComp<NebulaMapComponent>(mapUid, out var component) ||
+            component.Nebulas.Count == 0)
+        {
+            return false;
+        }
+
+        nebulaMap = component;
+        return true;
     }
 
     private static bool IsFTLBlockedNebulaType(NebulaType type)

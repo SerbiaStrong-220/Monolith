@@ -162,9 +162,9 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         // Exodus-begin
-        if (!CanFTLToNebula(shuttleUid.Value, targetCoordinates, targetAngle))
+        if (!CanFTLToNebula(shuttleUid.Value, targetCoordinates, targetAngle, out var nebulaRejection))
         {
-            _popup.PopupEntity(Loc.GetString("shuttle-ftl-nebula"), ent.Owner, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString(nebulaRejection), ent.Owner, PopupType.Medium);
             UpdateConsoles(shuttleUid.Value);
             return;
         }
