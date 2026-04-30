@@ -48,13 +48,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float SmallExplosionMaxTileIntensity = 40f;
     private const float HeavyExplosionTotalIntensity = 1066.667f;
     private const float HeavyExplosionMaxTileIntensity = 80f;
-    private const float SmallShieldLoad = 800f;
-    private const float HeavyShieldLoad = 3000f;
-    private const float OldSmallShieldLoad = 400f;
-    private const float OldHeavyShieldLoad = 1500f;
-    private const float LegacySmallShieldLoad = 50f;
-    private const float LegacyHeavyShieldLoad = 200f;
     private const float DefaultPlayerRange = 32f;
+    private const float ShieldProtectionSearchRange = 32f;
     private const float LightningSegmentSpacing = 1f;
     private const float LightningAudioRange = 512f;
     private const float LightningAudioVolume = 8f;
@@ -160,18 +155,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
         if (MathHelper.CloseTo(hazard.HeavyExplosionMaxTileIntensity, 120f))
             hazard.HeavyExplosionMaxTileIntensity = HeavyExplosionMaxTileIntensity;
-
-        if (MathHelper.CloseTo(hazard.SmallShieldLoad, LegacySmallShieldLoad) ||
-            MathHelper.CloseTo(hazard.SmallShieldLoad, OldSmallShieldLoad))
-        {
-            hazard.SmallShieldLoad = SmallShieldLoad;
-        }
-
-        if (MathHelper.CloseTo(hazard.HeavyShieldLoad, LegacyHeavyShieldLoad) ||
-            MathHelper.CloseTo(hazard.HeavyShieldLoad, OldHeavyShieldLoad))
-        {
-            hazard.HeavyShieldLoad = HeavyShieldLoad;
-        }
     }
 
     private void UpdateHazard(
@@ -573,12 +556,45 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var hazard = player.Comp1;
         SpawnLightning(mapCoords, hazard.LightningPrototype, hazard.LightningLength, _random.NextAngle().ToWorldVec());
         Spawn(SparksPrototype, player.Comp2.Coordinates);
+
+        if (TryAbsorbSpacePlayerStrike(mapCoords, hazard.ShieldLoad))
+        {
+            PlayLightningSound(hazard.ShieldImpactSound, player.Comp2.Coordinates, hazard.ImpactSoundRange, hazard.ImpactSoundVolume);
+            hazard.LastStrike = _timing.CurTime;
+            hazard.StrikeCount++;
+            return;
+        }
+
         PlayLightningSound(hazard.ImpactSound, player.Comp2.Coordinates, hazard.ImpactSoundRange, hazard.ImpactSoundVolume);
         _damageable.TryChangeDamage(player.Owner, hazard.BurnDamage);
         _electrocution.TryDoElectrocution(player.Owner, null, hazard.ShockDamage, hazard.ShockTime, true);
 
         hazard.LastStrike = _timing.CurTime;
         hazard.StrikeCount++;
+    }
+
+    private bool TryAbsorbSpacePlayerStrike(MapCoordinates mapCoords, float shieldLoad)
+    {
+        var rangeVector = new Vector2(ShieldProtectionSearchRange, ShieldProtectionSearchRange);
+        _nearbyGrids.Clear();
+        _mapManager.FindGridsIntersecting(
+            mapCoords.MapId,
+            new Box2(mapCoords.Position - rangeVector, mapCoords.Position + rangeVector),
+            ref _nearbyGrids,
+            approx: true,
+            includeMap: false);
+
+        for (var i = 0; i < _nearbyGrids.Count; i++)
+        {
+            var grid = _nearbyGrids[i];
+            if (!TryComp(grid.Owner, out TransformComponent? xform))
+                continue;
+
+            if (_shields.TryAbsorbNebulaPointStrike((grid.Owner, grid.Comp, xform), mapCoords, shieldLoad, out _))
+                return true;
+        }
+
+        return false;
     }
 
     private void ScheduleNextSpacePlayerStrike(NebulaSpaceLightningTargetComponent hazard)

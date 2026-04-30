@@ -17,10 +17,10 @@ public sealed partial class NebulaGridHazardComponent : Component
     public float PlayerRange = 32f;
 
     [DataField]
-    public float SmallShieldLoad = 800f;
+    public float SmallShieldLoad = 450f;
 
     [DataField]
-    public float HeavyShieldLoad = 3000f;
+    public float HeavyShieldLoad = 2000f;
 
     [DataField]
     public ProtoId<ExplosionPrototype> SmallExplosionType = "Minibomb";

@@ -1,11 +1,48 @@
 using Content.Server.Power.Components;
 using Content.Shared._Crescent.ShipShields;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using System.Numerics;
 
 namespace Content.Server._Crescent.ShipShields;
 
 public sealed partial class ShipShieldsSystem
 {
     // Exodus-begin | nebula shield hazard absorption
+    public bool TryAbsorbNebulaPointStrike(
+        Entity<MapGridComponent, TransformComponent> grid,
+        MapCoordinates point,
+        float loadWatts,
+        out EntityUid shield)
+    {
+        shield = EntityUid.Invalid;
+
+        if (grid.Comp2.MapID != point.MapId ||
+            !TryComp<ShipShieldedComponent>(grid.Owner, out var shielded))
+        {
+            return false;
+        }
+
+        var padding = TryComp<ShipShieldVisualsComponent>(shielded.Shield, out var visuals)
+            ? visuals.Padding
+            : 0f;
+
+        var localPoint = Vector2.Transform(point.Position, _transformSystem.GetInvWorldMatrix(grid.Comp2));
+        var center = grid.Comp1.LocalAABB.Center;
+        var halfWidth = (grid.Comp1.LocalAABB.Width + padding) * 0.5f;
+        var halfHeight = (grid.Comp1.LocalAABB.Height + padding) * 0.5f;
+
+        if (halfWidth <= 0f || halfHeight <= 0f)
+            return false;
+
+        var dx = (localPoint.X - center.X) / halfWidth;
+        var dy = (localPoint.Y - center.Y) / halfHeight;
+        if (dx * dx + dy * dy > 1f)
+            return false;
+
+        return TryAbsorbNebulaStrike(grid.Owner, loadWatts, out shield);
+    }
+
     public bool TryAbsorbNebulaStrike(EntityUid grid, float loadWatts, out EntityUid shield)
     {
         shield = EntityUid.Invalid;

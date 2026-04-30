@@ -38,6 +38,12 @@ public sealed partial class NebulaSpaceLightningTargetComponent : Component
     public SoundSpecifier ImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lighting_impact.ogg");
 
     [DataField]
+    public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lighting_impact.ogg");
+
+    [DataField]
+    public float ShieldLoad = 200f;
+
+    [DataField]
     public float ImpactSoundRange = 96f;
 
     [DataField]
