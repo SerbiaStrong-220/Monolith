@@ -18,9 +18,9 @@ namespace Content.Client._Exodus.Nebula;
 public sealed class NebulaParallaxSystem : EntitySystem
 {
     private static readonly ProtoId<ParallaxPrototype> RedNebulaParallax = "RedNebula";
-    private static readonly TimeSpan BackgroundLightningDuration = TimeSpan.FromSeconds(0.28f);
-    private static readonly TimeSpan BackgroundLightningMinDelay = TimeSpan.FromSeconds(4);
-    private static readonly TimeSpan BackgroundLightningMaxDelay = TimeSpan.FromSeconds(11);
+    private static readonly TimeSpan BackgroundLightningDuration = TimeSpan.FromSeconds(0.38f);
+    private static readonly TimeSpan BackgroundLightningMinDelay = TimeSpan.FromSeconds(2);
+    private static readonly TimeSpan BackgroundLightningMaxDelay = TimeSpan.FromSeconds(6);
     private static readonly SoundSpecifier[] BackgroundLightningSounds =
     {
         new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lighting_1.ogg"),
@@ -150,7 +150,7 @@ public sealed class NebulaParallaxSystem : EntitySystem
 
     private void GenerateBackgroundLightning()
     {
-        var pointCount = _random.Next(5, NebulaBackgroundLightning.MaxPoints + 1);
+        var pointCount = _random.Next(6, NebulaBackgroundLightning.MaxPoints + 1);
         var start = new Vector2(_random.NextFloat(0.12f, 0.88f), 1.05f);
         var end = new Vector2(Math.Clamp(start.X + _random.NextFloat(-0.26f, 0.26f), 0.08f, 0.92f), _random.NextFloat(0.16f, 0.48f));
 
@@ -159,7 +159,7 @@ public sealed class NebulaParallaxSystem : EntitySystem
         {
             var t = pointCount == 1 ? 0f : i / (pointCount - 1f);
             var point = Vector2.Lerp(start, end, t);
-            var jitter = MathF.Sin(t * MathF.PI) * _random.NextFloat(-0.1f, 0.1f);
+            var jitter = MathF.Sin(t * MathF.PI) * _random.NextFloat(-0.14f, 0.14f);
             point.X = Math.Clamp(point.X + jitter, 0.04f, 0.96f);
             _backgroundLightning.Points[i] = point;
         }
@@ -173,7 +173,7 @@ public sealed class NebulaParallaxSystem : EntitySystem
 
             var origin = _backgroundLightning.Points[i];
             var direction = _random.Prob(0.5f) ? -1f : 1f;
-            var branchEnd = origin + new Vector2(direction * _random.NextFloat(0.08f, 0.18f), _random.NextFloat(-0.08f, 0.08f));
+            var branchEnd = origin + new Vector2(direction * _random.NextFloat(0.11f, 0.24f), _random.NextFloat(-0.1f, 0.1f));
             branchEnd.X = Math.Clamp(branchEnd.X, 0.02f, 0.98f);
             branchEnd.Y = Math.Clamp(branchEnd.Y, 0.08f, 0.98f);
 
@@ -188,7 +188,7 @@ public sealed class NebulaParallaxSystem : EntitySystem
     {
         var sound = _random.Pick(BackgroundLightningSounds);
         var audioParams = AudioParams.Default
-            .WithVolume(_random.NextFloat(-11f, -6f))
+            .WithVolume(_random.NextFloat(-8f, -3f))
             .WithPitchScale(_random.NextFloat(0.94f, 1.06f));
 
         _audio.PlayGlobal(sound, Filter.Local(), false, audioParams);

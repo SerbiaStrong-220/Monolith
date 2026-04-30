@@ -169,7 +169,7 @@ public sealed class ParallaxOverlay : Overlay
 
         var worldHandle = args.WorldHandle;
         worldHandle.UseShader(null);
-        worldHandle.DrawRect(args.WorldAABB, new Color(1f, 0.2f, 0.1f, 0.025f * alpha));
+        worldHandle.DrawRect(args.WorldAABB, new Color(1f, 0.2f, 0.1f, 0.055f * alpha));
 
         for (var i = 0; i < lightning.PointCount - 1; i++)
         {
@@ -192,12 +192,14 @@ public sealed class ParallaxOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var start = ToWorld(args.WorldAABB, from);
         var end = ToWorld(args.WorldAABB, to);
-        var glow = new Color(1f, 0.12f, 0.08f, 0.18f * alpha);
-        var core = new Color(1f, 0.82f, 0.62f, 0.9f * alpha);
-        var offset = new Vector2(0.055f, 0.055f);
+        var glow = new Color(1f, 0.08f, 0.04f, 0.36f * alpha);
+        var core = new Color(1f, 0.9f, 0.72f, alpha);
+        var offset = new Vector2(0.085f, 0.085f);
 
         worldHandle.DrawLine(start - offset, end - offset, glow);
         worldHandle.DrawLine(start + offset, end + offset, glow);
+        worldHandle.DrawLine(start - offset * 0.45f, end - offset * 0.45f, glow);
+        worldHandle.DrawLine(start + offset * 0.45f, end + offset * 0.45f, glow);
         worldHandle.DrawLine(start, end, core);
     }
 
