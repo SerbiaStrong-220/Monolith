@@ -1,0 +1,15 @@
+- type: entity
+  parent: [EncryptionKey, RecyclableItemDeviceTiny] # Frontier: added RecyclableItemDeviceTiny
+  id: ExEncryptionKeyCommon
+  name: broadband encryption key
+  description: An encryption key for the broadband channel. Limited to a 6000 meters range.
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: ExCommon
+    defaultChannel: ExCommon
+  - type: Sprite
+    sprite: _NF/Objects/Devices/encryption_keys.rsi # Frontier
+    layers:
+    - state: crypt_gray
+    - state: common_label
