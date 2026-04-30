@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Examine.Damage;    //Exodus ArmorPiercingExamine
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
@@ -19,21 +20,24 @@ public sealed partial class GunSystem
 
     private void OnCartridgeDamageExamine(EntityUid uid, CartridgeAmmoComponent component, ref DamageExamineEvent args)
     {
-        var damageSpec = GetProjectileDamage(component.Prototype);
+        var damageSpec = GetProjectileDamageInfo(component.Prototype);
 
         if (damageSpec == null)
             return;
 
         //Exodus ArmorPiercingExamine Start
-        _damageExamine.AddDamageExamine(
-            args.Message,
-            Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Item1),
-            armorPenetration: damageSpec.Value.Item2,
-            type: Loc.GetString("damage-projectile"));
+        if (damageSpec.Value.Damage is not null)
+            _damageExamine.AddDamageExamine(
+                args.Message,
+                Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Damage),
+                type: Loc.GetString("damage-projectile"));
+
+        if (damageSpec.Value.ArmorPenetration is not null)
+            _piercingExamine.AddPenetrationToExamineMessage(args.Message, damageSpec.Value.ArmorPenetration.Value);
         //Exodus ArmorPiercingExamine End
     }
 
-    private (DamageSpecifier, float)? GetProjectileDamage(string proto)     //Exodus ArmorPiercingExamine
+    private ArmorPiercerDamageInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
     {
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;
@@ -41,11 +45,17 @@ public sealed partial class GunSystem
         if (entityProto.Components
             .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
         {
-            var p = (ProjectileComponent) projectile.Component;
+            var p = (ProjectileComponent)projectile.Component;
 
             if (!p.Damage.Empty)
             {
-                return (p.Damage * Damageable.UniversalProjectileDamageModifier, p.ArmorPenetration);   //Exodus ArmorPiercingExamine
+                //Exodus ArmorPiercingExamine Start
+                return new()
+                {
+                    Damage = p.Damage * Damageable.UniversalProjectileDamageModifier,
+                    ArmorPenetration = p.ArmorPenetration
+                };
+                //Exodus ArmorPiercingExamine End
             }
         }
 

@@ -38,9 +38,9 @@ public sealed class DamageExamineSystem : EntitySystem
         }
     }
 
-    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, float? armorPenetration = null, string? type = null)    //Exodus ArmorPiercingExamine
+    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null)
     {
-        var markup = GetDamageExamine(damageSpecifier, armorPenetration, type); //Exodus ArmorPiercingExamine
+        var markup = GetDamageExamine(damageSpecifier, type);
         if (!message.IsEmpty)
         {
             message.PushNewline();
@@ -51,7 +51,7 @@ public sealed class DamageExamineSystem : EntitySystem
     /// <summary>
     /// Retrieves the damage examine values.
     /// </summary>
-    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, float? armorPenetration = null, string? type = null) //Exodus ArmorPiercingExamine
+    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
     {
         var msg = new FormattedMessage();
 
@@ -78,20 +78,6 @@ public sealed class DamageExamineSystem : EntitySystem
                 msg.AddMarkupOrThrow(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
             }
         }
-
-        //Exodus AdvancedWeaponExamine Start
-        if (armorPenetration is not null)
-        {
-            msg.PushNewline();
-
-            var ap = Math.Round(armorPenetration.Value, 5);
-
-            if (ap > 0)
-                msg.AddMarkupOrThrow(Loc.GetString("damage-positive-armor-penetration", ("value", ap)));
-            else if (ap < 0)
-                msg.AddMarkupOrThrow(Loc.GetString("damage-negative-armor-penetration", ("value", ap)));
-        }
-        //Exodus AdvancedWeaponExamine End
 
         return msg;
     }
