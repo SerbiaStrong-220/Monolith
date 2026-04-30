@@ -70,6 +70,7 @@
     - FullAuto
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: DamageExaminable # Exodus RechargableWeaponExamine
   - type: Repairable
     qualities:
     - Applicating
@@ -268,8 +269,7 @@
           params:
             pitch: 2
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-  - type: ExaminableDamage
-    messages: WindowMessages
+  - type: DamageExaminable # Exodus RechargableWeaponExamine
   - type: Repairable
     qualities:
     - Applicating
