@@ -6,6 +6,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+using System.ComponentModel;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -20,24 +22,29 @@ public sealed partial class GunSystem
 
     private void OnCartridgeDamageExamine(EntityUid uid, CartridgeAmmoComponent component, ref DamageExamineEvent args)
     {
-        var damageSpec = GetProjectileDamageInfo(component.Prototype);
-
-        if (damageSpec == null)
-            return;
-
-        //Exodus ArmorPiercingExamine Start
-        if (damageSpec.Value.Damage is not null)
-            _damageExamine.AddDamageExamine(
-                args.Message,
-                Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Damage),
-                type: Loc.GetString("damage-projectile"));
-
-        if (damageSpec.Value.ArmorPenetration is not null)
-            _piercingExamine.AddPenetrationToExamineMessage(args.Message, damageSpec.Value.ArmorPenetration.Value);
-        //Exodus ArmorPiercingExamine End
+        AddCartridgeInfoToExamineMessage(args.Message, component.Prototype);    //Exodus AdvancedWeaponExamine
     }
 
-    public ArmorPiercerDamageInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
+    //Exodus AdvancedWeaponExamine Start
+    public void AddCartridgeInfoToExamineMessage(FormattedMessage examineMessage, string cartridgeProtoId)
+    {
+        var cartridgeInfo = GetProjectileDamageInfo(cartridgeProtoId);
+
+        if (cartridgeInfo == null)
+            return;
+
+        if (cartridgeInfo.Value.Damage is not null)
+            _damageExamine.AddDamageExamine(
+                examineMessage,
+                Damageable.ApplyUniversalAllModifiers(cartridgeInfo.Value.Damage),
+                type: Loc.GetString("damage-projectile"));
+
+        if (cartridgeInfo.Value.ArmorPenetration is not null)
+            _piercingExamine.AddPenetrationToExamineMessage(examineMessage, cartridgeInfo.Value.ArmorPenetration.Value);
+    }
+    //Exodus AdvancedWeaponExamine End
+
+    public CartridgeInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
     {
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;

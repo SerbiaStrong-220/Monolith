@@ -4,7 +4,7 @@ using Content.Shared.Damage;
 
 namespace Content.Shared._Exodus.Examine.Damage;
 
-public readonly struct ArmorPiercerDamageInfo
+public readonly struct CartridgeInfo
 {
     public DamageSpecifier? Damage { get; init; }
 
