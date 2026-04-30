@@ -3,6 +3,7 @@ using Content.Server._Crescent.ShipShields;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared._Exodus.Nebula;
+using Content.Shared.Electrocution;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
@@ -46,8 +47,10 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float SmallExplosionMaxTileIntensity = 40f;
     private const float HeavyExplosionTotalIntensity = 1066.667f;
     private const float HeavyExplosionMaxTileIntensity = 80f;
-    private const float SmallShieldLoad = 400f;
-    private const float HeavyShieldLoad = 1500f;
+    private const float SmallShieldLoad = 800f;
+    private const float HeavyShieldLoad = 3000f;
+    private const float OldSmallShieldLoad = 400f;
+    private const float OldHeavyShieldLoad = 1500f;
     private const float LegacySmallShieldLoad = 50f;
     private const float LegacyHeavyShieldLoad = 200f;
     private const float LightningSegmentSpacing = 1f;
@@ -65,6 +68,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NebulaPresenceSystem _presence = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShipShieldsSystem _shields = default!;
 
@@ -110,6 +114,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent);
         }
+
+        UpdateSpacePlayerHazards(mapId, mapComponent);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
@@ -179,11 +185,17 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         if (MathHelper.CloseTo(hazard.HeavyExplosionMaxTileIntensity, 120f))
             hazard.HeavyExplosionMaxTileIntensity = HeavyExplosionMaxTileIntensity;
 
-        if (MathHelper.CloseTo(hazard.SmallShieldLoad, LegacySmallShieldLoad))
+        if (MathHelper.CloseTo(hazard.SmallShieldLoad, LegacySmallShieldLoad) ||
+            MathHelper.CloseTo(hazard.SmallShieldLoad, OldSmallShieldLoad))
+        {
             hazard.SmallShieldLoad = SmallShieldLoad;
+        }
 
-        if (MathHelper.CloseTo(hazard.HeavyShieldLoad, LegacyHeavyShieldLoad))
+        if (MathHelper.CloseTo(hazard.HeavyShieldLoad, LegacyHeavyShieldLoad) ||
+            MathHelper.CloseTo(hazard.HeavyShieldLoad, OldHeavyShieldLoad))
+        {
             hazard.HeavyShieldLoad = HeavyShieldLoad;
+        }
     }
 
     private void UpdateHazard(
@@ -355,6 +367,18 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         _audio.PlayStatic(sound, filter, coordinates, true, audioParams);
     }
 
+    private void PlayLightningSound(SoundSpecifier sound, EntityCoordinates coordinates, float range, float volume)
+    {
+        var mapCoords = _transform.ToMapCoordinates(coordinates);
+        var filter = Filter.Pvs(mapCoords).AddInRange(mapCoords, range);
+        var audioParams = sound.Params
+            .AddVolume(volume)
+            .WithMaxDistance(range)
+            .WithRolloffFactor(0f);
+
+        _audio.PlayStatic(sound, filter, coordinates, true, audioParams);
+    }
+
     private void QueueExplosion(EntityCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
     {
         var explosionType = heavy ? hazard.HeavyExplosionType : hazard.SmallExplosionType;
@@ -380,8 +404,10 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
         foreach (var session in _player.Sessions)
         {
+            if (session.AttachedEntity is not { Valid: true } player)
+                continue;
+
             if (session.Status != SessionStatus.InGame ||
-                session.AttachedEntity is not { Valid: true } player ||
                 Deleted(player) ||
                 HasComp<GhostComponent>(player) ||
                 _mobState.IsDead(player) ||
@@ -411,6 +437,81 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         }
 
         return false;
+    }
+
+    private void UpdateSpacePlayerHazards(MapId mapId, NebulaMapComponent mapComponent)
+    {
+        foreach (var session in _player.Sessions)
+        {
+            if (session.AttachedEntity is not { Valid: true } player)
+                continue;
+
+            if (session.Status != SessionStatus.InGame ||
+                Deleted(player) ||
+                HasComp<GhostComponent>(player) ||
+                _mobState.IsDead(player) ||
+                !TryComp(player, out TransformComponent? xform) ||
+                xform.MapID != mapId)
+            {
+                RemoveSpacePlayerHazard(player);
+                continue;
+            }
+
+            var mapCoords = _transform.GetMapCoordinates(player, xform);
+            if (!IsRedNebulaAt(mapCoords.Position, mapComponent) ||
+                IsOnNonEmptyTile(xform))
+            {
+                RemoveSpacePlayerHazard(player);
+                continue;
+            }
+
+            var hazard = EnsureComp<NebulaSpaceLightningTargetComponent>(player);
+            if (hazard.NextStrike == TimeSpan.Zero)
+            {
+                // The timer starts only after the player enters tileless space, preventing instant exit strikes.
+                ScheduleNextSpacePlayerStrike(hazard);
+                continue;
+            }
+
+            if (_timing.CurTime < hazard.NextStrike)
+                continue;
+
+            StrikeSpacePlayer((player, hazard, xform), mapCoords);
+            ScheduleNextSpacePlayerStrike(hazard);
+        }
+    }
+
+    private void StrikeSpacePlayer(
+        Entity<NebulaSpaceLightningTargetComponent, TransformComponent> player,
+        MapCoordinates mapCoords)
+    {
+        var hazard = player.Comp1;
+        SpawnLightning(mapCoords, hazard.LightningPrototype, hazard.LightningLength, _random.NextAngle().ToWorldVec());
+        Spawn(SparksPrototype, player.Comp2.Coordinates);
+        PlayLightningSound(hazard.ImpactSound, player.Comp2.Coordinates, hazard.ImpactSoundRange, hazard.ImpactSoundVolume);
+        _electrocution.TryDoElectrocution(player.Owner, null, hazard.ShockDamage, hazard.ShockTime, true);
+
+        hazard.LastStrike = _timing.CurTime;
+        hazard.StrikeCount++;
+    }
+
+    private void ScheduleNextSpacePlayerStrike(NebulaSpaceLightningTargetComponent hazard)
+    {
+        var min = Math.Min(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
+        var max = Math.Max(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
+        hazard.NextStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
+    }
+
+    private bool IsOnNonEmptyTile(TransformComponent xform)
+    {
+        var tileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
+        return tileRef is { Tile.IsEmpty: false };
+    }
+
+    private void RemoveSpacePlayerHazard(EntityUid player)
+    {
+        if (HasComp<NebulaSpaceLightningTargetComponent>(player))
+            RemCompDeferred<NebulaSpaceLightningTargetComponent>(player);
     }
 
     private bool IsGridNearRedNebula(Entity<MapGridComponent, TransformComponent> grid, NebulaMapComponent mapComponent)
@@ -462,6 +563,12 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         while (query.MoveNext(out var uid, out _))
         {
             RemCompDeferred<NebulaGridHazardComponent>(uid);
+        }
+
+        var playerQuery = EntityQueryEnumerator<NebulaSpaceLightningTargetComponent>();
+        while (playerQuery.MoveNext(out var uid, out _))
+        {
+            RemCompDeferred<NebulaSpaceLightningTargetComponent>(uid);
         }
     }
 }
