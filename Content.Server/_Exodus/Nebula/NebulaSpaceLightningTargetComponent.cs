@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -13,7 +14,16 @@ public sealed partial class NebulaSpaceLightningTargetComponent : Component
     public int MaxStrikeDelaySeconds = 20;
 
     [DataField]
-    public int ShockDamage = 10;
+    public int ShockDamage = 15;
+
+    [DataField]
+    public DamageSpecifier BurnDamage = new()
+    {
+        DamageDict =
+        {
+            { "Heat", 15 },
+        },
+    };
 
     [DataField]
     public TimeSpan ShockTime = TimeSpan.FromSeconds(2);

@@ -3,6 +3,7 @@ using Content.Server._Crescent.ShipShields;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared._Exodus.Nebula;
+using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -53,6 +54,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float OldHeavyShieldLoad = 1500f;
     private const float LegacySmallShieldLoad = 50f;
     private const float LegacyHeavyShieldLoad = 200f;
+    private const float DefaultPlayerRange = 32f;
     private const float LightningSegmentSpacing = 1f;
     private const float LightningAudioRange = 512f;
     private const float LightningAudioVolume = 8f;
@@ -64,6 +66,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NebulaPresenceSystem _presence = default!;
@@ -72,6 +75,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShipShieldsSystem _shields = default!;
 
+    private readonly HashSet<EntityUid> _activeHazardGrids = new();
+    private List<Entity<MapGridComponent>> _nearbyGrids = new();
     private TimeSpan _nextUpdate;
 
     public override void Initialize()
@@ -92,30 +97,10 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             return;
         }
 
-        var query = EntityQueryEnumerator<MapGridComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var grid, out var xform))
-        {
-            if (xform.MapID != mapId ||
-                !IsGridNearRedNebula((uid, grid, xform), mapComponent))
-            {
-                RemCompDeferred<NebulaGridHazardComponent>(uid);
-                continue;
-            }
-
-            var hazard = EnsureComp<NebulaGridHazardComponent>(uid);
-            UpdateLegacyHazardSettings(hazard);
-            InitializeTimers(hazard);
-
-            if (!HasNearbyPlayer((uid, grid, xform), mapId, hazard.PlayerRange))
-            {
-                ResetOverdueTimers(hazard);
-                continue;
-            }
-
-            UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent);
-        }
-
-        UpdateSpacePlayerHazards(mapId, mapComponent);
+        _activeHazardGrids.Clear();
+        UpdatePlayerHazards(mapId, mapComponent);
+        UpdateActiveGridHazards(mapId, mapComponent);
+        ClearInactiveGridHazards();
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
@@ -131,15 +116,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         hazard.TimersInitialized = true;
         hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
         hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
-    }
-
-    private void ResetOverdueTimers(NebulaGridHazardComponent hazard)
-    {
-        if (hazard.NextSmallStrike <= _timing.CurTime)
-            hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
-
-        if (hazard.NextHeavyStrike <= _timing.CurTime)
-            hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
     }
 
     private void UpdateLegacyHazardSettings(NebulaGridHazardComponent hazard)
@@ -397,87 +373,196 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             addLog: false);
     }
 
-    private bool HasNearbyPlayer(Entity<MapGridComponent, TransformComponent> grid, MapId mapId, float range)
+    private void UpdatePlayerHazards(MapId mapId, NebulaMapComponent mapComponent)
     {
-        var enlargedBounds = grid.Comp1.LocalAABB.Enlarged(range);
-        var inverseMatrix = _transform.GetInvWorldMatrix(grid.Comp2);
-
         foreach (var session in _player.Sessions)
         {
-            if (session.AttachedEntity is not { Valid: true } player)
+            if (!TryGetValidPlayer(session, mapId, out var player, out var xform))
                 continue;
 
-            if (session.Status != SessionStatus.InGame ||
-                Deleted(player) ||
-                HasComp<GhostComponent>(player) ||
-                _mobState.IsDead(player) ||
-                !TryComp(player, out TransformComponent? playerXform) ||
-                playerXform.MapID != mapId)
+            var mapCoords = _transform.GetMapCoordinates(player, xform);
+            if (!IsRedNebulaAt(mapCoords.Position, mapComponent))
+            {
+                RemoveSpacePlayerHazard(player);
+                continue;
+            }
+
+            UpdateSpacePlayerHazard((player, xform), mapCoords);
+            CollectNearbyHazardGrids((player, xform), mapCoords, mapId, mapComponent);
+        }
+    }
+
+    private bool TryGetValidPlayer(
+        ICommonSession session,
+        MapId mapId,
+        out EntityUid player,
+        out TransformComponent xform)
+    {
+        player = EntityUid.Invalid;
+        xform = default!;
+
+        if (session.AttachedEntity is not { Valid: true } attached)
+            return false;
+
+        if (session.Status != SessionStatus.InGame ||
+            Deleted(attached) ||
+            HasComp<GhostComponent>(attached) ||
+            _mobState.IsDead(attached) ||
+            !TryComp(attached, out TransformComponent? playerXform) ||
+            playerXform.MapID != mapId)
+        {
+            RemoveSpacePlayerHazard(attached);
+            return false;
+        }
+
+        player = attached;
+        xform = playerXform;
+        return true;
+    }
+
+    private void UpdateSpacePlayerHazard(Entity<TransformComponent> player, MapCoordinates mapCoords)
+    {
+        if (IsOnNonEmptyTile(player.Comp))
+        {
+            RemoveSpacePlayerHazard(player.Owner);
+            return;
+        }
+
+        var hazard = EnsureComp<NebulaSpaceLightningTargetComponent>(player.Owner);
+        if (hazard.NextStrike == TimeSpan.Zero)
+        {
+            // The timer starts only after the player enters tileless space, preventing instant exit strikes.
+            ScheduleNextSpacePlayerStrike(hazard);
+            return;
+        }
+
+        if (_timing.CurTime < hazard.NextStrike)
+            return;
+
+        StrikeSpacePlayer((player.Owner, hazard, player.Comp), mapCoords);
+        ScheduleNextSpacePlayerStrike(hazard);
+    }
+
+    private void CollectNearbyHazardGrids(
+        Entity<TransformComponent> player,
+        MapCoordinates mapCoords,
+        MapId mapId,
+        NebulaMapComponent mapComponent)
+    {
+        if (player.Comp.GridUid is { Valid: true } playerGrid)
+            TryAddActiveHazardGrid(playerGrid, mapId, mapComponent);
+
+        var range = GetPlayerHazardRange(player.Comp.GridUid);
+        var rangeVector = new Vector2(range, range);
+        _nearbyGrids.Clear();
+        _mapManager.FindGridsIntersecting(
+            mapId,
+            new Box2(mapCoords.Position - rangeVector, mapCoords.Position + rangeVector),
+            ref _nearbyGrids,
+            approx: true,
+            includeMap: false);
+
+        for (var i = 0; i < _nearbyGrids.Count; i++)
+        {
+            var grid = _nearbyGrids[i];
+            if (!TryComp(grid.Owner, out TransformComponent? gridXform) ||
+                !IsPlayerInGridHazardRange((grid.Owner, grid.Comp, gridXform), player.Comp, range))
             {
                 continue;
             }
 
-            if (playerXform.GridUid != null)
-            {
-                // A player standing on a grid should only arm that grid; nearby docked grids would multiply strike rate.
-                if (playerXform.GridUid == grid.Owner)
-                    return true;
+            TryAddActiveHazardGrid((grid.Owner, grid.Comp, gridXform), mapId, mapComponent);
+        }
+    }
 
-                continue;
-            }
+    private float GetPlayerHazardRange(EntityUid? playerGrid)
+    {
+        if (playerGrid is { Valid: true } grid &&
+            TryComp<NebulaGridHazardComponent>(grid, out var hazard))
+        {
+            return hazard.PlayerRange;
+        }
 
-            var playerLocal = Vector2.Transform(_transform.GetWorldPosition(playerXform), inverseMatrix);
-            if (!enlargedBounds.Contains(playerLocal))
-                continue;
+        return DefaultPlayerRange;
+    }
 
-            foreach (var _ in _map.GetLocalTilesIntersecting(grid.Owner, grid.Comp1, new Circle(playerLocal, range), true))
-            {
-                return true;
-            }
+    private bool TryAddActiveHazardGrid(
+        EntityUid uid,
+        MapId mapId,
+        NebulaMapComponent mapComponent)
+    {
+        if (!TryComp(uid, out MapGridComponent? grid) ||
+            !TryComp(uid, out TransformComponent? xform))
+        {
+            return false;
+        }
+
+        return TryAddActiveHazardGrid((uid, grid, xform), mapId, mapComponent);
+    }
+
+    private bool TryAddActiveHazardGrid(
+        Entity<MapGridComponent, TransformComponent> grid,
+        MapId mapId,
+        NebulaMapComponent mapComponent)
+    {
+        if (grid.Comp2.MapID != mapId ||
+            !IsGridNearRedNebula(grid, mapComponent))
+        {
+            return false;
+        }
+
+        _activeHazardGrids.Add(grid.Owner);
+        return true;
+    }
+
+    private bool IsPlayerInGridHazardRange(
+        Entity<MapGridComponent, TransformComponent> grid,
+        TransformComponent playerXform,
+        float range)
+    {
+        if (playerXform.GridUid == grid.Owner)
+            return true;
+
+        var playerLocal = Vector2.Transform(_transform.GetWorldPosition(playerXform), _transform.GetInvWorldMatrix(grid.Comp2));
+        if (!grid.Comp1.LocalAABB.Enlarged(range).Contains(playerLocal))
+            return false;
+
+        foreach (var _ in _map.GetLocalTilesIntersecting(grid.Owner, grid.Comp1, new Circle(playerLocal, range), true))
+        {
+            return true;
         }
 
         return false;
     }
 
-    private void UpdateSpacePlayerHazards(MapId mapId, NebulaMapComponent mapComponent)
+    private void UpdateActiveGridHazards(MapId mapId, NebulaMapComponent mapComponent)
     {
-        foreach (var session in _player.Sessions)
+        foreach (var uid in _activeHazardGrids)
         {
-            if (session.AttachedEntity is not { Valid: true } player)
-                continue;
-
-            if (session.Status != SessionStatus.InGame ||
-                Deleted(player) ||
-                HasComp<GhostComponent>(player) ||
-                _mobState.IsDead(player) ||
-                !TryComp(player, out TransformComponent? xform) ||
+            if (!TryComp(uid, out MapGridComponent? grid) ||
+                !TryComp(uid, out TransformComponent? xform) ||
                 xform.MapID != mapId)
             {
-                RemoveSpacePlayerHazard(player);
+                RemCompDeferred<NebulaGridHazardComponent>(uid);
                 continue;
             }
 
-            var mapCoords = _transform.GetMapCoordinates(player, xform);
-            if (!IsRedNebulaAt(mapCoords.Position, mapComponent) ||
-                IsOnNonEmptyTile(xform))
-            {
-                RemoveSpacePlayerHazard(player);
-                continue;
-            }
+            var hazard = EnsureComp<NebulaGridHazardComponent>(uid);
+            UpdateLegacyHazardSettings(hazard);
+            InitializeTimers(hazard);
+            UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent);
+        }
+    }
 
-            var hazard = EnsureComp<NebulaSpaceLightningTargetComponent>(player);
-            if (hazard.NextStrike == TimeSpan.Zero)
-            {
-                // The timer starts only after the player enters tileless space, preventing instant exit strikes.
-                ScheduleNextSpacePlayerStrike(hazard);
-                continue;
-            }
-
-            if (_timing.CurTime < hazard.NextStrike)
+    private void ClearInactiveGridHazards()
+    {
+        var query = EntityQueryEnumerator<NebulaGridHazardComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (_activeHazardGrids.Contains(uid))
                 continue;
 
-            StrikeSpacePlayer((player, hazard, xform), mapCoords);
-            ScheduleNextSpacePlayerStrike(hazard);
+            RemCompDeferred<NebulaGridHazardComponent>(uid);
         }
     }
 
@@ -489,6 +574,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         SpawnLightning(mapCoords, hazard.LightningPrototype, hazard.LightningLength, _random.NextAngle().ToWorldVec());
         Spawn(SparksPrototype, player.Comp2.Coordinates);
         PlayLightningSound(hazard.ImpactSound, player.Comp2.Coordinates, hazard.ImpactSoundRange, hazard.ImpactSoundVolume);
+        _damageable.TryChangeDamage(player.Owner, hazard.BurnDamage);
         _electrocution.TryDoElectrocution(player.Owner, null, hazard.ShockDamage, hazard.ShockTime, true);
 
         hazard.LastStrike = _timing.CurTime;
@@ -559,6 +645,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
     private void ClearHazards()
     {
+        _activeHazardGrids.Clear();
+        _nearbyGrids.Clear();
+
         var query = EntityQueryEnumerator<NebulaGridHazardComponent>();
         while (query.MoveNext(out var uid, out _))
         {
