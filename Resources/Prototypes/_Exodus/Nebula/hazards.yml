@@ -5,10 +5,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: /Textures/Effects/lightning.rsi
     drawdepth: Effects
     layers:
-    - state: "red_lightning"
+    - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Lightning.png
       shader: unshaded
   - type: PointLight
     enabled: true
@@ -29,11 +28,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: /Textures/Effects/lightning.rsi
     drawdepth: Effects
     scale: 2,2
     layers:
-    - state: "red_lightning"
+    - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Lightning.png
       shader: unshaded
   - type: PointLight
     enabled: true

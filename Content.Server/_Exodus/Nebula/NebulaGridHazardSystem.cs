@@ -50,7 +50,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float HeavyExplosionMaxTileIntensity = 80f;
     private const float DefaultPlayerRange = 32f;
     private const float ShieldProtectionSearchRange = 32f;
-    private const float LightningSegmentSpacing = 1f;
     private const float LightningAudioRange = 512f;
     private const float LightningAudioVolume = 8f;
     private const string SparksPrototype = "EffectSparks";
@@ -304,14 +303,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             ? Vector2.Normalize(sourceDirection)
             : _random.NextAngle().ToWorldVec();
 
-        // Sprite-only segments keep the old beam-like look without BeamSystem physics contacts.
-        var segmentCount = Math.Max(1, (int) MathF.Ceiling(length / LightningSegmentSpacing));
-        for (var i = 0; i < segmentCount; i++)
-        {
-            var distance = Math.Min(length, i * LightningSegmentSpacing + LightningSegmentSpacing * 0.5f);
-            var visual = Spawn(lightningPrototype, targetCoords.Offset(direction * distance));
-            _transform.SetWorldRotation(visual, direction.ToWorldAngle());
-        }
+        var visual = Spawn(lightningPrototype, targetCoords.Offset(direction * length * 0.5f));
+        _transform.SetWorldRotation(visual, direction.ToWorldAngle() - Angle.FromDegrees(90));
     }
 
     private void PlayLightningSound(SoundSpecifier sound, EntityCoordinates coordinates)

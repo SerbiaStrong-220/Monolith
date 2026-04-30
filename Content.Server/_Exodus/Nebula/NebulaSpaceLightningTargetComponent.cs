@@ -32,7 +32,7 @@ public sealed partial class NebulaSpaceLightningTargetComponent : Component
     public EntProtoId LightningPrototype = "NebulaRedSmallStrikeVisual";
 
     [DataField]
-    public float LightningLength = 6f;
+    public float LightningLength = 8f;
 
     [DataField]
     public SoundSpecifier ImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lighting_impact.ogg");
