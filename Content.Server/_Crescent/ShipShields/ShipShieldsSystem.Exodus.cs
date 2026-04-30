@@ -23,6 +23,8 @@ public sealed partial class ShipShieldsSystem
         var currentLoad = CalculateLoadDamage(emitter);
         var targetLoad = Math.Clamp(currentLoad + loadWatts, 0f, emitter.MaxDraw);
         emitter.Damage = Math.Max(emitter.Damage, DamageForLoad(emitter, targetLoad));
+        // Avoid the regular shield recovery tick immediately eating the same nebula strike.
+        emitter.Accumulator = 0f;
 
         if (TryComp<ApcPowerReceiverComponent>(source, out var receiver))
             AdjustEmitterLoad(source, emitter, receiver);

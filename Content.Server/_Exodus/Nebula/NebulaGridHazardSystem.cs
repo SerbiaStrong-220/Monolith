@@ -17,7 +17,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula;
@@ -54,7 +53,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private const float LightningSegmentSpacing = 1f;
     private const float LightningAudioRange = 512f;
     private const float LightningAudioVolume = 8f;
-    private const float SmallLightningSoundLimit = 4.5f;
     private const string SparksPrototype = "EffectSparks";
 
     [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -265,7 +263,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var shieldLoad = heavy ? hazard.HeavyShieldLoad : hazard.SmallShieldLoad;
         if (_shields.TryAbsorbNebulaStrike(grid.Owner, shieldLoad, out _))
         {
-            PlayLightningSound(hazard.ShieldImpactSound, targetGridCoords, false);
+            PlayLightningSound(hazard.ShieldImpactSound, targetGridCoords);
             Spawn(SparksPrototype, targetCoords);
             return true;
         }
@@ -273,7 +271,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var impactSound = heavy ? hazard.HeavyImpactSound : hazard.SmallImpactSound;
 
         QueueExplosion(targetGridCoords, hazard, heavy);
-        PlayLightningSound(impactSound, targetGridCoords, !heavy);
+        PlayLightningSound(impactSound, targetGridCoords);
         Spawn(SparksPrototype, targetCoords);
         return true;
     }
@@ -345,7 +343,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         }
     }
 
-    private void PlayLightningSound(SoundSpecifier sound, EntityCoordinates coordinates, bool limitDuration)
+    private void PlayLightningSound(SoundSpecifier sound, EntityCoordinates coordinates)
     {
         var mapCoords = _transform.ToMapCoordinates(coordinates);
         var filter = Filter.Pvs(mapCoords).AddInRange(mapCoords, LightningAudioRange);
@@ -354,11 +352,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             .WithMaxDistance(LightningAudioRange)
             .WithRolloffFactor(0f);
 
-        var stream = _audio.PlayStatic(sound, filter, coordinates, true, audioParams);
-        if (!limitDuration || stream is not { } audio)
-            return;
-
-        EnsureComp<TimedDespawnComponent>(audio.Entity).Lifetime = SmallLightningSoundLimit;
+        _audio.PlayStatic(sound, filter, coordinates, true, audioParams);
     }
 
     private void QueueExplosion(EntityCoordinates targetCoords, NebulaGridHazardComponent hazard, bool heavy)
@@ -368,15 +362,15 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var slope = heavy ? hazard.HeavyExplosionIntensitySlope : hazard.SmallExplosionIntensitySlope;
         var maxTileIntensity = heavy ? hazard.HeavyExplosionMaxTileIntensity : hazard.SmallExplosionMaxTileIntensity;
 
-        var marker = Spawn(null, targetCoords);
+        var mapCoords = _transform.ToMapCoordinates(targetCoords);
         _explosions.QueueExplosion(
-            marker,
-            explosionType,
+            mapCoords,
+            explosionType.ToString(),
             totalIntensity,
             slope,
             maxTileIntensity,
+            cause: null,
             addLog: false);
-        QueueDel(marker);
     }
 
     private bool HasNearbyPlayer(Entity<MapGridComponent, TransformComponent> grid, MapId mapId, float range)
