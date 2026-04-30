@@ -12,6 +12,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing; // Exodus
 using System.Numerics;
 
 
@@ -144,8 +145,22 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
         if (component.Source is { } source)
         {
-            var ev = new ShieldDeflectedEvent(args.OtherEntity, projectile);
-            RaiseLocalEvent(source, ref ev);
+            // Exodus-begin | defer shield deflection side effects outside physics contact enumeration
+            var deflected = args.OtherEntity;
+            projectile.ProjectileSpent = true;
+            Timer.Spawn(0, () =>
+            {
+                if (Deleted(source) ||
+                    Deleted(deflected) ||
+                    !_projectileQuery.TryGetComponent(deflected, out var deferredProjectile))
+                {
+                    return;
+                }
+
+                var ev = new ShieldDeflectedEvent(deflected, deferredProjectile);
+                RaiseLocalEvent(source, ref ev);
+            });
+            // Exodus-end
         }
     }
 
