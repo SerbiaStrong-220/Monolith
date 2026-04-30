@@ -37,7 +37,7 @@ public sealed partial class GunSystem
         //Exodus ArmorPiercingExamine End
     }
 
-    private ArmorPiercerDamageInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
+    public ArmorPiercerDamageInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
     {
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;

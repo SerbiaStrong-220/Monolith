@@ -30,13 +30,13 @@ using Content.Shared.Interaction; // Frontier
 using Content.Shared.Examine; // Frontier
 using Content.Shared.Hands.Components;
 using Content.Shared.Power;
-using Content.Shared._Exodus.Examine.Damage;
+using Content.Shared._Exodus.Examine.Damage;    //Exodus ArmorPiercingExamine
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly PiercingExamineSystem _piercingExamine = default!;
+    [Dependency] private readonly PiercingExamineSystem _piercingExamine = default!;    //Exodus ArmorPiercingExamine
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
