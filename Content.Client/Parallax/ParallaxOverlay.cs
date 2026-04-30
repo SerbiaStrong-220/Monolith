@@ -59,7 +59,18 @@ public sealed class ParallaxOverlay : Overlay
         if (_nebulaParallax.TryGetParallaxLayers(out var nebulaLayers, out var nebulaBlend))
         {
             DrawLayers(args, layers, position, realTime);
-            DrawLayers(args, nebulaLayers, position, realTime, nebulaBlend);
+            if (_nebulaParallax.TryGetBackgroundLightning(out var lightning, out var lightningAlpha))
+            {
+                var split = Math.Min(NebulaParallaxSystem.BackgroundLightningLayerIndex, nebulaLayers.Length);
+                DrawLayers(args, nebulaLayers, position, realTime, nebulaBlend, 0, split);
+                DrawBackgroundLightning(args, lightning, lightningAlpha);
+                DrawLayers(args, nebulaLayers, position, realTime, nebulaBlend, split, nebulaLayers.Length - split);
+            }
+            else
+            {
+                DrawLayers(args, nebulaLayers, position, realTime, nebulaBlend);
+            }
+
             worldHandle.UseShader(null);
             return;
         }
@@ -75,17 +86,20 @@ public sealed class ParallaxOverlay : Overlay
         ParallaxLayerPrepared[] layers,
         Vector2 position,
         float realTime,
-        float alpha = 1f)
+        float alpha = 1f,
+        int startLayer = 0,
+        int layerCount = -1)
     {
         if (alpha <= 0f)
             return;
 
         var worldHandle = args.WorldHandle;
         Color? modulate = alpha >= 1f ? null : Color.White.WithAlpha(alpha);
-        // Exodus-end
+        var endLayer = layerCount < 0 ? layers.Length : Math.Min(layers.Length, startLayer + layerCount);
 
-        foreach (var layer in layers)
+        for (var layerIndex = startLayer; layerIndex < endLayer; layerIndex++)
         {
+            var layer = layers[layerIndex];
             ShaderInstance? shader;
 
             if (!string.IsNullOrEmpty(layer.Config.Shader))
@@ -144,5 +158,55 @@ public sealed class ParallaxOverlay : Overlay
             }
         }
     }
+
+    private static void DrawBackgroundLightning(
+        in OverlayDrawArgs args,
+        NebulaBackgroundLightning lightning,
+        float alpha)
+    {
+        if (lightning.PointCount < 2 || alpha <= 0f)
+            return;
+
+        var worldHandle = args.WorldHandle;
+        worldHandle.UseShader(null);
+        worldHandle.DrawRect(args.WorldAABB, new Color(1f, 0.2f, 0.1f, 0.025f * alpha));
+
+        for (var i = 0; i < lightning.PointCount - 1; i++)
+        {
+            DrawLightningSegment(args, lightning.Points[i], lightning.Points[i + 1], alpha);
+        }
+
+        for (var i = 0; i < lightning.BranchCount; i++)
+        {
+            var branchIndex = i * 2;
+            DrawLightningSegment(args, lightning.Branches[branchIndex], lightning.Branches[branchIndex + 1], alpha * 0.65f);
+        }
+    }
+
+    private static void DrawLightningSegment(
+        in OverlayDrawArgs args,
+        Vector2 from,
+        Vector2 to,
+        float alpha)
+    {
+        var worldHandle = args.WorldHandle;
+        var start = ToWorld(args.WorldAABB, from);
+        var end = ToWorld(args.WorldAABB, to);
+        var glow = new Color(1f, 0.12f, 0.08f, 0.18f * alpha);
+        var core = new Color(1f, 0.82f, 0.62f, 0.9f * alpha);
+        var offset = new Vector2(0.055f, 0.055f);
+
+        worldHandle.DrawLine(start - offset, end - offset, glow);
+        worldHandle.DrawLine(start + offset, end + offset, glow);
+        worldHandle.DrawLine(start, end, core);
+    }
+
+    private static Vector2 ToWorld(Box2 bounds, Vector2 normalized)
+    {
+        return new Vector2(
+            bounds.Left + (bounds.Right - bounds.Left) * normalized.X,
+            bounds.Bottom + (bounds.Top - bounds.Bottom) * normalized.Y);
+    }
+    // Exodus-end
 }
 
