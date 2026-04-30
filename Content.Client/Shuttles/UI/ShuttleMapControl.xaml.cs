@@ -535,8 +535,10 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     // do NOT apply LocalCenter operation here because it will be adjusted in FTLFree.
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
 
+                    var targetCoordinates = new EntityCoordinates(viewedMapUid, mouseMapPos); // Exodus nebula-ftl-map
                     var ftlFree = (!beaconsOnly || foundBeacon != default) &&
-                                  _shuttles.FTLFree(_shuttleEntity.Value, new EntityCoordinates(viewedMapUid, mouseMapPos), _ftlAngle, _viewportExclusions)
+                                  _shuttles.FTLFree(_shuttleEntity.Value, targetCoordinates, _ftlAngle, _viewportExclusions) &&
+                                  CanFTLToNebulaPreview(_shuttleEntity.Value, grid, targetCoordinates, _ftlAngle) // Exodus nebula-ftl-map
                                   || NoFTLRange; // Mono
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;
@@ -780,6 +782,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         _nebulaLineBuffer[lineCount - 1] = _nebulaLineBuffer[0];
         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_nebulaLineBuffer, 0, lineCount), config.Color.WithAlpha(0.9f));
     }
+
     // Exodus-end
 
     /// <summary>
