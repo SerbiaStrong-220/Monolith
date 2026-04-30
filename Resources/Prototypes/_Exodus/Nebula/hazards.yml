@@ -8,6 +8,7 @@
     drawdepth: Effects
     layers:
     - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Lightning.png
+      offset: 0,4
       shader: unshaded
   - type: PointLight
     enabled: true
@@ -32,6 +33,7 @@
     scale: 2,2
     layers:
     - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Lightning.png
+      offset: 0,4
       shader: unshaded
   - type: PointLight
     enabled: true

@@ -303,7 +303,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             ? Vector2.Normalize(sourceDirection)
             : _random.NextAngle().ToWorldVec();
 
-        var visual = Spawn(lightningPrototype, targetCoords.Offset(direction * length * 0.5f));
+        var visual = Spawn(lightningPrototype, targetCoords);
         _transform.SetWorldRotation(visual, direction.ToWorldAngle() - Angle.FromDegrees(90));
     }
 
