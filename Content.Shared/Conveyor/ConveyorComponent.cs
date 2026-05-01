@@ -15,12 +15,13 @@ public sealed partial class ConveyorComponent : Component
     [DataField, AutoNetworkedField]
     public Angle Angle = Angle.Zero;
 
+    // Exodus-conveyor-angle-begin
     /// <summary>
     ///     Angle used while in Reverse state.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public Angle ReverseAngle = Angle.FromDegrees(180);
+    // Exodus-conveyor-angle-end
 
     /// <summary>
     ///     The amount of units to move the entity by per second.
@@ -47,6 +48,7 @@ public sealed partial class ConveyorComponent : Component
     [DataField]
     public ProtoId<SinkPortPrototype> OffPort = "Off";
 
+    // Exodus-conveyor-speed-begin
     [DataField]
     public float SpeedTier1 = 1f;
 
@@ -59,6 +61,7 @@ public sealed partial class ConveyorComponent : Component
     // Active speed tier, 1-3.
     [DataField, AutoNetworkedField]
     public byte CurrentTier = 2;
+    // Exodus-conveyor-speed-end
 }
 
 [Serializable, NetSerializable]

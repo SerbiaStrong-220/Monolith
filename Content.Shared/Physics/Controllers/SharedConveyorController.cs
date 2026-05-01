@@ -54,12 +54,15 @@ public abstract class SharedConveyorController : VirtualController
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
+        // Exodus-conveyor-speed-begin
         SubscribeLocalEvent<ConveyorComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpeedVerb);
         SubscribeLocalEvent<ConveyorComponent, ConveyorSetSpeedMessage>(OnSetSpeed);
+        // Exodus-conveyor-speed-end
 
         base.Initialize();
     }
 
+    // Exodus-conveyor-speed-begin
     private void OnGetSpeedVerb(Entity<ConveyorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -91,6 +94,7 @@ public abstract class SharedConveyorController : VirtualController
         WakeConveyed(ent.Owner);
         _ui.CloseUi(ent.Owner, ConveyorUiKey.Key, args.Actor);
     }
+    // Exodus-conveyor-speed-end
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
@@ -303,10 +307,12 @@ public abstract class SharedConveyorController : VirtualController
         var conveyorXform = XformQuery.GetComponent(bestConveyor.Owner);
         var (conveyorPos, conveyorRot) = TransformSystem.GetWorldPositionRotation(conveyorXform);
 
+        // Exodus-conveyor-angle-begin
         if (comp.State != ConveyorState.Reverse)
             conveyorRot += bestConveyor.Comp!.Angle;
         else
             conveyorRot += bestConveyor.Comp!.ReverseAngle;
+        // Exodus-conveyor-angle-end
 
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;
