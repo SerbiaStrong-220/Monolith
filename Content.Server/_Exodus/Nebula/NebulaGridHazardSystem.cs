@@ -738,7 +738,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
     private void ScheduleNextSpacePlayerEmp(NebulaSpaceEmpTargetComponent hazard)
     {
-        var (min, max) = GetDelayRange(hazard.MinPulseDelaySeconds, hazard.MaxPulseDelaySeconds);
+        var (min, max) = GetDelayRange(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
         hazard.NextPulse = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
     }
 

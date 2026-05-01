@@ -6,10 +6,10 @@ namespace Content.Server._Exodus.Nebula;
 public sealed partial class NebulaSpaceEmpTargetComponent : Component
 {
     [DataField]
-    public int MinPulseDelaySeconds = 5;
+    public int MinStrikeDelaySeconds = 5;
 
     [DataField]
-    public int MaxPulseDelaySeconds = 30;
+    public int MaxStrikeDelaySeconds = 30;
 
     [DataField]
     public float Range = 4f;
