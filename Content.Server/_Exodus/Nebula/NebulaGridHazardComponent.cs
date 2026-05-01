@@ -84,6 +84,12 @@ public sealed partial class NebulaGridHazardComponent : Component
     public bool TimersInitialized;
 
     [ViewVariables]
+    public bool RedLightningActive;
+
+    [ViewVariables]
+    public bool GreenEmpActive;
+
+    [ViewVariables]
     public TimeSpan NextSmallStrike;
 
     [ViewVariables]

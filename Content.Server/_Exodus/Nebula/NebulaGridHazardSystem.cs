@@ -306,7 +306,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         MapId mapId,
         NebulaMapComponent mapComponent)
     {
-        if (!TrySelectHazardTile(grid, mapId, mapComponent, NebulaType.Green, out _, out var targetCoords, out var targetGridCoords))
+        if (!TrySelectHazardTile(grid, mapId, mapComponent, NebulaType.Green, out _, out var targetCoords, out _, edgeOnly: false))
             return false;
 
         var hazard = grid.Comp3;
@@ -322,7 +322,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         NebulaType type,
         out TileRef selected,
         out MapCoordinates selectedCoords,
-        out EntityCoordinates selectedGridCoords)
+        out EntityCoordinates selectedGridCoords,
+        bool edgeOnly = true)
     {
         selected = default;
         selectedCoords = default;
@@ -335,8 +336,11 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             if (tile is not { } tileRef)
                 continue;
 
-            if (tileRef.Tile.IsEmpty || !IsEdgeTile(grid.Owner, grid.Comp1, tileRef.GridIndices))
+            if (tileRef.Tile.IsEmpty ||
+                edgeOnly && !IsEdgeTile(grid.Owner, grid.Comp1, tileRef.GridIndices))
+            {
                 continue;
+            }
 
             var gridCoords = _map.GridTileToLocal(grid.Owner, grid.Comp1, tileRef.GridIndices);
             var coords = _transform.ToMapCoordinates(gridCoords);
@@ -642,6 +646,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             var hazard = EnsureComp<NebulaGridHazardComponent>(uid);
             UpdateLegacyHazardSettings(hazard);
             InitializeTimers(hazard);
+            hazard.RedLightningActive = (flags & NebulaHazardFlags.RedLightning) != 0;
+            hazard.GreenEmpActive = (flags & NebulaHazardFlags.GreenEmp) != 0;
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent, flags);
         }
     }

@@ -186,7 +186,7 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public string Command => "nebula_hazard_status";
-    public string Description => "Prints red nebula lightning hazard timers for the grid you are standing on.";
+    public string Description => "Prints nebula hazard timers for the grid you are standing on.";
     public string Help => "Usage: nebula_hazard_status";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -224,9 +224,21 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
         var curTime = _timing.CurTime;
         shell.WriteLine(
             $"Grid {gridUid} nebula hazard:\n" +
-            $"Small: interval {FormatDuration(hazard.SmallStrikeInterval)}, next in {FormatDuration(hazard.NextSmallStrike - curTime)}, count {hazard.SmallStrikeCount}, last {FormatOptionalDuration(hazard.LastSmallStrike)}, delta {FormatOptionalDuration(hazard.LastSmallDelta)}.\n" +
-            $"Heavy: interval {FormatDuration(hazard.HeavyStrikeInterval)}, next in {FormatDuration(hazard.NextHeavyStrike - curTime)}, count {hazard.HeavyStrikeCount}, last {FormatOptionalDuration(hazard.LastHeavyStrike)}, delta {FormatOptionalDuration(hazard.LastHeavyDelta)}.\n" +
+            $"Active: red lightning {FormatActive(hazard.RedLightningActive)}, green EMP {FormatActive(hazard.GreenEmpActive)}.\n" +
+            $"Small lightning: interval {FormatDuration(hazard.SmallStrikeInterval)}, next in {FormatActiveDuration(hazard.RedLightningActive, hazard.NextSmallStrike - curTime)}, count {hazard.SmallStrikeCount}, last {FormatOptionalDuration(hazard.LastSmallStrike)}, delta {FormatOptionalDuration(hazard.LastSmallDelta)}.\n" +
+            $"Heavy lightning: interval {FormatDuration(hazard.HeavyStrikeInterval)}, next in {FormatActiveDuration(hazard.RedLightningActive, hazard.NextHeavyStrike - curTime)}, count {hazard.HeavyStrikeCount}, last {FormatOptionalDuration(hazard.LastHeavyStrike)}, delta {FormatOptionalDuration(hazard.LastHeavyDelta)}.\n" +
+            $"Green EMP: interval {FormatDuration(hazard.GreenEmpInterval)}, next in {FormatActiveDuration(hazard.GreenEmpActive, hazard.NextGreenEmp - curTime)}, count {hazard.GreenEmpCount}, last {FormatOptionalDuration(hazard.LastGreenEmp)}, delta {FormatOptionalDuration(hazard.LastGreenEmpDelta)}.\n" +
             $"Player range: {hazard.PlayerRange:0.##}; shield load: small {hazard.SmallShieldLoad:0.##}, heavy {hazard.HeavyShieldLoad:0.##}.");
+    }
+
+    private static string FormatActive(bool active)
+    {
+        return active ? "active" : "inactive";
+    }
+
+    private static string FormatActiveDuration(bool active, TimeSpan value)
+    {
+        return active ? FormatDuration(value) : "inactive";
     }
 
     private static string FormatOptionalDuration(TimeSpan value)
