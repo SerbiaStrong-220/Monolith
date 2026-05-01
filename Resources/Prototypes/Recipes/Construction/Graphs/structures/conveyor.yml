@@ -12,24 +12,24 @@
                 state: conveyor_loose
               name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
-      # Exodus-conveyor-angle-begin
-      - to: entityRight
-        steps:
-        - tag: ConveyorAssembly
-          icon:
-            sprite: _NF/Structures/conveyor_angle.rsi
-            state: right_off
-          name: construction-graph-tag-conveyor-belt-assembly
-          doAfter: 2
-      - to: entityLeft
-        steps:
-        - tag: ConveyorAssembly
-          icon:
-            sprite: _NF/Structures/conveyor_angle.rsi
-            state: left_off
-          name: construction-graph-tag-conveyor-belt-assembly
-          doAfter: 2
-      # Exodus-conveyor-angle-end
+        # Exodus-conveyor-angle-begin
+        - to: entityRight
+          steps:
+            - tag: ConveyorAssembly
+              icon:
+                sprite: _NF/Structures/conveyor_angle.rsi
+                state: right_off
+              name: construction-graph-tag-conveyor-belt-assembly
+              doAfter: 2
+        - to: entityLeft
+          steps:
+            - tag: ConveyorAssembly
+              icon:
+                sprite: _NF/Structures/conveyor_angle.rsi
+                state: left_off
+              name: construction-graph-tag-conveyor-belt-assembly
+              doAfter: 2
+        # Exodus-conveyor-angle-end
     - node: item
       entity: ConveyorBeltAssembly
       actions:
