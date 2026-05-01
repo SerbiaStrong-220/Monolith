@@ -3,3 +3,10 @@ ent-ConveyorBelt = конвейерная лента
 ent-ConveyorBeltAssembly = конвейерная лента
     .desc = Разобранная конвейерная лента. Служит для сборки, как ни странно, конвейерной ленты.
     .suffix = разобранная
+
+ent-ConveyorBeltRight = конвейерная лента (по часовой)
+    .suffix = По часовой
+    .desc = { ent-ConveyorBelt.desc }
+ent-ConveyorBeltLeft = конвейерная лента (против часовой)
+    .suffix = Против часовой
+    .desc = { ent-ConveyorBelt.desc }

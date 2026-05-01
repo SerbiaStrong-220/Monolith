@@ -1086,6 +1086,30 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: ConveyorBeltRight
+  graph: ConveyorGraph
+  startNode: start
+  targetNode: entityRight
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ConveyorBeltLeft
+  graph: ConveyorGraph
+  startNode: start
+  targetNode: entityLeft
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: MetalDoor
   graph: DoorGraph
   startNode: start

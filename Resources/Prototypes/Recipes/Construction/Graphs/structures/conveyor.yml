@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: ConveyorGraph
   start: start
   graph:
@@ -12,6 +12,22 @@
                 state: conveyor_loose
               name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
+        - to: entityRight
+          steps:
+            - tag: ConveyorAssembly
+              icon:
+                sprite: _NF/Structures/conveyor_angle.rsi
+                state: right_off
+              name: construction-graph-tag-conveyor-belt-assembly
+              doAfter: 2
+        - to: entityLeft
+          steps:
+            - tag: ConveyorAssembly
+              icon:
+                sprite: _NF/Structures/conveyor_angle.rsi
+                state: left_off
+              name: construction-graph-tag-conveyor-belt-assembly
+              doAfter: 2
     - node: item
       entity: ConveyorBeltAssembly
       actions:
@@ -19,6 +35,34 @@
           value: false
     - node: entity
       entity: ConveyorBelt
+      actions:
+        - !type:SetAnchor
+          value: true
+        - !type:SnapToGrid
+      edges:
+        - to: item
+          steps:
+            - tool: Prying
+              doAfter: 3
+          completed:
+            - !type:SetAnchor
+              value: false
+    - node: entityRight
+      entity: ConveyorBeltRight
+      actions:
+        - !type:SetAnchor
+          value: true
+        - !type:SnapToGrid
+      edges:
+        - to: item
+          steps:
+            - tool: Prying
+              doAfter: 3
+          completed:
+            - !type:SetAnchor
+              value: false
+    - node: entityLeft
+      entity: ConveyorBeltLeft
       actions:
         - !type:SetAnchor
           value: true

@@ -35,6 +35,12 @@
         - DoorPassable
         hard: False
   - type: Conveyor
+  - type: ActivatableUI
+    key: enum.ConveyorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ConveyorUiKey.Key:
+        type: ConveyorBoundUserInterface
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -88,4 +94,45 @@
     node: item
   - type: StaticPrice
     price: 40
+
+
+- type: entity
+  parent: ConveyorBelt
+  id: ConveyorBeltRight
+  name: right conveyor belt
+  suffix: Right
+  components:
+  - type: Sprite
+    sprite: _NF/Structures/conveyor_angle.rsi
+    state: right_off
+  - type: Conveyor
+    angle: 90
+    reverseAngle: 0
+  - type: GenericVisualizer
+    visuals:
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Off: { state: right_off }
+          Forward: { state: right_fwd }
+          Reverse: { state: right_rev }
+
+- type: entity
+  parent: ConveyorBelt
+  id: ConveyorBeltLeft
+  name: left conveyor belt
+  suffix: Left
+  components:
+  - type: Sprite
+    sprite: _NF/Structures/conveyor_angle.rsi
+    state: left_off
+  - type: Conveyor
+    angle: -90
+    reverseAngle: 0
+  - type: GenericVisualizer
+    visuals:
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Off: { state: left_off }
+          Forward: { state: left_fwd }
+          Reverse: { state: left_rev }
 

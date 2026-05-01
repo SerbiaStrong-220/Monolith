@@ -4,6 +4,7 @@ using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -24,6 +25,7 @@ public abstract class SharedConveyorController : VirtualController
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
+    [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
 
     protected const string ConveyorFixture = "conveyor";
 
@@ -52,8 +54,42 @@ public abstract class SharedConveyorController : VirtualController
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
+        SubscribeLocalEvent<ConveyorComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpeedVerb);
+        SubscribeLocalEvent<ConveyorComponent, ConveyorSetSpeedMessage>(OnSetSpeed);
 
         base.Initialize();
+    }
+
+    private void OnGetSpeedVerb(Entity<ConveyorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var user = args.User;
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = Loc.GetString("ui-conveyor-speed-verb"),
+            Act = () => _ui.OpenUi(ent.Owner, ConveyorUiKey.Key, user),
+            Priority = 1,
+        });
+    }
+
+    private void OnSetSpeed(Entity<ConveyorComponent> ent, ref ConveyorSetSpeedMessage args)
+    {
+        if (args.Tier is < 1 or > 3)
+            return;
+
+        ent.Comp.Speed = args.Tier switch
+        {
+            1 => ent.Comp.SpeedTier1,
+            2 => ent.Comp.SpeedTier2,
+            _ => ent.Comp.SpeedTier3,
+        };
+        ent.Comp.CurrentTier = args.Tier;
+
+        Dirty(ent.Owner, ent.Comp);
+        WakeConveyed(ent.Owner);
+        _ui.CloseUi(ent.Owner, ConveyorUiKey.Key, args.Actor);
     }
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
@@ -267,10 +303,10 @@ public abstract class SharedConveyorController : VirtualController
         var conveyorXform = XformQuery.GetComponent(bestConveyor.Owner);
         var (conveyorPos, conveyorRot) = TransformSystem.GetWorldPositionRotation(conveyorXform);
 
-        conveyorRot += bestConveyor.Comp!.Angle;
-
-        if (comp.State == ConveyorState.Reverse)
-            conveyorRot += MathF.PI;
+        if (comp.State != ConveyorState.Reverse)
+            conveyorRot += bestConveyor.Comp!.Angle;
+        else
+            conveyorRot += bestConveyor.Comp!.ReverseAngle;
 
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;

@@ -1,0 +1,33 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Exodus",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "right_fwd",
+      "delays": [[0.1, 0.1, 0.1, 0.1]]
+    },
+    {
+      "name": "right_rev",
+      "delays": [[0.1, 0.1, 0.1, 0.1]]
+    },
+    {
+      "name": "left_fwd",
+      "delays": [[0.1, 0.1, 0.1, 0.1]]
+    },
+    {
+      "name": "left_rev",
+      "delays": [[0.1, 0.1, 0.1, 0.1]]
+    },
+    {
+      "name": "right_off"
+    },
+    {
+      "name": "left_off"
+    }
+  ]
+}
