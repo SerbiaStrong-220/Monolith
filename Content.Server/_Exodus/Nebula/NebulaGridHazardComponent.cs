@@ -14,6 +14,9 @@ public sealed partial class NebulaGridHazardComponent : Component
     public TimeSpan HeavyStrikeInterval = TimeSpan.FromSeconds(30);
 
     [DataField]
+    public TimeSpan GreenEmpInterval = TimeSpan.FromSeconds(30);
+
+    [DataField]
     public float PlayerRange = 32f;
 
     [DataField]
@@ -21,6 +24,15 @@ public sealed partial class NebulaGridHazardComponent : Component
 
     [DataField]
     public float HeavyShieldLoad = 2000f;
+
+    [DataField]
+    public float GreenEmpRange = 8f;
+
+    [DataField]
+    public float GreenEmpEnergyConsumption = 500000f;
+
+    [DataField]
+    public float GreenEmpDisableDuration = 5f;
 
     [DataField]
     public ProtoId<ExplosionPrototype> SmallExplosionType = "Minibomb";
@@ -78,10 +90,16 @@ public sealed partial class NebulaGridHazardComponent : Component
     public TimeSpan NextHeavyStrike;
 
     [ViewVariables]
+    public TimeSpan NextGreenEmp;
+
+    [ViewVariables]
     public TimeSpan LastSmallStrike;
 
     [ViewVariables]
     public TimeSpan LastHeavyStrike;
+
+    [ViewVariables]
+    public TimeSpan LastGreenEmp;
 
     [ViewVariables]
     public TimeSpan LastSmallDelta;
@@ -90,8 +108,14 @@ public sealed partial class NebulaGridHazardComponent : Component
     public TimeSpan LastHeavyDelta;
 
     [ViewVariables]
+    public TimeSpan LastGreenEmpDelta;
+
+    [ViewVariables]
     public int SmallStrikeCount;
 
     [ViewVariables]
     public int HeavyStrikeCount;
+
+    [ViewVariables]
+    public int GreenEmpCount;
 }
