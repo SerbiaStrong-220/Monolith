@@ -227,7 +227,7 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
             $"Active: red lightning {FormatActive(hazard.RedLightningActive)}, green EMP {FormatActive(hazard.GreenEmpActive)}.\n" +
             $"Small lightning: interval {FormatDuration(hazard.SmallStrikeInterval)}, next in {FormatActiveDuration(hazard.RedLightningActive, hazard.NextSmallStrike - curTime)}, count {hazard.SmallStrikeCount}, last {FormatOptionalDuration(hazard.LastSmallStrike)}, delta {FormatOptionalDuration(hazard.LastSmallDelta)}.\n" +
             $"Heavy lightning: interval {FormatDuration(hazard.HeavyStrikeInterval)}, next in {FormatActiveDuration(hazard.RedLightningActive, hazard.NextHeavyStrike - curTime)}, count {hazard.HeavyStrikeCount}, last {FormatOptionalDuration(hazard.LastHeavyStrike)}, delta {FormatOptionalDuration(hazard.LastHeavyDelta)}.\n" +
-            $"Green EMP: interval {FormatDuration(hazard.GreenEmpInterval)}, next in {FormatActiveDuration(hazard.GreenEmpActive, hazard.NextGreenEmp - curTime)}, count {hazard.GreenEmpCount}, last {FormatOptionalDuration(hazard.LastGreenEmp)}, delta {FormatOptionalDuration(hazard.LastGreenEmpDelta)}.\n" +
+            $"Green EMP: delay {FormatDelayRange(hazard.MinGreenEmpDelaySeconds, hazard.MaxGreenEmpDelaySeconds)}, next in {FormatActiveDuration(hazard.GreenEmpActive, hazard.NextGreenEmp - curTime)}, count {hazard.GreenEmpCount}, last {FormatOptionalDuration(hazard.LastGreenEmp)}, delta {FormatOptionalDuration(hazard.LastGreenEmpDelta)}.\n" +
             $"Player range: {hazard.PlayerRange:0.##}; shield load: small {hazard.SmallShieldLoad:0.##}, heavy {hazard.HeavyShieldLoad:0.##}.");
     }
 
@@ -244,6 +244,13 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
     private static string FormatOptionalDuration(TimeSpan value)
     {
         return value == TimeSpan.Zero ? "n/a" : FormatDuration(value);
+    }
+
+    private static string FormatDelayRange(int first, int second)
+    {
+        var min = Math.Max(1, Math.Min(first, second));
+        var max = Math.Max(min, Math.Max(first, second));
+        return $"{min}-{max}s";
     }
 
     private static string FormatDuration(TimeSpan value)

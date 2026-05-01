@@ -14,7 +14,10 @@ public sealed partial class NebulaGridHazardComponent : Component
     public TimeSpan HeavyStrikeInterval = TimeSpan.FromSeconds(30);
 
     [DataField]
-    public TimeSpan GreenEmpInterval = TimeSpan.FromSeconds(30);
+    public int MinGreenEmpDelaySeconds = 5;
+
+    [DataField]
+    public int MaxGreenEmpDelaySeconds = 30;
 
     [DataField]
     public float PlayerRange = 32f;

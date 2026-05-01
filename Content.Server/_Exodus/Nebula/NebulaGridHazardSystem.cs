@@ -45,7 +45,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
     private static readonly TimeSpan SmallStrikeInterval = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan HeavyStrikeInterval = TimeSpan.FromSeconds(30);
-    private static readonly TimeSpan GreenEmpInterval = TimeSpan.FromSeconds(30);
     private static readonly TimeSpan LongTestSmallStrikeInterval = TimeSpan.FromSeconds(50);
     private static readonly TimeSpan LongTestHeavyStrikeInterval = TimeSpan.FromSeconds(300);
     private static readonly TimeSpan OldTestSmallStrikeInterval = TimeSpan.FromSeconds(20);
@@ -121,7 +120,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         hazard.TimersInitialized = true;
         hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
         hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
-        hazard.NextGreenEmp = _timing.CurTime + hazard.GreenEmpInterval;
+        ScheduleNextGreenEmp(hazard);
     }
 
     private void UpdateLegacyHazardSettings(NebulaGridHazardComponent hazard)
@@ -144,9 +143,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             hazard.HeavyStrikeInterval = HeavyStrikeInterval;
         }
 
-        if (hazard.GreenEmpInterval <= TimeSpan.Zero)
-            hazard.GreenEmpInterval = GreenEmpInterval;
-
         if (hazard.TimersInitialized)
         {
             var nextSmallLimit = _timing.CurTime + hazard.SmallStrikeInterval;
@@ -157,7 +153,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             if (hazard.NextHeavyStrike > nextHeavyLimit)
                 hazard.NextHeavyStrike = nextHeavyLimit;
 
-            var nextGreenEmpLimit = _timing.CurTime + hazard.GreenEmpInterval;
+            var nextGreenEmpLimit = _timing.CurTime + TimeSpan.FromSeconds(GetMaxGreenEmpDelay(hazard));
             if (hazard.NextGreenEmp == TimeSpan.Zero)
                 hazard.NextGreenEmp = nextGreenEmpLimit;
             else if (hazard.NextGreenEmp > nextGreenEmpLimit)
@@ -202,7 +198,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
         if ((flags & NebulaHazardFlags.GreenEmp) != 0 && _timing.CurTime >= hazard.NextGreenEmp)
         {
-            hazard.NextGreenEmp = _timing.CurTime + hazard.GreenEmpInterval;
+            ScheduleNextGreenEmp(hazard);
 
             if (TryPulseGreenEmpGridSafely(grid, mapId, mapComponent))
                 RecordGreenEmp(hazard);
@@ -514,7 +510,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var hazard = EnsureComp<NebulaSpaceEmpTargetComponent>(player.Owner);
         if (hazard.NextPulse == TimeSpan.Zero)
         {
-            hazard.NextPulse = _timing.CurTime + hazard.PulseInterval;
+            ScheduleNextSpacePlayerEmp(hazard);
             return;
         }
 
@@ -522,10 +518,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             return;
 
         PulseSpacePlayerEmp((player.Owner, hazard, player.Comp), mapCoords);
-        hazard.NextPulse += hazard.PulseInterval;
-
-        if (hazard.NextPulse <= _timing.CurTime)
-            hazard.NextPulse = _timing.CurTime + hazard.PulseInterval;
+        ScheduleNextSpacePlayerEmp(hazard);
     }
 
     private void CollectNearbyHazardGrids(
@@ -729,6 +722,31 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         var min = Math.Min(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
         var max = Math.Max(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
         hazard.NextStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
+    }
+
+    private void ScheduleNextGreenEmp(NebulaGridHazardComponent hazard)
+    {
+        var (min, max) = GetDelayRange(hazard.MinGreenEmpDelaySeconds, hazard.MaxGreenEmpDelaySeconds);
+        hazard.NextGreenEmp = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
+    }
+
+    private int GetMaxGreenEmpDelay(NebulaGridHazardComponent hazard)
+    {
+        var (_, max) = GetDelayRange(hazard.MinGreenEmpDelaySeconds, hazard.MaxGreenEmpDelaySeconds);
+        return max;
+    }
+
+    private void ScheduleNextSpacePlayerEmp(NebulaSpaceEmpTargetComponent hazard)
+    {
+        var (min, max) = GetDelayRange(hazard.MinPulseDelaySeconds, hazard.MaxPulseDelaySeconds);
+        hazard.NextPulse = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
+    }
+
+    private static (int Min, int Max) GetDelayRange(int first, int second)
+    {
+        var min = Math.Max(1, Math.Min(first, second));
+        var max = Math.Max(min, Math.Max(first, second));
+        return (min, max);
     }
 
     private bool IsOnNonEmptyTile(TransformComponent xform)
