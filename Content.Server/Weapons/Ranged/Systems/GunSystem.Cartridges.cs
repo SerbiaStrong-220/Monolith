@@ -1,7 +1,9 @@
+using Content.Server._Exodus.Examine;           //Exodus AdvancedWeaponExamine
 using Content.Shared._Exodus.Examine.Damage;    //Exodus ArmorPiercingExamine
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
@@ -13,6 +15,8 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    [Dependency] private readonly ExplosiveEntityExamineSystem _explosiveEntityExamine = default!;  //Exodus AdvancedWeaponExamine
+    [Dependency] private readonly ExplosionExamineSystem _explosionExamine = default!;              //Exodus AdvancedWeaponExamine
     protected override void InitializeCartridge()
     {
         base.InitializeCartridge();
@@ -41,10 +45,13 @@ public sealed partial class GunSystem
 
         if (cartridgeInfo.Value.ArmorPenetration is not null)
             _piercingExamine.AddPenetrationToExamineMessage(examineMessage, cartridgeInfo.Value.ArmorPenetration.Value);
+
+        if (cartridgeInfo.Value.Explosion is not null)
+            _explosionExamine.AddExplosiveInfoToExamineMessage(examineMessage, cartridgeInfo.Value.Explosion.Value);
     }
     //Exodus AdvancedWeaponExamine End
 
-    public CartridgeInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
+    public ExamineCartridgeInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
     {
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;
@@ -52,6 +59,7 @@ public sealed partial class GunSystem
         if (entityProto.Components
             .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
         {
+
             var p = (ProjectileComponent)projectile.Component;
 
             if (!p.Damage.Empty)
@@ -60,7 +68,8 @@ public sealed partial class GunSystem
                 return new()
                 {
                     Damage = p.Damage * Damageable.UniversalProjectileDamageModifier,
-                    ArmorPenetration = p.ArmorPenetration
+                    ArmorPenetration = p.ArmorPenetration,
+                    Explosion = _explosiveEntityExamine.GetExplosiveInfo(entityProto)
                 };
                 //Exodus ArmorPiercingExamine End
             }

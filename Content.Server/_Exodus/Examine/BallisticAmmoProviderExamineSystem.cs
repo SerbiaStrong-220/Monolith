@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Provstat
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Weapons.Ranged.Components;

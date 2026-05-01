@@ -4,9 +4,11 @@ using Content.Shared.Damage;
 
 namespace Content.Shared._Exodus.Examine.Damage;
 
-public readonly struct CartridgeInfo
+public readonly struct ExamineCartridgeInfo
 {
     public DamageSpecifier? Damage { get; init; }
 
     public float? ArmorPenetration { get; init; }
+
+    public ExamineExplosionInfo? Explosion { get; init; }
 }

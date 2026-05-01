@@ -7,7 +7,8 @@ using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 using Content.Server.Power.EntitySystems;
-using Content.Server.PowerCell; // Mono
+using Content.Server.PowerCell;
+using Robust.Shared.Utility; // Mono
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -85,22 +86,39 @@ public sealed partial class GunSystem
 
     private void OnBatteryDamageExamine(EntityUid uid, BatteryAmmoProviderComponent component, ref DamageExamineEvent args)
     {
-        var damageSpec = GetDamage(component);
+        //Exodus AdvancedWeaponExamine Start
+        if (component is HitscanBatteryAmmoProviderComponent hitscanProvider)
+            AddHitscanExamine(args.Message, hitscanProvider);
+        else if (component is ProjectileBatteryAmmoProviderComponent projectileProvider)
+            AddCartridgeInfoToExamineMessage(args.Message, projectileProvider.Prototype);
+        //Exodus AdvancedWeaponExamine End
+    }
+
+    //Exodus AdvancedWeaponExamine Start
+    private void AddHitscanExamine(FormattedMessage message, HitscanBatteryAmmoProviderComponent component)
+    {
+        var damageType = Loc.GetString("damage-hitscan");
+
+        var damageSpec = GetHitscanDamage(component);
 
         if (damageSpec == null)
             return;
 
-        var damageType = component switch
-        {
-            HitscanBatteryAmmoProviderComponent => Loc.GetString("damage-hitscan"),
-            ProjectileBatteryAmmoProviderComponent => Loc.GetString("damage-projectile"),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
-
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), type: damageType); //Exodus ArmorPiercingExamine
+        _damageExamine.AddDamageExamine(message, Damageable.ApplyUniversalAllModifiers(damageSpec), type: damageType);
     }
 
-    private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)
+    private DamageSpecifier? GetHitscanDamage(HitscanBatteryAmmoProviderComponent component)
+    {
+        var dmg = ProtoManager.Index(component.HitscanEntityProto);
+        if (!dmg.TryGetComponent<HitscanBasicDamageComponent>(out var basicDamageComp, Factory))
+            return null;
+
+        return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
+    }
+
+    //Exodus AdvancedWeaponExamine End
+
+    /*private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)
     {
         if (component is ProjectileBatteryAmmoProviderComponent battery)
         {
@@ -118,17 +136,7 @@ public sealed partial class GunSystem
             return null;
         }
 
-        if (component is HitscanBatteryAmmoProviderComponent hitscan)
-        {
-            var dmg = ProtoManager.Index(hitscan.HitscanEntityProto);
-            if (!dmg.TryGetComponent<HitscanBasicDamageComponent>(out var basicDamageComp, Factory))
-                return null;
-
-            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
-        }
-
-        return null;
-    }
+    }*/
 
     // Mono Start - Reduce charge in internal battery, reduce in power cell if not available
     protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)

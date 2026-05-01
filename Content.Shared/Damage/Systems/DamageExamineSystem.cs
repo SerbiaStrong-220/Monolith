@@ -48,6 +48,31 @@ public sealed class DamageExamineSystem : EntitySystem
         message.AddMessage(markup);
     }
 
+
+    //Exodus AdvancedWeaponExamine Start
+
+    /// <summary>
+    ///     Retrieves the damage examine values without exstra lines.
+    /// </summary>
+    /// <seealso cref="AddDamageExamine"/>
+    public FormattedMessage AddDamageDictionary(DamageSpecifier explosionDamage)
+    {
+        var msg = new FormattedMessage();
+
+        foreach (var damage in explosionDamage.DamageDict)
+        {
+            if (damage.Value != FixedPoint2.Zero)
+            {
+                msg.PushNewline();
+                msg.AddMarkupOrThrow(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
+            }
+        }
+
+        return msg;
+    }
+
+    //Exodus AdvancedWeaponExamine End
+
     /// <summary>
     /// Retrieves the damage examine values.
     /// </summary>
@@ -70,14 +95,7 @@ public sealed class DamageExamineSystem : EntitySystem
             msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type)));
         }
 
-        foreach (var damage in damageSpecifier.DamageDict)
-        {
-            if (damage.Value != FixedPoint2.Zero)
-            {
-                msg.PushNewline();
-                msg.AddMarkupOrThrow(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
-            }
-        }
+        msg.AddMessage(AddDamageDictionary(damageSpecifier));   //Exodus AdvancedWeaponExamine
 
         return msg;
     }
