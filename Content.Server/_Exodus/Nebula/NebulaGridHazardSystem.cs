@@ -437,11 +437,13 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             {
                 UpdateSpacePlayerLightningHazard((player, xform), mapCoords);
                 RemoveSpacePlayerEmpHazard(player);
+                RemoveRadioBlackout(player);
             }
             else if (hazardType == NebulaType.Green)
             {
                 UpdateSpacePlayerEmpHazard((player, xform), mapCoords);
                 RemoveSpacePlayerLightningHazard(player);
+                EnsureComp<NebulaRadioBlackoutComponent>(player);
             }
 
             CollectNearbyHazardGrids((player, xform), mapCoords, mapId, mapComponent, hazardType);
@@ -641,6 +643,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             InitializeTimers(hazard);
             hazard.RedLightningActive = (flags & NebulaHazardFlags.RedLightning) != 0;
             hazard.GreenEmpActive = (flags & NebulaHazardFlags.GreenEmp) != 0;
+            UpdateGridRadioBlackout(uid, hazard.GreenEmpActive);
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent, flags);
         }
     }
@@ -653,6 +656,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             if (_activeHazardGrids.ContainsKey(uid))
                 continue;
 
+            RemoveRadioBlackout(uid);
             RemCompDeferred<NebulaGridHazardComponent>(uid);
         }
     }
@@ -759,6 +763,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     {
         RemoveSpacePlayerLightningHazard(player);
         RemoveSpacePlayerEmpHazard(player);
+        RemoveRadioBlackout(player);
     }
 
     private void RemoveSpacePlayerLightningHazard(EntityUid player)
@@ -771,6 +776,23 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     {
         if (HasComp<NebulaSpaceEmpTargetComponent>(player))
             RemCompDeferred<NebulaSpaceEmpTargetComponent>(player);
+    }
+
+    private void UpdateGridRadioBlackout(EntityUid grid, bool active)
+    {
+        if (active)
+        {
+            EnsureComp<NebulaRadioBlackoutComponent>(grid);
+            return;
+        }
+
+        RemoveRadioBlackout(grid);
+    }
+
+    private void RemoveRadioBlackout(EntityUid uid)
+    {
+        if (HasComp<NebulaRadioBlackoutComponent>(uid))
+            RemCompDeferred<NebulaRadioBlackoutComponent>(uid);
     }
 
     private bool IsGridNearNebulaType(Entity<MapGridComponent, TransformComponent> grid, NebulaMapComponent mapComponent, NebulaType type)
@@ -860,6 +882,12 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         while (empPlayerQuery.MoveNext(out var uid, out _))
         {
             RemCompDeferred<NebulaSpaceEmpTargetComponent>(uid);
+        }
+
+        var radioBlackoutQuery = EntityQueryEnumerator<NebulaRadioBlackoutComponent>();
+        while (radioBlackoutQuery.MoveNext(out var uid, out _))
+        {
+            RemCompDeferred<NebulaRadioBlackoutComponent>(uid);
         }
     }
 }
