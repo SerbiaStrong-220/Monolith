@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Content.Server._Exodus.Nebula; // Exodus
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Friction;
@@ -305,6 +306,16 @@ public sealed class MoverController : SharedMoverController
         var vertIndex = dir.Y > 0 ? 2 : 0; // north else south
         var horizThrust = shuttle.LinearThrust[horizIndex];
         var vertThrust = shuttle.LinearThrust[vertIndex];
+
+        // Exodus-begin
+        if (xform.GridUid is { Valid: true } shuttleUid)
+        {
+            var ev = new GetNebulaShuttleThrustEvent(shuttleUid, horizThrust, vertThrust);
+            RaiseLocalEvent(ref ev);
+            horizThrust = ev.HorizontalThrust;
+            vertThrust = ev.VerticalThrust;
+        }
+        // Exodus-end
 
         var horizScale = MathF.Abs(horizThrust / dir.X);
         var vertScale = MathF.Abs(vertThrust / dir.Y);
