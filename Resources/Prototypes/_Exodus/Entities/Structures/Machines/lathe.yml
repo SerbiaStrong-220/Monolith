@@ -1,0 +1,50 @@
+- type: entity
+  id: USSPLathe
+  parent: [ FactionLathe, BaseLatheLube ]
+  name: военный токарный станок СССП
+  description: Capable of producing a wide variety of things. Compatible with all kinds of fabrication template encryptions.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
+    - state: unlit
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: USSPTechfabMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/circuitprinter.ogg
+    idleState: icon
+    runningState: icon
+    dynamicPacks:
+    # rogue start
+    - MonoRogueWeaponsDynamicMelee
+    - MonoRogueWeaponsDynamicRanged
+    - MonoRogueVouchersDynamic
+    - MonoRogueMiscDynamic
+    - MonoRogueGearDynamic
+    - MonoRogueGearProDynamic
+    # USSP start
+    - ExodusUSSPLightShuttleWeaponsDynamic # Exodus
+    - MonoUSSPVouchersDynamic
+    - MonoUSSPArmorDynamic
+    - MonoUSSPMiscDynamic
+    - MonoUSSPWeaponsDynamicRanged
+    # Viper Group start
+    - MonoViperGroupDynamic
+    - UniversalRailgunAmmo
+    - UniversalMissileAmmo
+    - UniversalShellAmmo
+    - UniversalOrdinance
+    - DynamicAmmoRecipePack
+    - NFMercenaryTechfabDeprecated
+    # Civ military tech
+    - ResearchedExplosives
+    - SecurityEquipment
+    - SmartGun

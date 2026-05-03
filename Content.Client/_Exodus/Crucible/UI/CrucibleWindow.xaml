@@ -7,7 +7,6 @@
 
     <BoxContainer Orientation="Vertical" Margin="10">
 
-        <!-- Секция статуса предмета -->
         <PanelContainer StyleClasses="BackgroundDark">
             <BoxContainer Orientation="Horizontal" Margin="8">
                 <TextureRect Name="ItemIcon" VerticalAlignment="Center" MinSize="32,32" Margin="0,0,8,0" />
@@ -20,7 +19,6 @@
 
         <Control MinHeight="10" />
 
-        <!-- Индикация прогресса -->
         <BoxContainer Orientation="Vertical" Name="ProgressSection">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <Label Text="Прогресс плавки..." Name="StatusLabel" />
@@ -32,7 +30,6 @@
 
         <Control MinHeight="10" />
 
-        <!-- Управление -->
         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="20">
             <Button Name="StartBtn"
                     Text="ЗАПУСТИТЬ ПЛАВКУ"
@@ -48,7 +45,6 @@
 
         <Control MinHeight="5" />
 
-        <!-- Подсказка/Статус питания -->
         <Label Name="PowerStatusLabel"
                HorizontalAlignment="Center"
                StyleClasses="LabelSubtext"

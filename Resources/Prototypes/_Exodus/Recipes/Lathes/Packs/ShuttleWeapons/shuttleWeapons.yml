@@ -1,0 +1,8 @@
+- type: latheRecipePack
+  id: ExodusUSSPLightShuttleWeaponsDynamic
+  recipes:
+  - BoforsChassisRecipe
+  - BoforsFeedRecipe
+  - BoforsCoreRecipe
+  - BoforsTargetingRecipe
+  - BoforsBarrelRecipe

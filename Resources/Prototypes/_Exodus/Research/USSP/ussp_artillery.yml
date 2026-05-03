@@ -1,0 +1,17 @@
+- type: technology
+  id: UsspBofors
+  name: Стандартизация
+  entityIcon: WeaponTurretBofors
+  discipline: UsspShipyard
+  tier: 3
+  cost: 100000
+  recipeUnlocks:
+  - BoforsChassisRecipe
+  - BoforsFeedRecipe
+  - BoforsCoreRecipe
+  - BoforsTargetingRecipe
+  - BoforsBarrelRecipe
+  technologyPrerequisites:
+  - UniversalMaterialResearchT3
+  - UsspAdvancedShips
+  position: 19, 11

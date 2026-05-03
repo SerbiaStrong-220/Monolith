@@ -1,0 +1,28 @@
+- type: entity
+  id: ResearchAndDevelopmentServerUsspPOI
+  parent: BaseRdServerFaction
+  name: USSP R&D server
+  description: Contains the collective knowledge of the USSP in this sector.
+  components:
+  - type: Sprite
+    sprite: _Mono/Structures/Machines/server.rsi
+    layers:
+    - state: server
+    - state: variant-ussp
+    - state: server_o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: TechnologyDatabase
+    supportedDisciplines:
+    - Ussp
+    - UsspShipyard
+    - UsspEquipment
+    - UsspWeapons
+    - UsspWeaponsTurrets
+    - ViperGroup
+    - FactionUniversal
+    - Industrial
+    - Arsenal
+    - Experimental
+    - CivilianServices
+    - MechaEngineering
+    #- Iridium

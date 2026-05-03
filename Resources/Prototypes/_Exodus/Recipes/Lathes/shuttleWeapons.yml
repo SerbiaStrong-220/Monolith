@@ -1,0 +1,47 @@
+- type: latheRecipe
+  id: BoforsChassisRecipe
+  result: BoforsChassisUnfinished
+  completetime: 15
+  materials:
+    Steel: 15000
+    Plasteel: 5000
+
+- type: latheRecipe
+  id: BoforsCoreRecipe
+  result: BoforsCoreItem
+  completetime: 20
+  materials:
+    Steel: 2000
+    Plastic: 5000
+    Gold: 3000
+    Plasma: 1000
+    UraniumDepleted: 500
+
+- type: latheRecipe
+  id: BoforsFeedRecipe
+  result: BoforsFeedItem
+  completetime: 12
+  materials:
+    Steel: 8000
+    Plasteel: 2000
+    Plastic: 3000
+
+- type: latheRecipe
+  id: BoforsTargetingRecipe
+  result: BoforsTargetingItem
+  completetime: 25
+  materials:
+    Steel: 1000
+    Glass: 4000
+    Silver: 5000
+    Gold: 7000
+    Plastic: 2000
+
+- type: latheRecipe
+  id: BoforsBarrelRecipe
+  result: BoforsBarrelItem
+  completetime: 30
+  materials:
+    Steel: 5000
+    Plasteel: 15000
+    Iridite: 2000

@@ -1,0 +1,18 @@
+- type: entity
+  id: USSPTechfabMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: плата военного станка СССП
+  description: A machine printed circuit board for a military assembler.
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: FactionLathe
+    requirements:
+      MatterBin: 1
+      #Manipulator: 1
+      Capacitor: 1
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker

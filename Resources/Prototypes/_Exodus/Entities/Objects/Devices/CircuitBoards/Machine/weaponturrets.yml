@@ -1,5 +1,5 @@
 - type: entity
-  id: LeviathanCrucibleBoard
+  id: LeviathanCircuitboard
   parent: BaseMachineCircuitboard
   name: плата управления (Левиафан)
   components:
@@ -7,7 +7,7 @@
     prototype: LeviathanWorkPiece # Убедись, что этот ID существует!
 
 - type: entity
-  id: DraupnirCrucibleBoard
+  id: DraupnirCircuitboard
   parent: BaseMachineCircuitboard
   name: плата управления (Р-30 Драупнир)
   components:
@@ -23,7 +23,7 @@
     prototype: HadesWorkPiece
 
 - type: entity
-  id: LongbowCrucibleBoard
+  id: LongbowCircuitboard
   parent: BaseMachineCircuitboard
   name: плата управления (Л65-Лонгбоу)
   components:
@@ -31,7 +31,7 @@
     prototype: LongbowWorkPiece
 
 - type: entity
-  id: CharonCrucibleBoard
+  id: CharonCircuitboard
   parent: BaseMachineCircuitboard
   name: плата управления (Харон)
   components:
