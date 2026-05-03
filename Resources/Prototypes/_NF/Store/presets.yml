@@ -35,6 +35,7 @@
     - UplinkSecurityExplosives
     - UplinkSecurityBundles
     - UplinkSecurityVouchers # Mono
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
     currencyWhitelist:
     - FederationMilitaryCredit
     balance:
