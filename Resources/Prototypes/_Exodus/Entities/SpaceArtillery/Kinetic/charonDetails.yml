@@ -1,0 +1,73 @@
+- type: entity
+  id: CharonChassisUnfinished
+  parent: BaseHeavyTurretPart
+  name: фиксированная рама Харона
+  description: Жесткая несущая конструкция. Отсутствие поворотного механизма компенсируется колоссальной прочностью, необходимой для гашения вектора отдачи рельсотрона.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Research/rped.rsi
+    state: icon
+    color: "#2f4f4f"
+  - type: Construction
+    graph: Charon
+    node: start
+    defaultTarget: charon
+
+- type: entity
+  id: CharonRailsItem
+  parent: BaseHeavyTurretPart
+  name: направляющие рельсы Харона
+  description: Пара сверхпроводящих шин, предназначенных для разгона снаряда силой Лоренца. Способны выдерживать экстремальные токи.
+  components:
+    - type: Tag
+      tags:
+      - CharonRailsItem
+
+- type: entity
+  id: CharonCapacitorItem
+  parent: BaseHeavyTurretPart
+  name: ионисторный блок Харона
+  description: Массив высокоемких конденсаторов. Накапливает энергию для одного катастрофического выстрела.
+  components:
+    - type: Tag
+      tags:
+      - CharonCapacitorItem
+
+- type: entity
+  id: CharonLoaderItem
+  parent: BaseHeavyTurretPart
+  name: открытый казенник Харона
+  description: Усиленный лоток для ручной подачи снарядов. Модифицирован для безопасного размещения тактических ядерных ракет.
+  components:
+    - type: Tag
+      tags:
+      - CharonLoaderItem
+
+- type: entity
+  id: CharonLogicItem
+  parent: BaseHeavyTurretPart
+  name: контроллер синхронизации Харона
+  description: Управляет таймингами подачи энергии на рельсы. Включает интерфейс для дистанционного пуска с консоли.
+  components:
+    - type: Tag
+      tags:
+      - CharonLogicItem
+
+- type: entity
+  id: CharonWorkPiece
+  parent: BaseHeavyTurretPart
+  name: упакованный рельсотрон Харон
+  description: Разобранная магнитная пушка в электромагнитном экране. Требует прецизионной сборки в тигле.
+  components:
+  - type: CrucibleRecipe
+    processingTime: 25
+    resultEntity: M381Flatpack
+
+- type: Tag
+  id: CharonRailsItem
+- type: Tag
+  id: CharonCapacitorItem
+- type: Tag
+  id: CharonLoaderItem
+- type: Tag
+  id: CharonLogicItem

@@ -1,0 +1,45 @@
+- type: constructionGraph
+  id: Draupnir
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: draupnir
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - material: Cable
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - tag: DraupnirServosItem
+        name: Установите приводы Draupnir
+      - tool: Screwing
+        doAfter: 0.5
+      - tag: DraupnirRotaryItem
+        name: Установите роторный механизм Draupnir
+      - tool: Screwing
+        doAfter: 0.5
+      - tag: DraupnirOpticsItem
+        name: Установите оптику Draupnir
+      - tool: Screwing
+        doAfter: 0.5
+      - material: Steel
+        amount: 3 # Требует меньше стали, чем Бофорс
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+      - tag: DraupnirBarrelsItem
+        name: Установите блок стволов Draupnir
+      - tool: Anchoring
+        doAfter: 1
+
+  - node: draupnir
+    actions:
+    - !type:SpawnPrototype
+      prototype: DraupnirWorkPiece
+      amount: 1
+    - !type:DeleteEntity

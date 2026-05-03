@@ -1,0 +1,74 @@
+- type: entity
+  id: LongbowChassisUnfinished
+  parent: BaseTurretPart
+  name: турельное основание Лонгбоу
+  description: Облегченная поворотная платформа с усиленными сервоприводами. Рассчитана на высокую угловую скорость наведения 90-мм орудия.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Research/rped.rsi
+    state: icon
+    color: "#7a8a99" # Стальной синеватый оттенок
+  - type: Construction
+    graph: Longbow
+    node: start
+    defaultTarget: longbow
+
+- type: entity
+  id: LongbowAutoloaderItem
+  parent: BaseTurretPart
+  name: блок автозарядника Лонгбоу
+  description: Сложный гидравлический механизм, обеспечивающий подачу 90-мм снарядов из внутреннего бункера. Позволяет вести огонь очередями по 20 выстрелов.
+  components:
+    - type: Tag
+      tags:
+      - LongbowAutoloaderItem
+
+- type: entity
+  id: LongbowMagazineItem
+  parent: BaseTurretPart
+  name: снарядный бункер Лонгбоу
+  description: Емкость для хранения и предварительного распределения 90-мм боеприпасов. Оснащена системой автоматического восполнения.
+  components:
+    - type: Tag
+      tags:
+      - LongbowMagazineItem
+
+- type: entity
+  id: LongbowTargetingItem
+  parent: BaseTurretPart
+  name: тактический вычислитель Лонгбоу
+  description: Оптико-электронная система захвата целей. Оптимизирована для отслеживания быстродвижущихся объектов и расчета упреждения при темповой стрельбе.
+  components:
+    - type: Tag
+      tags:
+      - LongbowTargetingItem
+
+- type: entity
+  id: LongbowBarrelItem
+  parent: BaseTurretPart
+  name: строенный ствол Лонгбоу
+  description: Высокоресурсный нарезной ствол с дульным тормозом-компенсатором. Предназначен для удержания кучности при ведении автоматического огня.
+  components:
+    - type: Tag
+      tags:
+      - LongbowBarrelItem
+
+- type: entity
+  id: LongbowWorkPiece
+  parent: BaseTurretPart
+  name: упакованная установка Лонгбоу
+  description: Полный комплект деталей Л65-Лонгбоу в защитном кожухе. Готов к финальной сборке в промышленном тигле.
+  components:
+  - type: CrucibleRecipe
+    processingTime: 12
+    resultEntity: LongbowFlatpack
+
+# Тэги для логики сборки
+- type: Tag
+  id: LongbowAutoloaderItem
+- type: Tag
+  id: LongbowMagazineItem
+- type: Tag
+  id: LongbowTargetingItem
+- type: Tag
+  id: LongbowBarrelItem

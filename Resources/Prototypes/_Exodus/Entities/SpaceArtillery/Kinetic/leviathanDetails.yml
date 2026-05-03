@@ -1,0 +1,73 @@
+- type: entity
+  id: LeviathanChassisUnfinished
+  parent: BaseHeavyTurretPart
+  name: сверхтяжелый погон Левиафана
+  description: Титаническое стальное основание с усиленным демпферным контуром. Только такая конструкция способна выдержать отдачу 520-мм калибра без разрушения палубы.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Research/rped.rsi
+    state: icon
+    color: "#3d1111"
+  - type: Construction
+    graph: Leviathan
+    node: start
+    defaultTarget: leviathan
+
+- type: entity
+  id: LeviathanSlideItem
+  parent: BaseHeavyTurretPart
+  name: затворный блок типа «Анаконда»
+  description: Увеличенный в сотни раз механизм самозарядки. При выстреле гигантская рама откатывается назад, выбрасывая гильзу размером с человека.
+  components:
+    - type: Tag
+      tags:
+      - LeviathanSlideItem
+
+- type: entity
+  id: LeviathanRemoteModuleItem
+  parent: BaseHeavyTurretPart
+  name: защищенный модуль связи Синдиката
+  description: Криптостойкий терминал для дистанционной активации. Позволяет орудию принимать команды с консоли управления через зашифрованные каналы.
+  components:
+    - type: Tag
+      tags:
+      - LeviathanRemoteModuleItem
+
+- type: entity
+  id: LeviathanRammerItem
+  parent: BaseHeavyTurretPart
+  name: гидравлический досылатель Левиафана
+  description: Мощный поршень, обеспечивающий подачу тяжелого 520-мм снаряда в камору. Работает в паре с механизмом отката.
+  components:
+    - type: Tag
+      tags:
+      - LeviathanRammerItem
+
+- type: entity
+  id: LeviathanBarrelItem
+  parent: BaseHeavyTurretPart
+  name: осадный ствол Левиафана
+  description: Шестиметровое стальное чудовище. Его вид внушает ужас врагам Синдиката еще до того, как будет произведен первый выстрел.
+  components:
+    - type: Tag
+      tags:
+      - LeviathanBarrelItem
+
+- type: entity
+  id: LeviathanWorkPiece
+  parent: BaseHeavyTurretPart
+  name: упакованное орудие Левиафан
+  description: Разобранный на ключевые узлы «Левиафан». Требует экстремальных температур в промышленном тигле для сплавки основных соединений.
+  components:
+  - type: CrucibleRecipe
+    processingTime: 30
+    resultEntity: LeviathanFlatpack
+
+- type: Tag
+  id: LeviathanSlideItem
+- type: Tag
+  id: LeviathanRemoteModuleItem
+- type: Tag
+  id: LeviathanRammerItem
+- type: Tag
+  id: LeviathanBarrelItem

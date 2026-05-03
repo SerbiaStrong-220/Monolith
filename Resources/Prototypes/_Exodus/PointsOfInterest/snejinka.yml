@@ -1,0 +1,25 @@
+- type: pointOfInterest
+  id: Snejinka
+  parent: BasePOI
+  name:  'Литейный цех "Снежинка"'
+  minimumDistance: 9500
+  maximumDistance: 12500
+  spawnGroup: Required
+  gridPath: /Maps/_Exodus/POI/snejinka.yml
+  addComponents:
+  - type: IFF
+    color: "#c97e7e"
+
+- type: gameMap
+  id: Snejinka
+  mapName: 'Литейный цех "Снежинка"'
+  mapPath: /Maps/_Exodus/POI/snejinka.yml
+  minPlayers: 0
+  stations:
+    Snejinka:
+      stationProto: RecordsFrontierOutpostCargo
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Литейный цех "Снежинка"'
+        - type: StationDeadDrop
+          maxDeadDrops: 6

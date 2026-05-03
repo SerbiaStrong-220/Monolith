@@ -1,0 +1,77 @@
+- type: constructionGraph
+  id: Bofors
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: feed_loaded
+      steps:
+      - tool: Anchoring
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 2
+      - material: Cable
+      - tool: Cutting
+        doAfter: 2
+      - tag: BoforsFeedItem
+        name: Вставь ленточный элеватор Bofors
+        doAfter: 4
+
+  - node: feed_loaded
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: core_loaded
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: BoforsCoreItem
+        name: Вставь плазменный резонатор Bofors
+        doAfter: 5
+
+  - node: core_loaded
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: targeting_loaded
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: BoforsTargetingItem
+        name: Вставь вычислительный комплекс Bofors
+        doAfter: 2
+
+  - node: targeting_loaded
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: barrels_loaded
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Iridite
+        amount: 20
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+      - tag: BoforsBarrelItem
+        name: Вставь укрепленный ствол Bofors
+        doAfter: 7
+
+  - node: barrels_loaded
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: bofors
+      steps:
+      - tool: Anchoring
+        doAfter: 2
+
+  - node: bofors
+    name: Бофорс
+    actions:
+    - !type:SpawnPrototype
+      prototype: BoforsWorkPiece
+      amount: 1
+    - !type:DeleteEntity

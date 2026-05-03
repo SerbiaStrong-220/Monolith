@@ -1,0 +1,73 @@
+- type: entity
+  id: DraupnirChassisUnfinished
+  parent: BaseTurretPart
+  name: турельный погон Драупнир
+  description: Облегченное кольцевое основание. Изначально проектировалось для установки в носовые турели штурмовиков, теперь адаптировано под палубный монтаж.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Research/rped.rsi
+    state: icon
+    color: "#4a4a4a"
+  - type: Construction
+    graph: Draupnir
+    node: start
+    defaultTarget: draupnir
+
+- type: entity
+  id: DraupnirServosItem
+  parent: BaseTurretPart
+  name: высокоскоростные приводы Драупнир
+  description: Комплект форсированных электромоторов. Обеспечивают мгновенный разворот ствола, необходимый для ближнего боя.
+  components:
+    - type: Tag
+      tags:
+      - DraupnirServosItem
+
+- type: entity
+  id: DraupnirRotaryItem
+  parent: BaseTurretPart
+  name: роторный механизм Драупнир
+  description: Механизм вращения блока стволов. Позволяет достичь безумного темпа стрельбы без перегрева отдельных каналов.
+  components:
+    - type: Tag
+      tags:
+      - DraupnirRotaryItem
+
+- type: entity
+  id: DraupnirOpticsItem
+  parent: BaseTurretPart
+  name: коллиматорный комплекс Драупнир
+  description: Набор цифровых камер и ИК-датчиков для ведения боя на коротких дистанциях. Наследие авиационных прицельных систем.
+  components:
+    - type: Tag
+      tags:
+      - DraupnirOpticsItem
+
+- type: entity
+  id: DraupnirBarrelsItem
+  parent: BaseTurretPart
+  name: блок стволов Р-30
+  description: Связка из шести 30-мм стволов. Обладает характерным "воющим" звуком при раскрутке.
+  components:
+    - type: Tag
+      tags:
+      - DraupnirBarrelsItem
+
+- type: entity
+  id: DraupnirWorkPiece
+  parent: BaseTurretPart
+  name: упакованная установка Драупнир
+  description: Комплект Р-30 Драупнир в транспортировочной пене. Требует финальной калибровки в тигле.
+  components:
+  - type: CrucibleRecipe
+    processingTime: 10
+    resultEntity: RAC30Flatpack
+
+- type: Tag
+  id: DraupnirServosItem
+- type: Tag
+  id: DraupnirRotaryItem
+- type: Tag
+  id: DraupnirOpticsItem
+- type: Tag
+  id: DraupnirBarrelsItem

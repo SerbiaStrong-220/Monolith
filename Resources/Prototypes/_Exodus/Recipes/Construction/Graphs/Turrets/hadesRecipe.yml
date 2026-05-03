@@ -1,0 +1,46 @@
+- type: constructionGraph
+  id: Hades
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hades
+      steps:
+      - tool: Anchoring
+        doAfter: 3
+      - tool: Screwing
+        doAfter: 1.5
+      - material: Cable
+        amount: 3
+        doAfter: 1.5
+      - tool: Cutting
+        doAfter: 1
+      - tag: HadesAutoloaderItem
+        name: Установите блок перезарядки Hades
+      - tool: Screwing
+        doAfter: 1.5
+      - tag: HadesPneumaticsItem
+        name: Установите пневматические приводы Hades
+      - tool: Screwing
+        doAfter: 1.5
+      - tag: HadesInterfaceItem
+        name: Установите интерфейс управления Hades
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 12
+      - tool: Anchoring
+        doAfter: 2
+      - tool: Welding
+        doAfter: 3
+      - tag: HadesBarrelItem
+        name: Установите 255-мм ствол Hades
+      - tool: Anchoring
+        doAfter: 3
+
+  - node: hades
+    actions:
+    - !type:SpawnPrototype
+      prototype: HadesWorkPiece
+      amount: 1
+    - !type:DeleteEntity

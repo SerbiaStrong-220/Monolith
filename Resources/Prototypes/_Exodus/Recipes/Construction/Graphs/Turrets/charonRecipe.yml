@@ -1,0 +1,46 @@
+- type: constructionGraph
+  id: Charon
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: charon
+      steps:
+      - tool: Anchoring
+        doAfter: 4
+      - tool: Screwing
+        doAfter: 2
+      - material: Cable
+        amount: 8
+        doAfter: 3
+      - tool: Cutting
+        doAfter: 1
+      - tag: CharonCapacitorItem
+        name: Установите конденсаторный блок Charon
+      - tool: Welding
+        doAfter: 4
+      - tag: CharonRailsItem
+        name: Установите направляющие рельсы Charon
+      - tool: Screwing
+        doAfter: 2
+      - tag: CharonLoaderItem
+        name: Установите загрузочный лоток
+      - tool: Screwing
+        doAfter: 1
+      - tag: CharonLogicItem
+        name: Установите контроллер синхронизации
+      - material: Steel
+        amount: 15
+      - tool: Anchoring
+        doAfter: 2
+      - tool: Welding
+        doAfter: 5
+      - tool: Anchoring
+        doAfter: 2
+
+  - node: charon
+    actions:
+    - !type:SpawnPrototype
+      prototype: CharonWorkPiece
+      amount: 1
+    - !type:DeleteEntity

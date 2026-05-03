@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by kyres1, modified by Avalon-Proto, modified by Surani",
+  "size": {
+    "x": 128,
+    "y": 128
+  },
+  "states": [
+    {
+      "name": "bofors_chassis"
+    },
+    {
+      "name": "bofors_core"
+    },
+    {
+      "name": "bofors_feed"
+    },
+    {
+      "name": "bofors_targeting"
+    },
+    {
+      "name": "bofors_barrel"
+    },
+    {
+      "name": "bofors_workpiece"
+    }
+  ]
+}

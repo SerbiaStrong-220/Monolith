@@ -1,28 +1,29 @@
 - type: constructionGraph
-  id: Bofors
+  id: Longbow
   start: start
   graph:
   - node: start
     edges:
-    - to: bofors
+    - to: longbow
       steps:
       - tool: Anchoring
         doAfter: 1
       - tool: Screwing
         doAfter: 1
       - material: Cable
+        doAfter: 1
       - tool: Cutting
         doAfter: 1
-      - tag: BoforsCoreItem
-        name: Вставь ядро Bofors
+      - tag: LongbowAutoloaderItem
+        name: Установите блок автозарядника Longbow
       - tool: Screwing
         doAfter: 1
-      - tag: BoforsFeedItem
-        name: Подача Bofors
+      - tag: LongbowMagazineItem
+        name: Установите снарядный бункер Longbow
       - tool: Screwing
         doAfter: 1
-      - tag: BoforsTargetingItem
-        name: Радар Bofors
+      - tag: LongbowTargetingItem
+        name: Установите вычислитель Longbow
       - tool: Screwing
         doAfter: 1
       - material: Steel
@@ -31,14 +32,14 @@
         doAfter: 1
       - tool: Welding
         doAfter: 1
-      - tag: BoforsBarrelItem
-        name: Стволы Bofors
+      - tag: LongbowBarrelItem
+        name: Установите ствольную группу Longbow
       - tool: Anchoring
         doAfter: 2
 
-  - node: bofors
+  - node: longbow
     actions:
     - !type:SpawnPrototype
-      prototype: BoforsWorkPiece
+      prototype: LongbowWorkPiece
       amount: 1
     - !type:DeleteEntity

@@ -1,0 +1,74 @@
+- type: entity
+  id: HadesChassisUnfinished
+  parent: BaseHeavyTurretPart
+  name: артиллерийская платформа Хейдес
+  description: Массивное стационарное основание. Сконструировано для гашения колоссальной энергии отдачи 255-мм снарядов.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Research/rped.rsi
+    state: icon
+    color: "#2b2b2b"
+  - type: Construction
+    graph: Hades
+    node: start
+    defaultTarget: hades
+
+- type: entity
+  id: HadesAutoloaderItem
+  parent: BaseHeavyTurretPart
+  name: автоматизированная камора Хейдеса
+  description: Узел автоматической перезарядки, способный оперировать полноразмерными 255-мм болванками без участия экипажа.
+  components:
+    - type: Tag
+      tags:
+      - HadesAutoloaderItem
+
+- type: entity
+  id: HadesInterfaceItem
+  parent: BaseHeavyTurretPart
+  name: терминал управления Хейдес
+  description: Интерфейсный блок для синхронизации с орудийной консолью.
+  components:
+    - type: Tag
+      tags:
+      - HadesInterfaceItem
+
+- type: entity
+  id: HadesPneumaticsItem
+  parent: BaseHeavyTurretPart
+  name: пневмоприводы Хейдеса
+  description: Мощные нагнетатели, отвечающие за быструю подачу снарядов из внутреннего хранилища в ствол.
+  components:
+    - type: Tag
+      tags:
+      - HadesPneumaticsItem
+
+- type: entity
+  id: HadesBarrelItem
+  parent: BaseHeavyTurretPart
+  name: 255-мм ствол Хейдес
+  description: Тяжелобронированный ствол. По мощности уступает лишь масс-драйверам, превращая корабли противника в облака обломков.
+  components:
+    - type: Tag
+      tags:
+      - HadesBarrelItem
+
+- type: entity
+  id: HadesWorkPiece
+  parent: BaseHeavyTurretPart
+  name: упакованное орудие Хейдес
+  description: Полный комплект 255-мм установки в защитных распорках. Готов к закалке в промышленном тигле.
+  components:
+  - type: CrucibleRecipe
+    processingTime: 25
+    resultEntity: HadesFlatpack
+
+# Тэги
+- type: Tag
+  id: HadesAutoloaderItem
+- type: Tag
+  id: HadesInterfaceItem
+- type: Tag
+  id: HadesPneumaticsItem
+- type: Tag
+  id: HadesBarrelItem

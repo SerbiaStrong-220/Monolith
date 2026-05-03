@@ -1,0 +1,46 @@
+- type: constructionGraph
+  id: Leviathan
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: leviathan
+      steps:
+      - tool: Anchoring
+        doAfter: 5
+      - tool: Screwing
+        doAfter: 2
+      - material: Cable
+        amount: 5
+        doAfter: 2
+      - tool: Cutting
+        doAfter: 1
+      - tag: LeviathanSlideItem
+        name: Установите затвор «Анаконда»
+      - tool: Welder
+        doAfter: 5
+      - tag: LeviathanRammerItem
+        name: Установите систему досылания
+      - tool: Screwing
+        doAfter: 2
+      - tag: LeviathanRemoteModuleItem
+        name: Установите модуль ДУ
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 20
+      - tool: Anchoring
+        doAfter: 3
+      - tool: Welding
+        doAfter: 10
+      - tag: LeviathanBarrelItem
+        name: Установите осадный ствол 520-мм
+      - tool: Anchoring
+        doAfter: 5
+
+  - node: leviathan
+    actions:
+    - !type:SpawnPrototype
+      prototype: LeviathanWorkPiece
+      amount: 1
+    - !type:DeleteEntity
