@@ -7,7 +7,6 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - ExEncryptionKeyCommon # Exodus: new common channel
       - EncryptionKeyTraffic # Exodus: replace common channel
       - EncryptionKeyNfsd
       - EncryptionKeyCommand
@@ -42,7 +41,6 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - ExEncryptionKeyCommon # Exodus: new common channel
       - EncryptionKeyTraffic # Exodus: replace common channel
       - EncryptionKeyNfsd
 
@@ -56,7 +54,6 @@
       key_slots:
       - EncryptionKeyCommand
       # - EncryptionKeyCommon # Exodus: replace common channel
-      - ExEncryptionKeyCommon # Exodus: new common channel
       - EncryptionKeyNfsd
       - EncryptionKeyTraffic
       - EncryptionKeyMedical
