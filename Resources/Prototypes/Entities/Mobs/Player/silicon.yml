@@ -7,7 +7,7 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
-    - Traffic # Exodus
+    - Common
     - Command
     - Engineering
     - Medical
@@ -17,7 +17,7 @@
     - Supply
   - type: ActiveRadio
     channels:
-    - Traffic # Exodus
+    - Common
     - Command
     - Engineering
     - Medical
@@ -94,7 +94,7 @@
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
-    - Traffic # Exodus
+    - Common
   - type: CollectiveMind
     channels:
     - Binary

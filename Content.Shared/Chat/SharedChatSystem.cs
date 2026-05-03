@@ -28,7 +28,7 @@ public abstract class SharedChatSystem : EntitySystem
     public const char DefaultChannelKey = 'р'; // RU-Localization
 
     [ValidatePrototypeId<RadioChannelPrototype>]
-    public const string CommonChannel = "Traffic"; // Exodus
+    public const string CommonChannel = "Common";
 
     public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
 

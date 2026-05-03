@@ -10,12 +10,11 @@
   equipment:
     ears: ClothingHeadsetSecurityCommon
 
-# Exodus: for medics only
-# - type: loadout
-#   id: MercenaryClothingHeadsetBrigmedicCommon
-#   price: 0 # Mono
-#   equipment:
-#     ears: ClothingHeadsetBrigmedicCommon
+- type: loadout
+  id: MercenaryClothingHeadsetBrigmedicCommon
+  price: 0 # Mono
+  equipment:
+    ears: ClothingHeadsetBrigmedicCommon
 
 - type: loadout
   id: MercenaryClothingHeadsetAltSecurityCommon

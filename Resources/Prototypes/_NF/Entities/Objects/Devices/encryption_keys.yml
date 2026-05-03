@@ -5,8 +5,8 @@
   description: An encryption key for the shortband channel. Limited to a 750 meters range.
   components:
   - type: EncryptionKey
-    channels: # Exodus
-    - channel: Traffic
+    channels:
+    - Traffic
     defaultChannel: Traffic
   - type: Item
     sprite: _NF/Objects/Devices/encryption_keys.rsi
@@ -24,8 +24,8 @@
   description: An encryption key for the TSFMC channel.
   components:
   - type: EncryptionKey
-    channels: # Exodus
-    - channel: Nfsd
+    channels:
+    - Nfsd
     defaultChannel: Nfsd
   - type: Item
     sprite: _NF/Objects/Devices/encryption_keys.rsi
@@ -45,10 +45,12 @@
   description: An encryption key for coordinating medical dispatch.
   components:
   - type: EncryptionKey
-    channels: # Exodus
-    - channel: Medical
-    - channel: Command
-    defaultChannel: Medical
+    channels:
+    - Common
+    - Medical
+    - Service # Mono
+    #- Command # Mono
+    defaultChannel: Common
   - type: Item
     sprite: _NF/Objects/Devices/encryption_keys.rsi
   - type: Sprite

@@ -17,7 +17,7 @@
         - EncryptionKeySecurity
       rareChance: 0.1
       prototypes:
-        # - EncryptionKeyCommon # Exodus: replace common channel
+        - EncryptionKeyCommon
         - EncryptionKeyEngineering
         - EncryptionKeyScience
         - EncryptionKeyService

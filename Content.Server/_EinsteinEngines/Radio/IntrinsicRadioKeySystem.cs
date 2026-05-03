@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Radio.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
@@ -28,6 +27,6 @@ public sealed class IntrinsicRadioKeySystem : EntitySystem
     private void UpdateChannels(EntityUid _, EncryptionKeyHolderComponent keyHolderComp, ref HashSet<string> channels)
     {
         channels.Clear();
-        channels.UnionWith(keyHolderComp.Channels.Select(c => c.Channel.Id)); // Exodus: Use of RadioChannelEntry
+        channels.UnionWith(keyHolderComp.Channels);
     }
 }
