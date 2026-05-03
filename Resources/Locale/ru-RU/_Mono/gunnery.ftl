@@ -13,9 +13,7 @@ gunnery-select-missiles = Ракетные
 
 gunnery-shield-status-label = Статус щита:
 gunnery-shield-load-label = Нагрузка щита:
-# Exodus-begin | display shield load in watts
-gunnery-shield-load = { $draw } Вт
-# Exodus-end
+gunnery-shield-load = { $draw } кВт
 gunnery-shield-normal = Щит поднят
 gunnery-shield-under-load = Под нагрузкой
 gunnery-shield-overload = Получение повреждений
