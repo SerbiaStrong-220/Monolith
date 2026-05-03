@@ -41,8 +41,7 @@
           collection: GlassBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: PirateBountyItem
-    id: FentanylCrystal
+  # Exodus-Remove-Bounty
   - type: ItemTax # Mono
     taxAccounts:
       Medical: -0.05

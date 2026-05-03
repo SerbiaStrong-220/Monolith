@@ -157,8 +157,7 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/_NF/Animals/nfsdcat_meow.ogg
-  - type: PirateBountyItem
-    id: Cappy
+  # Exodus-Remove-Bounty
   - type: SouthernAccent
   - type: Company
     companyName: TSF

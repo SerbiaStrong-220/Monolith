@@ -12,8 +12,7 @@
       gloves: ClothingModsuitGauntletsUSSPVaryag
       outerClothing: ClothingModsuitChestplateUSSPVaryag
       shoes: ClothingModsuitBootsUSSPVaryag
-  - type: PirateBountyItem # Mono
-    id: ClothingOuterHardsuitTacsuit
+  # Exodus-Remove-Bounty
 
 - type: entity
   parent: ClothingModsuitUSSPVaryag
@@ -43,8 +42,7 @@
       gloves: ClothingModsuitGauntletsUSSPZastavnik
       outerClothing: ClothingModsuitChestplateUSSPZastavnik
       shoes: ClothingModsuitBootsUSSPZastavnik
-  - type: PirateBountyItem # Mono
-    id: ClothingOuterHardsuitTacsuitHighValue
+  # Exodus-Remove-Bounty
 
 - type: entity
   parent: ClothingModsuitUSSPZastavnik

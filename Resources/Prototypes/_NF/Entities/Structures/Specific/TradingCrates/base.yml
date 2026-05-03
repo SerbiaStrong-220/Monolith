@@ -126,8 +126,7 @@
     allowedShipyardTypes:
     - Syndicate
     - BlackMarket
-  - type: PirateBountyItem
-    id: ContrabandCrate
+  # Exodus-Remove-Bounty
   - type: ItemTax # Mono
     taxAccounts:
       BlackMarket: 0.3

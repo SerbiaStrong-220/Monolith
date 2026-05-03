@@ -89,8 +89,7 @@
   - type: Anchorable
     delay: 10
   - type: Pullable
-  - type: PirateBountyItem # not putting this on the other, because like. how do you get a cyrexa for your bounty. thats stupid.
-    id: ShipWeapon
+  # Exodus-Remove-Bounty
 
 - type: entity
   id: BallisticArtilleryBaseCartridge
@@ -180,8 +179,7 @@
     rotateWhileAnchored: false
     increment: 90
   - type: Pullable
-  - type: PirateBountyItem # not putting this on the other, because like. how do you get a cyrexa for your bounty. thats stupid.
-    id: ShipWeapon
+  # Exodus-Remove-Bounty
 
 - type: entity
   id: BallisticArtilleryUnanchorableCartridge
@@ -286,8 +284,7 @@
     rotateWhileAnchored: false
     increment: 90
   - type: Pullable
-  - type: PirateBountyItem # not putting this on the other, because like. how do you get a cyrexa for your bounty. thats stupid.
-    id: ShipWeapon
+  # Exodus-Remove-Bounty
 
 - type: entity
   id: BallisticArtilleryUnanchorableMagazine

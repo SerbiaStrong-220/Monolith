@@ -94,8 +94,7 @@
       types:
         Blunt: 10
   - type: CargoSellBlacklist # Frontier
-  - type: PirateBountyItem
-    id: Mail
+  # Exodus-Remove-Bounty
   - type: LanguageSpeaker # Einstein Engines - Language
   - type: LanguageKnowledge # Einstein Engines - Language
     speaks:

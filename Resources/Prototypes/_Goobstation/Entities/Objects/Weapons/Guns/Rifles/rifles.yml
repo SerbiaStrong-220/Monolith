@@ -58,8 +58,7 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
-  - type: PirateBountyItem # Mono
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   - type: GunRequiresWield
 
 - type: entity

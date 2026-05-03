@@ -129,8 +129,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 1200
-  - type: PirateBountyItem
-    id: StandardFactionLongarm
+  # Exodus-Remove-Bounty
 
 - type: entity
   name: VFD XLR-556 ICWS (5.56x45mm)
@@ -199,8 +198,7 @@
   - type: StaticPrice
     price: 3500
     vendPrice: 9000
-  - type: PirateBountyItem
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
 
 #Mercenary vulcan
 - type: entity
@@ -387,8 +385,7 @@
   - type: StaticPrice
     price: 10000
     vendPrice: 25000
-  - type: PirateBountyItem
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   - type: SmartGun
     requiresWield: true
   - type: LaserPointer
@@ -472,5 +469,4 @@
   - type: Appearance
   - type: StaticPrice
     price: 750
-  - type: PirateBountyItem
-    id: StandardFactionLongarm
+  # Exodus-Remove-Bounty

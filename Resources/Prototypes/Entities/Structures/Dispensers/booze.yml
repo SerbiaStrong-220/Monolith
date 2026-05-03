@@ -25,8 +25,7 @@
     - Drinks
   - type: StealTarget
     stealGroup: BoozeDispenser
-  - type: PirateBountyItem # Frontier
-    id: BoozeDispenser # Frontier
+  # Exodus-Remove-Bounty
 
 
 - type: entity

@@ -288,8 +288,7 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser #Mono: RedLaser >> RedMediumLaser
     fireCost: 30 #Mono: 62.5 >> 30
-  - type: PirateBountyItem # Mono
-    id: StandardFactionLongarm
+  # Exodus-Remove-Bounty
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -329,8 +328,7 @@
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
-  - type: PirateBountyItem # Mono
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   # Mono Additions
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -378,8 +376,7 @@
   - type: Battery
     maxCharge: 3000 # Mono
     startingCharge: 3000
-  - type: PirateBountyItem # Mono
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   # Mono Additions
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -422,8 +419,7 @@
   - type: Battery
     maxCharge: 6000 # Mono
     startingCharge: 6000 # Mono
-  - type: PirateBountyItem # Mono
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   # Mono Additions
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -471,8 +467,7 @@
   - type: Battery
     maxCharge: 6000 # Mono
     startingCharge: 6000 # Mono
-  - type: PirateBountyItem # Mono
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   # Mono Additions
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -762,8 +757,7 @@
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
     # not putting a BlockMovement component here cause that's funny.
-  - type: PirateBountyItem # Mono
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
 
 - type: entity
   name: advanced laser pistol

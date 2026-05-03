@@ -111,8 +111,7 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: PirateBountyItem
-    id: ShipShield
+  # Exodus-Remove-Bounty
 
 # POI
 - type: entity
@@ -372,8 +371,7 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: PirateBountyItem
-    id: ShipShield
+  # Exodus-Remove-Bounty
   - type: ShipRepairable
     repairTime: 25
     repairCost: 200
@@ -459,8 +457,7 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: PirateBountyItem
-    id: ShipShield
+  # Exodus-Remove-Bounty
   - type: ShipRepairable
     repairTime: 20
     repairCost: 125

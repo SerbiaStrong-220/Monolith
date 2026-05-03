@@ -47,8 +47,7 @@
   - type: Tag
     tags:
     - ObjectOfSpiritualSignificance
-  - type: PirateBountyItem
-    id: ClothingNeckAmuletBloodCult
+  # Exodus-Remove-Bounty
 
 - type: entity
   parent: ClothingNeckBase

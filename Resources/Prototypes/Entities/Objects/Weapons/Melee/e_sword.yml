@@ -102,8 +102,7 @@
       map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
-  - type: PirateBountyItem # Mono
-    id: TSFEnergyWeapon
+  # Exodus-Remove-Bounty
   - type: Tag  # Mono
     tags:
     - EnergySword
@@ -370,8 +369,7 @@
   - type: Reflect
     reflectProb: .5
     spread: 75
-  - type: PirateBountyItem # Mono
-    id: TSFEnergyWeapon
+  # Exodus-Remove-Bounty
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity

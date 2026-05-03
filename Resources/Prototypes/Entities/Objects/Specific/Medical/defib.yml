@@ -46,8 +46,7 @@
       - TauCetiBasic
       understands:
       - TauCetiBasic
-    - type: PirateBountyItem # Frontier
-      id: Defibrillator # Frontier
+    # Exodus-Remove-Bounty
 
 - type: entity
   id: Defibrillator

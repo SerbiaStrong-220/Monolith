@@ -48,8 +48,7 @@
           Quantity: 10
   - type: Item
     heldPrefix: gold
-  - type: PirateBountyItem # Frontier
-    id: Gold # Frontier
+  # Exodus-Remove-Bounty
 
 - type: entity
   parent: GoldOre

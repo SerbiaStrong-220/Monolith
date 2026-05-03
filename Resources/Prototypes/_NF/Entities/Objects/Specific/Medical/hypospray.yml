@@ -24,8 +24,7 @@
   - type: StaticPrice
     price: 550
     vendPrice: 5000 # Mono
-  - type: PirateBountyItem # Frontier
-    id: HypoMini # Frontier
+  # Exodus-Remove-Bounty
 
 - type: entity
   name: NTCS-102 hypospray

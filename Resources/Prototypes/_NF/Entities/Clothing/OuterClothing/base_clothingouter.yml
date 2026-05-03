@@ -12,7 +12,6 @@
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
   - type: HeldSpeedModifier
-  - type: PirateBountyItem
-    id: ClothingOuterHardsuitTacsuit
+  # Exodus-Remove-Bounty
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.35

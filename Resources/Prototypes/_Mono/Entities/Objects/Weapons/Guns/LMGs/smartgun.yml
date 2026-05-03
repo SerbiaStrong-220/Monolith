@@ -64,8 +64,7 @@
     walkModifier: 0.5
     sprintModifier: 0.4
   - type: GunRequiresWield
-  - type: PirateBountyItem
-    id: ExperimentalFactionWeapon
+  # Exodus-Remove-Bounty
   - type: SmartGun
     requiresWield: true
   - type: LaserPointer

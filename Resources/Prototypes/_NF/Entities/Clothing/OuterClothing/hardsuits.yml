@@ -35,8 +35,7 @@
       head:  ClothingHeadHelmetHardsuitMercenary
       helmetcover: ClothingHeadHelmetCoverBlock
       helmetattachment: ClothingHeadHelmetAttachmentBlock
-  - type: PirateBountyItem # Mono
-    id: ClothingOuterHardsuitTacsuit
+  # Exodus-Remove-Bounty
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.65
 
