@@ -17,7 +17,10 @@ namespace Content.Client._Exodus.Nebula;
 
 public sealed class NebulaParallaxSystem : EntitySystem
 {
+    private static readonly ProtoId<ParallaxPrototype> BlueNebulaParallax = "BlueNebula";
     private static readonly ProtoId<ParallaxPrototype> RedNebulaParallax = "RedNebula";
+    private static readonly ProtoId<ParallaxPrototype> GreenNebulaParallax = "GreenNebula";
+    private static readonly ProtoId<ParallaxPrototype> PurpleNebulaParallax = "PurpleNebula";
     private static readonly TimeSpan BackgroundLightningDuration = TimeSpan.FromSeconds(0.38f);
     private static readonly TimeSpan BackgroundLightningMinDelay = TimeSpan.FromSeconds(2);
     private static readonly TimeSpan BackgroundLightningMaxDelay = TimeSpan.FromSeconds(6);
@@ -218,9 +221,17 @@ public sealed class NebulaParallaxSystem : EntitySystem
     {
         switch (type)
         {
-            // Add other nebula type parallaxes here when their assets are ready.
+            case NebulaType.Blue:
+                parallax = BlueNebulaParallax;
+                return true;
             case NebulaType.Red:
                 parallax = RedNebulaParallax;
+                return true;
+            case NebulaType.Green:
+                parallax = GreenNebulaParallax;
+                return true;
+            case NebulaType.Purple:
+                parallax = PurpleNebulaParallax;
                 return true;
             default:
                 parallax = default;

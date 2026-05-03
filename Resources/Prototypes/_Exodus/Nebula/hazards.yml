@@ -7,7 +7,7 @@
   - type: Sprite
     drawdepth: Effects
     layers:
-    - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Lightning.png
+    - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Lightning.png
       offset: 0,4
       shader: unshaded
   - type: PointLight
@@ -32,7 +32,7 @@
     drawdepth: Effects
     scale: 2,2
     layers:
-    - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Lightning.png
+    - texture: _Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Lightning.png
       offset: 0,4
       shader: unshaded
   - type: PointLight
