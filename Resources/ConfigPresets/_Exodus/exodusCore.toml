@@ -41,8 +41,7 @@ maximum_width = 30
 
 [ooc]
 show_ooc_patron_color = false
-enabled = true
-enable_during_round = true
+enable_during_round = false
 
 [rules]
 time = 30
