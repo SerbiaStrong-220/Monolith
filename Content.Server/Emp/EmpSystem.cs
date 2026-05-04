@@ -201,7 +201,7 @@ public sealed class EmpSystem : SharedEmpSystem
             Loc.GetString("emp-examinable-verb-message"));
     }
 
-    private FormattedMessage GetEmpDescription(float range, float energy, float time)
+    public FormattedMessage GetEmpDescription(float range, float energy, float time) //Exodus AdvancedWeaponExamine
     {
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString("emp-examine"));

@@ -1,3 +1,5 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+// Authors: Provstat
 using Content.Shared.Damage;
 
 namespace Content.Shared._Exodus.Examine.Damage;

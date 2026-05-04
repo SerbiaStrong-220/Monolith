@@ -1,4 +1,5 @@
 using Content.Server._Exodus.Examine;           //Exodus AdvancedWeaponExamine
+using Content.Server.Emp;
 using Content.Shared._Exodus.Examine.Damage;    //Exodus ArmorPiercingExamine
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
@@ -16,6 +17,8 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    [Dependency] private readonly AdvancedGunExamineSystem _gunExamineSystem = default!;            //Exodus AdvancedWeaponExamine
+    [Dependency] private readonly EmpSystem _emp = default!;                                        //Exodus AdvancedWeaponExamine
     [Dependency] private readonly ExplosiveEntityExamineSystem _explosiveEntityExamine = default!;  //Exodus AdvancedWeaponExamine
     [Dependency] private readonly ExplosionExamineSystem _explosionExamine = default!;              //Exodus AdvancedWeaponExamine
     protected override void InitializeCartridge()
@@ -49,6 +52,13 @@ public sealed partial class GunSystem
 
         if (cartridgeInfo.Value.Explosion is not null)
             _explosionExamine.AddExplosiveInfoToExamineMessage(examineMessage, cartridgeInfo.Value.Explosion.Value);
+
+        if (cartridgeInfo.Value.Emp is not null &&
+            _emp.GetEmpDescription(cartridgeInfo.Value.Emp.Value.Range, cartridgeInfo.Value.Emp.Value.Energy, cartridgeInfo.Value.Emp.Value.Time) is { } empMessage)
+        {
+            examineMessage.PushNewline();
+            examineMessage.AddMessage(empMessage);
+        }
     }
 
     private ExamineCartridgeInfo? GetIndefineProjectileDamageInfo(string proto)
@@ -77,7 +87,8 @@ public sealed partial class GunSystem
                 {
                     Damage = p.Damage * Damageable.UniversalProjectileDamageModifier,
                     ArmorPenetration = p.ArmorPenetration,
-                    Explosion = _explosiveEntityExamine.GetExplosiveInfo(projectileEntity)
+                    Explosion = _explosiveEntityExamine.GetExplosiveInfo(projectileEntity),
+                    Emp = _gunExamineSystem.GetEmpInfo(projectileEntity)
                 };
             }
         }

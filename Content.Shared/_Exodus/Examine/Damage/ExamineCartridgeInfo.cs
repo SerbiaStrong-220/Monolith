@@ -11,4 +11,5 @@ public readonly struct ExamineCartridgeInfo
     public float? ArmorPenetration { get; init; }
 
     public ExamineExplosionInfo? Explosion { get; init; }
+    public ExamineEmpInfo? Emp { get; init; }
 }

@@ -15,11 +15,6 @@ public sealed class ExplosiveEntityExamineSystem : EntitySystem
     [Dependency] private readonly ExplosionExamineSystem _explosionExamine = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     public ExamineExplosionInfo? GetExplosiveInfo(ExplosiveComponent comp)
     {
         var damage = GetExplosionDamage(comp.ExplosionType);
