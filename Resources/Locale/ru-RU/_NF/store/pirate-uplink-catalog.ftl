@@ -1,10 +1,10 @@
 # Mono edit
-store-category-pirateequipment = Equipment
-store-category-pirateweapons = Weapons
-store-category-piratemedical = Medical
-store-category-pirateutility = Utility
-store-category-pirateammo = Ammunition
-store-category-pirateexplosives = Explosives
+store-category-pirateequipment = Снаряжение
+store-category-pirateweapons = Оружие
+store-category-piratemedical = Медицина
+store-category-pirateutility = Утилиты
+store-category-pirateammo = Боеприпасы
+store-category-pirateexplosives = Взрывчатка
 store-category-pirategambling = Gambling
 
 # Mono edit end

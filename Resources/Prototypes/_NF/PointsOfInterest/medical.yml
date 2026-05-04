@@ -15,7 +15,7 @@
   minimumDistance: 1650
   maximumDistance: 2700
   spawnGroup: Required
-  gridPath: /Maps/_NF/POI/medical.yml
+  gridPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
   addComponents:
   - type: IFF
     color: "#00b7eb"
@@ -27,7 +27,7 @@
 - type: gameMap
   id: Medical
   mapName: 'Госпиталь' # Ru-Localization
-  mapPath: /Maps/_NF/POI/medical.yml
+  mapPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
   minPlayers: 0
   stations:
     Medical:

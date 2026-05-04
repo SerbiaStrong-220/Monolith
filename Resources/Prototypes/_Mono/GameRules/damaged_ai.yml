@@ -5,6 +5,7 @@
       - id: UnknownShuttleZenith
       - id: UnknownShuttleWyrm
       - id: UnknownShuttleNebula
+      - id: UnknownShuttleOmen # Exodus
 
 - type: entityTable
   id: DamagedAIShipsTableT2
@@ -17,6 +18,7 @@
     - id: UnknownShuttleWyrm
     - id: UnknownShuttleNebula
     - id: UnknownShuttleConcordX # Exodus
+    - id: UnknownShuttleMantaray # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -36,7 +38,7 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 7
+      minDepartmentPlayers: 6
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -69,14 +71,14 @@
     weight: 2
     maxOccurrences: 4
   - type: GameRule
-    minPlayers: 32
+    minPlayers: 26
   - type: LoadMapRule
     gridPath: /Maps/_Exodus/ShuttleEvent/nebula.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 7
+      minDepartmentPlayers: 5
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -138,6 +140,7 @@
       department: Combatant
       minDepartmentPlayers: 9
 
+# Exodus
 - type: entity
   parent: BaseRandomShuttleRule
   id: UnknownShuttleConcordX
@@ -156,4 +159,46 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 5
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleMantaray
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-destroyer-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 3
+    maxOccurrences: 1
+  - type: GameRule
+    minPlayers: 40
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/mantaray.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 7
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleOmen
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-shuttle-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 3
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 16
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/omen.yml
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 3
