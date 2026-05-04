@@ -56,8 +56,18 @@ public sealed partial class GunSystem
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;
 
+        //Exodus AdvancedWeaponExamine Start
         if (entityProto.Components
-            .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
+            .TryGetValue(Factory.GetComponentName<CartridgeAmmoComponent>(), out var cartrigjeAmmo))
+        {
+            var cartridje = (CartridgeAmmoComponent)cartrigjeAmmo.Component;
+
+            return GetProjectileDamageInfo(cartridje.Prototype);
+        }
+        //Exodus AdvancedWeaponExamine End
+
+        if (entityProto.Components
+        .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
         {
 
             var p = (ProjectileComponent)projectile.Component;

@@ -165,6 +165,7 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: DamageExaminable # Exodus RechargableWeaponExamine
   - type: Repairable
     qualities:
     - Applicating
