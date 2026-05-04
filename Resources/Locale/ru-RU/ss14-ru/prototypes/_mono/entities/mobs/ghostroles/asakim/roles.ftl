@@ -1,3 +1,3 @@
-ent-MobAsakimGhostrole = asakim warrior
-    .suffix = Asakim
+ent-MobAsakimGhostrole = боец азаким
+    .suffix = Азаким
     .desc = { ent-MobAsakim.desc }

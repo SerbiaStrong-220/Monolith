@@ -1,4 +1,5 @@
-# - type: radioChannel # Exodus
+# Exodus
+# - type: radioChannel
 #   id: Common
 #   name: chat-radio-common
 #   keycode: ";" # Ru-Localization
