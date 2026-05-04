@@ -48,7 +48,7 @@
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
-    - Common
+    - Traffic # Exodus: replace common channel
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator

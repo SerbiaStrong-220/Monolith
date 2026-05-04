@@ -76,12 +76,12 @@
     access: [["Security"], ["Armory"], ["Sergeant"], ["Bailiff"], ["TsfmcEngineering"], ["Brig"]]
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Nfsd
     - Traffic
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Nfsd
     - Traffic
   - type: LanguageKnowledge
@@ -133,12 +133,12 @@
     access: [["GrandVizier"]]
   - type: IntrinsicRadioTransmitter
     channels:
-    - Common
+    # - Common # Exodus
     - Freelance
     - Traffic
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Freelance
     - Traffic
   - type: LanguageKnowledge

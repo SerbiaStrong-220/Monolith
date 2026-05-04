@@ -336,8 +336,8 @@
         orGroup: coms
       - id: ClothingHeadsetEngineering
         orGroup: coms
-      - id: ClothingHeadsetMedical
-        orGroup: coms
+      # - id: ClothingHeadsetMedical # Exodus
+      #   orGroup: coms
       - id: EncryptionKeyCargo
         prob: 0.05
       - id: EncryptionKeyScience

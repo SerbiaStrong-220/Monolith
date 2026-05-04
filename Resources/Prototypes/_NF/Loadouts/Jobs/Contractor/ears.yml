@@ -28,11 +28,11 @@
   equipment:
     ears: ClothingHeadsetEngineeringCommon
 
-- type: loadout
-  id: ContractorClothingHeadsetMedicalCommon
-  price: 0 # Mono
-  equipment:
-    ears: ClothingHeadsetMedicalCommon
+# - type: loadout # Exodus: for medics only
+#   id: ContractorClothingHeadsetMedicalCommon
+#   price: 0 # Mono
+#   equipment:
+#     ears: ClothingHeadsetMedicalCommon
 
 - type: loadout
   id: ContractorClothingHeadsetScienceCommon

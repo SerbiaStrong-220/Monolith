@@ -11,7 +11,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 10 # Frontier 4<10
@@ -45,7 +45,7 @@
     containers:
       key_slots:
       - EncryptionKeyCargo
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -73,7 +73,7 @@
       key_slots:
       - EncryptionKeyCargo
 #      - EncryptionKeyCommand # Frontier
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
 
 - type: entity
   parent: ClothingHeadset
@@ -116,7 +116,7 @@
     containers:
       key_slots:
       - EncryptionKeyEngineering
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -133,7 +133,7 @@
       key_slots:
       - EncryptionKeyEngineering
 #      - EncryptionKeyCommand # Frontier
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
 
 - type: entity
   parent: ClothingHeadset
@@ -145,7 +145,7 @@
     containers:
       key_slots:
       - EncryptionKeyMedical
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -160,9 +160,9 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
+      - EncryptionKeyMedicalSpeak # Exodus
 #      - EncryptionKeyCommand # Frontier
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
 
 - type: entity
   parent: ClothingHeadset
@@ -174,7 +174,7 @@
     containers:
       key_slots:
       - EncryptionKeyScience
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
@@ -190,7 +190,7 @@
     containers:
       key_slots:
       - EncryptionKeyMedicalScience
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
   - type: Clothing
@@ -206,7 +206,7 @@
     containers:
       key_slots:
       - EncryptionKeyRobo
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/robotics.rsi
   - type: Clothing
@@ -223,7 +223,7 @@
       key_slots:
       - EncryptionKeyScience
 #      - EncryptionKeyCommand # Frontier
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
 
 - type: entity
   parent: ClothingHeadset
@@ -235,7 +235,7 @@
     containers:
       key_slots:
       - EncryptionKeySecurity
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -250,9 +250,9 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
+      - EncryptionKeyMedicalSpeak # Exodus
       - EncryptionKeySecurity
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/brigmedic.rsi
   - type: Clothing
@@ -268,7 +268,7 @@
     containers:
       key_slots:
       - EncryptionKeyService
-      - EncryptionKeyCommon
+      - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
   - type: Clothing

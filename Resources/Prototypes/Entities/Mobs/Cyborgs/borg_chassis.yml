@@ -29,7 +29,7 @@
     interactFailureString: petting-failure-generic-cyborg
   - type: BorgSwitchableType
     inherentRadioChannels:
-    - Common
+    # - Common # Exodus
     - Traffic
     typeWhitelist: #Mono
     - generic

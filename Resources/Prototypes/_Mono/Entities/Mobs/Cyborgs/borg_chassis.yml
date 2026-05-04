@@ -29,12 +29,12 @@
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: BorgSwitchableType
-    typeWhitelist: 
+    typeWhitelist:
     - pdvassault
     - pdvengineer
     - pdvmedical
     inherentRadioChannels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Freelance
 
@@ -102,12 +102,12 @@
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: BorgSwitchableType
-    typeWhitelist: 
+    typeWhitelist:
     - tsfassault
     - tsfengineer
     - tsfmedical
     inherentRadioChannels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Nfsd
 

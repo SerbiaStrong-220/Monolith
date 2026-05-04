@@ -5,21 +5,21 @@
   description: whiskey echo... what's next?
   components:
   - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
-    - Freelance
-    # - Binary # replaced with collective mind
-    - Handheld
-    - CentCom
-    - Future
-    - Syndicate
+    channels: # Exodus
+    # - channel: Common # Exodus
+    - channel: Command
+    - channel: Engineering
+    - channel: Medical
+    - channel: Science
+    - channel: Security
+    - channel: Service
+    - channel: Supply
+    - channel: Freelance
+    # - channel: Binary # replaced with collective mind
+    - channel: Handheld
+    - channel: CentCom
+    - channel: Future
+    - channel: Syndicate
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     layers:

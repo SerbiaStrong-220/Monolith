@@ -23,7 +23,7 @@
     - ClothingEyesHudMedical
     - HandheldHealthAnalyzer
     - ClothingEyesGlassesChemical
-    - ClothingHeadsetMedical
+    # - ClothingHeadsetMedical # Exodus
     - DiseaseSwab
     - SpawnDungeonClutterSyringe
     - SpawnDungeonClutterBeakerEmpty

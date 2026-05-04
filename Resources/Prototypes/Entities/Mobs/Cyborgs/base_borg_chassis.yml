@@ -99,12 +99,12 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Traffic
-    - Common
+    # - Common # Exodus
     - Science
   - type: ActiveRadio
     channels:
     - Traffic
-    - Common
+    # - Common # Exodus
     - Science
   - type: CollectiveMind
     channels:
@@ -364,11 +364,11 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Traffic
-    - Common
+    # - Common # Exodus
     - Syndicate
   - type: ActiveRadio
     channels:
-    - Common
+    # - Common # Exodus
     - Traffic
     - Syndicate
   - type: CollectiveMind

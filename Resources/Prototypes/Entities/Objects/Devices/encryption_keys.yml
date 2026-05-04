@@ -14,21 +14,22 @@
   - type: StaticPrice # Frontier
     price: 2 # Frontier
 
-- type: entity
-  parent: [EncryptionKey, RecyclableItemDeviceTiny] # Frontier: added RecyclableItemDeviceTiny
-  id: EncryptionKeyCommon
-  name: broadband encryption key
-  description: An encryption key for the broadband channel. Limited to a 6000 meters range.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    defaultChannel: Common
-  - type: Sprite
-    sprite: _NF/Objects/Devices/encryption_keys.rsi # Frontier
-    layers:
-    - state: crypt_gray
-    - state: common_label
+# Exodus
+# - type: entity
+#   parent: [EncryptionKey, RecyclableItemDeviceTiny] # Frontier: added RecyclableItemDeviceTiny
+#   id: EncryptionKeyCommon
+#   name: broadband encryption key
+#   description: An encryption key for the broadband channel. Limited to a 6000 meters range.
+#   components:
+#   - type: EncryptionKey
+#     channels:
+#     - Common
+#     defaultChannel: Common
+#   - type: Sprite
+#     sprite: _NF/Objects/Devices/encryption_keys.rsi # Frontier
+#     layers:
+#     - state: crypt_gray
+#     - state: common_label
 
 - type: entity
   parent: [EncryptionKey, RecyclableItemDeviceTiny]
@@ -38,8 +39,9 @@
   description: An encryption key used by supply employees.
   components:
   - type: EncryptionKey
-    channels:
-    - Supply
+    channels: # Exodus
+    - channel: Supply # Exodus
+      canSpeak: false
     defaultChannel: Supply
   - type: Sprite
     layers:
@@ -54,8 +56,8 @@
   description: An encryption key used by captain's bosses.
   components:
   - type: EncryptionKey
-    channels:
-    - CentCom
+    channels: # Exodus
+    - channel: CentCom
     defaultChannel: CentCom
   - type: Sprite
     layers:
@@ -70,17 +72,17 @@
   description: An encryption key used by station's bosses.
   components:
   - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Nfsd # Frontier
-    - Service
-    - Supply
-    - Traffic # Frontier
+    channels: # Exodus
+    # - channel: Common
+    - channel: Command
+    - channel: Engineering
+    - channel: Medical
+    - channel: Science
+    - channel: Security
+    - channel: Nfsd # Frontier
+    - channel: Service
+    - channel: Supply
+    - channel: Traffic # Frontier
     defaultChannel: Command
   - type: Sprite
     layers:
@@ -95,8 +97,8 @@
   description: An encryption key used by TSF Command.
   components:
   - type: EncryptionKey
-    channels:
-    - Command
+    channels: # Exodus
+    - channel: Command
     defaultChannel: Command
   - type: Sprite
     layers:
@@ -113,8 +115,9 @@
   description: An encryption key used by the engineers.
   components:
   - type: EncryptionKey
-    channels:
-    - Engineering
+    channels: # Exodus
+    - channel: Engineering
+      canSpeak: false
     defaultChannel: Engineering
   - type: Sprite
     layers:
@@ -128,8 +131,9 @@
   description: An encryption key used by those who save lives.
   components:
   - type: EncryptionKey
-    channels:
-    - Medical
+    channels: # Exodus
+    - channel: Medical
+      canSpeak: false
     defaultChannel: Medical
   - type: Sprite
     layers:
@@ -144,9 +148,11 @@
   description: An encryption key used by someone who hasn't decided which side to take.
   components:
   - type: EncryptionKey
-    channels:
-    - Medical
-    - Science
+    channels: # Exodus
+    - channel: Medical
+      canSpeak: false
+    - channel: Science
+      canSpeak: false
     defaultChannel: Science
   - type: Sprite
     layers:
@@ -161,8 +167,9 @@
   description: An encryption key used by scientists. Maybe it is plasmaproof?
   components:
   - type: EncryptionKey
-    channels:
-    - Science
+    channels: # Exodus
+    - channel: Science
+      canSpeak: false
     defaultChannel: Science
   - type: Sprite
     layers:
@@ -177,8 +184,9 @@
   description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
   components:
   - type: EncryptionKey
-    channels:
-    - Science
+    channels: # Exodus
+    - channel: Science
+      canSpeak: false
     defaultChannel: Science
   - type: Sprite
     layers:
@@ -193,8 +201,8 @@
   description: An encryption key used by Colonial security. # Mono
   components:
   - type: EncryptionKey
-    channels:
-    - Security
+    channels: # Exodus
+    - channel: Security
     defaultChannel: Security
   - type: Sprite
     layers:
@@ -209,8 +217,8 @@
   description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.
   components:
   - type: EncryptionKey
-    channels:
-    - Service
+    channels: # Exodus: service is the frequency used for central outpost, and can't be easily accessed
+    - channel: Service
     defaultChannel: Service
   - type: Sprite
     layers:
@@ -225,8 +233,9 @@
   description: An encryption key used by... wait... Who is owner of this chip?
   components:
   - type: EncryptionKey
-    channels:
-    - Syndicate
+    channels: # Exodus
+    - channel: Syndicate
+      canSpeak: false
     defaultChannel: Syndicate
   - type: Sprite
     layers:
@@ -241,8 +250,8 @@
 #  description: An encryption key that translates binary signals used by silicons.
 #  components:
 #  - type: EncryptionKey
-#    channels:
-#    - Binary
+#    channels: # Exodus
+#    - channel: Binary
 #    defaultChannel: Binary
 #  - type: Sprite
 #    layers:
@@ -256,8 +265,8 @@
 #  description: A syndicate encryption key that translates binary signals used by silicons.
 #  components:
 #  - type: EncryptionKey
-#    channels:
-#    - Binary
+#    channels: # Exodus
+#    - channel: Binary
 #    defaultChannel: Binary
 #  - type: Sprite
 #    layers:
@@ -271,8 +280,8 @@
   description: An encryption key used by imperials. # Mono
   components:
     - type: EncryptionKey
-      channels:
-        - Freelance
+      channels: # Exodus
+      - channel: Freelance
       defaultChannel: Freelance
     - type: Sprite
       layers:

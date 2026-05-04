@@ -148,7 +148,7 @@ If you [italic]do[/italic] get set on fire, remember to [bold]click the [color=#
 
   <Box>
   <GuideEntityEmbed Entity="TelecomServerFilledShuttle"/>
-  <GuideEntityEmbed Entity="EncryptionKeyCommon"/>
+  <GuideEntityEmbed Entity="EncryptionKeyTraffic"/>
   </Box>
   <Box>
   <GuideEntityEmbed Entity="ClothingHeadsetGrey" Caption="headset"/>

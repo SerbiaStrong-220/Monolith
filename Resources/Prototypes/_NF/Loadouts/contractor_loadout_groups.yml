@@ -591,7 +591,7 @@
   - ContractorClothingHeadsetMiningCommon
   - ContractorClothingHeadsetCommandCommon
   - ContractorClothingHeadsetEngineeringCommon
-  - ContractorClothingHeadsetMedicalCommon
+  # - ContractorClothingHeadsetMedicalCommon # Exodus: only for medics
   - ContractorClothingHeadsetScienceCommon
   - ContractorClothingHeadsetMedicalScienceCommon
   - ContractorClothingHeadsetRoboticsCommon
