@@ -82,7 +82,7 @@
   cost:
     FederationMilitaryCredit: 20
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:

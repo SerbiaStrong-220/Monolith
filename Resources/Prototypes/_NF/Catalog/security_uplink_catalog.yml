@@ -426,24 +426,7 @@
 #        tags:
 #          - SecurityUplink
 
-- type: listing
-  id: UplinkSecurityOmnizineJug
-  name:  uplink-security-omnizine-jug-name
-  description: uplink-security-omnizine-jug-desc
-  productEntity: JugOmnizine
-  cost:
-    FederationMilitaryCredit: 60
-  categories:
-    - UplinkSecurityUtility
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - SecurityUplink
-    - !type:BuyerJobCondition
-      whitelist:
-        - Sheriff
-        - Brigmedic
+# Exodus-Remove-Jug-Omnizine
 
 - type: listing
   id: UplinkSecurityMedicalAssembler
@@ -453,7 +436,7 @@
   cost:
     FederationMilitaryCredit: 8
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -472,7 +455,7 @@
   cost:
     FederationMilitaryCredit: 15
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -491,28 +474,30 @@
   cost:
     FederationMilitaryCredit: 50
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
           - SecurityUplink
 
-#- type: listing
-#  id: UplinkSecurityCombatPen
-#  name:  uplink-security-combat-pen-name
-#  description: uplink-security-combat-pen-desc
-#  productEntity: CombatMedipen
-#  icon: { sprite: Objects/Specific/Medical/medipen.rsi, state: morphen }
-#  cost:
-#    FederationMilitaryCredit: 12
-#  categories:
-#    - UplinkSecurityUtility
-#  conditions:
-#    - !type:StoreWhitelistCondition
-#      whitelist:
-#        tags:
-#          - SecurityUplink
+# Exodus-Return-Combat-Pen-Start
+- type: listing
+  id: UplinkSecurityCombatPen
+  name:  uplink-security-combat-pen-name
+  description: uplink-security-combat-pen-desc
+  productEntity: CombatMedipen
+  icon: { sprite: Objects/Specific/Medical/medipen.rsi, state: morphen }
+  cost:
+    FederationMilitaryCredit: 12
+  categories:
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+# Exodus-Return-Combat-Pen-End
 
 - type: listing
   id: UplinkSecurityCyborgModule
@@ -738,7 +723,7 @@
   cost:
     FederationMilitaryCredit: 5
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -758,7 +743,7 @@
   cost:
     FederationMilitaryCredit: 5
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -774,7 +759,7 @@
   cost:
     FederationMilitaryCredit: 20
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
