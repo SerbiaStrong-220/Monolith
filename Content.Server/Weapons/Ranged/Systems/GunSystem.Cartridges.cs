@@ -10,8 +10,6 @@ using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.ComponentModel;
-using static Robust.Shared.Physics.DynamicTree;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -61,14 +59,14 @@ public sealed partial class GunSystem
         }
     }
 
-    private ExamineCartridgeInfo? GetIndefineProjectileDamageInfo(string proto)
+    private ExamineCartridgeInfo? GetUndefinedProjectileDamageInfo(string proto)
     {
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var projectileProto))
             return null;
 
         if (projectileProto.Components
             .TryGetValue(Factory.GetComponentName<CartridgeAmmoComponent>(), out var projectile))
-            return GetCartridjeDamageInfo((CartridgeAmmoComponent)projectile.Component);
+            return GetCartridgeDamageInfo((CartridgeAmmoComponent)projectile.Component);
         else
             return GetProjectileDamageInfo(projectileProto);
     }
@@ -78,7 +76,6 @@ public sealed partial class GunSystem
         if (projectileEntity.Components
         .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
         {
-
             var p = (ProjectileComponent)projectile.Component;
 
             if (!p.Damage.Empty)
@@ -96,7 +93,7 @@ public sealed partial class GunSystem
         return null;
     }
 
-    private ExamineCartridgeInfo? GetCartridjeDamageInfo(CartridgeAmmoComponent cartrigjeAmmo)
+    private ExamineCartridgeInfo? GetCartridgeDamageInfo(CartridgeAmmoComponent cartrigjeAmmo)
     {
         if (!ProtoManager.TryIndex<EntityPrototype>(cartrigjeAmmo.Prototype, out var projectileEntity))
             return null;
