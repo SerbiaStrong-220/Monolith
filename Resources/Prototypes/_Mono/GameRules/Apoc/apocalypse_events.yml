@@ -143,7 +143,7 @@
     startAnnouncement: station-event-ai-frigate-detected
     startAudio:
       path: /Audio/Misc/notice1.ogg
-    weight: 2.5
+    weight: 2
     maxOccurrences: 2
   - type: GameRule
     minPlayers: 25
