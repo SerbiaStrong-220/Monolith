@@ -1,0 +1,8 @@
+- type: entity
+  parent: BoxEncryptionKeyMedical
+  id: BoxEncryptionKeyMedicalSpeak
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyMedicalSpeak
+        amount: 4
