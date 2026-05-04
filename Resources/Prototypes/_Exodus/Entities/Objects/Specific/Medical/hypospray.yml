@@ -24,5 +24,10 @@
     transferAmount: 5
     preventCombatInjection: true
   - type: BorgParamedicHypo
+  - type: ReagentAutoRecharge
+    solutionName: hypospray
+    reagent: Bicaridine
+    rechargeAmount: 5
+    rechargeInterval: 30
   - type: UseDelay
     delay: 0.5

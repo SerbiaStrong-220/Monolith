@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Chemistry;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -9,14 +10,13 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Silicons.Borgs;
 
 public sealed class BorgParamedicHypoSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ReagentAutoRechargeSystem _reagentAutoRecharge = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
 
@@ -30,33 +30,13 @@ public sealed class BorgParamedicHypoSystem : EntitySystem
 
     private void OnMapInit(Entity<BorgParamedicHypoComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextRecharge = _timing.CurTime + ent.Comp.RechargeInterval;
         NormalizeSolution(ent);
-    }
 
-    public override void Update(float frameTime)
-    {
-        var query = EntityQueryEnumerator<BorgParamedicHypoComponent>();
-        while (query.MoveNext(out var uid, out var hypo))
-        {
-            if (hypo.RechargeInterval <= TimeSpan.Zero || hypo.RechargeAmount <= FixedPoint2.Zero)
-                continue;
+        if (!TryGetCurrentReagent(ent.Comp, out var reagent))
+            return;
 
-            if (hypo.NextRecharge == TimeSpan.Zero)
-            {
-                hypo.NextRecharge = _timing.CurTime + hypo.RechargeInterval;
-                continue;
-            }
-
-            if (_timing.CurTime < hypo.NextRecharge)
-                continue;
-
-            Recharge((uid, hypo));
-            hypo.NextRecharge += hypo.RechargeInterval;
-
-            if (hypo.NextRecharge < _timing.CurTime)
-                hypo.NextRecharge = _timing.CurTime + hypo.RechargeInterval;
-        }
+        if (TryComp<ReagentAutoRechargeComponent>(ent, out var recharge))
+            _reagentAutoRecharge.SetReagent((ent, recharge), reagent);
     }
 
     private void OnUseInHand(Entity<BorgParamedicHypoComponent> ent, ref UseInHandEvent args)
@@ -102,23 +82,9 @@ public sealed class BorgParamedicHypoSystem : EntitySystem
             return;
 
         _popup.PopupEntity(Loc.GetString("borg-paramedic-hypo-selected", ("reagent", GetReagentName(reagent))), ent, user);
-    }
 
-    private void Recharge(Entity<BorgParamedicHypoComponent> ent)
-    {
-        if (!TryGetCurrentReagent(ent.Comp, out var reagent))
-            return;
-
-        if (!_solutions.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out var solutionEnt, out var solution))
-            return;
-
-        NormalizeSolution(ent, solutionEnt.Value, solution);
-
-        var amount = FixedPoint2.Min(ent.Comp.RechargeAmount, solution.AvailableVolume);
-        if (amount <= FixedPoint2.Zero)
-            return;
-
-        _solutions.TryAddReagent(solutionEnt.Value, reagent, amount, out _);
+        if (TryComp<ReagentAutoRechargeComponent>(ent, out var recharge))
+            _reagentAutoRecharge.SetReagent((ent, recharge), reagent);
     }
 
     private void NormalizeSolution(Entity<BorgParamedicHypoComponent> ent)
