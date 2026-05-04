@@ -14,22 +14,21 @@
   - type: StaticPrice # Frontier
     price: 2 # Frontier
 
-# Exodus
-# - type: entity
-#   parent: [EncryptionKey, RecyclableItemDeviceTiny] # Frontier: added RecyclableItemDeviceTiny
-#   id: EncryptionKeyCommon
-#   name: broadband encryption key
-#   description: An encryption key for the broadband channel. Limited to a 6000 meters range.
-#   components:
-#   - type: EncryptionKey
-#     channels:
-#     - Common
-#     defaultChannel: Common
-#   - type: Sprite
-#     sprite: _NF/Objects/Devices/encryption_keys.rsi # Frontier
-#     layers:
-#     - state: crypt_gray
-#     - state: common_label
+- type: entity
+  parent: [EncryptionKey, RecyclableItemDeviceTiny] # Frontier: added RecyclableItemDeviceTiny
+  id: EncryptionKeyCommon
+  name: broadband encryption key
+  description: An encryption key for the broadband channel. Limited to a 7500 meters range.
+  components:
+  - type: EncryptionKey
+    channels: # Exodus
+    - channel: Common
+    defaultChannel: Common
+  - type: Sprite
+    sprite: _NF/Objects/Devices/encryption_keys.rsi # Frontier
+    layers:
+    - state: crypt_gray
+    - state: common_label
 
 - type: entity
   parent: [EncryptionKey, RecyclableItemDeviceTiny]
@@ -235,7 +234,6 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Syndicate
-      canSpeak: false
     defaultChannel: Syndicate
   - type: Sprite
     layers:

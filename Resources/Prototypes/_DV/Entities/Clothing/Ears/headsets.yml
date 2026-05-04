@@ -8,7 +8,7 @@
     containers:
       key_slots:
       # - EncryptionKeyPrison # Frontier
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
   - type: Sprite
     sprite: _DV/Clothing/Ears/Headsets/prisoner.rsi
   - type: Clothing
