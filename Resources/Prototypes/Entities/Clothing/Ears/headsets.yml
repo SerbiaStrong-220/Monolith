@@ -144,7 +144,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
+      - EncryptionKeyMedicalSpeak # Exodus
       - EncryptionKeyTraffic # Exodus: replace common channel
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
