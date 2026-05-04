@@ -233,7 +233,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [howls.]
+  chatMessages: ["chat-emote-msg-howl"] # Exodus
   chatTriggers:
     - howl
     - howls

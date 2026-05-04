@@ -49,10 +49,10 @@
   cost: 10
   reagent: DexalinPlus
 
-- type: borerChemical
-  id: borerHeartbreakerToxin
-  cost: 10
-  reagent: HeartbreakerToxin
+# - type: borerChemical # Exodus
+#   id: borerHeartbreakerToxin
+#   cost: 10
+#   reagent: HeartbreakerToxin
 
 - type: borerChemical
   id: borerNocturine

@@ -5,3 +5,6 @@ SpawnMobRammerCoreSmartDodging: SpawnMobAttackerCoreSmart
 
 # 20.04.2026 - Remove common channel
 EncryptionKeyCommon: EncryptionKeyTraffic
+
+# 26.04.2026 - Rename old bitcoin prototype
+BitcoinGoidacoin: BitcoinLuxurycoin
