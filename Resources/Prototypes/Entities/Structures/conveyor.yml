@@ -35,12 +35,14 @@
         - DoorPassable
         hard: False
   - type: Conveyor
+  # Exodus-conveyor-speed-begin
   - type: ActivatableUI
     key: enum.ConveyorUiKey.Key
   - type: UserInterface
     interfaces:
       enum.ConveyorUiKey.Key:
         type: ConveyorBoundUserInterface
+  # Exodus-conveyor-speed-end
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -96,6 +98,7 @@
     price: 40
 
 
+# Exodus-conveyor-angle-begin
 - type: entity
   parent: ConveyorBelt
   id: ConveyorBeltRight
@@ -103,7 +106,7 @@
   suffix: Right
   components:
   - type: Sprite
-    sprite: _NF/Structures/conveyor_angle.rsi
+    sprite: _Exodus/Structures/conveyor_angle.rsi
     state: right_off
   - type: Conveyor
     angle: 90
@@ -123,7 +126,7 @@
   suffix: Left
   components:
   - type: Sprite
-    sprite: _NF/Structures/conveyor_angle.rsi
+    sprite: _Exodus/Structures/conveyor_angle.rsi
     state: left_off
   - type: Conveyor
     angle: -90
@@ -135,4 +138,5 @@
           Off: { state: left_off }
           Forward: { state: left_fwd }
           Reverse: { state: left_rev }
+# Exodus-conveyor-angle-end
 

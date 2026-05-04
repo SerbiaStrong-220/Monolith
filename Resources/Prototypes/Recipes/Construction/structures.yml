@@ -1085,6 +1085,7 @@
   conditions:
     - !type:TileNotBlocked
 
+# Exodus-conveyor-angle-begin
 - type: construction
   id: ConveyorBeltRight
   graph: ConveyorGraph
@@ -1108,6 +1109,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+# Exodus-conveyor-angle-end
 
 - type: construction
   id: MetalDoor

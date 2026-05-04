@@ -1,8 +1,8 @@
-using Content.Shared.Conveyor;
+using Content.Shared._Exodus.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Conveyor;
+namespace Content.Client._Exodus.Conveyor;
 
 [UsedImplicitly]
 public sealed class ConveyorBoundUserInterface : BoundUserInterface

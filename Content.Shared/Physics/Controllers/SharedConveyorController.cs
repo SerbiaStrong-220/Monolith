@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Conveyor;
+using Content.Shared._Exodus.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -25,7 +26,9 @@ public abstract class SharedConveyorController : VirtualController
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
+    // Exodus-conveyor-speed-begin
     [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
+    // Exodus-conveyor-speed-end
 
     protected const string ConveyorFixture = "conveyor";
 
@@ -79,15 +82,12 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnSetSpeed(Entity<ConveyorComponent> ent, ref ConveyorSetSpeedMessage args)
     {
-        if (args.Tier is < 1 or > 3)
+        if (!Enum.IsDefined(args.Tier))
             return;
 
-        ent.Comp.Speed = args.Tier switch
-        {
-            1 => ent.Comp.SpeedTier1,
-            2 => ent.Comp.SpeedTier2,
-            _ => ent.Comp.SpeedTier3,
-        };
+        ent.Comp.Speed = ent.Comp.SpeedTiers.TryGetValue(args.Tier, out var speed)
+            ? speed
+            : ent.Comp.SpeedFallback;
         ent.Comp.CurrentTier = args.Tier;
 
         Dirty(ent.Owner, ent.Comp);

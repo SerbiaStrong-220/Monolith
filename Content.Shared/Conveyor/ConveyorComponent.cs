@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Conveyor;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -49,18 +50,28 @@ public sealed partial class ConveyorComponent : Component
     public ProtoId<SinkPortPrototype> OffPort = "Off";
 
     // Exodus-conveyor-speed-begin
+    /// <summary>
+    ///     Speed values for each tier. Keys are <see cref="ConveyorSpeedTier"/> values.
+    /// </summary>
     [DataField]
-    public float SpeedTier1 = 1f;
+    public Dictionary<ConveyorSpeedTier, float> SpeedTiers = new()
+    {
+        { ConveyorSpeedTier.Low, 1f },
+        { ConveyorSpeedTier.Medium, 2f },
+        { ConveyorSpeedTier.High, 4f },
+    };
 
+    /// <summary>
+    ///     Fallback speed used when the requested tier is not defined in <see cref="SpeedTiers"/>.
+    /// </summary>
     [DataField]
-    public float SpeedTier2 = 2f;
+    public float SpeedFallback = 2f;
 
-    [DataField]
-    public float SpeedTier3 = 4f;
-
-    // Active speed tier, 1-3.
+    /// <summary>
+    ///     Currently active speed tier.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public byte CurrentTier = 2;
+    public ConveyorSpeedTier CurrentTier = ConveyorSpeedTier.Medium;
     // Exodus-conveyor-speed-end
 }
 

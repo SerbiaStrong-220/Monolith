@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Conveyor;
+namespace Content.Shared._Exodus.Conveyor;
 
 [Serializable, NetSerializable]
 public enum ConveyorUiKey : byte
@@ -11,10 +11,9 @@ public enum ConveyorUiKey : byte
 [Serializable, NetSerializable]
 public sealed class ConveyorSetSpeedMessage : BoundUserInterfaceMessage
 {
-    /// <summary>1, 2 or 3.</summary>
-    public readonly byte Tier;
+    public readonly ConveyorSpeedTier Tier;
 
-    public ConveyorSetSpeedMessage(byte tier)
+    public ConveyorSetSpeedMessage(ConveyorSpeedTier tier)
     {
         Tier = tier;
     }

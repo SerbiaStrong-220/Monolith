@@ -17,7 +17,7 @@
           steps:
             - tag: ConveyorAssembly
               icon:
-                sprite: _NF/Structures/conveyor_angle.rsi
+                sprite: _Exodus/Structures/conveyor_angle.rsi
                 state: right_off
               name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
@@ -25,7 +25,7 @@
           steps:
             - tag: ConveyorAssembly
               icon:
-                sprite: _NF/Structures/conveyor_angle.rsi
+                sprite: _Exodus/Structures/conveyor_angle.rsi
                 state: left_off
               name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
@@ -49,6 +49,7 @@
           completed:
             - !type:SetAnchor
               value: false
+    # Exodus-conveyor-angle-begin
     - node: entityRight
       entity: ConveyorBeltRight
       actions:
@@ -77,3 +78,4 @@
           completed:
             - !type:SetAnchor
               value: false
+    # Exodus-conveyor-angle-end
