@@ -1,0 +1,6 @@
+- type: radioChannel
+  id: ExCommon
+  name: chat-radio-common
+  keycode: ";" # Ru-Localization
+  frequency: 1312
+  color: "#2cdb2c"
