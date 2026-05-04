@@ -10,6 +10,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.ComponentModel;
+using static Robust.Shared.Physics.DynamicTree;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -26,13 +27,13 @@ public sealed partial class GunSystem
 
     private void OnCartridgeDamageExamine(EntityUid uid, CartridgeAmmoComponent component, ref DamageExamineEvent args)
     {
-        AddCartridgeInfoToExamineMessage(args.Message, component.Prototype);    //Exodus AdvancedWeaponExamine
+        AddProjectileInfoToExamineMessage(args.Message, component.Prototype);    //Exodus AdvancedWeaponExamine
     }
 
     //Exodus AdvancedWeaponExamine Start
-    public void AddCartridgeInfoToExamineMessage(FormattedMessage examineMessage, string cartridgeProtoId)
+    public void AddProjectileInfoToExamineMessage(FormattedMessage examineMessage, string cartridgeProtoId)
     {
-        var cartridgeInfo = GetProjectileDamageInfo(cartridgeProtoId);
+        var cartridgeInfo = GetIndefineProjectileDamageInfo(cartridgeProtoId);
 
         if (cartridgeInfo == null)
             return;
@@ -49,24 +50,22 @@ public sealed partial class GunSystem
         if (cartridgeInfo.Value.Explosion is not null)
             _explosionExamine.AddExplosiveInfoToExamineMessage(examineMessage, cartridgeInfo.Value.Explosion.Value);
     }
-    //Exodus AdvancedWeaponExamine End
 
-    public ExamineCartridgeInfo? GetProjectileDamageInfo(string proto)     //Exodus ArmorPiercingExamine
+    private ExamineCartridgeInfo? GetIndefineProjectileDamageInfo(string proto)
     {
-        if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
+        if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var projectileProto))
             return null;
 
-        //Exodus AdvancedWeaponExamine Start
-        if (entityProto.Components
-            .TryGetValue(Factory.GetComponentName<CartridgeAmmoComponent>(), out var cartrigjeAmmo))
-        {
-            var cartridje = (CartridgeAmmoComponent)cartrigjeAmmo.Component;
+        if (projectileProto.Components
+            .TryGetValue(Factory.GetComponentName<CartridgeAmmoComponent>(), out var projectile))
+            return GetCartridjeDamageInfo((CartridgeAmmoComponent)projectile.Component);
+        else
+            return GetProjectileDamageInfo(projectileProto);
+    }
 
-            return GetProjectileDamageInfo(cartridje.Prototype);
-        }
-        //Exodus AdvancedWeaponExamine End
-
-        if (entityProto.Components
+    private ExamineCartridgeInfo? GetProjectileDamageInfo(EntityPrototype projectileEntity)
+    {
+        if (projectileEntity.Components
         .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
         {
 
@@ -74,19 +73,26 @@ public sealed partial class GunSystem
 
             if (!p.Damage.Empty)
             {
-                //Exodus ArmorPiercingExamine Start
                 return new()
                 {
                     Damage = p.Damage * Damageable.UniversalProjectileDamageModifier,
                     ArmorPenetration = p.ArmorPenetration,
-                    Explosion = _explosiveEntityExamine.GetExplosiveInfo(entityProto)
+                    Explosion = _explosiveEntityExamine.GetExplosiveInfo(projectileEntity)
                 };
-                //Exodus ArmorPiercingExamine End
             }
         }
 
         return null;
     }
+
+    private ExamineCartridgeInfo? GetCartridjeDamageInfo(CartridgeAmmoComponent cartrigjeAmmo)
+    {
+        if (!ProtoManager.TryIndex<EntityPrototype>(cartrigjeAmmo.Prototype, out var projectileEntity))
+            return null;
+
+        return GetProjectileDamageInfo(projectileEntity);
+    }
+    //Exodus AdvancedWeaponExamine End
 
     private void OnCartridgeExamine(EntityUid uid, CartridgeAmmoComponent component, ExaminedEvent args)
     {

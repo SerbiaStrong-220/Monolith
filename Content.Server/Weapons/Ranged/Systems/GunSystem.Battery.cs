@@ -90,7 +90,7 @@ public sealed partial class GunSystem
         if (component is HitscanBatteryAmmoProviderComponent hitscanProvider)
             AddHitscanExamine(args.Message, hitscanProvider);
         else if (component is ProjectileBatteryAmmoProviderComponent projectileProvider)
-            AddCartridgeInfoToExamineMessage(args.Message, projectileProvider.Prototype);
+            AddProjectileInfoToExamineMessage(args.Message, projectileProvider.Prototype);
         //Exodus AdvancedWeaponExamine End
     }
 

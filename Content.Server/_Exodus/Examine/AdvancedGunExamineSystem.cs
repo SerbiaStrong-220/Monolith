@@ -32,6 +32,6 @@ public sealed class AdvancedGunExamineSystem : EntitySystem
             return;
 
         if (ballisticAmmoProvider.Proto is not null)
-            _gun.AddCartridgeInfoToExamineMessage(args.Message, ballisticAmmoProvider.Proto);
+            _gun.AddProjectileInfoToExamineMessage(args.Message, ballisticAmmoProvider.Proto);
     }
 }

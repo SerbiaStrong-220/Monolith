@@ -20,6 +20,6 @@ public sealed class BallisticAmmoProviderExamineSystem : EntitySystem
     private void OnDamageExamine(Entity<BallisticAmmoProviderComponent> ent, ref DamageExamineEvent args)
     {
         if (ent.Comp.Proto is not null)
-            _gun.AddCartridgeInfoToExamineMessage(args.Message, ent.Comp.Proto);
+            _gun.AddProjectileInfoToExamineMessage(args.Message, ent.Comp.Proto);
     }
 }

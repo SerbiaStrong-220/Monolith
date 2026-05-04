@@ -19,6 +19,6 @@ public sealed class BasicEntityExamineSystem : EntitySystem
 
     private void OnDamageExamine(Entity<BasicEntityAmmoProviderComponent> ent, ref DamageExamineEvent args)
     {
-        _gun.AddCartridgeInfoToExamineMessage(args.Message, ent.Comp.Proto);
+        _gun.AddProjectileInfoToExamineMessage(args.Message, ent.Comp.Proto);
     }
 }
