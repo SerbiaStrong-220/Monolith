@@ -34,7 +34,7 @@ public sealed partial class GunSystem
     //Exodus AdvancedWeaponExamine Start
     public void AddProjectileInfoToExamineMessage(FormattedMessage examineMessage, string cartridgeProtoId)
     {
-        var cartridgeInfo = GetIndefineProjectileDamageInfo(cartridgeProtoId);
+        var cartridgeInfo = GetUndefinedProjectileDamageInfo(cartridgeProtoId);
 
         if (cartridgeInfo == null)
             return;
