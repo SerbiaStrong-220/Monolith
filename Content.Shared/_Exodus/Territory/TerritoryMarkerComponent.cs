@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Localization;
 
 namespace Content.Shared._Exodus.Territory;
 
@@ -17,4 +18,10 @@ public sealed partial class TerritoryMarkerComponent : Component
 
     [DataField]
     public Color BorderColor = new Color(1f, 0.88f, 0f, 0.085f);
+
+    /// <summary>
+    /// Localization key for the label repeated diagonally across the territory zone.
+    /// </summary>
+    [DataField]
+    public LocId Text = "territory-marker-default";
 }

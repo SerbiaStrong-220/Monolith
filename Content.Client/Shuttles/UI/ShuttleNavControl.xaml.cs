@@ -1498,6 +1498,71 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_territoryFillBuffer, 0, fillCount), config.Color);
         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_territoryLineBuffer, 0, lineCount), config.Color.WithAlpha(0.085f));
+
+        DrawTerritoryText(handle, position, config);
+    }
+
+    private void DrawTerritoryText(DrawingHandleScreen handle, Vector2 territoryCenter, BlipConfig config)
+    {
+        if (config.Label == null)
+            return;
+
+        var text = Loc.GetString(config.Label);
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        var territoryRadius = config.Bounds.Width * 0.5f * MinimapScale;
+        if (territoryRadius < 1f)
+            return;
+
+        var radarCenter = MidPointVector;
+        var radarRadius = ScaledMinimapRadius;
+
+        // Fixed 45° in screen space — stays still when ship rotates, like nebulae
+        const float angle45 = MathF.PI * 0.25f;
+        var textAngle = new Angle(angle45);
+        var screenDir = new Vector2(MathF.Cos(angle45), MathF.Sin(angle45));
+        var perpDir = new Vector2(-screenDir.Y, screenDir.X);
+
+        var textScale = UIScale * 0.6f;
+        var textColor = config.Color.WithAlpha(0.35f);
+        var textDims = handle.GetDimensions(Font, text, textScale);
+        var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
+
+        var spacingX = textDims.X + 20f;
+        var spacingY = textDims.Y * 3f;
+
+        // Iterate enough to cover the radar circle, positions relative to territoryCenter
+        var coverRadius = radarRadius * 1.1f;
+
+        var prevTransform = handle.GetTransform();
+
+        var rowIndex = 0;
+        for (var t = -coverRadius; t <= coverRadius; t += spacingY, rowIndex++)
+        {
+            var stagger = rowIndex % 2 == 0 ? 0f : spacingX * 0.5f;
+            for (var s = -coverRadius + stagger; s <= coverRadius + stagger; s += spacingX)
+            {
+                var pos = territoryCenter + t * perpDir + s * screenDir;
+
+                // Must be inside territory circle
+                var dTerritory = pos - territoryCenter;
+                var safeTerritory = territoryRadius - halfDiag;
+                if (dTerritory.LengthSquared() > safeTerritory * safeTerritory)
+                    continue;
+
+                // Must be inside radar circle
+                var dRadar = pos - radarCenter;
+                var safeRadar = radarRadius - halfDiag;
+                if (dRadar.LengthSquared() > safeRadar * safeRadar)
+                    continue;
+
+                handle.SetTransform(pos, textAngle);
+                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor);
+            }
+        }
+
+        handle.SetTransform(prevTransform);
     }
     // Exodus-end
 

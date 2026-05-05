@@ -33,6 +33,7 @@ public sealed class TerritoryMarkerSystem : EntitySystem
             Points = BuildCirclePoints(ent.Comp.Radius),
             RespectZoom = true,
             Rotate = false,
+            Label = ent.Comp.Text,
         };
     }
 
