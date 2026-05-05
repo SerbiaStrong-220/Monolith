@@ -6,6 +6,7 @@
   name: Скорпион # Ru-Localization
   description: Необычный вариант шаттла, использующий комбинацию ракетных пусковых установок и двух крупнокалиберных пушек. # Ru-Localization
   price: 113200
+  purchasable: false # voucher only
   category: Medium
   group: BlackMarket
   access: Pirate

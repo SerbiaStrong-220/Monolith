@@ -236,7 +236,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyTraffic # Frontier
 
 - type: entity
@@ -250,7 +250,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyCommand
       - EncryptionKeyTraffic # Frontier
 
@@ -264,7 +264,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyEngineering
       - EncryptionKeyTraffic # Frontier
 
@@ -278,7 +278,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyMedicalSpeak # Exodus
       - EncryptionKeyTraffic # Frontier
 
@@ -292,7 +292,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyScience
       - EncryptionKeyTraffic # Frontier
 
@@ -307,7 +307,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeySecurity
       - EncryptionKeyTraffic # Frontier
 
@@ -321,7 +321,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyService
       - EncryptionKeyTraffic # Frontier
 
@@ -335,7 +335,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyCommon # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyCargo
       - EncryptionKeyTraffic # Frontier
 
@@ -349,7 +349,7 @@
       board:
       - IntercomElectronics
       key_slots:
-      # - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyStationMaster
 
 - type: entity
@@ -362,5 +362,5 @@
       board:
       - IntercomElectronics
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyFreelance

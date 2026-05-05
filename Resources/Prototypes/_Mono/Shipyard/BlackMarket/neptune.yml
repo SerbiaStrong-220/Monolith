@@ -6,6 +6,7 @@
   name: Нептун # Ru-Localization
   description: Оснащён тяжёлой лобовой бронёй, шестью тяжёлыми 90-мм орудиями Клык и двумя АСМ-220 Трезубец. Хорош для борьбы с крупными целями в лобовых столкновениях, но неспособен эффективно сражаться с юркими и мелкими целями. # Ru-Localization
   price: 153555 #126k appraisal
+  purchasable: false # voucher only
   category: Medium
   group: BlackMarket
   access: Pirate
