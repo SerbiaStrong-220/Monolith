@@ -14,10 +14,10 @@ public sealed partial class TerritoryMarkerComponent : Component
     public float Radius = 7500f;
 
     [DataField]
-    public Color FillColor = new Color(0.55f, 0.55f, 0.55f, 0.02f);
+    public Color FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
 
     [DataField]
-    public Color BorderColor = new Color(0.60f, 0.60f, 0.60f, 0.085f);
+    public Color BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
 
     /// <summary>
     /// Localization key for the label repeated diagonally across the territory zone.
