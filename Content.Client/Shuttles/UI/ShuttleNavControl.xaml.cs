@@ -1498,6 +1498,66 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_territoryFillBuffer, 0, fillCount), config.Color);
         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_territoryLineBuffer, 0, lineCount), config.Color.WithAlpha(0.085f));
+
+        DrawTerritoryHatching(handle, position, config, worldRotation);
+    }
+
+    private void DrawTerritoryHatching(DrawingHandleScreen handle, Vector2 position, BlipConfig config, Angle worldRotation)
+    {
+        if (config.Label == null)
+            return;
+
+        var text = Loc.GetString(config.Label);
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        var screenRadius = config.Bounds.Width * 0.5f * MinimapScale;
+        if (screenRadius < 1f)
+            return;
+
+        // 45° in world space, transformed to screen direction (Y flipped for screen coords)
+        var worldDir = new Vector2(MathF.Cos(MathF.PI * 0.25f), MathF.Sin(MathF.PI * 0.25f));
+        var rotated = (-worldRotation).RotateVec(worldDir);
+        var screenDir = Vector2.Normalize(new Vector2(rotated.X, -rotated.Y));
+        var perpDir = new Vector2(-screenDir.Y, screenDir.X);
+
+        const float lineSpacing = 75f;
+        var textScale = UIScale * 0.4f;
+        var lineColor = config.Color.WithAlpha(0.10f);
+        var textColor = config.Color.WithAlpha(0.20f);
+        var textAngle = new Angle(MathF.Atan2(screenDir.Y, screenDir.X));
+        var textDims = handle.GetDimensions(Font, text, textScale);
+        var textInterval = textDims.X + 30f;
+
+        var prevTransform = handle.GetTransform();
+
+        for (var t = -screenRadius; t <= screenRadius; t += lineSpacing)
+        {
+            var chordSq = screenRadius * screenRadius - t * t;
+            if (chordSq < 1f)
+                continue;
+
+            var chord = MathF.Sqrt(chordSq);
+            var lineStart = position + t * perpDir - chord * screenDir;
+            var lineEnd = position + t * perpDir + chord * screenDir;
+
+            handle.DrawLine(lineStart, lineEnd, lineColor);
+
+            if (textInterval < 1f)
+                continue;
+
+            var lineLen = chord * 2f;
+            for (var s = textInterval * 0.5f; s < lineLen; s += textInterval)
+            {
+                var frac = s / lineLen;
+                var textPos = lineStart + frac * (lineEnd - lineStart);
+
+                handle.SetTransform(textPos, textAngle);
+                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor);
+            }
+        }
+
+        handle.SetTransform(prevTransform);
     }
     // Exodus-end
 
