@@ -1,0 +1,94 @@
+- type: entity
+  id: OreCatcher
+  name: ore catcher
+  description: A large magnet connected to storage. For catching and holding unprocessed ores and fragments.
+  parent: BaseStructureDynamic
+  components:
+  - type: StaticPrice
+    price: 2500
+  - type: Anchorable
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Climbable
+  - type: Sprite
+    noRot: true
+    sprite: /Textures/_Exodus/Objects/Machines/orecatcher.rsi
+    layers:
+    - state: orecatcher-top
+    - state: orecatcher
+      map: [ top ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        top:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Storage
+    grid:
+    - 0,0,25,12
+    maxItemSize: Normal
+    storageOpenSound: /Audio/Effects/closetopen.ogg
+    storageCloseSound: /Audio/Effects/closetclose.ogg
+    whitelist:
+      tags:
+      - Ore
+      - ArtifactFragment
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
+  - type: Dumpable
+    multiplier: 0.15
+  - type: MagnetPickup
+    range: 120
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 40
+        mask:
+        - SmallMobMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  name: ore catcher flatpack
+  id: OreCatcherFlatpack
+  parent: BaseNFFlatpack
+  description: A flatpack used for constructing an ore catcher.
+  components:
+  - type: Flatpack
+    entity: OreCatcher
+  - type: StaticPrice
+    price: 2500
+    vendPrice: 12500
