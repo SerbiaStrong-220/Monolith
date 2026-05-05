@@ -1524,8 +1524,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var screenDir = new Vector2(MathF.Cos(angle45), MathF.Sin(angle45));
         var perpDir = new Vector2(-screenDir.Y, screenDir.X);
 
-        var textScale = UIScale * 0.6f;
+        var textScale = UIScale * 1.2f;
         var baseAlpha = 0.35f;
+        var textColor = new Color(0.65f, 0.65f, 0.65f);
         var textDims = handle.GetDimensions(Font, text, textScale);
         var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
 
@@ -1536,8 +1537,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (fadeStart <= 0f)
             return;
 
-        var spacingX = textDims.X + 20f;
-        var spacingY = textDims.Y * 2.5f;
+        var spacingX = textDims.X + 40f;
+        var spacingY = textDims.Y * 5f;
 
         // SetTransform uses screen (window) coordinates, not control-local coordinates.
         // GlobalPixelPosition is the control's offset from the top-left of the game window.
@@ -1565,7 +1566,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     : baseAlpha * (1f - (dist - fadeStart) / (fadeEnd - fadeStart));
 
                 handle.SetTransform(screenOffset + pos, textAngle);
-                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, config.Color.WithAlpha(alpha));
+                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor.WithAlpha(alpha));
             }
         }
 
