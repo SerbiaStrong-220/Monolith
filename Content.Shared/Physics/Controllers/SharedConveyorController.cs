@@ -1,9 +1,11 @@
 using System.Numerics;
 using Content.Shared.Conveyor;
+using Content.Shared._Exodus.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -24,6 +26,9 @@ public abstract class SharedConveyorController : VirtualController
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
+    // Exodus-conveyor-speed-begin
+    [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
+    // Exodus-conveyor-speed-end
 
     protected const string ConveyorFixture = "conveyor";
 
@@ -52,9 +57,44 @@ public abstract class SharedConveyorController : VirtualController
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
+        // Exodus-conveyor-speed-begin
+        SubscribeLocalEvent<ConveyorComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpeedVerb);
+        SubscribeLocalEvent<ConveyorComponent, ConveyorSetSpeedMessage>(OnSetSpeed);
+        // Exodus-conveyor-speed-end
 
         base.Initialize();
     }
+
+    // Exodus-conveyor-speed-begin
+    private void OnGetSpeedVerb(Entity<ConveyorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var user = args.User;
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = Loc.GetString("ui-conveyor-speed-verb"),
+            Act = () => _ui.OpenUi(ent.Owner, ConveyorUiKey.Key, user),
+            Priority = 1,
+        });
+    }
+
+    private void OnSetSpeed(Entity<ConveyorComponent> ent, ref ConveyorSetSpeedMessage args)
+    {
+        if (!Enum.IsDefined(args.Tier))
+            return;
+
+        ent.Comp.Speed = ent.Comp.SpeedTiers.TryGetValue(args.Tier, out var speed)
+            ? speed
+            : ent.Comp.SpeedFallback;
+        ent.Comp.CurrentTier = args.Tier;
+
+        Dirty(ent.Owner, ent.Comp);
+        WakeConveyed(ent.Owner);
+        _ui.CloseUi(ent.Owner, ConveyorUiKey.Key, args.Actor);
+    }
+    // Exodus-conveyor-speed-end
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
@@ -267,10 +307,12 @@ public abstract class SharedConveyorController : VirtualController
         var conveyorXform = XformQuery.GetComponent(bestConveyor.Owner);
         var (conveyorPos, conveyorRot) = TransformSystem.GetWorldPositionRotation(conveyorXform);
 
-        conveyorRot += bestConveyor.Comp!.Angle;
-
-        if (comp.State == ConveyorState.Reverse)
-            conveyorRot += MathF.PI;
+        // Exodus-conveyor-angle-begin
+        if (comp.State != ConveyorState.Reverse)
+            conveyorRot += bestConveyor.Comp!.Angle;
+        else
+            conveyorRot += bestConveyor.Comp!.ReverseAngle;
+        // Exodus-conveyor-angle-end
 
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;

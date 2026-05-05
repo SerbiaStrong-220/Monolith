@@ -81,6 +81,7 @@
   color: "#B01340"
   disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
+  image: /Textures/_Mono/Companies/USSP.png
 
 # Major companies
 
@@ -177,7 +178,6 @@
   description: cerberus-surplus-provisions
   color: "#aa1010"
   image: /Textures/_Mono/Companies/CSP.png
-  disabled: true
   whitelisted: true
 
 - type: company

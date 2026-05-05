@@ -22,6 +22,7 @@
     speechSounds: Vulpkanin
     speechVerb: Vulpkanin
     allowedEmotes: ['Bark', 'Snarl', 'Whine', 'Howl', 'Awoo', 'Growl', 'Yip', 'Whimper'] # Starlight / Monolith: Add yip, whine; rename old whine to whimper
+  - type: VulpkaninAccent # SS220
   - type: LanguageKnowledge # Einstein Engines - Languages
     speaks:
     - TauCetiBasic

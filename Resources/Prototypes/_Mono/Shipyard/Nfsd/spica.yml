@@ -6,6 +6,7 @@
   name: Спика # Ru-Localization
   description: Лёгкая фронтовая опора флотов ТСФ. Удивительный набор вооружения в компактном корпусе, созданный для боя с более крупными целями. # Ru-Localization
   price: 117000
+  purchasable: false # voucher only
   category: Small
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles

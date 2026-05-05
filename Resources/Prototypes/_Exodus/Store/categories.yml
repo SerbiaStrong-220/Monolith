@@ -1,0 +1,5 @@
+#security
+- type: storeCategory
+  id: UplinkSecurityMedical
+  name: store-category-secmedical
+

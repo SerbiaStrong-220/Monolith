@@ -16,6 +16,7 @@
   - ComputerIFFCircuitboard
   - MachineDriveCTLA25Circuitboard
   - LargeThrusterMachineCircuitboard
+  - MachineShieldMS100Circuitboard # Exodus
   technologyPrerequisites:
   - Shuttlecraft
   - SuperParts

@@ -464,3 +464,5 @@
   - type: ShipRepairable
     repairTime: 20
     repairCost: 125
+  - type: StaticPrice # Exodus-Price-Rebalance
+    price: 1099 

@@ -7,6 +7,7 @@
   description: Переоборудованный медицинский шаттл с акцентом на бортовую огневую мощь и броню. # Ru-Localization
   limit: 3
   price: 280650
+  purchasable: false # voucher only
   category: Large
   group: BlackMarket
   access: Pirate

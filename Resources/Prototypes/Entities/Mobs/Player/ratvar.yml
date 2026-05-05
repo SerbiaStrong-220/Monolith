@@ -67,7 +67,7 @@
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
-    - Traffic # Exodus: replace common channel
+    - Common
     - Command
     - CentCom
     - Engineering

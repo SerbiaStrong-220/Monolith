@@ -1,3 +1,3 @@
 ent-ThrusterLargeNfsd = { ent-ThrusterLarge }
-    .suffix = TSFMC
+    .suffix = ТСФ
     .desc = { ent-ThrusterLarge.desc }
