@@ -18,8 +18,9 @@ public enum RadarBlipShape
     Arrow,
     Ring,
     // Exodus-begin nebula-radar-visualization
-    NebulaPolygon // Exodus nebula-radar-visualization
+    NebulaPolygon, // Exodus nebula-radar-visualization
     // Exodus-end
+    TerritoryCircle // Exodus territory-marker
 }
 
 [Serializable, NetSerializable]
