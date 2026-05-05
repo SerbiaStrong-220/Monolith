@@ -8,8 +8,8 @@
 - type: vessel
   id: Canister
   parent: BaseVessel
-  name: HES Canister
-  description: An entry level gas mining ship, manufactured and fielded by Horizon Energy to send out new gas miners for their first taste of the industry.
+  name: Канистра # Ru-Localization
+  description: Газодобывающий шаттл, произведённый и введённый в эксплуатацию Горизонт Энерджи для первых шагов новых газодобытчиков в этой отрасли. # Ru-Localization
   price: 33000
   category: Small
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Canister
-  mapName: 'HES Phaeron'
+  mapName: 'Канистра' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/canister.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Canister CIV{1}'
+          mapNameTemplate: 'Канистра{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

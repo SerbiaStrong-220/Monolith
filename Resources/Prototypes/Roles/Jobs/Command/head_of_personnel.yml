@@ -13,9 +13,9 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 # 10 hrs
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 36000 # 10 hours
+    # - !type:DepartmentTimeRequirement # Exodus-Delete-Command-Department
+    #   department: Command
+    #   time: 36000 # 10 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"

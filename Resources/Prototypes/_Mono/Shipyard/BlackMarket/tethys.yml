@@ -3,8 +3,8 @@
 - type: vessel
   id: Tethys
   parent: BaseVesselAntag
-  name: PDV Tethys
-  description: A medical Phaethon Dynasty shuttle. It comes equipped with 4 90mm turrets and 2 tovek missile launchers. Hot damn.
+  name: Тефида # Ru-Localization
+  description: Медицинский шаттл Династии Фаэтона. Оснащён четырьмя 90-мм орудиями и двумя ракетными установками АДМХ-23 Товек. # Ru-Localization
   price: 72000
   category: Medium
   group: BlackMarket
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Tethys
-  mapName: 'PDV Tethys'
+  mapName: 'Тефида' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/tethys.yml
   minPlayers: 0
   stations:
@@ -26,7 +26,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tethys PDV{1}'
+          mapNameTemplate: 'Тефида{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -9,8 +9,8 @@
 - type: vessel
   id: Intermission
   parent: BaseVessel
-  name: WA Intermission
-  description: A large medical vessel with a lobby, bar, food, and medical care facilities, Capable of saving lives and then saving appetites all in one go.
+  name: Антракт # Ru-Localization
+  description: Большой медицинский шаттл с холлом, баром, едой и медицинскими примочками. Способен спасать жизни и утолять аппетиты - всё здесь и сразу. # Ru-Localization
   price: 134750
   category: Large
   group: Medical
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Intermission
-  mapName: 'WA Intermission'
+  mapName: 'Антракт' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/intermission.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Intermission MED{1}'
+          mapNameTemplate: 'Антракт{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

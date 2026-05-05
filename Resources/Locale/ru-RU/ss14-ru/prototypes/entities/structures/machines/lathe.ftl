@@ -38,5 +38,5 @@ ent-Sheetifier = лист-мастер 2000
     .desc = Довольно мяссивное устройство.
 ent-CutterMachine = плиткорез
     .desc = Это резак. Он режет. Придайте разнообразия полу вашей станции с помощью интересных узоров! Не засовывайте внутрь пальцы.
-ent-MedicalBiofabricator = medical biofabricator
-    .desc = Produces organs and other organic matter that can be surgically grafted onto patients with biomass.
+ent-MedicalBiofabricator = медицинский биофабрикатор
+    .desc = Производит органы и искусственные тела-болванки для лечения или спасения бедных гуманоидов, используя для создания биомассу.

@@ -1,2 +1,2 @@
-ent-WeaponTurretASM220 = ASM-220 "Trident" 500mm torpedo rack
-    .desc = A heavy built-in torpedo rack for cruisers which relies on manual loading, usually done at harbor. Despite this, it has the largest missiles in the sector.
+ent-WeaponTurretASM220 = АСМ-220 Трезубец
+    .desc = Тяжёлая стационарная 500-мм торпедная установка для больших шаттлов, заряжаемая вручную. Несмотря на это, её ракеты - крупнейшие в секторе. Может активироваться дистанционно или подключаться к консоли управления корабельными орудиями.

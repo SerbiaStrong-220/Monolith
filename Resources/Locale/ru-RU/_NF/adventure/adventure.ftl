@@ -1,8 +1,8 @@
 ## UI
 
 adventure-list-start = [color=gold]Центральный банк ТСФ[/color]
-adventure-list-profit = Прибыль составила: [color=#d19e5e]{$amount}[/color].
-adventure-list-loss = Убыток составил: [color=#659cc9]{$amount}[/color].
+adventure-list-profit = заработал: [color=#d19e5e]{$amount}[/color].
+adventure-list-loss = потерял: [color=#659cc9]{$amount}[/color].
 adventure-webhook-list-start = Центральный банк ТСФ
 adventure-webhook-list-high = Больше всего заработали:
 adventure-webhook-list-low = Больше всего потратили:
@@ -31,6 +31,6 @@ shuttle-ftl-too-many = Too many shuttles already on expedition!
 changelog-tab-title-Upstream = Upstream Changelog
 multiauth-already-connected = Already connected to Monolith Official servers.
 public-transit-shuttle-name = Автобус
-public-transit-departure = Now departing for { $destination }. Estimated travel time: { $flytime } seconds.
-public-transit-arrival = Thank you for choosing NT Public Transit. Next transfer to { $destination } departs in { $waittime } seconds.
-public-transit-instant = Arrived at { $destination }. Next destination in { $waittime } seconds.
+public-transit-departure = Следующая остановка: { $destination }. Ориентировочное время в пути: { $flytime } секунд.
+public-transit-arrival = Благодарим за выбор общественного транспорта NT. Следующий автобус до { $destination } отправляется через { $waittime } секунд.
+public-transit-instant = Остановка { $destination }. Следующая остановка через { $waittime } секунд.

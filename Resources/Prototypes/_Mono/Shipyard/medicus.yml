@@ -8,8 +8,8 @@
 - type: vessel
   id: Medicus
   parent: BaseVessel
-  name: UW Medicus #medisus
-  description: A trustworthy medical vessel equipped with cryogenics, botany, chemistry, and paramedic capabilities.
+  name: Медикус #medisus # Ru-Localization
+  description: Надёжный медицинский шаттл, оснащённый криокапсулой, ботаническим отсеком, химической лабораторией и рабочим местом для парамедиков. # Ru-Localization
   price: 76500 #appraises at 70000
   category: Medium
   group: Medical
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Medicus
-  mapName: 'UW Medicus'
+  mapName: 'Медикус' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/medicus.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Medicus MED{1}'
+          mapNameTemplate: 'Медикус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

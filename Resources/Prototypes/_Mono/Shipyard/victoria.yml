@@ -7,8 +7,8 @@
 - type: vessel
   id: Victoria
   parent: BaseVessel
-  name: IHR Victoria
-  description: A reworked hull from an unknown salvage ship manufacturer refitted for xenoarcheology that still holds onto some of its mining and salvaging capabilities.
+  name: Виктория # Ru-Localization
+  description: Переработанный шаттл неизвестного производителя, переоборудованный для ксеноархеологии, но сохранивший некоторые свои добывающие и утилизаторские способности. # Ru-Localization
   price: 45000
   category: Medium
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Victoria
-  mapName: 'IHR Victoria'
+  mapName: 'Виктория' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/victoria.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Victoria CIV{1}'
+          mapNameTemplate: 'Виктория{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -591,7 +591,7 @@
   - ContractorClothingHeadsetMiningCommon
   - ContractorClothingHeadsetCommandCommon
   - ContractorClothingHeadsetEngineeringCommon
-  - ContractorClothingHeadsetMedicalCommon
+  # - ContractorClothingHeadsetMedicalCommon # Exodus: only for medics
   - ContractorClothingHeadsetScienceCommon
   - ContractorClothingHeadsetMedicalScienceCommon
   - ContractorClothingHeadsetRoboticsCommon
@@ -985,3 +985,12 @@
   - ContractorRubberStampTrader
   - ContractorRubberStampClown
   - ContractorRubberStampMime
+
+- type: loadoutGroup
+  id: ContractorArmorPlates
+  name: loadout-group-contractor-armorplates
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ContractorArmorPlateBlunt_Slash
+  - ContractorArmorPlatePierce

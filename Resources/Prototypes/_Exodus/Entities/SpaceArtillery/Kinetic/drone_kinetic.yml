@@ -7,6 +7,7 @@
   components:
   - type: Anchorable
     delay: 10
+  - type: Pullable
 
 - type: entity
   id: WeaponTurretPinholeAnchorable
@@ -17,3 +18,4 @@
   components:
   - type: Anchorable
     delay: 10
+  - type: Pullable

@@ -126,7 +126,7 @@
         key_slots:
           - EncryptionKeyFreelance
           - EncryptionKeyVanguardCommand
-          - EncryptionKeyCommon # Mono
+          - EncryptionKeyCommon
     - type: Sprite
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing

@@ -239,6 +239,11 @@ public sealed partial class TTSSystem : EntitySystem
         {
             var canUnderstand = _language.CanUnderstand(receiver, language);
             var message = canUnderstand ? sanitizedMessage : _language.ObfuscateSpeech(sanitizedMessage, language);
+
+            // we need to set to null obf message cause this message come to here empty from language sys
+            if (string.IsNullOrEmpty(obfuscatedMessage))
+                obfuscatedMessage = null;
+
             if (obfuscatedMessage != null)
                 obfuscatedMessage = canUnderstand ? obfuscatedMessage : _chat.ObfuscateMessageReadability(message);
 

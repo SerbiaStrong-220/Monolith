@@ -4,15 +4,23 @@
   description: job-description-pdv-infiltrator
   playTimeTracker: JobPDVInfiltrator
   requirements:
-    - !type:OverallPlaytimeRequirement # mono start
-      time: 108000 # 65 hours
-    - !type:RoleTimeRequirement
-      role: JobPirate
-      time: 3600 # 1 hour
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement # mono start
+    #   time: 108000 # 65 hours
+    # - !type:RoleTimeRequirement
+    #   role: JobPirate
+    #   time: 3600 # 1 hour
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours # mono end
-  whitelisted: true
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # 5 hours 
+    - !type:DepartmentTimeRequirement
+      department: Antag
+      time: 72000 # 20 hours
+    # Exodus-Rework-Time-Roles-End
+  whitelisted: false # Exodus-Rework-Whitelist-Roles-End
   startingGear: PDVInfiltratorGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

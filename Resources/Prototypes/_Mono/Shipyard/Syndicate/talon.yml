@@ -1,8 +1,8 @@
 - type: vessel
   id: Talon
   parent: BaseVesselAntag
-  name: Talon
-  description: A heavy syndicate interceptor, with 4 forward facing Fang autocannons and 2 sidemounted Adder scatter cannons
+  name: Коготь # Ru-Localization
+  description: Тяжёлый перехватчик синдиката с четырьмя носовыми Клыками и двумя боковыми Гадюками. # Ru-Localization
   price: 45000
   category: Small
   group: Syndicate
@@ -15,7 +15,7 @@
 
 - type: gameMap
   id: Talon
-  mapName: 'Talon'
+  mapName: 'Коготь' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Syndicate/talon.yml
   minPlayers: 0
   stations:
@@ -23,7 +23,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Talon SYN{1}'
+          mapNameTemplate: 'Коготь{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

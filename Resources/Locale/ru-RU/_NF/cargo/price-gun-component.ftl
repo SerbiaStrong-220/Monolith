@@ -1,7 +1,7 @@
-contraband-price-gun-pricing-result = Устройство показывает, что { $object } оценивается в { $price } ВКФ.
+contraband-price-gun-pricing-result = Устройство показывает, что { $object } оценивается в { $price } жетонов.
 contraband-price-gun-verb-text = Оценка предмета
 contraband-price-gun-verb-message = Оценить  { $object }.
-contraband-price-gun-pricing-result-none = Устройство показывает, что { $object } не имеет цены в ТК.
+contraband-price-gun-pricing-result-none = Устройство показывает, что { $object } не имеет цены в жетонах.
 pirate-contraband-price-gun-pricing-result =
     Железка говорит, что { $object } { $price ->
         [0] не стоит ни одного ДЧ!

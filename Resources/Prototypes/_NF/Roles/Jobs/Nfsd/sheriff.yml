@@ -4,15 +4,23 @@
   description: job-description-sheriff
   playTimeTracker: JobHeadOfSecurity
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 144000 # 40 hours - mono
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 90000 # 25 hours - mono
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 144000 # 40 hours - mono
+    # - !type:DepartmentTimeRequirement
+    #   department: Security
+    #   time: 90000 # 25 hours - mono
+    # - !type:RoleTimeRequirement
+    #   role: JobWarden
+    #   time: 18000 # 5 hours - mono
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 18000 # 5 hours - mono
-  whitelisted: true
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 108000 # 20 hours
+    # Exodus-Rework-Time-Roles-End
+  whitelisted: false # Exodus-Rework-Whitelist-Roles-End
   startingGear: SheriffGear
   alwaysUseSpawner: true
   icon: JobIconSheriff
@@ -23,9 +31,13 @@
   assignedCompany: TSF
   canBeAntag: false
   accessGroups:
-  - AllAccess
-  access: # Mono
+  - AllAccessMono #Mono Start
+  access:
   - TsfmcEngineering
+  - HeadOfSecurity
+  - Bailiff
+  - Sergeant
+  - Frontier #Mono End
   special:
   - !type:AddComponentSpecial
     components:
@@ -56,7 +68,6 @@
     - Multitool
     - DoorRemoteNfsd
     - BaseSecurityUplinkRadioSheriff
-    - ShipVoucherTsfmcColonel
     - PhoneInstrumentHigh
     - ShipVoucherLadya # Exodus
     - RubberStampTSFColonel #Mono. Look, it had comments on the Bailiff/Captain file.

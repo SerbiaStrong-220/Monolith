@@ -183,6 +183,22 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         bool voucherUsed = false;
         if (voucher is not null)
         {
+			// Mono: Check if voucher has a purchase cooldown, and if it is still in cooldown cancel purchase
+			var remainingTime = voucher.NextBuyAt - _timing.CurTime; // Mono
+
+			if (_timing.CurTime >= voucher.NextBuyAt)
+			{
+				voucher.NextBuyAt = _timing.CurTime + voucher.Cooldown;
+			}
+			else
+			{
+				ConsolePopup(player, Loc.GetString("ship-voucher-cooldown-active", ("remainingTime", Math.Round(remainingTime.TotalMinutes))));
+            	PlayDenySound(player, shipyardConsoleUid, component);
+                Del(shuttleUid);
+				return;
+			}
+			// End mono
+
             if (voucher!.RedemptionsLeft <= 0)
             {
                 Del(shuttleUid);
@@ -748,10 +764,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             if (HasComp<GhostComponent>(child))
                 continue;
 
+            // Exodus - stop selling people -  begin
             // Check if we have a player entity that's either still around or alive and may come back
-            if (_mind.TryGetMind(child, out var mind, out var mindComp)
-                && (mindComp.Session != null
-                || !_mind.IsCharacterDeadPhysically(mindComp)))
+            // if (_mind.TryGetMind(child, out var mind, out var mindComp)
+            //    && (mindComp.Session != null
+            //    || !_mind.IsCharacterDeadPhysically(mindComp)))
+            if (_mind.TryGetMind(child, out var mind, out var _))
+            // Exodus - stop selling people - end
             {
                 return Name(child);
             }
@@ -1085,6 +1104,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             PlayDenySound(player, uid, component);
             return;
         }
+
+        if (TryComp<ShipyardVoucherComponent>(targetId, out var voucher) && voucher.CanBeUnassigned != true) // Mono: If voucher is not allowed to unassign deeds, fail.
+        {
+            ConsolePopup(player, Loc.GetString("shipyard-console-no-unassign"));
+            PlayDenySound(player, uid, component);
+            return;
+        } // end mono
 
         // Check if the player is on cooldown
         var cooldown = EnsureComp<ShipyardUnassignCooldownComponent>(player);

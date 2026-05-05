@@ -4,11 +4,16 @@
   description: job-description-senior-officer
   playTimeTracker: JobSeniorOfficer
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 72000 # 20 hours # mono
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 72000 # 20 hours # mono
+    # - !type:DepartmentTimeRequirement
+    #   department: Security
+    #   time: 36000 # 10 hours # mono
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours # mono
+      time: 72000 # 20 hours
+    # Exodus-Rework-Time-Roles-End
   startingGear: SeniorOfficerGear
   icon: JobIconSergeant
   supervisors: job-supervisors-sheriff

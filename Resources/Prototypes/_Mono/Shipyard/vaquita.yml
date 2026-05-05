@@ -7,8 +7,8 @@
 - type: vessel
   id: Vaquita
   parent: BaseVessel
-  name: DIS Vaquita
-  description: A small craft equipped with all the necessary gear for optimal lone salvaging. Including camera mounted mining pulsers and a large thrusters for those quick getaways. "Mine from the cockpit without lifting a finger !" or at least, that's how the DIS advertises it.
+  name: Вакита # Ru-Localization
+  description: Небольшой шаттл, оснащённый всем необходимым для оптимальной утилизации в одиночку, включая шахтёрские пульсаторы и мощные двигатели для быстрого отхода. «Добывай руду прямо из кабины, не напрягая ничего кроме пальца!» - по крайней мере, так его рекламирует Дрейк Индастрис. # Ru-Localization
   price: 37900
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Vaquita
-  mapName: 'DIS Vaquita'
+  mapName: 'Вакита' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/vaquita.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Vaquita CIV{1}'
+          mapNameTemplate: 'Вакита{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

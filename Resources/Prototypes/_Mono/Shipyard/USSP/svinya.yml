@@ -8,8 +8,8 @@
 - type: vessel
   id: Svinya
   parent: BaseVessel
-  name: UW Svinya
-  description: A compact attack craft, bristling with small caliber armament.
+  name: Свинья # Ru-Localization
+  description: Компактный штурмовой шаттл, усеянный малокалиберным вооружением. # Ru-Localization
   price: 39000 # appraised at ~33200
   category: Small
   group: Ussp
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Svinya
-  mapName: 'Svinya'
+  mapName: 'Свинья' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/svinya.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Svinya MIL{1}'
+          mapNameTemplate: 'Свинья{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

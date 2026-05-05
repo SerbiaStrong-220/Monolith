@@ -1,8 +1,8 @@
 - type: vessel
   id: Comet
   parent: BaseVessel
-  name: CDM Comet
-  description: A de-militarized, jack-of-all-trades, utility vessel with expeditionary functionality.
+  name: Комета # Ru-Localization
+  description: Демилитаризованный универсальный вспомогательный шаттл с экспедиционным функционалом. # Ru-Localization
   price: 120000
   category: Large
   group: Expedition
@@ -17,7 +17,7 @@
 
 - type: gameMap
   id: Comet
-  mapName: 'CDM Comet'
+  mapName: 'Комета' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Expedition/comet.yml
   minPlayers: 0
   stations:
@@ -25,7 +25,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Comet EXP{1}'
+          mapNameTemplate: 'Комета{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

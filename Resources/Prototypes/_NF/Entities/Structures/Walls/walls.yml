@@ -15,54 +15,214 @@
       - MiningGatheringHard
   - type: MiningScannerViewable
 
+# Exodus-Begin
+# Separate resource wall parents avoid inheriting ShipRepairable from regular wall tiers.
 - type: entity
-  parent: [NFAsteroidWall, WallIce]
+  parent: BaseWall
+  id: NFBaseWallResources
+  abstract: true
+
+- type: entity
+  parent: NFBaseWallResources
+  id: NFBaseWallIce
+  name: ice wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/ice.rsi
+  - type: Icon
+    sprite: Structures/Walls/ice.rsi
+  - type: IconSmooth
+    key: walls
+    base: ice
+
+- type: entity
+  parent: NFBaseWallResources
+  id: NFBaseWallSandstone
+  name: sandstone wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/sandstone.rsi
+  - type: Icon
+    sprite: Structures/Walls/sandstone.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+  - type: IconSmooth
+    key: walls
+    base: sandstone
+
+- type: entity
+  parent: NFBaseWallResources
+  id: NFBaseWallNecropolis
+  name: stone wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/necropolis.rsi
+  - type: Icon
+    sprite: Structures/Walls/necropolis.rsi
+  - type: IconSmooth
+    key: walls
+    base: necropolis
+
+- type: entity
+  parent: NFBaseWallResources
+  id: NFBaseWallCobblebrick
+  name: cobblestone brick wall
+  description: Stone by stone, perfectly fitted together to form a wall.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+  - type: ArmorThickness
+    thickness: 2
+
+- type: entity
+  parent: NFBaseWallCobblebrick
+  id: NFBaseWallBasaltCobblebrick
+  name: basalt brick wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+
+- type: entity
+  parent: NFBaseWallCobblebrick
+  id: NFBaseWallSnowCobblebrick
+  name: snow brick wall
+  description: A cold, not-so-impenetrable wall.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+
+- type: entity
+  parent: NFBaseWallCobblebrick
+  id: NFBaseWallAsteroidCobblebrick
+  name: asteroid stone brick wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+
+- type: entity
+  parent: NFBaseWallCobblebrick
+  id: NFBaseWallSandCobblebrick
+  name: sandstone brick wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+
+- type: entity
+  parent: NFBaseWallCobblebrick
+  id: NFBaseWallChromiteCobblebrick
+  name: chromite brick wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_chromite.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_chromite.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+
+- type: entity
+  parent: NFBaseWallCobblebrick
+  id: NFBaseWallAndesiteCobblebrick
+  name: andesite brick wall
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_andesite.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_andesite.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+# Exodus-End
+
+- type: entity
+  parent: [NFAsteroidWall, NFBaseWallIce]
   id: NFWallIce
   name: supercompacted ice # special name
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallSandstone]
+  parent: [NFAsteroidWall, NFBaseWallSandstone]
   id: NFWallSandstone
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallNecropolis]
+  parent: [NFAsteroidWall, NFBaseWallNecropolis]
   id: NFWallNecropolis
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallCobblebrick]
   id: NFWallCobblebrick
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallBasaltCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallBasaltCobblebrick]
   id: NFWallBasaltCobblebrick
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallSnowCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallSnowCobblebrick]
   id: NFWallSnowCobblebrick
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallAsteroidCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallAsteroidCobblebrick]
   id: NFWallAsteroidCobblebrick
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallSandCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallSandCobblebrick]
   id: NFWallSandCobblebrick
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallChromiteCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallChromiteCobblebrick]
   id: NFWallChromiteCobblebrick
   categories: [ HideSpawnMenu ]
 
 - type: entity
-  parent: [NFAsteroidWall, WallAndesiteCobblebrick]
+  parent: [NFAsteroidWall, NFBaseWallAndesiteCobblebrick]
   id: NFWallAndesiteCobblebrick
   categories: [ HideSpawnMenu ]
 # endregion Base Walls

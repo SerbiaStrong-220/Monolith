@@ -53,7 +53,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Empty)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), type: Loc.GetString("damage-melee"));  //Exodus ArmorPiercingExamine
     }
 
     protected override bool ArcRaySuccessful(EntityUid targetUid,
@@ -223,13 +223,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return Math.Clamp(chance, 0f, 1f);
     }
 
-    public override void DoLunge(EntityUid user, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
+    public override void DoLunge(EntityUid user, EntityUid playerUid, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
         Filter filter;
 
         if (predicted)
         {
-            filter = Filter.PvsExcept(user, entityManager: EntityManager);
+            filter = Filter.PvsExcept(playerUid, entityManager: EntityManager);
         }
         else
         {

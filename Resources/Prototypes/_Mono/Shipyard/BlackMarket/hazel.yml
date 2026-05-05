@@ -3,8 +3,8 @@
 - type: vessel
   id: Hazel
   parent: BaseVesselAntag
-  name: BT-Y Hazel
-  description: A small, cramped shuttle featuring a Syndicate 3 barreled 220mm Battery and 2 ASM-302s, well armored for its size. Does not have an FTL drive. A cheap option but realiability is questionable.
+  name: Хейзел # Ru-Localization
+  description: Маленький, тесный шаттл, оснащённый синдикатской трёхствольной 220-мм батареей и двумя АСМ-302 Ванек. Хорошо бронирован для своих размеров. Не имеет модуля БСС. Дешёвый вариант, но надёжность при этом вызывает вопросы. # Ru-Localization
   price: 67000
   category: Small
   group: BlackMarket
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Hazel
-  mapName: 'BT-Y Hazel'
+  mapName: 'Хейзел' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/BlackMarket/hazel.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Hazel PDV{1}'
+          mapNameTemplate: 'Хейзел{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

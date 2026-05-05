@@ -7,8 +7,8 @@
 - type: vessel
   id: Autumn
   parent: BaseVessel
-  name: TSF-SKR Autumn
-  description: A long-range cargo freighter. The cargo bay is (relatively) heavily armored with a plastitanium inner layer, and the ship is equipped with a heavy FTL drive. Armed with 4x 57mms.
+  name: Аутум # Ru-Localization
+  description: Грузовой шаттл дальнего следования. Грузовой отсек тяжелобронирован внутренним слоем из пластитана, а шаттл оснащён тяжёлым модулем БСС. Вооружение 4×57-мм орудия. # Ru-Localization
   price: 115320
   category: Large
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Autumn
-  mapName: 'TSF-SKR Autumn'
+  mapName: 'Аутум' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/autumn.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Autumn CIV{1}'
+          mapNameTemplate: 'Аутум{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

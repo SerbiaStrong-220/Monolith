@@ -7,8 +7,8 @@
 - type: vessel
   id: Valkyrie
   parent: BaseVessel
-  name: PDW Valkyrie
-  description: An ancient phaethon dynasty interceptor. It's instruments are outdated and it's hull is rusted. However the Valkyrie still contends with vessels of similar class.
+  name: Валькирия # Ru-Localization
+  description: Древний перехватчик династии Фаэтона. Его приборы устарели, а корпус проржавел. Тем не менее, Валькирия всё ещё может соперничать с шаттлами своего класса. # Ru-Localization
   price: 93950
   category: Medium
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Valkyrie
-  mapName: 'PDW Valkyrie'
+  mapName: 'Валькирия' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/valkyrie.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Valkyrie MIL{1}'
+          mapNameTemplate: 'Валькирия{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

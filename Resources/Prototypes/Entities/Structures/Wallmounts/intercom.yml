@@ -279,7 +279,7 @@
       - IntercomElectronics
       key_slots:
       - EncryptionKeyCommon
-      - EncryptionKeyMedical
+      - EncryptionKeyMedicalSpeak # Exodus
       - EncryptionKeyTraffic # Frontier
 
 - type: entity

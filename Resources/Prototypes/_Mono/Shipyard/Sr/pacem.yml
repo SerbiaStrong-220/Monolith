@@ -5,8 +5,8 @@
 - type: vessel
   id: Pacem
   parent: BaseVessel
-  name: Pacem 
-  description: A patrol corvette for inner ring defense and patrol. Recommended crew of 2.
+  name: Пасем # Ru-Localization
+  description: Патрульный корвет для обороны внутреннего кольца и его патрулирования. Рекомендуемый экипаж - 2 человека. # Ru-Localization
   price: 130000 #Roughly 20% markup from appraisegrid
   category: Medium
   group: Sr
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Pacem
-  mapName: 'Pacem'
+  mapName: 'Пасем' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/pacem.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Pacem SEC{1}'
+          mapNameTemplate: 'Пасем{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

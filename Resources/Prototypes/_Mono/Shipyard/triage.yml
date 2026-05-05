@@ -7,8 +7,8 @@
 - type: vessel
   id: Triage
   parent: BaseVessel
-  name: MI Triage
-  description: A extremely compact medical ship that packs a punch.
+  name: Триэйдж # Ru-Localization
+  description: Чрезвычайно компактный медицинский корабль, который способен удивить своей огневой мощью. # Ru-Localization
   price: 49200 #Approx 41K with a 20% tax.
   category: Small
   group: Medical
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Triage
-  mapName: 'MI Triage'
+  mapName: 'Триэйдж' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/triage.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Triage MIL{1}'
+          mapNameTemplate: 'Триэйдж{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

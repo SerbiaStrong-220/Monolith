@@ -1,0 +1,159 @@
+#this is for separation of tech loot by theme. All tech in one place is boring. 
+#SILICON
+- type: entity
+  name: tech disks loot silicon
+  id: SpawnLootTechDisksSiliconT1
+  parent: MarkerBasePlaceFree
+  suffix: "T1"
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+      scale: 0.7, 0.7
+    - sprite: _NF/Markers/general.rsi
+      state: questionmark
+      color: red
+  - type: RandomSpawner
+    prototypes:
+    - TechDiskRCD
+    - TechDiskMechCiv
+    - TechDiskCivCTLA50
+    - TechDiskCivShipComps
+    - TechDiskCivBackpackWaterTank
+    - TechDiskCivTranslationBasic
+    - TechDiskUniversalShipAmmo
+    - TechDiskFtl
+    - ResearchDisk10000
+    - ResearchDisk35000
+    chance: 1
+    offset: 0.0
+
+- type: entity
+  name: tech disks loot silicon
+  id: SpawnLootTechDisksSiliconT2
+  parent: MarkerBasePlaceFree
+  suffix: "T2"
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+      scale: 0.7, 0.7
+    - sprite: _NF/Markers/general.rsi
+      state: questionmark
+      color: red
+  - type: RandomSpawner
+    prototypes:
+    - ResearchDisk65000
+    - TechDiskUniversalShipAmmoAdvanced
+    - TechDiskTranslationPreFracture
+    - TechDiskSpeedBoots
+    chance: 1
+    offset: 0.0
+
+#SYNDIE
+- type: entity
+  name: tech disks loot syndie
+  id: SpawnLootTechDisksSyndicateT1
+  parent: MarkerBasePlaceFree
+  suffix: "T1"
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+      scale: 0.7, 0.7
+    - sprite: _NF/Markers/general.rsi
+      state: questionmark
+      color: red
+  - type: RandomSpawner
+    prototypes:
+    - ResearchDisk10000
+    - TechDiskC20r
+    - TechDiskRogueTools
+    - TechDiskBulldog
+    chance: 1
+    offset: 0.0
+
+- type: entity
+  name: tech disks loot syndie
+  id: SpawnLootTechDisksSyndicateT2
+  parent: MarkerBasePlaceFree
+  suffix: "T2"
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+      scale: 0.7, 0.7
+    - sprite: _NF/Markers/general.rsi
+      state: questionmark
+      color: red
+  - type: RandomSpawner
+    prototypes:
+    - TechDiskEnergyWeapons
+    - TechDiskHristov
+    - TechDiskRogueToolsAdvanced
+    - ResearchDisk35000
+    chance: 1
+    offset: 0.0
+
+#EXPLORERS
+- type: entity
+  name: tech disks loot explorers
+  id: SpawnLootTechDisksExplorersT1
+  parent: MarkerBasePlaceFree
+  suffix: "T1"
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+      scale: 0.7, 0.7
+    - sprite: _NF/Markers/general.rsi
+      state: questionmark
+      color: red
+  - type: RandomSpawner
+    prototypes:
+    - ResearchDisk10000
+    - ResearchDisk35000
+    - TechDiskCivTranslationBasic
+    - TechDiskCivShipComps
+    - TechDiskCivBluespaceBags
+    chance: 0.85
+    offset: 0.0
+    rarePrototypes:
+    - TechDiskBluespaceBags
+    - ResearchDisk65000
+    rareChance: 0.15
+
+
+#MERCS
+- type: entity
+  name: tech disks loot mercenaries
+  id: SpawnLootTechDisksMercenariesT1
+  parent: MarkerBasePlaceFree
+  suffix: "T1"
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+      scale: 0.7, 0.7
+    - sprite: _NF/Markers/general.rsi
+      state: questionmark
+      color: red
+  - type: RandomSpawner
+    prototypes:
+    - ResearchDisk10000
+    - ResearchDisk35000
+    - TechDiskCivTranslationBasic
+    - TechDiskCivShipComps
+    - TechDiskTSFAnnie
+    - TechDiskTSFLecter
+    - TechDiskTSFDrozd
+    - TechDiskM90
+    - TechDiskTSFICWS
+    - TechDiskShields
+    chance: 0.85
+    offset: 0.0
+    rarePrototypes:
+    - TechDiskMla73
+    - TechDiskShields
+    - ResearchDisk65000
+    rareChance: 0.15

@@ -6,13 +6,13 @@
   - entries:
     - id: NFMobXeno # Frontier
       amount: 2
-      maxAmount: 3
+      maxAmount: 5 # Exodus-Exp-Balance
     - id: NFMobXenoDrone # Frontier
       amount: 1
   - entries:
     - id: NFMobXenoPraetorian # Frontier
       amount: 1
-      maxAmount: 2
+      maxAmount: 5 # Exodus-Exp-Balance
     prob: 0.5
   - entries:
     - id: NFMobXenoDrone # Frontier
@@ -21,7 +21,7 @@
     prob: 0.25
   - entries:
     - id: WeaponTurretXeno
-      amount: 3
+      amount: 6 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
       - id: NFMobXenoSpitter # Frontier
@@ -99,22 +99,22 @@
   - entries:
     - id: SpawnMobSyndicateNavalDeckhand
       amount: 2
-      maxAmount: 3
+      maxAmount: 5 # Exodus-Exp-Balance
     - id: SpawnMobSyndicateNavalEngineer
       amount: 1
   - entries:
     - id: SpawnMobSyndicateNavalSaboteur
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
     prob: 0.5
   - entries:
     - id: SpawnMobSyndicateNavalMedic
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
     - id: WeaponTurretSyndicate
-      amount: 1
+      amount: 4 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
       - id: SpawnMobSyndicateNavalOperator
@@ -123,6 +123,7 @@
   - entries:
     - id: SpawnMobSyndicateNavalCaptain
       amount: 1
+      maxAmount: 3 # Exodus-Exp-Balance
     prob: 0.1
   - entries:
     - id: SpawnMobSyndicateNavalHorror
@@ -274,10 +275,10 @@
   - entries:
     - id: SpawnMobDinosaurSmall
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
     - id: SpawnMobDinosaurSmall
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
     - id: MobDinosaurDiloExpeditions
@@ -294,12 +295,12 @@
   - entries:
     - id: MobDinosaurDiloExpeditions
       amount: 5
-      maxAmount: 6
+      maxAmount: 10 # Exodus-Exp-Balance
     prob: 0.001
   - entries:
     - id: MobDinosaurRaptorExpeditions
       amount: 3
-      maxAmount: 4
+      maxAmount: 6 # Exodus-Exp-Balance
     prob: 0.001
   configs:
     DefenseStructure: DinosaurEgg
@@ -314,21 +315,21 @@
   - entries:
     - id: SpawnMobMercenaryT1
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
   - entries:
     - id: SpawnMobMercenaryT1
       amount: 2
-      maxAmount: 4
+      maxAmount: 6 # Exodus-Exp-Balance
     prob: 0.75
   - entries:
     - id: SpawnMobMercenaryT2
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
     prob: 0.5
   - entries:
     - id: SpawnMobMercenaryT2
       amount: 2
-      maxAmount: 3
+      maxAmount: 6 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
     - id: SpawnMobMercenaryT1
@@ -337,15 +338,17 @@
   - entries:
     - id: SpawnMobMercenaryT2
       amount: 1
+      maxAmount: 3 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
     - id: SpawnMobMercenaryT3
       amount: 1
+      maxAmount: 3 # Exodus-Exp-Balance
     prob: 0.1
   - entries:
     - id: MobMercenarySoldierNovalite
       amount: 2
-      maxAmount: 4
+      maxAmount: 6 # Exodus-Exp-Balance
     prob: 0.05
   configs:
     DefenseStructure: MercenaryCounterfeitCache
@@ -360,21 +363,21 @@
   - entries:
     - id: SpawnMobExplorerT1
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
   - entries:
     - id: SpawnMobExplorerT1
       amount: 2
-      maxAmount: 4
+      maxAmount: 6 # Exodus-Exp-Balance
     prob: 0.75
   - entries:
     - id: SpawnMobExplorerT2
       amount: 1
-      maxAmount: 2
+      maxAmount: 4 # Exodus-Exp-Balance
     prob: 0.5
   - entries:
     - id: SpawnMobExplorerT2
       amount: 2
-      maxAmount: 3
+      maxAmount: 6 # Exodus-Exp-Balance
     prob: 0.25
   - entries:
     - id: SpawnMobExplorerT1
@@ -387,6 +390,7 @@
   - entries:
     - id: SpawnMobExplorerT3
       amount: 1
+      maxAmount: 2 # Exodus-Exp-Balance
     prob: 0.1
   - entries:
     - id: MobExplorerHauler
@@ -410,7 +414,7 @@
   - entries:
     - id: SpawnMobRogueScapT1
       amount: 2
-      maxAmount: 3
+      maxAmount: 4  # Exodus-Exp-Balance
     - id: SpawnMobRogueDronesT1
       amount: 1
     prob: 1.00
@@ -425,19 +429,19 @@
   - entries:
     - id: SpawnMobRogueSiliconsT2
       amount: 1
-      maxAmount: 2
+      maxAmount: 3  # Exodus-Exp-Balance
     - id: SpawnMobRogueDronesT1
       amount: 1
     prob: 0.5
   - entries:
     - id: SpawnMobRogueSiliconsT2
       amount: 2
-      maxAmount: 3
+      maxAmount: 4  # Exodus-Exp-Balance
     prob: 0.5
   - entries:
     - id: SpawnMobRogueSiliconsT2
       amount: 3
-      maxAmount: 4
+      maxAmount: 5  # Exodus-Exp-Balance
     - id: SpawnMobRogueSiliconsT3
       amount: 1
     prob: 0.25
@@ -475,21 +479,21 @@
   - entries:
     - id: SpawnMobPunkT1
       amount: 1
-      maxAmount: 2
+      maxAmount: 4  # Exodus-Exp-Balance
   - entries:
     - id: SpawnMobPunkT1
       amount: 2
-      maxAmount: 4
+      maxAmount: 6  # Exodus-Exp-Balance
     prob: 0.75
   - entries:
     - id: SpawnMobPunkT2
       amount: 1
-      maxAmount: 2
+      maxAmount: 4  # Exodus-Exp-Balance
     prob: 0.5
   - entries:
     - id: SpawnMobPunkT2
       amount: 2
-      maxAmount: 3
+      maxAmount: 5  # Exodus-Exp-Balance
     prob: 0.25
   - entries:
     - id: SpawnMobPunkT1

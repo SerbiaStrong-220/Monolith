@@ -3,12 +3,13 @@
 - type: vessel
   id: Dagger
   parent: BaseVesselAntag
-  name: TSF-SKR Dagger
-  description: Straight from the shipyards of Sol, this ship is equipped with a mass driver as its main armament for long-range fire support.
+  name: Даггер # Ru-Localization
+  description: Прямо с верфей Транс-Солнечной Федерации, этот шаттл оснащён рельсотроном в качестве основного орудия для дальней огневой поддержки. # Ru-Localization
   price: 120000
+  purchasable: false # voucher only
   category: Medium
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/dagger.yml
   guidebookPage: Null
   class:
@@ -19,7 +20,7 @@
 
 - type: gameMap
   id: Dagger
-  mapName: 'Dagger'
+  mapName: 'Даггер' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/dagger.yml
   minPlayers: 0
   stations:
@@ -27,7 +28,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Dagger TSF{1}'
+        mapNameTemplate: 'Даггер{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

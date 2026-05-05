@@ -200,7 +200,7 @@
     # Ru-Localization-End
 
 - type: emote
-  id: Whine
+  id: Whimper # Starlight / Monolith: Renamed to whimper
   name: delta-chat-emote-name-whine
   category: Vocal
   available: false
@@ -212,10 +212,10 @@
     - BorgChassis
   chatMessages: ["chat-emote-msg-whine"] # Ru-Localization-Start
   chatTriggers:
-    - whine
-    - whines
-    - whined
-    - whining
+    - whimper
+    - whimpers
+    - whimpered
+    - whimpering
     # Ru-Localization-Start
     - скулит
     - скулят
@@ -233,7 +233,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [howls.]
+  chatMessages: ["chat-emote-msg-howl"] # Exodus
   chatTriggers:
     - howl
     - howls

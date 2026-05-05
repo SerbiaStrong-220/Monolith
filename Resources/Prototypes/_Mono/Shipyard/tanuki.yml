@@ -7,8 +7,8 @@
 - type: vessel
   id: Tanuki
   parent: BaseVessel
-  name: MI-COR Tanuki
-  description: The Tanuki is a rugged, Militarised cargo shuttle from Militia Ironworks. Featuring an easily modifiable cargo bay and heavy-duty armor, it is designed to be the ultimate framework (and drone hunter) for Militia and Independent operators. It carries a healthy amount of laser firepower for its size, sporting 2 Prometheus Laser Cannons for long-range effective fire and 3 Cerberus Plasma Scattercannons for melting hostiles in close range. Houses a small galley and medbay, standard for militia ships, and is FTL capable.
+  name: Тануки # Ru-Localization
+  description: Тануки - это прочный милитаризированный грузовой шаттл. С лёгко модифицируемым грузовым отсеком и усиленной бронёй, он задуман как идеальная основа (и охотник на дронов) для ополченцев и независимых пилотов. Обладает внушительной лазерной огневой мощью для своих размеров, а именно у него два лазерных орудия Прометей для эффективного огня на дальних дистанциях и три Цербера для уничтожения врагов в ближнем бою. Оснащён небольшим камбузом и медотсеком - стандарт для кораблей ополчения. # Ru-Localization
   price: 115000 # 95K base + 20K for medical/galley.
   category: medium
   group: Shipyard
@@ -22,7 +22,7 @@
 
 - type: gameMap
   id: Tanuki
-  mapName: 'MI-COR Tanuki'
+  mapName: 'Танукиi' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/tanuki.yml
   minPlayers: 0
   stations:
@@ -30,7 +30,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tanuki MIL{1}'
+          mapNameTemplate: 'Тануки{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

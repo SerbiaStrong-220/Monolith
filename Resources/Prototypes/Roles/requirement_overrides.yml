@@ -11,6 +11,8 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 3600 # 1 hours
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 3600 # 1 hour
+    # Exodus-Delete-Command-Start
+    # - !type:DepartmentTimeRequirement
+    #   department: Command
+    #   time: 3600 # 1 hour
+    # Exodus-Delete-Command-End

@@ -11,7 +11,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// <summary>
 /// Designates this entity as holding a salvage expedition.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent] // [RegisterComponent, AutoGenerateComponentPause] // Exodus-add-exp-time-to-pda
 public sealed partial class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
 {
     public SalvageMissionParams MissionParams = default!;
@@ -22,12 +22,14 @@ public sealed partial class SalvageExpeditionComponent : SharedSalvageExpedition
     [DataField("dungeonLocation")]
     public Vector2 DungeonLocation = Vector2.Zero;
 
-    /// <summary>
-    /// When the expeditions ends.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan EndTime;
+    // Exodus-add-exp-time-to-pda-start
+    // /// <summary>
+    // /// When the expeditions ends.
+    // /// </summary>
+    // [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    // [AutoPausedField]
+    // public TimeSpan EndTime;
+    // Exodus-add-exp-time-to-pda-end
 
     /// <summary>
     /// Station whose mission this is.

@@ -3,8 +3,8 @@
 - type: vessel
   id: Atom
   parent: BaseVesselAntag
-  name: BT-Y Atom
-  description: No description yet
+  name: Атом
+  description: Пока нет описания, но оно обязательно скоро появится!
   price: 148000
   category: Small
   group: BlackMarket
@@ -19,7 +19,7 @@
 
 - type: gameMap
   id: Atom
-  mapName: 'BT-Y Atom'
+  mapName: 'Атом'
   mapPath: /Maps/_Exodus/Shuttles/PDV/atom.yml
   minPlayers: 0
   stations:
@@ -27,7 +27,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Atom PDV{1}'
+          mapNameTemplate: 'Атом{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -79,7 +79,7 @@
   abstract: true
   components:
   - type: Reflect
-    reflectProb: 0.8
+    reflectProb: 0.6 # Exodus-Exp-Balance
     reflects:
       - Energy
 

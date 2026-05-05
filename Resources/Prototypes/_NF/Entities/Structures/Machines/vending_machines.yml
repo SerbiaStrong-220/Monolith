@@ -475,7 +475,7 @@
     pack: NFPTechInventory
     requiresCash: true
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [["Command"]] #Monolith Change: Access change to allow DOC and Colonel to use it
   - type: MarketModifier
     mod: 5
 
@@ -612,7 +612,7 @@
   - type: MarketModifier #Mono
     mod: 3 #Mono 10 (damn) >> 3
   - type: Sprite
-    sprite: _NF/Structures/Machines/VendingMachines/civimed.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/civimed.rsi # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]

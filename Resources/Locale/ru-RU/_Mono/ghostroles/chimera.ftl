@@ -1,9 +1,8 @@
-ghost-role-information-chimera-name = Chimera
-ghost-role-information-chimera-description = The result of some disgusting Letoferol outbreak far away.
-ghost-role-information-chimera-rules =
-    Your only allies are [color=#ebba34][bold]other chimeras[/bold][/color].
-    You're goal is to [color=#ebba34][bold]spread the Letoferol infection[/bold][/color].
-    Reading the guidebook [color=red][bold]is expected for this role[/bold][/color].
-    You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
-    You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
-    You are absolutely [color=red]NOT[/color] allowed to remember the name, appearance, etc. of your previous character.
+ghost-role-information-chimera-name = Химера
+ghost-role-information-chimera-description = Результат какой-то отвратительной вспышки летоферола где-то далеко отсюда.
+ghost-role-information-chimera-rules = Ваши единственные союзники - [color=#ebba34][bold]другие химеры[/bold][/color].
+    Ваша цель - [color=#ebba34][bold]распространять инфекцию, вызываемую летоферолом[/bold][/color].
+    Для этой роли требуется [color=red][bold]прочтение руководства[/bold][/color].
+    Вы не помните ничего из своей прошлой жизни, и вы не помните ничего из того, чему научились, будучи призраком.
+    Вам разрешается запоминать знания об игре в целом, такие как приготовление пищи, использование предметов и т.д.
+    Вам категорически [color=red]ЗАПРЕЩЕНО[/color] помнить имя, внешность и т.д. вашего предыдущего персонажа.

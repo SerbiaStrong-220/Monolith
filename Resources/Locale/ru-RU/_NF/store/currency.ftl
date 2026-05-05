@@ -1,2 +1,2 @@
-store-currency-display-security-telecrystal = FMC
-store-currency-display-pirate-telecrystal = DC
+store-currency-display-security-telecrystal = Жетоны
+store-currency-display-pirate-telecrystal = Дата чипы

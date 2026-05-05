@@ -8,8 +8,8 @@
 - type: vessel
   id: Sellsword
   parent: BaseVessel
-  name: UW Sellsword
-  description: An escort picket comprising a claustrophobic, cast-plastitanium coffin enrobing a 255mm gun and VESPERA missile pod. Combat life expectancy of 4 minutes. Has a military IFF designation.
+  name: Селлсворд # Ru-Localization
+  description: Шаттл сопровождения, представляющий собой клаустрофобический гроб из литого пластитана, внутри которого размещены 255-мм орудие и Вспеоа. Ожидаемая продолжительность жизни шаттла в бою - 4 минуты.  # Ru-Localization
   price: 56000 # markup 15% from 48600. 
   category: Small
   group: Shipyard
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Sellsword
-  mapName: 'UW Sellsword'
+  mapName: 'Селлсворд' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/sellsword.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Sellsword MIL{1}'
+          mapNameTemplate: 'Селлсворд{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

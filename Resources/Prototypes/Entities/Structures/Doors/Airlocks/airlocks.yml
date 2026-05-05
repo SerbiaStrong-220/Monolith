@@ -100,7 +100,7 @@
   - type: WiresPanelSecurity
     securityLevel: medSecurity
   - type: PaintableAirlock
-    department: Command
+    department: Security # Exodus-Delete-Command-Department 
   - type: Wires
     layoutId: AirlockCommand
 
@@ -265,7 +265,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
   - type: PaintableAirlock
-    department: Command
+    department: Security # Exodus-Delete-Command-Department
   - type: WiresPanelSecurity
     securityLevel: medSecurity
   - type: Wires

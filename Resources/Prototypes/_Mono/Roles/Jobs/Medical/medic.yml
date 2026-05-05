@@ -4,8 +4,10 @@
   description: job-description-md-medic
   playTimeTracker: MdMedic
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 54000 # 15 hrs
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 54000 # 15 hrs
+    # Exodus-Rework-Time-Roles-End
   startingGear: MdMedicGear
   alwaysUseSpawner: true
   icon: "JobIconMedicalDoctor"

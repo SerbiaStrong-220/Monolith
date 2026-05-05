@@ -3,12 +3,13 @@
 - type: vessel
   id: Aldebaran
   parent: BaseVesselAntag
-  name: TSF-PIN Aldebaran
-  description: A frontal up-puncher corvette equipped with two cyrexas for long range engagements and torpedoes for heavier targets and close range.
+  name: Альдебаран # Ru-Localization
+  description: Корвет с усиленным носовым вооружением, оснащённый двумя Цирексами для боя на дальних дистанциях и ракетами для тяжёлых целей и ближнего боя. # Ru-Localization
   price: 160200
+  purchasable: false # voucher only
   category: Medium
   group: Security
-  access: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/aldebaran.yml
   guidebookPage: Null
   class:
@@ -19,7 +20,7 @@
 
 - type: gameMap
   id: Aldebaran
-  mapName: 'Aldebaran'
+  mapName: 'Альдебаран' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Nfsd/aldebaran.yml
   minPlayers: 0
   stations:
@@ -27,7 +28,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Aldebaran TSF{1}'
+        mapNameTemplate: 'Альдебаран{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

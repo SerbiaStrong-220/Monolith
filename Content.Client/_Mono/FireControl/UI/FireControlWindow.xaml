@@ -107,7 +107,9 @@
                 <ProgressBar Name="ShieldLoadBar" MaxValue="100" Value="100" SetHeight="35" HorizontalExpand="True" />
             </BoxContainer>
             <!-- Radar itself -->
-            <ui:FireControlNavControl Name="NavRadar" />
+            <LayoutContainer>
+                <ui:FireControlNavControl Name="NavRadar" />
+            </LayoutContainer>
         </BoxContainer>
         <!-- Exodus-End -->
     </BoxContainer>

@@ -184,7 +184,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             using (args.PushGroup(nameof(EncryptionKeyComponent)))
             {
                 args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
-                AddChannelsExamine(component.Channels,
+                AddChannelsExamine(new(component.Channels.Select(c => c.Channel.Id)), // Exodus: Use of RadioChannelEntry
                     component.DefaultChannel,
                     args,
                     _protoManager,
@@ -201,7 +201,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         if(component.Channels.Count > 0)
         {
             args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
-            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel");
+            AddChannelsExamine(new(component.Channels.Select(c => c.Channel.Id)), component.DefaultChannel, args, _protoManager, "examine-encryption-channel"); // Exodus: Use of RadioChannelEntry
         }
     }
 

@@ -3,8 +3,8 @@
 - type: vessel
   id: Tayfun
   parent: BaseVesselAntag
-  name: NCS Tayfun
-  description: An armored gunship with 4 90mms, 2 30mms, and 2 VESPERA missile pods.
+  name: Тайфун # Ru-Localization
+  description: Бронированный шаттл с четырьмя 90-мм орудиями, двумя 30-мм орудиями и двумя ракетными установками Веспера. # Ru-Localization
   price: 74200
   category: Medium
   group: Ussp
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Tayfun
-  mapName: 'Tayfun'
+  mapName: 'Тайфун' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/tayfun.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tayfun MIL{1}'
+          mapNameTemplate: 'Тайфун{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

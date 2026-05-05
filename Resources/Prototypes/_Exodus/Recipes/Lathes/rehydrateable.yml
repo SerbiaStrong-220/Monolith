@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: KidanCube
+  result: KidanCube
+  categories: # Mono
+  - Species
+  completetime: 30
+  materials:
+    Biomass: 80 # Slightly more than cloning requirement
+    Plasma: 250

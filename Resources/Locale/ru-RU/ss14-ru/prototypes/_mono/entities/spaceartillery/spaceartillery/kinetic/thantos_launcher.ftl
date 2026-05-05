@@ -1,3 +1,3 @@
-ent-WeaponTurretThanatos = THANATOS twin mass driver
-    .desc = The charon's mean older brother, the Thanatos is a force to be reckoned with. It can be remotely activated or linked up to a GCS. This one feeds from an autoloader somewhere, and doesn't need manual reloads.
-    .suffix = STATION ONLY, Recharging Ammo
+ent-WeaponTurretThanatos = Танатос
+    .desc = "Старший брат Харона", одно из самых опасных корабельных орудий из когда-либо созданных. Может активироваться дистанционно или подключаться к консоли контроля орудиями. Этот экземпляр питается от автоматического зарядного устройства и не требует ручной перезарядки.
+    .suffix = Только Станция, Автоперезарядка

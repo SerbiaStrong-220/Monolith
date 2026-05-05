@@ -1,28 +1,28 @@
 <p align="center"><img alt="Space Exodus" height="300" src="https://raw.githubusercontent.com/space-exodus/Monolith/0ddfa161945b7dda8c9cea018b7e72066225fae6/Resources/Textures/_Exodus/Logo/logo.png?raw=true" /><img alt="Monolith" height="50" src="https://raw.githubusercontent.com/Monolith-Station/Monolith/89d435f0d2c54c4b0e6c3b1bf4493c9c908a6ac7/Resources/Textures/_Mono/Logo/logo.png?raw=true" /></p>
 
-"Exodus: Monolith" is a fork of [Monolith](https://github.com/Monolith-Station/Monolith) that runs on the [Robust Toolbox](https://github.com/space-wizards/RobustToolbox) engine written in C#.
+"Exodus: Monolith" это репозиторий англоязычного фронтира [Monolith](https://github.com/Monolith-Station/Monolith) который работает на движке [Robust Toolbox](https://github.com/space-wizards/RobustToolbox) от Space Wizards написанном на C#.
 
 
-This is the primary repo for "Exodus: Monolith".
+Это основной репозиторий проекта "SS220 Exodus: Monolith".
 
-If you want to host or create content for "Exodus: Monolith", this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
-
+Если вы хотите создавать или размещать контент для "SS220 Exodus: Monolith", вам нужен именно этот репозиторий. Он содержит как RobustToolbox, так и набор контента для разработки нового контента.
 ## Links
 
-[Discord of Exodus: Monolith](https://discord.gg/yZKf8cQVHC) | [Discord of Monolith](https://discord.gg/mxY4h2JuUw) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/)
+[Discord-сервер SS220 Exodus: Monolith](https://discord.com/invite/ss220) | [Discord-сервер Monolith](https://discord.gg/mxY4h2JuUw) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/)
 
-## Contributing
 
-We are happy to accept contributions from anybody. Get in Discord if you want to help. Don't be afraid to ask for help either!
+## Участие в разработке
 
-Note: In order for your contribution to be accepted, you must agree to the terms of [our CLA](LICENSES/CLA.txt)
+Если Вы желаете помочь в улучшении репозитория, решении проблем или создании нового контента, мы рады принять вклад от любого человека. Заходите в Discord, если хотите помочь. Не бойтесь просить о помощи!
 
-## Building
+Примечание: чтобы ваш вклад был принят, вы должны согласиться с условиями [нашей лицензии CLA](LICENSES/CLA.txt)
 
-Refer to [the Space Wizards' guide](https://docs.spacestation14.com/en/general-development/setup/setting-up-a-development-environment.html) on setting up a development environment for general information, but keep in mind that Einstein Engines is not the same and many things may not apply.
-We provide some scripts shown below to make the job easier.
+## Сборка
 
-### Build dependencies
+Обратитесь к [руководству Space Wizards](https://docs.spacestation14.com/en/general-development/setup/setting-up-a-development-environment.html) для получения общей информации о настройке среды разработки, но имейте в виду, что наш проект — это не то же самое, и многое может не подходить.
+Мы предоставляем несколько скриптов, показанных ниже, чтобы упростить работу.
+
+### Зависимости для сборки
 
 > - Git
 > - .NET SDK 10.0
@@ -30,24 +30,24 @@ We provide some scripts shown below to make the job easier.
 
 ### Windows
 
-> 1. Clone this repository
-> 2. Run `Scripts/bat/updateEngine.bat` in a terminal or in file explorer to download the engine
-> 3. Run `Scripts/bat/buildAllDebug.bat` after making any changes to the source
-> 4. Run `Scripts/bat/runQuickAll.bat` to launch the client and the server
-> 5. Connect to localhost in the client and play
+> 1. Клонируйте этот репозиторий.
+> 2. Запустите `Scripts/bat/updateEngine.bat` в терминале или проводнике, чтобы загрузить движок игры.
+> 3. Запустите `Scripts/bat/buildAllDebug.bat` после внесения любых изменений в исходный код (Примечание: для полноценной игры стоит запускать `Scripts/bat/buildAllRelease.bat` или `Scripts/bat/buildAllRelease.bat` для маппинга или теста).
+> 4. Запустите `Scripts/bat/runQuickAll.bat` чтобы запустить клиент и сервер.
+> 5. Подключитесь к localhost в клиенте и играйте.
 
 ### Linux
 
-> 1. Clone this repository
-> 2. Run `Scripts/sh/updateEngine.sh` in a terminal to download the engine
-> 3. Run `Scripts/sh/buildAllDebug.sh` after making any changes to the source
-> 4. Run `Scripts/sh/runQuickAll.sh` to launch the client and the server
-> 5. Connect to localhost in the client and play
+> 1. Клонируйте этот репозиторий.
+> 2. Запустите `Scripts/sh/updateEngine.sh` в терминале или проводнике, чтобы загрузить движок игры.
+> 3. Запустите `Scripts/sh/buildAllDebug.sh` после внесения любых изменений в исходный код.
+> 4. Запустите `Scripts/sh/runQuickAll.sh` чтобы запустить клиент и сервер.
+> 5. Подключитесь к localhost в клиенте и играйте.
 
 ### MacOS
 
-> I don't know anybody using MacOS to test this, but it's probably roughly the same steps as Linux
+> Я не знаю никого, кто использует MacOS для тестирования, но шаги, вероятно, примерно такие же, как для Linux.
 
-## License
+## Лицензия
 
-For detailed licensing information, read the file carefully [LEGAL.md](LEGAL.md)
+Для получения подробной информации о лицензировании внимательно прочтите файл [LEGAL.md](LEGAL.md)

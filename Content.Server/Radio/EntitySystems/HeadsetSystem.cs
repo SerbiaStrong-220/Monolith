@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
@@ -50,14 +51,14 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (keyHolder.Channels.Count == 0)
             RemComp<ActiveRadioComponent>(uid);
         else
-            EnsureComp<ActiveRadioComponent>(uid).Channels = new(keyHolder.Channels);
+            EnsureComp<ActiveRadioComponent>(uid).Channels = new(keyHolder.Channels.Select(c => c.Channel.Id)); // Exodus
     }
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
         if (args.Channel != null
             && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && keys.Channels.Contains(args.Channel.ID))
+            && keys.Channels.Any(c => c.Channel == args.Channel.ID && c.CanSpeak)) // Exodus: read-only channels
         {
             _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
             args.Channel = null; // prevent duplicate messages from other listeners.

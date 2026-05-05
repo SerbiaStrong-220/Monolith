@@ -32,7 +32,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: ADS Razor-N
+      name: АСЗ Разор # Ru-Localization
     # bet
     - type: InitRepairSnapshot
     - type: ShipRepairRestrict

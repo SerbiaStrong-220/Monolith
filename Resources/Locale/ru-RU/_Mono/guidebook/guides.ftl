@@ -7,7 +7,7 @@ guide-entry-shipyard-ruby = Ruby
 guide-entry-shipyard-motley-anne = Motley Anne
 guide-entry-shipyard-fenrir = Fenrir
 # Gunnery Guides
-guide-entry-gunnery = Корабельное орудие
+guide-entry-gunnery = Корабельные орудия
 guide-entry-ballistics = Баллистические
 guide-entry-energy = Энергетические
 guide-entry-missiles = Ракетные

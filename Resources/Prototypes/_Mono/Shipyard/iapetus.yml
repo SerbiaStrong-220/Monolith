@@ -7,8 +7,8 @@
 - type: vessel
   id: Iapetus
   parent: BaseVessel
-  name: TSF-SKR Iapetus
-  description: A basic artifact research ship, with minimal armament.
+  name: Ипетус # Ru-Localization
+  description: Стандартный шаттл для ксеноархеологии с минимальным вооружением. # Ru-Localization
   price: 36900
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Iapetus
-  mapName: 'TSF-SKR Iapetus'
+  mapName: 'Ипетус' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/iapetus.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Iapetus CIV{1}'
+          mapNameTemplate: 'Ипетус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

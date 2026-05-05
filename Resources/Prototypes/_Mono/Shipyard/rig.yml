@@ -7,8 +7,8 @@
 - type: vessel
   id: Rig
   parent: BaseVessel
-  name: DIS Rig
-  description: A heavy-class flying refinery manufactured by Drake Industries Shipyards. Able to extract, collect and process materials then refine them into whatever the ever changing Colossean market demands.  Comes equipped with two flare launchers for missile defense and four mining pulsers, along with mining bumpers to push minerals directly onto the built in belt system. 
+  name: Риг # Ru-Localization
+  description: Тяжёлый рудодобывающий шаттл, произведённый на верфях Дрэйк Индастрис. Способен добывать, собирать и перерабатывать материалы, превращая их в то, что требует постоянно меняющийся рынок Колоссеи. Оснащён двумя пусковыми установками для фальшфейеров для противоракетной обороны, четырьмя шахтёрскими пульсаторами и специальной системой для подачи руды прямо на встроенную конвеерную систему. # Ru-Localization
   price: 104900 # +50% Markup from 69900 appraisegrid price. To amount for all of the QOL included in the vessel
   category: Medium
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Rig
-  mapName: 'DIS Rig'
+  mapName: 'Риг' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/rig.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Rig CIV{1}'
+          mapNameTemplate: 'Риг{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

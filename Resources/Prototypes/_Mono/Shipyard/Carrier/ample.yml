@@ -1,8 +1,8 @@
 - type: vessel
   id: Ample
   parent: BaseVessel
-  name: SKR Ample
-  description: A very light mining shuttle equipped with a PTK-1500e
+  name: Эмпл # Ru-Localization
+  description: Лёгкий шахтёрский шаттл, использующий для работы PTK-800. # Ru-Localization
   price: 6250
   category: Micro
   group: Custom
@@ -16,7 +16,7 @@
 
 - type: gameMap
   id: Ample
-  mapName: 'Ample'
+  mapName: 'Эмпл' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/Carrier/ample.yml
   minPlayers: 0
   stations:
@@ -24,7 +24,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Ample SNB{1}'
+        mapNameTemplate: 'Эмпл{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

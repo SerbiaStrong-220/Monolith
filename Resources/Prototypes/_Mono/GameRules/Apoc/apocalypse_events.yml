@@ -10,6 +10,9 @@
     - id: UnknownShuttleNebulaApoc
     - id: UnknownShuttleWyvernApoc
     - id: UnknownShuttleRazorNApoc
+    - id: UnknownShuttleMantarayApoc # Exodus
+    - id: UnknownShuttleCrowApoc # Exodus
+    - id: UnknownShuttleOmenApoc # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -24,12 +27,12 @@
   - type: GameRule
     minPlayers: 32
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/zenith.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/zenith.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 2
+      department: Combatant
+      minDepartmentPlayers: 3
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -44,12 +47,12 @@
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/zenith_e.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/zenith_e.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 2
+      department: Combatant
+      minDepartmentPlayers: 3
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -64,12 +67,12 @@
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/nebula.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/nebula.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 2
+      department: Combatant
+      minDepartmentPlayers: 3
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -84,12 +87,12 @@
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/wyrm.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/wyrm.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 2
+      department: Combatant
+      minDepartmentPlayers: 3
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -108,8 +111,8 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
-      minDepartmentPlayers: 6
+      department: Combatant
+      minDepartmentPlayers: 7
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -128,5 +131,68 @@
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
-      department: Security
+      department: Combatant
+      minDepartmentPlayers: 7
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleMantarayApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-destroyer-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 3
+    maxOccurrences: 1
+  - type: GameRule
+    minPlayers: 26
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/mantaray.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleOmenApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-shuttle-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 3
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 10
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/omen.yml
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 2
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleCrowApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-shuttle-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 5
+    maxOccurrences: 3
+  - type: GameRule
+    minPlayers: 28
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/crow.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
       minDepartmentPlayers: 6

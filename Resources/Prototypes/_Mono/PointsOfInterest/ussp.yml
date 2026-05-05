@@ -16,7 +16,7 @@
   maximumDistance: 12400
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
-  gridPath: /Maps/_Mono/POI/camelot.yml
+  gridPath: /Maps/_Exodus/POI/camelot.yml # Exodus
   addComponents:
   - type: IFF
     color: "#ccaa55"
@@ -26,7 +26,7 @@
 - type: gameMap
   id: USSPCamelot
   mapName: 'Форт Камелот' # Ru-Localization
-  mapPath: /Maps/_Mono/POI/camelot.yml
+  mapPath: /Maps/_Exodus/POI/camelot.yml # Exodus
   minPlayers: 0
   stations:
     USSPCamelot:

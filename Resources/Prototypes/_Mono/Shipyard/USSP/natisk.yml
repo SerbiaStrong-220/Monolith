@@ -3,8 +3,8 @@
 - type: vessel
   id: Natisk
   parent: BaseVesselAntag
-  name: NCS Natisk
-  description: A tank with a layer of reinforced walls under its exterior hull, ensuring its able to send out obscene amounts of firepower.
+  name: Натиск # Ru-Localization
+  description: Шаттл-танк со слоем усиленных стен под внешним корпусом, что позволяет ему выдерживать колоссальную нагрузку и использовать чудовищное количество огневой мощи. # Ru-Localization
   price: 53500
   category: Medium
   group: Ussp
@@ -18,7 +18,7 @@
 
 - type: gameMap
   id: Natisk
-  mapName: 'Natisk'
+  mapName: 'Натиск' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/USSP/natisk.yml
   minPlayers: 0
   stations:
@@ -26,7 +26,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Natisk MIL{1}'
+          mapNameTemplate: 'Натиск{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

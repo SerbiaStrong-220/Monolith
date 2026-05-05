@@ -71,7 +71,8 @@ public sealed partial class SalvageSystem
     {
         args.State = new SalvageExpeditionComponentState()
         {
-            Stage = component.Stage
+            Stage = component.Stage,
+            EndTime = component.EndTime, // Exodus-add-exp-time-to-pda
         };
     }
 

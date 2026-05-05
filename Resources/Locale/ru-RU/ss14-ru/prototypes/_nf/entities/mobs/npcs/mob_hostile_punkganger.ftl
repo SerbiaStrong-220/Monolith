@@ -1,22 +1,28 @@
 ent-MobVandalizer = { "" }
     .desc = { "" }
-ent-MobPunkBase = punk
-    .desc = "Criminally-inclined individuals", as NT Security documents call them, these are armed with a variety of weapons. These weapons range from makeshift shivs and machined truncheons to rusty pistols and shotguns. Some may be armored, so plan appropriately.
-ent-MobPunkGangerMeleeT1 = { ent-MobPunkBase }
-    .desc = { ent-MobPunkBase.desc }
-ent-MobPunkGangerPistol = { ent-MobPunkBase }
-    .desc = { ent-MobPunkBase.desc }
-ent-MobPunkGangerMeleeT2 = { ent-MobPunkBase }
-    .desc = { ent-MobPunkBase.desc }
-ent-MobPunkGangerShotgun = { ent-MobPunkBase }
-    .desc = { ent-MobPunkBase.desc }
-ent-MobPunkGangerMeleeT3 = { ent-MobPunkBase }
-    .desc = { ent-MobPunkBase.desc }
-ent-MobPunkGangerSmg = { ent-MobPunkBase }
-    .desc = { ent-MobPunkBase.desc }
-ent-MobPunkGangerLeader = punk gang leader
-    .desc = It takes a formidable figure to lead a pack of street trash. These leaders usually wield scavenged SMGs and wear armor taken from unfortunate security forces. Usually high on meth and booze.
-ent-PartyNadeGun = party nade gun
-    .desc = Needed to shoot a nade.
-ent-ActionThrowPartyNade = [color=yellow]Throw a party 'nade[/color]
-    .desc = Hurls activated party 'nade filled with party chems, explodes on contact. [color=yellow]20 second cooldown.[/color]
+ent-MobPunkBaseT1 = панк
+    .desc = "Индивиды, склонные к криминалу" - именно так служба безопасности Колосса описывает их в документах. Вооружены чем попало, начиная от заточек и мачете, заканчивая пистолетами и дробовиками. Готовьтесь к жаркому приёму.
+ent-MobPunkBaseT2 = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkBaseT3 = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkBaseT4 = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerMeleeT1 = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerPistol = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerMeleeT2 = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerShotgun = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerMeleeT3 = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerSmg = { ent-MobPunkBaseT1 }
+    .desc = { ent-MobPunkBaseT1.desc }
+ent-MobPunkGangerLeader = лидер банды панков
+    .desc = Требуется впечатляющая сила, чтобы вести за собой банду уличных отбросов. Носит пистолет-пулемёт и броню, снятую с попавшегося под руку охранника. Обычно обдолбан и пьян.
+ent-PartyNadeGun = тусовый гранатомёт
+    .desc = Нужен чтобы стрелять тусовыми гранатами.
+ent-ActionThrowPartyNade = [color=yellow]Метнуть тусовую гранату[/color]
+    .desc = Метает взведённую тусовую гранату, наполненную смешными химическими веществами. [color=yellow]20 секунд перезарядки.[/color]

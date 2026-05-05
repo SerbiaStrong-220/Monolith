@@ -4,8 +4,13 @@
   description: job-description-deputy
   playTimeTracker: JobSecurityOfficer
   requirements:
-    - !type:OverallPlaytimeRequirement
+    # Exodus-Rework-Time-Roles-Start
+    # - !type:OverallPlaytimeRequirement
+    #   time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
       time: 36000 # 10 hours
+    # Exodus-Rework-Time-Roles-End
   startingGear: DeputyGear
   icon: JobIconDeputy
   supervisors: job-supervisors-sergeant

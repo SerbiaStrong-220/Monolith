@@ -11,11 +11,11 @@
 - type: pointOfInterest
   id: Medical
   parent: [BasePOI, BaseRepairablePOI]
-  name: 'Медицинский Центр' # Ru-Localization
+  name: 'Госпиталь' # Ru-Localization
   minimumDistance: 1650
   maximumDistance: 2700
   spawnGroup: Required
-  gridPath: /Maps/_NF/POI/medical.yml
+  gridPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
   addComponents:
   - type: IFF
     color: "#00b7eb"
@@ -26,15 +26,15 @@
 
 - type: gameMap
   id: Medical
-  mapName: 'Медицинский Центр' # Ru-Localization
-  mapPath: /Maps/_NF/POI/medical.yml
+  mapName: 'Госпиталь' # Ru-Localization
+  mapPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
   minPlayers: 0
   stations:
     Medical:
       stationProto: RecordsFrontierOutpost
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Медицинский Центр' # Ru-Localization
+          mapNameTemplate: 'Госпиталь' # Ru-Localization
         - type: ExtraStationInformation
           icon:
             sprite: _NF/Markers/jobs.rsi

@@ -8,8 +8,8 @@
 - type: vessel
   id: McChilly
   parent: BaseVessel
-  name: AES McChilly
-  description: A small ice cream ship. For when the heat is up, its best to take it- who wrote this shit?.
+  name: МакЧилли # Ru-Localization
+  description: Небольшой шаттл для продажи мороженого. На случай, когда припекает, лучше всего взять... Кто это писал? # Ru-Localization
   price: 17500
   category: Small
   group: Shipyard
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: McChilly
-  mapName: 'AES McChilly'
+  mapName: 'МакЧилли' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/mcchilly.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'McChilly CIV{1}'
+          mapNameTemplate: 'МакЧилли{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

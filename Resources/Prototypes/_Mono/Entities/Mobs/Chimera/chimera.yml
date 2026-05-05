@@ -76,9 +76,14 @@
     rules: ghost-role-information-chimera-rules
     raffle:
       settings: default
+    # Exodus-Rework-Time-Roles-Start
+    # requirements:
+    # - !type:OverallPlaytimeRequirement
+    #   time: 180000 # 50 hrs
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 180000 # 50 hrs
+      time: 108000 # 30 hrs
+     # Exodus-Rework-Time-Roles-End
   - type: GhostTakeoverAvailable
 
 - type: entity

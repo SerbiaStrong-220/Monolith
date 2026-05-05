@@ -81,6 +81,7 @@
   color: "#B01340"
   disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
+  image: /Textures/_Mono/Companies/USSP.png
 
 # Major companies
 
@@ -118,7 +119,7 @@
   id: CivilDefenseMilita
   name: civil-defense-milita-name # Ru-Localization
   description: civil-defense-milita-description
-  color: "#666600"
+  color: "#5e6ab3" # Exodus-Company-Recolor
 
 - type: company
   id: UllmanIndustries
@@ -177,7 +178,6 @@
   description: cerberus-surplus-provisions
   color: "#aa1010"
   image: /Textures/_Mono/Companies/CSP.png
-  disabled: true
   whitelisted: true
 
 - type: company
@@ -190,7 +190,7 @@
 
 - type: company
   id: RedSailCorsairs
-  name: RedSail Corsairs
+  name: redsail-corsairs-name # Ru-Localization
   description: redsail-corsairs-description
   color: "#930000"
   image: /Textures/_Mono/Companies/redsailcorsairs.png

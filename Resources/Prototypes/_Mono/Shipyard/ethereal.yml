@@ -6,8 +6,8 @@
 - type: vessel
   id: Ethereal
   parent: BaseVessel
-  name: NS Ethereal
-  description: A science vessel shaped like a butterfly. Comes facilities to accomodate botany and artifact research, as well as chemistry. Comes with a pool & bar. 
+  name: Эзериал # Ru-Localization
+  description: Научный шаттл в форме бабочки. Оснащён помещениями для ботаники и исследования артефактов, а также химической лабораторией. Имеет бассейн и бар. # Ru-Localization
   price: 120000
   category: Large
   group: Shipyard
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Ethereal
-  mapName: 'NS Ethereal'
+  mapName: 'Эзериал' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/ethereal.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Ethereal CIV{1}'
+          mapNameTemplate: 'Эзериал{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -7,8 +7,8 @@
 - type: vessel
   id: Kestrel
   parent: BaseVessel
-  name: SKR Kestrel
-  description: A small jump-capable science vessel meant for long-term missions. Comes with a living suite and a decent defensive armament for its size, though it is without much maneuvering performance.
+  name: Кестрель # Ru-Localization
+  description: Небольшой научный шаттл с возможностью БСС скачка, предназначенный для длительных изучений. Оснащён жилым отсеком и неплохим оборонительным вооружением для своих размеров, хотя манёвренность из-за этого оставляет желать лучшего. # Ru-Localization
   price: 57500
   category: Small
   group: Shipyard
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: Kestrel
-  mapName: 'SKR Kestrel'
+  mapName: 'Кестрель' # Ru-Localization
   mapPath: /Maps/_Mono/Shuttles/kestrel.yml
   minPlayers: 0
   stations:
@@ -29,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Kestrel CIV{1}'
+          mapNameTemplate: 'Кестрель{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

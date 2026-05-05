@@ -1,22 +1,28 @@
-ent-MobExplorerBase = explorer
+ent-MobExplorerBaseT1 = исследователь
     .desc = { ent-MobNonHumanHostileBase.desc }
-ent-MobExplorerMeleeT1 = looter
-    .desc = Armed with a trusty pickaxe and greed, every group needs its grunts.
-ent-MobExplorerRangedT1 = scrapper
-    .desc = Proto-kinetic accelerator in one hand, flashlight in the other, beer in the belly. That's how you explore.
-ent-MobExplorerMeleeT2 = scavenger
-    .desc = A looter that scavenged enough coins to afford some decent equipment.
-ent-MobExplorerRangedT2 = salvager
-    .desc = Sawn-off proto-kinetic accelerator in one hand, crusher dagger in the other, magm-ale both in the belly and in the hardsuit's boots.
-ent-MobExplorerMeleeT3 = miner
-    .desc = Drilling in the name of... drilling. No rock formation can withstand the power of dual-wielded mining drills - good thing you aren't a rock.
-ent-MobExplorerRangedT3 = explorer
-    .desc = Veteran scrappers, these salvagers are wealthy enough to explore abandoned ruins for the adrenaline rush and adventure alone.
-ent-MobExplorerHauler = hauler
-    .desc = Loaded with heavy equipment for industrial-scale looting. Pardon me, "asset recovery".
-ent-MobExplorerBoss = explorer captain
-    .desc = Fearless and battle-hardened salvage team leaders, it takes years picking through the darkest corners of space and navigating the galaxy's criminal underbelly of the galaxy before you can become a captain. Not to be underestimated.
-ent-SeismicChargeGun = seismic charge gun
-    .desc = Needed to shoot the charge.
-ent-ActionSeismicCharge = [color=yellow]Throw Seismic Charge[/color]
-    .desc = Hurls activated seismic charge, that explodes on contact. [color=yellow]50 second cooldown.[/color]
+ent-MobExplorerBaseT2 = исследователь
+    .desc = { ent-MobNonHumanHostileBase.desc }
+ent-MobExplorerBaseT3 = исследователь
+    .desc = { ent-MobNonHumanHostileBase.desc }
+ent-MobExplorerBaseT4 = исследователь
+    .desc = { ent-MobNonHumanHostileBase.desc }
+ent-MobExplorerMeleeT1 = копатель
+    .desc = Вооружён старой доброй киркой и жадностью. Каждой группе нужна грубая сила.
+ent-MobExplorerRangedT1 = мусорщик
+    .desc = Кинетический ускоритель в одной руке, фонарик в другой, пиво в желудке. Вот как правильно зарабатывать на жизнь.
+ent-MobExplorerMeleeT2 = собиратель
+    .desc = Мародёр, смог прожить достаточно для того, чтобы позволить себе более-менее хорошую экипировку.
+ent-MobExplorerRangedT2 = утилизатор
+    .desc = Обрез кинетического ускорителя в одной руке, нож-крушитель в другой, магма-эль в желудке и сапогах.
+ent-MobExplorerMeleeT3 = шахтёр
+    .desc = Бурит во имя... бурения. Ни одна скала не устоит перед силой акимбо буров. Хорошо, что ты не из камня.
+ent-MobExplorerRangedT3 = исследователь
+    .desc = Ветеран среди исследователей, достаточно опытен и богат, для того чтобы исследовать руины погибших цивилизаций просто из любопытства и ради адреналина.
+ent-MobExplorerHauler = грузовой мех
+    .desc = Укомплектован тяжёлым оборудованием для мародёрства в промышленных масштабах. Извините, для "возвращения активов".
+ent-MobExplorerBoss = капитан исследователей
+    .desc = Бесстрашный и закалённый в боях лидер команды, годами ползал в самых тёмных углах галактики и работал с жестокими криминальными бандами чтобы стать капитаном. Не недооценивать.
+ent-SeismicChargeGun = Пускатель сейсмического заряда
+    .desc = Нужен чтобы выстрелить сейсмическим зарядом.
+ent-ActionSeismicCharge = [color=yellow]Метнуть Сейсмический Заряд[/color]
+    .desc = Пускает сейсмический заряд, который взрывается при контакте. [color=yellow]50 секунд перезарядка.[/color]

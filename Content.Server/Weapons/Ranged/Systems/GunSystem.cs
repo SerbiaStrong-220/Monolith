@@ -80,7 +80,7 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         userImpulse = true;
 
-        if (user != null)
+        if (user != null && gun.UseUserPosition) // Exodus
         {
             var selfEvent = new SelfBeforeGunShotEvent(user.Value, (gunUid, gun), ammo);
             RaiseLocalEvent(user.Value, selfEvent);
@@ -181,7 +181,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     // Mono start
-                    Spawn(hitscanammo.CasingPrototype, fromEnt);
+                    if (hitscanammo.CasingPrototype != null)
+                        Spawn(hitscanammo.CasingPrototype, fromEnt);
                     Del(ent);
                     // Mono end
                     break;
