@@ -12,15 +12,15 @@
     shape: square
   - type: SpawnItemsOnUse
     items:
-    # Money - 30k
+    # Money - 10k # Exodus-Economic-Rebalance
     - id: SpaceCash10000
-      amount: 3
-    # Scrap chunks
-    - id: ScrapOre100
       amount: 1
-    # Material
+    # Scrap chunks
+    - id: ScrapOre50 # Exodus-Economic-Rebalance
+      amount: 1
+    # Material # Exodus-Economic-Rebalance
     - id: SheetPlastitanium10
-      amount: 2
+      amount: 1
     # Parts
     - id: SuperCapacitorStockPart
       prob: 0.8
@@ -71,16 +71,16 @@
   components:
   - type: SpawnItemsOnUse
     items:
-    # Money - 80k
+    # Money - 30k # Exodus-Economic-Rebalance
     - id: SpaceCash25000
-      amount: 3
+      amount: 1
     - id: SpaceCash5000
-    # Scrap chunks
+    # Scrap chunks  # Exodus-Economic-Rebalance
     - id: ScrapOre100
-      amount: 3
-    # Material
+      amount: 1
+    # Material # Exodus-Economic-Rebalance
     - id: SheetPlastitanium10
-      amount: 4
+      amount: 2
     # Parts
     - id: SuperCapacitorStockPart
       amount: 3
@@ -88,14 +88,14 @@
       amount: 1
     - id: PicoManipulatorStockPart
       amount: 2
-    # rare t4 parts
+    # rare t4 parts # Exodus-Economic-Rebalance
     - id: QuadraticCapacitorStockPart
       amount: 2
-      prob: 0.8
+      prob: 0.4
     - id: FemtoManipulatorStockPart
-      prob: 0.8
+      prob: 0.4
     - id: BluespaceMatterBinStockPart
-      prob: 0.6
+      prob: 0.3
     - id: SpawnDungeonLootPowerCell
       prob: 0.5
     - id: PowerCellMicroreactor
@@ -123,16 +123,16 @@
   components:
   - type: SpawnItemsOnUse
     items:
-    # Money - 200k
+    # Money - 100k # Exodus-Economic-Rebalance
     - id: SpaceCash100000
-      amount: 2
-    # Scrap chunks
+      amount: 1
+    # Scrap chunks  # Exodus-Economic-Rebalance
     - id: ScrapOre100
-      amount: 6
-    # Material
+      amount: 2
+    # Material  # Exodus-Economic-Rebalance
     - id: SheetPlastitanium10
-      amount: 8
-    # Parts
+      amount: 4
+    # Parts 
     - id: SuperCapacitorStockPart
       amount: 6
     - id: SuperMatterBinStockPart
@@ -159,10 +159,10 @@
       maxAmount: 2
     - id: WeaponTurretPinholeFlatpack
     # no flatpacks or boards, just gamble scrap
-    # Research disk, expected value 200k/drone
+    # Research disk, expected value 200k/drone  # Exodus-Economic-Rebalance
     - id: RogueSiliconResearchDisk50000
-      amount: 3
-      maxAmount: 5
+      amount: 1
+      maxAmount: 3
     # Tech disk
     - id: SpawnLootTechDisksT3Mech
       prob: 0.6
