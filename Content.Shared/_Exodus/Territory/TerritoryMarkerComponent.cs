@@ -13,8 +13,8 @@ public sealed partial class TerritoryMarkerComponent : Component
     public float Radius = 7500f;
 
     [DataField]
-    public Color FillColor = new Color(1f, 0.88f, 0f, 0.12f);
+    public Color FillColor = new Color(1f, 0.88f, 0f, 0.02f);
 
     [DataField]
-    public Color BorderColor = new Color(1f, 0.88f, 0f, 0.50f);
+    public Color BorderColor = new Color(1f, 0.88f, 0f, 0.085f);
 }

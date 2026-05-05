@@ -1497,7 +1497,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _territoryLineBuffer[count] = _territoryFillBuffer[1];
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_territoryFillBuffer, 0, fillCount), config.Color);
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_territoryLineBuffer, 0, lineCount), config.Color.WithAlpha(0.5f));
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_territoryLineBuffer, 0, lineCount), config.Color.WithAlpha(0.085f));
     }
     // Exodus-end
 
