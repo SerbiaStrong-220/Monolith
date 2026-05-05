@@ -122,14 +122,6 @@ public partial record struct BlipConfig
     [DataField]
     public List<Vector2>? Points = null;
     // Exodus-end
-    // Exodus-begin territory-marker
-    /// <summary>
-    /// Optional localization key for a text label rendered inside the blip (e.g. territory hatching).
-    /// </summary>
-    [DataField]
-    public string? Label = null;
-    // Exodus-end
-
     [DataField]
     public bool RespectZoom = false;
 

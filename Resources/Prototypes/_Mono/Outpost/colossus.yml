@@ -17,7 +17,6 @@
       - type: Zone # Exodus - SafeZone
         text: "zone-safezone"
       - type: TerritoryMarker # Exodus - TerritoryMarker
-        text: territory-marker-colossus
       - type: Tower7G # Exodus-Adminbus
       components:
         - type: StationNameSetup
