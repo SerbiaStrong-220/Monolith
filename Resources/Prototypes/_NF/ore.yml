@@ -91,7 +91,7 @@
   id: NFOreGoldDense
   oreEntity: GoldOre5
   minOreYield: 1 # Exodis-mining-expansion
-  maxOreYield: 2
+  maxOreYield: 2 # Exodus-mining-expansion
 
 - type: ore
   id: NFOreSilverDense
