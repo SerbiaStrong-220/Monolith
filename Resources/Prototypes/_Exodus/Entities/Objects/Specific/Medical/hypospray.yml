@@ -23,7 +23,7 @@
     injectOnly: true
     transferAmount: 5
     preventCombatInjection: true
-  - type: BorgParamedicHypo
+  - type: CyclingHypospray
   - type: ReagentAutoRecharge
     solutionName: hypospray
     reagent: Bicaridine
