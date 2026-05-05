@@ -6,6 +6,7 @@
   name: Бастион # Ru-Localization
   description: Дальнобойный шаттл, ооружённый двумя 220-мм пушками Гидра и четырьмя 57-мм автопушками АК570. Ваша задача — стоять насмерть и топить врага. # Ru-Localization
   price: 95500
+  purchasable: false # voucher only
   category: Medium
   group: BlackMarket
   access: Pirate

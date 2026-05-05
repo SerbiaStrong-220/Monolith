@@ -1,5 +1,5 @@
-ent-GunneryControlComputerCircuitboard = gunnery control computer board
-    .desc = A computer printed circuit board for a gunnery control computer.
+ent-GunneryControlComputerCircuitboard = плата консоли контроля корабельными орудиями
+    .desc = Плата для консоли контроля корабельными орудиями.
 ent-StationAiUploadCircuitboardUnlocked = { ent-StationAiUploadCircuitboard }
     .desc = A computer printed circuit board for a AI upload console.
     .suffix = Unlocked
