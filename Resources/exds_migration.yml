@@ -11,3 +11,6 @@ BitcoinGoidacoin: BitcoinLuxurycoin
 
 # 04.05.2026 - Remove PDV bounty
 ComputerPirateBounty: null
+ComputerPirateBountyRedemption: null
+ComputerTabletopPirateBounty: null
+ComputerTabletopPirateBountyRedemption: null
