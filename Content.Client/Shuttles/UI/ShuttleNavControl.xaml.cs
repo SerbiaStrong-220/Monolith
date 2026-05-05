@@ -1527,37 +1527,41 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var textScale = UIScale * 0.6f;
         var textColor = config.Color.WithAlpha(0.35f);
         var textDims = handle.GetDimensions(Font, text, textScale);
-        var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
+        // Large margin keeps text clearly inside the circle — prevents edge bleed.
+        var margin = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f * 2.5f;
 
         var spacingX = textDims.X + 20f;
-        var spacingY = textDims.Y * 3f;
+        var spacingY = textDims.Y * 2.5f;
 
-        // Iterate enough to cover the radar circle, positions relative to territoryCenter
-        var coverRadius = radarRadius * 1.1f;
+        var safeTerritory = territoryRadius - margin;
+        var safeRadar = radarRadius - margin;
+        if (safeTerritory <= 0f || safeRadar <= 0f)
+            return;
 
+        // SetTransform uses screen (window) coordinates, not control-local coordinates.
+        // GlobalPixelPosition is the control's offset from the top-left of the game window.
+        var screenOffset = (Vector2) GlobalPixelPosition;
         var prevTransform = handle.GetTransform();
 
         var rowIndex = 0;
-        for (var t = -coverRadius; t <= coverRadius; t += spacingY, rowIndex++)
+        for (var t = -radarRadius; t <= radarRadius; t += spacingY, rowIndex++)
         {
             var stagger = rowIndex % 2 == 0 ? 0f : spacingX * 0.5f;
-            for (var s = -coverRadius + stagger; s <= coverRadius + stagger; s += spacingX)
+            for (var s = -radarRadius + stagger; s <= radarRadius + stagger; s += spacingX)
             {
-                var pos = territoryCenter + t * perpDir + s * screenDir;
+                var pos = radarCenter + t * perpDir + s * screenDir;
 
                 // Must be inside territory circle
                 var dTerritory = pos - territoryCenter;
-                var safeTerritory = territoryRadius - halfDiag;
                 if (dTerritory.LengthSquared() > safeTerritory * safeTerritory)
                     continue;
 
                 // Must be inside radar circle
                 var dRadar = pos - radarCenter;
-                var safeRadar = radarRadius - halfDiag;
                 if (dRadar.LengthSquared() > safeRadar * safeRadar)
                     continue;
 
-                handle.SetTransform(pos, textAngle);
+                handle.SetTransform(screenOffset + pos, textAngle);
                 handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor);
             }
         }
