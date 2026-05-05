@@ -8,6 +8,7 @@
   name: Тарантула # Ru-Localization
   description: Живучий шаттл, созданный для затяжных боев на ближней дистанции. Оснащён четырьмя Цербера и двумя Мародёрами, чтобы испепелять корабли противника. # Ru-Localization
   price: 140850
+  purchasable: false # voucher only
   category: Medium
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles

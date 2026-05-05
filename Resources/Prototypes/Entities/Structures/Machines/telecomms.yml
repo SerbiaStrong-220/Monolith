@@ -79,7 +79,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyCargo
       - EncryptionKeyEngineering
       - EncryptionKeyMedical
@@ -97,7 +97,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
 
 - type: entity
   parent: TelecomServer

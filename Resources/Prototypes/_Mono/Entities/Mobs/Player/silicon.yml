@@ -131,6 +131,7 @@
       state: default
   - type: ShowJobIcons
   - type: AdvancedPilot # can use both gunnery and shuttle console even on capitals
+  - type: RetroMonitorView
 
 - type: entity
   id: BaseBorgChassisRedacted
@@ -149,12 +150,12 @@
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: CollectiveMind
@@ -181,7 +182,7 @@
   id: BorgChassisRedacted
   parent: BaseBorgChassisRedacted
   name: remnant automated defense system tender
-  description: A tender to a automated drone ship, to keep internal mechanisms intact.
+  description: A tender to an automated drone ship, to keep its internal mechanisms intact.
   components:
   - type: Sprite
     layers:
@@ -402,8 +403,8 @@
     - MonoRemnantAdjective
     - MonoRemnantNoun
   - type: ShuttleBoostingPilot
-    angularMultiplier: 1.5
-    accelerationMultiplier: 1.5
+    angularMultiplier: 1.2
+    accelerationMultiplier: 1.2
 
 - type: entity
   id: AiHeldRedacted
@@ -412,12 +413,12 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: CollectiveMind
@@ -495,7 +496,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -503,7 +504,7 @@
     - Medical
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -582,7 +583,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -592,7 +593,7 @@
     - Command
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -672,7 +673,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -681,7 +682,7 @@
     - Freelance
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -748,7 +749,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -758,7 +759,7 @@
     - Service
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply

@@ -87,3 +87,28 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+  #Airlocks
+- type: construction
+  id: AirlockHeavy
+  graph: HeavyAirlock
+  startNode: start
+  targetNode: airlock
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: AirlockHeavyGlass
+  graph: HeavyAirlock
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked

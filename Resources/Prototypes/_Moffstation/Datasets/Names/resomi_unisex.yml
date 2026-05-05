@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesResomiUnisex
+  values: # Exodus
+    prefix: names-resomi-unisex-dataset-
+    count: 200

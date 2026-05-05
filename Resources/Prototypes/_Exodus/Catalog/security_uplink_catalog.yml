@@ -6,7 +6,7 @@
   cost:
     FederationMilitaryCredit: 30
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -21,7 +21,7 @@
   cost:
     FederationMilitaryCredit: 30
   categories:
-    - UplinkSecurityUtility
+    - UplinkSecurityMedical
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:

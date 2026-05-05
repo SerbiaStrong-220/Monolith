@@ -26,7 +26,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyNfsd
       - EncryptionKeyCommand
   - type: Sprite

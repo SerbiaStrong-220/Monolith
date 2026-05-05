@@ -612,7 +612,7 @@
   - type: MarketModifier #Mono
     mod: 3 #Mono 10 (damn) >> 3
   - type: Sprite
-    sprite: _NF/Structures/Machines/VendingMachines/civimed.rsi
+    sprite: _Exodus/Structures/Machines/VendingMachines/civimed.rsi # Exodus-Resprite
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
