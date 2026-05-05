@@ -346,7 +346,7 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "АССАМБЛЕЯ" # Ru-Localization
+      - "АССЕМБЛЕР" # Ru-Localization
       - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
