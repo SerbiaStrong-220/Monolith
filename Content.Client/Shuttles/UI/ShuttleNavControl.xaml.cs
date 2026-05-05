@@ -1525,13 +1525,15 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var perpDir = new Vector2(-screenDir.Y, screenDir.X);
 
         var textScale = UIScale * 0.6f;
-        var textColor = config.Color.WithAlpha(0.35f);
+        var baseAlpha = 0.35f;
         var textDims = handle.GetDimensions(Font, text, textScale);
         var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
-        // Territory: large margin so text stays clearly inside the yellow arc.
-        // Radar: small margin — the control has a circular clip mask, so no visual overflow.
-        var safeTerritory = territoryRadius - halfDiag * 2.5f;
-        if (safeTerritory <= 0f)
+
+        // Fade zone: text starts fading at fadeStart distance from territory center,
+        // reaching zero alpha at fadeEnd (slightly inside the circle edge).
+        var fadeEnd = territoryRadius - halfDiag * 1f;
+        var fadeStart = fadeEnd - halfDiag * 6f;
+        if (fadeStart <= 0f)
             return;
 
         var spacingX = textDims.X + 20f;
@@ -1553,13 +1555,17 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             {
                 var pos = radarCenter + t * perpDir + s * screenDir;
 
-                // Only draw inside the territory circle — square boundary is handled by RectClipContent.
-                var dTerritory = pos - territoryCenter;
-                if (dTerritory.LengthSquared() > safeTerritory * safeTerritory)
+                var dist = (pos - territoryCenter).Length();
+                if (dist >= fadeEnd)
                     continue;
 
+                // Lerp alpha from full to zero across the fade zone.
+                var alpha = dist <= fadeStart
+                    ? baseAlpha
+                    : baseAlpha * (1f - (dist - fadeStart) / (fadeEnd - fadeStart));
+
                 handle.SetTransform(screenOffset + pos, textAngle);
-                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor);
+                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, config.Color.WithAlpha(alpha));
             }
         }
 
