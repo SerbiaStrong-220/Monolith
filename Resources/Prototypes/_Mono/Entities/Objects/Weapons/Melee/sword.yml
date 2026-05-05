@@ -31,7 +31,8 @@
    - type: Construction
      graph: GraphWeaponHFKatana
      node: WeaponHFKatana
-   # Exodus-Remove-Bounty
+   - type: PirateBountyItem
+     id: TSFEnergyWeapon
 
 - type: entity
   name: VT-7 high-frequency blade

@@ -108,7 +108,8 @@
     fiberMaterial: fibers-durathread
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: ClothingHandsGlovesCaptain # Frontier
 
 - type: entity
   parent: ClothingHandsBase

@@ -150,7 +150,8 @@
     sprintModifier: 1
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.35
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuitHighValue
 
 - type: entity
   parent: [ClothingOuterHardsuitJuggernaut, EnergyShieldClothing, BaseFactionGearTSFT3 ] # Jugger Suit
@@ -194,7 +195,8 @@
     faction: NanoTrasen
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.25
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuitHighValue
   # Mono - Shielding comps
   - type: Blocking
     passiveBlockModifier:

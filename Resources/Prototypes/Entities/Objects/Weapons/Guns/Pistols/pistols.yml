@@ -266,7 +266,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/_DV/Weapons/Guns/Gunshots/universal.ogg
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: WeaponPistolMk58 # Frontier
   - type: ItemSlots
     slots:
       gun_magazine:

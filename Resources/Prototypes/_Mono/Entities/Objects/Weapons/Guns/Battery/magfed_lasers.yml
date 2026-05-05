@@ -62,7 +62,8 @@
     endSound:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: AmmoCounter
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon
 
 - type: entity
   name: NT-WS LRC-21 PPL
@@ -125,7 +126,8 @@
     endSound:
       path: /Audio/Weapons/Guns/Gunshots/ship_perforator.ogg
   - type: AmmoCounter
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon
   - type: LaserPointer
     targetedColor: "#03c2fc"
     defaultColor: "#03c2fc"

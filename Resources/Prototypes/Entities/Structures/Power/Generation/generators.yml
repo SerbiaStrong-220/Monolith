@@ -293,7 +293,8 @@
                 max: 1
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: GeneratorRTG # Frontier
   # Mono - no board so it's probably fine?
   - type: ShipRepairable
     repairTime: 10

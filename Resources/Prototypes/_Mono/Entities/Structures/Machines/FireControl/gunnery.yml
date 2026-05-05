@@ -39,7 +39,8 @@
       machine_parts: !type:Container
   - type: ExaminableBattery
   - type: BatterySelfRecharger
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: GunneryServer
   - type: StaticPrice
     price: 200
 

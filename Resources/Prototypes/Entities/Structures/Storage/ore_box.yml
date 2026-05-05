@@ -32,7 +32,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Climbable
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: OreBox # Frontier
 
   # orebox-specific
   - type: Sprite

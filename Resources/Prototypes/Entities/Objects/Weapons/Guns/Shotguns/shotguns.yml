@@ -193,7 +193,8 @@
     fireRate: 2.2 # Mono
 #  - type: PirateBountyItem # Frontier - Mono
 #    id: Enforcer # Frontier - Mono
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 - type: entity
   parent: WeaponShotgunEnforcer
@@ -228,7 +229,8 @@
     - WeaponShotgunKammerer
   - type: BallisticAmmoProvider
     capacity: 5
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 - type: entity
   name: sawn-off shotgun (12 gauge)

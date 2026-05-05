@@ -74,7 +74,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: FireExtinguisher # Frontier
 
 - type: entity
   name: extinguisher spray

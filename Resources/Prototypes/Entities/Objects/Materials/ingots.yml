@@ -59,7 +59,8 @@
         reagents:
         - ReagentId: Gold
           Quantity: 10
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: Gold # Frontier
 
 - type: entity
   parent: IngotGold

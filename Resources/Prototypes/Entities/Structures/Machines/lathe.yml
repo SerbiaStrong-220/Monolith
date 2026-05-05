@@ -190,7 +190,8 @@
   - type: EmptyOnMachineDeconstruct
     containers:
     - blueprint
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: Autolathe # Frontier
 
 - type: entity
   id: AutolatheHyperConvection
@@ -527,7 +528,8 @@
       - Sheet
       - RawMaterial
       - Ingot
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   id: AmmoTechFab
@@ -571,7 +573,8 @@
       - Sheet
       - RawMaterial
       - Ingot
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   id: MedicalTechFab
@@ -618,7 +621,8 @@
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   parent: BaseLathe

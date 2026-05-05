@@ -279,7 +279,8 @@
     sprintModifier: 0.95
   - type: AltFireMelee
     attackType: Light
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 # Monolith: PMC variants
 - type: entity

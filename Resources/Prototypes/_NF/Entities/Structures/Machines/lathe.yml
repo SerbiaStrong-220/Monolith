@@ -47,7 +47,8 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFServiceTechfabDeprecatedEmagStatic
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   parent: [ BlueprintReceiverBase, BaseLatheLube ]
@@ -83,7 +84,8 @@
     dynamicPacks:
     - NFEngineeringTechfabDeprecated
     - RCD # Mono
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   parent: [ BlueprintReceiverBase, BaseLatheLube ]
@@ -117,7 +119,8 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFSalvageTechfabDeprecatedEmag
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   id: NfsdTechFab
@@ -163,7 +166,8 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFNfsdTechfabDeprecatedEmag
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   id: MercenaryTechFab
@@ -220,7 +224,8 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFMercenaryTechfabDeprecatedEmag
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   id: MercenaryTechFabHacked
@@ -286,7 +291,8 @@
     - UniversalShellAmmo
     - UniversalOrdinance
     # Mono end
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Techfab
 
 - type: entity
   parent: [BaseStructureDisableToolUse, BaseLathe]

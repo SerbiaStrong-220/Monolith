@@ -34,7 +34,8 @@
       head: ClothingHelmetHardsuitMercenaryWarlord
       helmetcover: ClothingHeadHelmetCoverBlock
       helmetattachment: ClothingHeadHelmetAttachmentBlock
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: ClothingOuterHardsuitTacsuit
   - type: StaminaDamageResistance
     coefficient: 0.6
 
@@ -75,6 +76,7 @@
       head:  ClothingHeadHelmetHardsuitScaf
       helmetcover: ClothingHeadHelmetCoverBlock
       helmetattachment: ClothingHeadHelmetAttachmentBlock
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuitHighValue
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.45

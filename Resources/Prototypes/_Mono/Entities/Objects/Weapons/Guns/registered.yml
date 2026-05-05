@@ -37,7 +37,8 @@
   id: WeaponSubMachineGunC20rPMC
   suffix: Registered
   components:
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: StandardFactionLongarm
   - type: StaticPrice
     price: 1000
 

@@ -41,7 +41,8 @@
   - type: StaticPrice
     price: 1250
     vendPrice: 7500
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuit
 
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseFactionGearOtherFactionT0 ]
@@ -86,7 +87,8 @@
   - type: StaticPrice
     price: 420
     vendPrice: 2500
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuit
 
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseFactionGearOtherFactionT0 ]
@@ -131,7 +133,8 @@
   - type: StaticPrice
     price: 500
     vendPrice: 3000
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuit
 
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseFactionGearOtherFactionT0 ]
@@ -175,7 +178,8 @@
   - type: StaticPrice
     price: 1350
     vendPrice: 8000
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuitHighValue
 
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseFactionGearOtherFactionT2 ]
@@ -220,7 +224,8 @@
   - type: StaticPrice
     price: 3300
     vendPrice: 20000
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuitHighValue
 
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseFactionGearOtherFactionT3 ]
@@ -265,4 +270,5 @@
   - type: StaticPrice
     price: 4200
     vendPrice: 25000
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ClothingOuterHardsuitTacsuitHighValue

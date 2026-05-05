@@ -92,7 +92,8 @@
       containers:
         machine_board: !type:Container
         machine_parts: !type:Container
-    # Exodus-Remove-Bounty
+    - type: PirateBountyItem
+      id: FTLDrive
     # can repair it without pre-fracture SRD but expensive
     - type: ShipRepairable
       repairTime: 20

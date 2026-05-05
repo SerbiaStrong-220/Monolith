@@ -155,7 +155,8 @@
     maxOffset: 3
     pvsIncrease: 1
   - type: GunRequiresWield
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: ExperimentalFactionWeapon
   - type: HeldSpeedModifier
   - type: ClothingSpeedModifier
     sprintModifier: 0.95

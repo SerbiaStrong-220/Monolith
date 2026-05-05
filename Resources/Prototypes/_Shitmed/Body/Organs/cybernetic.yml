@@ -7,7 +7,8 @@
   - type: Sprite
     sprite: _EinsteinEngines/Mobs/Species/IPC/organs.rsi
     state: "eyes"
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Cybernetics
 
 - type: entity
   parent: BaseCyberneticEyes

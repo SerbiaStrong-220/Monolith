@@ -63,7 +63,8 @@
     walkModifier: 0.8
     sprintModifier: 0.65
   - type: GunRequiresWield
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon
 
 - type: entity
   name: VFD MR-8B LWMMG (8x65mm SKR)
@@ -133,7 +134,8 @@
     walkModifier: 0.85
     sprintModifier: 0.75
   - type: GunRequiresWield
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon
 
 - type: entity
   name: NCI AK-150 HAMMER (7.62x39mm)
@@ -205,7 +207,8 @@
     walkModifier: 0.65
     sprintModifier: 0.65
   - type: GunRequiresWield
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon
 
 - type: entity
   name: TCA MMG-68 "Grizzly" (6.8x52mm caseless)
@@ -289,7 +292,8 @@
   - type: StaticPrice
     price: 2500
   - type: GunRequiresWield
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: ExperimentalFactionWeapon
   - type: HeldSpeedModifier
   - type: ClothingSpeedModifier
     sprintModifier: 0.95

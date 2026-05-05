@@ -77,7 +77,8 @@
       - Cartridge762x54mmRFMJ
     capacity: 5
     proto: Cartridge762x54mmRFMJ
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 - type: entity
   name: SKR-WS M96 Hristov (14.5x114mm)

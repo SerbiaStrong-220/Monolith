@@ -226,7 +226,8 @@
     - type: Appearance
     - type: StaticPrice # Mono
       price: 525
-    # Exodus-Remove-Bounty
+    - type: PirateBountyItem # Mono
+      id: StandardFactionLongarm
 
 
 - type: entity
@@ -294,4 +295,5 @@
   - type: Appearance
   - type: StaticPrice # Mono
     price: 1000
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm

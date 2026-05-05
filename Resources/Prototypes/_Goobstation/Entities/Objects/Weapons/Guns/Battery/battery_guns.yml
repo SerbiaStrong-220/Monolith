@@ -61,7 +61,8 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 75 # Mono - 75 < 35
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: TSFLaserWeapon
 
 - type: entity
   name: DT-12 Lawbringer

@@ -55,7 +55,8 @@
       head: ClothingHelmetHardsuitAsakim
       helmetcover: ClothingHeadHelmetCoverBlock
       helmetattachment: ClothingHeadHelmetAttachmentBlock
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: ClothingOuterHardsuitTacsuit
   - type: StaminaDamageResistance
     coefficient: 0.4
 

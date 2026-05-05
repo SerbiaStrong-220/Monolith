@@ -112,7 +112,8 @@
     - On # frontier
     - Off # frontier
     - Toggle # frontier
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: Thruster # Frontier
   - type: RadarBlip # Mono
     visibleFromOtherGrids: true
     radarColor: "#99FF99"
@@ -232,7 +233,8 @@
     damageModifierSet: Electronic
   - type: StaticPrice
     price: 300 # Frontier - 2000<300
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: Gyroscope # Frontier
   # Mono
   - type: ShipRepairable
     repairTime: 6

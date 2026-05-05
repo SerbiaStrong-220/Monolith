@@ -99,7 +99,8 @@
     guides:
     - Botany
     - Chemicals
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: HydroponicsTray # Frontier
 
 - type: entity
   parent: hydroponicsTray

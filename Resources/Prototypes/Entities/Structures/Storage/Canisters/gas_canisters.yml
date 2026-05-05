@@ -214,7 +214,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:DumpCanisterBehavior
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: LifeSupportCan
 
 - type: entity
   parent: GasCanister
@@ -254,7 +255,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:DumpCanisterBehavior
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: LifeSupportCan
 
 - type: entity
   id: LiquidOxygenCanister
@@ -336,7 +338,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
-    # Exodus-Remove-Bounty
+    - type: PirateBountyItem # Mono
+      id: LifeSupportCan
 
 - type: entity
   id: LiquidNitrogenCanister
@@ -509,7 +512,8 @@
         - !type:DumpCanisterBehavior
 #    - type: Lock # Frontier
 #      locked: true # Frontier
-    # Exodus-Remove-Bounty
+    - type: PirateBountyItem # Frontier
+      id: PlasmaCanister # Frontier
 
 - type: entity
   parent: GasCanister

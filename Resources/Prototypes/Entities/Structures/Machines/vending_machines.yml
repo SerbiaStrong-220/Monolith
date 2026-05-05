@@ -131,7 +131,8 @@
         - Cash
     cashSlotName: cash_slot
     currencyStackType: Credit
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem
+    id: VendingMachine
   - type: ItemSlots
   - type: ContainerContainer
     containers:

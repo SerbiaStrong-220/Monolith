@@ -65,7 +65,8 @@
   - type: Appearance
   - type: Clothing
     sprite: _DV/Objects/Weapons/Guns/Rifles/vulcan.rsi
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
   # - type: StaticPrice # Frontier: overvalued
   #  price: 1300
   - type: GunRequiresWield

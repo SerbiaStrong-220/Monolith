@@ -79,7 +79,8 @@
     color: "#a8ffd9"
   - type: StaticPrice
     price: 0 # Frontier 5000<0
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: GravityGenerator # Frontier
   # Mono
   - type: ShipRepairable
     repairTime: 15

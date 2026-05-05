@@ -104,7 +104,8 @@
     layers:
     - state: crypt_silver
     - state: com_label
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: EncryptionKeyFaction
 
 - type: entity
   parent: [EncryptionKey, RecyclableItemDeviceTiny]

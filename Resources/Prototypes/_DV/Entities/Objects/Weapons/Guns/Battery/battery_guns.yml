@@ -61,7 +61,8 @@
           Disabler: { state: mode-disabler }
           Lethal: { state: mode-lethal }
           Special: { state: mode-stun } # Unused
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 
 - type: entity
@@ -206,4 +207,5 @@
     - Sidearm
   - type: StaticPrice
     price: 750
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon

@@ -10,7 +10,8 @@
   - type: Damageable
     damageContainer: Silicon
   - type: Cybernetics
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: Cybernetics
 
 - type: entity
   abstract: true

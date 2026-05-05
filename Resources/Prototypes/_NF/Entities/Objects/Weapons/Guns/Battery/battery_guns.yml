@@ -39,7 +39,8 @@
     range: 2
     energyConsumption: 400000
     disableDuration: 5
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 - type: entity
   id: WeaponLaserTurboNF

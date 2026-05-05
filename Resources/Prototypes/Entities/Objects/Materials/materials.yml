@@ -407,7 +407,8 @@
   - type: PhysicalComposition
     materialComposition:
       Diamond: 100
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: MaterialDiamond # Frontier
 
 - type: entity
   parent: MaterialDiamond

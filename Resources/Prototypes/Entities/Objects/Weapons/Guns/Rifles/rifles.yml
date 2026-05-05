@@ -123,7 +123,8 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: AKM # Frontier
 
 - type: entity
   name: TCA M-6 Lecter (6.8x52mm Caseless)
@@ -181,7 +182,8 @@
   - type: Appearance
   - type: StaticPrice # Mono
     price: 750
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
 
 - type: entity
   name: Foam Force Astro Ace

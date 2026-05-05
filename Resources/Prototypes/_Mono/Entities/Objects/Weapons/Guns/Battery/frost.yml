@@ -62,4 +62,5 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 125
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon

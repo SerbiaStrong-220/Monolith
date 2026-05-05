@@ -574,7 +574,8 @@
     price: 750
   - type: StealTarget
     stealGroup: ClothingOuterHardsuitRd
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Frontier
+    id: ClothingOuterHardsuitRd # Frontier
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.4
 

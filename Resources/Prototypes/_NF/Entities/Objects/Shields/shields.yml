@@ -9,4 +9,5 @@
     sprite: _NF/Objects/Weapons/Melee/e_shield.rsi
   - type: PointLight
     color: blue
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: TSFEnergyWeapon

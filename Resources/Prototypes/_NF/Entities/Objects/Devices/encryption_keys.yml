@@ -34,7 +34,8 @@
     layers:
     - state: crypt_gray
     - state: nfsd_label
-  # Exodus-Remove-Bounty
+  - type: PirateBountyItem # Mono
+    id: EncryptionKeyFaction
 
 - type: entity
   parent: EncryptionKey
