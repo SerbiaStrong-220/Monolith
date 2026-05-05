@@ -14,7 +14,7 @@
   - type: TechnologyDatabase
     supportedDisciplines:
     - Ussp
-    - UsspShipyard
+    #- UsspShipyard
     - UsspEquipment
     - UsspWeapons
     - UsspWeaponsTurrets
@@ -25,4 +25,3 @@
     - Experimental
     - CivilianServices
     - MechaEngineering
-    #- Iridium

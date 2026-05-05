@@ -1,49 +1,34 @@
 - type: entity
-  id: CrucibleMachineBoard
-  parent: BaseMachineCircuitboard
-  name: плата управления (Горнило)
-  components:
-  - type: MachineBoard
-    prototype: MachineExodusCrucible
-
-- type: entity
-  id: MachineExodusCrucible
+  id: MachineCrucible
   parent: BaseMachinePowered
-  name: промышленное горнило
-  description: Тяжелая установка для переплавки аномальных материалов.
+  name: ent-MachineCrucible
+  description: ent-MachineCrucible.desc
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
     layers:
-    - state: base
-    - state: base
-      map: ["enum.CrucibleLayers.Layer"]
-
+    - sprite: Structures/Storage/Crates/wood.rsi
+      state: icon
   - type: Crucible
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.CrucibleVisuals.Active:
-        enum.CrucibleLayers.Layer:
-          True: { state: generating }
-          False: { state: base }
+  - type: EntityStorage
+    capacity: 1
+    showContents: false
+    closeSound:
+      path: /Audio/Machines/airlock_close.ogg
+    openSound:
+      path: /Audio/Machines/airlock_open.ogg
 
+- type: entity
+  id: MachineCrucibleConsole
+  parent: BaseStructureComputerTabletop
+  name: ent-MachineCrucibleConsole
+  description: ent-MachineCrucibleConsole.desc
+  components:
+  - type: CrucibleConsole
   - type: UserInterface
     interfaces:
-      enum.CrucibleUiKey.Key:
+      enum.CrucibleConsoleUiKey.Key:
         type: CrucibleBoundUserInterface
-
   - type: ActivatableUI
-    key: enum.CrucibleUiKey.Key
-    requirePower: true
-
-  - type: ItemSlots
-    slots:
-      crucible_slot:
-        name: Слот для заготовки
-        whitelist:
-          components:
-            - CrucibleRecipe
-  - type: ContainerContainer
-    containers:
-      crucible_slot: !type:ContainerSlot
+    key: enum.CrucibleConsoleUiKey.Key

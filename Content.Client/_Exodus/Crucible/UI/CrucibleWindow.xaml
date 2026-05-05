@@ -1,55 +1,31 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    Title="Высокотемпературное горнило"
-    MinWidth="350"
-    MinHeight="250">
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               x:Class="Content.Client._Exodus.Crucible.UI.CrucibleWindow"
+               Title="{Loc 'crucible-window-title'}"
+               MinWidth="250">
+    <BoxContainer Orientation="Vertical" SeparationOverride="10" Margin="10">
 
-    <BoxContainer Orientation="Vertical" Margin="10">
+        <Label Name="StatusLabel"
+               Text="{Loc 'crucible-window-status-waiting'}"
+               HorizontalAlignment="Center"/>
 
-        <PanelContainer StyleClasses="BackgroundDark">
-            <BoxContainer Orientation="Horizontal" Margin="8">
-                <TextureRect Name="ItemIcon" VerticalAlignment="Center" MinSize="32,32" Margin="0,0,8,0" />
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="Текущая заготовка:" StyleClasses="LabelSubtext" />
-                    <Label Name="ItemNameLabel" Text="Пусто" StyleClasses="LabelBig" />
-                </BoxContainer>
-            </BoxContainer>
-        </PanelContainer>
+        <Label Name="ItemLabel"
+               Text="{Loc 'crucible-window-item-none'}"
+               HorizontalAlignment="Center"/>
 
-        <Control MinHeight="10" />
-
-        <BoxContainer Orientation="Vertical" Name="ProgressSection">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <Label Text="Прогресс плавки..." Name="StatusLabel" />
-                <Control HorizontalExpand="True" />
-                <Label Name="TimeLabel" Text="00:00" FontColorOverride="Cyan" />
-            </BoxContainer>
-            <ProgressBar Name="Progress" MinHeight="20" Margin="0,5" />
-        </BoxContainer>
-
-        <Control MinHeight="10" />
-
-        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="20">
-            <Button Name="StartBtn"
-                    Text="ЗАПУСТИТЬ ПЛАВКУ"
-                    MinSize="160,40"
-                    StyleClasses="ButtonColorGreen" />
-
-            <Button Name="AbortBtn"
-                    Text="ПРЕРВАТЬ"
-                    Visible="False"
-                    MinSize="160,40"
-                    StyleClasses="ButtonColorRed" />
-        </BoxContainer>
-
-        <Control MinHeight="5" />
-
-        <Label Name="PowerStatusLabel"
+        <Label Name="TimerLabel"
                HorizontalAlignment="Center"
-               StyleClasses="LabelSubtext"
-               Text="Система запитана"
-               FontColorOverride="Gray" />
+               Visible="False"/>
+
+        <ProgressBar Name="CookingProgress"
+                     MinValue="0"
+                     MaxValue="1"
+                     Value="0"
+                     MinHeight="20"/>
+
+        <Button Name="StartButton"
+                Text="{Loc 'crucible-window-start-button'}"
+                Disabled="True"/>
 
     </BoxContainer>
 </DefaultWindow>

@@ -4,7 +4,7 @@
   name: плата управления (Левиафан)
   components:
   - type: MachineBoard
-    prototype: LeviathanWorkPiece # Убедись, что этот ID существует!
+    prototype: LeviathanWorkPiece
 
 - type: entity
   id: DraupnirCircuitboard
@@ -15,7 +15,7 @@
     prototype: DraupnirWorkPiece
 
 - type: entity
-  id: HadesCrucibleBoard
+  id: HadesCircuitboard
   parent: BaseMachineCircuitboard
   name: плата управления (Хейдес)
   components:

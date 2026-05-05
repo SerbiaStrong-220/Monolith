@@ -1,0 +1,13 @@
+# Artillery Disciplines
+- type: techDiscipline
+  id: UsspWeaponsTurrets
+  name: research-discipline-ussp-weaponry-turrets
+  color: "#52c08d"
+  icon:
+    sprite: _Exodus/Interface/Misc/research_disciplines_ussp.rsi
+    state: artillery
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+  uiName: USSP-AR

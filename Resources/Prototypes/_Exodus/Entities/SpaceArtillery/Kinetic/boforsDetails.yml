@@ -121,7 +121,7 @@
   description: Разобранный комплект орудия в транспортировочном каркасе. Требует промышленного тигля для финальной подгонки деталей.
   components:
   - type: CrucibleRecipe
-    processingTime: 15
+    processingTime: 25
     resultEntity: BoforsFlatpack
   - type: Sprite
     state: bofors_workpiece
