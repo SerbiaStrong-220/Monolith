@@ -16,7 +16,8 @@ public enum RadarBlipShape
     Diamond,
     Hexagon,
     Arrow,
-    Ring
+    Ring,
+    TerritoryCircle // Exodus territory-marker
 }
 
 [Serializable, NetSerializable]
@@ -94,6 +95,20 @@ public partial record struct BlipConfig
 
     [DataField]
     public RadarBlipShape Shape = RadarBlipShape.Circle;
+
+    // Exodus-begin territory-marker
+    /// <summary>
+    /// Optional local-space points for blips that need a custom outline.
+    /// </summary>
+    [DataField]
+    public List<Vector2>? Points = null;
+
+    /// <summary>
+    /// Optional localization key for a text label repeated across the territory zone.
+    /// </summary>
+    [DataField]
+    public string? Label = null;
+    // Exodus-end
 
     [DataField]
     public bool RespectZoom = false;
