@@ -1,10 +1,40 @@
 - type: entity
   id: BaseBoforsTurretPart
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: CollisionWake
+  - type: TileFrictionModifier
+    modifier: 1.5
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 1500
+        layer:
+        - Opaque
+        mask:
+        - MachineMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Pullable
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/bofors/bofors_construction.rsi
+    state: bofors_chassis
+
+- type: entity
+  id: BaseBoforsTurretPartItem
   parent: BaseItem
   abstract: true
   components:
   - type: Sprite
-    sprite: _Exodus/Objects/ShuttleWeapons/bofors.rsi
+    sprite: _Exodus/Objects/ShuttleWeapons/bofors/bofors_construction.rsi
     state: bofors_chassis
   - type: MultiHandedItem
   - type: HeldSpeedModifier
@@ -33,107 +63,90 @@
     damage:
       types:
         Blunt: 20
+  - type: Item
+    size: Ginormous
 
 - type: entity
   id: BoforsChassisUnfinished
   parent: BaseBoforsTurretPart
-  name: артиллерийский лафет
-  description: Тяжелое стационарное основание с гидравлическими компенсаторами отдачи. Позволяет устанавливать 255-мм орудие без риска деформации корпуса корабля.
+  name: ent-BoforsChassisUnfinished
+  description: ent-BoforsChassisUnfinished.desc
   components:
   - type: Sprite
-    sprite: _Exodus/Objects/ShuttleWeapons/bofors.rsi
+    sprite: _Exodus/Objects/ShuttleWeapons/bofors/bofors_construction.rsi
     layers:
     - state: bofors_chassis
-      # Этот маппинг — "адрес" для визуализатора. Теперь NullRef пропадет.
       map: ["enum.ConstructionVisuals.Layer"]
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      "enum.ConstructionVisuals.Key":
-        "enum.ConstructionVisuals.Layer":
-          # Названия узлов графа : { стейт из твоего RSI }
-          start: { state: bofors_chassis }
-          core_loaded: { state: bofors_core }
-          feed_loaded: { state: bofors_feed }
-          targeting_loaded: { state: bofors_targeting }
-          barrels_loaded: { state: bofors_barrel }
   - type: Construction
     graph: Bofors
     node: start
     defaultTarget: bofors
 
 - type: entity
-  id: BoforsCoreItem
-  parent: BaseBoforsTurretPart
-  name: плазменный резонатор Бофорс
-  description: Высокотехнологичное ядро, использующее магнитное удержание для накопления энергии перед выстрелом. Необходим для питания механизмов ускорения снаряда.
+  id: BoforsFeedItem
+  parent: BaseBoforsTurretPartItem
+  name: ent-BoforsFeedItem
+  description: ent-BoforsFeedItem.desc
   components:
-    - type: Tag
-      tags:
-      - BoforsCoreItem
-    - type: Sprite
-      sprite: _Exodus/Objects/ShuttleWeapons/bofors_elements.rsi
-      state: bofors_core
+  - type: Tag
+    tags: [BoforsFeedItem]
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/bofors/bofors_feed.rsi
+    state: bofors_feed
 
 - type: entity
-  id: BoforsFeedItem
-  parent: BaseBoforsTurretPart
-  name: ленточный элеватор Бофорс
-  description: Автоматизированная система вертикальной подачи крупнокалиберных снарядов. Оснащена магнитными захватами для предотвращения детонации при тряске.
+  id: TechDiskBofors
+  parent: BaseItem
+  name: ent-TechDiskBofors
+  description: ent-TechDiskBofors.desc
   components:
-    - type: Tag
-      tags:
-      - BoforsFeedItem
-    - type: Sprite
-      sprite: _Exodus/Objects/ShuttleWeapons/bofors_elements.rsi
-      state: bofors_feed
+  - type: Sprite
+    sprite: _Mono/Objects/Specific/Research/researchdisk.rsi
+    layers:
+    - state: icon
+    - state: label
+    - state: protect_red
+    - state: holo_red
+      shader: unshaded
+  - type: Tag
+    tags: [BoforsDataDisk]
 
 - type: entity
   id: BoforsTargetingItem
-  parent: BaseBoforsTurretPart
-  name: вычислительный комплекс Бофорс
-  description: Процессорный блок со встроенным баллистическим ИИ. Обрабатывает данные с внешних радаров для автоматической корректировки огня на сверхдальних дистанциях.
+  parent: BaseBoforsTurretPartItem
+  name: ent-BoforsTargetingItem
+  description: ent-BoforsTargetingItem.desc
   components:
-    - type: Tag
-      tags:
-      - BoforsTargetingItem
-    - type: Sprite
-      sprite: _Exodus/Objects/ShuttleWeapons/bofors_elements.rsi
-      state: bofors_targeting
+  - type: Tag
+    tags: [BoforsTargetingItem]
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/bofors/bofors_targeting.rsi
+    state: bofors_targeting
 
 - type: entity
   id: BoforsBarrelItem
-  parent: BaseBoforsTurretPart
-  name: укрепленный ствол Бофорс
-  description: Огромный нарезной ствол из жаропрочного сплава. Включает в себя систему принудительного охлаждения жидким азотом после каждого выстрела.
+  parent: BaseBoforsTurretPartItem
+  name: ent-BoforsBarrelItem
+  description: ent-BoforsBarrelItem.desc
   components:
-    - type: Tag
-      tags:
-      - BoforsBarrelItem
-    - type: Sprite
-      sprite: _Exodus/Objects/ShuttleWeapons/bofors_elements.rsi
-      state: bofors_barrel
+  - type: Tag
+    tags: [BoforsBarrelItem]
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/bofors/bofors_barrel.rsi
+    state: bofors_barrel
 
 - type: entity
   id: BoforsWorkPiece
   parent: BaseBoforsTurretPart
-  name: упакованная установка Бофорс
-  description: Разобранный комплект орудия в транспортировочном каркасе. Требует промышленного тигля для финальной подгонки деталей.
+  name: ent-BoforsWorkPiece
+  description: ent-BoforsWorkPiece.desc
   components:
+  - type: Sprite
+    state: bofors_workpiece
   - type: CrucibleRecipe
     processingTime: 25
     resultEntity: BoforsFlatpack
-  - type: Sprite
-    state: bofors_workpiece
+  - type: Tag
+    tags: [CrucibleRecipe]
 
-- type: Tag
-  id: BoforsCoreItem
-
-- type: Tag
-  id: BoforsFeedItem
-
-- type: Tag
-  id: BoforsTargetingItem
-
-- type: Tag
-  id: BoforsBarrelItem

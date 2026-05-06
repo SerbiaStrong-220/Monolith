@@ -11,39 +11,34 @@
       - tool: Screwing
         doAfter: 2
       - material: Cable
+        amount: 5
       - tool: Cutting
         doAfter: 2
       - tag: BoforsFeedItem
-        name: Вставь ленточный элеватор Bofors
+        name: construction-graph-tag-BoforsFeedItem
         doAfter: 4
 
   - node: feed_loaded
-    actions:
-    - !type:AppearanceChange
     edges:
-    - to: core_loaded
+    - to: data_loaded
       steps:
       - tool: Screwing
         doAfter: 1
-      - tag: BoforsCoreItem
-        name: Вставь плазменный резонатор Bofors
-        doAfter: 5
+      - tag: BoforsDataDisk
+        name: construction-graph-tag-BoforsDataDisk
+        doAfter: 2
 
-  - node: core_loaded
-    actions:
-    - !type:AppearanceChange
+  - node: data_loaded
     edges:
     - to: targeting_loaded
       steps:
       - tool: Screwing
         doAfter: 1
       - tag: BoforsTargetingItem
-        name: Вставь вычислительный комплекс Bofors
+        name: construction-graph-tag-BoforsTargetingItem
         doAfter: 2
 
   - node: targeting_loaded
-    actions:
-    - !type:AppearanceChange
     edges:
     - to: barrels_loaded
       steps:
@@ -56,12 +51,10 @@
       - tool: Welding
         doAfter: 1
       - tag: BoforsBarrelItem
-        name: Вставь укрепленный ствол Bofors
+        name: construction-graph-tag-BoforsBarrelItem
         doAfter: 7
 
   - node: barrels_loaded
-    actions:
-    - !type:AppearanceChange
     edges:
     - to: bofors
       steps:
@@ -69,7 +62,6 @@
         doAfter: 2
 
   - node: bofors
-    name: Бофорс
     actions:
     - !type:SpawnPrototype
       prototype: BoforsWorkPiece

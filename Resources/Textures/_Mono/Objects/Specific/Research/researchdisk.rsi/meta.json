@@ -108,6 +108,18 @@
     },
     {
       "name": "research-disk-boss"
+    },
+    {
+      "name": "protect_red"
+    },
+    {
+      "name": "holo_red",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

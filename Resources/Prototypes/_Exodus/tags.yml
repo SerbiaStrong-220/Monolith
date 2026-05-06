@@ -6,3 +6,22 @@
 
 - type: Tag
   id: POI
+
+# Crucible
+
+- type: tag
+  id: CrucibleRecipe
+
+# Turret parts
+
+- type: Tag
+  id: BoforsFeedItem
+
+- type: Tag
+  id: BoforsTargetingItem
+
+- type: Tag
+  id: BoforsBarrelItem
+
+- type: Tag
+  id: BoforsDataDisk
