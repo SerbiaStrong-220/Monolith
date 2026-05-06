@@ -43,3 +43,32 @@
     - Ferz
   - type: StaticPrice
     vendPrice: 325000
+
+# start T3 TSF
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherAlcore
+  name: TSF Alcore LPC
+  description: A small card containing the data required to requisition an Alcor-class frigate from the flagships reserves.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/lpcnew.rsi
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#05ffff"
+    - state: screen3
+      color: "#05ffff"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 10800 # hour and 25 minutes
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - Alcore
+  - type: StaticPrice
+    vendPrice: 800000
+
+# end T3 TSF

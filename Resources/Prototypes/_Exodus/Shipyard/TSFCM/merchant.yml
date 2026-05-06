@@ -1,0 +1,39 @@
+- type: vessel
+  id: Alcore
+  parent: BaseVessel
+  name: Алькор
+  description: Первая модель военного крейсера из линейки созведий, закреплённый за КПВ ТСФ, в рамках программы усиления мобильных подразделений. Пригоден для выполнения задач в условиях повышенного риска.
+  limit: 1
+  price: 320000
+  category: Large
+  group: Security
+  access: Command
+  purchasable: false
+  shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/alcore.yml
+  guidebookPage: Null
+  class:
+  - Frigate
+  - Pursuit
+  - Patrol
+  - Chemistry
+  engine:
+  - AME
+
+- type: gameMap
+  id: Alcore
+  mapName: 'Алькор'
+  mapPath: /Maps/_Exodus/Shuttles/TSFCM/alcore.yml
+  minPlayers: 0
+  stations:
+    Alcore:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Алькор{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

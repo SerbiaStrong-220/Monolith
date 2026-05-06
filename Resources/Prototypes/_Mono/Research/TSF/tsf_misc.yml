@@ -80,6 +80,7 @@
   recipeUnlocks:
   - FlyssaVoucherTSF
   - AltairVoucherTSF
+  - AlcoreVoucherTSF # Exodus
   technologyPrerequisites:
   - TsfTierTwoVouchers
   - UniversalMaterialResearchT3

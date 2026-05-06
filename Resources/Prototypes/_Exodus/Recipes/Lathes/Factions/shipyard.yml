@@ -1,0 +1,15 @@
+- type: latheRecipe
+  parent: BaseVoucherRecipe
+  id: AlcoreVoucherTSF
+  result: ShipVoucherAlcore
+  completetime: 100
+  materials:
+    Steel: 50000
+    Plasteel: 30000
+    Plastic: 30000
+    Glass: 10000
+    Plasma: 10000
+    UraniumFissile: 700
+    UraniumDepleted: 4500
+    Silver: 10000
+    Gold: 5000

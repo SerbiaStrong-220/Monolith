@@ -364,6 +364,23 @@
       tags:
       - FactionStaticUplinkTsf
 
+# Exodus-begin
+- type: listing
+  id: UplinkSecurityT3VoucherAlcore
+  name:  uplink-security-t3-alcore-voucher-name
+  description: uplink-security-t3-alcore-voucher-desc
+  productEntity: ShipVoucherAlcore
+  cost:
+    FederationMilitaryCredit: 450
+  categories:
+  - UplinkSecurityVouchers
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkTsf
+# Exodus-end
+
 # end T3
 
 # start T4
