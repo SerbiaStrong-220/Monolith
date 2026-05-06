@@ -17,10 +17,6 @@ namespace Content.Client._Exodus.Nebula;
 
 public sealed class NebulaParallaxSystem : EntitySystem
 {
-    private static readonly ProtoId<ParallaxPrototype> BlueNebulaParallax = "BlueNebula";
-    private static readonly ProtoId<ParallaxPrototype> RedNebulaParallax = "RedNebula";
-    private static readonly ProtoId<ParallaxPrototype> GreenNebulaParallax = "GreenNebula";
-    private static readonly ProtoId<ParallaxPrototype> PurpleNebulaParallax = "PurpleNebula";
     private static readonly TimeSpan BackgroundLightningDuration = TimeSpan.FromSeconds(0.38f);
     private static readonly TimeSpan BackgroundLightningMinDelay = TimeSpan.FromSeconds(2);
     private static readonly TimeSpan BackgroundLightningMaxDelay = TimeSpan.FromSeconds(6);
@@ -44,8 +40,12 @@ public sealed class NebulaParallaxSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
+    private EntProtoId? _activeMarker;
     private ProtoId<ParallaxPrototype>? _activeParallax;
+    private bool _activeMarkerHasLightning;
     private readonly NebulaBackgroundLightning _backgroundLightning = new();
     private float _blend;
     private TimeSpan _nextBackgroundLightning;
@@ -68,14 +68,18 @@ public sealed class NebulaParallaxSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        ProtoId<ParallaxPrototype> targetParallax = default;
+        var hasLightning = false;
         var targetActive = TryGetLocalPresence(out var presence) &&
-                           TryGetParallaxPrototype(presence.Type, out var targetParallax);
+                           TryGetMarkerData(presence.Marker, out targetParallax, out hasLightning);
 
         if (targetActive)
         {
             if (_parallax.IsParallaxLoaded(targetParallax))
             {
                 _activeParallax = targetParallax;
+                _activeMarker = presence.Marker;
+                _activeMarkerHasLightning = hasLightning;
             }
             else
             {
@@ -93,7 +97,11 @@ public sealed class NebulaParallaxSystem : EntitySystem
             _blend = Math.Max(targetBlend, _blend - step);
 
         if (_blend <= 0f && !targetActive)
+        {
             _activeParallax = null;
+            _activeMarker = null;
+            _activeMarkerHasLightning = false;
+        }
 
         UpdateParallaxOverride();
         UpdateBackgroundLightning();
@@ -148,7 +156,7 @@ public sealed class NebulaParallaxSystem : EntitySystem
         if (_nextBackgroundLightning == TimeSpan.Zero)
             ScheduleNextBackgroundLightning();
 
-        if (_activeParallax != RedNebulaParallax ||
+        if (!_activeMarkerHasLightning ||
             _blend < BackgroundLightningBlendThreshold ||
             _timing.CurTime < _nextBackgroundLightning ||
             _hasBackgroundLightning)
@@ -231,26 +239,26 @@ public sealed class NebulaParallaxSystem : EntitySystem
         return true;
     }
 
-    private static bool TryGetParallaxPrototype(NebulaType type, out ProtoId<ParallaxPrototype> parallax)
+    private bool TryGetMarkerData(EntProtoId marker, out ProtoId<ParallaxPrototype> parallax, out bool hasLightning)
     {
-        switch (type)
+        parallax = default;
+        hasLightning = false;
+
+        if (string.IsNullOrEmpty(marker.Id))
+            return false;
+
+        if (!_prototype.TryIndex<EntityPrototype>(marker, out var prototype))
+            return false;
+
+        if (!prototype.TryGetComponent<NebulaParallaxComponent>(out var parallaxComp, _componentFactory) ||
+            string.IsNullOrEmpty(parallaxComp.Parallax))
         {
-            case NebulaType.Blue:
-                parallax = BlueNebulaParallax;
-                return true;
-            case NebulaType.Red:
-                parallax = RedNebulaParallax;
-                return true;
-            case NebulaType.Green:
-                parallax = GreenNebulaParallax;
-                return true;
-            case NebulaType.Purple:
-                parallax = PurpleNebulaParallax;
-                return true;
-            default:
-                parallax = default;
-                return false;
+            return false;
         }
+
+        parallax = new ProtoId<ParallaxPrototype>(parallaxComp.Parallax);
+        hasLightning = prototype.TryGetComponent<NebulaLightningHazardComponent>(out _, _componentFactory);
+        return true;
     }
 }
 

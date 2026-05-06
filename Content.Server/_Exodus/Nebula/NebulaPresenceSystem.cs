@@ -6,6 +6,7 @@ using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula;
@@ -108,8 +109,8 @@ public sealed class NebulaPresenceSystem : EntitySystem
         }
 
         var position = _transform.GetWorldPosition(xform);
-        if (TryGetNebulaAt(position, mapComponent, out var index, out var type, out var density, out var alpha))
-            SetPresence(uid, index, type, density, alpha);
+        if (TryGetNebulaAt(position, mapComponent, out var index, out var marker, out var density, out var alpha))
+            SetPresence(uid, index, marker, density, alpha);
         else
             ClearPresence(uid);
     }
@@ -118,12 +119,12 @@ public sealed class NebulaPresenceSystem : EntitySystem
         Vector2 position,
         NebulaMapComponent mapComponent,
         out int index,
-        out NebulaType type,
+        out EntProtoId marker,
         out float density,
         out float alpha)
     {
         index = -1;
-        type = default;
+        marker = default;
         density = 0f;
         alpha = 0f;
 
@@ -138,7 +139,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
                 continue;
 
             index = i;
-            type = NebulaTypeHelpers.GetOrDefault(mapComponent.NebulaTypes, i);
+            marker = i < mapComponent.NebulaPrototypes.Count ? mapComponent.NebulaPrototypes[i] : default;
             density = nebula.GetDensity(position);
             alpha = nebula.GetAlpha(position);
             return true;
@@ -147,13 +148,13 @@ public sealed class NebulaPresenceSystem : EntitySystem
         return false;
     }
 
-    private void SetPresence(EntityUid uid, int index, NebulaType type, float density, float alpha)
+    private void SetPresence(EntityUid uid, int index, EntProtoId marker, float density, float alpha)
     {
         var component = EnsureComp<NebulaPresenceComponent>(uid);
         var changedNebula = component.NebulaIndex != index;
 
         if (!changedNebula &&
-            component.Type == type &&
+            component.Marker == marker &&
             MathF.Abs(component.Density - density) < DirtyThreshold &&
             MathF.Abs(component.Alpha - alpha) < DirtyThreshold)
         {
@@ -161,13 +162,13 @@ public sealed class NebulaPresenceSystem : EntitySystem
         }
 
         component.NebulaIndex = index;
-        component.Type = type;
+        component.Marker = marker;
         component.Density = density;
         component.Alpha = alpha;
         Dirty(uid, component);
 
         if (changedNebula)
-            Logger.DebugS("nebula", $"{ToPrettyString(uid)} entered {type} nebula {index + 1} with density {density:0.00}.");
+            Logger.DebugS("nebula", $"{ToPrettyString(uid)} entered {marker} nebula {index + 1} with density {density:0.00}.");
     }
 
     private void ClearPresence(EntityUid uid)

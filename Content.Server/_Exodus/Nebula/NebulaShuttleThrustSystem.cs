@@ -1,10 +1,12 @@
 using Content.Shared._Exodus.Nebula;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Nebula;
 
 public sealed class NebulaShuttleThrustSystem : EntitySystem
 {
-    private const float ThrustMultiplier = 0.5f;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
     {
@@ -16,12 +18,29 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
     private void OnGetNebulaShuttleThrust(ref GetNebulaShuttleThrustEvent args)
     {
         if (!TryComp<NebulaPresenceComponent>(args.ShuttleUid, out var presence) ||
-            presence.Type is not (NebulaType.Green or NebulaType.Purple))
+            !TryGetThrustReduction(presence.Marker, out var multiplier))
         {
             return;
         }
 
-        args.HorizontalThrust *= ThrustMultiplier;
-        args.VerticalThrust *= ThrustMultiplier;
+        args.HorizontalThrust *= multiplier;
+        args.VerticalThrust *= multiplier;
+    }
+
+    private bool TryGetThrustReduction(EntProtoId marker, out float multiplier)
+    {
+        multiplier = 1f;
+
+        if (string.IsNullOrEmpty(marker.Id))
+            return false;
+
+        if (!_prototype.TryIndex<EntityPrototype>(marker, out var prototype))
+            return false;
+
+        if (!prototype.TryGetComponent<NebulaThrustReductionComponent>(out var component, _componentFactory))
+            return false;
+
+        multiplier = component.Multiplier;
+        return true;
     }
 }

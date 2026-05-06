@@ -68,7 +68,7 @@ public static class NebulaGenerator
             }
 
             result.Nebulas.Add(candidate);
-            result.NebulaTypes.Add(NebulaTypeHelpers.GetRandomNebulaType(random));
+            result.NebulaPrototypes.Add(PickRandomPrototype(random, settings));
             result.TotalArea += candidate.Area;
 
             if (result.TotalArea <= maxTotalArea)
@@ -220,5 +220,14 @@ public static class NebulaGenerator
     private static float NextFloat(global::System.Random random, float min, float max)
     {
         return min + (float) random.NextDouble() * (max - min);
+    }
+
+    private static Robust.Shared.Prototypes.EntProtoId PickRandomPrototype(global::System.Random random, NebulaGenerationSettings settings)
+    {
+        var pool = settings.NebulaPrototypePool;
+        if (pool == null || pool.Length == 0)
+            return default;
+
+        return pool[random.Next(pool.Length)];
     }
 }

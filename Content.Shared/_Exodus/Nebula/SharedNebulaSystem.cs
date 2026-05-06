@@ -8,7 +8,7 @@ namespace Content.Shared._Exodus.Nebula;
 /// <summary>
 /// Common API for asking nebula questions on either side. Concrete implementations live in
 /// <c>Content.Server</c> and <c>Content.Client</c> and only differ in where they read the
-/// nebula shape list from.
+/// nebula summary list from.
 /// </summary>
 public abstract class SharedNebulaSystem : EntitySystem
 {
@@ -57,24 +57,24 @@ public abstract class SharedNebulaSystem : EntitySystem
     }
 
     /// <summary>
-    /// True if any sampled point of the rotated shuttle footprint, or any nebula center
-    /// inside it, lies in an FTL-blocking nebula on <paramref name="mapId"/>.
+    /// True if any sampled point of the rotated shuttle footprint, or any FTL-blocking nebula
+    /// center inside it, lies in an FTL-blocking nebula on <paramref name="mapId"/>.
     /// </summary>
     public bool DoesFootprintHitFTLBlocker(Box2 localBounds, Vector2 origin, Angle rotation, MapId mapId)
     {
-        if (!TryGetMapData(mapId, out var shapes, out var types))
+        if (!TryGetSummaries(mapId, out var summaries))
             return false;
 
-        if (DoesFootprintContainBlockerCenter(localBounds, origin, rotation, shapes, types))
+        if (DoesFootprintContainBlockerCenter(localBounds, origin, rotation, summaries))
             return true;
 
-        if (IsFTLBlockerAt(LocalToWorld(localBounds.Center, origin, rotation), shapes, types))
+        if (IsFTLBlockerAt(LocalToWorld(localBounds.Center, origin, rotation), summaries))
             return true;
 
-        if (IsFTLBlockerAt(LocalToWorld(localBounds.BottomLeft, origin, rotation), shapes, types) ||
-            IsFTLBlockerAt(LocalToWorld(localBounds.TopLeft, origin, rotation), shapes, types) ||
-            IsFTLBlockerAt(LocalToWorld(localBounds.BottomRight, origin, rotation), shapes, types) ||
-            IsFTLBlockerAt(LocalToWorld(localBounds.TopRight, origin, rotation), shapes, types))
+        if (IsFTLBlockerAt(LocalToWorld(localBounds.BottomLeft, origin, rotation), summaries) ||
+            IsFTLBlockerAt(LocalToWorld(localBounds.TopLeft, origin, rotation), summaries) ||
+            IsFTLBlockerAt(LocalToWorld(localBounds.BottomRight, origin, rotation), summaries) ||
+            IsFTLBlockerAt(LocalToWorld(localBounds.TopRight, origin, rotation), summaries))
         {
             return true;
         }
@@ -83,8 +83,8 @@ public abstract class SharedNebulaSystem : EntitySystem
         for (var i = 1; i < horizontalSamples; i++)
         {
             var x = MathHelper.Lerp(localBounds.Left, localBounds.Right, i / (float) horizontalSamples);
-            if (IsFTLBlockerAt(LocalToWorld(new Vector2(x, localBounds.Bottom), origin, rotation), shapes, types) ||
-                IsFTLBlockerAt(LocalToWorld(new Vector2(x, localBounds.Top), origin, rotation), shapes, types))
+            if (IsFTLBlockerAt(LocalToWorld(new Vector2(x, localBounds.Bottom), origin, rotation), summaries) ||
+                IsFTLBlockerAt(LocalToWorld(new Vector2(x, localBounds.Top), origin, rotation), summaries))
             {
                 return true;
             }
@@ -94,8 +94,8 @@ public abstract class SharedNebulaSystem : EntitySystem
         for (var i = 1; i < verticalSamples; i++)
         {
             var y = MathHelper.Lerp(localBounds.Bottom, localBounds.Top, i / (float) verticalSamples);
-            if (IsFTLBlockerAt(LocalToWorld(new Vector2(localBounds.Left, y), origin, rotation), shapes, types) ||
-                IsFTLBlockerAt(LocalToWorld(new Vector2(localBounds.Right, y), origin, rotation), shapes, types))
+            if (IsFTLBlockerAt(LocalToWorld(new Vector2(localBounds.Left, y), origin, rotation), summaries) ||
+                IsFTLBlockerAt(LocalToWorld(new Vector2(localBounds.Right, y), origin, rotation), summaries))
             {
                 return true;
             }
@@ -106,42 +106,42 @@ public abstract class SharedNebulaSystem : EntitySystem
 
     /// <summary>
     /// True if <paramref name="worldPosition"/> lies inside a nebula on the given map.
-    /// Outputs the type of the first containing nebula even if it is not FTL-blocking.
+    /// Outputs the matched summary so callers can dispatch on its <see cref="NebulaSummary.Marker"/>.
     /// </summary>
-    public bool TryGetNebulaAt(MapId mapId, Vector2 worldPosition, out NebulaType type)
+    public bool TryGetNebulaAt(MapId mapId, Vector2 worldPosition, out NebulaSummary summary)
     {
-        type = default;
-        if (!TryGetMapData(mapId, out var shapes, out var types))
+        summary = default;
+        if (!TryGetSummaries(mapId, out var summaries))
             return false;
 
-        for (var i = 0; i < shapes.Count; i++)
+        for (var i = 0; i < summaries.Count; i++)
         {
-            var shape = shapes[i];
-            if ((worldPosition - shape.Center).LengthSquared() > shape.BoundingRadius * shape.BoundingRadius)
+            var candidate = summaries[i];
+            if ((worldPosition - candidate.Shape.Center).LengthSquared() > candidate.Shape.BoundingRadius * candidate.Shape.BoundingRadius)
                 continue;
 
-            if (!shape.Contains(worldPosition))
+            if (!candidate.Shape.Contains(worldPosition))
                 continue;
 
-            type = NebulaTypeHelpers.GetOrDefault(types, i);
+            summary = candidate;
             return true;
         }
 
         return false;
     }
 
-    private static bool IsFTLBlockerAt(Vector2 worldPosition, IReadOnlyList<NebulaShape> shapes, IReadOnlyList<NebulaType> types)
+    private static bool IsFTLBlockerAt(Vector2 worldPosition, IReadOnlyList<NebulaSummary> summaries)
     {
-        for (var i = 0; i < shapes.Count; i++)
+        for (var i = 0; i < summaries.Count; i++)
         {
-            var shape = shapes[i];
-            if ((worldPosition - shape.Center).LengthSquared() > shape.BoundingRadius * shape.BoundingRadius)
+            var summary = summaries[i];
+            if ((worldPosition - summary.Shape.Center).LengthSquared() > summary.Shape.BoundingRadius * summary.Shape.BoundingRadius)
                 continue;
 
-            if (!shape.Contains(worldPosition))
+            if (!summary.Shape.Contains(worldPosition))
                 continue;
 
-            return IsFTLBlockedNebulaType(NebulaTypeHelpers.GetOrDefault(types, i));
+            return summary.BlocksFTL;
         }
 
         return false;
@@ -151,16 +151,15 @@ public abstract class SharedNebulaSystem : EntitySystem
         Box2 localBounds,
         Vector2 origin,
         Angle rotation,
-        IReadOnlyList<NebulaShape> shapes,
-        IReadOnlyList<NebulaType> types)
+        IReadOnlyList<NebulaSummary> summaries)
     {
         var inverseAngle = -rotation;
-        for (var i = 0; i < shapes.Count; i++)
+        for (var i = 0; i < summaries.Count; i++)
         {
-            if (!IsFTLBlockedNebulaType(NebulaTypeHelpers.GetOrDefault(types, i)))
+            if (!summaries[i].BlocksFTL)
                 continue;
 
-            var localCenter = inverseAngle.RotateVec(shapes[i].Center - origin);
+            var localCenter = inverseAngle.RotateVec(summaries[i].Shape.Center - origin);
             if (localBounds.Contains(localCenter))
                 return true;
         }
@@ -174,15 +173,7 @@ public abstract class SharedNebulaSystem : EntitySystem
     }
 
     /// <summary>
-    /// Implementation hook: returns the nebula shape and type lists for the given map.
+    /// Implementation hook: returns the nebula summary list for the given map.
     /// </summary>
-    protected abstract bool TryGetMapData(
-        MapId mapId,
-        out IReadOnlyList<NebulaShape> shapes,
-        out IReadOnlyList<NebulaType> types);
-
-    public static bool IsFTLBlockedNebulaType(NebulaType type)
-    {
-        return type is NebulaType.Blue or NebulaType.Red or NebulaType.Purple;
-    }
+    protected abstract bool TryGetSummaries(MapId mapId, out IReadOnlyList<NebulaSummary> summaries);
 }

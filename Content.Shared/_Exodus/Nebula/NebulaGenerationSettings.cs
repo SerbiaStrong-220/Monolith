@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared._Exodus.Nebula;
 
 /// <summary>
@@ -28,4 +30,16 @@ public sealed class NebulaGenerationSettings
     public float MaxWaveAmplitude = 0.12f;
     public int MinWaveFrequency = 2;
     public int MaxWaveFrequency = 11;
+
+    /// <summary>
+    /// Pool of marker entity prototypes that the generator picks from when assigning a kind
+    /// to each generated nebula. Default covers the four built-in colors.
+    /// </summary>
+    public EntProtoId[] NebulaPrototypePool =
+    [
+        "NebulaBlueMarker",
+        "NebulaRedMarker",
+        "NebulaGreenMarker",
+        "NebulaPurpleMarker",
+    ];
 }

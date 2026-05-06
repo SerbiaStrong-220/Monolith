@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared._Exodus.Nebula;
 
 /// <summary>
@@ -6,7 +8,7 @@ namespace Content.Shared._Exodus.Nebula;
 public sealed class NebulaGenerationResult
 {
     public readonly List<NebulaShape> Nebulas = new();
-    public readonly List<NebulaType> NebulaTypes = new();
+    public readonly List<EntProtoId> NebulaPrototypes = new();
     public NebulaGenerationRejections Rejections;
     public int Attempts;
     public int MaxAttempts;

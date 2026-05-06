@@ -135,7 +135,7 @@ public sealed class NebulaShapeTests
             Assert.That(settings.MaxTotalAreaOptions, Does.Contain(result.MaxTotalArea));
             Assert.That(result.TotalArea, Is.GreaterThan(result.MaxTotalArea));
             Assert.That(result.Rejections.AreaLimit, Is.EqualTo(1));
-            Assert.That(result.NebulaTypes, Has.Count.EqualTo(result.Nebulas.Count));
+            Assert.That(result.NebulaPrototypes, Has.Count.EqualTo(result.Nebulas.Count));
             Assert.That(result.Nebulas, Is.Not.Empty);
         });
 

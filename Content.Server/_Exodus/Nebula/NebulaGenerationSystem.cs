@@ -28,11 +28,8 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const float NebulaRadarMaxDistance = 250_000f;
     private const int NebulaRadarContourSamples = 96;
     private static readonly TimeSpan MarkerValidationInterval = TimeSpan.FromSeconds(30);
-
-    private static readonly Color BlueNebulaRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
-    private static readonly Color RedNebulaRadarColor = new(1f, 0.30f, 0.26f, 0.85f);
-    private static readonly Color GreenNebulaRadarColor = new(0.32f, 0.90f, 0.48f, 0.85f);
-    private static readonly Color PurpleNebulaRadarColor = new(0.73f, 0.40f, 1f, 0.85f);
+    private static readonly EntProtoId FallbackNebulaPrototype = "NebulaBlueMarker";
+    private static readonly Color FallbackRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -88,8 +85,8 @@ public sealed class NebulaGenerationSystem : EntitySystem
         component.Nebulas.Clear();
         component.Nebulas.AddRange(result.Nebulas);
 
-        component.NebulaTypes.Clear();
-        component.NebulaTypes.AddRange(result.NebulaTypes);
+        component.NebulaPrototypes.Clear();
+        component.NebulaPrototypes.AddRange(result.NebulaPrototypes);
 
         component.ProtectedAreas.Clear();
         component.ProtectedAreas.AddRange(protectedAreas);
@@ -97,19 +94,38 @@ public sealed class NebulaGenerationSystem : EntitySystem
         SpawnNebulaMarkers(mapId, component);
         component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
 
-        SyncFTLData(mapUid, component);
+        SyncMapData(mapUid, component);
 
         Logger.InfoS("nebula", $"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
     }
 
-    private void SyncFTLData(EntityUid mapUid, NebulaMapComponent source)
+    private void SyncMapData(EntityUid mapUid, NebulaMapComponent source)
     {
-        var ftlData = EnsureComp<NebulaFTLDataComponent>(mapUid);
-        ftlData.Nebulas.Clear();
-        ftlData.Nebulas.AddRange(source.Nebulas);
-        ftlData.Types.Clear();
-        ftlData.Types.AddRange(source.NebulaTypes);
-        Dirty(mapUid, ftlData);
+        var data = EnsureComp<NebulaMapDataComponent>(mapUid);
+        data.Nebulas.Clear();
+
+        for (var i = 0; i < source.Nebulas.Count; i++)
+        {
+            var marker = i < source.NebulaMarkers.Count ? source.NebulaMarkers[i] : EntityUid.Invalid;
+            data.Nebulas.Add(BuildSummary(source.Nebulas[i], GetNebulaPrototype(source, i), marker));
+        }
+
+        Dirty(mapUid, data);
+    }
+
+    private NebulaSummary BuildSummary(NebulaShape shape, EntProtoId prototype, EntityUid marker)
+    {
+        var blocksFTL = !Deleted(marker) && HasComp<NebulaFTLBlockerComponent>(marker);
+
+        string? parallax = null;
+        if (!Deleted(marker) && TryComp<NebulaParallaxComponent>(marker, out var parallaxComp))
+            parallax = parallaxComp.Parallax;
+
+        var radarColor = FallbackRadarColor;
+        if (!Deleted(marker) && TryComp<NebulaRadarVisualsComponent>(marker, out var visuals))
+            radarColor = visuals.RadarColor;
+
+        return new NebulaSummary(shape, prototype, blocksFTL, parallax, radarColor);
     }
 
     public override void Update(float frameTime)
@@ -139,7 +155,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         {
             ClearNebulaMarkers(component);
             RemCompDeferred<NebulaMapComponent>(uid);
-            RemCompDeferred<NebulaFTLDataComponent>(uid);
+            RemCompDeferred<NebulaMapDataComponent>(uid);
         }
 
         var markerQuery = EntityQueryEnumerator<NebulaComponent>();
@@ -348,8 +364,8 @@ public sealed class NebulaGenerationSystem : EntitySystem
 
         for (var i = 0; i < component.Nebulas.Count; i++)
         {
-            var type = GetNebulaType(component, i);
-            message += $"\n{i + 1}. {type}: area {component.Nebulas[i].Area:0}; center {component.Nebulas[i].Center}; bounding radius {component.Nebulas[i].BoundingRadius:0}.";
+            var prototype = GetNebulaPrototype(component, i);
+            message += $"\n{i + 1}. {prototype}: area {component.Nebulas[i].Area:0}; center {component.Nebulas[i].Center}; bounding radius {component.Nebulas[i].BoundingRadius:0}.";
         }
 
         return true;
@@ -360,29 +376,28 @@ public sealed class NebulaGenerationSystem : EntitySystem
         for (var i = 0; i < component.Nebulas.Count; i++)
         {
             var nebula = component.Nebulas[i];
-            var type = GetNebulaType(component, i);
-            var marker = Spawn(null, new MapCoordinates(nebula.Center, mapId));
+            var prototype = GetNebulaPrototype(component, i);
+            var marker = Spawn(prototype, new MapCoordinates(nebula.Center, mapId));
             var nebulaComponent = EnsureComp<NebulaComponent>(marker);
 
             nebulaComponent.Index = i;
-            nebulaComponent.Type = type;
             nebulaComponent.Shape = nebula;
             component.NebulaMarkers.Add(marker);
 
-            ConfigureNebulaMarker(marker, nebula, type);
+            ConfigureNebulaMarker(marker, nebula);
 
-            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1} ({type})");
+            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1} ({prototype})");
         }
     }
 
-    private void ConfigureNebulaMarker(EntityUid marker, NebulaShape nebula, NebulaType type)
+    private void ConfigureNebulaMarker(EntityUid marker, NebulaShape nebula)
     {
         EnsureComp<PhysicsComponent>(marker);
         EnsureComp<CleanupImmuneComponent>(marker);
-        ConfigureRadarBlip(EnsureComp<RadarBlipComponent>(marker), nebula, type);
+        ConfigureRadarBlip(marker, EnsureComp<RadarBlipComponent>(marker), nebula);
     }
 
-    private static void ConfigureRadarBlip(RadarBlipComponent blip, NebulaShape nebula, NebulaType type)
+    private void ConfigureRadarBlip(EntityUid marker, RadarBlipComponent blip, NebulaShape nebula)
     {
         var radius = nebula.BoundingRadius;
         blip.MaxDistance = NebulaRadarMaxDistance;
@@ -391,22 +406,11 @@ public sealed class NebulaGenerationSystem : EntitySystem
         blip.Config = new BlipConfig
         {
             Bounds = new Box2(-radius, -radius, radius, radius),
-            Color = GetNebulaRadarColor(type),
+            Color = TryComp<NebulaRadarVisualsComponent>(marker, out var visuals) ? visuals.RadarColor : FallbackRadarColor,
             Shape = RadarBlipShape.NebulaPolygon,
             Points = BuildRadarContourPoints(nebula),
             RespectZoom = true,
             Rotate = false,
-        };
-    }
-
-    private static Color GetNebulaRadarColor(NebulaType type)
-    {
-        return type switch
-        {
-            NebulaType.Red => RedNebulaRadarColor,
-            NebulaType.Green => GreenNebulaRadarColor,
-            NebulaType.Purple => PurpleNebulaRadarColor,
-            _ => BlueNebulaRadarColor,
         };
     }
 
@@ -429,8 +433,8 @@ public sealed class NebulaGenerationSystem : EntitySystem
         while (component.NebulaMarkers.Count < component.Nebulas.Count)
             component.NebulaMarkers.Add(EntityUid.Invalid);
 
-        while (component.NebulaTypes.Count < component.Nebulas.Count)
-            component.NebulaTypes.Add(NebulaType.Blue);
+        while (component.NebulaPrototypes.Count < component.Nebulas.Count)
+            component.NebulaPrototypes.Add(FallbackNebulaPrototype);
 
         for (var i = 0; i < component.NebulaMarkers.Count; i++)
         {
@@ -439,27 +443,25 @@ public sealed class NebulaGenerationSystem : EntitySystem
 
             var marker = component.NebulaMarkers[i];
             var nebula = component.Nebulas[i];
-            var type = GetNebulaType(component, i);
+            var prototype = GetNebulaPrototype(component, i);
 
             if (!Deleted(marker) && HasComp<NebulaComponent>(marker))
             {
                 var nebulaComponent = Comp<NebulaComponent>(marker);
                 nebulaComponent.Index = i;
-                nebulaComponent.Type = type;
                 nebulaComponent.Shape = nebula;
-                ConfigureNebulaMarker(marker, nebula, type);
+                ConfigureNebulaMarker(marker, nebula);
                 continue;
             }
 
-            marker = Spawn(null, new MapCoordinates(nebula.Center, mapId));
+            marker = Spawn(prototype, new MapCoordinates(nebula.Center, mapId));
             var newNebulaComponent = EnsureComp<NebulaComponent>(marker);
             newNebulaComponent.Index = i;
-            newNebulaComponent.Type = type;
             newNebulaComponent.Shape = nebula;
             component.NebulaMarkers[i] = marker;
 
-            ConfigureNebulaMarker(marker, nebula, type);
-            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1} ({type})");
+            ConfigureNebulaMarker(marker, nebula);
+            _metadata.SetEntityName(marker, $"Nebula Marker {i + 1} ({prototype})");
             restored++;
         }
 
@@ -476,15 +478,19 @@ public sealed class NebulaGenerationSystem : EntitySystem
             restored++;
         }
 
-        if (component.NebulaTypes.Count > component.Nebulas.Count)
-            component.NebulaTypes.RemoveRange(component.Nebulas.Count, component.NebulaTypes.Count - component.Nebulas.Count);
+        if (component.NebulaPrototypes.Count > component.Nebulas.Count)
+            component.NebulaPrototypes.RemoveRange(component.Nebulas.Count, component.NebulaPrototypes.Count - component.Nebulas.Count);
 
         return restored;
     }
 
-    private static NebulaType GetNebulaType(NebulaMapComponent component, int index)
+    private static EntProtoId GetNebulaPrototype(NebulaMapComponent component, int index)
     {
-        return NebulaTypeHelpers.GetOrDefault(component.NebulaTypes, index);
+        if (index < 0 || index >= component.NebulaPrototypes.Count)
+            return FallbackNebulaPrototype;
+
+        var proto = component.NebulaPrototypes[index];
+        return string.IsNullOrEmpty(proto.Id) ? FallbackNebulaPrototype : proto;
     }
 
     private bool IsValidMarker(EntityUid uid)

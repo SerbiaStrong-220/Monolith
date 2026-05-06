@@ -4,28 +4,23 @@ using Robust.Shared.Map;
 namespace Content.Client._Exodus.Nebula;
 
 /// <summary>
-/// Client-side nebula lookup. Reads networked shape data from <see cref="NebulaFTLDataComponent"/>
-/// on the map entity, which the server populates after generation.
+/// Client-side nebula lookup. Reads networked summaries from <see cref="NebulaMapDataComponent"/>
+/// on the map entity.
 /// </summary>
 public sealed class NebulaSystem : SharedNebulaSystem
 {
-    protected override bool TryGetMapData(
-        MapId mapId,
-        out IReadOnlyList<NebulaShape> shapes,
-        out IReadOnlyList<NebulaType> types)
+    protected override bool TryGetSummaries(MapId mapId, out IReadOnlyList<NebulaSummary> summaries)
     {
-        shapes = Array.Empty<NebulaShape>();
-        types = Array.Empty<NebulaType>();
+        summaries = Array.Empty<NebulaSummary>();
 
         if (!MapManager.MapExists(mapId))
             return false;
 
         var mapUid = MapManager.GetMapEntityId(mapId);
-        if (!TryComp<NebulaFTLDataComponent>(mapUid, out var component) || component.Nebulas.Count == 0)
+        if (!TryComp<NebulaMapDataComponent>(mapUid, out var component) || component.Nebulas.Count == 0)
             return false;
 
-        shapes = component.Nebulas;
-        types = component.Types;
+        summaries = component.Nebulas;
         return true;
     }
 }

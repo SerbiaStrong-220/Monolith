@@ -1,9 +1,12 @@
 using Content.Shared._Exodus.Nebula;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Nebula;
 
 /// <summary>
-/// Stores generated Exodus space nebulas for a map.
+/// Server-authoritative state for nebulas on a map: the math shapes, which marker prototype
+/// each nebula uses, marker entities, and generation diagnostics. The networked summary
+/// the client reads lives separately on <see cref="NebulaMapDataComponent"/>.
 /// </summary>
 [RegisterComponent]
 public sealed partial class NebulaMapComponent : Component
@@ -15,7 +18,7 @@ public sealed partial class NebulaMapComponent : Component
     public List<NebulaShape> Nebulas = new();
 
     [ViewVariables]
-    public List<NebulaType> NebulaTypes = new();
+    public List<EntProtoId> NebulaPrototypes = new();
 
     [ViewVariables]
     public List<EntityUid> NebulaMarkers = new();

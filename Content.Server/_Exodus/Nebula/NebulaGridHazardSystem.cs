@@ -30,8 +30,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     private enum NebulaHazardFlags : byte
     {
         None = 0,
-        RedLightning = 1,
-        GreenEmp = 2,
+        Lightning = 1,
+        Emp = 2,
     }
 
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
@@ -77,6 +77,8 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     private readonly Dictionary<EntityUid, NebulaHazardFlags> _activeHazardGrids = new();
     private List<Entity<MapGridComponent>> _nearbyGrids = new();
@@ -179,7 +181,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         NebulaHazardFlags flags)
     {
         var hazard = grid.Comp3;
-        if ((flags & NebulaHazardFlags.RedLightning) != 0 && _timing.CurTime >= hazard.NextSmallStrike)
+        if ((flags & NebulaHazardFlags.Lightning) != 0 && _timing.CurTime >= hazard.NextSmallStrike)
         {
             hazard.NextSmallStrike = _timing.CurTime + hazard.SmallStrikeInterval;
 
@@ -187,7 +189,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
                 RecordStrike(hazard, false);
         }
 
-        if ((flags & NebulaHazardFlags.RedLightning) != 0 && _timing.CurTime >= hazard.NextHeavyStrike)
+        if ((flags & NebulaHazardFlags.Lightning) != 0 && _timing.CurTime >= hazard.NextHeavyStrike)
         {
             hazard.NextHeavyStrike = _timing.CurTime + hazard.HeavyStrikeInterval;
 
@@ -195,7 +197,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
                 RecordStrike(hazard, true);
         }
 
-        if ((flags & NebulaHazardFlags.GreenEmp) != 0 && _timing.CurTime >= hazard.NextGreenEmp)
+        if ((flags & NebulaHazardFlags.Emp) != 0 && _timing.CurTime >= hazard.NextGreenEmp)
         {
             ScheduleNextGreenEmp(hazard);
 
@@ -271,7 +273,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         NebulaMapComponent mapComponent,
         bool heavy)
     {
-        if (!TrySelectHazardTile(grid, mapId, mapComponent, NebulaType.Red, out _, out var targetCoords, out var targetGridCoords))
+        if (!TrySelectHazardTile<NebulaLightningHazardComponent>(grid, mapId, mapComponent, out _, out var targetCoords, out var targetGridCoords))
             return false;
 
         var hazard = grid.Comp3;
@@ -303,7 +305,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         MapId mapId,
         NebulaMapComponent mapComponent)
     {
-        if (!TrySelectHazardTile(grid, mapId, mapComponent, NebulaType.Green, out _, out var targetCoords, out _, edgeOnly: false))
+        if (!TrySelectHazardTile<NebulaEmpHazardComponent>(grid, mapId, mapComponent, out _, out var targetCoords, out _, edgeOnly: false))
             return false;
 
         var hazard = grid.Comp3;
@@ -312,15 +314,15 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         return true;
     }
 
-    private bool TrySelectHazardTile(
+    private bool TrySelectHazardTile<TMarkerComp>(
         Entity<MapGridComponent, TransformComponent, NebulaGridHazardComponent> grid,
         MapId mapId,
         NebulaMapComponent mapComponent,
-        NebulaType type,
         out TileRef selected,
         out MapCoordinates selectedCoords,
         out EntityCoordinates selectedGridCoords,
         bool edgeOnly = true)
+        where TMarkerComp : IComponent, new()
     {
         selected = default;
         selectedCoords = default;
@@ -341,7 +343,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
 
             var gridCoords = _map.GridTileToLocal(grid.Owner, grid.Comp1, tileRef.GridIndices);
             var coords = _transform.ToMapCoordinates(gridCoords);
-            if (coords.MapId != mapId || !IsNebulaTypeAt(coords.Position, mapComponent, type))
+            if (coords.MapId != mapId || !IsNebulaWithComponentAt<TMarkerComp>(coords.Position, mapComponent))
                 continue;
 
             candidates++;
@@ -428,26 +430,35 @@ public sealed class NebulaGridHazardSystem : EntitySystem
                 continue;
 
             var mapCoords = _transform.GetMapCoordinates(player, xform);
-            if (!TryGetActiveHazardTypeAt(mapCoords.Position, mapComponent, out var hazardType))
+            if (!_presence.TryGetNebulaAt(mapCoords.Position, mapComponent, out _, out var marker, out _, out _))
             {
                 RemoveSpacePlayerHazards(player);
                 continue;
             }
 
-            if (hazardType == NebulaType.Red)
+            var flags = GetMarkerHazardFlags(marker);
+            if (flags == NebulaHazardFlags.None && !MarkerHasComponent<NebulaRadioBlackoutSourceComponent>(marker))
             {
-                UpdateSpacePlayerLightningHazard((player, xform), mapCoords);
-                RemoveSpacePlayerEmpHazard(player);
-                RemoveRadioBlackout(player);
-            }
-            else if (hazardType == NebulaType.Green)
-            {
-                UpdateSpacePlayerEmpHazard((player, xform), mapCoords);
-                RemoveSpacePlayerLightningHazard(player);
-                EnsureComp<NebulaRadioBlackoutComponent>(player);
+                RemoveSpacePlayerHazards(player);
+                continue;
             }
 
-            CollectNearbyHazardGrids((player, xform), mapCoords, mapId, mapComponent, hazardType);
+            if ((flags & NebulaHazardFlags.Lightning) != 0)
+                UpdateSpacePlayerLightningHazard((player, xform), mapCoords);
+            else
+                RemoveSpacePlayerLightningHazard(player);
+
+            if ((flags & NebulaHazardFlags.Emp) != 0)
+                UpdateSpacePlayerEmpHazard((player, xform), mapCoords);
+            else
+                RemoveSpacePlayerEmpHazard(player);
+
+            if (MarkerHasComponent<NebulaRadioBlackoutSourceComponent>(marker))
+                EnsureComp<NebulaRadioBlackoutComponent>(player);
+            else
+                RemoveRadioBlackout(player);
+
+            CollectNearbyHazardGrids((player, xform), mapCoords, mapId, mapComponent, flags);
         }
     }
 
@@ -529,10 +540,13 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         MapCoordinates mapCoords,
         MapId mapId,
         NebulaMapComponent mapComponent,
-        NebulaType hazardType)
+        NebulaHazardFlags playerFlags)
     {
+        if (playerFlags == NebulaHazardFlags.None)
+            return;
+
         if (player.Comp.GridUid is { Valid: true } playerGrid)
-            TryAddActiveHazardGrid(playerGrid, mapId, mapComponent, hazardType);
+            TryAddActiveHazardGrid(playerGrid, mapId, mapComponent, playerFlags);
 
         var range = GetPlayerHazardRange(player.Comp.GridUid);
         var rangeVector = new Vector2(range, range);
@@ -553,7 +567,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
                 continue;
             }
 
-            TryAddActiveHazardGrid((grid.Owner, grid.Comp, gridXform), mapId, mapComponent, hazardType);
+            TryAddActiveHazardGrid((grid.Owner, grid.Comp, gridXform), mapId, mapComponent, playerFlags);
         }
     }
 
@@ -572,7 +586,7 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         EntityUid uid,
         MapId mapId,
         NebulaMapComponent mapComponent,
-        NebulaType hazardType)
+        NebulaHazardFlags playerFlags)
     {
         if (!TryComp(uid, out MapGridComponent? grid) ||
             !TryComp(uid, out TransformComponent? xform))
@@ -580,29 +594,37 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             return false;
         }
 
-        return TryAddActiveHazardGrid((uid, grid, xform), mapId, mapComponent, hazardType);
+        return TryAddActiveHazardGrid((uid, grid, xform), mapId, mapComponent, playerFlags);
     }
 
     private bool TryAddActiveHazardGrid(
         Entity<MapGridComponent, TransformComponent> grid,
         MapId mapId,
         NebulaMapComponent mapComponent,
-        NebulaType hazardType)
+        NebulaHazardFlags playerFlags)
     {
-        if (grid.Comp2.MapID != mapId ||
-            !IsGridNearNebulaType(grid, mapComponent, hazardType))
-        {
+        if (grid.Comp2.MapID != mapId)
             return false;
+
+        var gridFlags = NebulaHazardFlags.None;
+        if ((playerFlags & NebulaHazardFlags.Lightning) != 0 &&
+            IsGridNearNebulaWithComponent<NebulaLightningHazardComponent>(grid, mapComponent))
+        {
+            gridFlags |= NebulaHazardFlags.Lightning;
+        }
+        if ((playerFlags & NebulaHazardFlags.Emp) != 0 &&
+            IsGridNearNebulaWithComponent<NebulaEmpHazardComponent>(grid, mapComponent))
+        {
+            gridFlags |= NebulaHazardFlags.Emp;
         }
 
-        var flags = GetHazardFlag(hazardType);
-        if (flags == NebulaHazardFlags.None)
+        if (gridFlags == NebulaHazardFlags.None)
             return false;
 
         if (_activeHazardGrids.TryGetValue(grid.Owner, out var existing))
-            _activeHazardGrids[grid.Owner] = existing | flags;
+            _activeHazardGrids[grid.Owner] = existing | gridFlags;
         else
-            _activeHazardGrids.Add(grid.Owner, flags);
+            _activeHazardGrids.Add(grid.Owner, gridFlags);
 
         return true;
     }
@@ -642,9 +664,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             var hazard = EnsureComp<NebulaGridHazardComponent>(uid);
             UpdateLegacyHazardSettings(hazard);
             InitializeTimers(hazard);
-            hazard.RedLightningActive = (flags & NebulaHazardFlags.RedLightning) != 0;
-            hazard.GreenEmpActive = (flags & NebulaHazardFlags.GreenEmp) != 0;
-            UpdateGridRadioBlackout(uid, hazard.GreenEmpActive);
+            hazard.LightningActive = (flags & NebulaHazardFlags.Lightning) != 0;
+            hazard.EmpActive = (flags & NebulaHazardFlags.Emp) != 0;
+            UpdateGridRadioBlackout(uid, hazard.EmpActive);
             UpdateHazard((uid, grid, xform, hazard), mapId, mapComponent, flags);
         }
     }
@@ -795,13 +817,15 @@ public sealed class NebulaGridHazardSystem : EntitySystem
             RemCompDeferred<NebulaRadioBlackoutComponent>(uid);
     }
 
-    private bool IsGridNearNebulaType(Entity<MapGridComponent, TransformComponent> grid, NebulaMapComponent mapComponent, NebulaType type)
+    private bool IsGridNearNebulaWithComponent<TMarkerComp>(Entity<MapGridComponent, TransformComponent> grid, NebulaMapComponent mapComponent)
+        where TMarkerComp : IComponent, new()
     {
         var bounds = _transform.GetWorldMatrix(grid.Comp2).TransformBox(grid.Comp1.LocalAABB);
 
         for (var i = 0; i < mapComponent.Nebulas.Count; i++)
         {
-            if (NebulaTypeHelpers.GetOrDefault(mapComponent.NebulaTypes, i) != type)
+            var marker = i < mapComponent.NebulaPrototypes.Count ? mapComponent.NebulaPrototypes[i] : default;
+            if (!MarkerHasComponent<TMarkerComp>(marker))
                 continue;
 
             var nebula = mapComponent.Nebulas[i];
@@ -816,33 +840,30 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         return false;
     }
 
-    private bool TryGetActiveHazardTypeAt(Vector2 position, NebulaMapComponent mapComponent, out NebulaType type)
+    private bool IsNebulaWithComponentAt<TMarkerComp>(Vector2 position, NebulaMapComponent mapComponent)
+        where TMarkerComp : IComponent, new()
     {
-        type = default;
-
-        return _presence.TryGetNebulaAt(position, mapComponent, out _, out type, out _, out _) &&
-               IsActiveHazardType(type);
+        return _presence.TryGetNebulaAt(position, mapComponent, out _, out var marker, out _, out _) &&
+               MarkerHasComponent<TMarkerComp>(marker);
     }
 
-    private bool IsNebulaTypeAt(Vector2 position, NebulaMapComponent mapComponent, NebulaType type)
+    private NebulaHazardFlags GetMarkerHazardFlags(EntProtoId marker)
     {
-        return _presence.TryGetNebulaAt(position, mapComponent, out _, out var foundType, out _, out _) &&
-               foundType == type;
+        var flags = NebulaHazardFlags.None;
+        if (MarkerHasComponent<NebulaLightningHazardComponent>(marker))
+            flags |= NebulaHazardFlags.Lightning;
+        if (MarkerHasComponent<NebulaEmpHazardComponent>(marker))
+            flags |= NebulaHazardFlags.Emp;
+        return flags;
     }
 
-    private static bool IsActiveHazardType(NebulaType type)
+    private bool MarkerHasComponent<TComp>(EntProtoId marker) where TComp : IComponent, new()
     {
-        return type is NebulaType.Red or NebulaType.Green;
-    }
-
-    private static NebulaHazardFlags GetHazardFlag(NebulaType type)
-    {
-        return type switch
-        {
-            NebulaType.Red => NebulaHazardFlags.RedLightning,
-            NebulaType.Green => NebulaHazardFlags.GreenEmp,
-            _ => NebulaHazardFlags.None,
-        };
+        if (string.IsNullOrEmpty(marker.Id))
+            return false;
+        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
+            return false;
+        return proto.TryGetComponent<TComp>(out _, _componentFactory);
     }
 
     private bool TryGetNebulaMap(out MapId mapId, out NebulaMapComponent component)

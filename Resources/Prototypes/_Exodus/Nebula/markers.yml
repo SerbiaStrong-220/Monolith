@@ -1,0 +1,62 @@
+# Exodus nebula marker entity prototypes.
+# A marker is spawned at the center of each generated nebula by NebulaGenerationSystem.
+# Per-effect components on the prototype determine what the nebula does in-game.
+
+- type: entity
+  id: NebulaBaseMarker
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Nebula
+  - type: Physics
+    bodyType: Static
+  - type: CleanupImmune
+  - type: RadarBlip
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaBlueMarker
+  name: Blue Nebula Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: BlueNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#61b3ffd9"
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaRedMarker
+  name: Red Nebula Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: RedNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#ff4d42d9"
+  - type: NebulaLightningHazard
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaGreenMarker
+  name: Green Nebula Marker
+  components:
+  - type: NebulaParallax
+    parallax: GreenNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#52e57ad9"
+  - type: NebulaThrustReduction
+  - type: NebulaEmpHazard
+  - type: NebulaRadioBlackoutSource
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaPurpleMarker
+  name: Purple Nebula Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: PurpleNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#ba66ffd9"
+  - type: NebulaThrustReduction
