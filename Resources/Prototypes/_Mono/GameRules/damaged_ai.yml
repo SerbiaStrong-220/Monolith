@@ -18,6 +18,7 @@
     - id: UnknownShuttleZenith
     - id: UnknownShuttleWyrm
     - id: UnknownShuttleNebula
+    - id: UnknownShuttleConcordX # Exodus
     - id: UnknownShuttleMantaray # Exodus
 
 - type: entity
@@ -139,6 +140,27 @@
     - !type:JobGameRuleRequirement
       department: Combatant
       minDepartmentPlayers: 9
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleConcordX
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-frigate-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 2
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 25
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/concord_x.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
 
 # Exodus
 - type: entity

@@ -4,7 +4,6 @@
   keycode: ";" # Ru-Localization
   frequency: 1459
   color: "#2cdb2c"
-  maxRange: 7500 # Exodus
 
 - type: radioChannel
   id: CentCom
