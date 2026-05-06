@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Server._Crescent.ShipShields;
+using Content.Shared._Crescent.ShipShields;
 using Content.Server.Emp;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking;
@@ -77,7 +77,6 @@ public sealed class NebulaGridHazardSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ShipShieldsSystem _shields = default!;
 
     private readonly Dictionary<EntityUid, NebulaHazardFlags> _activeHazardGrids = new();
     private List<Entity<MapGridComponent>> _nearbyGrids = new();
@@ -282,7 +281,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         SpawnLightning(targetCoords, lightning, lightningLength, sourceDirection);
 
         var shieldLoad = heavy ? hazard.HeavyShieldLoad : hazard.SmallShieldLoad;
-        if (_shields.TryAbsorbNebulaStrike(grid.Owner, shieldLoad, out _))
+        var shieldHit = new ShipShieldHitAttemptEvent(targetCoords, shieldLoad, false);
+        RaiseLocalEvent(grid.Owner, ref shieldHit);
+        if (shieldHit.Absorbed)
         {
             PlayLightningSound(hazard.ShieldImpactSound, targetGridCoords);
             Spawn(SparksPrototype, targetCoords);
@@ -711,10 +712,9 @@ public sealed class NebulaGridHazardSystem : EntitySystem
         for (var i = 0; i < _nearbyGrids.Count; i++)
         {
             var grid = _nearbyGrids[i];
-            if (!TryComp(grid.Owner, out TransformComponent? xform))
-                continue;
-
-            if (_shields.TryAbsorbNebulaPointStrike((grid.Owner, grid.Comp, xform), mapCoords, shieldLoad, out _))
+            var shieldHit = new ShipShieldHitAttemptEvent(mapCoords, shieldLoad, false);
+            RaiseLocalEvent(grid.Owner, ref shieldHit);
+            if (shieldHit.Absorbed)
                 return true;
         }
 
