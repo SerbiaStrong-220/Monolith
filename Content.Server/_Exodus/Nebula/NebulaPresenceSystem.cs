@@ -150,11 +150,12 @@ public sealed class NebulaPresenceSystem : EntitySystem
 
     private void SetPresence(EntityUid uid, int index, EntProtoId marker, float density, float alpha)
     {
-        var component = EnsureComp<NebulaPresenceComponent>(uid);
-        var changedNebula = component.NebulaIndex != index;
+        var hadComponent = TryComp<NebulaPresenceComponent>(uid, out var existing);
+        var oldMarker = hadComponent ? existing!.Marker : default;
+        var component = hadComponent ? existing! : EnsureComp<NebulaPresenceComponent>(uid);
+        var changedMarker = !hadComponent || component.NebulaIndex != index || component.Marker != marker;
 
-        if (!changedNebula &&
-            component.Marker == marker &&
+        if (!changedMarker &&
             MathF.Abs(component.Density - density) < DirtyThreshold &&
             MathF.Abs(component.Alpha - alpha) < DirtyThreshold)
         {
@@ -167,8 +168,12 @@ public sealed class NebulaPresenceSystem : EntitySystem
         component.Alpha = alpha;
         Dirty(uid, component);
 
-        if (changedNebula)
+        if (changedMarker)
+        {
             Logger.DebugS("nebula", $"{ToPrettyString(uid)} entered {marker} nebula {index + 1} with density {density:0.00}.");
+            var ev = new NebulaPresenceChangedEvent(uid, oldMarker, marker);
+            RaiseLocalEvent(uid, ref ev);
+        }
     }
 
     private void ClearPresence(EntityUid uid)
@@ -176,8 +181,12 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (!TryComp<NebulaPresenceComponent>(uid, out var component))
             return;
 
+        var oldMarker = component.Marker;
         Logger.DebugS("nebula", $"{ToPrettyString(uid)} left nebula {component.NebulaIndex + 1}.");
         RemCompDeferred<NebulaPresenceComponent>(uid);
+
+        var ev = new NebulaPresenceChangedEvent(uid, oldMarker, default);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void ClearStalePresence()

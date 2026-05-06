@@ -215,42 +215,37 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
             return;
         }
 
-        if (!_entityManager.TryGetComponent<NebulaGridHazardComponent>(gridUid, out var hazard))
+        var hasLightning = _entityManager.TryGetComponent<NebulaLightningGridHazardComponent>(gridUid, out var lightning);
+        var hasEmp = _entityManager.TryGetComponent<NebulaEmpGridHazardComponent>(gridUid, out var emp);
+
+        if (!hasLightning && !hasEmp)
         {
-            shell.WriteLine($"Grid {gridUid} has no NebulaGridHazardComponent.");
+            shell.WriteLine($"Grid {gridUid} has no active nebula hazards.");
             return;
         }
 
         var curTime = _timing.CurTime;
-        shell.WriteLine(
-            $"Grid {gridUid} nebula hazard:\n" +
-            $"Active: lightning {FormatActive(hazard.LightningActive)}, EMP {FormatActive(hazard.EmpActive)}.\n" +
-            $"Small lightning: interval {FormatDuration(hazard.SmallStrikeInterval)}, next in {FormatActiveDuration(hazard.LightningActive, hazard.NextSmallStrike - curTime)}, count {hazard.SmallStrikeCount}, last {FormatOptionalDuration(hazard.LastSmallStrike)}, delta {FormatOptionalDuration(hazard.LastSmallDelta)}.\n" +
-            $"Heavy lightning: interval {FormatDuration(hazard.HeavyStrikeInterval)}, next in {FormatActiveDuration(hazard.LightningActive, hazard.NextHeavyStrike - curTime)}, count {hazard.HeavyStrikeCount}, last {FormatOptionalDuration(hazard.LastHeavyStrike)}, delta {FormatOptionalDuration(hazard.LastHeavyDelta)}.\n" +
-            $"EMP: delay {FormatDelayRange(hazard.MinGreenEmpDelaySeconds, hazard.MaxGreenEmpDelaySeconds)}, next in {FormatActiveDuration(hazard.EmpActive, hazard.NextGreenEmp - curTime)}, count {hazard.GreenEmpCount}, last {FormatOptionalDuration(hazard.LastGreenEmp)}, delta {FormatOptionalDuration(hazard.LastGreenEmpDelta)}.\n" +
-            $"Player range: {hazard.PlayerRange:0.##}; shield load: small {hazard.SmallShieldLoad:0.##}, heavy {hazard.HeavyShieldLoad:0.##}.");
-    }
+        var lines = new List<string> { $"Grid {gridUid} nebula hazards:" };
 
-    private static string FormatActive(bool active)
-    {
-        return active ? "active" : "inactive";
-    }
+        if (hasLightning && lightning != null)
+        {
+            lines.Add($"Lightning ({lightning.Marker}):");
+            lines.Add($"  Small: next in {FormatDuration(lightning.NextSmallStrike - curTime)}, count {lightning.SmallStrikeCount}, last {FormatOptionalDuration(lightning.LastSmallStrike)}, delta {FormatOptionalDuration(lightning.LastSmallDelta)}.");
+            lines.Add($"  Heavy: next in {FormatDuration(lightning.NextHeavyStrike - curTime)}, count {lightning.HeavyStrikeCount}, last {FormatOptionalDuration(lightning.LastHeavyStrike)}, delta {FormatOptionalDuration(lightning.LastHeavyDelta)}.");
+        }
 
-    private static string FormatActiveDuration(bool active, TimeSpan value)
-    {
-        return active ? FormatDuration(value) : "inactive";
+        if (hasEmp && emp != null)
+        {
+            lines.Add($"EMP ({emp.Marker}):");
+            lines.Add($"  Pulse: next in {FormatDuration(emp.NextPulse - curTime)}, count {emp.PulseCount}, last {FormatOptionalDuration(emp.LastPulse)}, delta {FormatOptionalDuration(emp.LastPulseDelta)}.");
+        }
+
+        shell.WriteLine(string.Join('\n', lines));
     }
 
     private static string FormatOptionalDuration(TimeSpan value)
     {
         return value == TimeSpan.Zero ? "n/a" : FormatDuration(value);
-    }
-
-    private static string FormatDelayRange(int first, int second)
-    {
-        var min = Math.Max(1, Math.Min(first, second));
-        var max = Math.Max(min, Math.Max(first, second));
-        return $"{min}-{max}s";
     }
 
     private static string FormatDuration(TimeSpan value)
