@@ -18,6 +18,7 @@ public sealed class HyposprayStatusControl : Control
     private FixedPoint2 PrevVolume;
     private FixedPoint2 PrevMaxVolume;
     private bool PrevOnlyAffectsMobs;
+    private bool PrevInjectOnly; // Exodus borg-paramedic-hypo
 
     public HyposprayStatusControl(Entity<HyposprayComponent> parent, SharedSolutionContainerSystem solutionContainers)
     {
@@ -37,18 +38,24 @@ public sealed class HyposprayStatusControl : Control
         // only updates the UI if any of the details are different than they previously were
         if (PrevVolume == solution.Volume
             && PrevMaxVolume == solution.MaxVolume
-            && PrevOnlyAffectsMobs == _parent.Comp.OnlyAffectsMobs)
+            && PrevOnlyAffectsMobs == _parent.Comp.OnlyAffectsMobs
+            && PrevInjectOnly == _parent.Comp.InjectOnly) // Exodus borg-paramedic-hypo
             return;
 
         PrevVolume = solution.Volume;
         PrevMaxVolume = solution.MaxVolume;
         PrevOnlyAffectsMobs = _parent.Comp.OnlyAffectsMobs;
+        PrevInjectOnly = _parent.Comp.InjectOnly; // Exodus borg-paramedic-hypo
 
-        var modeStringLocalized = Loc.GetString(_parent.Comp.OnlyAffectsMobs switch
+        // Exodus-begin borg-paramedic-hypo
+        var modeStringLocalized = Loc.GetString((_parent.Comp.InjectOnly, _parent.Comp.OnlyAffectsMobs) switch
         {
-            false => "hypospray-all-mode-text",
-            true => "hypospray-mobs-only-mode-text",
+            (true, true) => "hypospray-mobs-only-inject-only-mode-text",
+            (true, false) => "hypospray-all-mode-text",
+            (false, true) => "hypospray-mobs-only-mode-text",
+            (false, false) => "hypospray-all-mode-text",
         });
+        // Exodus-end
 
         _label.SetMarkup(Loc.GetString("hypospray-volume-label",
             ("currentVolume", solution.Volume),

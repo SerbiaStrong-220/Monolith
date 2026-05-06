@@ -262,6 +262,7 @@
   components:
   - type: Stack
     lingering: true
+    count: 10 # Exodus borg-medical-recharge
 
 - type: entity
   parent: BaseHealingItem
