@@ -1,0 +1,18 @@
+- type: entity
+  parent: [BaseCiviMedVend, BaseStructureDisableAnchoring, BaseStructureIndestructible, VendingMachine]
+  id: VendingMachineNanoMedPlusHospital
+  name: NanoMed Plus
+  description: NanoMed Plus in a special product configuration. Don't hesitate to use it!
+  components:
+  - type: VendingMachine
+    pack: HospitalMedVendInventory
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/VendingMachines/medical.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]

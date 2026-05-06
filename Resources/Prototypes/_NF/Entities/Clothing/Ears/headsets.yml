@@ -8,7 +8,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
 
 - type: entity
   parent: ClothingHeadset
@@ -22,7 +22,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyNfsd
 
 - type: entity

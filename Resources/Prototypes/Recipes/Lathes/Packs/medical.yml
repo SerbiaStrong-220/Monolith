@@ -84,6 +84,7 @@
   - CondenserMachineCircuitBoard
   # - HotplateMachineCircuitboard # Frontier: dynamic
   - OperatingTableCircuitboard # Shitmed Change
+  - OrganHarvesterMachineCircuitboard # :)
 
 # Shitmed
 - type: latheRecipePack

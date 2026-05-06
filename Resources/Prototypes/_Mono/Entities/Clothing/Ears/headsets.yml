@@ -7,8 +7,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - ExEncryptionKeyCommon # Exodus: new common channel
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyNfsd
       - EncryptionKeyCommand
   - type: Sprite
@@ -42,8 +41,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - ExEncryptionKeyCommon # Exodus: new common channel
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyNfsd
 
 - type: entity
@@ -55,8 +53,7 @@
     containers:
       key_slots:
       - EncryptionKeyCommand
-      # - EncryptionKeyCommon # Exodus: replace common channel
-      - ExEncryptionKeyCommon # Exodus: new common channel
+      - EncryptionKeyCommon
       - EncryptionKeyNfsd
       - EncryptionKeyTraffic
       - EncryptionKeyMedical
@@ -96,7 +93,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyUssp
 
 - type: entity
@@ -112,7 +109,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTraffic # Exodus: replace common channel
+      - EncryptionKeyCommon
       - EncryptionKeyUssp
 
 #PDV
@@ -129,7 +126,7 @@
         key_slots:
           - EncryptionKeyFreelance
           - EncryptionKeyVanguardCommand
-          - EncryptionKeyTraffic # Exodus: replace common channel
+          - EncryptionKeyCommon
     - type: Sprite
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing

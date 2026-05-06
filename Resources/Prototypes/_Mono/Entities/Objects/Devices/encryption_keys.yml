@@ -7,7 +7,6 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Ussp
-      canSpeak: false # cause USSP left this sector
     defaultChannel: Ussp
   - type: Item
     sprite: Objects/Devices/encryption_keys.rsi
@@ -28,7 +27,6 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Ussp
-      canSpeak: false # cause USSP left this sector
     defaultChannel: Ussp
   - type: Item
     sprite: Objects/Devices/encryption_keys.rsi
@@ -70,7 +68,6 @@
       canSpeak: false
     - channel: Security
     - channel: Service
-      canSpeak: false
     - channel: Supply
       canSpeak: false
     - channel: Traffic

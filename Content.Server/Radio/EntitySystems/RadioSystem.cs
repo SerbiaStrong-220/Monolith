@@ -21,6 +21,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -226,8 +227,11 @@ public sealed class RadioSystem : EntitySystem
             if (!HasComp<GhostComponent>(receiver) && GetFrequency(receiver, channel) != frequency) // Nuclear-14
                 continue; // Nuclear-14
 
-            // if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
-            //     continue;
+            if (!channel.LongRange
+                && !HasComp<FTLMapComponent>(transform.MapUid)
+                && transform.MapID != sourceMapId
+                && !radio.GlobalReceive) // Exodus
+                continue;
 
             // Check if within range for range-limited channels
             if (channel.MaxRange.HasValue && channel.MaxRange.Value > 0)

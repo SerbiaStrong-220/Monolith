@@ -20,7 +20,7 @@
       nameSeparator: ""
       nameSegments:
       - DroneTitle
-      - " 0x"
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -146,8 +146,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "NEEDLE"
-      - " 0x"
+      - "ИГЛА" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -166,8 +166,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "WEDGE"
-      - " 0x"
+      - "КЛИН" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -202,8 +202,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "PULSAR"
-      - " 0x"
+      - "ПУЛЬСАР" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -222,8 +222,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "LANCE"
-      - " 0x"
+      - "КОПЬЁ" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -244,8 +244,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "GUST"
-      - " 0x"
+      - "ГАСТ" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -264,8 +264,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "WASP"
-      - " 0x"
+      - "ОСА" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -284,8 +284,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "CROWN"
-      - " 0x"
+      - "КОРОНА" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -304,8 +304,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "PIERCER"
-      - " 0x"
+      - "ПРОБОЙНИК" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -326,8 +326,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "MEDUSA"
-      - " 0x"
+      - "МЕДУЗА" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -346,8 +346,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "ASSEMBLY"
-      - " 0x"
+      - "АССЕМБЛЕР" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -366,8 +366,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "BRACKET"
-      - " 0x"
+      - "КРОНШТЕЙН" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex
@@ -388,8 +388,8 @@
     - type: RandomMetadata
       nameSeparator: ""
       nameSegments:
-      - "MAULER"
-      - " 0x"
+      - "МАУЛЕР" # Ru-Localization
+      - DroneAltHex # Exodus-Tweak
       - DroneHex
       - DroneHex
       - DroneHex

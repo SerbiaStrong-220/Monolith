@@ -6,6 +6,7 @@
   name: Аургласс # Ru-Localization
   description: Аургласс - громоздкий тихоходный шаттл с двумя 90-мм орудиями в носовой части. Оснащён медицинским отсеком и камбузом. Имеет модуль БСС. # Ru-Localization
   price: 120000 #96k appraisegrid
+  purchasable: false # voucher only
   category: Medium
   group: BlackMarket
   access: Pirate

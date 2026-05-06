@@ -87,7 +87,7 @@
 - type: emote
   id: Growl
   category: Vocal
-  name: Growl
+  name: chat-emote-name-growl # Exodus
   icon: Interface/Actions/scream.png
   available: false
   whitelist:
@@ -96,7 +96,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [growls.]
+  chatMessages: ["chat-emote-msg-growl"] # Exodus
   chatTriggers:
     - growl
     - growls

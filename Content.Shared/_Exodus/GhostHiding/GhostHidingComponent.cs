@@ -18,10 +18,10 @@ public sealed partial class GhostHidingComponent : Component
     public VisibilityFlags BaseVisibilityLayers = VisibilityFlags.Ghost;
 
     [DataField, AutoNetworkedField]
-    public VisibilityFlags HidingVisibilityLayers = VisibilityFlags.Aghost;
+    public VisibilityFlags HidingVisibilityLayers = VisibilityFlags.Admin;
 
     [DataField, AutoNetworkedField]
-    public VisibilityFlags HidingVisibilityMask = VisibilityFlags.Normal | VisibilityFlags.Ghost | VisibilityFlags.Aghost;
+    public VisibilityFlags HidingVisibilityMask = VisibilityFlags.Normal | VisibilityFlags.Ghost | VisibilityFlags.Admin;
 
     [DataField, AutoNetworkedField]
     public bool Hiding = false;
