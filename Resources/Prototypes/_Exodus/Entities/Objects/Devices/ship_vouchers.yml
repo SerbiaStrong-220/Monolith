@@ -50,7 +50,7 @@
   parent: BaseShipLPC
   id: ShipVoucherAlcore
   name: TSF Alcore LPC
-  description: A small card containing the data required to requisition an Alcor-class frigate from the flagships reserves.
+  description: A small card containing the data required to requisition an Alcor-class cruiser from the flagships reserves.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/lpcnew.rsi
