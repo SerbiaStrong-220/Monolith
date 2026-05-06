@@ -181,12 +181,10 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (!TryComp<NebulaPresenceComponent>(uid, out var component))
             return;
 
-        var oldMarker = component.Marker;
         Logger.DebugS("nebula", $"{ToPrettyString(uid)} left nebula {component.NebulaIndex + 1}.");
         RemCompDeferred<NebulaPresenceComponent>(uid);
-
-        var ev = new NebulaPresenceChangedEvent(uid, oldMarker, default);
-        RaiseLocalEvent(uid, ref ev);
+        // The hazard coordinator listens to ComponentRemove on NebulaPresenceComponent, so it
+        // tears down per-effect components without needing a separate event here.
     }
 
     private void ClearStalePresence()

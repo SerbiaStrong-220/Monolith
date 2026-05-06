@@ -89,6 +89,14 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         var query = EntityQueryEnumerator<NebulaLightningGridHazardComponent, MapGridComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var hazard, out var grid, out var xform))
         {
+            // Sanity check: if presence was removed but the hazard component leaked, drop it
+            // here instead of striking a grid that is no longer inside a nebula.
+            if (!TryComp<NebulaPresenceComponent>(uid, out var presence) || presence.Marker != hazard.Marker)
+            {
+                RemCompDeferred<NebulaLightningGridHazardComponent>(uid);
+                continue;
+            }
+
             if (!TryGetMarkerConfig(hazard.Marker, out var config))
                 continue;
 
@@ -213,6 +221,9 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         var candidates = 0;
 
         var mapId = grid.Comp2.MapID;
+        if (!TryGetNebulaMapComponent(mapId, out var mapComponent))
+            return false;
+
         var tiles = _map.GetAllTilesEnumerator(grid.Owner, grid.Comp1, true);
         while (tiles.MoveNext(out var tile))
         {
@@ -226,8 +237,11 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
             if (coords.MapId != mapId)
                 continue;
 
-            // The marker filter is implicit: tiles only fire when the grid's hazard component
-            // is active, which the coordinator only does for matching nebulas.
+            // The grid may overlap a nebula only partially; only fire on tiles that are
+            // actually inside a nebula whose marker matches this hazard.
+            if (!IsPositionInsideMarkerNebula(coords.Position, mapComponent, marker))
+                continue;
+
             candidates++;
             if (_random.Next(candidates) != 0)
                 continue;
@@ -238,6 +252,35 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         }
 
         return candidates > 0;
+    }
+
+    private bool TryGetNebulaMapComponent(MapId mapId, out NebulaMapComponent component)
+    {
+        component = default!;
+        if (!_mapManager.MapExists(mapId))
+            return false;
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        return TryComp(mapUid, out component!);
+    }
+
+    private static bool IsPositionInsideMarkerNebula(Vector2 position, NebulaMapComponent mapComponent, EntProtoId marker)
+    {
+        for (var i = 0; i < mapComponent.Nebulas.Count; i++)
+        {
+            if (i >= mapComponent.NebulaPrototypes.Count || mapComponent.NebulaPrototypes[i] != marker)
+                continue;
+
+            var nebula = mapComponent.Nebulas[i];
+            var delta = position - nebula.Center;
+            if (delta.LengthSquared() > nebula.BoundingRadius * nebula.BoundingRadius)
+                continue;
+
+            if (nebula.Contains(position))
+                return true;
+        }
+
+        return false;
     }
 
     private bool IsEdgeTile(EntityUid gridUid, MapGridComponent grid, Vector2i tile)

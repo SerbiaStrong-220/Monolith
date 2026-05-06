@@ -27,7 +27,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NebulaPresenceChangedEvent>(OnPresenceChanged);
+        SubscribeLocalEvent<NebulaPresenceComponent, NebulaPresenceChangedEvent>(OnPresenceChanged);
         SubscribeLocalEvent<NebulaPresenceComponent, ComponentRemove>(OnPresenceRemoved);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
@@ -72,9 +72,9 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         }
     }
 
-    private void OnPresenceChanged(ref NebulaPresenceChangedEvent ev)
+    private void OnPresenceChanged(EntityUid uid, NebulaPresenceComponent comp, ref NebulaPresenceChangedEvent ev)
     {
-        ApplyEffects(ev.Entity, ev.NewMarker);
+        ApplyEffects(uid, ev.NewMarker);
     }
 
     private void OnPresenceRemoved(EntityUid uid, NebulaPresenceComponent component, ComponentRemove args)

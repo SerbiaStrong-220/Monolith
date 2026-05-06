@@ -76,6 +76,12 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         var query = EntityQueryEnumerator<NebulaEmpGridHazardComponent, MapGridComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var hazard, out var grid, out var xform))
         {
+            if (!TryComp<NebulaPresenceComponent>(uid, out var presence) || presence.Marker != hazard.Marker)
+            {
+                RemCompDeferred<NebulaEmpGridHazardComponent>(uid);
+                continue;
+            }
+
             if (!TryGetMarkerConfig(hazard.Marker, out var config))
                 continue;
 
@@ -86,7 +92,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
 
             ScheduleNextPulse(hazard, config);
 
-            if (TryPulseGrid((uid, grid, xform), config))
+            if (TryPulseGrid((uid, grid, xform), hazard.Marker, config))
                 RecordPulse(hazard);
         }
     }
@@ -161,9 +167,10 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
 
     private bool TryPulseGrid(
         Entity<MapGridComponent, TransformComponent> grid,
+        EntProtoId marker,
         NebulaEmpHazardComponent config)
     {
-        if (!TrySelectPulseTile(grid, out _, out var targetCoords))
+        if (!TrySelectPulseTile(grid, marker, out _, out var targetCoords))
             return false;
 
         _emp.EmpPulse(targetCoords, config.Range, config.EnergyConsumption, config.DisableDuration);
@@ -173,6 +180,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
 
     private bool TrySelectPulseTile(
         Entity<MapGridComponent, TransformComponent> grid,
+        EntProtoId marker,
         out TileRef selected,
         out MapCoordinates selectedCoords)
     {
@@ -181,6 +189,9 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         var candidates = 0;
 
         var mapId = grid.Comp2.MapID;
+        if (!TryGetNebulaMapComponent(mapId, out var mapComponent))
+            return false;
+
         var tiles = _map.GetAllTilesEnumerator(grid.Owner, grid.Comp1, true);
         while (tiles.MoveNext(out var tile))
         {
@@ -194,6 +205,9 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
             if (coords.MapId != mapId)
                 continue;
 
+            if (!IsPositionInsideMarkerNebula(coords.Position, mapComponent, marker))
+                continue;
+
             candidates++;
             if (_random.Next(candidates) != 0)
                 continue;
@@ -203,6 +217,35 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         }
 
         return candidates > 0;
+    }
+
+    private bool TryGetNebulaMapComponent(MapId mapId, out NebulaMapComponent component)
+    {
+        component = default!;
+        if (!_mapManager.MapExists(mapId))
+            return false;
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        return TryComp(mapUid, out component!);
+    }
+
+    private static bool IsPositionInsideMarkerNebula(Vector2 position, NebulaMapComponent mapComponent, EntProtoId marker)
+    {
+        for (var i = 0; i < mapComponent.Nebulas.Count; i++)
+        {
+            if (i >= mapComponent.NebulaPrototypes.Count || mapComponent.NebulaPrototypes[i] != marker)
+                continue;
+
+            var nebula = mapComponent.Nebulas[i];
+            var delta = position - nebula.Center;
+            if (delta.LengthSquared() > nebula.BoundingRadius * nebula.BoundingRadius)
+                continue;
+
+            if (nebula.Contains(position))
+                return true;
+        }
+
+        return false;
     }
 
     private void PulseSpaceTarget(
