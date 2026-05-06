@@ -97,7 +97,19 @@ public sealed class NebulaGenerationSystem : EntitySystem
         SpawnNebulaMarkers(mapId, component);
         component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
 
+        SyncFTLData(mapUid, component);
+
         Logger.InfoS("nebula", $"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
+    }
+
+    private void SyncFTLData(EntityUid mapUid, NebulaMapComponent source)
+    {
+        var ftlData = EnsureComp<NebulaFTLDataComponent>(mapUid);
+        ftlData.Nebulas.Clear();
+        ftlData.Nebulas.AddRange(source.Nebulas);
+        ftlData.Types.Clear();
+        ftlData.Types.AddRange(source.NebulaTypes);
+        Dirty(mapUid, ftlData);
     }
 
     public override void Update(float frameTime)
@@ -127,6 +139,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         {
             ClearNebulaMarkers(component);
             RemCompDeferred<NebulaMapComponent>(uid);
+            RemCompDeferred<NebulaFTLDataComponent>(uid);
         }
 
         var markerQuery = EntityQueryEnumerator<NebulaComponent>();

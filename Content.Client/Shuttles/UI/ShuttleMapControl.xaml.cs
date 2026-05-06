@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.Numerics;
+using Content.Client._Exodus.Nebula; // Exodus nebula-ftl-map
 using Content.Client._Mono.Radar; // Exodus nebula-ftl-map
 using Content.Client.Shuttles.Systems;
 using Content.Shared._Mono.Company;
@@ -106,6 +107,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         RobustXamlLoader.Load(this);
         _detection = EntManager.System<DetectionSystem>(); // Mono
         _blips = EntManager.System<RadarBlipsSystem>(); // Exodus nebula-ftl-map
+        _nebula = EntManager.System<NebulaSystem>(); // Exodus nebula-ftl-map
         _shuttles = EntManager.System<ShuttleSystem>();
         _xformSystem = EntManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
@@ -538,7 +540,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     var targetCoordinates = new EntityCoordinates(viewedMapUid, mouseMapPos); // Exodus nebula-ftl-map
                     var ftlFree = (!beaconsOnly || foundBeacon != default) &&
                                   _shuttles.FTLFree(_shuttleEntity.Value, targetCoordinates, _ftlAngle, _viewportExclusions) &&
-                                  CanFTLToNebulaPreview(_shuttleEntity.Value, grid, targetCoordinates, _ftlAngle) // Exodus nebula-ftl-map
+                                  CanFTLToNebulaPreview(_shuttleEntity.Value, targetCoordinates, _ftlAngle) // Exodus nebula-ftl-map
                                   || NoFTLRange; // Mono
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;

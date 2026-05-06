@@ -1,10 +1,12 @@
 using System.Numerics;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.Nebula;
 
 /// <summary>
 /// Pure mathematical shape for an Exodus space nebula.
 /// </summary>
+[Serializable, NetSerializable]
 public readonly record struct NebulaShape
 {
     public const int DefaultSampleCount = 512;
