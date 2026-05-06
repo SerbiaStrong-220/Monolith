@@ -1,6 +1,6 @@
 - type: vessel
   id: Alcore
-  parent: BaseVessel
+  parent: BaseVesselAntag
   name: Алькор
   description: Первая модель военного крейсера из линейки созведий, закреплённый за КПВ ТСФ, в рамках программы усиления мобильных подразделений. Пригоден для выполнения задач в условиях повышенного риска.
   limit: 1
@@ -26,7 +26,10 @@
   minPlayers: 0
   stations:
     Alcore:
-      stationProto: StandardFrontierVessel
+      stationProto: StandardFrontierSecurityVessel
+      gridComponents:
+      - type: VesselInfo
+        description: "Было ли это оправдано? Мысль на мгновение давит, затем растворяется, оставляя пустоту."
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Алькор{1}'
@@ -35,5 +38,5 @@
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-          Deputy: [ 0, 0 ]
-          TsfBorg: [ 0, 0 ]
+            Deputy: [ 0, 0 ]
+            TsfBorg: [ 0, 0 ]
