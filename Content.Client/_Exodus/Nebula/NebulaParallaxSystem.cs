@@ -1,9 +1,9 @@
 using System.Numerics;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Data;
-using Content.Client.Parallax.Managers;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.CCVar;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -34,9 +34,11 @@ public sealed class NebulaParallaxSystem : EntitySystem
 
     private const float TransitionSeconds = 2f;
     private const float BackgroundLightningBlendThreshold = 0.35f;
-    public const int BackgroundLightningLayerIndex = 7;
+    private const string ParallaxOverrideKey = "exodus-nebula";
+    private const int ParallaxOverridePriority = 100;
 
-    [Dependency] private readonly IParallaxManager _parallax = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly ParallaxSystem _parallax = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -51,6 +53,19 @@ public sealed class NebulaParallaxSystem : EntitySystem
     private TimeSpan _backgroundLightningEnd;
     private bool _hasBackgroundLightning;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        _overlay.AddOverlay(new NebulaLightningOverlay());
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _parallax.ClearParallaxOverride(ParallaxOverrideKey);
+        _overlay.RemoveOverlay<NebulaLightningOverlay>();
+    }
+
     public override void Update(float frameTime)
     {
         var targetActive = TryGetLocalPresence(out var presence) &&
@@ -58,11 +73,13 @@ public sealed class NebulaParallaxSystem : EntitySystem
 
         if (targetActive)
         {
-            if (_parallax.IsLoaded(targetParallax))
+            if (_parallax.IsParallaxLoaded(targetParallax))
+            {
                 _activeParallax = targetParallax;
+            }
             else
             {
-                _ = _parallax.LoadParallaxByName(targetParallax);
+                _parallax.LoadParallax(targetParallax);
                 targetActive = false;
             }
         }
@@ -78,23 +95,19 @@ public sealed class NebulaParallaxSystem : EntitySystem
         if (_blend <= 0f && !targetActive)
             _activeParallax = null;
 
+        UpdateParallaxOverride();
         UpdateBackgroundLightning();
     }
 
-    public bool TryGetParallaxLayers(out ParallaxLayerPrepared[] layers, out float blend)
+    private void UpdateParallaxOverride()
     {
-        layers = Array.Empty<ParallaxLayerPrepared>();
-        blend = _blend;
-
-        if (_activeParallax is not { } parallax ||
-            _blend <= 0f ||
-            !_parallax.IsLoaded(parallax))
+        if (_activeParallax is not { } parallax || _blend <= 0f)
         {
-            return false;
+            _parallax.ClearParallaxOverride(ParallaxOverrideKey);
+            return;
         }
 
-        layers = _parallax.GetParallaxLayers(parallax);
-        return layers.Length != 0;
+        _parallax.SetParallaxOverride(ParallaxOverrideKey, parallax, ParallaxOverridePriority, _blend, replace: true);
     }
 
     public bool TryGetBackgroundLightning(out NebulaBackgroundLightning lightning, out float alpha)
@@ -102,7 +115,8 @@ public sealed class NebulaParallaxSystem : EntitySystem
         lightning = _backgroundLightning;
         alpha = 0f;
 
-        if (!_hasBackgroundLightning ||
+        if (!_configuration.GetCVar(CCVars.ParallaxEnabled) ||
+            !_hasBackgroundLightning ||
             _timing.CurTime >= _backgroundLightningEnd)
         {
             return false;

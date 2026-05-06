@@ -14,6 +14,10 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IParallaxManager _parallax = default!;
 
+    // Exodus-begin parallax-overrides
+    private readonly Dictionary<string, ParallaxOverrideRequest> _overrides = new();
+    // Exodus-end
+
     [ValidatePrototypeId<ParallaxPrototype>]
     private const string Fallback = "Default";
 
@@ -40,6 +44,14 @@ public sealed class ParallaxSystem : SharedParallaxSystem
             _parallax.UnloadParallax(comp.Parallax);
             _parallax.LoadParallaxByName(comp.Parallax);
         }
+
+        // Exodus-begin parallax-overrides
+        foreach (var request in _overrides.Values)
+        {
+            _parallax.UnloadParallax(request.Parallax);
+            _parallax.LoadParallaxByName(request.Parallax);
+        }
+        // Exodus-end
     }
 
     public override void Shutdown()
@@ -70,6 +82,78 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     {
         return TryComp<ParallaxComponent>(mapUid, out var parallax) ? parallax.Parallax : Fallback;
     }
+
+    // Exodus-begin parallax-overrides
+    public bool IsParallaxLoaded(ProtoId<ParallaxPrototype> parallax)
+    {
+        return _parallax.IsLoaded(parallax);
+    }
+
+    public void LoadParallax(ProtoId<ParallaxPrototype> parallax)
+    {
+        _ = _parallax.LoadParallaxByName(parallax);
+    }
+
+    public void SetParallaxOverride(
+        string key,
+        ProtoId<ParallaxPrototype> parallax,
+        int priority,
+        float alpha,
+        bool replace = false)
+    {
+        alpha = Math.Clamp(alpha, 0f, 1f);
+
+        if (alpha <= 0f)
+        {
+            ClearParallaxOverride(key);
+            return;
+        }
+
+        _overrides[key] = new ParallaxOverrideRequest(parallax, priority, alpha, replace);
+
+        if (!_parallax.IsLoaded(parallax))
+            _parallax.LoadParallaxByName(parallax);
+    }
+
+    public void ClearParallaxOverride(string key)
+    {
+        _overrides.Remove(key);
+    }
+
+    /// <summary>
+    /// Returns the override with the highest <see cref="ParallaxOverrideRequest.Priority"/>.
+    /// Behavior on equal priority is undefined — pick distinct priorities.
+    /// </summary>
+    public bool TryGetHighestParallaxOverride(out ParallaxOverrideState state)
+    {
+        state = default;
+        var found = false;
+
+        foreach (var request in _overrides.Values)
+        {
+            if (request.Alpha <= 0f)
+                continue;
+
+            if (!_parallax.IsLoaded(request.Parallax))
+            {
+                _parallax.LoadParallaxByName(request.Parallax);
+                continue;
+            }
+
+            if (found && request.Priority <= state.Priority)
+                continue;
+
+            var layers = _parallax.GetParallaxLayers(request.Parallax);
+            if (layers.Length == 0)
+                continue;
+
+            state = new ParallaxOverrideState(request.Parallax, layers, request.Priority, request.Alpha, request.Replace);
+            found = true;
+        }
+
+        return found;
+    }
+    // Exodus-end
 
     /// <summary>
     /// Draws a texture as parallax in the specified world handle.
