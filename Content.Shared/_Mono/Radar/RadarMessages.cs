@@ -18,9 +18,8 @@ public enum RadarBlipShape
     Arrow,
     Ring,
     // Exodus-begin nebula-radar-visualization
-    NebulaPolygon, // Exodus nebula-radar-visualization
+    NebulaPolygon // Exodus nebula-radar-visualization
     // Exodus-end
-    TerritoryCircle // Exodus territory-marker
 }
 
 [Serializable, NetSerializable]
@@ -122,13 +121,7 @@ public partial record struct BlipConfig
     [DataField]
     public List<Vector2>? Points = null;
     // Exodus-end
-    // Exodus-begin territory-marker
-    /// <summary>
-    /// Optional localization key for a text label repeated across the territory zone.
-    /// </summary>
-    [DataField]
-    public string? Label = null;
-    // Exodus-end
+
     [DataField]
     public bool RespectZoom = false;
 

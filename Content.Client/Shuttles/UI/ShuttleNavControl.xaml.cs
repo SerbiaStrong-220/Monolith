@@ -75,10 +75,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private Vector2[] _nebulaFillBuffer = [];
     private Vector2[] _nebulaLineBuffer = [];
     // Exodus-end
-    // Exodus-begin territory-marker
-    private Vector2[] _territoryFillBuffer = [];
-    private Vector2[] _territoryLineBuffer = [];
-    // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
         new Vector2(0f, -2f),
@@ -1018,10 +1014,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Draw blips using the same grid-relative transformation approach as docks
         foreach (var blip in rawBlips)
         {
-            // Exodus-begin territory-marker
-            if (blip.Config.Shape == RadarBlipShape.TerritoryCircle)
-                continue;
-            // Exodus-end
             var position = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToView);
             var color = blip.Config.Color.WithAlpha(0.8f);
             var box = new Box2Rotated(blip.Config.Bounds, 0);
@@ -1093,15 +1085,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         DrawGrapLinks(handle, worldToView, monoViewBounds);
         //Exodus - ShuttleHooks - End
 
-        // Exodus-begin territory-marker
-        foreach (var blip in rawBlips)
-        {
-            if (blip.Config.Shape != RadarBlipShape.TerritoryCircle)
-                continue;
-            var position = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToView);
-            DrawTerritoryCircleBlip(handle, position, blip.Config);
-        }
-        // Exodus-end
         DrawSafeZones(handle, worldToView, ourGridId); // Exodus - SafeZone
     }
 
@@ -1466,113 +1449,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
     }
     // Exodus - ShuttleHooks - End
-
-    // Exodus-begin territory-marker
-    private void DrawTerritoryCircleBlip(DrawingHandleScreen handle, Vector2 position, BlipConfig config)
-    {
-        if (config.Points == null || config.Points.Count < 3)
-            return;
-
-        var count = config.Points.Count;
-        var fillCount = count + 2;
-        var lineCount = count + 1;
-
-        if (_territoryFillBuffer.Length < fillCount)
-            Array.Resize(ref _territoryFillBuffer, fillCount);
-        if (_territoryLineBuffer.Length < lineCount)
-            Array.Resize(ref _territoryLineBuffer, lineCount);
-
-        _territoryFillBuffer[0] = position;
-        for (var i = 0; i < count; i++)
-        {
-            var point = config.Points[i];
-            if (config.RespectZoom)
-                point *= MinimapScale;
-            _territoryFillBuffer[i + 1] = position + (point with { Y = -point.Y });
-        }
-        _territoryFillBuffer[fillCount - 1] = _territoryFillBuffer[1];
-
-        for (var i = 0; i < count; i++)
-            _territoryLineBuffer[i] = _territoryFillBuffer[i + 1];
-        _territoryLineBuffer[count] = _territoryFillBuffer[1];
-
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_territoryFillBuffer, 0, fillCount), config.Color);
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_territoryLineBuffer, 0, lineCount), config.Color.WithAlpha(0.085f));
-
-        DrawTerritoryText(handle, position, config);
-    }
-
-    private void DrawTerritoryText(DrawingHandleScreen handle, Vector2 territoryCenter, BlipConfig config)
-    {
-        if (config.Label == null)
-            return;
-
-        var text = Loc.GetString(config.Label);
-        if (string.IsNullOrEmpty(text))
-            return;
-
-        var territoryRadius = config.Bounds.Width * 0.5f * MinimapScale;
-        if (territoryRadius < 1f)
-            return;
-
-        var radarCenter = MidPointVector;
-        var radarRadius = ScaledMinimapRadius;
-
-        // Fixed 45° in screen space — stays still when ship rotates, like nebulae
-        const float angle45 = MathF.PI * 0.25f;
-        var textAngle = new Angle(angle45);
-        var screenDir = new Vector2(MathF.Cos(angle45), MathF.Sin(angle45));
-        var perpDir = new Vector2(-screenDir.Y, screenDir.X);
-
-        var textScale = UIScale * 1.2f;
-        var baseAlpha = 0.35f;
-        var textColor = new Color(0.65f, 0.65f, 0.65f);
-        var textDims = handle.GetDimensions(Font, text, textScale);
-        var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
-
-        // Fade zone: text starts fading at fadeStart distance from territory center,
-        // reaching zero alpha at fadeEnd (slightly inside the circle edge).
-        var fadeEnd = territoryRadius - halfDiag * 1f;
-        var fadeStart = fadeEnd - halfDiag * 6f;
-        if (fadeStart <= 0f)
-            return;
-
-        var spacingX = textDims.X + 40f;
-        var spacingY = textDims.Y * 5f;
-
-        // SetTransform uses screen (window) coordinates, not control-local coordinates.
-        // GlobalPixelPosition is the control's offset from the top-left of the game window.
-        var screenOffset = (Vector2) GlobalPixelPosition;
-
-        // Cover the full square control including corners — RectClipContent clips the rest.
-        var coverRadius = MidPointVector.Length();
-        var prevTransform = handle.GetTransform();
-
-        var rowIndex = 0;
-        for (var t = -coverRadius; t <= coverRadius; t += spacingY, rowIndex++)
-        {
-            var stagger = rowIndex % 2 == 0 ? 0f : spacingX * 0.5f;
-            for (var s = -coverRadius + stagger; s <= coverRadius + stagger; s += spacingX)
-            {
-                var pos = radarCenter + t * perpDir + s * screenDir;
-
-                var dist = (pos - territoryCenter).Length();
-                if (dist >= fadeEnd)
-                    continue;
-
-                // Lerp alpha from full to zero across the fade zone.
-                var alpha = dist <= fadeStart
-                    ? baseAlpha
-                    : baseAlpha * (1f - (dist - fadeStart) / (fadeEnd - fadeStart));
-
-                handle.SetTransform(screenOffset + pos, textAngle);
-                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor.WithAlpha(alpha));
-            }
-        }
-
-        handle.SetTransform(prevTransform);
-    }
-    // Exodus-end
 
     // Exodus - SafeZone - Start
     private void DrawSafeZones(DrawingHandleScreen handle, Matrix3x2 worldToView, EntityUid? ourGridUid)
