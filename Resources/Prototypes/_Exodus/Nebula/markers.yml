@@ -72,5 +72,5 @@
   - type: NebulaRadarVisuals
     radarColor: "#ff1a00ff"
   - type: NebulaLightningHazard
-    smallStrikeInterval: 00:00:03
-    heavyStrikeInterval: 00:00:15
+    smallStrikeInterval: 3
+    heavyStrikeInterval: 15

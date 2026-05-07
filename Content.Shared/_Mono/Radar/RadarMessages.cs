@@ -120,6 +120,19 @@ public partial record struct BlipConfig
     /// </summary>
     [DataField]
     public List<Vector2>? Points = null;
+
+    /// <summary>
+    /// When true, <see cref="Points"/> defines the inner boundary; fill is drawn as a
+    /// ring between that boundary and <see cref="OuterFillRadius"/> (world-space tiles).
+    /// </summary>
+    [DataField]
+    public bool InvertFill = false;
+
+    /// <summary>
+    /// World-space outer radius for ring fill when <see cref="InvertFill"/> is true.
+    /// </summary>
+    [DataField]
+    public float OuterFillRadius = 0f;
     // Exodus-end
 
     [DataField]

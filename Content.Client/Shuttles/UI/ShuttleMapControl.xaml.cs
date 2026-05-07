@@ -750,23 +750,52 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         if (config.Points == null || config.Points.Count < 3)
             return;
 
-        var fillCount = config.Points.Count + 2;
-        if (_nebulaFillBuffer.Length < fillCount)
-            _nebulaFillBuffer = new Vector2[fillCount];
-
-        _nebulaFillBuffer[0] = position;
-
-        for (var i = 0; i < config.Points.Count; i++)
+        if (config.InvertFill && config.OuterFillRadius > 0f)
         {
-            var point = config.Points[i];
-            if (config.RespectZoom)
-                point *= MinimapScale;
+            var n = config.Points.Count;
+            var ringCount = 2 * (n + 1);
+            if (_nebulaFillBuffer.Length < ringCount)
+                _nebulaFillBuffer = new Vector2[ringCount];
 
-            _nebulaFillBuffer[i + 1] = position + (point with { Y = -point.Y });
+            for (var i = 0; i <= n; i++)
+            {
+                var k = i % n;
+                var theta = MathF.Tau * k / n;
+                var outerPoint = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta));
+                var innerPoint = config.Points[k];
+
+                if (config.RespectZoom)
+                {
+                    outerPoint *= MinimapScale;
+                    innerPoint *= MinimapScale;
+                }
+
+                _nebulaFillBuffer[2 * i] = position + (outerPoint with { Y = -outerPoint.Y });
+                _nebulaFillBuffer[2 * i + 1] = position + (innerPoint with { Y = -innerPoint.Y });
+            }
+
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, new Span<Vector2>(_nebulaFillBuffer, 0, ringCount), config.Color.WithAlpha(NebulaFillAlpha));
         }
+        else
+        {
+            var fillCount = config.Points.Count + 2;
+            if (_nebulaFillBuffer.Length < fillCount)
+                _nebulaFillBuffer = new Vector2[fillCount];
 
-        _nebulaFillBuffer[fillCount - 1] = _nebulaFillBuffer[1];
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), config.Color.WithAlpha(NebulaFillAlpha));
+            _nebulaFillBuffer[0] = position;
+
+            for (var i = 0; i < config.Points.Count; i++)
+            {
+                var point = config.Points[i];
+                if (config.RespectZoom)
+                    point *= MinimapScale;
+
+                _nebulaFillBuffer[i + 1] = position + (point with { Y = -point.Y });
+            }
+
+            _nebulaFillBuffer[fillCount - 1] = _nebulaFillBuffer[1];
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), config.Color.WithAlpha(NebulaFillAlpha));
+        }
 
         var lineCount = config.Points.Count + 1;
         if (_nebulaLineBuffer.Length < lineCount)

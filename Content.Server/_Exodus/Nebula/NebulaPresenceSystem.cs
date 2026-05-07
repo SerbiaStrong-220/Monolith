@@ -238,7 +238,10 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return false;
 
-        if (!TryComp<NebulaMapComponent>(mapUid, out var mapComponent) || mapComponent.Nebulas.Count == 0)
+        if (!TryComp<NebulaMapComponent>(mapUid, out var mapComponent))
+            return false;
+
+        if (mapComponent.Nebulas.Count == 0 && !mapComponent.WorldEnd.IsGenerated)
             return false;
 
         component = mapComponent;
