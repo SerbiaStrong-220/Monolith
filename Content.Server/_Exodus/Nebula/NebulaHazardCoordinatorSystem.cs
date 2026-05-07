@@ -1,4 +1,6 @@
 using Content.Shared._Exodus.Nebula;
+using Content.Shared.Ghost;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
@@ -16,6 +18,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private readonly HashSet<string> _ftlBlockerMarkers = new();
     private readonly HashSet<string> _lightningMarkers = new();
@@ -86,9 +89,13 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
     {
         var isGrid = HasComp<MapGridComponent>(uid);
 
+        // Ghosts and dead bodies should not be hit by hazards. Their NebulaPresenceComponent
+        // still exists (for parallax etc.), but no per-effect components get applied.
+        var skipPlayerHazards = !isGrid && IsGhostOrDead(uid);
+
         // Lightning hazard: grids get the timer-bearing component, free entities (EVA players)
         // get the player-target component which the lightning system updates differently.
-        var wantLightning = MarkerHasLightning(marker);
+        var wantLightning = !skipPlayerHazards && MarkerHasLightning(marker);
         if (isGrid)
         {
             UpdateGridLightning(uid, wantLightning, marker);
@@ -98,7 +105,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
             UpdateSpaceLightning(uid, wantLightning);
         }
 
-        var wantEmp = MarkerHasEmp(marker);
+        var wantEmp = !skipPlayerHazards && MarkerHasEmp(marker);
         if (isGrid)
         {
             UpdateGridEmp(uid, wantEmp, marker);
@@ -108,7 +115,12 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
             UpdateSpaceEmp(uid, wantEmp);
         }
 
-        UpdateRadioBlackout(uid, MarkerHasRadioBlackout(marker));
+        UpdateRadioBlackout(uid, !skipPlayerHazards && MarkerHasRadioBlackout(marker));
+    }
+
+    private bool IsGhostOrDead(EntityUid uid)
+    {
+        return HasComp<GhostComponent>(uid) || _mobState.IsDead(uid);
     }
 
     private void UpdateGridLightning(EntityUid uid, bool wanted, EntProtoId marker)

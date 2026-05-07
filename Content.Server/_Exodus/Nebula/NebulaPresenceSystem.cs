@@ -3,6 +3,8 @@ using Content.Server.GameTicking;
 using Content.Server.Shuttles.Components;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -20,6 +22,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _checkedGrids = new();
@@ -69,6 +72,11 @@ public sealed class NebulaPresenceSystem : EntitySystem
             }
 
             UpdateEntityPresence(player, mapId, mapComponent);
+
+            // Ghosts and dead bodies must not load grids for hazard purposes — only living
+            // crew should cause a station/shuttle to be considered "inhabited".
+            if (HasComp<GhostComponent>(player) || _mobState.IsDead(player))
+                continue;
 
             if (!TryComp(player, out TransformComponent? xform) ||
                 xform.GridUid is not { } grid ||
