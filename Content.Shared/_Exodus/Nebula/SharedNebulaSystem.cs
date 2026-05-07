@@ -30,7 +30,7 @@ public abstract class SharedNebulaSystem : EntitySystem
 
         if (!TryComp<MapGridComponent>(shuttleUid, out var grid) ||
             !TryComp<PhysicsComponent>(shuttleUid, out var physics) ||
-            !TryComp<TransformComponent>(shuttleUid, out var xform))
+            !TryComp(shuttleUid, out TransformComponent? xform))
         {
             return true;
         }

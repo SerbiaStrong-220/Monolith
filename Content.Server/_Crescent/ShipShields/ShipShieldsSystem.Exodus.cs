@@ -31,7 +31,7 @@ public sealed partial class ShipShieldsSystem
     private bool IsPointInsideShield(EntityUid grid, ShipShieldedComponent shielded, MapCoordinates point)
     {
         if (!TryComp<MapGridComponent>(grid, out var mapGrid) ||
-            !TryComp<TransformComponent>(grid, out var xform) ||
+            !TryComp(grid, out TransformComponent? xform) ||
             xform.MapID != point.MapId)
         {
             return false;

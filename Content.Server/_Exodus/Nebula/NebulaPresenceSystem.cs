@@ -29,7 +29,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
 
     private readonly HashSet<EntityUid> _checkedGrids = new();
     private readonly HashSet<EntityUid> _updatedEntities = new();
-    private readonly List<Entity<MapGridComponent>> _nearbyGridBuffer = new();
+    private List<Entity<MapGridComponent>> _nearbyGridBuffer = new();
     private TimeSpan _nextUpdate;
 
     public override void Initialize()
