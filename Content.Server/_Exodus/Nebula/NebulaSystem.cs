@@ -13,10 +13,9 @@ public sealed class NebulaSystem : SharedNebulaSystem
     {
         summaries = Array.Empty<NebulaSummary>();
 
-        if (!MapManager.MapExists(mapId))
+        if (!MapSystem.TryGetMap(mapId, out var mapUid))
             return false;
 
-        var mapUid = MapManager.GetMapEntityId(mapId);
         if (!TryComp<NebulaMapDataComponent>(mapUid, out var component) || component.Nebulas.Count == 0)
             return false;
 

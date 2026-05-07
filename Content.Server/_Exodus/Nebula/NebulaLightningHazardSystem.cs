@@ -257,11 +257,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
     private bool TryGetNebulaMapComponent(MapId mapId, out NebulaMapComponent component)
     {
         component = default!;
-        if (!_mapManager.MapExists(mapId))
-            return false;
-
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-        return TryComp(mapUid, out component!);
+        return _map.TryGetMap(mapId, out var mapUid) && TryComp(mapUid, out component!);
     }
 
     private static bool IsPositionInsideMarkerNebula(Vector2 position, NebulaMapComponent mapComponent, EntProtoId marker)

@@ -12,7 +12,7 @@ namespace Content.Shared._Exodus.Nebula;
 /// </summary>
 public abstract class SharedNebulaSystem : EntitySystem
 {
-    [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly SharedMapSystem MapSystem = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
     private const float FTLFootprintSampleStep = 8f;
@@ -43,7 +43,7 @@ public abstract class SharedNebulaSystem : EntitySystem
         }
 
         var mapCoords = TransformSystem.ToMapCoordinates(targetCoordinates);
-        if (mapCoords == MapCoordinates.Nullspace || !MapManager.MapExists(mapCoords.MapId))
+        if (mapCoords == MapCoordinates.Nullspace || !MapSystem.TryGetMap(mapCoords.MapId, out _))
             return true;
 
         var targetOrigin = mapCoords.Position - targetAngle.RotateVec(physics.LocalCenter);

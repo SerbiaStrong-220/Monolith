@@ -8,4 +8,4 @@ namespace Content.Shared._Exodus.Nebula;
 /// between two of different kinds.
 /// </summary>
 [ByRefEvent]
-public readonly record struct NebulaPresenceChangedEvent(EntityUid Entity, EntProtoId OldMarker, EntProtoId NewMarker);
+public readonly record struct NebulaPresenceChangedEvent(EntProtoId OldMarker, EntProtoId NewMarker);

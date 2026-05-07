@@ -23,6 +23,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private const float GridHazardRadius = 32f;
@@ -183,7 +184,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (changedMarker)
         {
             Logger.DebugS("nebula", $"{ToPrettyString(uid)} entered {marker} nebula {index + 1} with density {density:0.00}.");
-            var ev = new NebulaPresenceChangedEvent(uid, oldMarker, marker);
+            var ev = new NebulaPresenceChangedEvent(oldMarker, marker);
             RaiseLocalEvent(uid, ref ev);
         }
     }
@@ -223,10 +224,9 @@ public sealed class NebulaPresenceSystem : EntitySystem
         mapId = _ticker.DefaultMap;
         component = default!;
 
-        if (!_mapManager.MapExists(mapId))
+        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return false;
 
-        var mapUid = _mapManager.GetMapEntityId(mapId);
         if (!TryComp<NebulaMapComponent>(mapUid, out var mapComponent) || mapComponent.Nebulas.Count == 0)
             return false;
 
