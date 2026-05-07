@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server.GameTicking;
-using Content.Server.Shuttles.Components;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -8,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -25,8 +25,11 @@ public sealed class NebulaPresenceSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    private const float GridHazardRadius = 32f;
+
     private readonly HashSet<EntityUid> _checkedGrids = new();
     private readonly HashSet<EntityUid> _updatedEntities = new();
+    private readonly List<Entity<MapGridComponent>> _nearbyGridBuffer = new();
     private TimeSpan _nextUpdate;
 
     public override void Initialize()
@@ -51,7 +54,6 @@ public sealed class NebulaPresenceSystem : EntitySystem
         _updatedEntities.Clear();
 
         UpdatePlayerPresence(mapId, mapComponent);
-        UpdateShuttlePresence(mapId, mapComponent);
         ClearStalePresence();
     }
 
@@ -73,32 +75,34 @@ public sealed class NebulaPresenceSystem : EntitySystem
 
             UpdateEntityPresence(player, mapId, mapComponent);
 
-            // Ghosts and dead bodies must not load grids for hazard purposes — only living
-            // crew should cause a station/shuttle to be considered "inhabited".
+            // Ghosts and dead bodies must not activate grid hazards.
             if (HasComp<GhostComponent>(player) || _mobState.IsDead(player))
                 continue;
 
-            if (!TryComp(player, out TransformComponent? xform) ||
-                xform.GridUid is not { } grid ||
-                Deleted(grid) ||
-                !_checkedGrids.Add(grid))
+            if (!TryComp(player, out TransformComponent? xform) || xform.MapID != mapId)
+                continue;
+
+            var pos = _transform.GetWorldPosition(xform);
+            if (!TryGetNebulaAt(pos, mapComponent, out _, out _, out _, out _))
+                continue;
+
+            // Activate hazards on all grids within radius of this player.
+            var rangeVec = new Vector2(GridHazardRadius, GridHazardRadius);
+            _nearbyGridBuffer.Clear();
+            _mapManager.FindGridsIntersecting(
+                mapId,
+                new Box2(pos - rangeVec, pos + rangeVec),
+                ref _nearbyGridBuffer,
+                approx: true,
+                includeMap: false);
+
+            foreach (var grid in _nearbyGridBuffer)
             {
-                continue;
+                if (!_checkedGrids.Add(grid.Owner))
+                    continue;
+
+                UpdateEntityPresence(grid.Owner, mapId, mapComponent);
             }
-
-            UpdateEntityPresence(grid, mapId, mapComponent);
-        }
-    }
-
-    private void UpdateShuttlePresence(MapId mapId, NebulaMapComponent mapComponent)
-    {
-        var shuttleQuery = EntityQueryEnumerator<ShuttleComponent, TransformComponent>();
-        while (shuttleQuery.MoveNext(out var uid, out _, out var xform))
-        {
-            if (xform.MapID != mapId || !_checkedGrids.Add(uid))
-                continue;
-
-            UpdateEntityPresence(uid, mapId, mapComponent, xform);
         }
     }
 
