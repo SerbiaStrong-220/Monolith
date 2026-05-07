@@ -8,7 +8,7 @@
   price: 148000
   category: Small
   group: BlackMarket
-  access: Pirate
+  access: PDVRakshakan # Exodus-Shagird-Add
   shuttlePath: /Maps/_Exodus/Shuttles/PDV/atom.yml
   guidebookPage: Null
   class:

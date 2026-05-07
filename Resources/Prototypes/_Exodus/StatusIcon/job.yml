@@ -1,0 +1,7 @@
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPDVShagird
+  icon:
+    sprite: /Textures/_Exodus/Interface/Misc/job_icons.rsi
+    state: PDVShagird
+  jobName: job-name-pdv-shagird

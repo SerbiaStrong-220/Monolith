@@ -44,6 +44,7 @@
             PirateFirstMate: [ 1, 1 ] # Mono
             PDVDenasvar: [ 2, 2 ]
             Pirate: [ 8, 8 ] # Mono
+            PDVShagird: [ 2, 2 ] # Exodus
           tags:
           - PDVCommand
         - type: StationDeadDropReporting

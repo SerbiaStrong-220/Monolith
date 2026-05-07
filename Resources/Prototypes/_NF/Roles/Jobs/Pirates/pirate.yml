@@ -7,6 +7,9 @@
     # Exodus-Rework-Time-Roles-Start
     # - !type:OverallPlaytimeRequirement
     #   time: 36000 # 10 hrs - monoЂ
+    - !type:DepartmentTimeRequirement
+      department: Antag
+      time: 18000 # 5 hours
     # Exodus-Rework-Time-Roles-End
   startingGear: PirateNFGear
   alwaysUseSpawner: true
@@ -21,11 +24,13 @@
   access:
   - Pirate
   - Mercenary
+  - PDVRakshakan # Exodus-Shagird-Add
   accessGroups:
   - GeneralAccess
   special:
   - !type:AddComponentSpecial
     components:
+    - type: MailDisabled # Exodus-Remove-PDV-Mail
     - type: NpcFactionMember
       factions:
       - PirateNF

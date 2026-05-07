@@ -1,0 +1,12 @@
+- type: entity
+  parent: PirateIDCard
+  id: PDVShagirdIDCard
+  name: PDV shagird id card
+  components:
+  - type: PresetIdCard
+    job: PDVShagird
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/id_cards.rsi
+    layers:
+    - state: base
+    - state: id_shagird

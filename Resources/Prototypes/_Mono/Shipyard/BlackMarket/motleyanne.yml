@@ -10,7 +10,7 @@
   purchasable: false
   category: Medium
   group: BlackMarket
-  access: Pirate
+  access: PDVRakshakan # Exodus-Shagird-Add
   shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/motleyanne.yml
   guidebookPage: ShipyardMotleyAnne
   class:

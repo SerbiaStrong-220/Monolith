@@ -1,0 +1,23 @@
+- type: roleLoadout
+  id: JobPDVShagird
+  groups:
+  - PDVHead
+  - PDVNeck
+  - PDVJumpsuit
+  - PDVGloves
+  - PDVOuterClothing
+  - PDVHud
+  - PDVBackpack
+  - PDVShoes
+  - PirateFace
+  - ContractorBoxSurvival
+  - ShagirdPDA  
+  - ContractorWallet
+  - NFSpeciesSpecific
+  - PirateTrinkets
+  - PDVBelt
+  - ContractorEncryptionKey
+  - RogueFirearm
+  - RogueMag
+  - FactionArmorPlates
+  canCustomizeName: true

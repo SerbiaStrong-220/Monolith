@@ -1,0 +1,19 @@
+- type: entity
+  parent: BasePDVPDA
+  id: PDVShagirdPDA
+  name: PDV shagird PDA
+  components:
+  - type: Pda
+    id: PDVShagirdIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-rakhshan
+  - type: Geiger # Mono
+    showExamine: true
+    showControl: true
+    isEnabled: true
+    attachedToSuit: true # Mono
+  - type: PdaBorderColor
+    borderColor: "#9c8245"

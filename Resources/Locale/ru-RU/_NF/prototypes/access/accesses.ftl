@@ -1,8 +1,9 @@
-id-card-access-level-frontier = TSF
-id-card-access-level-pilot = Pilot
-id-card-access-level-mail = Mail
-id-card-access-level-mercenary = Mercenary
-id-card-access-level-stc = Station Traffic Controller
-id-card-access-level-sergeant = TSFMC Fireteam Leader
-id-card-access-level-bailiff = TSFMC Command
-id-card-access-level-pirate = PDV
+id-card-access-level-frontier = ТСФ
+id-card-access-level-pilot = Пилот
+id-card-access-level-mail = Почта
+id-card-access-level-mercenary = Наёмник
+id-card-access-level-stc = Диспетчер
+id-card-access-level-sergeant = Инструктор КВП ТСФ
+id-card-access-level-bailiff = Капитан КВП ТСФ
+id-card-access-level-pirate = ДФ
+id-card-access-level-rakshakan = Рахкшакан

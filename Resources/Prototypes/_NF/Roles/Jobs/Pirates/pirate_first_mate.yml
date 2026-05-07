@@ -29,11 +29,13 @@
   - Pirate
   - PDVCommand
   - Mercenary
+  - PDVRakshakan # Exodus-Shagird-Add
   accessGroups:
   - GeneralAccess
   special:
   - !type:AddComponentSpecial
     components:
+    - type: MailDisabled # Exodus-Remove-PDV-Mail
     - type: NpcFactionMember
       factions:
       - PirateNF

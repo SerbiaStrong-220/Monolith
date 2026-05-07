@@ -53,6 +53,7 @@
             PirateFirstMate: [ -1, -1]
             PDVDenasvar: [ -1, -1] #Mono
             Pirate: [ -1, -1]
+            PDVShagird: [ -1, -1] # Exodus
             PDVInfiltrator: [ -1, -1] # Mono]
             TsfBorg: [ -1, -1 ]
             PdvBorg: [ -1, -1 ]

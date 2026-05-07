@@ -98,6 +98,7 @@ Deputy-loadout = Снаряжение сержанта КВП ТСФ
 PirateCaptain-loadout = Снаряжение великого Визиря
 PirateFirstMate-loadout = Снаряжение асварана
 PDVDenasvar-loadout = Снаряжение денасфара
+PDVShagird-loadout = Снаряжение шагирда
 PDVInfiltrator-loadout = Снаряжение cпасаки
 Pirate-loadout = Снаряжение рахкшакана
 DirectorOfCare-loadout = Снаряжение заведующего СНМП
