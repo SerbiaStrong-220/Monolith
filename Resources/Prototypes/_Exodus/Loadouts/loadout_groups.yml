@@ -7,7 +7,7 @@
   fallbacks:
   - PDVShagirdPDA
 
-  - type: loadout
+- type: loadout
   id: PDVShagirdPDA
   price: 0
   equipment:

@@ -41,7 +41,6 @@
   id: PDVShagirdGear
   equipment:
     ears: ClothingHeadsetAltFreelancer
-    id: PDVShagirdPDA
   storage:
     back:
     - RadioHandheldNF
