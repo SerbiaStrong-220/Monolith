@@ -21,7 +21,6 @@ namespace Content.Shared._Exodus.Nebula;
 public readonly struct WorldEndNebulaShape
 {
     public const int SampleCount = 512;
-    private const float FadeZone = 3000f;
 
     private static readonly int[] WaveFrequencies = { 3, 5, 7, 11 };
 
@@ -31,6 +30,8 @@ public readonly struct WorldEndNebulaShape
 
     // Pre-sampled boundary radii; index = (int)(theta / Tau * SampleCount) % SampleCount
     private readonly float[] _boundary;
+
+    public bool IsGenerated => _boundary != null;
 
     private WorldEndNebulaShape(Vector2 center, float[] boundary, float inner, float outer)
     {
@@ -115,6 +116,9 @@ public readonly struct WorldEndNebulaShape
     /// </summary>
     public bool Contains(Vector2 point)
     {
+        if (_boundary == null)
+            return false;
+
         var delta = point - Center;
         var r = delta.Length();
 
@@ -125,23 +129,9 @@ public readonly struct WorldEndNebulaShape
         return r > _boundary[index];
     }
 
-    /// <summary>
-    /// Returns 0 at the boundary, approaches 1 over <see cref="FadeZone"/> tiles inside the zone.
-    /// </summary>
-    public float GetDensity(Vector2 point)
-    {
-        var delta = point - Center;
-        var r = delta.Length();
-        var index = ThetaToIndex(MathF.Atan2(delta.Y, delta.X));
-        var boundary = _boundary[index];
+    public float GetDensity(Vector2 point) => 1f;
 
-        return Math.Clamp((r - boundary) / FadeZone, 0f, 1f);
-    }
-
-    public float GetAlpha(Vector2 point)
-    {
-        return GetDensity(point);
-    }
+    public float GetAlpha(Vector2 point) => 1f;
 
     /// <summary>
     /// Returns the world-space boundary point at angle <paramref name="theta"/>.

@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.Nebula;
 
@@ -12,4 +13,10 @@ public sealed partial class NebulaMapDataComponent : Component
 {
     [AutoNetworkedField, ViewVariables]
     public List<NebulaSummary> Nebulas = new();
+
+    [AutoNetworkedField, ViewVariables]
+    public WorldEndNebulaShape WorldEnd;
+
+    [AutoNetworkedField, ViewVariables]
+    public EntProtoId WorldEndMarker;
 }

@@ -46,4 +46,10 @@ public sealed partial class NebulaMapComponent : Component
 
     [ViewVariables]
     public TimeSpan NextMarkerValidation;
+
+    [ViewVariables]
+    public WorldEndNebulaShape WorldEnd;
+
+    [ViewVariables]
+    public EntProtoId WorldEndMarker;
 }

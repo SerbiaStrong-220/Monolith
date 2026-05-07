@@ -110,6 +110,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
             data.Nebulas.Add(BuildSummary(source.Nebulas[i], GetNebulaPrototype(source, i), marker));
         }
 
+        data.WorldEnd = source.WorldEnd;
+        data.WorldEndMarker = source.WorldEndMarker;
+
         Dirty(mapUid, data);
     }
 
