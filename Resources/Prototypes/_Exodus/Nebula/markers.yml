@@ -60,3 +60,17 @@
   - type: NebulaRadarVisuals
     radarColor: "#ba66ffd9"
   - type: NebulaThrustReduction
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaDeathZoneMarker
+  name: Death Zone Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: RedNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#ff1a00ff"
+  - type: NebulaLightningHazard
+    smallStrikeInterval: 00:00:03
+    heavyStrikeInterval: 00:00:15

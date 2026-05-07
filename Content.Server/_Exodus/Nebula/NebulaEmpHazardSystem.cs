@@ -241,6 +241,11 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
                 return true;
         }
 
+        if (mapComponent.WorldEndMarker == marker &&
+            mapComponent.WorldEnd.IsGenerated &&
+            mapComponent.WorldEnd.Contains(position))
+            return true;
+
         return false;
     }
 
