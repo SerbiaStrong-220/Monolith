@@ -2430,7 +2430,7 @@ entities:
     - type: Transform
       pos: -0.5,8.5
       parent: 1
-- proto: SpawnMobWeaponTurretLaserSilicon
+- proto: SpawnMobWeaponTurretLaserAsakim # Exodus-asakim-fix
   entities:
   - uid: 392
     components:

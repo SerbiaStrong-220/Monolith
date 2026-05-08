@@ -141,7 +141,7 @@
   - type: NpcFactionMember
     factions:
     # - Syndicate # Exodus-asakim-fix
-    - SiliconsExpeditionNF
+    - AsakimDefenceForces # Exodus-asakim-fix
   - type: Access
     tags:
     - NuclearOperative
