@@ -77,7 +77,7 @@
     color: "#FF3333"
   - type: AnimationPlayer
   - type: LitOnPowered
-  - type: PowerSwitch
+  # - type: PowerSwitch # Exodus-shield-swap-fix
   - type: ApcPowerReceiver
     powerLoad: 60000
   - type: Appearance
