@@ -43,7 +43,7 @@
     layers:
     - state: red
     - sprite: _Mono/Objects/Weapons/Turrets/heavy_turret.rsi
-      state: base
+      state: syndie_lethal
   - type: ConditionalSpawner
     prototypes:
     - WeaponTurretHeavyAsakim
