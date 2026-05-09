@@ -21,7 +21,7 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
 {
     private const float WorldEndInnerRadius = 75000f;
     private const float NebulaRadarMaxDistance = 250_000f;
-    private const int RadarContourSamples = 96;
+    private const int RadarContourSamples = 512;
     private static readonly EntProtoId DeathZoneMarkerPrototype = "NebulaDeathZoneMarker";
     private static readonly Color DeathZoneRadarColor = new(1f, 0.1f, 0f, 1f);
 

@@ -62,19 +62,24 @@ public abstract class SharedNebulaSystem : EntitySystem
     /// </summary>
     public bool DoesFootprintHitFTLBlocker(Box2 localBounds, Vector2 origin, Angle rotation, MapId mapId)
     {
-        if (!TryGetSummaries(mapId, out var summaries))
+        var hasSummaries = TryGetSummaries(mapId, out var summaries);
+        // Exodus-begin nebula-death-zone-ftl
+        var hasWorldEnd = TryGetWorldEnd(mapId, out var worldEnd);
+        // Exodus-end
+
+        if (!hasSummaries && !hasWorldEnd)
             return false;
 
-        if (DoesFootprintContainBlockerCenter(localBounds, origin, rotation, summaries))
+        if (hasSummaries && DoesFootprintContainBlockerCenter(localBounds, origin, rotation, summaries))
             return true;
 
-        if (IsFTLBlockerAt(LocalToWorld(localBounds.Center, origin, rotation), summaries))
+        if (IsBlockedAt(LocalToWorld(localBounds.Center, origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd))
             return true;
 
-        if (IsFTLBlockerAt(LocalToWorld(localBounds.BottomLeft, origin, rotation), summaries) ||
-            IsFTLBlockerAt(LocalToWorld(localBounds.TopLeft, origin, rotation), summaries) ||
-            IsFTLBlockerAt(LocalToWorld(localBounds.BottomRight, origin, rotation), summaries) ||
-            IsFTLBlockerAt(LocalToWorld(localBounds.TopRight, origin, rotation), summaries))
+        if (IsBlockedAt(LocalToWorld(localBounds.BottomLeft, origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd) ||
+            IsBlockedAt(LocalToWorld(localBounds.TopLeft, origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd) ||
+            IsBlockedAt(LocalToWorld(localBounds.BottomRight, origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd) ||
+            IsBlockedAt(LocalToWorld(localBounds.TopRight, origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd))
         {
             return true;
         }
@@ -83,8 +88,8 @@ public abstract class SharedNebulaSystem : EntitySystem
         for (var i = 1; i < horizontalSamples; i++)
         {
             var x = MathHelper.Lerp(localBounds.Left, localBounds.Right, i / (float) horizontalSamples);
-            if (IsFTLBlockerAt(LocalToWorld(new Vector2(x, localBounds.Bottom), origin, rotation), summaries) ||
-                IsFTLBlockerAt(LocalToWorld(new Vector2(x, localBounds.Top), origin, rotation), summaries))
+            if (IsBlockedAt(LocalToWorld(new Vector2(x, localBounds.Bottom), origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd) ||
+                IsBlockedAt(LocalToWorld(new Vector2(x, localBounds.Top), origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd))
             {
                 return true;
             }
@@ -94,8 +99,8 @@ public abstract class SharedNebulaSystem : EntitySystem
         for (var i = 1; i < verticalSamples; i++)
         {
             var y = MathHelper.Lerp(localBounds.Bottom, localBounds.Top, i / (float) verticalSamples);
-            if (IsFTLBlockerAt(LocalToWorld(new Vector2(localBounds.Left, y), origin, rotation), summaries) ||
-                IsFTLBlockerAt(LocalToWorld(new Vector2(localBounds.Right, y), origin, rotation), summaries))
+            if (IsBlockedAt(LocalToWorld(new Vector2(localBounds.Left, y), origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd) ||
+                IsBlockedAt(LocalToWorld(new Vector2(localBounds.Right, y), origin, rotation), hasSummaries, summaries, hasWorldEnd, worldEnd))
             {
                 return true;
             }
@@ -103,6 +108,39 @@ public abstract class SharedNebulaSystem : EntitySystem
 
         return false;
     }
+
+    // Exodus-begin nebula-death-zone-ftl
+    /// <summary>
+    /// Returns the world-end death zone shape for the map if it has been generated.
+    /// </summary>
+    protected bool TryGetWorldEnd(MapId mapId, out WorldEndNebulaShape worldEnd)
+    {
+        worldEnd = default;
+
+        if (!MapSystem.TryGetMap(mapId, out var mapUid))
+            return false;
+
+        if (!TryComp<NebulaMapDataComponent>(mapUid, out var component) || !component.WorldEnd.IsGenerated)
+            return false;
+
+        worldEnd = component.WorldEnd;
+        return true;
+    }
+
+    private static bool IsBlockedAt(
+        Vector2 worldPos,
+        bool hasSummaries,
+        IReadOnlyList<NebulaSummary>? summaries,
+        bool hasWorldEnd,
+        WorldEndNebulaShape worldEnd)
+    {
+        if (hasSummaries && IsFTLBlockerAt(worldPos, summaries!))
+            return true;
+        if (hasWorldEnd && worldEnd.Contains(worldPos))
+            return true;
+        return false;
+    }
+    // Exodus-end
 
     /// <summary>
     /// True if <paramref name="worldPosition"/> lies inside a nebula on the given map.
