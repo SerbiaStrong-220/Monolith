@@ -120,9 +120,9 @@
   id: UnknownShuttleRazorNApoc
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ai-razorn-detected
+    startAnnouncement: station-event-ai-razorn-detected # Exodus
     startAudio:
-      path: /Audio/Misc/delta_alt.ogg
+      path: /Audio/Misc/delta_alt.ogg # Exodus
     weight: 3 # billions must die
     maxOccurrences: 3
   - type: GameRule
