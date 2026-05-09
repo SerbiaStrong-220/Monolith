@@ -59,7 +59,7 @@ public readonly struct WorldEndNebulaShape
 
         for (var i = 0; i < 4; i++)
         {
-            amplitudes[i] = (float)(rng.NextDouble() * 0.010 + 0.005); // [0.005, 0.015]
+            amplitudes[i] = (float)(rng.NextDouble() * 0.004 + 0.002); // [0.002, 0.006]
             phases[i] = (float)(rng.NextDouble() * MathF.Tau);
         }
 

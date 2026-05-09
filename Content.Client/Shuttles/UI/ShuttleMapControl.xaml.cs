@@ -102,7 +102,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private Vector2[] _nebulaLineBuffer = [];
     // Exodus-end
 
-    public ShuttleMapControl() : base(256f, 4096f, 512f)
+    public ShuttleMapControl() : base(256f, 16384f, 512f) // Exodus nebula-death-zone — maxRange increased 4x for death zone visibility
     {
         RobustXamlLoader.Load(this);
         _detection = EntManager.System<DetectionSystem>(); // Mono
