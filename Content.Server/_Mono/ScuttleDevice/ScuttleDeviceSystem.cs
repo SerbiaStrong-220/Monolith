@@ -230,6 +230,7 @@ public sealed class ScuttleDeviceSystem : EntitySystem
                 ("y", (int) nukeCoords.Y));
             _chatSystem.DispatchGlobalAnnouncement(announcement, sender: sender, playSound: true,
                 announcementSound: ent.Comp.ActivateSound, colorOverride: Color.Red);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
         }
         else
         {
@@ -242,6 +243,7 @@ public sealed class ScuttleDeviceSystem : EntitySystem
             _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
         }
         // Exodus-end
+
         if (ent.Comp.DoMusic)
         {
             ent.Comp.SelectedNukeSong = _audio.ResolveSound(ent.Comp.ArmMusic);
