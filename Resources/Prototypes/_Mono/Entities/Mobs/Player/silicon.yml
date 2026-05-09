@@ -140,8 +140,8 @@
   components:
   - type: NpcFactionMember
     factions:
-    - Syndicate
-    - SiliconsExpeditionNF
+    # - Syndicate # Exodus-asakim-fix
+    - AsakimDefenceForces # Exodus-asakim-fix
   - type: Access
     tags:
     - NuclearOperative

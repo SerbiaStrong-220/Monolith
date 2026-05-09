@@ -115,7 +115,7 @@
   - type: Wagging
   - type: NpcFactionMember
     factions:
-    - Syndicate # Making new AI factions is annoying with all the hostilities I have to add, whatever.
+    - AsakimDefenceForces # Exodus-asakim-fix # Making new AI factions is annoying with all the hostilities I have to add, whatever. 
   - type: Inventory
     speciesId: asakim
     # WWDP-Edit-Start

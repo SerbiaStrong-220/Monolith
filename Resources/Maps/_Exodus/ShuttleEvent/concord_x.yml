@@ -7755,7 +7755,7 @@ entities:
     - type: Transform
       pos: -0.5,7.5
       parent: 1
-- proto: SpawnMobWeaponTurretLaserSyndicateNF
+- proto: SpawnMobSpawnMobWeaponTurretLaserAsakim # Exodus-asakim-fix
   entities:
   - uid: 1098
     components:

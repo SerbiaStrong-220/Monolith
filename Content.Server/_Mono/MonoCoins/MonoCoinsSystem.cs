@@ -182,7 +182,7 @@ public sealed class MonoCoinsSystem : EntitySystem
             var newBalance = await _db.AddMonoCoinsAsync(session.UserId, RoundEndReward);
             Logger.Info($"Awarded {RoundEndReward} MonoCoins to player {session.Name} ({session.UserId}). New balance: {newBalance}");
 
-            // Notify the player via chat
+            /* Notify the player via chat Exodus-Remove-MonoCoins-Message
             var notificationMessage = $"Round ended! You earned {RoundEndReward} MonoCoins. Your new balance: {newBalance}";
             _chatManager.ChatMessageToOne(
                 ChatChannel.Notifications,
@@ -190,7 +190,7 @@ public sealed class MonoCoinsSystem : EntitySystem
                 notificationMessage,
                 EntityUid.Invalid,
                 false,
-                session.Channel);
+                session.Channel);*/
         }
         catch (Exception ex)
         {
