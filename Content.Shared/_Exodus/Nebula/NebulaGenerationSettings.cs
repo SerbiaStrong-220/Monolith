@@ -12,7 +12,7 @@ public sealed class NebulaGenerationSettings
         8_000_000_000d,
     ];
 
-    public int MaxAttempts = 8_192;
+    public int MaxAttempts = 16_384;
     public int SampleCount = NebulaShape.DefaultSampleCount;
 
     public float MinArea = 13_000_000f;

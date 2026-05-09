@@ -59,7 +59,7 @@ public readonly struct WorldEndNebulaShape
 
         for (var i = 0; i < 4; i++)
         {
-            amplitudes[i] = (float)(rng.NextDouble() * 0.02 + 0.01); // [0.01, 0.03]
+            amplitudes[i] = (float)(rng.NextDouble() * 0.010 + 0.005); // [0.005, 0.015]
             phases[i] = (float)(rng.NextDouble() * MathF.Tau);
         }
 
@@ -82,19 +82,31 @@ public readonly struct WorldEndNebulaShape
         meanSquare /= samples;
         var normalization = MathF.Sqrt(meanSquare);
 
-        // Pass 2: find minimum normalised B to derive R_base.
+        // Pass 2: find minimum normalised B using a dense search so the continuous minimum
+        // between sample points is not missed. A coarse sample search would underestimate
+        // rBase and allow the boundary to dip below innerRadius.
+        const int minSearchSamples = SampleCount * 32; // 16 384 — ~1500 points per highest-freq cycle
         var minNormB = float.MaxValue;
 
-        for (var i = 0; i < samples; i++)
+        for (var i = 0; i < minSearchSamples; i++)
         {
-            var normB = bSamples[i] / normalization;
+            var theta = MathF.Tau * i / minSearchSamples;
+            var b = 1f;
+
+            for (var w = 0; w < 4; w++)
+                b += amplitudes[w] * MathF.Sin(WaveFrequencies[w] * theta + phases[w]);
+
+            var normB = b / normalization;
             if (normB < minNormB)
                 minNormB = normB;
         }
 
-        var rBase = innerRadius / minNormB;
+        // Enforce a clearance buffer so the boundary never touches the nebula generation zone.
+        // minBoundaryRadius is the guaranteed minimum radius — 4 % above innerRadius.
+        var minBoundaryRadius = innerRadius * 1.04f;
+        var rBase = minBoundaryRadius / minNormB;
 
-        // Pass 3: compute final boundary radii.
+        // Pass 3: compute final boundary radii, clamped to the clearance minimum.
         var boundary = new float[samples];
         var innerBound = float.MaxValue;
         var outerBound = 0f;
@@ -102,6 +114,8 @@ public readonly struct WorldEndNebulaShape
         for (var i = 0; i < samples; i++)
         {
             var r = rBase * bSamples[i] / normalization;
+            if (r < minBoundaryRadius)
+                r = minBoundaryRadius;
             boundary[i] = r;
 
             if (r < innerBound) innerBound = r;
@@ -125,8 +139,7 @@ public readonly struct WorldEndNebulaShape
         if (r < InnerBoundingRadius)
             return false;
 
-        var index = ThetaToIndex(MathF.Atan2(delta.Y, delta.X));
-        return r > _boundary[index];
+        return r > SampleBoundary(MathF.Atan2(delta.Y, delta.X));
     }
 
     public float GetDensity(Vector2 point) => 1f;
@@ -135,20 +148,24 @@ public readonly struct WorldEndNebulaShape
 
     /// <summary>
     /// Returns the world-space boundary point at angle <paramref name="theta"/>.
-    /// Used by debug visualisation.
+    /// Used by radar visualisation.
     /// </summary>
     public Vector2 GetBoundaryPoint(float theta)
     {
-        var index = ThetaToIndex(theta);
-        var r = _boundary[index];
+        var r = SampleBoundary(theta);
         return Center + new Vector2(r * MathF.Cos(theta), r * MathF.Sin(theta));
     }
 
-    private int ThetaToIndex(float theta)
+    // Linearly interpolates between the two nearest boundary samples for smooth, accurate lookup.
+    private float SampleBoundary(float theta)
     {
         if (theta < 0f)
             theta += MathF.Tau;
 
-        return (int)(theta / MathF.Tau * _boundary.Length) % _boundary.Length;
+        var fIndex = theta / MathF.Tau * _boundary.Length;
+        var i0 = (int)fIndex % _boundary.Length;
+        var i1 = (i0 + 1) % _boundary.Length;
+        var t = fIndex - MathF.Floor(fIndex);
+        return _boundary[i0] * (1f - t) + _boundary[i1] * t;
     }
 }

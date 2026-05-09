@@ -84,8 +84,7 @@ public static class NebulaGenerator
 
     public static bool IsInsideCoordinateLimit(NebulaShape shape, float coordinateLimit)
     {
-        return MathF.Abs(shape.Center.X) + shape.BoundingRadius <= coordinateLimit &&
-            MathF.Abs(shape.Center.Y) + shape.BoundingRadius <= coordinateLimit;
+        return shape.Center.Length() + shape.BoundingRadius <= coordinateLimit;
     }
 
     public static bool IntersectsProtectedArea(NebulaShape shape, IReadOnlyList<Vector2> protectedPositions, float protectedRadius)
@@ -162,9 +161,10 @@ public static class NebulaGenerator
         if (limit <= 0f)
             return false;
 
-        var center = new Vector2(
-            NextFloat(random, -limit, limit),
-            NextFloat(random, -limit, limit));
+        // Uniform distribution over a disk: r = limit * sqrt(U) avoids centre concentration.
+        var angle = (float)(random.NextDouble() * MathF.Tau);
+        var r = limit * MathF.Sqrt((float)random.NextDouble());
+        var center = new Vector2(r * MathF.Cos(angle), r * MathF.Sin(angle));
 
         return NebulaShape.TryCreate(
             center,
