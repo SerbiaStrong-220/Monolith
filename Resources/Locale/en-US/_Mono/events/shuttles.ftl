@@ -4,6 +4,7 @@ station-event-ai-shuttle-detected = Unidentified dilapidated combat vessel detec
 station-event-ai-frigate-detected = An unidentified old-model combat frigate has been detected in the sector. We advise caution and recommend avoiding contact for your own safety.
 station-event-ai-destroyer-detected = An unidentified old-model patrol destroyer has been detected in the sector. We advise caution and recommend avoiding contact for your own safety.
 station-event-ai-capital-detected = Capital Class dilapidated combat vessel detected near local space. Heavy caution is advised.
+station-event-ai-razorn-detected = An unidentified ancient-model vessel carrying an antimatter-based tactical charge has been detected in the sector. Extreme caution is advised. Avoid any contact for your own safety.
 
 # chimera ship spawns
 station-event-chimera-shuttle-detected = Unidentified vessel detected near local space. Caution is advised.

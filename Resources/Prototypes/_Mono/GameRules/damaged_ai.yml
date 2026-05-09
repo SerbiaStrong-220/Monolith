@@ -106,15 +106,15 @@
   id: UnknownShuttleRazorN
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-razorn-detected
     startAudio:
-      path: /Audio/Misc/notice1.ogg
+      path: /Audio/Misc/delta_alt.ogg
     weight: 2 # rare but not too rare since it's in the T2 spawner
     maxOccurrences: 2
   - type: GameRule
     minPlayers: 15
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/razorn.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/razorn.yml # Exodus
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
