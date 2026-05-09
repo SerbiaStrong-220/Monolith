@@ -117,10 +117,11 @@ namespace Content.Server.Research.Systems
             else
             {
                 // Fallback for grids without a station (e.g. event shuttles): isolate by GridUid directly.
-                var clientGrid = Transform(gridUid).GridUid ?? gridUid;
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var clientGrid = xformQuery.GetComponent(gridUid).GridUid ?? gridUid;
                 while (allServers.MoveNext(out var uid, out var comp))
                 {
-                    if (_station.GetOwningStation(uid) == null && (Transform(uid).GridUid ?? uid) == clientGrid)
+                    if (_station.GetOwningStation(uid) == null && (xformQuery.GetComponent(uid).GridUid ?? uid) == clientGrid)
                         list.Add(comp.ServerName);
                 }
             }
@@ -148,10 +149,11 @@ namespace Content.Server.Research.Systems
             else
             {
                 // Fallback for grids without a station (e.g. event shuttles): isolate by GridUid directly.
-                var clientGrid = Transform(gridUid).GridUid ?? gridUid;
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var clientGrid = xformQuery.GetComponent(gridUid).GridUid ?? gridUid;
                 while (allServers.MoveNext(out var uid, out var comp))
                 {
-                    if (_station.GetOwningStation(uid) == null && (Transform(uid).GridUid ?? uid) == clientGrid)
+                    if (_station.GetOwningStation(uid) == null && (xformQuery.GetComponent(uid).GridUid ?? uid) == clientGrid)
                         list.Add(comp.Id);
                 }
             }
