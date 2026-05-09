@@ -134,7 +134,7 @@
   - type: GameRule
     minPlayers: 60
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/wyvern.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/wyvern.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
