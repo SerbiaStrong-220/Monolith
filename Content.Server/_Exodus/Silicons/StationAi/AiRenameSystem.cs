@@ -1,6 +1,6 @@
-using Content.Server.Administration;
+using Content.Server.EUI;
 using Content.Shared._Exodus.Silicons.StationAi;
-using Content.Shared.Preferences;
+using Content.Shared.Chat;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Player;
 
@@ -8,7 +8,7 @@ namespace Content.Server._Exodus.Silicons.StationAi;
 
 public sealed class AiRenameSystem : EntitySystem
 {
-    [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
 
@@ -16,6 +16,7 @@ public sealed class AiRenameSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<StationAiHeldComponent, AiRenameEvent>(OnAiRename);
+        SubscribeLocalEvent<StationAiHeldComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName);
     }
 
     private void OnAiRename(Entity<StationAiHeldComponent> ent, ref AiRenameEvent args)
@@ -26,18 +27,20 @@ public sealed class AiRenameSystem : EntitySystem
         if (!_stationAi.TryGetCore(ent.Owner, out var core) || core.Owner == EntityUid.Invalid)
             return;
 
-        _quickDialog.OpenDialog<string>(
-            actor.PlayerSession,
-            Loc.GetString("ai-rename-dialog-title"),
-            Loc.GetString("ai-rename-dialog-prompt"),
-            newName =>
-            {
-                if (string.IsNullOrWhiteSpace(newName) || newName.Length > HumanoidCharacterProfile.MaxNameLength)
-                    return;
+        var eui = new AiRenameEui(this, core.Owner);
+        _eui.OpenEui(eui, actor.PlayerSession);
+    }
 
-                var trimmed = newName.Trim();
-                _metaData.SetEntityName(core.Owner, trimmed);
-            }
-        );
+    private void OnTransformSpeakerName(Entity<StationAiHeldComponent> ent, ref TransformSpeakerNameEvent args)
+    {
+        if (!_stationAi.TryGetCore(ent.Owner, out var core) || core.Owner == EntityUid.Invalid)
+            return;
+
+        args.VoiceName = Name(core.Owner);
+    }
+
+    public void RenameCore(EntityUid coreUid, string newName)
+    {
+        _metaData.SetEntityName(coreUid, newName);
     }
 }

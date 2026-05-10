@@ -6,5 +6,8 @@ ghost-role-information-colossus-core-description = Центральный выч
 # Exodus: AI rename action
 action-ai-rename-name = Система переименования оболочки
 action-ai-rename-desc = Изменить наименование вашей оболочки ядра.
-ai-rename-dialog-title = На какое наименование вы хотите сменить название вашей оболочки ядра?
-ai-rename-dialog-prompt = Новое название
+ai-rename-dialog-title = Система переименования оболочки
+ai-rename-dialog-prompt = На какое наименование вы хотите сменить название вашей оболочки ядра?
+ai-rename-dialog-placeholder = Введите новое название...
+ai-rename-dialog-confirm = Применить
+ai-rename-dialog-cancel = Отмена
