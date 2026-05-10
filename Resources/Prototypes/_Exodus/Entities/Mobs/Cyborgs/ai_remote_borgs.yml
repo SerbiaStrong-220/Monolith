@@ -1,0 +1,154 @@
+# Exodus: Borg variants using AiRemoteBrain instead of PositronicBrain.
+# These are placed on maps so a Station AI can take control from round start.
+# No GhostRole / GhostTakeoverAvailable — player access is intentionally removed.
+
+# NT generic borg
+- type: entity
+  id: AiRemoteBorgBattery
+  parent: BorgChassisSelectable
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+# TSF borg
+- type: entity
+  id: AiRemoteBorgTSF
+  parent: BorgChassisSelectableTSF
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellCombat
+  - type: RandomMetadata
+    nameSegments: [MonoTSFBorgNameset]
+
+# PDV borg
+- type: entity
+  id: AiRemoteBorgPDV
+  parent: BorgChassisSelectablePDV
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellCombat
+  - type: RandomMetadata
+    nameSegments: [MonoPDVBorgNameset]
+
+# ADS (Redacted) borg
+- type: entity
+  id: AiRemoteBorgRedacted
+  parent: BorgChassisRedacted
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleRedactedWeapon
+      - BorgModuleEsword
+      - BorgModuleJetpackADM
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleCable
+      - BorgModuleRedactedRCD
+      - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
+  - type: RandomMetadata
+    nameSegments:
+    - MonoRemnantBorgTitle
+    - MonoRemnantAdjective
+    - MonoRemnantNoun
+    - MonoRemnantModifier
+
+# Syndicate assault borg
+- type: entity
+  id: AiRemoteBorgSyndicateAssaultBattery
+  parent: BorgChassisSyndicateAssault
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleL6C
+      - BorgModuleEsword
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+# Syndicate saboteur borg
+- type: entity
+  id: AiRemoteBorgSyndicateSaboteurBattery
+  parent: BorgChassisSyndicateSaboteur
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleOperative
+      - BorgModuleSyndicateWeapon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+# Derelict borg
+- type: entity
+  id: AiRemoteBorgDerelict
+  parent: BorgChassisDerelict
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleJetpack
+      - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
