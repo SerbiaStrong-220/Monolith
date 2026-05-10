@@ -186,6 +186,15 @@ public sealed partial class BorgSystem : SharedBorgSystem
         {
             _mind.TransferTo(mindId, uid, mind: mind);
         }
+
+        // Exodus-begin ai-remote-brain-init
+        // Handle ContainerFill case: AiRemoteBrain inserted at map load, not through AfterInteractUsing.
+        if (args.Container == component.BrainContainer && HasComp<AiRemoteBrainComponent>(args.Entity))
+        {
+            EnsureComp<AiRemoteControllerComponent>(uid);
+            BorgActivate(uid, component);
+        }
+        // Exodus-end
     }
 
     protected override void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
