@@ -9,33 +9,32 @@ public sealed partial class AiRenameWindow : FancyWindow
 {
     public event Action<string>? OnConfirmed;
 
+    private bool _confirmed;
+
     public AiRenameWindow()
     {
         RobustXamlLoader.Load(this);
 
-        ConfirmButton.OnPressed += _ =>
-        {
-            var name = NameEdit.Text.Trim();
-            if (string.IsNullOrWhiteSpace(name))
-                return;
-            OnConfirmed?.Invoke(name);
-            Close();
-        };
-
+        ConfirmButton.OnPressed += _ => TryConfirm();
         CancelButton.OnPressed += _ => Close();
-
-        NameEdit.OnTextEntered += _ =>
-        {
-            var name = NameEdit.Text.Trim();
-            if (string.IsNullOrWhiteSpace(name))
-                return;
-            OnConfirmed?.Invoke(name);
-            Close();
-        };
+        NameEdit.OnTextEntered += _ => TryConfirm();
     }
 
     public void SetCurrentName(string name)
     {
         NameEdit.Text = name;
+    }
+
+    public bool WasConfirmed => _confirmed;
+
+    private void TryConfirm()
+    {
+        var name = NameEdit.Text.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+            return;
+
+        _confirmed = true;
+        OnConfirmed?.Invoke(name);
+        Close();
     }
 }

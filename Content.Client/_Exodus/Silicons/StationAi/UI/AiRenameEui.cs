@@ -13,7 +13,11 @@ public sealed class AiRenameEui : BaseEui
         base.Opened();
         _window = new AiRenameWindow();
         _window.OnConfirmed += name => SendMessage(new AiRenameEuiMessage(name));
-        _window.OnClose += () => SendMessage(new AiRenameEuiMessage(string.Empty));
+        _window.OnClose += () =>
+        {
+            if (_window != null && !_window.WasConfirmed)
+                SendMessage(new AiRenameEuiMessage(string.Empty));
+        };
         _window.OpenCentered();
     }
 

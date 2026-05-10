@@ -189,7 +189,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         // Exodus-begin ai-remote-brain-init
         // Handle ContainerFill case: AiRemoteBrain inserted at map load, not through AfterInteractUsing.
-        if (args.Container == component.BrainContainer && HasComp<AiRemoteBrainComponent>(args.Entity))
+        // Guard against double activation: the manual-install path in AfterInteractUsing
+        // already adds AiRemoteController and calls BorgActivate before Insert triggers OnInserted.
+        if (args.Container == component.BrainContainer
+            && HasComp<AiRemoteBrainComponent>(args.Entity)
+            && !HasComp<AiRemoteControllerComponent>(uid))
         {
             EnsureComp<AiRemoteControllerComponent>(uid);
             BorgActivate(uid, component);
