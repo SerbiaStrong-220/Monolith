@@ -225,10 +225,12 @@ public sealed partial class BorgSystem
             _hands.AddHand(chassis, handId, HandLocation.Middle, hands);
             _hands.DoPickup(chassis, hands.Hands[handId], item, hands);
             EnsureComp<UnremoveableComponent>(item);
+
             // Exodus-begin borg-stack-split-fix
             if (HasComp<BorgModuleStackRechargerComponent>(uid))
                 EnsureComp<UnsplittableComponent>(item);
             // Exodus-end
+
             component.ProvidedItems.Add(handId, item);
         }
 

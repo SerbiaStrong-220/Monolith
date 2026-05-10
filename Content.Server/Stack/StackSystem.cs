@@ -172,8 +172,10 @@ namespace Content.Server.Stack
             if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
                 return;
 
-            if (HasComp<UnsplittableComponent>(uid)) // Exodus borg-stack-split-fix
+            // Exodus-begin borg-stack-split-fix
+            if (HasComp<UnsplittableComponent>(uid))
                 return;
+            // Exodus-end
 
             // Frontier: cherry-picked from ss14#32938, moved up top
             var priority = 1;
