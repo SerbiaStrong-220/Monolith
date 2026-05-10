@@ -5,6 +5,7 @@ using Content.Shared._Exodus.Silicons.StationAi;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Silicons.StationAi;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -29,6 +30,14 @@ public sealed class AiRenameSystem : EntitySystem
         SubscribeLocalEvent<StationAiHeldComponent, AiRenameEvent>(OnAiRename);
         SubscribeLocalEvent<StationAiHeldComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName);
         SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
+
+        // Run after upstream's OnAiInsert (which copies brain name to core) so we can
+        // re-apply the player's chosen name on top, surviving Intellicard transfers.
+        // Broadcast subscription instead of per-component to avoid the
+        // "Duplicate Subscriptions" conflict with upstream's StationAiCoreComponent handler.
+        SubscribeLocalEvent<EntInsertedIntoContainerMessage>(
+            OnCoreInsert,
+            after: new[] { typeof(SharedStationAiSystem) });
     }
 
     private void OnAiRename(Entity<StationAiHeldComponent> ent, ref AiRenameEvent args)
@@ -36,7 +45,7 @@ public sealed class AiRenameSystem : EntitySystem
         if (!TryComp<ActorComponent>(ent.Owner, out var actor))
             return;
 
-        if (!_stationAi.TryGetCore(ent.Owner, out var core))
+        if (!_stationAi.TryGetCore(ent.Owner, out _))
             return;
 
         var now = _timing.CurTime;
@@ -53,9 +62,9 @@ public sealed class AiRenameSystem : EntitySystem
         if (_openEuis.Remove(ent.Owner, out var existing))
             existing.Close();
 
-        var currentName = GetBaseName(core.Owner);
+        var currentBase = GetBaseName(ent.Owner);
 
-        var eui = new AiRenameEui(this, core.Owner, ent.Owner, currentName);
+        var eui = new AiRenameEui(this, ent.Owner, currentBase);
         _openEuis[ent.Owner] = eui;
         _eui.OpenEui(eui, actor.PlayerSession);
     }
@@ -80,18 +89,54 @@ public sealed class AiRenameSystem : EntitySystem
         args.VoiceName = Name(core.Owner);
     }
 
-    public void RenameCore(EntityUid coreUid, string newName, ICommonSession? renamer = null)
+    /// <summary>
+    /// Re-applies the saved custom name to the core after upstream's OnAiInsert
+    /// copies the raw brain name into the core. This is what makes the rename
+    /// survive an Intellicard pull-and-reinsert.
+    /// </summary>
+    private void OnCoreInsert(EntInsertedIntoContainerMessage args)
     {
-        var identifier = EnsureIdentifier(coreUid);
-        var oldName = MetaData(coreUid).EntityName;
-        var finalName = string.IsNullOrEmpty(identifier) ? newName : $"{newName} ({identifier})";
+        if (args.Container.ID != StationAiCoreComponent.Container)
+            return;
 
-        _metaData.SetEntityName(coreUid, finalName);
+        if (!HasComp<StationAiCoreComponent>(args.Container.Owner))
+            return;
+
+        if (!TryComp<AiRenameBaseNameComponent>(args.Entity, out var saved) ||
+            string.IsNullOrEmpty(saved.BaseName))
+            return;
+
+        var identifier = ParseTrailingIdentifier(MetaData(args.Entity).EntityName);
+        var finalName = string.IsNullOrEmpty(identifier)
+            ? saved.BaseName
+            : $"{saved.BaseName} ({identifier})";
+
+        _metaData.SetEntityName(args.Container.Owner, finalName);
+    }
+
+    public void RenameCore(EntityUid heldUid, string newName, ICommonSession? renamer = null)
+    {
+        if (!_stationAi.TryGetCore(heldUid, out var core))
+            return;
+
+        var brainName = MetaData(heldUid).EntityName;
+        var identifier = ParseTrailingIdentifier(brainName);
+        var finalName = string.IsNullOrEmpty(identifier)
+            ? newName
+            : $"{newName} ({identifier})";
+
+        var saved = EnsureComp<AiRenameBaseNameComponent>(heldUid);
+        var oldName = MetaData(core.Owner).EntityName;
+        saved.BaseName = newName;
+        Dirty(heldUid, saved);
+
+        _metaData.SetEntityName(core.Owner, finalName);
+        _metaData.SetEntityName(heldUid, finalName);
 
         if (renamer != null)
         {
             _adminLog.Add(LogType.Action, LogImpact.Low,
-                $"{renamer:player} renamed AI core {ToPrettyString(coreUid):target} from \"{oldName}\" to \"{finalName}\"");
+                $"{renamer:player} renamed AI core {ToPrettyString(core.Owner):target} from \"{oldName}\" to \"{finalName}\"");
         }
     }
 
@@ -103,13 +148,16 @@ public sealed class AiRenameSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the editable part of the core name, stripping the trailing " (IDENTIFIER)" suffix
-    /// using the cached identifier component. The component is created on first access if missing.
+    /// Returns the editable part of the brain name: the saved base name if a player has renamed
+    /// before, otherwise the current brain name with the trailing " (IDENTIFIER)" stripped.
     /// </summary>
-    private string GetBaseName(EntityUid coreUid)
+    private string GetBaseName(EntityUid heldUid)
     {
-        var fullName = MetaData(coreUid).EntityName;
-        var identifier = EnsureIdentifier(coreUid);
+        if (TryComp<AiRenameBaseNameComponent>(heldUid, out var saved) && !string.IsNullOrEmpty(saved.BaseName))
+            return saved.BaseName;
+
+        var fullName = MetaData(heldUid).EntityName;
+        var identifier = ParseTrailingIdentifier(fullName);
 
         if (string.IsNullOrEmpty(identifier))
             return fullName;
@@ -118,25 +166,6 @@ public sealed class AiRenameSystem : EntitySystem
         return fullName.EndsWith(suffix, StringComparison.Ordinal)
             ? fullName[..^suffix.Length]
             : fullName;
-    }
-
-    /// <summary>
-    /// One-time migration: parse the identifier from the existing entity name and store it.
-    /// Used when the core was spawned with a RandomMetadata-generated " (XXX)" suffix
-    /// before this system tracked identifiers explicitly.
-    /// </summary>
-    private string EnsureIdentifier(EntityUid coreUid)
-    {
-        if (TryComp<AiRenameIdentifierComponent>(coreUid, out var existing))
-            return existing.Identifier;
-
-        var fullName = MetaData(coreUid).EntityName;
-        var parsed = ParseTrailingIdentifier(fullName);
-
-        var comp = AddComp<AiRenameIdentifierComponent>(coreUid);
-        comp.Identifier = parsed;
-        Dirty(coreUid, comp);
-        return parsed;
     }
 
     private static string ParseTrailingIdentifier(string name)
@@ -148,7 +177,6 @@ public sealed class AiRenameSystem : EntitySystem
         if (open <= 0)
             return string.Empty;
 
-        var inner = name[(open + 2)..^1];
-        return inner;
+        return name[(open + 2)..^1];
     }
 }

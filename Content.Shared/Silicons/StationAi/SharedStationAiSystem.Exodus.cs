@@ -10,13 +10,14 @@ public abstract partial class SharedStationAiSystem
 {
     /// <summary>
     /// When a Station AI shell has a renamed core, replace the identity short-info title
-    /// with the core name so chat and admin tooling display the renamed shell instead of the puppet.
+    /// with "{core name} ({job})" so chat and admin tooling display the renamed shell
+    /// instead of the puppet, while still keeping the job tag visible.
     /// </summary>
     private void OverrideAiIdentityTitle(EntityUid forActor, ref TryGetIdentityShortInfoEvent args)
     {
         if (!TryGetCore(forActor, out var core))
             return;
 
-        args.Title = Name(core.Owner);
+        args.Title = $"{Name(core.Owner)} ({Loc.GetString(JobNameLocId)})";
     }
 }

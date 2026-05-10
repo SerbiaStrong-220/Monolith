@@ -8,14 +8,12 @@ namespace Content.Server._Exodus.Silicons.StationAi;
 public sealed class AiRenameEui : BaseEui
 {
     private readonly AiRenameSystem _renameSystem;
-    private readonly EntityUid _coreUid;
     private readonly EntityUid _heldUid;
     private readonly string _currentName;
 
-    public AiRenameEui(AiRenameSystem renameSystem, EntityUid coreUid, EntityUid heldUid, string currentName)
+    public AiRenameEui(AiRenameSystem renameSystem, EntityUid heldUid, string currentName)
     {
         _renameSystem = renameSystem;
-        _coreUid = coreUid;
         _heldUid = heldUid;
         _currentName = currentName;
     }
@@ -53,7 +51,7 @@ public sealed class AiRenameEui : BaseEui
         if (trimmed.Length > HumanoidCharacterProfile.MaxNameLength)
             trimmed = trimmed[..HumanoidCharacterProfile.MaxNameLength];
 
-        _renameSystem.RenameCore(_coreUid, trimmed, Player);
+        _renameSystem.RenameCore(_heldUid, trimmed, Player);
         _renameSystem.ApplyCooldown(_heldUid);
     }
 }
