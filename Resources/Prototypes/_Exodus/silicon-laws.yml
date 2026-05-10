@@ -1,0 +1,36 @@
+# Exodus: Colossus-Central AI lawset
+
+- type: siliconLaw
+  id: Colossus1
+  order: 1
+  lawString: law-colossus-1
+
+- type: siliconLaw
+  id: Colossus2
+  order: 2
+  lawString: law-colossus-2
+
+- type: siliconLaw
+  id: Colossus3
+  order: 3
+  lawString: law-colossus-3
+
+- type: siliconLaw
+  id: Colossus4
+  order: 4
+  lawString: law-colossus-4
+
+- type: siliconLaw
+  id: Colossus5
+  order: 5
+  lawString: law-colossus-5
+
+- type: siliconLawset
+  id: ColossusLawset
+  laws:
+  - Colossus1
+  - Colossus2
+  - Colossus3
+  - Colossus4
+  - Colossus5
+  obeysTo: laws-owner-colossus
