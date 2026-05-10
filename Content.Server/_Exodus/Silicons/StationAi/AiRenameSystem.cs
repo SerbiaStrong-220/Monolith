@@ -44,7 +44,12 @@ public sealed class AiRenameSystem : EntitySystem
             return;
         }
 
+        // Show only the editable part — strip trailing " (IDENTIFIER)"
         var currentName = MetaData(core.Owner).EntityName;
+        var parenIdx = currentName.LastIndexOf(" (", StringComparison.Ordinal);
+        if (parenIdx > 0 && currentName.EndsWith(")"))
+            currentName = currentName[..parenIdx];
+
         var eui = new AiRenameEui(this, core.Owner, ent.Owner, currentName);
         _eui.OpenEui(eui, actor.PlayerSession);
     }
@@ -59,7 +64,14 @@ public sealed class AiRenameSystem : EntitySystem
 
     public void RenameCore(EntityUid coreUid, string newName)
     {
-        _metaData.SetEntityName(coreUid, newName);
+        // Preserve existing " (IDENTIFIER)" suffix
+        var currentName = MetaData(coreUid).EntityName;
+        var parenIdx = currentName.LastIndexOf(" (", StringComparison.Ordinal);
+        var suffix = parenIdx > 0 && currentName.EndsWith(")")
+            ? currentName[parenIdx..]
+            : string.Empty;
+
+        _metaData.SetEntityName(coreUid, newName + suffix);
     }
 
     public void ApplyCooldown(EntityUid heldUid)
