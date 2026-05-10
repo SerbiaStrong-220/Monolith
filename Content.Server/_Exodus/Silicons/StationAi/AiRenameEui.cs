@@ -31,6 +31,12 @@ public sealed class AiRenameEui : BaseEui
         StateDirty();
     }
 
+    public override void Closed()
+    {
+        base.Closed();
+        _renameSystem.NotifyEuiClosed(_heldUid, this);
+    }
+
     public override void HandleMessage(EuiMessageBase msg)
     {
         base.HandleMessage(msg);

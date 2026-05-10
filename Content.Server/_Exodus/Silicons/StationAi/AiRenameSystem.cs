@@ -21,11 +21,14 @@ public sealed class AiRenameSystem : EntitySystem
 
     private static readonly TimeSpan RenameCooldown = TimeSpan.FromMinutes(1);
 
+    private readonly Dictionary<EntityUid, AiRenameEui> _openEuis = new();
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<StationAiHeldComponent, AiRenameEvent>(OnAiRename);
         SubscribeLocalEvent<StationAiHeldComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName);
+        SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
     }
 
     private void OnAiRename(Entity<StationAiHeldComponent> ent, ref AiRenameEvent args)
@@ -45,10 +48,28 @@ public sealed class AiRenameSystem : EntitySystem
             return;
         }
 
+        // Only one rename window per shell at a time — closing the previous prevents
+        // the player from queueing two confirmations and bypassing the cooldown.
+        if (_openEuis.Remove(ent.Owner, out var existing))
+            existing.Close();
+
         var currentName = GetBaseName(core.Owner);
 
         var eui = new AiRenameEui(this, core.Owner, ent.Owner, currentName);
+        _openEuis[ent.Owner] = eui;
         _eui.OpenEui(eui, actor.PlayerSession);
+    }
+
+    private void OnHeldShutdown(Entity<StationAiHeldComponent> ent, ref ComponentShutdown args)
+    {
+        if (_openEuis.Remove(ent.Owner, out var eui))
+            eui.Close();
+    }
+
+    public void NotifyEuiClosed(EntityUid heldUid, AiRenameEui eui)
+    {
+        if (_openEuis.TryGetValue(heldUid, out var current) && current == eui)
+            _openEuis.Remove(heldUid);
     }
 
     private void OnTransformSpeakerName(Entity<StationAiHeldComponent> ent, ref TransformSpeakerNameEvent args)
