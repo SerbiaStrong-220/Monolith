@@ -106,10 +106,7 @@ public sealed class AiRenameSystem : EntitySystem
             string.IsNullOrEmpty(saved.BaseName))
             return;
 
-        var identifier = ParseTrailingIdentifier(MetaData(args.Entity).EntityName);
-        var finalName = string.IsNullOrEmpty(identifier)
-            ? saved.BaseName
-            : $"{saved.BaseName} ({identifier})";
+        var finalName = BuildFullName(saved.BaseName, MetaData(args.Entity).EntityName);
 
         _metaData.SetEntityName(args.Container.Owner, finalName);
     }
@@ -119,11 +116,7 @@ public sealed class AiRenameSystem : EntitySystem
         if (!_stationAi.TryGetCore(heldUid, out var core))
             return;
 
-        var brainName = MetaData(heldUid).EntityName;
-        var identifier = ParseTrailingIdentifier(brainName);
-        var finalName = string.IsNullOrEmpty(identifier)
-            ? newName
-            : $"{newName} ({identifier})";
+        var finalName = BuildFullName(newName, MetaData(heldUid).EntityName);
 
         var saved = EnsureComp<AiRenameBaseNameComponent>(heldUid);
         var oldName = MetaData(core.Owner).EntityName;
@@ -166,6 +159,18 @@ public sealed class AiRenameSystem : EntitySystem
         return fullName.EndsWith(suffix, StringComparison.Ordinal)
             ? fullName[..^suffix.Length]
             : fullName;
+    }
+
+    /// <summary>
+    /// Builds the displayed AI name from a base name and a source name that may carry
+    /// a trailing " (IDENTIFIER)" suffix. Single source of truth for the rename format.
+    /// </summary>
+    private static string BuildFullName(string baseName, string identifierSource)
+    {
+        var identifier = ParseTrailingIdentifier(identifierSource);
+        return string.IsNullOrEmpty(identifier)
+            ? baseName
+            : $"{baseName} ({identifier})";
     }
 
     private static string ParseTrailingIdentifier(string name)
