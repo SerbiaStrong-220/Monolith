@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Stack;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
@@ -169,6 +170,9 @@ namespace Content.Server.Stack
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
+                return;
+
+            if (HasComp<UnsplittableComponent>(uid)) // Exodus borg-stack-split-fix
                 return;
 
             // Frontier: cherry-picked from ss14#32938, moved up top

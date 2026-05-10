@@ -94,7 +94,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
         InitializeMMI();
         InitializeUI();
         InitializeTransponder();
-        InitializeExodus(); // Exodus borg-stack-split-fix
     }
 
     private void OnMapInit(EntityUid uid, BorgChassisComponent component, MapInitEvent args)

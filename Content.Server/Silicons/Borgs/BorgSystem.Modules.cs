@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server._Exodus.Silicons.Borgs;
+using Content.Shared._Exodus.Stack;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -224,8 +225,8 @@ public sealed partial class BorgSystem
             _hands.AddHand(chassis, handId, HandLocation.Middle, hands);
             _hands.DoPickup(chassis, hands.Hands[handId], item, hands);
             EnsureComp<UnremoveableComponent>(item);
-            var moduleItem = EnsureComp<BorgModuleItemComponent>(item); // Exodus borg-stack-split-fix
-            moduleItem.ModuleUid = uid;
+            if (HasComp<BorgModuleStackRechargerComponent>(uid)) // Exodus borg-stack-split-fix
+                EnsureComp<UnsplittableComponent>(item);
             component.ProvidedItems.Add(handId, item);
         }
 
@@ -256,7 +257,7 @@ public sealed partial class BorgSystem
             if (LifeStage(item) <= EntityLifeStage.MapInitialized)
             {
                 RemComp<UnremoveableComponent>(item);
-                RemComp<BorgModuleItemComponent>(item); // Exodus borg-stack-split-fix
+                RemComp<UnsplittableComponent>(item); // Exodus borg-stack-split-fix
                 _container.Insert(item, component.ProvidedContainer);
             }
             _hands.RemoveHand(chassis, handId, hands);
