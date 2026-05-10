@@ -18,7 +18,7 @@
   maximumDistance: 5500 # Mono
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
-  gridPath: /Maps/_Mono/POI/tsfmchalcyon.yml
+  gridPath: /Maps/_Exodus/POI/tsfmchalcyon.yml # Exodus ai-remote-borgs
   addComponents:
   - type: IFF
     color: "#047abd"
@@ -29,7 +29,7 @@
 - type: gameMap
   id: TSFMCHalcyon
   mapName: 'КВП | Флагман Фалкон' # Ru-Localization
-  mapPath: /Maps/_Mono/POI/tsfmchalcyon.yml
+  mapPath: /Maps/_Exodus/POI/tsfmchalcyon.yml # Exodus ai-remote-borgs
   minPlayers: 0
   randomRotation: false
   stations:
