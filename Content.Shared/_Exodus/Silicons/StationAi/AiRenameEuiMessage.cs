@@ -13,3 +13,14 @@ public sealed class AiRenameEuiMessage : EuiMessageBase
         NewName = newName;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class AiRenameEuiState : EuiStateBase
+{
+    public string CurrentName;
+
+    public AiRenameEuiState(string currentName)
+    {
+        CurrentName = currentName;
+    }
+}

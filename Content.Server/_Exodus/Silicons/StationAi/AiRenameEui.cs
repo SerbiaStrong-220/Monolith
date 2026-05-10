@@ -9,11 +9,26 @@ public sealed class AiRenameEui : BaseEui
 {
     private readonly AiRenameSystem _renameSystem;
     private readonly EntityUid _coreUid;
+    private readonly EntityUid _heldUid;
+    private readonly string _currentName;
 
-    public AiRenameEui(AiRenameSystem renameSystem, EntityUid coreUid)
+    public AiRenameEui(AiRenameSystem renameSystem, EntityUid coreUid, EntityUid heldUid, string currentName)
     {
         _renameSystem = renameSystem;
         _coreUid = coreUid;
+        _heldUid = heldUid;
+        _currentName = currentName;
+    }
+
+    public override EuiStateBase GetNewState()
+    {
+        return new AiRenameEuiState(_currentName);
+    }
+
+    public override void Opened()
+    {
+        base.Opened();
+        StateDirty();
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -33,5 +48,6 @@ public sealed class AiRenameEui : BaseEui
             return;
 
         _renameSystem.RenameCore(_coreUid, trimmed);
+        _renameSystem.ApplyCooldown(_heldUid);
     }
 }

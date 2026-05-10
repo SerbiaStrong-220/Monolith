@@ -1,8 +1,10 @@
+using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Shared._Exodus.Silicons.StationAi;
 using Content.Shared.Chat;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Silicons.StationAi;
 
@@ -11,6 +13,12 @@ public sealed class AiRenameSystem : EntitySystem
     [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    private static readonly TimeSpan RenameCooldown = TimeSpan.FromMinutes(1);
+
+    private readonly Dictionary<EntityUid, TimeSpan> _cooldowns = new();
 
     public override void Initialize()
     {
@@ -27,7 +35,17 @@ public sealed class AiRenameSystem : EntitySystem
         if (!_stationAi.TryGetCore(ent.Owner, out var core) || core.Owner == EntityUid.Invalid)
             return;
 
-        var eui = new AiRenameEui(this, core.Owner);
+        var now = _timing.CurTime;
+        if (_cooldowns.TryGetValue(ent.Owner, out var nextAllowed) && now < nextAllowed)
+        {
+            var remaining = (int)(nextAllowed - now).TotalSeconds;
+            _chat.DispatchServerMessage(actor.PlayerSession,
+                Loc.GetString("ai-rename-cooldown", ("seconds", remaining)));
+            return;
+        }
+
+        var currentName = MetaData(core.Owner).EntityName;
+        var eui = new AiRenameEui(this, core.Owner, ent.Owner, currentName);
         _eui.OpenEui(eui, actor.PlayerSession);
     }
 
@@ -42,5 +60,10 @@ public sealed class AiRenameSystem : EntitySystem
     public void RenameCore(EntityUid coreUid, string newName)
     {
         _metaData.SetEntityName(coreUid, newName);
+    }
+
+    public void ApplyCooldown(EntityUid heldUid)
+    {
+        _cooldowns[heldUid] = _timing.CurTime + RenameCooldown;
     }
 }
