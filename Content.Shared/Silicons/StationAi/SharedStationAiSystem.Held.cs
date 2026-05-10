@@ -43,7 +43,13 @@ public abstract partial class SharedStationAiSystem
         {
             return;
         }
-        args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
+
+        // Exodus-begin ai-rename: use core name so renamed shell shows in chat
+        var displayName = Name(args.ForActor);
+        if (TryGetCore(args.ForActor, out var core))
+            displayName = Name(core.Owner);
+        args.Title = $"{displayName} ({Loc.GetString(JobNameLocId)})";
+        // Exodus-end
         args.Handled = true;
     }
 

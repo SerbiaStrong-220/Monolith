@@ -107,6 +107,7 @@
     - ActionSurvCameraLights
     - ActionAIViewLaws
     - ActionOpenRemoteDevicesMenu # Corvax-Next-AiRemoteControl
+    - ActionAiRename # Exodus ai-rename
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
