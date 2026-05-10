@@ -12,3 +12,6 @@ ai-rename-dialog-placeholder = Введите новое название...
 ai-rename-dialog-confirm = Применить
 ai-rename-dialog-cancel = Отмена
 ai-rename-cooldown = Система переименования перезаряжается. Осталось: { $seconds } сек.
+
+# Exodus: Colossus comms announcement title
+comms-console-announcement-title-colossus-ai = ИИ Колосс-Централа

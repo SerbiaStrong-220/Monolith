@@ -48,7 +48,7 @@ public abstract partial class SharedStationAiSystem
         var displayName = Name(args.ForActor);
         if (TryGetCore(args.ForActor, out var core))
             displayName = Name(core.Owner);
-        args.Title = $"{displayName} ({Loc.GetString(JobNameLocId)})";
+        args.Title = displayName;
         // Exodus-end
         args.Handled = true;
     }
