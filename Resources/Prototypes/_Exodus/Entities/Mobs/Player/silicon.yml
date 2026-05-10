@@ -57,6 +57,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
+    - Common
     - Traffic
     - Command
     - Engineering
@@ -67,6 +68,7 @@
     - Supply
   - type: ActiveRadio
     channels:
+    - Common
     - Traffic
     - Command
     - Engineering
