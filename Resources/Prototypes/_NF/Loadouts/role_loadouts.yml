@@ -298,6 +298,7 @@
   - ContractorImplanter
   - ContractorUtility # Mono
   - ContractorEncryptionKey
+  - ContractorFirearm # Exodus-Loadout-Tweak
   - ContractorFun
   - ContractorTrinkets
   - ContractorBureaucracy

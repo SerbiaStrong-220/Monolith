@@ -80,6 +80,8 @@
 
 - type: npcFaction
   id: SiliconsExpeditionNF
+  friendly: # Exodus-asakim-fix
+  -  AsakimDefenceForces # Exodus-asakim-fix
   defaultHostile: true
 
 - type: npcFaction
@@ -103,3 +105,12 @@
   defaultHostile: true
 
 # Mono edit end.
+
+# Exodus-asakim-fix-start 
+- type: npcFaction
+  id: AsakimDefenceForces
+  friendly:
+  - SiliconsExpeditionNF
+  defaultHostile: true
+
+# Exodus-asakim-end

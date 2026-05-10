@@ -21,3 +21,4 @@ loadout-group-contractor-cartridge = Картриджи КПК
 loadout-group-contractor-wallet = Кошелёк
 loadout-group-contractor-implanter = Импланты
 loadout-group-contractor-bureaucracy = Бюрократия
+loadout-group-contractor-armorplates = Бронеплиты

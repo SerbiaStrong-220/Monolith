@@ -2549,7 +2549,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-0.5
       parent: 864
-- proto: SpawnMobWeaponTurretLaserSilicon
+- proto: SpawnMobWeaponTurretLaserAsakim # Exodus-asakim-fix
   entities:
   - uid: 82
     components:
@@ -3977,7 +3977,7 @@ entities:
       parent: 864
     missingComponents:
     - Anchorable
-- proto: WeaponTurretHeavySilicon
+- proto: WeaponTurretHeavyAsakim # Exodus-asakim-fix
   entities:
   - uid: 1207
     components:
