@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for Exodus/SS220 project",
+    "size": {
+        "x": 96,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "thrust_unshaded"
+        }
+    ]
+}
