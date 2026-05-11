@@ -483,7 +483,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
 
         AttachEye(ent);
-        OnAiInserted(ent, args.Entity); // Exodus SS220-silicon-tts-fix
     }
 
     private void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -506,13 +505,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         }
 
         ClearEye(ent);
-        OnAiRemoved(ent, args.Entity); // Exodus SS220-silicon-tts-fix
     }
-
-    // Exodus SS220-silicon-tts-fix begin
-    protected virtual void OnAiInserted(Entity<StationAiCoreComponent> core, EntityUid brain) { }
-    protected virtual void OnAiRemoved(Entity<StationAiCoreComponent> core, EntityUid brain) { }
-    // Exodus SS220-silicon-tts-fix end
 
     private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
     {
