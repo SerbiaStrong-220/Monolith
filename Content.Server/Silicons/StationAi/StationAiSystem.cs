@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Radio.Components; // Exodus SS220-silicon-tts-fix
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -99,6 +100,24 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
             _roles.MindPlaySound(mindId, cue);
     }
+
+    // Exodus SS220-silicon-tts-fix begin
+    protected override void OnAiInserted(Entity<StationAiCoreComponent> core, EntityUid brain)
+    {
+        if (!TryComp(brain, out IntrinsicRadioReceiverComponent? receiver))
+            return;
+
+        receiver.ReceiverEntityOverride = core.Comp.RemoteEntity;
+    }
+
+    protected override void OnAiRemoved(Entity<StationAiCoreComponent> core, EntityUid brain)
+    {
+        if (!TryComp(brain, out IntrinsicRadioReceiverComponent? receiver))
+            return;
+
+        receiver.ReceiverEntityOverride = null;
+    }
+    // Exodus SS220-silicon-tts-fix end
 
     private void AnnounceSnip(EntityUid entity)
     {
