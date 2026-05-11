@@ -91,7 +91,6 @@
     delay: 15
   - type: Sprite
     sprite: _Exodus/Structures/Shuttles/vacuum_gradient_thruster.rsi
-    noRot: true
     layers:
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]
