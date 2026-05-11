@@ -269,9 +269,6 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnAnchorChange(EntityUid uid, ThrusterComponent component, ref AnchorStateChangedEvent args)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
-            return;
-
         if (args.Anchored && CanEnable(uid, component))
         {
             EnableThruster(uid, component);
@@ -293,9 +290,6 @@ public sealed class ThrusterSystem : EntitySystem
 
         _ambient.SetAmbience(uid, false);
 
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
-            return;
-
         if (!component.Enabled)
         {
             return;
@@ -314,17 +308,11 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ComponentShutdown args)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
-            return;
-
         DisableThruster(uid, component);
     }
 
     private void OnPowerChange(EntityUid uid, ThrusterComponent component, ref PowerChangedEvent args)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
-            return;
-
         if (args.Powered && CanEnable(uid, component))
         {
             EnableThruster(uid, component);
@@ -340,6 +328,9 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         if (component.IsOn ||
             !Resolve(uid, ref xform))
         {
@@ -429,6 +420,9 @@ public sealed class ThrusterSystem : EntitySystem
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         if (!Resolve(uid, ref xform)) return;
         DisableThruster(uid, component, xform.GridUid, xform);
     }

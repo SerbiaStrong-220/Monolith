@@ -130,25 +130,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
 
     private void DisableOmni(EntityUid uid, ThrusterComponent thruster)
     {
-        if (!thruster.IsOn)
-            return;
-
-        var xform = Transform(uid);
-        if (!TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
-        {
-            thruster.IsOn = false;
-            return;
-        }
-
-        thruster.IsOn = false;
-
-        for (var i = 0; i < 4; i++)
-        {
-            shuttle.LinearThrust[i] -= thruster.Thrust;
-            shuttle.BaseLinearThrust[i] -= thruster.BaseThrust;
-            shuttle.LinearThrusters[i].Remove(uid);
-        }
-
+        // Always kill effects regardless of IsOn state
         if (TryComp<AppearanceComponent>(uid, out var appearance))
             _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
 
@@ -157,5 +139,21 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
 
         _ambient.SetAmbience(uid, false);
         _radiation.SetSourceEnabled(uid, false);
+
+        if (!thruster.IsOn)
+            return;
+
+        thruster.IsOn = false;
+
+        var xform = Transform(uid);
+        if (!TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
+            return;
+
+        for (var i = 0; i < 4; i++)
+        {
+            shuttle.LinearThrust[i] -= thruster.Thrust;
+            shuttle.BaseLinearThrust[i] -= thruster.BaseThrust;
+            shuttle.LinearThrusters[i].Remove(uid);
+        }
     }
 }
