@@ -3,6 +3,9 @@ using Content.Server.Audio;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radiation.Systems;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Interaction;
 using Content.Shared.Power;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map.Components;
@@ -26,6 +29,11 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, PowerChangedEvent>(OnPowerChanged);
+        // After ThrusterSystem sets Enabled, we re-evaluate our state
+        SubscribeLocalEvent<OmnidirectionalThrusterComponent, ActivateInWorldEvent>(OnActivate,
+            after: [typeof(ThrusterSystem)]);
+        SubscribeLocalEvent<OmnidirectionalThrusterComponent, SignalReceivedEvent>(OnSignalReceived,
+            after: [typeof(ThrusterSystem)]);
     }
 
     private void OnShutdown(Entity<OmnidirectionalThrusterComponent> ent, ref ComponentShutdown args)
@@ -33,6 +41,29 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         if (!TryComp<ThrusterComponent>(ent, out var thruster))
             return;
         DisableOmni(ent, thruster);
+    }
+
+    private void OnActivate(Entity<OmnidirectionalThrusterComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (!TryComp<ThrusterComponent>(ent, out var thruster))
+            return;
+
+        // ThrusterSystem already toggled Enabled — we just re-evaluate
+        if (CanEnableOmni(ent, thruster))
+            EnableOmni(ent, thruster);
+        else
+            DisableOmni(ent, thruster);
+    }
+
+    private void OnSignalReceived(Entity<OmnidirectionalThrusterComponent> ent, ref SignalReceivedEvent args)
+    {
+        if (!TryComp<ThrusterComponent>(ent, out var thruster))
+            return;
+
+        if (CanEnableOmni(ent, thruster))
+            EnableOmni(ent, thruster);
+        else
+            DisableOmni(ent, thruster);
     }
 
     private void OnAnchorChanged(Entity<OmnidirectionalThrusterComponent> ent, ref AnchorStateChangedEvent args)
