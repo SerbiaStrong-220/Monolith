@@ -1,9 +1,9 @@
+using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server._Exodus.Construction.Completions;
 
@@ -31,37 +31,28 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
             return;
 
         var containerSys = entityManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
-        var xformSys = entityManager.EntitySysManager.GetEntitySystem<TransformSystem>();
-        var coords = xformSys.GetMapCoordinates(uid);
 
         foreach (var container in containerManager.GetAllContainers())
         {
-            // Плату всегда возвращаем полностью
             if (container.ID == MachineFrameComponent.BoardContainerName)
             {
                 containerSys.EmptyContainer(container, true);
                 continue;
             }
 
-            // Для деталей — частичный возврат
             if (container.ID != MachineFrameComponent.PartContainerName)
                 continue;
 
             var entities = container.ContainedEntities.ToArray();
-            var totalCount = entities.Length;
-            var toReturn = (int) Math.Floor(totalCount * fraction);
+            var toReturn = (int) Math.Floor(entities.Length * fraction);
 
             for (var i = 0; i < entities.Length; i++)
             {
                 var ent = entities[i];
                 if (i < toReturn)
-                {
                     containerSys.Remove(ent, container, reparent: true);
-                }
                 else
-                {
                     entityManager.DeleteEntity(ent);
-                }
             }
         }
     }
