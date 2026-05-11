@@ -73,7 +73,6 @@
     intensity: 25
     slope: 4.17
     enabled: false
-  - type: PoweredRadiationSource
   - type: AmbientSound
     enabled: false
     range: 10
@@ -87,7 +86,7 @@
     color: "#FF7700"
   - type: Rotatable
     rotateWhileAnchored: false
-    increment: 90
+    rotateWhilePulling: false
   - type: Anchorable
     delay: 15
   - type: Sprite
