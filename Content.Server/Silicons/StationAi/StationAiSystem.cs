@@ -100,7 +100,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
             _roles.MindPlaySound(mindId, cue);
     }
 
-
     private void AnnounceSnip(EntityUid entity)
     {
         var xform = Transform(entity);
