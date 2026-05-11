@@ -100,6 +100,11 @@ public sealed class ThrusterSystem : EntitySystem
         {
             args.PushMarkup(enabled);
 
+            // Exodus-begin: OmnidirectionalThruster — no nozzle direction for omni thrusters
+            if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid))
+                return;
+            // Exodus-end
+
             if (component.Type == ThrusterType.Linear &&
                 EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
                 xform.Anchored)
@@ -264,6 +269,9 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnAnchorChange(EntityUid uid, ThrusterComponent component, ref AnchorStateChangedEvent args)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         if (args.Anchored && CanEnable(uid, component))
         {
             EnableThruster(uid, component);
@@ -285,6 +293,9 @@ public sealed class ThrusterSystem : EntitySystem
 
         _ambient.SetAmbience(uid, false);
 
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         if (!component.Enabled)
         {
             return;
@@ -303,11 +314,17 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ComponentShutdown args)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         DisableThruster(uid, component);
     }
 
     private void OnPowerChange(EntityUid uid, ThrusterComponent component, ref PowerChangedEvent args)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         if (args.Powered && CanEnable(uid, component))
         {
             EnableThruster(uid, component);

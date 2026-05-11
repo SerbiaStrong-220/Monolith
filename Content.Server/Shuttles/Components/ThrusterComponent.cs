@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
-    [Access(typeof(ThrusterSystem))]
+    [Access(typeof(ThrusterSystem), typeof(Content.Server._Exodus.Shuttles.Systems.OmnidirectionalThrusterSystem))] // Exodus OmnidirectionalThruster
     public sealed partial class ThrusterComponent : Component
     {
         /// <summary>
