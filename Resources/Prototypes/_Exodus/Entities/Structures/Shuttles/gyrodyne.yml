@@ -25,7 +25,7 @@
     A massive bluespace-assisted gyroscope capable of rotating even the largest vessels.
     Requires significant power to operate.
   placement:
-    mode: AlignTileAny
+    mode: SnapgridCenter
   components:
   - type: Machine
     board: GyrodyneMachineCircuitboard
@@ -37,7 +37,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.95,-0.95,0.95,0.95"
+          bounds: "-0.45,-1.45,1.45,0.45"
         density: 1200
         mask:
         - MachineMask
@@ -68,6 +68,7 @@
   - type: Sprite
     sprite: _Exodus/Structures/Shuttles/gyrodyne.rsi
     snapCardinals: true
+    offset: 0.5,-0.5
     layers:
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]
@@ -96,6 +97,8 @@
     volume: -4
     sound:
       path: /Audio/Effects/shuttle_thruster.ogg
+  - type: Anchorable
+    flags: Anchorable
   - type: StaticPrice
     price: 3000
   - type: ShipRepairable
@@ -111,4 +114,4 @@
       shape: Square
       respectZoom: true
       rotate: true
-      bounds: "-1,-1,1,1"
+      bounds: "-0.5,-1.5,1.5,0.5"

@@ -89,6 +89,7 @@
     rotateWhilePulling: false
   - type: Anchorable
     delay: 15
+    flags: Anchorable
   - type: Sprite
     sprite: _Exodus/Structures/Shuttles/vacuum_gradient_thruster.rsi
     layers:

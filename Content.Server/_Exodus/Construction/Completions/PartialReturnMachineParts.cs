@@ -3,20 +3,20 @@ using Content.Server.Construction.Components;
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Construction.Completions;
 
 /// <summary>
 /// Graph action that returns a fraction of machine parts from machine_parts container.
-/// Amounts are read from the machine board's original requirements, not from what's physically in the container.
+/// Stacks use original board requirements for correct amounts (container clips to maxCount).
+/// Non-stack entities (MachinePart) are returned directly from the container, preserving upgrades.
 /// machine_board container is always fully returned.
 /// </summary>
 [UsedImplicitly]
@@ -44,7 +44,7 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
         var coords = xformSys.GetMapCoordinates(uid);
         var dropCoords = new EntityCoordinates(uid, 0, 0);
 
-        // Find the board to read original requirements
+        // Read board requirements before emptying
         MachineBoardComponent? board = null;
         foreach (var container in containerManager.GetAllContainers())
         {
@@ -64,45 +64,71 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
             break;
         }
 
-        // Process machine_parts
         foreach (var container in containerManager.GetAllContainers())
         {
             if (container.ID != MachineFrameComponent.PartContainerName)
                 continue;
 
-            // Delete everything in the container — we spawn from board requirements
-            foreach (var ent in container.ContainedEntities.ToArray())
+            var entities = container.ContainedEntities.ToArray();
+
+            // Separate stacks from non-stacks
+            var stackEntities = new List<EntityUid>();
+            var nonStackGroups = new Dictionary<string, List<EntityUid>>();
+
+            foreach (var ent in entities)
+            {
+                // MachinePartComponent entities (Manipulator, MatterBin, etc.) have StackComponent count=1
+                // but must be returned directly to preserve upgrade ratings
+                if (!entityManager.HasComponent<MachinePartComponent>(ent) &&
+                    entityManager.HasComponent<StackComponent>(ent))
+                {
+                    stackEntities.Add(ent);
+                }
+                else
+                {
+                    var proto = entityManager.GetComponentOrNull<MetaDataComponent>(ent)?.EntityPrototype?.ID
+                                ?? ent.ToString();
+                    if (!nonStackGroups.TryGetValue(proto, out var group))
+                        nonStackGroups[proto] = group = new List<EntityUid>();
+                    group.Add(ent);
+                }
+            }
+
+            // Delete all stack entities — we spawn from board requirements for correct amounts
+            foreach (var ent in stackEntities)
             {
                 containerSys.Remove(ent, container, reparent: false);
                 entityManager.DeleteEntity(ent);
             }
 
-            if (board == null)
-                break;
-
-            // Spawn stacks based on original StackRequirements
-            foreach (var (stackType, amount) in board.StackRequirements)
+            // Spawn stacks from board StackRequirements
+            if (board != null)
             {
-                var toReturn = (int) Math.Floor(amount * fraction);
-                if (toReturn <= 0)
-                    continue;
+                foreach (var (stackType, amount) in board.StackRequirements)
+                {
+                    var toReturn = (int) Math.Floor(amount * fraction);
+                    if (toReturn <= 0)
+                        continue;
 
-                var stackProto = protoManager.Index(stackType);
-                var spawned = stackSys.SpawnMultiple(stackProto.Spawn, toReturn, dropCoords);
-                foreach (var s in spawned)
-                    xformSys.SetMapCoordinates(s, coords);
+                    var stackProto = protoManager.Index(stackType);
+                    var spawned = stackSys.SpawnMultiple(stackProto.Spawn, toReturn, dropCoords);
+                    foreach (var s in spawned)
+                        xformSys.SetMapCoordinates(s, coords);
+                }
             }
 
-            // Spawn MachinePart entities based on original Requirements
-            foreach (var (partType, amount) in board.Requirements)
+            // Return non-stack entities directly (preserves upgrade ratings)
+            foreach (var (_, group) in nonStackGroups)
             {
-                var toReturn = (int) Math.Floor(amount * fraction);
-                if (toReturn <= 0)
-                    continue;
-
-                var partProto = protoManager.Index(partType);
-                for (var i = 0; i < toReturn; i++)
-                    entityManager.SpawnEntity(partProto.StockPartPrototype, dropCoords);
+                var toReturn = (int) Math.Floor(group.Count * fraction);
+                for (var i = 0; i < group.Count; i++)
+                {
+                    var ent = group[i];
+                    if (i < toReturn)
+                        containerSys.Remove(ent, container, reparent: true);
+                    else
+                        entityManager.DeleteEntity(ent);
+                }
             }
 
             break;
