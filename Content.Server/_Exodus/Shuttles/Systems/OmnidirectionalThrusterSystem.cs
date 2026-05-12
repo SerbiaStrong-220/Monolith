@@ -1,5 +1,6 @@
 using Content.Server._Exodus.Shuttles.Components;
 using Content.Server.Audio;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radiation.Systems;
 using Content.Server.Shuttles.Components;
@@ -27,6 +28,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<OmnidirectionalThrusterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, PowerChangedEvent>(OnPowerChanged);
         // After ThrusterSystem sets Enabled, we re-evaluate our state
@@ -43,12 +45,25 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         DisableOmni(ent, thruster);
     }
 
+    private void OnMapInit(Entity<OmnidirectionalThrusterComponent> ent, ref MapInitEvent args)
+    {
+        if (!TryComp<ThrusterComponent>(ent, out var thruster))
+            return;
+
+        if (CanEnableOmni(ent, thruster))
+            EnableOmni(ent, thruster);
+        else
+            DisableOmni(ent, thruster);
+    }
+
     private void OnActivate(Entity<OmnidirectionalThrusterComponent> ent, ref ActivateInWorldEvent args)
     {
         if (!TryComp<ThrusterComponent>(ent, out var thruster))
             return;
 
-        // ThrusterSystem already toggled Enabled — we just re-evaluate
+        // ThrusterSystem already toggled Enabled — sync power load and re-evaluate
+        SyncPowerLoad(ent, thruster);
+
         if (CanEnableOmni(ent, thruster))
             EnableOmni(ent, thruster);
         else
@@ -60,10 +75,23 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         if (!TryComp<ThrusterComponent>(ent, out var thruster))
             return;
 
+        SyncPowerLoad(ent, thruster);
+
         if (CanEnableOmni(ent, thruster))
             EnableOmni(ent, thruster);
         else
             DisableOmni(ent, thruster);
+    }
+
+    private void SyncPowerLoad(EntityUid uid, ThrusterComponent thruster)
+    {
+        if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) || thruster.OriginalLoad == 0)
+            return;
+
+        if (!thruster.Enabled)
+            apcPower.Load = 1;
+        else if (apcPower.Load != thruster.OriginalLoad)
+            apcPower.Load = thruster.OriginalLoad;
     }
 
     private void OnAnchorChanged(Entity<OmnidirectionalThrusterComponent> ent, ref AnchorStateChangedEvent args)
