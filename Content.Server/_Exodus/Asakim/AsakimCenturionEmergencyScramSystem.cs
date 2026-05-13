@@ -4,8 +4,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Teleportation;
 using Content.Shared.Actions;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -15,7 +13,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
 using Content.Shared._Exodus.Asakim;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -25,13 +22,12 @@ namespace Content.Server._Exodus.Asakim;
 public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly AsakimIdentitySystem _asakim = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TeleportSystem _teleport = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -45,7 +41,7 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
 
     private void OnEquipped(Entity<AsakimCenturionEmergencyScramComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        if (!HasRequiredBrain(args.Wearer, ent.Comp))
+        if (!_asakim.HasAsakimBrain(args.Wearer))
             return;
 
         _actions.AddAction(args.Wearer, ref ent.Comp.ActionUid, ent.Comp.ActionProto, ent.Owner);
@@ -63,7 +59,7 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
             return;
 
         var wearer = args.Args.Target;
-        if (Deleted(wearer) || !HasRequiredBrain(wearer, ent.Comp))
+        if (Deleted(wearer) || !_asakim.HasAsakimBrain(wearer))
             return;
 
         if (_timing.CurTime < ent.Comp.NextActivation)
@@ -108,20 +104,6 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(wearer):user} was injected by {ToPrettyString(ent.Owner):using} with a solution {SharedSolutionContainerSystem.ToPrettyString(solution):removedSolution}");
 
         return true;
-    }
-
-    private bool HasRequiredBrain(EntityUid wearer, AsakimCenturionEmergencyScramComponent component)
-    {
-        if (!TryComp<BodyComponent>(wearer, out var body))
-            return false;
-
-        foreach (var (organ, _) in _body.GetBodyOrgans(wearer, body))
-        {
-            if (_tag.HasTag(organ, component.RequiredOrganTag))
-                return true;
-        }
-
-        return false;
     }
 
     private void SyncActionCooldown(Entity<AsakimCenturionEmergencyScramComponent> ent)

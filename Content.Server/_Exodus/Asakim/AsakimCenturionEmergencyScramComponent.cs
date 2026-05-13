@@ -22,9 +22,6 @@ public sealed partial class AsakimCenturionEmergencyScramComponent : Component
     public TimeSpan NextActivation = TimeSpan.Zero;
 
     [DataField]
-    public string RequiredOrganTag = "AsakimBrain";
-
-    [DataField]
     public List<ReagentQuantity> Reagents =
     [
         new("Omnizine", FixedPoint2.New(25)),
