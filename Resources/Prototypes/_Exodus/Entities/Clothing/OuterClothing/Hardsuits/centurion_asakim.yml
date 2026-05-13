@@ -36,7 +36,7 @@
     modifiers:
       coefficients:
         Blunt: 0.3
-        Slash: 0.4
+        Slash: 0.5
         Piercing: 0.25
         Heat: 0.3
         Radiation: 0

@@ -7,7 +7,7 @@
   - type: InstantAction
     checkCanInteract: false
     checkConsciousness: false
-    useDelay: 60
+    useDelay: 120
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -22,7 +22,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: WorldTargetAction
-    useDelay: 30
+    useDelay: 60
     range: 0
     itemIconStyle: NoItem
     checkCanAccess: false
