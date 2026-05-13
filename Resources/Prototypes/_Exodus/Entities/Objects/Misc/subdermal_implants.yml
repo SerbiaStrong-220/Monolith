@@ -79,3 +79,13 @@
     - SubdermalImplant
     - HideContextMenu
     - DeathAcidifier
+
+- type: entity
+  parent: MedicalTrackingImplant
+  id: AsakimTrackingImplant
+  name: asakim tracking implant
+  description: This implant reports critical life signs to the Asakim remnants channel.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Rattle
+    radioChannel: Remnants

@@ -5,7 +5,7 @@
   suffix: Asakim, Centurion
   components:
   - type: RandomHumanoidAppearance
-    randomizeName: True
+    randomizeName: False
   - type: HumanoidAppearance
   - type: Loadout
     prototypes: [AsakimCenturionGear]
@@ -13,6 +13,7 @@
   - type: AutoImplant
     implants:
     - FreedomImplant
+    - AsakimTrackingImplant
     - DeathAcidifierImplantDeadNF
   - type: GhostRole
     name: ghost-role-information-centurion-asakim-name
@@ -26,7 +27,7 @@
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
-    - NamesFirstMilitary
+    - random-metadata-name-asakim-centurion
     - NamesLastMilitary
   - type: NpcFactionMember
     factions:
