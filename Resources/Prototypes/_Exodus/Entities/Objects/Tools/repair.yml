@@ -1,0 +1,7 @@
+- type: entity
+  id: ShipRepairDeviceAsakimRedacted
+  parent: ShipRepairDeviceRedacted
+  name: asakim pre-fracture SRD
+  description: A resonant ship repair device keyed to Asakim neural patterns.
+  components:
+  - type: AsakimUseAccess
