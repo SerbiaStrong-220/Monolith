@@ -15,9 +15,9 @@
     - FreedomImplant
     - DeathAcidifierImplantDeadNF
   - type: GhostRole
-    name: ghost-role-information-asakim-name
-    description: ghost-role-information-asakim-description
-    rules: ghost-role-information-asakim-rules
+    name: ghost-role-information-centurion-asakim-name
+    description: ghost-role-information-centurion-asakim-description
+    rules: ghost-role-information-centurion-asakim-rules
     raffle:
       settings: default
     requirements:
