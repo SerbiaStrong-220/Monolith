@@ -1,0 +1,15 @@
+- type: entity
+  name: asakim centurion spawner
+  id: SpawnCenturionAsakimWarrior
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCenturionAsakimGhostrole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Mono/Mobs/Species/Asakim/parts.rsi
+      state: full
+

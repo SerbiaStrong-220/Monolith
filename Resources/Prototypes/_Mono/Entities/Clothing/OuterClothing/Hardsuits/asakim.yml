@@ -44,8 +44,8 @@
         Poison: 0.4
         Caustic: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
+    sprintModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
   - type: HeldSpeedModifier
   - type: ToggleableClothing # Goobstation - Modsuits change - Mono - this is a solution for helmet attachment/cover to not fit on hardsuits
     requiredSlot: outerclothing
