@@ -10,6 +10,10 @@
   - type: Loadout
     prototypes: [AsakimCenturionGear]
     roleLoadout: [RoleSurvivalTankOnly]
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+    - DeathAcidifierImplantDeadNF
   - type: GhostRole
     name: ghost-role-information-asakim-name
     description: ghost-role-information-asakim-description

@@ -36,7 +36,7 @@
     modifiers:
       coefficients:
         Blunt: 0.35
-        Slash: 0.85
+        Slash: 0.45 # Exodus-asakim-slash-resist
         Piercing: 0.3
         Heat: 0.4
         Radiation: 0

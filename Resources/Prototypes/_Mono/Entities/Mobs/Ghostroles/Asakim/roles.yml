@@ -10,6 +10,11 @@
   - type: Loadout
     prototypes: [AsakimGear]
     roleLoadout: [RoleSurvivalTankOnly]
+  # Exodus-asakim-auto-implant-start
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+  # Exodus-asakim-auto-implant-end
   - type: GhostRole
     name: ghost-role-information-asakim-name
     description: ghost-role-information-asakim-description
