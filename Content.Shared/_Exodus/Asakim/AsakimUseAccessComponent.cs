@@ -25,7 +25,8 @@ public sealed class AsakimUseAccessSystem : EntitySystem
         SubscribeLocalEvent<AsakimUseAccessComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<AsakimUseAccessComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(SharedShipRepairSystem)]);
         SubscribeLocalEvent<AsakimUseAccessComponent, UseInHandEvent>(OnUseInHand, before: [typeof(ActivatableUISystem)]);
-        SubscribeLocalEvent<AsakimUseAccessComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<AsakimUseAccessComponent, ActivateInWorldEvent>(OnActivateInWorld, before: [typeof(ActivatableUISystem)]);
+        SubscribeLocalEvent<AsakimUseAccessComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUiOpenAttempt);
     }
 
     private void OnBeforeRangedInteract(Entity<AsakimUseAccessComponent> ent, ref BeforeRangedInteractEvent args)
@@ -60,9 +61,17 @@ public sealed class AsakimUseAccessSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnActivatableUiOpenAttempt(Entity<AsakimUseAccessComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled || CanUse(ent, args.User))
+            return;
+
+        args.Cancel();
+    }
+
     private bool CanUse(Entity<AsakimUseAccessComponent> ent, EntityUid user)
     {
-        if (_asakim.HasAsakimBrain(user))
+        if (_asakim.HasAsakimBrain(user) || HasComp<AsakimTrustedUserComponent>(user))
             return true;
 
         _popup.PopupClient(Loc.GetString(ent.Comp.RejectedPopup), ent, user, PopupType.MediumCaution);

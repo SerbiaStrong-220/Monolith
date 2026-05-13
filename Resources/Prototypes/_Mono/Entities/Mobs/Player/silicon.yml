@@ -271,6 +271,7 @@
   parent: BorgChassisRedacted
   suffix: Battery, Module
   components:
+  - type: AsakimTrustedUser # Exodus-asakim-access
   - type: ContainerFill
     containers:
       borg_brain:
@@ -364,6 +365,7 @@
   parent: StationAiBrain
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  - type: AsakimTrustedUser # Exodus-asakim-access
   - type: Sprite
   - type: SiliconLawProvider
     laws: Redacted
