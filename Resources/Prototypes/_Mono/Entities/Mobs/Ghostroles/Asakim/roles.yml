@@ -34,10 +34,4 @@
     - Syndicate
   - type: SurgerySpeedModifier
     speedModifier: 1.5
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Remnants
-  - type: ActiveRadio
-    channels:
-    - Remnants
+  # Exodus-asakim-suit-radio: Remnants radio moved to the Asakim hardsuit.

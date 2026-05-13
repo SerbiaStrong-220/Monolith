@@ -15,6 +15,25 @@
       tags:
         - AsakimBrain
     whitelistCheckOrgans: true
+  # Exodus-asakim-suit-radio-start
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container {}
+      storagebase: !type:Container
+        ents: []
+      item: !type:ContainerSlot {}
+      key_slots: !type:Container
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyAsakimRemnants
+  - type: Headset
+    requiredSlot: outerclothing
+  - type: EncryptionKeyHolder
+    keysUnlocked: false
+    keySlots: 1
+    examineWhileLocked: false
+  # Exodus-asakim-suit-radio-end
   - type: SelfUnremovableClothing
   - type: PressureProtection
     highPressureMultiplier: 0.1
