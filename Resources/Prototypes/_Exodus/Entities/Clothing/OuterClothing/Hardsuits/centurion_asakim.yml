@@ -46,6 +46,22 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
+  - type: AsakimCenturionEmergencyScram
+    cooldown: 60
+    reagents:
+    - ReagentId: Omnizine
+      Quantity: 25
+    - ReagentId: TranexamicAcid
+      Quantity: 5
+    - ReagentId: Dexalin
+      Quantity: 5
+    - ReagentId: DexalinPlus
+      Quantity: 5
+    specifier:
+      teleportRadius: 40
+      teleportAttempts: 5
+      forceSafe: false
+      minRadiusFraction: 0.75
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     requiredSlot: outerclothing

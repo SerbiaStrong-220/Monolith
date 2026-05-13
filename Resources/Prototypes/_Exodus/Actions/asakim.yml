@@ -1,0 +1,16 @@
+- type: entity
+  id: ActionAsakimCenturionEmergencyScram
+  name: emergency displacement
+  description: Automatically injects combat stabilizers and performs an emergency random teleport when the wearer enters critical condition.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    useDelay: 60
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom4
+    event: !type:AsakimCenturionEmergencyScramActionEvent
