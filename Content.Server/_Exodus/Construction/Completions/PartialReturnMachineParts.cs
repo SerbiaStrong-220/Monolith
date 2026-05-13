@@ -94,7 +94,7 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
                 }
             }
 
-            // Delete all stack entities — we spawn from board requirements for correct amounts
+            // Delete all stack entities - we spawn from board requirements for correct amounts
             foreach (var ent in stackEntities)
             {
                 containerSys.Remove(ent, container, reparent: false);

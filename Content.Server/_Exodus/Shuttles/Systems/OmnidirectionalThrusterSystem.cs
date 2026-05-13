@@ -61,7 +61,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         if (!TryComp<ThrusterComponent>(ent, out var thruster))
             return;
 
-        // ThrusterSystem already toggled Enabled — sync power load and re-evaluate
+        // ThrusterSystem already toggled Enabled - sync power load and re-evaluate
         SyncPowerLoad(ent, thruster);
 
         if (CanEnableOmni(ent, thruster))

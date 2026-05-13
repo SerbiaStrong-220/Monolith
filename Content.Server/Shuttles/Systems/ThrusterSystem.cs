@@ -100,7 +100,7 @@ public sealed class ThrusterSystem : EntitySystem
         {
             args.PushMarkup(enabled);
 
-            // Exodus-begin: OmnidirectionalThruster — no nozzle direction for omni thrusters
+            // Exodus-begin: OmnidirectionalThruster - no nozzle direction for omni thrusters
             if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid))
                 return;
             // Exodus-end
