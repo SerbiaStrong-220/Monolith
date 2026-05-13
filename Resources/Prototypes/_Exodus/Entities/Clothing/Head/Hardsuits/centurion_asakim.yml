@@ -23,9 +23,8 @@
   - type: EyeProtection
     protectionTime: 15
   - type: ThermalVision
-    pulseTime: 1
     isEquipment: true
-    toggleAction: PulseThermalVision
+    toggleAction: ToggleThermalVision
   - type: RadarConsole
     followEntity: true
     noRotate: true
