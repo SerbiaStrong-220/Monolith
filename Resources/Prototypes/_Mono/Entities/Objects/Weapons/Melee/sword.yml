@@ -173,6 +173,11 @@
     malus: 0.6
   - type: Execution
     doAfterDuration: 4.0
+  # Exodus-asakim-katana-dash-start
+  - type: DashAbility
+    dashAction: ActionAsakimKatanaDash
+  - type: AsakimKatanaDash
+  # Exodus-asakim-katana-dash-end
 
 # Ullman Blade
 

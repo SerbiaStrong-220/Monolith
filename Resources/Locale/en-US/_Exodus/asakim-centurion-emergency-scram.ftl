@@ -3,3 +3,6 @@ ent-ActionAsakimCenturionEmergencyScram = emergency displacement
 
 asakim-centurion-emergency-scram-activated = The suit's emergency module injects stabilizers and pulls you out of combat!
 asakim-centurion-emergency-scram-passive = The emergency displacement module triggers automatically in critical condition.
+
+ent-ActionAsakimKatanaDash = phase dash
+    .desc = Dash to a visible location.

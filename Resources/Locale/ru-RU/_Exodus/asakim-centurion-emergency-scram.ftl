@@ -3,3 +3,6 @@ ent-ActionAsakimCenturionEmergencyScram = Аварийное смещение
 
 asakim-centurion-emergency-scram-activated = Аварийный модуль скафандра вкалывает стабилизаторы и уносит вас из боя!
 asakim-centurion-emergency-scram-passive = Модуль аварийного смещения срабатывает автоматически при критическом состоянии.
+
+ent-ActionAsakimKatanaDash = фазовый рывок
+    .desc = Позволяет совершить рывок в видимую точку.
