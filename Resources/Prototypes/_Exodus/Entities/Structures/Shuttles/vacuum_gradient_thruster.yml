@@ -73,6 +73,7 @@
     intensity: 25
     slope: 4.17
     enabled: false
+  - type: PoweredRadiationSource
   - type: AmbientSound
     enabled: false
     range: 10

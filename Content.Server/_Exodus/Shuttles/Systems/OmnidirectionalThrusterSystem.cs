@@ -1,8 +1,8 @@
+using Content.Server._Exodus.Power;
 using Content.Server._Exodus.Shuttles.Components;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Radiation.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.DeviceLinking.Events;
@@ -22,7 +22,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly RadiationSystem _radiation = default!;
+    [Dependency] private readonly PoweredRadiationSourceSystem _poweredRadiation = default!;
 
     public override void Initialize()
     {
@@ -153,7 +153,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
             _light.SetEnabled(uid, true, light);
 
         _ambient.SetAmbience(uid, true);
-        _radiation.SetSourceEnabled(uid, true);
+        _poweredRadiation.SetActive(uid, true);
     }
 
     private void DisableOmni(EntityUid uid, ThrusterComponent thruster)
@@ -166,7 +166,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
             _light.SetEnabled(uid, false, light);
 
         _ambient.SetAmbience(uid, false);
-        _radiation.SetSourceEnabled(uid, false);
+        _poweredRadiation.SetActive(uid, false);
 
         if (!thruster.IsOn)
             return;

@@ -201,6 +201,9 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     private void OnRotate(EntityUid uid, ThrusterComponent component, ref MoveEvent args)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         // TODO: Disable visualizer for old direction
         // TODO: Don't make them rotatable and make it require anchoring.
 
@@ -654,6 +657,9 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
     {
+        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+            return;
+
         if (component.IsOn) // safely disable thruster to prevent negative thrust
             DisableThruster(uid, component);
 
