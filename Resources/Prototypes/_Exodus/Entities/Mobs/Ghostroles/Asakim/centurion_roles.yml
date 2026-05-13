@@ -1,0 +1,38 @@
+- type: entity
+  parent: MobAsakim
+  id: MobCenturionAsakimGhostrole
+  name: centurion asakim warrior
+  suffix: Asakim, Centurion
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: True
+  - type: HumanoidAppearance
+  - type: Loadout
+    prototypes: [AsakimCenturionGear]
+    roleLoadout: [RoleSurvivalTankOnly]
+  - type: GhostRole
+    name: ghost-role-information-asakim-name
+    description: ghost-role-information-asakim-description
+    rules: ghost-role-information-asakim-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 180000 # 50 hrs
+  - type: GhostTakeoverAvailable
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstMilitary
+    - NamesLastMilitary
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Remnants
+  - type: ActiveRadio
+    channels:
+    - Remnants
