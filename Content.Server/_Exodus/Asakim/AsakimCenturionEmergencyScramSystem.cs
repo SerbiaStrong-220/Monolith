@@ -41,7 +41,7 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
 
     private void OnEquipped(Entity<AsakimCenturionEmergencyScramComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        if (!IsAsakim(args.Wearer))
+        if (!_asakim.IsAsakim(args.Wearer))
             return;
 
         _actions.AddAction(args.Wearer, ref ent.Comp.ActionUid, ent.Comp.ActionProto, ent.Owner);
@@ -59,7 +59,7 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
             return;
 
         var wearer = args.Args.Target;
-        if (Deleted(wearer) || !IsAsakim(wearer))
+        if (Deleted(wearer) || !_asakim.IsAsakim(wearer))
             return;
 
         if (_timing.CurTime < ent.Comp.NextActivation)
@@ -74,11 +74,6 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
     private void OnAction(Entity<AsakimCenturionEmergencyScramComponent> ent, ref AsakimCenturionEmergencyScramActionEvent args)
     {
         _popup.PopupEntity(Loc.GetString("asakim-centurion-emergency-scram-passive"), args.Performer, args.Performer);
-    }
-
-    private bool IsAsakim(EntityUid uid)
-    {
-        return HasComp<AsakimTrustedUserComponent>(uid) || _asakim.HasAsakimBrain(uid);
     }
 
     private void Activate(Entity<AsakimCenturionEmergencyScramComponent> ent, EntityUid wearer)

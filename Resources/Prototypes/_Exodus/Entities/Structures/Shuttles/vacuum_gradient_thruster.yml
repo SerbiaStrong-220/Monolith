@@ -50,6 +50,7 @@
     thrust: 2500
     baseThrust: 2500
     requireSpace: false
+    # Zero out inherited Heat damage: omni thrusters do not create a BurnFixture and have no nozzle direction.
     damage:
       types:
         Heat: 0

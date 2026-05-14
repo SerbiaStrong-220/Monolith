@@ -16,7 +16,7 @@ public sealed partial class AsakimCenturionEmergencyScramComponent : Component
     public EntityUid? ActionUid;
 
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromMinutes(1);
+    public TimeSpan Cooldown = TimeSpan.FromMinutes(2);
 
     [DataField]
     public TimeSpan NextActivation = TimeSpan.Zero;

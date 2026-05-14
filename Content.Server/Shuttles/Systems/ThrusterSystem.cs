@@ -412,6 +412,11 @@ public sealed class ThrusterSystem : EntitySystem
                 if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
+                // Exodus-begin OmnidirectionalThruster - omni thrusters are treated as centered and must not skew center of thrust
+                if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(ent))
+                    continue;
+                // Exodus-end
+
                 center += xform.LocalPosition * thruster.Thrust;
                 totalThrust += thruster.Thrust;
             }

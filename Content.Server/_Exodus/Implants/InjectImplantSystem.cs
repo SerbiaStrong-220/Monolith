@@ -1,108 +1,91 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Database;
-using Content.Shared.Implants.Components;
-using Content.Shared.FixedPoint;
-using Robust.Shared.Audio.Systems;
-using Content.Shared.Chemistry;
-using Content.Shared.IdentityManagement;
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Database;
+using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
 
+namespace Content.Server._Exodus.Implants;
 
-namespace Content.Server._Exodus.Implants
+public sealed class InjectImplantSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public sealed partial class InjectImplantSystem : EntitySystem
+    public override void Initialize()
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<InjectOnTriggerComponent, TriggerEvent>(OnInjectOnTrigger);
+    }
+
+    public bool InjectSolution(EntityUid user, Entity<InjectOnTriggerComponent> implant, string solutionName, float transferAmount)
+    {
+        if (!_solutionContainer.TryGetSolution(implant.Owner, solutionName, out var initialSoln, out var initialSolution))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<InjectOnTriggerComponent, TriggerEvent>(OnInjectOnTrigger);
+            Log.Error($"Couldn't find solution named {solutionName} in entity {ToPrettyString(implant.Owner)}");
+            return false;
         }
 
-        public bool InjectSolution(EntityUid user, Entity<InjectOnTriggerComponent> implantEnt, string solutionName, float transferAmount)
+        if (!_solutionContainer.TryGetInjectableSolution(user, out var targetSoln, out var targetSolution))
         {
-            var (implant, injectComp) = implantEnt;
-
-            // Try get initial solution
-            if (!_solutionContainer.TryGetSolution(implant, solutionName, out var initialSoln, out var initialSolution))
-            {
-                Log.Error($"Couldnt find solution named {solutionName} in entity {user}");
-                return false;
-            }
-
-            // Try get insert solution
-            if (!_solutionContainer.TryGetInjectableSolution(user, out var targetSoln, out var targetSolution))
-            {
-                _popup.PopupEntity(Loc.GetString("inject-trigger-cant-inject-message", ("target", Identity.Entity(user, _entMan))), user, user);
-                return false;
-            }
-
-            var realtransferAmount = FixedPoint2.Min(initialSolution.Volume, targetSolution.AvailableVolume, transferAmount);
-            if (realtransferAmount <= 0)
-            {
-                _popup.PopupEntity(Loc.GetString("inject-trigger-empty-capsule-message"), user, user);
-                return false;
-            }
-
-            // Move units from init solution to target solution
-            var removedSolution = _solutionContainer.SplitSolution(initialSoln.Value, realtransferAmount);
-            if (!targetSolution.CanAddSolution(removedSolution))
-            {
-                _popup.PopupEntity(Loc.GetString("inject-trigger-cant-inject-message", ("target", Identity.Entity(user, _entMan))), user, user);
-                return false;
-            }
-
-            _audio.PlayPvs(injectComp.InjectSound, user);
-
-            _reactiveSystem.DoEntityReaction(user, removedSolution, ReactionMethod.Injection);
-            _solutionContainer.TryAddSolution(targetSoln.Value, removedSolution);
-
-            _popup.PopupEntity(Loc.GetString("inject-trigger-feel-prick-message"), user, user);
-            _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} used inject implant with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution}");
-
-            return true;
+            _popup.PopupEntity(Loc.GetString("inject-trigger-cant-inject-message", ("target", Identity.Entity(user, EntityManager))), user, user);
+            return false;
         }
 
-        private void OnInjectOnTrigger(EntityUid uid, InjectOnTriggerComponent component, TriggerEvent args)
+        var realTransferAmount = FixedPoint2.Min(initialSolution.Volume, targetSolution.AvailableVolume, transferAmount);
+        if (realTransferAmount <= 0)
         {
-            // Get user uid
-            if (!TryComp<SubdermalImplantComponent>(uid, out var implantComp) ||
-                implantComp.ImplantedEntity == null)
-                return;
-            var user = implantComp.ImplantedEntity.Value;
-
-
-            // Geting inject solutions form many avaible solutions
-            if (component.InjectSolutions.Count == 0)
-            {
-                _popup.PopupEntity(Loc.GetString("inject-trigger-empty-message"), user, user);
-                return;
-            }
-
-            foreach (var solData in component.InjectSolutions)
-            {
-                if (solData.UsedCount >= solData.Charges)
-                    continue;
-
-                InjectSolution(user, (uid, component), solData.Name, solData.TransferAmount);
-                solData.UsedCount += 1;
-                break;
-            }
-
-            args.Handled = true;
+            _popup.PopupEntity(Loc.GetString("inject-trigger-empty-capsule-message"), user, user);
+            return false;
         }
 
+        var removedSolution = _solutionContainer.SplitSolution(initialSoln.Value, realTransferAmount);
+        if (!targetSolution.CanAddSolution(removedSolution))
+        {
+            _popup.PopupEntity(Loc.GetString("inject-trigger-cant-inject-message", ("target", Identity.Entity(user, EntityManager))), user, user);
+            return false;
+        }
+
+        _audio.PlayPvs(implant.Comp.InjectSound, user);
+        _reactiveSystem.DoEntityReaction(user, removedSolution, ReactionMethod.Injection);
+        _solutionContainer.TryAddSolution(targetSoln.Value, removedSolution);
+
+        _popup.PopupEntity(Loc.GetString("inject-trigger-feel-prick-message"), user, user);
+        _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} used inject implant with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution}");
+
+        return true;
+    }
+
+    private void OnInjectOnTrigger(Entity<InjectOnTriggerComponent> ent, ref TriggerEvent args)
+    {
+        if (!TryComp<SubdermalImplantComponent>(ent, out var implantComp) || implantComp.ImplantedEntity is not { } user)
+            return;
+
+        if (ent.Comp.InjectSolutions.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("inject-trigger-empty-message"), user, user);
+            return;
+        }
+
+        foreach (var solData in ent.Comp.InjectSolutions)
+        {
+            if (solData.UsedCount >= solData.Charges)
+                continue;
+
+            InjectSolution(user, ent, solData.Name, solData.TransferAmount);
+            solData.UsedCount += 1;
+            break;
+        }
+
+        args.Handled = true;
     }
 }

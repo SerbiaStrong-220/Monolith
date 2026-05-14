@@ -1,21 +1,16 @@
+using System.Numerics;
 using Content.Server.Pinpointer;
 using Content.Shared._Exodus.Asakim;
-using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
-using Content.Shared.Tag;
-using Robust.Shared.Prototypes;
-using System.Numerics;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Asakim;
 
 public sealed class AsakimBrainPinpointerSystem : EntitySystem
 {
-    private static readonly ProtoId<TagPrototype> AsakimBrainTag = "AsakimBrain";
-
-    [Dependency] private readonly AsakimIdentitySystem _asakim = default!;
     [Dependency] private readonly PinpointerSystem _pinpointer = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
@@ -27,54 +22,60 @@ public sealed class AsakimBrainPinpointerSystem : EntitySystem
         SubscribeLocalEvent<AsakimBrainPinpointerComponent, ActivateInWorldEvent>(OnActivate, after: [typeof(PinpointerSystem)]);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+        var query = EntityQueryEnumerator<AsakimBrainPinpointerComponent, PinpointerComponent>();
+        while (query.MoveNext(out var uid, out var asakim, out var pinpointer))
+        {
+            if (!pinpointer.IsActive || curTime < asakim.NextUpdate)
+                continue;
+
+            UpdateTarget((uid, asakim, pinpointer), curTime);
+        }
+    }
+
     private void OnActivate(Entity<AsakimBrainPinpointerComponent> ent, ref ActivateInWorldEvent args)
     {
         if (!args.Complex || !TryComp<PinpointerComponent>(ent, out var pinpointer) || !pinpointer.IsActive)
             return;
 
-        _pinpointer.SetTarget(ent, FindNearestAsakim(ent, Transform(ent)), pinpointer);
+        var curTime = _timing.CurTime;
+        if (curTime < ent.Comp.NextUpdate)
+            return;
+
+        UpdateTarget((ent.Owner, ent.Comp, pinpointer), curTime);
     }
 
-    private EntityUid? FindNearestAsakim(EntityUid source, TransformComponent sourceTransform)
+    private void UpdateTarget(Entity<AsakimBrainPinpointerComponent, PinpointerComponent> ent, TimeSpan curTime)
+    {
+        ent.Comp1.NextUpdate = curTime + ent.Comp1.UpdateInterval;
+        _pinpointer.SetTarget(ent.Owner, FindNearestAsakimBrain(ent.Owner, Transform(ent.Owner)), ent.Comp2);
+    }
+
+    private EntityUid? FindNearestAsakimBrain(EntityUid source, TransformComponent sourceTransform)
     {
         var mapId = sourceTransform.MapID;
         var sourcePosition = _transform.GetWorldPosition(sourceTransform);
         var nearestDistance = float.MaxValue;
         EntityUid? nearest = null;
 
-        var bodyQuery = EntityQueryEnumerator<BodyComponent, TransformComponent>();
-        while (bodyQuery.MoveNext(out var bodyUid, out _, out var bodyTransform))
+        var query = EntityQueryEnumerator<AsakimBrainComponent, TransformComponent>();
+        while (query.MoveNext(out var brainUid, out _, out var brainTransform))
         {
-            if (bodyUid == source || bodyTransform.MapID != mapId || !_asakim.HasAsakimBrain(bodyUid))
+            if (brainUid == source || brainTransform.MapID != mapId)
                 continue;
 
-            TrySetNearest(bodyUid, bodyTransform, sourcePosition, ref nearestDistance, ref nearest);
-        }
-
-        var tagQuery = EntityQueryEnumerator<TagComponent, TransformComponent>();
-        while (tagQuery.MoveNext(out var brainUid, out var tag, out var brainTransform))
-        {
-            if (brainUid == source || brainTransform.MapID != mapId || !_tag.HasTag(tag, AsakimBrainTag))
+            var distance = (_transform.GetWorldPosition(brainTransform, _transformQuery) - sourcePosition).LengthSquared();
+            if (distance >= nearestDistance)
                 continue;
 
-            TrySetNearest(brainUid, brainTransform, sourcePosition, ref nearestDistance, ref nearest);
+            nearestDistance = distance;
+            nearest = brainUid;
         }
 
         return nearest;
-    }
-
-    private void TrySetNearest(
-        EntityUid target,
-        TransformComponent targetTransform,
-        Vector2 sourcePosition,
-        ref float nearestDistance,
-        ref EntityUid? nearest)
-    {
-        var distance = (_transform.GetWorldPosition(targetTransform, _transformQuery) - sourcePosition).LengthSquared();
-        if (distance >= nearestDistance)
-            return;
-
-        nearestDistance = distance;
-        nearest = target;
     }
 }
