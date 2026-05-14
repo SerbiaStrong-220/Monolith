@@ -66,9 +66,8 @@
   components:
   - type: SubdermalImplant
     permanent: true
-  - type: TriggerOnMobstateChange
-    mobState:
-    - Dead
+  - type: DelayedDeathAcidifier
+    delay: 300
   - type: GibOnTrigger
     deleteItems: true
     deleteOrgans: true
