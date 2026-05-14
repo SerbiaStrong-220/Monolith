@@ -1,0 +1,9 @@
+- type: entity
+  id: PinpointerAsakimBrain
+  parent: PinpointerSyndicateNuclear
+  name: asakim pinpointer
+  description: A compact tracker tuned to the closest Asakim neural signature.
+  components:
+  - type: Pinpointer
+    targetName: asakim neural signature
+  - type: AsakimBrainPinpointer

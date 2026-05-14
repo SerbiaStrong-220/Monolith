@@ -279,7 +279,7 @@
       borg_module:
       - BorgModuleOperative
       - BorgModuleRedactedWeapon
-      - BorgModuleEsword
+      - BorgModuleAsakimEsword # Exodus-asakim-pinpointer
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool
       - BorgModuleConstruction

@@ -24,6 +24,8 @@
     - RobotTalk
     - Azaziba
   - type: CanMoveInAir
+  - type: ThermalVision
+    toggleAction: ToggleThermalVision
   - type: BorgChassis
     maxModules: 10
     moduleWhitelist:
@@ -54,17 +56,17 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      180: Critical
-      250: Dead
+      450: Critical
+      600: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      140: 0.7
-      160: 0.5
+      360: 0.7
+      420: 0.5
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 240
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -73,7 +75,7 @@
             volume: 5
     - trigger:
         !type:DamageTrigger
-        damage: 350
+        damage: 840
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -99,7 +101,7 @@
       borg_module:
       - BorgModuleOperative
       - BorgModuleAsakimBlackShieldWeapon
-      - BorgModuleEsword
+      - BorgModuleAsakimEsword
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool
       - BorgModuleDefibrillator
