@@ -1,9 +1,9 @@
 namespace Content.Server._Exodus.ShipShields;
 
 /// <summary>
-/// When attached to a ship shield emitter, queues an explosion the moment its accumulated damage
-/// crosses the configured DamageLimit (the rising edge that triggers overload).
-/// Does NOT fire on power-loss recharge — only on damage-induced overload.
+/// When attached to a ship shield emitter, queues an explosion the moment the emitter is forced
+/// into overload by damage — either by the power-draw cap (LoadDamage &gt;= MaxDraw) or by the
+/// hard damage cap (Damage &gt; DamageLimit). Does NOT fire on plain power-loss recharge.
 /// </summary>
 [RegisterComponent, Access(typeof(ExplodeOnShieldOverloadSystem))]
 public sealed partial class ExplodeOnShieldOverloadComponent : Component
@@ -27,8 +27,8 @@ public sealed partial class ExplodeOnShieldOverloadComponent : Component
     public bool Triggered;
 
     /// <summary>
-    /// Tracked across ticks to detect the rising edge Damage &lt;= Limit -&gt; Damage &gt; Limit.
+    /// Tracked across ticks to detect the rising edge of "overloaded by damage, while powered".
     /// </summary>
     [ViewVariables]
-    public bool WasOverLimit;
+    public bool WasOverloadedByDamage;
 }

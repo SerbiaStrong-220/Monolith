@@ -1,12 +1,15 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Power.Components;
 using Content.Shared._Crescent.ShipShields;
 using Content.Shared._Exodus.ShipShields;
 
 namespace Content.Server._Exodus.ShipShields;
 
 /// <summary>
-/// Triggers an explosion on shield emitters whose accumulated damage crosses
-/// the configured DamageLimit (forced overload). Skips overloads caused by power loss alone.
+/// Triggers an explosion on shield emitters that are forced into overload by damage.
+/// Overload from damage means either the power-draw cap (LoadDamage &gt;= MaxDraw)
+/// or the hard damage cap (Damage &gt; DamageLimit) was crossed while the emitter was powered.
+/// Skips overloads caused by pure power loss.
 /// </summary>
 public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
 {
@@ -16,15 +19,17 @@ public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ExplodeOnShieldOverloadComponent, ShipShieldEmitterComponent>();
-        while (query.MoveNext(out var uid, out var explode, out var emitter))
+        var query = EntityQueryEnumerator<ExplodeOnShieldOverloadComponent, ShipShieldEmitterComponent, ApcPowerReceiverComponent>();
+        while (query.MoveNext(out var uid, out var explode, out var emitter, out var power))
         {
             if (explode.Triggered)
                 continue;
 
-            var overLimit = emitter.Damage > emitter.DamageLimit;
+            var overloadedByDamage = power.Powered
+                                     && (CalculateLoadDamage(emitter) >= emitter.MaxDraw
+                                         || emitter.Damage > emitter.DamageLimit);
 
-            if (overLimit && !explode.WasOverLimit)
+            if (overloadedByDamage && !explode.WasOverloadedByDamage)
             {
                 explode.Triggered = true;
                 var ev = new ShipShieldOverloadedEvent();
@@ -38,7 +43,16 @@ public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
                     explode.MaxTileIntensity);
             }
 
-            explode.WasOverLimit = overLimit;
+            explode.WasOverloadedByDamage = overloadedByDamage;
         }
+    }
+
+    /// <summary>
+    /// Mirror of the private formula in <see cref="Content.Server._Crescent.ShipShields.ShipShieldsSystem"/>.
+    /// Kept in sync manually because the upstream method is private.
+    /// </summary>
+    private static float CalculateLoadDamage(ShipShieldEmitterComponent emitter)
+    {
+        return (float)Math.Clamp(Math.Pow(emitter.Damage, emitter.DamageExp) * emitter.PowerModifier, 0f, emitter.MaxDraw);
     }
 }
