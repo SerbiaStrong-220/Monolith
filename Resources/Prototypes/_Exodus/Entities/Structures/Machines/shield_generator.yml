@@ -7,7 +7,7 @@
   components:
   - type: ShipShieldEmitter
     damageLimit: 500000
-    healPerSecond: 4000
+    healPerSecond: 1100
     damageExp: 1.05
     baseDraw: 100000
     maxDraw: 500000
