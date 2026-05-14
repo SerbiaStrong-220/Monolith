@@ -263,7 +263,8 @@ namespace Content.Server.Communications
                 // Exodus-begin asakim-communications-console
                 if (tryGetIdentityShortInfoEvent.Title != null)
                     author = tryGetIdentityShortInfoEvent.Title;
-                else if (TryComp<AsakimCommunicationsConsoleComponent>(uid, out var asakimComms) && _asakim.HasAsakimBrain(mob))
+                else if (TryComp<AsakimCommunicationsConsoleComponent>(uid, out var asakimComms) &&
+                         (HasComp<AsakimTrustedUserComponent>(mob) || _asakim.HasAsakimBrain(mob)))
                     author = Loc.GetString(asakimComms.SenderFallback, ("user", Identity.Name(mob, EntityManager)));
                 // Exodus-end asakim-communications-console
 

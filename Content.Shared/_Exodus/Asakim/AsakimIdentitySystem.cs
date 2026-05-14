@@ -12,6 +12,11 @@ public sealed class AsakimIdentitySystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
+    public bool IsAsakim(EntityUid uid)
+    {
+        return HasComp<AsakimTrustedUserComponent>(uid) || HasAsakimBrain(uid);
+    }
+
     public bool HasAsakimBrain(EntityUid uid)
     {
         if (!TryComp<BodyComponent>(uid, out var body))

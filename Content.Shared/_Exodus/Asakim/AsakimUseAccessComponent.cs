@@ -71,7 +71,7 @@ public sealed class AsakimUseAccessSystem : EntitySystem
 
     private bool CanUse(Entity<AsakimUseAccessComponent> ent, EntityUid user)
     {
-        if (_asakim.HasAsakimBrain(user) || HasComp<AsakimTrustedUserComponent>(user))
+        if (_asakim.IsAsakim(user))
             return true;
 
         _popup.PopupClient(Loc.GetString(ent.Comp.RejectedPopup), ent, user, PopupType.MediumCaution);

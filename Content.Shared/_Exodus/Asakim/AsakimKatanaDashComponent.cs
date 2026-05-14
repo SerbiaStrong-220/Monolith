@@ -18,7 +18,7 @@ public sealed class AsakimKatanaDashSystem : EntitySystem
 
     private void OnCheckDash(Entity<AsakimKatanaDashComponent> ent, ref CheckDashEvent args)
     {
-        if (!_asakim.HasAsakimBrain(args.User))
+        if (!_asakim.IsAsakim(args.User))
             args.Cancelled = true;
     }
 }
