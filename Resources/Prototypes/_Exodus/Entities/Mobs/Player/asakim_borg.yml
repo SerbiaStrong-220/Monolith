@@ -128,5 +128,5 @@
     prototype: AsakimRedactedBorg
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 180000 # 50 hrs
   - type: GhostTakeoverAvailable
