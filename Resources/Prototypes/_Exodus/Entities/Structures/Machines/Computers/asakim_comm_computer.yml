@@ -5,6 +5,7 @@
   description: A pre-fracture communications console keyed to Asakim neural patterns.
   components:
   - type: AsakimUseAccess
+  - type: AsakimCommunicationsConsole
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
