@@ -2,3 +2,6 @@ ent-SpawnCenturionAsakimWarrior = спавнер центуриона азаки
     .desc = { ent-MarkerBase.desc }
     .suffix = Азаким, Центурион
 
+ent-SpawnAsakimRedactedBorg = спавнер Оператора Персональной Защиты
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Азаким, АСЗ
