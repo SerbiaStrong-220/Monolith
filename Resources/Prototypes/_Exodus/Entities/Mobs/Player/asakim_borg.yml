@@ -28,6 +28,7 @@
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
+      - BorgModuleMedical
       - BorgModuleEngineering
       - BorgModuleSyndicate
       - BorgModuleSyndicateAssault
@@ -96,19 +97,18 @@
       - PositronicBrain
       borg_module:
       - BorgModuleOperative
-      - BorgModuleRedactedWeapon
       - BorgModuleEsword
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool
-      - BorgModuleConstruction
-      - BorgModuleCable
+      - BorgModuleDefibrillator
+      - BorgModuleAdvancedParamedic
       - BorgModuleRedactedRCD
       - BorgModuleGPS
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellAntiqueProto
+        startingItem: PowerCellAntiqueProtoEmpProof
 
 - type: entity
   id: PlayerBorgAsakimRedactedGhostRole

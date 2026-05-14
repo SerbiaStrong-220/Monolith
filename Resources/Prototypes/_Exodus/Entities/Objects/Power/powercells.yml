@@ -1,0 +1,9 @@
+- type: entity
+  parent: PowerCellAntiqueProto
+  id: PowerCellAntiqueProtoEmpProof
+  name: EMP-proof antique power cell prototype
+  suffix: Full, EMP-proof
+  components:
+  - type: EmpImmune
+  - type: EmpResistance
+    coefficient: 0
