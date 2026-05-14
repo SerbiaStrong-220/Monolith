@@ -89,3 +89,4 @@
   components:
   - type: Rattle
     radioChannel: Remnants
+    language: Azaziba
