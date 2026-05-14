@@ -5,3 +5,6 @@ ghost-role-information-centurion-asakim-rules =
     Your objectives are to [color=red]capture and hold points of interest[/color], protect pre-fracture technology, and direct other Asakim operating in the sector.
     Reading the guidebook is [color=red][bold]mandatory for this role[/bold][/color].
     You do not remember your previous life or anything learned while you were a ghost.
+
+ghost-role-information-asakim-redacted-borg = Asakim ADS Tender
+ghost-role-information-asakim-redacted-borg-description = A synthetic tender assigned to an Asakim automated defense vessel.

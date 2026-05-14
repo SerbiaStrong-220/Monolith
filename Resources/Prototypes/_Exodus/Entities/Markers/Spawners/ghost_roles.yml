@@ -13,3 +13,32 @@
     - sprite: _Mono/Mobs/Species/Asakim/parts.rsi
       state: full
 
+- type: entity
+  name: asakim ADS tender spawner
+  id: SpawnAsakimRedactedBorg
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimRedactedGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/asakim_guard.rsi
+      state: azakim_guard
+
+- type: entity
+  name: asakim ADS playtime-locked tender spawner
+  id: SpawnAsakimRedactedBorgPlaytime
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimRedactedGhostRolePlaytime
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/asakim_guard.rsi
+      state: azakim_guard

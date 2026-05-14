@@ -7,3 +7,6 @@ ghost-role-information-centurion-asakim-rules =
     Прочтение руководства [color=red][bold]обязательно для этой роли[/bold][/color].
     Важно: [color=red][bold]это ответственная роль![/bold][/color]
     Вы не помните свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.
+
+ghost-role-information-asakim-redacted-borg = Оператор автоматической защиты Азакимов
+ghost-role-information-asakim-redacted-borg-description = Синтетик сопровождения шаттла автоматической обороны Азакимов.
