@@ -6,5 +6,5 @@ ghost-role-information-centurion-asakim-rules =
     Reading the guidebook is [color=red][bold]mandatory for this role[/bold][/color].
     You do not remember your previous life or anything learned while you were a ghost.
 
-ghost-role-information-asakim-redacted-borg = Asakim ADS Tender
-ghost-role-information-asakim-redacted-borg-description = A synthetic tender assigned to an Asakim automated defense vessel.
+ghost-role-information-asakim-redacted-borg = Personal Protection Operator
+ghost-role-information-asakim-redacted-borg-description = A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.

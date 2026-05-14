@@ -1,5 +1,5 @@
-ent-BorgChassisAsakimRedacted = asakim ADS tender
-    .desc = A tender to an automated drone ship, to keep its internal mechanisms intact.
+ent-BorgChassisAsakimRedacted = personal protection operator
+    .desc = A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
 
-ent-PlayerBorgAsakimRedacted = asakim ADS tender
-    .desc = A tender to an automated drone ship, to keep its internal mechanisms intact.
+ent-PlayerBorgAsakimRedacted = personal protection operator
+    .desc = A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
