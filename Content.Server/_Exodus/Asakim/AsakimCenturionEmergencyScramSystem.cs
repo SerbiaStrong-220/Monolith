@@ -55,7 +55,7 @@ public sealed class AsakimCenturionEmergencyScramSystem : EntitySystem
 
     private void OnMobStateChanged(Entity<AsakimCenturionEmergencyScramComponent> ent, ref InventoryRelayedEvent<MobStateChangedEvent> args)
     {
-        if (args.Args.NewMobState != MobState.Critical || args.Args.OldMobState == MobState.Critical)
+        if (args.Args.NewMobState != MobState.Critical || args.Args.OldMobState != MobState.Alive)
             return;
 
         var wearer = args.Args.Target;
