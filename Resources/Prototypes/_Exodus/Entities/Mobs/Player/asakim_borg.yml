@@ -23,6 +23,7 @@
     - TauCetiBasic
     - RobotTalk
     - Azaziba
+  - type: CanMoveInAir
   - type: BorgChassis
     maxModules: 10
     moduleWhitelist:
@@ -97,6 +98,7 @@
       - PositronicBrain
       borg_module:
       - BorgModuleOperative
+      - BorgModuleAsakimBlackShieldWeapon
       - BorgModuleEsword
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool

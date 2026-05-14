@@ -1,0 +1,18 @@
+- type: entity
+  id: BorgModuleAsakimBlackShieldWeapon
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseFactionGearOtherFactionT3 ]
+  name: black shield weapon cyborg module
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: mercenary
+    - state: icon-mercenary
+  - type: ItemBorgModule
+    moduleId: Security
+    items:
+    - WeaponRifleAsakimAutopulserADM
+    - WeaponSmartLmgAsakimBorg
+    - HoloprojectorFieldAsakimBorg
+  - type: BorgModuleIcon
+    icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
