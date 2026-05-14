@@ -1,0 +1,23 @@
+- type: entity
+  id: MachineShieldMS750Circuitboard
+  parent: BaseMachineCircuitboard
+  name: MS-750 shield generator board
+  description: A machine board for a vintage Prometheus shield generator. Lost technology.
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShieldGeneratorMS750
+    componentRequirements:
+      AmeFuelContainer:
+        amount: 12
+        defaultPrototype: AmeJar
+    stackRequirements:
+      Glass: 50
+      Steel: 50
+      Plasma: 100
+      Plasteel: 75
+      Gold: 50
+      Silver: 30
+      UraniumFissile: 5
+      Bluespace: 5

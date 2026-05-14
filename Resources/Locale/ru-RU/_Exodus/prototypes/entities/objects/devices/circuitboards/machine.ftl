@@ -3,3 +3,6 @@ ent-VacuumGradientThrusterMachineCircuitboard = плата двигателя в
 
 ent-GyrodyneMachineCircuitboard = плата гиродина
     .desc = Плата машины для гиродина. Мощный гироскоп с блюспейс-усилителем.
+
+ent-MachineShieldMS750Circuitboard = плата генератора щита МС-750
+    .desc = Плата машины для дораскольного генератора щита Прометей. Утерянная технология.
