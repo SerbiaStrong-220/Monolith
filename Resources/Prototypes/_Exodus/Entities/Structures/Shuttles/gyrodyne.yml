@@ -66,6 +66,7 @@
         sound:
           collection: MetalBreak
   - type: Transform
+    anchored: true
     noRot: true
   - type: Sprite
     sprite: _Exodus/Structures/Shuttles/gyrodyne.rsi
