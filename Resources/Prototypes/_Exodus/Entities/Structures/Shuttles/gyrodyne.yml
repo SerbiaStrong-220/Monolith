@@ -97,6 +97,9 @@
     volume: -4
     sound:
       path: /Audio/Effects/shuttle_thruster.ogg
+  - type: Rotatable
+    rotateWhileAnchored: false
+    rotateWhilePulling: false
   - type: Anchorable
     flags: Anchorable
   - type: StaticPrice

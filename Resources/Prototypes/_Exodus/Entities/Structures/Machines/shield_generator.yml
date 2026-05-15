@@ -10,7 +10,7 @@
     healPerSecond: 1100
     damageExp: 1.05
     baseDraw: 100000
-    maxDraw: 500000
+    maxDraw: 200000
     unpoweredBonus: 6
     damageOverloadTimePunishment: 40
     shieldColor: "#D4AF37"
