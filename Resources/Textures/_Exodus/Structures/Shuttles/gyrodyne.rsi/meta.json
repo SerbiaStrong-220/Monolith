@@ -8,16 +8,13 @@
     },
     "states": [
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "thrust",
-            "directions": 1
+            "name": "thrust"
         },
         {
             "name": "thrust_burn",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -29,7 +26,6 @@
         },
         {
             "name": "thrust_burn_unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.1,

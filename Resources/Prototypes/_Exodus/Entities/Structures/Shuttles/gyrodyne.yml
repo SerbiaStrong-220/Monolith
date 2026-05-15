@@ -25,7 +25,7 @@
     A massive bluespace-assisted gyroscope capable of rotating even the largest vessels.
     Requires significant power to operate.
   placement:
-    mode: SnapgridCenter
+    mode: AlignTileAny
   components:
   - type: Machine
     board: GyrodyneMachineCircuitboard
@@ -37,7 +37,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-1.45,1.45,0.45"
+          bounds: "-1.0,-1.0,1.0,1.0"
         density: 1200
         mask:
         - MachineMask
@@ -65,13 +65,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-  - type: Transform
-    anchored: true
-    noRot: true
   - type: Sprite
     sprite: _Exodus/Structures/Shuttles/gyrodyne.rsi
-    noRot: true
-    offset: 0.5,-0.5
     layers:
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]

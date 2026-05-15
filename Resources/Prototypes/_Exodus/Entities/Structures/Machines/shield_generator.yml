@@ -6,11 +6,12 @@
   suffix: ADS ONLY
   components:
   - type: ShipShieldEmitter
-    damageLimit: 500000
+    damageLimit: 1000000
     healPerSecond: 1100
     damageExp: 1.05
+    powerModifier: 0.056
     baseDraw: 100000
-    maxDraw: 150000
+    maxDraw: 200000
     unpoweredBonus: 6
     damageOverloadTimePunishment: 40
     shieldColor: "#D4AF37"
