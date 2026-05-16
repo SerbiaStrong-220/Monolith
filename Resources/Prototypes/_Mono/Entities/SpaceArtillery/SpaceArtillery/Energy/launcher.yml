@@ -327,8 +327,8 @@
   - type: Appearance
   - type: AmmoCounter
   - type: Battery
-    maxCharge: 200000
-    startingCharge: 200000
+    maxCharge: 50000 # Exodus scylla rework 1k to 250
+    startingCharge: 50000 # Exodus scylla rework 1k to 250
   - type: ExaminableBattery
   - type: WirelessNetworkConnection
     range: 500
@@ -336,13 +336,17 @@
     projectileSpeed: 240
     minAngle: 0
     maxAngle: 8
-    fireRate: 1
+    fireRate: 20 # Exodus scylla rework
     recoil: 10 # 2/5x
-    burstCooldown: 16
-    burstFireRate: 50
-    shotsPerBurst: 50
-    selectedMode: Burst
-    availableModes: Burst
+  # Exodus scylla rework begin
+
+  #  burstCooldown: 16
+  #  burstFireRate: 50
+  #  shotsPerBurst: 50
+  #  selectedMode: Burst
+  #  availableModes: Burst
+
+  # Exodus scylla rework end
     shootThermalSignature: 500000 # ~5.6km with continuous fire
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/autopulse_laser_fire_01.ogg
@@ -350,7 +354,7 @@
       path: /Audio/Weapons/click.ogg
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 300
+    autoRechargeRate: 400 # Exodus scylla rework
   - type: SpaceArtillery
     powerChargeRate: 700
     powerUsePassive: 100
@@ -372,7 +376,7 @@
   - type: ShipGunType
     shipType: Energy
   - type: ShipGunClass
-    shipClass: Heavy
+    shipClass: SuperHeavy # Exodus scylla rework 9 to 12
   - type: ShipRepairable
     repairTime: 70
     repairCost: 150
