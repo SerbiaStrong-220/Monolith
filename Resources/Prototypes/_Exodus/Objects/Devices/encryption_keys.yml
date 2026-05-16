@@ -20,3 +20,9 @@
     channels:
     - channel: Remnants
     defaultChannel: Remnants
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    layers:
+    - state: crypt_gold
+    - state: pirate_label
