@@ -81,8 +81,8 @@ public sealed class InjectImplantSystem : EntitySystem
             if (solData.UsedCount >= solData.Charges)
                 continue;
 
-            InjectSolution(user, ent, solData.Name, solData.TransferAmount);
-            solData.UsedCount += 1;
+            if (InjectSolution(user, ent, solData.Name, solData.TransferAmount))
+                solData.UsedCount += 1;
             break;
         }
 

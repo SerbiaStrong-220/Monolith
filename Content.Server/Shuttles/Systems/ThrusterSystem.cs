@@ -406,6 +406,7 @@ public sealed class ThrusterSystem : EntitySystem
             var index = (int)dir / 2;
             var pop = shuttle.LinearThrusters[index];
             var totalThrust = 0f;
+            var effectiveCount = 0; // Exodus: omni thrusters are skipped, do not count them in the divisor
 
             foreach (var ent in pop)
             {
@@ -419,9 +420,11 @@ public sealed class ThrusterSystem : EntitySystem
 
                 center += xform.LocalPosition * thruster.Thrust;
                 totalThrust += thruster.Thrust;
+                effectiveCount++; // Exodus
             }
 
-            center /= pop.Count * totalThrust;
+            if (effectiveCount > 0 && totalThrust > 0) // Exodus: guard against div-by-zero on all-omni grids
+                center /= effectiveCount * totalThrust;
             shuttle.CenterOfThrust[index] = center;
         }
     }

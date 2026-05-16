@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Asakim;
 
@@ -11,12 +12,24 @@ public sealed partial class AsakimUseAccessComponent : Component
 {
     [DataField]
     public LocId RejectedPopup = "asakim-use-access-rejected";
+
+    /// <summary>
+    /// One physical interaction (e.g. opening a UI) raises several events in succession
+    /// (UseInHand → ActivatableUIOpenAttempt). Without dedup the user sees the reject popup
+    /// twice in a row. We swallow repeat popups within this window.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan NextPopupAllowed;
+
+    [DataField]
+    public TimeSpan PopupDedupeWindow = TimeSpan.FromMilliseconds(250);
 }
 
 public sealed class AsakimUseAccessSystem : EntitySystem
 {
     [Dependency] private readonly AsakimIdentitySystem _asakim = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -74,7 +87,13 @@ public sealed class AsakimUseAccessSystem : EntitySystem
         if (_asakim.IsAsakim(user))
             return true;
 
-        _popup.PopupClient(Loc.GetString(ent.Comp.RejectedPopup), ent, user, PopupType.MediumCaution);
+        var curTime = _timing.CurTime;
+        if (curTime >= ent.Comp.NextPopupAllowed)
+        {
+            _popup.PopupClient(Loc.GetString(ent.Comp.RejectedPopup), ent, user, PopupType.MediumCaution);
+            ent.Comp.NextPopupAllowed = curTime + ent.Comp.PopupDedupeWindow;
+        }
+
         return false;
     }
 }

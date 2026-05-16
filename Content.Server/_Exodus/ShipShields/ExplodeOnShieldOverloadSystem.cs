@@ -1,7 +1,6 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Shared._Crescent.ShipShields;
-using Content.Shared._Exodus.ShipShields;
 
 namespace Content.Server._Exodus.ShipShields;
 
@@ -32,8 +31,6 @@ public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
             if (overloadedByDamage && !explode.WasOverloadedByDamage)
             {
                 explode.Triggered = true;
-                var ev = new ShipShieldOverloadedEvent();
-                RaiseLocalEvent(uid, ref ev);
 
                 _explosion.QueueExplosion(
                     uid,
