@@ -22,7 +22,15 @@
       "directions": 4
     },
     {
-      "name": "e_sword_blade"
+      "name": "e_sword_blade",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
     },
     {
       "name": "equipped-SUITSTORAGE",

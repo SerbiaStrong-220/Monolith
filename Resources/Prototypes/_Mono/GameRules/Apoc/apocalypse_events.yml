@@ -14,6 +14,7 @@
     - id: UnknownShuttleMantarayApoc # Exodus
     - id: UnknownShuttleCrowApoc # Exodus
     - id: UnknownShuttleOmenApoc # Exodus
+    - id: UnknownShuttleAzimuthApoc # Exodus-azimuth
 
 - type: entity
   parent: BaseRandomShuttleRule

@@ -1,0 +1,61 @@
+- type: entityTable
+  id: ExodusT3ShipsTable
+  table: !type:AllSelector
+    children:
+    - id: UnknownShuttleAzimuth
+
+- type: entity
+  id: ExodusT3ShipsScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: ExodusT3ShipsTable
+    minimumTimeUntilFirstEvent: 7200 # 2 hours
+    minMaxEventTiming:
+      min: 5400 # 90 minutes between events
+      max: 7200 # 120 minutes between events
+
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleAzimuth
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-cruiser-detected
+    startAudio:
+      path: /Audio/_Exodus/Asakim/Announcements/azimuth.ogg
+    weight: 1.5
+    maxOccurrences: 1
+  - type: GameRule
+    minPlayers: 50
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/azimuth.yml
+  - type: GameRuleRequirements
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 7
+    - !type:AsakimPlayersRequirement
+      minAsakimPlayers: 1
+
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleAzimuthApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-cruiser-detected
+    startAudio:
+      path: /Audio/_Exodus/Asakim/Announcements/azimuth.ogg
+    weight: 5
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 35
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/azimuth.yml
+  - type: GameRuleRequirements
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 7
+    - !type:AsakimPlayersRequirement
+      minAsakimPlayers: 1
