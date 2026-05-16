@@ -67,6 +67,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
