@@ -13,8 +13,8 @@
       tableId: ExodusT3ShipsTable
     minimumTimeUntilFirstEvent: 7200 # 2 hours
     minMaxEventTiming:
-      min: 5400 # 90 minutes between events
-      max: 7200 # 120 minutes between events
+      min: 3600 # fixed 60 minutes between attempts
+      max: 3600
 
 - type: entity
   parent: BaseRandomShuttleRule
