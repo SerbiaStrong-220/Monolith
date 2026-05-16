@@ -51,6 +51,25 @@
     powerLoad: 100000
   - type: Machine
     board: MachineShieldMS750Circuitboard
+  - type: Construction
+    graph: MachineImmovable
+    node: machine
+    containers:
+    - machine_board
+    - machine_parts
+  - type: Anchorable
+    flags: Anchorable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: ShipRepairable
     repairTime: 30
     repairCost: 400
