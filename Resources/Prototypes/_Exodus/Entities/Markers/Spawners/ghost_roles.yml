@@ -14,6 +14,16 @@
       state: full
 
 - type: entity
+  name: asakim centurion spawner
+  id: SpawnCenturionAsakimWarriorNoTimelock
+  parent: SpawnCenturionAsakimWarrior
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCenturionAsakimGhostroleNoTimelock
+
+- type: entity
   name: personal protection operator spawner
   id: SpawnAsakimRedactedBorg
   parent: MarkerBase
@@ -27,3 +37,13 @@
     - state: green
     - sprite: _Exodus/Mobs/Silicon/asakim_guard.rsi
       state: azakim_guard
+
+- type: entity
+  name: personal protection operator spawner
+  id: SpawnAsakimRedactedBorgNoTimelock
+  parent: SpawnAsakimRedactedBorg
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimRedactedGhostRoleNoTimelock

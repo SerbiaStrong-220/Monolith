@@ -63,7 +63,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
-  - type: AsakimCenturionEmergencyScram
+  - type: EmergencyReagentInjector
     cooldown: 120
     reagents:
     - ReagentId: Omnizine
@@ -74,6 +74,8 @@
       Quantity: 5
     - ReagentId: DexalinPlus
       Quantity: 5
+  - type: EmergencyTeleport
+    cooldown: 120
     specifier:
       teleportRadius: 40
       teleportAttempts: 5

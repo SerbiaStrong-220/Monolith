@@ -1,0 +1,16 @@
+- type: entity
+  id: ActionEmergencyTeleport
+  name: emergency teleport
+  description: When the wearer enters critical condition, automatically teleports them to a random nearby location.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    useDelay: 120
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom4
+    event: !type:EmergencyTeleportActionEvent

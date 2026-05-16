@@ -23,7 +23,7 @@
       settings: default
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 360000 # 100 hrs
+      time: 270000 # 75 hrs
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
@@ -34,3 +34,16 @@
     - Syndicate
   - type: SurgerySpeedModifier
     speedModifier: 1.5
+
+- type: entity
+  parent: MobCenturionAsakimGhostrole
+  id: MobCenturionAsakimGhostroleNoTimelock
+  suffix: Asakim, Centurion, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-centurion-asakim-name
+    description: ghost-role-information-centurion-asakim-description
+    rules: ghost-role-information-centurion-asakim-rules
+    raffle:
+      settings: default
+    requirements: []
