@@ -345,7 +345,9 @@
   #  shotsPerBurst: 50
   #  selectedMode: Burst
   #  availableModes: Burst
-
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
   # Exodus scylla rework end
     shootThermalSignature: 500000 # ~5.6km with continuous fire
     soundGunshot:
