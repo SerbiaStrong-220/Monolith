@@ -24,14 +24,27 @@
 
 - type: entity
   id: MachineCrucibleConsole
-  parent: BaseStructureComputerTabletop
+  parent: BaseComputer
   name: ent-MachineCrucibleConsole
   description: ent-MachineCrucibleConsole.desc
   components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: crucible_red
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: CrucibleConsole
+  - type: ActivatableUI
+    key: enum.CrucibleConsoleUiKey.Key
+    activateSound: /Audio/Machines/machine_switch.ogg # Добавь это!
+
   - type: UserInterface
     interfaces:
       enum.CrucibleConsoleUiKey.Key:
         type: CrucibleBoundUserInterface
-  - type: ActivatableUI
-    key: enum.CrucibleConsoleUiKey.Key
