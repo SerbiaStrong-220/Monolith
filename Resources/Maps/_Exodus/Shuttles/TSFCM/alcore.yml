@@ -4,7 +4,7 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/06/2026 17:58:18
+  time: 05/16/2026 09:07:27
   entityCount: 2017
 maps: []
 grids:
@@ -136,10 +136,10 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Puddle: []
         Smoke: []
         Kudzu: []
         MetalFoam: []
+        Puddle: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -8338,6 +8338,12 @@ entities:
       parent: 1
 - proto: RadarEdgeMarkerDiagonal
   entities:
+  - uid: 576
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.5,48.5
+      parent: 1
   - uid: 1242
     components:
     - type: Transform
@@ -8882,12 +8888,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,45.5
-      parent: 1
-  - uid: 1338
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,48.5
       parent: 1
   - uid: 1339
     components:
@@ -10535,29 +10535,27 @@ entities:
           - 737
           - 736
           - 738
-- proto: SuitStorageEVANfsd
-  entities:
-  - uid: 576
-    components:
-    - type: Transform
-      pos: 1.5,48.5
-      parent: 1
-  - uid: 1113
-    components:
-    - type: Transform
-      pos: -0.5,48.5
-      parent: 1
-- proto: SuitStorageSheriff
+- proto: SuitStorageM82c
   entities:
   - uid: 330
     components:
     - type: Transform
-      pos: 0.5,36.5
+      pos: 1.5,48.5
       parent: 1
   - uid: 332
     components:
     - type: Transform
+      pos: -0.5,48.5
+      parent: 1
+  - uid: 1113
+    components:
+    - type: Transform
       pos: 0.5,35.5
+      parent: 1
+  - uid: 1338
+    components:
+    - type: Transform
+      pos: 0.5,36.5
       parent: 1
 - proto: TableFolding
   entities:
