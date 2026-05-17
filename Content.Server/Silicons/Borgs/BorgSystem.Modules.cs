@@ -270,6 +270,9 @@ public sealed partial class BorgSystem
     // Exodus-begin borg module item cleanup
     private void DeleteProvidedItems(EntityUid chassis, ItemBorgModuleComponent component)
     {
+        if (TerminatingOrDeleted(chassis))
+            return;
+
         if (TryComp<HandsComponent>(chassis, out var hands))
         {
             foreach (var (handId, item) in component.ProvidedItems)
@@ -355,7 +358,13 @@ public sealed partial class BorgSystem
                     !CanInsertDuplicateModulePrototype(uid, module, containedModuleUid)) // Exodus military borg module duplicates
                 {
                     if (user != null)
-                        Popup.PopupEntity(Loc.GetString("borg-module-duplicate"), uid, user.Value);
+                    {
+                        // Exodus-begin borg module conflict popup
+                        var sameProto = Prototype(module)?.ID == Prototype(containedModuleUid)?.ID;
+                        var message = sameProto ? "borg-module-duplicate" : "borg-module-conflict";
+                        Popup.PopupEntity(Loc.GetString(message), uid, user.Value);
+                        // Exodus-end
+                    }
                     return false;
                 }
             }
