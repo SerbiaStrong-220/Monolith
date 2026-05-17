@@ -59,10 +59,6 @@
   suffix: For Borgs
   description: A turbo laser adapted for cyborg use. Its internal power system cannot be reloaded externally and slowly recharges itself.
   components:
-  - type: ClothingSpeedModifier
-    walkModifier: 0.95
-    sprintModifier: 0.7
-  - type: HeldSpeedModifier
   - type: Item
     size: Ginormous
     inhandVisuals:
@@ -115,7 +111,7 @@
     maxAngle: 10
     burstFireRate: 9
     shotsPerBurst: 5
-    burstCooldown: 0.5
+    burstCooldown: 1
     soundGunshot:
       path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
