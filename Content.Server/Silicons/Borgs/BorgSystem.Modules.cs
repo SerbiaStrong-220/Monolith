@@ -273,35 +273,6 @@ public sealed partial class BorgSystem
         if (TerminatingOrDeleted(chassis))
             return;
 
-        if (TryComp<HandsComponent>(chassis, out var hands))
-        {
-            foreach (var (handId, item) in component.ProvidedItems)
-            {
-                if (!TerminatingOrDeleted(item) &&
-                    _hands.TryGetHand(chassis, handId, out var hand, hands) &&
-                    hand.Container != null &&
-                    hand.Container.ContainedEntity == item)
-                {
-                    RemComp<UnremoveableComponent>(item);
-                    _container.Remove(item, hand.Container, force: true);
-                }
-
-                if (!TerminatingOrDeleted(item))
-                    QueueDel(item);
-                _hands.RemoveHand(chassis, handId, hands);
-            }
-        }
-        else
-        {
-            foreach (var item in component.ProvidedItems.Values)
-            {
-                if (!TerminatingOrDeleted(item))
-                    QueueDel(item);
-            }
-        }
-
-        component.ProvidedItems.Clear();
-
         if (component.ProvidedContainer != null)
         {
             foreach (var item in component.ProvidedContainer.ContainedEntities.ToArray())
