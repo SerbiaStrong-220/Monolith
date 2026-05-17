@@ -20,9 +20,6 @@
     - BorgModulePDVStandardWeapon
     - BorgModulePDVStandardAssault
     - BorgModulePDVAdvancedWeapon
-    - BorgModuleTSFStandardWeapon
-    - BorgModuleTSFStandardAssault
-    - BorgModuleTSFAdvancedWeapon
   # Exodus-end
   inventoryTemplateId: borgShort
   spriteBodyState: assault
@@ -110,9 +107,6 @@
   addComponents:
   - type: BorgModulePrototypeDuplicateWhitelist
     modulePrototypes:
-    - BorgModulePDVStandardWeapon
-    - BorgModulePDVStandardAssault
-    - BorgModulePDVAdvancedWeapon
     - BorgModuleTSFStandardWeapon
     - BorgModuleTSFStandardAssault
     - BorgModuleTSFAdvancedWeapon
