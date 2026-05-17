@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Shared._Exodus.Silicons.Borgs.Components; // Exodus military borg module duplicates
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes; // Exodus military borg module duplicates
 using Content.Shared._NF.Silicons.Borgs; // Frontier
 
 namespace Content.Server.Silicons.Borgs;
@@ -49,6 +51,11 @@ public sealed partial class BorgSystem
             return;
 
         UninstallModule(chassis, uid, chassisComp, component);
+
+        // Exodus-begin borg module item cleanup
+        if (TryComp<ItemBorgModuleComponent>(uid, out var itemModule))
+            DeleteProvidedItems(chassis, itemModule);
+        // Exodus-end
     }
 
     private void OnProvideItemStartup(EntityUid uid, ItemBorgModuleComponent component, ComponentStartup args)
@@ -260,6 +267,52 @@ public sealed partial class BorgSystem
         component.ProvidedItems.Clear();
     }
 
+    // Exodus-begin borg module item cleanup
+    private void DeleteProvidedItems(EntityUid chassis, ItemBorgModuleComponent component)
+    {
+        if (TryComp<HandsComponent>(chassis, out var hands))
+        {
+            foreach (var (handId, item) in component.ProvidedItems)
+            {
+                if (!TerminatingOrDeleted(item) &&
+                    _hands.TryGetHand(chassis, handId, out var hand, hands) &&
+                    hand.Container != null &&
+                    hand.Container.ContainedEntity == item)
+                {
+                    RemComp<UnremoveableComponent>(item);
+                    _container.Remove(item, hand.Container, force: true);
+                }
+
+                if (!TerminatingOrDeleted(item))
+                    QueueDel(item);
+                _hands.RemoveHand(chassis, handId, hands);
+            }
+        }
+        else
+        {
+            foreach (var item in component.ProvidedItems.Values)
+            {
+                if (!TerminatingOrDeleted(item))
+                    QueueDel(item);
+            }
+        }
+
+        component.ProvidedItems.Clear();
+
+        if (component.ProvidedContainer != null)
+        {
+            foreach (var item in component.ProvidedContainer.ContainedEntities.ToArray())
+            {
+                if (!TerminatingOrDeleted(item))
+                    QueueDel(item);
+            }
+        }
+
+        component.ItemsCreated = false;
+        component.HandCounter = 0;
+    }
+    // Exodus-end
+
     /// <summary>
     /// Checks if a given module can be inserted into a borg
     /// </summary>
@@ -298,7 +351,8 @@ public sealed partial class BorgSystem
 
                 // if (containedItemModuleComp.Items.Count == itemModuleComp.Items.Count && // Frontier: no item check
                 //     containedItemModuleComp.Items.All(itemModuleComp.Items.Contains)) // Frontier
-                if (containedItemModuleComp.ModuleId == itemModuleComp.ModuleId) // Frontier: ID comparison
+                if (containedItemModuleComp.ModuleId == itemModuleComp.ModuleId && // Frontier: ID comparison
+                    !CanInsertDuplicateModulePrototype(uid, module, containedModuleUid)) // Exodus military borg module duplicates
                 {
                     if (user != null)
                         Popup.PopupEntity(Loc.GetString("borg-module-duplicate"), uid, user.Value);
@@ -309,6 +363,22 @@ public sealed partial class BorgSystem
 
         return true;
     }
+
+    // Exodus-begin military borg module duplicates
+    private bool CanInsertDuplicateModulePrototype(EntityUid chassis, EntityUid module, EntityUid containedModule)
+    {
+        if (!TryComp<BorgModulePrototypeDuplicateWhitelistComponent>(chassis, out var whitelist))
+            return false;
+
+        var moduleProto = Prototype(module)?.ID;
+        var containedModuleProto = Prototype(containedModule)?.ID;
+        if (moduleProto == null || containedModuleProto == null || moduleProto == containedModuleProto)
+            return false;
+
+        return whitelist.ModulePrototypes.Contains(new EntProtoId(moduleProto)) &&
+               whitelist.ModulePrototypes.Contains(new EntProtoId(containedModuleProto));
+    }
+    // Exodus-end
 
     /// <summary>
     /// Check if a module can be removed from a borg.
