@@ -1,11 +1,11 @@
 using System.Linq;
-using Content.Shared._Exodus.Silicons.Borgs.Components; // Exodus military borg module duplicates
+using Content.Shared._Exodus.Silicons.Borgs.Components; // Exodus borg-module-duplicate-whitelist
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes; // Exodus military borg module duplicates
+using Robust.Shared.Prototypes; // Exodus borg-module-duplicate-whitelist
 using Content.Shared._NF.Silicons.Borgs; // Frontier
 
 namespace Content.Server.Silicons.Borgs;
@@ -355,7 +355,7 @@ public sealed partial class BorgSystem
                 // if (containedItemModuleComp.Items.Count == itemModuleComp.Items.Count && // Frontier: no item check
                 //     containedItemModuleComp.Items.All(itemModuleComp.Items.Contains)) // Frontier
                 if (containedItemModuleComp.ModuleId == itemModuleComp.ModuleId && // Frontier: ID comparison
-                    !CanInsertDuplicateModulePrototype(uid, module, containedModuleUid)) // Exodus military borg module duplicates
+                    !CanInsertDuplicateModulePrototype(uid, module, containedModuleUid)) // Exodus borg-module-duplicate-whitelist
                 {
                     if (user != null)
                     {
@@ -373,7 +373,7 @@ public sealed partial class BorgSystem
         return true;
     }
 
-    // Exodus-begin military borg module duplicates
+    // Exodus-begin borg-module-duplicate-whitelist
     private bool CanInsertDuplicateModulePrototype(EntityUid chassis, EntityUid module, EntityUid containedModule)
     {
         if (!TryComp<BorgModulePrototypeDuplicateWhitelistComponent>(chassis, out var whitelist))

@@ -13,7 +13,7 @@
   - BorgModuleJetpack
   - BorgModuleTool
   - BorgModuleGPS
-  # Exodus-begin military-borg-module-duplicates
+  # Exodus-begin borg-module-duplicate-whitelist
   addComponents:
   - type: BorgModulePrototypeDuplicateWhitelist
     modulePrototypes:
@@ -103,7 +103,7 @@
   - BorgModuleJetpack
   - BorgModuleTool
   - BorgModuleGPS
-  # Exodus-begin military-borg-module-duplicates
+  # Exodus-begin borg-module-duplicate-whitelist
   addComponents:
   - type: BorgModulePrototypeDuplicateWhitelist
     modulePrototypes:
