@@ -461,7 +461,7 @@
   - type: Gun
     fireRate: 1.5
     # Exodus-begin borg-pulse-rifle-burst
-    burstCooldown: 0.65
+    burstCooldown: 0.75
     burstFireRate: 12
     shotsPerBurst: 2
     # Exodus-end
