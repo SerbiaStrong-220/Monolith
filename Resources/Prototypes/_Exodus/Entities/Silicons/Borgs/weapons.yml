@@ -106,12 +106,12 @@
     availableModes:
     - Burst
     - FullAuto
-    fireRate: 6
+    fireRate: 7
     minAngle: 1
     maxAngle: 10
     burstFireRate: 9
     shotsPerBurst: 5
-    burstCooldown: 1
+    burstCooldown: 0.7
     soundGunshot:
       path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
