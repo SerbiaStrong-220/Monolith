@@ -107,6 +107,11 @@
 
 
 # Minor companies
+- type: company
+  id: CyborgFederation
+  name: cyborg-federation-name # Ru-Localization
+  description: cyborg-federation-description
+  color: "#2eb5ff"
 
 - type: company
   id: UniversalStatesOfAmerica
