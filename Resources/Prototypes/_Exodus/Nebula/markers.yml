@@ -38,6 +38,7 @@
     radarColor: "#ff4d42d9"
   - type: NebulaLightningHazard
   - type: NebulaSpaceLightningHazard
+  - type: NebulaBlocksDebris
 
 - type: entity
   parent: NebulaBaseMarker
@@ -83,6 +84,7 @@
   - type: NebulaSpaceLightningHazard
     minStrikeDelaySeconds: 1
     maxStrikeDelaySeconds: 6
+  - type: NebulaBlocksDebris
 
 # Death zone — outer concentric sub-zone (>90k from origin). Boundary is invisible.
 # Only heavy grid strikes (every 2.5s), no small. Personal lightning at default cadence
@@ -107,3 +109,4 @@
     burnDamage:
       types:
         Heat: 100
+  - type: NebulaBlocksDebris
