@@ -104,7 +104,8 @@ public sealed class NebulaGenerationSystem : EntitySystem
         }
 
         data.WorldEnd = source.WorldEnd;
-        data.WorldEndMarker = source.WorldEndMarker;
+        data.WorldEndInnerMarker = source.WorldEndInnerMarker;
+        data.WorldEndOuterMarker = source.WorldEndOuterMarker;
 
         Dirty(mapUid, data);
     }

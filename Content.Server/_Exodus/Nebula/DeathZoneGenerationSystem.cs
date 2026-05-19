@@ -14,15 +14,19 @@ namespace Content.Server._Exodus.Nebula;
 /// <summary>
 /// Generates the world-end death zone ring after the station-generation pass.
 /// Writes <see cref="WorldEndNebulaShape"/> into <see cref="NebulaMapComponent"/>,
-/// spawns a marker entity for radar/FTL-map visualization, and pushes the shape
-/// to the networked <see cref="NebulaMapDataComponent"/>.
+/// spawns two marker entities (one per concentric sub-zone, split at
+/// <see cref="WorldEndMidRadius"/>), and pushes the shape to the networked
+/// <see cref="NebulaMapDataComponent"/>. Only the inner marker carries a radar blip —
+/// the mid-radius boundary is intentionally invisible to players.
 /// </summary>
 public sealed class DeathZoneGenerationSystem : EntitySystem
 {
     private const float WorldEndInnerRadius = 75000f;
+    private const float WorldEndMidRadius = 90000f;
     private const float NebulaRadarMaxDistance = 250_000f;
     private const int RadarContourSamples = 512;
-    private static readonly EntProtoId DeathZoneMarkerPrototype = "NebulaDeathZoneMarker";
+    private static readonly EntProtoId InnerMarkerPrototype = "NebulaDeathZoneInnerMarker";
+    private static readonly EntProtoId OuterMarkerPrototype = "NebulaDeathZoneOuterMarker";
     private static readonly Color DeathZoneRadarColor = new(1f, 0.1f, 0f, 1f);
 
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -46,25 +50,36 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         var mapComponent = EnsureComp<NebulaMapComponent>(mapUid.Value);
 
         var seed = _random.Next();
-        mapComponent.WorldEnd = WorldEndNebulaShape.Generate(seed, WorldEndInnerRadius);
-        mapComponent.WorldEndMarker = DeathZoneMarkerPrototype;
+        mapComponent.WorldEnd = WorldEndNebulaShape.Generate(seed, WorldEndInnerRadius, WorldEndMidRadius);
+        mapComponent.WorldEndInnerMarker = InnerMarkerPrototype;
+        mapComponent.WorldEndOuterMarker = OuterMarkerPrototype;
 
-        SpawnDeathZoneMarker(mapId, mapComponent.WorldEnd);
+        SpawnDeathZoneMarkers(mapId, mapComponent.WorldEnd);
 
         var data = EnsureComp<NebulaMapDataComponent>(mapUid.Value);
         data.WorldEnd = mapComponent.WorldEnd;
-        data.WorldEndMarker = mapComponent.WorldEndMarker;
+        data.WorldEndInnerMarker = mapComponent.WorldEndInnerMarker;
+        data.WorldEndOuterMarker = mapComponent.WorldEndOuterMarker;
         Dirty(mapUid.Value, data);
 
-        _sawmill.Info($"Generated world-end death zone: inner radius {WorldEndInnerRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
+        _sawmill.Info($"Generated world-end death zone: inner radius {WorldEndInnerRadius}, mid radius {WorldEndMidRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
     }
 
-    private void SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd)
+    private void SpawnDeathZoneMarkers(MapId mapId, WorldEndNebulaShape worldEnd)
     {
-        var marker = Spawn(DeathZoneMarkerPrototype, new MapCoordinates(Vector2.Zero, mapId));
+        SpawnDeathZoneMarker(mapId, worldEnd, InnerMarkerPrototype, withRadarBlip: true);
+        SpawnDeathZoneMarker(mapId, worldEnd, OuterMarkerPrototype, withRadarBlip: false);
+    }
+
+    private void SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd, EntProtoId prototype, bool withRadarBlip)
+    {
+        var marker = Spawn(prototype, new MapCoordinates(Vector2.Zero, mapId));
 
         var nebulaComp = EnsureComp<NebulaComponent>(marker);
         nebulaComp.Index = -1;
+
+        if (!withRadarBlip)
+            return;
 
         var blip = EnsureComp<RadarBlipComponent>(marker);
         blip.MaxDistance = NebulaRadarMaxDistance;

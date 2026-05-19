@@ -1198,7 +1198,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             {
                 var k = i % n;
                 var theta = MathF.Tau * k / n;
-                var outerPoint = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta));
+                // Exodus nebula-radar-visualization: rotate outer ring endpoints into the same frame as the inner contour;
+                // otherwise the triangle strip skews and shows diagonal fill stripes when the radar rotates with the shuttle.
+                var outerPoint = (-worldRotation).RotateVec(new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta)));
                 var innerPoint = (-worldRotation).RotateVec(config.Points[k]);
 
                 if (config.RespectZoom)

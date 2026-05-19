@@ -10,6 +10,14 @@ namespace Content.Shared._Exodus.Nebula;
 [RegisterComponent]
 public sealed partial class NebulaLightningHazardComponent : Component
 {
+    /// <summary>Enables periodic small strikes on grids inside the nebula.</summary>
+    [DataField]
+    public bool EnableSmall = true;
+
+    /// <summary>Enables periodic heavy strikes on grids inside the nebula.</summary>
+    [DataField]
+    public bool EnableHeavy = true;
+
     [DataField]
     public TimeSpan SmallStrikeInterval = TimeSpan.FromSeconds(5);
 

@@ -160,15 +160,21 @@ public sealed class NebulaPresenceSystem : EntitySystem
             return true;
         }
 
-        if (mapComponent.WorldEndMarker != default &&
-            mapComponent.WorldEnd.IsGenerated &&
-            mapComponent.WorldEnd.Contains(position))
+        if (mapComponent.WorldEnd.IsGenerated &&
+            mapComponent.WorldEnd.TryGetZone(position, out var zone))
         {
-            index = -1;
-            marker = mapComponent.WorldEndMarker;
-            density = 1f;
-            alpha = 1f;
-            return true;
+            var zoneMarker = zone == WorldEndZone.Outer
+                ? mapComponent.WorldEndOuterMarker
+                : mapComponent.WorldEndInnerMarker;
+
+            if (zoneMarker != default)
+            {
+                index = -1;
+                marker = zoneMarker;
+                density = 1f;
+                alpha = 1f;
+                return true;
+            }
         }
 
         return false;

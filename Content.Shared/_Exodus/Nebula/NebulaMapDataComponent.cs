@@ -17,6 +17,11 @@ public sealed partial class NebulaMapDataComponent : Component
     [AutoNetworkedField, ViewVariables]
     public WorldEndNebulaShape WorldEnd;
 
+    /// <summary>Marker prototype for the inner concentric sub-zone (boundary..MidRadius).</summary>
     [AutoNetworkedField, ViewVariables]
-    public EntProtoId WorldEndMarker;
+    public EntProtoId WorldEndInnerMarker;
+
+    /// <summary>Marker prototype for the outer concentric sub-zone (MidRadius..∞).</summary>
+    [AutoNetworkedField, ViewVariables]
+    public EntProtoId WorldEndOuterMarker;
 }

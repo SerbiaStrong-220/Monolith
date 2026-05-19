@@ -28,17 +28,25 @@ public readonly struct WorldEndNebulaShape
     public readonly float InnerBoundingRadius;
     public readonly float OuterBoundingRadius;
 
+    /// <summary>
+    /// Concentric radius from <see cref="Center"/> that splits the death zone into an inner
+    /// sub-zone (boundary..MidRadius) and an outer sub-zone (MidRadius..∞). Used by
+    /// <see cref="TryGetZone"/>; FTL blocking ignores this and treats the whole shape as one.
+    /// </summary>
+    public readonly float MidRadius;
+
     // Pre-sampled boundary radii; index = (int)(theta / Tau * SampleCount) % SampleCount
     private readonly float[] _boundary;
 
     public bool IsGenerated => _boundary != null;
 
-    private WorldEndNebulaShape(Vector2 center, float[] boundary, float inner, float outer)
+    private WorldEndNebulaShape(Vector2 center, float[] boundary, float inner, float outer, float midRadius)
     {
         Center = center;
         _boundary = boundary;
         InnerBoundingRadius = inner;
         OuterBoundingRadius = outer;
+        MidRadius = midRadius;
     }
 
     /// <summary>
@@ -49,6 +57,7 @@ public readonly struct WorldEndNebulaShape
     public static WorldEndNebulaShape Generate(
         int seed,
         float innerRadius,
+        float midRadius = 0f,
         Vector2 center = default,
         int samples = SampleCount)
     {
@@ -122,7 +131,7 @@ public readonly struct WorldEndNebulaShape
             if (r > outerBound) outerBound = r;
         }
 
-        return new WorldEndNebulaShape(center, boundary, innerBound, outerBound);
+        return new WorldEndNebulaShape(center, boundary, innerBound, outerBound, midRadius);
     }
 
     /// <summary>
@@ -140,6 +149,31 @@ public readonly struct WorldEndNebulaShape
             return false;
 
         return r > SampleBoundary(MathF.Atan2(delta.Y, delta.X));
+    }
+
+    /// <summary>
+    /// Single-pass check: is <paramref name="point"/> inside the death zone, and if so, in
+    /// which concentric sub-zone (split by <see cref="MidRadius"/>).
+    /// Returns false (zone = default) if outside the death zone or shape ungenerated.
+    /// </summary>
+    public bool TryGetZone(Vector2 point, out WorldEndZone zone)
+    {
+        zone = default;
+        if (_boundary == null)
+            return false;
+
+        var delta = point - Center;
+        var rSq = delta.LengthSquared();
+
+        if (rSq < InnerBoundingRadius * InnerBoundingRadius)
+            return false;
+
+        var r = MathF.Sqrt(rSq);
+        if (r <= SampleBoundary(MathF.Atan2(delta.Y, delta.X)))
+            return false;
+
+        zone = MidRadius > 0f && r > MidRadius ? WorldEndZone.Outer : WorldEndZone.Inner;
+        return true;
     }
 
     public float GetDensity(Vector2 point) => 1f;

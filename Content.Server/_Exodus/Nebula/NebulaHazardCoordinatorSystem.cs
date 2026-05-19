@@ -22,6 +22,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
 
     private readonly HashSet<string> _ftlBlockerMarkers = new();
     private readonly HashSet<string> _lightningMarkers = new();
+    private readonly HashSet<string> _spaceLightningMarkers = new();
     private readonly HashSet<string> _empMarkers = new();
     private readonly HashSet<string> _radioBlackoutMarkers = new();
     private readonly HashSet<string> _thrustReductionMarkers = new();
@@ -39,6 +40,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
 
     public bool MarkerBlocksFTL(EntProtoId marker) => marker.Id != null && _ftlBlockerMarkers.Contains(marker.Id);
     public bool MarkerHasLightning(EntProtoId marker) => marker.Id != null && _lightningMarkers.Contains(marker.Id);
+    public bool MarkerHasSpaceLightning(EntProtoId marker) => marker.Id != null && _spaceLightningMarkers.Contains(marker.Id);
     public bool MarkerHasEmp(EntProtoId marker) => marker.Id != null && _empMarkers.Contains(marker.Id);
     public bool MarkerHasRadioBlackout(EntProtoId marker) => marker.Id != null && _radioBlackoutMarkers.Contains(marker.Id);
     public bool MarkerHasThrustReduction(EntProtoId marker) => marker.Id != null && _thrustReductionMarkers.Contains(marker.Id);
@@ -53,6 +55,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
     {
         _ftlBlockerMarkers.Clear();
         _lightningMarkers.Clear();
+        _spaceLightningMarkers.Clear();
         _empMarkers.Clear();
         _radioBlackoutMarkers.Clear();
         _thrustReductionMarkers.Clear();
@@ -66,6 +69,8 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
                 _ftlBlockerMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaLightningHazardComponent>(out _, _componentFactory))
                 _lightningMarkers.Add(proto.ID);
+            if (proto.TryGetComponent<NebulaSpaceLightningHazardComponent>(out _, _componentFactory))
+                _spaceLightningMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaEmpHazardComponent>(out _, _componentFactory))
                 _empMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaRadioBlackoutSourceComponent>(out _, _componentFactory))
@@ -93,16 +98,15 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         // still exists (for parallax etc.), but no per-effect components get applied.
         var skipPlayerHazards = !isGrid && IsGhostOrDead(uid);
 
-        // Lightning hazard: grids get the timer-bearing component, free entities (EVA players)
-        // get the player-target component which the lightning system updates differently.
-        var wantLightning = !skipPlayerHazards && MarkerHasLightning(marker);
+        // Lightning hazard: grids and free entities (EVA players) have independent components
+        // on the marker prototype, so they can be enabled separately per nebula kind.
         if (isGrid)
         {
-            UpdateGridLightning(uid, wantLightning, marker);
+            UpdateGridLightning(uid, !skipPlayerHazards && MarkerHasLightning(marker), marker);
         }
         else
         {
-            UpdateSpaceLightning(uid, wantLightning);
+            UpdateSpaceLightning(uid, !skipPlayerHazards && MarkerHasSpaceLightning(marker));
         }
 
         var wantEmp = !skipPlayerHazards && MarkerHasEmp(marker);

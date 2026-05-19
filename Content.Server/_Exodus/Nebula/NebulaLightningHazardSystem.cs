@@ -102,14 +102,14 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
 
             InitializeGridTimers(hazard, config);
 
-            if (_timing.CurTime >= hazard.NextSmallStrike)
+            if (config.EnableSmall && _timing.CurTime >= hazard.NextSmallStrike)
             {
                 hazard.NextSmallStrike = _timing.CurTime + config.SmallStrikeInterval;
                 if (TryStrikeGrid((uid, grid, xform), hazard, config, false))
                     RecordStrike(hazard, false);
             }
 
-            if (_timing.CurTime >= hazard.NextHeavyStrike)
+            if (config.EnableHeavy && _timing.CurTime >= hazard.NextHeavyStrike)
             {
                 hazard.NextHeavyStrike = _timing.CurTime + config.HeavyStrikeInterval;
                 if (TryStrikeGrid((uid, grid, xform), hazard, config, true))
@@ -123,20 +123,29 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         var query = EntityQueryEnumerator<NebulaSpaceLightningTargetComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var target, out var xform))
         {
+            // Resolve marker via presence each tick so transitions between nebula kinds
+            // (e.g. death-zone inner -> outer at the 90k boundary) take effect immediately.
+            if (!TryComp<NebulaPresenceComponent>(uid, out var presence) ||
+                !TryGetSpaceMarkerConfig(presence.Marker, out var config))
+            {
+                RemCompDeferred<NebulaSpaceLightningTargetComponent>(uid);
+                continue;
+            }
+
             if (IsOnNonEmptyTile(xform))
                 continue;
 
             if (target.NextStrike == TimeSpan.Zero)
             {
-                ScheduleNextSpaceStrike(target);
+                ScheduleNextSpaceStrike(target, config);
                 continue;
             }
 
             if (_timing.CurTime < target.NextStrike)
                 continue;
 
-            StrikeSpaceTarget((uid, target, xform), _transform.GetMapCoordinates(uid, xform));
-            ScheduleNextSpaceStrike(target);
+            StrikeSpaceTarget((uid, target, xform), _transform.GetMapCoordinates(uid, xform), config);
+            ScheduleNextSpaceStrike(target, config);
         }
     }
 
@@ -150,14 +159,26 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         return proto.TryGetComponent<NebulaLightningHazardComponent>(out config!, _componentFactory);
     }
 
+    private bool TryGetSpaceMarkerConfig(EntProtoId marker, out NebulaSpaceLightningHazardComponent config)
+    {
+        config = default!;
+        if (string.IsNullOrEmpty(marker.Id))
+            return false;
+        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
+            return false;
+        return proto.TryGetComponent<NebulaSpaceLightningHazardComponent>(out config!, _componentFactory);
+    }
+
     private void InitializeGridTimers(NebulaLightningGridHazardComponent hazard, NebulaLightningHazardComponent config)
     {
         if (hazard.TimersInitialized)
             return;
 
         hazard.TimersInitialized = true;
-        hazard.NextSmallStrike = _timing.CurTime + config.SmallStrikeInterval;
-        hazard.NextHeavyStrike = _timing.CurTime + config.HeavyStrikeInterval;
+        if (config.EnableSmall)
+            hazard.NextSmallStrike = _timing.CurTime + config.SmallStrikeInterval;
+        if (config.EnableHeavy)
+            hazard.NextHeavyStrike = _timing.CurTime + config.HeavyStrikeInterval;
     }
 
     private void RecordStrike(NebulaLightningGridHazardComponent hazard, bool heavy)
@@ -276,10 +297,17 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
                 return true;
         }
 
-        if (mapComponent.WorldEndMarker == marker &&
+        // Death zone is split into concentric sub-zones; only the matching marker's zone
+        // counts as "inside" — an outer-zone hazard must not pick a tile that is actually
+        // in the inner zone, and vice versa.
+        var isInner = mapComponent.WorldEndInnerMarker == marker;
+        var isOuter = mapComponent.WorldEndOuterMarker == marker;
+        if ((isInner || isOuter) &&
             mapComponent.WorldEnd.IsGenerated &&
-            mapComponent.WorldEnd.Contains(position))
-            return true;
+            mapComponent.WorldEnd.TryGetZone(position, out var zone))
+        {
+            return isInner ? zone == WorldEndZone.Inner : zone == WorldEndZone.Outer;
+        }
 
         return false;
     }
@@ -343,26 +371,27 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
 
     private void StrikeSpaceTarget(
         Entity<NebulaSpaceLightningTargetComponent, TransformComponent> player,
-        MapCoordinates mapCoords)
+        MapCoordinates mapCoords,
+        NebulaSpaceLightningHazardComponent config)
     {
-        var hazard = player.Comp1;
-        SpawnLightning(mapCoords, hazard.LightningPrototype, hazard.LightningLength, _random.NextAngle().ToWorldVec());
+        var target = player.Comp1;
+        SpawnLightning(mapCoords, config.LightningPrototype, config.LightningLength, _random.NextAngle().ToWorldVec());
         Spawn(SparksPrototype, player.Comp2.Coordinates);
 
-        if (TryAbsorbSpaceStrike(mapCoords, hazard.ShieldLoad))
+        if (TryAbsorbSpaceStrike(mapCoords, config.ShieldLoad))
         {
-            PlayLightningSound(hazard.ShieldImpactSound, player.Comp2.Coordinates, hazard.ImpactSoundRange, hazard.ImpactSoundVolume);
-            hazard.LastStrike = _timing.CurTime;
-            hazard.StrikeCount++;
+            PlayLightningSound(config.ShieldImpactSound, player.Comp2.Coordinates, config.ImpactSoundRange, config.ImpactSoundVolume);
+            target.LastStrike = _timing.CurTime;
+            target.StrikeCount++;
             return;
         }
 
-        PlayLightningSound(hazard.ImpactSound, player.Comp2.Coordinates, hazard.ImpactSoundRange, hazard.ImpactSoundVolume);
-        _damageable.TryChangeDamage(player.Owner, hazard.BurnDamage);
-        _electrocution.TryDoElectrocution(player.Owner, null, hazard.ShockDamage, hazard.ShockTime, true);
+        PlayLightningSound(config.ImpactSound, player.Comp2.Coordinates, config.ImpactSoundRange, config.ImpactSoundVolume);
+        _damageable.TryChangeDamage(player.Owner, config.BurnDamage);
+        _electrocution.TryDoElectrocution(player.Owner, null, config.ShockDamage, config.ShockTime, true);
 
-        hazard.LastStrike = _timing.CurTime;
-        hazard.StrikeCount++;
+        target.LastStrike = _timing.CurTime;
+        target.StrikeCount++;
     }
 
     private bool TryAbsorbSpaceStrike(MapCoordinates mapCoords, float shieldLoad)
@@ -387,11 +416,11 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         return false;
     }
 
-    private void ScheduleNextSpaceStrike(NebulaSpaceLightningTargetComponent hazard)
+    private void ScheduleNextSpaceStrike(NebulaSpaceLightningTargetComponent target, NebulaSpaceLightningHazardComponent config)
     {
-        var min = Math.Min(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
-        var max = Math.Max(hazard.MinStrikeDelaySeconds, hazard.MaxStrikeDelaySeconds);
-        hazard.NextStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
+        var min = Math.Max(1, Math.Min(config.MinStrikeDelaySeconds, config.MaxStrikeDelaySeconds));
+        var max = Math.Max(min, Math.Max(config.MinStrikeDelaySeconds, config.MaxStrikeDelaySeconds));
+        target.NextStrike = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
     }
 
     private bool IsOnNonEmptyTile(TransformComponent xform)

@@ -241,10 +241,14 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
                 return true;
         }
 
-        if (mapComponent.WorldEndMarker == marker &&
+        var isInner = mapComponent.WorldEndInnerMarker == marker;
+        var isOuter = mapComponent.WorldEndOuterMarker == marker;
+        if ((isInner || isOuter) &&
             mapComponent.WorldEnd.IsGenerated &&
-            mapComponent.WorldEnd.Contains(position))
-            return true;
+            mapComponent.WorldEnd.TryGetZone(position, out var zone))
+        {
+            return isInner ? zone == WorldEndZone.Inner : zone == WorldEndZone.Outer;
+        }
 
         return false;
     }

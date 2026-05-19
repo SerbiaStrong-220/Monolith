@@ -51,5 +51,8 @@ public sealed partial class NebulaMapComponent : Component
     public WorldEndNebulaShape WorldEnd;
 
     [ViewVariables]
-    public EntProtoId WorldEndMarker;
+    public EntProtoId WorldEndInnerMarker;
+
+    [ViewVariables]
+    public EntProtoId WorldEndOuterMarker;
 }
