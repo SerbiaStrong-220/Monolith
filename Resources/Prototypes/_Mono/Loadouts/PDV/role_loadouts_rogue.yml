@@ -13,6 +13,7 @@
   - ContractorBoxSurvival
   - RakhshanPDA
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
   - NFSpeciesSpecific
   - PirateTrinkets
   - PDVBelt
@@ -38,6 +39,7 @@
   - AsvaranPDA
   - NFSpeciesSpecific
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
   - PirateTrinkets
   - PDVBelt
   - ContractorEncryptionKey
@@ -62,6 +64,7 @@
   - GrandVizierPDA
   - NFSpeciesSpecific
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
   - PirateCaptainTrinkets
   - PDVBelt
   - ContractorEncryptionKey
@@ -86,6 +89,7 @@
   - PDVInfiltratorPDA
   - NFSpeciesSpecific
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
   - PirateTrinkets
   - PDVBelt
   - ContractorEncryptionKey
@@ -109,6 +113,7 @@
   - ContractorBoxSurvival
   - PDVDenasvarPDA
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
   - NFSpeciesSpecific
   - PirateTrinkets
   - PDVBelt
