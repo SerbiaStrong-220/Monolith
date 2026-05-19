@@ -26,6 +26,8 @@ public sealed class NebulaPresenceSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    private ISawmill _sawmill = Logger.GetSawmill("nebula");
+
     private const float GridHazardRadius = 32f;
 
     private readonly HashSet<EntityUid> _checkedGrids = new();
@@ -194,7 +196,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
 
         if (changedMarker)
         {
-            Logger.DebugS("nebula", $"{ToPrettyString(uid)} entered {marker} nebula {index + 1} with density {density:0.00}.");
+            _sawmill.Debug($"{ToPrettyString(uid)} entered {marker} nebula {index + 1} with density {density:0.00}.");
             var ev = new NebulaPresenceChangedEvent(oldMarker, marker);
             RaiseLocalEvent(uid, ref ev);
         }
@@ -205,7 +207,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (!TryComp<NebulaPresenceComponent>(uid, out var component))
             return;
 
-        Logger.DebugS("nebula", $"{ToPrettyString(uid)} left nebula {component.NebulaIndex + 1}.");
+        _sawmill.Debug($"{ToPrettyString(uid)} left nebula {component.NebulaIndex + 1}.");
         RemCompDeferred<NebulaPresenceComponent>(uid);
         // The hazard coordinator listens to ComponentRemove on NebulaPresenceComponent, so it
         // tears down per-effect components without needing a separate event here.

@@ -39,15 +39,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private static readonly string[] ProtectedStationIds =
-    [
-        "Frontier",
-        "Medical",
-        "TSFMCHalcyon",
-        "TFMCHalcyon",
-        "HeliosFortress",
-        "PDV Helios Fortress",
-    ];
+    private ISawmill _sawmill = Logger.GetSawmill("nebula");
 
     public override void Initialize()
     {
@@ -62,10 +54,11 @@ public sealed class NebulaGenerationSystem : EntitySystem
             return;
 
         var settings = new NebulaGenerationSettings();
-        var protectedNames = GetProtectedStationNames();
+        var protectedStationIds = GetProtectedStationIds();
+        var protectedNames = GetProtectedStationNames(protectedStationIds);
         var protectedAreas = new List<NebulaProtectedArea>();
-        CollectProtectedAreas(mapId, protectedNames, protectedAreas, settings.ProtectedRadius);
-        AddProtectedArea(protectedAreas, new NebulaProtectedArea(Vector2.Zero, settings.ProtectedRadius));
+        CollectProtectedAreas(mapId, protectedStationIds, protectedNames, protectedAreas, settings.ProtectedRadius);
+        CollectProtectedPoints(protectedAreas, settings.ProtectedRadius);
 
         var seed = _random.Next();
         var result = NebulaGenerator.Generate(seed, protectedAreas, settings);
@@ -96,7 +89,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
 
         SyncMapData(mapUid, component);
 
-        Logger.InfoS("nebula", $"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
+        _sawmill.Info($"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
     }
 
     private void SyncMapData(EntityUid mapUid, NebulaMapComponent source)
@@ -147,7 +140,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
             if (restored == 0)
                 continue;
 
-            Logger.WarningS("nebula", $"Restored {restored} nebula markers/components on map {map.MapId}.");
+            _sawmill.Warning($"Restored {restored} nebula markers/components on map {map.MapId}.");
         }
     }
 
@@ -168,14 +161,22 @@ public sealed class NebulaGenerationSystem : EntitySystem
         }
     }
 
-    private HashSet<string> GetProtectedStationNames()
+    private HashSet<string> GetProtectedStationIds()
+    {
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var proto in _prototype.EnumeratePrototypes<NebulaProtectedStationPrototype>())
+            ids.Add(proto.ID);
+
+        return ids;
+    }
+
+    private HashSet<string> GetProtectedStationNames(HashSet<string> protectedStationIds)
     {
         var names = new HashSet<string>(StringComparer.Ordinal);
 
-        for (var i = 0; i < ProtectedStationIds.Length; i++)
+        foreach (var id in protectedStationIds)
         {
-            var id = ProtectedStationIds[i];
-
             if (_prototype.TryIndex<PointOfInterestPrototype>(id, out var poi))
                 names.Add(poi.Name);
 
@@ -186,7 +187,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         return names;
     }
 
-    private void CollectProtectedAreas(MapId mapId, HashSet<string> protectedNames, List<NebulaProtectedArea> protectedAreas, float protectedRadius)
+    private void CollectProtectedAreas(MapId mapId, HashSet<string> protectedStationIds, HashSet<string> protectedNames, List<NebulaProtectedArea> protectedAreas, float protectedRadius)
     {
         var stationQuery = EntityQueryEnumerator<StationDataComponent>();
         while (stationQuery.MoveNext(out var stationUid, out var station))
@@ -203,7 +204,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
                     continue;
                 }
 
-                if (!stationNameProtected && !IsProtectedGrid(gridUid, protectedNames))
+                if (!stationNameProtected && !IsProtectedGrid(gridUid, protectedStationIds, protectedNames))
                     continue;
 
                 AddProtectedArea(protectedAreas, GetProtectedArea(grid, xform, protectedRadius));
@@ -211,26 +212,24 @@ public sealed class NebulaGenerationSystem : EntitySystem
         }
     }
 
-    private bool IsProtectedGrid(EntityUid gridUid, HashSet<string> protectedNames)
+    private void CollectProtectedPoints(List<NebulaProtectedArea> protectedAreas, float defaultRadius)
+    {
+        foreach (var proto in _prototype.EnumeratePrototypes<NebulaProtectedPointPrototype>())
+        {
+            var radius = proto.Radius > 0f ? proto.Radius : defaultRadius;
+            AddProtectedArea(protectedAreas, new NebulaProtectedArea(proto.Position, radius));
+        }
+    }
+
+    private bool IsProtectedGrid(EntityUid gridUid, HashSet<string> protectedStationIds, HashSet<string> protectedNames)
     {
         if (TryComp<BecomesStationComponent>(gridUid, out var becomesStation) &&
-            IsProtectedStationId(becomesStation.Id))
+            protectedStationIds.Contains(becomesStation.Id))
         {
             return true;
         }
 
         return protectedNames.Contains(MetaData(gridUid).EntityName);
-    }
-
-    private static bool IsProtectedStationId(string id)
-    {
-        for (var i = 0; i < ProtectedStationIds.Length; i++)
-        {
-            if (id == ProtectedStationIds[i])
-                return true;
-        }
-
-        return false;
     }
 
     private NebulaProtectedArea GetProtectedArea(MapGridComponent grid, TransformComponent xform, float protectedRadius)

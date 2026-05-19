@@ -29,6 +29,8 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
+    private ISawmill _sawmill = Logger.GetSawmill("nebula");
+
     public override void Initialize()
     {
         base.Initialize();
@@ -54,7 +56,7 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         data.WorldEndMarker = mapComponent.WorldEndMarker;
         Dirty(mapUid.Value, data);
 
-        Logger.InfoS("nebula", $"Generated world-end death zone: inner radius {WorldEndInnerRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
+        _sawmill.Info($"Generated world-end death zone: inner radius {WorldEndInnerRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
     }
 
     private void SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd)
