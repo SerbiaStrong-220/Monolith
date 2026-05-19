@@ -102,6 +102,8 @@
   - type: NebulaLightningHazard
     enableSmall: false
     heavyStrikeInterval: 2.5
+    heavyShieldLoad: 20000
+    heavyExplosionTotalIntensity: 2133.334
   - type: NebulaSpaceLightningHazard
     minStrikeDelaySeconds: 2
     maxStrikeDelaySeconds: 7
