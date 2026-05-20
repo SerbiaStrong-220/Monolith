@@ -1,5 +1,8 @@
 using System.Numerics;
+using Content.Server._NF.Station.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Maps;
+using Content.Server.Station.Systems;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
@@ -30,7 +33,10 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StationRenameWarpsSystems _renameWarps = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 
@@ -271,13 +277,52 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
 
     private bool TryLoadPoiGrid(MapId mapId, NebulaPoiPrototype poi, Vector2 point)
     {
-        if (!_map.TryLoadGrid(mapId, poi.Path, out _, offset: point, rot: _random.NextAngle()))
+        if (!_map.TryLoadGrid(mapId, poi.Path, out var grid, offset: point, rot: _random.NextAngle()) || grid is not { } loaded)
         {
             _sawmill.Warning($"POI {poi.ID}: failed to load grid {poi.Path}.");
             return false;
         }
 
+        var gridUid = loaded.Owner;
+
+        if (!string.IsNullOrEmpty(poi.Name))
+            _metadata.SetEntityName(gridUid, poi.Name);
+
+        var stationUid = TryRegisterStation(gridUid, poi);
+
+        if (poi.AddComponents.Count > 0)
+            EntityManager.AddComponents(gridUid, poi.AddComponents);
+
+        if (stationUid is { } station && poi.HideWarp)
+            _renameWarps.SyncWarpPointsToStation(station, forceAdminOnly: true);
+
         return true;
+    }
+
+    /// <summary>
+    /// Initialises the loaded grid as a <see cref="Content.Server.Station"/> if the POI carries
+    /// a <see cref="NebulaPoiPrototype.StationGameMap"/> reference. Returns null for decorative
+    /// POIs (no station init) — that's the default and the cheap path.
+    /// </summary>
+    private EntityUid? TryRegisterStation(EntityUid gridUid, NebulaPoiPrototype poi)
+    {
+        if (string.IsNullOrEmpty(poi.StationGameMap))
+            return null;
+
+        if (!_prototype.TryIndex<GameMapPrototype>(poi.StationGameMap, out var gameMap))
+        {
+            _sawmill.Warning($"POI {poi.ID}: stationGameMap '{poi.StationGameMap}' not found.");
+            return null;
+        }
+
+        if (!gameMap.Stations.TryGetValue(poi.StationGameMap, out var stationConfig))
+        {
+            _sawmill.Warning($"POI {poi.ID}: gameMap '{poi.StationGameMap}' has no stations entry matching its own id.");
+            return null;
+        }
+
+        var stationName = string.IsNullOrEmpty(poi.Name) ? gameMap.MapName : poi.Name;
+        return _station.InitializeNewStation(stationConfig, new[] { gridUid }, stationName);
     }
 
     private static bool IsMarkerAllowed(NebulaPoiPrototype poi, EntProtoId marker)

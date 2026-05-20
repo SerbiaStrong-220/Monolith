@@ -1,34 +1,60 @@
-# POIs that spawn inside specific nebula kinds at round start.
-# Picked up by NebulaPoiSpawnSystem after both blob and world-end generation finish.
-# These entries are TEST stubs using existing World shuttles — replace with real POI maps
-# when designers finalise per-nebula content.
+# POI grids that spawn inside specific nebula kinds at round start.
+# Picked up by NebulaPoiSpawnSystem once both blob and world-end nebula generation finish.
+#
+# How to add a new POI:
+#
+# - type: nebulaPoi
+#   id: NebulaPoiYourId                              # unique prototype id
+#   path: Maps/_Whatever/your_grid.yml               # ResPath to the grid YAML to load
+#   spawnIn:                                         # marker prototype ids of allowed nebulas
+#   - NebulaBlueMarker
+#   - NebulaGreenMarker
+#   - NebulaPurpleMarker
+#   - NebulaRedMarker
+#   - NebulaDeathZoneInnerMarker
+#   # (NebulaDeathZoneOuterMarker is intentionally avoided — players cannot survive there.)
+#   maxCount: 1                                      # total copies across the whole map
+#   duplicateAllowed: false                          # may two copies share one nebula
+#   protectedRadius: 500                             # broadphase clearance (world tiles)
+#   minDensity: 0.5                                  # density floor inside blob nebulas
+#   maxDensity: 1.0                                  # density ceiling
+#   name: "Имя на карте"                             # optional display name override
+#   addComponents:                                   # optional components attached to the grid
+#   - type: IFF
+#     color: "#C83737"
+#     flags: [HideLabel]
+#   - type: SyndicateFOB
+#   stationGameMap: LPBravo                          # optional, register grid as a station
+#   hideWarp: true                                   # optional, station warp = admin-only
+#
+# Notes:
+# - density semantics: 1 = nebula core, 0 = outer edge. Death zones are dense everywhere; the
+#   density bounds are ignored for them.
+# - protectedRadius is checked via broadphase against existing grids and other POIs placed by
+#   this spawner in the same round.
+# - duplicateAllowed only matters when maxCount > 1.
+# - The spawner prefers nebulas with no POI yet, then falls back to random valid nebulas.
+# - stationGameMap is optional. Most POIs should leave it unset — the grid loads as plain
+#   decoration without station bookkeeping. Set it ONLY when the POI hosts station-aware
+#   machinery: shipyard consoles, cargo bounty terminals, anything calling GetOwningStation.
+#   The referenced gameMap prototype must have a stations entry whose key matches its own id.
 
 - type: nebulaPoi
-  id: NebulaPoiWedgeTest
-  path: Maps/_Mono/Shuttles/World/wedge.yml
-  spawnIn:
-  - NebulaBlueMarker
-  maxCount: 2
-
-- type: nebulaPoi
-  id: NebulaPoiNeedleTest
-  path: Maps/_Mono/Shuttles/World/needle.yml
+  id: NebulaPoiLPBravo
+  path: /Maps/_NF/POI/lpbravo.yml
   spawnIn:
   - NebulaGreenMarker
   maxCount: 1
-
-- type: nebulaPoi
-  id: NebulaPoiCrownTest
-  path: Maps/_Mono/Shuttles/World/crown.yml
-  spawnIn:
-  - NebulaPurpleMarker
-  maxCount: 1
-
-- type: nebulaPoi
-  id: NebulaPoiBracketTest
-  path: Maps/_Mono/Shuttles/World/bracket.yml
-  spawnIn:
-  - NebulaRedMarker
-  - NebulaDeathZoneInnerMarker
-  maxCount: 3
-  duplicateAllowed: true
+  minDensity: 0.7
+  name: "Прослушивающий Пункт Браво"
+  stationGameMap: LPBravo
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#C83737"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SyndicateFOB
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true

@@ -60,4 +60,39 @@ public sealed partial class NebulaPoiPrototype : IPrototype
     /// </summary>
     [DataField]
     public float MaxDensity { get; private set; } = 1f;
+
+    /// <summary>
+    /// Optional display name for the loaded grid. When set, replaces the default name derived
+    /// from the YAML filename.
+    /// </summary>
+    [DataField]
+    public string? Name { get; private set; }
+
+    /// <summary>
+    /// Components attached to the loaded grid entity after spawn. Lets POIs carry IFF colors,
+    /// faction markers, power configs, etc. — same shape as
+    /// <c>PointOfInterestPrototype.AddComponents</c>.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry AddComponents { get; private set; } = new();
+
+    /// <summary>
+    /// Optional <see cref="GameMapPrototype"/> id used to register the loaded grid as a station
+    /// via <c>StationSystem.InitializeNewStation</c>. Leave null for plain decorative grids;
+    /// set this when the POI hosts station-aware machinery (shipyard consoles, cargo bounty
+    /// terminals, anything that asks for <c>GetOwningStation</c>).
+    ///
+    /// The referenced game map prototype must have a <c>stations</c> entry whose key matches
+    /// the prototype's own id (same convention as <c>PointOfInterestSystem.TrySpawnPoiGrid</c>).
+    /// </summary>
+    [DataField]
+    public string? StationGameMap { get; private set; }
+
+    /// <summary>
+    /// If true and the POI is registered as a station via <see cref="StationGameMap"/>, its
+    /// warp points are hidden from non-admin players. Mirrors
+    /// <c>PointOfInterestPrototype.HideWarp</c>.
+    /// </summary>
+    [DataField]
+    public bool HideWarp { get; private set; }
 }
