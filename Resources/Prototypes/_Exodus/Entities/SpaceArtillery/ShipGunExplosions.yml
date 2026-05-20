@@ -8,8 +8,8 @@
 # but adds an Explosive component and an ExplodeBehavior to the destruction threshold.
 #
 # Two sizes:
-#   3x3 - radius 2, ~25 tiles
-#   5x5 - radius ~3.5, ~50 tiles (twice the 3x3 area)
+#   3x3 - radius 2
+#   5x5 - radius ~3.5
 # Both use the ShipGunSelfDestruct explosion (Structural: 50) which breaks
 # reinforced plastitanium walls and most objects within the blast radius.
 
