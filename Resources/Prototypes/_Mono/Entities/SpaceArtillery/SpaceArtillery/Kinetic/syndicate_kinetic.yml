@@ -75,7 +75,7 @@
   suffix: Medium, T3
   parent:
   - BallisticArtillery
-  - BallisticArtilleryTier3HP
+  - ShipGunTier3HpExplodes5x5 # Exodus self-destruct (was BallisticArtilleryTier3HP)
   description: A heavy 90mm autocannon of syndicate design, created during the corporate war. Made for shattering opponent destroyers. Uses a self loading mechanism similar to the anaconda handgun.
   components:
   - type: StaticPrice
@@ -219,6 +219,12 @@
       respectZoom: true
       rotate: true
       bounds: "-2,-2,2,2"
+  # Exodus-begin: self-destruct explosion (5x5)
+  - type: Explosive
+    explosionType: ShipGunSelfDestruct
+    totalIntensity: 600
+    intensitySlope: 17
+    maxIntensity: 60
   - type: Destructible
     thresholds:
     - trigger:
@@ -227,15 +233,18 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:ExplodeBehavior
     - trigger:
         !type:DamageTrigger
         damage: 15000 # Slightly tankier than T4
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+  # Exodus-end
   - type: ShipGunType
     shipType: Ballistic
   - type: ShipGunClass
@@ -250,7 +259,7 @@
   suffix: Capital, T5
   parent:
   - BallisticArtilleryUnanchorable
-  - BallisticArtilleryTier5HP
+  - ShipGunTier5HpExplodes5x5 # Exodus self-destruct (was BallisticArtilleryTier5HP)
   description: A heavy artillery gun of syndicate origin, the leviathan is tyrannic testiment of Syndicate ingenuity, designed to send a message. Able to crack NanoTrasen battleships, and small fighters in a single shell. Loads with a similar mechanism as the anaconda handgun.
   components:
   - type: StaticPrice

@@ -1,6 +1,6 @@
 - type: entity
   id: WeaponTurretCharonBase
-  parent: BallisticArtilleryTier4HP
+  parent: ShipGunTier4HpExplodes5x5 # Exodus self-destruct (was BallisticArtilleryTier4HP)
   name: M381 CHARON mass driver
   suffix: Capital, T4
   abstract: true
