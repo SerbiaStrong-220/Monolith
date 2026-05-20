@@ -90,6 +90,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
         SyncMapData(mapUid, component);
 
         _sawmill.Info($"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
+
+        var doneEv = new NebulaBlobGenerationDoneEvent();
+        RaiseLocalEvent(ref doneEv);
     }
 
     private void SyncMapData(EntityUid mapUid, NebulaMapComponent source)

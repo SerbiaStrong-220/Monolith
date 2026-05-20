@@ -181,6 +181,49 @@ public readonly struct WorldEndNebulaShape
     public float GetAlpha(Vector2 point) => 1f;
 
     /// <summary>
+    /// Samples a random world point inside the requested concentric sub-zone. Picks a random
+    /// angle and a random radial distance within that angle's valid range for the sub-zone
+    /// (inner: boundary..MidRadius, outer: max(boundary, MidRadius)..OuterBoundingRadius).
+    /// Returns false if no candidate fits within <paramref name="maxAttempts"/> tries — this
+    /// only happens for the inner sub-zone on rays where the boundary contour bulges past
+    /// <see cref="MidRadius"/>, leaving no inner band on that ray.
+    /// </summary>
+    public bool TryGetRandomPoint(System.Random rng, WorldEndZone zone, out Vector2 point, int maxAttempts = 32)
+    {
+        point = default;
+
+        if (rng == null || _boundary == null || maxAttempts <= 0)
+            return false;
+
+        for (var i = 0; i < maxAttempts; i++)
+        {
+            var theta = (float) (rng.NextDouble() * MathF.Tau);
+            var boundary = SampleBoundary(theta);
+
+            float minR, maxR;
+            if (zone == WorldEndZone.Outer)
+            {
+                minR = MathF.Max(MidRadius, boundary);
+                maxR = OuterBoundingRadius;
+            }
+            else
+            {
+                minR = boundary;
+                maxR = MidRadius > 0f ? MidRadius : OuterBoundingRadius;
+            }
+
+            if (maxR <= minR)
+                continue;
+
+            var r = minR + (float) rng.NextDouble() * (maxR - minR);
+            point = Center + new Vector2(r * MathF.Cos(theta), r * MathF.Sin(theta));
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Returns the world-space boundary point at angle <paramref name="theta"/>.
     /// Used by radar visualisation.
     /// </summary>

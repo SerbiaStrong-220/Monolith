@@ -1,0 +1,34 @@
+# POIs that spawn inside specific nebula kinds at round start.
+# Picked up by NebulaPoiSpawnSystem after both blob and world-end generation finish.
+# These entries are TEST stubs using existing World shuttles — replace with real POI maps
+# when designers finalise per-nebula content.
+
+- type: nebulaPoi
+  id: NebulaPoiWedgeTest
+  path: Maps/_Mono/Shuttles/World/wedge.yml
+  spawnIn:
+  - NebulaBlueMarker
+  maxCount: 2
+
+- type: nebulaPoi
+  id: NebulaPoiNeedleTest
+  path: Maps/_Mono/Shuttles/World/needle.yml
+  spawnIn:
+  - NebulaGreenMarker
+  maxCount: 1
+
+- type: nebulaPoi
+  id: NebulaPoiCrownTest
+  path: Maps/_Mono/Shuttles/World/crown.yml
+  spawnIn:
+  - NebulaPurpleMarker
+  maxCount: 1
+
+- type: nebulaPoi
+  id: NebulaPoiBracketTest
+  path: Maps/_Mono/Shuttles/World/bracket.yml
+  spawnIn:
+  - NebulaRedMarker
+  - NebulaDeathZoneInnerMarker
+  maxCount: 3
+  duplicateAllowed: true

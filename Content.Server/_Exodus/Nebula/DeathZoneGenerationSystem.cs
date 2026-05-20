@@ -63,6 +63,9 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         Dirty(mapUid.Value, data);
 
         _sawmill.Info($"Generated world-end death zone: inner radius {WorldEndInnerRadius}, mid radius {WorldEndMidRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
+
+        var doneEv = new WorldEndGenerationDoneEvent();
+        RaiseLocalEvent(ref doneEv);
     }
 
     private void SpawnDeathZoneMarkers(MapId mapId, WorldEndNebulaShape worldEnd)

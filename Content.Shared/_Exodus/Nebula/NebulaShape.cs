@@ -152,6 +152,44 @@ public readonly record struct NebulaShape
         return MathF.Pow(GetDensity(point), Power);
     }
 
+    /// <summary>
+    /// Rejection-samples a random world point inside this nebula whose density is in
+    /// [<paramref name="minDensity"/>, <paramref name="maxDensity"/>]. Returns false if no
+    /// candidate passes within <paramref name="maxAttempts"/> tries.
+    ///
+    /// Sampling domain is the bounding box [-BoundingRadius .. BoundingRadius]² around
+    /// <see cref="Center"/>, so coverage is uniform over the nebula's actual area.
+    /// </summary>
+    public bool TryGetRandomPoint(System.Random rng, float minDensity, float maxDensity, out Vector2 point, int maxAttempts = 32)
+    {
+        point = default;
+
+        if (rng == null || BoundingRadius <= 0f || maxAttempts <= 0)
+            return false;
+
+        if (minDensity > maxDensity)
+            (minDensity, maxDensity) = (maxDensity, minDensity);
+
+        for (var i = 0; i < maxAttempts; i++)
+        {
+            var dx = ((float) rng.NextDouble() * 2f - 1f) * BoundingRadius;
+            var dy = ((float) rng.NextDouble() * 2f - 1f) * BoundingRadius;
+            var candidate = Center + new Vector2(dx, dy);
+
+            if (!Contains(candidate))
+                continue;
+
+            var density = GetDensity(candidate);
+            if (density < minDensity || density > maxDensity)
+                continue;
+
+            point = candidate;
+            return true;
+        }
+
+        return false;
+    }
+
     public float GetRadius(float theta)
     {
         var boundary = GetBoundaryModifier(theta, Wave1, Wave2, Wave3, Wave4);
