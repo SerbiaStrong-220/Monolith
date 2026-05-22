@@ -65,6 +65,11 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
     sprintModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
+  # Exodus-asakim-suit-biocheck-start
+  - type: AsakimSuitBiocheck
+  - type: GibOnTrigger
+    deleteItems: true
+  # Exodus-asakim-suit-biocheck-end
   - type: HeldSpeedModifier
   - type: ToggleableClothing # Goobstation - Modsuits change - Mono - this is a solution for helmet attachment/cover to not fit on hardsuits
     requiredSlot: outerclothing

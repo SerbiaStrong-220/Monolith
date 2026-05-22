@@ -17,6 +17,18 @@
       max: 3600
 
 - type: entity
+  id: ExodusT3ShipsSchedulerSlow
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: ExodusT3ShipsTable
+    minimumTimeUntilFirstEvent: 16200 # 4.5 hours — MonoMixed only
+    minMaxEventTiming:
+      min: 3600
+      max: 3600
+
+- type: entity
   parent: BaseRandomShuttleRule
   id: UnknownShuttleAzimuth
   components:
