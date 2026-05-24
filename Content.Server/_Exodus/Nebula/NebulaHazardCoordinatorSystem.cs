@@ -24,6 +24,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
     private readonly HashSet<string> _lightningMarkers = new();
     private readonly HashSet<string> _spaceLightningMarkers = new();
     private readonly HashSet<string> _empMarkers = new();
+    private readonly HashSet<string> _spaceEmpMarkers = new();
     private readonly HashSet<string> _radioBlackoutMarkers = new();
     private readonly HashSet<string> _thrustReductionMarkers = new();
 
@@ -38,12 +39,13 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         BuildCache();
     }
 
-    public bool MarkerBlocksFTL(EntProtoId marker) => marker.Id != null && _ftlBlockerMarkers.Contains(marker.Id);
-    public bool MarkerHasLightning(EntProtoId marker) => marker.Id != null && _lightningMarkers.Contains(marker.Id);
-    public bool MarkerHasSpaceLightning(EntProtoId marker) => marker.Id != null && _spaceLightningMarkers.Contains(marker.Id);
-    public bool MarkerHasEmp(EntProtoId marker) => marker.Id != null && _empMarkers.Contains(marker.Id);
-    public bool MarkerHasRadioBlackout(EntProtoId marker) => marker.Id != null && _radioBlackoutMarkers.Contains(marker.Id);
-    public bool MarkerHasThrustReduction(EntProtoId marker) => marker.Id != null && _thrustReductionMarkers.Contains(marker.Id);
+    private bool MarkerBlocksFTL(EntProtoId marker) => marker.Id != null && _ftlBlockerMarkers.Contains(marker.Id);
+    private bool MarkerHasLightning(EntProtoId marker) => marker.Id != null && _lightningMarkers.Contains(marker.Id);
+    private bool MarkerHasSpaceLightning(EntProtoId marker) => marker.Id != null && _spaceLightningMarkers.Contains(marker.Id);
+    private bool MarkerHasEmp(EntProtoId marker) => marker.Id != null && _empMarkers.Contains(marker.Id);
+    private bool MarkerHasSpaceEmp(EntProtoId marker) => marker.Id != null && _spaceEmpMarkers.Contains(marker.Id);
+    private bool MarkerHasRadioBlackout(EntProtoId marker) => marker.Id != null && _radioBlackoutMarkers.Contains(marker.Id);
+    private bool MarkerHasThrustReduction(EntProtoId marker) => marker.Id != null && _thrustReductionMarkers.Contains(marker.Id);
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
@@ -57,6 +59,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         _lightningMarkers.Clear();
         _spaceLightningMarkers.Clear();
         _empMarkers.Clear();
+        _spaceEmpMarkers.Clear();
         _radioBlackoutMarkers.Clear();
         _thrustReductionMarkers.Clear();
 
@@ -73,6 +76,8 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
                 _spaceLightningMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaEmpHazardComponent>(out _, _componentFactory))
                 _empMarkers.Add(proto.ID);
+            if (proto.TryGetComponent<NebulaSpaceEmpHazardComponent>(out _, _componentFactory))
+                _spaceEmpMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaRadioBlackoutSourceComponent>(out _, _componentFactory))
                 _radioBlackoutMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaThrustReductionComponent>(out _, _componentFactory))
@@ -109,14 +114,15 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
             UpdateSpaceLightning(uid, !skipPlayerHazards && MarkerHasSpaceLightning(marker));
         }
 
-        var wantEmp = !skipPlayerHazards && MarkerHasEmp(marker);
+        // EMP hazard: grids and free entities (EVA) have independent components on the marker
+        // so they can be enabled separately per nebula kind (symmetric to lightning).
         if (isGrid)
         {
-            UpdateGridEmp(uid, wantEmp, marker);
+            UpdateGridEmp(uid, !skipPlayerHazards && MarkerHasEmp(marker), marker);
         }
         else
         {
-            UpdateSpaceEmp(uid, wantEmp);
+            UpdateSpaceEmp(uid, !skipPlayerHazards && MarkerHasSpaceEmp(marker));
         }
 
         UpdateRadioBlackout(uid, !skipPlayerHazards && MarkerHasRadioBlackout(marker));

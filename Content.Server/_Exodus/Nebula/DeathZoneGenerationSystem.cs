@@ -27,7 +27,10 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
     private const int RadarContourSamples = 512;
     private static readonly EntProtoId InnerMarkerPrototype = "NebulaDeathZoneInnerMarker";
     private static readonly EntProtoId OuterMarkerPrototype = "NebulaDeathZoneOuterMarker";
-    private static readonly Color DeathZoneRadarColor = new(1f, 0.1f, 0f, 1f);
+
+    // Fallback when the marker prototype has no NebulaRadarVisualsComponent.
+    // Real colour should always come from the marker's YAML radarColor field.
+    private static readonly Color FallbackRadarColor = new(1f, 0.1f, 0f, 1f);
 
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -84,6 +87,10 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         if (!withRadarBlip)
             return;
 
+        var color = TryComp<NebulaRadarVisualsComponent>(marker, out var visuals)
+            ? visuals.RadarColor
+            : FallbackRadarColor;
+
         var blip = EnsureComp<RadarBlipComponent>(marker);
         blip.MaxDistance = NebulaRadarMaxDistance;
         blip.RequireNoGrid = true;
@@ -93,7 +100,7 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
             Bounds = new Box2(
                 -worldEnd.InnerBoundingRadius, -worldEnd.InnerBoundingRadius,
                 worldEnd.InnerBoundingRadius, worldEnd.InnerBoundingRadius),
-            Color = DeathZoneRadarColor,
+            Color = color,
             Shape = RadarBlipShape.NebulaPolygon,
             Points = BuildBoundaryPoints(worldEnd),
             InvertFill = true,

@@ -102,20 +102,29 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         var query = EntityQueryEnumerator<NebulaSpaceEmpTargetComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var target, out var xform))
         {
+            // Resolve marker via presence each tick so transitions between nebula kinds
+            // (e.g. death-zone inner -> outer at the 90k boundary) take effect immediately.
+            if (!TryComp<NebulaPresenceComponent>(uid, out var presence) ||
+                !TryGetSpaceMarkerConfig(presence.Marker, out var config))
+            {
+                RemCompDeferred<NebulaSpaceEmpTargetComponent>(uid);
+                continue;
+            }
+
             if (IsOnNonEmptyTile(xform))
                 continue;
 
             if (target.NextPulse == TimeSpan.Zero)
             {
-                ScheduleNextSpacePulse(target);
+                ScheduleNextSpacePulse(target, config);
                 continue;
             }
 
             if (_timing.CurTime < target.NextPulse)
                 continue;
 
-            PulseSpaceTarget((uid, target, xform), _transform.GetMapCoordinates(uid, xform));
-            ScheduleNextSpacePulse(target);
+            PulseSpaceTarget((uid, target, xform), _transform.GetMapCoordinates(uid, xform), config);
+            ScheduleNextSpacePulse(target, config);
         }
     }
 
@@ -127,6 +136,16 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
             return false;
         return proto.TryGetComponent<NebulaEmpHazardComponent>(out config!, _componentFactory);
+    }
+
+    private bool TryGetSpaceMarkerConfig(EntProtoId marker, out NebulaSpaceEmpHazardComponent config)
+    {
+        config = default!;
+        if (string.IsNullOrEmpty(marker.Id))
+            return false;
+        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
+            return false;
+        return proto.TryGetComponent<NebulaSpaceEmpHazardComponent>(out config!, _componentFactory);
     }
 
     private void InitializeGridTimers(NebulaEmpGridHazardComponent hazard, NebulaEmpHazardComponent config)
@@ -144,9 +163,9 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         hazard.NextPulse = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
     }
 
-    private void ScheduleNextSpacePulse(NebulaSpaceEmpTargetComponent target)
+    private void ScheduleNextSpacePulse(NebulaSpaceEmpTargetComponent target, NebulaSpaceEmpHazardComponent config)
     {
-        var (min, max) = GetDelayRange(target.MinStrikeDelaySeconds, target.MaxStrikeDelaySeconds);
+        var (min, max) = GetDelayRange(config.MinStrikeDelaySeconds, config.MaxStrikeDelaySeconds);
         target.NextPulse = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(min, max + 1));
     }
 
@@ -255,14 +274,15 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
 
     private void PulseSpaceTarget(
         Entity<NebulaSpaceEmpTargetComponent, TransformComponent> player,
-        MapCoordinates mapCoords)
+        MapCoordinates mapCoords,
+        NebulaSpaceEmpHazardComponent config)
     {
-        var hazard = player.Comp1;
+        var target = player.Comp1;
         Spawn(SparksPrototype, player.Comp2.Coordinates);
-        _emp.EmpPulse(mapCoords, hazard.Range, hazard.EnergyConsumption, hazard.DisableDuration);
+        _emp.EmpPulse(mapCoords, config.Range, config.EnergyConsumption, config.DisableDuration);
 
-        hazard.LastPulse = _timing.CurTime;
-        hazard.PulseCount++;
+        target.LastPulse = _timing.CurTime;
+        target.PulseCount++;
     }
 
     private bool IsOnNonEmptyTile(TransformComponent xform)
