@@ -18,6 +18,10 @@ public sealed partial class NebulaLightningHazardComponent : Component
     [DataField]
     public bool EnableHeavy = true;
 
+    /// <summary>Enables periodic superheavy strikes on grids inside the nebula.</summary>
+    [DataField]
+    public bool EnableSuperHeavy = false;
+
     [DataField]
     public TimeSpan SmallStrikeInterval = TimeSpan.FromSeconds(5);
 
@@ -25,10 +29,16 @@ public sealed partial class NebulaLightningHazardComponent : Component
     public TimeSpan HeavyStrikeInterval = TimeSpan.FromSeconds(30);
 
     [DataField]
+    public TimeSpan SuperHeavyStrikeInterval = TimeSpan.FromSeconds(15);
+
+    [DataField]
     public float SmallShieldLoad = 450f;
 
     [DataField]
     public float HeavyShieldLoad = 2000f;
+
+    [DataField]
+    public float SuperHeavyShieldLoad = 20000f;
 
     [DataField]
     public ProtoId<ExplosionPrototype> SmallExplosionType = "Minibomb";
@@ -55,10 +65,25 @@ public sealed partial class NebulaLightningHazardComponent : Component
     public float HeavyExplosionMaxTileIntensity = 80f;
 
     [DataField]
+    public ProtoId<ExplosionPrototype> SuperHeavyExplosionType = "Minibomb";
+
+    [DataField]
+    public float SuperHeavyExplosionTotalIntensity = 10667f;
+
+    [DataField]
+    public float SuperHeavyExplosionIntensitySlope = 30f;
+
+    [DataField]
+    public float SuperHeavyExplosionMaxTileIntensity = 200f;
+
+    [DataField]
     public float SmallLightningLength = 8f;
 
     [DataField]
     public float HeavyLightningLength = 16f;
+
+    [DataField]
+    public float SuperHeavyLightningLength = 32f;
 
     [DataField]
     public EntProtoId SmallLightningPrototype = "NebulaRedSmallStrikeVisual";
@@ -67,10 +92,16 @@ public sealed partial class NebulaLightningHazardComponent : Component
     public EntProtoId HeavyLightningPrototype = "NebulaRedHeavyStrikeVisual";
 
     [DataField]
+    public EntProtoId SuperHeavyLightningPrototype = "NebulaRedHeavyStrikeVisual";
+
+    [DataField]
     public SoundSpecifier SmallImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lighting_impact.ogg");
 
     [DataField]
     public SoundSpecifier HeavyImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/medium_lighting_impact.ogg");
+
+    [DataField]
+    public SoundSpecifier SuperHeavyImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/medium_lighting_impact.ogg");
 
     [DataField]
     public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lighting_impact.ogg");

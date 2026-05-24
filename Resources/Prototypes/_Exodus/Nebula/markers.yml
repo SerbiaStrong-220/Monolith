@@ -87,8 +87,8 @@
   - type: NebulaBlocksDebris
 
 # Death zone — outer concentric sub-zone (>90k from origin). Boundary is invisible.
-# Only heavy grid strikes (every 2.5s), no small. Personal lightning at default cadence
-# but with much higher damage (100 burn + 100 shock).
+# Only superheavy grid strikes (every 15s), no small/heavy. Personal lightning at default
+# cadence but with much higher damage (100 burn + 100 shock).
 # No NebulaRadarVisuals — outer marker has no radar blip by design (see DeathZoneGenerationSystem).
 - type: entity
   parent: NebulaBaseMarker
@@ -100,9 +100,12 @@
     parallax: RedNebula
   - type: NebulaLightningHazard
     enableSmall: false
-    heavyStrikeInterval: 2.5
-    heavyShieldLoad: 20000
-    heavyExplosionTotalIntensity: 2133.334
+    enableHeavy: false
+    enableSuperHeavy: true
+    superHeavyStrikeInterval: 15
+    superHeavyShieldLoad: 200000
+    superHeavyExplosionTotalIntensity: 40000
+    superHeavyExplosionMaxTileIntensity: 400
   - type: NebulaSpaceLightningHazard
     minStrikeDelaySeconds: 2
     maxStrikeDelaySeconds: 7

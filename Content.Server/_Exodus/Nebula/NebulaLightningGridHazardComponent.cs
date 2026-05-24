@@ -25,10 +25,16 @@ public sealed partial class NebulaLightningGridHazardComponent : Component
     public TimeSpan NextHeavyStrike;
 
     [ViewVariables]
+    public TimeSpan NextSuperHeavyStrike;
+
+    [ViewVariables]
     public TimeSpan LastSmallStrike;
 
     [ViewVariables]
     public TimeSpan LastHeavyStrike;
+
+    [ViewVariables]
+    public TimeSpan LastSuperHeavyStrike;
 
     [ViewVariables]
     public TimeSpan LastSmallDelta;
@@ -37,8 +43,14 @@ public sealed partial class NebulaLightningGridHazardComponent : Component
     public TimeSpan LastHeavyDelta;
 
     [ViewVariables]
+    public TimeSpan LastSuperHeavyDelta;
+
+    [ViewVariables]
     public int SmallStrikeCount;
 
     [ViewVariables]
     public int HeavyStrikeCount;
+
+    [ViewVariables]
+    public int SuperHeavyStrikeCount;
 }

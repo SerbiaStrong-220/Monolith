@@ -4,6 +4,7 @@ using Content.Shared._Crescent.ShipShields;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
+using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
@@ -56,6 +57,13 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
     private List<Entity<MapGridComponent>> _shieldSearchBuffer = new();
     private TimeSpan _nextUpdate;
 
+    private enum LightningStrikeTier : byte
+    {
+        Small,
+        Heavy,
+        SuperHeavy,
+    }
+
     public override void Initialize()
     {
         base.Initialize();
@@ -105,15 +113,22 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
             if (config.EnableSmall && _timing.CurTime >= hazard.NextSmallStrike)
             {
                 hazard.NextSmallStrike = _timing.CurTime + config.SmallStrikeInterval;
-                if (TryStrikeGrid((uid, grid, xform), hazard, config, false))
-                    RecordStrike(hazard, false);
+                if (TryStrikeGrid((uid, grid, xform), hazard, config, LightningStrikeTier.Small))
+                    RecordStrike(hazard, LightningStrikeTier.Small);
             }
 
             if (config.EnableHeavy && _timing.CurTime >= hazard.NextHeavyStrike)
             {
                 hazard.NextHeavyStrike = _timing.CurTime + config.HeavyStrikeInterval;
-                if (TryStrikeGrid((uid, grid, xform), hazard, config, true))
-                    RecordStrike(hazard, true);
+                if (TryStrikeGrid((uid, grid, xform), hazard, config, LightningStrikeTier.Heavy))
+                    RecordStrike(hazard, LightningStrikeTier.Heavy);
+            }
+
+            if (config.EnableSuperHeavy && _timing.CurTime >= hazard.NextSuperHeavyStrike)
+            {
+                hazard.NextSuperHeavyStrike = _timing.CurTime + config.SuperHeavyStrikeInterval;
+                if (TryStrikeGrid((uid, grid, xform), hazard, config, LightningStrikeTier.SuperHeavy))
+                    RecordStrike(hazard, LightningStrikeTier.SuperHeavy);
             }
         }
     }
@@ -179,11 +194,22 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
             hazard.NextSmallStrike = _timing.CurTime + config.SmallStrikeInterval;
         if (config.EnableHeavy)
             hazard.NextHeavyStrike = _timing.CurTime + config.HeavyStrikeInterval;
+        if (config.EnableSuperHeavy)
+            hazard.NextSuperHeavyStrike = _timing.CurTime + config.SuperHeavyStrikeInterval;
     }
 
-    private void RecordStrike(NebulaLightningGridHazardComponent hazard, bool heavy)
+    private void RecordStrike(NebulaLightningGridHazardComponent hazard, LightningStrikeTier tier)
     {
-        if (heavy)
+        if (tier == LightningStrikeTier.SuperHeavy)
+        {
+            if (hazard.LastSuperHeavyStrike != TimeSpan.Zero)
+                hazard.LastSuperHeavyDelta = _timing.CurTime - hazard.LastSuperHeavyStrike;
+            hazard.LastSuperHeavyStrike = _timing.CurTime;
+            hazard.SuperHeavyStrikeCount++;
+            return;
+        }
+
+        if (tier == LightningStrikeTier.Heavy)
         {
             if (hazard.LastHeavyStrike != TimeSpan.Zero)
                 hazard.LastHeavyDelta = _timing.CurTime - hazard.LastHeavyStrike;
@@ -202,17 +228,17 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         Entity<MapGridComponent, TransformComponent> grid,
         NebulaLightningGridHazardComponent hazard,
         NebulaLightningHazardComponent config,
-        bool heavy)
+        LightningStrikeTier tier)
     {
         if (!TrySelectStrikeTile(grid, hazard.Marker, out _, out var targetCoords, out var targetGridCoords))
             return false;
 
-        var lightning = heavy ? config.HeavyLightningPrototype : config.SmallLightningPrototype;
-        var lightningLength = heavy ? config.HeavyLightningLength : config.SmallLightningLength;
+        var lightning = GetLightningPrototype(config, tier);
+        var lightningLength = GetLightningLength(config, tier);
         var sourceDirection = targetCoords.Position - _transform.GetWorldPosition(grid.Comp2);
         SpawnLightning(targetCoords, lightning, lightningLength, sourceDirection);
 
-        var shieldLoad = heavy ? config.HeavyShieldLoad : config.SmallShieldLoad;
+        var shieldLoad = GetShieldLoad(config, tier);
         var shieldHit = new ShipShieldHitAttemptEvent(targetCoords, shieldLoad, false);
         RaiseLocalEvent(grid.Owner, ref shieldHit);
         if (shieldHit.Absorbed)
@@ -222,8 +248,8 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
             return true;
         }
 
-        var impactSound = heavy ? config.HeavyImpactSound : config.SmallImpactSound;
-        QueueExplosion(targetGridCoords, config, heavy);
+        var impactSound = GetImpactSound(config, tier);
+        QueueExplosion(targetGridCoords, config, tier);
         PlayLightningSound(impactSound, targetGridCoords);
         Spawn(SparksPrototype, targetCoords);
         return true;
@@ -351,12 +377,12 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         _audio.PlayStatic(sound, filter, coordinates, true, audioParams);
     }
 
-    private void QueueExplosion(EntityCoordinates targetCoords, NebulaLightningHazardComponent config, bool heavy)
+    private void QueueExplosion(EntityCoordinates targetCoords, NebulaLightningHazardComponent config, LightningStrikeTier tier)
     {
-        var explosionType = heavy ? config.HeavyExplosionType : config.SmallExplosionType;
-        var totalIntensity = heavy ? config.HeavyExplosionTotalIntensity : config.SmallExplosionTotalIntensity;
-        var slope = heavy ? config.HeavyExplosionIntensitySlope : config.SmallExplosionIntensitySlope;
-        var maxTileIntensity = heavy ? config.HeavyExplosionMaxTileIntensity : config.SmallExplosionMaxTileIntensity;
+        var explosionType = GetExplosionType(config, tier);
+        var totalIntensity = GetExplosionTotalIntensity(config, tier);
+        var slope = GetExplosionIntensitySlope(config, tier);
+        var maxTileIntensity = GetExplosionMaxTileIntensity(config, tier);
 
         var mapCoords = _transform.ToMapCoordinates(targetCoords);
         _explosions.QueueExplosion(
@@ -367,6 +393,86 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
             maxTileIntensity,
             cause: null,
             addLog: false);
+    }
+
+    private static EntProtoId GetLightningPrototype(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyLightningPrototype,
+            LightningStrikeTier.Heavy => config.HeavyLightningPrototype,
+            _ => config.SmallLightningPrototype,
+        };
+    }
+
+    private static float GetLightningLength(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyLightningLength,
+            LightningStrikeTier.Heavy => config.HeavyLightningLength,
+            _ => config.SmallLightningLength,
+        };
+    }
+
+    private static float GetShieldLoad(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyShieldLoad,
+            LightningStrikeTier.Heavy => config.HeavyShieldLoad,
+            _ => config.SmallShieldLoad,
+        };
+    }
+
+    private static ProtoId<ExplosionPrototype> GetExplosionType(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyExplosionType,
+            LightningStrikeTier.Heavy => config.HeavyExplosionType,
+            _ => config.SmallExplosionType,
+        };
+    }
+
+    private static float GetExplosionTotalIntensity(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyExplosionTotalIntensity,
+            LightningStrikeTier.Heavy => config.HeavyExplosionTotalIntensity,
+            _ => config.SmallExplosionTotalIntensity,
+        };
+    }
+
+    private static float GetExplosionIntensitySlope(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyExplosionIntensitySlope,
+            LightningStrikeTier.Heavy => config.HeavyExplosionIntensitySlope,
+            _ => config.SmallExplosionIntensitySlope,
+        };
+    }
+
+    private static float GetExplosionMaxTileIntensity(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyExplosionMaxTileIntensity,
+            LightningStrikeTier.Heavy => config.HeavyExplosionMaxTileIntensity,
+            _ => config.SmallExplosionMaxTileIntensity,
+        };
+    }
+
+    private static SoundSpecifier GetImpactSound(NebulaLightningHazardComponent config, LightningStrikeTier tier)
+    {
+        return tier switch
+        {
+            LightningStrikeTier.SuperHeavy => config.SuperHeavyImpactSound,
+            LightningStrikeTier.Heavy => config.HeavyImpactSound,
+            _ => config.SmallImpactSound,
+        };
     }
 
     private void StrikeSpaceTarget(

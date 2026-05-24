@@ -50,6 +50,36 @@ public sealed class NebulaShapeTests
     }
 
     [Test]
+    public void TryGetRandomPointDensityRespectsBounds()
+    {
+        Assert.That(TryCreateCircle(out var shape), Is.True);
+        var rng = new Random(12345);
+
+        for (var i = 0; i < 64; i++)
+        {
+            Assert.That(shape.TryGetRandomPoint(rng, 0.5f, 1f, out var point, 256), Is.True);
+
+            var density = shape.GetDensity(point);
+            Assert.Multiple(() =>
+            {
+                Assert.That(shape.Contains(point), Is.True);
+                Assert.That(density, Is.InRange(0.5f, 1f));
+            });
+        }
+    }
+
+    [Test]
+    public void TryGetRandomPointSwapsInvertedDensityRange()
+    {
+        Assert.That(TryCreateCircle(out var shape), Is.True);
+        var rng = new Random(12345);
+
+        Assert.That(shape.TryGetRandomPoint(rng, 0.8f, 0.4f, out var point, 256), Is.True);
+
+        Assert.That(shape.GetDensity(point), Is.InRange(0.4f, 0.8f));
+    }
+
+    [Test]
     public void AreaIsNormalizedToBaseRadius()
     {
         var area = 45_000_000f;
@@ -126,7 +156,10 @@ public sealed class NebulaShapeTests
             new NebulaProtectedArea(new Vector2(8000f, -8000f), 1_000f),
         };
 
-        var settings = new NebulaGenerationSettings();
+        var settings = new NebulaGenerationSettings
+        {
+            MaxTotalAreaOptions = [1_000_000_000d],
+        };
         var result = NebulaGenerator.Generate(12345, protectedAreas, settings);
 
         Assert.Multiple(() =>
