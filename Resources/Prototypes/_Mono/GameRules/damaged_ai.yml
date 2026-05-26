@@ -7,6 +7,7 @@
       - id: UnknownShuttleNebula
       - id: UnknownShuttleOmen # Exodus      
       - id: UnknownShuttleCrow # Exodus
+      - id: UnknownShuttleZenithA # Exodus
 
 - type: entityTable
   id: DamagedAIShipsTableT2
@@ -20,6 +21,7 @@
     - id: UnknownShuttleNebula
     - id: UnknownShuttleConcordX # Exodus
     - id: UnknownShuttleMantaray # Exodus
+    - id: UnknownShuttleZenithA # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -90,7 +92,7 @@
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 3
-    maxOccurrences: 6
+    maxOccurrences: 3
   - type: GameRule
     minPlayers: 15
   - type: LoadMapRule
@@ -219,6 +221,27 @@
     minPlayers: 28
   - type: LoadMapRule
     gridPath: /Maps/_Exodus/ShuttleEvent/crow.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleZenithA
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-frigate-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 2.5
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 32
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/zenith_a.yml # Exodus
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
