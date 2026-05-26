@@ -343,7 +343,12 @@
             max: 5
           SheetUranium1:
             min: 1
-            max: 5
+            max: 4
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "RTGPlutoniumDropTable"
+        spawnOffset: 0.5
+        minSpawn: 1
+        maxSpawn: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   # Mono - no board so it's probably fine?
