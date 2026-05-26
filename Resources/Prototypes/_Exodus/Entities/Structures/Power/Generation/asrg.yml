@@ -121,7 +121,13 @@
             max: 5
           SheetUranium1:
             min: 1
-            max: 5
+            max: 4
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "ASRGPlutoniumDropTable"
+        spawnOffset: 0.5
+        minSpawn: 1
+        maxSpawn: 1
+        spawnAfter: 0.2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: ShipRepairable
