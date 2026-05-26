@@ -123,7 +123,7 @@
       softness: 1
     - type: Explosive
       explosionType: HardBomb
-      totalIntensity: 40000.0
+      totalIntensity: 40000.0 # Exodus
       intensitySlope: 3
       maxIntensity: 400
 
