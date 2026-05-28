@@ -37,9 +37,9 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
         if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
             return;
 
-        var containerSys = entityManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
-        var stackSys = entityManager.EntitySysManager.GetEntitySystem<StackSystem>();
-        var xformSys = entityManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
+        var containerSys = entityManager.System<SharedContainerSystem>();
+        var stackSys = entityManager.System<StackSystem>();
+        var xformSys = entityManager.System<SharedTransformSystem>();
         var protoManager = IoCManager.Resolve<IPrototypeManager>();
         var coords = xformSys.GetMapCoordinates(uid);
         var dropCoords = new EntityCoordinates(uid, 0, 0);

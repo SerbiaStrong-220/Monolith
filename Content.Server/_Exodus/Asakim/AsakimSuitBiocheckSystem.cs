@@ -10,7 +10,8 @@ using Content.Shared.Mobs.Systems;
 namespace Content.Server._Exodus.Asakim;
 
 /// <summary>
-/// Gibs the wearer of Asakim-biocoded clothing when a non-Asakim is detected.
+/// Fires the biocheck trigger on Asakim-biocoded clothing when a non-Asakim wearer is detected.
+/// The actual reaction (gib, explosion, etc.) is defined by trigger behaviors on the clothing prototype.
 /// Two trigger paths:
 /// 1. Equipped while alive and not Asakim.
 /// 2. A mind becomes attached to the wearer's body and that body does not currently have an
@@ -41,7 +42,7 @@ public sealed class AsakimSuitBiocheckSystem : EntitySystem
         if (_asakim.IsAsakim(wearer))
             return;
 
-        Gib(ent, wearer, "equipped while not Asakim");
+        RejectWearer(ent, wearer, "equipped while not Asakim");
     }
 
     private void OnMindAdded(Entity<MindContainerComponent> body, ref MindAddedMessage args)
@@ -55,13 +56,13 @@ public sealed class AsakimSuitBiocheckSystem : EntitySystem
         if (!TryComp<AsakimSuitBiocheckComponent>(outerUid, out var biocheck))
             return;
 
-        Gib((outerUid.Value, biocheck), body, "mind attached without Asakim brain");
+        RejectWearer((outerUid.Value, biocheck), body, "mind attached without Asakim brain");
     }
 
-    private void Gib(Entity<AsakimSuitBiocheckComponent> ent, EntityUid wearer, string reason)
+    private void RejectWearer(Entity<AsakimSuitBiocheckComponent> ent, EntityUid wearer, string reason)
     {
-        _adminLogger.Add(LogType.Gib, LogImpact.High,
-            $"{ToPrettyString(wearer):wearer} was gibbed by Asakim suit biocheck on {ToPrettyString(ent.Owner):suit} ({reason})");
+        _adminLogger.Add(LogType.Trigger, LogImpact.High,
+            $"Asakim suit biocheck on {ToPrettyString(ent.Owner):suit} fired its trigger against {ToPrettyString(wearer):wearer} ({reason})");
         _trigger.Trigger(ent.Owner, wearer);
     }
 }

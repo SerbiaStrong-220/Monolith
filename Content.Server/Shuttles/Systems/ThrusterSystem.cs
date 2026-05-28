@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Exodus.Shuttles.Components; // Exodus OmnidirectionalThruster
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -101,7 +102,7 @@ public sealed class ThrusterSystem : EntitySystem
             args.PushMarkup(enabled);
 
             // Exodus-begin: OmnidirectionalThruster - no nozzle direction for omni thrusters
-            if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid))
+            if (HasComp<OmnidirectionalThrusterComponent>(uid))
                 return;
             // Exodus-end
 
@@ -201,7 +202,7 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     private void OnRotate(EntityUid uid, ThrusterComponent component, ref MoveEvent args)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
             return;
 
         // TODO: Disable visualizer for old direction
@@ -331,7 +332,7 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
             return;
 
         if (component.IsOn ||
@@ -414,7 +415,7 @@ public sealed class ThrusterSystem : EntitySystem
                     continue;
 
                 // Exodus-begin OmnidirectionalThruster - omni thrusters are treated as centered and must not skew center of thrust
-                if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(ent))
+                if (HasComp<OmnidirectionalThrusterComponent>(ent))
                     continue;
                 // Exodus-end
 
@@ -431,7 +432,7 @@ public sealed class ThrusterSystem : EntitySystem
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
             return;
 
         if (!Resolve(uid, ref xform)) return;
@@ -665,7 +666,7 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
     {
-        if (HasComp<Content.Server._Exodus.Shuttles.Components.OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
             return;
 
         if (component.IsOn) // safely disable thruster to prevent negative thrust
