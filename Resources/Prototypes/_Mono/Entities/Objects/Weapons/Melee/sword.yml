@@ -177,7 +177,13 @@
   # Exodus-asakim-katana-dash-start
   - type: DashAbility
     dashAction: ActionAsakimKatanaDash
-  - type: AsakimKatanaDash
+  - type: Biocode
+    blockInteraction: false
+    blockDash: true
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    organWhitelist:
+      components: [ AsakimBrain ]
   # Exodus-asakim-katana-dash-end
 
 # Ullman Blade

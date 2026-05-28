@@ -4,7 +4,11 @@
   name: asakim communications computer
   description: A pre-fracture communications console keyed to Asakim neural patterns.
   components:
-  - type: AsakimUseAccess
+  - type: Biocode
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    organWhitelist:
+      components: [ AsakimBrain ]
   - type: AsakimCommunicationsConsole
   - type: Sprite
     layers:

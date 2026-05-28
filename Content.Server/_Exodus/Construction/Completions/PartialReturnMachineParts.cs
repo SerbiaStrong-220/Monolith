@@ -14,10 +14,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._Exodus.Construction.Completions;
 
 /// <summary>
-/// Graph action that returns a fraction of machine parts from machine_parts container.
+/// Graph action that returns a fraction of machine parts from the machine_parts container.
 /// Stacks use original board requirements for correct amounts (container clips to maxCount).
 /// Non-stack entities (MachinePart) are returned directly from the container, preserving upgrades.
-/// machine_board container is always fully returned.
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
@@ -29,6 +28,20 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
     /// </summary>
     [DataField(required: true)]
     public float ReturnFraction = 1.0f;
+
+    /// <summary>
+    /// Whether the machine board is returned intact. When false, the board is destroyed
+    /// along with the rest of the machine.
+    /// </summary>
+    [DataField]
+    public bool ReturnBoard = true;
+
+    /// <summary>
+    /// Whether non-stack parts (manipulators, capacitors, etc.) are returned as their real
+    /// entities to preserve upgrade ratings. When false, they are destroyed instead.
+    /// </summary>
+    [DataField]
+    public bool PreserveNonStackParts = true;
 
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
@@ -60,7 +73,12 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
                 }
             }
 
-            containerSys.EmptyContainer(container, true);
+            // EmptyContainer with reparent drops the board back into the world (returned).
+            // Otherwise the board is destroyed along with the machine.
+            if (ReturnBoard)
+                containerSys.EmptyContainer(container, true);
+            else
+                containerSys.CleanContainer(container);
             break;
         }
 
@@ -117,10 +135,11 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
                 }
             }
 
-            // Return non-stack entities directly (preserves upgrade ratings)
+            // Return non-stack entities directly (preserves upgrade ratings), or destroy them all
+            // when preservation is disabled.
             foreach (var (_, group) in nonStackGroups)
             {
-                var toReturn = (int) Math.Floor(group.Count * fraction);
+                var toReturn = PreserveNonStackParts ? (int) Math.Floor(group.Count * fraction) : 0;
                 for (var i = 0; i < group.Count; i++)
                 {
                     var ent = group[i];

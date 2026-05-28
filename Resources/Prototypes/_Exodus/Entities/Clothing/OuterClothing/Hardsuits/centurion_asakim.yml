@@ -63,7 +63,13 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
-  - type: AsakimSuitBiocheck
+  - type: Biocode
+    blockInteraction: false
+    triggerOnReject: true
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    organWhitelist:
+      components: [ AsakimBrain ]
   - type: GibOnTrigger
     deleteItems: true
   - type: EmergencyReagentInjector

@@ -66,7 +66,13 @@
     walkModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
     sprintModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
   # Exodus-asakim-suit-biocheck-start
-  - type: AsakimSuitBiocheck
+  - type: Biocode
+    blockInteraction: false
+    triggerOnReject: true
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    organWhitelist:
+      components: [ AsakimBrain ]
   - type: GibOnTrigger
     deleteItems: true
   # Exodus-asakim-suit-biocheck-end

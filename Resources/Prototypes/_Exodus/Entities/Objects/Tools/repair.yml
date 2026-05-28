@@ -4,4 +4,8 @@
   name: asakim pre-fracture SRD
   description: A resonant ship repair device keyed to Asakim neural patterns.
   components:
-  - type: AsakimUseAccess
+  - type: Biocode
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    organWhitelist:
+      components: [ AsakimBrain ]
