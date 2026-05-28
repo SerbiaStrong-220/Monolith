@@ -41,10 +41,10 @@ public sealed partial class BiocodeComponent : Component
     public bool BlockEquip;
 
     /// <summary>
-    /// Cancel <see cref="Content.Shared.Ninja.Systems.CheckDashEvent"/> for non-authorized users.
+    /// Withhold all item actions this entity would grant (dash, etc.) from non-authorized users.
     /// </summary>
     [DataField]
-    public bool BlockDash;
+    public bool BlockItemActions;
 
     /// <summary>
     /// Run the entity's trigger when a non-authorized live wearer is detected (equipped while alive,

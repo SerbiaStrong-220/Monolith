@@ -179,7 +179,7 @@
     dashAction: ActionAsakimKatanaDash
   - type: Biocode
     blockInteraction: false
-    blockDash: true
+    blockItemActions: true
     whitelist:
       components: [ AsakimTrustedUser ]
     organWhitelist:

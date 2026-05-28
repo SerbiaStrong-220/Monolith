@@ -1,4 +1,5 @@
 using Content.Shared._Mono.ShipRepair;
+using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Interaction;
@@ -33,7 +34,8 @@ public sealed class SharedBiocodeSystem : EntitySystem
         SubscribeLocalEvent<BiocodeComponent, UseInHandEvent>(OnUseInHand, before: [typeof(ActivatableUISystem)]);
         SubscribeLocalEvent<BiocodeComponent, ActivateInWorldEvent>(OnActivateInWorld, before: [typeof(ActivatableUISystem)]);
         SubscribeLocalEvent<BiocodeComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUiOpenAttempt);
-        SubscribeLocalEvent<BiocodeComponent, CheckDashEvent>(OnCheckDash);
+        // Run after action-granting systems so their actions are already in the set and can be cleared.
+        SubscribeLocalEvent<BiocodeComponent, GetItemActionsEvent>(OnGetItemActions, after: [typeof(DashAbilitySystem)]);
         SubscribeLocalEvent<BiocodeComponent, BeingEquippedAttemptEvent>(OnBeingEquippedAttempt);
     }
 
@@ -125,12 +127,12 @@ public sealed class SharedBiocodeSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnCheckDash(Entity<BiocodeComponent> ent, ref CheckDashEvent args)
+    private void OnGetItemActions(Entity<BiocodeComponent> ent, ref GetItemActionsEvent args)
     {
-        if (!ent.Comp.BlockDash || IsAllowed(ent, args.User))
+        if (!ent.Comp.BlockItemActions || IsAllowed(ent, args.User))
             return;
 
-        args.Cancelled = true;
+        args.Actions.Clear();
     }
 
     private void OnBeingEquippedAttempt(Entity<BiocodeComponent> ent, ref BeingEquippedAttemptEvent args)
