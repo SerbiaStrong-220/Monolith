@@ -1,4 +1,5 @@
 using Content.Shared.Whitelist;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Biocode;
 
@@ -33,4 +34,12 @@ public sealed partial class BodySlotInsertGuardComponent : Component
 
     [DataField]
     public LocId RejectPopup = "body-slot-insert-guard-rejected";
+
+    /// <summary>
+    /// Tick this guard was created on. The body is assembled (organs/parts inserted) on the same
+    /// tick the part spawns, so insertions on this tick are the initial assembly and are not guarded.
+    /// Later insertions (surgery) are.
+    /// </summary>
+    [ViewVariables]
+    public GameTick SpawnTick;
 }

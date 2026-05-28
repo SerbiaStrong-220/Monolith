@@ -4,6 +4,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Biocode;
 
@@ -17,11 +18,18 @@ public sealed class BodySlotInsertGuardSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<BodySlotInsertGuardComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BodySlotInsertGuardComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+    }
+
+    private void OnStartup(Entity<BodySlotInsertGuardComponent> ent, ref ComponentStartup args)
+    {
+        ent.Comp.SpawnTick = _timing.CurTick;
     }
 
     private void OnInsertAttempt(Entity<BodySlotInsertGuardComponent> ent, ref ContainerIsInsertingAttemptEvent args)
@@ -29,9 +37,9 @@ public sealed class BodySlotInsertGuardSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        // The body is assembled (organs/parts inserted) during spawn, before the part is map-initialized.
-        // Only guard against later insertions (surgery), not the initial assembly.
-        if (MetaData(ent.Owner).EntityLifeStage < EntityLifeStage.MapInitialized)
+        // The body is assembled (organs/parts inserted) on the same tick the guarded part spawns.
+        // Skip insertions on that tick (initial assembly); only guard later ones (surgery).
+        if (_timing.CurTick == ent.Comp.SpawnTick)
             return;
 
         var containerId = args.Container.ID;
