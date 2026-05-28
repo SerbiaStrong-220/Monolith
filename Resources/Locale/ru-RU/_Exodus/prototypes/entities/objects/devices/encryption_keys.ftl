@@ -1,2 +1,2 @@
-ent-EncryptionKeyAsakimRemnants = ключ шифрования останков азакимов
+ent-EncryptionKeyAsakimRemnants = ключ шифрования азакимов
     .desc = Встроенный ключ шифрования для боевых экзоскелетов азакимов.
