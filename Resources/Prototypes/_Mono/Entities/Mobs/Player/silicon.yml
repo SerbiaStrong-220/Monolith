@@ -132,6 +132,8 @@
   - type: ShowJobIcons
   - type: AdvancedPilot # can use both gunnery and shuttle console even on capitals
   - type: RetroMonitorView
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg
 
 - type: entity
   id: BaseBorgChassisRedacted

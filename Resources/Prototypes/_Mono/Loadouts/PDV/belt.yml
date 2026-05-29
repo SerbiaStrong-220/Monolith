@@ -7,3 +7,10 @@
   id: PDVClothingBeltWebbingsBigBlack
   equipment:
     belt: ClothingBeltWebbingsBigBlack
+
+# Exodus - begin
+- type: loadout
+  id: PDVCombatWebbingMedical
+  equipment:
+    belt: ClothingBeltMilitaryWebbingMed
+# Exodus - end

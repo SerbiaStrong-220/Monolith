@@ -108,7 +108,7 @@
   - type: GameRule
     minPlayers: 30
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/wyvern.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/wyvern.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -120,15 +120,15 @@
   id: UnknownShuttleRazorNApoc
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-razorn-detected # Exodus
     startAudio:
-      path: /Audio/Misc/notice1.ogg
+      path: /Audio/Misc/delta_alt.ogg # Exodus
     weight: 3 # billions must die
     maxOccurrences: 3
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/razorn.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/razorn.yml # Exodus
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
