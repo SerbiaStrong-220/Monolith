@@ -217,17 +217,33 @@ public sealed class ScuttleDeviceSystem : EntitySystem
         var nukeXform = Transform(ent);
         var grid = nukeXform.GridUid;
         var name = grid == null ? "Space" : _shuttles.GetIFFLabel(grid.Value) ?? "Space";
-
-        // warn a crew
-        var announcement = Loc.GetString("scuttle-device-announcement-armed",
-            ("time", (int) ent.Comp.RemainingTime.TotalSeconds),
-            ("location", name));
         var sender = Loc.GetString(ent.Comp.AnnounceSender);
-        _chatSystem.DispatchFilteredAnnouncement(Filter.Local().AddInRange(_transform.GetMapCoordinates(ent, nukeXform), ent.Comp.AnnounceRadius),
-                                                announcement, sender: sender, playSound: false, colorOverride: Color.Red);
 
-        _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ActivateSound));
-        _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
+        // Exodus-begin
+        var nukeCoords = _transform.GetMapCoordinates(ent, nukeXform);
+        if (ent.Comp.GlobalAnnouncement)
+        {
+            var announcement = Loc.GetString(ent.Comp.ArmAnnouncementKey,
+                ("time", (int) ent.Comp.RemainingTime.TotalSeconds),
+                ("location", name),
+                ("x", (int) nukeCoords.X),
+                ("y", (int) nukeCoords.Y));
+            _chatSystem.DispatchGlobalAnnouncement(announcement, sender: sender, playSound: true,
+                announcementSound: ent.Comp.ActivateSound, colorOverride: Color.Red);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
+        }
+        else
+        {
+            var announcement = Loc.GetString(ent.Comp.ArmAnnouncementKey,
+                ("time", (int) ent.Comp.RemainingTime.TotalSeconds),
+                ("location", name));
+            _chatSystem.DispatchFilteredAnnouncement(Filter.Local().AddInRange(nukeCoords, ent.Comp.AnnounceRadius),
+                announcement, sender: sender, playSound: false, colorOverride: Color.Red);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ActivateSound));
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
+        }
+        // Exodus-end
+
         if (ent.Comp.DoMusic)
         {
             ent.Comp.SelectedNukeSong = _audio.ResolveSound(ent.Comp.ArmMusic);

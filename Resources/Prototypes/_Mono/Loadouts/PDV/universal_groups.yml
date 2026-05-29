@@ -102,6 +102,7 @@
   loadouts:
   - PDVClothingBeltWebbingsNormalBlack
   - PDVClothingBeltWebbingsBigBlack
+  - PDVCombatWebbingMedical # Exodus
   fallbacks:
   - PDVClothingBeltWebbingsNormalBlack
 
