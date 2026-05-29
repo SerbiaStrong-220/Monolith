@@ -708,6 +708,31 @@ public sealed class ThrusterSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         return ev.Handled;
     }
+
+    // Exodus-begin: registration API so externally-handled thrusters (e.g. omni) don't mutate ShuttleComponent fields directly
+    /// <summary>
+    /// Registers linear thrust from a thruster onto a shuttle in the given cardinal direction index.
+    /// Use this instead of writing <see cref="ShuttleComponent"/> thrust fields directly.
+    /// </summary>
+    public void AddLinearThrust(ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid)
+    {
+        shuttle.LinearThrust[direction] += thrust;
+        shuttle.BaseLinearThrust[direction] += baseThrust;
+        DebugTools.Assert(!shuttle.LinearThrusters[direction].Contains(uid));
+        shuttle.LinearThrusters[direction].Add(uid);
+    }
+
+    /// <summary>
+    /// Removes previously registered linear thrust from a shuttle in the given cardinal direction index.
+    /// </summary>
+    public void RemoveLinearThrust(ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid)
+    {
+        shuttle.LinearThrust[direction] -= thrust;
+        shuttle.BaseLinearThrust[direction] -= baseThrust;
+        DebugTools.Assert(shuttle.LinearThrusters[direction].Contains(uid));
+        shuttle.LinearThrusters[direction].Remove(uid);
+    }
+    // Exodus-end
 }
 
 /// <summary>

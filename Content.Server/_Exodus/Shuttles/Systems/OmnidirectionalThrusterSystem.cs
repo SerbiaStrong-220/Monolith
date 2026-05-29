@@ -23,6 +23,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly PoweredRadiationSourceSystem _poweredRadiation = default!;
+    [Dependency] private readonly ThrusterSystem _thruster = default!;
 
     public override void Initialize()
     {
@@ -147,11 +148,7 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         thruster.IsOn = true;
 
         for (var i = 0; i < 4; i++)
-        {
-            shuttle.LinearThrust[i] += thruster.Thrust;
-            shuttle.BaseLinearThrust[i] += thruster.BaseThrust;
-            shuttle.LinearThrusters[i].Add(uid);
-        }
+            _thruster.AddLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, uid);
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
             _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
@@ -185,10 +182,6 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
             return;
 
         for (var i = 0; i < 4; i++)
-        {
-            shuttle.LinearThrust[i] -= thruster.Thrust;
-            shuttle.BaseLinearThrust[i] -= thruster.BaseThrust;
-            shuttle.LinearThrusters[i].Remove(uid);
-        }
+            _thruster.RemoveLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, uid);
     }
 }
