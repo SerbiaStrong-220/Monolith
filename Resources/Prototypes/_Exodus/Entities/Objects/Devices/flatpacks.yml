@@ -1,0 +1,18 @@
+- type: entity
+  parent: PortableGeneratorJrPacmanFlatpack
+  id: GeneratorASRGFlatpack
+  name: ASRG generator flatpack
+  description: A flatpack used for constructing a radioisotope Stirling generator.
+  components:
+  - type: Flatpack
+    entity: GeneratorASRG
+
+- type: entity
+  parent: PortableGeneratorJrPacmanFlatpack
+  id: GeneratorASRGDamagedFlatpack
+  name: ASRG generator flatpack
+  description: A flatpack used for constructing a radioisotope Stirling generator. The packaging seems to be somewhat damaged.
+  suffix: Damaged
+  components:
+  - type: Flatpack
+    entity: GeneratorASRGDamaged
