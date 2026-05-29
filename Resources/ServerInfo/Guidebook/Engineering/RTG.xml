@@ -1,25 +1,43 @@
 <Document>
-  # Radioisotope Thermoelectric Generator (RTG)
+  # Радиоизотопные генераторы
 
   <Box>
-    <GuideEntityEmbed Entity="GeneratorRTG" Caption="RTG" />
+    <GuideEntityEmbed Entity="GeneratorRTG" Caption="РИТЭГ" />
+    <GuideEntityEmbed Entity="GeneratorASRG" Caption="ДРИТЭГ" />
   </Box>
 
-  A Radioisotope Thermoelectric Generator (RTG) is a passive power source that generates power from the decay of radioactive isotopes.
+  Радиоизотопные генераторы являются пассивными источниками энергии, которые вырабатывают электричество за счёт распада радиоактивных изотопов.
 
-  They require no maintenance and are a reliable source of power, making them ideal for powering essential systems that need to be online at all times, like Telecoms, the AI, or the Crew Monitoring Server.
+  Они не требуют обслуживания и дают стабильную мощность, что делает их удобными для питания критически важных систем, которые должны работать постоянно, вроде телекома, ядра ИИ или сервера мониторинга экипажа.
 
-  RTGs always generate [color=orange][protodata="GeneratorRTG" comp="PowerSupplier" member="MaxSupply" format="N0"/] W[/color] of power and must be connected to an [color=orange]HV power[/color] [textlink="network" link="VoltageNetworks"] to function.
-
-  However, they're only accessible through salvage finding one on an expedition. Should they bring some in, make sure to thank them!
-
-  ## RTG Damage
+  ## РИТЭГ
   <Box>
-    <GuideEntityEmbed Entity="GeneratorRTGDamaged" Caption="Damaged RTG" />
+    <GuideEntityEmbed Entity="GeneratorRTG" Caption="РИТЭГ" />
   </Box>
-  If RTGs take enough damage, they can become damaged RTGs.
-  Damaged RTGs behave just like regular ones, but they're [color=yellow]radioactive[/color].
+  РИТЭГ всегда вырабатывает [color=orange][protodata="GeneratorRTG" comp="PowerSupplier" member="MaxSupply" format="N0"/] Вт[/color] мощности и для работы должен быть подключён к [color=orange]высоковольтной[/color] [textlink="сети" link="VoltageNetworks"].
 
-  That means they're more dangerous, but on the bright side, you can put radiation collectors next to them to turn that radiation into more power.
-  This is usually more worthwhile, considering the power is still free, so long as you can find a safe spot to put the RTG(s) in.
+  Это полностью пассивный источник энергии: пока он подключён к сети, он будет работать в любых условиях, даже в вакууме.
+
+  Обычно РИТЭГи попадают на станцию только через утилизаторов, нашедших их во время экспедиции. Если вам привезли один, имеет смысл сразу найти для него безопасное место и включить в энергосеть.
+
+  ## ДРИТЭГ
+  <Box>
+    <GuideEntityEmbed Entity="GeneratorASRG" Caption="ДРИТЭГ" />
+  </Box>
+  ДРИТЭГ работает по тому же принципу, но использует двигатель Стирлинга и вырабатывает [color=orange][protodata="GeneratorASRG" comp="PowerSupplier" member="MaxSupply" format="N0"/] Вт[/color] мощности.
+
+  Как и РИТЭГ, он должен быть подключён к [color=orange]высоковольтной[/color] [textlink="сети" link="VoltageNetworks"]. В отличие от РИТЭГа, ДРИТЭГ работает только при давлении не ниже [color=orange]75 kPa[/color]. Если давление падает ниже этого порога, он перестаёт вырабатывать энергию, пока условия не восстановятся.
+
+  Это делает ДРИТЭГ мощнее обычного РИТЭГа, но заметно чувствительнее к разгерметизации. При полном уничтожении ДРИТЭГ также взрывается, поэтому ставить его в уязвимых или часто простреливаемых местах стоит с осторожностью.
+
+  ## Повреждение
+  <Box>
+    <GuideEntityEmbed Entity="GeneratorRTGDamaged" Caption="повреждённый РИТЭГ" />
+    <GuideEntityEmbed Entity="GeneratorASRGDamaged" Caption="повреждённый ДРИТЭГ" />
+  </Box>
+  Если такие генераторы получают достаточно повреждений, они переходят в повреждённое состояние.
+
+  Повреждённые варианты сохраняют свою обычную выработку, но становятся [color=yellow]радиоактивными[/color]. Повреждённый ДРИТЭГ при этом всё ещё требует давление не ниже [color=orange]75 kPa[/color] для работы.
+
+  Это делает их опаснее, но у этого есть и практическая сторона: рядом можно поставить радиационные коллекторы и превратить это излучение в дополнительную энергию. Обычно это всё ещё выгодно, если вы можете выделить для генератора безопасное место.
 </Document>

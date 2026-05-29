@@ -87,6 +87,21 @@ public sealed partial class ScuttleDeviceComponent : Component
     [DataField]
     public bool DoMusic = true;
 
+    // Exodus-begin
+    /// <summary>
+    ///     If true, the arm announcement is dispatched globally across all players instead of a local radius.
+    /// </summary>
+    [DataField]
+    public bool GlobalAnnouncement = false;
+
+    /// <summary>
+    ///     Localization key used for the arm announcement. Supports ($location, $time).
+    ///     When GlobalAnnouncement is true, also supports ($x, $y) for map coordinates.
+    /// </summary>
+    [DataField]
+    public LocId ArmAnnouncementKey = "scuttle-device-announcement-armed";
+    // Exodus-end
+
     [DataField]
     public LocId AnnounceSender = "scuttle-device-announcement-sender";
 
