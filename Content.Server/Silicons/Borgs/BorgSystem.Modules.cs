@@ -7,7 +7,6 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes; // Exodus borg-module-duplicate-whitelist
 using Content.Shared._NF.Silicons.Borgs; // Frontier
 
 namespace Content.Server.Silicons.Borgs;
@@ -364,8 +363,8 @@ public sealed partial class BorgSystem
         if (moduleProto == null || containedModuleProto == null || moduleProto == containedModuleProto)
             return false;
 
-        return whitelist.ModulePrototypes.Contains(new EntProtoId(moduleProto)) &&
-               whitelist.ModulePrototypes.Contains(new EntProtoId(containedModuleProto));
+        return whitelist.ModulePrototypes.Contains(moduleProto) &&
+               whitelist.ModulePrototypes.Contains(containedModuleProto);
     }
     // Exodus-end
 
