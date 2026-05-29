@@ -9,7 +9,9 @@
       components: [ AsakimTrustedUser ]
     organWhitelist:
       components: [ AsakimBrain ]
-  - type: AsakimCommunicationsConsole
+  - type: IdentitySenderFallback
+    fallback: asakim-communications-console-sender-fallback
+  - type: CommsAlertLevelLock
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]

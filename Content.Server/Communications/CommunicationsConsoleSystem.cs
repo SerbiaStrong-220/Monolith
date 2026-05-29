@@ -8,7 +8,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
-using Content.Shared._Exodus.Asakim; // Exodus-asakim-communications-console
+using Content.Shared._Exodus.Communications; // Exodus-comms-alert-level-lock
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -39,7 +39,6 @@ namespace Content.Server.Communications
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SectorServiceSystem _sectorService = default!; // Frontier: sector-wide alerts
-        [Dependency] private readonly AsakimIdentitySystem _asakim = default!; // Exodus-asakim-communications-console
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -147,9 +146,9 @@ namespace Content.Server.Communications
                 if (TryComp(stationUid, out AlertLevelComponent? alertComp) && // Frontier: stationUid.Value<stationUid
                     alertComp.AlertLevels != null)
                 {
-                    // Exodus-begin asakim-communications-console
-                    if (alertComp.IsSelectable && !HasComp<AsakimCommunicationsConsoleComponent>(uid))
-                    // Exodus-end asakim-communications-console
+                    // Exodus-begin comms-alert-level-lock
+                    if (alertComp.IsSelectable && !HasComp<CommsAlertLevelLockComponent>(uid))
+                    // Exodus-end comms-alert-level-lock
                     {
                         levels = new();
                         foreach (var (id, detail) in alertComp.AlertLevels.Levels)
@@ -220,10 +219,10 @@ namespace Content.Server.Communications
             if (message.Actor is not { Valid: true } mob)
                 return;
 
-            // Exodus-begin asakim-communications-console
-            if (HasComp<AsakimCommunicationsConsoleComponent>(uid))
+            // Exodus-begin comms-alert-level-lock
+            if (HasComp<CommsAlertLevelLockComponent>(uid))
                 return;
-            // Exodus-end asakim-communications-console
+            // Exodus-end comms-alert-level-lock
 
             if (!CanUse(mob, uid))
             {
@@ -260,13 +259,7 @@ namespace Content.Server.Communications
 
                 var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, mob);
                 RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-                // Exodus-begin asakim-communications-console
-                if (tryGetIdentityShortInfoEvent.Title != null)
-                    author = tryGetIdentityShortInfoEvent.Title;
-                else if (TryComp<AsakimCommunicationsConsoleComponent>(uid, out var asakimComms) &&
-                         (HasComp<AsakimTrustedUserComponent>(mob) || _asakim.HasAsakimBrain(mob)))
-                    author = Loc.GetString(asakimComms.SenderFallback, ("user", Identity.Name(mob, EntityManager)));
-                // Exodus-end asakim-communications-console
+                author = tryGetIdentityShortInfoEvent.Title;
 
                 if (TryComp<TTSComponent>(mob, out var tts))
                 {

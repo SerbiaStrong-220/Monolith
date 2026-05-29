@@ -27,6 +27,8 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        // Claim standard thruster handling: ThrusterSystem skips its default logic for us.
+        SubscribeLocalEvent<OmnidirectionalThrusterComponent, ThrusterHandledExternallyEvent>(OnHandledExternally);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -36,6 +38,11 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
             after: [typeof(ThrusterSystem)]);
         SubscribeLocalEvent<OmnidirectionalThrusterComponent, SignalReceivedEvent>(OnSignalReceived,
             after: [typeof(ThrusterSystem)]);
+    }
+
+    private void OnHandledExternally(Entity<OmnidirectionalThrusterComponent> ent, ref ThrusterHandledExternallyEvent args)
+    {
+        args.Handled = true;
     }
 
     private void OnShutdown(Entity<OmnidirectionalThrusterComponent> ent, ref ComponentShutdown args)

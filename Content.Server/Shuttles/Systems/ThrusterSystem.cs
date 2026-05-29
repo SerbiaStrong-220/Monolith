@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server._Exodus.Shuttles.Components; // Exodus OmnidirectionalThruster
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -101,10 +100,9 @@ public sealed class ThrusterSystem : EntitySystem
         {
             args.PushMarkup(enabled);
 
-            // Exodus-begin: OmnidirectionalThruster - no nozzle direction for omni thrusters
-            if (HasComp<OmnidirectionalThrusterComponent>(uid))
+            // Exodus: externally-handled thrusters (e.g. omni) have no nozzle direction
+            if (IsHandledExternally(uid))
                 return;
-            // Exodus-end
 
             if (component.Type == ThrusterType.Linear &&
                 EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
@@ -202,7 +200,7 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     private void OnRotate(EntityUid uid, ThrusterComponent component, ref MoveEvent args)
     {
-        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (IsHandledExternally(uid)) // Exodus
             return;
 
         // TODO: Disable visualizer for old direction
@@ -332,7 +330,7 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
     {
-        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (IsHandledExternally(uid)) // Exodus
             return;
 
         if (component.IsOn ||
@@ -414,10 +412,9 @@ public sealed class ThrusterSystem : EntitySystem
                 if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
-                // Exodus-begin OmnidirectionalThruster - omni thrusters are treated as centered and must not skew center of thrust
-                if (HasComp<OmnidirectionalThrusterComponent>(ent))
+                // Exodus: externally-handled thrusters (e.g. omni) are treated as centered and must not skew center of thrust
+                if (IsHandledExternally(ent))
                     continue;
-                // Exodus-end
 
                 center += xform.LocalPosition * thruster.Thrust;
                 totalThrust += thruster.Thrust;
@@ -432,7 +429,7 @@ public sealed class ThrusterSystem : EntitySystem
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
     {
-        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (IsHandledExternally(uid)) // Exodus
             return;
 
         if (!Resolve(uid, ref xform)) return;
@@ -666,7 +663,7 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
     {
-        if (HasComp<OmnidirectionalThrusterComponent>(uid)) // Exodus OmnidirectionalThruster
+        if (IsHandledExternally(uid)) // Exodus
             return;
 
         if (component.IsOn) // safely disable thruster to prevent negative thrust
@@ -694,13 +691,29 @@ public sealed class ThrusterSystem : EntitySystem
     //    }
     //}
 
-    //[ByRefEvent]
-    //public record struct ThrusterToggleAttemptEvent(bool Cancelled);
-
     #endregion
 
     private int GetFlagIndex(DirectionFlag flag)
     {
         return (int)Math.Log2((int)flag);
     }
+
+    /// <summary>
+    /// Raises <see cref="ThrusterHandledExternallyEvent"/> so other systems can opt this thruster
+    /// out of the standard thrust/visual handling (e.g. omnidirectional thrusters manage themselves).
+    /// </summary>
+    private bool IsHandledExternally(EntityUid uid)
+    {
+        var ev = new ThrusterHandledExternallyEvent();
+        RaiseLocalEvent(uid, ref ev);
+        return ev.Handled;
+    }
 }
+
+/// <summary>
+/// Raised on a thruster to let another system claim its standard handling. If handled, the
+/// default <see cref="ThrusterSystem"/> logic (enable/disable, rotation, parts, examine, center
+/// of thrust) is skipped for that thruster.
+/// </summary>
+[ByRefEvent]
+public record struct ThrusterHandledExternallyEvent(bool Handled = false);
