@@ -28,6 +28,8 @@ public abstract class SharedNavMapSystem : EntitySystem
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
     private EntityQuery<NavMapDoorComponent> _doorQuery;
 
+    private readonly Dictionary<Vector2i, int[]> _stateChunks = new(); // Exodus-Optimize
+
     public override void Initialize()
     {
         base.Initialize();
@@ -136,32 +138,32 @@ public abstract class SharedNavMapSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
-        Dictionary<Vector2i, int[]> chunks;
+        // Dictionary<Vector2i, int[]> chunks; // Exodus-Optimize
+        _stateChunks.Clear(); // Exodus-Optimize
 
         // Should this be a full component state or a delta-state?
         if (args.FromTick <= component.CreationTick)
         {
             // Full state
-            chunks = new(component.Chunks.Count);
+            _stateChunks.EnsureCapacity(component.Chunks.Count); // Exodus-Optimize
             foreach (var (origin, chunk) in component.Chunks)
             {
-                chunks.Add(origin, chunk.TileData);
+                _stateChunks.Add(origin, chunk.TileData); // Exodus-Optimize
             }
 
-            args.State = new NavMapState(chunks, component.Beacons, component.RegionProperties);
+            args.State = new NavMapState(_stateChunks, component.Beacons, component.RegionProperties); // Exodus-Optimize
             return;
         }
 
-        chunks = new();
         foreach (var (origin, chunk) in component.Chunks)
         {
             if (chunk.LastUpdate < args.FromTick)
                 continue;
 
-            chunks.Add(origin, chunk.TileData);
+            _stateChunks.Add(origin, chunk.TileData); // Exodus-Optimize
         }
 
-        args.State = new NavMapDeltaState(chunks, component.Beacons, component.RegionProperties, new(component.Chunks.Keys));
+        args.State = new NavMapDeltaState(_stateChunks, component.Beacons, component.RegionProperties, [.. component.Chunks.Keys]); // Exodus-Optimize
     }
 
     #endregion
@@ -222,16 +224,19 @@ public abstract class SharedNavMapSystem : EntitySystem
             }
         }
 
+        [NonSerialized] private readonly Dictionary<Vector2i, int[]> _newFullStateChunks = new(); // Exodus-Optimize
+
         public NavMapState CreateNewFullState(NavMapState state)
         {
-            var chunks = new Dictionary<Vector2i, int[]>(state.Chunks.Count);
+            _newFullStateChunks.Clear(); // Exodus-Optimize
+            _newFullStateChunks.EnsureCapacity(state.Chunks.Count); // Exodus-Optimize
 
             foreach (var (index, data) in state.Chunks)
             {
                 if (!AllChunks!.Contains(index))
                     continue;
 
-                var newData = chunks[index] = new int[ArraySize];
+                var newData = _newFullStateChunks[index] = new int[ArraySize]; // Exodus-Optimize
 
                 if (ModifiedChunks.TryGetValue(index, out var updatedData))
                     Array.Copy(newData, updatedData, ArraySize);
@@ -239,7 +244,7 @@ public abstract class SharedNavMapSystem : EntitySystem
                     Array.Copy(newData, data, ArraySize);
             }
 
-            return new NavMapState(chunks, new(Beacons), new(Regions));
+            return new NavMapState(_newFullStateChunks, new(Beacons), new(Regions)); // Exodus-Optimize
         }
     }
 
