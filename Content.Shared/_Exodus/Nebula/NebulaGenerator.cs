@@ -228,6 +228,30 @@ public static class NebulaGenerator
         if (pool == null || pool.Length == 0)
             return default;
 
-        return pool[random.Next(pool.Length)];
+        var totalWeight = 0f;
+        for (var i = 0; i < pool.Length; i++)
+            totalWeight += MathF.Max(0f, pool[i].Weight);
+
+        // No positive weights — fall back to a uniform pick so we never return default.
+        if (totalWeight <= 0f)
+            return pool[random.Next(pool.Length)].Proto;
+
+        var roll = (float) random.NextDouble() * totalWeight;
+        var cumulative = 0f;
+        for (var i = 0; i < pool.Length; i++)
+        {
+            cumulative += MathF.Max(0f, pool[i].Weight);
+            if (roll <= cumulative)
+                return pool[i].Proto;
+        }
+
+        // Floating-point rounding guard — pick the last positive-weight entry.
+        for (var i = pool.Length - 1; i >= 0; i--)
+        {
+            if (pool[i].Weight > 0f)
+                return pool[i].Proto;
+        }
+
+        return pool[^1].Proto;
     }
 }

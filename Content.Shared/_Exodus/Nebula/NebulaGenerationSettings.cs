@@ -3,7 +3,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Exodus.Nebula;
 
 /// <summary>
-/// Pure generation settings for Exodus space nebulas.
+/// Runtime container that <see cref="NebulaGenerator"/> consumes. In production it is built
+/// from <see cref="NebulaGenerationConfigPrototype"/> in
+/// <c>NebulaGenerationSystem.ResolveSettings</c>; in tests it can be instantiated directly
+/// with the safe defaults below.
 /// </summary>
 public sealed class NebulaGenerationSettings
 {
@@ -32,14 +35,14 @@ public sealed class NebulaGenerationSettings
     public int MaxWaveFrequency = 11;
 
     /// <summary>
-    /// Pool of marker entity prototypes that the generator picks from when assigning a kind
-    /// to each generated nebula. Default covers the four built-in colors.
+    /// Weighted marker pool. Higher weight = more frequent picks. Weight ≤ 0 disables that
+    /// entry. Default pool gives the four built-in colors equal weight.
     /// </summary>
-    public EntProtoId[] NebulaPrototypePool =
+    public (EntProtoId Proto, float Weight)[] NebulaPrototypePool =
     [
-        "NebulaBlueMarker",
-        "NebulaRedMarker",
-        "NebulaGreenMarker",
-        "NebulaPurpleMarker",
+        ("NebulaBlueMarker", 1f),
+        ("NebulaRedMarker", 1f),
+        ("NebulaGreenMarker", 1f),
+        ("NebulaPurpleMarker", 1f),
     ];
 }

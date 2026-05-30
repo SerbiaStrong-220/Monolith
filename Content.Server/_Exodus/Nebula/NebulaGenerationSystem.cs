@@ -25,11 +25,15 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const string DebugContourPointPrototype = "NebulaDebugContourPoint";
     private const string DebugBoundingPointPrototype = "NebulaDebugBoundingPoint";
     private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
-    private const float NebulaRadarMaxDistance = 250_000f;
     private const int NebulaRadarContourSamples = 96;
-    private static readonly TimeSpan MarkerValidationInterval = TimeSpan.FromSeconds(30);
-    private static readonly EntProtoId FallbackNebulaPrototype = "NebulaBlueMarker";
     private static readonly Color FallbackRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
+
+    /// <summary>
+    /// Id of the <see cref="NebulaGenerationConfigPrototype"/> resolved at round start.
+    /// Validate-attribute checks that the prototype exists at compile/load time.
+    /// </summary>
+    [ValidatePrototypeId<NebulaGenerationConfigPrototype>]
+    private const string DefaultConfigId = "Default";
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -40,6 +44,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
+
+    /// <summary>Resolved at round start, kept hot for radar / marker validation.</summary>
+    private NebulaGenerationConfigPrototype _config = new();
 
     public override void Initialize()
     {
@@ -53,7 +60,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
         if (!_mapManager.MapExists(mapId))
             return;
 
-        var settings = new NebulaGenerationSettings();
+        _config = ResolveConfig();
+        var settings = BuildSettings(_config);
+
         var protectedStationIds = GetProtectedStationIds();
         var protectedNames = GetProtectedStationNames(protectedStationIds);
         var protectedAreas = new List<NebulaProtectedArea>();
@@ -85,7 +94,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
         component.ProtectedAreas.AddRange(protectedAreas);
 
         SpawnNebulaMarkers(mapId, component);
-        component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
+        component.NextMarkerValidation = _timing.CurTime + _config.MarkerValidationInterval;
 
         SyncMapData(mapUid, component);
 
@@ -136,7 +145,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
             if (component.Nebulas.Count == 0 || _timing.CurTime < component.NextMarkerValidation)
                 continue;
 
-            component.NextMarkerValidation = _timing.CurTime + MarkerValidationInterval;
+            component.NextMarkerValidation = _timing.CurTime + _config.MarkerValidationInterval;
 
             // Shape data lives on the map component; marker entities are runtime radar/VV handles and can be restored.
             // CleanupImmune prevents normal cleanup; this extra pass repairs manual or unexpected component loss.
@@ -163,6 +172,53 @@ public sealed class NebulaGenerationSystem : EntitySystem
         {
             QueueDel(uid);
         }
+    }
+
+    /// <summary>
+    /// Resolves the active generation config prototype. Falls back to safe hardcoded defaults
+    /// (a fresh <see cref="NebulaGenerationConfigPrototype"/>) when the YAML entry is missing,
+    /// so the round still starts even if content is broken.
+    /// </summary>
+    private NebulaGenerationConfigPrototype ResolveConfig()
+    {
+        if (_prototype.TryIndex<NebulaGenerationConfigPrototype>(DefaultConfigId, out var config))
+            return config;
+
+        _sawmill.Warning($"Nebula generation config '{DefaultConfigId}' not found; using hardcoded fallback.");
+        return new NebulaGenerationConfigPrototype();
+    }
+
+    /// <summary>
+    /// Projects a config prototype into the pure-math <see cref="NebulaGenerationSettings"/>
+    /// container that <see cref="NebulaGenerator"/> consumes. Keeps the generator decoupled
+    /// from <c>IPrototypeManager</c>.
+    /// </summary>
+    private static NebulaGenerationSettings BuildSettings(NebulaGenerationConfigPrototype config)
+    {
+        var pool = new (EntProtoId Proto, float Weight)[config.Markers.Count];
+        for (var i = 0; i < config.Markers.Count; i++)
+            pool[i] = (config.Markers[i].Proto, config.Markers[i].Weight);
+
+        return new NebulaGenerationSettings
+        {
+            MaxTotalAreaOptions = new[] { config.MaxTotalArea },
+            MaxAttempts = config.MaxAttempts,
+            SampleCount = config.SampleCount,
+            MinArea = config.MinArea,
+            MaxArea = config.MaxArea,
+            CoordinateLimit = config.CoordinateLimit,
+            ProtectedRadius = config.ProtectedRadius,
+            Separation = config.Separation,
+            MinStretch = config.MinStretch,
+            MaxStretch = config.MaxStretch,
+            MinPower = config.MinPower,
+            MaxPower = config.MaxPower,
+            MinWaveAmplitude = config.MinWaveAmplitude,
+            MaxWaveAmplitude = config.MaxWaveAmplitude,
+            MinWaveFrequency = config.MinWaveFrequency,
+            MaxWaveFrequency = config.MaxWaveFrequency,
+            NebulaPrototypePool = pool,
+        };
     }
 
     private HashSet<string> GetProtectedStationIds()
@@ -406,7 +462,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private void ConfigureRadarBlip(EntityUid marker, RadarBlipComponent blip, NebulaShape nebula)
     {
         var radius = nebula.BoundingRadius;
-        blip.MaxDistance = NebulaRadarMaxDistance;
+        blip.MaxDistance = _config.RadarMaxDistance;
         blip.RequireNoGrid = true;
         blip.VisibleFromOtherGrids = true;
         blip.Config = new BlipConfig
@@ -440,7 +496,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
             component.NebulaMarkers.Add(EntityUid.Invalid);
 
         while (component.NebulaPrototypes.Count < component.Nebulas.Count)
-            component.NebulaPrototypes.Add(FallbackNebulaPrototype);
+            component.NebulaPrototypes.Add(_config.FallbackMarker);
 
         for (var i = 0; i < component.NebulaMarkers.Count; i++)
         {
@@ -490,13 +546,13 @@ public sealed class NebulaGenerationSystem : EntitySystem
         return restored;
     }
 
-    private static EntProtoId GetNebulaPrototype(NebulaMapComponent component, int index)
+    private EntProtoId GetNebulaPrototype(NebulaMapComponent component, int index)
     {
         if (index < 0 || index >= component.NebulaPrototypes.Count)
-            return FallbackNebulaPrototype;
+            return _config.FallbackMarker;
 
         var proto = component.NebulaPrototypes[index];
-        return string.IsNullOrEmpty(proto.Id) ? FallbackNebulaPrototype : proto;
+        return string.IsNullOrEmpty(proto.Id) ? _config.FallbackMarker : proto;
     }
 
     private bool IsValidMarker(EntityUid uid)

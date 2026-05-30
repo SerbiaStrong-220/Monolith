@@ -13,26 +13,25 @@ namespace Content.Server._Exodus.Nebula;
 
 /// <summary>
 /// Generates the world-end death zone ring after the station-generation pass.
-/// Writes <see cref="WorldEndNebulaShape"/> into <see cref="NebulaMapComponent"/>,
-/// spawns two marker entities (one per concentric sub-zone, split at
-/// <see cref="WorldEndMidRadius"/>), and pushes the shape to the networked
-/// <see cref="NebulaMapDataComponent"/>. Only the inner marker carries a radar blip —
-/// the mid-radius boundary is intentionally invisible to players.
+/// All radii, marker prototype ids and radar parameters come from
+/// <see cref="NebulaGenerationConfigPrototype"/>.
+/// Spawns two marker entities (inner / outer concentric sub-zones split at
+/// <see cref="NebulaGenerationConfigPrototype.WorldEndMidRadius"/>); only the inner marker
+/// carries a radar blip — the mid-radius boundary is intentionally invisible to players.
 /// </summary>
 public sealed class DeathZoneGenerationSystem : EntitySystem
 {
-    private const float WorldEndInnerRadius = 75000f;
-    private const float WorldEndMidRadius = 90000f;
-    private const float NebulaRadarMaxDistance = 250_000f;
     private const int RadarContourSamples = 512;
-    private static readonly EntProtoId InnerMarkerPrototype = "NebulaDeathZoneInnerMarker";
-    private static readonly EntProtoId OuterMarkerPrototype = "NebulaDeathZoneOuterMarker";
+
+    [ValidatePrototypeId<NebulaGenerationConfigPrototype>]
+    private const string DefaultConfigId = "Default";
 
     // Fallback when the marker prototype has no NebulaRadarVisualsComponent.
     // Real colour should always come from the marker's YAML radarColor field.
     private static readonly Color FallbackRadarColor = new(1f, 0.1f, 0f, 1f);
 
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
@@ -50,14 +49,15 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
+        var config = ResolveConfig();
         var mapComponent = EnsureComp<NebulaMapComponent>(mapUid.Value);
 
         var seed = _random.Next();
-        mapComponent.WorldEnd = WorldEndNebulaShape.Generate(seed, WorldEndInnerRadius, WorldEndMidRadius);
-        mapComponent.WorldEndInnerMarker = InnerMarkerPrototype;
-        mapComponent.WorldEndOuterMarker = OuterMarkerPrototype;
+        mapComponent.WorldEnd = WorldEndNebulaShape.Generate(seed, config.WorldEndInnerRadius, config.WorldEndMidRadius);
+        mapComponent.WorldEndInnerMarker = config.DeathZoneInnerMarker;
+        mapComponent.WorldEndOuterMarker = config.DeathZoneOuterMarker;
 
-        SpawnDeathZoneMarkers(mapId, mapComponent.WorldEnd);
+        SpawnDeathZoneMarkers(mapId, mapComponent.WorldEnd, config);
 
         var data = EnsureComp<NebulaMapDataComponent>(mapUid.Value);
         data.WorldEnd = mapComponent.WorldEnd;
@@ -65,19 +65,33 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         data.WorldEndOuterMarker = mapComponent.WorldEndOuterMarker;
         Dirty(mapUid.Value, data);
 
-        _sawmill.Info($"Generated world-end death zone: inner radius {WorldEndInnerRadius}, mid radius {WorldEndMidRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
+        _sawmill.Info($"Generated world-end death zone: inner radius {config.WorldEndInnerRadius}, mid radius {config.WorldEndMidRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
 
         var doneEv = new WorldEndGenerationDoneEvent();
         RaiseLocalEvent(ref doneEv);
     }
 
-    private void SpawnDeathZoneMarkers(MapId mapId, WorldEndNebulaShape worldEnd)
+    /// <summary>
+    /// Same fallback pattern as <c>NebulaGenerationSystem.ResolveConfig</c> — both subscribers
+    /// of <c>StationsGeneratedEvent</c> resolve independently; the prototype is read once each
+    /// round and stays consistent across both.
+    /// </summary>
+    private NebulaGenerationConfigPrototype ResolveConfig()
     {
-        SpawnDeathZoneMarker(mapId, worldEnd, InnerMarkerPrototype, withRadarBlip: true);
-        SpawnDeathZoneMarker(mapId, worldEnd, OuterMarkerPrototype, withRadarBlip: false);
+        if (_prototype.TryIndex<NebulaGenerationConfigPrototype>(DefaultConfigId, out var config))
+            return config;
+
+        _sawmill.Warning($"Nebula generation config '{DefaultConfigId}' not found; using hardcoded fallback.");
+        return new NebulaGenerationConfigPrototype();
     }
 
-    private void SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd, EntProtoId prototype, bool withRadarBlip)
+    private void SpawnDeathZoneMarkers(MapId mapId, WorldEndNebulaShape worldEnd, NebulaGenerationConfigPrototype config)
+    {
+        SpawnDeathZoneMarker(mapId, worldEnd, config, config.DeathZoneInnerMarker, withRadarBlip: true);
+        SpawnDeathZoneMarker(mapId, worldEnd, config, config.DeathZoneOuterMarker, withRadarBlip: false);
+    }
+
+    private void SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd, NebulaGenerationConfigPrototype config, EntProtoId prototype, bool withRadarBlip)
     {
         var marker = Spawn(prototype, new MapCoordinates(Vector2.Zero, mapId));
 
@@ -92,7 +106,7 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
             : FallbackRadarColor;
 
         var blip = EnsureComp<RadarBlipComponent>(marker);
-        blip.MaxDistance = NebulaRadarMaxDistance;
+        blip.MaxDistance = config.RadarMaxDistance;
         blip.RequireNoGrid = true;
         blip.VisibleFromOtherGrids = true;
         blip.Config = new BlipConfig
