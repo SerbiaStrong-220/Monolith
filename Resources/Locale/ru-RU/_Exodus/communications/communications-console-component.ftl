@@ -1,2 +1,2 @@
-comms-console-announcement-title-asakim = Империя Кхси'Ра постановляет
+comms-console-announcement-title-asakim = Объявление восьмого экспедиционного флота
 asakim-communications-console-sender-fallback = {$user}
