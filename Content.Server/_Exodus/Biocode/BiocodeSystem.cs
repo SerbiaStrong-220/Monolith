@@ -57,12 +57,17 @@ public sealed class BiocodeSystem : SharedBiocodeSystem
         }
     }
 
-    private void RejectTrigger(Entity<BiocodeComponent> ent, EntityUid wearer, string reason)
+    /// <summary>
+    /// <paramref name="adminLogReason"/> is a plain English tag for the admin log and the
+    /// <see cref="BiocodeRejectedEvent"/> payload — it is never shown to the player and is
+    /// intentionally not localized.
+    /// </summary>
+    private void RejectTrigger(Entity<BiocodeComponent> ent, EntityUid wearer, string adminLogReason)
     {
         _adminLogger.Add(LogType.Trigger, LogImpact.High,
-            $"Biocode on {ToPrettyString(ent.Owner):item} fired its trigger against {ToPrettyString(wearer):wearer} ({reason})");
+            $"Biocode on {ToPrettyString(ent.Owner):item} fired its trigger against {ToPrettyString(wearer):wearer} ({adminLogReason})");
 
-        var ev = new BiocodeRejectedEvent(ent.Owner, wearer, reason);
+        var ev = new BiocodeRejectedEvent(ent.Owner, wearer, adminLogReason);
         RaiseLocalEvent(ent.Owner, ref ev);
         if (ev.Handled)
             return;

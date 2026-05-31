@@ -31,8 +31,8 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
         SubscribeLocalEvent<BiocodeComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<BiocodeComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(SharedShipRepairSystem)]);
-        SubscribeLocalEvent<BiocodeComponent, UseInHandEvent>(OnUseInHand, before: [typeof(ActivatableUISystem)]);
-        SubscribeLocalEvent<BiocodeComponent, ActivateInWorldEvent>(OnActivateInWorld, before: [typeof(ActivatableUISystem)]);
+        SubscribeLocalEvent<BiocodeComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<BiocodeComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<BiocodeComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUiOpenAttempt);
         // Run after action-granting systems so their actions are already in the set and can be cleared.
         SubscribeLocalEvent<BiocodeComponent, GetItemActionsEvent>(OnGetItemActions, after: [typeof(DashAbilitySystem)]);

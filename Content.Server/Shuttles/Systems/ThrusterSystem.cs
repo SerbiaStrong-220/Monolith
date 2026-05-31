@@ -698,6 +698,7 @@ public sealed class ThrusterSystem : EntitySystem
         return (int)Math.Log2((int)flag);
     }
 
+    // Exodus-begin: event-bus hook + registration API so externally-handled thrusters (e.g. omni) can opt out of standard handling and register thrust without mutating ShuttleComponent fields directly
     /// <summary>
     /// Raises <see cref="ThrusterHandledExternallyEvent"/> so other systems can opt this thruster
     /// out of the standard thrust/visual handling (e.g. omnidirectional thrusters manage themselves).
@@ -709,7 +710,6 @@ public sealed class ThrusterSystem : EntitySystem
         return ev.Handled;
     }
 
-    // Exodus-begin: registration API so externally-handled thrusters (e.g. omni) don't mutate ShuttleComponent fields directly
     /// <summary>
     /// Registers linear thrust from a thruster onto a shuttle in the given cardinal direction index.
     /// Use this instead of writing <see cref="ShuttleComponent"/> thrust fields directly.
@@ -732,13 +732,13 @@ public sealed class ThrusterSystem : EntitySystem
         DebugTools.Assert(shuttle.LinearThrusters[direction].Contains(uid));
         shuttle.LinearThrusters[direction].Remove(uid);
     }
-    // Exodus-end
 }
 
 /// <summary>
-/// Raised on a thruster to let another system claim its standard handling. If handled, the
+/// Exodus: raised on a thruster to let another system claim its standard handling. If handled, the
 /// default <see cref="ThrusterSystem"/> logic (enable/disable, rotation, parts, examine, center
 /// of thrust) is skipped for that thruster.
 /// </summary>
 [ByRefEvent]
 public record struct ThrusterHandledExternallyEvent(bool Handled = false);
+// Exodus-end
