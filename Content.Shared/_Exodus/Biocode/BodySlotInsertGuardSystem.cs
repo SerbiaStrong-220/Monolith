@@ -1,4 +1,3 @@
-using Content.Shared._Exodus.Biocode;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Popups;
@@ -6,7 +5,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Server._Exodus.Biocode;
+namespace Content.Shared._Exodus.Biocode;
 
 /// <summary>
 /// Enforces <see cref="BodySlotInsertGuardComponent"/>: cancels insertion of organs/parts that do
