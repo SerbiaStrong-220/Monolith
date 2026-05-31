@@ -49,7 +49,7 @@ public sealed partial class BiocodeComponent : Component
     /// <summary>
     /// Run the entity's trigger when a non-authorized live wearer is detected (equipped while alive,
     /// or a mind attaches to the wearer's body). The actual reaction (gib, explosion, etc.) is
-    /// defined by trigger behaviors on the prototype.
+    /// defined by BiocodeRejectedEvent handlers or trigger behaviors on the prototype.
     /// </summary>
     [DataField]
     public bool TriggerOnReject;

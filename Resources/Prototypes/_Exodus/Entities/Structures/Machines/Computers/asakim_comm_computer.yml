@@ -11,7 +11,6 @@
       components: [ AsakimBrain ]
   - type: IdentitySenderFallback
     fallback: asakim-communications-console-sender-fallback
-  - type: CommsAlertLevelLock
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -28,6 +27,7 @@
     title: comms-console-announcement-title-asakim
     color: "#00CCFF"
     canShuttle: false
+    canSetAlertLevel: false
     global: true
     sound: /Audio/_Exodus/Asakim/Announcements/asakim_announcement.ogg
   - type: DeviceNetwork

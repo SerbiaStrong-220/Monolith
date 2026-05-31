@@ -1,14 +1,11 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._Exodus.EmergencyActions;
 
 /// <summary>
-/// Attach to a clothing item. When its wearer transitions from Alive to Critical, a configured
-/// pool of reagents is injected into their bloodstream. No identity / faction check is performed —
-/// it is expected that the clothing prototype itself gates who can wear it.
+/// Injects a configured reagent pool into the trigger user.
 /// </summary>
 [RegisterComponent, Access(typeof(EmergencyReagentInjectorSystem)), AutoGenerateComponentPause]
 public sealed partial class EmergencyReagentInjectorComponent : Component

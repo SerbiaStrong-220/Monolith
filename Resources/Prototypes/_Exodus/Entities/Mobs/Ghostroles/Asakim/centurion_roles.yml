@@ -19,6 +19,9 @@
     name: ghost-role-information-centurion-asakim-name
     description: ghost-role-information-centurion-asakim-description
     rules: ghost-role-information-centurion-asakim-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
     raffle:
       settings: default
     requirements:
@@ -44,6 +47,9 @@
     name: ghost-role-information-centurion-asakim-name
     description: ghost-role-information-centurion-asakim-description
     rules: ghost-role-information-centurion-asakim-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
     raffle:
       settings: default
     requirements: []

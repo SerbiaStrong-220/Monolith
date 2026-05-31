@@ -43,6 +43,9 @@
   - type: Body
     prototype: Asakim
     requiredLegs: 2
+  # Exodus-asakim-mind-role
+  - type: StartingMindRole
+    mindRole: MindRoleAsakim
   - type: Butcherable
     butcheringType: Spike
     spawned:

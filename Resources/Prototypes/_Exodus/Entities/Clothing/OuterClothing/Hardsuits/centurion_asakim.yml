@@ -70,8 +70,13 @@
       components: [ AsakimTrustedUser ]
     organWhitelist:
       components: [ AsakimBrain ]
-  - type: GibOnTrigger
+  - type: GibOnBiocodeReject
     deleteItems: true
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    oldMobState:
+    - Alive
   - type: EmergencyReagentInjector
     cooldown: 120
     reagents:
@@ -83,7 +88,7 @@
       Quantity: 5
     - ReagentId: DexalinPlus
       Quantity: 5
-  - type: EmergencyTeleport
+  - type: RandomTeleportOnTrigger
     cooldown: 120
     specifier:
       teleportRadius: 40

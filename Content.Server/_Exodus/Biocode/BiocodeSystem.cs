@@ -12,7 +12,8 @@ namespace Content.Server._Exodus.Biocode;
 /// <summary>
 /// Server side of the biocode gate: fires the entity's trigger when a non-authorized live wearer
 /// is detected, either by equipping the item while alive or by a mind attaching to the wearer's
-/// body. The reaction itself (gib, explosion, etc.) is defined by trigger behaviors on the prototype.
+/// body. The reaction itself (gib, explosion, etc.) is defined by reject handlers or trigger
+/// behaviors on the prototype.
 /// </summary>
 public sealed class BiocodeSystem : EntitySystem
 {
@@ -61,6 +62,18 @@ public sealed class BiocodeSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Trigger, LogImpact.High,
             $"Biocode on {ToPrettyString(ent.Owner):item} fired its trigger against {ToPrettyString(wearer):wearer} ({reason})");
+
+        var ev = new BiocodeRejectedEvent(ent.Owner, wearer, reason);
+        RaiseLocalEvent(ent.Owner, ref ev);
+        if (ev.Handled)
+            return;
+
         _trigger.Trigger(ent.Owner, wearer);
     }
+}
+
+[ByRefEvent]
+public record struct BiocodeRejectedEvent(EntityUid Item, EntityUid User, string Reason)
+{
+    public bool Handled;
 }

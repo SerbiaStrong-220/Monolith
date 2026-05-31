@@ -5,12 +5,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server._Exodus.EmergencyActions;
 
 /// <summary>
-/// Attach to a clothing item. When its wearer transitions from Alive to Critical, performs a
-/// random teleport according to <see cref="Specifier"/>. Grants the wearer a passive action so
-/// they can see the cooldown / status in their HUD. No identity / faction check is performed.
+/// Randomly teleports the trigger user.
 /// </summary>
-[RegisterComponent, Access(typeof(EmergencyTeleportSystem)), AutoGenerateComponentPause]
-public sealed partial class EmergencyTeleportComponent : Component
+[RegisterComponent, Access(typeof(RandomTeleportOnTriggerSystem)), AutoGenerateComponentPause]
+public sealed partial class RandomTeleportOnTriggerComponent : Component
 {
     [DataField]
     public TimeSpan Cooldown = TimeSpan.FromMinutes(2);

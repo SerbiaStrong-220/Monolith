@@ -20,6 +20,9 @@
     name: ghost-role-information-asakim-name
     description: ghost-role-information-asakim-description
     rules: ghost-role-information-asakim-rules
+    mindRoles: # Exodus-asakim-mind-role
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
     raffle:
       settings: default
     requirements:

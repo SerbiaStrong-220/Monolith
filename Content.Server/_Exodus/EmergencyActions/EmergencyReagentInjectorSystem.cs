@@ -1,12 +1,11 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Inventory;
-using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -14,8 +13,7 @@ using Robust.Shared.Timing;
 namespace Content.Server._Exodus.EmergencyActions;
 
 /// <summary>
-/// Injects a configured reagent pool into the wearer's bloodstream when they transition from
-/// Alive to Critical. Generic — no Asakim or other identity check is performed.
+/// Injects a configured reagent pool into the trigger user.
 /// </summary>
 public sealed class EmergencyReagentInjectorSystem : EntitySystem
 {
@@ -29,35 +27,33 @@ public sealed class EmergencyReagentInjectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EmergencyReagentInjectorComponent, InventoryRelayedEvent<MobStateChangedEvent>>(OnMobStateChanged);
+
+        SubscribeLocalEvent<EmergencyReagentInjectorComponent, TriggerEvent>(OnTriggered);
     }
 
-    private void OnMobStateChanged(Entity<EmergencyReagentInjectorComponent> ent, ref InventoryRelayedEvent<MobStateChangedEvent> args)
+    private void OnTriggered(Entity<EmergencyReagentInjectorComponent> ent, ref TriggerEvent args)
     {
-        if (args.Args.NewMobState != MobState.Critical || args.Args.OldMobState != MobState.Alive)
-            return;
-
-        var wearer = args.Args.Target;
-        if (Deleted(wearer))
+        if (args.User is not { } wearer || Deleted(wearer))
             return;
 
         if (_timing.CurTime < ent.Comp.NextActivation)
             return;
 
-        TryInject(ent, wearer);
+        if (TryInject(ent, wearer))
+            args.Handled = true;
     }
 
-    private void TryInject(Entity<EmergencyReagentInjectorComponent> ent, EntityUid wearer)
+    private bool TryInject(Entity<EmergencyReagentInjectorComponent> ent, EntityUid wearer)
     {
         if (ent.Comp.Reagents.Count == 0)
-            return;
+            return false;
 
         var solution = new Solution(ent.Comp.Reagents);
         if (solution.Volume <= FixedPoint2.Zero)
-            return;
+            return false;
 
         if (!_bloodstream.TryAddToChemicals(wearer, solution))
-            return;
+            return false;
 
         ent.Comp.NextActivation = _timing.CurTime + ent.Comp.Cooldown;
 
@@ -67,5 +63,6 @@ public sealed class EmergencyReagentInjectorSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("emergency-reagent-injector-activated"), wearer, wearer, PopupType.MediumCaution);
 
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(wearer):user} received an emergency injection from {ToPrettyString(ent.Owner):clothing}: {SharedSolutionContainerSystem.ToPrettyString(solution):solution}");
+        return true;
     }
 }

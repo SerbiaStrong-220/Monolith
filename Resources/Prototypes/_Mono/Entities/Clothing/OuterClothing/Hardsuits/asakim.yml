@@ -73,7 +73,7 @@
       components: [ AsakimTrustedUser ]
     organWhitelist:
       components: [ AsakimBrain ]
-  - type: GibOnTrigger
+  - type: GibOnBiocodeReject
     deleteItems: true
   # Exodus-asakim-suit-biocheck-end
   - type: HeldSpeedModifier

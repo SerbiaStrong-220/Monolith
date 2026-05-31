@@ -1,15 +1,15 @@
-using Content.Server.Mind;
 using Content.Shared._Exodus.Asakim;
 using Content.Shared._Exodus.GameTicking.Requirements;
-using Content.Shared.Body.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.GameTicking.Requirements;
 
 /// <summary>
 /// Game rule requirement: at least <see cref="MinAsakimPlayers"/> alive mind-connected
-/// players must currently have an Asakim brain organ (carrying <see cref="AsakimBrainComponent"/>).
+/// players must have an Asakim mind role.
 /// Re-evaluated on every rule-start attempt, so the pool resets between attempts naturally.
 /// </summary>
 public sealed partial class AsakimPlayersRequirement : GameRuleRequirement
@@ -18,25 +18,24 @@ public sealed partial class AsakimPlayersRequirement : GameRuleRequirement
 
     public override bool Check(IEntityManager entity, IPrototypeManager prototype)
     {
-        var mindSystem = entity.System<MindSystem>();
         var mobSystem = entity.System<MobStateSystem>();
-        var asakim = entity.System<AsakimIdentitySystem>();
+        var roleSystem = entity.System<SharedRoleSystem>();
 
         var counter = 0;
 
-        var query = entity.EntityQueryEnumerator<BodyComponent>();
-        while (query.MoveNext(out var uid, out _))
+        var query = entity.EntityQueryEnumerator<MindComponent>();
+        while (query.MoveNext(out var mindId, out var mind))
         {
-            if (entity.IsPaused(uid))
+            if (mind.Session == null || mind.CurrentEntity is not { } uid)
                 continue;
 
-            if (!mindSystem.TryGetMind(uid, out _, out var mind) || mind.Session == null)
+            if (!entity.EntityExists(uid) || entity.IsPaused(uid))
                 continue;
 
             if (mobSystem.IsIncapacitated(uid))
                 continue;
 
-            if (!asakim.HasAsakimBrain(uid))
+            if (!roleSystem.MindHasRole<AsakimRoleComponent>((mindId, mind), out _))
                 continue;
 
             counter++;

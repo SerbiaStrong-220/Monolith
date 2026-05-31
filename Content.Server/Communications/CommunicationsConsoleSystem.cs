@@ -8,7 +8,6 @@ using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
-using Content.Shared._Exodus.Communications; // Exodus-comms-alert-level-lock
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -146,9 +145,7 @@ namespace Content.Server.Communications
                 if (TryComp(stationUid, out AlertLevelComponent? alertComp) && // Frontier: stationUid.Value<stationUid
                     alertComp.AlertLevels != null)
                 {
-                    // Exodus-begin comms-alert-level-lock
-                    if (alertComp.IsSelectable && !HasComp<CommsAlertLevelLockComponent>(uid))
-                    // Exodus-end comms-alert-level-lock
+                    if (alertComp.IsSelectable && comp.CanSetAlertLevel) // Exodus-comms-alert-level-lock
                     {
                         levels = new();
                         foreach (var (id, detail) in alertComp.AlertLevels.Levels)
@@ -219,10 +216,8 @@ namespace Content.Server.Communications
             if (message.Actor is not { Valid: true } mob)
                 return;
 
-            // Exodus-begin comms-alert-level-lock
-            if (HasComp<CommsAlertLevelLockComponent>(uid))
+            if (!comp.CanSetAlertLevel) // Exodus-comms-alert-level-lock
                 return;
-            // Exodus-end comms-alert-level-lock
 
             if (!CanUse(mob, uid))
             {
