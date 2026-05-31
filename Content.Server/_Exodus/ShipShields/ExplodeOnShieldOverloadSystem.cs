@@ -1,3 +1,4 @@
+using Content.Server._Crescent.ShipShields;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Shared._Crescent.ShipShields;
@@ -25,7 +26,7 @@ public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
                 continue;
 
             var overloadedByDamage = power.Powered
-                                     && (CalculateLoadDamage(emitter) >= emitter.MaxDraw
+                                     && (ShipShieldsSystem.CalculateLoadDamage(emitter) >= emitter.MaxDraw
                                          || emitter.Damage > emitter.DamageLimit);
 
             if (overloadedByDamage && !explode.WasOverloadedByDamage)
@@ -44,12 +45,4 @@ public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Mirror of the private formula in <see cref="Content.Server._Crescent.ShipShields.ShipShieldsSystem"/>.
-    /// Kept in sync manually because the upstream method is private.
-    /// </summary>
-    private static float CalculateLoadDamage(ShipShieldEmitterComponent emitter)
-    {
-        return (float)Math.Clamp(Math.Pow(emitter.Damage, emitter.DamageExp) * emitter.PowerModifier, 0f, emitter.MaxDraw);
-    }
 }

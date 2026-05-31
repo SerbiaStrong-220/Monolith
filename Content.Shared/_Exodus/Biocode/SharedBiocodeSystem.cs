@@ -18,7 +18,7 @@ namespace Content.Shared._Exodus.Biocode;
 /// match the configured access conditions. The trigger-on-reject reaction lives in the server-only
 /// system because it relies on the trigger pipeline.
 /// </summary>
-public sealed class SharedBiocodeSystem : EntitySystem
+public abstract partial class SharedBiocodeSystem : EntitySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;

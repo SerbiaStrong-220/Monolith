@@ -13,11 +13,9 @@ public sealed class AsakimBrainPinpointerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private EntityQuery<TransformComponent> _transformQuery;
-
     public override void Initialize()
     {
-        _transformQuery = GetEntityQuery<TransformComponent>();
+        base.Initialize();
 
         SubscribeLocalEvent<AsakimBrainPinpointerComponent, ActivateInWorldEvent>(OnActivate, after: [typeof(PinpointerSystem)]);
     }
@@ -62,13 +60,14 @@ public sealed class AsakimBrainPinpointerSystem : EntitySystem
         var nearestDistance = float.MaxValue;
         EntityUid? nearest = null;
 
-        var query = EntityQueryEnumerator<AsakimBrainComponent, TransformComponent>();
-        while (query.MoveNext(out var brainUid, out _, out var brainTransform))
+        var query = EntityQueryEnumerator<AsakimBrainComponent>();
+        while (query.MoveNext(out var brainUid, out _))
         {
+            var brainTransform = Transform(brainUid);
             if (brainUid == source || brainTransform.MapID != mapId)
                 continue;
 
-            var distance = (_transform.GetWorldPosition(brainTransform, _transformQuery) - sourcePosition).LengthSquared();
+            var distance = (_transform.GetWorldPosition(brainTransform) - sourcePosition).LengthSquared();
             if (distance >= nearestDistance)
                 continue;
 

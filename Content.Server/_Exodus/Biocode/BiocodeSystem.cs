@@ -15,9 +15,8 @@ namespace Content.Server._Exodus.Biocode;
 /// body. The reaction itself (gib, explosion, etc.) is defined by reject handlers or trigger
 /// behaviors on the prototype.
 /// </summary>
-public sealed class BiocodeSystem : EntitySystem
+public sealed class BiocodeSystem : SharedBiocodeSystem
 {
-    [Dependency] private readonly SharedBiocodeSystem _biocode = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -37,7 +36,7 @@ public sealed class BiocodeSystem : EntitySystem
             return;
 
         var wearer = args.Wearer;
-        if (!_mobState.IsAlive(wearer) || _biocode.IsAllowed(ent, wearer))
+        if (!_mobState.IsAlive(wearer) || IsAllowed(ent, wearer))
             return;
 
         RejectTrigger(ent, wearer, "equipped while not authorized");
@@ -51,7 +50,7 @@ public sealed class BiocodeSystem : EntitySystem
             if (!TryComp<BiocodeComponent>(item, out var biocode) || !biocode.TriggerOnReject)
                 continue;
 
-            if (_biocode.IsAllowed((item, biocode), body.Owner))
+            if (IsAllowed((item, biocode), body.Owner))
                 continue;
 
             RejectTrigger((item, biocode), body.Owner, "mind attached while not authorized");
