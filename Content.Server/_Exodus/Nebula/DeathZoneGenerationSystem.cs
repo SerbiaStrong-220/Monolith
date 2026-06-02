@@ -99,7 +99,13 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         nebulaComp.Index = -1;
 
         if (!withRadarBlip)
+        {
+            // The marker inherits RadarBlipComponent from NebulaBaseMarker. Without a tuned
+            // BlipConfig it would render as a small default circle at the world origin on any
+            // radar that doesn't filter by NebulaPolygon shape. Strip it for the outer marker.
+            RemComp<RadarBlipComponent>(marker);
             return;
+        }
 
         var color = TryComp<NebulaRadarVisualsComponent>(marker, out var visuals)
             ? visuals.RadarColor

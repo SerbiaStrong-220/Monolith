@@ -30,7 +30,4 @@ public sealed partial class NebulaEmpHazardComponent : Component
 
     [DataField]
     public float DisableDuration = 5f;
-
-    [DataField]
-    public float PlayerRange = 32f;
 }

@@ -62,9 +62,21 @@ public sealed partial class NebulaGenerationConfigPrototype : IPrototype
     [DataField] public float WorldEndMidRadius = 90_000f;
 
     // ─── Marker housekeeping ───
-    /// <summary>Marker pool with weights. Higher weight = more frequent picks.</summary>
+    /// <summary>
+    /// Marker pool with weights. Higher weight = more frequent picks.
+    /// The defaults below are NOT used in production (the YAML entry is required and overrides
+    /// them); they exist so the safe fallback in
+    /// <c>NebulaGenerationSystem.ResolveConfig</c> still produces a working pool when the YAML
+    /// is missing or malformed, instead of spawning empty markers.
+    /// </summary>
     [DataField(required: true)]
-    public List<NebulaMarkerWeight> Markers = new();
+    public List<NebulaMarkerWeight> Markers = new()
+    {
+        new NebulaMarkerWeight { Proto = "NebulaBlueMarker", Weight = 1f },
+        new NebulaMarkerWeight { Proto = "NebulaRedMarker", Weight = 1f },
+        new NebulaMarkerWeight { Proto = "NebulaGreenMarker", Weight = 1f },
+        new NebulaMarkerWeight { Proto = "NebulaPurpleMarker", Weight = 1f },
+    };
 
     /// <summary>Marker prototype spawned for the inner death-zone sub-zone.</summary>
     [DataField] public EntProtoId DeathZoneInnerMarker = "NebulaDeathZoneInnerMarker";

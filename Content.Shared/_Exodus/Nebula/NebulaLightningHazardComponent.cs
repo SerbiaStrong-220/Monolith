@@ -105,7 +105,4 @@ public sealed partial class NebulaLightningHazardComponent : Component
 
     [DataField]
     public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lighting_impact.ogg");
-
-    [DataField]
-    public float PlayerRange = 32f;
 }
