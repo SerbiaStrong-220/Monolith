@@ -51,6 +51,11 @@
     radarColor: "#52e57ad9"
   - type: NebulaThrustReduction
   - type: NebulaEmpHazard
+  # EVA EMP pulses are intentionally disabled in green — the component lives here as a
+  # parameter sheet ready to be enabled if the design changes. Defaults match red-nebula
+  # behaviour; flip enabled to true to apply them.
+  - type: NebulaSpaceEmpHazard
+    enabled: false
   - type: NebulaRadioBlackoutSource
 
 - type: entity
@@ -87,7 +92,7 @@
   - type: NebulaBlocksDebris
 
 # Death zone — outer concentric sub-zone (>90k from origin). Boundary is invisible.
-# Only superheavy grid strikes (every 15s), no small/heavy. Personal lightning at default
+# Only superheavy grid strikes (every 8s), no small/heavy. Personal lightning at default
 # cadence but with much higher damage (100 burn + 100 shock).
 # No NebulaRadarVisuals — outer marker has no radar blip by design (see DeathZoneGenerationSystem).
 - type: entity
@@ -102,7 +107,7 @@
     enableSmall: false
     enableHeavy: false
     enableSuperHeavy: true
-    superHeavyStrikeInterval: 15
+    superHeavyStrikeInterval: 8
     superHeavyShieldLoad: 200000
     superHeavyExplosionTotalIntensity: 40000
     superHeavyExplosionMaxTileIntensity: 400

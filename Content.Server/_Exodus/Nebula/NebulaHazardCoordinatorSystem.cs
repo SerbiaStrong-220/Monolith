@@ -74,9 +74,11 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
                 _lightningMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaSpaceLightningHazardComponent>(out _, _componentFactory))
                 _spaceLightningMarkers.Add(proto.ID);
-            if (proto.TryGetComponent<NebulaEmpHazardComponent>(out _, _componentFactory))
+            // EMP components honour their Enabled flag so disabled markers can still document
+            // tuned values without firing the effect.
+            if (proto.TryGetComponent<NebulaEmpHazardComponent>(out var empComp, _componentFactory) && empComp.Enabled)
                 _empMarkers.Add(proto.ID);
-            if (proto.TryGetComponent<NebulaSpaceEmpHazardComponent>(out _, _componentFactory))
+            if (proto.TryGetComponent<NebulaSpaceEmpHazardComponent>(out var spaceEmpComp, _componentFactory) && spaceEmpComp.Enabled)
                 _spaceEmpMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaRadioBlackoutSourceComponent>(out _, _componentFactory))
                 _radioBlackoutMarkers.Add(proto.ID);
@@ -138,7 +140,17 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         if (wanted)
         {
             var hazard = EnsureComp<NebulaLightningGridHazardComponent>(uid);
-            hazard.Marker = marker;
+            // Marker change implies a new tier configuration; clear the existing strike
+            // schedule so InitializeGridTimers reapplies the new intervals on the next tick.
+            // Statistics (LastStrike, StrikeCount) are intentionally preserved.
+            if (hazard.Marker != marker)
+            {
+                hazard.Marker = marker;
+                hazard.TimersInitialized = false;
+                hazard.NextSmallStrike = default;
+                hazard.NextHeavyStrike = default;
+                hazard.NextSuperHeavyStrike = default;
+            }
         }
         else if (HasComp<NebulaLightningGridHazardComponent>(uid))
         {
@@ -159,7 +171,14 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         if (wanted)
         {
             var hazard = EnsureComp<NebulaEmpGridHazardComponent>(uid);
-            hazard.Marker = marker;
+            // Marker change implies a new EMP config; clear the next-pulse schedule so the
+            // system reapplies the new delay range on the next tick. Statistics preserved.
+            if (hazard.Marker != marker)
+            {
+                hazard.Marker = marker;
+                hazard.TimersInitialized = false;
+                hazard.NextPulse = default;
+            }
         }
         else if (HasComp<NebulaEmpGridHazardComponent>(uid))
         {

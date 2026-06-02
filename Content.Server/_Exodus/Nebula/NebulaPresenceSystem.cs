@@ -123,11 +123,27 @@ public sealed class NebulaPresenceSystem : EntitySystem
             return;
         }
 
-        var position = _transform.GetWorldPosition(xform);
+        var position = GetPresencePosition(uid, xform);
         if (TryGetNebulaAt(position, mapComponent, out var index, out var marker, out var density, out var alpha))
             SetPresence(uid, index, marker, density, alpha);
         else
             ClearPresence(uid);
+    }
+
+    /// <summary>
+    /// Picks the representative world point used to ask "which nebula is this entity in".
+    /// For free-space entities (EVA players) this is just the world position. For grids the
+    /// origin can sit far from the actual hull bounds, so we use the AABB center — this keeps
+    /// hazard activation aligned with what the player sees, especially for capships that
+    /// straddle the death-zone inner/outer boundary at 90k.
+    /// </summary>
+    private Vector2 GetPresencePosition(EntityUid uid, TransformComponent xform)
+    {
+        if (!TryComp<MapGridComponent>(uid, out var grid))
+            return _transform.GetWorldPosition(xform);
+
+        var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform);
+        return worldPos + worldRot.RotateVec(grid.LocalAABB.Center);
     }
 
     public bool TryGetNebulaAt(

@@ -10,6 +10,14 @@ namespace Content.Shared._Exodus.Nebula;
 [RegisterComponent]
 public sealed partial class NebulaSpaceEmpHazardComponent : Component
 {
+    /// <summary>
+    /// Master switch. When false the marker carries this configuration as documentation
+    /// without actually pulsing EVA targets — useful to record tuned values for a future
+    /// enablement without re-adding the component.
+    /// </summary>
+    [DataField]
+    public bool Enabled = true;
+
     [DataField]
     public int MinStrikeDelaySeconds = 5;
 
