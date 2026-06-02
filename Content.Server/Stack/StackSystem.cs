@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Stack;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
@@ -170,6 +171,11 @@ namespace Content.Server.Stack
         {
             if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
                 return;
+
+            // Exodus-begin borg-stack-split-fix
+            if (HasComp<UnsplittableComponent>(uid))
+                return;
+            // Exodus-end
 
             // Frontier: cherry-picked from ss14#32938, moved up top
             var priority = 1;

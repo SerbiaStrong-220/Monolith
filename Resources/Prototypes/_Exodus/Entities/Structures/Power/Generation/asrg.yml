@@ -1,0 +1,136 @@
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorASRG
+  name: ASRG
+  description: A radioisotope Stirling generator for long-term power. It only runs while surrounded by enough atmosphere.
+  suffix: 30kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 30000
+    enabled: false
+    heatSignatureRatio: 16
+  - type: Appearance
+  - type: AtmosDevice
+  - type: PressurePowerGenerator
+    minimumPressure: 75
+  - type: Sprite
+    sprite: _Exodus/Structures/Power/Generation/asrg.rsi
+    state: asrg
+    layers:
+    - state: asrg
+    - state: asrg_off
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: asrg_on }
+          False: { state: asrg_off }
+  - type: PowerMonitoringDevice
+    sprite: _Exodus/Structures/Power/Generation/asrg.rsi
+    state: asrg
+  - type: AmbientSound
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: GuideHelp
+    guides:
+    - RTG
+    - Power
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:ExplodeBehavior
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorASRGDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 2
+    totalIntensity: 100
+  - type: ShipRepairable
+    repairTime: 10
+    repairCost: 20
+
+- type: entity
+  parent: GeneratorASRG
+  id: GeneratorASRGDamaged
+  name: damaged ASRG
+  description: A radioisotope Stirling generator for long-term power. This one has damaged shielding and still needs enough atmosphere to run.
+  suffix: 30kW
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Power/Generation/asrg.rsi
+    state: asrg_damaged
+    layers:
+    - state: asrg_damaged
+    - state: asrg_glow
+    - state: asrg_off
+      shader: unshaded
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: asrg_on }
+          False: { state: asrg_off }
+  - type: PowerMonitoringDevice
+    sprite: _Exodus/Structures/Power/Generation/asrg.rsi
+    state: asrg_damaged
+  - type: RadiationSource
+    intensity: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:ExplodeBehavior
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
+          SheetUranium1:
+            min: 1
+            max: 4
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "ASRGPlutoniumDropTable"
+        spawnOffset: 0.5
+        minSpawn: 1
+        maxSpawn: 1
+        spawnAfter: 0.2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ShipRepairable
+    repairTo: GeneratorASRG
+    repairTime: 10
+    repairCost: 20
