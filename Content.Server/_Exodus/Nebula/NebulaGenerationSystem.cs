@@ -395,7 +395,25 @@ public sealed class NebulaGenerationSystem : EntitySystem
                 validMarkers++;
         }
 
-        message = $"Nebulas: {component.Nebulas.Count}; area: {component.TotalArea:0}/{component.MaxTotalArea:0}; markers: {validMarkers}/{component.NebulaMarkers.Count}; seed: {component.Seed}; attempts: {component.Attempts}/{component.MaxAttempts}; complete: {component.Complete}.";
+        var configId = string.IsNullOrEmpty(_config.ID) ? "<hardcoded fallback>" : _config.ID;
+        var lines = new List<string>
+        {
+            $"Config: '{configId}' (coordinateLimit {_config.CoordinateLimit:0}, {_config.Markers.Count} marker entries).",
+            $"Blob nebulas: {component.Nebulas.Count}; area: {component.TotalArea:0}/{component.MaxTotalArea:0}; markers alive: {validMarkers}/{component.NebulaMarkers.Count}; seed: {component.Seed}; attempts: {component.Attempts}/{component.MaxAttempts}; complete: {component.Complete}.",
+        };
+
+        if (component.WorldEnd.IsGenerated)
+        {
+            lines.Add($"Death zone: inner radius {component.WorldEnd.InnerBoundingRadius:0}, mid radius {component.WorldEnd.MidRadius:0}, outer boundary {component.WorldEnd.OuterBoundingRadius:0}.");
+            lines.Add($"  Inner marker: {component.WorldEndInnerMarker}");
+            lines.Add($"  Outer marker: {component.WorldEndOuterMarker}");
+        }
+        else
+        {
+            lines.Add("Death zone: NOT generated.");
+        }
+
+        message = string.Join('\n', lines);
         return true;
     }
 

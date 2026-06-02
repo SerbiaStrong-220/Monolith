@@ -137,7 +137,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
     /// hazard activation aligned with what the player sees, especially for capships that
     /// straddle the death-zone inner/outer boundary at 90k.
     /// </summary>
-    private Vector2 GetPresencePosition(EntityUid uid, TransformComponent xform)
+    public Vector2 GetPresencePosition(EntityUid uid, TransformComponent xform)
     {
         if (!TryComp<MapGridComponent>(uid, out var grid))
             return _transform.GetWorldPosition(xform);

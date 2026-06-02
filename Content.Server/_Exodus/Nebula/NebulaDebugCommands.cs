@@ -1,7 +1,9 @@
+using System.Numerics;
 using Content.Server.Administration;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula;
@@ -169,13 +171,34 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
             return;
         }
 
+        // Compute the same world position the presence system uses — AABB center for grids,
+        // world transform position for free-space entities. Helpful for debugging the P1 fix
+        // where capships are tested by hull center, not transform origin.
+        Vector2? position = null;
+        string? source = null;
+        if (_entityManager.TryGetComponent<TransformComponent>(entity, out var xform))
+        {
+            var presenceSystem = _entityManager.System<NebulaPresenceSystem>();
+            position = presenceSystem.GetPresencePosition(entity, xform);
+            source = _entityManager.HasComponent<MapGridComponent>(entity)
+                ? "grid AABB center"
+                : "transform position";
+        }
+
         if (!_entityManager.TryGetComponent<NebulaPresenceComponent>(entity, out var presence))
         {
-            shell.WriteLine("Outside nebula.");
+            var posStr = position is { } p ? $" (checked at ({p.X:0}, {p.Y:0}) via {source})" : "";
+            shell.WriteLine($"Outside nebula{posStr}.");
             return;
         }
 
-        shell.WriteLine($"Inside {presence.Marker} nebula {presence.NebulaIndex + 1}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
+        // NebulaIndex == -1 marks the world-end death zone (no entry in mapComponent.Nebulas).
+        var zoneTag = presence.NebulaIndex < 0
+            ? "death-zone sub-zone"
+            : $"blob nebula {presence.NebulaIndex + 1}";
+
+        var positionStr = position is { } pp ? $" at ({pp.X:0}, {pp.Y:0}) via {source}" : "";
+        shell.WriteLine($"Inside {presence.Marker} ({zoneTag}){positionStr}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
     }
 }
 
@@ -230,8 +253,9 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
         if (hasLightning && lightning != null)
         {
             lines.Add($"Lightning ({lightning.Marker}):");
-            lines.Add($"  Small: next in {FormatDuration(lightning.NextSmallStrike - curTime)}, count {lightning.SmallStrikeCount}, last {FormatOptionalDuration(lightning.LastSmallStrike)}, delta {FormatOptionalDuration(lightning.LastSmallDelta)}.");
-            lines.Add($"  Heavy: next in {FormatDuration(lightning.NextHeavyStrike - curTime)}, count {lightning.HeavyStrikeCount}, last {FormatOptionalDuration(lightning.LastHeavyStrike)}, delta {FormatOptionalDuration(lightning.LastHeavyDelta)}.");
+            lines.Add($"  Small:      next in {FormatDuration(lightning.NextSmallStrike - curTime)}, count {lightning.SmallStrikeCount}, last {FormatOptionalDuration(lightning.LastSmallStrike)}, delta {FormatOptionalDuration(lightning.LastSmallDelta)}.");
+            lines.Add($"  Heavy:      next in {FormatDuration(lightning.NextHeavyStrike - curTime)}, count {lightning.HeavyStrikeCount}, last {FormatOptionalDuration(lightning.LastHeavyStrike)}, delta {FormatOptionalDuration(lightning.LastHeavyDelta)}.");
+            lines.Add($"  SuperHeavy: next in {FormatDuration(lightning.NextSuperHeavyStrike - curTime)}, count {lightning.SuperHeavyStrikeCount}, last {FormatOptionalDuration(lightning.LastSuperHeavyStrike)}, delta {FormatOptionalDuration(lightning.LastSuperHeavyDelta)}.");
         }
 
         if (hasEmp && emp != null)
