@@ -76,35 +76,12 @@ public sealed class NebulaDebrisExclusionSystem : EntitySystem
     /// <summary>
     /// True if <paramref name="position"/> is inside a nebula whose marker has
     /// <see cref="NebulaBlocksDebrisComponent"/>. Both blob nebulas and death-zone sub-zones
-    /// are checked.
+    /// are covered by <see cref="NebulaQueryHelper.TryGetMarkerAt"/>.
     /// </summary>
     private bool IsBlockedAt(Vector2 position, NebulaMapComponent mapComponent)
     {
-        for (var i = 0; i < mapComponent.Nebulas.Count; i++)
-        {
-            if (i >= mapComponent.NebulaPrototypes.Count)
-                continue;
-
-            var marker = mapComponent.NebulaPrototypes[i];
-            if (marker.Id == null || !_debrisBlockerMarkers.Contains(marker.Id))
-                continue;
-
-            var nebula = mapComponent.Nebulas[i];
-            var delta = position - nebula.Center;
-            if (delta.LengthSquared() > nebula.BoundingRadius * nebula.BoundingRadius)
-                continue;
-
-            if (nebula.Contains(position))
-                return true;
-        }
-
-        if (!mapComponent.WorldEnd.IsGenerated || !mapComponent.WorldEnd.TryGetZone(position, out var zone))
-            return false;
-
-        var zoneMarker = zone == WorldEndZone.Outer
-            ? mapComponent.WorldEndOuterMarker
-            : mapComponent.WorldEndInnerMarker;
-
-        return zoneMarker.Id != null && _debrisBlockerMarkers.Contains(zoneMarker.Id);
+        return NebulaQueryHelper.TryGetMarkerAt(mapComponent, position, out var marker) &&
+               marker.Id != null &&
+               _debrisBlockerMarkers.Contains(marker.Id);
     }
 }

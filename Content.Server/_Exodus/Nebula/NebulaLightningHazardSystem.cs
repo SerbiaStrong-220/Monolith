@@ -105,7 +105,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
                 continue;
             }
 
-            if (!TryGetMarkerConfig(hazard.Marker, out var config))
+            if (!NebulaQueryHelper.TryGetMarkerComponent<NebulaLightningHazardComponent>(_prototype, _componentFactory, hazard.Marker, out var config))
                 continue;
 
             InitializeGridTimers(hazard, config);
@@ -141,7 +141,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
             // Resolve marker via presence each tick so transitions between nebula kinds
             // (e.g. death-zone inner -> outer at the 90k boundary) take effect immediately.
             if (!TryComp<NebulaPresenceComponent>(uid, out var presence) ||
-                !TryGetSpaceMarkerConfig(presence.Marker, out var config))
+                !NebulaQueryHelper.TryGetMarkerComponent<NebulaSpaceLightningHazardComponent>(_prototype, _componentFactory, presence.Marker, out var config))
             {
                 RemCompDeferred<NebulaSpaceLightningTargetComponent>(uid);
                 continue;
@@ -164,25 +164,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         }
     }
 
-    private bool TryGetMarkerConfig(EntProtoId marker, out NebulaLightningHazardComponent config)
-    {
-        config = default!;
-        if (string.IsNullOrEmpty(marker.Id))
-            return false;
-        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
-            return false;
-        return proto.TryGetComponent<NebulaLightningHazardComponent>(out config!, _componentFactory);
-    }
-
-    private bool TryGetSpaceMarkerConfig(EntProtoId marker, out NebulaSpaceLightningHazardComponent config)
-    {
-        config = default!;
-        if (string.IsNullOrEmpty(marker.Id))
-            return false;
-        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
-            return false;
-        return proto.TryGetComponent<NebulaSpaceLightningHazardComponent>(out config!, _componentFactory);
-    }
+    // TryGetMarkerConfig / TryGetSpaceMarkerConfig replaced by NebulaQueryHelper.TryGetMarkerComponent<T>.
 
     private void InitializeGridTimers(NebulaLightningGridHazardComponent hazard, NebulaLightningHazardComponent config)
     {
@@ -286,7 +268,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
 
             // The grid may overlap a nebula only partially; only fire on tiles that are
             // actually inside a nebula whose marker matches this hazard.
-            if (!IsPositionInsideMarkerNebula(coords.Position, mapComponent, marker))
+            if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, marker))
                 continue;
 
             candidates++;
@@ -307,36 +289,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         return _map.TryGetMap(mapId, out var mapUid) && TryComp(mapUid, out component!);
     }
 
-    private static bool IsPositionInsideMarkerNebula(Vector2 position, NebulaMapComponent mapComponent, EntProtoId marker)
-    {
-        for (var i = 0; i < mapComponent.Nebulas.Count; i++)
-        {
-            if (i >= mapComponent.NebulaPrototypes.Count || mapComponent.NebulaPrototypes[i] != marker)
-                continue;
-
-            var nebula = mapComponent.Nebulas[i];
-            var delta = position - nebula.Center;
-            if (delta.LengthSquared() > nebula.BoundingRadius * nebula.BoundingRadius)
-                continue;
-
-            if (nebula.Contains(position))
-                return true;
-        }
-
-        // Death zone is split into concentric sub-zones; only the matching marker's zone
-        // counts as "inside" — an outer-zone hazard must not pick a tile that is actually
-        // in the inner zone, and vice versa.
-        var isInner = mapComponent.WorldEndInnerMarker == marker;
-        var isOuter = mapComponent.WorldEndOuterMarker == marker;
-        if ((isInner || isOuter) &&
-            mapComponent.WorldEnd.IsGenerated &&
-            mapComponent.WorldEnd.TryGetZone(position, out var zone))
-        {
-            return isInner ? zone == WorldEndZone.Inner : zone == WorldEndZone.Outer;
-        }
-
-        return false;
-    }
+    // IsPositionInsideMarkerNebula moved to NebulaQueryHelper.
 
     private bool IsEdgeTile(EntityUid gridUid, MapGridComponent grid, Vector2i tile)
     {

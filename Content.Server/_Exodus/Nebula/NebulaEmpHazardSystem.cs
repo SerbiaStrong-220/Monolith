@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Emp;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.GameTicking;
@@ -23,14 +22,6 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
     private const string SparksPrototype = "EffectSparks";
-
-    private static readonly Vector2i[] CardinalOffsets =
-    {
-        new(1, 0),
-        new(-1, 0),
-        new(0, 1),
-        new(0, -1),
-    };
 
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -82,7 +73,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
                 continue;
             }
 
-            if (!TryGetMarkerConfig(hazard.Marker, out var config))
+            if (!NebulaQueryHelper.TryGetMarkerComponent<NebulaEmpHazardComponent>(_prototype, _componentFactory, hazard.Marker, out var config))
                 continue;
 
             InitializeGridTimers(hazard, config);
@@ -105,7 +96,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
             // Resolve marker via presence each tick so transitions between nebula kinds
             // (e.g. death-zone inner -> outer at the 90k boundary) take effect immediately.
             if (!TryComp<NebulaPresenceComponent>(uid, out var presence) ||
-                !TryGetSpaceMarkerConfig(presence.Marker, out var config))
+                !NebulaQueryHelper.TryGetMarkerComponent<NebulaSpaceEmpHazardComponent>(_prototype, _componentFactory, presence.Marker, out var config))
             {
                 RemCompDeferred<NebulaSpaceEmpTargetComponent>(uid);
                 continue;
@@ -128,25 +119,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         }
     }
 
-    private bool TryGetMarkerConfig(EntProtoId marker, out NebulaEmpHazardComponent config)
-    {
-        config = default!;
-        if (string.IsNullOrEmpty(marker.Id))
-            return false;
-        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
-            return false;
-        return proto.TryGetComponent<NebulaEmpHazardComponent>(out config!, _componentFactory);
-    }
-
-    private bool TryGetSpaceMarkerConfig(EntProtoId marker, out NebulaSpaceEmpHazardComponent config)
-    {
-        config = default!;
-        if (string.IsNullOrEmpty(marker.Id))
-            return false;
-        if (!_prototype.TryIndex<EntityPrototype>(marker, out var proto))
-            return false;
-        return proto.TryGetComponent<NebulaSpaceEmpHazardComponent>(out config!, _componentFactory);
-    }
+    // Marker config / position checks moved to NebulaQueryHelper.
 
     private void InitializeGridTimers(NebulaEmpGridHazardComponent hazard, NebulaEmpHazardComponent config)
     {
@@ -224,7 +197,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
             if (coords.MapId != mapId)
                 continue;
 
-            if (!IsPositionInsideMarkerNebula(coords.Position, mapComponent, marker))
+            if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, marker))
                 continue;
 
             candidates++;
@@ -242,34 +215,6 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
     {
         component = default!;
         return _map.TryGetMap(mapId, out var mapUid) && TryComp(mapUid, out component!);
-    }
-
-    private static bool IsPositionInsideMarkerNebula(Vector2 position, NebulaMapComponent mapComponent, EntProtoId marker)
-    {
-        for (var i = 0; i < mapComponent.Nebulas.Count; i++)
-        {
-            if (i >= mapComponent.NebulaPrototypes.Count || mapComponent.NebulaPrototypes[i] != marker)
-                continue;
-
-            var nebula = mapComponent.Nebulas[i];
-            var delta = position - nebula.Center;
-            if (delta.LengthSquared() > nebula.BoundingRadius * nebula.BoundingRadius)
-                continue;
-
-            if (nebula.Contains(position))
-                return true;
-        }
-
-        var isInner = mapComponent.WorldEndInnerMarker == marker;
-        var isOuter = mapComponent.WorldEndOuterMarker == marker;
-        if ((isInner || isOuter) &&
-            mapComponent.WorldEnd.IsGenerated &&
-            mapComponent.WorldEnd.TryGetZone(position, out var zone))
-        {
-            return isInner ? zone == WorldEndZone.Inner : zone == WorldEndZone.Outer;
-        }
-
-        return false;
     }
 
     private void PulseSpaceTarget(
