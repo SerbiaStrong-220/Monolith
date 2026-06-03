@@ -246,6 +246,27 @@
   - type: Tag
     tags: [ POI ]
 
+- type: nebulaPoi
+  id: NebulaPoiTSFMCOutpost
+  path: /Maps/_Mono/POI/tsfmcoutpost.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: 'КВП | Периферийный аванпост'
+  stationGameMap: TSFMCOutpost
+  addComponents:
+  - type: IFF
+    color: "#047abd"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
 # Omnichurch had no upstream `gameMap` registration → no stationGameMap here.
 - type: nebulaPoi
   id: NebulaPoiOmnichurch
