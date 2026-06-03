@@ -73,7 +73,12 @@ public sealed class PointOfInterestSystem : EntitySystem
             if (proto.SpawnGamePreset.Length > 0 && !proto.SpawnGamePreset.Contains(currentPreset))
                 continue;
 
-            Vector2i offset = new Vector2i(_random.Next(proto.MinimumDistance, proto.MaximumDistance), 0);
+            // # # Exodus start - apply POIDistanceModifier so depot rings also respect overall spread tuning (for territory)
+            float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+            int minD = (int)(proto.MinimumDistance * mod);
+            int maxD = (int)(proto.MaximumDistance * mod);
+            Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
+            // # # Exodus end
             offset = offset.Rotate(rotationOffset);
             rotationOffset += rotation;
             // Append letter to depot name.
@@ -274,9 +279,14 @@ public sealed class PointOfInterestSystem : EntitySystem
     private Vector2 GetRandomPOICoord(float unscaledMinRange, float unscaledMaxRange)
     {
         int numRetries = int.Max(_cfg.GetCVar(NFCCVars.POIPlacementRetries), 0);
-        float minDistance = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance), 0); // Constant at the end to avoid NaN weirdness
+        // # # Exodus start - apply POIDistanceModifier for stronger/further POI spread (makes global CVar actually work for tuning territory separation)
+        float modifier = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+        float minRange = unscaledMinRange * modifier;
+        float maxRange = unscaledMaxRange * modifier;
+        float minDistance = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance) * modifier, 0);
+        // # # Exodus end
 
-        Vector2 coords = _random.NextVector2(unscaledMinRange, unscaledMaxRange);
+        Vector2 coords = _random.NextVector2(minRange, maxRange);
         for (int i = 0; i < numRetries; i++)
         {
             bool positionIsValid = true;
@@ -294,7 +304,7 @@ public sealed class PointOfInterestSystem : EntitySystem
                 break;
 
             // No vector yet, get next value.
-            coords = _random.NextVector2(unscaledMinRange, unscaledMaxRange);
+            coords = _random.NextVector2(minRange, maxRange);
         }
 
         return coords;

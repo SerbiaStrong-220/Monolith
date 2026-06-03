@@ -1,0 +1,54 @@
+# Data-driven configuration of factions that can claim and control territories.
+#
+# The localized text shown on the navigation radar (repeated diagonal label inside the circle)
+# comes from the radarLabel here + the .ftl files.
+#
+# Actual strings:
+#   Resources/Locale/ru-RU/_Exodus/territory/territory-marker.ftl
+#   Resources/Locale/en-US/_Exodus/territory/territory-marker.ftl
+#
+# How a claim appears:
+#   A banner with TerritoryBannerComponent (referencing a territoryFaction) gets anchored.
+#   → GridTerritoryBannerSystem calls SetController with the faction.
+#   → System looks up the prototype → uses its radarLabel for the TerritoryMarker.
+#   → Radar draws Loc.GetString(radarLabel).
+#
+# Initial map state:
+#   - Do NOT use controllingFaction in GridTerritory yaml to give "default" ownership.
+#   - Stations are unclaimed by default ("Незанято").
+#   - If a station must start under a faction: place the banner entity itself in the map
+#     (anchored on the grid). The banner system will detect it on load.
+#
+# To add a new claimable faction:
+#   1. Add entry here.
+#   2. Create banner entity prototype.
+#   3. Give it TerritoryBanner (yaml type) / TerritoryBannerComponent (C# class) pointing to this faction id.
+#   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
+
+- type: territoryFaction
+  id: TSFMC
+  radarLabel: territory-faction-tsf
+  banner: BannerNGC
+
+- type: territoryFaction
+  id: DrakeIndustries
+  radarLabel: territory-faction-phaeton
+  banner: BannerDrakeIndustries
+
+# Placeholder for Династия Фаэтон if SHM maps here, or adjust as needed.
+- type: territoryFaction
+  id: SHM
+  radarLabel: territory-faction-phaeton
+  banner: BannerSHM
+
+- type: territoryFaction
+  id: Khsira
+  radarLabel: territory-faction-khsira
+  banner: BannerKhsira   # затычка placeholder, will be replaced with real sprite later
+
+# Колосс-Централ treated as its own faction so it can have the special "КОЛОСС-ЦЕНТРАЛ" label
+# even when initially "controlled" without a physical banner, or when claimed.
+- type: territoryFaction
+  id: ColossusCentral
+  radarLabel: territory-marker-colossus
+  # No dedicated banner yet; can be set as initial controller on the grid or via a banner later.

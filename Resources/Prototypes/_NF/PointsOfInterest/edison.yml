@@ -12,8 +12,10 @@
   id: Edison
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Электростанция Эдисона' # Ru-Localization
-  minimumDistance: 5650
-  maximumDistance: 7400
+  # # Exodus start - even stronger spread (1km radius) + widen
+  minimumDistance: 6800
+  maximumDistance: 10000
+  # # Exodus end
   spawnGroup: Required
   gridPath: /Maps/_NF/POI/edison.yml
   addComponents:
@@ -33,6 +35,11 @@
   stations:
     Edison:
       stationProto: RecordsFrontierOutpost
+      # # Exodus start - Territory for Edison Power Station (1km)
+      gridComponents:
+      - type: GridTerritory
+        radius: 1000
+      # # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Электростанция Эдисона' # Ru-Localization

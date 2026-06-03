@@ -12,8 +12,10 @@
   id: USSPCamelot
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Форт Камелот' # Ru-Localization
-  minimumDistance: 10650
-  maximumDistance: 12400
+  # # Exodus start - even stronger spread (2.5km radius)
+  minimumDistance: 12500
+  maximumDistance: 16000
+  # # Exodus end
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/camelot.yml # Exodus
@@ -36,6 +38,20 @@
           ambientMusicPrototype: CamelotMusic
         - type: VesselInfo
           description: "Ветхая станция, некогда принадлежавшая СССП. Холодно и темно." # Ru-Localization
+        # # Exodus start - Territory circle for this USSP station (use 2500 or 5000 as appropriate)
+        #
+        # Design rule (strict):
+        # - Default for any station/POI is "Незанято" (unclaimed).
+        # - No default faction belonging via controllingFaction in GridTerritory.
+        # - To have initial ownership, map a physical banner entity (with `type: TerritoryBanner` in yaml)
+        #   anchored on the grid in the actual map file.
+        # - Removing the banner (wrench) always leads to unclaimed state.
+        #
+        # Do not set controllingFaction here for lore "default owner".
+        - type: GridTerritory
+          radius: 2500
+          # No controllingFaction, no defaultLabel → falls back to "Незанято".
+        # # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Форт Камелот' # Ru-Localization

@@ -6,8 +6,10 @@
   id: Sevastopol
   parent: BasePOI
   name: 'Дата-центр Севастополь' # Ru-Localization
-  minimumDistance: 3500
-  maximumDistance: 7500
+  # # Exodus start - even stronger spread (1km radius)
+  minimumDistance: 6000
+  maximumDistance: 9500
+  # # Exodus end
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/sevastopol.yml # Exodus
   addComponents:
@@ -22,6 +24,11 @@
   stations:
     Sevastopol:
       stationProto: RecordsFrontierOutpostCargo
+      # # Exodus start - Territory for DC Sevastopol (1km)
+      gridComponents:
+      - type: GridTerritory
+        radius: 1000
+      # # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Дата-центр Севастополь' # Ru-Localization

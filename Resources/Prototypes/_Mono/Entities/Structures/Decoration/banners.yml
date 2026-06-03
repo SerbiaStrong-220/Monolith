@@ -10,6 +10,10 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerTSFNode
+  # # Exodus start - Territory claim banner for ТСФ
+  - type: TerritoryBanner
+    faction: TSFMC
+  # # Exodus end
 
 - type: entity
   id: BannerSHM
@@ -23,6 +27,10 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerSHMNode
+  # # Exodus start - Territory claim banner (SHM as temporary for ДФ area)
+  - type: TerritoryBanner
+    faction: SHM
+  # # Exodus end
 
 - type: entity
   id: BannerDrakeIndustries
@@ -36,3 +44,26 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerDINode
+  # # Exodus start - Territory claim banner for Династия Фаэтон (ДФ)
+  - type: TerritoryBanner
+    faction: DrakeIndustries
+  # # Exodus end
+
+# # Exodus start - Placeholder (затычка) banner for Империя Кхси'Ра
+# Real sprite/graph node will be provided later. Currently reuses an existing state as temporary.
+# User will replace with proper art.
+- type: entity
+  id: BannerKhsira
+  parent: BannerBase
+  name: Khsira banner (placeholder)
+  description: Placeholder banner for the Khsira Empire. Temporary until proper sprite is added.
+  components:
+  - type: Sprite
+    sprite: _Mono/Structures/Decoration/banner.rsi
+    state: ngc-banner # затычка - temporary, will be replaced
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerKhsiraNode
+  - type: TerritoryBanner
+    faction: Khsira
+# # Exodus end

@@ -12,8 +12,10 @@
   id: Medical
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Госпиталь' # Ru-Localization
-  minimumDistance: 1650
-  maximumDistance: 2700
+  # # Exodus start - even stronger spread (2.5km radius): much further out for less overlap with central 5km + other majors
+  minimumDistance: 9000
+  maximumDistance: 13000
+  # # Exodus end
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
   addComponents:
@@ -32,6 +34,11 @@
   stations:
     Medical:
       stationProto: RecordsFrontierOutpost
+      # # Exodus start - Territory for Medical Center (2.5km)
+      gridComponents:
+      - type: GridTerritory
+        radius: 2500
+      # # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Госпиталь' # Ru-Localization

@@ -16,8 +16,22 @@
         description: "Последний рубеж цивилизации этого сектора. Ты чувствуешь себя в безопасности... почти." # Ru-Localization
       - type: Zone # Exodus - SafeZone
         text: "zone-safezone"
-      - type: TerritoryMarker # Exodus - TerritoryMarker
-        text: territory-marker-colossus
+      # # Exodus start - Territory grid control (replaces old static TerritoryMarker)
+      #
+      # IMPORTANT (design rule):
+      # - No station has default faction ownership.
+      # - To start claimed by a faction, place its banner entity (with `type: TerritoryBanner` in yaml)
+      #   anchored in the map on this grid. Banner system will claim it on load.
+      # - Removing the banner always results in unclaimed state (shows defaultLabel or "Незанято").
+      #
+      # defaultLabel is for custom neutral text when unclaimed.
+      # We use the special station name here.
+      #
+      # Radius is free-form.
+      - type: GridTerritory
+        radius: 5000
+        defaultLabel: territory-marker-colossus
+      # # Exodus end
       - type: Tower7G # Exodus-Adminbus
       components:
         - type: StationNameSetup

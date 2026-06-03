@@ -14,8 +14,10 @@
   id: TSFMCHalcyon
   parent: [BasePOI, BaseRepairablePOI]
   name: 'КВП | Флагман Фалкон' # Ru-Localization
-  minimumDistance: 4500 # Mono
-  maximumDistance: 5500 # Mono
+  # # Exodus start - even stronger spread (2.5km radius): further out + widened for separation
+  minimumDistance: 8800
+  maximumDistance: 12800
+  # # Exodus end
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/tsfmchalcyon.yml
@@ -38,6 +40,24 @@
       gridComponents:
       - type: VesselInfo
         description: "Законсервированный военный корабль КВП, переоборудованный в передовую оперативную базу." # Ru-Localization
+      # # Exodus start - Territory claim circle for this major TSF station (Large radius)
+      #
+      # Design rule:
+      # - Every station defaults to "Незанято" / unclaimed.
+      # - A station never "belongs" to a faction by default (ontologically impossible).
+      # - If it must start claimed by a faction, place the actual banner entity (e.g. BannerNGC)
+      #   anchored on the grid inside the map file itself. The banner system will pick it up on load.
+      # - When the claim banner is removed (unscrewed), ControllingFaction becomes null and it shows
+      #   the neutral text (defaultLabel or "Незанято").
+      #
+      # Do not use controllingFaction in this GridTerritory for "home faction" default.
+      # The radar text for claims always comes from the current active banner's TerritoryFactionPrototype.
+      #
+      # Radius is free-form.
+      - type: GridTerritory
+        radius: 2500
+        # No controllingFaction and no defaultLabel override → truly unclaimed / "Незанято" when no banner.
+      # # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'КВП | Флагман Фалкон' # Ru-Localization

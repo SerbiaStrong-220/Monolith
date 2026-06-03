@@ -12,8 +12,10 @@
   id: Omnichurch
   parent: [BasePOI, BaseRepairablePOI]
   name: "Маяк ВсеЦеркви" # Ru-Localization
-  minimumDistance: 4200
-  maximumDistance: 6900
+  # # Exodus start - even stronger spread (1km radius, added via addComponents below)
+  minimumDistance: 6200
+  maximumDistance: 9500
+  # # Exodus end
   gridPath: /Maps/_NF/POI/beacon.yml
   addComponents:
   - type: SolarPoweredGrid
@@ -21,3 +23,7 @@
     doNotCull: true
   - type: Tower7G # Exodus-Adminbus
     range: 256
+  # # Exodus start - Territory for OmniChurch Beacon (1km)
+  - type: GridTerritory
+    radius: 1000
+  # # Exodus end

@@ -9,8 +9,10 @@
   id: HeliosFortress
   parent: [BasePOI, BaseRepairablePOI]
   name: 'ДФ | Крепость Гелиос' # Ru-Localization
-  minimumDistance: 7500
-  maximumDistance: 9500
+  # # Exodus start - even stronger spread (2.5km radius)
+  minimumDistance: 9500
+  maximumDistance: 13500
+  # # Exodus end
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/pdvhelios.yml
@@ -30,6 +32,10 @@
       gridComponents:
       - type: VesselInfo
         description: "Здесь царит гнетущая имперская аура." # Ru-Localization
+      # # Exodus start - Territory for Helios Fortress (2.5km)
+      - type: GridTerritory
+        radius: 2500
+      # # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'ДФ | Крепость Гелиос' # Ru-Localization

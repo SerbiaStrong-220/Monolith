@@ -16,6 +16,10 @@
             - material: Cloth
               amount: 2
               doAfter: 1
+          # # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # # Exodus end
         - to: BannerSHMNode
           completed:
             - !type:SnapToGrid { }
@@ -26,6 +30,10 @@
             - material: Cloth
               amount: 2
               doAfter: 1
+          # # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # # Exodus end
         - to: BannerDINode
           completed:
             - !type:SnapToGrid { }
@@ -36,6 +44,26 @@
             - material: Cloth
               amount: 2
               doAfter: 1
+          # # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # # Exodus end
+        # # Exodus start - build edge for Khsira placeholder (затычка)
+        - to: BannerKhsiraNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+          # # Exodus start - enforce single territory claim banner (затычка)
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # # Exodus end
+        # # Exodus end
 
     - node: BannerTSFNode
       entity: BannerNGC
@@ -81,3 +109,21 @@
         steps:
         - tool: Welding
           doAfter: 3
+
+    # # Exodus start - node for Khsira placeholder banner (затычка)
+    # Temporary until real sprite and proper deconstruct tool are provided.
+    - node: BannerKhsiraNode
+      entity: BannerKhsira
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Screwing
+          doAfter: 1
+    # # Exodus end

@@ -19,12 +19,25 @@ public sealed class TerritoryMarkerSystem : EntitySystem
 
     private void OnStartup(Entity<TerritoryMarkerComponent> ent, ref ComponentStartup args)
     {
+        SyncBlip(ent);
+    }
+
+    /// <summary>
+    /// Re-applies the current visual configuration from the TerritoryMarkerComponent
+    /// to the associated RadarBlipComponent (TerritoryCircle shape).
+    /// Called on startup and whenever the control layer updates radius or label
+    /// (e.g. when a banner claim changes the displayed faction name or size).
+    /// </summary>
+    public void SyncBlip(Entity<TerritoryMarkerComponent> ent)
+    {
         EnsureComp<PhysicsComponent>(ent);
 
         var blip = EnsureComp<RadarBlipComponent>(ent);
         blip.MaxDistance = MaxRadarDistance;
         blip.RequireNoGrid = false;
         blip.VisibleFromOtherGrids = true;
+
+        // Assign a fresh BlipConfig so the radar palette (value equality) picks up label/radius changes on next request.
         blip.Config = new BlipConfig
         {
             Bounds = new Box2(-ent.Comp.Radius, -ent.Comp.Radius, ent.Comp.Radius, ent.Comp.Radius),
