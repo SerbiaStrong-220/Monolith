@@ -7,7 +7,8 @@
   - type: InstantAction
     checkCanInteract: false
     checkConsciousness: false
-    useDelay: 120
+    # No useDelay: real cooldown after teleport is set explicitly by RandomTeleportOnTriggerSystem
+    # via SetCooldown. A useDelay here would fire whenever the user merely clicks the passive button.
     itemIconStyle: BigAction
     priority: -20
     icon:

@@ -44,6 +44,9 @@ public sealed class BiocodeSystem : SharedBiocodeSystem
 
     private void OnMindAdded(Entity<MindContainerComponent> body, ref MindAddedMessage args)
     {
+        if (!_mobState.IsAlive(body.Owner))
+            return;
+
         var enumerator = _inventory.GetSlotEnumerator(body.Owner);
         while (enumerator.NextItem(out var item))
         {

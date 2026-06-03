@@ -136,52 +136,56 @@ public sealed class OmnidirectionalThrusterSystem : EntitySystem
         return xform.Anchored && this.IsPowered(uid, EntityManager);
     }
 
-    private void EnableOmni(EntityUid uid, ThrusterComponent thruster)
+    private void EnableOmni(Entity<OmnidirectionalThrusterComponent> ent, ThrusterComponent thruster)
     {
         if (thruster.IsOn)
             return;
 
-        var xform = Transform(uid);
+        var xform = Transform(ent.Owner);
         if (!TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
             return;
 
         thruster.IsOn = true;
+        ent.Comp.CurrentGrid = xform.GridUid;
 
         for (var i = 0; i < 4; i++)
-            _thruster.AddLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, uid);
+            _thruster.AddLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, ent.Owner);
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-            _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
+        if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            _appearance.SetData(ent.Owner, ThrusterVisualState.State, true, appearance);
 
-        if (_light.TryGetLight(uid, out var light))
-            _light.SetEnabled(uid, true, light);
+        if (_light.TryGetLight(ent.Owner, out var light))
+            _light.SetEnabled(ent.Owner, true, light);
 
-        _ambient.SetAmbience(uid, true);
-        _poweredRadiation.SetActive(uid, true);
+        _ambient.SetAmbience(ent.Owner, true);
+        _poweredRadiation.SetActive(ent.Owner, true);
     }
 
-    private void DisableOmni(EntityUid uid, ThrusterComponent thruster)
+    private void DisableOmni(Entity<OmnidirectionalThrusterComponent> ent, ThrusterComponent thruster)
     {
         // Always kill effects regardless of IsOn state
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-            _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
+        if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            _appearance.SetData(ent.Owner, ThrusterVisualState.State, false, appearance);
 
-        if (_light.TryGetLight(uid, out var light))
-            _light.SetEnabled(uid, false, light);
+        if (_light.TryGetLight(ent.Owner, out var light))
+            _light.SetEnabled(ent.Owner, false, light);
 
-        _ambient.SetAmbience(uid, false);
-        _poweredRadiation.SetActive(uid, false);
+        _ambient.SetAmbience(ent.Owner, false);
+        _poweredRadiation.SetActive(ent.Owner, false);
 
         if (!thruster.IsOn)
             return;
 
         thruster.IsOn = false;
 
-        var xform = Transform(uid);
-        if (!TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
-            return;
+        // Use the grid the thrust was registered on, not the current xform (the thruster may have
+        // been unanchored or moved to a different grid since EnableOmni).
+        if (TryComp<ShuttleComponent>(ent.Comp.CurrentGrid, out var shuttle))
+        {
+            for (var i = 0; i < 4; i++)
+                _thruster.RemoveLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, ent.Owner);
+        }
 
-        for (var i = 0; i < 4; i++)
-            _thruster.RemoveLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, uid);
+        ent.Comp.CurrentGrid = null;
     }
 }
