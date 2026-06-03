@@ -1,10 +1,9 @@
 using Content.Shared._Mono.ShipRepair;
 using Content.Shared.Actions;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mind;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
@@ -21,7 +20,7 @@ namespace Content.Shared._Exodus.Biocode;
 public abstract partial class SharedBiocodeSystem : EntitySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -41,31 +40,25 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
     /// <summary>
     /// A user is authorized if there are no conditions, or they pass the user whitelist,
-    /// or they carry a body organ that passes the organ whitelist.
+    /// or the mind attached to them passes the mind whitelist.
     /// </summary>
     public bool IsAllowed(Entity<BiocodeComponent> ent, EntityUid user)
     {
-        if (ent.Comp.Whitelist == null && ent.Comp.OrganWhitelist == null)
+        if (ent.Comp.Whitelist == null && ent.Comp.MindWhitelist == null)
             return true;
 
         if (ent.Comp.Whitelist != null && _whitelist.IsValid(ent.Comp.Whitelist, user))
             return true;
 
-        return ent.Comp.OrganWhitelist != null && HasMatchingOrgan(ent.Comp.OrganWhitelist, user);
+        return ent.Comp.MindWhitelist != null && HasMatchingMind(ent.Comp.MindWhitelist, user);
     }
 
-    private bool HasMatchingOrgan(EntityWhitelist organWhitelist, EntityUid user)
+    private bool HasMatchingMind(EntityWhitelist mindWhitelist, EntityUid user)
     {
-        if (!TryComp<BodyComponent>(user, out var body))
+        if (!_mind.TryGetMind(user, out var mindId, out _))
             return false;
 
-        foreach (var (organ, _) in _body.GetBodyOrgans(user, body))
-        {
-            if (_whitelist.IsValid(organWhitelist, organ))
-                return true;
-        }
-
-        return false;
+        return _whitelist.IsValid(mindWhitelist, mindId);
     }
 
     private bool CanInteract(Entity<BiocodeComponent> ent, EntityUid user)

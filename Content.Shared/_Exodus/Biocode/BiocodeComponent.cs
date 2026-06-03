@@ -9,24 +9,24 @@ namespace Content.Shared._Exodus.Biocode;
 ///
 /// A user is considered authorized if EITHER:
 /// - they pass <see cref="Whitelist"/> (checked against the user entity itself), OR
-/// - they have a body organ that passes <see cref="OrganWhitelist"/>.
+/// - they pass <see cref="MindWhitelist"/> (checked against the mind entity attached to the user).
 /// </summary>
 [RegisterComponent]
 public sealed partial class BiocodeComponent : Component
 {
     /// <summary>
-    /// Condition checked against the user entity (components/tags/mind roles on the puppet).
+    /// Condition checked against the user entity (components/tags on the puppet).
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    /// Condition checked against the user's body organs. The user passes if any organ matches.
-    /// Lets a gate depend on an implanted organ (e.g. a brain) rather than the puppet,
-    /// so brain transplants are handled correctly.
+    /// Condition checked against the mind entity attached to the user (typically mind roles).
+    /// Use this for player-bound identity gates so the check follows the player across
+    /// body swaps / resleeves rather than depending on a specific organ.
     /// </summary>
     [DataField]
-    public EntityWhitelist? OrganWhitelist;
+    public EntityWhitelist? MindWhitelist;
 
     /// <summary>
     /// Block ranged/after-interact, use-in-hand, activate-in-world and UI-open for non-authorized users.

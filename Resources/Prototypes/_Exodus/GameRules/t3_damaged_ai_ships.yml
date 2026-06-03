@@ -46,9 +46,11 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 7
-    - !type:AsakimPlayersRequirement
-      minAsakimPlayers: 1
+      minDepartmentPlayers: 6
+    - !type:MindWhitelistedPlayersRequirement
+      minPlayers: 1
+      whitelist:
+        mindRoles: [ AsakimRole ]
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -68,6 +70,8 @@
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
-      minDepartmentPlayers: 7
-    - !type:AsakimPlayersRequirement
-      minAsakimPlayers: 1
+      minDepartmentPlayers: 6
+    - !type:MindWhitelistedPlayersRequirement
+      minPlayers: 1
+      whitelist:
+        mindRoles: [ AsakimRole ]

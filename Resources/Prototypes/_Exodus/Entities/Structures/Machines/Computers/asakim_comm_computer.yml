@@ -7,8 +7,8 @@
   - type: Biocode
     whitelist:
       components: [ AsakimTrustedUser ]
-    organWhitelist:
-      components: [ AsakimBrain ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
   - type: IdentitySenderFallback
     fallback: asakim-communications-console-sender-fallback
   - type: Sprite

@@ -1,25 +1,27 @@
-using Content.Shared._Exodus.Asakim;
 using Content.Shared._Exodus.GameTicking.Requirements;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Roles;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.GameTicking.Requirements;
 
 /// <summary>
-/// Game rule requirement: at least <see cref="MinAsakimPlayers"/> alive mind-connected
-/// players must have an Asakim mind role.
-/// Re-evaluated on every rule-start attempt, so the pool resets between attempts naturally.
+/// Game rule requirement: at least <see cref="MinPlayers"/> alive mind-connected players whose
+/// mind entity passes <see cref="Whitelist"/>. The whitelist is matched against the mind entity
+/// itself (so use <c>mindRoles</c>, <c>components</c>, or <c>tags</c> as they apply to minds —
+/// not against the player's body). Re-evaluated on every rule-start attempt.
 /// </summary>
-public sealed partial class AsakimPlayersRequirement : GameRuleRequirement
+public sealed partial class MindWhitelistedPlayersRequirement : GameRuleRequirement
 {
-    [DataField] public int MinAsakimPlayers;
+    [DataField] public int MinPlayers;
+
+    [DataField(required: true)] public EntityWhitelist Whitelist = new();
 
     public override bool Check(IEntityManager entity, IPrototypeManager prototype)
     {
         var mobSystem = entity.System<MobStateSystem>();
-        var roleSystem = entity.System<SharedRoleSystem>();
+        var whitelistSystem = entity.System<EntityWhitelistSystem>();
 
         var counter = 0;
 
@@ -35,12 +37,12 @@ public sealed partial class AsakimPlayersRequirement : GameRuleRequirement
             if (mobSystem.IsIncapacitated(uid))
                 continue;
 
-            if (!roleSystem.MindHasRole<AsakimRoleComponent>((mindId, mind), out _))
+            if (!whitelistSystem.IsValid(Whitelist, mindId))
                 continue;
 
             counter++;
         }
 
-        return counter >= MinAsakimPlayers;
+        return counter >= MinPlayers;
     }
 }

@@ -182,8 +182,8 @@
     blockItemActions: true
     whitelist:
       components: [ AsakimTrustedUser ]
-    organWhitelist:
-      components: [ AsakimBrain ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
   # Exodus-asakim-katana-dash-end
 
 # Ullman Blade

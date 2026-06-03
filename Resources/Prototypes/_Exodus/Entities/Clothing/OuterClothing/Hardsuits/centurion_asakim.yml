@@ -68,8 +68,8 @@
     triggerOnReject: true
     whitelist:
       components: [ AsakimTrustedUser ]
-    organWhitelist:
-      components: [ AsakimBrain ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
   - type: GibOnBiocodeReject
     deleteItems: true
   - type: TriggerOnMobstateChange

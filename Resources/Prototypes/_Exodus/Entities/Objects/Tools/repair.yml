@@ -7,5 +7,5 @@
   - type: Biocode
     whitelist:
       components: [ AsakimTrustedUser ]
-    organWhitelist:
-      components: [ AsakimBrain ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
