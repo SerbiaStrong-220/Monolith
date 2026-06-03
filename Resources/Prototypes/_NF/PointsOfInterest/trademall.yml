@@ -15,7 +15,7 @@
   minimumDistance: 3500
   maximumDistance: 6500
   spawnGroup: MarketStation
-  gridPath: /Maps/_NF/POI/trademall.yml
+  gridPath: /Maps/_Exodus/POI/trademall.yml # Exodus
   addComponents:
   - type: IFF
     color: "#37C837"
@@ -38,7 +38,7 @@
 - type: gameMap
   id: TradeMall
   mapName: "Торговый Центр" # Ru-Localization
-  mapPath: /Maps/_NF/POI/trademall.yml
+  mapPath: /Maps/_Exodus/POI/trademall.yml # Exodus
   minPlayers: 0
   stations:
     TradeMall:

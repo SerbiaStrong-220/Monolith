@@ -15,7 +15,7 @@
   minimumDistance: 5200
   maximumDistance: 6200
   spawnGroup: Arena
-  gridPath: /Maps/_NF/POI/arena.yml
+  gridPath: /Maps/_Exodus/POI/arena.yml # Exodus
   addComponents:
   - type: SolarPoweredGrid
     trackOnInit: true
@@ -26,7 +26,7 @@
 - type: gameMap
   id: ThePit
   mapName: "Бойцовская Яма" # Ru-Localization
-  mapPath: /Maps/_NF/POI/arena.yml
+  mapPath: /Maps/_Exodus/POI/arena.yml # Exodus
   minPlayers: 0
   stations:
     ThePit:

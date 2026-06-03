@@ -14,7 +14,7 @@
   name: 'Казино Крейзи Кейси' # Ru-Localization
   minimumDistance: 4250
   maximumDistance: 5600
-  gridPath: /Maps/_NF/POI/caseyscasino.yml
+  gridPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
   addComponents:
   - type: Tower7G # Exodus-Adminbus
     range: 256
@@ -22,7 +22,7 @@
 - type: gameMap
   id: CaseysCasino
   mapName: 'Казино Крейзи Кейси' # Ru-Localization
-  mapPath: /Maps/_NF/POI/caseyscasino.yml
+  mapPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
   minPlayers: 0
   stations:
     CaseysCasino:

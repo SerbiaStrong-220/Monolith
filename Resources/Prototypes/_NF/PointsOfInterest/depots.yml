@@ -15,7 +15,7 @@
   minimumDistance: 8000
   maximumDistance: 10000
   spawnGroup: CargoDepot
-  gridPath: /Maps/_NF/POI/cargodepot.yml
+  gridPath: /Maps/_Exodus/POI/cargodepot.yml # Exodus
   addComponents: &cargoComponents
   - type: IFF
     color: "#37C837"
@@ -41,13 +41,13 @@
   minimumDistance: 8000
   maximumDistance: 10000
   spawnGroup: CargoDepot
-  gridPath: /Maps/_NF/POI/cargodepotalt.yml
+  gridPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   addComponents: *cargoComponents
 
 - type: gameMap
   id: CargoDepot
   mapName: 'Cargo Depot' # Has a letter appended in PointOfInterestSystem
-  mapPath: /Maps/_NF/POI/cargodepotalt.yml
+  mapPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   minPlayers: 0
   stations:
     CargoDepot:
@@ -61,7 +61,7 @@
 - type: gameMap
   id: CargoDepotAlt
   mapName: 'Грузовое Депо' # Ru-Localization # Has a letter appended in PointOfInterestSystem
-  mapPath: /Maps/_NF/POI/cargodepotalt.yml
+  mapPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   minPlayers: 0
   stations:
     CargoDepotAlt:

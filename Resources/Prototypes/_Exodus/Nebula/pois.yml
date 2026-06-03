@@ -38,14 +38,20 @@
 #   decoration without station bookkeeping. Set it ONLY when the POI hosts station-aware
 #   machinery: shipyard consoles, cargo bounty terminals, anything calling GetOwningStation.
 #   The referenced gameMap prototype must have a stations entry whose key matches its own id.
+# - addComponents are applied directly to the loaded grid — NebulaPoiSpawnSystem does NOT
+#   inherit from BasePOI / BaseRepairablePOI. If you migrate a POI from the upstream
+#   pointOfInterest pipeline, copy here the components those base prototypes used to add
+#   (ForceAnchor, Tag {POI}, IFF, InitRepairSnapshot, etc.) — see existing entries for examples.
 
+# ───────────────────────────────────────────────────────────────────────────
+# Hidden POI — listening post inside green nebulas.
 - type: nebulaPoi
   id: NebulaPoiLPBravo
   path: /Maps/_NF/POI/lpbravo.yml
   spawnIn:
   - NebulaGreenMarker
-  maxCount: 1
   minDensity: 0.7
+  protectedRadius: 2500
   name: "Прослушивающий Пункт Браво"
   stationGameMap: LPBravo
   hideWarp: true
@@ -58,3 +64,209 @@
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
+  - type: ForceAnchor       # inherited from BasePOI in the upstream prototype
+  - type: Tag               # inherited from BasePOI
+    tags: [ POI ]
+
+# ───────────────────────────────────────────────────────────────────────────
+# Migrated from upstream pointOfInterest pipeline. minDensity 0.1, maxDensity 1,
+# protectedRadius 2500, maxCount 1, duplicateAllowed false (default).
+
+- type: nebulaPoi
+  id: NebulaPoiLancelot
+  path: /Maps/_Mono/POI/Dungeons/lancelot.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  - NebulaGreenMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: 'Шахтёрский Аванпост Ланцелот'
+  stationGameMap: Lancelot
+  addComponents:
+  - type: IFF
+    color: "#ccaa55"
+    flags: [HideLabel]
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+- type: nebulaPoi
+  id: NebulaPoiEdison
+  path: /Maps/_NF/POI/edison.yml
+  spawnIn:
+  - NebulaBlueMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: 'Электростанция Эдисона'
+  stationGameMap: Edison
+  addComponents:
+  - type: IFF
+    color: "#3737F8"
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot  # inherited from BaseRepairablePOI
+
+- type: nebulaPoi
+  id: NebulaPoiPolaris
+  path: /Maps/_Mono/POI/Dungeons/polaris.yml
+  spawnIn:
+  - NebulaBlueMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: 'Биологический центр Полярис'
+  stationGameMap: Polaris
+  addComponents:
+  - type: IFF
+    color: "#C83737"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+- type: nebulaPoi
+  id: NebulaPoiAutomatedTanker
+  path: /Maps/_Mono/POI/Dungeons/ruin_tanker.yml
+  spawnIn:
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: 'Автоматизированный Межсекторальный Танкер'
+  stationGameMap: AutomatedTanker
+  addComponents:
+  - type: IFF
+    color: "#44bfe3"
+    flags: [HideLabel]
+    readOnly: true
+  # BaseMobilePOI parent — no ForceAnchor / Tag POI inherited (mobile by design).
+
+- type: nebulaPoi
+  id: NebulaPoiAnomalousLab
+  path: /Maps/_Mono/POI/anomalouslab.yml
+  spawnIn:
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: 'Лаборатория Аномалий'
+  stationGameMap: AnomalousLab
+  addComponents:
+  - type: IFF
+    color: "#ffa600"  # inherited default from BaseMobilePOI
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+- type: nebulaPoi
+  id: NebulaPoiTinnia
+  path: /Maps/_NF/POI/tinnia.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: "Ресторан Тинни"
+  stationGameMap: Tinnia
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: StationTransit
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiGrifty
+  path: /Maps/_NF/POI/grifty.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: "Бензин и жратва Грифти"
+  stationGameMap: Grifty
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: StationTransit
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiMcHobo
+  path: /Maps/_NF/POI/mchobo.yml
+  spawnIn:
+  - NebulaGreenMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: "Заброшенный МакХобольдс"
+  stationGameMap: McHobo
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+# Omnichurch had no upstream `gameMap` registration → no stationGameMap here.
+- type: nebulaPoi
+  id: NebulaPoiOmnichurch
+  path: /Maps/_NF/POI/beacon.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 2500
+  name: "Маяк ВсеЦеркви"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot

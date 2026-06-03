@@ -15,7 +15,7 @@
   minimumDistance: 3400
   maximumDistance: 5800
   spawnGroup: RestStop
-  gridPath: /Maps/_NF/POI/bahama.yml
+  gridPath: /Maps/_Exodus/POI/bahama.yml # Exodus
   addComponents:
   - type: StationTransit
   - type: SolarPoweredGrid
@@ -25,7 +25,7 @@
 - type: gameMap
   id: Bahama
   mapName: 'Багамская Мама' # Ru-Localization
-  mapPath: /Maps/_NF/POI/bahama.yml
+  mapPath: /Maps/_Exodus/POI/bahama.yml # Exodus
   minPlayers: 0
   stations:
     Bahama:
