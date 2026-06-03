@@ -30,10 +30,6 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-          # # Exodus start - enforce single territory claim banner
-          conditions:
-          - !type:NoActiveTerritoryClaimOnGrid {}
-          # # Exodus end
         - to: BannerDINode
           completed:
             - !type:SnapToGrid { }
@@ -44,10 +40,22 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-          # # Exodus start - enforce single territory claim banner
+        # # Exodus start - build edge for PDV placeholder (затычка) for Династия Фаэтон
+        - to: BannerPDVNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+          # # Exodus start - enforce single territory claim banner (затычка)
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
           # # Exodus end
+        # # Exodus end
         # # Exodus start - build edge for Khsira placeholder (затычка)
         - to: BannerKhsiraNode
           completed:
@@ -109,6 +117,24 @@
         steps:
         - tool: Welding
           doAfter: 3
+
+    # # Exodus start - node for PDV placeholder banner (затычка) for Династия Фаэтон
+    # Temporary until real sprite and proper deconstruct tool are provided.
+    - node: BannerPDVNode
+      entity: BannerPDV
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Welding
+          doAfter: 3
+    # # Exodus end
 
     # # Exodus start - node for Khsira placeholder banner (затычка)
     # Temporary until real sprite and proper deconstruct tool are provided.

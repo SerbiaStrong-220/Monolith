@@ -24,14 +24,14 @@ namespace Content.Shared._Exodus.Territory;
 /// 
 /// Radius: free float. Common useful values 1000/2500/5000 based on station importance.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GridTerritoryComponent : Component
 {
     /// <summary>
     /// Radius of the territory circle in world units.
     /// Recommended values: 1000 (small/outpost), 2500 (medium), 5000 (large/flagship).
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Radius = 2500f;
 
     /// <summary>
@@ -39,7 +39,7 @@ public sealed partial class GridTerritoryComponent : Component
     /// Defined in TerritoryFactionPrototype (data-driven config under _Exodus).
     /// Null / unset = neutral (display "Unclaimed" / "Незанято").
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<TerritoryFactionPrototype>? ControllingFaction = null;
 
     /// <summary>
@@ -47,7 +47,7 @@ public sealed partial class GridTerritoryComponent : Component
     /// Defaults to the "Unclaimed"/"Незанято" key.
     /// Mappers can override per-POI (e.g. station name) if desired.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId DefaultLabel = "territory-unclaimed";
 
     /// <summary>

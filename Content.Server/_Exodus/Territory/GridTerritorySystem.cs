@@ -34,6 +34,7 @@ public sealed class GridTerritorySystem : EntitySystem
     private void OnGridTerritoryStartup(Entity<GridTerritoryComponent> ent, ref ComponentStartup args)
     {
         EnsureVisual(ent);
+        Dirty(ent, ent.Comp); // # Exodus - ensure initial prototype values (e.g. Radius) are sent to clients for map icon logic etc.
     }
 
     /// <summary>
@@ -90,6 +91,8 @@ public sealed class GridTerritorySystem : EntitySystem
 
         terr.ControllingFaction = faction;
         terr.ActiveClaimBanner = sourceBanner;
+
+        Dirty(grid, terr); // # Exodus - ensure Radius etc replicated to client for map icons etc.
 
         // Resolve the label from the prototype (or fall back to default for neutral)
         LocId effectiveLabel = terr.DefaultLabel;

@@ -33,9 +33,9 @@
 - type: territoryFaction
   id: DrakeIndustries
   radarLabel: territory-faction-phaeton
-  banner: BannerDrakeIndustries
+  banner: BannerPDV
 
-# Placeholder for Династия Фаэтон if SHM maps here, or adjust as needed.
+# SHM banner is now ordinary decorative (freed from PDV binding).
 - type: territoryFaction
   id: SHM
   radarLabel: territory-faction-phaeton
