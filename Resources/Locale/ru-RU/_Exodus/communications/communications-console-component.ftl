@@ -1,2 +1,2 @@
-comms-console-announcement-title-asakim = Объявление восьмого экспедиционного флота
+comms-console-announcement-title-asakim = восьмого экспедиционного флота Кхси'Ра
 asakim-communications-console-sender-fallback = {$user}
