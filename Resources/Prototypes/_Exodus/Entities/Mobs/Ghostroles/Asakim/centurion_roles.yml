@@ -14,7 +14,7 @@
     implants:
     - FreedomImplant
     - AsakimTrackingImplant
-    - DeathAcidifierImplantDeadNF
+    - DeathAcidifierImplantDeadEXDS
   - type: GhostRole
     name: ghost-role-information-centurion-asakim-name
     description: ghost-role-information-centurion-asakim-description

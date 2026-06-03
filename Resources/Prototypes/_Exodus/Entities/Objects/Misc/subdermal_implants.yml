@@ -59,7 +59,7 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: DeathAcidifierImplantDeadNF
+  id: DeathAcidifierImplantDeadEXDS
   name: death-acidifier implant
   description: This implant melts the user and their equipment upon death.
   categories: [ HideSpawnMenu ]

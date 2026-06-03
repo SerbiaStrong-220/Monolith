@@ -1,4 +1,4 @@
-ent-DeathAcidifierImplantDeadNF = имплант посмертного растворения
+ent-DeathAcidifierImplantDeadEXDS = имплант посмертного растворения
     .desc = Имплант, растворяющий тело, органы и снаряжение носителя после смерти.
 
 ent-AsakimTrackingImplant = имплант отслеживания азакимов
