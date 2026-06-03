@@ -411,20 +411,36 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
             var gridUiPos = ScalePosition(gridRelativePos);
 
-            // # # Exodus start - draw influence rings (territory circles / кольца влияния) on BSS jump map (FTL selection tab)
-            // Previously visible ONLY on regular mass scanner / nav radar (via TerritoryMarkerComponent + RadarBlip + DrawTerritoryCircleBlip in ShuttleNavControl).
+            // # Exodus start - draw influence rings (territory circles / кольца влияния) on BSS jump map (FTL selection tab)
+            // Color comes from the controlling TerritoryFactionPrototype (defined in yml).
+            // Only three factions claim POIs: TSFMC (light blue), PDV (gold-tan), Khsira (pink-red).
+            // Unclaimed = neutral gray.
+            // Previously visible ONLY on regular mass scanner / nav radar (via TerritoryMarkerComponent + RadarBlip).
             // Grids get rings here iff they have GridTerritoryComponent (same condition as the radius-shaped icons).
             // Ring radius uses world units * MinimapScale (consistent with FTL range circles, exclusion circles).
             // Drawn before batched icon polys so the ring renders under the station icon.
             if (EntManager.TryGetComponent<GridTerritoryComponent>(grid.Owner, out var terrRing) && terrRing.Radius > 0)
             {
                 var ringRadius = terrRing.Radius * MinimapScale;
-                handle.DrawCircle(gridUiPos, ringRadius, new Color(0.55f, 0.55f, 0.58f, 0.035f));
-                handle.DrawCircle(gridUiPos, ringRadius, new Color(0.60f, 0.60f, 0.65f, 0.28f), filled: false);
-            }
-            // # # Exodus end - rings on BSS map
 
-            // # # Exodus start - choose icon based only on GridTerritory radius for BSS jump map
+                Color ringBase;
+                if (terrRing.ControllingFaction is { } factionId &&
+                    IoCManager.Resolve<IPrototypeManager>().TryIndex(factionId, out var factionProto))
+                {
+                    ringBase = factionProto.Color;
+                }
+                else
+                {
+                    // Unclaimed / neutral
+                    ringBase = new Color(0.65f, 0.65f, 0.65f);
+                }
+
+                handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.035f));
+                handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.28f), filled: false);
+            }
+            // # Exodus end - rings on BSS map (colored by faction from yml)
+
+            // # Exodus start - choose icon based only on GridTerritory radius for BSS jump map
             // regular grid (no component) or other radius -> default diamond (ship icon)
             // 1000 radius = square (квадрат)
             // 2500 = 5-point pentagon
@@ -440,7 +456,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 mapObject = GetMapObject(gridRelativePos, Angle.Zero, scalePosition: true);
                 AddMapObject(existingEdges, existingVerts, mapObject);
             }
-            // # # Exodus end - safe, only affects visual icon shape for grids with territory; all other logic (labels, IFF, etc.) unchanged
+            // # Exodus end - safe, only affects visual icon shape for grids with territory; all other logic (labels, IFF, etc.) unchanged
 
             // Mono - now always has label
             // Text
@@ -688,7 +704,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         return mapObj;
     }
 
-    // # # Exodus start - differentiated icons on BSS jump map (FTL destinations) based ONLY on GridTerritoryComponent + radius
+    // # Exodus start - differentiated icons on BSS jump map (FTL destinations) based ONLY on GridTerritoryComponent + radius
     // Regular grids (no territory) = default ship icon (current diamond)
     // 1000 radius = square (квадрат)
     // 2500 = 5-point pentagon
@@ -753,7 +769,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             edges.Add(points[(i + 1) % points.Count]);
         }
     }
-    // # # Exodus end - BSS jump map icons (and rings for territory grids)
+    // # Exodus end - BSS jump map icons (and rings for territory grids)
 
     private bool TryGetBeacon(IEnumerable<IMapObject> mapObjects, Matrix3x2 mapTransform, Vector2 mousePos, UIBox2i area, out ShuttleBeaconObject foundBeacon, out Vector2 foundLocalPos)
     {

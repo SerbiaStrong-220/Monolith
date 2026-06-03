@@ -24,27 +24,26 @@
 #   2. Create banner entity prototype.
 #   3. Give it TerritoryBanner (yaml type) / TerritoryBannerComponent (C# class) pointing to this faction id.
 #   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
+#   5. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
+#      Only TSFMC, PDV and Khsira are the factions that can actually claim POIs.
 
 - type: territoryFaction
   id: TSFMC
   radarLabel: territory-faction-tsf
   banner: BannerNGC
+  color: "#87CEEB"  # TSF light blue (better visibility on dark BSS map background)
 
 - type: territoryFaction
-  id: DrakeIndustries
+  id: PDV
   radarLabel: territory-faction-phaeton
   banner: BannerPDV
-
-# SHM banner is now ordinary decorative (freed from PDV binding).
-- type: territoryFaction
-  id: SHM
-  radarLabel: territory-faction-phaeton
-  banner: BannerSHM
+  color: "#D2B48C"  # PDV gold-tan
 
 - type: territoryFaction
   id: Khsira
   radarLabel: territory-faction-khsira
   banner: BannerKhsira   # затычка placeholder, will be replaced with real sprite later
+  color: "#C71585"  # розово-красный (medium violet red / pink-red for Khsira Empire)
 
 # Колосс-Централ treated as its own faction so it can have the special "КОЛОСС-ЦЕНТРАЛ" label
 # even when initially "controlled" without a physical banner, or when claimed.
@@ -52,3 +51,4 @@
   id: ColossusCentral
   radarLabel: territory-marker-colossus
   # No dedicated banner yet; can be set as initial controller on the grid or via a banner later.
+  # Not one of the three main POI-claiming factions for color purposes.

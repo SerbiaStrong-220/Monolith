@@ -57,7 +57,7 @@
     graph: MonoBannersGraph
     node: BannerPDVNode
   - type: TerritoryBanner
-    faction: DrakeIndustries
+    faction: PDV
 # # Exodus end
 
 # # Exodus start - Placeholder (затычка) banner for Империя Кхси'Ра

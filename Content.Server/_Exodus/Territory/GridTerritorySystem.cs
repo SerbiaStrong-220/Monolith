@@ -50,11 +50,22 @@ public sealed class GridTerritorySystem : EntitySystem
 
         LocId label = ent.Comp.DefaultLabel;
 
+        // # Exodus start - apply faction color to territory rings (BSS map + nav radar)
+        // Only three factions claim POIs: TSFMC (light blue), PDV, Khsira.
         if (ent.Comp.ControllingFaction is { } factionId &&
             _proto.TryIndex(factionId, out var factionProto))
         {
             label = factionProto.RadarLabel;
+            marker.FillColor = factionProto.Color.WithAlpha(0.02f);
+            marker.BorderColor = factionProto.Color.WithAlpha(0.28f);
         }
+        else
+        {
+            // Unclaimed / neutral territory
+            marker.FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
+            marker.BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
+        }
+        // # Exodus end - faction color for rings
 
         marker.Text = label;
 
@@ -96,7 +107,8 @@ public sealed class GridTerritorySystem : EntitySystem
 
         // Resolve the label from the prototype (or fall back to default for neutral)
         LocId effectiveLabel = terr.DefaultLabel;
-        if (faction is { } factionId && _proto.TryIndex(factionId, out var factionProto))
+        TerritoryFactionPrototype? factionProto = null;
+        if (faction is { } factionId && _proto.TryIndex(factionId, out factionProto))
         {
             effectiveLabel = factionProto.RadarLabel;
         }
@@ -106,6 +118,21 @@ public sealed class GridTerritorySystem : EntitySystem
         {
             marker.Text = effectiveLabel;
             marker.Radius = terr.Radius;
+
+            // # Exodus start - apply faction color to territory rings (BSS map + nav radar)
+            if (factionProto != null)
+            {
+                marker.FillColor = factionProto.Color.WithAlpha(0.02f);
+                marker.BorderColor = factionProto.Color.WithAlpha(0.28f);
+            }
+            else
+            {
+                // Unclaimed
+                marker.FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
+                marker.BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
+            }
+            // # Exodus end - faction color for rings
+
             _marker.SyncBlip((grid, marker));
         }
         else

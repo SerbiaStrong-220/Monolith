@@ -7,6 +7,7 @@ namespace Content.Shared._Exodus.Territory;
 /// This makes the list of claimable factions data-driven instead of hardcoded.
 /// 
 /// Declare new ones in Resources/Prototypes/_Exodus/Territory/territory_factions.yml
+/// The 'color' field controls the territory ring color on BSS map and nav radar (only for the three main POI-claiming factions).
 /// </summary>
 [Prototype]
 public sealed partial class TerritoryFactionPrototype : IPrototype
@@ -27,4 +28,14 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<EntityPrototype>? Banner { get; private set; }
+
+    // # Exodus start - faction color for territory rings on BSS map and nav radar
+    /// <summary>
+    /// Base color used for the territory influence rings (BSS jump map and navigation radar)
+    /// when this faction controls a grid. Alpha is applied at draw time.
+    /// Only the three main claimable factions (TSFMC - light blue, PDV, Khsira) have meaningful colors.
+    /// </summary>
+    [DataField]
+    public Color Color { get; private set; } = new Color(0.7f, 0.7f, 0.7f);
+    // # Exodus end - faction color for territory rings
 }
