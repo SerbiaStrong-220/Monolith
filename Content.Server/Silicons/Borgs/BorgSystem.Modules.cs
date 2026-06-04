@@ -55,7 +55,7 @@ public sealed partial class BorgSystem
 
         // Exodus-begin borg module item cleanup
         if (TryComp<ItemBorgModuleComponent>(uid, out var itemModule))
-            DeleteProvidedItems(chassis, itemModule);
+            DeleteProvidedItems(chassis, (uid, itemModule));
         // Exodus-end
     }
 
@@ -276,22 +276,22 @@ public sealed partial class BorgSystem
     }
 
     // Exodus-begin borg module item cleanup
-    private void DeleteProvidedItems(EntityUid chassis, ItemBorgModuleComponent component)
+    private void DeleteProvidedItems(EntityUid chassis, Entity<ItemBorgModuleComponent> module)
     {
         if (TerminatingOrDeleted(chassis))
             return;
 
-        if (component.ProvidedContainer != null)
+        if (module.Comp.ProvidedContainer != null)
         {
-            foreach (var item in component.ProvidedContainer.ContainedEntities.ToArray())
+            foreach (var item in module.Comp.ProvidedContainer.ContainedEntities.ToArray())
             {
                 if (!TerminatingOrDeleted(item))
                     QueueDel(item);
             }
         }
 
-        component.ItemsCreated = false;
-        component.HandCounter = 0;
+        module.Comp.ItemsCreated = false;
+        module.Comp.HandCounter = 0;
     }
     // Exodus-end
 
