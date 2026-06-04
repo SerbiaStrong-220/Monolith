@@ -2,7 +2,7 @@ territory-marker-default = ТЕРРИТОРИЯ
 territory-marker-colossus = КОЛОСС-ЦЕНТРАЛ
 
 # Territory control / claim factions (4 total)
-territory-faction-tsf = ТСФ
+territory-faction-tsf = Транс-Солнечная Федерация
 territory-faction-phaeton = ДИНАСТИЯ ФАЭТОН
 territory-faction-khsira = ИМПЕРИЯ КХСИ'РА
 

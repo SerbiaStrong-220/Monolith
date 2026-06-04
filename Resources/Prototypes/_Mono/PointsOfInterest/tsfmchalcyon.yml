@@ -14,9 +14,9 @@
   id: TSFMCHalcyon
   parent: [BasePOI, BaseRepairablePOI]
   name: 'КВП | Флагман Фалкон' # Ru-Localization
-  # # Exodus start - even stronger spread (2.5km radius): further out + widened for separation
+  # # Exodus start - wider spread for Флагман Фалкон
   minimumDistance: 8800
-  maximumDistance: 12800
+  maximumDistance: 18800
   # # Exodus end
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required

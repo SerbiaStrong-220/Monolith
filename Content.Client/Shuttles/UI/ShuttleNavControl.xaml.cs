@@ -73,6 +73,14 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     // Exodus-begin territory-marker
     private Vector2[] _territoryFillBuffer = [];
     private Vector2[] _territoryLineBuffer = [];
+
+    /// <summary>
+    /// World-space repeat distance (in meters) for the diagonal repeated faction label pattern inside territory rings.
+    /// The screen step is computed as TerritoryTextWorldRepeat * MinimapScale and the pattern is always centered on the ring.
+    /// This makes the text pattern fully static relative to the ring geometry — no movement or phase shift on pan or any zoom.
+    /// Increase to make sparser, decrease for denser fill.
+    /// </summary>
+    private const float TerritoryTextWorldRepeat = 1800f;
     // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
@@ -1430,13 +1438,17 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (string.IsNullOrEmpty(text))
             return;
 
-        var territoryRadius = config.Bounds.Width * 0.5f * MinimapScale;
-        if (territoryRadius < 1f)
+        var worldRadius = config.Bounds.Width * 0.5f;
+        if (worldRadius < 1f)
             return;
 
-        var radarCenter = MidPointVector;
+        var screenRadius = worldRadius * MinimapScale;
 
         // Fixed 45 degrees in screen space; stays still when ship rotates.
+        // Text positions are generated with screen spacing that scales with MinimapScale
+        // (screenStepLen = TerritoryTextWorldRepeat * MinimapScale) and always centered on the ring.
+        // This makes the pattern fully static relative to the ring: same relative positions and density
+        // no matter how you pan or zoom the mass scanner.
         const float angle45 = MathF.PI * 0.25f;
         var textAngle = new Angle(angle45);
         var screenDir = new Vector2(MathF.Cos(angle45), MathF.Sin(angle45));
@@ -1448,27 +1460,32 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var textDims = handle.GetDimensions(Font, text, textScale);
         var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
 
-        // Fade text near the circle edge.
-        var fadeEnd = territoryRadius - halfDiag;
+        // Fade text near the circle edge (in screen pixels).
+        var fadeEnd = screenRadius - halfDiag;
         var fadeStart = fadeEnd - halfDiag * 6f;
         if (fadeStart <= 0f)
             return;
 
-        var spacingX = textDims.X + 40f;
-        var spacingY = textDims.Y * 5f;
-
         // SetTransform uses screen coordinates, not control-local coordinates.
         var screenOffset = (Vector2) GlobalPixelPosition;
-        var coverRadius = MidPointVector.Length();
         var prevTransform = handle.GetTransform();
 
-        var rowIndex = 0;
-        for (var t = -coverRadius; t <= coverRadius; t += spacingY, rowIndex++)
+        // Fixed world-space repeat for the diagonal pattern.
+        // See TerritoryTextWorldRepeat (top of territory section) for tuning.
+        var screenStepLen = TerritoryTextWorldRepeat * MinimapScale;
+        var stepDir = screenDir * screenStepLen;
+        var stepPerp = perpDir * screenStepLen;
+
+        // How many steps we need to search in index space to cover the territory.
+        int maxIndex = (int)((worldRadius / TerritoryTextWorldRepeat) * 1.8f) + 4;
+
+        // Use one index as "row" for the stagger (to keep the old nice diagonal offset look).
+        for (int row = -maxIndex; row <= maxIndex; row++)
         {
-            var stagger = rowIndex % 2 == 0 ? 0f : spacingX * 0.5f;
-            for (var s = -coverRadius + stagger; s <= coverRadius + stagger; s += spacingX)
+            var stagger = (row % 2 == 0) ? 0f : (screenStepLen * 0.5f);
+            for (int col = -maxIndex; col <= maxIndex; col++)
             {
-                var pos = radarCenter + t * perpDir + s * screenDir;
+                var pos = territoryCenter + (row * stepDir) + (col * stepPerp) + (stagger * perpDir);  // stagger along the perp for visual
 
                 var dist = (pos - territoryCenter).Length();
                 if (dist >= fadeEnd)

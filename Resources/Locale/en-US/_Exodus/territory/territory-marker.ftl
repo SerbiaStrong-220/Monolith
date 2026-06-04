@@ -2,7 +2,7 @@ territory-marker-default = TERRITORY
 territory-marker-colossus = COLOSSUS CENTRAL
 
 # Territory control / claim factions (4 total)
-territory-faction-tsf = TSF
+territory-faction-tsf = Trans-Solar Federation
 territory-faction-phaeton = PHAETON DYNASTY
 territory-faction-khsira = KHSIRA EMPIRE
 

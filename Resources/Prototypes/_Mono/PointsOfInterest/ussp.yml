@@ -12,9 +12,9 @@
   id: USSPCamelot
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Форт Камелот' # Ru-Localization
-  # # Exodus start - even stronger spread (2.5km radius)
+  # # Exodus start - wider spread for Форт Камелот
   minimumDistance: 12500
-  maximumDistance: 16000
+  maximumDistance: 26000
   # # Exodus end
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required

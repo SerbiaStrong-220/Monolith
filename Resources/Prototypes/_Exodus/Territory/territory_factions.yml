@@ -31,7 +31,7 @@
   id: TSFMC
   radarLabel: territory-faction-tsf
   banner: BannerNGC
-  color: "#87CEEB"  # TSF light blue (better visibility on dark BSS map background)
+  color: "#87CEEB"  # Trans-Solar Federation light blue (better visibility on dark BSS map background)
 
 - type: territoryFaction
   id: PDV
