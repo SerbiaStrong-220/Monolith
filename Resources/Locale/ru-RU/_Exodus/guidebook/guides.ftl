@@ -18,6 +18,6 @@ guide-entry-exodus-rule-ghost-roles-ads = Автоматическая Сист�
 guide-entry-exodus-rule-ghost-roles-ads-general = Общее положение
 guide-entry-exodus-rule-ghost-roles-operator = Оператор Системы Защиты
 guide-entry-exodus-rule-ghost-roles-core = Ядро Системы Защиты
-guide-entry-exodus-rule-ghost-roles-personal-protection-operator = Оператор Персональной защиты
+guide-entry-exodus-rule-ghost-roles-personal-protection-operator = Оператор Персональной Защиты
 guide-entry-exodus-rule-ghost-roles-chimera = Химера
 guide-entry-exodus-rule-ghost-roles-borg = Борг
