@@ -1,7 +1,10 @@
 using Content.Shared._Exodus.Territory;
 using Content.Shared.Construction; // for potential future
 using Content.Server._Exodus.Territory; // for the marker sync (same logical area)
+using Content.Shared._Crescent.SpaceBiomes;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using System.Numerics;
 
 namespace Content.Server._Exodus.Territory;
 
@@ -34,6 +37,7 @@ public sealed class GridTerritorySystem : EntitySystem
     private void OnGridTerritoryStartup(Entity<GridTerritoryComponent> ent, ref ComponentStartup args)
     {
         EnsureVisual(ent);
+        EnsureMiddleRingBiomeSource(ent);
         Dirty(ent, ent.Comp); // # Exodus - ensure initial prototype values (e.g. Radius) are sent to clients for map icon logic etc.
     }
 
@@ -152,5 +156,29 @@ public sealed class GridTerritorySystem : EntitySystem
     public void ClearController(EntityUid grid)
     {
         SetController(grid, null, null);
+    }
+
+    /// <summary>
+    /// Spawns a dedicated biome source entity (child of the grid) configured for the middle ring,
+    /// using the territory's Radius as the swap distance. This makes all station/POI
+    /// influence zones (GridTerritory circles) count as "среднее кольцо" for biome/ambient music.
+    ///
+    /// Uses BaseBiomeSource prototype (which carries GlobalPvs) so the source is visible to clients
+    /// at long range even for distant POIs, without forcing the main grid entity into global PVS.
+    /// The child is positioned at (0,0) local so it follows the grid's world position exactly.
+    /// Priority chosen to be below inner ring (2000) but above external space (500), so inner center wins over colossus territory.
+    /// </summary>
+    private void EnsureMiddleRingBiomeSource(Entity<GridTerritoryComponent> ent)
+    {
+        // Spawn as child of grid so transform follows grid center automatically.
+        // Use dedicated prototype (carries GlobalPvs + prefilled SpaceBiomeSource) for clean init of required fields.
+        var sourceUid = Spawn("BiomeSourceTerritoryMiddle", new EntityCoordinates(ent.Owner, Vector2.Zero));
+
+        var sourceComp = EnsureComp<SpaceBiomeSourceComponent>(sourceUid);
+        sourceComp.Id = "BiomeMiddleRing";
+        sourceComp.SwapDistance = ent.Comp.Radius; // override placeholder with actual territory size
+        sourceComp.Priority = 1800f;
+
+        Dirty(sourceUid, sourceComp);
     }
 }
