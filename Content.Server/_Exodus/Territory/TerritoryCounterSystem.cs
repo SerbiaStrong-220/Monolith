@@ -1,5 +1,5 @@
-using Content.Server.GameTicking;
 using Content.Shared._Exodus.Territory;
+using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
 using System;
 using System.Collections.Generic;
@@ -87,7 +87,10 @@ public sealed class TerritoryCounterSystem : EntitySystem
             {
                 _scores[oldF] = newScore;
                 if (_roundStarted)
-                    RaiseLocalEvent(new TerritoryScoreChangedEvent(oldF, oldScore, newScore));
+                {
+                    var ev = new TerritoryScoreChangedEvent(oldF, oldScore, newScore);
+                    RaiseLocalEvent(ref ev);
+                }
             }
         }
 
@@ -100,7 +103,10 @@ public sealed class TerritoryCounterSystem : EntitySystem
             {
                 _scores[newF] = newScore;
                 if (_roundStarted)
-                    RaiseLocalEvent(new TerritoryScoreChangedEvent(newF, oldScore, newScore));
+                {
+                    var ev = new TerritoryScoreChangedEvent(newF, oldScore, newScore);
+                    RaiseLocalEvent(ref ev);
+                }
             }
         }
     }
