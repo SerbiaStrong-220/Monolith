@@ -10,7 +10,7 @@ namespace Content.Server._Exodus.Implants;
 
 public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
 {
-    private const float UpdateTimer = 1f;
+    private const float UpdateTimer = 5f;
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
