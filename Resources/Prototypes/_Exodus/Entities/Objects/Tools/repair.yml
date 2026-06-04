@@ -3,6 +3,7 @@
   parent: ShipRepairDeviceRedacted
   name: asakim pre-fracture SRD
   description: A resonant ship repair device keyed to Asakim neural patterns.
+  suffix: БИОКОД АЗАКИМ
   components:
   - type: Biocode
     whitelist:
