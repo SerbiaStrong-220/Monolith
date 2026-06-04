@@ -16,10 +16,10 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-          # # Exodus start - enforce single territory claim banner
+          # Exodus start - enforce single territory claim banner
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
-          # # Exodus end
+          # Exodus end
         - to: BannerSHMNode
           completed:
             - !type:SnapToGrid { }
@@ -40,7 +40,7 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-        # # Exodus start - build edge for PDV placeholder (затычка) for Династия Фаэтон
+        # Exodus start - build edge for PDV banner (Династия Фаэтон)
         - to: BannerPDVNode
           completed:
             - !type:SnapToGrid { }
@@ -51,12 +51,12 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-          # # Exodus start - enforce single territory claim banner (затычка)
+          # Exodus start - enforce single territory claim banner
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
-          # # Exodus end
-        # # Exodus end
-        # # Exodus start - build edge for Khsira placeholder (затычка)
+          # Exodus end
+        # Exodus end
+        # Exodus start - build edge for Khsira banner (Империя Кхси'Ра)
         - to: BannerKhsiraNode
           completed:
             - !type:SnapToGrid { }
@@ -67,11 +67,11 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-          # # Exodus start - enforce single territory claim banner (затычка)
+          # Exodus start - enforce single territory claim banner
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
-          # # Exodus end
-        # # Exodus end
+          # Exodus end
+        # Exodus end
 
     - node: BannerTSFNode
       entity: BannerNGC
@@ -118,8 +118,7 @@
         - tool: Welding
           doAfter: 3
 
-    # # Exodus start - node for PDV placeholder banner (затычка) for Династия Фаэтон
-    # Temporary until real sprite and proper deconstruct tool are provided.
+    # Exodus start - node for PDV banner (Династия Фаэтон)
     - node: BannerPDVNode
       entity: BannerPDV
       edges:
@@ -134,10 +133,9 @@
         steps:
         - tool: Welding
           doAfter: 3
-    # # Exodus end
+    # Exodus end
 
-    # # Exodus start - node for Khsira placeholder banner (затычка)
-    # Temporary until real sprite and proper deconstruct tool are provided.
+    # Exodus start - node for Khsira banner (Империя Кхси'Ра)
     - node: BannerKhsiraNode
       entity: BannerKhsira
       edges:
@@ -152,4 +150,4 @@
         steps:
         - tool: Screwing
           doAfter: 1
-    # # Exodus end
+    # Exodus end

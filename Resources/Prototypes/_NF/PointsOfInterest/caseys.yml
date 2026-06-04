@@ -12,10 +12,10 @@
   id: CaseysCasino
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Казино Крейзи Кейси' # Ru-Localization
-  # # Exodus start - even stronger spread (1km radius)
+  # Exodus start - even stronger spread (1km radius)
   minimumDistance: 6500
   maximumDistance: 9200
-  # # Exodus end
+  # Exodus end
   gridPath: /Maps/_NF/POI/caseyscasino.yml
   addComponents:
   - type: Tower7G # Exodus-Adminbus
@@ -29,11 +29,11 @@
   stations:
     CaseysCasino:
       stationProto: DeadDropFrontierOutpost
-      # # Exodus start - Territory for Crazy Casey's (1km)
+      # Exodus start - Territory for Crazy Casey's (1km)
       gridComponents:
       - type: GridTerritory
         radius: 1000
-      # # Exodus end
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Казино Крейзи Кейси' # Ru-Localization

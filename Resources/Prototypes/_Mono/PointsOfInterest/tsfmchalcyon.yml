@@ -14,10 +14,10 @@
   id: TSFMCHalcyon
   parent: [BasePOI, BaseRepairablePOI]
   name: 'КВП | Флагман Фалкон' # Ru-Localization
-  # # Exodus start - wider spread for Флагман Фалкон
+  # Exodus start - wider spread for Флагман Фалкон
   minimumDistance: 8800
   maximumDistance: 18800
-  # # Exodus end
+  # Exodus end
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/tsfmchalcyon.yml
@@ -40,7 +40,7 @@
       gridComponents:
       - type: VesselInfo
         description: "Законсервированный военный корабль КВП, переоборудованный в передовую оперативную базу." # Ru-Localization
-      # # Exodus start - Territory claim circle for this major TSF station (Large radius)
+      # Exodus start - Territory claim circle for this major TSF station (Large radius)
       #
       # Design rule:
       # - Every station defaults to "Незанято" / unclaimed.
@@ -57,7 +57,7 @@
       - type: GridTerritory
         radius: 2500
         # No controllingFaction and no defaultLabel override → truly unclaimed / "Незанято" when no banner.
-      # # Exodus end
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'КВП | Флагман Фалкон' # Ru-Localization

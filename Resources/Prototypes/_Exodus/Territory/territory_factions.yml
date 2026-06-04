@@ -55,7 +55,7 @@
 - type: territoryFaction
   id: Khsira
   radarLabel: territory-faction-khsira
-  banner: BannerKhsira   # затычка placeholder, will be replaced with real sprite later
+  banner: BannerKhsira
   color: "#C71585"  # розово-красный (medium violet red / pink-red for Khsira Empire)
 
 # Колосс-Централ treated as its own faction so it can have the special "КОЛОСС-ЦЕНТРАЛ" label

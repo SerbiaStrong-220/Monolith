@@ -12,10 +12,10 @@
   id: TradeMall
   parent: [BasePOI, BaseRepairablePOI]
   name: "Торговый Центр" # Ru-Localization
-  # # Exodus start - even stronger spread (2.5km radius)
+  # Exodus start - even stronger spread (2.5km radius)
   minimumDistance: 8500
   maximumDistance: 12500
-  # # Exodus end
+  # Exodus end
   spawnGroup: MarketStation
   gridPath: /Maps/_NF/POI/trademall.yml
   addComponents:
@@ -45,11 +45,11 @@
   stations:
     TradeMall:
       stationProto: MarketFrontierOutpost
-      # # Exodus start - Territory for Trade Mall (2.5km)
+      # Exodus start - Territory for Trade Mall (2.5km)
       gridComponents:
       - type: GridTerritory
         radius: 2500
-      # # Exodus end
+      # Exodus end
       components:
         - type: StationCargoOrderDatabase
           capacity: 60

@@ -12,10 +12,10 @@
   id: AnomalousLab
   parent: BasePOI
   name: 'Лаборатория Аномалий' # Ru-Localization
-  # # Exodus start - even stronger spread (1km radius, keep mostly outer)
+  # Exodus start - even stronger spread (1km radius, keep mostly outer)
   minimumDistance: 8000
   maximumDistance: 12500
-  # # Exodus end
+  # Exodus end
   spawnGroup: ScienceLab
   gridPath: /Maps/_Mono/POI/anomalouslab.yml
   addComponents:
@@ -31,11 +31,11 @@
   stations:
     AnomalousLab:
       stationProto: StandardFrontierOutpost
-      # # Exodus start - Territory for Anomaly Laboratory (1km)
+      # Exodus start - Territory for Anomaly Laboratory (1km)
       gridComponents:
       - type: GridTerritory
         radius: 1000
-      # # Exodus end
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Лаборатория Аномалий' # Ru-Localization

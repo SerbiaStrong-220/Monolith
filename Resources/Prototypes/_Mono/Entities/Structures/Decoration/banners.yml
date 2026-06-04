@@ -10,10 +10,10 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerTSFNode
-  # # Exodus start - Territory claim banner for ТСФ
+  # Exodus start - Territory claim banner for ТСФ
   - type: TerritoryBanner
     faction: TSFMC
-  # # Exodus end
+  # Exodus end
 
 - type: entity
   id: BannerSHM
@@ -41,40 +41,36 @@
     graph: MonoBannersGraph
     node: BannerDINode
 
-# # Exodus start - Placeholder (затычка) banner for Династия Фаэтон (PDV)
-# Real sprite/graph node will be provided later. Currently reuses an existing state as temporary.
-# User will replace with proper art.
+# Exodus start - banner for Династия Фаэтон (PDV)
 - type: entity
   id: BannerPDV
   parent: BannerBase
-  name: PDV banner (placeholder)
-  description: Placeholder banner for the Phaeton Dynasty (PDV). Temporary until proper sprite is added.
+  name: PDV banner
+  description: A banner displaying the sigil of the Phaeton Dynasty.
   components:
   - type: Sprite
-    sprite: _Mono/Structures/Decoration/banner.rsi
-    state: di-banner # затычка - temporary, will be replaced with proper PDV sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: pdv-banner
   - type: Construction
     graph: MonoBannersGraph
     node: BannerPDVNode
   - type: TerritoryBanner
     faction: PDV
-# # Exodus end
+# Exodus end
 
-# # Exodus start - Placeholder (затычка) banner for Империя Кхси'Ра
-# Real sprite/graph node will be provided later. Currently reuses an existing state as temporary.
-# User will replace with proper art.
+# Exodus start - banner for Империя Кхси'Ра
 - type: entity
   id: BannerKhsira
   parent: BannerBase
-  name: Khsira banner (placeholder)
-  description: Placeholder banner for the Khsira Empire. Temporary until proper sprite is added.
+  name: Khsira banner
+  description: A banner bearing the emblem of the Khsira Empire.
   components:
   - type: Sprite
-    sprite: _Mono/Structures/Decoration/banner.rsi
-    state: ngc-banner # затычка - temporary, will be replaced
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: khsira-banner
   - type: Construction
     graph: MonoBannersGraph
     node: BannerKhsiraNode
   - type: TerritoryBanner
     faction: Khsira
-# # Exodus end
+# Exodus end

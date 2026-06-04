@@ -13,10 +13,10 @@
   id: McHobo
   parent: BasePOI
   name: "Заброшенный МакХобольдс" # Ru-Localization
-  # # Exodus start - even stronger spread (1km radius)
+  # Exodus start - even stronger spread (1km radius)
   minimumDistance: 7500
   maximumDistance: 10500
-  # # Exodus end
+  # Exodus end
   spawnGroup: Scrapyard
   gridPath: /Maps/_NF/POI/mchobo.yml
 
@@ -28,11 +28,11 @@
   stations:
     McHobo:
       stationProto: DeadDropRecordsFrontierOutpost
-      # # Exodus start - Territory for McHobo / Заброшенный МакХобольдс (1km)
+      # Exodus start - Territory for McHobo / Заброшенный МакХобольдс (1km)
       gridComponents:
       - type: GridTerritory
         radius: 1000
-      # # Exodus end
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Заброшенный МакХобольдс" # Ru-Localization

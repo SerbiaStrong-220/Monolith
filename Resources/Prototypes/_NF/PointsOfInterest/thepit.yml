@@ -12,10 +12,10 @@
   id: ThePit
   parent: [BasePOI, BaseRepairablePOI]
   name: "Бойцовская Яма" # Ru-Localization
-  # # Exodus start - even stronger spread (1km radius) + widened
+  # Exodus start - even stronger spread (1km radius) + widened
   minimumDistance: 6500
   maximumDistance: 9500
-  # # Exodus end
+  # Exodus end
   spawnGroup: Arena
   gridPath: /Maps/_NF/POI/arena.yml
   addComponents:
@@ -33,11 +33,11 @@
   stations:
     ThePit:
       stationProto: DeadDropFrontierOutpost
-      # # Exodus start - Territory for The Pit / Fighting Arena (1km)
+      # Exodus start - Territory for The Pit / Fighting Arena (1km)
       gridComponents:
       - type: GridTerritory
         radius: 1000
-      # # Exodus end
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Бойцовская Яма" # Ru-Localization
