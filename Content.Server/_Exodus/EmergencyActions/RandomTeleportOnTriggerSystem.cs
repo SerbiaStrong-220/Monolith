@@ -43,9 +43,9 @@ public sealed class RandomTeleportOnTriggerSystem : EntitySystem
         if (args.User is not { } target || Deleted(target))
             return;
 
-        // Emergency teleport is meant to save a player. NPC-controlled mobs (no mind) don't need
-        // to be saved, and teleporting them changes their parent grid, which can trip systems
-        // like HostileNPCDeletionSystem into immediately gibbing them on protected NT grids.
+        // Intentional: only teleport wearers with an attached mind. Mindless dummies cannot
+        // control their actions, so randomly relocating them across the map only makes them
+        // harder to find (and can land them on grids that auto-delete uncontrolled hostiles).
         if (!_mind.TryGetMind(target, out _, out _))
             return;
 
