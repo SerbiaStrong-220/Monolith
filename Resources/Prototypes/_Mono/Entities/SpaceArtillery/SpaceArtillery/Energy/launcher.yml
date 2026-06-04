@@ -5,7 +5,8 @@
   name: Type-35 MARAUDER-type plasma cannon
   parent:
   - BallisticArtillery
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
   description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
   components:
@@ -65,7 +66,8 @@
   name: TPC Cerberus Plasma scattercannon
   parent:
   - BallisticArtillery
-  - BallisticArtilleryTier3HP
+  - ShipGunTier3HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier3HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
   description: Borrowing from the design of the Marauder, the Cerberus fires very similar shots, but in a tight spread of 3 blasts
   components:
@@ -124,7 +126,8 @@
   name: Type-54C plasma autopulser
   parent:
   - BallisticArtillery
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
   description: A rapidly firing energy weapon, dealing a large amount of damage to its targets. Takes a long time to recharge.
   components:
@@ -314,7 +317,8 @@
   name: TPC Scylla plasma impulse driver
   parent:
   - BallisticArtilleryUnanchorable
-  - BallisticArtilleryTier3HP
+  - ShipGunTier3HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier3HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Large, T3
   description: A more specialized energy weapon, the Scylla fires a massive burst of plasma projectiles down range, in a huge spew to erase large and small targets alike.
   components:

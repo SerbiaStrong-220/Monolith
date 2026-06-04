@@ -209,7 +209,7 @@
   unit: materials-unit-sheet
   icon: { sprite: /Textures/_Mono/Objects/Materials/fissiles.rsi, state: uranium }
   color: "#8a8568"
-  price: 250 # 25000/sheet
+  price: 100 # 10000/sheet # Exodus-Price-Rebalance
   properties: # FH edit
     electrical: 4
     thermal: 3

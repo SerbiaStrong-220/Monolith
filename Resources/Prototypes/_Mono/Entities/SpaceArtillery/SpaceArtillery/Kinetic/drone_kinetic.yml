@@ -3,7 +3,8 @@
   name: Light mass driver "Shard"
   parent:
   - BallisticArtilleryUnanchorable # Exodus
-  - BallisticArtilleryTier1HP
+  - ShipGunTier1HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier1HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   description: Ultralight mass driver weapon of unknown origin, designated "Shard" during initial reverse engineering attempts. Light damage, but long range and little upkeep to mount on ships.
   suffix: Drone T1
   components:
@@ -60,7 +61,8 @@
   name: Pinhole-class railgun
   parent:
   - BallisticArtilleryUnanchorable # Exodus
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   description: Mass driver weapon of unknown origin. Reverse engineering attempts have indicated extremely high projectile velocity and high-mass projectiles with unresolved ship-pushing payload.
   suffix: Drone T2
   components:

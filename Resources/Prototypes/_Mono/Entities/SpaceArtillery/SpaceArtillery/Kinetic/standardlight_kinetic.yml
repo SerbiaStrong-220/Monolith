@@ -93,7 +93,8 @@
   name: RAC-30 Draupnir Autocannon
   parent:
   - BallisticArtilleryMagazine
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
   description: A heavy duty rapid rife 30mm autocannon, originally mounted as a dogfighting weapon on atmospheric craft.
   components:
