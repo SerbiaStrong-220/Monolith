@@ -15,7 +15,7 @@ namespace Content.Server._Exodus.EmergencyActions;
 /// <summary>
 /// Injects a configured reagent pool into the trigger user.
 /// </summary>
-public sealed class EmergencyReagentInjectorSystem : EntitySystem
+public sealed class AddReagentOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -28,10 +28,10 @@ public sealed class EmergencyReagentInjectorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EmergencyReagentInjectorComponent, TriggerEvent>(OnTriggered);
+        SubscribeLocalEvent<AddReagentOnTriggerComponent, TriggerEvent>(OnTriggered);
     }
 
-    private void OnTriggered(Entity<EmergencyReagentInjectorComponent> ent, ref TriggerEvent args)
+    private void OnTriggered(Entity<AddReagentOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.User is not { } wearer || Deleted(wearer))
             return;
@@ -43,7 +43,7 @@ public sealed class EmergencyReagentInjectorSystem : EntitySystem
             args.Handled = true;
     }
 
-    private bool TryInject(Entity<EmergencyReagentInjectorComponent> ent, EntityUid wearer)
+    private bool TryInject(Entity<AddReagentOnTriggerComponent> ent, EntityUid wearer)
     {
         if (ent.Comp.Reagents.Count == 0)
             return false;

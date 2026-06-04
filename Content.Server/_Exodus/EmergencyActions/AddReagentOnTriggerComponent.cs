@@ -7,8 +7,8 @@ namespace Content.Server._Exodus.EmergencyActions;
 /// <summary>
 /// Injects a configured reagent pool into the trigger user.
 /// </summary>
-[RegisterComponent, Access(typeof(EmergencyReagentInjectorSystem)), AutoGenerateComponentPause]
-public sealed partial class EmergencyReagentInjectorComponent : Component
+[RegisterComponent, Access(typeof(AddReagentOnTriggerSystem)), AutoGenerateComponentPause]
+public sealed partial class AddReagentOnTriggerComponent : Component
 {
     [DataField]
     public TimeSpan Cooldown = TimeSpan.FromMinutes(2);

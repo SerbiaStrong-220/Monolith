@@ -42,7 +42,7 @@ public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
             if (delayed.TriggerAt == TimeSpan.Zero || curTime < delayed.TriggerAt)
                 continue;
 
-            delayed.TriggerAt = TimeSpan.Zero;
+            ResetDelay((uid, delayed));
 
             if (implant.ImplantedEntity is not { } implanted || Deleted(implanted))
                 continue;
@@ -64,7 +64,7 @@ public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
 
     private void OnRemoved(Entity<DelayedTriggerOnMobstateChangeComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        ent.Comp.TriggerAt = TimeSpan.Zero;
+        ResetDelay(ent);
     }
 
     private void OnMobStateRelay(Entity<DelayedTriggerOnMobstateChangeComponent> ent, ref ImplantRelayEvent<MobStateChangedEvent> args)
@@ -76,11 +76,16 @@ public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
         }
 
         if (args.Event.OldMobState == MobState.Dead)
-            ent.Comp.TriggerAt = TimeSpan.Zero;
+            ResetDelay(ent);
     }
 
     private void StartDelay(Entity<DelayedTriggerOnMobstateChangeComponent> ent)
     {
         ent.Comp.TriggerAt = _timing.CurTime + ent.Comp.Delay;
+    }
+
+    private void ResetDelay(Entity<DelayedTriggerOnMobstateChangeComponent> ent)
+    {
+        ent.Comp.TriggerAt = TimeSpan.Zero;
     }
 }

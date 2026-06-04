@@ -77,7 +77,7 @@
     - Critical
     oldMobState:
     - Alive
-  - type: EmergencyReagentInjector
+  - type: AddReagentOnTrigger
     cooldown: 120
     reagents:
     - ReagentId: Omnizine

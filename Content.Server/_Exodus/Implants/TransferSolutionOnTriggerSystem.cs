@@ -12,7 +12,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server._Exodus.Implants;
 
-public sealed class InjectImplantSystem : EntitySystem
+public sealed class TransferSolutionOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -24,10 +24,10 @@ public sealed class InjectImplantSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InjectOnTriggerComponent, TriggerEvent>(OnInjectOnTrigger);
+        SubscribeLocalEvent<TransferSolutionOnTriggerComponent, TriggerEvent>(OnTriggered);
     }
 
-    public bool InjectSolution(EntityUid user, Entity<InjectOnTriggerComponent> implant, string solutionName, float transferAmount)
+    public bool InjectSolution(EntityUid user, Entity<TransferSolutionOnTriggerComponent> implant, string solutionName, float transferAmount)
     {
         if (!_solutionContainer.TryGetSolution(implant.Owner, solutionName, out var initialSoln, out var initialSolution))
         {
@@ -65,18 +65,18 @@ public sealed class InjectImplantSystem : EntitySystem
         return true;
     }
 
-    private void OnInjectOnTrigger(Entity<InjectOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTriggered(Entity<TransferSolutionOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (!TryComp<SubdermalImplantComponent>(ent, out var implantComp) || implantComp.ImplantedEntity is not { } user)
             return;
 
-        if (ent.Comp.InjectSolutions.Count == 0)
+        if (ent.Comp.Solutions.Count == 0)
         {
             _popup.PopupEntity(Loc.GetString("inject-trigger-empty-message"), user, user);
             return;
         }
 
-        foreach (var solData in ent.Comp.InjectSolutions)
+        foreach (var solData in ent.Comp.Solutions)
         {
             if (solData.UsedCount >= solData.Charges)
                 continue;

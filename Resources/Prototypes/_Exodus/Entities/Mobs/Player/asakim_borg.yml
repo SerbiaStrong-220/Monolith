@@ -1,6 +1,6 @@
 - type: entity
   id: BorgChassisAsakimRedacted
-  parent: BaseBorgChassisRedacted
+  parent: [BaseBorgChassisRedacted, ShowMedicalIcons]
   name: personal protection operator
   description: A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
   components:
