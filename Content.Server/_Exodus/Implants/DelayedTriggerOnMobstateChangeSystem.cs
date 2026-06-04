@@ -10,13 +10,13 @@ namespace Content.Server._Exodus.Implants;
 
 public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
 {
-    private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(5);
+    private const float UpdateTimer = 1f;
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
-    private TimeSpan _nextUpdate = TimeSpan.Zero;
+    private float _updateTimer = 0f;
 
     public override void Initialize()
     {
@@ -31,26 +31,24 @@ public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var curTime = _timing.CurTime;
-        if (curTime < _nextUpdate)
+        _updateTimer += frameTime;
+        if (_updateTimer < UpdateTimer)
             return;
-        _nextUpdate = curTime + UpdateInterval;
+        _updateTimer = 0f;
 
         var query = EntityQueryEnumerator<DelayedTriggerOnMobstateChangeComponent, SubdermalImplantComponent>();
         while (query.MoveNext(out var uid, out var delayed, out var implant))
         {
-            if (delayed.TriggerAt == TimeSpan.Zero || curTime < delayed.TriggerAt)
+            if (delayed.TriggerAt == TimeSpan.Zero || _timing.CurTime < delayed.TriggerAt)
                 continue;
-
-            ResetDelay((uid, delayed));
 
             if (implant.ImplantedEntity is not { } implanted || Deleted(implanted))
                 continue;
 
-            if (!_mobState.IsDead(implanted))
-                continue;
+            ResetDelay((uid, delayed));
 
-            _trigger.Trigger(uid, implanted);
+            if (_mobState.IsDead(implanted))
+                _trigger.Trigger(uid, implanted);
         }
     }
 
