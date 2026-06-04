@@ -34,7 +34,7 @@
     - NamesLastMilitary
   - type: NpcFactionMember
     factions:
-    - Syndicate
+    - AsakimDefenceForces
   - type: SurgerySpeedModifier
     speedModifier: 1.5
 

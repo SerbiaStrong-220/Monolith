@@ -3,6 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Teleportation;
 using Content.Shared._Exodus.EmergencyActions;
 using Content.Shared.Clothing;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
 
@@ -11,6 +12,7 @@ namespace Content.Server._Exodus.EmergencyActions;
 public sealed class RandomTeleportOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TeleportSystem _teleport = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -39,6 +41,12 @@ public sealed class RandomTeleportOnTriggerSystem : EntitySystem
     private void OnTriggered(Entity<RandomTeleportOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.User is not { } target || Deleted(target))
+            return;
+
+        // Emergency teleport is meant to save a player. NPC-controlled mobs (no mind) don't need
+        // to be saved, and teleporting them changes their parent grid, which can trip systems
+        // like HostileNPCDeletionSystem into immediately gibbing them on protected NT grids.
+        if (!_mind.TryGetMind(target, out _, out _))
             return;
 
         if (_timing.CurTime < ent.Comp.NextActivation)
