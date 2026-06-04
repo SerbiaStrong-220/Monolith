@@ -26,6 +26,19 @@
 #   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
 #   5. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
 #      Only TSFMC, PDV and Khsira are the factions that can actually claim POIs.
+#
+# Captured territory scoring (via TerritoryCounterSystem):
+#   - References this YML for the list of factions.
+#   - Самое оптимальное целочисленное правило: points = (r + 500) / 1000
+#     - 1km (1000)   → 1 очко
+#     - 1.1km (1100) → 1 очко   (1100 не может быть округлено до 2)
+#     - 1.5km (1500) → 2 очка   (округлиться до 2 только если 1500 или более)
+#     - 2.5km (2500) → 3 очка
+#     - 5km (5000)   → 5 очков
+#   - Чистая int-арифметика (эквивалент round half up для положительных).
+#     Быстрее, без float, без погрешностей. Идеальный задел на будущее.
+#   - Scores updated live on claim changes (GridTerritoryControllerChangedEvent).
+#   - Other systems should query TerritoryCounterSystem.GetScore(faction) or subscribe to TerritoryScoreChangedEvent.
 
 - type: territoryFaction
   id: TSFMC
