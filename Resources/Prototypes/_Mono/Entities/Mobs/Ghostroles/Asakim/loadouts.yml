@@ -19,8 +19,8 @@
     - MedkitCombatFilled
     - MedkitCombatFilled
     - SyringeCaseAltFilled
-    - JetpackMiniFilled
-    - FreedomImplanter
+    - JetpackADMFilled # Exodus-asakim-pre-fracture-jetpack
+    # Exodus-asakim-auto-implant: FreedomImplant is injected on spawn.
     - CognizineChemistryBottle
     - Syringe
     - RadioHandheldNF

@@ -131,6 +131,8 @@
         - FullTileMask
         - Opaque
         - GasImpassable # Exodus-Kidans
+        layer:
+        - ItemMask
   - type: Appearance
   - type: VaporVisuals
 

@@ -1,0 +1,55 @@
+- type: entity
+  parent: MobAsakim
+  id: MobCenturionAsakimGhostrole
+  name: centurion asakim warrior
+  suffix: Asakim, Centurion
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: False
+  - type: HumanoidAppearance
+  - type: Loadout
+    prototypes: [AsakimCenturionGear]
+    roleLoadout: [RoleSurvivalTankOnly]
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+    - AsakimTrackingImplant
+    - DeathAcidifierImplantDeadEXDS
+  - type: GhostRole
+    name: ghost-role-information-centurion-asakim-name
+    description: ghost-role-information-centurion-asakim-description
+    rules: ghost-role-information-centurion-asakim-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 270000 # 75 hrs
+  - type: GhostTakeoverAvailable
+  - type: RandomMetadata
+    nameSegments:
+    - random-metadata-name-asakim-centurion
+    - NamesLastMilitary
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5
+
+- type: entity
+  parent: MobCenturionAsakimGhostrole
+  id: MobCenturionAsakimGhostroleNoTimelock
+  suffix: Asakim, Centurion, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-centurion-asakim-name
+    description: ghost-role-information-centurion-asakim-description
+    rules: ghost-role-information-centurion-asakim-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
+    raffle:
+      settings: default
+    requirements: []

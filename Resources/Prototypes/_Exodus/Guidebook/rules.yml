@@ -67,9 +67,7 @@
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRoles.xml"
   children:
     - EXRuleGhostRoleBorer
-    - EXRuleGhostRoleAsakim
-    - EXRuleGhostRoleOperator
-    - EXRuleGhostRoleCore
+    - EXRuleGhostRoleKhsiraEighthFleet
     - EXRuleGhostRoleChimera
     - EXRuleGhostRoleBorg
     
@@ -77,11 +75,47 @@
   id: EXRuleGhostRoleBorer
   name: guide-entry-exodus-rule-ghost-roles-borer
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesBorer.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleKhsiraEighthFleet
+  name: guide-entry-exodus-rule-ghost-roles-khsira-eighth-expeditionary-fleet
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesKhsiraEighthFleet.xml"
+  children:
+    - EXRuleGhostRoleAsakims
+    - EXRuleGhostRoleADS
+
+- type: guideEntry
+  id: EXRuleGhostRoleAsakims
+  name: guide-entry-exodus-rule-ghost-roles-asakims
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesAsakims.xml"
+  children:
+    - EXRuleGhostRoleAsakim
+    - EXRuleGhostRoleCenturionAsakim
   
 - type: guideEntry
   id: EXRuleGhostRoleAsakim
   name: guide-entry-exodus-rule-ghost-roles-asakim
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesAsakim.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleCenturionAsakim
+  name: guide-entry-exodus-rule-ghost-roles-centurion-asakim
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCenturionAsakim.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleADS
+  name: guide-entry-exodus-rule-ghost-roles-ads
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesADS.xml"
+  children:
+    - EXRuleGhostRoleADSGeneral
+    - EXRuleGhostRoleOperator
+    - EXRuleGhostRoleCore
+    - EXRuleGhostRolePersonalProtectionOperator
+
+- type: guideEntry
+  id: EXRuleGhostRoleADSGeneral
+  name: guide-entry-exodus-rule-ghost-roles-ads-general
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesADSGeneral.xml"
   
 - type: guideEntry
   id: EXRuleGhostRoleOperator
@@ -92,6 +126,11 @@
   id: EXRuleGhostRoleCore
   name: guide-entry-exodus-rule-ghost-roles-core
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCore.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRolePersonalProtectionOperator
+  name: guide-entry-exodus-rule-ghost-roles-personal-protection-operator
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesPersonalProtectionOperator.xml"
   
 - type: guideEntry
   id: EXRuleGhostRoleChimera

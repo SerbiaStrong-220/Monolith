@@ -1,0 +1,6 @@
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleAsakim
+  name: Asakim Role
+  components:
+  - type: AsakimRole

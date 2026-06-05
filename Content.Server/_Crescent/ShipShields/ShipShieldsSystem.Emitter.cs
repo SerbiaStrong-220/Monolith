@@ -19,12 +19,11 @@ namespace Content.Server._Crescent.ShipShields;
 public partial class ShipShieldsSystem
 {
     private const float MAX_EMP_DAMAGE = 10000f;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Exodus
-
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!; // Exodus
     public void InitializeEmitters()
     {
         SubscribeLocalEvent<ShipShieldEmitterComponent, ShieldDeflectedEvent>(OnShieldDeflected);
@@ -68,7 +67,7 @@ public partial class ShipShieldsSystem
         args.PushMarkup(Loc.GetString("shield-emitter-examine", ("basedraw", component.BaseDraw), ("additional", CalculateLoadDamage(component))));
     }
 
-    private static float CalculateLoadDamage(ShipShieldEmitterComponent emitter)
+    public static float CalculateLoadDamage(ShipShieldEmitterComponent emitter) // Exodus: make public
     {
         return (float)Math.Clamp(Math.Pow(emitter.Damage, emitter.DamageExp) * emitter.PowerModifier, 0f, emitter.MaxDraw);
     }

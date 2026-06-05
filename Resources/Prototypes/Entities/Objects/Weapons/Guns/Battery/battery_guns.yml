@@ -460,8 +460,14 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: Gun
     fireRate: 1.5
+    # Exodus-begin borg-pulse-rifle-burst
+    burstCooldown: 0.75
+    burstFireRate: 12
+    shotsPerBurst: 2
+    # Exodus-end
     availableModes:
     - SemiAuto
+    - Burst # Exodus borg-pulse-rifle-burst
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg

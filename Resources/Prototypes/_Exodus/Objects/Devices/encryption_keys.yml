@@ -9,3 +9,20 @@
     - channel: Medical
       canSpeak: true
     defaultChannel: Medical
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyAsakimRemnants
+  name: Asakim remnants encryption key
+  description: An integrated encryption key for Asakim combat exoskeletons.
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: Remnants
+    defaultChannel: Remnants
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    layers:
+    - state: crypt_gold
+    - state: pirate_label

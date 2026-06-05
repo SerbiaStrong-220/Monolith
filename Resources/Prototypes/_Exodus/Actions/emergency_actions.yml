@@ -1,0 +1,17 @@
+- type: entity
+  id: ActionEmergencyTeleport
+  name: emergency teleport
+  description: When the wearer enters critical condition, automatically teleports them to a random nearby location.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    # No useDelay: real cooldown after teleport is set explicitly by RandomTeleportOnTriggerSystem
+    # via SetCooldown. A useDelay here would fire whenever the user merely clicks the passive button.
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom4
+    event: !type:EmergencyTeleportActionEvent

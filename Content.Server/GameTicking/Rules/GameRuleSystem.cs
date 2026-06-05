@@ -10,15 +10,15 @@ namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
-    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
-    [Dependency] protected readonly IChatManager ChatManager = default!;
-    [Dependency] protected readonly GameTicker GameTicker = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected IRobustRandom RobustRandom = default!;
+    [Dependency] protected IChatManager ChatManager = default!;
+    [Dependency] protected GameTicker GameTicker = default!;
+    [Dependency] protected IGameTiming Timing = default!;
 
     // Not protected, just to be used in utility methods
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly GameRuleRequirementsSystem _ruleRequirements = default!; // Exodus
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private GameRuleRequirementsSystem _ruleRequirements = default!; // Exodus
 
     public override void Initialize()
     {
@@ -40,6 +40,8 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
+            var name = ToPrettyString(uid);
+
             if (args.Players.Length >= minPlayers && _ruleRequirements.CheckRule(uid)) // Exodus-GameRuleRequirements
                 continue;
 
@@ -48,8 +50,10 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
                 ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
                     ("readyPlayersCount", args.Players.Length),
                     ("minimumPlayers", minPlayers),
-                    ("presetName", ToPrettyString(uid))));
+                    ("presetName", name)));
                 args.Cancel();
+                //TODO remove this once announcements are logged
+                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
             }
             else
             {
