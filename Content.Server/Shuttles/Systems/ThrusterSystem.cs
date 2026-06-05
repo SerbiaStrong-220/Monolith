@@ -100,6 +100,10 @@ public sealed class ThrusterSystem : EntitySystem
         {
             args.PushMarkup(enabled);
 
+            // Exodus: externally-handled thrusters (e.g. omni) have no nozzle direction
+            if (IsHandledExternally(uid))
+                return;
+
             if (component.Type == ThrusterType.Linear &&
                 EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
                 xform.Anchored)
@@ -196,6 +200,9 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     private void OnRotate(EntityUid uid, ThrusterComponent component, ref MoveEvent args)
     {
+        if (IsHandledExternally(uid)) // Exodus
+            return;
+
         // TODO: Disable visualizer for old direction
         // TODO: Don't make them rotatable and make it require anchoring.
 
@@ -323,6 +330,9 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     public void EnableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
     {
+        if (IsHandledExternally(uid)) // Exodus
+            return;
+
         if (component.IsOn ||
             !Resolve(uid, ref xform))
         {
@@ -395,23 +405,33 @@ public sealed class ThrusterSystem : EntitySystem
             var index = (int)dir / 2;
             var pop = shuttle.LinearThrusters[index];
             var totalThrust = 0f;
+            var effectiveCount = 0; // Exodus: omni thrusters are skipped, do not count them in the divisor
 
             foreach (var ent in pop)
             {
                 if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
+                // Exodus: externally-handled thrusters (e.g. omni) are treated as centered and must not skew center of thrust
+                if (IsHandledExternally(ent))
+                    continue;
+
                 center += xform.LocalPosition * thruster.Thrust;
                 totalThrust += thruster.Thrust;
+                effectiveCount++; // Exodus
             }
 
-            center /= pop.Count * totalThrust;
+            if (effectiveCount > 0 && totalThrust > 0) // Exodus: guard against div-by-zero on all-omni grids
+                center /= effectiveCount * totalThrust;
             shuttle.CenterOfThrust[index] = center;
         }
     }
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
     {
+        if (IsHandledExternally(uid)) // Exodus
+            return;
+
         if (!Resolve(uid, ref xform)) return;
         DisableThruster(uid, component, xform.GridUid, xform);
     }
@@ -643,6 +663,9 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
     {
+        if (IsHandledExternally(uid)) // Exodus
+            return;
+
         if (component.IsOn) // safely disable thruster to prevent negative thrust
             DisableThruster(uid, component);
 
@@ -668,13 +691,54 @@ public sealed class ThrusterSystem : EntitySystem
     //    }
     //}
 
-    //[ByRefEvent]
-    //public record struct ThrusterToggleAttemptEvent(bool Cancelled);
-
     #endregion
 
     private int GetFlagIndex(DirectionFlag flag)
     {
         return (int)Math.Log2((int)flag);
     }
+
+    // Exodus-begin: event-bus hook + registration API so externally-handled thrusters (e.g. omni) can opt out of standard handling and register thrust without mutating ShuttleComponent fields directly
+    /// <summary>
+    /// Raises <see cref="ThrusterHandledExternallyEvent"/> so other systems can opt this thruster
+    /// out of the standard thrust/visual handling (e.g. omnidirectional thrusters manage themselves).
+    /// </summary>
+    private bool IsHandledExternally(EntityUid uid)
+    {
+        var ev = new ThrusterHandledExternallyEvent();
+        RaiseLocalEvent(uid, ref ev);
+        return ev.Handled;
+    }
+
+    /// <summary>
+    /// Registers linear thrust from a thruster onto a shuttle in the given cardinal direction index.
+    /// Use this instead of writing <see cref="ShuttleComponent"/> thrust fields directly.
+    /// </summary>
+    public void AddLinearThrust(ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid)
+    {
+        shuttle.LinearThrust[direction] += thrust;
+        shuttle.BaseLinearThrust[direction] += baseThrust;
+        DebugTools.Assert(!shuttle.LinearThrusters[direction].Contains(uid));
+        shuttle.LinearThrusters[direction].Add(uid);
+    }
+
+    /// <summary>
+    /// Removes previously registered linear thrust from a shuttle in the given cardinal direction index.
+    /// </summary>
+    public void RemoveLinearThrust(ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid)
+    {
+        shuttle.LinearThrust[direction] -= thrust;
+        shuttle.BaseLinearThrust[direction] -= baseThrust;
+        DebugTools.Assert(shuttle.LinearThrusters[direction].Contains(uid));
+        shuttle.LinearThrusters[direction].Remove(uid);
+    }
 }
+
+/// <summary>
+/// Exodus: raised on a thruster to let another system claim its standard handling. If handled, the
+/// default <see cref="ThrusterSystem"/> logic (enable/disable, rotation, parts, examine, center
+/// of thrust) is skipped for that thruster.
+/// </summary>
+[ByRefEvent]
+public record struct ThrusterHandledExternallyEvent(bool Handled = false);
+// Exodus-end

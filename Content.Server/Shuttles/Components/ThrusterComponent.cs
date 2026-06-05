@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Exodus.Shuttles.Systems; // Exodus OmnidirectionalThruster
 using Content.Server._NF.M_Emp;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.Prototypes;
@@ -11,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
-    [Access(typeof(ThrusterSystem))]
+    [Access(typeof(ThrusterSystem), typeof(OmnidirectionalThrusterSystem))] // Exodus OmnidirectionalThruster
     public sealed partial class ThrusterComponent : Component
     {
         /// <summary>

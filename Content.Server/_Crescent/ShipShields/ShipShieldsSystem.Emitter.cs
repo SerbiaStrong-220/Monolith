@@ -68,7 +68,7 @@ public partial class ShipShieldsSystem
         args.PushMarkup(Loc.GetString("shield-emitter-examine", ("basedraw", component.BaseDraw), ("additional", CalculateLoadDamage(component))));
     }
 
-    private static float CalculateLoadDamage(ShipShieldEmitterComponent emitter)
+    public static float CalculateLoadDamage(ShipShieldEmitterComponent emitter) // Exodus: make public
     {
         return (float)Math.Clamp(Math.Pow(emitter.Damage, emitter.DamageExp) * emitter.PowerModifier, 0f, emitter.MaxDraw);
     }

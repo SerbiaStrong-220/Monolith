@@ -3,7 +3,8 @@
   name: ASM-150 "Vanyk" Missile Pod
   parent:
   - BallisticArtilleryMagazine
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   description: An escort missile pod manufactured by Aetherion Dynamics. Launches 150mm guided missiles for basic ship-to-ship combat and area denial. Uses a built-in autoloader instead of a rack, increasing capacity but reducing rate of fire. Can be remotely activated or linked to a GCS.
   components:
   - type: StaticPrice

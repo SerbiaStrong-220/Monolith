@@ -76,7 +76,7 @@
   name: pre-fracture SRD
   description: An arcane repair device that can repair ADS ships.
   parent: ShipRepairDeviceRecharging
-  suffix: Recharging
+  suffix: ДЛЯ БОРГОВ # Exodus-borg-srd-suffix
   components:
   - type: Sprite
     scale: 0.6, 0.6

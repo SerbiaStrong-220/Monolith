@@ -10,10 +10,19 @@
   - type: Loadout
     prototypes: [AsakimGear]
     roleLoadout: [RoleSurvivalTankOnly]
+  # Exodus-asakim-auto-implant-start
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+    - AsakimTrackingImplant
+  # Exodus-asakim-auto-implant-end
   - type: GhostRole
     name: ghost-role-information-asakim-name
     description: ghost-role-information-asakim-description
     rules: ghost-role-information-asakim-rules
+    mindRoles: # Exodus-asakim-mind-role
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
     raffle:
       settings: default
     requirements:
@@ -29,10 +38,4 @@
     - Syndicate
   - type: SurgerySpeedModifier
     speedModifier: 1.5
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Remnants
-  - type: ActiveRadio
-    channels:
-    - Remnants
+  # Exodus-asakim-suit-radio: Remnants radio moved to the Asakim hardsuit.

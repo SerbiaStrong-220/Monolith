@@ -145,7 +145,7 @@ namespace Content.Server.Communications
                 if (TryComp(stationUid, out AlertLevelComponent? alertComp) && // Frontier: stationUid.Value<stationUid
                     alertComp.AlertLevels != null)
                 {
-                    if (alertComp.IsSelectable)
+                    if (alertComp.IsSelectable && comp.CanSetAlertLevel) // Exodus-comms-alert-level-lock
                     {
                         levels = new();
                         foreach (var (id, detail) in alertComp.AlertLevels.Levels)
@@ -214,6 +214,9 @@ namespace Content.Server.Communications
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
             if (message.Actor is not { Valid: true } mob)
+                return;
+
+            if (!comp.CanSetAlertLevel) // Exodus-comms-alert-level-lock
                 return;
 
             if (!CanUse(mob, uid))

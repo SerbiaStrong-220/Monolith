@@ -344,6 +344,8 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg
 
 - type: entity
   id: BaseBorgChassisSyndicate
@@ -377,6 +379,8 @@
     - Binary
     defaultChannel: Binary
   - type: ShowSyndicateIcons
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg
   - type: MovementAlwaysTouching
   - type: Speech
     speechSounds: SyndieBorg
@@ -417,3 +421,5 @@
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg

@@ -1,0 +1,13 @@
+- type: entity
+  id: HoloprojectorFieldAsakimBorg
+  parent: HoloprojectorField
+  name: black shield force field projector
+  description: Creates an impassable forcefield. This model is powered by a shielded pre-fracture cell.
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProtoEmpProof
+        disableEject: true
+        swap: false

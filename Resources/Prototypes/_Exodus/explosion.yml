@@ -1,0 +1,17 @@
+# Exodus self-destruct explosion for destroyed ship guns
+
+- type: explosion
+  id: ShipGunSelfDestruct
+  damagePerIntensity:
+    types:
+      Heat: 3
+      Blunt: 4
+      Piercing: 2
+      Structural: 50
+  tileBreakChance: [0, 0.7, 1]
+  tileBreakIntensity: [0, 8, 20]
+  tileBreakRerollReduction: 10
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6

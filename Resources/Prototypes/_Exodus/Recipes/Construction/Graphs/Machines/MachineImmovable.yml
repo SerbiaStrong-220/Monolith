@@ -1,0 +1,6 @@
+- type: constructionGraph
+  id: MachineImmovable
+  start: machine
+  graph:
+    - node: machine
+      entity: !type:BoardNodeEntity { container: machine_board }

@@ -1,0 +1,81 @@
+- type: entity
+  id: ShieldGeneratorMS750
+  parent: ShieldGeneratorBase
+  name: MS-750 "Prometheus" Shield Generator
+  description: Pre-fracture shielding salvaged from a sealed armoury. Massive capacity, radiates while active, and overloads catastrophically.
+  suffix: ADS ONLY
+  components:
+  - type: ShipShieldEmitter
+    damageLimit: 2000000
+    healPerSecond: 800
+    damageExp: 1.05
+    powerModifier: 0.0752
+    baseDraw: 100000
+    maxDraw: 200000
+    unpoweredBonus: 6
+    damageOverloadTimePunishment: 40
+    shieldColor: "#D4AF37"
+    collisionResistanceMultiplier: 0.05
+  - type: ExplodeOnShieldOverload
+    explosionType: HardBomb
+    totalIntensity: 4000
+    intensitySlope: 3
+    maxTileIntensity: 400
+  - type: RadiationSource
+    intensity: 10
+    slope: 4.17
+    enabled: false
+  - type: PoweredRadiationSource
+  - type: RadarBlip
+    radarColor: "#D4AF37"
+    scale: 1.5
+    shape: Circle
+    visibleFromOtherGrids: true
+  - type: Sprite
+    sprite: _Mono/Structures/ShuttleComponents/shield.rsi
+    snapCardinals: true
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#D4AF37"
+  - type: PointLight
+    enabled: false
+    castShadows: true
+    radius: 2
+    energy: 1.5
+    color: "#D4AF37"
+  - type: ApcPowerReceiver
+    powerLoad: 100000
+  - type: Machine
+    board: MachineShieldMS750Circuitboard
+  - type: Construction
+    graph: MachineImmovable
+    node: machine
+    deconstructionTarget: null
+    containers:
+    - machine_board
+    - machine_parts
+  - type: Anchorable
+    flags: Anchorable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: ShipRepairable
+    repairTime: 30
+    repairCost: 400
+  - type: ShipRepairableRestrict
+    toolWhitelist:
+      tags:
+      - ADSRepairTool

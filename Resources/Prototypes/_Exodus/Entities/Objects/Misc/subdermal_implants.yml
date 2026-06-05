@@ -8,7 +8,7 @@
   - type: SubdermalImplant
     implantAction: ActionChemicalImplant
   - type: TriggerImplantAction
-  - type: InjectOnTrigger
+  - type: TransferSolutionOnTrigger
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -27,7 +27,7 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 50
-  - type: InjectOnTrigger
+  - type: TransferSolutionOnTrigger
     solutions:
     - name: sol1
       charges: 5
@@ -51,8 +51,41 @@
               Quantity: 100
             - ReagentId: TranexamicAcid
               Quantity: 20
-    - type: InjectOnTrigger
+    - type: TransferSolutionOnTrigger
       solutions:
         - name: sol1
           charges: 5
           transferAmount: 30
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathAcidifierImplantDeadEXDS
+  name: death-acidifier implant
+  description: This implant melts the user and their equipment upon death.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+  - type: DelayedTriggerOnMobstateChange
+    delay: 300
+  - type: GibOnTrigger
+    deleteItems: true
+    deleteOrgans: true
+  - type: SpawnOnTrigger
+    proto: Acidifier
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - DeathAcidifier
+
+- type: entity
+  parent: MedicalTrackingImplant
+  id: AsakimTrackingImplant
+  name: asakim tracking implant
+  description: This implant reports critical life signs to the Asakim remnants channel.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Rattle
+    radioChannel: Remnants
+    language: Azaziba

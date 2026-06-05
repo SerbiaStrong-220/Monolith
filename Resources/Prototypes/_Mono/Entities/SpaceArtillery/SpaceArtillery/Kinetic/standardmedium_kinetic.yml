@@ -5,7 +5,8 @@
   name: AK570 57mm autocannon
   parent:
   - BallisticArtilleryMagazine
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
   description: A dual-barrel, heavy 57mm autocannon firing general-purpose APHE rounds, effective for sustained fire against medium targets. Can be remotely activated or linked up to a GCS.
   components:
@@ -77,7 +78,8 @@
   name: ADBP-7 DRAVON 90mm Autocannon
   parent:
   - BallisticArtilleryMagazine
-  - BallisticArtilleryTier2HP
+  - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
+  - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
   description: A single-barrel autocannon made by Aetherion Dynamics. Medium artillery piece with high impact but relatively low fire rate, firing HEAT shells to damage ship armor and systems. Can be remotely activated or linked up to a GCS.
   components:

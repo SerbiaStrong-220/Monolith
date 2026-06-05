@@ -50,7 +50,7 @@
     rootTask:
       task: RammerShuttleCompound
   - type: StaticPrice
-    price: 20000
+    price: 10000 # Exodus-Price-Rebalance
   - type: ApcPowerReceiver
     powerLoad: 1000 # suspiciously low power-using AI
   - type: ExtensionCableReceiver

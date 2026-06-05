@@ -15,6 +15,25 @@
       tags:
         - AsakimBrain
     whitelistCheckOrgans: true
+  # Exodus-asakim-suit-radio-start
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container {}
+      storagebase: !type:Container
+        ents: []
+      item: !type:ContainerSlot {}
+      key_slots: !type:Container
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyAsakimRemnants
+  - type: Headset
+    requiredSlot: outerclothing
+  - type: EncryptionKeyHolder
+    keysUnlocked: false
+    keySlots: 1
+    examineWhileLocked: false
+  # Exodus-asakim-suit-radio-end
   - type: SelfUnremovableClothing
   - type: PressureProtection
     highPressureMultiplier: 0.1
@@ -36,7 +55,7 @@
     modifiers:
       coefficients:
         Blunt: 0.35
-        Slash: 0.85
+        Slash: 0.5 # Exodus-asakim-slash-resist
         Piercing: 0.3
         Heat: 0.4
         Radiation: 0
@@ -44,8 +63,19 @@
         Poison: 0.4
         Caustic: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
+    sprintModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
+  # Exodus-asakim-suit-biocheck-start
+  - type: Biocode
+    blockInteraction: false
+    triggerOnReject: true
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
+  - type: GibOnBiocodeReject
+    deleteItems: true
+  # Exodus-asakim-suit-biocheck-end
   - type: HeldSpeedModifier
   - type: ToggleableClothing # Goobstation - Modsuits change - Mono - this is a solution for helmet attachment/cover to not fit on hardsuits
     requiredSlot: outerclothing
