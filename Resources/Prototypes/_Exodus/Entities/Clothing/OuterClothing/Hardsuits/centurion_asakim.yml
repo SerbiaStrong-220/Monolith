@@ -1,0 +1,119 @@
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseFactionGearOtherFactionT3 ]
+  id: ClothingOuterHardsuitCenturionAsakim
+  name: centurion kasature-pattern combat exoskeleton
+  description: An advanced exoskeleton harness of cutting edge, corporate-era technology. It connects itself directly to the brain of the wearer, and requires advanced brain augmentation and cybernetics to function. Incredibly rare, and practically alien in technology compared to modern tacsuits. Once equipped, the armor cannot be removed without external release.
+  suffix: SelfUnremovable
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/OuterClothing/Hardsuits/centurion_asakim.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/OuterClothing/Hardsuits/centurion_asakim.rsi
+    stripDelay: 60
+    equipDelay: 5
+    whitelist:
+      tags:
+      - AsakimBrain
+    whitelistCheckOrgans: true
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container {}
+      storagebase: !type:Container
+        ents: []
+      item: !type:ContainerSlot {}
+      key_slots: !type:Container
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyAsakimRemnants
+  - type: Headset
+    requiredSlot: outerclothing
+  - type: EncryptionKeyHolder
+    keysUnlocked: false
+    keySlots: 1
+    examineWhileLocked: false
+  - type: SelfUnremovableClothing
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+  - type: FireProtection
+    reduction: 0.7
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10
+    slots: OUTERCLOTHING
+  - type: StaticPrice
+    price: 100000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.5
+        Piercing: 0.25
+        Heat: 0.3
+        Radiation: 0
+        Shock: 0.6
+        Poison: 0.2
+        Caustic: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Biocode
+    blockInteraction: false
+    triggerOnReject: true
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
+  - type: GibOnBiocodeReject
+    deleteItems: true
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    oldMobState:
+    - Alive
+  - type: AddReagentOnTrigger
+    cooldown: 120
+    reagents:
+    - ReagentId: Omnizine
+      Quantity: 25
+    - ReagentId: TranexamicAcid
+      Quantity: 5
+    - ReagentId: Dexalin
+      Quantity: 5
+    - ReagentId: DexalinPlus
+      Quantity: 5
+  - type: RandomTeleportOnTrigger
+    cooldown: 120
+    specifier:
+      teleportRadius: 40
+      teleportAttempts: 5
+      forceSafe: false
+      minRadiusFraction: 0.75
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    requiredSlot: outerclothing
+    blockUnequipWhenAttached: false
+    replaceCurrentClothing: true
+    clothingPrototypes:
+      head: ClothingHelmetHardsuitCenturionAsakim
+      helmetcover: ClothingHeadHelmetCoverBlock
+      helmetattachment: ClothingHeadHelmetAttachmentBlock
+  - type: PirateBountyItem
+    id: ClothingOuterHardsuitTacsuit
+  - type: StaminaDamageResistance
+    coefficient: 0.4
+
+- type: entity
+  parent: ClothingOuterHardsuitCenturionAsakim
+  id: ClothingOuterHardsuitCenturionAsakimUnremoveable
+  suffix: 120 stripDelay
+  components:
+  - type: Clothing
+    stripDelay: 120
+    equipDelay: 120

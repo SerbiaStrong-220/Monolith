@@ -77,7 +77,7 @@
   - type: Flatpack
     entity: WeaponCapacitorRecharger
   - type: StaticPrice
-    price: 15
+    price: 55 # Exodus-Price-Rebalance
 
 - type: entity
   parent: BaseNFFlatpack

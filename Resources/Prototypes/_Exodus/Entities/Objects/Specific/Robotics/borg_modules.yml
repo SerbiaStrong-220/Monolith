@@ -1,0 +1,36 @@
+- type: entity
+  id: BorgModuleAsakimBlackShieldWeapon
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseFactionGearOtherFactionT3 ]
+  name: black shield weapon cyborg module
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: mercenary
+    - state: icon-mercenary
+  - type: ItemBorgModule
+    moduleId: Security
+    items:
+    - WeaponRifleAsakimAutopulserADM
+    - WeaponSmartLmgAsakimBorg
+    - HoloprojectorFieldAsakimBorg
+  - type: BorgModuleIcon
+    icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
+
+- type: entity
+  id: BorgModuleAsakimEsword
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: black shield energy sword cyborg module
+  description: A module that comes with a double energy sword and an Asakim neural pinpointer.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    moduleId: EnergySword
+    items:
+    - CyborgEnergySwordDouble
+    - PinpointerAsakimBrain
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }

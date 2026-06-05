@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: AsakimCommsComputerCircuitboard
+  name: asakim communications computer board
+  description: A computer printed circuit board for an Asakim communications console.
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerAsakimComms
+

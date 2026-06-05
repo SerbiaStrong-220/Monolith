@@ -110,6 +110,7 @@
   - type: SolutionScanner
   - type: IgnoreUIRange
   - type: ShowAntagIcons
+  - type: AsakimTrustedUser # Exodus-asakim-admin-access
   - type: Inventory
     templateId: aghost
   - type: Loadout

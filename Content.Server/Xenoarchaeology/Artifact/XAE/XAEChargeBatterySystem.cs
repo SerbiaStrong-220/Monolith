@@ -1,9 +1,8 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
-using Content.Server.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 

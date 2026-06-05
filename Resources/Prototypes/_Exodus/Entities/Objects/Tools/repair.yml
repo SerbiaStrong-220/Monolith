@@ -1,0 +1,12 @@
+- type: entity
+  id: ShipRepairDeviceAsakimRedacted
+  parent: ShipRepairDeviceRedacted
+  name: asakim pre-fracture SRD
+  description: A resonant ship repair device keyed to Asakim neural patterns.
+  suffix: БИОКОД АЗАКИМ
+  components:
+  - type: Biocode
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]

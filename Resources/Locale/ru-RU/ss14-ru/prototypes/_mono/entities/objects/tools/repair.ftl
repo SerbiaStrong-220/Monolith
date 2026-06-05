@@ -11,8 +11,6 @@ ent-ShipRepairDeviceRecharging = { ent-ShipRepairDeviceBase }
 ent-ShipRepairDeviceAdmin = { ent-ShipRepairDeviceBase }
     .suffix = Admin
     .desc = { ent-ShipRepairDeviceBase.desc }
-ent-ShipRepairDeviceRedacted = pre-fracture SRD
-    .desc = An arcane repair device that can repair ADS ships.
-    .suffix = Recharging
+# Exodus: translation ShipRepairDeviceRedacted has been moved into Resources/Locale/ru-RU/_Exodus/prototypes/entities/objects/tools/repair.ftl
 ent-ShipRepairDeviceAmmo = ship repair matter
     .desc = Ammo cartridge for a ship repair device.

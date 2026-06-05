@@ -5,7 +5,8 @@
   name: THANATOS twin mass driver
   parent:
   - BallisticArtilleryUnanchorable
-  - BallisticArtilleryTier5HP
+  - ShipGunTier5HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier5HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
   suffix: Station, T5
   description: The charon's mean older brother, the Thanatos is a force to be reckoned with. It can be remotely activated or linked up to a GCS. This one feeds from an autoloader somewhere, and doesn't need manual reloads.
   components:

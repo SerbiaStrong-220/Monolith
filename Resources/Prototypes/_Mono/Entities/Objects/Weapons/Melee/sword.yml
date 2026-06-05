@@ -114,6 +114,7 @@
     layers:
     - state: e_sword
     - state: e_sword_blade
+      sprite: _Exodus/Objects/Weapons/Melee/phaseblade.rsi # Exodus-asakim-katana-dash
       visible: false
       shader: unshaded
       map: [ "blade" ]
@@ -173,6 +174,17 @@
     malus: 0.6
   - type: Execution
     doAfterDuration: 4.0
+  # Exodus-asakim-katana-dash-start
+  - type: DashAbility
+    dashAction: ActionAsakimKatanaDash
+  - type: Biocode
+    blockInteraction: false
+    blockItemActions: true
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
+  # Exodus-asakim-katana-dash-end
 
 # Ullman Blade
 

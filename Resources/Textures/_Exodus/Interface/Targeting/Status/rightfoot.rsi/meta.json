@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by MIXnikita for https://github.com/SerbiaStrong-220/Monolith",
+  "states": [
+    {
+      "name": "rightfoot_0"
+    },
+    {
+      "name": "rightfoot_1"
+    },
+    {
+      "name": "rightfoot_2"
+    },
+    {
+      "name": "rightfoot_3"
+    },
+    {
+      "name": "rightfoot_4"
+    },
+    {
+      "name": "rightfoot_5"
+    },
+    {
+      "name": "rightfoot_6"
+    },
+    {
+      "name": "rightfoot_7"
+    },
+    {
+      "name": "rightfoot_8"
+    }
+  ]
+}
