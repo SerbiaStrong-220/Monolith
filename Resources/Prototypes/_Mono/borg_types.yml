@@ -13,6 +13,14 @@
   - BorgModuleJetpack
   - BorgModuleTool
   - BorgModuleGPS
+  # Exodus-begin borg-module-duplicate-whitelist
+  addComponents:
+  - type: BorgModulePrototypeDuplicateWhitelist
+    modulePrototypes:
+    - BorgModulePDVStandardWeapon
+    - BorgModulePDVStandardAssault
+    - BorgModulePDVAdvancedWeapon
+  # Exodus-end
   inventoryTemplateId: borgShort
   spriteBodyState: assault
   spriteHasMindState: assault_l
@@ -95,6 +103,14 @@
   - BorgModuleJetpack
   - BorgModuleTool
   - BorgModuleGPS
+  # Exodus-begin borg-module-duplicate-whitelist
+  addComponents:
+  - type: BorgModulePrototypeDuplicateWhitelist
+    modulePrototypes:
+    - BorgModuleTSFStandardWeapon
+    - BorgModuleTSFStandardAssault
+    - BorgModuleTSFAdvancedWeapon
+  # Exodus-end
   inventoryTemplateId: borgShort
   spriteBodyState: assault
   spriteHasMindState: assault_l
