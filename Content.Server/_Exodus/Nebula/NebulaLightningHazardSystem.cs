@@ -484,7 +484,13 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
 
     private bool IsOnNonEmptyTile(TransformComponent xform)
     {
-        var tileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
-        return tileRef is { Tile.IsEmpty: false };
+        if (xform.GridUid is not { Valid: true } gridUid)
+            return false;
+
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
+            return false;
+
+        return _map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef) &&
+               !tileRef.Tile.IsEmpty;
     }
 }

@@ -9,6 +9,8 @@ using Content.Server.Station.Components;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared._Mono.Radar;
 using Content.Shared.GameTicking;
+using Content.Shared.Maps;
+using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
@@ -258,7 +260,7 @@ public sealed class NebulaGenerationSystem : EntitySystem
             foreach (var gridUid in station.Grids)
             {
                 if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                    !TryComp(gridUid, out TransformComponent? xform) ||
+                    !TryComp<TransformComponent>(gridUid, out var xform) ||
                     xform.MapID != mapId)
                 {
                     continue;

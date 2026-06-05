@@ -26,7 +26,6 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MapSystem _map = default!;
@@ -165,7 +164,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
         if (!TrySelectPulseTile(grid, marker, out _, out var targetCoords))
             return false;
 
-        _emp.EmpPulse(targetCoords, config.Range, config.EnergyConsumption, config.DisableDuration);
+        _emp.EmpPulse(targetCoords, config.Range, config.EnergyConsumption, TimeSpan.FromSeconds(config.DisableDuration));
         Spawn(SparksPrototype, targetCoords);
         return true;
     }
@@ -224,7 +223,7 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
     {
         var target = player.Comp1;
         Spawn(SparksPrototype, player.Comp2.Coordinates);
-        _emp.EmpPulse(mapCoords, config.Range, config.EnergyConsumption, config.DisableDuration);
+        _emp.EmpPulse(mapCoords, config.Range, config.EnergyConsumption, TimeSpan.FromSeconds(config.DisableDuration));
 
         target.LastPulse = _timing.CurTime;
         target.PulseCount++;
@@ -232,7 +231,13 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
 
     private bool IsOnNonEmptyTile(TransformComponent xform)
     {
-        var tileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
-        return tileRef is { Tile.IsEmpty: false };
+        if (xform.GridUid is not { Valid: true } gridUid)
+            return false;
+
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
+            return false;
+
+        return _map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef) &&
+               !tileRef.Tile.IsEmpty;
     }
 }
