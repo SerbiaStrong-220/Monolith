@@ -6,7 +6,7 @@ namespace Content.Server._Exodus.Nebula;
 /// Runtime state for nebula lightning hazards on a grid. Static configuration (intervals,
 /// damage, sounds, etc.) is read from the marker prototype's
 /// <see cref="Content.Shared._Exodus.Nebula.NebulaLightningHazardComponent"/>; this component
-/// only stores per-grid timers and statistics.
+/// only stores per-grid timers and statistics for the current marker.
 /// </summary>
 [RegisterComponent]
 public sealed partial class NebulaLightningGridHazardComponent : Component

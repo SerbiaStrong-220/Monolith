@@ -113,7 +113,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         }
         else
         {
-            UpdateSpaceLightning(uid, !skipPlayerHazards && MarkerHasSpaceLightning(marker));
+            UpdateSpaceLightning(uid, !skipPlayerHazards && MarkerHasSpaceLightning(marker), marker);
         }
 
         // EMP hazard: grids and free entities (EVA) have independent components on the marker
@@ -124,7 +124,7 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         }
         else
         {
-            UpdateSpaceEmp(uid, !skipPlayerHazards && MarkerHasSpaceEmp(marker));
+            UpdateSpaceEmp(uid, !skipPlayerHazards && MarkerHasSpaceEmp(marker), marker);
         }
 
         UpdateRadioBlackout(uid, !skipPlayerHazards && MarkerHasRadioBlackout(marker));
@@ -140,16 +140,9 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         if (wanted)
         {
             var hazard = EnsureComp<NebulaLightningGridHazardComponent>(uid);
-            // Marker change implies a new tier configuration; clear the existing strike
-            // schedule so InitializeGridTimers reapplies the new intervals on the next tick.
-            // Statistics (LastStrike, StrikeCount) are intentionally preserved.
             if (hazard.Marker != marker)
             {
-                hazard.Marker = marker;
-                hazard.TimersInitialized = false;
-                hazard.NextSmallStrike = default;
-                hazard.NextHeavyStrike = default;
-                hazard.NextSuperHeavyStrike = default;
+                ResetGridLightning(hazard, marker);
             }
         }
         else if (HasComp<NebulaLightningGridHazardComponent>(uid))
@@ -158,12 +151,18 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         }
     }
 
-    private void UpdateSpaceLightning(EntityUid uid, bool wanted)
+    private void UpdateSpaceLightning(EntityUid uid, bool wanted, EntProtoId marker)
     {
         if (wanted)
-            EnsureComp<NebulaSpaceLightningTargetComponent>(uid);
+        {
+            var target = EnsureComp<NebulaSpaceLightningTargetComponent>(uid);
+            if (target.Marker != marker)
+                ResetSpaceLightning(target, marker);
+        }
         else if (HasComp<NebulaSpaceLightningTargetComponent>(uid))
+        {
             RemCompDeferred<NebulaSpaceLightningTargetComponent>(uid);
+        }
     }
 
     private void UpdateGridEmp(EntityUid uid, bool wanted, EntProtoId marker)
@@ -171,13 +170,9 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         if (wanted)
         {
             var hazard = EnsureComp<NebulaEmpGridHazardComponent>(uid);
-            // Marker change implies a new EMP config; clear the next-pulse schedule so the
-            // system reapplies the new delay range on the next tick. Statistics preserved.
             if (hazard.Marker != marker)
             {
-                hazard.Marker = marker;
-                hazard.TimersInitialized = false;
-                hazard.NextPulse = default;
+                ResetGridEmp(hazard, marker);
             }
         }
         else if (HasComp<NebulaEmpGridHazardComponent>(uid))
@@ -186,12 +181,18 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         }
     }
 
-    private void UpdateSpaceEmp(EntityUid uid, bool wanted)
+    private void UpdateSpaceEmp(EntityUid uid, bool wanted, EntProtoId marker)
     {
         if (wanted)
-            EnsureComp<NebulaSpaceEmpTargetComponent>(uid);
+        {
+            var target = EnsureComp<NebulaSpaceEmpTargetComponent>(uid);
+            if (target.Marker != marker)
+                ResetSpaceEmp(target, marker);
+        }
         else if (HasComp<NebulaSpaceEmpTargetComponent>(uid))
+        {
             RemCompDeferred<NebulaSpaceEmpTargetComponent>(uid);
+        }
     }
 
     private void UpdateRadioBlackout(EntityUid uid, bool wanted)
@@ -200,5 +201,49 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
             EnsureComp<NebulaRadioBlackoutComponent>(uid);
         else if (HasComp<NebulaRadioBlackoutComponent>(uid))
             RemCompDeferred<NebulaRadioBlackoutComponent>(uid);
+    }
+
+    private static void ResetGridLightning(NebulaLightningGridHazardComponent hazard, EntProtoId marker)
+    {
+        hazard.Marker = marker;
+        hazard.TimersInitialized = false;
+        hazard.NextSmallStrike = default;
+        hazard.NextHeavyStrike = default;
+        hazard.NextSuperHeavyStrike = default;
+        hazard.LastSmallStrike = default;
+        hazard.LastHeavyStrike = default;
+        hazard.LastSuperHeavyStrike = default;
+        hazard.LastSmallDelta = default;
+        hazard.LastHeavyDelta = default;
+        hazard.LastSuperHeavyDelta = default;
+        hazard.SmallStrikeCount = default;
+        hazard.HeavyStrikeCount = default;
+        hazard.SuperHeavyStrikeCount = default;
+    }
+
+    private static void ResetSpaceLightning(NebulaSpaceLightningTargetComponent target, EntProtoId marker)
+    {
+        target.Marker = marker;
+        target.NextStrike = default;
+        target.LastStrike = default;
+        target.StrikeCount = default;
+    }
+
+    private static void ResetGridEmp(NebulaEmpGridHazardComponent hazard, EntProtoId marker)
+    {
+        hazard.Marker = marker;
+        hazard.TimersInitialized = false;
+        hazard.NextPulse = default;
+        hazard.LastPulse = default;
+        hazard.LastPulseDelta = default;
+        hazard.PulseCount = default;
+    }
+
+    private static void ResetSpaceEmp(NebulaSpaceEmpTargetComponent target, EntProtoId marker)
+    {
+        target.Marker = marker;
+        target.NextPulse = default;
+        target.LastPulse = default;
+        target.PulseCount = default;
     }
 }

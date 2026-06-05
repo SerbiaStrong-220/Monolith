@@ -4,6 +4,7 @@ using Content.Shared._Exodus.Nebula;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula;
@@ -206,6 +207,8 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
 public sealed class NebulaHazardStatusCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public string Command => "nebula_hazard_status";
@@ -253,18 +256,80 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
         if (hasLightning && lightning != null)
         {
             lines.Add($"Lightning ({lightning.Marker}):");
-            lines.Add($"  Small:      next in {FormatDuration(lightning.NextSmallStrike - curTime)}, count {lightning.SmallStrikeCount}, last {FormatOptionalDuration(lightning.LastSmallStrike)}, delta {FormatOptionalDuration(lightning.LastSmallDelta)}.");
-            lines.Add($"  Heavy:      next in {FormatDuration(lightning.NextHeavyStrike - curTime)}, count {lightning.HeavyStrikeCount}, last {FormatOptionalDuration(lightning.LastHeavyStrike)}, delta {FormatOptionalDuration(lightning.LastHeavyDelta)}.");
-            lines.Add($"  SuperHeavy: next in {FormatDuration(lightning.NextSuperHeavyStrike - curTime)}, count {lightning.SuperHeavyStrikeCount}, last {FormatOptionalDuration(lightning.LastSuperHeavyStrike)}, delta {FormatOptionalDuration(lightning.LastSuperHeavyDelta)}.");
+            if (NebulaQueryHelper.TryGetMarkerComponent<NebulaLightningHazardComponent>(
+                    _prototype,
+                    _componentFactory,
+                    lightning.Marker,
+                    out var lightningConfig))
+            {
+                AddLightningTier(lines, "Small", lightningConfig.EnableSmall, lightning.TimersInitialized,
+                    lightning.NextSmallStrike, lightning.SmallStrikeCount, lightning.LastSmallStrike,
+                    lightning.LastSmallDelta, curTime);
+                AddLightningTier(lines, "Heavy", lightningConfig.EnableHeavy, lightning.TimersInitialized,
+                    lightning.NextHeavyStrike, lightning.HeavyStrikeCount, lightning.LastHeavyStrike,
+                    lightning.LastHeavyDelta, curTime);
+                AddLightningTier(lines, "SuperHeavy", lightningConfig.EnableSuperHeavy, lightning.TimersInitialized,
+                    lightning.NextSuperHeavyStrike, lightning.SuperHeavyStrikeCount, lightning.LastSuperHeavyStrike,
+                    lightning.LastSuperHeavyDelta, curTime);
+            }
+            else
+            {
+                lines.Add("  Config unavailable; enable flags unknown.");
+                AddLightningTier(lines, "Small", true, lightning.TimersInitialized,
+                    lightning.NextSmallStrike, lightning.SmallStrikeCount, lightning.LastSmallStrike,
+                    lightning.LastSmallDelta, curTime);
+                AddLightningTier(lines, "Heavy", true, lightning.TimersInitialized,
+                    lightning.NextHeavyStrike, lightning.HeavyStrikeCount, lightning.LastHeavyStrike,
+                    lightning.LastHeavyDelta, curTime);
+                AddLightningTier(lines, "SuperHeavy", true, lightning.TimersInitialized,
+                    lightning.NextSuperHeavyStrike, lightning.SuperHeavyStrikeCount, lightning.LastSuperHeavyStrike,
+                    lightning.LastSuperHeavyDelta, curTime);
+            }
         }
 
         if (hasEmp && emp != null)
         {
             lines.Add($"EMP ({emp.Marker}):");
-            lines.Add($"  Pulse: next in {FormatDuration(emp.NextPulse - curTime)}, count {emp.PulseCount}, last {FormatOptionalDuration(emp.LastPulse)}, delta {FormatOptionalDuration(emp.LastPulseDelta)}.");
+            var enabled =
+                !NebulaQueryHelper.TryGetMarkerComponent<NebulaEmpHazardComponent>(
+                    _prototype,
+                    _componentFactory,
+                    emp.Marker,
+                    out var empConfig) ||
+                empConfig.Enabled;
+            lines.Add($"  Pulse: {FormatNextTimer(enabled, emp.TimersInitialized, emp.NextPulse, curTime)}, " +
+                      $"count {emp.PulseCount}, last {FormatOptionalDuration(emp.LastPulse)}, " +
+                      $"delta {FormatOptionalDuration(emp.LastPulseDelta)}.");
         }
 
         shell.WriteLine(string.Join('\n', lines));
+    }
+
+    private static void AddLightningTier(
+        List<string> lines,
+        string name,
+        bool enabled,
+        bool timersInitialized,
+        TimeSpan nextTime,
+        int count,
+        TimeSpan lastTime,
+        TimeSpan delta,
+        TimeSpan curTime)
+    {
+        lines.Add($"  {name}: {FormatNextTimer(enabled, timersInitialized, nextTime, curTime)}, " +
+                  $"count {count}, last {FormatOptionalDuration(lastTime)}, " +
+                  $"delta {FormatOptionalDuration(delta)}.");
+    }
+
+    private static string FormatNextTimer(bool enabled, bool timersInitialized, TimeSpan nextTime, TimeSpan curTime)
+    {
+        if (!enabled)
+            return "disabled";
+
+        if (!timersInitialized || nextTime == TimeSpan.Zero)
+            return "pending";
+
+        return $"next in {FormatDuration(nextTime - curTime)}";
     }
 
     private static string FormatOptionalDuration(TimeSpan value)
