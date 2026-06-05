@@ -1,0 +1,35 @@
+- type: startingGear
+  id: AsakimCenturionGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNinja
+    back: ClothingBackpackERTLeader
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCenturionAsakimUnremoveable
+    shoes: ClothingShoesBootsMagAsakim
+    pocket1: CrowbarPocket
+    pocket2: DoubleEmergencyOxygenTankFilled
+    belt: ClothingBeltWebbingsBigBlack
+    suitStorage: OxygenTankFilled
+  inhand:
+  - WeaponRifleAsakimAutopulser
+  - WeaponPhaseBlade
+  storage:
+    back:
+    - DoubleEmergencyOxygenTankFilled
+    - MedkitCombatFilled
+    - MedkitCombatFilled
+    - SyringeCaseAltFilled
+    - JetpackADMFilled
+    - CognizineChemistryBottle
+    - Syringe
+    - RadioHandheldNF
+    - ShipRepairDeviceAsakimRedacted
+    belt:
+    - CombatMedipen
+    - CombatMedipen
+    - CombatMedipen
+    - CombatMedipen
+    - HandHeldMassScannerBorg
+    - PowerDrill
+    - JawsOfLife
+    - WelderExperimental

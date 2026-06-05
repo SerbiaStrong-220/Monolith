@@ -14,6 +14,8 @@
     - id: UnknownShuttleMantarayApoc # Exodus
     - id: UnknownShuttleCrowApoc # Exodus
     - id: UnknownShuttleOmenApoc # Exodus
+    - id: UnknownShuttleAzimuthApoc # Exodus-azimuth
+    - id: UnknownShuttleZenithAApoc # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -213,6 +215,27 @@
     minPlayers: 28
   - type: LoadMapRule
     gridPath: /Maps/_Exodus/ShuttleEvent/crow.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleZenithAApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-frigate-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 2.5
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 32
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/zenith_a.yml # Exodus
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement

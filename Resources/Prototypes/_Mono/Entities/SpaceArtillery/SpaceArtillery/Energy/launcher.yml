@@ -29,7 +29,7 @@
     recoil: 5 # 1/5x
     minAngle: 0
     maxAngle: 0
-    projectileSpeed: 150
+    projectileSpeed: 180
     shootThermalSignature: 4000000 # ~2.8km with continuous fire
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
@@ -90,7 +90,7 @@
     recoil: 8
     minAngle: 0
     maxAngle: 0
-    projectileSpeed: 150
+    projectileSpeed: 180
     shootThermalSignature: 4000000 # ~2.8km with continuous fire
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
@@ -129,7 +129,7 @@
   - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
   - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   suffix: Medium, T2
-  description: A rapidly firing energy weapon, dealing a large amount of damage to its targets. Takes a long time to recharge.
+  description: A rapidly firing energy weapon, well known for its devastating burst followed by a constant stream of plasma.
   components:
   - type: StaticPrice
     price: 4000
@@ -140,8 +140,8 @@
   - type: Appearance
   - type: AmmoCounter
   - type: Battery
-    maxCharge: 15500
-    startingCharge: 15500
+    maxCharge: 18000
+    startingCharge: 18000
   - type: ExaminableBattery
   - type: WirelessNetworkConnection
     range: 500
@@ -150,7 +150,7 @@
     recoil: 5 # 1/5x
     minAngle: 0
     maxAngle: 5
-    projectileSpeed: 185
+    projectileSpeed: 220
     shootThermalSignature: 500000 # ~5.6km with continuous fire
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/autopulse_laser_fire_01.ogg
@@ -158,7 +158,7 @@
       path: /Audio/Weapons/click.ogg
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 220
+    autoRechargeRate: 2250
   - type: SpaceArtillery
     powerChargeRate: 700
     powerUsePassive: 100
@@ -201,8 +201,8 @@
   - type: Appearance
   - type: AmmoCounter
   - type: Battery
-    maxCharge: 40000
-    startingCharge: 40000
+    maxCharge: 2250 # 15 seconds of constant fire, 75 rock walls destroyed per full mag
+    startingCharge: 2250
   - type: ExaminableBattery
   - type: WirelessNetworkConnection
     range: 500
@@ -259,7 +259,7 @@
   id: WeaponTurretM220
   name: M220 RUBICON EMP launcher
   parent:
-  - BallisticArtillery
+  - BallisticArtilleryUnanchorable
   - BallisticArtilleryTier2HP
   suffix: Medium, T2
   description: Launches EMP projectiles at ships, disabling systems with powerful electromagnetic pulses. Ideal for non-lethal engagements and can be remotely activated or linked to a GCS.
@@ -281,7 +281,7 @@
     range: 500
   - type: Gun
     fireRate: 0.2
-    projectileSpeed: 140
+    projectileSpeed: 170
     shootThermalSignature: 2000000 # ~1414m after firing - relatively low
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
@@ -339,12 +339,12 @@
   - type: Gun
     projectileSpeed: 240
     minAngle: 0
-    maxAngle: 8
+    maxAngle: 6
     fireRate: 1
     recoil: 10 # 2/5x
-    burstCooldown: 16
-    burstFireRate: 50
-    shotsPerBurst: 50
+    burstCooldown: 5.5
+    burstFireRate: 100
+    shotsPerBurst: 100
     selectedMode: Burst
     availableModes: Burst
     shootThermalSignature: 500000 # ~5.6km with continuous fire
@@ -354,7 +354,7 @@
       path: /Audio/Weapons/click.ogg
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 300
+    autoRechargeRate: 30000
   - type: SpaceArtillery
     powerChargeRate: 700
     powerUsePassive: 100
@@ -490,7 +490,7 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: Gun
-    fireRate: 20
+    fireRate: 15
     recoil: 0
     minAngle: 0
     maxAngle: 0
@@ -545,7 +545,7 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: Gun
-    fireRate: 0.15
+    fireRate: 0.3
     recoil: 5
     minAngle: 0
     maxAngle: 0
@@ -555,7 +555,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
   - type: SpaceArtillery
-    powerChargeRate: 200
+    powerChargeRate: 20000
     powerUsePassive: 300
     powerUseActive: 0
   - type: FireControlRotate
@@ -602,13 +602,13 @@
   - type: Appearance
   - type: AmmoCounter
   - type: Battery
-    maxCharge: 50000
-    startingCharge: 50000
+    maxCharge: 56250 # 20 seconds of constant fire, 375 rock walls destroyed per full mag. 5 mining pulsers needed to equal its output.
+    startingCharge: 56250
   - type: BatterySelfRecharger
     autoRechargePause: true
     autoRechargePauseTime: 30
     autoRecharge: true
-    autoRechargeRate: 50000
+    autoRechargeRate: 56250
   - type: FireControlRotate
   - type: ExaminableBattery
   - type: WirelessNetworkConnection
@@ -1066,7 +1066,7 @@
     range: 500
   - type: Gun
     recoil: 10 # 2/5x
-    projectileSpeed: 150
+    projectileSpeed: 180
     minAngle: 0
     maxAngle: 4
     burstCooldown: 2

@@ -1,0 +1,7 @@
+- type: ghostRole
+  id: AsakimRedactedBorg
+  name: ghost-role-information-asakim-redacted-borg
+  description: ghost-role-information-asakim-redacted-borg-description
+  rules: ghost-role-information-silicon-rules
+  entityPrototype: PlayerBorgAsakimRedacted
+  whitelisted: false

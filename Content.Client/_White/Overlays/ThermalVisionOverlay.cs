@@ -13,12 +13,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._White.Overlays;
 
-public sealed class ThermalVisionOverlay : Overlay
+public sealed partial class ThermalVisionOverlay : Overlay
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!; // Exodus-ThermalVisionShader
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly TransformSystem _transform;
     private readonly StealthSystem _stealth;

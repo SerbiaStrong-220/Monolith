@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -35,7 +35,7 @@ public sealed class JobsCommand : ToolshedCommand
     {
         _jobs ??= GetSys<StationJobsSystem>();
 
-        return new JobSlotRef(job, station, _jobs, EntityManager);
+        return new JobSlotRef(job.Id, station, _jobs, EntityManager);
     }
 
     [CommandImplementation("job")]

@@ -1,0 +1,49 @@
+- type: entity
+  name: asakim centurion spawner
+  id: SpawnCenturionAsakimWarrior
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCenturionAsakimGhostrole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Mono/Mobs/Species/Asakim/parts.rsi
+      state: full
+
+- type: entity
+  name: asakim centurion spawner
+  id: SpawnCenturionAsakimWarriorNoTimelock
+  parent: SpawnCenturionAsakimWarrior
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCenturionAsakimGhostroleNoTimelock
+
+- type: entity
+  name: personal protection operator spawner
+  id: SpawnAsakimRedactedBorg
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimRedactedGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/asakim_guard.rsi
+      state: azakim_guard
+
+- type: entity
+  name: personal protection operator spawner
+  id: SpawnAsakimRedactedBorgNoTimelock
+  parent: SpawnAsakimRedactedBorg
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimRedactedGhostRoleNoTimelock

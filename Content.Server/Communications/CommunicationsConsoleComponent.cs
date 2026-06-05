@@ -57,6 +57,12 @@ namespace Content.Server.Communications
         public bool CanShuttle = true;
 
         /// <summary>
+        /// Exodus: can change the station alert level from this console.
+        /// </summary>
+        [DataField]
+        public bool CanSetAlertLevel = true;
+
+        /// <summary>
         /// Announce on all grids (for nukies)
         /// </summary>
         [DataField]

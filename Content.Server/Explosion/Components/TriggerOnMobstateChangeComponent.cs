@@ -16,6 +16,13 @@ public sealed partial class TriggerOnMobstateChangeComponent : Component
     public List<MobState> MobState = new();
 
     /// <summary>
+    /// Exodus: optional previous state filter.
+    /// </summary>
+    [ViewVariables]
+    [DataField("oldMobState")]
+    public List<MobState>? OldMobState;
+
+    /// <summary>
     /// If true, prevents suicide attempts for the trigger to prevent cheese.
     /// </summary>
     [ViewVariables]

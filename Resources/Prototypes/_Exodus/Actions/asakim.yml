@@ -1,0 +1,20 @@
+- type: entity
+  id: ActionAsakimKatanaDash
+  name: phase dash
+  description: Dash to a visible location.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    useDelay: 60
+    range: 0
+    itemIconStyle: NoItem
+    checkCanAccess: false
+    repeat: false
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: blink
+    sound:
+      path: /Audio/Magic/blink.ogg
+      params:
+        volume: 5
+    event: !type:DashEvent

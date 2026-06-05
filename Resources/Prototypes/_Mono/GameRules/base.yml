@@ -50,6 +50,7 @@
   abstract: true
   parent: BaseGameRule
   id: BaseRandomShuttleRule
+  categories: [ Spawner ] # Exodus-azimuth: map-loading rules should not be spawned by spawn-all tests
   components:
   - type: StationEvent
     weight: 10

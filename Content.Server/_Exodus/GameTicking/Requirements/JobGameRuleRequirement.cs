@@ -4,8 +4,8 @@ using Content.Shared._Exodus.GameTicking.Requirements;
 using Content.Server._NF.CryoSleep;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
-using Content.Server.Mind;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server._Exodus.GameTicking.Requirements;
 
@@ -22,14 +22,14 @@ public sealed partial class JobGameRuleRequirement : GameRuleRequirement
         if (!prototype.TryIndex(Department, out var department))
             return true;
 
-        var mindSystem = entity.System<MindSystem>();
         var mobSystem = entity.System<MobStateSystem>();
 
-        var players = entity.EntityQueryEnumerator<PlayerJobComponent>();
         var jobCounter = 0;
         var departmentCounter = 0;
 
-        while (players.MoveNext(out var uid, out var player))
+        var query = entity.EntityQueryEnumerator<PlayerJobComponent, ActorComponent>();
+
+        while (query.MoveNext(out var uid, out var player, out var actor))
         {
             if (player.JobPrototype == null)
                 continue;
@@ -38,9 +38,6 @@ public sealed partial class JobGameRuleRequirement : GameRuleRequirement
                 continue;
 
             // mob checks
-            if (!mindSystem.TryGetMind(uid, out _, out var mind) || mind.Session == null)
-                continue;
-
             if (mobSystem.IsIncapacitated(uid))
                 continue;
 
