@@ -38,6 +38,10 @@
     radarColor: "#ff4d42d9"
   - type: NebulaLightningHazard
   - type: NebulaSpaceLightningHazard
+    burnDamage:
+      types:
+        Heat: 30
+        Blunt: 30
   - type: NebulaBlocksDebris
 
 - type: entity
@@ -72,7 +76,7 @@
 
 # Death zone — inner concentric sub-zone (boundary..90k from origin).
 # Grid lightning fires ~3x more often than in a normal red nebula. Personal (EVA)
-# lightning also fires ~3x faster; damage stays at red-nebula defaults.
+# lightning also fires ~3x faster; damage matches the normal red nebula.
 - type: entity
   parent: NebulaBaseMarker
   id: NebulaDeathZoneInnerMarker
@@ -89,11 +93,15 @@
   - type: NebulaSpaceLightningHazard
     minStrikeDelaySeconds: 1
     maxStrikeDelaySeconds: 6
+    burnDamage:
+      types:
+        Heat: 40
+        Blunt: 40
   - type: NebulaBlocksDebris
 
 # Death zone — outer concentric sub-zone (>90k from origin). Boundary is invisible.
 # Only superheavy grid strikes (every 8s), no small/heavy. Personal lightning at default
-# cadence but with much higher damage (100 burn + 100 shock).
+# cadence but with much higher damage (100 heat + 100 blunt + 100 shock).
 # No NebulaRadarVisuals — outer marker has no radar blip by design (see DeathZoneGenerationSystem).
 - type: entity
   parent: NebulaBaseMarker
@@ -118,4 +126,5 @@
     burnDamage:
       types:
         Heat: 100
+        Blunt: 100
   - type: NebulaBlocksDebris
