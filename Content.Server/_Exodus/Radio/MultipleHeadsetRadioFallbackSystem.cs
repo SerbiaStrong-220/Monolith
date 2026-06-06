@@ -29,7 +29,6 @@ public sealed class MultipleHeadsetRadioFallbackSystem : EntitySystem
         {
             if (!TryComp<HeadsetComponent>(item, out var headset) ||
                 !headset.Enabled ||
-                !headset.IsEquipped ||
                 (slot.SlotFlags & headset.RequiredSlot) == SlotFlags.NONE ||
                 !TryComp<EncryptionKeyHolderComponent>(item, out var keys))
             {
