@@ -166,18 +166,28 @@ public sealed partial class BankSystem : SharedBankSystem
             GetTaxedDepositAmount(amount, bank.Balance, out var afterTax, out var taxedAway);
             toSector = afterTax;
             toLongTerm = taxedAway;
-            _ = _coins.AddMonoCoinsAsync(session.UserId, taxedAway);
         }
 
-        if (TryBankDeposit(session, prefs, profile, toSector, out var newBalance))
+        // Exodus-Begin: savings deposit fix
+        if (toSector <= 0)
+        {
+            if (toLongTerm <= 0)
+                return false;
+        }
+        else if (TryBankDeposit(session, prefs, profile, toSector, out var newBalance))
         {
             bank.Balance = newBalance.Value;
             Dirty(mobUid, bank);
-            _log.Info($"{mobUid} deposited {amount} (sector: {toSector}, savings: {toLongTerm})");
-            return true;
         }
+        else
+            return false;
 
-        return false;
+        if (toLongTerm > 0)
+            _ = _coins.AddMonoCoinsAsync(session.UserId, toLongTerm);
+
+        _log.Info($"{mobUid} deposited {amount} (sector: {toSector}, savings: {toLongTerm})");
+        return true;
+        // Exodus-End
     }
 
     /// <summary>
