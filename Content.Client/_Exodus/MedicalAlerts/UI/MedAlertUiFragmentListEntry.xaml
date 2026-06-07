@@ -1,0 +1,14 @@
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer Name="AlertPanel" Margin="5" StyleClasses="AngleRect" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="4">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="AlertStatus" StyleClasses="LabelKeyText" HorizontalExpand="True"/>
+                <Label Name="AlertTime" StyleClasses="LabelSubText" FontColorOverride="#A9A9A9"
+                       HorizontalAlignment="Right"/>
+            </BoxContainer>
+            <PanelContainer StyleClasses="HighDivider" />
+            <Label Name="AlertSubject" HorizontalExpand="True"/>
+            <Label Name="AlertLocation" StyleClasses="LabelSubText" FontColorOverride="#A9A9A9"/>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

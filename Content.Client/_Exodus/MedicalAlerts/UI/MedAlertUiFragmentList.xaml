@@ -1,0 +1,30 @@
+<Control xmlns="https://spacestation14.io" HorizontalExpand="True" VerticalExpand="True">
+    <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+        <Label Name="NoAlertsLabel" Text="{Loc 'med-alert-ui-empty'}"
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
+                <BoxContainer
+                    Name="AlertsContainer"
+                    Orientation="Vertical"
+                    VerticalExpand="True">
+                </BoxContainer>
+            </ScrollContainer>
+
+            <PanelContainer HorizontalExpand="True" MinHeight="32">
+                <BoxContainer Orientation="Horizontal"
+                              Margin="8,8,8,8"
+                              HorizontalExpand="True">
+                    <Button
+                        Name="NotificationSwitch"
+                        ToolTip="{Loc news-reader-ui-mute-tooltip}"
+                        Text="{Loc news-read-ui-notification-on}"
+                        MinWidth="20"
+                        Margin="0,0,5,0"/>
+                    <Button Name="RefreshButton" Text="{Loc 'med-alert-ui-refresh'}"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

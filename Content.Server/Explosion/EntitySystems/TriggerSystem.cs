@@ -16,6 +16,7 @@ using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared._Exodus.MedicalAlerts;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Payload.Components;
@@ -245,6 +246,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (implanted.ImplantedEntity == null)
                 return;
+            var implantedUid = implanted.ImplantedEntity.Value;
 
             // Gets location of the implant
             var ownerXform = Transform(uid);
@@ -268,9 +270,9 @@ namespace Content.Server.Explosion.EntitySystems
                 speciesText = Loc.GetString(species.Name); // Ru-Localization
             }
 
-            var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("specie", speciesText), ("grid", gridText), ("position", posText));
-            var reviveMessage = Loc.GetString(component.ReviveMessage, ("user", implanted.ImplantedEntity.Value), ("specie", speciesText), ("grid", gridText), ("position", posText)); // Mono
-            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("specie", speciesText), ("grid", gridText), ("position", posText));
+            var critMessage = Loc.GetString(component.CritMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText));
+            var reviveMessage = Loc.GetString(component.ReviveMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText)); // Mono
+            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText));
 
             if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate))
                 return;
@@ -293,6 +295,21 @@ namespace Content.Server.Explosion.EntitySystems
                         break;
                     }
                 }
+
+                // Exodus-med-alert-begin
+                if (component.RadioChannel == "Medical")
+                {
+                    var medAlert = new MedicalAlertRaisedEvent(
+                        implantedUid,
+                        mobstate.CurrentState,
+                        mobstate.PreviousState,
+                        x,
+                        y,
+                        gridText,
+                        speciesText);
+                    RaiseLocalEvent(ref medAlert);
+                }
+                // Exodus-med-alert-end
             }
 
             args.Handled = true;

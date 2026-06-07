@@ -171,6 +171,7 @@
     - BountyContractsCartridge # Frontier
     - AstroNavCartridge # Frontier
     - MedTekCartridge
+    - MedAlertCartridge # Exodus-med-alert
   # End Frontier
 
 - type: entity

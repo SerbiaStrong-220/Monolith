@@ -1,0 +1,20 @@
+- type: entity
+  parent: NFBasePDACartridge
+  id: MedAlertCartridge
+  name: MedAlert cartridge
+  description: A program that logs medical implant distress signals.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-med
+  - type: Icon
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-med
+  - type: UIFragment
+    ui: !type:MedAlertUi
+  - type: Cartridge
+    programName: med-alert-program-name
+    icon:
+      sprite: Objects/Specific/Medical/healthanalyzer.rsi
+      state: icon
+  - type: MedAlertCartridge
