@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.CartridgeLoader;
 using Robust.Shared.Serialization;
 
@@ -6,7 +7,7 @@ namespace Content.Shared._Exodus.MedicalAlerts;
 [NetSerializable, Serializable]
 public sealed class MedicalAlertListUiState(IReadOnlyList<MedicalAlertEntry> entries, bool notificationsEnabled) : BoundUserInterfaceState
 {
-    public readonly IReadOnlyList<MedicalAlertEntry> Entries = entries;
+    public readonly MedicalAlertEntry[] Entries = entries as MedicalAlertEntry[] ?? entries.ToArray();
     public readonly bool NotificationsEnabled = notificationsEnabled;
 }
 
