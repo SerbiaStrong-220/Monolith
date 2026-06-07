@@ -1,10 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.CartridgeLoader;
+using Content.Server._Mono.Planets;
 using Content.Server._NF.SectorServices;
 using Content.Shared._Exodus.MedicalAlerts;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.MedicalAlerts;
@@ -33,12 +36,13 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
 
         data.LastEntryId++;
         var subjectName = Identity.Name(args.Subject, EntityManager);
+        var gridName = ResolveGridName(args.GridUid);
         var entry = new MedicalAlertEntry(
             data.LastEntryId,
             alertType.Value,
             subjectName,
             args.SpeciesName,
-            args.GridName,
+            gridName,
             args.PositionX,
             args.PositionY,
             _timing.CurTime);
@@ -47,6 +51,18 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
         TrimEntries(data);
 
         BroadcastAlert(entry);
+    }
+
+    private string? ResolveGridName(EntityUid? gridUid)
+    {
+        if (gridUid is not { } grid)
+            return null;
+
+        // A bare (non-planet) map has no meaningful location name for medics.
+        if (HasComp<MapComponent>(grid) && !HasComp<PlanetMapComponent>(grid))
+            return null;
+
+        return Name(grid);
     }
 
     private static MedicalAlertType? GetAlertType(MobState current, MobState previous)
@@ -75,16 +91,16 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
         var header = Loc.GetString("med-alert-notification-header");
         var msg = Loc.GetString(GetNotificationLocId(entry.AlertType),
             ("user", entry.SubjectName),
-            ("specie", entry.SpeciesName),
-            ("grid", entry.GridName),
+            ("specie", entry.SpeciesName ?? "null"),
+            ("grid", entry.GridName ?? Loc.GetString("med-alert-ui-unknown-grid")),
             ("position", $"({entry.PositionX}, {entry.PositionY})"));
 
-        var entries = GetEntries();
+        var entries = GetEntries().ToArray();
 
         var loaders = EntityQueryEnumerator<CartridgeLoaderComponent>();
         while (loaders.MoveNext(out var loaderUid, out var loaderComp))
         {
-            if (!_cartridgeLoader.TryGetProgram<MedAlertCartridgeComponent>(loaderUid, out _, out var cartComp, true, loaderComp))
+            if (!_cartridgeLoader.TryGetProgram<MedAlertCartridgeComponent>(loaderUid, out _, out var cartComp, false, loaderComp))
                 continue;
 
             var state = new MedicalAlertListUiState(entries, cartComp.NotificationsEnabled);

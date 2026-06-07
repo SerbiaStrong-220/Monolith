@@ -12,5 +12,5 @@ public readonly record struct MedicalAlertRaisedEvent(
     MobState PreviousState,
     int PositionX,
     int PositionY,
-    string GridName,
-    string SpeciesName);
+    EntityUid? GridUid,
+    string? SpeciesName);

@@ -7,8 +7,8 @@ public readonly record struct MedicalAlertEntry(
     uint EntryId,
     MedicalAlertType AlertType,
     string SubjectName,
-    string SpeciesName,
-    string GridName,
+    string? SpeciesName,
+    string? GridName,
     int PositionX,
     int PositionY,
     TimeSpan Timestamp);

@@ -18,17 +18,15 @@ public sealed partial class MedAlertUiFragmentListEntry : Control
 
         AlertSubject.Text = Loc.GetString("med-alert-ui-entry-subject",
             ("user", entry.SubjectName),
-            ("specie", entry.SpeciesName));
+            ("specie", entry.SpeciesName ?? "null"));
 
-        var grid = string.IsNullOrEmpty(entry.GridName) || entry.GridName == "null"
-            ? Loc.GetString("med-alert-ui-unknown-grid")
-            : entry.GridName;
+        var grid = entry.GridName ?? Loc.GetString("med-alert-ui-unknown-grid");
 
         AlertLocation.Text = Loc.GetString("med-alert-ui-entry-location",
             ("grid", grid),
             ("position", $"({entry.PositionX}, {entry.PositionY})"));
 
-        AlertTime.Text = entry.Timestamp.ToString(@"hh\:mm\:ss");
+        AlertTime.Text = $"{(int) entry.Timestamp.TotalHours:D2}:{entry.Timestamp.Minutes:D2}:{entry.Timestamp.Seconds:D2}";
     }
 
     private static LocId GetStatusLocId(MedicalAlertType type)

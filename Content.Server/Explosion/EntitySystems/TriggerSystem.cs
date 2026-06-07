@@ -16,7 +16,7 @@ using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared._Exodus.MedicalAlerts;
+using Content.Shared._Exodus.MedicalAlerts; // Exodus-med-alert
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Payload.Components;
@@ -246,7 +246,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (implanted.ImplantedEntity == null)
                 return;
-            var implantedUid = implanted.ImplantedEntity.Value;
+            var implantedUid = implanted.ImplantedEntity.Value; // Exodus-med-alert
 
             // Gets location of the implant
             var ownerXform = Transform(uid);
@@ -270,9 +270,9 @@ namespace Content.Server.Explosion.EntitySystems
                 speciesText = Loc.GetString(species.Name); // Ru-Localization
             }
 
-            var critMessage = Loc.GetString(component.CritMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText));
-            var reviveMessage = Loc.GetString(component.ReviveMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText)); // Mono
-            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText));
+            var critMessage = Loc.GetString(component.CritMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText)); // Exodus-med-alert
+            var reviveMessage = Loc.GetString(component.ReviveMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText)); // Mono // Exodus-med-alert
+            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implantedUid), ("specie", speciesText), ("grid", gridText), ("position", posText)); // Exodus-med-alert
 
             if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate))
                 return;
@@ -305,8 +305,8 @@ namespace Content.Server.Explosion.EntitySystems
                         mobstate.PreviousState,
                         x,
                         y,
-                        gridText,
-                        speciesText);
+                        ownerXform.GridUid, // Exodus-med-alert
+                        humanoid != null ? speciesText : null); // Exodus-med-alert
                     RaiseLocalEvent(ref medAlert);
                 }
                 // Exodus-med-alert-end
