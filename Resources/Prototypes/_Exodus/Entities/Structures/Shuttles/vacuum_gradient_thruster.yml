@@ -54,6 +54,8 @@
     damage:
       types:
         Heat: 0
+  - type: NebulaThrustResistance
+    resistance: 1
   - type: ApcPowerReceiver
     powerLoad: 250000
   - type: Damageable

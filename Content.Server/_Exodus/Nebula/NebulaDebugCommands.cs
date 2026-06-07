@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Administration;
+using Content.Server.Shuttles.Components;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -200,6 +201,131 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
 
         var positionStr = position is { } pp ? $" at ({pp.X:0}, {pp.Y:0}) via {source}" : "";
         shell.WriteLine($"Inside {presence.Marker} ({zoneTag}){positionStr}: density {presence.Density:0.00}; alpha {presence.Alpha:0.00}.");
+    }
+}
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class NebulaThrustStatusCommand : IConsoleCommand
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    private static readonly (string Name, int Index)[] Directions =
+    {
+        ("North", 2),
+        ("East", 1),
+        ("South", 0),
+        ("West", 3),
+    };
+
+    public string Command => "nebula_thrust_status";
+    public string Description => "Prints current shuttle thrust in all four directions for the grid you are standing on.";
+    public string Help => "Usage: nebula_thrust_status [details]";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length > 1)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        var details = args.Length == 1 && string.Equals(args[0], "details", StringComparison.OrdinalIgnoreCase);
+        if (args.Length == 1 && !details)
+        {
+            shell.WriteError(Help);
+            return;
+        }
+
+        if (shell.Player?.AttachedEntity is not { Valid: true } entity)
+        {
+            shell.WriteError("No attached entity.");
+            return;
+        }
+
+        if (!_entityManager.TryGetComponent<TransformComponent>(entity, out var xform))
+        {
+            shell.WriteError("Attached entity has no transform.");
+            return;
+        }
+
+        if (xform.GridUid is not { Valid: true } gridUid)
+        {
+            shell.WriteLine("You are not standing on a grid.");
+            return;
+        }
+
+        if (!_entityManager.TryGetComponent<ShuttleComponent>(gridUid, out var shuttle))
+        {
+            shell.WriteLine($"Grid {gridUid} has no ShuttleComponent.");
+            return;
+        }
+
+        var thrustSystem = _entityManager.System<NebulaShuttleThrustSystem>();
+        var multiplier = thrustSystem.GetCurrentThrustMultiplier(gridUid);
+        var nebula = GetNebulaLabel(gridUid);
+        var lines = new List<string>
+        {
+            $"Grid {gridUid} shuttle thrust:",
+            $"Nebula: {nebula}; multiplier {multiplier:0.###}.",
+        };
+
+        foreach (var direction in Directions)
+        {
+            AddDirection(lines, gridUid, shuttle, thrustSystem, direction.Name, direction.Index, multiplier, details);
+        }
+
+        lines.Add($"Angular: thrust {shuttle.AngularThrust:0.##}; thrusters {shuttle.AngularThrusters.Count}.");
+        shell.WriteLine(string.Join('\n', lines));
+    }
+
+    private void AddDirection(
+        List<string> lines,
+        EntityUid gridUid,
+        ShuttleComponent shuttle,
+        NebulaShuttleThrustSystem thrustSystem,
+        string name,
+        int index,
+        float multiplier,
+        bool details)
+    {
+        var raw = shuttle.LinearThrust[index];
+        var baseRaw = shuttle.BaseLinearThrust[index];
+        var effective = thrustSystem.GetEffectiveDirectionThrust(gridUid, index, raw, multiplier);
+        var reduction = raw - effective;
+        var thrusters = shuttle.LinearThrusters[index];
+
+        lines.Add($"  {name}: raw {raw:0.##}; base {baseRaw:0.##}; effective {effective:0.##}; reduction {reduction:0.##}; thrusters {thrusters.Count}.");
+
+        if (!details)
+            return;
+
+        for (var i = 0; i < thrusters.Count; i++)
+        {
+            var thrusterUid = thrusters[i];
+            if (!_entityManager.TryGetComponent<ThrusterComponent>(thrusterUid, out var thruster))
+            {
+                lines.Add($"    - {GetEntityLabel(thrusterUid)}: missing ThrusterComponent.");
+                continue;
+            }
+
+            var resistance = thrustSystem.GetThrustReductionResistance(thrusterUid);
+            var effectiveThruster = thrustSystem.GetEffectiveThrusterThrust(thrusterUid, thruster.Thrust, multiplier);
+            lines.Add($"    - {GetEntityLabel(thrusterUid)}: thrust {thruster.Thrust:0.##}; effective {effectiveThruster:0.##}; base {thruster.BaseThrust:0.##}; resistance {resistance:0.###}; on {thruster.IsOn}; enabled {thruster.Enabled}.");
+        }
+    }
+
+    private string GetNebulaLabel(EntityUid gridUid)
+    {
+        return _entityManager.TryGetComponent<NebulaPresenceComponent>(gridUid, out var presence)
+            ? $"{presence.Marker} density {presence.Density:0.##}"
+            : "none";
+    }
+
+    private string GetEntityLabel(EntityUid uid)
+    {
+        return _entityManager.TryGetComponent<MetaDataComponent>(uid, out var meta)
+            ? $"{meta.EntityName} ({uid})"
+            : uid.ToString();
     }
 }
 

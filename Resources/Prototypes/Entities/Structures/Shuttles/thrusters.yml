@@ -69,6 +69,8 @@
   components:
   - type: Machine
     board: ThrusterMachineCircuitboard
+  - type: NebulaThrustResistance # Exodus nebula thrust resistance
+    resistance: 0.1
   - type: Destructible
     thresholds:
     - trigger:

@@ -423,7 +423,7 @@ public sealed partial class MoverController : SharedMoverController
         // Exodus-begin
         if (xform.GridUid is { Valid: true } shuttleUid)
         {
-            var ev = new GetNebulaShuttleThrustEvent(shuttleUid, horizThrust, vertThrust);
+            var ev = new GetNebulaShuttleThrustEvent(shuttleUid, horizIndex, vertIndex, horizThrust, vertThrust);
             RaiseLocalEvent(ref ev);
             horizThrust = ev.HorizontalThrust;
             vertThrust = ev.VerticalThrust;
