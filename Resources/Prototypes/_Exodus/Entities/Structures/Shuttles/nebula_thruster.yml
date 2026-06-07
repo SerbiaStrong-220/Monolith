@@ -1,0 +1,25 @@
+- type: entity
+  id: NebulaThrusterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: nebula-tuned thruster machine board
+  description: A machine board for a nebula-tuned thruster.
+  components:
+  - type: MachineBoard
+    prototype: NebulaThruster
+    requirements:
+      Capacitor: 1
+    stackRequirements:
+      Steel: 5
+
+- type: entity
+  id: NebulaThruster
+  parent: Thruster
+  name: nebula-tuned thruster
+  description: A standard shuttle thruster tuned to overperform in nebula fields.
+  components:
+  - type: Machine
+    board: NebulaThrusterMachineCircuitboard
+  - type: NebulaThrustMultiplier
+    multiplier: 2
+  - type: NebulaThrustResistance
+    resistance: 1
