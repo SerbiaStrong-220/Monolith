@@ -66,10 +66,6 @@
     receiveFrequencyId: DroneControl
   - type: WirelessNetworkConnection
     range: 100000 # keep same as sleep range
-  # Exodus-tweak-begin
-  - type: Anchorable
-    flags: 0
-  # Exodus-tweak-end
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -107,10 +103,6 @@
   - type: WirelessNetworkConnection
     range: 100000
   - type: DeviceList
-  # Exodus-tweak-begin
-  - type: Anchorable
-    flags: 0
-  # Exodus-tweak-end
 
 - type: entity
   parent: ComputerDroneControl
