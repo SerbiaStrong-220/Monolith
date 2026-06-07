@@ -16,6 +16,7 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     private EntityQuery<ThrusterComponent> _thrusterQuery;
+    private EntityQuery<NebulaThrustMultiplierComponent> _thrusterMultiplierQuery;
     private EntityQuery<NebulaThrustResistanceComponent> _resistanceQuery;
 
     /// <summary>Marker prototype id → thrust multiplier. Rebuilt on prototype reload.</summary>
@@ -26,6 +27,7 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
         base.Initialize();
 
         _thrusterQuery = GetEntityQuery<ThrusterComponent>();
+        _thrusterMultiplierQuery = GetEntityQuery<NebulaThrustMultiplierComponent>();
         _resistanceQuery = GetEntityQuery<NebulaThrustResistanceComponent>();
 
         SubscribeLocalEvent<GetNebulaShuttleThrustEvent>(OnGetNebulaShuttleThrust);
@@ -56,49 +58,80 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
 
     private void OnGetNebulaShuttleThrust(ref GetNebulaShuttleThrustEvent args)
     {
-        var multiplier = GetCurrentThrustMultiplier(args.ShuttleUid);
+        var inNebula = TryGetCurrentThrustMultiplier(args.ShuttleUid, out var multiplier);
 
         args.HorizontalThrust = GetEffectiveDirectionThrust(
             args.ShuttleUid,
             args.HorizontalDirectionIndex,
             args.HorizontalThrust,
-            multiplier);
+            multiplier,
+            inNebula);
         args.VerticalThrust = GetEffectiveDirectionThrust(
             args.ShuttleUid,
             args.VerticalDirectionIndex,
             args.VerticalThrust,
-            multiplier);
+            multiplier,
+            inNebula);
     }
 
     public float GetCurrentThrustMultiplier(EntityUid shuttleUid)
     {
-        if (_multiplierByMarker.Count == 0)
-            return 1f;
-
-        if (!TryComp<NebulaPresenceComponent>(shuttleUid, out var presence))
-            return 1f;
-
-        if (presence.Marker.Id is not { } id ||
-            !_multiplierByMarker.TryGetValue(id, out var multiplier))
-        {
-            return 1f;
-        }
-
+        TryGetCurrentThrustMultiplier(shuttleUid, out var multiplier);
         return multiplier;
     }
 
+    public bool TryGetCurrentThrustMultiplier(EntityUid shuttleUid, out float multiplier)
+    {
+        if (_multiplierByMarker.Count == 0)
+        {
+            multiplier = 1f;
+            return HasComp<NebulaPresenceComponent>(shuttleUid);
+        }
+
+        if (!TryComp<NebulaPresenceComponent>(shuttleUid, out var presence))
+        {
+            multiplier = 1f;
+            return false;
+        }
+
+        if (presence.Marker.Id is not { } id ||
+            !_multiplierByMarker.TryGetValue(id, out multiplier))
+        {
+            multiplier = 1f;
+        }
+
+        return true;
+    }
+
     public float GetEffectiveDirectionThrust(EntityUid shuttleUid, int directionIndex, float fallbackThrust)
+    {
+        var inNebula = TryGetCurrentThrustMultiplier(shuttleUid, out var multiplier);
+        return GetEffectiveDirectionThrust(
+            shuttleUid,
+            directionIndex,
+            fallbackThrust,
+            multiplier,
+            inNebula);
+    }
+
+    public float GetEffectiveDirectionThrust(EntityUid shuttleUid, int directionIndex, float fallbackThrust, float nebulaMultiplier)
     {
         return GetEffectiveDirectionThrust(
             shuttleUid,
             directionIndex,
             fallbackThrust,
-            GetCurrentThrustMultiplier(shuttleUid));
+            nebulaMultiplier,
+            HasComp<NebulaPresenceComponent>(shuttleUid));
     }
 
-    public float GetEffectiveDirectionThrust(EntityUid shuttleUid, int directionIndex, float fallbackThrust, float nebulaMultiplier)
+    public float GetEffectiveDirectionThrust(
+        EntityUid shuttleUid,
+        int directionIndex,
+        float fallbackThrust,
+        float nebulaMultiplier,
+        bool inNebula)
     {
-        if (nebulaMultiplier == 1f || fallbackThrust <= 0f)
+        if (!inNebula || fallbackThrust <= 0f)
             return fallbackThrust;
 
         if (!TryComp<ShuttleComponent>(shuttleUid, out var shuttle) ||
@@ -121,7 +154,7 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
                 continue;
 
             accountedThrust += thruster.Thrust;
-            effectiveThrust += GetEffectiveThrusterThrust(thrusterUid, thruster.Thrust, nebulaMultiplier);
+            effectiveThrust += GetEffectiveThrusterThrust(thrusterUid, thruster.Thrust, nebulaMultiplier, inNebula);
         }
 
         var remainingThrust = fallbackThrust - accountedThrust;
@@ -133,8 +166,26 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
 
     public float GetEffectiveThrusterThrust(EntityUid thrusterUid, float thrust, float nebulaMultiplier)
     {
+        return GetEffectiveThrusterThrust(thrusterUid, thrust, nebulaMultiplier, true);
+    }
+
+    public float GetEffectiveThrusterThrust(EntityUid thrusterUid, float thrust, float nebulaMultiplier, bool inNebula)
+    {
+        if (!inNebula || thrust <= 0f)
+            return thrust;
+
         var resistance = GetThrustReductionResistance(thrusterUid);
-        return thrust * GetEffectiveMultiplier(nebulaMultiplier, resistance);
+        // Direct nebula multiplier is applied before slowdown resistance by design.
+        var scaledThrust = thrust * GetNebulaThrustMultiplier(thrusterUid);
+        return scaledThrust * GetEffectiveMultiplier(nebulaMultiplier, resistance);
+    }
+
+    public float GetNebulaThrustMultiplier(EntityUid thrusterUid)
+    {
+        if (!_thrusterMultiplierQuery.TryComp(thrusterUid, out var multiplier))
+            return 1f;
+
+        return MathF.Max(0f, multiplier.Multiplier);
     }
 
     public float GetThrustReductionResistance(EntityUid thrusterUid)
@@ -142,11 +193,13 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
         if (!_resistanceQuery.TryComp(thrusterUid, out var resistance))
             return 0f;
 
-        return Math.Clamp(resistance.Resistance, 0f, 1f);
+        return MathF.Max(0f, resistance.Resistance);
     }
 
     private static float GetEffectiveMultiplier(float nebulaMultiplier, float resistance)
     {
+        // Resistance above 1 is intentional: in slowing nebulas it converts the ignored slowdown
+        // into extra thrust. Example: multiplier 0.5 and resistance 2 gives multiplier 1.5.
         return 1f - (1f - nebulaMultiplier) * (1f - resistance);
     }
 }

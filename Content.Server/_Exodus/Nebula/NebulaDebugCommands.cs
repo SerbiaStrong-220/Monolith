@@ -261,17 +261,17 @@ public sealed class NebulaThrustStatusCommand : IConsoleCommand
         }
 
         var thrustSystem = _entityManager.System<NebulaShuttleThrustSystem>();
-        var multiplier = thrustSystem.GetCurrentThrustMultiplier(gridUid);
+        var inNebula = thrustSystem.TryGetCurrentThrustMultiplier(gridUid, out var multiplier);
         var nebula = GetNebulaLabel(gridUid);
         var lines = new List<string>
         {
             $"Grid {gridUid} shuttle thrust:",
-            $"Nebula: {nebula}; multiplier {multiplier:0.###}.",
+            $"Nebula: {nebula}; slowdown multiplier {multiplier:0.###}.",
         };
 
         foreach (var direction in Directions)
         {
-            AddDirection(lines, gridUid, shuttle, thrustSystem, direction.Name, direction.Index, multiplier, details);
+            AddDirection(lines, gridUid, shuttle, thrustSystem, direction.Name, direction.Index, multiplier, inNebula, details);
         }
 
         lines.Add($"Angular: thrust {shuttle.AngularThrust:0.##}; thrusters {shuttle.AngularThrusters.Count}.");
@@ -286,11 +286,12 @@ public sealed class NebulaThrustStatusCommand : IConsoleCommand
         string name,
         int index,
         float multiplier,
+        bool inNebula,
         bool details)
     {
         var raw = shuttle.LinearThrust[index];
         var baseRaw = shuttle.BaseLinearThrust[index];
-        var effective = thrustSystem.GetEffectiveDirectionThrust(gridUid, index, raw, multiplier);
+        var effective = thrustSystem.GetEffectiveDirectionThrust(gridUid, index, raw, multiplier, inNebula);
         var reduction = raw - effective;
         var thrusters = shuttle.LinearThrusters[index];
 
@@ -309,8 +310,9 @@ public sealed class NebulaThrustStatusCommand : IConsoleCommand
             }
 
             var resistance = thrustSystem.GetThrustReductionResistance(thrusterUid);
-            var effectiveThruster = thrustSystem.GetEffectiveThrusterThrust(thrusterUid, thruster.Thrust, multiplier);
-            lines.Add($"    - {GetEntityLabel(thrusterUid)}: thrust {thruster.Thrust:0.##}; effective {effectiveThruster:0.##}; base {thruster.BaseThrust:0.##}; resistance {resistance:0.###}; on {thruster.IsOn}; enabled {thruster.Enabled}.");
+            var nebulaThrustMultiplier = thrustSystem.GetNebulaThrustMultiplier(thrusterUid);
+            var effectiveThruster = thrustSystem.GetEffectiveThrusterThrust(thrusterUid, thruster.Thrust, multiplier, inNebula);
+            lines.Add($"    - {GetEntityLabel(thrusterUid)}: thrust {thruster.Thrust:0.##}; effective {effectiveThruster:0.##}; base {thruster.BaseThrust:0.##}; nebula thrust multiplier {nebulaThrustMultiplier:0.###}; resistance {resistance:0.###}; on {thruster.IsOn}; enabled {thruster.Enabled}.");
         }
     }
 
