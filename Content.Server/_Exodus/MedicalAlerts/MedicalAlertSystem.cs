@@ -97,10 +97,10 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
 
         var entries = GetEntries().ToArray();
 
-        var loaders = EntityQueryEnumerator<CartridgeLoaderComponent>();
-        while (loaders.MoveNext(out var loaderUid, out var loaderComp))
+        var query = EntityQueryEnumerator<MedAlertCartridgeComponent, CartridgeComponent>();
+        while (query.MoveNext(out _, out var cartComp, out var cartridgeComp))
         {
-            if (!_cartridgeLoader.TryGetProgram<MedAlertCartridgeComponent>(loaderUid, out _, out var cartComp, false, loaderComp))
+            if (cartridgeComp.LoaderUid is not { } loaderUid || !TryComp<CartridgeLoaderComponent>(loaderUid, out var loaderComp))
                 continue;
 
             var state = new MedicalAlertListUiState(entries, cartComp.NotificationsEnabled);
