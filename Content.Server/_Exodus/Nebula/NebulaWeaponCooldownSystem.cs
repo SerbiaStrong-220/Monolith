@@ -9,7 +9,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._Exodus.Nebula;
 
 /// <summary>
-/// Applies weapon cooldown modifiers from the nebula marker containing the weapon's grid.
+/// Applies weapon cooldown modifiers from the nebula marker containing the weapon's grid,
+/// plus per-weapon nebula rate multipliers and resistance.
 /// Cache-driven so gun fire checks do not resolve marker prototype components every shot.
 /// </summary>
 public sealed class NebulaWeaponCooldownSystem : EntitySystem
@@ -22,6 +23,8 @@ public sealed class NebulaWeaponCooldownSystem : EntitySystem
     private EntityQuery<AutoShootGunComponent> _autoShootGunQuery;
     private EntityQuery<FireControllableComponent> _fireControllableQuery;
     private EntityQuery<NebulaPresenceComponent> _presenceQuery;
+    private EntityQuery<NebulaWeaponCooldownMultiplierComponent> _weaponMultiplierQuery;
+    private EntityQuery<NebulaWeaponCooldownResistanceComponent> _weaponResistanceQuery;
     private EntityQuery<ShipGunClassComponent> _shipGunClassQuery;
     private EntityQuery<SpaceArtilleryComponent> _spaceArtilleryQuery;
     private EntityQuery<TransformComponent> _transformQuery;
@@ -35,6 +38,8 @@ public sealed class NebulaWeaponCooldownSystem : EntitySystem
         _autoShootGunQuery = GetEntityQuery<AutoShootGunComponent>();
         _fireControllableQuery = GetEntityQuery<FireControllableComponent>();
         _presenceQuery = GetEntityQuery<NebulaPresenceComponent>();
+        _weaponMultiplierQuery = GetEntityQuery<NebulaWeaponCooldownMultiplierComponent>();
+        _weaponResistanceQuery = GetEntityQuery<NebulaWeaponCooldownResistanceComponent>();
         _shipGunClassQuery = GetEntityQuery<ShipGunClassComponent>();
         _spaceArtilleryQuery = GetEntityQuery<SpaceArtilleryComponent>();
         _transformQuery = GetEntityQuery<TransformComponent>();
@@ -72,7 +77,24 @@ public sealed class NebulaWeaponCooldownSystem : EntitySystem
             return false;
         }
 
-        return TryGetGridWeaponCooldownMultipliers(gridUid, out shotCooldownMultiplier, out reloadCooldownMultiplier);
+        if (!TryGetGridWeaponCooldownMultipliers(gridUid, out var nebulaShotMultiplier, out var nebulaReloadMultiplier))
+            return false;
+
+        var shotRateMultiplier = GetWeaponShotCooldownMultiplier(weaponUid);
+        var reloadRateMultiplier = GetWeaponReloadCooldownMultiplier(weaponUid);
+        var shotResistance = GetShotCooldownResistance(weaponUid);
+        var reloadResistance = GetReloadCooldownResistance(weaponUid);
+
+        shotCooldownMultiplier = GetEffectiveCooldownMultiplier(
+            nebulaShotMultiplier,
+            shotResistance,
+            shotRateMultiplier);
+        reloadCooldownMultiplier = GetEffectiveCooldownMultiplier(
+            nebulaReloadMultiplier,
+            reloadResistance,
+            reloadRateMultiplier);
+
+        return true;
     }
 
     public bool TryGetGridWeaponCooldownMultipliers(
@@ -151,12 +173,76 @@ public sealed class NebulaWeaponCooldownSystem : EntitySystem
                _spaceArtilleryQuery.HasComp(uid);
     }
 
+    public float GetWeaponShotCooldownMultiplier(EntityUid weaponUid)
+    {
+        if (!_weaponMultiplierQuery.TryComp(weaponUid, out var multiplier))
+            return 1f;
+
+        return SanitizeRateMultiplier(multiplier.ShotCooldownMultiplier);
+    }
+
+    public float GetWeaponReloadCooldownMultiplier(EntityUid weaponUid)
+    {
+        if (!_weaponMultiplierQuery.TryComp(weaponUid, out var multiplier))
+            return 1f;
+
+        return SanitizeRateMultiplier(multiplier.ReloadCooldownMultiplier);
+    }
+
+    public float GetShotCooldownResistance(EntityUid weaponUid)
+    {
+        if (!_weaponResistanceQuery.TryComp(weaponUid, out var resistance))
+            return 0f;
+
+        return SanitizeResistance(resistance.ShotCooldownResistance);
+    }
+
+    public float GetReloadCooldownResistance(EntityUid weaponUid)
+    {
+        if (!_weaponResistanceQuery.TryComp(weaponUid, out var resistance))
+            return 0f;
+
+        return SanitizeResistance(resistance.ReloadCooldownResistance);
+    }
+
+    private static float GetEffectiveCooldownMultiplier(
+        float nebulaCooldownMultiplier,
+        float resistance,
+        float weaponRateMultiplier)
+    {
+        // Weapon multiplier is rate-style: 1.25 means cooldown / 1.25, not cooldown * 1.25.
+        return GetEffectiveNebulaCooldownMultiplier(nebulaCooldownMultiplier, resistance) / weaponRateMultiplier;
+    }
+
+    private static float GetEffectiveNebulaCooldownMultiplier(float nebulaCooldownMultiplier, float resistance)
+    {
+        // Resistance above 1 is intentional: in slowing nebulas it converts ignored slowdown
+        // into weapon acceleration. Example: multiplier 4 and resistance 1.25 gives 0.25.
+        return MathF.Max(MinCooldownMultiplier, 1f + (nebulaCooldownMultiplier - 1f) * (1f - resistance));
+    }
+
     private static float SanitizeCooldownMultiplier(float multiplier)
     {
         if (float.IsNaN(multiplier) || float.IsInfinity(multiplier))
             return 1f;
 
         return MathF.Max(MinCooldownMultiplier, multiplier);
+    }
+
+    private static float SanitizeRateMultiplier(float multiplier)
+    {
+        if (float.IsNaN(multiplier) || float.IsInfinity(multiplier))
+            return 1f;
+
+        return MathF.Max(MinCooldownMultiplier, multiplier);
+    }
+
+    private static float SanitizeResistance(float resistance)
+    {
+        if (float.IsNaN(resistance) || float.IsInfinity(resistance))
+            return 1f;
+
+        return MathF.Max(0f, resistance);
     }
 
     private readonly record struct WeaponCooldownMultipliers(
