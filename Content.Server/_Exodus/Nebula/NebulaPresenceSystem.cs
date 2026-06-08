@@ -1,13 +1,17 @@
 using System.Numerics;
 using Content.Server.GameTicking;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared._Exodus.Nebula;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -16,12 +20,18 @@ namespace Content.Server._Exodus.Nebula;
 public sealed class NebulaPresenceSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    public static readonly TimeSpan NpcGridScanInterval = TimeSpan.FromSeconds(20);
+    public static readonly TimeSpan NpcGridLeaseDuration = TimeSpan.FromSeconds(25);
     private const float DirtyThreshold = 0.01f;
+    public const float NpcGridScanRadius = 1500f;
 
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -31,9 +41,12 @@ public sealed class NebulaPresenceSystem : EntitySystem
     private const float GridHazardRadius = 32f;
 
     private readonly HashSet<EntityUid> _checkedGrids = new();
+    private readonly HashSet<EntityUid> _checkedNpcGrids = new();
     private readonly HashSet<EntityUid> _updatedEntities = new();
+    private readonly HashSet<Entity<NebulaNpcGridPresenceSourceComponent>> _nearbyNpcCoreBuffer = new();
     private List<Entity<MapGridComponent>> _nearbyGridBuffer = new();
     private TimeSpan _nextUpdate;
+    private TimeSpan _nextNpcGridScan;
 
     public override void Initialize()
     {
@@ -50,6 +63,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (!TryGetNebulaMap(out var mapId, out var mapComponent))
         {
             ClearAllPresence();
+            ClearAllNpcPresenceLeases();
             return;
         }
 
@@ -57,12 +71,20 @@ public sealed class NebulaPresenceSystem : EntitySystem
         _updatedEntities.Clear();
 
         UpdatePlayerPresence(mapId, mapComponent);
+        if (_timing.CurTime >= _nextNpcGridScan)
+        {
+            _nextNpcGridScan = _timing.CurTime + NpcGridScanInterval;
+            UpdateNpcGridPresence(mapId, mapComponent);
+        }
+
+        ClearExpiredNpcPresenceLeases();
         ClearStalePresence();
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
         ClearAllPresence();
+        ClearAllNpcPresenceLeases();
     }
 
     private void UpdatePlayerPresence(MapId mapId, NebulaMapComponent mapComponent)
@@ -107,6 +129,89 @@ public sealed class NebulaPresenceSystem : EntitySystem
                 UpdateEntityPresence(grid.Owner, mapId, mapComponent);
             }
         }
+    }
+
+    private void UpdateNpcGridPresence(MapId mapId, NebulaMapComponent mapComponent)
+    {
+        _checkedNpcGrids.Clear();
+
+        foreach (var session in _playerManager.Sessions)
+        {
+            if (!TryGetNpcScanOrigin(session, mapId, out var origin))
+                continue;
+
+            _nearbyNpcCoreBuffer.Clear();
+            _lookup.GetEntitiesInRange(
+                origin,
+                NpcGridScanRadius,
+                _nearbyNpcCoreBuffer,
+                LookupFlags.Uncontained);
+
+            foreach (var core in _nearbyNpcCoreBuffer)
+            {
+                if (!TryGetActiveNpcGrid(core.Owner, mapId, out var gridUid))
+                    continue;
+
+                if (!_checkedNpcGrids.Add(gridUid))
+                    continue;
+
+                UpdateEntityPresence(gridUid, mapId, mapComponent);
+                RefreshNpcPresenceLease(gridUid, core.Owner);
+            }
+        }
+    }
+
+    private bool TryGetNpcScanOrigin(ICommonSession session, MapId mapId, out MapCoordinates origin)
+    {
+        origin = default;
+
+        if (session.Status != SessionStatus.InGame ||
+            session.AttachedEntity is not { Valid: true } player ||
+            Deleted(player) ||
+            HasComp<GhostComponent>(player) ||
+            _mobState.IsDead(player) ||
+            !_mind.TryGetMind(player, out _, out _) ||
+            !TryComp(player, out TransformComponent? xform) ||
+            xform.MapID != mapId)
+        {
+            return false;
+        }
+
+        origin = _transform.GetMapCoordinates(player, xform);
+        return true;
+    }
+
+    private bool TryGetActiveNpcGrid(EntityUid coreUid, MapId mapId, out EntityUid gridUid)
+    {
+        gridUid = default;
+
+        if (Deleted(coreUid) ||
+            !TryComp(coreUid, out TransformComponent? xform) ||
+            xform.MapID != mapId ||
+            !xform.Anchored ||
+            xform.GridUid is not { Valid: true } grid ||
+            Deleted(grid) ||
+            !HasComp<MapGridComponent>(grid))
+        {
+            return false;
+        }
+
+        if (TryComp<ApcPowerReceiverComponent>(coreUid, out var receiver) &&
+            !_power.IsPowered(coreUid, receiver))
+        {
+            return false;
+        }
+
+        gridUid = grid;
+        return true;
+    }
+
+    private void RefreshNpcPresenceLease(EntityUid gridUid, EntityUid coreUid)
+    {
+        var lease = EnsureComp<NebulaNpcPresenceLeaseComponent>(gridUid);
+        lease.SourceCore = coreUid;
+        lease.LastRefresh = _timing.CurTime;
+        lease.ExpiresAt = _timing.CurTime + NpcGridLeaseDuration;
     }
 
     private void UpdateEntityPresence(
@@ -240,8 +345,28 @@ public sealed class NebulaPresenceSystem : EntitySystem
         var query = EntityQueryEnumerator<NebulaPresenceComponent>();
         while (query.MoveNext(out var uid, out _))
         {
-            if (!_updatedEntities.Contains(uid))
-                ClearPresence(uid);
+            if (_updatedEntities.Contains(uid))
+                continue;
+
+            if (TryComp<NebulaNpcPresenceLeaseComponent>(uid, out var lease) &&
+                lease.ExpiresAt > _timing.CurTime)
+            {
+                continue;
+            }
+
+            ClearPresence(uid);
+        }
+    }
+
+    private void ClearExpiredNpcPresenceLeases()
+    {
+        var query = EntityQueryEnumerator<NebulaNpcPresenceLeaseComponent>();
+        while (query.MoveNext(out var uid, out var lease))
+        {
+            if (lease.ExpiresAt > _timing.CurTime)
+                continue;
+
+            RemCompDeferred<NebulaNpcPresenceLeaseComponent>(uid);
         }
     }
 
@@ -251,6 +376,15 @@ public sealed class NebulaPresenceSystem : EntitySystem
         while (query.MoveNext(out var uid, out _))
         {
             RemCompDeferred<NebulaPresenceComponent>(uid);
+        }
+    }
+
+    private void ClearAllNpcPresenceLeases()
+    {
+        var query = EntityQueryEnumerator<NebulaNpcPresenceLeaseComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            RemCompDeferred<NebulaNpcPresenceLeaseComponent>(uid);
         }
     }
 

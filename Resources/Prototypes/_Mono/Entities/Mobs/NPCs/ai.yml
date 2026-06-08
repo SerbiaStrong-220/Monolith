@@ -50,6 +50,7 @@
     sleepMaxGridSpeed: 10 # don't sleep so we can still dodge grids or such if drifting far from players
     rootTask:
       task: RammerShuttleCompound
+  - type: NebulaNpcGridPresenceSource # Exodus nebula NPC grid presence
   - type: StaticPrice
     price: 10000 # Exodus-Price-Rebalance
   - type: ApcPowerReceiver
