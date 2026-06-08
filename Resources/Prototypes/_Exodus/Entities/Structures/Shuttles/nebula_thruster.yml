@@ -1,8 +1,8 @@
 - type: entity
   id: NebulaThrusterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: nebula-tuned thruster machine board
-  description: A machine board for a nebula-tuned thruster.
+  name: phasic thruster machine board
+  description: A machine board for a phasic thruster.
   components:
   - type: MachineBoard
     prototype: NebulaThruster
@@ -14,12 +14,17 @@
 - type: entity
   id: NebulaThruster
   parent: Thruster
-  name: nebula-tuned thruster
-  description: A standard shuttle thruster tuned to overperform in nebula fields.
+  name: phasic thruster
+  description: A shuttle thruster tuned to underperform in open space and overperform in nebula fields.
   components:
   - type: Machine
     board: NebulaThrusterMachineCircuitboard
+  - type: Thruster
+    thrust: 100
+    baseThrust: 100
   - type: NebulaThrustMultiplier
-    multiplier: 2
+    multiplier: 3.5
   - type: NebulaThrustResistance
     resistance: 1
+  - type: Sprite
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster.rsi
