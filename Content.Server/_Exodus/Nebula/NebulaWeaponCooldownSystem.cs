@@ -211,14 +211,27 @@ public sealed class NebulaWeaponCooldownSystem : EntitySystem
         float weaponRateMultiplier)
     {
         // Weapon multiplier is rate-style: 1.25 means cooldown / 1.25, not cooldown * 1.25.
-        return GetEffectiveNebulaCooldownMultiplier(nebulaCooldownMultiplier, resistance) / weaponRateMultiplier;
+        return GetResistedNebulaCooldownMultiplier(nebulaCooldownMultiplier, resistance) /
+            weaponRateMultiplier /
+            GetOverdriveMultiplier(nebulaCooldownMultiplier, resistance);
     }
 
-    private static float GetEffectiveNebulaCooldownMultiplier(float nebulaCooldownMultiplier, float resistance)
+    private static float GetResistedNebulaCooldownMultiplier(float nebulaCooldownMultiplier, float resistance)
     {
-        // Resistance above 1 is intentional: in slowing nebulas it converts ignored slowdown
-        // into weapon acceleration. Example: multiplier 4 and resistance 1.25 gives 0.25.
-        return MathF.Max(MinCooldownMultiplier, 1f + (nebulaCooldownMultiplier - 1f) * (1f - resistance));
+        // 0..1 is pure resistance to the marker cooldown modifier:
+        // 0 gets the full modifier, 0.5 gets half of its distance from neutral, 1 ignores it.
+        var effectiveResistance = MathF.Min(resistance, 1f);
+        return MathF.Max(MinCooldownMultiplier, 1f + (nebulaCooldownMultiplier - 1f) * (1f - effectiveResistance));
+    }
+
+    private static float GetOverdriveMultiplier(float nebulaCooldownMultiplier, float resistance)
+    {
+        if (nebulaCooldownMultiplier == 1f)
+            return 1f;
+
+        // Values above 1 become a direct rate multiplier after the marker modifier is ignored.
+        // Example: purple x4 and resistance 1.6 gives marker x1, then cooldown / 1.6.
+        return MathF.Max(1f, resistance);
     }
 
     private static float SanitizeCooldownMultiplier(float multiplier)
