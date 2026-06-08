@@ -23,7 +23,7 @@
     thrust: 100
     baseThrust: 100
   - type: NebulaThrustMultiplier
-    multiplier: 3.5
+    multiplier: 4
   - type: NebulaThrustResistance
     resistance: 1
   - type: Sprite
