@@ -73,6 +73,9 @@
   - type: NebulaRadarVisuals
     radarColor: "#ba66ffd9"
   - type: NebulaThrustReduction
+  - type: NebulaWeaponCooldownModifier
+    shotCooldownMultiplier: 4
+    reloadCooldownMultiplier: 4
 
 # Death zone — inner concentric sub-zone (boundary..90k from origin).
 # Grid lightning fires ~3x more often than in a normal red nebula. Personal (EVA)
