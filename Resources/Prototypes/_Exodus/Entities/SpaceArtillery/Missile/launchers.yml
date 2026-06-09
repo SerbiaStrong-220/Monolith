@@ -7,7 +7,7 @@
   description: A self-loading fixed missile launcher. It fires light guided rockets at high speed.
   components:
   - type: StaticPrice
-    price: 5000
+    price: 50000
   - type: Sprite
     sprite: _Exodus/Objects/ShuttleWeapons/Rain.rsi
     layers:
@@ -35,10 +35,10 @@
     powerUsePassive: 200
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 180
+    autoRechargeRate: 120
   - type: Actions
   - type: ProjectileBatteryAmmoProvider
-    proto: ShipMissileRain
+    proto: ShipMissileSliverRain
     fireCost: 350
   - type: RadarBlip
     radarColor: "#FCBA03"
@@ -61,7 +61,7 @@
   description: A self-loading fixed missile launcher. It fires light guided rockets.
   components:
   - type: StaticPrice
-    price: 5000
+    price: 25000
   - type: Sprite
     sprite: _Exodus/Objects/ShuttleWeapons/Sliver.rsi
     layers:
@@ -75,9 +75,9 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: FireControllable
-    processingPowerCost: 11
+    processingPowerCost: 6
   - type: Gun
-    fireRate: 0.75
+    fireRate: 1
     recoil: 10
     shootThermalSignature: 32000000
     soundGunshot:
@@ -89,10 +89,10 @@
     powerUsePassive: 200
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 180
+    autoRechargeRate: 300
   - type: Actions
   - type: ProjectileBatteryAmmoProvider
-    proto: ShipMissileSliver
+    proto: ShipMissileSliverRain
     fireCost: 350
   - type: RadarBlip
     radarColor: "#FCBA03"
@@ -103,24 +103,11 @@
   - type: ShipGunClass
     shipClass: Heavy
   - type: ShipRepairable
-    repairTime: 30
-    repairCost: 120
+    repairTime: 20
+    repairCost: 90
 
 - type: entity
-  id: ShipMissileRain
-  name: Rain rocket
-  parent: ShipMissileSerpent
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _Exodus/Objects/ShuttleWeapons/SmallRocket.rsi
-    layers:
-    - state: SmallRocket
-  - type: TimedDespawn
-    lifetime: 17.6
-
-- type: entity
-  id: ShipMissileSliver
+  id: ShipMissileSliverRain
   name: Sliver rocket
   parent: ShipMissileSerpent
   categories: [ HideSpawnMenu ]
@@ -130,4 +117,15 @@
     layers:
     - state: SmallRocket
   - type: TimedDespawn
-    lifetime: 20
+    lifetime: 17.5
+  - type: TargetSeeking
+    acceleration: 30
+    detectionRange: 700
+    scanArc: 40
+    launchSpeed: 50
+    maxSpeed: 300
+    trackDelay: 2
+  - type: RadarBlip
+    radarColor: "#ffffff"
+    scale: 3
+    shape: hexagon
