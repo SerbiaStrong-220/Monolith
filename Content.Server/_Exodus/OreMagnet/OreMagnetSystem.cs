@@ -39,7 +39,6 @@ public sealed class OreMagnetSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<OreMagnetComponent, ComponentInit>(OnMagnetInit);
         SubscribeLocalEvent<OreMagnetComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<OreMagnetComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
         SubscribeLocalEvent<OreMagnetComponent, ComponentShutdown>(OnMagnetShutdown);
     }
 
