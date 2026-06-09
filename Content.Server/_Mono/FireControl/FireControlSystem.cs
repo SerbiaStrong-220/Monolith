@@ -305,6 +305,9 @@ public sealed partial class FireControlSystem : EntitySystem
         if (!Resolve(controllable, ref component))
             return 0;
 
+        if (component.ProcessingPowerCost is { } processingPowerCost)
+            return Math.Max(0, processingPowerCost);
+
         if (!TryComp<ShipGunClassComponent>(controllable, out var classComponent))
             return 0;
 
