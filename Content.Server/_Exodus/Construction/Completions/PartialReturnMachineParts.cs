@@ -59,7 +59,7 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
 
         // Read board requirements before emptying
         MachineBoardComponent? board = null;
-        foreach (var container in containerManager.GetAllContainers())
+        foreach (var (key, container) in containerManager.Containers)
         {
             if (container.ID != MachineFrameComponent.BoardContainerName)
                 continue;
@@ -82,7 +82,7 @@ public sealed partial class PartialReturnMachineParts : IGraphAction
             break;
         }
 
-        foreach (var container in containerManager.GetAllContainers())
+        foreach (var (key, container) in containerManager.Containers)
         {
             if (container.ID != MachineFrameComponent.PartContainerName)
                 continue;

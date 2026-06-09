@@ -1,4 +1,4 @@
-using Content.Server.Emp;
+using Content.Shared.Emp;
 
 namespace Content.Server._Exodus.Emp;
 
@@ -11,6 +11,6 @@ public sealed class EmpImmuneSystem : EntitySystem
 
     private void OnEmpAttempt(Entity<EmpImmuneComponent> ent, ref EmpAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 }

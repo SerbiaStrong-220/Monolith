@@ -2,6 +2,7 @@ using Content.Shared._Exodus.GameTicking.Requirements;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.GameTicking.Requirements;
@@ -28,7 +29,7 @@ public sealed partial class MindWhitelistedPlayersRequirement : GameRuleRequirem
         var query = entity.EntityQueryEnumerator<MindComponent>();
         while (query.MoveNext(out var mindId, out var mind))
         {
-            if (mind.Session == null || mind.CurrentEntity is not { } uid)
+            if (mind.CurrentEntity is not { } uid || entity.HasComponent<ActorComponent>(uid))
                 continue;
 
             if (!entity.EntityExists(uid) || entity.IsPaused(uid))

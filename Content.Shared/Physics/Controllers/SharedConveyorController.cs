@@ -17,18 +17,16 @@ using Robust.Shared.Threading;
 
 namespace Content.Shared.Physics.Controllers;
 
-public abstract class SharedConveyorController : VirtualController
+public abstract partial class SharedConveyorController : VirtualController
 {
-    [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private   readonly IParallelManager _parallel = default!;
-    [Dependency] private   readonly CollisionWakeSystem _wake = default!;
-    [Dependency] protected readonly EntityLookupSystem Lookup = default!;
-    [Dependency] private   readonly FixtureSystem _fixtures = default!;
-    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private   readonly SharedMoverController _mover = default!;
-    // Exodus-conveyor-speed-begin
-    [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
-    // Exodus-conveyor-speed-end
+    [Dependency] protected IMapManager MapManager = default!;
+    [Dependency] private   IParallelManager _parallel = default!;
+    [Dependency] private   CollisionWakeSystem _wake = default!;
+    [Dependency] protected EntityLookupSystem Lookup = default!;
+    [Dependency] private   FixtureSystem _fixtures = default!;
+    [Dependency] private   SharedGravitySystem _gravity = default!;
+    [Dependency] private   SharedMoverController _mover = default!;
+    [Dependency] private   SharedUserInterfaceSystem _ui = default!; // Exodus-Conveyor-Speed
 
     protected const string ConveyorFixture = "conveyor";
 

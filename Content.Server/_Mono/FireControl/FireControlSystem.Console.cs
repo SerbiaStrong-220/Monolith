@@ -27,15 +27,15 @@ namespace Content.Server._Mono.FireControl;
 
 public sealed partial class FireControlSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoleSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly CrewedShuttleSystem _crewedShuttle = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
-    [Dependency] private readonly ShipShieldsSystem _shields = default!; // Exodus
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private ShuttleConsoleSystem _shuttleConsoleSystem = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private CrewedShuttleSystem _crewedShuttle = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IMapManager _mapMan = default!;
+    [Dependency] private ShipShieldsSystem _shields = default!; // Exodus
 
     private bool _completedCheck = false;
 

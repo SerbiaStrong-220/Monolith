@@ -1,8 +1,8 @@
 - type: entity
   id: WeaponTurretTovek
   name: ADMX-250 TOVEK Missile Pod
-  parent:   # Exodus-Fix-None-HP
-  - BallisticArtilleryCartridge
+  parent: # Exodus-Fix-None-HP
+  - BallisticArtilleryUnanchorableCartridge
   - ShipGunTier2HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier2HP)
   - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   description: A 250mm missile pod created by Aetherion Dynamics. Fires 250mm warheads to devastate enemy ships at long range. Can be remotely activated or linked to a GCS.

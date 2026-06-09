@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server._Exodus.Shuttles.Systems; // Exodus OmnidirectionalThruster
-using Content.Server._NF.M_Emp;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Damage;
