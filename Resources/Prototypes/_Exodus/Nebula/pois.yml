@@ -73,6 +73,30 @@
 # protectedRadius 2500, maxCount 1, duplicateAllowed false (default).
 
 - type: nebulaPoi
+  id: NebulaPoiSmallMeteostation
+  path: /Maps/_Exodus/POI/small_meteo_station.yml
+  spawnIn:
+  - NebulaRedMarker
+  minDensity: 0.7
+  protectedRadius: 2500
+  name: "Маленькая Метеостанция"
+  stationGameMap: SmallMeteostation
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#C83737"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SyndicateFOB
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot 
+
+- type: nebulaPoi
   id: NebulaPoiLancelot
   path: /Maps/_Mono/POI/Dungeons/lancelot.yml
   spawnIn:
