@@ -66,7 +66,7 @@
   - type: Transform
   - type: GenericVisualizer
     visuals:
-      enum.StorageVisuals.Open:
+      enum.OreMagnetVisuals.Active:
         top:
           True: { visible: true }
           False: { visible: false }

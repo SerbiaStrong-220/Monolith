@@ -50,9 +50,9 @@ public sealed partial class OreMagnetComponent : Component
     [NonSerialized]
     public TimeSpan? DeactivateAt;
 
-    /// <summary>
-    /// Whether the magnet is currently active.
-    /// </summary>
+    [NonSerialized]
+    public TimeSpan? LidCloseAt;
+
     public bool IsActive => DeactivateAt.HasValue;
 }
 

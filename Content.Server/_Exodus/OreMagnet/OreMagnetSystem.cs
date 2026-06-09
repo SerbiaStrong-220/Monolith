@@ -3,12 +3,15 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Power.Components;
 using Content.Shared._Exodus.Mining.Components;
+using Content.Shared._Exodus.Mining;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -25,6 +28,8 @@ public sealed class OreMagnetSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private const float ScanInterval = 0.5f;
@@ -33,12 +38,14 @@ public sealed class OreMagnetSystem : EntitySystem
     // Tracks how many magnets are currently active.
     // Lets Update() exit immediately if all magnets idle.
     private int _activeCount;
+    private int _lidOpenCount;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<OreMagnetComponent, ComponentInit>(OnMagnetInit);
         SubscribeLocalEvent<OreMagnetComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<OreMagnetComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
         SubscribeLocalEvent<OreMagnetComponent, ComponentShutdown>(OnMagnetShutdown);
     }
 
@@ -63,12 +70,22 @@ public sealed class OreMagnetSystem : EntitySystem
         _activeCount++;
     }
 
+    // Storage power gate
+
+    private void OnStorageInteractAttempt(Entity<OreMagnetComponent> ent, ref StorageInteractAttemptEvent args)
+    {
+        if (!TryComp<ApcPowerReceiverComponent>(ent, out var power) || !power.Powered)
+            args.Cancelled = true;
+    }
+
     // Cleanup when entity is deleted while active
 
     private void OnMagnetShutdown(EntityUid uid, OreMagnetComponent comp, ComponentShutdown args)
     {
         if (comp.IsActive)
             _activeCount--;
+        if (comp.LidCloseAt.HasValue)
+            _lidOpenCount--;
     }
 
     // Per-frame update
@@ -78,22 +95,28 @@ public sealed class OreMagnetSystem : EntitySystem
         _scanTimer -= frameTime;
 
         // Fast path: no magnets are active and scan isn't due — nothing to do.
-        if (_activeCount <= 0 && _scanTimer > 0f)
+        if (_activeCount <= 0 && _lidOpenCount <= 0 && _scanTimer > 0f)
             return;
 
-        // Check for expired magnets (only runs when _activeCount > 0).
-        if (_activeCount > 0)
+        if (_activeCount > 0 || _lidOpenCount > 0)
         {
             var timerQuery = EntityQueryEnumerator<OreMagnetComponent>();
-            while (timerQuery.MoveNext(out _, out var comp))
+            while (timerQuery.MoveNext(out var uid, out var comp))
             {
-                if (!comp.IsActive)
-                    continue;
-                if (_timing.CurTime < comp.DeactivateAt!.Value)
-                    continue;
+                if (comp.IsActive && _timing.CurTime >= comp.DeactivateAt!.Value)
+                {
+                    comp.DeactivateAt = null;
+                    _activeCount--;
+                }
 
-                comp.DeactivateAt = null;
-                _activeCount--;
+                if (comp.LidCloseAt.HasValue && _timing.CurTime >= comp.LidCloseAt.Value)
+                {
+                    comp.LidCloseAt = null;
+                    _lidOpenCount--;
+                    _appearance.SetData(uid, OreMagnetVisuals.Active, false);
+                    if (TryComp<StorageComponent>(uid, out var storageComp))
+                        _audio.PlayPvs(storageComp.StorageCloseSound, uid);
+                }
             }
         }
 
@@ -155,7 +178,18 @@ public sealed class OreMagnetSystem : EntitySystem
             {
                 // Close enough: collect directly into storage.
                 // If storage is full the item stays on the floor without being re-thrown.
-                _storage.Insert(magnetUid, entityUid, out _, playSound: false);
+                if (_storage.Insert(magnetUid, entityUid, out _, playSound: false))
+                {
+                    var wasOpen = magnetComp.LidCloseAt.HasValue;
+                    if (!wasOpen)
+                    {
+                        _lidOpenCount++;
+                        if (TryComp<StorageComponent>(magnetUid, out var storageComp))
+                            _audio.PlayPvs(storageComp.StorageOpenSound, magnetUid);
+                        _appearance.SetData(magnetUid, OreMagnetVisuals.Active, true);
+                    }
+                    magnetComp.LidCloseAt = _timing.CurTime + TimeSpan.FromSeconds(ScanInterval + 0.25f);
+                }
                 continue;
             }
 

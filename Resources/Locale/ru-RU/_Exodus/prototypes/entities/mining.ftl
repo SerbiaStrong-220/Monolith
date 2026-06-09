@@ -4,5 +4,5 @@ ent-OreCatcherFlatpack = Упакованная ловушка руд
 ent-OreCatcherMachine = Ловушка руд
     .desc = Большой магнит, соединённый с хранилищем. Для улавливания и хранения необработанных руд и фрагментов.
 
- ent-OreCatcherMachineCircuitboard = Плата ловушки руд
+ent-OreCatcherMachineCircuitboard = Плата ловушки руд
     .desc = Плата машины - ловушки руд, необходима для сборки.
