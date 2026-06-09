@@ -1,0 +1,58 @@
+using Content.Shared.Whitelist;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+
+namespace Content.Shared._Exodus.Mining.Components;
+
+[RegisterComponent]
+public sealed partial class OreMagnetComponent : Component
+{
+    /// <summary>
+    /// Search radius in tiles.
+    /// </summary>
+    [DataField]
+    public float Radius = 8f;
+
+    /// <summary>
+    /// Speed at which attracted entities are thrown toward the magnet.
+    /// </summary>
+    [DataField]
+    public float PullSpeed = 6f;
+
+    /// <summary>
+    /// How long the magnet stays active after a signal, in seconds.
+    /// </summary>
+    [DataField]
+    public float ActivationDuration = 10f;
+
+    /// <summary>
+    /// Whitelist of entity types to attract. If null, attracts everything in range.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// DeviceLink sink port that triggers activation.
+    /// </summary>
+    [DataField]
+    public string OnPort = "On";
+
+    /// <summary>
+    /// Radius within which items are inserted directly into storage rather than thrown.
+    /// </summary>
+    [DataField]
+    public float PickupRadius = 1.5f;
+
+    /// <summary>
+    /// Absolute server time at which the magnet deactivates.
+    /// Null when the magnet is inactive. Avoids per-tick float subtraction drift.
+    /// </summary>
+    [NonSerialized]
+    public TimeSpan? DeactivateAt;
+
+    /// <summary>
+    /// Whether the magnet is currently active.
+    /// </summary>
+    public bool IsActive => DeactivateAt.HasValue;
+}
+
