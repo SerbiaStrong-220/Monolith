@@ -42,6 +42,8 @@
     Uranium: 20000
     Silver: 7000
     Gold: 7000
+    UraniumDepleted: 700
+    UraniumFissile: 350
 
 - type: latheRecipe
   parent: BaseVoucherRecipe
@@ -53,10 +55,12 @@
     Plasteel: 20000
     Plastic: 50000
     Glass: 15000
-    Plasma: 7500
+    Plasma: 20000
     Uranium: 20000
     Silver: 10000
-    Gold: 7000
+    Gold: 10000
+    UraniumDepleted: 1800
+    UraniumFissile: 800
 
 - type: latheRecipe
   parent: BaseVoucherRecipe

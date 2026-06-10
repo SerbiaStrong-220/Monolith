@@ -4,7 +4,7 @@
   entityIcon: ShipVoucherUSSPBasic
   discipline: UsspShipyard
   tier: 1
-  cost: 45000
+  cost: 80000
   recipeUnlocks:
   - BasicVoucherUssp
   technologyPrerequisites:
@@ -17,7 +17,7 @@
   entityIcon: ShipVoucherUSSPIntermediate
   discipline: UsspShipyard
   tier: 2
-  cost: 65000
+  cost: 130000
   recipeUnlocks:
   - IntermediateVoucherUssp
   technologyPrerequisites:
@@ -30,7 +30,7 @@
   entityIcon: ShipVoucherUSSPAdvanced
   discipline: UsspShipyard
   tier: 3
-  cost: 95000
+  cost: 200000
   recipeUnlocks:
   - AdvancedVoucherUssp
   technologyPrerequisites:
@@ -44,7 +44,7 @@
   entityIcon: ShipVoucherUSSPLedokol
   discipline: UsspShipyard
   tier: 3
-  cost: 100000
+  cost: 300000
   recipeUnlocks:
   - LedokolVoucherUssp
   - LedokolRamVoucherUssp
