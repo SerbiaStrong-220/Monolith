@@ -43,3 +43,123 @@
     - Ferz
   - type: StaticPrice
     vendPrice: 325000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherUSSPBasic
+  name: USSP basic shuttle LPC
+  description: A small card that authorizes the acquisition of a basic USSP shuttle.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/lpc.rsi
+    layers:
+    - state: ltech
+    - state: stripeussp
+    - state: icon1
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: USSP
+    companyName: USSP
+    vessels:
+    - Svinya
+    - Gruznyk
+    - Natisk
+    - Strayk
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherUSSPIntermediate
+  name: USSP intermediate shuttle LPC
+  description: A small card that authorizes the acquisition of an intermediate USSP shuttle.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/lpc.rsi
+    layers:
+    - state: ltech
+    - state: stripeussp
+    - state: icon2
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: USSP
+    companyName: USSP
+    vessels:
+    - Akula
+    - Drakon
+    - Tayfun
+    - Sekunda
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherUSSPAdvanced
+  name: USSP advanced shuttle LPC
+  description: A small card that authorizes the acquisition of an advanced USSP shuttle.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/lpc.rsi
+    layers:
+    - state: ltech
+    - state: stripeussp
+    - state: icon3
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: USSP
+    companyName: USSP
+    vessels:
+    - Sulak
+    - Buran
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherUSSPLedokol
+  name: USSP ledokol LPC
+  description: A small card that authorizes the acquisition of a Ledokol.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/lpc.rsi
+    layers:
+    - state: mtech
+    - state: stripeussp
+    - state: vouchermilitary
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: USSP
+    companyName: USSP
+    vessels:
+    - Ledokol
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherUSSPLedokolRam
+  name: USSP ledokol ram LPC
+  description: A small card that authorizes the acquisition of a Ledokol ram.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/lpc.rsi
+    layers:
+    - state: mtech
+    - state: stripeussp
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Custom
+    companyName: USSP
+    vessels:
+    - Kopye
+    - Molotok
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherUSSPLedokolAttatchment
+  name: USSP ledokol attatchment LPC
+  description: A small card that authorizes the acquisition of a Ledokol attatchment.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/lpc.rsi
+    layers:
+    - state: mtech
+    - state: stripeussp
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Custom
+    companyName: USSP
+    vessels:
+    - Kupol
