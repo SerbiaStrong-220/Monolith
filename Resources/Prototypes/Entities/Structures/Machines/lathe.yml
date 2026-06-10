@@ -327,6 +327,7 @@
     - NFScienceBoardsStatic # Frontier
     - NFServiceBoardsStatic # Frontier
     - NFSalvageBoardsStatic # Frontier
+    - ExodusMiningBoardsStatic # Exodus-mining-expansion
     dynamicPacks:
     - MonoEconomyLatheBoards # Mono
     - EngineeringBoards
