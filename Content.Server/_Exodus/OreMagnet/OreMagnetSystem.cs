@@ -43,16 +43,9 @@ public sealed class OreMagnetSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<OreMagnetComponent, ComponentInit>(OnMagnetInit);
         SubscribeLocalEvent<OreMagnetComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<OreMagnetComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
         SubscribeLocalEvent<OreMagnetComponent, ComponentShutdown>(OnMagnetShutdown);
-    }
-
-    private void OnMagnetInit(Entity<OreMagnetComponent> ent, ref ComponentInit args)
-    {
-        if (ent.Comp.Whitelist != null && TryComp<StorageComponent>(ent, out var storage))
-            storage.Whitelist = ent.Comp.Whitelist;
     }
 
     // Signal handling
