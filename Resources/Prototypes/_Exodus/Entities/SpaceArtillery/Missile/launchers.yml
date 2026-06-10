@@ -23,7 +23,7 @@
   - type: FireControllable
     processingPowerCost: 10
   - type: Gun
-    fireRate: 1.5
+    fireRate: 2
     recoil: 10
     shootThermalSignature: 32000000
     soundGunshot:
@@ -35,7 +35,7 @@
     powerUsePassive: 200
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 120
+    autoRechargeRate: 180
   - type: Actions
   - type: ProjectileBatteryAmmoProvider
     proto: ShipMissileSliverRain
@@ -119,13 +119,18 @@
   - type: TimedDespawn
     lifetime: 17.5
   - type: TargetSeeking
-    acceleration: 30
-    detectionRange: 700
-    scanArc: 40
-    launchSpeed: 50
+    acceleration: 70
+    detectionRange: 800
+    scanArc: 60
+    launchSpeed: 75
     maxSpeed: 300
     trackDelay: 2
   - type: RadarBlip
     radarColor: "#ffffff"
     scale: 3
     shape: hexagon
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 3
+    totalIntensity: 150
