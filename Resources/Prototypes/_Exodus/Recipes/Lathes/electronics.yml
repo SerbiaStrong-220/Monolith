@@ -4,6 +4,6 @@
   result: OreCatcherMachineCircuitboard
 
 - type: latheRecipePack
-  id: ExodusMiningBoardsStatic
+  id: ExodusMiningBoards
   recipes:
   - OreCatcherMachineCircuitboard
