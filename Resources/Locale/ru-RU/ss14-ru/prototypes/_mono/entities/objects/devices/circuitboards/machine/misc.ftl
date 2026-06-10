@@ -4,5 +4,3 @@ ent-ContainmentFieldGeneratorCircuitboard = containment field generator machine 
     .desc = { ent-BaseMachineCircuitboard.desc }
 ent-SmartfridgeCircuitboard = печатная плата умного холодильника
     .desc = Печатная плата умного холодильника.
-ent-SmartArmoryCircuitboard = печатная плата умного арсенала
-    .desc = Печатная плата умного арсенала.
