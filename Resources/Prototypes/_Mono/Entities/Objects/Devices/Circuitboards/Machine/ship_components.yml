@@ -128,6 +128,42 @@
       Glass: 10
       Steel: 10
 
+# Exodus start
+- type: entity
+  id: MachineGCSSuperCircuitboard
+  parent: BaseMachineCircuitboard
+  name: super-high-power gunnery control server board
+  description: A machine board for a GCS.
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: GunneryServerSuper
+    requirements:
+      Capacitor: 2
+      Manipulator: 2
+    stackRequirements:
+      Glass: 10
+      Steel: 10
+
+- type: entity
+  id: MachineGCSHyperCircuitboard
+  parent: BaseMachineCircuitboard
+  name: hyper-high-power gunnery control server board
+  description: A machine board for a GCS.
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: GunneryServerHyper
+    requirements:
+      Capacitor: 2
+      Manipulator: 2
+    stackRequirements:
+      Glass: 10
+      Steel: 10
+# Exodus end
+
 - type: entity
   id: MachineGCSStationCircuitboard
   parent: BaseMachineCircuitboard
