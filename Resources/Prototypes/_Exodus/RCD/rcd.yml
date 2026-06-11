@@ -14,6 +14,7 @@
 
 - type: rcd
   id: SurveillanceCameraConstructed
+  name: surveillance-camera-constructed
   category: Electrical
   sprite: { sprite: Structures/Wallmounts/camera.rsi, state: camera_off }
   mode: ConstructObject
