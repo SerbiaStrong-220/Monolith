@@ -86,6 +86,7 @@ namespace Content.Server.IoC
             IoCManager.Register<MiniAuthManager>(); //Frontier
             IoCManager.Register<CompanyManager>(); // Mono
             IoCManager.Register<MonoCoinsManager>(); // Mono
+            IoCManager.Register<Content.Server._Exodus.Bank.SavingsTransferManager>(); // Exodus
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();

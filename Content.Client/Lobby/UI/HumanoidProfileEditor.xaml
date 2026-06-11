@@ -45,6 +45,10 @@
                 </BoxContainer>
             </BoxContainer>
             <Control MinHeight="10" />
+            <!-- Exodus: savings button, sits at the left just above the tab strip -->
+            <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
+                <Button Name="SavingsButton" Text="{Loc 'humanoid-profile-editor-savings-button'}" />
+            </BoxContainer>
             <!-- tabContainer -->
             <TabContainer Name="TabContainer" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical">

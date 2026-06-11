@@ -189,6 +189,7 @@ namespace Content.Server.Entry
 
                 IoCManager.Resolve<CompanyManager>().Initialize(); // Mono
                 IoCManager.Resolve<MonoCoinsManager>().Initialize(); // Mono
+                IoCManager.Resolve<Content.Server._Exodus.Bank.SavingsTransferManager>().Initialize(); // Exodus
                 IoCManager.Resolve<IGameMapManager>().Initialize();
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBanManager>().Initialize();

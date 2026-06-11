@@ -69,6 +69,7 @@ namespace Content.Client.IoC
 
             collection.Register<CompanyManager>(); // Mono
             collection.Register<MonoCoinsManager>(); // Mono
+            collection.Register<Content.Client._Exodus.Bank.SavingsTransferManager>(); // Exodus
 
             collection.Register<SponsorsManager>(); // Corvax-Sponsors
             collection.Register<JoinQueueManager>(); // Corvax-Queue

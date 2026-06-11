@@ -84,6 +84,7 @@ namespace Content.Client.Entry
         [Dependency] private IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private CompanyManager _companyManager = default!; // Mono
         [Dependency] private MonoCoinsManager _coinsManager = default!; // Mono
+        [Dependency] private Content.Client._Exodus.Bank.SavingsTransferManager _savingsTransferManager = default!; // Exodus
 
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
         [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
@@ -154,6 +155,7 @@ namespace Content.Client.Entry
             _playbackMan.Initialize();
             _companyManager.Initialize(); // Mono
             _coinsManager.Initialize(); // Mono
+            _savingsTransferManager.Initialize(); // Exodus
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);

@@ -86,6 +86,13 @@ namespace Content.Client.Lobby
             _netManager.ClientSendMessage(msg);
         }
 
+        public void UpdateCharacterLocal(ICharacterProfile profile, int slot)
+        {
+            // Exodus: cache-only update, no network send. The server already owns this change.
+            var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) { [slot] = profile };
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+        }
+
         public void CreateCharacter(ICharacterProfile profile)
         {
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters);

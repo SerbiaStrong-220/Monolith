@@ -14,6 +14,13 @@ namespace Content.Client.Lobby
         void SelectCharacter(ICharacterProfile profile);
         void SelectCharacter(int slot);
         void UpdateCharacter(ICharacterProfile profile, int slot);
+
+        /// <summary>
+        /// Exodus: updates a character in the local cache only, without sending it to the server.
+        /// Use when the server is already the source of the change (e.g. a savings transfer) to avoid
+        /// a redundant save that races with the server's own write.
+        /// </summary>
+        void UpdateCharacterLocal(ICharacterProfile profile, int slot);
         void CreateCharacter(ICharacterProfile profile);
         void DeleteCharacter(ICharacterProfile profile);
         void DeleteCharacter(int slot);

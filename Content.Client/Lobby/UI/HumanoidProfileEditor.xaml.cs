@@ -63,6 +63,11 @@ namespace Content.Client.Lobby.UI
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
 
+        // Exodus: savings transfer window + managers.
+        private _Exodus.Bank.UI.SavingsWindow? _savingsWindow;
+        private readonly _Mono.MonoCoins.MonoCoinsManager _monoCoins;
+        private readonly _Exodus.Bank.SavingsTransferManager _savingsTransfer;
+
         private bool _exporting;
         private bool _imaging;
 
@@ -169,6 +174,13 @@ namespace Content.Client.Lobby.UI
             {
                 Save?.Invoke();
             };
+
+            // Exodus: savings transfer.
+            _monoCoins = IoCManager.Resolve<_Mono.MonoCoins.MonoCoinsManager>();
+            _savingsTransfer = IoCManager.Resolve<_Exodus.Bank.SavingsTransferManager>();
+            _savingsTransfer.BankBalanceUpdated += OnSavingsBankBalanceUpdated;
+            _monoCoins.BalanceUpdated += OnSavingsAccountBalanceUpdated;
+            SavingsButton.OnPressed += _ => OpenSavingsWindow();
 
             #region Left
 
@@ -1592,6 +1604,60 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
 
+        // Exodus: savings transfer window.
+        private void OpenSavingsWindow()
+        {
+            if (Profile == null)
+                return;
+
+            _savingsWindow?.Dispose();
+            _savingsWindow = new _Exodus.Bank.UI.SavingsWindow();
+            _savingsWindow.OnTransfer += amount => _savingsTransfer.RequestTransfer(amount);
+            _savingsWindow.OnClose += () => _savingsWindow = null;
+            RefreshSavingsWindow();
+            _savingsWindow.OpenCentered();
+            // Make sure we have an up-to-date savings figure.
+            _monoCoins.RequestBalance();
+        }
+
+        private void RefreshSavingsWindow()
+        {
+            if (_savingsWindow == null || Profile == null)
+                return;
+
+            var savings = _monoCoins.GetLastKnownBalance();
+            if (savings < 0)
+                savings = 0;
+
+            _savingsWindow.SetBalances(Profile.BankBalance, savings);
+        }
+
+        private void OnSavingsBankBalanceUpdated(int newBalance)
+        {
+            // Keep the local WIP profile in sync with the server-authoritative balance so saving does not revert it.
+            if (Profile != null)
+                Profile = Profile.WithBankBalance(newBalance);
+
+            // Sync the cached (saved) character's balance + lobby preview, without touching other unsaved edits.
+            var prefs = _preferencesManager.Preferences;
+            if (CharacterSlot is { } slot && prefs != null &&
+                prefs.Characters.TryGetValue(slot, out var cached) &&
+                cached is HumanoidCharacterProfile cachedHumanoid)
+            {
+                // Cache-only: the server already persisted this balance during the transfer.
+                // Sending it back via UpdateCharacter would race the server's own DB write.
+                _preferencesManager.UpdateCharacterLocal(cachedHumanoid.WithBankBalance(newBalance), slot);
+                _controller.RefreshPreview();
+            }
+
+            RefreshSavingsWindow();
+        }
+
+        private void OnSavingsAccountBalanceUpdated(long savings)
+        {
+            RefreshSavingsWindow();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -1600,6 +1666,12 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
+
+            // Exodus: savings transfer cleanup.
+            _savingsTransfer.BankBalanceUpdated -= OnSavingsBankBalanceUpdated;
+            _monoCoins.BalanceUpdated -= OnSavingsAccountBalanceUpdated;
+            _savingsWindow?.Dispose();
+            _savingsWindow = null;
         }
 
         protected override void EnteredTree()

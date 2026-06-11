@@ -270,6 +270,14 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
         UpdateMonoCoinsDisplay();
     }
 
+    /// <summary>
+    /// Exodus: refreshes the lobby character preview (e.g. after a savings transfer changes the bank balance).
+    /// </summary>
+    public void RefreshPreview()
+    {
+        RefreshLobbyPreview();
+    }
+
     private void RefreshProfileEditor()
     {
         _profileEditor?.RefreshAntags();
