@@ -10,7 +10,6 @@
     radius: 100
     pullSpeed: 6
     activationDuration: 10
-    pickupRadius: 1.5
     whitelist:
       tags:
       - Ore
@@ -71,12 +70,18 @@
     - state: orecatcher
       map: [ top ]
       visible: false
+    - state: orecatcher
+      map: [ topUI ]
+      visible: false
   - type: Appearance
-  - type: Transform
   - type: GenericVisualizer
     visuals:
       enum.OreMagnetVisuals.Active:
         top:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.Open:
+        topUI:
           True: { visible: true }
           False: { visible: false }
     anchored: true

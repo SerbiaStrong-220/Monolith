@@ -38,12 +38,6 @@ public sealed partial class OreMagnetComponent : Component
     public string OnPort = "On";
 
     /// <summary>
-    /// Radius within which items are inserted directly into storage rather than thrown.
-    /// </summary>
-    [DataField]
-    public float PickupRadius = 1.5f;
-
-    /// <summary>
     /// Absolute server time at which the magnet deactivates.
     /// Null when the magnet is inactive. Avoids per-tick float subtraction drift.
     /// </summary>

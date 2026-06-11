@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -10,7 +11,6 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -46,6 +46,7 @@ public sealed class OreMagnetSystem : EntitySystem
         SubscribeLocalEvent<OreMagnetComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<OreMagnetComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
         SubscribeLocalEvent<OreMagnetComponent, ComponentShutdown>(OnMagnetShutdown);
+        SubscribeLocalEvent<OreMagnetComponent, ThrowHitByEvent>(OnHitByThrown);
     }
 
     // Signal handling
@@ -124,6 +125,9 @@ public sealed class OreMagnetSystem : EntitySystem
 
     private void PullEntities()
     {
+        if (_activeCount <= 0)
+            return;
+
         var magnets = new List<(EntityUid Uid, OreMagnetComponent Comp, Vector2 Pos, MapId MapId)>();
 
         var magnetQuery = EntityQueryEnumerator<OreMagnetComponent, TransformComponent, ApcPowerReceiverComponent>();
@@ -167,38 +171,48 @@ public sealed class OreMagnetSystem : EntitySystem
 
         foreach (var (entityUid, (magnetUid, magnetComp, distance)) in pullTargets)
         {
-            if (distance <= magnetComp.PickupRadius)
-            {
-                // Close enough: collect directly into storage.
-                // If storage is full the item stays on the floor without being re-thrown.
-                if (_storage.Insert(magnetUid, entityUid, out _, playSound: false))
-                {
-                    var wasOpen = magnetComp.LidCloseAt.HasValue;
-                    if (!wasOpen)
-                    {
-                        _lidOpenCount++;
-                        if (TryComp<StorageComponent>(magnetUid, out var storageComp))
-                            _audio.PlayPvs(storageComp.StorageOpenSound, magnetUid);
-                        _appearance.SetData(magnetUid, OreMagnetVisuals.Active, true);
-                    }
-                    magnetComp.LidCloseAt = _timing.CurTime + TimeSpan.FromSeconds(ScanInterval + 0.25f);
-                }
-                continue;
-            }
-
             var magnetPos = _transform.GetWorldPosition(Transform(magnetUid));
             var entityPos = _transform.GetWorldPosition(Transform(entityUid));
+            var direction = magnetPos - entityPos;
+
+            if (direction == Vector2.Zero)
+                continue;
 
             _throwing.TryThrow(
                 entityUid,
-                magnetPos - entityPos,
+                direction,
                 magnetComp.PullSpeed,
-                magnetUid,
                 recoil: false,
                 compensateFriction: true,
                 doSpin: false,
                 animated: false,
                 playSound: false);
+        }
+    }
+
+    // Physics collision — ore hits the machine after being thrown toward it
+    private void OnHitByThrown(Entity<OreMagnetComponent> ent, ref ThrowHitByEvent args)
+    {
+        if (!ent.Comp.IsActive)
+            return;
+        if (!TryComp<ApcPowerReceiverComponent>(ent, out var power) || !power.Powered)
+            return;
+        if (ent.Comp.Whitelist != null && !_whitelist.IsValid(ent.Comp.Whitelist, args.Thrown))
+            return;
+        if (!_storage.Insert(ent, args.Thrown, out _, playSound: false))
+            return;
+
+        var hadTimer = ent.Comp.LidCloseAt.HasValue;
+        if (!hadTimer)
+            _lidOpenCount++;
+
+        ent.Comp.LidCloseAt = _timing.CurTime + TimeSpan.FromSeconds(1.0);
+
+        if (!hadTimer)
+        {
+            if (TryComp<StorageComponent>(ent, out var storageComp))
+                _audio.PlayPvs(storageComp.StorageOpenSound, ent);
+            _appearance.SetData(ent, OreMagnetVisuals.Active, true);
         }
     }
 
