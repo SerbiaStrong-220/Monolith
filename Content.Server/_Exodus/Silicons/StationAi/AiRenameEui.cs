@@ -52,6 +52,5 @@ public sealed class AiRenameEui : BaseEui
             trimmed = trimmed[..HumanoidCharacterProfile.MaxNameLength];
 
         _renameSystem.RenameCore(_heldUid, trimmed, Player);
-        _renameSystem.ApplyCooldown(_heldUid);
     }
 }

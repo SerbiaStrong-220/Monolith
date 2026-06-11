@@ -1,26 +1,21 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Shared._Exodus.Silicons.StationAi;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.NameIdentifier;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Silicons.StationAi;
 
 public sealed class AiRenameSystem : EntitySystem
 {
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-
-    private static readonly TimeSpan RenameCooldown = TimeSpan.FromMinutes(1);
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedStationAiSystem _stationAi = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
 
     private readonly Dictionary<EntityUid, AiRenameEui> _openEuis = new();
 
@@ -31,10 +26,9 @@ public sealed class AiRenameSystem : EntitySystem
         SubscribeLocalEvent<StationAiHeldComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName);
         SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
 
-        // Run after upstream's OnAiInsert (which copies brain name to core) so we can
-        // re-apply the player's chosen name on top, surviving Intellicard transfers.
-        // Broadcast subscription instead of per-component to avoid the
-        // "Duplicate Subscriptions" conflict with upstream's StationAiCoreComponent handler.
+        // Run after upstream's OnAiInsert, which copies the inserted brain name to the core.
+        // Robust allows only one component subscription for StationAiCoreComponent + EntInsertedIntoContainerMessage,
+        // and upstream owns it, so this must stay as a broadcast subscription.
         SubscribeLocalEvent<EntInsertedIntoContainerMessage>(
             OnCoreInsert,
             after: new[] { typeof(SharedStationAiSystem) });
@@ -48,17 +42,9 @@ public sealed class AiRenameSystem : EntitySystem
         if (!_stationAi.TryGetCore(ent.Owner, out _))
             return;
 
-        var now = _timing.CurTime;
-        if (TryComp<AiRenameCooldownComponent>(ent.Owner, out var cooldown) && now < cooldown.NextRenameAt)
-        {
-            var remaining = (int)(cooldown.NextRenameAt - now).TotalSeconds;
-            _chat.DispatchServerMessage(actor.PlayerSession,
-                Loc.GetString("ai-rename-cooldown", ("seconds", remaining)));
-            return;
-        }
+        args.Handled = true;
 
-        // Only one rename window per shell at a time — closing the previous prevents
-        // the player from queueing two confirmations and bypassing the cooldown.
+        // Only one rename window per shell at a time.
         if (_openEuis.Remove(ent.Owner, out var existing))
             existing.Close();
 
@@ -90,25 +76,26 @@ public sealed class AiRenameSystem : EntitySystem
     }
 
     /// <summary>
-    /// Re-applies the saved custom name to the core after upstream's OnAiInsert
-    /// copies the raw brain name into the core. This is what makes the rename
-    /// survive an Intellicard pull-and-reinsert.
+    /// Re-applies the saved custom AI name after upstream's OnAiInsert copies
+    /// the raw inserted brain name into the core.
     /// </summary>
     private void OnCoreInsert(EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != StationAiCoreComponent.Container)
             return;
 
-        if (!HasComp<StationAiCoreComponent>(args.Container.Owner))
+        var core = args.Container.Owner;
+        if (!HasComp<StationAiCoreComponent>(core))
             return;
 
-        if (!TryComp<AiRenameBaseNameComponent>(args.Entity, out var saved) ||
+        if (!TryComp<AiRenameNameComponent>(args.Entity, out var saved) ||
             string.IsNullOrEmpty(saved.BaseName))
             return;
 
-        var finalName = BuildFullName(saved.BaseName, MetaData(args.Entity).EntityName);
+        saved.Identifier = GetIdentifier(args.Entity);
+        Dirty(args.Entity, saved);
 
-        _metaData.SetEntityName(args.Container.Owner, finalName);
+        _metaData.SetEntityName(core, BuildFullName(saved.BaseName, saved.Identifier));
     }
 
     public void RenameCore(EntityUid heldUid, string newName, ICommonSession? renamer = null)
@@ -116,12 +103,13 @@ public sealed class AiRenameSystem : EntitySystem
         if (!_stationAi.TryGetCore(heldUid, out var core))
             return;
 
-        var finalName = BuildFullName(newName, MetaData(heldUid).EntityName);
-
-        var saved = EnsureComp<AiRenameBaseNameComponent>(heldUid);
-        var oldName = MetaData(core.Owner).EntityName;
+        var saved = EnsureComp<AiRenameNameComponent>(heldUid);
         saved.BaseName = newName;
+        saved.Identifier = GetIdentifier(heldUid);
         Dirty(heldUid, saved);
+
+        var finalName = BuildFullName(saved.BaseName, saved.Identifier);
+        var oldName = MetaData(core.Owner).EntityName;
 
         _metaData.SetEntityName(core.Owner, finalName);
         _metaData.SetEntityName(heldUid, finalName);
@@ -133,55 +121,42 @@ public sealed class AiRenameSystem : EntitySystem
         }
     }
 
-    public void ApplyCooldown(EntityUid heldUid)
-    {
-        var cooldown = EnsureComp<AiRenameCooldownComponent>(heldUid);
-        cooldown.NextRenameAt = _timing.CurTime + RenameCooldown;
-        Dirty(heldUid, cooldown);
-    }
-
     /// <summary>
-    /// Returns the editable part of the brain name: the saved base name if a player has renamed
-    /// before, otherwise the current brain name with the trailing " (IDENTIFIER)" stripped.
+    /// Returns the editable part of the AI name.
     /// </summary>
     private string GetBaseName(EntityUid heldUid)
     {
-        if (TryComp<AiRenameBaseNameComponent>(heldUid, out var saved) && !string.IsNullOrEmpty(saved.BaseName))
+        if (TryComp<AiRenameNameComponent>(heldUid, out var saved) &&
+            !string.IsNullOrEmpty(saved.BaseName))
             return saved.BaseName;
 
-        var fullName = MetaData(heldUid).EntityName;
-        var identifier = ParseTrailingIdentifier(fullName);
-
-        if (string.IsNullOrEmpty(identifier))
-            return fullName;
-
-        var suffix = $" ({identifier})";
-        return fullName.EndsWith(suffix, StringComparison.Ordinal)
-            ? fullName[..^suffix.Length]
-            : fullName;
+        return GetEditableBaseName(heldUid);
     }
 
-    /// <summary>
-    /// Builds the displayed AI name from a base name and a source name that may carry
-    /// a trailing " (IDENTIFIER)" suffix. Single source of truth for the rename format.
-    /// </summary>
-    private static string BuildFullName(string baseName, string identifierSource)
+    private string BuildFullName(string baseName, string identifier)
     {
-        var identifier = ParseTrailingIdentifier(identifierSource);
         return string.IsNullOrEmpty(identifier)
             ? baseName
-            : $"{baseName} ({identifier})";
+            : Loc.GetString("ai-rename-full-name", ("baseName", baseName), ("identifier", identifier));
     }
 
-    private static string ParseTrailingIdentifier(string name)
+    private string GetEditableBaseName(EntityUid uid)
     {
-        if (!name.EndsWith(')'))
-            return string.Empty;
+        var name = MetaData(uid).EntityName;
+        var identifier = GetIdentifier(uid);
+        if (string.IsNullOrEmpty(identifier))
+            return name;
 
-        var open = name.LastIndexOf(" (", StringComparison.Ordinal);
-        if (open <= 0)
-            return string.Empty;
+        var suffix = $" {identifier}";
+        return name.EndsWith(suffix, StringComparison.Ordinal) && name.Length > suffix.Length
+            ? name[..^suffix.Length]
+            : name;
+    }
 
-        return name[(open + 2)..^1];
+    private string GetIdentifier(EntityUid uid)
+    {
+        return TryComp<NameIdentifierComponent>(uid, out var identifier)
+            ? identifier.FullIdentifier
+            : string.Empty;
     }
 }

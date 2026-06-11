@@ -72,9 +72,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
     [Dependency] private DiscordChatLink _discordLink = default!;
-    [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
-    [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!; // Goobstation - Starlight collective mind port
-    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!; // Exodus ai-rename
+    [Dependency] private LanguageSystem _language = default!; // Einstein Engines - Language
+    [Dependency] private CollectiveMindUpdateSystem _collectiveMind = default!; // Goobstation - Starlight collective mind port
+    [Dependency] private SharedStationAiSystem _stationAiSystem = default!; // Exodus ai-rename
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -865,7 +865,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         var ent = Identity.Entity(source, EntityManager);
         // Exodus-begin ai-rename: use core name for AI emotes
         if (nameOverride == null
-            && HasComp<StationAiHeldComponent>(source)
             && _stationAiSystem.TryGetCore(source, out var aiCore))
             nameOverride = Name(aiCore.Owner);
         // Exodus-end

@@ -12,4 +12,4 @@
       sprite: Interface/Actions/_Exodus/actions_ai_colossus.rsi
       state: AI_rename
     event: !type:AiRenameEvent
-    useDelay: 1
+    useDelay: 60

@@ -45,7 +45,10 @@ public abstract partial class SharedStationAiSystem
         }
 
         args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
-        OverrideAiIdentityTitle(args.ForActor, ref args); // Exodus ai-rename
+        // Exodus-begin ai-rename
+        if (TryGetCore(args.ForActor, out var core))
+            args.Title = $"{Name(core.Owner)} ({Loc.GetString(JobNameLocId)})";
+        // Exodus-end
         args.Handled = true;
     }
 
