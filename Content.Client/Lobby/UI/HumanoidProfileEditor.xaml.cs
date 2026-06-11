@@ -1647,7 +1647,7 @@ namespace Content.Client.Lobby.UI
                 // Cache-only: the server already persisted this balance during the transfer.
                 // Sending it back via UpdateCharacter would race the server's own DB write.
                 _preferencesManager.UpdateCharacterLocal(cachedHumanoid.WithBankBalance(newBalance), slot);
-                _controller.RefreshPreview();
+                _controller.RefreshPreviewBalance();
             }
 
             RefreshSavingsWindow();

@@ -271,11 +271,16 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     }
 
     /// <summary>
-    /// Exodus: refreshes the lobby character preview (e.g. after a savings transfer changes the bank balance).
+    /// Exodus: refreshes only the bank balance label in the lobby preview (e.g. after a savings transfer).
+    /// Avoids rebuilding the preview entity since only the balance changed.
     /// </summary>
-    public void RefreshPreview()
+    public void RefreshPreviewBalance()
     {
-        RefreshLobbyPreview();
+        if (PreviewPanel == null)
+            return;
+
+        if (_preferencesManager.Preferences?.SelectedCharacter is HumanoidCharacterProfile humanoid)
+            PreviewPanel.SetBankBalanceText(humanoid.BankBalanceText);
     }
 
     private void RefreshProfileEditor()

@@ -1,7 +1,9 @@
 using Content.Server._Mono.MonoCoins;
 using Content.Server._NF.Bank;
+using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared._Exodus.Bank;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -33,10 +35,17 @@ public sealed class SavingsTransferManager
 
     private void OnTransferRequest(MsgSavingsTransferRequest msg)
     {
-        if (msg.Amount == 0)
+        // Reject the no-op and int.MinValue (whose negation overflows back to a negative number).
+        if (msg.Amount == 0 || msg.Amount == int.MinValue)
             return;
 
         if (!_player.TryGetSessionByChannel(msg.MsgChannel, out var session))
+            return;
+
+        // Only allow transfers from the lobby. In-round the live BankAccountComponent is not updated
+        // by this path, so moving profile money to savings mid-round would duplicate it.
+        if (_entMan.System<GameTicker>().PlayerGameStatuses.TryGetValue(session.UserId, out var status) &&
+            status == PlayerGameStatus.JoinedGame)
             return;
 
         if (!_prefs.TryGetCachedPreferences(session.UserId, out var prefs) ||
@@ -53,7 +62,7 @@ public sealed class SavingsTransferManager
         }
         else
         {
-            // Savings -> main account.
+            // Savings -> main account. Safe negation: int.MinValue was rejected at the top.
             var moveAmount = -msg.Amount;
             var savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
             if (savings >= moveAmount &&
