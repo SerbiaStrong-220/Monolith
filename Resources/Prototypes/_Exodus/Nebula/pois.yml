@@ -94,7 +94,36 @@
   - type: ForceAnchor
   - type: Tag
     tags: [ POI ]
-  - type: InitRepairSnapshot 
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiAdsSmallAncientStorage
+  path: /Maps/_Exodus/POI/ads_small_ancient_storage.yml
+  spawnIn:
+  - NebulaRedMarker
+  - NebulaDeathZoneInnerMarker
+  minDensity: 0.7
+  maxCount: 2
+  duplicateAllowed: false
+  protectedRadius: 2500
+  name: "Древнее Хранилище Кхси'Ра"
+  stationGameMap: AdsSmallAncientStorage
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#00CCFFFF"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - ADSRepairTool 
 
 - type: nebulaPoi
   id: NebulaPoiLancelot
