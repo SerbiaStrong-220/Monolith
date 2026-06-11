@@ -29,16 +29,16 @@ public sealed partial class MedAlertUiFragmentList : Control
         }
 
         NoAlertsLabel.Visible = false;
-        for (var i = entries.Count - 1; i >= 0; i--)
+        foreach (var entry in entries)
         {
-            AlertsContainer.AddChild(new MedAlertUiFragmentListEntry(entries[i]));
+            AlertsContainer.AddChild(new MedAlertUiFragmentListEntry(entry));
         }
     }
 
     public void SetNotificationsEnabled(bool notificationsEnabled)
     {
         NotificationSwitch.Text = Loc.GetString(notificationsEnabled
-            ? "news-read-ui-notification-on"
-            : "news-read-ui-notification-off");
+            ? "med-alert-ui-notification-on"
+            : "med-alert-ui-notification-off");
     }
 }

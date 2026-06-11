@@ -13,5 +13,5 @@ public sealed partial class MedicalAlertDataComponent : Component
     public uint LastEntryId;
 
     [DataField]
-    public List<MedicalAlertEntry> Entries = new();
+    public MedicalAlertEntry[] Entries = [];
 }

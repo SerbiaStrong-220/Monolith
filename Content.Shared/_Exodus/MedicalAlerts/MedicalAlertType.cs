@@ -6,6 +6,6 @@ namespace Content.Shared._Exodus.MedicalAlerts;
 public enum MedicalAlertType : byte
 {
     Critical = 0,
-    Dead = 1,
+    Death = 1,
     Revived = 2,
 }

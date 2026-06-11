@@ -18,8 +18,8 @@
                               HorizontalExpand="True">
                     <Button
                         Name="NotificationSwitch"
-                        ToolTip="{Loc news-reader-ui-mute-tooltip}"
-                        Text="{Loc news-read-ui-notification-on}"
+                        ToolTip="{Loc med-alert-ui-mute-tooltip}"
+                        Text="{Loc med-alert-ui-notification-on}"
                         MinWidth="20"
                         Margin="0,0,5,0"/>
                     <Button Name="RefreshButton" Text="{Loc 'med-alert-ui-refresh'}"/>

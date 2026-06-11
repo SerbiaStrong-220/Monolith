@@ -1,10 +1,16 @@
 med-alert-ui-empty = No registered medical incidents.
 med-alert-ui-refresh = Refresh
 med-alert-ui-unknown-grid = unknown location
+med-alert-ui-notification-on = ♫
+med-alert-ui-notification-off = ̶♫̶
+med-alert-ui-mute-tooltip = Mute notifications
 
-med-alert-status-dead = DECEASED
-med-alert-status-critical = CRITICAL
-med-alert-status-revived = REVIVED
+med-alert-status = { $type ->
+    [death] DECEASED
+    [critical] CRITICAL
+    [revived] REVIVED
+   *[other] CRITICAL
+}
 
 med-alert-ui-entry-subject = {$user}{ $specie ->
     [null] { "" }
@@ -14,15 +20,12 @@ med-alert-ui-entry-location = {$grid} at {$position}
 
 med-alert-notification-header = MedAlert
 
-med-alert-notification-dead = {$user}{ $specie ->
+med-alert-notification = {$user}{ $specie ->
     [null] { "" }
    *[default] { " "}({ $specie })
-} has died at {$grid} {$position}.
-med-alert-notification-critical = {$user}{ $specie ->
-    [null] { "" }
-   *[default] { " "}({ $specie })
-} life signs critical at {$grid} {$position}.
-med-alert-notification-revived = {$user}{ $specie ->
-    [null] { "" }
-   *[default] { " "}({ $specie })
-} revived, now critical at {$grid} {$position}.
+}{ $type ->
+    [death] has died at {$grid} {$position}.
+    [critical] life signs critical at {$grid} {$position}.
+    [revived] has been revived at {$grid} {$position}.
+   *[other] life signs critical at {$grid} {$position}.
+}

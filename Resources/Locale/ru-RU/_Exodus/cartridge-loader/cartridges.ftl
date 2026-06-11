@@ -1,1 +1,1 @@
-med-alert-program-name = МедАлерт
+med-alert-program-name = МедОповещения

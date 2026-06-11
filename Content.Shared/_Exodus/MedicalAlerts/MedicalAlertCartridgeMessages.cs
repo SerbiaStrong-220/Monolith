@@ -1,13 +1,12 @@
-using System.Linq;
 using Content.Shared.CartridgeLoader;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.MedicalAlerts;
 
 [NetSerializable, Serializable]
-public sealed class MedicalAlertListUiState(IReadOnlyList<MedicalAlertEntry> entries, bool notificationsEnabled) : BoundUserInterfaceState
+public sealed class MedicalAlertListUiState(MedicalAlertEntry[] entries, bool notificationsEnabled) : BoundUserInterfaceState
 {
-    public readonly MedicalAlertEntry[] Entries = entries as MedicalAlertEntry[] ?? entries.ToArray();
+    public readonly MedicalAlertEntry[] Entries = entries;
     public readonly bool NotificationsEnabled = notificationsEnabled;
 }
 
@@ -21,9 +20,4 @@ public enum MedicalAlertCommand : byte
 public sealed class MedicalAlertCommandMessageEvent(MedicalAlertCommand command) : CartridgeMessageEvent
 {
     public readonly MedicalAlertCommand Command = command;
-}
-
-public abstract class SharedMedicalAlertSystem : EntitySystem
-{
-    public const int MaxEntries = 64;
 }

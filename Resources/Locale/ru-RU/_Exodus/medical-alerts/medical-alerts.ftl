@@ -1,10 +1,16 @@
 med-alert-ui-empty = Нет зарегистрированных инцидентов.
 med-alert-ui-refresh = Обновить
 med-alert-ui-unknown-grid = неизвестное место
+med-alert-ui-notification-on = ♫
+med-alert-ui-notification-off = ̶♫̶
+med-alert-ui-mute-tooltip = Отключить уведомления
 
-med-alert-status-dead = МЁРТВ
-med-alert-status-critical = КРИТИЧЕСКОЕ
-med-alert-status-revived = ВОСКРЕШЁН
+med-alert-status = { $type ->
+    [death] МЁРТВ
+    [critical] КРИТИЧЕСКОЕ
+    [revived] РЕАНИМИРОВАН
+   *[other] КРИТИЧЕСКОЕ
+}
 
 med-alert-ui-entry-subject = {$user}{ $specie ->
     [null] { "" }
@@ -12,17 +18,14 @@ med-alert-ui-entry-subject = {$user}{ $specie ->
 }
 med-alert-ui-entry-location = {$grid}, {$position}
 
-med-alert-notification-header = МедАлерт
+med-alert-notification-header = МедОповещения
 
-med-alert-notification-dead = {$user}{ $specie ->
+med-alert-notification = {$user}{ $specie ->
     [null] { "" }
    *[default] { " "}({ $specie })
-} погиб в {$grid} {$position}.
-med-alert-notification-critical = {$user}{ $specie ->
-    [null] { "" }
-   *[default] { " "}({ $specie })
-} в критическом состоянии в {$grid} {$position}.
-med-alert-notification-revived = {$user}{ $specie ->
-    [null] { "" }
-   *[default] { " "}({ $specie })
-} воскрешён, сейчас в крите в {$grid} {$position}.
+}{ $type ->
+    [death] погиб на {$grid} {$position}.
+    [critical] в критическом состоянии на {$grid} {$position}.
+    [revived] реанимирован на {$grid} {$position}.
+   *[other] в критическом состоянии на {$grid} {$position}.
+}

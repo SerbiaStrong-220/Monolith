@@ -15,6 +15,6 @@
   - type: Cartridge
     programName: med-alert-program-name
     icon:
-      sprite: Objects/Specific/Medical/healthanalyzer.rsi
-      state: icon
+      sprite: Interface/Actions/actions_ai.rsi
+      state: crew_monitor
   - type: MedAlertCartridge

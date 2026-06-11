@@ -1,4 +1,7 @@
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mobs;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.MedicalAlerts;
 
@@ -8,9 +11,7 @@ namespace Content.Shared._Exodus.MedicalAlerts;
 [ByRefEvent]
 public readonly record struct MedicalAlertRaisedEvent(
     EntityUid Subject,
-    MobState CurrentState,
-    MobState PreviousState,
-    int PositionX,
-    int PositionY,
+    MedicalAlertType AlertType,
+    Vector2i Position,
     EntityUid? GridUid,
-    string? SpeciesName);
+    ProtoId<SpeciesPrototype>? SpeciesId);

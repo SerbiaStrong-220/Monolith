@@ -1,28 +1,69 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.CartridgeLoader;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server._Mono.Planets;
 using Content.Server._NF.SectorServices;
 using Content.Shared._Exodus.MedicalAlerts;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Implants.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Maths;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.MedicalAlerts;
 
-public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
+public sealed partial class MedicalAlertSystem : EntitySystem
 {
+    public const int MaxEntries = 64;
+
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SectorServiceSystem _sectorService = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+
+    private EntityQuery<CartridgeLoaderComponent> _cartridgeLoaderQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+        _cartridgeLoaderQuery = GetEntityQuery<CartridgeLoaderComponent>();
+        SubscribeLocalEvent<MedicalAlertOnTriggerComponent, TriggerEvent>(OnMedicalAlertTrigger);
         SubscribeLocalEvent<MedicalAlertRaisedEvent>(OnMedicalAlertRaised);
         InitializeUi();
+    }
+
+    private void OnMedicalAlertTrigger(Entity<MedicalAlertOnTriggerComponent> ent, ref TriggerEvent args)
+    {
+        if (!TryComp<SubdermalImplantComponent>(ent.Owner, out var implanted) || implanted.ImplantedEntity is not { } implantedUid)
+            return;
+
+        if (!TryComp<MobStateComponent>(implantedUid, out var mobState))
+            return;
+
+        var alertType = GetAlertType(mobState.CurrentState, mobState.PreviousState);
+        if (alertType == null)
+            return;
+
+        ProtoId<SpeciesPrototype>? speciesId = null;
+        if (TryComp<HumanoidAppearanceComponent>(implantedUid, out var humanoid))
+            speciesId = humanoid.Species;
+
+        var ownerXform = Transform(ent.Owner);
+        var mapPos = ownerXform.MapPosition;
+        var alert = new MedicalAlertRaisedEvent(
+            implantedUid,
+            alertType.Value,
+            new Vector2i((int) mapPos.X, (int) mapPos.Y),
+            ownerXform.GridUid,
+            speciesId);
+        RaiseLocalEvent(ref alert);
     }
 
     private void OnMedicalAlertRaised(ref MedicalAlertRaisedEvent args)
@@ -30,27 +71,39 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
         if (!TryGetAlertData(out var data))
             return;
 
-        var alertType = GetAlertType(args.CurrentState, args.PreviousState);
-        if (alertType == null)
-            return;
-
         data.LastEntryId++;
-        var subjectName = Identity.Name(args.Subject, EntityManager);
-        var gridName = ResolveGridName(args.GridUid);
         var entry = new MedicalAlertEntry(
             data.LastEntryId,
-            alertType.Value,
-            subjectName,
-            args.SpeciesName,
-            gridName,
-            args.PositionX,
-            args.PositionY,
+            args.AlertType,
+            Identity.Name(args.Subject, EntityManager),
+            args.SpeciesId,
+            ResolveGridName(args.GridUid),
+            args.Position,
             _timing.CurTime);
 
-        data.Entries.Add(entry);
-        TrimEntries(data);
+        AddEntry(data, entry);
+        BroadcastAlertToCartridges(entry);
+    }
 
-        BroadcastAlert(entry);
+    /// <summary>
+    /// Appends an entry to the bounded log, dropping the oldest once <see cref="MaxEntries"/> is reached.
+    /// </summary>
+    private static void AddEntry(MedicalAlertDataComponent data, MedicalAlertEntry entry)
+    {
+        var current = data.Entries;
+        if (current.Length < MaxEntries)
+        {
+            var grown = new MedicalAlertEntry[current.Length + 1];
+            Array.Copy(current, grown, current.Length);
+            grown[^1] = entry;
+            data.Entries = grown;
+            return;
+        }
+
+        var shifted = new MedicalAlertEntry[MaxEntries];
+        Array.Copy(current, 1, shifted, 0, MaxEntries - 1);
+        shifted[^1] = entry;
+        data.Entries = shifted;
     }
 
     private string? ResolveGridName(EntityUid? gridUid)
@@ -65,11 +118,11 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
         return Name(grid);
     }
 
-    private static MedicalAlertType? GetAlertType(MobState current, MobState previous)
+    public static MedicalAlertType? GetAlertType(MobState current, MobState previous)
     {
         return current switch
         {
-            MobState.Dead => MedicalAlertType.Dead,
+            MobState.Dead => MedicalAlertType.Death,
             MobState.Critical when previous == MobState.Dead => MedicalAlertType.Revived,
             MobState.Alive when previous == MobState.Dead => MedicalAlertType.Revived,
             MobState.Critical => MedicalAlertType.Critical,
@@ -77,62 +130,15 @@ public sealed partial class MedicalAlertSystem : SharedMedicalAlertSystem
         };
     }
 
-    private void TrimEntries(MedicalAlertDataComponent data)
-    {
-        var overflow = data.Entries.Count - MaxEntries;
-        if (overflow <= 0)
-            return;
-
-        data.Entries.RemoveRange(0, overflow);
-    }
-
-    private void BroadcastAlert(MedicalAlertEntry entry)
-    {
-        var header = Loc.GetString("med-alert-notification-header");
-        var msg = Loc.GetString(GetNotificationLocId(entry.AlertType),
-            ("user", entry.SubjectName),
-            ("specie", entry.SpeciesName ?? "null"),
-            ("grid", entry.GridName ?? Loc.GetString("med-alert-ui-unknown-grid")),
-            ("position", $"({entry.PositionX}, {entry.PositionY})"));
-
-        var entries = GetEntries().ToArray();
-
-        var query = EntityQueryEnumerator<MedAlertCartridgeComponent, CartridgeComponent>();
-        while (query.MoveNext(out _, out var cartComp, out var cartridgeComp))
-        {
-            if (cartridgeComp.LoaderUid is not { } loaderUid || !TryComp<CartridgeLoaderComponent>(loaderUid, out var loaderComp))
-                continue;
-
-            var state = new MedicalAlertListUiState(entries, cartComp.NotificationsEnabled);
-            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state, loader: loaderComp);
-
-            if (!cartComp.NotificationsEnabled)
-                continue;
-
-            _cartridgeLoader.SendNotification(loaderUid, header, msg, loaderComp);
-        }
-    }
-
-    private static LocId GetNotificationLocId(MedicalAlertType type)
-    {
-        return type switch
-        {
-            MedicalAlertType.Dead => "med-alert-notification-dead",
-            MedicalAlertType.Critical => "med-alert-notification-critical",
-            MedicalAlertType.Revived => "med-alert-notification-revived",
-            _ => "med-alert-notification-critical",
-        };
-    }
-
-    public bool TryGetAlertData([NotNullWhen(true)] out MedicalAlertDataComponent? data)
+    private bool TryGetAlertData([NotNullWhen(true)] out MedicalAlertDataComponent? data)
     {
         return TryComp(_sectorService.GetServiceEntity(), out data);
     }
 
-    public IReadOnlyList<MedicalAlertEntry> GetEntries()
+    public MedicalAlertEntry[] GetAlertData()
     {
         if (!TryGetAlertData(out var data))
-            return Array.Empty<MedicalAlertEntry>();
+            return [];
 
         return data.Entries;
     }
