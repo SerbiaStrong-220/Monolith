@@ -1,3 +1,4 @@
+using System;
 using Content.Server._Mono.MonoCoins;
 using Content.Server._NF.Bank;
 using Content.Server.GameTicking;
@@ -56,20 +57,21 @@ public sealed class SavingsTransferManager
 
         if (msg.Amount > 0)
         {
-            // Main account -> savings. Only draw from the main account, never from existing savings.
-            if (bank.TryBankWithdraw(session, prefs, profile, msg.Amount, out _, spendLongTerm: false))
-                _ = _coins.AddMonoCoinsAsync(session.UserId, msg.Amount);
+            // Main account -> savings. Clamp to what's on the main account: asking for more
+            // than you have just transfers everything available.
+            var moveAmount = Math.Min(msg.Amount, profile.BankBalance);
+            if (moveAmount > 0 &&
+                bank.TryBankWithdraw(session, prefs, profile, moveAmount, out _, spendLongTerm: false))
+                _ = _coins.AddMonoCoinsAsync(session.UserId, moveAmount);
         }
         else
         {
-            // Savings -> main account. Safe negation: int.MinValue was rejected at the top.
-            var moveAmount = -msg.Amount;
+            // Savings -> main account. Clamp to available savings. (int.MinValue rejected at the top.)
             var savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
-            if (savings >= moveAmount &&
+            var moveAmount = (int)Math.Min(-msg.Amount, savings);
+            if (moveAmount > 0 &&
                 bank.TryBankDeposit(session, prefs, profile, moveAmount, out _))
-            {
                 _ = _coins.AddMonoCoinsAsync(session.UserId, -moveAmount);
-            }
         }
 
         // Echo back the authoritative bank balance so the client updates its local profile copy.

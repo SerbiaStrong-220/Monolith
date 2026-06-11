@@ -181,6 +181,7 @@ namespace Content.Client.Lobby.UI
             _savingsTransfer.BankBalanceUpdated += OnSavingsBankBalanceUpdated;
             _monoCoins.BalanceUpdated += OnSavingsAccountBalanceUpdated;
             SavingsButton.OnPressed += _ => OpenSavingsWindow();
+            UpdateSavingsButtonIcon(_monoCoins.GetLastKnownBalance());
 
             #region Left
 
@@ -1655,7 +1656,38 @@ namespace Content.Client.Lobby.UI
 
         private void OnSavingsAccountBalanceUpdated(long savings)
         {
+            UpdateSavingsButtonIcon(savings);
             RefreshSavingsWindow();
+        }
+
+        // Exodus: cash.rsi denomination thresholds mapped to states, highest first.
+        private static readonly (long Threshold, string State)[] SavingsCashStates =
+        {
+            (250000, "cash_250000"),
+            (100000, "cash_100000"),
+            (50000, "cash_50000"),
+            (25000, "cash_25000"),
+            (10000, "cash_10000"),
+            (5000, "cash_5000"),
+            (1000, "cash_1000"),
+            (500, "cash_500"),
+            (100, "cash_100"),
+            (10, "cash_10"),
+        };
+
+        private void UpdateSavingsButtonIcon(long savings)
+        {
+            var state = "cash";
+            foreach (var (threshold, cashState) in SavingsCashStates)
+            {
+                if (savings >= threshold)
+                {
+                    state = cashState;
+                    break;
+                }
+            }
+
+            SavingsIcon.Texture = new SpriteSpecifier.Rsi(new ResPath("_NF/Objects/Economy/cash.rsi"), state).Frame0();
         }
 
         protected override void Dispose(bool disposing)
