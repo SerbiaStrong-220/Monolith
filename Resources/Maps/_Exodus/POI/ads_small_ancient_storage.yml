@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/11/2026 00:04:17
-  entityCount: 729
+  time: 06/11/2026 00:21:44
+  entityCount: 731
 maps: []
 grids:
 - 1
@@ -200,10 +200,10 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
       spreadQueues:
-        MetalFoam: []
         Puddle: []
         Kudzu: []
         Smoke: []
+        MetalFoam: []
     - type: ThermalSignature
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
@@ -1717,6 +1717,16 @@ entities:
     components:
     - type: Transform
       pos: -6.5,1.5
+      parent: 1
+  - uid: 730
+    components:
+    - type: Transform
+      pos: -2.5,-3.5
+      parent: 1
+  - uid: 731
+    components:
+    - type: Transform
+      pos: -2.5,-4.5
       parent: 1
 - proto: CableHV
   entities:
