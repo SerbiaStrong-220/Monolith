@@ -77,7 +77,7 @@
     color: "#FF3333"
   - type: AnimationPlayer
   - type: LitOnPowered
-  # - type: PowerSwitch # Exodus-shield-swap-fix
+  - type: PowerSwitch
   - type: ApcPowerReceiver
     powerLoad: 60000
   - type: Appearance
@@ -299,10 +299,6 @@
     toolWhitelist:
       tags:
       - ADSRepairTool
-# Exodus-shield-swap-fix-start
-  - type: Anchorable 
-    delay: 40
-# Exodus-shield-swap-fix-end
 
 # Medium-End
 - type: entity
@@ -391,10 +387,6 @@
   - type: ShipRepairable
     repairTime: 25
     repairCost: 200
-# Exodus-shield-swap-fix-start
-  - type: Anchorable 
-    delay: 40
-# Exodus-shield-swap-fix-end
 
 # Low-End
 - type: entity
@@ -483,8 +475,4 @@
     repairTime: 20
     repairCost: 125
   - type: StaticPrice # Exodus-Price-Rebalance
-    price: 1099 
-# Exodus-shield-swap-fix-start
-  - type: Anchorable 
-    delay: 30
-# Exodus-shield-swap-fix-end
+    price: 1099
