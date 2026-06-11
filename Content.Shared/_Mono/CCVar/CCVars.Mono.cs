@@ -218,11 +218,11 @@ public sealed partial class MonoCVars
     /// <summary>
     ///     Bank balance at which the marginal deposit tax rate would reach 100%.
     ///     Between <see cref="DepositThreshold"/> and this value the marginal rate grows linearly.
-    ///     With threshold 5,000,000 and this at 10,000,000 the rate rises 20% per 1,000,000
-    ///     (6M -> 20%, 7M -> 40%, 8M -> 60%, 9M -> 80%, ...).
+    ///     With threshold 5,000,000 and this at 12,000,000 the curve is stretched over 5M-12M,
+    ///     rising ~14.3% per 1,000,000 (6M -> ~14%, 8M -> ~43%, 10M -> ~71%, 12M -> 100%).
     /// </summary>
     public static readonly CVarDef<float> DepositFullTaxBalance =
-        CVarDef.Create("mono.deposit.full_tax_balance", 10000000f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("mono.deposit.full_tax_balance", 12000000f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Maximum marginal deposit tax rate (cap). 0.99 means at most 99% of a marginal deposit is taxed away.
