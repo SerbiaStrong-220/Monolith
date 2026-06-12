@@ -174,12 +174,9 @@ public sealed class GridTerritorySystem : EntitySystem
 
         var oldFaction = terr.ControllingFaction;
         var oldClaimBanner = terr.ActiveClaimBanner;
-
-        if (EqualityComparer<ProtoId<TerritoryFactionPrototype>?>.Default.Equals(oldFaction, faction) &&
-            oldClaimBanner == sourceBanner)
-        {
-            return;
-        }
+        var controllerChanged =
+            !EqualityComparer<ProtoId<TerritoryFactionPrototype>?>.Default.Equals(oldFaction, faction) ||
+            oldClaimBanner != sourceBanner;
 
         terr.ControllingFaction = faction;
         terr.ActiveClaimBanner = sourceBanner;
@@ -223,6 +220,9 @@ public sealed class GridTerritorySystem : EntitySystem
         }
 
         // Extensibility hook for future capture mechanics, alerts, etc.
+        if (!controllerChanged)
+            return;
+
         var ev = new GridTerritoryControllerChangedEvent(grid, oldFaction, faction, sourceBanner);
         RaiseLocalEvent(grid, ref ev);
     }

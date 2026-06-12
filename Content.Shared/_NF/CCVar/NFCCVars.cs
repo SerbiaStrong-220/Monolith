@@ -97,7 +97,7 @@ public sealed class NFCCVars
     /// <summary>
     /// The rough minimum distance between POIs in meters.
     /// </summary>
-    // # # Exodus start - further strengthened (even stronger spread) for territory zones; also now honored via modifier in placement
+    // Exodus-begin territory-poi-spread
     public static readonly CVarDef<float> MinPOIDistance =
         CVarDef.Create("nf14.worldgen.min_poi_distance", 3500f, CVar.SERVERONLY);
 
@@ -106,7 +106,7 @@ public sealed class NFCCVars
     /// </summary>
     public static readonly CVarDef<int> POIPlacementRetries =
         CVarDef.Create("nf14.worldgen.poi_placement_retries", 50, CVar.SERVERONLY);
-    // # # Exodus end
+    // Exodus-end
 
     /*
     * Shipyard

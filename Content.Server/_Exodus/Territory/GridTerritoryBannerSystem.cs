@@ -137,5 +137,3 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("grid-territory-unclaimed"), banner);
     }
 }
-
-public readonly record struct GridTerritoryStartedEvent;

@@ -73,12 +73,12 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             if (proto.SpawnGamePreset.Length > 0 && !proto.SpawnGamePreset.Contains(currentPreset))
                 continue;
 
-            // # # Exodus start - apply POIDistanceModifier so depot rings also respect overall spread tuning (for territory)
+            // Exodus-begin territory-poi-spread
             float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
             int minD = (int)(proto.MinimumDistance * mod);
             int maxD = (int)(proto.MaximumDistance * mod);
             Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
-            // # # Exodus end
+            // Exodus-end
             offset = offset.Rotate(rotationOffset);
             rotationOffset += rotation;
             // Append letter to depot name.
@@ -279,12 +279,12 @@ public sealed partial class PointOfInterestSystem : EntitySystem
     private Vector2 GetRandomPOICoord(float unscaledMinRange, float unscaledMaxRange)
     {
         int numRetries = int.Max(_cfg.GetCVar(NFCCVars.POIPlacementRetries), 0);
-        // # # Exodus start - apply POIDistanceModifier for stronger/further POI spread (makes global CVar actually work for tuning territory separation)
+        // Exodus-begin territory-poi-spread
         float modifier = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
         float minRange = unscaledMinRange * modifier;
         float maxRange = unscaledMaxRange * modifier;
         float minDistance = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance) * modifier, 0);
-        // # # Exodus end
+        // Exodus-end
 
         Vector2 coords = _random.NextVector2(minRange, maxRange);
         for (int i = 0; i < numRetries; i++)
