@@ -62,12 +62,14 @@ public sealed class GridTerritorySystem : EntitySystem
             label = factionProto.RadarLabel;
             marker.FillColor = factionProto.Color.WithAlpha(0.02f);
             marker.BorderColor = factionProto.Color.WithAlpha(0.28f);
+            marker.LabelOffset = factionProto.RadarLabelOffset;
         }
         else
         {
             // Unclaimed / neutral territory
             marker.FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
             marker.BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
+            marker.LabelOffset = Vector2.Zero;
         }
         // # Exodus end - faction color for rings
 
@@ -128,12 +130,14 @@ public sealed class GridTerritorySystem : EntitySystem
             {
                 marker.FillColor = factionProto.Color.WithAlpha(0.02f);
                 marker.BorderColor = factionProto.Color.WithAlpha(0.28f);
+                marker.LabelOffset = factionProto.RadarLabelOffset;
             }
             else
             {
                 // Unclaimed
                 marker.FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
                 marker.BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
+                marker.LabelOffset = Vector2.Zero;
             }
             // # Exodus end - faction color for rings
 

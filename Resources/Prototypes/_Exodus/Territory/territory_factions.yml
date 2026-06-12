@@ -26,6 +26,7 @@
 #   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
 #   5. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
 #      Only TSFMC, PDV and Khsira are the factions that can actually claim POIs.
+#   6. (Optional) Add 'radarLabelOffset' to offset repeated radar labels from their rotation pivot.
 #
 # Captured territory scoring (via TerritoryCounterSystem):
 #   - References this YML for the list of factions.
@@ -45,17 +46,20 @@
   radarLabel: territory-faction-tsf
   banner: BannerNGC
   color: "#87CEEB"  # Trans-Solar Federation light blue (better visibility on dark BSS map background)
+  radarLabelOffset: 0,0
 
 - type: territoryFaction
   id: PDV
   radarLabel: territory-faction-phaeton
   banner: BannerPDV
   color: "#D2B48C"  # PDV gold-tan
+  radarLabelOffset: 0,0
 
 - type: territoryFaction
   id: Khsira
   radarLabel: territory-faction-khsira
   banner: BannerKhsira
+  radarLabelOffset: 0,0
   color: "#C71585"  # розово-красный (medium violet red / pink-red for Khsira Empire)
 
 # Колосс-Централ treated as its own faction so it can have the special "КОЛОСС-ЦЕНТРАЛ" label
@@ -63,5 +67,6 @@
 - type: territoryFaction
   id: ColossusCentral
   radarLabel: territory-marker-colossus
+  radarLabelOffset: 0,0
   # No dedicated banner yet; can be set as initial controller on the grid or via a banner later.
   # Not one of the three main POI-claiming factions for color purposes.

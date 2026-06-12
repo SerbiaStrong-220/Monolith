@@ -1444,6 +1444,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var baseAlpha = 0.35f;
         var textColor = new Color(0.65f, 0.65f, 0.65f);
         var textDims = handle.GetDimensions(Font, text, textScale);
+        var labelOffset = config.LabelOffset * UIScale;
+        var textDrawOffset = new Vector2(
+            -textDims.X * 0.5f + labelOffset.X,
+            -textDims.Y * 0.5f + labelOffset.Y);
         var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
         var zoomAlpha = GetTerritoryTextZoomAlpha(screenRadius, halfDiag);
         if (zoomAlpha <= 0f)
@@ -1510,7 +1514,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     continue;
 
                 handle.SetTransform(screenOffset + pos, textAngle);
-                handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor.WithAlpha(alpha));
+                handle.DrawString(Font, textDrawOffset, text, textScale, textColor.WithAlpha(alpha));
             }
         }
 
