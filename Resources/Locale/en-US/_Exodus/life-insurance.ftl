@@ -28,7 +28,8 @@ life-insurance-status-battery = { $machine }: battery { $percent }%
 life-insurance-no-scanner = No scanning capsule connected.
 life-insurance-no-dna = Could not read DNA from the occupant.
 life-insurance-dna-recorded = Recorded DNA for { $name }.
-life-insurance-max-reached = This person already holds the maximum number of policies.
+life-insurance-max-reached = This client already holds the maximum number of policies.
+life-insurance-target-not-alive = Insurance can only be bought for a living client.
 life-insurance-insufficient-funds = Insufficient funds.
 life-insurance-purchased = Bought a life insurance policy for { $name }.
 

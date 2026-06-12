@@ -133,7 +133,8 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
         if (!CanInsert(toInsert))
             return;
 
-        _container.Insert(toInsert, comp.BodyContainer);
+        if (!_container.Insert(toInsert, comp.BodyContainer))
+            return;
 
         // TEMP (single-player testing): auto-record DNA the moment a body is inserted.
         _console.TryAutoRecordFromScanner(uid, toInsert);

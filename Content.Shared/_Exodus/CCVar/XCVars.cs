@@ -20,5 +20,5 @@ public sealed partial class XCVars
     /// Price (in spesos) charged to the operator for adding a single life insurance charge.
     /// </summary>
     public static readonly CVarDef<int> LifeInsurancePrice =
-        CVarDef.Create("exds.life_insurance_price", 5000, CVar.SERVERONLY);
+        CVarDef.Create("exds.life_insurance_price", 500000, CVar.SERVERONLY);
 }

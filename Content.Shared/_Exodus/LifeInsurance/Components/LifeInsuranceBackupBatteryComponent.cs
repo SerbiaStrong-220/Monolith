@@ -16,6 +16,13 @@ public sealed partial class LifeInsuranceBackupBatteryComponent : Component
     public float DrainRate = 50f;
 
     /// <summary>
+    /// Multiplier applied to <see cref="DrainRate"/> when recharging the battery from grid power.
+    /// Higher values refill the backup battery faster after an outage.
+    /// </summary>
+    [DataField]
+    public float ChargeRateMultiplier = 2f;
+
+    /// <summary>
     /// Whether the component is currently operational (grid power or remaining battery charge).
     /// </summary>
     [ViewVariables]

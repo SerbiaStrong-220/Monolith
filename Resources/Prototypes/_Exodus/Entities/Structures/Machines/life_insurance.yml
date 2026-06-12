@@ -8,6 +8,10 @@
   description: A patient scanning capsule that records DNA onto a linked life insurance console.
   components:
   - type: LifeInsuranceScanner
+  - type: StaticPrice
+    price: 800
+  - type: ShipRepairable
+    repairCost: 100
   - type: LifeInsuranceBackupBattery
     drainRate: 50
   - type: Battery
@@ -36,6 +40,10 @@
   components:
   - type: LifeInsuranceCloner
     revivalTime: 10
+  - type: StaticPrice
+    price: 1000
+  - type: ShipRepairable
+    repairCost: 100
   - type: LifeInsuranceBackupBattery
     drainRate: 50
   - type: Battery
@@ -63,6 +71,10 @@
   description: Records patient DNA, sells life insurance policies, and runs the cloning capsule.
   components:
   - type: LifeInsuranceConsole
+  - type: StaticPrice
+    price: 500
+  - type: ShipRepairable
+    repairCost: 100
   - type: LifeInsuranceBackupBattery
     drainRate: 30
   - type: Battery

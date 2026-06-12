@@ -72,7 +72,11 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         _metaData.SetEntityName(mob, profile.Name);
         EnsureComp<BankAccountComponent>(mob);
 
-        _container.Insert(mob, comp.BodyContainer);
+        if (!_container.Insert(mob, comp.BodyContainer))
+        {
+            QueueDel(mob);
+            return false;
+        }
 
         comp.Active = true;
         comp.Progress = 0f;

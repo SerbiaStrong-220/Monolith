@@ -34,7 +34,7 @@ public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
             {
                 // Recharge the backup battery while on grid power.
                 if (battery.CurrentCharge < battery.MaxCharge)
-                    _battery.SetCharge(uid, MathF.Min(battery.MaxCharge, battery.CurrentCharge + comp.DrainRate * 2f * frameTime), battery);
+                    _battery.SetCharge(uid, MathF.Min(battery.MaxCharge, battery.CurrentCharge + comp.DrainRate * comp.ChargeRateMultiplier * frameTime), battery);
 
                 comp.OnGridPower = true;
                 comp.Operational = true;

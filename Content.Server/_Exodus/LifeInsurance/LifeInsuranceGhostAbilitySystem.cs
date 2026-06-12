@@ -55,6 +55,11 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
         if (args.Handled)
             return;
 
+        // Safety: only a ghost may revive. Prevents a living holder of this action from killing
+        // themselves by force-transferring their mind into a fresh clone.
+        if (!HasComp<GhostComponent>(uid))
+            return;
+
         if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.UserId is not { } user)
             return;
 

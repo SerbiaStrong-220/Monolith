@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Shared._Exodus.CCVar;
 using Content.Shared._Exodus.LifeInsurance;
 using Content.Shared._Exodus.LifeInsurance.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.UserInterface;
 using Content.Server.Preferences.Managers;
@@ -28,6 +29,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly LifeInsuranceBackupBatterySystem _backup = default!;
 
     public override void Initialize()
@@ -122,12 +124,30 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         if (!_backup.IsOperational(uid))
             return;
 
-        if (!comp.Records.TryGetValue(new NetUserId(args.UserId), out var record))
+        var userId = new NetUserId(args.UserId);
+
+        if (!comp.Records.TryGetValue(userId, out var record))
             return;
+
+        // Anti-metagaming: only insure a person who is currently alive, so a dead player can't have
+        // policies bought for them out-of-character to climb back into a body.
+        if (!IsTargetAlive(userId))
+        {
+            _popup.PopupEntity(Loc.GetString("life-insurance-target-not-alive"), uid, args.Actor);
+            return;
+        }
 
         if (record.Insurances >= comp.MaxInsurances)
         {
             _popup.PopupEntity(Loc.GetString("life-insurance-max-reached"), uid, args.Actor);
+            return;
+        }
+
+        // Don't sell a policy that can never be redeemed: the cloning capsule must still exist.
+        EnsureLinks(uid, comp);
+        if (comp.Cloner is not { } cloner || !Exists(cloner))
+        {
+            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), uid, args.Actor);
             return;
         }
 
@@ -141,6 +161,16 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         record.Insurances++;
         _popup.PopupEntity(Loc.GetString("life-insurance-purchased", ("name", record.Name)), uid, args.Actor);
         UpdateUi(uid, comp);
+    }
+
+    /// <summary>
+    /// Whether the recorded person is currently connected and controlling a living body.
+    /// </summary>
+    private bool IsTargetAlive(NetUserId userId)
+    {
+        return _playerManager.TryGetSessionById(userId, out var session)
+            && session.AttachedEntity is { } ent
+            && _mobState.IsAlive(ent);
     }
 
     private void OnDelete(EntityUid uid, LifeInsuranceConsoleComponent comp, LifeInsuranceDeleteMessage args)
@@ -157,7 +187,13 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     /// </summary>
     public void EnsureLinks(EntityUid uid, LifeInsuranceConsoleComponent comp)
     {
-        if (Exists(comp.Scanner) && Exists(comp.Cloner))
+        // Drop stale references (e.g. a destroyed capsule) so a replacement can be picked up.
+        if (!Exists(comp.Scanner))
+            comp.Scanner = null;
+        if (!Exists(comp.Cloner))
+            comp.Cloner = null;
+
+        if (comp.Scanner != null && comp.Cloner != null)
             return;
 
         var coords = Transform(uid).Coordinates;
@@ -236,7 +272,8 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Records.TryGetValue(user, out var found) && found.Insurances > 0)
+            // A powered-down or destroyed console can't serve its policy database.
+            if (_backup.IsOperational(uid) && comp.Records.TryGetValue(user, out var found) && found.Insurances > 0)
             {
                 console = uid;
                 consoleComp = comp;

@@ -28,7 +28,8 @@ life-insurance-status-battery = { $machine }: батарея { $percent }%
 life-insurance-no-scanner = Капсула сканирования не подключена.
 life-insurance-no-dna = Не удалось считать ДНК пациента.
 life-insurance-dna-recorded = ДНК { $name } записана.
-life-insurance-max-reached = У этого человека уже максимум страховок.
+life-insurance-max-reached = У этого клиента уже максимум страховок.
+life-insurance-target-not-alive = Страховку можно купить только живому клиенту.
 life-insurance-insufficient-funds = Недостаточно средств.
 life-insurance-purchased = Куплена страховка жизни для { $name }.
 

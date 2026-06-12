@@ -3,8 +3,8 @@
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'life-insurance-window-title'}"
-    SetSize="460 540"
-    MinSize="460 540">
+    SetSize="530 540"
+    MinSize="530 540">
     <!-- Terminal "screen" backing -->
     <PanelContainer HorizontalExpand="True" VerticalExpand="True">
         <PanelContainer.PanelOverride>
