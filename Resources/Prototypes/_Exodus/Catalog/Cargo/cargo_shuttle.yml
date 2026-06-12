@@ -8,15 +8,15 @@
   category: cargoproduct-category-name-shuttle
   group: market
 
-- type: cargoProduct
-  id: ShuttleTurretFang
-  icon:
-    sprite: _Mono/Objects/ShuttleWeapons/fang.rsi
-    state: space_artillery
-  product: CrateWeaponTurretFang
-  cost: 115000
-  category: cargoproduct-category-name-shuttle
-  group: market
+#- type: cargoProduct
+#  id: ShuttleTurretFang
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/fang.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretFang
+#  cost: 115000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
 
 - type: cargoProduct
   id: ShuttleTurretLongbow
@@ -138,15 +138,15 @@
   category: cargoproduct-category-name-shuttle
   group: market
 
-- type: cargoProduct
-  id: ShuttleTurretType54
-  icon:
-    sprite: _Mono/Objects/ShuttleWeapons/t54.rsi
-    state: space_artillery
-  product: CrateWeaponTurretType54
-  cost: 60000
-  category: cargoproduct-category-name-shuttle
-  group: market
+#- type: cargoProduct
+#  id: ShuttleTurretType54
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/t54.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretType54
+#  cost: 60000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
 
 - type: cargoProduct
   id: ShuttleTurretASM220
