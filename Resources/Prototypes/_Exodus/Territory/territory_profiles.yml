@@ -10,6 +10,7 @@
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:
   - AnomalousLab
+  - Arena
   - Sevastopol
   - TSFMCOutpost
   - Bahama

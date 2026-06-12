@@ -307,6 +307,7 @@ public sealed partial class StationSystem : SharedStationSystem
         DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
 
         var data = Comp<StationDataComponent>(station);
+        data.StationConfig = stationConfig; // Exodus - let territory and other systems resolve the source game map.
         name ??= MetaData(station).EntityName;
 
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())

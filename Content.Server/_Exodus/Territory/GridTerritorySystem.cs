@@ -1,9 +1,11 @@
 using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared._Exodus.Territory;
 using Content.Shared.Construction; // for potential future
 using Content.Server._Exodus.Territory; // for the marker sync (same logical area)
 using Content.Shared._Crescent.SpaceBiomes;
 using Content.Shared.Maps;
+using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
@@ -28,6 +30,7 @@ public sealed class GridTerritorySystem : EntitySystem
 {
     [Dependency] private readonly TerritoryMarkerSystem _marker = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -103,6 +106,20 @@ public sealed class GridTerritorySystem : EntitySystem
 
     private string? GetGameMapId(EntityUid grid)
     {
+        if (_station.GetOwningStation(grid) is { } station &&
+            TryComp<StationDataComponent>(station, out var stationData) &&
+            stationData.StationConfig != null)
+        {
+            foreach (var gameMap in _proto.EnumeratePrototypes<GameMapPrototype>())
+            {
+                foreach (var (_, stationConfig) in gameMap.Stations)
+                {
+                    if (ReferenceEquals(stationConfig, stationData.StationConfig))
+                        return gameMap.ID;
+                }
+            }
+        }
+
         if (TryComp<BecomesStationComponent>(grid, out var becomesStation))
             return becomesStation.Id;
 
