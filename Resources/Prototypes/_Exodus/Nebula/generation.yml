@@ -11,8 +11,8 @@
 
   # Area budget — per-nebula and total cap.
   minArea: 13000000
-  maxArea: 300000000
-  maxTotalArea: 8000000000
+  maxArea: 450000000
+  maxTotalArea: 6000000000
 
   # Blob shape parameters.
   minStretch: 0.65

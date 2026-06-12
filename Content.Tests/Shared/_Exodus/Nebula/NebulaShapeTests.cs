@@ -188,6 +188,24 @@ public sealed class NebulaShapeTests
         }
     }
 
+    [Test]
+    public void OverlapCheckAllowsEmptySpaceInsideBoundingCircle()
+    {
+        Assert.That(TryCreateEllipse(Vector2.Zero, out var existing), Is.True);
+        Assert.That(TryCreateEllipse(new Vector2(0f, 1500f), out var candidate), Is.True);
+
+        Assert.That(NebulaGenerator.IntersectsExistingNebula(candidate, new[] { existing }, 0f), Is.False);
+    }
+
+    [Test]
+    public void OverlapCheckRejectsActualShapeIntersection()
+    {
+        Assert.That(TryCreateEllipse(Vector2.Zero, out var existing), Is.True);
+        Assert.That(TryCreateEllipse(new Vector2(0f, 900f), out var candidate), Is.True);
+
+        Assert.That(NebulaGenerator.IntersectsExistingNebula(candidate, new[] { existing }, 0f), Is.True);
+    }
+
     private static bool TryCreateCircle(out NebulaShape shape, float power = 1f)
     {
         return NebulaShape.TryCreate(
@@ -196,6 +214,21 @@ public sealed class NebulaShapeTests
             1f,
             500f,
             power,
+            default,
+            default,
+            default,
+            default,
+            out shape);
+    }
+
+    private static bool TryCreateEllipse(Vector2 center, out NebulaShape shape)
+    {
+        return NebulaShape.TryCreate(
+            center,
+            0f,
+            2f,
+            1000f,
+            1f,
             default,
             default,
             default,

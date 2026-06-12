@@ -130,10 +130,15 @@ public readonly record struct NebulaShape
 
     public bool Contains(Vector2 point)
     {
+        return Contains(point, 0f);
+    }
+
+    public bool Contains(Vector2 point, float padding)
+    {
         var (theta, rho) = ToNebulaPolar(point);
         var radius = GetRadius(theta);
 
-        return radius > 0f && rho <= radius;
+        return radius > 0f && rho <= radius + MathF.Max(0f, padding);
     }
 
     public float GetDensity(Vector2 point)

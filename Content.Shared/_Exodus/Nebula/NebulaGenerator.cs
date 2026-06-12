@@ -7,6 +7,8 @@ namespace Content.Shared._Exodus.Nebula;
 /// </summary>
 public static class NebulaGenerator
 {
+    private const int ShapeOverlapSampleCount = 96;
+
     public static NebulaGenerationResult Generate(
         int seed,
         IReadOnlyList<Vector2> protectedPositions,
@@ -39,6 +41,9 @@ public static class NebulaGenerator
         result.MaxTotalArea = maxTotalArea;
         result.MaxAttempts = settings.MaxAttempts;
 
+        var spatial = new NebulaSpatialIndex(CreateSpatialCellSize(settings));
+        var nearbyNebulas = new List<int>();
+
         while (result.Attempts < settings.MaxAttempts)
         {
             result.Attempts++;
@@ -61,13 +66,15 @@ public static class NebulaGenerator
                 continue;
             }
 
-            if (IntersectsExistingNebula(candidate, result.Nebulas, settings.Separation))
+            if (IntersectsExistingNebula(candidate, result.Nebulas, spatial, nearbyNebulas, settings.Separation))
             {
                 result.Rejections.Overlap++;
                 continue;
             }
 
+            var nebulaIndex = result.Nebulas.Count;
             result.Nebulas.Add(candidate);
+            spatial.Add(candidate, nebulaIndex);
             result.NebulaPrototypes.Add(PickRandomPrototype(random, settings));
             result.TotalArea += candidate.Area;
 
@@ -119,9 +126,61 @@ public static class NebulaGenerator
     {
         for (var i = 0; i < existing.Count; i++)
         {
-            var distance = Vector2.Distance(shape.Center, existing[i].Center);
-            if (distance < shape.BoundingRadius + existing[i].BoundingRadius + separation)
+            if (IntersectsExistingNebula(shape, existing[i], separation))
                 return true;
+        }
+
+        return false;
+    }
+
+    private static bool IntersectsExistingNebula(
+        NebulaShape shape,
+        IReadOnlyList<NebulaShape> existing,
+        NebulaSpatialIndex spatial,
+        List<int> nearbyNebulas,
+        float separation)
+    {
+        spatial.Query(shape, nearbyNebulas, separation);
+
+        for (var i = 0; i < nearbyNebulas.Count; i++)
+        {
+            var index = nearbyNebulas[i];
+            if (index < 0 || index >= existing.Count)
+                continue;
+
+            if (IntersectsExistingNebula(shape, existing[index], separation))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool IntersectsExistingNebula(NebulaShape shape, NebulaShape existing, float separation)
+    {
+        var padding = MathF.Max(0f, separation);
+        var boundingRadius = shape.BoundingRadius + existing.BoundingRadius + padding;
+        var delta = shape.Center - existing.Center;
+
+        if (delta.LengthSquared() >= boundingRadius * boundingRadius)
+            return false;
+
+        return ShapesOverlap(shape, existing, padding);
+    }
+
+    private static bool ShapesOverlap(NebulaShape first, NebulaShape second, float padding)
+    {
+        if (first.Contains(second.Center, padding) || second.Contains(first.Center, padding))
+            return true;
+
+        for (var i = 0; i < ShapeOverlapSampleCount; i++)
+        {
+            var theta = MathF.Tau * i / ShapeOverlapSampleCount;
+
+            if (second.Contains(first.GetBoundaryPoint(theta), padding) ||
+                first.Contains(second.GetBoundaryPoint(theta), padding))
+            {
+                return true;
+            }
         }
 
         return false;
@@ -217,6 +276,11 @@ public static class NebulaGenerator
             settings.MaxWaveFrequency >= settings.MinWaveFrequency;
     }
 
+    private static float CreateSpatialCellSize(NebulaGenerationSettings settings)
+    {
+        return MathF.Max(4096f, NebulaShape.RadiusFromArea(settings.MaxArea));
+    }
+
     private static float NextFloat(global::System.Random random, float min, float max)
     {
         return min + (float) random.NextDouble() * (max - min);
@@ -253,5 +317,87 @@ public static class NebulaGenerator
         }
 
         return pool[^1].Proto;
+    }
+
+    private readonly record struct SpatialCell(int X, int Y);
+
+    private sealed class NebulaSpatialIndex
+    {
+        private readonly Dictionary<SpatialCell, List<int>> _cells = new();
+        private readonly Dictionary<int, int> _seen = new();
+        private readonly float _cellSize;
+        private int _stamp;
+
+        public NebulaSpatialIndex(float cellSize)
+        {
+            _cellSize = MathF.Max(1f, cellSize);
+        }
+
+        public void Add(NebulaShape shape, int index)
+        {
+            GetCellBounds(shape, 0f, out var minX, out var maxX, out var minY, out var maxY);
+
+            for (var x = minX; x <= maxX; x++)
+            {
+                for (var y = minY; y <= maxY; y++)
+                {
+                    var cell = new SpatialCell(x, y);
+                    if (!_cells.TryGetValue(cell, out var indexes))
+                    {
+                        indexes = new List<int>();
+                        _cells.Add(cell, indexes);
+                    }
+
+                    indexes.Add(index);
+                }
+            }
+        }
+
+        public void Query(NebulaShape shape, List<int> results, float padding)
+        {
+            results.Clear();
+            _stamp++;
+
+            GetCellBounds(shape, MathF.Max(0f, padding), out var minX, out var maxX, out var minY, out var maxY);
+
+            for (var x = minX; x <= maxX; x++)
+            {
+                for (var y = minY; y <= maxY; y++)
+                {
+                    if (!_cells.TryGetValue(new SpatialCell(x, y), out var indexes))
+                        continue;
+
+                    for (var i = 0; i < indexes.Count; i++)
+                    {
+                        var index = indexes[i];
+                        if (_seen.TryGetValue(index, out var seenStamp) && seenStamp == _stamp)
+                            continue;
+
+                        _seen[index] = _stamp;
+                        results.Add(index);
+                    }
+                }
+            }
+        }
+
+        private void GetCellBounds(
+            NebulaShape shape,
+            float padding,
+            out int minX,
+            out int maxX,
+            out int minY,
+            out int maxY)
+        {
+            var radius = shape.BoundingRadius + padding;
+            minX = GetCell(shape.Center.X - radius);
+            maxX = GetCell(shape.Center.X + radius);
+            minY = GetCell(shape.Center.Y - radius);
+            maxY = GetCell(shape.Center.Y + radius);
+        }
+
+        private int GetCell(float value)
+        {
+            return (int) MathF.Floor(value / _cellSize);
+        }
     }
 }
