@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Nebula;
@@ -53,4 +54,17 @@ public sealed partial class NebulaLightningGridHazardComponent : Component
 
     [ViewVariables]
     public int SuperHeavyStrikeCount;
+
+    /// <summary>
+    /// Cached grid tile indices that were valid lightning strike candidates during the last full scan.
+    /// Stored as grid indices because tile refs can become stale after topology changes or grid splits.
+    /// </summary>
+    [ViewVariables]
+    public readonly List<Vector2i> CachedStrikeTiles = new();
+
+    [ViewVariables]
+    public bool StrikeTileCacheInitialized;
+
+    [ViewVariables]
+    public TimeSpan NextStrikeTileCacheRefresh;
 }

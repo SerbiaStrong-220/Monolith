@@ -219,6 +219,9 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         hazard.SmallStrikeCount = default;
         hazard.HeavyStrikeCount = default;
         hazard.SuperHeavyStrikeCount = default;
+        hazard.CachedStrikeTiles.Clear();
+        hazard.StrikeTileCacheInitialized = false;
+        hazard.NextStrikeTileCacheRefresh = default;
     }
 
     private static void ResetSpaceLightning(NebulaSpaceLightningTargetComponent target, EntProtoId marker)

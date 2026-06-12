@@ -29,6 +29,8 @@ namespace Content.Server._Exodus.Nebula;
 public sealed class NebulaLightningHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    private static readonly TimeSpan StrikeTileCacheRefreshInterval = TimeSpan.FromSeconds(30);
+    private static readonly TimeSpan EmptyStrikeTileCacheRetryInterval = TimeSpan.FromSeconds(5);
     private const float ShieldProtectionSearchRange = 32f;
     private const float LightningAudioRange = 512f;
     private const float LightningAudioVolume = 8f;
@@ -212,7 +214,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         NebulaLightningHazardComponent config,
         LightningStrikeTier tier)
     {
-        if (!TrySelectStrikeTile(grid, hazard.Marker, out _, out var targetCoords, out var targetGridCoords))
+        if (!TrySelectStrikeTile(grid, hazard, out _, out var targetCoords, out var targetGridCoords))
             return false;
 
         var lightning = GetLightningPrototype(config, tier);
@@ -239,7 +241,7 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
 
     private bool TrySelectStrikeTile(
         Entity<MapGridComponent, TransformComponent> grid,
-        EntProtoId marker,
+        NebulaLightningGridHazardComponent hazard,
         out TileRef selected,
         out MapCoordinates selectedCoords,
         out EntityCoordinates selectedGridCoords)
@@ -247,11 +249,35 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         selected = default;
         selectedCoords = default;
         selectedGridCoords = default;
-        var candidates = 0;
 
         var mapId = grid.Comp2.MapID;
         if (!TryGetNebulaMapComponent(mapId, out var mapComponent))
             return false;
+
+        var rebuilt = false;
+        if (!hazard.StrikeTileCacheInitialized || _timing.CurTime >= hazard.NextStrikeTileCacheRefresh)
+        {
+            RebuildStrikeTileCache(grid, hazard, mapId, mapComponent);
+            rebuilt = true;
+        }
+
+        if (TryPickStrikeTileFromCache(grid, hazard, mapId, mapComponent, out selected, out selectedCoords, out selectedGridCoords))
+            return true;
+
+        if (rebuilt)
+            return false;
+
+        RebuildStrikeTileCache(grid, hazard, mapId, mapComponent);
+        return TryPickStrikeTileFromCache(grid, hazard, mapId, mapComponent, out selected, out selectedCoords, out selectedGridCoords);
+    }
+
+    private void RebuildStrikeTileCache(
+        Entity<MapGridComponent, TransformComponent> grid,
+        NebulaLightningGridHazardComponent hazard,
+        MapId mapId,
+        NebulaMapComponent mapComponent)
+    {
+        hazard.CachedStrikeTiles.Clear();
 
         var tiles = _map.GetAllTilesEnumerator(grid.Owner, grid.Comp1, true);
         while (tiles.MoveNext(out var tile))
@@ -268,19 +294,85 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
 
             // The grid may overlap a nebula only partially; only fire on tiles that are
             // actually inside a nebula whose marker matches this hazard.
-            if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, marker))
+            if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, hazard.Marker))
                 continue;
 
-            candidates++;
-            if (_random.Next(candidates) != 0)
-                continue;
-
-            selected = tileRef;
-            selectedCoords = coords;
-            selectedGridCoords = gridCoords;
+            hazard.CachedStrikeTiles.Add(tileRef.GridIndices);
         }
 
-        return candidates > 0;
+        hazard.StrikeTileCacheInitialized = true;
+        hazard.NextStrikeTileCacheRefresh = _timing.CurTime +
+            (hazard.CachedStrikeTiles.Count == 0
+                ? EmptyStrikeTileCacheRetryInterval
+                : StrikeTileCacheRefreshInterval);
+    }
+
+    private bool TryPickStrikeTileFromCache(
+        Entity<MapGridComponent, TransformComponent> grid,
+        NebulaLightningGridHazardComponent hazard,
+        MapId mapId,
+        NebulaMapComponent mapComponent,
+        out TileRef selected,
+        out MapCoordinates selectedCoords,
+        out EntityCoordinates selectedGridCoords)
+    {
+        selected = default;
+        selectedCoords = default;
+        selectedGridCoords = default;
+
+        while (hazard.CachedStrikeTiles.Count > 0)
+        {
+            var index = _random.Next(hazard.CachedStrikeTiles.Count);
+            var tile = hazard.CachedStrikeTiles[index];
+
+            if (TryResolveStrikeTile(grid, hazard, mapId, mapComponent, tile, out selected, out selectedCoords, out selectedGridCoords))
+                return true;
+
+            RemoveCachedStrikeTileAt(hazard, index);
+        }
+
+        return false;
+    }
+
+    private bool TryResolveStrikeTile(
+        Entity<MapGridComponent, TransformComponent> grid,
+        NebulaLightningGridHazardComponent hazard,
+        MapId mapId,
+        NebulaMapComponent mapComponent,
+        Vector2i tile,
+        out TileRef selected,
+        out MapCoordinates selectedCoords,
+        out EntityCoordinates selectedGridCoords)
+    {
+        selected = default;
+        selectedCoords = default;
+        selectedGridCoords = default;
+
+        if (!_map.TryGetTileRef(grid.Owner, grid.Comp1, tile, out selected) ||
+            selected.Tile.IsEmpty ||
+            !IsEdgeTile(grid.Owner, grid.Comp1, tile))
+        {
+            return false;
+        }
+
+        var gridCoords = _map.GridTileToLocal(grid.Owner, grid.Comp1, tile);
+        var coords = _transform.ToMapCoordinates(gridCoords);
+        if (coords.MapId != mapId)
+            return false;
+
+        if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, hazard.Marker))
+            return false;
+
+        selectedCoords = coords;
+        selectedGridCoords = gridCoords;
+        return true;
+    }
+
+    private static void RemoveCachedStrikeTileAt(NebulaLightningGridHazardComponent hazard, int index)
+    {
+        var last = hazard.CachedStrikeTiles.Count - 1;
+        hazard.CachedStrikeTiles[index] = hazard.CachedStrikeTiles[last];
+        hazard.CachedStrikeTiles.RemoveAt(last);
     }
 
     private bool TryGetNebulaMapComponent(MapId mapId, out NebulaMapComponent component)

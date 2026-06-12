@@ -749,6 +749,9 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
                     lightning.NextSuperHeavyStrike, lightning.SuperHeavyStrikeCount, lightning.LastSuperHeavyStrike,
                     lightning.LastSuperHeavyDelta, curTime);
             }
+
+            lines.Add($"  Tile cache: {lightning.CachedStrikeTiles.Count} tiles, " +
+                      $"refresh {FormatNextTimer(true, lightning.StrikeTileCacheInitialized, lightning.NextStrikeTileCacheRefresh, curTime)}.");
         }
 
         if (hasEmp && emp != null)
