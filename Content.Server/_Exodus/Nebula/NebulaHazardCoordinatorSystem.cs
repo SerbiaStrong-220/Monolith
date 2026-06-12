@@ -237,6 +237,9 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         hazard.LastPulse = default;
         hazard.LastPulseDelta = default;
         hazard.PulseCount = default;
+        hazard.CachedPulseTiles.Clear();
+        hazard.PulseTileCacheInitialized = false;
+        hazard.NextPulseTileCacheRefresh = default;
     }
 
     private static void ResetSpaceEmp(NebulaSpaceEmpTargetComponent target, EntProtoId marker)

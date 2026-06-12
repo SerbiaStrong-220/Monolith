@@ -764,6 +764,8 @@ public sealed class NebulaHazardStatusCommand : IConsoleCommand
             lines.Add($"  Pulse: {FormatNextTimer(enabled, emp.TimersInitialized, emp.NextPulse, curTime)}, " +
                       $"count {emp.PulseCount}, last {FormatOptionalDuration(emp.LastPulse)}, " +
                       $"delta {FormatOptionalDuration(emp.LastPulseDelta)}.");
+            lines.Add($"  Tile cache: {emp.CachedPulseTiles.Count} tiles, " +
+                      $"refresh {FormatNextTimer(true, emp.PulseTileCacheInitialized, emp.NextPulseTileCacheRefresh, curTime)}.");
         }
 
         shell.WriteLine(string.Join('\n', lines));

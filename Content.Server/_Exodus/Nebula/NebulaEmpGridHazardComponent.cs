@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Nebula;
@@ -27,4 +28,17 @@ public sealed partial class NebulaEmpGridHazardComponent : Component
 
     [ViewVariables]
     public int PulseCount;
+
+    /// <summary>
+    /// Cached grid tile indices that were valid EMP pulse candidates during the last full scan.
+    /// Stored as grid indices because tile refs can become stale after topology changes or grid splits.
+    /// </summary>
+    [ViewVariables]
+    public readonly List<Vector2i> CachedPulseTiles = new();
+
+    [ViewVariables]
+    public bool PulseTileCacheInitialized;
+
+    [ViewVariables]
+    public TimeSpan NextPulseTileCacheRefresh;
 }
