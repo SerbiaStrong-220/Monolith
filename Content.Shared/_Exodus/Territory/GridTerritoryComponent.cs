@@ -7,7 +7,7 @@ namespace Content.Shared._Exodus.Territory;
 /// Marks a grid as having a controllable territory / influence zone on the nav radar.
 /// 
 /// Core design (per requirements):
-/// - Every station/POI is "Незанято" (unclaimed) by default.
+/// - Every station/POI is unclaimed by default.
 /// - A station of any type will NEVER belong to a faction by default (ontologically impossible).
 /// - If a station must start under a faction's control, place the faction's banner entity
 ///   (with TerritoryBanner in yaml / TerritoryBannerComponent in C#) anchored on the grid directly in the map file.
@@ -20,7 +20,7 @@ namespace Content.Shared._Exodus.Territory;
 /// 
 /// - defaultLabel: text shown when unclaimed (ControllingFaction is null).
 ///   Defaults to "territory-unclaimed".
-///   Can be overridden per-grid for special neutral text (e.g. station name "КОЛОСС-ЦЕНТРАЛ").
+///   Can be overridden per-grid for special neutral text.
 /// 
 /// Radius: free float. Common useful values 1000/2500/5000 based on station importance.
 /// </summary>
@@ -37,18 +37,26 @@ public sealed partial class GridTerritoryComponent : Component
     /// <summary>
     /// The faction currently controlling this territory.
     /// Defined in TerritoryFactionPrototype (data-driven config under _Exodus).
-    /// Null / unset = neutral (display "Unclaimed" / "Незанято").
+    /// Null / unset = neutral.
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<TerritoryFactionPrototype>? ControllingFaction = null;
 
     /// <summary>
     /// Label to use when there is no controlling faction (neutral state).
-    /// Defaults to the "Unclaimed"/"Незанято" key.
+    /// Defaults to the unclaimed key.
     /// Mappers can override per-POI (e.g. station name) if desired.
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId DefaultLabel = "territory-unclaimed";
+
+    /// <summary>
+    /// Entity prototype spawned at the territory center to provide biome/ambient selection.
+    /// The spawned prototype defines biome id and priority; runtime code only applies Radius as swap distance.
+    /// Null disables biome source spawning for this territory.
+    /// </summary>
+    [DataField]
+    public ProtoId<EntityPrototype>? BiomeSourcePrototype = "BiomeSourceTerritoryMiddle";
 
     /// <summary>
     /// The entity currently providing the active claim (the anchored banner).

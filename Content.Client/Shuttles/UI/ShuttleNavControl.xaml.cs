@@ -80,6 +80,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private const float TerritoryTextWorldRepeat = 1800f;
     private const float TerritoryTextFadeInDiagMultiplier = 3f;
     private const float TerritoryTextFullDiagMultiplier = 7f;
+    private const float TerritoryTextFadeOutViewDiagMultiplier = 0.9f;
+    private const float TerritoryTextHiddenViewDiagMultiplier = 1.35f;
     // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
@@ -1444,12 +1446,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var baseAlpha = 0.35f;
         var textColor = new Color(0.65f, 0.65f, 0.65f);
         var textDims = handle.GetDimensions(Font, text, textScale);
-        var labelOffset = config.LabelOffset * UIScale;
         var textDrawOffset = new Vector2(
-            -textDims.X * 0.5f + labelOffset.X,
-            -textDims.Y * 0.5f + labelOffset.Y);
+            -textDims.X * 0.5f,
+            -textDims.Y * 0.5f);
         var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
-        var zoomAlpha = GetTerritoryTextZoomAlpha(screenRadius, halfDiag);
+        var zoomAlpha = GetTerritoryTextZoomAlpha(screenRadius, halfDiag, viewBounds);
         if (zoomAlpha <= 0f)
             return;
 
@@ -1530,18 +1531,35 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         return (closest - center).LengthSquared() <= radius * radius;
     }
 
-    private static float GetTerritoryTextZoomAlpha(float screenRadius, float halfDiag)
+    private static float GetTerritoryTextZoomAlpha(float screenRadius, float halfDiag, Box2 viewBounds)
     {
-        var fadeStart = halfDiag * TerritoryTextFadeInDiagMultiplier;
-        var fadeEnd = halfDiag * TerritoryTextFullDiagMultiplier;
+        var fadeInStart = halfDiag * TerritoryTextFadeInDiagMultiplier;
+        var fadeInEnd = halfDiag * TerritoryTextFullDiagMultiplier;
 
-        if (screenRadius <= fadeStart)
+        if (screenRadius <= fadeInStart)
             return 0f;
 
-        if (screenRadius >= fadeEnd)
-            return 1f;
+        var fadeInAlpha = screenRadius >= fadeInEnd
+            ? 1f
+            : (screenRadius - fadeInStart) / (fadeInEnd - fadeInStart);
 
-        return (screenRadius - fadeStart) / (fadeEnd - fadeStart);
+        var viewWidth = MathF.Abs(viewBounds.Right - viewBounds.Left);
+        var viewHeight = MathF.Abs(viewBounds.Top - viewBounds.Bottom);
+        var viewDiag = MathF.Sqrt(viewWidth * viewWidth + viewHeight * viewHeight);
+        if (viewDiag <= 0f)
+            return fadeInAlpha;
+
+        var fadeOutStart = viewDiag * TerritoryTextFadeOutViewDiagMultiplier;
+        var fadeOutEnd = viewDiag * TerritoryTextHiddenViewDiagMultiplier;
+
+        if (screenRadius >= fadeOutEnd)
+            return 0f;
+
+        var fadeOutAlpha = screenRadius <= fadeOutStart
+            ? 1f
+            : 1f - (screenRadius - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+
+        return fadeInAlpha * fadeOutAlpha;
     }
 
     private static void GetTerritoryTextIndexRange(Box2 bounds, Vector2 center, Vector2 axis, float step, out int min, out int max)

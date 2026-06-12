@@ -12,9 +12,9 @@ namespace Content.Server._Exodus.Territory;
 /// Handles banners as a claim source for GridTerritory.
 /// Enforces "only one active claim banner per grid" at runtime (construction condition handles build time).
 /// When a qualifying banner is anchored on a grid with GridTerritoryComponent, it claims control
-/// and the radar label updates to the faction name (or "Незанято" when removed).
+/// and the radar label updates to the faction name, or the neutral label when removed.
 /// 
-/// Uses zaty chka / placeholder banners for factions without final art yet (Империя Кхси'Ра etc.).
+/// Factions without final art can use temporary placeholder banner entities.
 /// </summary>
 public sealed class GridTerritoryBannerSystem : EntitySystem
 {

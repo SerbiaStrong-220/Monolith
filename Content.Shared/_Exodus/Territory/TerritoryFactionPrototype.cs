@@ -1,4 +1,3 @@
-using System.Numerics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.Territory;
@@ -39,11 +38,4 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     [DataField]
     public Color Color { get; private set; } = new Color(0.7f, 0.7f, 0.7f);
     // # Exodus end - faction color for territory rings
-
-    /// <summary>
-    /// Unscaled screen-space offset for the repeated radar label.
-    /// Applied after centering, so the label still rotates around its original invisible pivot.
-    /// </summary>
-    [DataField]
-    public Vector2 RadarLabelOffset { get; private set; } = Vector2.Zero;
 }

@@ -10,8 +10,7 @@ namespace Content.Shared._Exodus.Territory;
 /// 
 /// Only one such banner should be the active claim per grid (enforced at construction + runtime).
 /// 
-/// For factions without final sprites yet (Империя Кхси'Ра, possibly Колосс-Централ), 
-/// a placeholder/zaty chka banner entity id is used temporarily.
+/// Factions without final sprites can use temporary placeholder banner entities.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class TerritoryBannerComponent : Component

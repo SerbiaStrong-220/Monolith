@@ -107,13 +107,6 @@ public partial record struct BlipConfig
     /// </summary>
     [DataField]
     public string? Label = null;
-
-    /// <summary>
-    /// Optional unscaled screen-space offset for the repeated label.
-    /// Applied after centering, so the label still rotates around the blip pivot.
-    /// </summary>
-    [DataField]
-    public Vector2 LabelOffset = Vector2.Zero;
     // Exodus-end
 
     [DataField]

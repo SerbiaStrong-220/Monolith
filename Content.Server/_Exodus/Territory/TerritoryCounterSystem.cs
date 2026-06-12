@@ -7,47 +7,8 @@ using System.Collections.Generic;
 namespace Content.Server._Exodus.Territory;
 
 /// <summary>
-/// Abstract counter of captured territories (per-faction points).
-/// 
-/// Designed so that future systems can easily reference it for scoring, events, win conditions, etc.
-/// 
-/// How it works:
-/// - On every round start (RoundStartedEvent), it fully recalculates by:
-///   1. Scanning all entities with GridTerritoryComponent that have a ControllingFaction.
-///   2. For each such claimed territory, adds points based on its Radius (see GetPoints).
-///   3. Then explicitly ensures EVERY faction declared in territory_factions.yml has an entry
-///      (0 if it has no claims yet).
-/// 
-/// - Live updates: subscribes to GridTerritoryControllerChangedEvent (raised by GridTerritorySystem
-///   whenever a claim changes via banner or other means). On change it does delta: subtract points
-///   from old faction, add to new faction. Unknown factions are auto-added via EnsureFaction.
-/// 
-/// - Automatic pickup of new factions:
-///   Because RecalculateAll() and EnsureAllFactions() ALWAYS call
-///   _proto.EnumeratePrototypes&lt;TerritoryFactionPrototype&gt;(), any new faction added to
-///   Resources/Prototypes/_Exodus/Territory/territory_factions.yml will be automatically
-///   "подсасывается" (included with score 0) on the next round start, or immediately if
-///   prototypes are reloaded (PrototypesReloadedEventArgs).
-/// 
-///   Even mid-round, if a brand-new faction claims something, the delta path will create the entry.
-/// 
-/// Scoring rules (самое оптимальное целочисленное решение):
-/// - Rule: points = (r + 500) / 1000   (integer division)
-/// - 1km (1000)   → 1 очко
-/// - 1.1km (1100) → 1 очко   (1100 не может быть округлено до 2)
-/// - 1.5km (1500) → 2 очка   (округлиться до 2 только если 1500 или более)
-/// - 2.5km (2500) → 3 очка
-/// - 5km (5000)   → 5 очков
-/// 
-/// Это эквивалент round half up (к ближайшему, .5+ вверх).
-/// Такой принцип распространяется на всё округление значений.
-/// Самое оптимальное: быстрее, без float, без погрешностей,
-/// идеальный задел на будущее.
-/// 
-/// Public API for other systems:
-/// - GetScore(faction)
-/// - GetAllScores()
-/// - Subscribe to TerritoryScoreChangedEvent for reactive updates.
+/// Tracks captured territory score per faction.
+/// Recalculates on round start, updates by delta on claim changes, and keeps every declared territory faction present at score 0.
 /// </summary>
 public sealed class TerritoryCounterSystem : EntitySystem
 {
@@ -143,9 +104,6 @@ public sealed class TerritoryCounterSystem : EntitySystem
 
     private void EnsureAllFactions()
     {
-        // Always pull fresh from the YML via prototypes.
-        // This is what makes the counter automatically "подсасываться" new factions
-        // when they are added to territory_factions.yml (on round start or proto reload).
         foreach (var fac in _proto.EnumeratePrototypes<TerritoryFactionPrototype>())
         {
             var key = new ProtoId<TerritoryFactionPrototype>(fac.ID);
@@ -162,27 +120,7 @@ public sealed class TerritoryCounterSystem : EntitySystem
 
     private static int GetPoints(float radius)
     {
-        // Самое оптимальное и чистое решение (целочисленная арифметика):
-        //
-        // points = (r + 500) / 1000
-        //
-        // Это математически эквивалентно "round half up" (округление к ближайшему,
-        // .5 и выше — вверх) для положительных значений.
-        //
-        // Правила (точно как просил):
-        // - 1км (1000)   → (1000 + 500) / 1000 = 1
-        // - 1.1км (1100) → (1100 + 500) / 1000 = 1   (1100 не может быть округлено до 2)
-        // - 1.5км (1500) → (1500 + 500) / 1000 = 2   (округлиться до 2 только если 1500 или более)
-        // - 2.5км (2500) → (2500 + 500) / 1000 = 3
-        // - 3.5км        → (3500 + 500) / 1000 = 4
-        // - 5км (5000)   → (5000 + 500) / 1000 = 5
-        //
-        // Преимущества:
-        // - Нет floating point операций после каста
-        // - Нет вызова функции округления
-        // - Полная защита от погрешностей float
-        // - Быстрее и проще
-        // - Самое оптимальное решение для этой задачи.
+        // Equivalent to round-half-up for positive kilometer values.
         if (radius <= 0)
             return 0;
 

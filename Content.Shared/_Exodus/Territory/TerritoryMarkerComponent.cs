@@ -1,4 +1,3 @@
-using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 
@@ -19,13 +18,6 @@ public sealed partial class TerritoryMarkerComponent : Component
 
     [DataField]
     public Color BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
-
-    /// <summary>
-    /// Unscaled screen-space offset for the repeated radar label.
-    /// Applied after centering, so the label still rotates around its original invisible pivot.
-    /// </summary>
-    [DataField]
-    public Vector2 LabelOffset = Vector2.Zero;
 
     /// <summary>
     /// Localization key for the label repeated diagonally across the territory zone.

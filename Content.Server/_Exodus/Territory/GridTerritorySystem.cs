@@ -37,7 +37,7 @@ public sealed class GridTerritorySystem : EntitySystem
     private void OnGridTerritoryStartup(Entity<GridTerritoryComponent> ent, ref ComponentStartup args)
     {
         EnsureVisual(ent);
-        EnsureMiddleRingBiomeSource(ent);
+        EnsureTerritoryBiomeSource(ent);
         Dirty(ent, ent.Comp); // # Exodus - ensure initial prototype values (e.g. Radius) are sent to clients for map icon logic etc.
     }
 
@@ -62,14 +62,12 @@ public sealed class GridTerritorySystem : EntitySystem
             label = factionProto.RadarLabel;
             marker.FillColor = factionProto.Color.WithAlpha(0.02f);
             marker.BorderColor = factionProto.Color.WithAlpha(0.28f);
-            marker.LabelOffset = factionProto.RadarLabelOffset;
         }
         else
         {
             // Unclaimed / neutral territory
             marker.FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
             marker.BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
-            marker.LabelOffset = Vector2.Zero;
         }
         // # Exodus end - faction color for rings
 
@@ -90,7 +88,7 @@ public sealed class GridTerritorySystem : EntitySystem
     /// will set it on load via this method).
     /// 
     /// The radar label is resolved from the TerritoryFactionPrototype (by its radarLabel LocId),
-    /// never passed directly. When faction is null → uses the component's defaultLabel (usually "Незанято").
+    /// never passed directly. When faction is null, uses the component's defaultLabel.
     /// 
     /// Changes are purely runtime on the grid entity (not persisted to yaml).
     /// 
@@ -130,14 +128,12 @@ public sealed class GridTerritorySystem : EntitySystem
             {
                 marker.FillColor = factionProto.Color.WithAlpha(0.02f);
                 marker.BorderColor = factionProto.Color.WithAlpha(0.28f);
-                marker.LabelOffset = factionProto.RadarLabelOffset;
             }
             else
             {
                 // Unclaimed
                 marker.FillColor = new Color(0.65f, 0.65f, 0.65f, 0.02f);
                 marker.BorderColor = new Color(0.70f, 0.70f, 0.70f, 0.085f);
-                marker.LabelOffset = Vector2.Zero;
             }
             // # Exodus end - faction color for rings
 
@@ -163,26 +159,30 @@ public sealed class GridTerritorySystem : EntitySystem
     }
 
     /// <summary>
-    /// Spawns a dedicated biome source entity (child of the grid) configured for the middle ring,
-    /// using the territory's Radius as the swap distance. This makes all station/POI
-    /// influence zones (GridTerritory circles) count as "среднее кольцо" for biome/ambient music.
-    ///
-    /// Uses BaseBiomeSource prototype (which carries GlobalPvs) so the source is visible to clients
-    /// at long range even for distant POIs, without forcing the main grid entity into global PVS.
-    /// The child is positioned at (0,0) local so it follows the grid's world position exactly.
-    /// Priority chosen to be below inner ring (2000) but above external space (500), so inner center wins over colossus territory.
+    /// Spawns a configured biome source entity as a child of the grid.
+    /// The source prototype owns biome id, priority and visibility flags; territory radius only controls its swap distance.
     /// </summary>
-    private void EnsureMiddleRingBiomeSource(Entity<GridTerritoryComponent> ent)
+    private void EnsureTerritoryBiomeSource(Entity<GridTerritoryComponent> ent)
     {
-        // Spawn as child of grid so transform follows grid center automatically.
-        // Use dedicated prototype (carries GlobalPvs + prefilled SpaceBiomeSource) for clean init of required fields.
-        var sourceUid = Spawn("BiomeSourceTerritoryMiddle", new EntityCoordinates(ent.Owner, Vector2.Zero));
+        if (ent.Comp.BiomeSourcePrototype is not { } sourcePrototype)
+            return;
 
-        var sourceComp = EnsureComp<SpaceBiomeSourceComponent>(sourceUid);
-        sourceComp.Id = "BiomeMiddleRing";
-        sourceComp.SwapDistance = ent.Comp.Radius; // override placeholder with actual territory size
-        sourceComp.Priority = 1800f;
+        if (!_proto.HasIndex<EntityPrototype>(sourcePrototype))
+        {
+            Log.Error($"GridTerritory on {ToPrettyString(ent)} references missing biome source prototype {sourcePrototype}.");
+            return;
+        }
 
+        var sourceUid = Spawn(sourcePrototype, new EntityCoordinates(ent.Owner, Vector2.Zero));
+
+        if (!TryComp<SpaceBiomeSourceComponent>(sourceUid, out var sourceComp))
+        {
+            Log.Error($"Territory biome source prototype {sourcePrototype} has no {nameof(SpaceBiomeSourceComponent)}.");
+            QueueDel(sourceUid);
+            return;
+        }
+
+        sourceComp.SwapDistance = ent.Comp.Radius;
         Dirty(sourceUid, sourceComp);
     }
 }

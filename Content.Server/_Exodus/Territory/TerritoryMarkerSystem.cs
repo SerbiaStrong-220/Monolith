@@ -45,7 +45,6 @@ public sealed class TerritoryMarkerSystem : EntitySystem
             RespectZoom = true,
             Rotate = false,
             Label = ent.Comp.Text,
-            LabelOffset = ent.Comp.LabelOffset,
         };
     }
 }
