@@ -7,13 +7,18 @@
 # - Regular space (outside territories, <40km): Внешний Космос (external space, renamed from outer ring)
 # - >40km: Дальние Рубежи (far reaches / distant borders, layered)
 # - fallback: uncharted/default
-# THESE MUST HAVE GLOBAL PVS OR THE CLIENT WON'T SEE THEM!!!!!!!!!!!!
+# Static sector sources must have GlobalPvs or the client will not see them past PVS range.
+# Runtime territory sources intentionally do not inherit GlobalPvs. # Exodus - territory biome perf
 
 - type: entity
   id: BaseBiomeSource
   name: base biome source
   components:
   - type: GlobalPvs #needed so the client can see these past PVS range
+
+- type: entity
+  id: BaseLocalBiomeSource # Exodus - local source for runtime territory biomes
+  name: base local biome source
 
 - type: entity
   id: BiomeSourceFallback
@@ -93,7 +98,7 @@
 
 - type: entity
   id: BiomeSourceTerritoryMiddle
-  parent: BaseBiomeSource
+  parent: BaseLocalBiomeSource # Exodus - do not globally replicate per-territory sources
   name: territory middle ring biome source (runtime configured per GridTerritory)
   components:
   - type: SpaceBiomeSource

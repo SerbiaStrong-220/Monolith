@@ -36,7 +36,7 @@ public sealed partial class TerritoryProfilePrototype : IPrototype
     /// Null disables biome source spawning for this territory profile.
     /// </summary>
     [DataField]
-    public ProtoId<EntityPrototype>? BiomeSourcePrototype { get; private set; } = "BiomeSourceTerritoryMiddle";
+    public ProtoId<EntityPrototype>? BiomeSourcePrototype { get; private set; }
 
     /// <summary>
     /// If true, POI icon/label colors on shuttle maps follow territory ownership.

@@ -7,7 +7,7 @@ namespace Content.Server._Exodus.Territory;
 
 public sealed class TerritoryMarkerSystem : EntitySystem
 {
-    private const float MaxRadarDistance = 300_000f;
+    private const float RadarEdgeVisibilityPadding = 10_000f;
 
     public override void Initialize()
     {
@@ -31,7 +31,7 @@ public sealed class TerritoryMarkerSystem : EntitySystem
         EnsureComp<PhysicsComponent>(ent);
 
         var blip = EnsureComp<RadarBlipComponent>(ent);
-        blip.MaxDistance = MaxRadarDistance;
+        blip.MaxDistance = ent.Comp.Radius + RadarEdgeVisibilityPadding;
         blip.RequireNoGrid = false;
         blip.VisibleFromOtherGrids = true;
 

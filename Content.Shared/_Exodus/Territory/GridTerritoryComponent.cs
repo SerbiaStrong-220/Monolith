@@ -71,6 +71,12 @@ public sealed partial class GridTerritoryComponent : Component
     public ProtoId<EntityPrototype>? BiomeSourcePrototype;
 
     /// <summary>
+    /// Runtime biome source spawned for this territory grid.
+    /// </summary>
+    [DataField, NonSerialized]
+    public EntityUid? ActiveBiomeSource = null;
+
+    /// <summary>
     /// The entity currently providing the active claim (the anchored banner).
     /// Server-authoritative. Used to know which banner to "remove" to clear the claim.
     /// </summary>

@@ -21,4 +21,30 @@
     doNotCull: true
   - type: Tower7G # Exodus-Adminbus
     range: 256
-  - type: GridTerritory # Exodus
+
+# Exodus start - Territory gameMap for OmniChurch Beacon
+- type: gameMap
+  id: Omnichurch
+  mapName: "Маяк ВсеЦеркви" # Ru-Localization
+  mapPath: /Maps/_NF/POI/beacon.yml
+  minPlayers: 0
+  stations:
+    Omnichurch:
+      stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for OmniChurch Beacon
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Маяк ВсеЦеркви" # Ru-Localization
+    Beacon:
+      stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for OmniChurch Beacon direct map load
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Маяк ВсеЦеркви" # Ru-Localization
+# Exodus end

@@ -6,6 +6,7 @@ using Content.Shared._Crescent.SpaceBiomes;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace Content.Server._Exodus.Territory;
@@ -33,6 +34,7 @@ public sealed class GridTerritorySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GridTerritoryComponent, ComponentStartup>(OnGridTerritoryStartup);
+        SubscribeLocalEvent<GridTerritoryComponent, ComponentShutdown>(OnGridTerritoryShutdown);
         // Future: could subscribe to changes if we use dirty or a directed event.
     }
 
@@ -42,6 +44,13 @@ public sealed class GridTerritorySystem : EntitySystem
         EnsureVisual(ent);
         EnsureTerritoryBiomeSource(ent);
         Dirty(ent, ent.Comp); // # Exodus - ensure profile-derived values are sent to clients for map icon logic etc.
+
+        RaiseLocalEvent(ent.Owner, new GridTerritoryStartedEvent());
+    }
+
+    private void OnGridTerritoryShutdown(Entity<GridTerritoryComponent> ent, ref ComponentShutdown args)
+    {
+        DeleteTerritoryBiomeSource(ent);
     }
 
     private void ApplyProfile(Entity<GridTerritoryComponent> ent)
@@ -164,6 +173,13 @@ public sealed class GridTerritorySystem : EntitySystem
         ApplyProfile((grid, terr));
 
         var oldFaction = terr.ControllingFaction;
+        var oldClaimBanner = terr.ActiveClaimBanner;
+
+        if (EqualityComparer<ProtoId<TerritoryFactionPrototype>?>.Default.Equals(oldFaction, faction) &&
+            oldClaimBanner == sourceBanner)
+        {
+            return;
+        }
 
         terr.ControllingFaction = faction;
         terr.ActiveClaimBanner = sourceBanner;
@@ -226,11 +242,25 @@ public sealed class GridTerritorySystem : EntitySystem
     private void EnsureTerritoryBiomeSource(Entity<GridTerritoryComponent> ent)
     {
         if (ent.Comp.BiomeSourcePrototype is not { } sourcePrototype)
+        {
+            DeleteTerritoryBiomeSource(ent);
             return;
+        }
 
         if (!_proto.HasIndex<EntityPrototype>(sourcePrototype))
         {
             Log.Error($"GridTerritory on {ToPrettyString(ent)} references missing biome source prototype {sourcePrototype}.");
+            DeleteTerritoryBiomeSource(ent);
+            return;
+        }
+
+        ClearInvalidActiveBiomeSource(ent, sourcePrototype);
+
+        if (TryGetExistingTerritoryBiomeSource(ent, sourcePrototype, out var existingSource, out var existingSourceComp))
+        {
+            ent.Comp.ActiveBiomeSource = existingSource;
+            existingSourceComp!.SwapDistance = ent.Comp.Radius;
+            Dirty(existingSource, existingSourceComp);
             return;
         }
 
@@ -243,7 +273,96 @@ public sealed class GridTerritorySystem : EntitySystem
             return;
         }
 
+        ent.Comp.ActiveBiomeSource = sourceUid;
         sourceComp.SwapDistance = ent.Comp.Radius;
         Dirty(sourceUid, sourceComp);
+    }
+
+    private void ClearInvalidActiveBiomeSource(Entity<GridTerritoryComponent> ent, ProtoId<EntityPrototype> sourcePrototype)
+    {
+        if (ent.Comp.ActiveBiomeSource is not { } activeSource)
+            return;
+
+        if (TerminatingOrDeleted(activeSource))
+        {
+            ent.Comp.ActiveBiomeSource = null;
+            return;
+        }
+
+        if (!TryComp<SpaceBiomeSourceComponent>(activeSource, out _) ||
+            Transform(activeSource).ParentUid != ent.Owner ||
+            MetaData(activeSource).EntityPrototype?.ID != sourcePrototype.Id)
+        {
+            QueueDel(activeSource);
+            ent.Comp.ActiveBiomeSource = null;
+        }
+    }
+
+    private bool TryGetExistingTerritoryBiomeSource(
+        Entity<GridTerritoryComponent> ent,
+        ProtoId<EntityPrototype> sourcePrototype,
+        out EntityUid sourceUid,
+        out SpaceBiomeSourceComponent? sourceComp)
+    {
+        sourceUid = default;
+        sourceComp = null;
+
+        var activeSource = ent.Comp.ActiveBiomeSource;
+        var query = EntityQueryEnumerator<SpaceBiomeSourceComponent, TransformComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var xform, out var meta))
+        {
+            if (xform.ParentUid != ent.Owner ||
+                meta.EntityPrototype?.ID != sourcePrototype.Id)
+            {
+                continue;
+            }
+
+            if (activeSource is { } active && active == uid)
+            {
+                if (sourceComp != null && sourceUid != uid)
+                    QueueDel(sourceUid);
+
+                sourceUid = uid;
+                sourceComp = comp;
+                continue;
+            }
+
+            if (sourceComp == null)
+            {
+                sourceUid = uid;
+                sourceComp = comp;
+                continue;
+            }
+
+            QueueDel(uid);
+        }
+
+        return sourceComp != null;
+    }
+
+    private void DeleteTerritoryBiomeSource(Entity<GridTerritoryComponent> ent)
+    {
+        var activeSource = ent.Comp.ActiveBiomeSource;
+
+        if (activeSource is { } sourceToDelete && !TerminatingOrDeleted(sourceToDelete))
+            QueueDel(sourceToDelete);
+
+        ent.Comp.ActiveBiomeSource = null;
+
+        if (ent.Comp.BiomeSourcePrototype is not { } sourcePrototype)
+            return;
+
+        var query = EntityQueryEnumerator<SpaceBiomeSourceComponent, TransformComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform, out var meta))
+        {
+            if ((activeSource is { } sourceToSkip && uid == sourceToSkip) ||
+                xform.ParentUid != ent.Owner ||
+                meta.EntityPrototype?.ID != sourcePrototype.Id)
+            {
+                continue;
+            }
+
+            QueueDel(uid);
+        }
     }
 }

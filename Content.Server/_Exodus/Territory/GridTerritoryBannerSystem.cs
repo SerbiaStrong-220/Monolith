@@ -27,10 +27,30 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
         SubscribeLocalEvent<TerritoryBannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<TerritoryBannerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<GridTerritoryComponent, GridTerritoryStartedEvent>(OnTerritoryStarted);
         // ConstructionChangedEvent subscription removed for initial implementation
         // (anchor/parent/shutdown cover unclaim on wrench/deconstruct). Add back with correct event if needed.
         // # Exodus - construction event sub commented for now
+    }
+
+    private void OnStartup(Entity<TerritoryBannerComponent> ent, ref ComponentStartup args)
+    {
+        if (Transform(ent).Anchored)
+            TryClaim(ent, false);
+    }
+
+    private void OnTerritoryStarted(Entity<GridTerritoryComponent> ent, ref GridTerritoryStartedEvent args)
+    {
+        var query = EntityQueryEnumerator<TerritoryBannerComponent, TransformComponent>();
+        while (query.MoveNext(out var bannerUid, out var banner, out var xform))
+        {
+            if (!xform.Anchored || xform.GridUid != ent.Owner)
+                continue;
+
+            TryClaim((bannerUid, banner), false);
+        }
     }
 
     private void OnAnchorChanged(Entity<TerritoryBannerComponent> ent, ref AnchorStateChangedEvent args)
@@ -58,7 +78,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
     // OnConstructionChanged removed (event type may differ; anchor/parent/shutdown suffice for now).
     // # Exodus
 
-    private void TryClaim(Entity<TerritoryBannerComponent> banner)
+    private void TryClaim(Entity<TerritoryBannerComponent> banner, bool showPopup = true)
     {
         var xform = Transform(banner);
         if (xform.GridUid is not { } grid)
@@ -76,7 +96,9 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         {
             if (Exists(existing))
             {
-                _popup.PopupEntity(Loc.GetString("grid-territory-already-claimed"), banner);
+                if (showPopup)
+                    _popup.PopupEntity(Loc.GetString("grid-territory-already-claimed"), banner);
+
                 // Do not claim; the new banner is physically there but does not grant control.
                 // (Construction condition should have already prevented most cases.)
                 return;
@@ -88,7 +110,8 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         // Perform the claim. Label is resolved from the TerritoryFactionPrototype.
         _territory.SetController(grid, banner.Comp.Faction, banner.Owner);
 
-        _popup.PopupEntity(Loc.GetString("grid-territory-claimed"), banner);
+        if (showPopup)
+            _popup.PopupEntity(Loc.GetString("grid-territory-claimed"), banner);
     }
 
     private void TryUnclaim(Entity<TerritoryBannerComponent> banner)
@@ -114,3 +137,5 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("grid-territory-unclaimed"), banner);
     }
 }
+
+public readonly record struct GridTerritoryStartedEvent;
