@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -98,10 +97,10 @@ public partial record struct BlipConfig
 
     // Exodus-begin territory-marker
     /// <summary>
-    /// Optional local-space points for blips that need a custom outline.
+    /// Optional outline color for blips that draw a filled shape and a separate border.
     /// </summary>
     [DataField]
-    public List<Vector2>? Points = null;
+    public Color BorderColor = Color.Transparent;
 
     /// <summary>
     /// Optional localization key for a text label repeated across the territory zone.

@@ -71,9 +71,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private readonly List<BlipData> _tempBlipDataList = new();
     private readonly HashSet<EntityUid> _visibleGridsSet = new();
     // Exodus-begin territory-marker
-    private Vector2[] _territoryFillBuffer = [];
-    private Vector2[] _territoryLineBuffer = [];
-
     /// <summary>
     /// World-space repeat distance (in meters) for the diagonal repeated faction label pattern inside territory rings.
     /// The screen step is computed as TerritoryTextWorldRepeat * MinimapScale and the pattern is always centered on the ring.
@@ -81,6 +78,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     /// Increase to make sparser, decrease for denser fill.
     /// </summary>
     private const float TerritoryTextWorldRepeat = 1800f;
+    private const float TerritoryTextFadeInDiagMultiplier = 3f;
+    private const float TerritoryTextFullDiagMultiplier = 7f;
     // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
@@ -1092,7 +1091,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 continue;
 
             var position = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToView);
-            DrawTerritoryCircleBlip(handle, position, blip.Config);
+            DrawTerritoryCircleBlip(handle, position, blip.Config, monoViewBounds);
         }
         // Exodus-end
 
@@ -1392,44 +1391,33 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     // Exodus - ShuttleHooks - End
 
     // Exodus-begin territory-marker
-    private void DrawTerritoryCircleBlip(DrawingHandleScreen handle, Vector2 position, BlipConfig config)
+    private void DrawTerritoryCircleBlip(DrawingHandleScreen handle, Vector2 position, BlipConfig config, Box2 viewBounds)
     {
-        if (config.Points == null || config.Points.Count < 3)
+        var screenRadius = GetTerritoryScreenRadius(config);
+        if (screenRadius <= 0f)
             return;
 
-        var count = config.Points.Count;
-        var fillCount = count + 2;
-        var lineCount = count + 1;
+        if (!CircleIntersectsBox(position, screenRadius, viewBounds))
+            return;
 
-        if (_territoryFillBuffer.Length < fillCount)
-            Array.Resize(ref _territoryFillBuffer, fillCount);
-        if (_territoryLineBuffer.Length < lineCount)
-            Array.Resize(ref _territoryLineBuffer, lineCount);
+        handle.DrawCircle(position, screenRadius, config.Color);
+        handle.DrawCircle(position, screenRadius, config.BorderColor, filled: false);
 
-        _territoryFillBuffer[0] = position;
-        for (var i = 0; i < count; i++)
-        {
-            var point = config.Points[i];
-            if (config.RespectZoom)
-                point *= MinimapScale;
-
-            _territoryFillBuffer[i + 1] = position + (point with { Y = -point.Y });
-        }
-
-        _territoryFillBuffer[fillCount - 1] = _territoryFillBuffer[1];
-
-        for (var i = 0; i < count; i++)
-            _territoryLineBuffer[i] = _territoryFillBuffer[i + 1];
-
-        _territoryLineBuffer[count] = _territoryFillBuffer[1];
-
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_territoryFillBuffer, 0, fillCount), config.Color);
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_territoryLineBuffer, 0, lineCount), config.Color.WithAlpha(0.085f));
-
-        DrawTerritoryText(handle, position, config);
+        DrawTerritoryText(handle, position, screenRadius, config, viewBounds);
     }
 
-    private void DrawTerritoryText(DrawingHandleScreen handle, Vector2 territoryCenter, BlipConfig config)
+    private float GetTerritoryScreenRadius(BlipConfig config)
+    {
+        var radius = config.Bounds.MaxDimension * 0.5f;
+        if (radius < 1f)
+            return 0f;
+
+        return config.RespectZoom
+            ? radius * MinimapScale
+            : radius;
+    }
+
+    private void DrawTerritoryText(DrawingHandleScreen handle, Vector2 territoryCenter, float screenRadius, BlipConfig config, Box2 viewBounds)
     {
         if (config.Label == null)
             return;
@@ -1438,11 +1426,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (string.IsNullOrEmpty(text))
             return;
 
-        var worldRadius = config.Bounds.Width * 0.5f;
+        var worldRadius = config.Bounds.MaxDimension * 0.5f;
         if (worldRadius < 1f)
             return;
-
-        var screenRadius = worldRadius * MinimapScale;
 
         // Fixed 45 degrees in screen space; stays still when ship rotates.
         // Text positions are generated with screen spacing that scales with MinimapScale
@@ -1459,12 +1445,17 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var textColor = new Color(0.65f, 0.65f, 0.65f);
         var textDims = handle.GetDimensions(Font, text, textScale);
         var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
+        var zoomAlpha = GetTerritoryTextZoomAlpha(screenRadius, halfDiag);
+        if (zoomAlpha <= 0f)
+            return;
 
         // Fade text near the circle edge (in screen pixels).
         var fadeEnd = screenRadius - halfDiag;
-        var fadeStart = fadeEnd - halfDiag * 6f;
-        if (fadeStart <= 0f)
+        if (fadeEnd <= 0f)
             return;
+
+        var fadeStart = MathF.Max(0f, fadeEnd - halfDiag * 6f);
+        var edgeFadeRange = fadeEnd - fadeStart;
 
         // SetTransform uses screen coordinates, not control-local coordinates.
         var screenOffset = (Vector2) GlobalPixelPosition;
@@ -1473,27 +1464,50 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Fixed world-space repeat for the diagonal pattern.
         // See TerritoryTextWorldRepeat (top of territory section) for tuning.
         var screenStepLen = TerritoryTextWorldRepeat * MinimapScale;
+        if (screenStepLen <= 0f)
+            return;
+
         var stepDir = screenDir * screenStepLen;
         var stepPerp = perpDir * screenStepLen;
 
         // How many steps we need to search in index space to cover the territory.
-        int maxIndex = (int)((worldRadius / TerritoryTextWorldRepeat) * 1.8f) + 4;
+        var maxIndex = (int)((worldRadius / TerritoryTextWorldRepeat) * 1.8f) + 4;
+        var textCullBounds = viewBounds.Enlarged(halfDiag);
+
+        GetTerritoryTextIndexRange(textCullBounds, territoryCenter, screenDir, screenStepLen, out var minRow, out var maxRow);
+        GetTerritoryTextIndexRange(textCullBounds, territoryCenter, perpDir, screenStepLen, out var minCol, out var maxCol);
+
+        minRow = Math.Max(minRow, -maxIndex);
+        maxRow = Math.Min(maxRow, maxIndex);
+        minCol = Math.Max(minCol, -maxIndex);
+        maxCol = Math.Min(maxCol, maxIndex);
+
+        if (minRow > maxRow || minCol > maxCol)
+            return;
 
         // Use one index as "row" for the stagger (to keep the old nice diagonal offset look).
-        for (int row = -maxIndex; row <= maxIndex; row++)
+        for (var row = minRow; row <= maxRow; row++)
         {
             var stagger = (row % 2 == 0) ? 0f : (screenStepLen * 0.5f);
-            for (int col = -maxIndex; col <= maxIndex; col++)
+            for (var col = minCol; col <= maxCol; col++)
             {
                 var pos = territoryCenter + (row * stepDir) + (col * stepPerp) + (stagger * perpDir);  // stagger along the perp for visual
 
-                var dist = (pos - territoryCenter).Length();
-                if (dist >= fadeEnd)
+                if (!textCullBounds.Contains(pos))
                     continue;
 
-                var alpha = dist <= fadeStart
-                    ? baseAlpha
-                    : baseAlpha * (1f - (dist - fadeStart) / (fadeEnd - fadeStart));
+                var distSquared = (pos - territoryCenter).LengthSquared();
+                if (distSquared >= fadeEnd * fadeEnd)
+                    continue;
+
+                var dist = MathF.Sqrt(distSquared);
+                var edgeAlpha = dist <= fadeStart || edgeFadeRange <= 0f
+                    ? 1f
+                    : 1f - (dist - fadeStart) / edgeFadeRange;
+                var alpha = baseAlpha * zoomAlpha * edgeAlpha;
+
+                if (alpha <= 0f)
+                    continue;
 
                 handle.SetTransform(screenOffset + pos, textAngle);
                 handle.DrawString(Font, new Vector2(-textDims.X * 0.5f, -textDims.Y * 0.5f), text, textScale, textColor.WithAlpha(alpha));
@@ -1501,6 +1515,43 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         handle.SetTransform(prevTransform);
+    }
+
+    private static bool CircleIntersectsBox(Vector2 center, float radius, Box2 box)
+    {
+        var closest = new Vector2(
+            Math.Clamp(center.X, box.Left, box.Right),
+            Math.Clamp(center.Y, box.Bottom, box.Top));
+
+        return (closest - center).LengthSquared() <= radius * radius;
+    }
+
+    private static float GetTerritoryTextZoomAlpha(float screenRadius, float halfDiag)
+    {
+        var fadeStart = halfDiag * TerritoryTextFadeInDiagMultiplier;
+        var fadeEnd = halfDiag * TerritoryTextFullDiagMultiplier;
+
+        if (screenRadius <= fadeStart)
+            return 0f;
+
+        if (screenRadius >= fadeEnd)
+            return 1f;
+
+        return (screenRadius - fadeStart) / (fadeEnd - fadeStart);
+    }
+
+    private static void GetTerritoryTextIndexRange(Box2 bounds, Vector2 center, Vector2 axis, float step, out int min, out int max)
+    {
+        var topLeft = Vector2.Dot(bounds.TopLeft - center, axis);
+        var topRight = Vector2.Dot(bounds.TopRight - center, axis);
+        var bottomLeft = Vector2.Dot(bounds.BottomLeft - center, axis);
+        var bottomRight = Vector2.Dot(bounds.BottomRight - center, axis);
+
+        var minProjection = MathF.Min(MathF.Min(topLeft, topRight), MathF.Min(bottomLeft, bottomRight));
+        var maxProjection = MathF.Max(MathF.Max(topLeft, topRight), MathF.Max(bottomLeft, bottomRight));
+
+        min = (int)MathF.Floor(minProjection / step) - 2;
+        max = (int)MathF.Ceiling(maxProjection / step) + 2;
     }
     // Exodus-end
 

@@ -94,6 +94,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly Dictionary<Color, List<(Vector2, string, bool)>> _strings = new();
     private readonly List<ShuttleExclusionObject> _viewportExclusions = new();
 
+    // # Exodus start - BSS map territory visuals
+    private const float BssMapBackgroundTileScale = 8f;
+    private const float TerritoryMediumIconThreshold = 1750f;
+    private const float TerritoryLargeIconThreshold = 3750f;
+    // # Exodus end - BSS map territory visuals
+
     public ShuttleMapControl() : base(256f, 4096f, 512f)
     {
         RobustXamlLoader.Load(this);
@@ -183,7 +189,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var tex = _shuttles.GetTexture(shuttleXform.MapUid.Value);
 
         // Size of the texture in world units.
-        var size = tex.Size * MinimapScale * 1f;
+        var size = tex.Size * MinimapScale * BssMapBackgroundTileScale; // # Exodus - reduce BSS map background tile churn when zoomed out
+        if (size.X <= 0f || size.Y <= 0f)
+            return;
 
         var position = ScalePosition(new Vector2(-Offset.X, Offset.Y));
         var slowness = 1f;
@@ -283,6 +291,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
         var viewportObjects = GetViewportMapObjects(matty, mapObjects);
         _viewportExclusions.Clear();
+        var controlViewBounds = GetControlViewBounds();
 
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.
@@ -335,6 +344,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         _verts.Clear();
         _edges.Clear();
         _strings.Clear();
+
+        DrawTerritoryRings(handle, mapObjects, matty, controlViewBounds); // # Exodus - territory rings need radius-aware culling
 
         // Add beacons if relevant.
         var beaconsOnly = _shuttles.IsBeaconMap(viewedMapUid);
@@ -411,40 +422,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
             var gridUiPos = ScalePosition(gridRelativePos);
 
-            // # Exodus start - draw influence rings (territory circles / кольца влияния) on BSS jump map (FTL selection tab)
-            // Color comes from the controlling TerritoryFactionPrototype (defined in yml).
-            // Only three factions claim POIs: TSFMC (light blue), PDV (gold-tan), Khsira (pink-red).
-            // Unclaimed = neutral gray.
-            // Previously visible ONLY on regular mass scanner / nav radar (via TerritoryMarkerComponent + RadarBlip).
-            // Grids get rings here iff they have GridTerritoryComponent (same condition as the radius-shaped icons).
-            // Ring radius uses world units * MinimapScale (consistent with FTL range circles, exclusion circles).
-            // Drawn before batched icon polys so the ring renders under the station icon.
-            if (EntManager.TryGetComponent<GridTerritoryComponent>(grid.Owner, out var terrRing) && terrRing.Radius > 0)
-            {
-                var ringRadius = terrRing.Radius * MinimapScale;
-
-                Color ringBase;
-                if (terrRing.ControllingFaction is { } factionId &&
-                    IoCManager.Resolve<IPrototypeManager>().TryIndex(factionId, out var factionProto))
-                {
-                    ringBase = factionProto.Color;
-                }
-                else
-                {
-                    // Unclaimed / neutral
-                    ringBase = new Color(0.65f, 0.65f, 0.65f);
-                }
-
-                handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.035f));
-                handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.28f), filled: false);
-            }
-            // # Exodus end - rings on BSS map (colored by faction from yml)
-
             // # Exodus start - choose icon based only on GridTerritory radius for BSS jump map
             // regular grid (no component) or other radius -> default diamond (ship icon)
-            // 1000 radius = square (квадрат)
-            // 2500 = 5-point pentagon
-            // 5000 = 6-point hexagon
+            // small radius = square, medium = pentagon, large = hexagon
             ValueList<Vector2> mapObject;
             if (EntManager.TryGetComponent<GridTerritoryComponent>(grid.Owner, out var terr) && terr.Radius > 0)
             {
@@ -656,6 +636,103 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         edges.Add(bottom);
     }
 
+    // # Exodus start - radius-aware territory rings on BSS jump map
+    private Box2 GetControlViewBounds()
+    {
+        var margin = 3f * UIScale;
+        return new Box2(-margin, -margin, PixelSize.X + margin, PixelSize.Y + margin);
+    }
+
+    private void DrawTerritoryRings(DrawingHandleScreen handle, List<IMapObject> mapObjects, Matrix3x2 matty, Box2 viewBounds)
+    {
+        foreach (var mapObj in mapObjects)
+        {
+            if (mapObj is not GridMapObject gridObj ||
+                !EntManager.TryGetComponent<GridTerritoryComponent>(gridObj.Entity, out var terrRing) ||
+                terrRing.Radius <= 0f)
+            {
+                continue;
+            }
+
+            if (!TryGetVisibleGridMapObject(mapObj, matty, out _, out _, out var gridUiPos))
+                continue;
+
+            var ringRadius = terrRing.Radius * MinimapScale;
+            if (!CircleIntersectsBox(gridUiPos, ringRadius, viewBounds))
+                continue;
+
+            var ringBase = GetTerritoryRingColor(terrRing);
+            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.035f));
+            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.28f), filled: false);
+        }
+    }
+
+    private bool TryGetVisibleGridMapObject(
+        IMapObject mapObj,
+        Matrix3x2 matty,
+        out Entity<MapGridComponent> grid,
+        out Vector2 gridRelativePos,
+        out Vector2 gridUiPos)
+    {
+        grid = default;
+        gridRelativePos = default;
+        gridUiPos = default;
+
+        if (mapObj is not GridMapObject gridObj || !EntManager.TryGetComponent(gridObj.Entity, out MapGridComponent? mapGrid))
+            return false;
+
+        if (EntManager.HasComponent<MapComponent>(gridObj.Entity) || !_entManager.EntityExists(gridObj.Entity))
+            return false;
+
+        grid = (gridObj.Entity, mapGrid);
+        IFFComponent? iffComp = null;
+
+        if (grid.Owner != _shuttleEntity &&
+            EntManager.TryGetComponent(grid, out iffComp) &&
+            (iffComp.Flags & IFFFlags.Hide) != 0x0)
+        {
+            return false;
+        }
+
+        var hideLabel = iffComp != null && (iffComp.Flags & IFFFlags.HideLabel) != 0x0;
+        var detectionLevel = _console == null ? DetectionLevel.Detected : _detection.IsGridDetected(grid.Owner, _console.Value);
+        var detected = detectionLevel != DetectionLevel.Undetected || !hideLabel;
+        if (!detected)
+            return false;
+
+        if (!_physicsQuery.TryGetComponent(grid.Owner, out var gridPhysics))
+            return false;
+
+        var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid.Owner);
+        gridPos = Maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
+
+        gridRelativePos = Vector2.Transform(gridPos, matty);
+        gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
+        gridUiPos = ScalePosition(gridRelativePos);
+        return true;
+    }
+
+    private Color GetTerritoryRingColor(GridTerritoryComponent terrRing)
+    {
+        if (terrRing.ControllingFaction is { } factionId &&
+            PrototypeManager.TryIndex(factionId, out var factionProto))
+        {
+            return factionProto.Color;
+        }
+
+        return new Color(0.65f, 0.65f, 0.65f);
+    }
+
+    private static bool CircleIntersectsBox(Vector2 center, float radius, Box2 box)
+    {
+        var closest = new Vector2(
+            Math.Clamp(center.X, box.Left, box.Right),
+            Math.Clamp(center.Y, box.Bottom, box.Top));
+
+        return (closest - center).LengthSquared() <= radius * radius;
+    }
+    // # Exodus end - radius-aware territory rings on BSS jump map
+
     /// <summary>
     /// Returns the beacons that intersect the viewport.
     /// </summary>
@@ -706,22 +783,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
     // # Exodus start - differentiated icons on BSS jump map (FTL destinations) based ONLY on GridTerritoryComponent + radius
     // Regular grids (no territory) = default ship icon (current diamond)
-    // 1000 radius = square (квадрат)
-    // 2500 = 5-point pentagon
-    // 5000 = 6-point hexagon
+    // Small radius = square, medium = 5-point pentagon, large = 6-point hexagon
     // The same GridTerritoryComponent + Radius also drives the influence ring (circle) drawn for these grids (see Draw).
     // All other drawing, labels, IFF, beacons, FTL preview etc. unchanged to avoid breaking anything.
     private ValueList<Vector2> GetTerritoryMapObject(Vector2 localPos, Angle angle, float territoryRadius, float scale = 1f, bool scalePosition = false)
     {
-        int sides;
-        if (MathF.Abs(territoryRadius - 1000f) < 0.1f)
-            sides = 4; // квадрат
-        else if (MathF.Abs(territoryRadius - 2500f) < 0.1f)
-            sides = 5; // pentagon
-        else if (MathF.Abs(territoryRadius - 5000f) < 0.1f)
-            sides = 6; // hexagon
-        else
-            sides = 4; // fallback
+        var sides = GetTerritoryMapSides(territoryRadius);
 
         var baseRadius = GetMapObjectRadius(); // base, then * scale
         float vertexRadius = 2 * baseRadius * scale; // match current diamond extent
@@ -747,6 +814,17 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         }
 
         return points;
+    }
+
+    private static int GetTerritoryMapSides(float territoryRadius)
+    {
+        if (territoryRadius < TerritoryMediumIconThreshold)
+            return 4;
+
+        if (territoryRadius < TerritoryLargeIconThreshold)
+            return 5;
+
+        return 6;
     }
 
     private void AddMapPolygon(List<Vector2> edges, List<Vector2> verts, ValueList<Vector2> points)
