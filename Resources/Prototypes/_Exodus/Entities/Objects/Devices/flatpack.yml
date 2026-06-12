@@ -1,0 +1,152 @@
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretDravonFlatpack
+  name: ADBP-7 DRAVON 90mm Autocannon flatpack
+  description: A flatpack used for constructing ADBP-7 DRAVON 90mm Autocannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretDravon
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretFangFlatpack
+  name: Fang heavy 90mm autocannon flatpack
+  description: A flatpack used for constructing a Fang heavy 90mm autocannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretFang
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretLongbowFlatpack
+  name: L65-"Longbow" 90mm autocannon flatpack
+  description: A flatpack used for constructing a L65-"Longbow" 90mm autocannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretLongbow
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretM220Flatpack
+  name: M220 RUBICON EMP launcher flatpack
+  description: A flatpack used for constructing a Rubicon EMP turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretM220
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretTarnyxReloadFlatpack
+  name: ADBX-31 TARNYX 150mm EMP Cannon flatpack
+  description: A flatpack used for constructing ADBX-31 TARNYX 150mm EMP Cannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretTarnyxReload
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretTovekFlatpack
+  name: ADMX-250 TOVEK Missile Pod flatpack
+  description: A flatpack used for constructing a ADMX-250 TOVEK Missile Pod.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretTovek
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretVesperaFlatpack
+  name: ADMP-50 VESPERA Missile Rack flatpack
+  description: A flatpack used for constructing a ADMP-50 VESPERA Missile Rack.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretVespera
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretVanykFlatpack
+  name: ASM-150 "Vanyk" Missile Pod flatpack
+  description: A flatpack used for constructing a ASM-150 "Vanyk" Missile Pod.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretVanyk
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretRAC30Flatpack
+  name: RAC-30 Draupnir Autocannon flatpack
+  description: A flatpack used for constructing a RAC-30 Draupnir Autocannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretRAC30
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponLaserTurretPrometheusFlatpack
+  name: TPC Prometheus Laser Cannon flatpack
+  description: A flatpack used for constructing a TPC Prometheus Laser Cannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponLaserTurretPrometheus
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponLaserTurretL1PhalanxFlatpack
+  name: L-1 Phalanx laser turret flatpack
+  description: A flatpack used for constructing a L1 Phalanx laser turret.
+  components:
+  - type: Flatpack
+    entity: WeaponLaserTurretL1Phalanx
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretAdderScattercannonFlatpack
+  name: Adder scattercannon turret flatpack
+  description: A flatpack used for constructing a Adder scattercannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretAdderScattercannon
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretCerberusFlatpack
+  name: TPC Cerberus Plasma scattercannon flatpack
+  description: A flatpack used for constructing a TPC Cerberus Plasma scattercannon turret.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretCerberus
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretType54Flatpack
+  name: Type-54C plasma autopulser flatpack
+  description: A flatpack used for constructing a Type-54C plasma autopulser.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretType54
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretASM220Flatpack
+  name: ASM-220 "Trident" Torpedo Rack flatpack
+  description: A flatpack used for constructing a ASM-220 "Trident" 500mm torpedo rack.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretASM220
+
+- type: entity
+  parent: BaseFlatpack
+  id: AmmoLoaderFlatpack
+  name: ammo loader flatpack
+  description: A flatpack used for constructing a ammo loader.
+  components:
+  - type: Flatpack
+    entity: AmmoLoader
+
+- type: entity
+  parent: BaseFlatpack
+  id: AmmoLoaderSmallFlatpack
+  name: small ammo loader flatpack
+  description: A flatpack used for constructing a small ammo loader.
+  components:
+  - type: Flatpack
+    entity: AmmoLoaderSmall
