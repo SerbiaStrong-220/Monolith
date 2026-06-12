@@ -12,10 +12,8 @@
   id: Bahama
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Багамская Мама' # Ru-Localization
-  # Exodus start - even stronger spread (1km radius)
-  minimumDistance: 6000
-  maximumDistance: 9000
-  # Exodus end
+  minimumDistance: 3400
+  maximumDistance: 5800
   spawnGroup: RestStop
   gridPath: /Maps/_NF/POI/bahama.yml
   addComponents:
@@ -32,10 +30,9 @@
   stations:
     Bahama:
       stationProto: DeadDropFrontierOutpost
-      # Exodus start - Territory for Bahama Mama / Багамская Мама (1km)
+      # Exodus start - Territory for Bahama Mama
       gridComponents:
       - type: GridTerritory
-        radius: 1000
       # Exodus end
       components:
         - type: StationNameSetup

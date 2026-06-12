@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client._Mono.Radar;
 using Content.Client.Station; // Frontier
 using Content.Shared._Crescent.ShipShields;
@@ -40,6 +41,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
     private readonly RadarBlipsSystem _blips;
+    private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus - territory POI colors
 
     // Exodus - SafeZone - Start
     private EntityQuery<TransformComponent> _xformQuery;
@@ -164,6 +166,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _transform = EntManager.System<SharedTransformSystem>();
         _station = EntManager.System<StationSystem>(); // Frontier
         _blips = EntManager.System<RadarBlipsSystem>();
+        _territoryPoiColors = EntManager.System<TerritoryPoiColorSystem>(); // Exodus - territory POI colors
 
         // Exodus - SafeZone - Start
         _xformQuery = EntManager.GetEntityQuery<TransformComponent>();
@@ -726,6 +729,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
             var hideColor = hideLabel && iff != null && (iff.Flags & IFFFlags.AlwaysShowColor) == 0x0;
             var labelColor = hideColor ? blipOnly ? Color.Orange : Color.White : _shuttles.GetIFFColor(grid, self: false, iff);
+            if (!hideColor && _territoryPoiColors.TryGetColor(gUid, out var territoryPoiColor))
+                labelColor = territoryPoiColor; // Exodus - territory POI colors
+
             var coordColor = new Color(labelColor.R * 0.8f, labelColor.G * 0.8f, labelColor.B * 0.8f, 0.5f);
 
             var isPlayerShuttle = iff != null && (iff.Flags & IFFFlags.IsPlayerShuttle) != 0x0;

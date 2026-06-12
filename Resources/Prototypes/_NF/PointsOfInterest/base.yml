@@ -12,10 +12,8 @@
 - type: pointOfInterest
   id: BaseMobilePOI
   abstract: true
-  # Exodus start - further raised base ring for even stronger territory spread
-  minimumDistance: 7000
-  maximumDistance: 14000
-  # Exodus end
+  minimumDistance: 4000 # Exodus
+  maximumDistance: 8000 # Exodus
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Behold my list of gamerules
   spawnGroup: Optional
   addComponents:

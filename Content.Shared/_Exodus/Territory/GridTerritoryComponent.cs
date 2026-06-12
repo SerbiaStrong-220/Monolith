@@ -22,17 +22,31 @@ namespace Content.Shared._Exodus.Territory;
 ///   Defaults to "territory-unclaimed".
 ///   Can be overridden per-grid for special neutral text.
 /// 
-/// Radius: free float. Common useful values 1000/2500/5000 based on station importance.
+/// Effective radius comes from TerritoryProfilePrototype.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GridTerritoryComponent : Component
 {
     /// <summary>
-    /// Radius of the territory circle in world units.
-    /// Recommended values: 1000 (small/outpost), 2500 (medium), 5000 (large/flagship).
+    /// Effective radius of the territory circle in world units.
+    /// Server applies this from the territory profile resolved by game map / station id.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float Radius = 2500f;
+    [AutoNetworkedField]
+    public float Radius;
+
+    /// <summary>
+    /// Whether POI icon/label colors should follow territory ownership.
+    /// Server applies this from the territory profile resolved by game map / station id.
+    /// </summary>
+    [AutoNetworkedField]
+    public bool ColorPoiByFaction;
+
+    /// <summary>
+    /// POI icon/label color while unclaimed.
+    /// Server applies this from the territory profile resolved by game map / station id.
+    /// </summary>
+    [AutoNetworkedField]
+    public Color NeutralPoiColor;
 
     /// <summary>
     /// The faction currently controlling this territory.
@@ -52,11 +66,9 @@ public sealed partial class GridTerritoryComponent : Component
 
     /// <summary>
     /// Entity prototype spawned at the territory center to provide biome/ambient selection.
-    /// The spawned prototype defines biome id and priority; runtime code only applies Radius as swap distance.
-    /// Null disables biome source spawning for this territory.
+    /// Server applies this from the territory profile resolved by game map / station id.
     /// </summary>
-    [DataField]
-    public ProtoId<EntityPrototype>? BiomeSourcePrototype = "BiomeSourceTerritoryMiddle";
+    public ProtoId<EntityPrototype>? BiomeSourcePrototype;
 
     /// <summary>
     /// The entity currently providing the active claim (the anchored banner).

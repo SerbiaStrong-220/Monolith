@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.Numerics;
+using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client.Shuttles.Systems;
 using Content.Shared._Mono.Company;
 using Content.Shared._Mono.Detection;
@@ -33,6 +34,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly DetectionSystem _detection; // Mono
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
+    private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus - territory POI colors
 
     protected override bool Draggable => true;
 
@@ -91,7 +93,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly List<IMapObject> _mapObjects = new();
     private readonly Dictionary<Color, List<Vector2>> _verts = new();
     private readonly Dictionary<Color, List<Vector2>> _edges = new();
-    private readonly Dictionary<Color, List<(Vector2, string, bool)>> _strings = new();
+    private readonly Dictionary<Color, List<(Vector2 Position, string Text, bool HasLabel, EntityUid? GridUid)>> _strings = new(); // Exodus - territory POI colors
     private readonly List<ShuttleExclusionObject> _viewportExclusions = new();
 
     // # Exodus start - BSS map territory visuals
@@ -106,6 +108,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         _detection = EntManager.System<DetectionSystem>(); // Mono
         _shuttles = EntManager.System<ShuttleSystem>();
         _xformSystem = EntManager.System<SharedTransformSystem>();
+        _territoryPoiColors = EntManager.System<TerritoryPoiColorSystem>(); // Exodus - territory POI colors
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _physicsQuery = EntManager.GetEntityQuery<PhysicsComponent>();
@@ -380,7 +383,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 _beacons.Add(mapO);
 
                 var existingStrings = _strings.GetOrNew(displayColor);
-                existingStrings.Add((beaconUiPos, beaconName, true));
+                existingStrings.Add((beaconUiPos, beaconName, true, null)); // Exodus - territory POI colors
             }
         }
 
@@ -410,6 +413,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
             var hideColor = hideLabel && iffComp != null && (iffComp.Flags & IFFFlags.AlwaysShowColor) == 0x0;
             var gridColor = hideColor ? blipOnly ? Color.Orange : Color.White : _shuttles.GetIFFColor(grid, self: _shuttleEntity == grid.Owner, component: iffComp);
+            if (!hideColor && _territoryPoiColors.TryGetColor(grid.Owner, out var territoryPoiColor))
+                gridColor = territoryPoiColor; // Exodus - territory POI colors
 
             var existingVerts = _verts.GetOrNew(gridColor);
             var existingEdges = _edges.GetOrNew(gridColor);
@@ -455,7 +460,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 continue;
 
             var existingStrings = _strings.GetOrNew(gridColor);
-            existingStrings.Add((gridUiPos, iffText, !hideLabel));
+            existingStrings.Add((gridUiPos, iffText, !hideLabel, grid.Owner)); // Exodus - territory POI colors
         }
 
         // Batch the colors whoopie
@@ -474,7 +479,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         {
             var adjustedColor = Color.FromSrgb(color);
 
-            foreach (var (gridUiPos, iffText, hasLabel) in sendStrings)
+            foreach (var (gridUiPos, iffText, hasLabel, gridUid) in sendStrings)
             {
                 var textWidth = handle.GetDimensions(_font, iffText, 1f);
 
@@ -485,19 +490,13 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
                 // Get company color if entity has CompanyComponent
                 var displayColor = adjustedColor;
-                if (hasLabel)
+                if (hasLabel &&
+                    gridUid is { } labelGrid &&
+                    EntManager.TryGetComponent(labelGrid, out CompanyComponent? companyComp) &&
+                    !string.IsNullOrEmpty(companyComp.CompanyName) &&
+                    IoCManager.Resolve<IPrototypeManager>().TryIndex<CompanyPrototype>(companyComp.CompanyName, out var gridCompanyProto))
                 {
-                    foreach (var mapObj in viewportObjects)
-                    {
-                        if (mapObj is GridMapObject gridObj &&
-                            EntManager.TryGetComponent(gridObj.Entity, out Shared._Mono.Company.CompanyComponent? companyComp) &&
-                            !string.IsNullOrEmpty(companyComp.CompanyName) &&
-                            IoCManager.Resolve<IPrototypeManager>().TryIndex<CompanyPrototype>(companyComp.CompanyName, out var gridCompanyProto))
-                        {
-                            displayColor = Color.FromSrgb(gridCompanyProto.Color);
-                            break;
-                        }
-                    }
+                    displayColor = Color.FromSrgb(gridCompanyProto.Color);
                 }
 
                 // Draw main ship label with company color if available

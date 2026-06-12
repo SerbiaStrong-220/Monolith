@@ -12,10 +12,8 @@
   id: TSFMCOutpost
   parent: [BasePOI, BaseRepairablePOI]
   name: 'КВП | Периферийный аванпост' # Ru-Localization
-  # Exodus start - even stronger spread (1km radius, outer)
-  minimumDistance: 13000
-  maximumDistance: 17500
-  # Exodus end
+  minimumDistance: 11000
+  maximumDistance: 14000
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/tsfmcoutpost.yml
@@ -33,10 +31,9 @@
   stations:
     TSFMCOutpost:
       stationProto: SecurityFrontierOutpost
-      # Exodus start - Territory grid control for peripheral outpost (1km radius)
+      # Exodus start - Territory grid control for peripheral outpost
       gridComponents:
       - type: GridTerritory
-        radius: 1000
       # Exodus end
       components:
         - type: StationNameSetup

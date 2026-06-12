@@ -12,10 +12,8 @@
   id: CargoDepot
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Грузовое Депо' # Ru-Localization
-  # Exodus start - even stronger spread (1km radius, 4x circular placement)
-  minimumDistance: 11500
-  maximumDistance: 15500
-  # Exodus end
+  minimumDistance: 8000
+  maximumDistance: 10000
   spawnGroup: CargoDepot
   gridPath: /Maps/_NF/POI/cargodepot.yml
   addComponents: &cargoComponents
@@ -40,10 +38,8 @@
   id: CargoDepotAlt
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Грузовое Депо' # Ru-Localization
-  # Exodus start - even stronger spread (1km radius, 4x circular placement)
-  minimumDistance: 11500
-  maximumDistance: 15500
-  # Exodus end
+  minimumDistance: 8000
+  maximumDistance: 10000
   spawnGroup: CargoDepot
   gridPath: /Maps/_NF/POI/cargodepotalt.yml
   addComponents: *cargoComponents
@@ -56,10 +52,9 @@
   stations:
     CargoDepot:
       stationProto: StandardFrontierOutpost
-      # Exodus start - Territory for Cargo Depot (1km)
+      # Exodus start - Territory for Cargo Depot
       gridComponents:
       - type: GridTerritory
-        radius: 1000
       # Exodus end
       components: &cargoStationComponents
         - type: StationNameSetup
@@ -75,9 +70,8 @@
   stations:
     CargoDepotAlt:
       stationProto: StandardFrontierOutpost
-      # Exodus start - Territory for Cargo Depot Alt (1km)
+      # Exodus start - Territory for Cargo Depot Alt
       gridComponents:
       - type: GridTerritory
-        radius: 1000
       # Exodus end
       components: *cargoStationComponents

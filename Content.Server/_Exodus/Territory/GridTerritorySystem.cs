@@ -1,7 +1,9 @@
+using Content.Server.Station.Components;
 using Content.Shared._Exodus.Territory;
 using Content.Shared.Construction; // for potential future
 using Content.Server._Exodus.Territory; // for the marker sync (same logical area)
 using Content.Shared._Crescent.SpaceBiomes;
+using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Numerics;
@@ -16,8 +18,8 @@ namespace Content.Server._Exodus.Territory;
 /// Banners are one claim source (see GridTerritoryBannerSystem).
 /// Other sources can call SetController directly.
 /// 
-/// Factions and their banners/labels are declared in TerritoryFactionPrototype (data-driven config).
-/// Radius is a free float (common station values: 1000, 2500, 5000).
+/// Factions and their banners/labels are declared in TerritoryFactionPrototype.
+/// Territory sizes and POI coloring rules are declared in TerritoryProfilePrototype.
 /// 
 /// All new territory control code lives under _Exodus as per project style.
 /// </summary>
@@ -36,9 +38,66 @@ public sealed class GridTerritorySystem : EntitySystem
 
     private void OnGridTerritoryStartup(Entity<GridTerritoryComponent> ent, ref ComponentStartup args)
     {
+        ApplyProfile(ent);
         EnsureVisual(ent);
         EnsureTerritoryBiomeSource(ent);
-        Dirty(ent, ent.Comp); // # Exodus - ensure initial prototype values (e.g. Radius) are sent to clients for map icon logic etc.
+        Dirty(ent, ent.Comp); // # Exodus - ensure profile-derived values are sent to clients for map icon logic etc.
+    }
+
+    private void ApplyProfile(Entity<GridTerritoryComponent> ent)
+    {
+        var profile = ResolveProfile(ent);
+        if (profile == null)
+            return;
+
+        ent.Comp.Radius = profile.Radius;
+        ent.Comp.BiomeSourcePrototype = profile.BiomeSourcePrototype;
+        ent.Comp.ColorPoiByFaction = profile.ColorPoiByFaction;
+        ent.Comp.NeutralPoiColor = profile.NeutralPoiColor;
+    }
+
+    private TerritoryProfilePrototype? ResolveProfile(Entity<GridTerritoryComponent> ent)
+    {
+        var gameMapId = GetGameMapId(ent.Owner);
+        if (gameMapId != null)
+        {
+            var gameMapPrototype = new ProtoId<GameMapPrototype>(gameMapId);
+
+            foreach (var profile in _proto.EnumeratePrototypes<TerritoryProfilePrototype>())
+            {
+                if (profile.GameMapPrototypes.Contains(gameMapPrototype))
+                    return profile;
+            }
+        }
+
+        TerritoryProfilePrototype? defaultProfile = null;
+
+        foreach (var profile in _proto.EnumeratePrototypes<TerritoryProfilePrototype>())
+        {
+            if (!profile.Default)
+                continue;
+
+            if (defaultProfile != null)
+            {
+                Log.Error($"Multiple default territory profiles configured: {defaultProfile.ID} and {profile.ID}.");
+                return defaultProfile;
+            }
+
+            defaultProfile = profile;
+        }
+
+        if (defaultProfile == null)
+            Log.Error($"GridTerritory on {ToPrettyString(ent)} has no matching or default territory profile.");
+
+        return defaultProfile;
+    }
+
+    private string? GetGameMapId(EntityUid grid)
+    {
+        if (TryComp<BecomesStationComponent>(grid, out var becomesStation))
+            return becomesStation.Id;
+
+        return MetaData(grid).EntityPrototype?.ID;
     }
 
     /// <summary>
@@ -102,12 +161,14 @@ public sealed class GridTerritorySystem : EntitySystem
         if (!TryComp<GridTerritoryComponent>(grid, out var terr))
             return;
 
+        ApplyProfile((grid, terr));
+
         var oldFaction = terr.ControllingFaction;
 
         terr.ControllingFaction = faction;
         terr.ActiveClaimBanner = sourceBanner;
 
-        Dirty(grid, terr); // # Exodus - ensure Radius etc replicated to client for map icons etc.
+        Dirty(grid, terr); // # Exodus - ensure profile-derived values are replicated to client for map icons etc.
 
         // Resolve the label from the prototype (or fall back to default for neutral)
         LocId effectiveLabel = terr.DefaultLabel;

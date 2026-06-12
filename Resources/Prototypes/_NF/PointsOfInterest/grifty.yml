@@ -12,10 +12,8 @@
   id: Grifty
   parent: [BasePOI, BaseRepairablePOI]
   name: "Бензин и жратва Грифти" # Ru-Localization
-  # Exodus start - even stronger spread (1km radius)
-  minimumDistance: 7500
-  maximumDistance: 11000
-  # Exodus end
+  minimumDistance: 6250
+  maximumDistance: 8600
   spawnGroup: Scrapyard
   gridPath: /Maps/_NF/POI/grifty.yml
   addComponents:
@@ -34,10 +32,9 @@
   stations:
     Grifty:
       stationProto: DeadDropRecordsFrontierOutpost
-      # Exodus start - Territory for Grifty's Gas & Grub (1km)
+      # Exodus start - Territory for Grifty's Gas & Grub
       gridComponents:
       - type: GridTerritory
-        radius: 1000
       # Exodus end
       components:
         - type: StationNameSetup
