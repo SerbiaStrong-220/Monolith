@@ -15,4 +15,10 @@ public sealed partial class XCVars
 
     public static readonly CVarDef<string> WebAPIToken =
         CVarDef.Create("exds.webapi_token", "", CVar.SERVERONLY);
+
+    /// <summary>
+    /// Price (in spesos) charged to the operator for adding a single life insurance charge.
+    /// </summary>
+    public static readonly CVarDef<int> LifeInsurancePrice =
+        CVarDef.Create("exds.life_insurance_price", 5000, CVar.SERVERONLY);
 }

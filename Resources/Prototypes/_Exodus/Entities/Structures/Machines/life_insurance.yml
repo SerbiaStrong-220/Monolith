@@ -1,0 +1,89 @@
+# Life insurance machine: three static, mapper-placed pieces that auto-link by proximity.
+# Each piece carries an internal backup battery sized to outlast ~15 minute power outages.
+
+- type: entity
+  id: LifeInsuranceScanner
+  parent: BaseMachinePowered
+  name: life insurance scanning capsule
+  description: A patient scanning capsule that records DNA onto a linked life insurance console.
+  components:
+  - type: LifeInsuranceScanner
+  - type: LifeInsuranceBackupBattery
+    drainRate: 50
+  - type: Battery
+    maxCharge: 45000 # 50 W * 900 s = 15 minutes of backup power
+    startingCharge: 45000
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Sprite
+    sprite: Structures/Machines/scanner.rsi
+    snapCardinals: true
+    layers:
+    - state: open
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      life-insurance-scanner-body: !type:ContainerSlot
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - life-insurance-scanner-body
+
+- type: entity
+  id: LifeInsuranceCloner
+  parent: BaseMachinePowered
+  name: life insurance cloning capsule
+  description: A cloning capsule that rebuilds an insured patient's body on demand.
+  components:
+  - type: LifeInsuranceCloner
+    revivalTime: 10
+  - type: LifeInsuranceBackupBattery
+    drainRate: 50
+  - type: Battery
+    maxCharge: 45000
+    startingCharge: 45000
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Sprite
+    sprite: Structures/Machines/cloning.rsi
+    snapCardinals: true
+    layers:
+    - state: pod_0
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      life-insurance-cloner-body: !type:ContainerSlot
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - life-insurance-cloner-body
+
+- type: entity
+  id: LifeInsuranceConsole
+  parent: BaseMachinePowered
+  name: life insurance console
+  description: Records patient DNA, sells life insurance policies, and runs the cloning capsule.
+  components:
+  - type: LifeInsuranceConsole
+  - type: LifeInsuranceBackupBattery
+    drainRate: 30
+  - type: Battery
+    maxCharge: 27000 # 30 W * 900 s = 15 minutes of backup power
+    startingCharge: 27000
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ActivatableUI
+    key: enum.LifeInsuranceConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.LifeInsuranceConsoleUiKey.Key:
+        type: LifeInsuranceBoundUserInterface
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    snapCardinals: true
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: generic
+  - type: Appearance
