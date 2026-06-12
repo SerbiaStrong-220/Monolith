@@ -19,7 +19,7 @@ namespace Content.Server._Exodus.Nebula;
 
 public sealed class NebulaPresenceSystem : EntitySystem
 {
-    private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
     public static readonly TimeSpan NpcGridScanInterval = TimeSpan.FromSeconds(20);
     public static readonly TimeSpan NpcGridLeaseDuration = TimeSpan.FromSeconds(25);
     private const float DirtyThreshold = 0.01f;
