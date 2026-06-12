@@ -74,7 +74,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     /// <summary>
     /// World-space repeat distance (in meters) for the diagonal repeated faction label pattern inside territory rings.
     /// The screen step is computed as TerritoryTextWorldRepeat * MinimapScale and the pattern is always centered on the ring.
-    /// This makes the text pattern fully static relative to the ring geometry — no movement or phase shift on pan or any zoom.
+    /// This makes the text pattern fully static relative to the ring geometry, without movement or phase shift on pan or any zoom.
     /// Increase to make sparser, decrease for denser fill.
     /// </summary>
     private const float TerritoryTextWorldRepeat = 1800f;
@@ -82,6 +82,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private const float TerritoryTextFullDiagMultiplier = 7f;
     private const float TerritoryTextFadeOutViewDiagMultiplier = 0.9f;
     private const float TerritoryTextHiddenViewDiagMultiplier = 1.35f;
+    // Exodus-end
+    // Exodus-begin dock-label-fade
+    private const float DockLabelFadeOutWorldRange = 250f;
+    private const float DockLabelHiddenWorldRange = 750f;
     // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
@@ -1273,6 +1277,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             }
 
             // Frontier: draw dock labels (done last to appear on top of all docks, still fights with other grids)
+            var dockLabelAlpha = GetDockLabelZoomAlpha(); // Exodus - dock-label-fade
+            if (dockLabelAlpha <= 0f)
+                return;
+
+            var dockLabelColor = _dockLabelColor.WithAlpha(_dockLabelColor.A * dockLabelAlpha); // Exodus - dock-label-fade
             var labeled = new HashSet<string>();
             foreach (var state in docks)
             {
@@ -1287,11 +1296,29 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
                 labeled.Add(state.LabelName);
                 var labelDimensions = handle.GetDimensions(Font, state.LabelName, 0.9f);
-                handle.DrawString(Font, (uiPosition / UIScale - labelDimensions / 2) * UIScale, state.LabelName, UIScale * 0.9f, _dockLabelColor);
+                handle.DrawString(
+                    Font,
+                    (uiPosition / UIScale - labelDimensions / 2) * UIScale,
+                    state.LabelName,
+                    UIScale * 0.9f,
+                    dockLabelColor); // Exodus - dock-label-fade
             }
             // End Frontier
         }
     }
+
+    // Exodus-begin dock-label-fade
+    private float GetDockLabelZoomAlpha()
+    {
+        if (WorldRange <= DockLabelFadeOutWorldRange)
+            return 1f;
+
+        if (WorldRange >= DockLabelHiddenWorldRange)
+            return 0f;
+
+        return 1f - (WorldRange - DockLabelFadeOutWorldRange) / (DockLabelHiddenWorldRange - DockLabelFadeOutWorldRange);
+    }
+    // Exodus-end
 
     protected Vector2 InverseScalePosition(Vector2 value)
     {

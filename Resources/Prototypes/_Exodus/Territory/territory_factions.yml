@@ -50,7 +50,7 @@
   id: Khsira
   radarLabel: territory-faction-khsira
   banner: BannerKhsira
-  color: "#C71585"  # Medium violet red / pink-red for Khsira Empire
+  color: "#BD0071"  # Medium violet red / pink-red for Khsira Empire
 
 # Colossus Central is treated as its own faction so it can have a dedicated label
 # even when initially "controlled" without a physical banner, or when claimed.
