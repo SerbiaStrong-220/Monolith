@@ -60,8 +60,9 @@ public sealed class TerritoryCounterSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GridTerritoryControllerChangedEvent>(OnTerritoryChanged);
+        SubscribeLocalEvent<GridTerritoryComponent, GridTerritoryControllerChangedEvent>(OnTerritoryChanged);
         SubscribeLocalEvent<RoundStartedEvent>(OnRoundStarted);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
 
@@ -71,12 +72,15 @@ public sealed class TerritoryCounterSystem : EntitySystem
         RecalculateAll();
     }
 
-    private void OnTerritoryChanged(ref GridTerritoryControllerChangedEvent args)
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
-        if (!TryComp<GridTerritoryComponent>(args.Grid, out var comp))
-            return;
+        _roundStarted = false;
+        _scores.Clear();
+    }
 
-        int points = GetPoints(comp.Radius);
+    private void OnTerritoryChanged(Entity<GridTerritoryComponent> ent, ref GridTerritoryControllerChangedEvent args)
+    {
+        int points = GetPoints(ent.Comp.Radius);
 
         if (args.OldFaction is { } oldF)
         {

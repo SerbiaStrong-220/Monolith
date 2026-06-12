@@ -25,28 +25,7 @@ public sealed partial class NoActiveTerritoryClaimOnGrid : IGraphCondition
 {
     public bool Condition(EntityUid uid, IEntityManager entityManager)
     {
-        if (!entityManager.TryGetComponent(uid, out TransformComponent? xform))
-            return true;
-
-        var gridUid = xform.GridUid;
-        if (gridUid == null)
-            return true;
-
-        // Look for any other anchored banner that carries a territory claim on the same grid.
-        var query = entityManager.EntityQueryEnumerator<TerritoryBannerComponent, TransformComponent>();
-        while (query.MoveNext(out var otherUid, out _, out var otherXform))
-        {
-            if (otherUid == uid)
-                continue;
-
-            if (otherXform.GridUid != gridUid)
-                continue;
-
-            if (otherXform.Anchored)
-                return false; // already a claim banner on this grid
-        }
-
-        return true;
+        return !HasOtherActiveClaim(uid, entityManager, out _);
     }
 
     public bool DoExamine(ExaminedEvent args)
@@ -54,27 +33,11 @@ public sealed partial class NoActiveTerritoryClaimOnGrid : IGraphCondition
         // Provide feedback in the construction examine window.
         var entMan = IoCManager.Resolve<IEntityManager>();
 
-        if (!entMan.TryGetComponent(args.Examined, out TransformComponent? xform))
+        if (!HasOtherActiveClaim(args.Examined, entMan, out _))
             return false;
 
-        var gridUid = xform.GridUid;
-        if (gridUid == null)
-            return false;
-
-        var query = entMan.EntityQueryEnumerator<TerritoryBannerComponent, TransformComponent>();
-        while (query.MoveNext(out var otherUid, out _, out var otherXform))
-        {
-            if (otherUid == args.Examined)
-                continue;
-
-            if (otherXform.GridUid != gridUid || !otherXform.Anchored)
-                continue;
-
-            args.PushMarkup(Loc.GetString("construction-examine-condition-territory-claim-exists") + "\n");
-            return true;
-        }
-
-        return false;
+        args.PushMarkup(Loc.GetString("construction-examine-condition-territory-claim-exists") + "\n");
+        return true;
     }
 
     public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
@@ -83,5 +46,28 @@ public sealed partial class NoActiveTerritoryClaimOnGrid : IGraphCondition
         {
             Localization = "construction-step-condition-territory-no-claim"
         };
+    }
+
+    private static bool HasOtherActiveClaim(EntityUid uid, IEntityManager entityManager, out EntityUid activeClaimBanner)
+    {
+        activeClaimBanner = default;
+
+        if (!entityManager.TryGetComponent(uid, out TransformComponent? xform))
+            return false;
+
+        if (xform.GridUid is not { } gridUid)
+            return false;
+
+        if (!entityManager.TryGetComponent(gridUid, out GridTerritoryComponent? territory))
+            return false;
+
+        if (territory.ActiveClaimBanner is not { } activeBanner)
+            return false;
+
+        if (activeBanner == uid || !entityManager.EntityExists(activeBanner))
+            return false;
+
+        activeClaimBanner = activeBanner;
+        return true;
     }
 }

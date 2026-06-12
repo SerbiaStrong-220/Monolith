@@ -43,11 +43,10 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
     private void OnParentChanged(Entity<TerritoryBannerComponent> ent, ref EntParentChangedMessage args)
     {
-        // If the banner moves to a different grid (or off-grid), unclaim previous.
-        TryUnclaim(ent);
-        // If it landed on a new grid while anchored, the anchor event should fire, but we defensively check.
-        var xform = Transform(ent);
-        if (xform.Anchored)
+        if (args.OldParent is { } oldParent && oldParent != args.Transform.GridUid)
+            TryUnclaimFromGrid(ent, oldParent);
+
+        if (args.Transform.Anchored)
             TryClaim(ent);
     }
 
@@ -75,10 +74,15 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         // Check for existing claim.
         if (terr.ActiveClaimBanner is { } existing && existing != banner.Owner)
         {
-            _popup.PopupEntity(Loc.GetString("grid-territory-already-claimed"), banner);
-            // Do not claim; the new banner is physically there but does not grant control.
-            // (Construction condition should have already prevented most cases.)
-            return;
+            if (Exists(existing))
+            {
+                _popup.PopupEntity(Loc.GetString("grid-territory-already-claimed"), banner);
+                // Do not claim; the new banner is physically there but does not grant control.
+                // (Construction condition should have already prevented most cases.)
+                return;
+            }
+
+            _territory.ClearController(grid);
         }
 
         // Perform the claim. Label is resolved from the TerritoryFactionPrototype.
@@ -93,6 +97,11 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         if (xform.GridUid is not { } grid)
             return;
 
+        TryUnclaimFromGrid(banner, grid);
+    }
+
+    private void TryUnclaimFromGrid(Entity<TerritoryBannerComponent> banner, EntityUid grid)
+    {
         if (!TryComp<GridTerritoryComponent>(grid, out var terr))
             return;
 
