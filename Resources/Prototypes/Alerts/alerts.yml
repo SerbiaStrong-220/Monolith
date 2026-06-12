@@ -89,7 +89,9 @@
 
 - type: alert
   id: Fire
-  icons: [ /Textures/Interface/Alerts/Fire/fire.png ]
+  icons:
+  - sprite: /Textures/_Exodus/Interface/Alerts/fire.rsi # Exodus retextur
+    state: fire
   clickEvent: !type:ResistFireAlertEvent
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
