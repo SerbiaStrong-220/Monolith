@@ -27,6 +27,10 @@
   stations:
     Mining:
       stationProto: RecordsFrontierOutpost
+      # Exodus start 
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Брошенный Буровой Комплекс' # Ru-Localization

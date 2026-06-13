@@ -22,6 +22,7 @@
   - Beacon
   - ThePit
   - Tinnia
+  - Mining
 
 - type: territoryProfile
   id: PoiMedium
@@ -32,6 +33,7 @@
   gameMapPrototypes:
   - Sevastopol
   - TradeMall
+  - Zvezda
 
 - type: territoryProfile
   id: PoiLarge
