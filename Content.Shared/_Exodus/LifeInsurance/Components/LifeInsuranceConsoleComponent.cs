@@ -1,5 +1,7 @@
+using Content.Shared.Access;
 using Content.Shared.Preferences;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.LifeInsurance.Components;
 
@@ -22,6 +24,13 @@ public sealed partial class LifeInsuranceConsoleComponent : Component
     /// </summary>
     [DataField]
     public float LinkRange = 4f;
+
+    /// <summary>
+    /// Access levels permitted to delete recorded DNA. Default: TSF Colonel (Head of Security access)
+    /// and the Grand Vizier. Anyone may still record/buy; only these may purge the registry.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<AccessLevelPrototype>> DeleteAccess = new() { "HeadOfSecurity", "GrandVizier" };
 
     /// <summary>
     /// Linked scanner capsule entity.

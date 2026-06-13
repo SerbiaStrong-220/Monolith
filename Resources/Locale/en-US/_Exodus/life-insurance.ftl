@@ -27,6 +27,9 @@ life-insurance-status-battery = { $machine }: battery { $percent }%
 # Console popups
 life-insurance-no-scanner = No scanning capsule connected.
 life-insurance-no-dna = Could not read DNA from the occupant.
+life-insurance-not-organic = No organic material detected for scanning.
+life-insurance-uncloneable = This patient's genetic structure cannot be recorded.
+life-insurance-no-access = Access denied: only the TSF Colonel or the Grand Vizier may delete records.
 life-insurance-dna-recorded = Recorded DNA for { $name }.
 life-insurance-max-reached = This client already holds the maximum number of policies.
 life-insurance-target-not-alive = Insurance can only be bought for a living client.
@@ -36,6 +39,7 @@ life-insurance-purchased = Bought a life insurance policy for { $name }.
 # Ghost ability
 life-insurance-no-active-policy = You have no active life insurance policy.
 life-insurance-cloner-unavailable = The cloning capsule is unavailable right now.
+life-insurance-original-alive = Your original body is still alive.
 
 # Wake-up window (shown to a revived clone)
 life-insurance-wakeup-title = Nosske-Eien Life Insurance

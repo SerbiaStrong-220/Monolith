@@ -1,10 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server._NF.Bank;
+using Content.Server._NF.Traits.Assorted;
+using Content.Server.GameTicking;
 using Content.Server.Popups;
+using Content.Shared._EinsteinEngines.Silicon.Components;
 using Content.Shared._Exodus.CCVar;
 using Content.Shared._Exodus.LifeInsurance;
 using Content.Shared._Exodus.LifeInsurance.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.UserInterface;
@@ -30,6 +34,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly LifeInsuranceBackupBatterySystem _backup = default!;
 
     public override void Initialize()
@@ -41,6 +46,22 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         SubscribeLocalEvent<LifeInsuranceConsoleComponent, LifeInsuranceRecordDnaMessage>(OnRecordDna);
         SubscribeLocalEvent<LifeInsuranceConsoleComponent, LifeInsuranceBuyMessage>(OnBuy);
         SubscribeLocalEvent<LifeInsuranceConsoleComponent, LifeInsuranceDeleteMessage>(OnDelete);
+        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
+    }
+
+    /// <summary>
+    /// When a player returns to the lobby, purge their DNA from every console: they may come back
+    /// on a different character, and old policies must not carry over.
+    /// </summary>
+    private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent args)
+    {
+        var user = args.PlayerSession.UserId;
+        var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Records.Remove(user))
+                UpdateUi(uid, comp);
+        }
     }
 
     private void OnMapInit(EntityUid uid, LifeInsuranceConsoleComponent comp, MapInitEvent args)
@@ -83,6 +104,22 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         if (!Resolve(consoleUid, ref comp) || !_backup.IsOperational(consoleUid))
             return false;
 
+        // No synthetic life: the cloner only works with organic genetic material.
+        if (HasComp<SiliconComponent>(body))
+        {
+            if (actor != null)
+                _popup.PopupEntity(Loc.GetString("life-insurance-not-organic"), consoleUid, actor.Value);
+            return false;
+        }
+
+        // Respect the uncloneable trait — such genomes can't be banked.
+        if (HasComp<UncloneableComponent>(body))
+        {
+            if (actor != null)
+                _popup.PopupEntity(Loc.GetString("life-insurance-uncloneable"), consoleUid, actor.Value);
+            return false;
+        }
+
         if (!_playerManager.TryGetSessionByEntity(body, out var session) ||
             !_prefsManager.TryGetCachedPreferences(session.UserId, out var prefs) ||
             prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
@@ -92,10 +129,13 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return false;
         }
 
+        // Store a deep copy so the registry holds a true snapshot, independent of later prefs edits.
+        var snapshot = profile.Clone();
+
         if (comp.Records.TryGetValue(session.UserId, out var existing))
-            existing.Profile = profile;
+            existing.Profile = snapshot;
         else
-            comp.Records[session.UserId] = new LifeInsuranceRecord(profile.Name, profile, 0);
+            comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0);
 
         _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor ?? body);
         UpdateUi(consoleUid, comp);
@@ -177,6 +217,14 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     {
         if (!_backup.IsOperational(uid))
             return;
+
+        // Only high command (TSF Colonel / Grand Vizier) may purge paid policies.
+        var tags = _access.FindAccessTags(args.Actor);
+        if (!comp.DeleteAccess.Any(req => tags.Contains(req)))
+        {
+            _popup.PopupEntity(Loc.GetString("life-insurance-no-access"), uid, args.Actor);
+            return;
+        }
 
         comp.Records.Remove(new NetUserId(args.UserId));
         UpdateUi(uid, comp);
@@ -269,23 +317,58 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         [NotNullWhen(true)] out LifeInsuranceConsoleComponent? consoleComp,
         [NotNullWhen(true)] out LifeInsuranceRecord? record)
     {
+        EntityUid fallbackConsole = default;
+        LifeInsuranceConsoleComponent? fallbackComp = null;
+        LifeInsuranceRecord? fallbackRecord = null;
+
         var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             // A powered-down or destroyed console can't serve its policy database.
-            if (_backup.IsOperational(uid) && comp.Records.TryGetValue(user, out var found) && found.Insurances > 0)
+            if (!_backup.IsOperational(uid))
+                continue;
+
+            EnsureLinks(uid, comp);
+
+            if (!comp.Records.TryGetValue(user, out var found) || found.Insurances <= 0)
+                continue;
+
+            // Prefer a console whose cloning capsule is actually free to use right now.
+            if (IsClonerAvailable(comp.Cloner))
             {
                 console = uid;
                 consoleComp = comp;
                 record = found;
                 return true;
             }
+
+            // Otherwise remember it as a fallback so the player at least gets a clear reason.
+            fallbackConsole = uid;
+            fallbackComp = comp;
+            fallbackRecord = found;
+        }
+
+        if (fallbackComp != null)
+        {
+            console = fallbackConsole;
+            consoleComp = fallbackComp;
+            record = fallbackRecord;
+            return true;
         }
 
         console = default;
         consoleComp = null;
         record = null;
         return false;
+    }
+
+    private bool IsClonerAvailable(EntityUid? cloner)
+    {
+        return cloner is { } c
+            && TryComp<LifeInsuranceClonerComponent>(c, out var cl)
+            && !cl.Active
+            && !cl.Failing
+            && _backup.IsOperational(c);
     }
 
     /// <summary>

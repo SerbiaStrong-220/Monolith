@@ -1,10 +1,15 @@
+using Content.Server._EinsteinEngines.Language;
 using Content.Server.EUI;
 using Content.Server.Humanoid;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared._NF.Bank.Components;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
+using Content.Shared.Traits;
+using Content.Shared.Whitelist;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -26,6 +31,10 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly LanguageSystem _language = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly LifeInsuranceBackupBatterySystem _backup = default!;
     [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!;
     [Dependency] private readonly EuiManager _eui = default!;
@@ -50,7 +59,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return false;
 
-        return !comp.Active && _backup.IsOperational(uid);
+        return !comp.Active && !comp.Failing && _backup.IsOperational(uid);
     }
 
     /// <summary>
@@ -61,7 +70,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return false;
 
-        if (comp.Active || !_backup.IsOperational(uid))
+        if (comp.Active || comp.Failing || !_backup.IsOperational(uid))
             return false;
 
         if (!_prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species))
@@ -71,6 +80,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         _humanoid.LoadProfile(mob, profile);
         _metaData.SetEntityName(mob, profile.Name);
         EnsureComp<BankAccountComponent>(mob);
+        ApplyTraits(mob, profile);
 
         if (!_container.Insert(mob, comp.BodyContainer))
         {
@@ -82,6 +92,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         comp.Progress = 0f;
         comp.PendingMind = mindId;
         comp.PendingUser = user;
+        _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Cloning);
 
         return true;
     }
@@ -93,12 +104,23 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         var query = EntityQueryEnumerator<LifeInsuranceClonerComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
+            // A failed batch decays regardless of power before producing the abomination.
+            if (comp.Failing)
+            {
+                RunFailure(uid, comp, frameTime);
+                continue;
+            }
+
             if (!comp.Active)
                 continue;
 
-            // Backup battery keeps this running through outages; if it runs out, pause until power returns.
+            // The backup battery bridges brief outages. If power is fully gone (battery depleted),
+            // the batch is ruined and decays into a botched abomination.
             if (!_backup.IsOperational(uid))
+            {
+                TriggerFailure(uid, comp);
                 continue;
+            }
 
             comp.Progress += frameTime;
             if (comp.Progress < comp.RevivalTime)
@@ -130,8 +152,90 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         comp.Progress = 0f;
         comp.PendingMind = null;
         comp.PendingUser = null;
+        _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Idle);
 
         if (comp.ConnectedConsole is { } console)
             _console.UpdateUi(console);
+    }
+
+    /// <summary>
+    /// Aborts an in-progress revival (power fully lost): the half-grown body is destroyed and the
+    /// capsule enters a gory failure state. The insurance charge stays spent.
+    /// </summary>
+    private void TriggerFailure(EntityUid uid, LifeInsuranceClonerComponent comp)
+    {
+        if (comp.BodyContainer.ContainedEntity is { } body)
+            QueueDel(body);
+
+        comp.Active = false;
+        comp.Progress = 0f;
+        comp.PendingMind = null;
+        comp.PendingUser = null;
+        comp.Failing = true;
+        comp.FailProgress = 0f;
+        _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Failed);
+
+        if (comp.ConnectedConsole is { } console)
+            _console.UpdateUi(console);
+    }
+
+    private void RunFailure(EntityUid uid, LifeInsuranceClonerComponent comp, float frameTime)
+    {
+        comp.FailProgress += frameTime;
+        if (comp.FailProgress < comp.FailTime)
+            return;
+
+        Spawn(comp.FailMob, _transform.GetMapCoordinates(uid));
+
+        comp.Failing = false;
+        comp.FailProgress = 0f;
+        _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Idle);
+
+        if (comp.ConnectedConsole is { } console)
+            _console.UpdateUi(console);
+    }
+
+    /// <summary>
+    /// Applies the character's profile traits (components, languages, trait gear) to the clone,
+    /// mirroring <see cref="Content.Server.Traits.TraitSystem"/> which only runs on normal spawns.
+    /// </summary>
+    private void ApplyTraits(EntityUid mob, HumanoidCharacterProfile profile)
+    {
+        foreach (var traitId in profile.TraitPreferences)
+        {
+            if (!_prototype.TryIndex<TraitPrototype>(traitId, out var trait))
+                continue;
+
+            if (_whitelist.IsWhitelistFail(trait.Whitelist, mob) || _whitelist.IsBlacklistPass(trait.Blacklist, mob))
+                continue;
+
+            EntityManager.AddComponents(mob, trait.Components, false);
+
+            if (trait.RemoveLanguagesSpoken is not null)
+                foreach (var lang in trait.RemoveLanguagesSpoken)
+                    _language.RemoveLanguage(mob, lang, true, false);
+
+            if (trait.RemoveLanguagesUnderstood is not null)
+                foreach (var lang in trait.RemoveLanguagesUnderstood)
+                    _language.RemoveLanguage(mob, lang, false, true);
+
+            if (trait.LanguagesSpoken is not null)
+                foreach (var lang in trait.LanguagesSpoken)
+                    _language.AddLanguage(mob, lang, true, false);
+
+            if (trait.LanguagesUnderstood is not null)
+                foreach (var lang in trait.LanguagesUnderstood)
+                    _language.AddLanguage(mob, lang, false, true);
+
+            if (trait.TraitGear == null)
+                continue;
+
+            if (!TryComp<HandsComponent>(mob, out var hands))
+                continue;
+
+            var coords = Transform(mob).Coordinates;
+            var item = Spawn(trait.TraitGear, coords);
+            _hands.TryPickup(mob, item, checkActionBlocker: false, handsComp: hands);
+        }
     }
 }

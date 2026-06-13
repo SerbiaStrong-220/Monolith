@@ -56,7 +56,15 @@
     snapCardinals: true
     layers:
     - state: pod_0
+      map: ["base"]
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LifeInsuranceClonerVisuals.State:
+        base:
+          Idle: { state: pod_0 }
+          Cloning: { state: pod_1 }
+          Failed: { state: pod_g } # placeholder gore until dedicated sprite exists
   - type: ContainerContainer
     containers:
       life-insurance-cloner-body: !type:ContainerSlot

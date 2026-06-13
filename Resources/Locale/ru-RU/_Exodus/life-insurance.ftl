@@ -27,6 +27,9 @@ life-insurance-status-battery = { $machine }: батарея { $percent }%
 # Всплывающие сообщения консоли
 life-insurance-no-scanner = Капсула сканирования не подключена.
 life-insurance-no-dna = Не удалось считать ДНК пациента.
+life-insurance-not-organic = Не обнаружено органической материи для сканирования.
+life-insurance-uncloneable = Генетическую структуру этого пациента невозможно записать.
+life-insurance-no-access = Доступ запрещён: удалять записи могут только полковник ТСФ или Великий Визирь.
 life-insurance-dna-recorded = ДНК { $name } записана.
 life-insurance-max-reached = У этого клиента уже максимум страховок.
 life-insurance-target-not-alive = Страховку можно купить только живому клиенту.
@@ -36,6 +39,7 @@ life-insurance-purchased = Куплена страховка жизни для {
 # Способность госта
 life-insurance-no-active-policy = У вас нет действующей страховки жизни.
 life-insurance-cloner-unavailable = Капсула клонирования сейчас недоступна.
+life-insurance-original-alive = Ваше оригинальное тело ещё живо.
 
 # Окно пробуждения (показывается воскрешённому клону)
 life-insurance-wakeup-title = Страхование жизни Носке-Эйен

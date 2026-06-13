@@ -1,5 +1,7 @@
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.LifeInsurance.Components;
 
@@ -51,4 +53,43 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// </summary>
     [ViewVariables]
     public NetUserId? PendingUser;
+
+    /// <summary>
+    /// True while a failed batch is decaying before spitting out a botched abomination.
+    /// Triggered when power is fully lost (grid down and backup battery depleted) mid-revival.
+    /// </summary>
+    [ViewVariables]
+    public bool Failing;
+
+    /// <summary>
+    /// Elapsed failure decay time.
+    /// </summary>
+    [ViewVariables]
+    public float FailProgress;
+
+    /// <summary>
+    /// How long the gory failure state lasts before the abomination crawls out, in seconds.
+    /// </summary>
+    [DataField]
+    public float FailTime = 30f;
+
+    /// <summary>
+    /// Hostile mob spawned from a failed clone batch (a botched, unfinished body).
+    /// </summary>
+    [DataField]
+    public EntProtoId FailMob = "MobHorrorExpeditions";
+}
+
+[Serializable, NetSerializable]
+public enum LifeInsuranceClonerVisuals : byte
+{
+    State
+}
+
+[Serializable, NetSerializable]
+public enum LifeInsuranceClonerState : byte
+{
+    Idle,
+    Cloning,
+    Failed
 }
