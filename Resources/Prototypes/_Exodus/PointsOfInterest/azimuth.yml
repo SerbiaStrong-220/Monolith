@@ -1,0 +1,41 @@
+- type: pointOfInterest
+  id: ADSAzimuth
+  parent: [BaseMobilePOI, BaseRepairablePOI]
+  name: "ADS | Azimuth"
+  minimumDistance: 6000
+  maximumDistance: 8000
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
+  spawnGroup: Required
+  gridPath: /Maps/_Exodus/POI/azimuth_lobby.yml
+  addComponents:
+  - type: IFF
+    color: "#05e6ff"
+    readOnly: true
+
+- type: gameMap
+  id: ADSAzimuth
+  mapName: "ADS | Azimuth"
+  mapPath: /Maps/_Exodus/POI/azimuth_lobby.yml
+  minPlayers: 0
+  randomRotation: false
+  stations:
+    ADSAzimuth:
+      stationProto: RecordsFrontierOutpost
+      gridComponents:
+      - type: VesselInfo
+        description: "A surviving ADS remnant vessel crewed by pre-fracture Asakim warriors."
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "ADS | Azimuth"
+      - type: ExtraStationInformation
+        icon:
+          sprite: _Mono/Mobs/Species/Asakim/parts.rsi
+          state: full
+        stationSubtext: frontier-lobby-asakim-subtext
+        stationDescription: frontier-lobby-asakim-description
+        lobbySortOrder: 3
+      - type: StationJobs
+        availableJobs:
+          AsakimPrefect: [ 1, 1 ]
+          AsakimCenturion: [ 1, 1 ]
+          AsakimWarrior: [ 3, 3 ]
