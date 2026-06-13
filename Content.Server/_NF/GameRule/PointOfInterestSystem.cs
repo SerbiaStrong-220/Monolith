@@ -21,6 +21,12 @@ namespace Content.Server._NF.GameRule;
 //[Access(typeof(NfAdventureRuleSystem))]
 public sealed partial class PointOfInterestSystem : EntitySystem
 {
+    // Exodus-begin paired faction POI spawn
+    private const string PairedFactionPoiGroup = "PairedFactionPoi";
+
+    private ISawmill _sawmill = Logger.GetSawmill("poi");
+    // Exodus-end
+
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -48,6 +54,42 @@ public sealed partial class PointOfInterestSystem : EntitySystem
     {
         _stationCoords.Add(coords);
     }
+
+    // Exodus-begin paired faction POI spawn
+    public void GeneratePairedFactionPois(MapId mapUid, List<PointOfInterestPrototype> pairedPrototypes, out List<EntityUid> pairedStations)
+    {
+        pairedStations = new List<EntityUid>();
+
+        if (pairedPrototypes.Count == 0)
+            return;
+
+        if (pairedPrototypes.Count != 2)
+        {
+            _sawmill.Warning($"{PairedFactionPoiGroup} expected exactly 2 POIs, got {pairedPrototypes.Count}.");
+            return;
+        }
+
+        var rotation = _random.NextAngle();
+        for (var i = 0; i < pairedPrototypes.Count; i++)
+        {
+            var proto = pairedPrototypes[i];
+            float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+            int minD = (int)(proto.MinimumDistance * mod);
+            int maxD = (int)(proto.MaximumDistance * mod);
+            Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
+            offset = offset.Rotate(rotation + Angle.FromDegrees(180 * i));
+
+            if (TrySpawnPoiGrid(mapUid, proto, offset, out var pairedUid) && pairedUid is { Valid: true } paired)
+            {
+                pairedStations.Add(paired);
+                AddStationCoordsToSet(offset);
+                continue;
+            }
+
+            _sawmill.Warning($"Failed to spawn paired faction POI {proto.ID}.");
+        }
+    }
+    // Exodus-end
 
     public void GenerateDepots(MapId mapUid, List<PointOfInterestPrototype> depotPrototypes, out List<EntityUid> depotStations)
     {

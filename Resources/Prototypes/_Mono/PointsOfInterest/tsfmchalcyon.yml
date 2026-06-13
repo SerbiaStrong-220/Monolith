@@ -16,8 +16,8 @@
   name: 'КВП | Флагман Фалкон' # Ru-Localization
   minimumDistance: 17500 # Exodus-nebula-update
   maximumDistance: 30000 # Exodus-nebula-update
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
-  spawnGroup: Required
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Exodus paired faction POI spawn
+  spawnGroup: PairedFactionPoi # Exodus paired faction POI spawn
   gridPath: /Maps/_Mono/POI/tsfmchalcyon.yml
   addComponents:
   - type: IFF

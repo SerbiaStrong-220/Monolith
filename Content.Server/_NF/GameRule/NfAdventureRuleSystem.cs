@@ -312,6 +312,7 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
         //First, we need to grab the list and sort it into its respective spawning logics
         List<PointOfInterestPrototype> depotProtos = [];
         List<PointOfInterestPrototype> marketProtos = [];
+        List<PointOfInterestPrototype> pairedFactionProtos = []; // Exodus paired faction POI spawn
         List<PointOfInterestPrototype> requiredProtos = [];
         List<PointOfInterestPrototype> optionalProtos = [];
         Dictionary<string, List<PointOfInterestPrototype>> remainingUniqueProtosBySpawnGroup = new();
@@ -333,6 +334,9 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
                 case "MarketStation":
                     marketProtos.Add(location);
                     break;
+                case "PairedFactionPoi": // Exodus paired faction POI spawn
+                    pairedFactionProtos.Add(location);
+                    break;
                 case "Required":
                     requiredProtos.Add(location);
                     break;
@@ -351,6 +355,7 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
         }
         _poi.GenerateDepots(mapUid, depotProtos, out component.CargoDepots);
         _poi.GenerateMarkets(mapUid, marketProtos, out component.MarketStations);
+        _poi.GeneratePairedFactionPois(mapUid, pairedFactionProtos, out _); // Exodus paired faction POI spawn
         _poi.GenerateRequireds(mapUid, requiredProtos, out component.RequiredPois);
         _poi.GenerateOptionals(mapUid, optionalProtos, out component.OptionalPois);
         _poi.GenerateUniques(mapUid, remainingUniqueProtosBySpawnGroup, out component.UniquePois);
