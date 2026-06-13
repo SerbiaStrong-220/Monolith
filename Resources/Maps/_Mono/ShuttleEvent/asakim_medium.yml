@@ -33,6 +33,9 @@ entities:
       name: Неопознанное судно # Ru-Localization
     - type: Transform
       parent: invalid
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces # Exodus-asakim-faction
     - type: MapGrid
       chunks:
         0,-1:

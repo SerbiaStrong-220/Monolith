@@ -1,0 +1,8 @@
+- type: entity
+  id: NpcStationAiAttackerStaticSmartAsakim
+  parent: NpcStationAiAttackerStaticSmart
+  suffix: AI, Smart, Static, Asakim
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces

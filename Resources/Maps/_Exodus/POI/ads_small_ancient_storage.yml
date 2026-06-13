@@ -42,6 +42,9 @@ entities:
       name: Древнее Хранилище Кхси'Ра
     - type: Transform
       parent: invalid
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces
     - type: MapGrid
       chunks:
         0,0:
@@ -2435,7 +2438,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,0.5
       parent: 1
-- proto: NpcStationAiAttackerStaticSmart
+- proto: NpcStationAiAttackerStaticSmartAsakim
   entities:
   - uid: 413
     components:

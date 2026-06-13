@@ -43,6 +43,9 @@ entities:
       toolWhitelist:
         tags:
         - ADSRepairTool
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces
     - type: MapGrid
       chunks:
         -1,-1:
