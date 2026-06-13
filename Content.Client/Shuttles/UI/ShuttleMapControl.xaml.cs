@@ -106,12 +106,13 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     // Exodus-end
 
     // # Exodus start - BSS map territory visuals
-    private const float BssMapBackgroundTileScale = 8f;
+    private const float BssMapBackgroundTileScale = 30f;
     private const float TerritoryMediumIconThreshold = 1750f;
     private const float TerritoryLargeIconThreshold = 3750f;
+    private const float TerritoryHugeIconThreshold = 4500f;
     // # Exodus end - BSS map territory visuals
 
-    public ShuttleMapControl() : base(256f, 32768f, 512f) // Exodus nebula visibility
+    public ShuttleMapControl() : base(256f, 28000f, 512f) // Exodus nebula visibility
     {
         RobustXamlLoader.Load(this);
         _detection = EntManager.System<DetectionSystem>(); // Mono
@@ -797,7 +798,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
     // # Exodus start - differentiated icons on BSS jump map (FTL destinations) based ONLY on GridTerritoryComponent + radius
     // Regular grids (no territory) = default ship icon (current diamond)
-    // Small radius = square, medium = 5-point pentagon, large = 6-point hexagon
+    // Small radius = triangle, medium = square, large = 5-point pentagon, huge/Colossus = 6-point hexagon.
     // The same GridTerritoryComponent + Radius also drives the influence ring (circle) drawn for these grids (see Draw).
     // All other drawing, labels, IFF, beacons, FTL preview etc. unchanged to avoid breaking anything.
     private ValueList<Vector2> GetTerritoryMapObject(Vector2 localPos, Angle angle, float territoryRadius, float scale = 1f, bool scalePosition = false)
@@ -809,7 +810,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         var points = new ValueList<Vector2>(sides);
 
-        float startAng = (sides == 4) ? MathF.PI / 4 : -MathF.PI / 2; // for square: axis-aligned sides; others pointy top
+        float startAng = sides switch
+        {
+            3 => MathF.PI / 2,
+            4 => MathF.PI / 4,
+            _ => -MathF.PI / 2
+        };
         float angleStep = 2 * MathF.PI / sides;
 
         for (int i = 0; i < sides; i++)
@@ -833,9 +839,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private static int GetTerritoryMapSides(float territoryRadius)
     {
         if (territoryRadius < TerritoryMediumIconThreshold)
-            return 4;
+            return 3;
 
         if (territoryRadius < TerritoryLargeIconThreshold)
+            return 4;
+
+        if (territoryRadius < TerritoryHugeIconThreshold)
             return 5;
 
         return 6;
