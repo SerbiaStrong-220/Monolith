@@ -48,6 +48,7 @@
 - type: territoryProfile
   id: ColossusCentral
   radius: 5000
+  claimable: false
   colorPoiByFaction: false
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:
@@ -56,6 +57,7 @@
 - type: territoryProfile
   id: Hospital
   radius: 2500
+  claimable: false
   colorPoiByFaction: false
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:

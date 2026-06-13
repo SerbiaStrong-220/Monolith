@@ -21,6 +21,9 @@ namespace Content.Shared._Exodus.Territory;
 /// - defaultLabel: text shown when unclaimed (ControllingFaction is null).
 ///   Defaults to "territory-unclaimed".
 ///   Can be overridden per-grid for special neutral text.
+///
+/// - claimable: whether banners can claim this territory.
+///   Some service or hub territories are display-only and cannot be controlled by factions.
 /// 
 /// Effective radius comes from TerritoryProfilePrototype.
 /// </summary>
@@ -47,6 +50,13 @@ public sealed partial class GridTerritoryComponent : Component
     /// </summary>
     [AutoNetworkedField]
     public Color NeutralPoiColor;
+
+    /// <summary>
+    /// Whether territory banners can claim this grid.
+    /// Server applies this from the territory profile resolved by game map / station id.
+    /// </summary>
+    [AutoNetworkedField]
+    public bool Claimable = true;
 
     /// <summary>
     /// The faction currently controlling this territory.

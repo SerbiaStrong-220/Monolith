@@ -64,6 +64,7 @@ public sealed class GridTerritorySystem : EntitySystem
 
         ent.Comp.Radius = profile.Radius;
         ent.Comp.BiomeSourcePrototype = profile.BiomeSourcePrototype;
+        ent.Comp.Claimable = profile.Claimable;
         ent.Comp.ColorPoiByFaction = profile.ColorPoiByFaction;
         ent.Comp.NeutralPoiColor = profile.NeutralPoiColor;
     }
@@ -188,6 +189,9 @@ public sealed class GridTerritorySystem : EntitySystem
             return;
 
         ApplyProfile((grid, terr));
+
+        if (!terr.Claimable && faction != null)
+            return;
 
         var oldFaction = terr.ControllingFaction;
         var oldClaimBanner = terr.ActiveClaimBanner;

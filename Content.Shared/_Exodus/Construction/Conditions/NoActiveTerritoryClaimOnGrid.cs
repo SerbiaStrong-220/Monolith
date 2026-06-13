@@ -25,6 +25,9 @@ public sealed partial class NoActiveTerritoryClaimOnGrid : IGraphCondition
 {
     public bool Condition(EntityUid uid, IEntityManager entityManager)
     {
+        if (IsClaimDisabled(uid, entityManager))
+            return false;
+
         return !HasOtherActiveClaim(uid, entityManager, out _);
     }
 
@@ -33,11 +36,19 @@ public sealed partial class NoActiveTerritoryClaimOnGrid : IGraphCondition
         // Provide feedback in the construction examine window.
         var entMan = IoCManager.Resolve<IEntityManager>();
 
-        if (!HasOtherActiveClaim(args.Examined, entMan, out _))
-            return false;
+        if (IsClaimDisabled(args.Examined, entMan))
+        {
+            args.PushMarkup(Loc.GetString("construction-examine-condition-territory-claim-disabled") + "\n");
+            return true;
+        }
 
-        args.PushMarkup(Loc.GetString("construction-examine-condition-territory-claim-exists") + "\n");
-        return true;
+        if (HasOtherActiveClaim(args.Examined, entMan, out _))
+        {
+            args.PushMarkup(Loc.GetString("construction-examine-condition-territory-claim-exists") + "\n");
+            return true;
+        }
+
+        return false;
     }
 
     public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
@@ -46,6 +57,17 @@ public sealed partial class NoActiveTerritoryClaimOnGrid : IGraphCondition
         {
             Localization = "construction-step-condition-territory-no-claim"
         };
+    }
+
+    private static bool IsClaimDisabled(EntityUid uid, IEntityManager entityManager)
+    {
+        if (!entityManager.TryGetComponent(uid, out TransformComponent? xform))
+            return false;
+
+        if (xform.GridUid is not { } gridUid)
+            return false;
+
+        return entityManager.TryGetComponent(gridUid, out GridTerritoryComponent? territory) && !territory.Claimable;
     }
 
     private static bool HasOtherActiveClaim(EntityUid uid, IEntityManager entityManager, out EntityUid activeClaimBanner)

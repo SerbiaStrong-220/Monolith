@@ -35,6 +35,7 @@
       # Exodus start - Territory for Medical Center
       gridComponents:
       - type: GridTerritory
+        defaultLabel: territory-marker-hospital # Exodus territory-hospital-label
       # Exodus end
       components:
         - type: StationNameSetup

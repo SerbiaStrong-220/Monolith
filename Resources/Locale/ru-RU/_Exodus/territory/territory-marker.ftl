@@ -1,5 +1,6 @@
 territory-marker-default = ТЕРРИТОРИЯ
 territory-marker-colossus = КОЛОСС-ЦЕНТРАЛ
+territory-marker-hospital = ГОСПИТАЛЬ
 
 # Territory control / claim factions (4 total)
 territory-faction-tsf = Транс-Солнечная Федерация
@@ -13,6 +14,8 @@ territory-unclaimed = НЕЗАНЯТО
 grid-territory-already-claimed = Эта станция уже имеет установленный баннер контроля. Снимите старый перед установкой нового.
 grid-territory-claimed = Станция перешла под контроль.
 grid-territory-unclaimed = Контроль над станцией снят.
+grid-territory-claim-disabled = Эту территорию нельзя захватить баннером.
 
 construction-examine-condition-territory-claim-exists = На этой станции уже установлен баннер контроля территории.
+construction-examine-condition-territory-claim-disabled = Эту территорию нельзя захватить баннером.
 construction-step-condition-territory-no-claim = Убедитесь, что на станции нет другого активного баннера контроля.

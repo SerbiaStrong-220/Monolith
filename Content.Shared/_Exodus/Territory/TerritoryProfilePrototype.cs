@@ -39,6 +39,13 @@ public sealed partial class TerritoryProfilePrototype : IPrototype
     public ProtoId<EntityPrototype>? BiomeSourcePrototype { get; private set; }
 
     /// <summary>
+    /// If true, territory banners can claim this territory.
+    /// Display-only service or hub territories should keep their marker and biome behavior while disabling claims.
+    /// </summary>
+    [DataField]
+    public bool Claimable { get; private set; } = true;
+
+    /// <summary>
     /// If true, POI icon/label colors on shuttle maps follow territory ownership.
     /// </summary>
     [DataField]

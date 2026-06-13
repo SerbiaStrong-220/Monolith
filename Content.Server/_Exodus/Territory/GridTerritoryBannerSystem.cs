@@ -87,6 +87,14 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         if (!TryComp<GridTerritoryComponent>(grid, out var terr))
             return;
 
+        if (!terr.Claimable)
+        {
+            if (showPopup)
+                _popup.PopupEntity(Loc.GetString("grid-territory-claim-disabled"), banner);
+
+            return;
+        }
+
         // Already claimed by this exact banner?
         if (terr.ActiveClaimBanner == banner.Owner)
             return;
