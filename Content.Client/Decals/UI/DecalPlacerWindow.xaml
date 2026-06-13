@@ -13,6 +13,8 @@
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
             <Button Name="PickerOpen" Text="{Loc 'decal-placer-window-palette'}" />
+            <!-- Exodus: eyedropper tool, copies the color of a decal already on the map -->
+            <Button Name="EyedropperButton" Text="{Loc 'decal-placer-window-eyedropper'}" />
         </BoxContainer>
         <CheckBox Name="EnableAuto" Text="{Loc 'decal-placer-window-enable-auto'}" Margin="0 0 0 10"/>
         <CheckBox Name="EnableColor" Text="{Loc 'decal-placer-window-use-color'}" />

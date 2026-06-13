@@ -30,6 +30,14 @@ public sealed partial class DecalPlacementOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        // Exodus-Start: draw the eyedropper crosshair instead of a decal preview while picking a color.
+        if (_placement.EyedropperActive)
+        {
+            DrawEyedropper(args);
+            return;
+        }
+        // Exodus-End
+
         var (decal, snap, rotation, color) = _placement.GetActiveDecal();
 
         if (decal == null)
@@ -67,4 +75,34 @@ public sealed partial class DecalPlacementOverlay : Overlay
         handle.DrawTextureRect(_sprite.Frame0(decal.Sprite), box, color);
         handle.SetTransform(Matrix3x2.Identity);
     }
+
+    // Exodus-Start: crosshair shown at the cursor marking the sample point of the eyedropper tool.
+    private void DrawEyedropper(in OverlayDrawArgs args)
+    {
+        var mouseScreenPos = _inputManager.MouseScreenPosition;
+        var mousePos = _eyeManager.PixelToMap(mouseScreenPos);
+
+        if (mousePos.MapId != args.MapId)
+            return;
+
+        // The handle is already in world space here (we never set a transform), so draw directly.
+        var handle = args.WorldHandle;
+        var pos = mousePos.Position;
+        const float arm = 0.35f;
+        const float gap = 0.08f;
+
+        // Draw a dark outline first so the crosshair stays visible over any decal color.
+        DrawCross(handle, pos, arm, gap, 0.04f, Color.Black.WithAlpha(0.6f));
+        DrawCross(handle, pos, arm, gap, 0f, Color.White);
+        handle.DrawCircle(pos, gap, Color.White, false);
+    }
+
+    private static void DrawCross(DrawingHandleWorld handle, Vector2 pos, float arm, float gap, float pad, Color color)
+    {
+        handle.DrawLine(pos + new Vector2(-arm - pad, 0f), pos + new Vector2(-gap + pad, 0f), color);
+        handle.DrawLine(pos + new Vector2(gap - pad, 0f), pos + new Vector2(arm + pad, 0f), color);
+        handle.DrawLine(pos + new Vector2(0f, -arm - pad), pos + new Vector2(0f, -gap + pad), color);
+        handle.DrawLine(pos + new Vector2(0f, gap - pad), pos + new Vector2(0f, arm + pad), color);
+    }
+    // Exodus-End
 }

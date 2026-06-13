@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Map; // Exodus
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Decals;
@@ -17,6 +18,7 @@ namespace Content.Client.Decals;
 public sealed partial class DecalPlacementSystem : EntitySystem
 {
     [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IMapManager _mapManager = default!; // Exodus
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private InputSystem _inputSystem = default!;
@@ -35,6 +37,25 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     private bool _placing;
     private bool _erasing;
 
+    // Exodus-Start: eyedropper tool that copies the color of an existing decal on the map.
+    private bool _eyedropper;
+
+    /// <summary>
+    ///     Whether the eyedropper (color picker) tool is currently selected.
+    /// </summary>
+    public bool EyedropperActive => _eyedropper;
+
+    /// <summary>
+    ///     Raised when the eyedropper successfully copies a color from a decal on the map.
+    /// </summary>
+    public event Action<Color>? EyedropperPicked;
+
+    public void SetEyedropper(bool active)
+    {
+        _eyedropper = active && _active;
+    }
+    // Exodus-End
+
     public (DecalPrototype? Decal, bool Snap, Angle Angle, Color Color) GetActiveDecal()
     {
         return _active && _decalId != null ?
@@ -50,6 +71,18 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
+                // Exodus-Start: left click while the eyedropper is active copies a color instead of placing.
+                if (_eyedropper)
+                {
+                    _eyedropper = false;
+
+                    if (TryPickDecalColor(coords, out var picked))
+                        EyedropperPicked?.Invoke(picked);
+
+                    return true;
+                }
+                // Exodus-End
+
                 if (!_active || _placing || _decalId == null)
                     return false;
 
@@ -85,6 +118,14 @@ public sealed partial class DecalPlacementSystem : EntitySystem
             .Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
+                // Exodus-Start: right click cancels the eyedropper instead of erasing.
+                if (_eyedropper)
+                {
+                    _eyedropper = false;
+                    return true;
+                }
+                // Exodus-End
+
                 if (!_active || _erasing)
                     return false;
 
@@ -189,12 +230,65 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         _cleanable = cleanable;
     }
 
+    // Exodus: clear the active decal so it stops following the cursor when deselected.
+    public void ClearDecal()
+    {
+        _decalId = null;
+    }
+
     public void SetActive(bool active)
     {
         _active = active;
+        _eyedropper = false; // Exodus: arming is always an explicit user action.
         if (_active)
             _inputManager.Contexts.SetActiveContext("editor");
         else
             _inputSystem.SetEntityContextActive();
     }
+
+    // Exodus-Start: find the topmost decal under the given coordinates and return its color.
+    private bool TryPickDecalColor(EntityCoordinates coords, out Color color)
+    {
+        color = Color.White;
+
+        var mapPos = _transform.ToMapCoordinates(coords);
+        if (!_mapManager.TryFindGridAt(mapPos, out var gridUid, out _))
+            return false;
+
+        if (!TryComp<DecalGridComponent>(gridUid, out var decalGrid))
+            return false;
+
+        var localPos = Vector2.Transform(mapPos.Position, _transform.GetInvWorldMatrix(gridUid));
+        var chunkIndices = SharedDecalSystem.GetChunkIndices(localPos);
+
+        if (!decalGrid.ChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var chunk))
+            return false;
+
+        Decal? best = null;
+        var bestZ = int.MinValue;
+        var bestId = 0u;
+
+        foreach (var (id, decal) in chunk.Decals)
+        {
+            // Decals are drawn as a 1x1 tile with their bottom-left corner at Coordinates.
+            if (localPos.X < decal.Coordinates.X || localPos.X >= decal.Coordinates.X + 1f ||
+                localPos.Y < decal.Coordinates.Y || localPos.Y >= decal.Coordinates.Y + 1f)
+                continue;
+
+            // Match the overlay's draw order: highest ZIndex, then highest id, is on top.
+            if (best != null && (decal.ZIndex < bestZ || decal.ZIndex == bestZ && id < bestId))
+                continue;
+
+            best = decal;
+            bestZ = decal.ZIndex;
+            bestId = id;
+        }
+
+        if (best == null)
+            return false;
+
+        color = best.Color ?? Color.White;
+        return true;
+    }
+    // Exodus-End
 }

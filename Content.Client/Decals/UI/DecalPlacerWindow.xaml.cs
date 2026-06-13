@@ -53,6 +53,12 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         Search.OnTextChanged += _ => RefreshList();
         ColorPicker.OnColorChanged += OnColorPicked;
 
+        // Exodus: arm the eyedropper tool to copy a color from a decal on the map.
+        // Subscribe for the lifetime of this window instance (see Dispose); tying this to
+        // Opened/Close leaks a stale handler when the window is disposed without closing.
+        EyedropperButton.OnPressed += _ => _decalPlacementSystem.SetEyedropper(!_decalPlacementSystem.EyedropperActive);
+        _decalPlacementSystem.EyedropperPicked += OnEyedropperPicked;
+
         PickerOpen.OnPressed += _ =>
         {
             if (_picker is null)
@@ -120,6 +126,17 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         RefreshList();
     }
 
+    // Exodus: apply a color copied from a decal via the eyedropper tool.
+    private void OnEyedropperPicked(Color color)
+    {
+        // Make sure the copied color is actually used when placing.
+        _useColor = true;
+        EnableColor.Pressed = true;
+
+        ColorPicker.Color = color;
+        OnColorPicked(color);
+    }
+
     private void UpdateDecalPlacementInfo()
     {
         if (_selected is null)
@@ -175,6 +192,16 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         if (obj.Button.Name == null)
             return;
 
+        // Exodus: clicking the already-selected decal again clears the selection
+        // instead of leaving it stuck to the cursor.
+        if (obj.Button.Name == _selected)
+        {
+            _selected = null;
+            _decalPlacementSystem.ClearDecal();
+            RefreshList();
+            return;
+        }
+
         SelectDecal(obj.Button.Name);
     }
 
@@ -220,5 +247,13 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
     {
         base.Close();
         _decalPlacementSystem.SetActive(false);
+    }
+
+    // Exodus: drop the eyedropper subscription when this window instance is destroyed.
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+            _decalPlacementSystem.EyedropperPicked -= OnEyedropperPicked;
     }
 }
