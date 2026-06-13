@@ -1,7 +1,9 @@
 using System.Linq;
+using Content.Server._Exodus.Biocode;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Store.Systems;
+using Content.Shared._Exodus.Biocode;
 using Content.Shared._Exodus.Store;
 using Content.Shared.Power;
 using Content.Shared.Popups;
@@ -16,6 +18,7 @@ namespace Content.Server._Exodus.Store;
 
 public sealed class SummoningMachineSystem : EntitySystem
 {
+    [Dependency] private readonly BiocodeSystem _biocode = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StoreSystem _store = default!;
@@ -66,6 +69,13 @@ public sealed class SummoningMachineSystem : EntitySystem
     private void OnBeforeStoreBuyAttempt(Entity<SummoningMachineComponent> ent, ref BeforeStoreBuyAttemptEvent args)
     {
         args.Handled = true;
+
+        if (TryComp<BiocodeComponent>(ent.Owner, out var biocode) &&
+            biocode.BlockInteraction &&
+            !_biocode.TryAccess((ent.Owner, biocode), args.Buyer))
+        {
+            return;
+        }
 
         if (ent.Comp.ActiveListingId != null)
         {
