@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client._Mono.Radar;
 using Content.Client.Station; // Frontier
 using Content.Shared._Crescent.ShipShields;
@@ -40,6 +41,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
     private readonly RadarBlipsSystem _blips;
+    private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus - territory POI colors
 
     // Exodus - SafeZone - Start
     private EntityQuery<TransformComponent> _xformQuery;
@@ -74,6 +76,24 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private const float NebulaFillAlpha = 0.08f;
     private Vector2[] _nebulaFillBuffer = [];
     private Vector2[] _nebulaLineBuffer = [];
+    // Exodus-end
+
+    // Exodus-begin territory-marker
+    /// <summary>
+    /// World-space repeat distance (in meters) for the diagonal repeated faction label pattern inside territory rings.
+    /// The screen step is computed as TerritoryTextWorldRepeat * MinimapScale and the pattern is always centered on the ring.
+    /// This makes the text pattern fully static relative to the ring geometry, without movement or phase shift on pan or any zoom.
+    /// Increase to make sparser, decrease for denser fill.
+    /// </summary>
+    private const float TerritoryTextWorldRepeat = 1800f;
+    private const float TerritoryTextFadeInDiagMultiplier = 3f;
+    private const float TerritoryTextFullDiagMultiplier = 7f;
+    private const float TerritoryTextFadeOutViewDiagMultiplier = 0.9f;
+    private const float TerritoryTextHiddenViewDiagMultiplier = 1.35f;
+    // Exodus-end
+    // Exodus-begin dock-label-fade
+    private const float DockLabelFadeOutWorldRange = 250f;
+    private const float DockLabelHiddenWorldRange = 750f;
     // Exodus-end
     private static readonly Vector2[] RadarPosVertsCache =
     [
@@ -152,6 +172,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _transform = EntManager.System<SharedTransformSystem>();
         _station = EntManager.System<StationSystem>(); // Frontier
         _blips = EntManager.System<RadarBlipsSystem>();
+        _territoryPoiColors = EntManager.System<TerritoryPoiColorSystem>(); // Exodus - territory POI colors
 
         // Exodus - SafeZone - Start
         _xformQuery = EntManager.GetEntityQuery<TransformComponent>();
@@ -714,6 +735,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
             var hideColor = hideLabel && iff != null && (iff.Flags & IFFFlags.AlwaysShowColor) == 0x0;
             var labelColor = hideColor ? blipOnly ? Color.Orange : Color.White : _shuttles.GetIFFColor(grid, self: false, iff);
+            if (!hideColor && _territoryPoiColors.TryGetColor(gUid, out var territoryPoiColor))
+                labelColor = territoryPoiColor; // Exodus - territory POI colors
+
             var coordColor = new Color(labelColor.R * 0.8f, labelColor.G * 0.8f, labelColor.B * 0.8f, 0.5f);
 
             var isPlayerShuttle = iff != null && (iff.Flags & IFFFlags.IsPlayerShuttle) != 0x0;
@@ -1014,6 +1038,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Draw blips using the same grid-relative transformation approach as docks
         foreach (var blip in rawBlips)
         {
+            // Exodus-begin territory-marker
+            if (blip.Config.Shape == RadarBlipShape.TerritoryCircle)
+                continue;
+            // Exodus-end
+
             var position = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToView);
             var color = blip.Config.Color.WithAlpha(0.8f);
             var box = new Box2Rotated(blip.Config.Bounds, 0);
@@ -1084,6 +1113,17 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Draw lines from grappling gun to target
         DrawGrapLinks(handle, worldToView, monoViewBounds);
         //Exodus - ShuttleHooks - End
+
+        // Exodus-begin territory-marker
+        foreach (var blip in rawBlips)
+        {
+            if (blip.Config.Shape != RadarBlipShape.TerritoryCircle)
+                continue;
+
+            var position = Vector2.Transform(_transform.ToMapCoordinates(blip.Position).Position, worldToView);
+            DrawTerritoryCircleBlip(handle, position, blip.Config, monoViewBounds);
+        }
+        // Exodus-end
 
         DrawSafeZones(handle, worldToView, ourGridId); // Exodus - SafeZone
     }
@@ -1362,6 +1402,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             }
 
             // Frontier: draw dock labels (done last to appear on top of all docks, still fights with other grids)
+            var dockLabelAlpha = GetDockLabelZoomAlpha(); // Exodus - dock-label-fade
+            if (dockLabelAlpha <= 0f)
+                return;
+
+            var dockLabelColor = _dockLabelColor.WithAlpha(_dockLabelColor.A * dockLabelAlpha); // Exodus - dock-label-fade
             var labeled = new HashSet<string>();
             foreach (var state in docks)
             {
@@ -1376,11 +1421,29 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
                 labeled.Add(state.LabelName);
                 var labelDimensions = handle.GetDimensions(Font, state.LabelName, 0.9f);
-                handle.DrawString(Font, (uiPosition / UIScale - labelDimensions / 2) * UIScale, state.LabelName, UIScale * 0.9f, _dockLabelColor);
+                handle.DrawString(
+                    Font,
+                    (uiPosition / UIScale - labelDimensions / 2) * UIScale,
+                    state.LabelName,
+                    UIScale * 0.9f,
+                    dockLabelColor); // Exodus - dock-label-fade
             }
             // End Frontier
         }
     }
+
+    // Exodus-begin dock-label-fade
+    private float GetDockLabelZoomAlpha()
+    {
+        if (WorldRange <= DockLabelFadeOutWorldRange)
+            return 1f;
+
+        if (WorldRange >= DockLabelHiddenWorldRange)
+            return 0f;
+
+        return 1f - (WorldRange - DockLabelFadeOutWorldRange) / (DockLabelHiddenWorldRange - DockLabelFadeOutWorldRange);
+    }
+    // Exodus-end
 
     protected Vector2 InverseScalePosition(Vector2 value)
     {
@@ -1480,6 +1543,191 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
     }
     // Exodus - ShuttleHooks - End
+
+    // Exodus-begin territory-marker
+    private void DrawTerritoryCircleBlip(DrawingHandleScreen handle, Vector2 position, BlipConfig config, Box2 viewBounds)
+    {
+        var screenRadius = GetTerritoryScreenRadius(config);
+        if (screenRadius <= 0f)
+            return;
+
+        if (!CircleIntersectsBox(position, screenRadius, viewBounds))
+            return;
+
+        handle.DrawCircle(position, screenRadius, config.Color);
+        handle.DrawCircle(position, screenRadius, config.BorderColor, filled: false);
+
+        DrawTerritoryText(handle, position, screenRadius, config, viewBounds);
+    }
+
+    private float GetTerritoryScreenRadius(BlipConfig config)
+    {
+        var radius = config.Bounds.MaxDimension * 0.5f;
+        if (radius < 1f)
+            return 0f;
+
+        return config.RespectZoom
+            ? radius * MinimapScale
+            : radius;
+    }
+
+    private void DrawTerritoryText(DrawingHandleScreen handle, Vector2 territoryCenter, float screenRadius, BlipConfig config, Box2 viewBounds)
+    {
+        if (config.Label == null)
+            return;
+
+        var text = Loc.GetString(config.Label);
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        var worldRadius = config.Bounds.MaxDimension * 0.5f;
+        if (worldRadius < 1f)
+            return;
+
+        // Fixed 45 degrees in screen space; stays still when ship rotates.
+        // Text positions are generated with screen spacing that scales with MinimapScale
+        // (screenStepLen = TerritoryTextWorldRepeat * MinimapScale) and always centered on the ring.
+        // This makes the pattern fully static relative to the ring: same relative positions and density
+        // no matter how you pan or zoom the mass scanner.
+        const float angle45 = MathF.PI * 0.25f;
+        var textAngle = new Angle(angle45);
+        var screenDir = new Vector2(MathF.Cos(angle45), MathF.Sin(angle45));
+        var perpDir = new Vector2(-screenDir.Y, screenDir.X);
+
+        var textScale = UIScale * 1.2f;
+        var baseAlpha = 0.35f;
+        var textColor = new Color(0.65f, 0.65f, 0.65f);
+        var textDims = handle.GetDimensions(Font, text, textScale);
+        var textDrawOffset = new Vector2(
+            -textDims.X * 0.5f,
+            -textDims.Y * 0.5f);
+        var halfDiag = MathF.Sqrt(textDims.X * textDims.X + textDims.Y * textDims.Y) * 0.5f;
+        var zoomAlpha = GetTerritoryTextZoomAlpha(screenRadius, halfDiag, viewBounds);
+        if (zoomAlpha <= 0f)
+            return;
+
+        // Fade text near the circle edge (in screen pixels).
+        var fadeEnd = screenRadius - halfDiag;
+        if (fadeEnd <= 0f)
+            return;
+
+        var fadeStart = MathF.Max(0f, fadeEnd - halfDiag * 6f);
+        var edgeFadeRange = fadeEnd - fadeStart;
+
+        // SetTransform uses screen coordinates, not control-local coordinates.
+        var screenOffset = (Vector2) GlobalPixelPosition;
+        var prevTransform = handle.GetTransform();
+
+        // Fixed world-space repeat for the diagonal pattern.
+        // See TerritoryTextWorldRepeat (top of territory section) for tuning.
+        var screenStepLen = TerritoryTextWorldRepeat * MinimapScale;
+        if (screenStepLen <= 0f)
+            return;
+
+        var stepDir = screenDir * screenStepLen;
+        var stepPerp = perpDir * screenStepLen;
+
+        // How many steps we need to search in index space to cover the territory.
+        var maxIndex = (int)((worldRadius / TerritoryTextWorldRepeat) * 1.8f) + 4;
+        var textCullBounds = viewBounds.Enlarged(halfDiag);
+
+        GetTerritoryTextIndexRange(textCullBounds, territoryCenter, screenDir, screenStepLen, out var minRow, out var maxRow);
+        GetTerritoryTextIndexRange(textCullBounds, territoryCenter, perpDir, screenStepLen, out var minCol, out var maxCol);
+
+        minRow = Math.Max(minRow, -maxIndex);
+        maxRow = Math.Min(maxRow, maxIndex);
+        minCol = Math.Max(minCol, -maxIndex);
+        maxCol = Math.Min(maxCol, maxIndex);
+
+        if (minRow > maxRow || minCol > maxCol)
+            return;
+
+        // Use one index as "row" for the stagger (to keep the old nice diagonal offset look).
+        for (var row = minRow; row <= maxRow; row++)
+        {
+            var stagger = (row % 2 == 0) ? 0f : (screenStepLen * 0.5f);
+            for (var col = minCol; col <= maxCol; col++)
+            {
+                var pos = territoryCenter + (row * stepDir) + (col * stepPerp) + (stagger * perpDir);  // stagger along the perp for visual
+
+                if (!textCullBounds.Contains(pos))
+                    continue;
+
+                var distSquared = (pos - territoryCenter).LengthSquared();
+                if (distSquared >= fadeEnd * fadeEnd)
+                    continue;
+
+                var dist = MathF.Sqrt(distSquared);
+                var edgeAlpha = dist <= fadeStart || edgeFadeRange <= 0f
+                    ? 1f
+                    : 1f - (dist - fadeStart) / edgeFadeRange;
+                var alpha = baseAlpha * zoomAlpha * edgeAlpha;
+
+                if (alpha <= 0f)
+                    continue;
+
+                handle.SetTransform(screenOffset + pos, textAngle);
+                handle.DrawString(Font, textDrawOffset, text, textScale, textColor.WithAlpha(alpha));
+            }
+        }
+
+        handle.SetTransform(prevTransform);
+    }
+
+    private static bool CircleIntersectsBox(Vector2 center, float radius, Box2 box)
+    {
+        var closest = new Vector2(
+            Math.Clamp(center.X, box.Left, box.Right),
+            Math.Clamp(center.Y, box.Bottom, box.Top));
+
+        return (closest - center).LengthSquared() <= radius * radius;
+    }
+
+    private static float GetTerritoryTextZoomAlpha(float screenRadius, float halfDiag, Box2 viewBounds)
+    {
+        var fadeInStart = halfDiag * TerritoryTextFadeInDiagMultiplier;
+        var fadeInEnd = halfDiag * TerritoryTextFullDiagMultiplier;
+
+        if (screenRadius <= fadeInStart)
+            return 0f;
+
+        var fadeInAlpha = screenRadius >= fadeInEnd
+            ? 1f
+            : (screenRadius - fadeInStart) / (fadeInEnd - fadeInStart);
+
+        var viewWidth = MathF.Abs(viewBounds.Right - viewBounds.Left);
+        var viewHeight = MathF.Abs(viewBounds.Top - viewBounds.Bottom);
+        var viewDiag = MathF.Sqrt(viewWidth * viewWidth + viewHeight * viewHeight);
+        if (viewDiag <= 0f)
+            return fadeInAlpha;
+
+        var fadeOutStart = viewDiag * TerritoryTextFadeOutViewDiagMultiplier;
+        var fadeOutEnd = viewDiag * TerritoryTextHiddenViewDiagMultiplier;
+
+        if (screenRadius >= fadeOutEnd)
+            return 0f;
+
+        var fadeOutAlpha = screenRadius <= fadeOutStart
+            ? 1f
+            : 1f - (screenRadius - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+
+        return fadeInAlpha * fadeOutAlpha;
+    }
+
+    private static void GetTerritoryTextIndexRange(Box2 bounds, Vector2 center, Vector2 axis, float step, out int min, out int max)
+    {
+        var topLeft = Vector2.Dot(bounds.TopLeft - center, axis);
+        var topRight = Vector2.Dot(bounds.TopRight - center, axis);
+        var bottomLeft = Vector2.Dot(bounds.BottomLeft - center, axis);
+        var bottomRight = Vector2.Dot(bounds.BottomRight - center, axis);
+
+        var minProjection = MathF.Min(MathF.Min(topLeft, topRight), MathF.Min(bottomLeft, bottomRight));
+        var maxProjection = MathF.Max(MathF.Max(topLeft, topRight), MathF.Max(bottomLeft, bottomRight));
+
+        min = (int)MathF.Floor(minProjection / step) - 2;
+        max = (int)MathF.Ceiling(maxProjection / step) + 2;
+    }
+    // Exodus-end
 
     // Exodus - SafeZone - Start
     private void DrawSafeZones(DrawingHandleScreen handle, Matrix3x2 worldToView, EntityUid? ourGridUid)

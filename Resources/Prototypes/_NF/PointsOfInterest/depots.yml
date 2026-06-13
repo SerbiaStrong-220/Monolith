@@ -52,6 +52,10 @@
   stations:
     CargoDepot:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for Cargo Depot
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components: &cargoStationComponents
         - type: StationNameSetup
           mapNameTemplate: 'Грузовое Депо' # Ru-Localization # Has a letter appended in PointOfInterestSystem
@@ -66,4 +70,8 @@
   stations:
     CargoDepotAlt:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for Cargo Depot Alt
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components: *cargoStationComponents

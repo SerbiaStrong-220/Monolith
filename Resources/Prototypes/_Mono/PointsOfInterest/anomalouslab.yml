@@ -18,6 +18,10 @@
   stations:
     AnomalousLab:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for Anomaly Laboratory
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Лаборатория Аномалий' # Ru-Localization

@@ -12,8 +12,8 @@
 - type: pointOfInterest
   id: BaseMobilePOI
   abstract: true
-  minimumDistance: 4000 # Some sane defaults
-  maximumDistance: 8000
+  minimumDistance: 4000 # Exodus
+  maximumDistance: 8000 # Exodus
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Behold my list of gamerules
   spawnGroup: Optional
   addComponents:

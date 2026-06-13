@@ -31,6 +31,10 @@
   stations:
     ThePit:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for The Pit
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Бойцовская Яма" # Ru-Localization

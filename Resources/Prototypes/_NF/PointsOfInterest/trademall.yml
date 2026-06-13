@@ -43,6 +43,10 @@
   stations:
     TradeMall:
       stationProto: MarketFrontierOutpost
+      # Exodus start - Territory for Trade Mall
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationCargoOrderDatabase
           capacity: 60

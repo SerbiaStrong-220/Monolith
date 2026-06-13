@@ -16,6 +16,10 @@
             - material: Cloth
               amount: 2
               doAfter: 1
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
         - to: BannerSHMNode
           completed:
             - !type:SnapToGrid { }
@@ -36,6 +40,38 @@
             - material: Cloth
               amount: 2
               doAfter: 1
+        # Exodus start - build edge for PDV banner (Династия Фаэтон)
+        - to: BannerPDVNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
+        # Exodus end
+        # Exodus start - build edge for Khsira banner (Империя Кхси'Ра)
+        - to: BannerKhsiraNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
+        # Exodus end
 
     - node: BannerTSFNode
       entity: BannerNGC
@@ -81,3 +117,37 @@
         steps:
         - tool: Welding
           doAfter: 3
+
+    # Exodus start - node for PDV banner (Династия Фаэтон)
+    - node: BannerPDVNode
+      entity: BannerPDV
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Welding
+          doAfter: 3
+    # Exodus end
+
+    # Exodus start - node for Khsira banner (Империя Кхси'Ра)
+    - node: BannerKhsiraNode
+      entity: BannerKhsira
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Screwing
+          doAfter: 1
+    # Exodus end

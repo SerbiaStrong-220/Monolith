@@ -22,6 +22,10 @@
   stations:
     Sevastopol:
       stationProto: RecordsFrontierOutpostCargo
+      # Exodus start - Territory for DC Sevastopol
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Дата-центр Севастополь' # Ru-Localization

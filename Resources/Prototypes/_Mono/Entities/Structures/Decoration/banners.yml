@@ -10,6 +10,10 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerTSFNode
+  # Exodus start - Territory claim banner for ТСФ
+  - type: TerritoryBanner
+    faction: TSFMC
+  # Exodus end
 
 - type: entity
   id: BannerSHM
@@ -36,3 +40,37 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerDINode
+
+# Exodus start - banner for Династия Фаэтон (PDV)
+- type: entity
+  id: BannerPDV
+  parent: BannerBase
+  name: PDV banner
+  description: A banner displaying the sigil of the Phaeton Dynasty.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: pdv-banner
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerPDVNode
+  - type: TerritoryBanner
+    faction: PDV
+# Exodus end
+
+# Exodus start - banner for Империя Кхси'Ра
+- type: entity
+  id: BannerKhsira
+  parent: BannerBase
+  name: Khsira banner
+  description: A banner bearing the emblem of the Khsira Empire.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: khsira-banner
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerKhsiraNode
+  - type: TerritoryBanner
+    faction: Khsira
+# Exodus end

@@ -320,10 +320,14 @@
     tags: [ POI ]
   - type: InitRepairSnapshot
 
-# Omnichurch had no upstream `gameMap` registration → no stationGameMap here.
+# Exodus-begin territory-nebula-merge
+# Territory adds the Omnichurch gameMap registration; keep the POI in nebula spawn,
+# but initialize it as a station so GridTerritory is applied through StationSystem.
+# Exodus-end
 - type: nebulaPoi
   id: NebulaPoiOmnichurch
   path: /Maps/_NF/POI/beacon.yml
+  stationGameMap: Omnichurch
   spawnIn:
   - NebulaBlueMarker
   - NebulaPurpleMarker

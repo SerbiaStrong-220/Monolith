@@ -18,6 +18,10 @@
   stations:
     Edison:
       stationProto: RecordsFrontierOutpost
+      # Exodus start - Territory for Edison Power Station
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Электростанция Эдисона' # Ru-Localization

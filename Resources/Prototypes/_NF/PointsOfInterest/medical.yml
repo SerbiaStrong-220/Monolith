@@ -32,6 +32,10 @@
   stations:
     Medical:
       stationProto: RecordsFrontierOutpost
+      # Exodus start - Territory for Medical Center
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Госпиталь' # Ru-Localization

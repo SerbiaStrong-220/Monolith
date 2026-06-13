@@ -19,6 +19,10 @@
   stations:
     TSFMCOutpost:
       stationProto: SecurityFrontierOutpost
+      # Exodus start - Territory grid control for peripheral outpost
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'КВП | Периферийный аванпост' # Ru-Localization

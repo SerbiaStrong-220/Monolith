@@ -38,6 +38,9 @@
       gridComponents:
       - type: VesselInfo
         description: "Законсервированный военный корабль КВП, переоборудованный в передовую оперативную базу." # Ru-Localization
+      # Exodus start - Territory for TSFMC Halcyon
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'КВП | Флагман Фалкон' # Ru-Localization

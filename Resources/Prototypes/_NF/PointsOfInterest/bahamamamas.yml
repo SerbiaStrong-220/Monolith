@@ -30,6 +30,10 @@
   stations:
     Bahama:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for Bahama Mama
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Багамская Мама' # Ru-Localization

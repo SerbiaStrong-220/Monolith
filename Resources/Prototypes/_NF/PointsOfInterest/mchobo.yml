@@ -20,6 +20,10 @@
   stations:
     McHobo:
       stationProto: DeadDropRecordsFrontierOutpost
+      # Exodus start - Territory for McHobo
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Заброшенный МакХобольдс" # Ru-Localization

@@ -18,6 +18,10 @@
   stations:
     Tinnia:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for Tinnia's Restaurant
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Ресторан Тинни" # Ru-Localization

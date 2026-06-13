@@ -27,6 +27,10 @@
   stations:
     CaseysCasino:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for Crazy Casey's
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Казино Крейзи Кейси' # Ru-Localization

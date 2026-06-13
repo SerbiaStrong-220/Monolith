@@ -18,6 +18,10 @@
   stations:
     Grifty:
       stationProto: DeadDropRecordsFrontierOutpost
+      # Exodus start - Territory for Grifty's Gas & Grub
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Бензин и жратва Грифти" # Ru-Localization

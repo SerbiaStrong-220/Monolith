@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -18,8 +17,9 @@ public enum RadarBlipShape
     Arrow,
     Ring,
     // Exodus-begin nebula-radar-visualization
-    NebulaPolygon // Exodus nebula-radar-visualization
+    NebulaPolygon, // Exodus nebula-radar-visualization
     // Exodus-end
+    TerritoryCircle // Exodus territory-marker
 }
 
 [Serializable, NetSerializable]
@@ -133,6 +133,20 @@ public partial record struct BlipConfig
     /// </summary>
     [DataField]
     public float OuterFillRadius = 0f;
+    // Exodus-end
+
+    // Exodus-begin territory-marker
+    /// <summary>
+    /// Optional outline color for blips that draw a filled shape and a separate border.
+    /// </summary>
+    [DataField]
+    public Color BorderColor = Color.Transparent;
+
+    /// <summary>
+    /// Optional localization key for a text label repeated across the territory zone.
+    /// </summary>
+    [DataField]
+    public string? Label = null;
     // Exodus-end
 
     [DataField]

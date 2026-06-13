@@ -152,22 +152,22 @@
   files:
    - /Audio/_Crescent/Ambient/FarReaches/far_reaches_i.ogg
 
-# outer ring
+# external space (renamed from outer ring; "внешний космос")
 
 - type: ambientMusic
-  id: BiomeOuterRing
+  id: BiomeExternalSpace
   sound:
-    collection: BiomeOuterRing
+    collection: BiomeExternalSpace
 
 - type: soundCollection
-  id: BiomeOuterRing
+  id: BiomeExternalSpace
   files:
    - /Audio/_Crescent/Ambient/OuterRing/outer_ring_1.ogg
    - /Audio/_Crescent/Ambient/OuterRing/outer_ring_2.ogg
    - /Audio/_Crescent/Ambient/OuterRing/outer_ring_3.ogg
    - /Audio/_Crescent/Ambient/OuterRing/outer_ring_4.ogg
 
-# middle ring
+# middle ring (also used for all station GridTerritory influence zones)
 
 - type: ambientMusic
   id: BiomeMiddleRing

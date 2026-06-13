@@ -36,6 +36,9 @@
           ambientMusicPrototype: CamelotMusic
         - type: VesselInfo
           description: "Ветхая станция, некогда принадлежавшая СССП. Холодно и темно." # Ru-Localization
+        # Exodus start - Territory for Camelot
+        - type: GridTerritory
+        # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Форт Камелот' # Ru-Localization
