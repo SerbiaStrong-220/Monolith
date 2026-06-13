@@ -12,12 +12,13 @@
 
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
-            <!-- Exodus: toggle the current color as a favorite (★ = saved, ☆ = not saved) -->
+            <!-- Exodus-Start: toggle the current color as a favorite (★ = saved, ☆ = not saved) -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'decal-placer-window-favorite-label'}" HorizontalExpand="True" />
                 <Button Name="FavoriteButton" Text="☆" MinWidth="40"
                         ToolTip="{Loc 'decal-placer-window-favorite-tooltip'}" />
             </BoxContainer>
+            <!-- Exodus-End -->
             <Button Name="PickerOpen" Text="{Loc 'decal-placer-window-palette'}" />
             <!-- Exodus: eyedropper tool, copies the color of a decal already on the map -->
             <Button Name="EyedropperButton" Text="{Loc 'decal-placer-window-eyedropper'}" />

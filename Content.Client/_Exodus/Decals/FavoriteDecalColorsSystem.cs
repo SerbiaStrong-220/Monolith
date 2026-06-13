@@ -27,8 +27,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
 
     public bool Contains(Color color)
     {
-        var hex = color.ToHex();
-        return _colors.Any(c => c.ToHex() == hex);
+        return _colors.Any(c => SameColor(c, color));
     }
 
     /// <summary>Adds the color, or removes it if already a favorite. Returns true if it is now a favorite.</summary>
@@ -45,8 +44,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
     /// <summary>Removes the color if present. Returns true if something was removed.</summary>
     public bool Remove(Color color)
     {
-        var hex = color.ToHex();
-        var index = _colors.FindIndex(c => c.ToHex() == hex);
+        var index = _colors.FindIndex(c => SameColor(c, color));
         if (index < 0)
             return false;
 
@@ -54,6 +52,10 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
         Save();
         return true;
     }
+
+    // Compare at the 8-bit precision colors are stored/serialized at, without allocating hex strings.
+    private static bool SameColor(Color a, Color b)
+        => a.RByte == b.RByte && a.GByte == b.GByte && a.BByte == b.BByte && a.AByte == b.AByte;
 
     private void Load()
     {

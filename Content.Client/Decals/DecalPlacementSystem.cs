@@ -57,7 +57,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         _eyedropper = active && _active;
     }
 
-    // Сopy decal(s) under the cursor (hotkeys O / Ctrl+O), only while the window is open.
+    // Copy decal(s) under the cursor (hotkeys O / Ctrl+O), only while the window is open.
     // Multi-decal "stamp": each entry is a decal plus its offset from the copied tile origin.
     private readonly List<(Vector2 Offset, Decal Decal)> _stamp = new();
     private bool _stamping;
@@ -268,19 +268,21 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         _cleanable = cleanable;
     }
 
-    // Exodus: clear the active decal so it stops following the cursor when deselected.
+    // Exodus-Start: clear the active decal so it stops following the cursor when deselected.
     public void ClearDecal()
     {
         _decalId = null;
     }
+    // Exodus-End
 
     public void SetActive(bool active)
     {
         _active = active;
-        // Exodus: arming/holding a tool is always an explicit user action.
+        // Exodus-Start: arming/holding a tool is always an explicit user action.
         _eyedropper = false;
         _stamping = false;
         _stamp.Clear();
+        // Exodus-End
         if (_active)
             _inputManager.Contexts.SetActiveContext("editor");
         else

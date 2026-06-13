@@ -18,9 +18,11 @@ public sealed partial class PaletteColorPicker : DefaultWindow
 
     private readonly TextureResource _tex;
 
-    // Exodus: sentinel metadata marking the synthetic "Favorites" entry (not a prototype).
+    // Exodus-Start
+    // Sentinel metadata marking the synthetic "Favorites" entry (not a prototype).
     private static readonly object FavoritesMarker = new();
-    private readonly FavoriteDecalColorsSystem _favorites; // Exodus
+    private readonly FavoriteDecalColorsSystem _favorites;
+    // Exodus-End
 
     public PaletteColorPicker()
     {
@@ -41,10 +43,11 @@ public sealed partial class PaletteColorPicker : DefaultWindow
             i += 1;
         }
 
-        // Exodus: append the user's favorites as a synthetic palette.
+        // Exodus-Start: append the user's favorites as a synthetic palette.
         Palettes.AddItem(Loc.GetString("decal-placer-palette-favorites"));
         Palettes.SetItemMetadata(i, FavoritesMarker);
         _favorites.FavoritesChanged += OnFavoritesChanged;
+        // Exodus-End
 
         Palettes.OnItemSelected += args =>
         {
@@ -81,7 +84,8 @@ public sealed partial class PaletteColorPicker : DefaultWindow
         }
     }
 
-    // Exodus: refresh while the favorites palette is shown (e.g. the star added/removed a color).
+    // Exodus-Start
+    // Refresh while the favorites palette is shown (e.g. the star added/removed a color).
     private void OnFavoritesChanged()
     {
         // Runs from a system event; a dead instance must not touch its controls.
@@ -95,7 +99,8 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing) // Exodus
+        if (disposing)
             _favorites.FavoritesChanged -= OnFavoritesChanged;
     }
+    // Exodus-End
 }
