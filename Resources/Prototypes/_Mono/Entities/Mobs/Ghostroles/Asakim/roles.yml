@@ -35,7 +35,7 @@
     - NamesLastMilitary
   - type: NpcFactionMember
     factions:
-    - Syndicate
+    - AsakimDefenceForces # Exodus-asakim-faction
   - type: SurgerySpeedModifier
     speedModifier: 1.5
   # Exodus-asakim-suit-radio: Remnants radio moved to the Asakim hardsuit.
