@@ -27,21 +27,21 @@ using Robust.Shared.Utility;
 
 namespace Content.Server._Mono.ScuttleDevice;
 
-public sealed class ScuttleDeviceSystem : EntitySystem
+public sealed partial class ScuttleDeviceSystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosions = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly PointLightSystem _pointLight = default!;
-    [Dependency] private readonly PopupSystem _popups = default!;
-    [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedShuttleSystem _shuttles = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private ExplosionSystem _explosions = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private NavMapSystem _navMap = default!;
+    [Dependency] private PointLightSystem _pointLight = default!;
+    [Dependency] private PopupSystem _popups = default!;
+    [Dependency] private ServerGlobalSoundSystem _sound = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedShuttleSystem _shuttles = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
     ///     Time to leave between the nuke song and the nuke alarm playing.
@@ -217,17 +217,33 @@ public sealed class ScuttleDeviceSystem : EntitySystem
         var nukeXform = Transform(ent);
         var grid = nukeXform.GridUid;
         var name = grid == null ? "Space" : _shuttles.GetIFFLabel(grid.Value) ?? "Space";
-
-        // warn a crew
-        var announcement = Loc.GetString("scuttle-device-announcement-armed",
-            ("time", (int) ent.Comp.RemainingTime.TotalSeconds),
-            ("location", name));
         var sender = Loc.GetString(ent.Comp.AnnounceSender);
-        _chatSystem.DispatchFilteredAnnouncement(Filter.Local().AddInRange(_transform.GetMapCoordinates(ent, nukeXform), ent.Comp.AnnounceRadius),
-                                                announcement, sender: sender, playSound: false, colorOverride: Color.Red);
 
-        _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ActivateSound));
-        _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
+        // Exodus-begin
+        var nukeCoords = _transform.GetMapCoordinates(ent, nukeXform);
+        if (ent.Comp.GlobalAnnouncement)
+        {
+            var announcement = Loc.GetString(ent.Comp.ArmAnnouncementKey,
+                ("time", (int) ent.Comp.RemainingTime.TotalSeconds),
+                ("location", name),
+                ("x", (int) nukeCoords.X),
+                ("y", (int) nukeCoords.Y));
+            _chatSystem.DispatchGlobalAnnouncement(announcement, sender: sender, playSound: true,
+                announcementSound: ent.Comp.ActivateSound, colorOverride: Color.Red);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
+        }
+        else
+        {
+            var announcement = Loc.GetString(ent.Comp.ArmAnnouncementKey,
+                ("time", (int) ent.Comp.RemainingTime.TotalSeconds),
+                ("location", name));
+            _chatSystem.DispatchFilteredAnnouncement(Filter.Local().AddInRange(nukeCoords, ent.Comp.AnnounceRadius),
+                announcement, sender: sender, playSound: false, colorOverride: Color.Red);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ActivateSound));
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.ArmSound));
+        }
+        // Exodus-end
+
         if (ent.Comp.DoMusic)
         {
             ent.Comp.SelectedNukeSong = _audio.ResolveSound(ent.Comp.ArmMusic);

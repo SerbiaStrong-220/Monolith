@@ -99,12 +99,12 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Traffic
-    # - Common # Exodus
+    - Common
     - Science
   - type: ActiveRadio
     channels:
     - Traffic
-    # - Common # Exodus
+    - Common
     - Science
   - type: CollectiveMind
     channels:
@@ -287,6 +287,7 @@
     visualMultiplier: 0.75
   - type: ShipNpcTarget
     needGrid: NoGrid
+  - type: RetroMonitorView
   # </Mono>
 
 - type: entity
@@ -343,6 +344,8 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg
 
 - type: entity
   id: BaseBorgChassisSyndicate
@@ -364,11 +367,11 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Traffic
-    # - Common # Exodus
+    - Common
     - Syndicate
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Syndicate
   - type: CollectiveMind
@@ -376,6 +379,8 @@
     - Binary
     defaultChannel: Binary
   - type: ShowSyndicateIcons
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg
   - type: MovementAlwaysTouching
   - type: Speech
     speechSounds: SyndieBorg
@@ -416,3 +421,5 @@
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg

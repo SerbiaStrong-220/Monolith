@@ -6,7 +6,7 @@
 - type: entity
   id: WeaponTurretAdderScattercannon
   name: Adder scattercannon
-  suffix: PDV ONLY, SYN ONLY
+  suffix: Small, T1
   parent:
   - BallisticArtillery
   - BallisticArtilleryTier1HP
@@ -34,7 +34,7 @@
   - type: Gun
     fireRate: 5
     recoil: 10 # 2/5x
-    projectileSpeed: 200
+    projectileSpeed: 230
     minAngle: 0
     maxAngle: 5
     shootThermalSignature: 10000 # relatively low for a shipgun, ~693m signature if firing continuously
@@ -72,10 +72,11 @@
 - type: entity
   id: WeaponTurretFang
   name: Fang heavy 90mm autocannon
-  suffix: PDV ONLY, SYN ONLY
+  suffix: Medium, T3
   parent:
   - BallisticArtillery
-  - BallisticArtilleryTier3HP
+  - ShipGunTier3HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier3HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
   description: A heavy 90mm autocannon of syndicate design, created during the corporate war. Made for shattering opponent destroyers. Uses a self loading mechanism similar to the anaconda handgun.
   components:
   - type: StaticPrice
@@ -118,7 +119,7 @@
     powerUseActive: 0
   - type: Actions
   - type: ProjectileBatteryAmmoProvider
-    proto: 90mmBullet
+    proto: 90mmBulletAP
     fireCost: 50
   - type: RadarBlip
     radarColor: "#FF0000"
@@ -152,8 +153,10 @@
 - type: entity
   id: WeaponTurretHydra
   name: Hydra 220mm battery
-  suffix: PDV ONLY, SYN ONLY
-  parent: BallisticArtilleryUnanchorable
+  suffix: Large, T3
+  parent:
+  - BallisticArtilleryUnanchorable
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size only; HP/armor stay unique below)
   description: A main cannonade of syndicate origin, the hydra is a monstrous tri-barreled battery of 220-millimeter pain, designed to shatter corpations' toughest vessels. Loads with a similar mechanism as the anaconda handgun.
   components:
   - type: StaticPrice
@@ -207,7 +210,7 @@
     powerUseActive: 0
   - type: Actions
   - type: ProjectileBatteryAmmoProvider
-    proto: ShipCyrexaProjectile
+    proto: 220mmBulletHE
     fireCost: 4000
   - type: RadarBlip
     radarColor: "#FF0000"
@@ -219,6 +222,9 @@
       respectZoom: true
       rotate: true
       bounds: "-2,-2,2,2"
+  # Exodus-begin: self-destruct. Blast (Explosive) comes from the ShipGunExplodes5x5
+  # parent; the Destructible stays local because Hydra's HP (20000/15000) and armor
+  # (WallDefense2, from base) match no tier. ExplodeBehavior triggers the blast.
   - type: Destructible
     thresholds:
     - trigger:
@@ -227,15 +233,18 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:ExplodeBehavior
     - trigger:
         !type:DamageTrigger
         damage: 15000 # Slightly tankier than T4
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+  # Exodus-end
   - type: ShipGunType
     shipType: Ballistic
   - type: ShipGunClass
@@ -247,10 +256,11 @@
 - type: entity
   id: WeaponTurretLeviathan
   name: LEVIATHAN 520mm howitzer
-  suffix: PDV ONLY, SYN ONLY
+  suffix: Capital, T5
   parent:
   - BallisticArtilleryUnanchorable
-  - BallisticArtilleryTier4HP
+  - ShipGunTier5HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier5HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
   description: A heavy artillery gun of syndicate origin, the leviathan is tyrannic testiment of Syndicate ingenuity, designed to send a message. Able to crack NanoTrasen battleships, and small fighters in a single shell. Loads with a similar mechanism as the anaconda handgun.
   components:
   - type: StaticPrice

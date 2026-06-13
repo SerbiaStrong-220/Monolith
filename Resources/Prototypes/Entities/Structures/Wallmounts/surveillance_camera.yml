@@ -75,17 +75,18 @@
         type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
+  # Exodus-start camera-durability
   - type: Destructible
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 200
+          damage: 400
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
-          damage: 100
+          damage: 200
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
@@ -94,6 +95,7 @@
               collection: MetalBreak
               params:
                 volume: -8
+  # Exodus-end camera-durability
   # Mono
   - type: ShipRepairable
     repairTime: 2

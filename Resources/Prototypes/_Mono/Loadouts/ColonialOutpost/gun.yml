@@ -1,6 +1,6 @@
 - type: loadoutGroup
   id: ColonialLiaisonFirearm
-  name: loadout-group-weapon-civilian
+  name: loadout-group-weapon # Exodus-Loadout-Tweak
   minLimit: 1
   loadouts:
   - StationRepWeaponEnergyShotgun

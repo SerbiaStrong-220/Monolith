@@ -1,0 +1,49 @@
+- type: entity
+  id: WeaponTurretLaserAsakim
+  name: laser turret
+  suffix: Asakim
+  parent:
+  - WeaponTurretLaserSyndicateNF
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+
+- type: entity
+  parent: BallisticTurretHeavyBase
+  id: WeaponTurretHeavyAsakim
+  suffix: Asakim
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+
+# spawners
+- type: entity
+  id: SpawnMobWeaponTurretLaserAsakim
+  parent: MarkerBase
+  name: asakim laser turret spawner
+  suffix: Asakim
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _NF/Objects/Weapons/Guns/Turrets/laser.rsi
+      state: base
+  - type: ConditionalSpawner
+    prototypes:
+    - WeaponTurretLaserAsakim
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWeaponTurretHeavyAsakim
+  suffix: Asakim
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Mono/Objects/Weapons/Turrets/heavy_turret.rsi
+      state: syndie_lethal
+  - type: ConditionalSpawner
+    prototypes:
+    - WeaponTurretHeavyAsakim

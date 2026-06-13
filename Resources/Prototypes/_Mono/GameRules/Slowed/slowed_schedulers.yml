@@ -7,7 +7,7 @@
       tableId: DamagedAIShipsTable
     minimumTimeUntilFirstEvent: 3600 # 1 hour
     minMaxEventTiming:
-      min: 8100 # 135 minutes between events
+      min: 5400 # 90 minutes between events Exodus-Tweak
       max: 10800 # 180 minutes between events
 
 - type: entity
@@ -17,7 +17,7 @@
   - type: BasicStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: DamagedAIShipsTableT2
-    minimumTimeUntilFirstEvent: 14400 # 4 hours
+    minimumTimeUntilFirstEvent: 10800 # 3 hours Exodus-Tweak
     minMaxEventTiming:
       min: 5400 # 90 minutes between events
       max: 5400 # 90 minutes between events

@@ -6,7 +6,9 @@
   name: CYREXA 220mm cannon
   parent:
   - BallisticArtilleryUnanchorableCartridge
-  - BallisticArtilleryTier4HP
+  - ShipGunTier4HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier4HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
+  suffix: Large, T4
   description: A main battery with dual barrels, delivering rapid, punishing salvos at extreme range. Fires 220mm auto shells with slightly reduced brute strength. Can be remotely activated or linked up to a GCS.
   components:
   - type: StaticPrice
@@ -70,7 +72,7 @@
       tags:
       - 220mmCartridge
     capacity: 24
-    proto: 220mmCartridge
+    proto: 220mmCartridgeAPHE
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: ShipGunType
@@ -88,7 +90,9 @@
   name: Bofors 255mm cannon
   parent:
   - BallisticArtilleryUnanchorableCartridge
-  - BallisticArtilleryTier3HP
+  - ShipGunTier4HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier4HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
+  suffix: Large, T4
   description: A single-barrel, heavy artillery cannon designed for cruisers, delivering massive impact with each long-range shot. Can be remotely activated or linked up to a GCS.
   components:
   - type: StaticPrice
@@ -137,7 +141,7 @@
       tags:
       - 255mmCartridge
     capacity: 8
-    proto: 255mmCartridge
+    proto: 255mmCartridgeAPHE
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: RadarBlip
@@ -165,7 +169,9 @@
   name: HADES 255mm cannon
   parent:
   - BallisticArtilleryUnanchorable
-  - BallisticArtilleryTier5HP
+  - ShipGunTier5HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier5HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
+  suffix: Capital/Station, T4
   description: One of the largest chemical-based kinetic weapons in the sector. Its power is only rivaled by mass drivers such as the M381. Automatically reloads full-power 255mm shells.
   components:
   - type: StaticPrice
@@ -220,7 +226,7 @@
     powerUseActive: 0
   - type: Actions
   - type: ProjectileBatteryAmmoProvider
-    proto: ShipBoforsProjectile
+    proto: 255mmBulletAPHE
     fireCost: 6000
   - type: RadarBlip
     radarColor: "#FF0000"
@@ -247,7 +253,9 @@
   name: L65-"Longbow" 90mm autocannon
   parent:
   - BallisticArtilleryMagazine
-  - BallisticArtilleryTier4HP
+  - ShipGunTier4HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier4HP)
+  - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
+  suffix: Large, T4
   description: Fires 90mm shells in a 20 round burst from an internal autoloader.
   components:
   - type: StaticPrice
@@ -308,7 +316,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: Magazine90mm
+        startingItem: 90mmMagazineHE
         insertSound: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
         priority: 2

@@ -1,0 +1,119 @@
+- type: entity
+  id: VacuumGradientThrusterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: vacuum gradient thruster machine board
+  description: A machine board for a vacuum gradient thruster. Handle with radiation protection.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: VacuumGradientThruster
+    frameSize: 3x3
+    requirements:
+      Manipulator: 6
+      MatterBin: 3
+    stackRequirements:
+      Steel: 500
+      Iridite: 20
+      Uranium: 300
+      UraniumFissile: 50
+      Bluespace: 30
+
+- type: entity
+  id: VacuumGradientThruster
+  parent: [BaseThruster, ConstructibleMachine]
+  name: vacuum gradient thruster
+  description: >-
+    A massive thruster that manipulates vacuum energy gradients for propulsion.
+    Does not require open space to operate. Highly radioactive when active.
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Machine
+    board: VacuumGradientThrusterMachineCircuitboard
+  - type: Construction
+    graph: Machine3x3Partial
+    node: machine
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.45,-1.45,1.45,1.45"
+        density: 1750
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: OmnidirectionalThruster
+  - type: Thruster
+    thrust: 2500
+    baseThrust: 2500
+    requireSpace: false
+    # Zero out inherited Heat damage: omni thrusters do not create a BurnFixture and have no nozzle direction.
+    damage:
+      types:
+        Heat: 0
+  - type: ApcPowerReceiver
+    powerLoad: 250000
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Electronic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2700
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: RadiationSource
+    intensity: 25
+    slope: 4.17
+    enabled: false
+  - type: PoweredRadiationSource
+  - type: AmbientSound
+    enabled: false
+    range: 10
+    volume: -2
+    sound:
+      path: /Audio/_Exodus/Machines/vacuum_gradient_thruster.ogg
+  - type: PointLight
+    radius: 2
+    energy: 1.5
+    enabled: false
+    color: "#FF7700"
+  - type: Rotatable
+    rotateWhileAnchored: false
+    rotateWhilePulling: false
+  - type: Anchorable
+    delay: 15
+    flags: Anchorable
+  - type: Sprite
+    sprite: _Exodus/Structures/Shuttles/vacuum_gradient_thruster.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+  - type: StaticPrice
+    price: 5000
+  - type: ShipRepairable
+    repairTime: 30
+    repairCost: 200
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#FF7700"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#FF7700"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"

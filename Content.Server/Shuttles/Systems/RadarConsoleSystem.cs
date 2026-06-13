@@ -8,11 +8,11 @@ using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed partial class RadarConsoleSystem : SharedRadarConsoleSystem // Frontier: add partial
+public sealed partial class RadarConsoleSystem : SharedRadarConsoleSystem
 {
-    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!; // Frontier
+    [Dependency] private SharedTransformSystem _transform = default!; // Frontier // Mono
+    [Dependency] private ShuttleConsoleSystem _console = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {

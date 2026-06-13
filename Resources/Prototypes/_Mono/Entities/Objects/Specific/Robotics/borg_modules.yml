@@ -69,8 +69,9 @@
   - type: ItemBorgModule
     moduleId: Security
     items:
-    - WeaponHFKatana
+    - CyborgEnergySwordDouble # Exodus borg-advanced-combat-modules
     - WeaponBorgPulseRifle
+    - CyborgWeaponLMGGrizzly # Exodus borg-advanced-combat-modules
   - type: BorgModuleIcon
     icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: tsfadvanced-weapon-module }
 
@@ -125,8 +126,9 @@
   - type: ItemBorgModule
     moduleId: Security
     items:
-    - WeaponVT7
-    - WeaponLightMachineGunL6C
+    - CyborgEnergyCutlass # Exodus borg-advanced-combat-modules
+    - CyborgWeaponLightMachineGunL6C # Exodus borg-advanced-combat-modules
+    - CyborgWeaponLaserTurboNF # Exodus borg-advanced-combat-modules
   - type: BorgModuleIcon
     icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: pdvadvanced-weapon-module }
 

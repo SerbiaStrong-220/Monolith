@@ -10,11 +10,11 @@
   group: Ussp
   access: Mercenary
   shuttlePath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
-  guidebookPage: Null
+  guidebookPage: ShipyardNFROperation
   class:
   - Frigate
   engine:
-  - AME
+  - NFR
 
 - type: gameMap
   id: Buran

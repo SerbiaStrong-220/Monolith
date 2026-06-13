@@ -13,7 +13,7 @@
 # Brigmedic
 - type: loadout
   id: TsfmcCombatWebbingMedical
-  name: chest rig (medical)
+  # name: chest rig (medical) # Exodus
   equipment:
     belt: ClothingBeltMilitaryWebbingMed
 

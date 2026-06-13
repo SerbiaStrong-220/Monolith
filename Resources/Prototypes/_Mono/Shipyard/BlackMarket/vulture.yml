@@ -7,6 +7,7 @@
   description: Тяжёлый утилизаторский шаттл производства "Ульман Индастрис", изначально созданный для добычи в глубоком космосе, но недавно был переделан под более боевые задачи и продан Династии Фаэтона. Оснащён тремя орудиями Бофорс. # Ru-Localization
   limit: 2
   price: 285580
+  purchasable: false # voucher only
   category: Large
   group: BlackMarket
   access: Pirate

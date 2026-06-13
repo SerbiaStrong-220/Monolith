@@ -1,3 +1,3 @@
 ent-JugOmnizine = { ent-Jug }
-    .suffix = omnizine
+    .suffix = Омнизин
     .desc = { ent-Jug.desc }

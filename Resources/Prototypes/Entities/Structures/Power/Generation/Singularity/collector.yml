@@ -61,7 +61,7 @@
     radiationReactiveGases:
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
-        reactantBreakdownRate: 0.0001
+        reactantBreakdownRate: 0.00001 # Exodus-radiation-collector: 10x slower plasma consumption, same power output
   - type: RadiationReceiver
   - type: RadCollectorSignal # Goobstation
   - type: AutomationSlots # Goobstation

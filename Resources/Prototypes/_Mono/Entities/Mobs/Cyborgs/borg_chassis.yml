@@ -34,7 +34,7 @@
     - pdvengineer
     - pdvmedical
     inherentRadioChannels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Freelance
 
@@ -107,7 +107,7 @@
     - tsfengineer
     - tsfmedical
     inherentRadioChannels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Nfsd
 

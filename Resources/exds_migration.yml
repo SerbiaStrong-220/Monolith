@@ -1,10 +1,11 @@
-# 29.01.2026 - Replace rammers AI cores with smarter
-SpawnMobRammerCore: SpawnMobAttackerCore
-SpawnMobRammerCoreSmart: SpawnMobAttackerCoreSmart
-SpawnMobRammerCoreSmartDodging: SpawnMobAttackerCoreSmart
-
 # 20.04.2026 - Remove common channel
 EncryptionKeyCommon: EncryptionKeyTraffic
 
 # 26.04.2026 - Rename old bitcoin prototype
 BitcoinGoidacoin: BitcoinLuxurycoin
+
+# 04.05.2026 - Remove PDV bounty
+ComputerPirateBounty: null
+ComputerPirateBountyRedemption: null
+ComputerTabletopPirateBounty: null
+ComputerTabletopPirateBountyRedemption: null

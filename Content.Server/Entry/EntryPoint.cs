@@ -1,6 +1,7 @@
 using Content.Server._Exodus.Adminbus.WebAPI; // Exodus-WebAPI
 using Content.Server._Exodus.GuideGenerator; // Exodus
 using Content.Server._Mono.Company; // Mono
+using Content.Server._Mono.MonoCoins; // Mono
 using Content.Server._NF.Auth;
 using Content.Server.Acz;
 using Content.Server.Administration;
@@ -187,6 +188,7 @@ namespace Content.Server.Entry
                 _euiManager.Initialize();
 
                 IoCManager.Resolve<CompanyManager>().Initialize(); // Mono
+                IoCManager.Resolve<MonoCoinsManager>().Initialize(); // Mono
                 IoCManager.Resolve<IGameMapManager>().Initialize();
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBanManager>().Initialize();

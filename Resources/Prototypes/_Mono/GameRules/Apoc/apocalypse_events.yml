@@ -10,6 +10,12 @@
     - id: UnknownShuttleNebulaApoc
     - id: UnknownShuttleWyvernApoc
     - id: UnknownShuttleRazorNApoc
+    - id: UnknownShuttleConcordXApoc # Exodus
+    - id: UnknownShuttleMantarayApoc # Exodus
+    - id: UnknownShuttleCrowApoc # Exodus
+    - id: UnknownShuttleOmenApoc # Exodus
+    - id: UnknownShuttleAzimuthApoc # Exodus-azimuth
+    - id: UnknownShuttleZenithAApoc # Exodus
 
 - type: entity
   parent: BaseRandomShuttleRule
@@ -104,7 +110,7 @@
   - type: GameRule
     minPlayers: 30
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/wyvern.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/wyvern.yml # Exodus-Tweak
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
@@ -116,17 +122,122 @@
   id: UnknownShuttleRazorNApoc
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-razorn-detected # Exodus
     startAudio:
-      path: /Audio/Misc/notice1.ogg
+      path: /Audio/Misc/delta_alt.ogg # Exodus
     weight: 3 # billions must die
     maxOccurrences: 3
   - type: GameRule
     minPlayers: 10
   - type: LoadMapRule
-    gridPath: /Maps/_Mono/ShuttleEvent/razorn.yml
+    gridPath: /Maps/_Exodus/ShuttleEvent/razorn.yml # Exodus
   - type: GameRuleRequirements # Exodus
     requirements:
     - !type:JobGameRuleRequirement
       department: Combatant
       minDepartmentPlayers: 7
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleConcordXApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-frigate-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 2
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 25
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/concord_x.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleMantarayApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-destroyer-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 3
+    maxOccurrences: 1
+  - type: GameRule
+    minPlayers: 26
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/mantaray.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleOmenApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-shuttle-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 3
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 10
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/omen.yml
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 2
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleCrowApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-shuttle-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 5
+    maxOccurrences: 3
+  - type: GameRule
+    minPlayers: 28
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/crow.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+
+# Exodus
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleZenithAApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-frigate-detected
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    weight: 2.5
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 32
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/zenith_a.yml # Exodus
+  - type: GameRuleRequirements # Exodus
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6

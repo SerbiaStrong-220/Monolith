@@ -16,14 +16,14 @@ namespace Content.Server.Research.Systems
     [UsedImplicitly]
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLog = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly RadioSystem _radio = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private IAdminLogManager _adminLog = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private AccessReaderSystem _accessReader = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private RadioSystem _radio = default!;
+        [Dependency] private StationSystem _station = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
 
         public override void Initialize()
         {
@@ -113,6 +113,19 @@ namespace Content.Server.Research.Systems
                         list.Add(comp.ServerName);
                 }
             }
+            // Exodus-begin
+            else
+            {
+                // Fallback for grids without a station (e.g. event shuttles): isolate by GridUid directly.
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var clientGrid = xformQuery.GetComponent(gridUid).GridUid ?? gridUid;
+                while (allServers.MoveNext(out var uid, out var comp))
+                {
+                    if (_station.GetOwningStation(uid) == null && (xformQuery.GetComponent(uid).GridUid ?? uid) == clientGrid)
+                        list.Add(comp.ServerName);
+                }
+            }
+            // Exodus-end
 
             var serverList = list.ToArray();
             return serverList;
@@ -132,6 +145,19 @@ namespace Content.Server.Research.Systems
                         list.Add(comp.Id);
                 }
             }
+            // Exodus-begin
+            else
+            {
+                // Fallback for grids without a station (e.g. event shuttles): isolate by GridUid directly.
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var clientGrid = xformQuery.GetComponent(gridUid).GridUid ?? gridUid;
+                while (allServers.MoveNext(out var uid, out var comp))
+                {
+                    if (_station.GetOwningStation(uid) == null && (xformQuery.GetComponent(uid).GridUid ?? uid) == clientGrid)
+                        list.Add(comp.Id);
+                }
+            }
+            // Exodus-end
 
             var serverList = list.ToArray();
             return serverList;

@@ -33,27 +33,28 @@ using Content.Shared.Verbs;
 using Content.Shared._Exodus.BUIStates; // Exodus
 using Content.Shared._Exodus.SpaceArtillery.Components; //Exodus
 using Content.Server._Exodus.SpaceArtillery; // Exodus
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 {
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ShuttleSystem _shuttle = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly RadioSystem _radioSystem = default!;
-    [Dependency] private readonly StationJobsSystem _stationJobs = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly CrewedShuttleSystem _crewedShuttle = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private AlertsSystem _alertsSystem = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ShuttleSystem _shuttle = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private TagSystem _tags = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private RadioSystem _radioSystem = default!;
+    [Dependency] private StationJobsSystem _stationJobs = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private CrewedShuttleSystem _crewedShuttle = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -61,6 +62,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
+
+    private static readonly ProtoId<TagPrototype> CanPilotTag = "CanPilot";
 
     public override void Initialize()
     {
@@ -227,7 +230,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
-        if (!_tags.HasTag(user, "CanPilot") ||
+        if (!_tags.HasTag(user, CanPilotTag) ||
             !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
             !this.IsPowered(uid, EntityManager) ||
             !Transform(uid).Anchored ||

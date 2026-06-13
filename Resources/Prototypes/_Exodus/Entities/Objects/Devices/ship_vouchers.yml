@@ -6,9 +6,12 @@
   components:
   - type: Sprite
     layers:
-    - state: htech
-    - state: stripetsfmc
-    - state: vouchermilitary
+    - state: icon_capital
+    - state: screen
+      color: "#05ffff"
+    - state: screen4
+      color: "#05ffff"
+      shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
     consoleType: Security
@@ -26,9 +29,12 @@
   components:
   - type: Sprite
     layers:
-    - state: mtech
-    - state: stripepdv
-    - state: vouchermilitary
+    - state: icon_capital
+    - state: screen
+      color: "#1eff00"
+    - state: screen5
+      color: "#1eff00"
+      shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
     consoleType: BlackMarket

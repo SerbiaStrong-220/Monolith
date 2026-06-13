@@ -13,12 +13,16 @@
   - ContractorBoxSurvival
   - RakhshanPDA
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
+  - ContractorFun # Exodus
   - NFSpeciesSpecific
   - PirateTrinkets
   - PDVBelt
   - ContractorEncryptionKey
   - RogueFirearm
+  - RogueSidearm
   - RogueMag
+  - RoguePistolMag
   - FactionArmorPlates
   canCustomizeName: true
 
@@ -38,11 +42,15 @@
   - AsvaranPDA
   - NFSpeciesSpecific
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
+  - ContractorFun # Exodus
   - PirateTrinkets
   - PDVBelt
   - ContractorEncryptionKey
   - RogueFirearm
+  - RogueSidearm
   - RogueMag
+  - RoguePistolMag
   - FactionArmorPlates
   canCustomizeName: true
 
@@ -62,11 +70,15 @@
   - GrandVizierPDA
   - NFSpeciesSpecific
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
+  - ContractorFun # Exodus
   - PirateCaptainTrinkets
   - PDVBelt
   - ContractorEncryptionKey
   - RogueFirearm
+  - RogueSidearm
   - RogueMag
+  - RoguePistolMag
   - FactionArmorPlates
   canCustomizeName: true
 
@@ -86,6 +98,8 @@
   - PDVInfiltratorPDA
   - NFSpeciesSpecific
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
+  - ContractorFun # Exodus
   - PirateTrinkets
   - PDVBelt
   - ContractorEncryptionKey
@@ -109,11 +123,15 @@
   - ContractorBoxSurvival
   - PDVDenasvarPDA
   - ContractorWallet
+  - ContractorCartridge # Exodus-Loadout-Tweak
+  - ContractorFun # Exodus
   - NFSpeciesSpecific
   - PirateTrinkets
   - PDVBelt
   - ContractorEncryptionKey
   - RogueFirearm
+  - RogueSidearm
   - RogueMag
+  - RoguePistolMag
   - FactionArmorPlates
   canCustomizeName: true

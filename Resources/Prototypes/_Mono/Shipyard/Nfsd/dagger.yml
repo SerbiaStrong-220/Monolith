@@ -6,6 +6,7 @@
   name: Даггер # Ru-Localization
   description: Прямо с верфей Транс-Солнечной Федерации, этот шаттл оснащён рельсотроном в качестве основного орудия для дальней огневой поддержки. # Ru-Localization
   price: 120000
+  purchasable: false # voucher only
   category: Medium
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles

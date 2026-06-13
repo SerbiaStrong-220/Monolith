@@ -131,6 +131,9 @@
       state: default
   - type: ShowJobIcons
   - type: AdvancedPilot # can use both gunnery and shuttle console even on capitals
+  - type: RetroMonitorView
+  - type: TTS # Exodus SS220-silicon-tts-fix
+    randomVoicesList: Borg
 
 - type: entity
   id: BaseBorgChassisRedacted
@@ -139,8 +142,8 @@
   components:
   - type: NpcFactionMember
     factions:
-    - Syndicate
-    - SiliconsExpeditionNF
+    # - Syndicate # Exodus-asakim-fix
+    - AsakimDefenceForces # Exodus-asakim-fix
   - type: Access
     tags:
     - NuclearOperative
@@ -149,12 +152,12 @@
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: CollectiveMind
@@ -181,7 +184,7 @@
   id: BorgChassisRedacted
   parent: BaseBorgChassisRedacted
   name: remnant automated defense system tender
-  description: A tender to a automated drone ship, to keep internal mechanisms intact.
+  description: A tender to an automated drone ship, to keep its internal mechanisms intact.
   components:
   - type: Sprite
     layers:
@@ -270,6 +273,7 @@
   parent: BorgChassisRedacted
   suffix: Battery, Module
   components:
+  - type: AsakimTrustedUser # Exodus-asakim-access
   - type: ContainerFill
     containers:
       borg_brain:
@@ -277,7 +281,7 @@
       borg_module:
       - BorgModuleOperative
       - BorgModuleRedactedWeapon
-      - BorgModuleEsword
+      - BorgModuleAsakimEsword # Exodus-asakim-pinpointer
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool
       - BorgModuleConstruction
@@ -363,6 +367,7 @@
   parent: StationAiBrain
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  - type: AsakimTrustedUser # Exodus-asakim-access
   - type: Sprite
   - type: SiliconLawProvider
     laws: Redacted
@@ -402,8 +407,8 @@
     - MonoRemnantAdjective
     - MonoRemnantNoun
   - type: ShuttleBoostingPilot
-    angularMultiplier: 1.5
-    accelerationMultiplier: 1.5
+    angularMultiplier: 1.2
+    accelerationMultiplier: 1.2
 
 - type: entity
   id: AiHeldRedacted
@@ -412,12 +417,12 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Remnants
     - Traffic
   - type: CollectiveMind
@@ -495,7 +500,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -503,7 +508,7 @@
     - Medical
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -582,7 +587,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -592,7 +597,7 @@
     - Command
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -672,7 +677,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -681,7 +686,7 @@
     - Freelance
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -748,7 +753,7 @@
   components:
   - type: IntrinsicRadioTransmitter
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply
@@ -758,7 +763,7 @@
     - Service
   - type: ActiveRadio
     channels:
-    # - Common # Exodus
+    - Common
     - Traffic
     - Science
     - Supply

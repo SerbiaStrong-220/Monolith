@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Stack;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
@@ -12,10 +13,10 @@ namespace Content.Server.Stack
     ///     This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
-    public sealed class StackSystem : SharedStackSystem
+    public sealed partial class StackSystem : SharedStackSystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!; // Cherry-picked from space-station-14#32938 courtesy of Ilya246
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private SharedUserInterfaceSystem _ui = default!; // Cherry-picked from space-station-14#32938 courtesy of Ilya246
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 50, 100, 500, 1000, 5000, 10000 };
 
@@ -170,6 +171,11 @@ namespace Content.Server.Stack
         {
             if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
                 return;
+
+            // Exodus-begin borg-stack-split-fix
+            if (HasComp<UnsplittableComponent>(uid))
+                return;
+            // Exodus-end
 
             // Frontier: cherry-picked from ss14#32938, moved up top
             var priority = 1;

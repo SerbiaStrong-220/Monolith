@@ -1,0 +1,143 @@
+- type: entity
+  name: RMP-68 "Grizzly" (6.8x52mm caseless)
+  id: CyborgWeaponLMGGrizzly
+  parent: BaseItem
+  suffix: For Borgs
+  description: A medium machine gun adapted for cyborg use. Its internal ammo fabricator cannot be reloaded externally and slowly recharges itself.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/LMGs/grizzly/Grizzly-icon.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    minAngle: 0
+    maxAngle: 12
+    angleIncrease: 1
+    angleDecay: 12
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Mono/Weapons/Guns/SmallArms/Gunshots/heavy_rifle_1.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: Item
+    sprite: _Mono/Objects/Weapons/Guns/LMGs/grizzly/Grizzly-inhands.rsi
+    size: Huge
+  - type: ProjectileBatteryAmmoProvider
+    proto: Cartridge68x52mmCaseless
+    fireCost: 100
+  - type: Battery
+    maxCharge: 8000
+    startingCharge: 8000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 100
+  - type: AmmoCounter
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+
+- type: entity
+  id: CyborgWeaponLightMachineGunL6C
+  parent: WeaponLightMachineGunL6C
+  suffix: For Borgs
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 100
+
+- type: entity
+  id: CyborgWeaponLaserTurboNF
+  parent: BaseWeaponBattery
+  name: cyborg turbo laser mk3
+  suffix: For Borgs
+  description: A turbo laser adapted for cyborg use. Its internal power system cannot be reloaded externally and slowly recharges itself.
+  components:
+  - type: Item
+    size: Ginormous
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right
+      - state: inhand-right-unshaded
+        shader: unshaded
+  - type: Sprite
+    sprite: _NF/Objects/Weapons/Guns/Battery/turbo_laser.rsi
+    layers:
+    - state: icon-base
+    - state: charge-level-unshaded-5
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+    sprite: _NF/Objects/Weapons/Guns/Battery/turbo_laser.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-back
+      - state: equipped-unshaded
+        shader: unshaded
+      suitstorage:
+      - state: equipped-back
+      - state: equipped-unshaded
+        shader: unshaded
+  - type: Battery
+    maxCharge: 3200
+    startingCharge: 3200
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 32
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 32
+  - type: Gun
+    selectedMode: FullAuto
+    availableModes:
+    - Burst
+    - FullAuto
+    fireRate: 7
+    minAngle: 1
+    maxAngle: 10
+    burstFireRate: 9
+    shotsPerBurst: 5
+    burstCooldown: 0.7
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+  - type: MagazineVisuals
+    magState: charge-level
+    steps: 6
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: cyborg energy cutlass
+  id: CyborgEnergyCutlass
+  parent: CyborgEnergySwordDouble
+  suffix: One-Handed, For Borgs
+  description: An energy cutlass adapted for cyborg use.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_cutlass.rsi
+    layers:
+    - state: e_cutlass
+    - state: e_cutlass_blade
+      color: "#e95151"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/e_cutlass.rsi
