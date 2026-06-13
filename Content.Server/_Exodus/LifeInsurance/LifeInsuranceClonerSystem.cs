@@ -1,6 +1,7 @@
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.EUI;
 using Content.Server.Humanoid;
+using Content.Server.Jobs;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared._NF.Bank.Components;
 using Content.Shared.Hands.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
@@ -35,6 +37,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     [Dependency] private readonly LanguageSystem _language = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly LifeInsuranceBackupBatterySystem _backup = default!;
     [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!;
     [Dependency] private readonly EuiManager _eui = default!;
@@ -81,6 +84,17 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         _metaData.SetEntityName(mob, profile.Name);
         EnsureComp<BankAccountComponent>(mob);
         ApplyTraits(mob, profile);
+
+        // Restore job-granted components (faction membership, command staff) and languages, mirroring
+        // standard cloning plus role languages. Implants/loadout (other JobSpecial types) are not applied.
+        if (_jobs.MindTryGetJob(mindId, out var jobProto))
+        {
+            foreach (var special in jobProto.Special)
+            {
+                if (special is AddComponentSpecial or AddLanguageSpecial)
+                    special.AfterEquip(mob);
+            }
+        }
 
         if (!_container.Insert(mob, comp.BodyContainer))
         {
