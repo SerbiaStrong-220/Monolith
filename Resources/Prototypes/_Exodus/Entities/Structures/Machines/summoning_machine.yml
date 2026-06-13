@@ -73,6 +73,7 @@
     - SummoningMachineKasatura
     - SummoningMachineZeroGVector
     - SummoningMachineTechnicalContour
+    - SummoningMachineEmergencyBeacons
     - SummoningMachineFieldReserve
     currencyWhitelist:
     - Telecrystal

@@ -94,6 +94,8 @@ public sealed partial class StoreSystem
                 .ToHashSet();
         }
 
+        UpdateLimitedStockState(component.LastAvailableListings); // #Exodus
+
         //dictionary for all currencies, including 0 values for currencies on the whitelist
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
         foreach (var supported in component.CurrencyWhitelist)
@@ -286,7 +288,7 @@ public sealed partial class StoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
 
-        listing.PurchaseAmount++; //track how many times something has been purchased
+        MarkListingPurchased(listing); // #Exodus
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
         var buyFinished = new StoreBuyFinishedEvent

@@ -20,6 +20,10 @@
   name: store-category-summoning-technical-contour
 
 - type: storeCategory
+  id: SummoningMachineEmergencyBeacons
+  name: store-category-summoning-emergency-beacons
+
+- type: storeCategory
   id: SummoningMachineFieldReserve
   name: store-category-summoning-field-reserve
 

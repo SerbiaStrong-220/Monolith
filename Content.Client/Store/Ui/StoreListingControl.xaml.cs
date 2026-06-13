@@ -36,6 +36,7 @@ public sealed partial class StoreListingControl : Control
 
         StoreItemName.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
         StoreItemDescription.SetMessage(ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(_data, _prototype));
+        UpdateStockDisplay();
 
         UpdateBuyButtonText();
         StoreItemBuyButton.Disabled = !CanBuy();
@@ -81,6 +82,19 @@ public sealed partial class StoreListingControl : Control
         }
 
         StoreItemName.Text = name;
+    }
+
+    // #Exodus
+    private void UpdateStockDisplay()
+    {
+        if (_data.RemainingStock is not { } remainingStock)
+        {
+            StoreItemStockContainer.Visible = false;
+            return;
+        }
+
+        StoreItemStockContainer.Visible = true;
+        StoreItemStockText.Text = Loc.GetString("store-ui-limited-stock", ("amount", remainingStock));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

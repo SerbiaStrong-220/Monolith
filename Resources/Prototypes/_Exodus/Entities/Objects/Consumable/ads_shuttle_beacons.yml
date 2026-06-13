@@ -157,8 +157,8 @@
 - type: entity
   id: ADSShuttleEmergencyBeaconAzimuth
   parent: BaseADSShuttleEmergencyBeaconTier3
-  name: маячок вызова асакимов "Azimuth"
-  description: Одноразовый аварийный маячок вызова корабля асакимов Azimuth.
+  name: маячок вызова азакимов "Azimuth"
+  description: Одноразовый аварийный маячок вызова корабля азакимов Azimuth.
   components:
   - type: ShuttleEventBeacon
     rule: UnknownShuttleAzimuth
@@ -166,8 +166,8 @@
 - type: entity
   id: AsakimShuttleEmergencyBeaconSmall
   parent: BaseADSShuttleEmergencyBeaconTier1
-  name: маячок вызова асакимов "Малое судно"
-  description: Одноразовый аварийный маячок вызова малого корабля асакимов.
+  name: маячок вызова азакимов "Малое судно"
+  description: Одноразовый аварийный маячок вызова малого корабля азакимов.
   components:
   - type: ShuttleEventBeacon
     rule: UnknownShuttleAsakimSmall
@@ -175,8 +175,8 @@
 - type: entity
   id: AsakimShuttleEmergencyBeaconMedium
   parent: BaseADSShuttleEmergencyBeaconTier2
-  name: маячок вызова асакимов "Среднее судно"
-  description: Одноразовый аварийный маячок вызова среднего корабля асакимов.
+  name: маячок вызова азакимов "Среднее судно"
+  description: Одноразовый аварийный маячок вызова среднего корабля азакимов.
   components:
   - type: ShuttleEventBeacon
     rule: UnknownShuttleAsakimMedium
