@@ -31,6 +31,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
     private EntityQuery<ProjectileComponent> _projectileQuery;
     private EntityQuery<ShipWeaponProjectileComponent> _shipWeaponProjectileQuery;
+    private EntityQuery<ShipShieldedComponent> _shieldedQuery;
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -85,7 +86,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             // or if any other emitter on the grid is still serving its overload lockout. The lockout is
             // checked here at raise time, so it also blocks generators anchored/powered mid-window.
             if (!emitter.Recharging && emitter.Shield is null && emitter.OverloadAccumulator < 1
-                && !HasComp<ShipShieldedComponent>(parent.Value)
+                && !_shieldedQuery.HasComp(parent.Value)
                 && !IsGridShieldOnCooldown(parent.Value, uid))
             // Exodus-shield-swap-fix-end
             {
@@ -138,6 +139,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         base.Initialize();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
         _shipWeaponProjectileQuery = GetEntityQuery<ShipWeaponProjectileComponent>();
+        _shieldedQuery = GetEntityQuery<ShipShieldedComponent>();
 
         SubscribeLocalEvent<ShipShieldComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentShutdown>(OnEmitterShutdown); // Mono
