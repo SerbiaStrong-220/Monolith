@@ -1,11 +1,11 @@
-using Content.Server.Store.Conditions; // #Exodus
-using Content.Shared.Store; // #Exodus
+using Content.Server.Store.Conditions; // Exodus
+using Content.Shared.Store; // Exodus
 
 namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
-    // #Exodus: Shared limited stock prevents bypassing round quotas by purchasing from multiple stores.
+    // Exodus: Shared limited stock prevents bypassing round quotas by purchasing from multiple stores.
     private readonly Dictionary<string, int> _sharedLimitedStockPurchases = new();
 
     public int GetSharedLimitedStockPurchases(string stockKey)
@@ -13,7 +13,7 @@ public sealed partial class StoreSystem
         return _sharedLimitedStockPurchases.GetValueOrDefault(stockKey);
     }
 
-    // #Exodus: Calculates remaining limited stock for UI and availability feedback.
+    // Exodus: Calculates remaining limited stock for UI and availability feedback.
     public int? GetRemainingLimitedStock(ListingData listing)
     {
         if (listing.Conditions == null)
@@ -38,7 +38,7 @@ public sealed partial class StoreSystem
         return remaining;
     }
 
-    // #Exodus: Stamps current remaining stock into listing snapshots sent to the client UI.
+    // Exodus: Stamps current remaining stock into listing snapshots sent to the client UI.
     public void UpdateLimitedStockState(IEnumerable<ListingDataWithCostModifiers> listings)
     {
         foreach (var listing in listings)
@@ -47,7 +47,7 @@ public sealed partial class StoreSystem
         }
     }
 
-    // #Exodus: Shared helper for custom store flows that complete a purchase outside the default OnBuyRequest path.
+    // Exodus: Shared helper for custom store flows that complete a purchase outside the default OnBuyRequest path.
     public void MarkListingPurchased(ListingData listing)
     {
         listing.PurchaseAmount++;

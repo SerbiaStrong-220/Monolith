@@ -21,15 +21,15 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private HashSet<ListingDataWithCostModifiers> _listings = new();
 
-    // #Exodus
+    // Exodus
     [ViewVariables]
     private StoreUiMode _mode = StoreUiMode.Default;
 
-    // #Exodus
+    // Exodus
     [ViewVariables]
     private float _priceMultiplier = 1f;
 
-    // #Exodus
+    // Exodus
     [ViewVariables]
     private bool _summoningBusy;
 
@@ -79,7 +79,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         switch (state)
         {
             case StoreUpdateState msg:
-                // #Exodus
+                // Exodus
                 var listingsChanged = !ListingsEqual(_listings, msg.Listings);
                 var modeChanged = _mode != msg.Mode || Math.Abs(_priceMultiplier - msg.PriceMultiplier) > 0.001f;
                 var summoningBusy = msg.ActiveSummoning != null;
@@ -118,7 +118,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.UpdateListing(filteredListings.ToList());
     }
 
-    // #Exodus
+    // Exodus
     private static bool ListingsEqual(HashSet<ListingDataWithCostModifiers> left, HashSet<ListingDataWithCostModifiers> right)
     {
         if (left.Count != right.Count)

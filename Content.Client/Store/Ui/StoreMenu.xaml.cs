@@ -33,13 +33,13 @@ public sealed partial class StoreMenu : DefaultWindow
     public string CurrentCategory = string.Empty;
 
     private List<ListingDataWithCostModifiers> _cachedListings = new();
-    // #Exodus
+    // Exodus
     private List<ListingDataWithCostModifiers> _allListings = new();
-    // #Exodus
+    // Exodus
     private StoreUiMode _mode = StoreUiMode.Default;
-    // #Exodus
+    // Exodus
     private float _priceMultiplier = 1f;
-    // #Exodus
+    // Exodus
     private StoreSummoningUiData? _activeSummoning;
 
     public StoreMenu()
@@ -92,7 +92,7 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    // #Exodus
+    // Exodus
     public void SetMode(StoreUiMode mode, float priceMultiplier)
     {
         _mode = mode;
@@ -102,7 +102,7 @@ public sealed partial class StoreMenu : DefaultWindow
         UpdateSummoningStatus();
     }
 
-    // #Exodus
+    // Exodus
     public void SetSummoning(StoreSummoningUiData? summoning)
     {
         _activeSummoning = summoning;
@@ -116,7 +116,7 @@ public sealed partial class StoreMenu : DefaultWindow
         UpdateListing();
     }
 
-    // #Exodus
+    // Exodus
     public void SetAllListings(List<ListingDataWithCostModifiers> listings)
     {
         _allListings = listings;
@@ -169,7 +169,7 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        // #Exodus
+        // Exodus
         var hasBalance = _mode == StoreUiMode.Summoning
             ? _activeSummoning == null
             : listing.CanBuyWith(Balance);
@@ -188,7 +188,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private string GetListingPriceString(ListingDataWithCostModifiers listing)
     {
-        // #Exodus
+        // Exodus
         if (_mode == StoreUiMode.Summoning)
             return FormatDuration(GetSummoningDuration(listing));
 
@@ -261,7 +261,7 @@ public sealed partial class StoreMenu : DefaultWindow
         return discountMessage;
     }
 
-    // #Exodus
+    // Exodus
     private Texture? GetListingTexture(ListingData listing)
     {
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
@@ -290,14 +290,14 @@ public sealed partial class StoreMenu : DefaultWindow
         return texture;
     }
 
-    // #Exodus
+    // Exodus
     private TimeSpan GetSummoningDuration(ListingDataWithCostModifiers listing)
     {
         var seconds = listing.Cost.Values.Sum(cost => cost.Float()) * _priceMultiplier;
         return TimeSpan.FromSeconds(MathF.Ceiling(Math.Max(1f, seconds)));
     }
 
-    // #Exodus
+    // Exodus
     private void UpdateSummoningStatus()
     {
         if (_mode != StoreUiMode.Summoning || _activeSummoning == null)
@@ -330,7 +330,7 @@ public sealed partial class StoreMenu : DefaultWindow
         SummoningProgressBar.Value = (float) completed;
     }
 
-    // #Exodus
+    // Exodus
     private static string FormatDuration(TimeSpan duration)
     {
         if (duration.TotalHours >= 1)

@@ -6,7 +6,7 @@
             <Label Name="StoreItemName" HorizontalExpand="True" />
             <Label Name="DiscountSubText"
                    HorizontalAlignment="Right"/>
-            <!-- #Exodus -->
+            <!-- Exodus -->
             <PanelContainer Name="StoreItemStockContainer" Visible="False" Margin="4,0,4,0">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#2A2A2AFF" BorderColor="#5E5E5EFF" BorderThickness="1,1,1,1" />

@@ -1,4 +1,4 @@
-using Content.Server.Store.Systems; // #Exodus
+using Content.Server.Store.Systems; // Exodus
 using Content.Shared.Store;
 
 namespace Content.Server.Store.Conditions;
@@ -14,11 +14,11 @@ public sealed partial class ListingLimitedStockCondition : ListingCondition
     [DataField("stock", required: true)]
     public int Stock;
 
-    // #Exodus: When enabled, the stock is shared across all stores instead of using the local store cache.
+    // Exodus: When enabled, the stock is shared across all stores instead of using the local store cache.
     [DataField("shared")]
     public bool Shared;
 
-    // #Exodus: Optional shared stock pool id. Defaults to the listing id.
+    // Exodus: Optional shared stock pool id. Defaults to the listing id.
     [DataField("stockKey")]
     public string? StockKey;
 

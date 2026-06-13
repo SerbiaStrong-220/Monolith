@@ -6,7 +6,7 @@
     SetSize="512 512">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <!-- #Exodus -->
+            <!-- Exodus -->
             <BoxContainer Name="SummoningStatusContainer" Margin="4,4,4,0" Orientation="Vertical" Visible="False">
                 <BoxContainer Orientation="Horizontal">
                     <TextureRect

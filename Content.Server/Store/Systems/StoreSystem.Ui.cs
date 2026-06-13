@@ -94,7 +94,7 @@ public sealed partial class StoreSystem
                 .ToHashSet();
         }
 
-        UpdateLimitedStockState(component.LastAvailableListings); // #Exodus
+        UpdateLimitedStockState(component.LastAvailableListings); // Exodus
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
@@ -112,7 +112,7 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
 
-        // #Exodus
+        // Exodus
         var uiData = new GetStoreUiDataEvent();
         RaiseLocalEvent(store, ref uiData);
 
@@ -166,7 +166,7 @@ public sealed partial class StoreSystem
                 return;
         }
 
-        // #Exodus
+        // Exodus
         var beforeBuy = new BeforeStoreBuyAttemptEvent(uid, buyer, component, listing);
         RaiseLocalEvent(uid, ref beforeBuy);
         if (beforeBuy.Handled || beforeBuy.Cancelled)
@@ -288,7 +288,7 @@ public sealed partial class StoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
 
-        MarkListingPurchased(listing); // #Exodus
+        MarkListingPurchased(listing); // Exodus
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
         var buyFinished = new StoreBuyFinishedEvent
@@ -430,7 +430,7 @@ public readonly record struct StoreBuyFinishedEvent(
     ListingDataWithCostModifiers PurchasedItem
 );
 
-// #Exodus
+// Exodus
 [ByRefEvent]
 public sealed class BeforeStoreBuyAttemptEvent(
     EntityUid storeUid,
@@ -445,7 +445,7 @@ public sealed class BeforeStoreBuyAttemptEvent(
     public bool Handled { get; set; }
 }
 
-// #Exodus
+// Exodus
 [ByRefEvent]
 public sealed class GetStoreUiDataEvent
 {

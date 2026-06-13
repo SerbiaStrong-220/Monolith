@@ -87,7 +87,7 @@ public sealed class SummoningMachineSystem : EntitySystem
             return;
         }
 
-        _store.MarkListingPurchased(args.Listing); // #Exodus
+        _store.MarkListingPurchased(args.Listing); // Exodus
 
         var duration = GetSummonDuration(args.Listing, ent.Comp);
         ent.Comp.ActiveListingId = args.Listing.ID;

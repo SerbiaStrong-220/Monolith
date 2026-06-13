@@ -84,7 +84,7 @@ public sealed partial class StoreListingControl : Control
         StoreItemName.Text = name;
     }
 
-    // #Exodus
+    // Exodus
     private void UpdateStockDisplay()
     {
         if (_data.RemainingStock is not { } remainingStock)

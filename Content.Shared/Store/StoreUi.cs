@@ -21,13 +21,13 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 
     public readonly bool AllowRefund;
 
-    // #Exodus
+    // Exodus
     public readonly StoreUiMode Mode;
 
-    // #Exodus
+    // Exodus
     public readonly float PriceMultiplier;
 
-    // #Exodus
+    // Exodus
     public readonly StoreSummoningUiData? ActiveSummoning;
 
     public StoreUpdateState(
@@ -49,7 +49,7 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
     }
 }
 
-// #Exodus
+// Exodus
 [Serializable, NetSerializable]
 public enum StoreUiMode : byte
 {
@@ -57,7 +57,7 @@ public enum StoreUiMode : byte
     Summoning
 }
 
-// #Exodus
+// Exodus
 [Serializable, NetSerializable]
 public sealed class StoreSummoningUiData(
     ProtoId<ListingPrototype> listingId,
