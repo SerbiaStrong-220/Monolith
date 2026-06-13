@@ -15,4 +15,11 @@ public sealed partial class XCVars
 
     public static readonly CVarDef<string> WebAPIToken =
         CVarDef.Create("exds.webapi_token", "", CVar.SERVERONLY);
+
+    /// <summary>
+    /// User's favorite decal colors, stored as a ';'-separated list of hex colors.
+    /// Client-only and archived to client_config.toml so it survives relogs/restarts.
+    /// </summary>
+    public static readonly CVarDef<string> DecalFavoriteColors =
+        CVarDef.Create("exds.decal_favorite_colors", "", CVar.CLIENTONLY | CVar.ARCHIVE);
 }
