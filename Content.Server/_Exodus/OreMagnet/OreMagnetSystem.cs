@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using Content.Server.Power.Components;
-using Content.Shared._Exodus.Mining.Components;
+using Content.Server._Exodus.Mining.Components;
 using Content.Shared._Exodus.Mining;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -14,23 +15,28 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.OreMagnet;
 
 public sealed class OreMagnetSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
+
+    private EntityQuery<StorageComponent> _storageQuery;
+
+    // Reused across scans to avoid reallocating
+    private readonly List<(EntityUid Uid, OreMagnetComponent Comp, Vector2 Pos, MapId MapId)> _magnets = new();
+    private readonly Dictionary<EntityUid, (EntityUid MagnetUid, OreMagnetComponent MagnetComp, float Distance)> _pullTargets = new();
+    private readonly HashSet<Entity<ItemComponent>> _lookupEnts = new();
 
     private const float ScanInterval = 0.5f;
     private float _scanTimer;
@@ -43,6 +49,7 @@ public sealed class OreMagnetSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        _storageQuery = GetEntityQuery<StorageComponent>();
         SubscribeLocalEvent<OreMagnetComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<OreMagnetComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
         SubscribeLocalEvent<OreMagnetComponent, ComponentShutdown>(OnMagnetShutdown);
@@ -108,7 +115,7 @@ public sealed class OreMagnetSystem : EntitySystem
                     comp.LidCloseAt = null;
                     _lidOpenCount--;
                     _appearance.SetData(uid, OreMagnetVisuals.Active, false);
-                    if (TryComp<StorageComponent>(uid, out var storageComp))
+                    if (_storageQuery.TryComp(uid, out var storageComp))
                         _audio.PlayPvs(storageComp.StorageCloseSound, uid);
                 }
             }
@@ -128,30 +135,31 @@ public sealed class OreMagnetSystem : EntitySystem
         if (_activeCount <= 0)
             return;
 
-        var magnets = new List<(EntityUid Uid, OreMagnetComponent Comp, Vector2 Pos, MapId MapId)>();
+        _magnets.Clear();
 
         var magnetQuery = EntityQueryEnumerator<OreMagnetComponent, TransformComponent, ApcPowerReceiverComponent>();
         while (magnetQuery.MoveNext(out var uid, out var comp, out var xform, out var power))
         {
             if (!comp.IsActive || !power.Powered)
                 continue;
-            magnets.Add((uid, comp, _transform.GetWorldPosition(xform), xform.MapID));
+            _magnets.Add((uid, comp, _transform.GetWorldPosition(xform), xform.MapID));
         }
 
-        if (magnets.Count == 0)
+        if (_magnets.Count == 0)
             return;
 
-        // For each entity in range, assign it to the nearest magnet with clear LoS.
+        // For each entity in range, assign it to the nearest magnet.
         // Prevents two active magnets from fighting over the same ore.
-        var pullTargets = new Dictionary<EntityUid, (EntityUid MagnetUid, OreMagnetComponent MagnetComp, float Distance)>();
+        _pullTargets.Clear();
 
-        foreach (var (magnetUid, comp, magnetPos, mapId) in magnets)
+        foreach (var (magnetUid, comp, magnetPos, mapId) in _magnets)
         {
-            var entities = new HashSet<EntityUid>();
-            _lookup.GetEntitiesInRange(mapId, magnetPos, comp.Radius, entities, LookupFlags.Dynamic | LookupFlags.Sundries);
+            _lookupEnts.Clear();
+            _lookup.GetEntitiesInRange(mapId, magnetPos, comp.Radius, _lookupEnts, LookupFlags.Dynamic | LookupFlags.Sundries);
 
-            foreach (var entityUid in entities)
+            foreach (var ent in _lookupEnts)
             {
+                var entityUid = ent.Owner;
                 if (entityUid == magnetUid)
                     continue;
                 if (comp.Whitelist != null && !_whitelist.IsValid(comp.Whitelist, entityUid))
@@ -160,16 +168,16 @@ public sealed class OreMagnetSystem : EntitySystem
                 var entityPos = _transform.GetWorldPosition(Transform(entityUid));
                 var distance = (entityPos - magnetPos).Length();
 
-                if (pullTargets.TryGetValue(entityUid, out var existing) && existing.Distance <= distance)
+                if (_pullTargets.TryGetValue(entityUid, out var existing) && existing.Distance <= distance)
                     continue;
-                if (!HasLineOfSight(magnetPos, entityPos, mapId, magnetUid))
+                if (!_interaction.InRangeUnobstructed(magnetUid, entityUid, comp.Radius, CollisionGroup.Impassable))
                     continue;
 
-                pullTargets[entityUid] = (magnetUid, comp, distance);
+                _pullTargets[entityUid] = (magnetUid, comp, distance);
             }
         }
 
-        foreach (var (entityUid, (magnetUid, magnetComp, distance)) in pullTargets)
+        foreach (var (entityUid, (magnetUid, magnetComp, distance)) in _pullTargets)
         {
             var magnetPos = _transform.GetWorldPosition(Transform(magnetUid));
             var entityPos = _transform.GetWorldPosition(Transform(entityUid));
@@ -210,22 +218,9 @@ public sealed class OreMagnetSystem : EntitySystem
 
         if (!hadTimer)
         {
-            if (TryComp<StorageComponent>(ent, out var storageComp))
+            if (_storageQuery.TryComp(ent, out var storageComp))
                 _audio.PlayPvs(storageComp.StorageOpenSound, ent);
             _appearance.SetData(ent, OreMagnetVisuals.Active, true);
         }
-    }
-
-    //LoS check
-
-    private bool HasLineOfSight(Vector2 from, Vector2 to, MapId mapId, EntityUid ignored)
-    {
-        var diff = to - from;
-        var distance = diff.Length();
-        if (distance < 0.5f)
-            return true;
-
-        var ray = new CollisionRay(from, diff / distance, (int) CollisionGroup.Impassable);
-        return !_physics.IntersectRay(mapId, ray, distance, ignored, returnOnFirstHit: true).Any();
     }
 }

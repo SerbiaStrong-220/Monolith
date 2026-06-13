@@ -2,7 +2,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared._Exodus.Mining.Components;
+namespace Content.Server._Exodus.Mining.Components;
 
 [RegisterComponent]
 public sealed partial class OreMagnetComponent : Component
@@ -49,4 +49,3 @@ public sealed partial class OreMagnetComponent : Component
 
     public bool IsActive => DeactivateAt.HasValue;
 }
-
