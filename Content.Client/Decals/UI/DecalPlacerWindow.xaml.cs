@@ -58,6 +58,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         // Opened/Close leaks a stale handler when the window is disposed without closing.
         EyedropperButton.OnPressed += _ => _decalPlacementSystem.SetEyedropper(!_decalPlacementSystem.EyedropperActive);
         _decalPlacementSystem.EyedropperPicked += OnEyedropperPicked;
+        _decalPlacementSystem.DecalCopied += OnDecalCopied; // Exodus: "O" copy hotkey
 
         PickerOpen.OnPressed += _ =>
         {
@@ -135,6 +136,32 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
 
         ColorPicker.Color = color;
         OnColorPicked(color);
+    }
+
+    // Exodus: mirror a decal copied from the map (hotkey "O") into the placer settings.
+    private void OnDecalCopied(Decal decal)
+    {
+        if (!_prototype.HasIndex<DecalPrototype>(decal.Id))
+            return;
+
+        _selected = decal.Id;
+
+        _useColor = decal.Color != null;
+        EnableColor.Pressed = _useColor;
+        _color = decal.Color ?? Color.White;
+        ColorPicker.Color = _color;
+
+        _rotation = (float) decal.Angle.Degrees;
+        RotationSpinBox.Value = _rotation;
+
+        _zIndex = decal.ZIndex;
+        ZIndexSpinBox.Value = _zIndex;
+
+        _cleanable = decal.Cleanable;
+        EnableCleanable.Pressed = _cleanable;
+
+        UpdateDecalPlacementInfo();
+        RefreshList();
     }
 
     private void UpdateDecalPlacementInfo()
@@ -254,6 +281,9 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
     {
         base.Dispose(disposing);
         if (disposing)
+        {
             _decalPlacementSystem.EyedropperPicked -= OnEyedropperPicked;
+            _decalPlacementSystem.DecalCopied -= OnDecalCopied;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Decals; // Exodus
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -13,6 +14,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
     [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!; // Exodus
     private readonly DecalPlacementSystem _placement;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
@@ -30,10 +32,16 @@ public sealed partial class DecalPlacementOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        // Exodus-Start: draw the eyedropper crosshair instead of a decal preview while picking a color.
+        // Exodus-Start: while a tool is active, draw its preview instead of the single-decal preview.
         if (_placement.EyedropperActive)
         {
             DrawEyedropper(args);
+            return;
+        }
+
+        if (_placement.Stamping)
+        {
+            DrawStamp(args);
             return;
         }
         // Exodus-End
@@ -76,7 +84,43 @@ public sealed partial class DecalPlacementOverlay : Overlay
         handle.SetTransform(Matrix3x2.Identity);
     }
 
-    // Exodus-Start: crosshair shown at the cursor marking the sample point of the eyedropper tool.
+    // Exodus-Start: preview of the copied decal stack, following the cursor before it is stamped.
+    private void DrawStamp(in OverlayDrawArgs args)
+    {
+        var mouseScreenPos = _inputManager.MouseScreenPosition;
+        var mousePos = _eyeManager.PixelToMap(mouseScreenPos);
+
+        if (mousePos.MapId != args.MapId)
+            return;
+
+        if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+            return;
+
+        var handle = args.WorldHandle;
+        handle.SetTransform(_transform.GetWorldMatrix(gridUid));
+
+        var localPos = Vector2.Transform(mousePos.Position, _transform.GetInvWorldMatrix(gridUid));
+        var origin = localPos.Floored();
+
+        foreach (var (offset, decal) in _placement.Stamp)
+        {
+            if (!_protoMan.TryIndex<DecalPrototype>(decal.Id, out var proto))
+                continue;
+
+            var texture = _sprite.Frame0(proto.Sprite);
+            var pos = origin + offset;
+            var color = decal.Color ?? Color.White;
+
+            if (decal.Angle == Angle.Zero)
+                handle.DrawTexture(texture, pos, color);
+            else
+                handle.DrawTexture(texture, pos, decal.Angle, color);
+        }
+
+        handle.SetTransform(Matrix3x2.Identity);
+    }
+
+    // crosshair shown at the cursor marking the sample point of the eyedropper tool.
     private void DrawEyedropper(in OverlayDrawArgs args)
     {
         var mouseScreenPos = _inputManager.MouseScreenPosition;

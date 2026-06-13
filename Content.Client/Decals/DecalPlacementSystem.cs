@@ -3,12 +3,14 @@ using Content.Client.Actions;
 using Content.Client.Decals.Overlays;
 using Content.Shared.Actions;
 using Content.Shared.Decals;
+using Content.Shared.Input; // Exodus
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map; // Exodus
+using Robust.Shared.Player; // Exodus
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Decals;
@@ -54,6 +56,23 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     {
         _eyedropper = active && _active;
     }
+
+    // Сopy decal(s) under the cursor (hotkeys O / Ctrl+O), only while the window is open.
+    // Multi-decal "stamp": each entry is a decal plus its offset from the copied tile origin.
+    private readonly List<(Vector2 Offset, Decal Decal)> _stamp = new();
+    private bool _stamping;
+
+    /// <summary>
+    ///     Whether a multi-decal stamp is currently held and ready to be placed.
+    /// </summary>
+    public bool Stamping => _stamping && _stamp.Count > 0;
+
+    public IReadOnlyList<(Vector2 Offset, Decal Decal)> Stamp => _stamp;
+
+    /// <summary>
+    ///     Raised when a single decal is copied from the map, so the window can mirror its settings.
+    /// </summary>
+    public event Action<Decal>? DecalCopied;
     // Exodus-End
 
     public (DecalPrototype? Decal, bool Snap, Angle Angle, Color Color) GetActiveDecal()
@@ -79,6 +98,13 @@ public sealed partial class DecalPlacementSystem : EntitySystem
                     if (TryPickDecalColor(coords, out var picked))
                         EyedropperPicked?.Invoke(picked);
 
+                    return true;
+                }
+
+                // Left click while a stamp is held places the whole copied stack.
+                if (_stamping)
+                {
+                    PlaceStamp(coords);
                     return true;
                 }
                 // Exodus-End
@@ -118,10 +144,17 @@ public sealed partial class DecalPlacementSystem : EntitySystem
             .Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
-                // Exodus-Start: right click cancels the eyedropper instead of erasing.
+                // Exodus-Start: right click cancels the eyedropper or a held stamp instead of erasing.
                 if (_eyedropper)
                 {
                     _eyedropper = false;
+                    return true;
+                }
+
+                if (_stamping)
+                {
+                    _stamping = false;
+                    _stamp.Clear();
                     return true;
                 }
                 // Exodus-End
@@ -141,7 +174,12 @@ public sealed partial class DecalPlacementSystem : EntitySystem
                 _erasing = false;
 
                 return true;
-            }, true)).Register<DecalPlacementSystem>();
+            }, true))
+            // Exodus-Start: copy the decal (O) or the whole stack (Ctrl+O) under the cursor.
+            .Bind(ContentKeyFunctions.EditorCopyDecal, new PointerInputCmdHandler(OnCopyDecal))
+            .Bind(ContentKeyFunctions.EditorCopyDecalStack, new PointerInputCmdHandler(OnCopyDecalStack))
+            // Exodus-End
+            .Register<DecalPlacementSystem>();
 
         SubscribeLocalEvent<FillActionSlotEvent>(OnFillSlot);
         SubscribeLocalEvent<PlaceDecalActionEvent>(OnPlaceDecalAction);
@@ -239,34 +277,106 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     public void SetActive(bool active)
     {
         _active = active;
-        _eyedropper = false; // Exodus: arming is always an explicit user action.
+        // Exodus: arming/holding a tool is always an explicit user action.
+        _eyedropper = false;
+        _stamping = false;
+        _stamp.Clear();
         if (_active)
             _inputManager.Contexts.SetActiveContext("editor");
         else
             _inputSystem.SetEntityContextActive();
     }
 
-    // Exodus-Start: find the topmost decal under the given coordinates and return its color.
+    // Exodus-Start
+    /// <summary>"O": copy the topmost decal under the cursor into the placer.</summary>
+    private bool OnCopyDecal(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    {
+        if (!_active)
+            return false;
+
+        _eyedropper = false;
+        _stamping = false;
+        _stamp.Clear();
+
+        if (TryGetDecalsUnder(coords, out _, out var decals) && Topmost(decals) is { } top)
+            DecalCopied?.Invoke(top.Decal);
+
+        return true;
+    }
+
+    /// <summary>"Ctrl+O": copy every decal under the cursor as a stamp to place as a group.</summary>
+    private bool OnCopyDecalStack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    {
+        if (!_active)
+            return false;
+
+        _eyedropper = false;
+        _stamp.Clear();
+        _stamping = false;
+
+        if (!TryGetDecalsUnder(coords, out var localPos, out var decals))
+            return true;
+
+        // Anchor offsets to the copied tile so the stamp stays tile-aligned when placed elsewhere.
+        var origin = localPos.Floored();
+        foreach (var (_, decal) in decals)
+            _stamp.Add((decal.Coordinates - origin, decal));
+
+        _stamping = true;
+        return true;
+    }
+
+    private void PlaceStamp(EntityCoordinates coords)
+    {
+        if (!TryGetGridLocal(coords, out var gridUid, out var localPos))
+            return;
+
+        var origin = localPos.Floored();
+        foreach (var (offset, decal) in _stamp)
+        {
+            var newPos = origin + offset;
+            var target = new EntityCoordinates(gridUid, newPos);
+            if (!target.IsValid(EntityManager))
+                continue;
+
+            var copy = new Decal(newPos, decal.Id, decal.Color, decal.Angle, decal.ZIndex, decal.Cleanable);
+            RaiseNetworkEvent(new RequestDecalPlacementEvent(copy, GetNetCoordinates(target)));
+        }
+    }
+
     private bool TryPickDecalColor(EntityCoordinates coords, out Color color)
     {
         color = Color.White;
+        if (!TryGetDecalsUnder(coords, out _, out var decals) || Topmost(decals) is not { } top)
+            return false;
 
+        color = top.Decal.Color ?? Color.White;
+        return true;
+    }
+
+    /// <summary>Resolve the grid and grid-local position under the given coordinates.</summary>
+    private bool TryGetGridLocal(EntityCoordinates coords, out EntityUid gridUid, out Vector2 localPos)
+    {
+        localPos = default;
         var mapPos = _transform.ToMapCoordinates(coords);
-        if (!_mapManager.TryFindGridAt(mapPos, out var gridUid, out _))
+        if (!_mapManager.TryFindGridAt(mapPos, out gridUid, out _))
             return false;
 
-        if (!TryComp<DecalGridComponent>(gridUid, out var decalGrid))
+        localPos = Vector2.Transform(mapPos.Position, _transform.GetInvWorldMatrix(gridUid));
+        return true;
+    }
+
+    /// <summary>Collect every decal whose 1x1 footprint contains the cursor.</summary>
+    private bool TryGetDecalsUnder(EntityCoordinates coords, out Vector2 localPos, out List<(uint Index, Decal Decal)> decals)
+    {
+        decals = new();
+        if (!TryGetGridLocal(coords, out var gridUid, out localPos)
+            || !TryComp<DecalGridComponent>(gridUid, out var decalGrid))
             return false;
 
-        var localPos = Vector2.Transform(mapPos.Position, _transform.GetInvWorldMatrix(gridUid));
         var chunkIndices = SharedDecalSystem.GetChunkIndices(localPos);
-
         if (!decalGrid.ChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var chunk))
             return false;
-
-        Decal? best = null;
-        var bestZ = int.MinValue;
-        var bestId = 0u;
 
         foreach (var (id, decal) in chunk.Decals)
         {
@@ -275,20 +385,25 @@ public sealed partial class DecalPlacementSystem : EntitySystem
                 localPos.Y < decal.Coordinates.Y || localPos.Y >= decal.Coordinates.Y + 1f)
                 continue;
 
-            // Match the overlay's draw order: highest ZIndex, then highest id, is on top.
-            if (best != null && (decal.ZIndex < bestZ || decal.ZIndex == bestZ && id < bestId))
-                continue;
-
-            best = decal;
-            bestZ = decal.ZIndex;
-            bestId = id;
+            decals.Add((id, decal));
         }
 
-        if (best == null)
-            return false;
+        return decals.Count > 0;
+    }
 
-        color = best.Color ?? Color.White;
-        return true;
+    /// <summary>Pick the decal drawn on top: highest ZIndex, then highest id (matches the overlay).</summary>
+    private static (uint Index, Decal Decal)? Topmost(List<(uint Index, Decal Decal)> decals)
+    {
+        (uint Index, Decal Decal)? best = null;
+        foreach (var entry in decals)
+        {
+            if (best is not { } b
+                || entry.Decal.ZIndex > b.Decal.ZIndex
+                || (entry.Decal.ZIndex == b.Decal.ZIndex && entry.Index > b.Index))
+                best = entry;
+        }
+
+        return best;
     }
     // Exodus-End
 }
