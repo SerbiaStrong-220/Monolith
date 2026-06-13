@@ -12,8 +12,8 @@
   id: ThePit
   parent: [BasePOI, BaseRepairablePOI]
   name: "Бойцовская Яма" # Ru-Localization
-  minimumDistance: 5200
-  maximumDistance: 6200
+  minimumDistance: 11000 # Exodus-nebula-update
+  maximumDistance: 20000 # Exodus-nebula-update
   spawnGroup: Arena
   gridPath: /Maps/_Exodus/POI/arena.yml # Exodus
   addComponents:

@@ -75,7 +75,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: BecomesStation
-      id: CargoDepot
+      id: AdsSmallAncientStorage
     - type: DecalGrid
       chunkCollection:
         version: 2

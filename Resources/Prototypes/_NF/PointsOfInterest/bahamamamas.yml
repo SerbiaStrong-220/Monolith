@@ -12,8 +12,8 @@
   id: Bahama
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Багамская Мама' # Ru-Localization
-  minimumDistance: 3400
-  maximumDistance: 5800
+  minimumDistance: 11000 # Exodus-nebula-update
+  maximumDistance: 20000 # Exodus-nebula-update
   spawnGroup: RestStop
   gridPath: /Maps/_Exodus/POI/bahama.yml # Exodus
   addComponents:

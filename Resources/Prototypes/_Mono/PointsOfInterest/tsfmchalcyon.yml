@@ -14,8 +14,8 @@
   id: TSFMCHalcyon
   parent: [BasePOI, BaseRepairablePOI]
   name: 'КВП | Флагман Фалкон' # Ru-Localization
-  minimumDistance: 4500 # Mono
-  maximumDistance: 5500 # Mono
+  minimumDistance: 17500 # Exodus-nebula-update
+  maximumDistance: 30000 # Exodus-nebula-update
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/tsfmchalcyon.yml

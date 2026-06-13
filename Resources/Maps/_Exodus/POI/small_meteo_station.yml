@@ -102,7 +102,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: BecomesStation
-      id: CargoDepot
+      id: SmallMeteostation
     - type: DecalGrid
       chunkCollection:
         version: 2

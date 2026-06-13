@@ -6,8 +6,8 @@
   id: Sevastopol
   parent: BasePOI
   name: 'Дата-центр Севастополь' # Ru-Localization
-  minimumDistance: 3500
-  maximumDistance: 7500
+  minimumDistance: 17500 # Exodus-nebula-update
+  maximumDistance: 25000 # Exodus-nebula-update
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/sevastopol.yml # Exodus
   addComponents:

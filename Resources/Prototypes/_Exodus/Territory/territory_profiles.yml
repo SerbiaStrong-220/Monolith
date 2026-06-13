@@ -11,8 +11,6 @@
   gameMapPrototypes:
   - AnomalousLab
   - Arena
-  - Sevastopol
-  - TSFMCOutpost
   - Bahama
   - CaseysCasino
   - CargoDepot
@@ -32,16 +30,18 @@
   colorPoiByFaction: true
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:
-  - HeliosFortress
-  - TSFMCHalcyon
-  - USSPCamelot
+  - Sevastopol
   - TradeMall
 
 - type: territoryProfile
   id: PoiLarge
-  radius: 5000
+  radius: 4000
   colorPoiByFaction: true
   neutralPoiColor: "#A6A6A6"
+  gameMapPrototypes:
+  - HeliosFortress
+  - TSFMCHalcyon
+  - USSPCamelot
 
 - type: territoryProfile
   id: ColossusCentral

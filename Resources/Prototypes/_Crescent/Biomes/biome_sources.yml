@@ -63,7 +63,7 @@
   components:
   - type: SpaceBiomeSource
     id: BiomeFarReachesIII
-    swapDistance: 80000
+    swapDistance: 78000 # Exodus-nebula-update
     priority: 200
 
 - type: entity
@@ -73,7 +73,7 @@
   components:
   - type: SpaceBiomeSource
     id: BiomeFarReachesII
-    swapDistance: 60000
+    swapDistance: 65000 # Exodus-nebula-update
     priority: 300
 
 - type: entity
@@ -83,7 +83,7 @@
   components:
   - type: SpaceBiomeSource
     id: BiomeFarReachesI
-    swapDistance: 50000
+    swapDistance: 52500 # Exodus-nebula-update
     priority: 400
 
 - type: entity
@@ -93,7 +93,7 @@
   components:
   - type: SpaceBiomeSource
     id: BiomeExternalSpace
-    swapDistance: 40000
+    swapDistance: 45000 # Exodus-nebula-update
     priority: 500
 
 - type: entity
