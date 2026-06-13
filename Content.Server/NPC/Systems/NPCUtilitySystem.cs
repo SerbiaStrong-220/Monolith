@@ -441,6 +441,14 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             {
                 return !TryComp<MobStateComponent>(targetUid, out var mobState) || _mobState.IsAlive(targetUid, mobState) ? 1f : 0f;
             }
+            // Exodus-begin faction-aware NPC core targeting
+            case TargetShipNpcPriorityCon:
+            {
+                return TryComp<ShipNpcTargetComponent>(targetUid, out var target)
+                    ? Math.Clamp(target.Priority, 0f, 1f)
+                    : 0f;
+            }
+            // Exodus-end
             default:
                 throw new NotImplementedException();
         }
