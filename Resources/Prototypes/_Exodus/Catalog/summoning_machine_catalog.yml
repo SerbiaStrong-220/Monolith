@@ -39,6 +39,16 @@
   - SummoningMachineKasatura
 
 - type: listing
+  id: SummoningMachineKasaturaPrefect
+  name: summoning-machine-kasatura-prefect-name
+  description: summoning-machine-kasatura-prefect-desc
+  productEntity: ClothingOuterHardsuitPrefectAsakimUnremoveable
+  cost:
+    Telecrystal: 3000
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
   id: SummoningMachineAutopulser
   name: summoning-machine-autopulser-name
   description: summoning-machine-autopulser-desc

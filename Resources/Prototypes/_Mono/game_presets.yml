@@ -80,10 +80,7 @@
   - BluespaceSalvageEventScheduler
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
-  - MonoAISTCShuttleSpawnerScheduler
-  - MonoAISTCShuttleSpawnerSchedulerTier2
-  - ExodusT3ShipsScheduler # Exodus-azimuth
-  - MonoAsakimSTCShuttleSpawnerScheduler
+  # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
@@ -118,10 +115,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoChimeraSTCShuttleSpawnerSchedulerSlow
-  - MonoAISTCShuttleSpawnerSchedulerSlow
-  - MonoAISTCShuttleSpawnerSchedulerTier2Slow
-  - ExodusT3ShipsSchedulerSlow # Exodus-azimuth
-  - MonoAsakimSTCShuttleSpawnerSchedulerSlow
+  # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
 
@@ -140,8 +134,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoChimeraSTCShuttleSpawnerSchedulerApocalypse
-  - MonoAISTCShuttleSpawnerSchedulerApocalypse
-  - MonoAsakimSTCShuttleSpawnerSchedulerApocalypse
+  # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   - RoundEndRuleHour3
   - PortstrikeAnnounceRuleHour1

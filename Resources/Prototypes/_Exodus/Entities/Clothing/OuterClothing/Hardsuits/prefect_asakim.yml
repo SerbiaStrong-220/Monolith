@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingOuterHardsuitCenturionAsakim
+  id: ClothingOuterHardsuitPrefectAsakim
+  name: prefect kasature-pattern command exoskeleton
+  description: A senior command variant of the Asakim pre-fracture combat exoskeleton, reserved for high-ranking field officers of the Khs'i-Ra Empire.
+  components:
+  - type: ToggleableClothing
+    requiredSlot: outerclothing
+    blockUnequipWhenAttached: false
+    replaceCurrentClothing: true
+    clothingPrototypes:
+      head: ClothingHelmetHardsuitPrefectAsakim
+      helmetcover: ClothingHeadHelmetCoverBlock
+      helmetattachment: ClothingHeadHelmetAttachmentBlock
+
+- type: entity
+  parent: ClothingOuterHardsuitPrefectAsakim
+  id: ClothingOuterHardsuitPrefectAsakimUnremoveable
+  suffix: 120 stripDelay
+  components:
+  - type: Clothing
+    stripDelay: 120
+    equipDelay: 120

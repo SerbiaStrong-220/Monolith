@@ -1,0 +1,182 @@
+- type: entity
+  id: BaseADSShuttleEmergencyBeacon
+  parent: BaseItem
+  abstract: true
+  name: emergency shuttle beacon
+  description: A disposable emergency beacon tuned to summon a specific ADS vessel.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Beacons/little_beacon.rsi
+    layers:
+    - state: beacon
+  - type: Item
+    size: Small
+    sprite: _Exodus/Objects/Consumable/Beacons/little_beacon.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: ShuttleEventBeacon
+  - type: Tag
+    tags:
+    - Payload
+
+- type: entity
+  id: BaseADSShuttleEmergencyBeaconTier1
+  parent: BaseADSShuttleEmergencyBeacon
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: beacon
+    - state: emission_tier1
+      shader: unshaded
+
+- type: entity
+  id: BaseADSShuttleEmergencyBeaconTier2
+  parent: BaseADSShuttleEmergencyBeacon
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: beacon
+    - state: emission_tier2
+      shader: unshaded
+
+- type: entity
+  id: BaseADSShuttleEmergencyBeaconTier3
+  parent: BaseADSShuttleEmergencyBeacon
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: beacon
+    - state: emission_tier3
+      shader: unshaded
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconZenith
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  name: маячок вызова АСЗ "Zenith"
+  description: Одноразовый аварийный маячок вызова АСЗ Zenith.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleZenith
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconWyrm
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  name: маячок вызова АСЗ "Wyrm"
+  description: Одноразовый аварийный маячок вызова АСЗ Wyrm.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleWyrm
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconNebula
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  name: маячок вызова АСЗ "Nebula"
+  description: Одноразовый аварийный маячок вызова АСЗ Nebula.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleNebula
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconOmen
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  name: маячок вызова АСЗ "Omen"
+  description: Одноразовый аварийный маячок вызова АСЗ Omen.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleOmen
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconCrow
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  name: маячок вызова АСЗ "Crow"
+  description: Одноразовый аварийный маячок вызова АСЗ Crow.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleCrow
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconZenithA
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова АСЗ "Zenith A"
+  description: Одноразовый аварийный маячок вызова АСЗ Zenith A.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleZenithA
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconZenithE
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова АСЗ "Zenith E"
+  description: Одноразовый аварийный маячок вызова АСЗ Zenith E.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleZenithE
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconRazorN
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова АСЗ "Razor-N"
+  description: Одноразовый аварийный маячок вызова АСЗ Razor-N.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleRazorN
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconWyvern
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова АСЗ "Wyvern"
+  description: Одноразовый аварийный маячок вызова АСЗ Wyvern.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleWyvern
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconConcordX
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова АСЗ "Concord X"
+  description: Одноразовый аварийный маячок вызова АСЗ Concord X.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleConcordX
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconMantaray
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова АСЗ "Mantaray"
+  description: Одноразовый аварийный маячок вызова АСЗ Mantaray.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleMantaray
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconAzimuth
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  name: маячок вызова асакимов "Azimuth"
+  description: Одноразовый аварийный маячок вызова корабля асакимов Azimuth.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleAzimuth
+
+- type: entity
+  id: AsakimShuttleEmergencyBeaconSmall
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  name: маячок вызова асакимов "Малое судно"
+  description: Одноразовый аварийный маячок вызова малого корабля асакимов.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleAsakimSmall
+
+- type: entity
+  id: AsakimShuttleEmergencyBeaconMedium
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  name: маячок вызова асакимов "Среднее судно"
+  description: Одноразовый аварийный маячок вызова среднего корабля асакимов.
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleAsakimMedium
