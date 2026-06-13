@@ -111,7 +111,7 @@
   hideWarp: true
   addComponents:
   - type: IFF
-    color: "#00CCFFFF"
+    color: "#BD0071"
     flags: [HideLabel]
     readOnly: false
   - type: SolarPoweredGrid

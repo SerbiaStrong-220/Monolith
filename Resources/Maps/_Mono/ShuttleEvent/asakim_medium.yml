@@ -297,7 +297,7 @@ entities:
     - type: ShipGridLock
       locked: False
     - type: IFF
-      color: '#00FFCCFF'
+      color: '#BD0071' # Exodus-asakim-iff-color
       flags: HideLabel, IsPlayerShuttle
     - type: CloakHeat
       lastUpdateTime: 0

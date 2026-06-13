@@ -125,7 +125,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: IFF
-      color: '#00CCFFFF'
+      color: '#BD0071'
     - type: DecalGrid
       chunkCollection:
         version: 2

@@ -1838,7 +1838,7 @@ entities:
       locked: False
     - type: RadiationGridResistance
     - type: IFF
-      color: '#00CCFFFF'
+      color: '#BD0071'
     - type: ThermalSignature
 - proto: AirAlarmXeno
   entities:

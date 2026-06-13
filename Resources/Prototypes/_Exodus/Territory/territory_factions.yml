@@ -38,13 +38,13 @@
   id: TSFMC
   radarLabel: territory-faction-tsf
   banner: BannerNGC
-  color: "#87CEEB"  # Trans-Solar Federation light blue (better visibility on dark BSS map background)
+  color: "#40516E"  # TSFMC ship / paperwork blue-gray
 
 - type: territoryFaction
   id: PDV
   radarLabel: territory-faction-phaeton
   banner: BannerPDV
-  color: "#D2B48C"  # PDV gold-tan
+  color: "#D2B48C"  # PDV ship / equipment tan
 
 - type: territoryFaction
   id: Khsira
