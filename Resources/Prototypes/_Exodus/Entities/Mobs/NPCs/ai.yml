@@ -1,7 +1,17 @@
 - type: entity
+  id: NpcStationAiFactionAttackerStaticSmart
+  parent: NpcStationAiAttackerSmart
+  abstract: true
+  suffix: DO NOT USE
+  components:
+  - type: HTN
+    rootTask:
+      task: AttackerShuttleSmartCompound
+
+- type: entity
   id: NpcStationAiAttackerStaticSmartAsakim
-  parent: NpcStationAiAttackerStaticSmart
-  suffix: AI, Smart, Static, Asakim
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: AI, Asakim, Static, Smart
   components:
   - type: NpcFactionMember
     factions:
