@@ -1,0 +1,239 @@
+- type: listing
+  id: SummoningMachinePhaseBlade
+  name: summoning-machine-phase-blade-name
+  description: summoning-machine-phase-blade-desc
+  productEntity: WeaponPhaseBlade
+  cost:
+    Telecrystal: 420
+  categories:
+  - SummoningMachinePrefractureRelics
+
+- type: listing
+  id: SummoningMachineMagbootsAsakim
+  name: summoning-machine-magboots-name
+  description: summoning-machine-magboots-desc
+  productEntity: ClothingShoesBootsMagAsakim
+  cost:
+    Telecrystal: 900
+  categories:
+  - SummoningMachineZeroGVector
+
+- type: listing
+  id: SummoningMachineKasaturaCombat
+  name: summoning-machine-kasatura-combat-name
+  description: summoning-machine-kasatura-combat-desc
+  productEntity: ClothingOuterHardsuitAsakimUnremoveable
+  cost:
+    Telecrystal: 1500
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
+  id: SummoningMachineKasaturaCenturion
+  name: summoning-machine-kasatura-centurion-name
+  description: summoning-machine-kasatura-centurion-desc
+  productEntity: ClothingOuterHardsuitCenturionAsakimUnremoveable
+  cost:
+    Telecrystal: 2400
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
+  id: SummoningMachineAutopulser
+  name: summoning-machine-autopulser-name
+  description: summoning-machine-autopulser-desc
+  productEntity: WeaponRifleAsakimAutopulser
+  cost:
+    Telecrystal: 360
+  categories:
+  - SummoningMachinePrefractureRelics
+
+- type: listing
+  id: SummoningMachineCombatJumpsuit
+  name: summoning-machine-combat-jumpsuit-name
+  description: summoning-machine-combat-jumpsuit-desc
+  productEntity: ClothingUniformJumpsuitNinja
+  cost:
+    Telecrystal: 120
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
+  id: SummoningMachineCombatGloves
+  name: summoning-machine-combat-gloves-name
+  description: summoning-machine-combat-gloves-desc
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    Telecrystal: 180
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
+  id: SummoningMachineDoubleEmergencyOxygenTank
+  name: summoning-machine-double-emergency-oxygen-tank-name
+  description: summoning-machine-double-emergency-oxygen-tank-desc
+  productEntity: DoubleEmergencyOxygenTankFilled
+  cost:
+    Telecrystal: 60
+  categories:
+  - SummoningMachineZeroGVector
+
+- type: listing
+  id: SummoningMachineJetpackADM
+  name: summoning-machine-jetpack-name
+  description: summoning-machine-jetpack-desc
+  productEntity: JetpackADMFilled
+  cost:
+    Telecrystal: 900
+  categories:
+  - SummoningMachineZeroGVector
+
+- type: listing
+  id: SummoningMachineJawsOfLife
+  name: summoning-machine-jaws-of-life-name
+  description: summoning-machine-jaws-of-life-desc
+  productEntity: JawsOfLife
+  cost:
+    Telecrystal: 60
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachinePowerDrill
+  name: summoning-machine-power-drill-name
+  description: summoning-machine-power-drill-desc
+  productEntity: PowerDrill
+  cost:
+    Telecrystal: 60
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineCombatMedkit
+  name: summoning-machine-combat-medkit-name
+  description: summoning-machine-combat-medkit-desc
+  productEntity: MedkitCombatFilled
+  cost:
+    Telecrystal: 240
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineCompactDefibrillator
+  name: summoning-machine-compact-defibrillator-name
+  description: summoning-machine-compact-defibrillator-desc
+  productEntity: DefibrillatorCompact
+  cost:
+    Telecrystal: 240
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineAntiqueBattery
+  name: summoning-machine-antique-battery-name
+  description: summoning-machine-antique-battery-desc
+  productEntity: PowerCellAntiqueProto
+  cost:
+    Telecrystal: 1500
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAntiqueBatteryEmpProof
+  name: summoning-machine-antique-battery-emp-proof-name
+  description: summoning-machine-antique-battery-emp-proof-desc
+  productEntity: PowerCellAntiqueProtoEmpProof
+  cost:
+    Telecrystal: 3000
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineMassScannerBorg
+  name: summoning-machine-mass-scanner-name
+  description: summoning-machine-mass-scanner-desc
+  productEntity: HandHeldMassScannerBorg
+  cost:
+    Telecrystal: 480
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineCognizineBottle
+  name: summoning-machine-cognizine-bottle-name
+  description: summoning-machine-cognizine-bottle-desc
+  productEntity: CognizineChemistryBottle
+  cost:
+    Telecrystal: 120
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineSyringe
+  name: summoning-machine-syringe-name
+  description: summoning-machine-syringe-desc
+  productEntity: Syringe
+  cost:
+    Telecrystal: 30
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineRTGFlatpack
+  name: summoning-machine-rtg-flatpack-name
+  description: summoning-machine-rtg-flatpack-desc
+  productEntity: GeneratorRTGFlatpack
+  cost:
+    Telecrystal: 480
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineASRGFlatpack
+  name: summoning-machine-asrg-flatpack-name
+  description: summoning-machine-asrg-flatpack-desc
+  productEntity: GeneratorASRGFlatpack
+  cost:
+    Telecrystal: 1080
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAsakimSrd
+  name: summoning-machine-asakim-srd-name
+  description: summoning-machine-asakim-srd-desc
+  productEntity: ShipRepairDeviceAsakimRedacted
+  cost:
+    Telecrystal: 1500
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineChestRig
+  name: summoning-machine-chest-rig-name
+  description: summoning-machine-chest-rig-desc
+  productEntity: ClothingBeltWebbingsBigBlack
+  cost:
+    Telecrystal: 180
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
+  id: SummoningMachineErtLeaderBackpack
+  name: summoning-machine-ert-backpack-name
+  description: summoning-machine-ert-backpack-desc
+  productEntity: ClothingBackpackERTLeader
+  cost:
+    Telecrystal: 300
+  categories:
+  - SummoningMachineKasatura
+
+- type: listing
+  id: SummoningMachineMRECrate
+  name: summoning-machine-mre-crate-name
+  description: summoning-machine-mre-crate-desc
+  productEntity: CrateFoodMRE
+  cost:
+    Telecrystal: 240
+  categories:
+  - SummoningMachineFieldReserve

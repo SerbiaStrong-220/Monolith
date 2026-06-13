@@ -33,6 +33,14 @@ public sealed partial class StoreMenu : DefaultWindow
     public string CurrentCategory = string.Empty;
 
     private List<ListingDataWithCostModifiers> _cachedListings = new();
+    // #Exodus
+    private List<ListingDataWithCostModifiers> _allListings = new();
+    // #Exodus
+    private StoreUiMode _mode = StoreUiMode.Default;
+    // #Exodus
+    private float _priceMultiplier = 1f;
+    // #Exodus
+    private StoreSummoningUiData? _activeSummoning;
 
     public StoreMenu()
     {
@@ -47,6 +55,17 @@ public sealed partial class StoreMenu : DefaultWindow
     public void UpdateBalance(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
         Balance = balance;
+
+        if (_mode == StoreUiMode.Summoning)
+        {
+            BalanceInfo.SetMarkup(Loc.GetString("store-ui-summoning-multiplier", ("multiplier", _priceMultiplier.ToString("0.##"))));
+            WithdrawButton.Visible = false;
+            RefundButton.Visible = false;
+            return;
+        }
+
+        WithdrawButton.Visible = true;
+        RefundButton.Visible = true;
 
         var currency = balance.ToDictionary(type =>
             (type.Key, type.Value), type => _prototypeManager.Index(type.Key));
@@ -73,11 +92,35 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
+    // #Exodus
+    public void SetMode(StoreUiMode mode, float priceMultiplier)
+    {
+        _mode = mode;
+        _priceMultiplier = priceMultiplier;
+
+        UpdateBalance(Balance);
+        UpdateSummoningStatus();
+    }
+
+    // #Exodus
+    public void SetSummoning(StoreSummoningUiData? summoning)
+    {
+        _activeSummoning = summoning;
+        UpdateSummoningStatus();
+    }
+
     public void UpdateListing(List<ListingDataWithCostModifiers> listings)
     {
         _cachedListings = listings;
 
         UpdateListing();
+    }
+
+    // #Exodus
+    public void SetAllListings(List<ListingDataWithCostModifiers> listings)
+    {
+        _allListings = listings;
+        UpdateSummoningStatus();
     }
 
     public void UpdateListing()
@@ -126,28 +169,12 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var hasBalance = listing.CanBuyWith(Balance);
+        // #Exodus
+        var hasBalance = _mode == StoreUiMode.Summoning
+            ? _activeSummoning == null
+            : listing.CanBuyWith(Balance);
 
-        var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
-
-        Texture? texture = null;
-        if (listing.Icon != null)
-            texture = spriteSys.Frame0(listing.Icon);
-
-        if (listing.ProductEntity != null)
-        {
-            if (texture == null)
-                texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
-        }
-        else if (listing.ProductAction != null)
-        {
-            var actionId = _entityManager.Spawn(listing.ProductAction);
-            if (_entityManager.System<ActionsSystem>().TryGetActionData(actionId, out var action) &&
-                action.Icon != null)
-            {
-                texture = spriteSys.Frame0(action.Icon);
-            }
-        }
+        var texture = GetListingTexture(listing);
 
         var listingInStock = GetListingPriceString(listing);
         var discount = GetDiscountString(listing);
@@ -161,6 +188,10 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private string GetListingPriceString(ListingDataWithCostModifiers listing)
     {
+        // #Exodus
+        if (_mode == StoreUiMode.Summoning)
+            return FormatDuration(GetSummoningDuration(listing));
+
         var text = string.Empty;
 
         if (listing.Cost.Count < 1)
@@ -230,6 +261,84 @@ public sealed partial class StoreMenu : DefaultWindow
         return discountMessage;
     }
 
+    // #Exodus
+    private Texture? GetListingTexture(ListingData listing)
+    {
+        var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
+
+        Texture? texture = null;
+        if (listing.Icon != null)
+            texture = spriteSys.Frame0(listing.Icon);
+
+        if (listing.ProductEntity != null)
+        {
+            if (texture == null)
+                texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
+        }
+        else if (listing.ProductAction != null)
+        {
+            var actionId = _entityManager.Spawn(listing.ProductAction);
+            if (_entityManager.System<ActionsSystem>().TryGetActionData(actionId, out var action) &&
+                action.Icon != null)
+            {
+                texture = spriteSys.Frame0(action.Icon);
+            }
+
+            _entityManager.DeleteEntity(actionId);
+        }
+
+        return texture;
+    }
+
+    // #Exodus
+    private TimeSpan GetSummoningDuration(ListingDataWithCostModifiers listing)
+    {
+        var seconds = listing.Cost.Values.Sum(cost => cost.Float()) * _priceMultiplier;
+        return TimeSpan.FromSeconds(MathF.Ceiling(Math.Max(1f, seconds)));
+    }
+
+    // #Exodus
+    private void UpdateSummoningStatus()
+    {
+        if (_mode != StoreUiMode.Summoning || _activeSummoning == null)
+        {
+            SummoningStatusContainer.Visible = false;
+            return;
+        }
+
+        SummoningStatusContainer.Visible = true;
+
+        var listing = _allListings.FirstOrDefault(l => l.ID == _activeSummoning.ListingId);
+        if (listing != null)
+        {
+            SummoningStatusTitle.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager);
+            SummoningStatusIcon.Texture = GetListingTexture(listing);
+        }
+        else
+        {
+            SummoningStatusTitle.Text = _activeSummoning.ListingId.ToString();
+            SummoningStatusIcon.Texture = null;
+        }
+
+        SummoningStatusTimer.Text = FormatDuration(_activeSummoning.Remaining);
+        SummoningStatusNote.Text = _activeSummoning.Paused
+            ? Loc.GetString("store-ui-summoning-paused")
+            : Loc.GetString("store-ui-summoning-active");
+
+        var totalSeconds = Math.Max(_activeSummoning.Duration.TotalSeconds, 1);
+        var completed = Math.Clamp((_activeSummoning.Duration - _activeSummoning.Remaining).TotalSeconds / totalSeconds, 0, 1);
+        SummoningProgressBar.Value = (float) completed;
+    }
+
+    // #Exodus
+    private static string FormatDuration(TimeSpan duration)
+    {
+        if (duration.TotalHours >= 1)
+            return duration.ToString(@"h\:mm\:ss");
+
+        return duration.ToString(@"mm\:ss");
+    }
+
     private void ClearListings()
     {
         StoreListingsContainer.Children.Clear();
@@ -287,7 +396,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public void UpdateRefund(bool allowRefund)
     {
-        RefundButton.Visible = allowRefund;
+        RefundButton.Visible = _mode != StoreUiMode.Summoning && allowRefund;
     }
 
     private sealed class StoreCategoryButton : Button

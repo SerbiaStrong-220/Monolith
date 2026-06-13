@@ -110,7 +110,18 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
 
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
+        // #Exodus
+        var uiData = new GetStoreUiDataEvent();
+        RaiseLocalEvent(store, ref uiData);
+
+        var state = new StoreUpdateState(
+            component.LastAvailableListings,
+            allCurrency,
+            showFooter,
+            component.RefundAllowed,
+            uiData.Mode,
+            uiData.PriceMultiplier,
+            uiData.ActiveSummoning);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
@@ -151,6 +162,15 @@ public sealed partial class StoreSystem
 
             if (!conditionsMet)
                 return;
+        }
+
+        // #Exodus
+        var beforeBuy = new BeforeStoreBuyAttemptEvent(uid, buyer, component, listing);
+        RaiseLocalEvent(uid, ref beforeBuy);
+        if (beforeBuy.Handled || beforeBuy.Cancelled)
+        {
+            UpdateUserInterface(buyer, uid, component);
+            return;
         }
 
         //check that we have enough money
@@ -407,3 +427,27 @@ public readonly record struct StoreBuyFinishedEvent(
     EntityUid StoreUid,
     ListingDataWithCostModifiers PurchasedItem
 );
+
+// #Exodus
+[ByRefEvent]
+public sealed class BeforeStoreBuyAttemptEvent(
+    EntityUid storeUid,
+    EntityUid buyer,
+    StoreComponent store,
+    ListingDataWithCostModifiers listing) : CancellableEntityEventArgs
+{
+    public EntityUid StoreUid { get; } = storeUid;
+    public EntityUid Buyer { get; } = buyer;
+    public StoreComponent Store { get; } = store;
+    public ListingDataWithCostModifiers Listing { get; } = listing;
+    public bool Handled { get; set; }
+}
+
+// #Exodus
+[ByRefEvent]
+public sealed class GetStoreUiDataEvent
+{
+    public StoreUiMode Mode { get; set; } = StoreUiMode.Default;
+    public float PriceMultiplier { get; set; } = 1f;
+    public StoreSummoningUiData? ActiveSummoning { get; set; }
+}

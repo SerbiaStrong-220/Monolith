@@ -1,0 +1,90 @@
+- type: entity
+  id: SummoningMachine
+  parent: BaseMachinePowered
+  name: summoning machine
+  description: A heavy summoning gateway that trades time for contraband.
+  suffix: 5x5
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/GiantUplinkGateway.rsi
+    layers:
+    - state: GiantUplinkGateway
+      map: [ "enum.SummoningMachineVisualLayers.Base" ]
+    - state: GiantUplinkGateway_Inactive
+      map: [ "enum.SummoningMachineVisualLayers.State" ]
+      shader: unshaded
+    - state: GiantUplinkGateway_Emission
+      map: [ "enum.SummoningMachineVisualLayers.Emission" ]
+      shader: unshaded
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SummoningMachineVisuals.State:
+        enum.SummoningMachineVisualLayers.State:
+          Inactive: { state: GiantUplinkGateway_Inactive }
+          Idle: { state: GiantUplinkGateway_Idle }
+          Working: { state: GiantUplinkGateway_Working }
+        enum.SummoningMachineVisualLayers.Emission:
+          Inactive: { visible: false }
+          Idle: { visible: false }
+          Working: { visible: true }
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-2.5,-2.5,2.5,2.5"
+        density: 250
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: PowerCharge
+    charge: 0
+    chargeRate: 0.05
+    idlePower: 0
+    activePower: 500
+  - type: Biocode
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: Store
+    name: summoning-machine-ui-title
+    categories:
+    - SummoningMachinePrefractureRelics
+    - SummoningMachineKasatura
+    - SummoningMachineZeroGVector
+    - SummoningMachineTechnicalContour
+    - SummoningMachineFieldReserve
+    currencyWhitelist:
+    - Telecrystal
+    balance:
+      Telecrystal: 0
+  - type: NoDeconstruct
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 10
+  - type: ShipRepairable
+    repairTime: 12
+    repairCost: 25
+  - type: StaticPrice
+    price: 0
+  - type: SummoningMachine
