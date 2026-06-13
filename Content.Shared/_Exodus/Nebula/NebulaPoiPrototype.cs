@@ -62,6 +62,13 @@ public sealed partial class NebulaPoiPrototype : IPrototype
     public float MaxDensity { get; private set; } = 1f;
 
     /// <summary>
+    /// Optional maximum distance from the map center where this POI may spawn. When unset,
+    /// the POI may spawn anywhere inside a matching nebula.
+    /// </summary>
+    [DataField]
+    public float? MaxSpawnDistanceFromCenter { get; private set; }
+
+    /// <summary>
     /// Optional display name for the loaded grid. When set, replaces the default name derived
     /// from the YAML filename.
     /// </summary>

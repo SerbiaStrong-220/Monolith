@@ -18,6 +18,7 @@
 #   protectedRadius: 500                             # broadphase clearance (world tiles)
 #   minDensity: 0.5                                  # density floor inside blob nebulas
 #   maxDensity: 1.0                                  # density ceiling
+#   maxSpawnDistanceFromCenter: 45000                # optional max world distance from map center; unset = no limit
 #   name: "Имя на карте"                             # optional display name override
 #   addComponents:                                   # optional components attached to the grid
 #   - type: IFF
@@ -32,6 +33,9 @@
 #   density bounds are ignored for them.
 # - protectedRadius is checked via broadphase against existing grids and other POIs placed by
 #   this spawner in the same round.
+# - maxSpawnDistanceFromCenter is optional. Leave it unset to allow the POI anywhere inside a
+#   matching nebula. Set it to a world-tile radius to keep the POI inside that distance from
+#   the map center while still requiring it to be inside the selected nebula.
 # - duplicateAllowed only matters when maxCount > 1.
 # - The spawner prefers nebulas with no POI yet, then falls back to random valid nebulas.
 # - stationGameMap is optional. Most POIs should leave it unset — the grid loads as plain
@@ -134,7 +138,7 @@
   - NebulaGreenMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  protectedRadius: 1000
   name: 'Шахтёрский Аванпост Ланцелот'
   stationGameMap: Lancelot
   addComponents:
@@ -156,7 +160,8 @@
   - NebulaBlueMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 500
   name: 'Электростанция Эдисона'
   stationGameMap: Edison
   addComponents:
@@ -179,7 +184,7 @@
   - NebulaBlueMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  protectedRadius: 1000
   name: 'Биологический центр Полярис'
   stationGameMap: Polaris
   addComponents:
@@ -198,7 +203,7 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  protectedRadius: 250
   name: 'Автоматизированный Межсекторальный Танкер'
   stationGameMap: AutomatedTanker
   addComponents:
@@ -215,7 +220,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  maxSpawnDistanceFromCenter: 45000
+  protectedRadius: 500
   name: 'Лаборатория Аномалий'
   stationGameMap: AnomalousLab
   addComponents:
@@ -237,7 +243,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 500
   name: "Ресторан Тинни"
   stationGameMap: Tinnia
   addComponents:
@@ -263,7 +270,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 500
   name: "Бензин и жратва Грифти"
   stationGameMap: Grifty
   addComponents:
@@ -288,7 +296,7 @@
   - NebulaGreenMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  protectedRadius: 500
   name: "Заброшенный МакХобольдс"
   stationGameMap: McHobo
   addComponents:
@@ -307,7 +315,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  maxSpawnDistanceFromCenter: 45000
+  protectedRadius: 500
   name: 'КВП | Периферийный аванпост'
   stationGameMap: TSFMCOutpost
   addComponents:
@@ -333,7 +342,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 2500
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 250
   name: "Маяк ВсеЦеркви"
   addComponents:
   - type: IFF

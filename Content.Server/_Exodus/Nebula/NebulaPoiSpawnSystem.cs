@@ -219,6 +219,9 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
             if (!TrySamplePoint(rng, mapComponent, candidate, poi, out var point))
                 continue;
 
+            if (!IsWithinSpawnDistanceLimit(point, poi.MaxSpawnDistanceFromCenter))
+                continue;
+
             if (HasNearbyGrid(mapId, point, poi.ProtectedRadius))
                 continue;
 
@@ -233,6 +236,18 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
         }
 
         return false;
+    }
+
+    private static bool IsWithinSpawnDistanceLimit(Vector2 point, float? maxDistance)
+    {
+        if (maxDistance == null)
+            return true;
+
+        var limit = maxDistance.Value;
+        if (limit < 0f)
+            return false;
+
+        return point.LengthSquared() <= limit * limit;
     }
 
     private bool TrySamplePoint(System.Random rng, NebulaMapComponent mapComponent, PoiCandidate candidate, NebulaPoiPrototype poi, out Vector2 point)
