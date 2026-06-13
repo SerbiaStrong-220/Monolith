@@ -15,7 +15,7 @@
   - type: LifeInsuranceBackupBattery
     drainRate: 50
   - type: Battery
-    maxCharge: 45000 # 50 W * 900 s = 15 minutes of backup power
+    maxCharge: 45000 # ~15 minutes of backup power
     startingCharge: 45000
   - type: ApcPowerReceiver
     powerLoad: 200
@@ -40,6 +40,7 @@
   components:
   - type: LifeInsuranceCloner
     revivalTime: 10
+  - type: Climbable
   - type: StaticPrice
     price: 1000
   - type: ShipRepairable
@@ -64,7 +65,7 @@
         base:
           Idle: { state: pod_0 }
           Cloning: { state: pod_1 }
-          Failed: { state: pod_g } # placeholder gore until dedicated sprite exists
+          Failed: { state: pod_g } # placeholder
   - type: ContainerContainer
     containers:
       life-insurance-cloner-body: !type:ContainerSlot
@@ -86,7 +87,7 @@
   - type: LifeInsuranceBackupBattery
     drainRate: 30
   - type: Battery
-    maxCharge: 27000 # 30 W * 900 s = 15 minutes of backup power
+    maxCharge: 27000 # ~15 minutes of backup power
     startingCharge: 27000
   - type: ApcPowerReceiver
     powerLoad: 200
