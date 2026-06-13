@@ -38,7 +38,7 @@
   id: TSFMC
   radarLabel: territory-faction-tsf
   banner: BannerNGC
-  color: "#40516E"  # TSFMC ship / paperwork blue-gray
+  color: "#047ABD"  # TSF company ship blue
 
 - type: territoryFaction
   id: PDV
