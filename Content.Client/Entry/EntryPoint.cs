@@ -45,6 +45,7 @@ using Robust.Shared.Timing;
 using Content.Client._NF.Emp.Overlays; // Frontier
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins; // Mono
+using Content.Client._Exodus.Bank; // Exodus
 
 namespace Content.Client.Entry
 {
@@ -84,7 +85,7 @@ namespace Content.Client.Entry
         [Dependency] private IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private CompanyManager _companyManager = default!; // Mono
         [Dependency] private MonoCoinsManager _coinsManager = default!; // Mono
-        [Dependency] private Content.Client._Exodus.Bank.SavingsTransferManager _savingsTransferManager = default!; // Exodus
+        [Dependency] private SavingsTransferManager _savingsTransferManager = default!; // Exodus
 
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
         [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue

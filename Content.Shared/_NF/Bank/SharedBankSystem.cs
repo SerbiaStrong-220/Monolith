@@ -48,6 +48,7 @@ public abstract partial class SharedBankSystem : EntitySystem
         _itemSlotsSystem.RemoveItemSlot(uid, component.CashSlot);
     }
 
+    // Exodus-Start
     /// <summary>
     /// Computes how much of a deposit lands on the main bank account (<paramref name="amount"/>)
     /// versus how much is taxed away into savings (<paramref name="taxedAway"/>).
@@ -63,39 +64,39 @@ public abstract partial class SharedBankSystem : EntitySystem
         if (deposit <= 0)
             return;
 
-        double threshold = _cfg.GetCVar(MonoCVars.DepositThreshold);
-        double fullTaxBalance = _cfg.GetCVar(MonoCVars.DepositFullTaxBalance);
-        double maxRate = Math.Clamp(_cfg.GetCVar(MonoCVars.DepositMaxRate), 0.0, 0.999999);
+        var threshold = (double)_cfg.GetCVar(MonoCVars.DepositThreshold);
+        var fullTaxBalance = (double)_cfg.GetCVar(MonoCVars.DepositFullTaxBalance);
+        var maxRate = Math.Clamp((double)_cfg.GetCVar(MonoCVars.DepositMaxRate), 0.0, 0.999999);
 
         // Balance width over which the marginal rate climbs from 0% to 100%.
-        double width = Math.Max(fullTaxBalance - threshold, 1.0);
+        var width = Math.Max(fullTaxBalance - threshold, 1.0);
 
-        double b = balance;          // running main-account balance
-        double remaining = deposit;  // gross cash still to process
-        double net = 0;              // cash that lands on the main account
+        var b = (double)balance;          // running main-account balance
+        var remaining = (double)deposit;  // gross cash still to process
+        var net = 0.0;                    // cash that lands on the main account
 
         // Below the threshold: no tax, 1:1 until the balance reaches the threshold.
         if (b < threshold)
         {
-            double pass = Math.Min(remaining, threshold - b);
+            var pass = Math.Min(remaining, threshold - b);
             net += pass;
             b += pass;
             remaining -= pass;
         }
 
         // Balance at which the marginal rate reaches the cap.
-        double capBalance = threshold + maxRate * width;
+        var capBalance = threshold + maxRate * width;
 
         // Linear region: marginal rate = (b - threshold) / width.
         // ODE db/dg = 1 - (b - threshold)/width  =>  b(g) = A - (A - b) * e^(-g/width), A = threshold + width.
         if (remaining > 0 && b < capBalance)
         {
-            double asymptote = threshold + width; // balance where the marginal rate would be 100%
-            double startGap = asymptote - b;      // > 0
-            double endGap = asymptote - capBalance; // = width * (1 - maxRate) > 0
-            double grossToCap = width * Math.Log(startGap / endGap);
-            double g = Math.Min(remaining, grossToCap);
-            double newB = asymptote - startGap * Math.Exp(-g / width);
+            var asymptote = threshold + width; // balance where the marginal rate would be 100%
+            var startGap = asymptote - b;      // > 0
+            var endGap = asymptote - capBalance; // = width * (1 - maxRate) > 0
+            var grossToCap = width * Math.Log(startGap / endGap);
+            var g = Math.Min(remaining, grossToCap);
+            var newB = asymptote - startGap * Math.Exp(-g / width);
             net += newB - b;
             b = newB;
             remaining -= g;
@@ -108,5 +109,6 @@ public abstract partial class SharedBankSystem : EntitySystem
         amount = (int)Math.Clamp(Math.Round(net), 0, deposit);
         taxedAway = deposit - amount;
     }
+    // Exodus-End
 }
 

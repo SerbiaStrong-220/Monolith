@@ -21,7 +21,6 @@ humanoid-profile-editor-export-button = Export
 humanoid-profile-editor-export-image-button = Export image
 humanoid-profile-editor-open-image-button = Open images
 humanoid-profile-editor-save-button = Save
-humanoid-profile-editor-savings-button = Savings
 humanoid-profile-editor-reset-button = Reset
 humanoid-profile-editor-spawn-priority-label = Spawn priority:
 # Mono Start

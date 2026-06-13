@@ -45,7 +45,8 @@
                 </BoxContainer>
             </BoxContainer>
             <Control MinHeight="10" />
-            <!-- Exodus: savings button, sits at the left just above the tab strip -->
+            <!-- Exodus-Start -->
+            <!-- savings button, sits at the left just above the tab strip -->
             <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
                 <Button Name="SavingsButton">
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -55,6 +56,7 @@
                     </BoxContainer>
                 </Button>
             </BoxContainer>
+            <!-- Exodus-End -->
             <!-- tabContainer -->
             <TabContainer Name="TabContainer" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical">

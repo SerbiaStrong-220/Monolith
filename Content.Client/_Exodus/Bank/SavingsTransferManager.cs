@@ -11,7 +11,7 @@ namespace Content.Client._Exodus.Bank;
 /// </summary>
 public sealed class SavingsTransferManager
 {
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private INetManager _net = default!;
 
     /// <summary>
     /// Raised with the new main bank balance after the server processes a transfer.

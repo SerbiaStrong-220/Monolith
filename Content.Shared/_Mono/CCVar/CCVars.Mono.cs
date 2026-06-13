@@ -209,6 +209,7 @@ public sealed partial class MonoCVars
 
     #region Bank
 
+    // Exodus-Start
     /// <summary>
     ///     Bank balance at or below which deposits are not taxed at all (0% marginal rate).
     /// </summary>
@@ -229,6 +230,7 @@ public sealed partial class MonoCVars
     /// </summary>
     public static readonly CVarDef<float> DepositMaxRate =
         CVarDef.Create("mono.deposit.max_rate", 0.99f, CVar.SERVER | CVar.REPLICATED);
+    // Exodus-End
 
     /// <summary>
     ///     Whether to enable depositing cash. Good for admin events or sandbox.

@@ -37,6 +37,9 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 using Content.Client._Mono.Company;
+using Content.Client._Mono.MonoCoins;
+using Content.Client._Exodus.Bank;
+using Content.Client._Exodus.Bank.UI;
 
 namespace Content.Client.Lobby.UI
 {
@@ -63,10 +66,12 @@ namespace Content.Client.Lobby.UI
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
 
-        // Exodus: savings transfer window + managers.
-        private _Exodus.Bank.UI.SavingsWindow? _savingsWindow;
-        private readonly _Mono.MonoCoins.MonoCoinsManager _monoCoins;
-        private readonly _Exodus.Bank.SavingsTransferManager _savingsTransfer;
+        // Exodus-Start
+        // Savings transfer window + managers.
+        private SavingsWindow? _savingsWindow;
+        private readonly MonoCoinsManager _monoCoins;
+        private readonly SavingsTransferManager _savingsTransfer;
+        // Exodus-End
 
         private bool _exporting;
         private bool _imaging;
@@ -126,7 +131,9 @@ namespace Content.Client.Lobby.UI
             IResourceManager resManager,
             JobRequirementsManager requirements,
             MarkingManager markings,
-            CompanyManager manager) // Mono
+            CompanyManager manager, // Mono
+            MonoCoinsManager monoCoins, // Exodus
+            SavingsTransferManager savingsTransfer) // Exodus
         {
             RobustXamlLoader.Load(this);
             _sawmill = logManager.GetSawmill("profile.editor");
@@ -175,13 +182,14 @@ namespace Content.Client.Lobby.UI
                 Save?.Invoke();
             };
 
-            // Exodus: savings transfer.
-            _monoCoins = IoCManager.Resolve<_Mono.MonoCoins.MonoCoinsManager>();
-            _savingsTransfer = IoCManager.Resolve<_Exodus.Bank.SavingsTransferManager>();
+            // Exodus-Start
+            _monoCoins = monoCoins;
+            _savingsTransfer = savingsTransfer;
             _savingsTransfer.BankBalanceUpdated += OnSavingsBankBalanceUpdated;
             _monoCoins.BalanceUpdated += OnSavingsAccountBalanceUpdated;
             SavingsButton.OnPressed += _ => OpenSavingsWindow();
             UpdateSavingsButtonIcon(_monoCoins.GetLastKnownBalance());
+            // Exodus-End
 
             #region Left
 
@@ -1605,14 +1613,15 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
 
-        // Exodus: savings transfer window.
+        // Exodus-Start
+        // Savings transfer window.
         private void OpenSavingsWindow()
         {
             if (Profile == null)
                 return;
 
             _savingsWindow?.Dispose();
-            _savingsWindow = new _Exodus.Bank.UI.SavingsWindow();
+            _savingsWindow = new SavingsWindow();
             _savingsWindow.OnTransfer += amount => _savingsTransfer.RequestTransfer(amount);
             _savingsWindow.OnClose += () => _savingsWindow = null;
             RefreshSavingsWindow();
@@ -1689,6 +1698,7 @@ namespace Content.Client.Lobby.UI
 
             SavingsIcon.Texture = new SpriteSpecifier.Rsi(new ResPath("_NF/Objects/Economy/cash.rsi"), state).Frame0();
         }
+        // Exodus-End
 
         protected override void Dispose(bool disposing)
         {
@@ -1699,11 +1709,12 @@ namespace Content.Client.Lobby.UI
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
 
-            // Exodus: savings transfer cleanup.
+            // Exodus-Start
             _savingsTransfer.BankBalanceUpdated -= OnSavingsBankBalanceUpdated;
             _monoCoins.BalanceUpdated -= OnSavingsAccountBalanceUpdated;
             _savingsWindow?.Dispose();
             _savingsWindow = null;
+            // Exodus-End
         }
 
         protected override void EnteredTree()

@@ -22,16 +22,23 @@ namespace Content.Server._Exodus.Bank;
 /// </summary>
 public sealed class SavingsTransferManager
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly MonoCoinsManager _coins = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IServerPreferencesManager _prefs = default!;
+    [Dependency] private MonoCoinsManager _coins = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+
+    private GameTicker _ticker = default!;
+    private BankSystem _bank = default!;
 
     public void Initialize()
     {
         _net.RegisterNetMessage<MsgSavingsTransferRequest>(OnTransferRequest);
         _net.RegisterNetMessage<MsgSavingsTransferState>();
+
+        // Cache the systems once; the entity systems are already up at this point.
+        _ticker = _entMan.System<GameTicker>();
+        _bank = _entMan.System<BankSystem>();
     }
 
     private void OnTransferRequest(MsgSavingsTransferRequest msg)
@@ -45,7 +52,7 @@ public sealed class SavingsTransferManager
 
         // Only allow transfers from the lobby. In-round the live BankAccountComponent is not updated
         // by this path, so moving profile money to savings mid-round would duplicate it.
-        if (_entMan.System<GameTicker>().PlayerGameStatuses.TryGetValue(session.UserId, out var status) &&
+        if (_ticker.PlayerGameStatuses.TryGetValue(session.UserId, out var status) &&
             status == PlayerGameStatus.JoinedGame)
             return;
 
@@ -53,15 +60,13 @@ public sealed class SavingsTransferManager
             prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
             return;
 
-        var bank = _entMan.System<BankSystem>();
-
         if (msg.Amount > 0)
         {
             // Main account -> savings. Clamp to what's on the main account: asking for more
             // than you have just transfers everything available.
             var moveAmount = Math.Min(msg.Amount, profile.BankBalance);
             if (moveAmount > 0 &&
-                bank.TryBankWithdraw(session, prefs, profile, moveAmount, out _, spendLongTerm: false))
+                _bank.TryBankWithdraw(session, prefs, profile, moveAmount, out _, spendLongTerm: false))
                 _ = _coins.AddMonoCoinsAsync(session.UserId, moveAmount);
         }
         else
@@ -70,7 +75,7 @@ public sealed class SavingsTransferManager
             var savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
             var moveAmount = (int)Math.Min(-msg.Amount, savings);
             if (moveAmount > 0 &&
-                bank.TryBankDeposit(session, prefs, profile, moveAmount, out _))
+                _bank.TryBankDeposit(session, prefs, profile, moveAmount, out _))
                 _ = _coins.AddMonoCoinsAsync(session.UserId, -moveAmount);
         }
 

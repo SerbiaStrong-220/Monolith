@@ -21,7 +21,6 @@ humanoid-profile-editor-export-button = Экспорт
 humanoid-profile-editor-export-image-button = Экспорт изображения
 humanoid-profile-editor-open-image-button = Открыть изображения
 humanoid-profile-editor-save-button = Сохранить
-humanoid-profile-editor-savings-button = Сбережения
 humanoid-profile-editor-reset-button = Сбросить
 humanoid-profile-editor-spawn-priority-label = Приоритет спавна:
 humanoid-profile-editor-eyes-label = Цвет глаз:
