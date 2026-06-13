@@ -348,7 +348,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             fallbackRecord = found;
         }
 
-        if (fallbackComp != null)
+        if (fallbackComp != null && fallbackRecord != null)
         {
             console = fallbackConsole;
             consoleComp = fallbackComp;
