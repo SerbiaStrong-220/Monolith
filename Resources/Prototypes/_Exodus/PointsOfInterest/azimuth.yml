@@ -26,7 +26,7 @@
         description: "A surviving ADS remnant vessel crewed by pre-fracture Asakim warriors."
       components:
       - type: StationNameSetup
-        mapNameTemplate: "ADS | Azimuth"
+        mapNameTemplate: "ВЭФ | Азимут"
       - type: ExtraStationInformation
         icon:
           sprite: _Mono/Mobs/Species/Asakim/parts.rsi
