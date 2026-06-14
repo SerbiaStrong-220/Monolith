@@ -71,6 +71,12 @@ public sealed class LifeInsuranceRecord
     /// </summary>
     public int Insurances;
 
+    /// <summary>
+    /// Company/faction the player belonged to when recorded. Restored on the clone so it keeps
+    /// company-gated access (e.g. faction uplinks). "None" when the player had no company.
+    /// </summary>
+    public string Company = "None";
+
     public LifeInsuranceRecord(string name, HumanoidCharacterProfile profile, int insurances)
     {
         Name = name;

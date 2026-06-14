@@ -87,7 +87,7 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
             return;
         }
 
-        if (!_cloner.TryStartRevival(cloner, record.Profile, mindId, user))
+        if (!_cloner.TryStartRevival(cloner, record.Profile, mindId, user, record.Company))
         {
             _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), uid, uid);
             return;

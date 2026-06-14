@@ -6,6 +6,7 @@ using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared._EinsteinEngines.Silicon.Components;
 using Content.Shared._Exodus.CCVar;
+using Content.Shared._Mono.Company;
 using Content.Shared._Exodus.LifeInsurance;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared.Access.Systems;
@@ -132,10 +133,18 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         // Store a deep copy so the registry holds a true snapshot, independent of later prefs edits.
         var snapshot = profile.Clone();
 
+        // Capture the live company so the clone can keep company-gated access (faction uplinks).
+        var company = TryComp<CompanyComponent>(body, out var companyComp) ? companyComp.CompanyName.Id : "None";
+
         if (comp.Records.TryGetValue(session.UserId, out var existing))
+        {
             existing.Profile = snapshot;
+            existing.Company = company;
+        }
         else
-            comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0);
+        {
+            comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0) { Company = company };
+        }
 
         _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor ?? body);
         UpdateUi(consoleUid, comp);

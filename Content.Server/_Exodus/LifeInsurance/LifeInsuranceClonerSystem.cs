@@ -3,6 +3,7 @@ using Content.Server.EUI;
 using Content.Server.Humanoid;
 using Content.Server.Jobs;
 using Content.Shared._Exodus.LifeInsurance.Components;
+using Content.Shared._Mono.Company;
 using Content.Shared._NF.Bank.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -68,7 +69,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     /// <summary>
     /// Begins growing a clone from the given profile. The mind is transferred once revival completes.
     /// </summary>
-    public bool TryStartRevival(EntityUid uid, HumanoidCharacterProfile profile, EntityUid mindId, NetUserId user, LifeInsuranceClonerComponent? comp = null)
+    public bool TryStartRevival(EntityUid uid, HumanoidCharacterProfile profile, EntityUid mindId, NetUserId user, string company, LifeInsuranceClonerComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return false;
@@ -84,6 +85,12 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         _metaData.SetEntityName(mob, profile.Name);
         EnsureComp<BankAccountComponent>(mob);
         ApplyTraits(mob, profile);
+
+        // Restore company/faction membership so the clone keeps company-gated access (faction uplinks).
+        // CompanySystem normally sets this on PlayerSpawnCompleteEvent, which Spawn does not raise.
+        var companyComp = EnsureComp<CompanyComponent>(mob);
+        companyComp.CompanyName = company;
+        Dirty(mob, companyComp);
 
         // Restore job-granted components (faction membership, command staff) and languages, mirroring
         // standard cloning plus role languages. Implants/loadout (other JobSpecial types) are not applied.
