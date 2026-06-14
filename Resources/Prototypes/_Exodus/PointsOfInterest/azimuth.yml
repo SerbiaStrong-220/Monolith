@@ -2,14 +2,14 @@
   id: ADSAzimuth
   parent: [BaseMobilePOI, BaseRepairablePOI]
   name: "ВЭФ | Азимут"
-  minimumDistance: 6000
-  maximumDistance: 8000
+  minimumDistance: 20000
+  maximumDistance: 30000
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/azimuth_lobby.yml
   addComponents:
   - type: IFF
-    color: "#05e6ff"
+    color: "#BD0071"
     readOnly: true
 
 - type: gameMap
