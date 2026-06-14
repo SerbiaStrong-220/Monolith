@@ -1,4 +1,5 @@
 using Content.Server.Store.Conditions; // Exodus
+using Content.Shared.GameTicking; // Exodus
 using Content.Shared.Store; // Exodus
 
 namespace Content.Server.Store.Systems;
@@ -11,6 +12,11 @@ public sealed partial class StoreSystem
     public int GetSharedLimitedStockPurchases(string stockKey)
     {
         return _sharedLimitedStockPurchases.GetValueOrDefault(stockKey);
+    }
+
+    private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
+    {
+        _sharedLimitedStockPurchases.Clear();
     }
 
     // Exodus: Calculates remaining limited stock for UI and availability feedback.

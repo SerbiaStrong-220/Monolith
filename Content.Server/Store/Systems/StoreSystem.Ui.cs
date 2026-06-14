@@ -432,24 +432,33 @@ public readonly record struct StoreBuyFinishedEvent(
 
 // Exodus
 [ByRefEvent]
-public sealed class BeforeStoreBuyAttemptEvent(
-    EntityUid storeUid,
-    EntityUid buyer,
-    StoreComponent store,
-    ListingDataWithCostModifiers listing) : CancellableEntityEventArgs
+public record struct BeforeStoreBuyAttemptEvent(
+    EntityUid StoreUid,
+    EntityUid Buyer,
+    StoreComponent Store,
+    ListingDataWithCostModifiers Listing)
 {
-    public EntityUid StoreUid { get; } = storeUid;
-    public EntityUid Buyer { get; } = buyer;
-    public StoreComponent Store { get; } = store;
-    public ListingDataWithCostModifiers Listing { get; } = listing;
+    public bool Cancelled { get; private set; }
     public bool Handled { get; set; }
+
+    public void Cancel()
+    {
+        Cancelled = true;
+    }
 }
 
 // Exodus
 [ByRefEvent]
-public sealed class GetStoreUiDataEvent
+public record struct GetStoreUiDataEvent
 {
-    public StoreUiMode Mode { get; set; } = StoreUiMode.Default;
-    public float PriceMultiplier { get; set; } = 1f;
+    public StoreUiMode Mode { get; set; }
+    public float PriceMultiplier { get; set; }
     public StoreSummoningUiData? ActiveSummoning { get; set; }
+
+    public GetStoreUiDataEvent()
+    {
+        Mode = StoreUiMode.Default;
+        PriceMultiplier = 1f;
+        ActiveSummoning = null;
+    }
 }

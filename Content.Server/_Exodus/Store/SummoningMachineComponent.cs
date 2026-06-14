@@ -8,22 +8,22 @@ namespace Content.Server._Exodus.Store;
 [Access(typeof(SummoningMachineSystem))]
 public sealed partial class SummoningMachineComponent : Component
 {
-    [DataField("durationMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("durationMultiplier")]
     public float DurationMultiplier = 1f;
 
-    [DataField("secondsPerCostUnit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("secondsPerCostUnit")]
     public float SecondsPerCostUnit = 1f;
 
-    [DataField("ejectSpeed"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("ejectSpeed")]
     public float EjectSpeed = 6f;
 
-    [DataField("uiUpdateInterval"), ViewVariables(VVAccess.ReadWrite)]
-    public float UiUpdateInterval = 0.25f;
+    [DataField("uiUpdateInterval")]
+    public TimeSpan UiUpdateInterval = TimeSpan.FromSeconds(0.25);
 
     public ProtoId<ListingPrototype>? ActiveListingId;
     public EntProtoId? ActiveProductEntity;
     public TimeSpan ActiveDuration = TimeSpan.Zero;
     public TimeSpan RemainingDuration = TimeSpan.Zero;
-    public float UiAccumulator;
+    public TimeSpan UiAccumulator = TimeSpan.Zero;
     public SummoningMachineVisualState VisualState = SummoningMachineVisualState.Inactive;
 }

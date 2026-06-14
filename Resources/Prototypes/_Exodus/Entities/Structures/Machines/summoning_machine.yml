@@ -1,9 +1,6 @@
 - type: entity
   id: SummoningMachine
   parent: BaseMachinePowered
-  name: summoning machine
-  description: A heavy summoning gateway that trades time for contraband.
-  suffix: 5x5
   placement:
     mode: AlignTileAny
   components:
