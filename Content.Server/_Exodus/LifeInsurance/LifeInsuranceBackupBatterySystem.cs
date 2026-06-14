@@ -11,8 +11,8 @@ namespace Content.Server._Exodus.LifeInsurance;
 /// </summary>
 public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
 {
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private BatterySystem _battery = default!;
 
     public override void Update(float frameTime)
     {

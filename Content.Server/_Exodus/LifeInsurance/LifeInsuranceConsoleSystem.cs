@@ -27,16 +27,16 @@ namespace Content.Server._Exodus.LifeInsurance;
 /// </summary>
 public sealed class LifeInsuranceConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly BankSystem _bank = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly LifeInsuranceBackupBatterySystem _backup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private BankSystem _bank = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IServerPreferencesManager _prefsManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private LifeInsuranceBackupBatterySystem _backup = default!;
 
     public override void Initialize()
     {

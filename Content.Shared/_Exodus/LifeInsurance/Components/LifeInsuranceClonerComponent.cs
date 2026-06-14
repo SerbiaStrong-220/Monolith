@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Preferences;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -90,6 +91,12 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// </summary>
     [DataField]
     public float FailBloodAmount = 100f;
+
+    /// <summary>
+    /// Reagent spilled under the abomination on failure.
+    /// </summary>
+    [DataField]
+    public ProtoId<ReagentPrototype> FailBloodReagent = "Blood";
 }
 
 [Serializable, NetSerializable]

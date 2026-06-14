@@ -28,21 +28,21 @@ namespace Content.Server._Exodus.LifeInsurance;
 /// </summary>
 public sealed class LifeInsuranceClonerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly LanguageSystem _language = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
-    [Dependency] private readonly LifeInsuranceBackupBatterySystem _backup = default!;
-    [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private LanguageSystem _language = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedJobSystem _jobs = default!;
+    [Dependency] private LifeInsuranceBackupBatterySystem _backup = default!;
+    [Dependency] private LifeInsuranceConsoleSystem _console = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
 
     public bool IsAvailable(EntityUid uid, LifeInsuranceClonerComponent? comp = null)
     {
@@ -203,7 +203,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         Spawn(comp.FailMob, _transform.GetMapCoordinates(uid));
 
         // The botched batch bursts out in a gush of blood under the abomination.
-        var blood = new Solution("Blood", comp.FailBloodAmount);
+        var blood = new Solution(comp.FailBloodReagent, comp.FailBloodAmount);
         _puddle.TrySpillAt(Transform(uid).Coordinates, blood, out _);
 
         comp.Failing = false;

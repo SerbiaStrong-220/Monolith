@@ -18,12 +18,12 @@ namespace Content.Server._Exodus.LifeInsurance;
 /// </summary>
 public sealed class LifeInsuranceScannerSystem : EntitySystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly ClimbSystem _climb = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!; // TEMP: auto-record on insert
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private ClimbSystem _climb = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private LifeInsuranceConsoleSystem _console = default!; // TEMP: auto-record on insert
 
     public const string ContainerId = "life-insurance-scanner-body";
 
@@ -33,7 +33,6 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
 
         SubscribeLocalEvent<LifeInsuranceScannerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<LifeInsuranceScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, DragDropTargetEvent>(OnDragDropOn);
@@ -68,28 +67,6 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
             return;
 
         EjectBody(uid, comp);
-    }
-
-    private void AddInsertOtherVerb(EntityUid uid, LifeInsuranceScannerComponent comp, GetVerbsEvent<InteractionVerb> args)
-    {
-        if (args.Using == null ||
-            !args.CanAccess ||
-            !args.CanInteract ||
-            IsOccupied(comp) ||
-            !CanInsert(args.Using.Value))
-            return;
-
-        var name = "Unknown";
-        if (TryComp(args.Using.Value, out MetaDataComponent? metadata))
-            name = metadata.EntityName;
-
-        var target = args.Target;
-        args.Verbs.Add(new InteractionVerb
-        {
-            Act = () => InsertBody(uid, target, comp),
-            Category = VerbCategory.Insert,
-            Text = name
-        });
     }
 
     private void AddAlternativeVerbs(EntityUid uid, LifeInsuranceScannerComponent comp, GetVerbsEvent<AlternativeVerb> args)

@@ -16,12 +16,12 @@ namespace Content.Server._Exodus.LifeInsurance;
 /// </summary>
 public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!;
-    [Dependency] private readonly LifeInsuranceClonerSystem _cloner = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private LifeInsuranceConsoleSystem _console = default!;
+    [Dependency] private LifeInsuranceClonerSystem _cloner = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string ActionProto = "ActionLifeInsuranceRevive";
