@@ -247,10 +247,8 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
     {
         // So we don't drag the window alongside the technology tree.
-        var min = ResearchesContainer.GlobalPosition - GlobalPosition;
-        var max = min + ResearchesContainer.Size;
-        if (relativeMousePos.X >= min.X && relativeMousePos.X <= max.X
-            && relativeMousePos.Y >= min.Y && relativeMousePos.Y <= max.Y)
+        var treeBounds = UIBox2.FromDimensions(ResearchesContainer.GlobalPosition - GlobalPosition, ResearchesContainer.Size);
+        if (treeBounds.Contains(relativeMousePos))
             return DragMode.None;
 
         return _draggin ? DragMode.None : base.GetDragModeFor(relativeMousePos);
