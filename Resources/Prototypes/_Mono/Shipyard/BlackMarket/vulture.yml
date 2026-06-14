@@ -12,6 +12,10 @@
   group: BlackMarket
   access: Pirate
   shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/vulture.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: Null
   class:
   - Pirate

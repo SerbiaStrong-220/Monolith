@@ -85,6 +85,9 @@ entities:
     - type: Transform
       pos: -1.0273438,0.010117531
       parent: invalid
+    - type: NpcFactionMember
+      factions:
+      - TSFMC
     - type: MapGrid
       chunks:
         0,0:

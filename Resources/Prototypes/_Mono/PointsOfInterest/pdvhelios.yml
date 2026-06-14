@@ -18,6 +18,9 @@
   - type: IFF
     color: "#DE9E59"
     readOnly: true # mono
+  - type: NpcFactionMember # Exodus faction-owned POI target filtering
+    factions:
+    - PirateNF
 
 - type: gameMap
   id: HeliosFortress
@@ -30,6 +33,9 @@
       gridComponents:
       - type: VesselInfo
         description: "Здесь царит гнетущая имперская аура." # Ru-Localization
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - PirateNF
       # Exodus start - Territory for Helios Fortress
       - type: GridTerritory
       # Exodus end

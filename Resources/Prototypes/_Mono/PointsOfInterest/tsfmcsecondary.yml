@@ -21,6 +21,9 @@
       stationProto: SecurityFrontierOutpost
       # Exodus start - Territory grid control for peripheral outpost
       gridComponents:
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - TSFMC
       - type: GridTerritory
       # Exodus end
       components:

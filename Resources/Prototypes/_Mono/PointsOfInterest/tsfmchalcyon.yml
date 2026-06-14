@@ -23,6 +23,9 @@
   - type: IFF
     color: "#047abd"
     readOnly: true
+  - type: NpcFactionMember # Exodus faction-owned POI target filtering
+    factions:
+    - TSFMC
   - type: SolarPoweredGrid
     doNotCull: true
 
@@ -38,6 +41,9 @@
       gridComponents:
       - type: VesselInfo
         description: "Законсервированный военный корабль КВП, переоборудованный в передовую оперативную базу." # Ru-Localization
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - TSFMC
       # Exodus start - Territory for TSFMC Halcyon
       - type: GridTerritory
       # Exodus end

@@ -11,6 +11,10 @@
   access: Pirate
   purchasable: false # voucher only
   shuttlePath: /Maps/_Exodus/Shuttles/PDV/ferz.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: Null
   class:
   - Pirate

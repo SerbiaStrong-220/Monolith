@@ -10,6 +10,10 @@
   group: BlackMarket
   access: Pirate
   shuttlePath: /Maps/_Exodus/Shuttles/PDV/atom.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: Null
   class:
   - Pirate

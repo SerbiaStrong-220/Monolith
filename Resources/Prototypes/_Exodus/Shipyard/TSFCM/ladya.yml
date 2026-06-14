@@ -9,6 +9,10 @@
   access: Command # Exodus-Cadet-No-TSF-Shutles
   purchasable: false # voucher only
   shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/ladya.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol
