@@ -17583,7 +17583,7 @@ entities:
     - type: Transform
       pos: 39.5,-1.5
       parent: 1
-- proto: NpcStationAiAttackerStaticSmart
+- proto: NpcStationAiAttackerStaticSmartSyndicateUnanchorable # Exodus syndicate faction AI core
   entities:
   - uid: 2584
     components:

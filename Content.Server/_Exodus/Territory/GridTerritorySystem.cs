@@ -141,7 +141,7 @@ public sealed class GridTerritorySystem : EntitySystem
         LocId label = ent.Comp.DefaultLabel;
 
         // # Exodus start - apply faction color to territory rings (BSS map + nav radar)
-        // Only three factions claim POIs: TSFMC (light blue), PDV, Khsira.
+        // Main claim factions: TSFMC, PDV, Khsira. Side claim faction: Syndicate.
         if (ent.Comp.ControllingFaction is { } factionId &&
             _proto.TryIndex(factionId, out var factionProto))
         {

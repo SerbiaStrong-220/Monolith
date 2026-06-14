@@ -21,3 +21,11 @@ ent-NpcStationAiAttackerStaticSmartTSFMC = атакующее ядро ТСФ
 ent-NpcStationAiAttackerStaticSmartTSFMCUnanchorable = заболтированное атакующее ядро ТСФ
     .desc = { ent-NpcStationAiAttackerStaticSmart.desc }
     .suffix = ИИ, ТСФ, НЕ СКРУЧИВАЕМОЕ
+
+ent-NpcStationAiAttackerStaticSmartSyndicate = атакующее ядро Синдиката
+    .desc = { ent-NpcStationAiAttackerStaticSmart.desc }
+    .suffix = ИИ, Синдикат
+
+ent-NpcStationAiAttackerStaticSmartSyndicateUnanchorable = заболтированное атакующее ядро Синдиката
+    .desc = { ent-NpcStationAiAttackerStaticSmart.desc }
+    .suffix = ИИ, Синдикат, НЕ СКРУЧИВАЕМОЕ

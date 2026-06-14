@@ -7,6 +7,10 @@
   category: Medium
   group: Syndicate
   shuttlePath: /Maps/_Mono/Shuttles/Syndicate/hydra.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
   guidebookPage: Null
   class:
   - Syndicate

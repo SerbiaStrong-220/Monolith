@@ -7,6 +7,10 @@
   category: Small
   group: Syndicate
   shuttlePath: /Maps/_Mono/Shuttles/Syndicate/talon.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
   guidebookPage: Null
   class:
   - Syndicate

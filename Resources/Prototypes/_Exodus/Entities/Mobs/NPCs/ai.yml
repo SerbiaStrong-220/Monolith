@@ -6,7 +6,7 @@
   components:
   - type: HTN
     rootTask:
-      task: AttackerShuttleSmartCompound
+      task: AttackerShuttleSmartStaticCompound
 
 - type: entity
   id: NpcStationAiAttackerStaticSmartAsakim
@@ -55,6 +55,23 @@
   id: NpcStationAiAttackerStaticSmartTSFMCUnanchorable
   parent: NpcStationAiAttackerStaticSmartTSFMC
   suffix: ИИ, ТСФ, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartSyndicate
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, Синдикат
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartSyndicateUnanchorable
+  parent: NpcStationAiAttackerStaticSmartSyndicate
+  suffix: ИИ, Синдикат, НЕ СКРУЧИВАЕМОЕ
   components:
   - type: Anchorable
     flags: None

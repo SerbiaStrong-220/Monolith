@@ -27,6 +27,12 @@
     LPBravo:
       # FIXME: no records despite shipyard console, could currently be gamed
       stationProto: StandardFrontierOutpost
+      # Exodus start - Syndicate-owned NPC target filtering
+      gridComponents:
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Прослушивающий Пункт Браво' # Ru-Localization

@@ -2,10 +2,11 @@ territory-marker-default = ТЕРРИТОРИЯ
 territory-marker-colossus = КОЛОСС-ЦЕНТРАЛ
 territory-marker-hospital = ГОСПИТАЛЬ
 
-# Territory control / claim factions (4 total)
+# Territory control / claim factions (5 total)
 territory-faction-tsf = Транс-Солнечная Федерация
 territory-faction-phaeton = ДИНАСТИЯ ФАЭТОН
 territory-faction-khsira = ИМПЕРИЯ КХСИ'РА
+territory-faction-syndicate = СИНДИКАТ
 
 # Neutral / unclaimed state (used when no banner is actively claiming the grid)
 territory-unclaimed = НЕЗАНЯТО

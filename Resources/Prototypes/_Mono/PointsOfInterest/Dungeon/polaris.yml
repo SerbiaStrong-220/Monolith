@@ -18,6 +18,13 @@
   stations:
     Polaris:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Syndicate-owned territory and NPC target filtering
+      gridComponents:
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Биологический центр Полярис' # Ru-Localization
