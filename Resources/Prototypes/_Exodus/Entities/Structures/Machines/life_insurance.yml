@@ -8,6 +8,19 @@
   description: A patient scanning capsule that records DNA onto a linked life insurance console.
   components:
   - type: LifeInsuranceScanner
+  - type: Anchorable
+    flags: Anchorable # mapper-placed, can be anchored but never unwrenched
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: StaticPrice
     price: 800
   - type: ShipRepairable
@@ -24,7 +37,14 @@
     snapCardinals: true
     layers:
     - state: open
+      map: ["base"]
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LifeInsuranceScannerVisuals.State:
+        base:
+          Open: { state: open }
+          Occupied: { state: occupied }
   - type: ContainerContainer
     containers:
       life-insurance-scanner-body: !type:ContainerSlot
@@ -40,6 +60,19 @@
   components:
   - type: LifeInsuranceCloner
     revivalTime: 10
+  - type: Anchorable
+    flags: Anchorable # mapper-placed, can be anchored but never unwrenched
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Climbable
   - type: StaticPrice
     price: 1000
@@ -65,7 +98,7 @@
         base:
           Idle: { state: pod_0 }
           Cloning: { state: pod_1 }
-          Failed: { state: pod_g } # placeholder
+          Failed: { state: pod_g } # gore state, shown for the 30s failure decay
   - type: ContainerContainer
     containers:
       life-insurance-cloner-body: !type:ContainerSlot
@@ -80,6 +113,19 @@
   description: Records patient DNA, sells life insurance policies, and runs the cloning capsule.
   components:
   - type: LifeInsuranceConsole
+  - type: Anchorable
+    flags: Anchorable # mapper-placed, can be anchored but never unwrenched
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: StaticPrice
     price: 500
   - type: ShipRepairable

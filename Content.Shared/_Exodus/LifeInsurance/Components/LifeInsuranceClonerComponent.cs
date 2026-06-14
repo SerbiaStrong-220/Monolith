@@ -1,4 +1,4 @@
-using Robust.Shared.Containers;
+using Content.Shared.Preferences;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -25,12 +25,6 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     public EntityUid? ConnectedConsole;
 
     /// <summary>
-    /// Container holding the body currently being grown.
-    /// </summary>
-    [ViewVariables]
-    public ContainerSlot BodyContainer = default!;
-
-    /// <summary>
     /// True while a revival is in progress.
     /// </summary>
     [ViewVariables]
@@ -53,6 +47,18 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// </summary>
     [ViewVariables]
     public NetUserId? PendingUser;
+
+    /// <summary>
+    /// Profile the body will be built from once the process completes. The body is not spawned until then.
+    /// </summary>
+    [ViewVariables]
+    public HumanoidCharacterProfile? PendingProfile;
+
+    /// <summary>
+    /// Company/faction to restore on the finished clone.
+    /// </summary>
+    [ViewVariables]
+    public string PendingCompany = "None";
 
     /// <summary>
     /// True while a failed batch is decaying before spitting out a botched abomination.
@@ -78,6 +84,12 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId FailMob = "MobHorrorExpeditions";
+
+    /// <summary>
+    /// Units of blood gushed onto the floor under the abomination when a failed batch finishes.
+    /// </summary>
+    [DataField]
+    public float FailBloodAmount = 100f;
 }
 
 [Serializable, NetSerializable]

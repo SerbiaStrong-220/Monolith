@@ -31,6 +31,7 @@ life-insurance-not-organic = Не обнаружено органической 
 life-insurance-uncloneable = Генетическую структуру этого пациента невозможно записать.
 life-insurance-no-access = Доступ запрещён: удалять записи могут только полковник ТСФ или Великий Визирь.
 life-insurance-dna-recorded = ДНК { $name } записана.
+life-insurance-already-registered = Пациент уже внесён в базу клиентов.
 life-insurance-max-reached = У этого клиента уже максимум страховок.
 life-insurance-target-not-alive = Страховку можно купить только живому клиенту.
 life-insurance-insufficient-funds = Недостаточно средств.

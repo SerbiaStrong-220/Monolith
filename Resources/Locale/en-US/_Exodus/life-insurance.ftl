@@ -31,6 +31,7 @@ life-insurance-not-organic = No organic material detected for scanning.
 life-insurance-uncloneable = This patient's genetic structure cannot be recorded.
 life-insurance-no-access = Access denied: only the TSF Colonel or the Grand Vizier may delete records.
 life-insurance-dna-recorded = Recorded DNA for { $name }.
+life-insurance-already-registered = This patient is already in the client database.
 life-insurance-max-reached = This client already holds the maximum number of policies.
 life-insurance-target-not-alive = Insurance can only be bought for a living client.
 life-insurance-insufficient-funds = Insufficient funds.

@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
@@ -20,6 +21,8 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!; // TEMP: auto-record on insert
 
     public const string ContainerId = "life-insurance-scanner-body";
@@ -35,6 +38,7 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
         SubscribeLocalEvent<LifeInsuranceScannerComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, DragDropTargetEvent>(OnDragDropOn);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
+        SubscribeLocalEvent<LifeInsuranceScannerComponent, LifeInsuranceScannerEnterDoAfterEvent>(OnEnterDoAfter);
     }
 
     private void OnInit(EntityUid uid, LifeInsuranceScannerComponent comp, ComponentInit args)
@@ -109,7 +113,7 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
             var user = args.User;
             args.Verbs.Add(new AlternativeVerb
             {
-                Act = () => InsertBody(uid, user, comp),
+                Act = () => TryEnter(uid, user, user, comp),
                 Text = Loc.GetString("medical-scanner-verb-enter")
             });
         }
@@ -122,7 +126,35 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
 
     private void OnDragDropOn(EntityUid uid, LifeInsuranceScannerComponent comp, ref DragDropTargetEvent args)
     {
-        InsertBody(uid, args.Dragged, comp);
+        TryEnter(uid, args.User, args.Dragged, comp);
+        args.Handled = true;
+    }
+
+    private void OnEnterDoAfter(EntityUid uid, LifeInsuranceScannerComponent comp, LifeInsuranceScannerEnterDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Args.Target is not { } target)
+            return;
+
+        InsertBody(uid, target, comp);
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Starts the timed climb-into-capsule. The body is only inserted once the progress bar completes,
+    /// so the entry takes exactly as long as the bar shows.
+    /// </summary>
+    private void TryEnter(EntityUid uid, EntityUid user, EntityUid target, LifeInsuranceScannerComponent comp)
+    {
+        if (IsOccupied(comp) || !CanInsert(target))
+            return;
+
+        var args = new DoAfterArgs(EntityManager, user, comp.EnterDelay, new LifeInsuranceScannerEnterDoAfterEvent(), uid, target: target, used: uid)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = false,
+        };
+        _doAfter.TryStartDoAfter(args);
     }
 
     public void InsertBody(EntityUid uid, EntityUid toInsert, LifeInsuranceScannerComponent comp)
@@ -136,6 +168,8 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
         if (!_container.Insert(toInsert, comp.BodyContainer))
             return;
 
+        _appearance.SetData(uid, LifeInsuranceScannerVisuals.State, LifeInsuranceScannerState.Occupied);
+
         // TEMP (single-player testing): auto-record DNA the moment a body is inserted.
         _console.TryAutoRecordFromScanner(uid, toInsert);
     }
@@ -146,6 +180,7 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
             return;
 
         _container.Remove(contained, comp.BodyContainer);
+        _appearance.SetData(uid, LifeInsuranceScannerVisuals.State, LifeInsuranceScannerState.Open);
         _climb.ForciblySetClimbing(contained, uid);
     }
 }

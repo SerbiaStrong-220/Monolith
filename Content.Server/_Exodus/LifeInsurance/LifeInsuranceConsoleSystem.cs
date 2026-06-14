@@ -130,21 +130,20 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return false;
         }
 
+        // A person is only enrolled once; re-scanning a known client reports their status instead.
+        if (comp.Records.ContainsKey(session.UserId))
+        {
+            _popup.PopupEntity(Loc.GetString("life-insurance-already-registered"), consoleUid, actor ?? body);
+            return false;
+        }
+
         // Store a deep copy so the registry holds a true snapshot, independent of later prefs edits.
         var snapshot = profile.Clone();
 
         // Capture the live company so the clone can keep company-gated access (faction uplinks).
         var company = TryComp<CompanyComponent>(body, out var companyComp) ? companyComp.CompanyName.Id : "None";
 
-        if (comp.Records.TryGetValue(session.UserId, out var existing))
-        {
-            existing.Profile = snapshot;
-            existing.Company = company;
-        }
-        else
-        {
-            comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0) { Company = company };
-        }
+        comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0) { Company = company };
 
         _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor ?? body);
         UpdateUi(consoleUid, comp);

@@ -1,10 +1,12 @@
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.EUI;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Humanoid;
 using Content.Server.Jobs;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared._Mono.Company;
 using Content.Shared._NF.Bank.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid.Prototypes;
@@ -13,10 +15,8 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
-using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -31,7 +31,6 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -43,20 +42,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     [Dependency] private readonly LifeInsuranceConsoleSystem _console = default!;
     [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-
-    public const string ContainerId = "life-insurance-cloner-body";
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LifeInsuranceClonerComponent, ComponentInit>(OnInit);
-    }
-
-    private void OnInit(EntityUid uid, LifeInsuranceClonerComponent comp, ComponentInit args)
-    {
-        comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, ContainerId);
-    }
+    [Dependency] private readonly PuddleSystem _puddle = default!;
 
     public bool IsAvailable(EntityUid uid, LifeInsuranceClonerComponent? comp = null)
     {
@@ -67,7 +53,9 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Begins growing a clone from the given profile. The mind is transferred once revival completes.
+    /// Begins the revival process. Only the capsule animation runs during this time; the body is not
+    /// spawned until the process succeeds (see <see cref="Finish"/>), so a failure mid-way leaves no
+    /// stray body to clean up.
     /// </summary>
     public bool TryStartRevival(EntityUid uid, HumanoidCharacterProfile profile, EntityUid mindId, NetUserId user, string company, LifeInsuranceClonerComponent? comp = null)
     {
@@ -77,42 +65,16 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         if (comp.Active || comp.Failing || !_backup.IsOperational(uid))
             return false;
 
-        if (!_prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species))
+        // Reject an unusable profile up front so the caller doesn't spend an insurance charge for nothing.
+        if (!_prototype.HasIndex<SpeciesPrototype>(profile.Species))
             return false;
-
-        var mob = Spawn(species.Prototype, _transform.GetMapCoordinates(uid));
-        _humanoid.LoadProfile(mob, profile);
-        _metaData.SetEntityName(mob, profile.Name);
-        EnsureComp<BankAccountComponent>(mob);
-        ApplyTraits(mob, profile);
-
-        // Restore company/faction membership so the clone keeps company-gated access (faction uplinks).
-        // CompanySystem normally sets this on PlayerSpawnCompleteEvent, which Spawn does not raise.
-        var companyComp = EnsureComp<CompanyComponent>(mob);
-        companyComp.CompanyName = company;
-        Dirty(mob, companyComp);
-
-        // Restore job-granted components (faction membership, command staff) and languages, mirroring
-        // standard cloning plus role languages. Implants/loadout (other JobSpecial types) are not applied.
-        if (_jobs.MindTryGetJob(mindId, out var jobProto))
-        {
-            foreach (var special in jobProto.Special)
-            {
-                if (special is AddComponentSpecial or AddLanguageSpecial)
-                    special.AfterEquip(mob);
-            }
-        }
-
-        if (!_container.Insert(mob, comp.BodyContainer))
-        {
-            QueueDel(mob);
-            return false;
-        }
 
         comp.Active = true;
         comp.Progress = 0f;
         comp.PendingMind = mindId;
         comp.PendingUser = user;
+        comp.PendingProfile = profile;
+        comp.PendingCompany = company;
         _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Cloning);
 
         return true;
@@ -153,26 +115,19 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
 
     private void Finish(EntityUid uid, LifeInsuranceClonerComponent comp)
     {
-        var body = comp.BodyContainer.ContainedEntity;
+        // The body is only built now, on success: spawn it, then transfer the waiting mind into it.
+        var body = SpawnBody(uid, comp);
 
-        if (body != null)
+        if (body != null && comp.PendingMind is { } mindId && Exists(mindId))
         {
-            _container.Remove(body.Value, comp.BodyContainer);
+            _mind.TransferTo(mindId, body.Value, ghostCheckOverride: true);
 
-            if (comp.PendingMind is { } mindId && Exists(mindId))
-            {
-                _mind.TransferTo(mindId, body.Value, ghostCheckOverride: true);
-
-                // Show the narrative "you wake up in the incubator" window to the revived player.
-                if (comp.PendingUser is { } user && _player.TryGetSessionById(user, out var session))
-                    _eui.OpenEui(new LifeInsuranceWakeUpEui(), session);
-            }
+            // Show the narrative "you wake up in the incubator" window to the revived player.
+            if (comp.PendingUser is { } user && _player.TryGetSessionById(user, out var session))
+                _eui.OpenEui(new LifeInsuranceWakeUpEui(), session);
         }
 
-        comp.Active = false;
-        comp.Progress = 0f;
-        comp.PendingMind = null;
-        comp.PendingUser = null;
+        ClearPending(comp);
         _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Idle);
 
         if (comp.ConnectedConsole is { } console)
@@ -180,24 +135,63 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Aborts an in-progress revival (power fully lost): the half-grown body is destroyed and the
-    /// capsule enters a gory failure state. The insurance charge stays spent.
+    /// Builds the clone body from the pending profile, applying appearance, traits, company and the
+    /// mind's job specials. Returns null if the pending profile is missing or invalid.
+    /// </summary>
+    private EntityUid? SpawnBody(EntityUid uid, LifeInsuranceClonerComponent comp)
+    {
+        if (comp.PendingProfile is not { } profile || !_prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species))
+            return null;
+
+        var mob = Spawn(species.Prototype, _transform.GetMapCoordinates(uid));
+        _humanoid.LoadProfile(mob, profile);
+        _metaData.SetEntityName(mob, profile.Name);
+        EnsureComp<BankAccountComponent>(mob);
+        ApplyTraits(mob, profile);
+
+        // Restore company/faction membership so the clone keeps company-gated access (faction uplinks).
+        // CompanySystem normally sets this on PlayerSpawnCompleteEvent, which Spawn does not raise.
+        var companyComp = EnsureComp<CompanyComponent>(mob);
+        companyComp.CompanyName = comp.PendingCompany;
+        Dirty(mob, companyComp);
+
+        // Restore job-granted components (faction membership, command staff) and languages, mirroring
+        // standard cloning plus role languages. Implants/loadout (other JobSpecial types) are not applied.
+        if (comp.PendingMind is { } mindId && _jobs.MindTryGetJob(mindId, out var jobProto))
+        {
+            foreach (var special in jobProto.Special)
+            {
+                if (special is AddComponentSpecial or AddLanguageSpecial)
+                    special.AfterEquip(mob);
+            }
+        }
+
+        return mob;
+    }
+
+    /// <summary>
+    /// Aborts an in-progress revival (power fully lost). No body exists yet (it is only spawned on
+    /// success), so the capsule simply enters its gory failure state. The insurance charge stays spent.
     /// </summary>
     private void TriggerFailure(EntityUid uid, LifeInsuranceClonerComponent comp)
     {
-        if (comp.BodyContainer.ContainedEntity is { } body)
-            QueueDel(body);
-
-        comp.Active = false;
-        comp.Progress = 0f;
-        comp.PendingMind = null;
-        comp.PendingUser = null;
+        ClearPending(comp);
         comp.Failing = true;
         comp.FailProgress = 0f;
         _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Failed);
 
         if (comp.ConnectedConsole is { } console)
             _console.UpdateUi(console);
+    }
+
+    private void ClearPending(LifeInsuranceClonerComponent comp)
+    {
+        comp.Active = false;
+        comp.Progress = 0f;
+        comp.PendingMind = null;
+        comp.PendingUser = null;
+        comp.PendingProfile = null;
+        comp.PendingCompany = "None";
     }
 
     private void RunFailure(EntityUid uid, LifeInsuranceClonerComponent comp, float frameTime)
@@ -207,6 +201,10 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
             return;
 
         Spawn(comp.FailMob, _transform.GetMapCoordinates(uid));
+
+        // The botched batch bursts out in a gush of blood under the abomination.
+        var blood = new Solution("Blood", comp.FailBloodAmount);
+        _puddle.TrySpillAt(Transform(uid).Coordinates, blood, out _);
 
         comp.Failing = false;
         comp.FailProgress = 0f;
