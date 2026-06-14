@@ -5,7 +5,6 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Silicons.StationAi;
-using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server._Exodus.Silicons.StationAi;
@@ -25,13 +24,6 @@ public sealed class AiRenameSystem : EntitySystem
         SubscribeLocalEvent<StationAiHeldComponent, AiRenameEvent>(OnAiRename);
         SubscribeLocalEvent<StationAiHeldComponent, TransformSpeakerNameEvent>(OnTransformSpeakerName);
         SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
-
-        // Run after upstream's OnAiInsert, which copies the inserted brain name to the core.
-        // Robust allows only one component subscription for StationAiCoreComponent + EntInsertedIntoContainerMessage,
-        // and upstream owns it, so this must stay as a broadcast subscription.
-        SubscribeLocalEvent<EntInsertedIntoContainerMessage>(
-            OnCoreInsert,
-            after: new[] { typeof(SharedStationAiSystem) });
     }
 
     private void OnAiRename(Entity<StationAiHeldComponent> ent, ref AiRenameEvent args)
@@ -75,29 +67,6 @@ public sealed class AiRenameSystem : EntitySystem
         args.VoiceName = Name(core.Owner);
     }
 
-    /// <summary>
-    /// Re-applies the saved custom AI name after upstream's OnAiInsert copies
-    /// the raw inserted brain name into the core.
-    /// </summary>
-    private void OnCoreInsert(EntInsertedIntoContainerMessage args)
-    {
-        if (args.Container.ID != StationAiCoreComponent.Container)
-            return;
-
-        var core = args.Container.Owner;
-        if (!HasComp<StationAiCoreComponent>(core))
-            return;
-
-        if (!TryComp<AiRenameNameComponent>(args.Entity, out var saved) ||
-            string.IsNullOrEmpty(saved.BaseName))
-            return;
-
-        saved.Identifier = GetIdentifier(args.Entity);
-        Dirty(args.Entity, saved);
-
-        _metaData.SetEntityName(core, BuildFullName(saved.BaseName, saved.Identifier));
-    }
-
     public void RenameCore(EntityUid heldUid, string newName, ICommonSession? renamer = null)
     {
         if (!_stationAi.TryGetCore(heldUid, out var core))
@@ -108,7 +77,7 @@ public sealed class AiRenameSystem : EntitySystem
         saved.Identifier = GetIdentifier(heldUid);
         Dirty(heldUid, saved);
 
-        var finalName = BuildFullName(saved.BaseName, saved.Identifier);
+        var finalName = _stationAi.BuildAiRenameFullName(saved.BaseName, saved.Identifier);
         var oldName = MetaData(core.Owner).EntityName;
 
         _metaData.SetEntityName(core.Owner, finalName);
@@ -131,13 +100,6 @@ public sealed class AiRenameSystem : EntitySystem
             return saved.BaseName;
 
         return GetEditableBaseName(heldUid);
-    }
-
-    private string BuildFullName(string baseName, string identifier)
-    {
-        return string.IsNullOrEmpty(identifier)
-            ? baseName
-            : Loc.GetString("ai-rename-full-name", ("baseName", baseName), ("identifier", identifier));
     }
 
     private string GetEditableBaseName(EntityUid uid)
