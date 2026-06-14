@@ -30,7 +30,7 @@ auto_map_vote = false
 space_wind = true
 
 [shuttle]
-auto_call_time = 0
+auto_call_time = 360
 mass_limit = 0
 
 [shuttle.impact]
