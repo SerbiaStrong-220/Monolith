@@ -87,9 +87,6 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private List<EntityUid> _entityList = new();
     private HashSet<Entity<IComponent>> _entitySet = new();
     private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
-    private HashSet<Entity<ShipNpcTargetComponent>> _shipNpcTargets = new(); // Exodus faction-aware NPC core targeting
-    private HashSet<EntityUid> _checkedShipTargetGrids = new(); // Exodus faction-aware NPC core targeting
-    private HashSet<EntityUid> _friendlyShipTargetGrids = new(); // Exodus faction-aware NPC core targeting
 
     public override void Initialize()
     {
@@ -562,8 +559,6 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 var ownGrid = xform.GridUid;
                 // Exodus-begin faction-aware ship NPC targeting
                 var hasFactionSource = TryGetFactionSource(owner, ownGrid, out var factionSource, out var sourceFaction);
-                _checkedShipTargetGrids.Clear();
-                _friendlyShipTargetGrids.Clear();
                 // Exodus-end
                 foreach (var (target, targetComp) in _lookup.GetEntitiesInRange<ShipNpcTargetComponent>(_transform.GetMapCoordinates(xform), shuttlesQuery.Range))
                 {
@@ -611,31 +606,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private bool IsFriendlyNpcTarget(EntityUid source, NpcFactionMemberComponent? sourceFaction, EntityUid target, EntityUid? targetGrid)
     {
         return HasFriendlyFaction(source, sourceFaction, target) ||
-               targetGrid != null && HasFriendlyShipNpcTargetOnGrid(source, sourceFaction, targetGrid.Value) ||
                targetGrid != null && HasFriendlyFaction(source, sourceFaction, targetGrid.Value);
-    }
-
-    private bool HasFriendlyShipNpcTargetOnGrid(EntityUid source, NpcFactionMemberComponent? sourceFaction, EntityUid targetGrid)
-    {
-        if (_friendlyShipTargetGrids.Contains(targetGrid))
-            return true;
-
-        if (!_checkedShipTargetGrids.Add(targetGrid))
-            return false;
-
-        _shipNpcTargets.Clear();
-        _lookup.GetChildEntities(targetGrid, _shipNpcTargets);
-
-        foreach (var shipTarget in _shipNpcTargets)
-        {
-            if (HasFriendlyFaction(source, sourceFaction, shipTarget.Owner))
-            {
-                _friendlyShipTargetGrids.Add(targetGrid);
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private bool TryGetFactionSource(EntityUid owner, EntityUid? ownerGrid, out EntityUid source, out NpcFactionMemberComponent? faction)

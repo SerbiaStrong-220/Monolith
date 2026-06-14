@@ -111,7 +111,6 @@
   duplicateAllowed: false
   protectedRadius: 2500
   name: "Древнее Хранилище Кхси'Ра"
-  stationGameMap: AdsSmallAncientStorage
   hideWarp: true
   addComponents:
   - type: IFF
