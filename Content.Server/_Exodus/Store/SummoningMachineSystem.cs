@@ -18,13 +18,13 @@ namespace Content.Server._Exodus.Store;
 
 public sealed class SummoningMachineSystem : EntitySystem
 {
-    [Dependency] private readonly BiocodeSystem _biocode = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private BiocodeSystem _biocode = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private StoreSystem _store = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -49,7 +49,7 @@ public sealed class SummoningMachineSystem : EntitySystem
                 continue;
 
             if (ready)
-                summoner.RemainingDuration = summoner.RemainingDuration - elapsed;
+                summoner.RemainingDuration -= elapsed;
 
             if (summoner.RemainingDuration <= TimeSpan.Zero)
             {
@@ -57,10 +57,10 @@ public sealed class SummoningMachineSystem : EntitySystem
                 continue;
             }
 
-            summoner.UiAccumulator += frameTime;
+            summoner.UiAccumulator += elapsed;
             if (summoner.UiAccumulator >= summoner.UiUpdateInterval && _ui.IsUiOpen(uid, StoreUiKey.Key))
             {
-                summoner.UiAccumulator = 0f;
+                summoner.UiAccumulator = TimeSpan.Zero;
                 _store.UpdateUserInterface(null, uid, store);
             }
         }
@@ -160,7 +160,7 @@ public sealed class SummoningMachineSystem : EntitySystem
         component.ActiveProductEntity = null;
         component.ActiveDuration = TimeSpan.Zero;
         component.RemainingDuration = TimeSpan.Zero;
-        component.UiAccumulator = 0f;
+        component.UiAccumulator = TimeSpan.Zero;
     }
 
     private TimeSpan GetSummonDuration(ListingDataWithCostModifiers listing, SummoningMachineComponent component)
