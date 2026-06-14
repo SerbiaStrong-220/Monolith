@@ -72,7 +72,7 @@
   - type: RadarConsole
     followEntity: false
   - type: CommunicationsConsole
-    canShuttle: false
+    # canShuttle: false # Exodus
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
   - type: HolographicAvatar
