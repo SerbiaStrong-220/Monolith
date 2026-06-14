@@ -1,7 +1,7 @@
 - type: pointOfInterest
   id: ADSAzimuth
   parent: [BaseMobilePOI, BaseRepairablePOI]
-  name: "ADS | Azimuth"
+  name: "ВЭФ | Азимут"
   minimumDistance: 6000
   maximumDistance: 8000
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
@@ -14,7 +14,7 @@
 
 - type: gameMap
   id: ADSAzimuth
-  mapName: "ADS | Azimuth"
+  mapName: "ВЭФ | Азимут"
   mapPath: /Maps/_Exodus/POI/azimuth_lobby.yml
   minPlayers: 0
   randomRotation: false
