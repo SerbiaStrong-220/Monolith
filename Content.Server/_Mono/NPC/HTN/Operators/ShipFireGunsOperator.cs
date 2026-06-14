@@ -110,6 +110,9 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
                 && _entManager.TryGetComponent<AnchorableComponent>(owner, out var anchorable) && !xform.Anchored
             || RequirePowered
                 && _entManager.TryGetComponent<ApcPowerReceiverComponent>(owner, out var receiver) && !_power.IsPowered(owner, receiver)
+            // Exodus-begin powered NPC core targeting
+            || !IsPoweredTarget(target)
+            // Exodus-end
         )
             return HTNOperatorStatus.Failed;
 
@@ -136,6 +139,22 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
 
         return HTNOperatorStatus.Continuing;
     }
+
+    // Exodus-begin powered NPC core targeting
+    private bool IsPoweredTarget(EntityCoordinates target)
+    {
+        var targetUid = target.EntityId;
+        if (targetUid == EntityUid.Invalid ||
+            !_entManager.TryGetComponent<ShipNpcTargetComponent>(targetUid, out var targetComp) ||
+            !targetComp.NeedPower)
+        {
+            return true;
+        }
+
+        return !_entManager.TryGetComponent<ApcPowerReceiverComponent>(targetUid, out var receiver) ||
+               _power.IsPowered(targetUid, receiver);
+    }
+    // Exodus-end
 
     public void ConditionalShutdown(NPCBlackboard blackboard)
     {

@@ -4,3 +4,4 @@ ent-MobPrefectAsakimGhostrole = префект азаким
 
 ent-MobPrefectAsakimGhostroleNoTimelock = { ent-MobPrefectAsakimGhostrole }
     .suffix = Азаким, Префект, без часов
+    .desc = { ent-MobPrefectAsakimGhostrole.desc }

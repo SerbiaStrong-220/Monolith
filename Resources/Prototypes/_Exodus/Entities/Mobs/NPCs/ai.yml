@@ -11,8 +11,50 @@
 - type: entity
   id: NpcStationAiAttackerStaticSmartAsakim
   parent: NpcStationAiFactionAttackerStaticSmart
-  suffix: AI, Asakim, Static, Smart
+  suffix: ИИ, Азаким
   components:
   - type: NpcFactionMember
     factions:
     - AsakimDefenceForces
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartAsakimUnanchorable
+  parent: NpcStationAiAttackerStaticSmartAsakim
+  suffix: ИИ, Азаким, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartPirateNF
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, ДФ
+  components:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartPirateNFUnanchorable
+  parent: NpcStationAiAttackerStaticSmartPirateNF
+  suffix: ИИ, ДФ, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartTSFMC
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, ТСФ
+  components:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartTSFMCUnanchorable
+  parent: NpcStationAiAttackerStaticSmartTSFMC
+  suffix: ИИ, ТСФ, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None

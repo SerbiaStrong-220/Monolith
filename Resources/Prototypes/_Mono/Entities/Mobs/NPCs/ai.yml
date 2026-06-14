@@ -62,6 +62,7 @@
     - RogueNpcStationAi
   - type: ShipNpcTarget # Exodus faction-aware NPC core targeting
     priority: 1
+    needPower: true # Exodus powered NPC core targeting
   - type: PassiveThermalSignature # Mono
     signature: 500000 # vibe number
   - type: ThermalSignature # Mono
