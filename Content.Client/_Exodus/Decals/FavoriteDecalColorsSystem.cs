@@ -10,7 +10,7 @@ namespace Content.Client._Exodus.Decals;
 /// </summary>
 public sealed class FavoriteDecalColorsSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private readonly List<Color> _colors = new();
 
