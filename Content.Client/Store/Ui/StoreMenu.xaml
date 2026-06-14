@@ -6,6 +6,25 @@
     SetSize="512 512">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <!-- Exodus -->
+            <BoxContainer Name="SummoningStatusContainer" Margin="4,4,4,0" Orientation="Vertical" Visible="False">
+                <BoxContainer Orientation="Horizontal">
+                    <TextureRect
+                        Name="SummoningStatusIcon"
+                        MinSize="32 32"
+                        SetSize="32 32"
+                        Stretch="KeepAspectCentered" />
+                    <BoxContainer Margin="6,0,0,0" Orientation="Vertical" HorizontalExpand="True">
+                        <Label Name="SummoningStatusTitle" />
+                        <BoxContainer Orientation="Horizontal">
+                            <Label Name="SummoningStatusTimer" />
+                            <Control MinWidth="8" />
+                            <Label Name="SummoningStatusNote" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
+                <ProgressBar Name="SummoningProgressBar" Margin="0,4,0,0" MaxValue="1" Value="0" />
+            </BoxContainer>
             <BoxContainer Margin="4,4,4,4" Orientation="Horizontal">
                 <RichTextLabel
                     Name="BalanceInfo"

@@ -14,6 +14,15 @@
       state: full
 
 - type: entity
+  name: asakim prefect spawner
+  id: SpawnPrefectAsakimWarrior
+  parent: SpawnCenturionAsakimWarrior
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPrefectAsakimGhostrole
+
+- type: entity
   name: asakim centurion spawner
   id: SpawnCenturionAsakimWarriorNoTimelock
   parent: SpawnCenturionAsakimWarrior
@@ -22,6 +31,16 @@
   - type: ConditionalSpawner
     prototypes:
     - MobCenturionAsakimGhostroleNoTimelock
+
+- type: entity
+  name: asakim prefect spawner
+  id: SpawnPrefectAsakimWarriorNoTimelock
+  parent: SpawnPrefectAsakimWarrior
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPrefectAsakimGhostroleNoTimelock
 
 - type: entity
   name: personal protection operator spawner

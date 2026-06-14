@@ -21,13 +21,54 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 
     public readonly bool AllowRefund;
 
-    public StoreUpdateState(HashSet<ListingDataWithCostModifiers> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, bool showFooter, bool allowRefund)
+    // Exodus
+    public readonly StoreUiMode Mode;
+
+    // Exodus
+    public readonly float PriceMultiplier;
+
+    // Exodus
+    public readonly StoreSummoningUiData? ActiveSummoning;
+
+    public StoreUpdateState(
+        HashSet<ListingDataWithCostModifiers> listings,
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance,
+        bool showFooter,
+        bool allowRefund,
+        StoreUiMode mode = StoreUiMode.Default,
+        float priceMultiplier = 1f,
+        StoreSummoningUiData? activeSummoning = null)
     {
         Listings = listings;
         Balance = balance;
         ShowFooter = showFooter;
         AllowRefund = allowRefund;
+        Mode = mode;
+        PriceMultiplier = priceMultiplier;
+        ActiveSummoning = activeSummoning;
     }
+}
+
+// Exodus
+[Serializable, NetSerializable]
+public enum StoreUiMode : byte
+{
+    Default,
+    Summoning
+}
+
+// Exodus
+[Serializable, NetSerializable]
+public sealed class StoreSummoningUiData(
+    ProtoId<ListingPrototype> listingId,
+    TimeSpan duration,
+    TimeSpan remaining,
+    bool paused)
+{
+    public ProtoId<ListingPrototype> ListingId = listingId;
+    public TimeSpan Duration = duration;
+    public TimeSpan Remaining = remaining;
+    public bool Paused = paused;
 }
 
 [Serializable, NetSerializable]

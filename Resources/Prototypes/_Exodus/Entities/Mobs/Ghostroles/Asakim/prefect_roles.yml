@@ -1,0 +1,35 @@
+- type: entity
+  parent: MobPrefectAsakim
+  id: MobPrefectAsakimGhostrole
+  name: prefect asakim warrior
+  suffix: Asakim, Prefect
+  components:
+  - type: GhostRole
+    name: ghost-role-information-prefect-asakim-name
+    description: ghost-role-information-prefect-asakim-description
+    rules: ghost-role-information-prefect-asakim-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 360000 # 100 hrs
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobPrefectAsakimGhostrole
+  id: MobPrefectAsakimGhostroleNoTimelock
+  suffix: Asakim, Prefect, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-prefect-asakim-name
+    description: ghost-role-information-prefect-asakim-description
+    rules: ghost-role-information-prefect-asakim-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleAsakim
+    raffle:
+      settings: default
+    requirements: []

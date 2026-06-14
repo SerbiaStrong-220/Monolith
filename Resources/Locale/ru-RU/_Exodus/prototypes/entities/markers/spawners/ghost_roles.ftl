@@ -6,6 +6,14 @@ ent-SpawnCenturionAsakimWarriorNoTimelock = { ent-SpawnCenturionAsakimWarrior }
     .desc = { ent-MarkerBase.desc }
     .suffix = Азаким, Центурион, без часов
 
+ent-SpawnPrefectAsakimWarrior = спавнер префекта азакимов
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Азаким, Префект
+
+ent-SpawnPrefectAsakimWarriorNoTimelock = { ent-SpawnPrefectAsakimWarrior }
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Азаким, Префект, без часов
+
 ent-SpawnAsakimRedactedBorg = спавнер Оператора Персональной Защиты
     .desc = { ent-MarkerBase.desc }
     .suffix = Азаким, АСЗ

@@ -1,0 +1,24 @@
+- type: entity
+  parent: ClothingOuterHardsuitCenturionAsakim
+  id: ClothingOuterHardsuitPrefectAsakim
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/OuterClothing/Hardsuits/prefect_asakim.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/OuterClothing/Hardsuits/prefect_asakim.rsi
+  - type: ToggleableClothing
+    requiredSlot: outerclothing
+    blockUnequipWhenAttached: false
+    replaceCurrentClothing: true
+    clothingPrototypes:
+      head: ClothingHelmetHardsuitPrefectAsakim
+      helmetcover: ClothingHeadHelmetCoverBlock
+      helmetattachment: ClothingHeadHelmetAttachmentBlock
+
+- type: entity
+  parent: ClothingOuterHardsuitPrefectAsakim
+  id: ClothingOuterHardsuitPrefectAsakimUnremoveable
+  components:
+  - type: Clothing
+    stripDelay: 120
+    equipDelay: 120

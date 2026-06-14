@@ -91,6 +91,7 @@
   children:
     - EXRuleGhostRoleAsakim
     - EXRuleGhostRoleCenturionAsakim
+    - EXRuleGhostRolePrefectAsakim
   
 - type: guideEntry
   id: EXRuleGhostRoleAsakim
@@ -101,6 +102,11 @@
   id: EXRuleGhostRoleCenturionAsakim
   name: guide-entry-exodus-rule-ghost-roles-centurion-asakim
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCenturionAsakim.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRolePrefectAsakim
+  name: guide-entry-exodus-rule-ghost-roles-prefect-asakim
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesPrefectAsakim.xml"
 
 - type: guideEntry
   id: EXRuleGhostRoleADS
