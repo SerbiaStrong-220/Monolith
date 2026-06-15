@@ -1,9 +1,9 @@
 store-category-summoning-prefracture-relics = Node: Weapons
-store-category-summoning-kasatura = Node: Armor and Gear
+store-category-summoning-kasatura = Node: Loadout
 store-category-summoning-zero-g-vector = Node: EVA Systems
-store-category-summoning-technical-contour = Node: Tools and Power
-store-category-summoning-emergency-beacons = Node: Emergency Beacons
-store-category-summoning-field-reserve = Node: Medical and Supplies
+store-category-summoning-technical-contour = Power
+store-category-summoning-emergency-beacons = Node: Beacons
+store-category-summoning-field-reserve = Node: Supplies
 
 summoning-machine-phase-blade-name = Nanoluminite phase blade
 summoning-machine-phase-blade-desc = A heavy pre-Fracture blade with switchable combat tuning. It looks exactly as unhealthy to argue with as it should.
