@@ -15,6 +15,7 @@ namespace Content.Server._Exodus.Store;
 public sealed class TerritoryStoreDiscountSystem : EntitySystem
 {
     private const string TerritoryDiscountModifierId = "ExodusTerritoryDiscount";
+    private const string SyndicateFactionId = "Syndicate";
 
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TerritoryCounterSystem _territoryCounter = default!;
@@ -48,17 +49,22 @@ public sealed class TerritoryStoreDiscountSystem : EntitySystem
 
     private void OnGetStoreUiData(Entity<TerritoryStoreDiscountComponent> ent, ref GetStoreUiDataEvent args)
     {
-        var score = _territoryCounter.GetScore(ent.Comp.Faction);
-        args.PriceMultiplier = GetDiscountFraction(score, ent.Comp.DiscountPerPoint);
+        var effectiveScore = GetEffectiveScore(ent.Comp.Faction);
+        args.HasPriceModifier = true;
+        args.PriceMultiplier = GetPriceEffectFraction(effectiveScore, ent.Comp.DiscountPerPoint);
     }
 
     private void OnTerritoryScoreChanged(ref TerritoryScoreChangedEvent ev)
     {
+        var syndicateFaction = new ProtoId<TerritoryFactionPrototype>(SyndicateFactionId);
         var query = EntityQueryEnumerator<StoreComponent, TerritoryStoreDiscountComponent>();
         while (query.MoveNext(out var uid, out _, out var territoryDiscount))
         {
-            if (territoryDiscount.Faction != ev.Faction)
+            if (ev.Faction != syndicateFaction &&
+                territoryDiscount.Faction != ev.Faction)
+            {
                 continue;
+            }
 
             RefreshStore(uid);
         }
@@ -81,14 +87,14 @@ public sealed class TerritoryStoreDiscountSystem : EntitySystem
             return;
         }
 
-        var score = _territoryCounter.GetScore(territoryDiscount.Faction);
-        var priceMultiplier = GetPriceMultiplier(score, territoryDiscount.DiscountPerPoint);
+        var effectiveScore = GetEffectiveScore(territoryDiscount.Faction);
+        var priceMultiplier = GetPriceMultiplier(effectiveScore, territoryDiscount.DiscountPerPoint);
 
         foreach (var listing in store.FullListingsCatalog)
         {
             listing.RemoveCostModifier(TerritoryDiscountModifierId);
 
-            if (priceMultiplier >= 0.9999f)
+            if (Math.Abs(priceMultiplier - 1f) <= 0.0001f)
                 continue;
 
             var modifier = BuildModifier(listing, priceMultiplier);
@@ -125,21 +131,34 @@ public sealed class TerritoryStoreDiscountSystem : EntitySystem
         return modifier;
     }
 
-    private static float GetDiscountFraction(int score, float discountPerPoint)
+    private int GetEffectiveScore(ProtoId<TerritoryFactionPrototype> faction)
     {
-        return 1f - GetPriceMultiplier(score, discountPerPoint);
+        var syndicateFaction = new ProtoId<TerritoryFactionPrototype>(SyndicateFactionId);
+        var ownScore = _territoryCounter.GetScore(faction);
+        if (faction == syndicateFaction)
+            return ownScore;
+
+        var syndicateScore = _territoryCounter.GetScore(syndicateFaction);
+        return ownScore - syndicateScore;
     }
 
-    private static float GetPriceMultiplier(int score, float discountPerPoint)
+    private static float GetPriceEffectFraction(int effectiveScore, float discountPerPoint)
     {
-        if (score <= 0 ||
-            discountPerPoint <= 0f ||
+        return 1f - GetPriceMultiplier(effectiveScore, discountPerPoint);
+    }
+
+    private static float GetPriceMultiplier(int effectiveScore, float discountPerPoint)
+    {
+        if (discountPerPoint <= 0f ||
             discountPerPoint >= 1f)
         {
             return 1f;
         }
 
         var scoreScale = discountPerPoint / (1f - discountPerPoint);
-        return 1f / (1f + score * scoreScale);
+        if (effectiveScore >= 0)
+            return 1f / (1f + effectiveScore * scoreScale);
+
+        return 1f + (-effectiveScore * scoreScale);
     }
 }

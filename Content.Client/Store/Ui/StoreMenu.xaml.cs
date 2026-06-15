@@ -38,7 +38,9 @@ public sealed partial class StoreMenu : DefaultWindow
     // Exodus
     private StoreUiMode _mode = StoreUiMode.Default;
     // Exodus
-    private float _territoryDiscount = -1f;
+    private bool _hasPriceModifier;
+    // Exodus
+    private float _territoryPriceEffect;
     // Exodus
     private float _summoningPriceMultiplier = 1f;
     // Exodus
@@ -79,7 +81,7 @@ public sealed partial class StoreMenu : DefaultWindow
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
         }
 
-        if (_territoryDiscount >= 0f)
+        if (_hasPriceModifier)
             balanceStr += "\n" + GetTerritoryDiscountText();
 
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
@@ -98,10 +100,11 @@ public sealed partial class StoreMenu : DefaultWindow
     }
 
     // Exodus
-    public void SetMode(StoreUiMode mode, float priceMultiplier, float summoningPriceMultiplier)
+    public void SetMode(StoreUiMode mode, bool hasPriceModifier, float priceMultiplier, float summoningPriceMultiplier)
     {
         _mode = mode;
-        _territoryDiscount = priceMultiplier;
+        _hasPriceModifier = hasPriceModifier;
+        _territoryPriceEffect = priceMultiplier;
         _summoningPriceMultiplier = summoningPriceMultiplier;
 
         UpdateBalance(Balance);
@@ -241,8 +244,10 @@ public sealed partial class StoreMenu : DefaultWindow
                     sb.Append(", ");
                 }
                 var currentDiscountMessage = Loc.GetString(
-                    "store-ui-discount-display-with-currency",
-                    ("amount", FormatPercent(amount)),
+                    amount <= 0f
+                        ? "store-ui-discount-display-with-currency"
+                        : "store-ui-surcharge-display-with-currency",
+                    ("amount", FormatPercent(Math.Abs(amount))),
                     ("currency", Loc.GetString(currencyPrototype.DisplayName))
                 );
                 sb.Append(currentDiscountMessage);
@@ -259,8 +264,10 @@ public sealed partial class StoreMenu : DefaultWindow
             enumerator.MoveNext();
             var amount = enumerator.Current.Value;
             discountMessage = Loc.GetString(
-                "store-ui-discount-display",
-                ("amount", FormatPercent(amount))
+                amount <= 0f
+                    ? "store-ui-discount-display"
+                    : "store-ui-surcharge-display",
+                ("amount", FormatPercent(Math.Abs(amount)))
             );
         }
 
@@ -305,10 +312,14 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private string GetTerritoryDiscountText()
     {
-        if (_territoryDiscount < 0f)
+        if (!_hasPriceModifier)
             return string.Empty;
 
-        return Loc.GetString("store-ui-territory-discount", ("amount", FormatPercent(_territoryDiscount)));
+        return Loc.GetString(
+            _territoryPriceEffect >= 0f
+                ? "store-ui-territory-discount"
+                : "store-ui-territory-surcharge",
+            ("amount", FormatPercent(Math.Abs(_territoryPriceEffect))));
     }
 
     // Exodus

@@ -122,6 +122,7 @@ public sealed partial class StoreSystem
             showFooter,
             component.RefundAllowed,
             uiData.Mode,
+            uiData.HasPriceModifier,
             uiData.PriceMultiplier,
             uiData.SummoningPriceMultiplier,
             uiData.ActiveSummoning);
@@ -453,6 +454,7 @@ public record struct BeforeStoreBuyAttemptEvent(
 public record struct GetStoreUiDataEvent
 {
     public StoreUiMode Mode { get; set; }
+    public bool HasPriceModifier { get; set; }
     public float PriceMultiplier { get; set; }
     public float SummoningPriceMultiplier { get; set; }
     public StoreSummoningUiData? ActiveSummoning { get; set; }
@@ -460,7 +462,8 @@ public record struct GetStoreUiDataEvent
     public GetStoreUiDataEvent()
     {
         Mode = StoreUiMode.Default;
-        PriceMultiplier = -1f;
+        HasPriceModifier = false;
+        PriceMultiplier = 0f;
         SummoningPriceMultiplier = 1f;
         ActiveSummoning = null;
     }

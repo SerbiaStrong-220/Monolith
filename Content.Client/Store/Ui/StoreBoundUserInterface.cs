@@ -27,7 +27,11 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     // Exodus
     [ViewVariables]
-    private float _priceMultiplier = -1f;
+    private bool _hasPriceModifier;
+
+    // Exodus
+    [ViewVariables]
+    private float _priceMultiplier;
 
     // Exodus
     [ViewVariables]
@@ -86,6 +90,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 // Exodus
                 var listingsChanged = !ListingsEqual(_listings, msg.Listings);
                 var modeChanged = _mode != msg.Mode ||
+                                  _hasPriceModifier != msg.HasPriceModifier ||
                                   Math.Abs(_priceMultiplier - msg.PriceMultiplier) > 0.001f ||
                                   Math.Abs(_summoningPriceMultiplier - msg.SummoningPriceMultiplier) > 0.001f;
                 var summoningBusy = msg.ActiveSummoning != null;
@@ -93,11 +98,12 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
                 _listings = msg.Listings;
                 _mode = msg.Mode;
+                _hasPriceModifier = msg.HasPriceModifier;
                 _priceMultiplier = msg.PriceMultiplier;
                 _summoningPriceMultiplier = msg.SummoningPriceMultiplier;
                 _summoningBusy = summoningBusy;
 
-                _menu?.SetMode(msg.Mode, msg.PriceMultiplier, msg.SummoningPriceMultiplier);
+                _menu?.SetMode(msg.Mode, msg.HasPriceModifier, msg.PriceMultiplier, msg.SummoningPriceMultiplier);
                 _menu?.UpdateBalance(msg.Balance);
                 _menu?.SetSummoning(msg.ActiveSummoning);
 
