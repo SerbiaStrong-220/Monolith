@@ -39,38 +39,44 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     private bool _placing;
     private bool _erasing;
 
-    // Exodus-Start: eyedropper tool that copies the color of an existing decal on the map.
+    // Exodus-Start
     private bool _eyedropper;
 
     /// <summary>
-    ///     Whether the eyedropper (color picker) tool is currently selected.
+    /// Whether the eyedropper is currently selected.
     /// </summary>
     public bool EyedropperActive => _eyedropper;
 
     /// <summary>
-    ///     Raised when the eyedropper successfully copies a color from a decal on the map.
+    /// Raised when the eyedropper successfully copies a color from a decal.
     /// </summary>
     public event Action<Color>? EyedropperPicked;
 
     public void SetEyedropper(bool active)
     {
         _eyedropper = active && _active;
+
+        // The eyedropper and a paste (in copypaste mode) are mutually exclusive.
+        if (_eyedropper)
+        {
+            _stamping = false;
+            _stamp.Clear();
+        }
     }
 
-    // Copy decal(s) under the cursor (hotkeys O / Ctrl+O), only while the window is open.
-    // Multi-decal "stamp": each entry is a decal plus its offset from the copied tile origin.
+    // Copy decal(s) under the cursor, only while the window is open.
     private readonly List<(Vector2 Offset, Decal Decal)> _stamp = new();
     private bool _stamping;
 
     /// <summary>
-    ///     Whether a multi-decal stamp is currently held and ready to be placed.
+    /// Whether a multi-decal stamp is currently held and ready to be placed.
     /// </summary>
     public bool Stamping => _stamping && _stamp.Count > 0;
 
     public IReadOnlyList<(Vector2 Offset, Decal Decal)> Stamp => _stamp;
 
     /// <summary>
-    ///     Raised when a single decal is copied from the map, so the window can mirror its settings.
+    /// Raised when a single decal is copied from the map, so the window can mirror its settings.
     /// </summary>
     public event Action<Decal>? DecalCopied;
     // Exodus-End
@@ -90,7 +96,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
-                // Exodus-Start: left click while the eyedropper is active copies a color instead of placing.
+                // Exodus-Start: left click while the eyedropper is active copies a color.
                 if (_eyedropper)
                 {
                     _eyedropper = false;
@@ -100,8 +106,6 @@ public sealed partial class DecalPlacementSystem : EntitySystem
 
                     return true;
                 }
-
-                // Left click while a stamp is held places the whole copied stack.
                 if (_stamping)
                 {
                     PlaceStamp(coords);
@@ -175,7 +179,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
 
                 return true;
             }, true))
-            // Exodus-Start: copy the decal (O) or the whole stack (Ctrl+O) under the cursor.
+            // Exodus-Start: copy the decal (O - not 0) or the whole stack (Ctrl+O) under the cursor.
             .Bind(ContentKeyFunctions.EditorCopyDecal, new PointerInputCmdHandler(OnCopyDecal))
             .Bind(ContentKeyFunctions.EditorCopyDecalStack, new PointerInputCmdHandler(OnCopyDecalStack))
             // Exodus-End
@@ -268,7 +272,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         _cleanable = cleanable;
     }
 
-    // Exodus-Start: clear the active decal so it stops following the cursor when deselected.
+    // Exodus-Start: clear the active decal. This wast here for years, really?!
     public void ClearDecal()
     {
         _decalId = null;
@@ -290,7 +294,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     }
 
     // Exodus-Start
-    /// <summary>"O": copy the topmost decal under the cursor into the placer.</summary>
+    /// <summary>"O": copy the top decal under the cursor into the placer.</summary>
     private bool OnCopyDecal(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
         if (!_active)
@@ -319,7 +323,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         if (!TryGetDecalsUnder(coords, out var localPos, out var decals))
             return true;
 
-        // Anchor offsets to the copied tile so the stamp stays tile-aligned when placed elsewhere.
+        // So stamp stays tile-aligned when placed.
         var origin = localPos.Floored();
         foreach (var (_, decal) in decals)
             _stamp.Add((decal.Coordinates - origin, decal));

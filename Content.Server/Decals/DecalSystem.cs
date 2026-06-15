@@ -285,7 +285,7 @@ namespace Content.Server.Decals
             //     RemoveDecal(gridId.Value, decalId);
             // }
 
-            // Pick the decal drawn on top (highest ZIndex, then highest id), matching what the user sees.
+            // Pick the decal on top (highest ZIndex, then highest id).
             (uint Index, Decal Decal)? topmost = null;
             foreach (var entry in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
             {

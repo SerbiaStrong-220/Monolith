@@ -4,10 +4,6 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client._Exodus.Decals;
 
-/// <summary>
-///     Stores the player's favorite decal colors locally. Persisted via an archived client-only
-///     cvar (<see cref="XCVars.DecalFavoriteColors"/>), so favorites survive relogs and restarts.
-/// </summary>
 public sealed class FavoriteDecalColorsSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
@@ -30,7 +26,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
         return _colors.Any(c => SameColor(c, color));
     }
 
-    /// <summary>Adds the color, or removes it if already a favorite. Returns true if it is now a favorite.</summary>
+    /// <summary>Adds the color, or removes it if already a favorite.</summary>
     public bool Toggle(Color color)
     {
         if (Remove(color))
@@ -42,7 +38,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
     }
 
     /// <summary>Removes the color if present. Returns true if something was removed.</summary>
-    public bool Remove(Color color)
+    private bool Remove(Color color)
     {
         var index = _colors.FindIndex(c => SameColor(c, color));
         if (index < 0)
@@ -70,7 +66,6 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
 
     private void Save()
     {
-        // Color.ToHex() already includes the leading '#', which TryFromHex requires when loading.
         _cfg.SetCVar(XCVars.DecalFavoriteColors, string.Join(';', _colors.Select(c => c.ToHex())));
         _cfg.SaveToFile();
         FavoritesChanged?.Invoke();

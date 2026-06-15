@@ -63,7 +63,7 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     {
         PaletteList.Clear();
 
-        // Exodus: the Favorites entry is dynamic, the rest are static prototypes.
+        // Exodus: the Favorites entry is dynamic.
         if (Palettes.SelectedMetadata is ColorPalettePrototype palette)
         {
             foreach (var (name, value) in palette.Colors)
@@ -85,10 +85,9 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     }
 
     // Exodus-Start
-    // Refresh while the favorites palette is shown (e.g. the star added/removed a color).
+    // Refresh while the favorites palette is shown.
     private void OnFavoritesChanged()
     {
-        // Runs from a system event; a dead instance must not touch its controls.
         if (Disposed)
             return;
 
