@@ -605,8 +605,10 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     // Exodus-begin faction-aware ship NPC targeting
     private bool IsFriendlyNpcTarget(EntityUid source, NpcFactionMemberComponent? sourceFaction, EntityUid target, EntityUid? targetGrid)
     {
-        return HasFriendlyFaction(source, sourceFaction, target) ||
-               targetGrid != null && HasFriendlyFaction(source, sourceFaction, targetGrid.Value);
+        if (_factionQuery.HasComponent(target))
+            return HasFriendlyFaction(source, sourceFaction, target);
+
+        return targetGrid != null && HasFriendlyFaction(source, sourceFaction, targetGrid.Value);
     }
 
     private bool TryGetFactionSource(EntityUid owner, EntityUid? ownerGrid, out EntityUid source, out NpcFactionMemberComponent? faction)

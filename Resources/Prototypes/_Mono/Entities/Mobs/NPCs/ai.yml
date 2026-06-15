@@ -7,11 +7,14 @@
   suffix: AI
   parent: [BaseStructure, BaseFactionGearOtherFactionT2]
   components:
+  - type: Damageable # Exodus destructible NPC AI cores
+    damageContainer: StructuralInorganic
+    damageModifierSet: WallDefense3
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 4000 # Exodus destructible NPC AI cores, matches T3/plastitanium wall
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -28,8 +31,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer # Exodus destructible NPC AI cores
   - type: InteractionOutline
   - type: Sprite
     sprite: _Mono/Mobs/Core/drone.rsi

@@ -57,9 +57,8 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
     [DataField]
     public bool RequirePowered = true;
 
-    private EntityCoordinates? wasTarget = null;
-
     private const string TargetingCancelToken = "ShipTargetingCancelToken";
+    private const string WasTargetKey = "ShipFireGunsWasTarget"; // Exodus shared HTN operator state fix
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -117,16 +116,18 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
             return HTNOperatorStatus.Failed;
 
         // hack to update ShipMoveTo or such when we swap targets
-        if (wasTarget != null && wasTarget != target)
+        // Exodus-begin shared HTN operator state fix
+        if (blackboard.TryGetValue<EntityCoordinates>(WasTargetKey, out var wasTarget, _entManager) && wasTarget != target)
         {
-            wasTarget = null;
+            blackboard.Remove<EntityCoordinates>(WasTargetKey);
             return HTNOperatorStatus.Finished;
         }
+        // Exodus-end
 
         // ensure we're still targeting if we e.g. move grids
         var comp = _targeting.Target(owner, target);
 
-        wasTarget = target;
+        blackboard.SetValue(WasTargetKey, target); // Exodus shared HTN operator state fix
 
         if (comp == null)
             return HTNOperatorStatus.Finished;
@@ -167,6 +168,8 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
 
         if (RemoveKeyOnFinish)
             blackboard.Remove<EntityCoordinates>(TargetKey);
+
+        blackboard.Remove<EntityCoordinates>(WasTargetKey); // Exodus shared HTN operator state fix
 
         _targeting.Stop(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
     }
