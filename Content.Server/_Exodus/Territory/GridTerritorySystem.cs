@@ -2,7 +2,6 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._Exodus.Territory;
 using Content.Shared.Construction; // for potential future
-using Content.Server._Exodus.Territory; // for the marker sync (same logical area)
 using Content.Shared._Crescent.SpaceBiomes;
 using Content.Shared.Maps;
 using Content.Shared.Station.Components;
@@ -31,6 +30,7 @@ public sealed class GridTerritorySystem : EntitySystem
     [Dependency] private readonly TerritoryMarkerSystem _marker = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly GridTerritoryNpcFactionSystem _npcFaction = default!;
 
     public override void Initialize()
     {
@@ -243,6 +243,8 @@ public sealed class GridTerritorySystem : EntitySystem
         // Extensibility hook for future capture mechanics, alerts, etc.
         if (!controllerChanged)
             return;
+
+        _npcFaction.SyncControllerFaction(grid, faction);
 
         var ev = new GridTerritoryControllerChangedEvent(grid, oldFaction, faction, sourceBanner);
         RaiseLocalEvent(grid, ref ev);

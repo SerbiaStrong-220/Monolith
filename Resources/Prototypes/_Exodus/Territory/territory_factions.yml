@@ -24,7 +24,8 @@
 #   2. Create banner entity prototype.
 #   3. Give it TerritoryBanner (yaml type) / TerritoryBannerComponent (C# class) pointing to this faction id.
 #   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
-#   5. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
+#   5. (Optional) Add 'npcFaction' field to make captured grids friendly to matching factional AI cores.
+#   6. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
 #      TSFMC, PDV and Khsira are main claim factions; Syndicate and USSP are side claim factions.
 #
 # Captured territory scoring (via TerritoryCounterSystem):
@@ -38,30 +39,35 @@
   id: TSFMC
   radarLabel: territory-faction-tsf
   banner: BannerNGC
+  npcFaction: TSFMC
   color: "#047ABD"  # TSF company ship blue
 
 - type: territoryFaction
   id: PDV
   radarLabel: territory-faction-phaeton
   banner: BannerPDV
+  npcFaction: PirateNF
   color: "#D2B48C"  # PDV ship / equipment tan
 
 - type: territoryFaction
   id: Khsira
   radarLabel: territory-faction-khsira
   banner: BannerKhsira
+  npcFaction: AsakimDefenceForces
   color: "#BD0071"  # Medium violet red / pink-red for Khsira Empire
 
 - type: territoryFaction
   id: Syndicate
   radarLabel: territory-faction-syndicate
   banner: BannerSyndicate
+  npcFaction: Syndicate
   color: "#C83737"  # Syndicate red
 
 - type: territoryFaction
   id: USSP
   radarLabel: territory-faction-ussp
   banner: BannerUSSP
+  npcFaction: USSP
   color: "#B01340"  # USSP company red
 
 # Colossus Central is treated as its own faction so it can have a dedicated label

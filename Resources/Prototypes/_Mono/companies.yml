@@ -82,6 +82,7 @@
   disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
   image: /Textures/_Mono/Companies/USSP.png
+  npcFaction: USSP # Exodus - company NPC faction
 
 # Major companies
 

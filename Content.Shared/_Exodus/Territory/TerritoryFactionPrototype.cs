@@ -1,3 +1,4 @@
+using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.Territory;
@@ -28,6 +29,13 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<EntityPrototype>? Banner { get; private set; }
+
+    /// <summary>
+    /// Optional NPC faction applied to a grid while this territory faction controls it.
+    /// This makes captured territories friendly to matching factional AI cores.
+    /// </summary>
+    [DataField]
+    public ProtoId<NpcFactionPrototype>? NpcFaction { get; private set; }
 
     // # Exodus start - faction color for territory rings on BSS map and nav radar
     /// <summary>
