@@ -62,6 +62,20 @@
   - !type:TileNotBlocked
 # Exodus end
 
+# Exodus start - construction for USSP banner
+- type: construction
+  id: BannerUSSP
+  graph: MonoBannersGraph
+  startNode: start
+  targetNode: BannerUSSPNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+# Exodus end
+
 - type: construction
   id: TargetHuman
   graph: ShootingTargets

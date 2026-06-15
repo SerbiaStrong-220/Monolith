@@ -7,7 +7,7 @@
 
 - type: vessel
   id: Svinya
-  parent: BaseVessel
+  parent: [BaseVessel, BaseVesselUSSP] # Exodus - USSP NPC faction
   name: Свинья # Ru-Localization
   description: Компактный штурмовой шаттл, усеянный малокалиберным вооружением. # Ru-Localization
   price: 39000 # appraised at ~33200

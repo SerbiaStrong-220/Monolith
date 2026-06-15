@@ -72,6 +72,20 @@
           - !type:NoActiveTerritoryClaimOnGrid {}
           # Exodus end
         # Exodus end
+        # Exodus start - build edge for USSP banner
+        - to: BannerUSSPNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+        # Exodus end
 
     - node: BannerTSFNode
       entity: BannerNGC
@@ -138,6 +152,23 @@
     # Exodus start - node for Khsira banner (Империя Кхси'Ра)
     - node: BannerKhsiraNode
       entity: BannerKhsira
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Screwing
+          doAfter: 1
+    # Exodus end
+
+    # Exodus start - node for USSP banner
+    - node: BannerUSSPNode
+      entity: BannerUSSP
       edges:
       - to: start
         completed:

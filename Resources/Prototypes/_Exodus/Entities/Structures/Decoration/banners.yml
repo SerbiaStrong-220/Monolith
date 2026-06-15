@@ -1,0 +1,15 @@
+- type: entity
+  id: BannerUSSP
+  parent: BannerBase
+  name: USSP banner
+  description: A banner displaying the colors of the USSP.
+  components:
+  - type: Sprite
+    sprite: _Mono/Structures/Decoration/banner.rsi
+    state: ngc-banner
+    color: "#B01340"
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerUSSPNode
+  - type: TerritoryBanner
+    faction: USSP

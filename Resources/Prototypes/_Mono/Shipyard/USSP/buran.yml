@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Buran
-  parent: BaseVesselAntag
+  parent: [BaseVesselAntag, BaseVesselUSSP] # Exodus - USSP NPC faction
   name: Буран # Ru-Localization
   description: Фрегат СССП с огромной бортовой огневой мощью и толстой бронёй. Слава великому комиссариату! # Ru-Localization
   price: 320000

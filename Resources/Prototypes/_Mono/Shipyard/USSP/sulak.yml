@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Sulak
-  parent: BaseVesselAntag
+  parent: [BaseVesselAntag, BaseVesselUSSP] # Exodus - USSP NPC faction
   name: Судак # Ru-Localization
   description: Эсминец среднего размера, вооружённый Хароном для уничтожения крупных целей. # Ru-Localization
   price: 142500

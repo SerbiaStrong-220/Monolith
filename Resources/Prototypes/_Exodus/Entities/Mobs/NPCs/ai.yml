@@ -69,6 +69,23 @@
     - Syndicate
 
 - type: entity
+  id: NpcStationAiAttackerStaticSmartUSSP
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, СССП
+  components:
+  - type: NpcFactionMember
+    factions:
+    - USSP
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartUSSPUnanchorable
+  parent: NpcStationAiAttackerStaticSmartUSSP
+  suffix: ИИ, СССП, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
   id: NpcStationAiAttackerStaticSmartSyndicateUnanchorable
   parent: NpcStationAiAttackerStaticSmartSyndicate
   suffix: ИИ, Синдикат, НЕ СКРУЧИВАЕМОЕ

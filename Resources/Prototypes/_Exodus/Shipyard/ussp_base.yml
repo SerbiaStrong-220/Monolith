@@ -1,0 +1,7 @@
+- type: vessel
+  id: BaseVesselUSSP
+  abstract: true
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - USSP
