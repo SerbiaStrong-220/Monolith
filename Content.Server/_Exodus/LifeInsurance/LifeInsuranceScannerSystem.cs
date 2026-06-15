@@ -12,10 +12,6 @@ using Robust.Shared.Containers;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-/// <summary>
-/// Patient scanning capsule of the life insurance machine. Handles inserting/ejecting a body;
-/// the actual DNA recording is driven from the linked console.
-/// </summary>
 public sealed class LifeInsuranceScannerSystem : EntitySystem
 {
     [Dependency] private ContainerSystem _container = default!;
@@ -35,7 +31,7 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
         SubscribeLocalEvent<LifeInsuranceScannerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, DestructionEventArgs>(OnDestroyed);
-        SubscribeLocalEvent<LifeInsuranceScannerComponent, DragDropTargetEvent>(OnDragDropOn);
+        SubscribeLocalEvent<LifeInsuranceScannerComponent, DragDropTargetEvent>(OnDragDropOn, before: new[] { typeof(ClimbSystem) });
         SubscribeLocalEvent<LifeInsuranceScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<LifeInsuranceScannerComponent, LifeInsuranceScannerEnterDoAfterEvent>(OnEnterDoAfter);
     }
@@ -117,8 +113,7 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Starts the timed climb-into-capsule. The body is only inserted once the progress bar completes,
-    /// so the entry takes exactly as long as the bar shows.
+    /// Timed climb-into-capsule. The body is only inserted once the progress bar completes.
     /// </summary>
     private void TryEnter(EntityUid uid, EntityUid user, EntityUid target, LifeInsuranceScannerComponent comp)
     {

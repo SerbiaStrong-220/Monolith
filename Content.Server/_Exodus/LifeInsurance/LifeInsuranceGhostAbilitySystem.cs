@@ -10,10 +10,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-/// <summary>
-/// Grants insured ghosts the "Activate Life Insurance" action and handles its activation,
-/// starting a clone on the registered cloner and consuming one insurance charge.
-/// </summary>
 public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
 {
     [Dependency] private SharedMindSystem _mind = default!;
@@ -29,9 +25,6 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        // GhostComponent's MindAddedMessage is already taken by GhostSystem (one directed sub per comp+event),
-        // so hook PlayerAttachedEvent instead — it also fires on reconnect and gives the session directly.
         SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttached);
         SubscribeLocalEvent<LifeInsuranceUserComponent, LifeInsuranceCloneActionEvent>(OnActivate);
     }
@@ -57,16 +50,13 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
         if (args.Handled)
             return;
 
-        // Safety: only a ghost may revive. Prevents a living holder of this action from killing
-        // themselves by force-transferring their mind into a fresh clone.
+        // Only a ghost can revive.
         if (!HasComp<GhostComponent>(uid))
             return;
 
         if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.UserId is not { } user)
             return;
 
-        // Anti-dupe: don't revive if the player's original body is still alive (e.g. ghosting while
-        // alive). Their mind would be yanked into a clone, leaving a live abandoned body behind.
         if (mind.OwnedEntity is { } original && Exists(original) && _mobState.IsAlive(original))
         {
             _popup.PopupEntity(Loc.GetString("life-insurance-original-alive"), uid, uid);
@@ -93,7 +83,6 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
             return;
         }
 
-        // The action system auto-consumes one charge because we set Handled below; mirror that on the registry.
         record.Insurances--;
         _console.UpdateUi(console);
 

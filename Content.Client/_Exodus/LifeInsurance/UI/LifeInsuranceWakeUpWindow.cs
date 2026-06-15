@@ -9,9 +9,6 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client._Exodus.LifeInsurance.UI;
 
-/// <summary>
-/// Narrative window shown to a player the moment their life insurance clone is finished.
-/// </summary>
 public sealed class LifeInsuranceWakeUpWindow : DefaultWindow
 {
     public readonly Button OkButton;

@@ -99,12 +99,6 @@
           Idle: { state: pod_0 }
           Cloning: { state: pod_1 }
           Failed: { state: pod_g } # gore state, shown for the 30s failure decay
-  - type: ContainerContainer
-    containers:
-      life-insurance-cloner-body: !type:ContainerSlot
-  - type: EmptyOnMachineDeconstruct
-    containers:
-    - life-insurance-cloner-body
 
 - type: entity
   id: LifeInsuranceConsole

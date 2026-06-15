@@ -22,10 +22,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-/// <summary>
-/// Cloning capsule of the life insurance machine. Rebuilds an insured player's body from a recorded
-/// character profile and transfers their mind into it once the revival timer completes.
-/// </summary>
 public sealed class LifeInsuranceClonerSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
@@ -54,8 +50,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
 
     /// <summary>
     /// Begins the revival process. Only the capsule animation runs during this time; the body is not
-    /// spawned until the process succeeds (see <see cref="Finish"/>), so a failure mid-way leaves no
-    /// stray body to clean up.
+    /// spawned until the process succeeds, so a failure mid-way leaves no stray body to clean up.
     /// </summary>
     public bool TryStartRevival(EntityUid uid, HumanoidCharacterProfile profile, EntityUid mindId, NetUserId user, string company, LifeInsuranceClonerComponent? comp = null)
     {
@@ -97,8 +92,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
             if (!comp.Active)
                 continue;
 
-            // The backup battery bridges brief outages. If power is fully gone (battery depleted),
-            // the batch is ruined and decays into a botched abomination.
+            // The backup battery.
             if (!_backup.IsOperational(uid))
             {
                 TriggerFailure(uid, comp);
@@ -115,14 +109,14 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
 
     private void Finish(EntityUid uid, LifeInsuranceClonerComponent comp)
     {
-        // The body is only built now, on success: spawn it, then transfer the waiting mind into it.
+        // The body is only built on success: spawn it, then transfer the waiting mind into it.
         var body = SpawnBody(uid, comp);
 
         if (body != null && comp.PendingMind is { } mindId && Exists(mindId))
         {
             _mind.TransferTo(mindId, body.Value, ghostCheckOverride: true);
 
-            // Show the narrative "you wake up in the incubator" window to the revived player.
+            // Show the "you wake up in the incubator" window to the revived player.
             if (comp.PendingUser is { } user && _player.TryGetSessionById(user, out var session))
                 _eui.OpenEui(new LifeInsuranceWakeUpEui(), session);
         }
@@ -156,7 +150,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         Dirty(mob, companyComp);
 
         // Restore job-granted components (faction membership, command staff) and languages, mirroring
-        // standard cloning plus role languages. Implants/loadout (other JobSpecial types) are not applied.
+        // standard cloning plus role languages.
         if (comp.PendingMind is { } mindId && _jobs.MindTryGetJob(mindId, out var jobProto))
         {
             foreach (var special in jobProto.Special)
@@ -170,8 +164,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Aborts an in-progress revival (power fully lost). No body exists yet (it is only spawned on
-    /// success), so the capsule simply enters its gory failure state. The insurance charge stays spent.
+    /// Aborts an in-progress revival. No body exists yet, so the capsule simply enters its gory failure state.
     /// </summary>
     private void TriggerFailure(EntityUid uid, LifeInsuranceClonerComponent comp)
     {
@@ -202,7 +195,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
 
         Spawn(comp.FailMob, _transform.GetMapCoordinates(uid));
 
-        // The botched batch bursts out in a gush of blood under the abomination.
+        // The failed revive bursts out blood.
         var blood = new Solution(comp.FailBloodReagent, comp.FailBloodAmount);
         _puddle.TrySpillAt(Transform(uid).Coordinates, blood, out _);
 
@@ -215,8 +208,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Applies the character's profile traits (components, languages, trait gear) to the clone,
-    /// mirroring <see cref="Content.Server.Traits.TraitSystem"/> which only runs on normal spawns.
+    /// Applies the character's profile traits to the clone.
     /// </summary>
     private void ApplyTraits(EntityUid mob, HumanoidCharacterProfile profile)
     {

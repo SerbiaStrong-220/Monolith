@@ -5,10 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.LifeInsurance.Components;
 
-/// <summary>
-/// Patient scanning capsule. A living player is placed inside and their DNA is recorded
-/// onto the linked life insurance console.
-/// </summary>
 [RegisterComponent]
 public sealed partial class LifeInsuranceScannerComponent : Component
 {
@@ -25,8 +21,7 @@ public sealed partial class LifeInsuranceScannerComponent : Component
     public EntityUid? ConnectedConsole;
 
     /// <summary>
-    /// How long climbing into the capsule takes. The body is only inserted once this completes,
-    /// keeping the progress bar in sync with the actual entry.
+    /// How long climbing into the capsule takes.
     /// </summary>
     [DataField]
     public TimeSpan EnterDelay = TimeSpan.FromSeconds(2.5);

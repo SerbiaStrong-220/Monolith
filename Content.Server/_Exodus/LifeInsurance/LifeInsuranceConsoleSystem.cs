@@ -21,10 +21,6 @@ using Robust.Shared.Network;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-/// <summary>
-/// Life insurance console. Records player DNA from the linked scanner, sells insurance charges,
-/// and reports machine status. Auto-links to nearby scanner/cloner capsules (machines are static).
-/// </summary>
 public sealed class LifeInsuranceConsoleSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -51,8 +47,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// When a player returns to the lobby, purge their DNA from every console: they may come back
-    /// on a different character, and old policies must not carry over.
+    /// When a player returns to the lobby, purge their DNA from every console.
     /// </summary>
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent args)
     {
@@ -98,14 +93,14 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Stores the DNA (character profile) of the given body into this console's registry.
+    /// Stores the DNA of the given body into this console's registry.
     /// </summary>
     public bool TryRecordDna(EntityUid consoleUid, EntityUid body, LifeInsuranceConsoleComponent? comp = null, EntityUid? actor = null)
     {
         if (!Resolve(consoleUid, ref comp) || !_backup.IsOperational(consoleUid))
             return false;
 
-        // No synthetic life: the cloner only works with organic genetic material.
+        // No synth
         if (HasComp<SiliconComponent>(body))
         {
             if (actor != null)
@@ -113,7 +108,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return false;
         }
 
-        // Respect the uncloneable trait — such genomes can't be banked.
+        // Respect the uncloneable trait
         if (HasComp<UncloneableComponent>(body))
         {
             if (actor != null)
@@ -137,10 +132,10 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return false;
         }
 
-        // Store a deep copy so the registry holds a true snapshot, independent of later prefs edits.
+        // Let it be like this for now. Registry holds a true snapshot, independent of later edits.
         var snapshot = profile.Clone();
 
-        // Capture the live company so the clone can keep company-gated access (faction uplinks).
+        // Clone can keep company-gated access (faction uplinks).
         var company = TryComp<CompanyComponent>(body, out var companyComp) ? companyComp.CompanyName.Id : "None";
 
         comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0) { Company = company };
@@ -177,8 +172,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         if (!comp.Records.TryGetValue(userId, out var record))
             return;
 
-        // Anti-metagaming: only insure a person who is currently alive, so a dead player can't have
-        // policies bought for them out-of-character to climb back into a body.
+        // Only reg a person who is currently alive.
         if (!IsTargetAlive(userId))
         {
             _popup.PopupEntity(Loc.GetString("life-insurance-target-not-alive"), uid, args.Actor);
@@ -191,7 +185,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return;
         }
 
-        // Don't sell a policy that can never be redeemed: the cloning capsule must still exist.
+        // Don't sell unless cloning capsule still connected.
         EnsureLinks(uid, comp);
         if (comp.Cloner is not { } cloner || !Exists(cloner))
         {
@@ -226,7 +220,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         if (!_backup.IsOperational(uid))
             return;
 
-        // Only high command (TSF Colonel / Grand Vizier) may purge paid policies.
+        // Only frac leaders may purge paid policies.
         var tags = _access.FindAccessTags(args.Actor);
         if (!comp.DeleteAccess.Any(req => tags.Contains(req)))
         {
@@ -243,7 +237,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     /// </summary>
     public void EnsureLinks(EntityUid uid, LifeInsuranceConsoleComponent comp)
     {
-        // Drop stale references (e.g. a destroyed capsule) so a replacement can be picked up.
+        // Drop stale references so a replacement can be picked up.
         if (!Exists(comp.Scanner))
             comp.Scanner = null;
         if (!Exists(comp.Cloner))

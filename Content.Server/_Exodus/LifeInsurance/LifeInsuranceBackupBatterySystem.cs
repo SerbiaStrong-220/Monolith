@@ -5,10 +5,6 @@ using Content.Shared.Power.Components;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-/// <summary>
-/// Keeps life insurance machine components alive through grid power outages by draining an internal
-/// battery, and recharges that battery while grid power is available.
-/// </summary>
 public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
 {
     [Dependency] private PowerReceiverSystem _power = default!;
@@ -57,10 +53,6 @@ public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Whether the machine can currently run (grid power or remaining backup charge).
-    /// Falls back to true if the entity has no backup battery component configured.
-    /// </summary>
     public bool IsOperational(EntityUid uid)
     {
         if (TryComp<LifeInsuranceBackupBatteryComponent>(uid, out var comp))
@@ -70,7 +62,7 @@ public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
     }
 
     /// <summary>
-    /// Builds the power/battery status reported to the console UI.
+    /// Power/battery status reported to the console UI.
     /// </summary>
     public LifeInsuranceMachineStatus GetStatus(EntityUid uid, bool connected)
     {

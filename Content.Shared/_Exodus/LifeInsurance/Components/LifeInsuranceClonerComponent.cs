@@ -6,10 +6,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.LifeInsurance.Components;
 
-/// <summary>
-/// Cloning capsule. Rebuilds an insured player's body from a recorded profile when their
-/// ghost activates life insurance, then transfers their mind into the new body.
-/// </summary>
 [RegisterComponent]
 public sealed partial class LifeInsuranceClonerComponent : Component
 {
@@ -62,8 +58,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     public string PendingCompany = "None";
 
     /// <summary>
-    /// True while a failed batch is decaying before spitting out a botched abomination.
-    /// Triggered when power is fully lost (grid down and backup battery depleted) mid-revival.
+    /// True when cloning is failed (power is fully lost mid-revival).
     /// </summary>
     [ViewVariables]
     public bool Failing;
@@ -81,7 +76,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     public float FailTime = 30f;
 
     /// <summary>
-    /// Hostile mob spawned from a failed clone batch (a botched, unfinished body).
+    /// ProtoID of mob spawned from a failed clone.
     /// </summary>
     [DataField]
     public EntProtoId FailMob = "MobHorrorExpeditions";

@@ -5,11 +5,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.LifeInsurance.Components;
 
-/// <summary>
-/// Console that records player DNA from a linked scanner capsule, sells life insurance charges,
-/// and drives the cloning capsule when an insured ghost activates their insurance.
-/// Part of the three-piece life insurance machine, auto-linked to nearby scanner/cloner on map init.
-/// </summary>
 [RegisterComponent]
 public sealed partial class LifeInsuranceConsoleComponent : Component
 {
@@ -26,8 +21,7 @@ public sealed partial class LifeInsuranceConsoleComponent : Component
     public float LinkRange = 4f;
 
     /// <summary>
-    /// Access levels permitted to delete recorded DNA. Default: TSF Colonel (Head of Security access)
-    /// and the Grand Vizier. Anyone may still record/buy; only these may purge the registry.
+    /// Access levels permitted to delete recorded DNA. Default: TSF Colonel and Vizier.
     /// </summary>
     [DataField]
     public List<ProtoId<AccessLevelPrototype>> DeleteAccess = new() { "HeadOfSecurity", "GrandVizier" };
