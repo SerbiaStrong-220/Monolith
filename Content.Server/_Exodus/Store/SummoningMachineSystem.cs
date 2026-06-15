@@ -112,7 +112,7 @@ public sealed class SummoningMachineSystem : EntitySystem
     private void OnGetStoreUiData(Entity<SummoningMachineComponent> ent, ref GetStoreUiDataEvent args)
     {
         args.Mode = StoreUiMode.Summoning;
-        args.PriceMultiplier = ent.Comp.DurationMultiplier * ent.Comp.SecondsPerCostUnit;
+        args.SummoningPriceMultiplier = ent.Comp.DurationMultiplier * ent.Comp.SecondsPerCostUnit;
 
         if (ent.Comp.ActiveListingId == null)
             return;

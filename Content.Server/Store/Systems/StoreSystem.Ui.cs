@@ -123,6 +123,7 @@ public sealed partial class StoreSystem
             component.RefundAllowed,
             uiData.Mode,
             uiData.PriceMultiplier,
+            uiData.SummoningPriceMultiplier,
             uiData.ActiveSummoning);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
@@ -453,12 +454,14 @@ public record struct GetStoreUiDataEvent
 {
     public StoreUiMode Mode { get; set; }
     public float PriceMultiplier { get; set; }
+    public float SummoningPriceMultiplier { get; set; }
     public StoreSummoningUiData? ActiveSummoning { get; set; }
 
     public GetStoreUiDataEvent()
     {
         Mode = StoreUiMode.Default;
-        PriceMultiplier = 1f;
+        PriceMultiplier = -1f;
+        SummoningPriceMultiplier = 1f;
         ActiveSummoning = null;
     }
 }

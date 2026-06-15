@@ -28,6 +28,9 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
     public readonly float PriceMultiplier;
 
     // Exodus
+    public readonly float SummoningPriceMultiplier;
+
+    // Exodus
     public readonly StoreSummoningUiData? ActiveSummoning;
 
     public StoreUpdateState(
@@ -36,7 +39,8 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
         bool showFooter,
         bool allowRefund,
         StoreUiMode mode = StoreUiMode.Default,
-        float priceMultiplier = 1f,
+        float priceMultiplier = -1f,
+        float summoningPriceMultiplier = 1f,
         StoreSummoningUiData? activeSummoning = null)
     {
         Listings = listings;
@@ -45,6 +49,7 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
         AllowRefund = allowRefund;
         Mode = mode;
         PriceMultiplier = priceMultiplier;
+        SummoningPriceMultiplier = summoningPriceMultiplier;
         ActiveSummoning = activeSummoning;
     }
 }

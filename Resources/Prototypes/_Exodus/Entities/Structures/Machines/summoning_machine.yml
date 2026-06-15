@@ -76,6 +76,8 @@
     - Telecrystal
     balance:
       Telecrystal: 0
+  - type: TerritoryStoreDiscount
+    faction: Khsira
   - type: NoDeconstruct
   - type: Repairable
     fuelCost: 15

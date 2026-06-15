@@ -38,7 +38,9 @@ public sealed partial class StoreMenu : DefaultWindow
     // Exodus
     private StoreUiMode _mode = StoreUiMode.Default;
     // Exodus
-    private float _priceMultiplier = 1f;
+    private float _territoryDiscount = -1f;
+    // Exodus
+    private float _summoningPriceMultiplier = 1f;
     // Exodus
     private StoreSummoningUiData? _activeSummoning;
 
@@ -58,7 +60,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         if (_mode == StoreUiMode.Summoning)
         {
-            BalanceInfo.SetMarkup(Loc.GetString("store-ui-summoning-multiplier", ("multiplier", _priceMultiplier.ToString("0.##"))));
+            BalanceInfo.SetMarkup(GetTerritoryDiscountText());
             WithdrawButton.Visible = false;
             RefundButton.Visible = false;
             return;
@@ -77,6 +79,9 @@ public sealed partial class StoreMenu : DefaultWindow
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
         }
 
+        if (_territoryDiscount >= 0f)
+            balanceStr += "\n" + GetTerritoryDiscountText();
+
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
 
         var disabled = true;
@@ -93,10 +98,11 @@ public sealed partial class StoreMenu : DefaultWindow
     }
 
     // Exodus
-    public void SetMode(StoreUiMode mode, float priceMultiplier)
+    public void SetMode(StoreUiMode mode, float priceMultiplier, float summoningPriceMultiplier)
     {
         _mode = mode;
-        _priceMultiplier = priceMultiplier;
+        _territoryDiscount = priceMultiplier;
+        _summoningPriceMultiplier = summoningPriceMultiplier;
 
         UpdateBalance(Balance);
         UpdateSummoningStatus();
@@ -236,7 +242,7 @@ public sealed partial class StoreMenu : DefaultWindow
                 }
                 var currentDiscountMessage = Loc.GetString(
                     "store-ui-discount-display-with-currency",
-                    ("amount", amount.ToString("P0")),
+                    ("amount", FormatPercent(amount)),
                     ("currency", Loc.GetString(currencyPrototype.DisplayName))
                 );
                 sb.Append(currentDiscountMessage);
@@ -254,7 +260,7 @@ public sealed partial class StoreMenu : DefaultWindow
             var amount = enumerator.Current.Value;
             discountMessage = Loc.GetString(
                 "store-ui-discount-display",
-                ("amount", (amount.ToString("P0")))
+                ("amount", FormatPercent(amount))
             );
         }
 
@@ -293,8 +299,16 @@ public sealed partial class StoreMenu : DefaultWindow
     // Exodus
     private TimeSpan GetSummoningDuration(ListingDataWithCostModifiers listing)
     {
-        var seconds = listing.Cost.Values.Sum(cost => cost.Float()) * _priceMultiplier;
+        var seconds = listing.Cost.Values.Sum(cost => cost.Float()) * _summoningPriceMultiplier;
         return TimeSpan.FromSeconds(MathF.Ceiling(Math.Max(1f, seconds)));
+    }
+
+    private string GetTerritoryDiscountText()
+    {
+        if (_territoryDiscount < 0f)
+            return string.Empty;
+
+        return Loc.GetString("store-ui-territory-discount", ("amount", FormatPercent(_territoryDiscount)));
     }
 
     // Exodus
@@ -337,6 +351,11 @@ public sealed partial class StoreMenu : DefaultWindow
             return duration.ToString(@"h\:mm\:ss");
 
         return duration.ToString(@"mm\:ss");
+    }
+
+    private static string FormatPercent(float value)
+    {
+        return $"{value * 100:0}%";
     }
 
     private void ClearListings()
