@@ -1,4 +1,14 @@
 uplink-stimulants-implant-name = Химический имплант-стимулятор
-uplink-stimulants-implant-desc = Продвинутый имплант, содержащий пять капсул первокласного стимулирующего вещества, моментально вводимые в кровь по желанию носителя.
+uplink-stimulants-implant-desc = Продвинутый имплант, содержащий пять капсул первоклассного стимулирующего вещества, моментально вводимые в кровь по желанию носителя.
 uplink-combat-implant-name = Химический лечебный имплант
-uplink-combat-implant-desc = Продвинутый имплант, содержащий пять капсул первокласного лечащего вещества, моментально вводимые в кровь по желанию носителя.
+uplink-combat-implant-desc = Продвинутый имплант, содержащий пять капсул первоклассного лечащего вещества, моментально вводимые в кровь по желанию носителя.
+store-category-syndicate-ships = Корабли
+
+uplink-syndicate-hydra-voucher-name = Ваучер на Гидру
+uplink-syndicate-hydra-voucher-desc = Одноразовый ваучер на корвет класса «Гидра».
+uplink-syndicate-talon-voucher-name = Ваучер на Коготь
+uplink-syndicate-talon-voucher-desc = Одноразовый ваучер на перехватчик класса «Коготь».
+uplink-syndicate-infiltrator-voucher-name = Ваучер на Лазутчик
+uplink-syndicate-infiltrator-voucher-desc = Одноразовый ваучер на фрегат класса «Лазутчик».
+uplink-syndicate-hunter-voucher-name = Ваучер на Охотник
+uplink-syndicate-hunter-voucher-desc = Одноразовый ваучер на канонерку класса «Охотник».
