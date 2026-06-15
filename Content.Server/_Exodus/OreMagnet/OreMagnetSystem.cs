@@ -32,8 +32,6 @@ public sealed class OreMagnetSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<StorageComponent> _storageQuery;
-
-    // Reused across scans to avoid reallocating
     private readonly List<(EntityUid Uid, OreMagnetComponent Comp, Vector2 Pos, MapId MapId)> _magnets = new();
     private readonly Dictionary<EntityUid, (EntityUid MagnetUid, OreMagnetComponent MagnetComp, float Distance)> _pullTargets = new();
     private readonly HashSet<Entity<ItemComponent>> _lookupEnts = new();
