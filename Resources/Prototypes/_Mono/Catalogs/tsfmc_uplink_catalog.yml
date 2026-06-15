@@ -432,6 +432,22 @@
       tags:
       - SecurityUplink
 
+# Exodus-faction-ai-core
+- type: listing
+  id: UplinkSecurityFactionAiCore
+  name: uplink-security-faction-ai-core-name
+  description: uplink-security-faction-ai-core-desc
+  productEntity: NpcStationAiAttackerStaticSmartTSFMC
+  cost:
+    FederationMilitaryCredit: 150
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
 # - type: listing
 #   id: UplinkSecurityAuroraExosuit
 #   name:  uplink-exosuit-aurora-name

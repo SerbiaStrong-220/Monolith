@@ -66,3 +66,65 @@
   - type: ConditionalSpawner
     prototypes:
     - PlayerBorgAsakimRedactedGhostRoleNoTimelock
+
+- type: entity
+  name: syndicate operative spawner
+  id: SpawnSyndicateGhostOperative
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_syndicate
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostOperative
+
+- type: entity
+  name: syndicate operative spawner
+  id: SpawnSyndicateGhostOperativeNoTimelock
+  parent: SpawnSyndicateGhostOperative
+  suffix: No Timelock
+  components:
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostOperativeNoTimelock
+
+- type: entity
+  name: syndicate leader spawner
+  id: SpawnSyndicateGhostLeader
+  parent: SpawnSyndicateGhostOperative
+  components:
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostLeader
+
+- type: entity
+  name: syndicate leader spawner
+  id: SpawnSyndicateGhostLeaderNoTimelock
+  parent: SpawnSyndicateGhostLeader
+  suffix: No Timelock
+  components:
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostLeaderNoTimelock
+
+- type: entity
+  name: citadel service spawner
+  id: SpawnCitadelServiceGhostRole
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCitadelServiceGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Reptilian/parts.rsi
+      state: full
+
+- type: entity
+  name: citadel service spawner
+  id: SpawnCitadelServiceGhostRoleNoTimelock
+  parent: SpawnCitadelServiceGhostRole
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCitadelServiceGhostRoleNoTimelock

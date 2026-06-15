@@ -1,6 +1,10 @@
 - type: Tag
   id: ADSRepairTool
 
+# Exodus-syndicate-srd
+- type: Tag
+  id: SyndicateRepairTool
+
 - type: Tag
   id: AdvancedLaserPistol
 

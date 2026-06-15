@@ -71,6 +71,11 @@
   - type: ForceAnchor       # inherited from BasePOI in the upstream prototype
   - type: Tag               # inherited from BasePOI
     tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - SyndicateRepairTool
 
 # ───────────────────────────────────────────────────────────────────────────
 # Migrated from upstream pointOfInterest pipeline. minDensity 0.1, maxDensity 1,
@@ -99,6 +104,10 @@
   - type: Tag
     tags: [ POI ]
   - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - SyndicateRepairTool
 
 - type: nebulaPoi
   id: NebulaPoiAdsSmallAncientStorage
@@ -151,6 +160,11 @@
   - type: ForceAnchor
   - type: Tag
     tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - SyndicateRepairTool
 
 - type: nebulaPoi
   id: NebulaPoiEdison

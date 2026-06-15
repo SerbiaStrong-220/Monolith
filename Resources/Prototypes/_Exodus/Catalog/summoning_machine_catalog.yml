@@ -219,6 +219,16 @@
   - SummoningMachineTechnicalContour
 
 - type: listing
+  id: SummoningMachineAsakimAiCore
+  name: summoning-machine-asakim-ai-core-name
+  description: summoning-machine-asakim-ai-core-desc
+  productEntity: NpcStationAiAttackerStaticSmartAsakim
+  cost:
+    Telecrystal: 1800
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
   id: SummoningMachineChestRig
   name: summoning-machine-chest-rig-name
   description: summoning-machine-chest-rig-desc

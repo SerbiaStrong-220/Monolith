@@ -1,0 +1,130 @@
+- type: startingGear
+  id: SyndicateGhostOperativeGear
+  parent: SyndicateOperativeGearFullNoUplink
+  equipment:
+    id: SyndicateIDCard
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostOperative
+  parent: EventHumanoid
+  randomizeName: false
+  speciesBlacklist:
+  - Vox
+  - Asakim
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-operative-name
+    description: ghost-role-information-syndicate-operative-description
+    rules: ghost-role-information-syndicate-operative-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeops
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 54000 # 15 hrs
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeGear ]
+    roleLoadout: [ RoleSurvivalNukie ]
+  - type: AutoImplant
+    implants:
+    - UplinkImplant
+    - FreedomImplant
+    - MicroBombImplant
+  - type: RandomMetadata
+    nameSegments:
+    - nukeops-role-operator
+    - SyndicateNamesNormal
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: NukeOperative
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostOperativeNoTimelock
+  parent: SyndicateGhostOperative
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-operative-name
+    description: ghost-role-information-syndicate-operative-description
+    rules: ghost-role-information-syndicate-operative-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeops
+    raffle:
+      settings: default
+    requirements: []
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostLeader
+  parent: SyndicateGhostOperative
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-leader-name
+    description: ghost-role-information-syndicate-leader-description
+    rules: ghost-role-information-syndicate-leader-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeopsCommander
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 90000 # 25 hrs
+  - type: RandomMetadata
+    nameSegments:
+    - random-metadata-name-syndicate-leader
+    - NamesLastMilitary
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostLeaderNoTimelock
+  parent: SyndicateGhostLeader
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-leader-name
+    description: ghost-role-information-syndicate-leader-description
+    rules: ghost-role-information-syndicate-leader-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeopsCommander
+    raffle:
+      settings: default
+    requirements: []
+
+- type: entity
+  parent: MobReptilian
+  id: MobCitadelServiceGhostRole
+  name: citadel service
+  suffix: GhostRole, Citadel
+  components:
+  - type: RandomHumanoidAppearance
+  - type: GhostRole
+    name: ghost-role-information-citadel-service-name
+    description: ghost-role-information-citadel-service-description
+    rules: ghost-role-information-citadel-service-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hrs
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ LimitedPassengerGear ]
+    roleLoadout: [ RoleSurvivalStandard ]
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+
+- type: entity
+  parent: MobCitadelServiceGhostRole
+  id: MobCitadelServiceGhostRoleNoTimelock
+  suffix: GhostRole, Citadel, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-citadel-service-name
+    description: ghost-role-information-citadel-service-description
+    rules: ghost-role-information-citadel-service-rules
+    raffle:
+      settings: default
+    requirements: []

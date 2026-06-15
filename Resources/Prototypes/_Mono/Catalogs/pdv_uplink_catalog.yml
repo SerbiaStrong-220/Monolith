@@ -1238,6 +1238,22 @@
       tags:
       - PirateUplink
 
+# Exodus-faction-ai-core
+- type: listing
+  id: UplinkPirateFactionAiCore
+  name: uplink-pirate-faction-ai-core-name
+  description: uplink-pirate-faction-ai-core-desc
+  productEntity: NpcStationAiAttackerStaticSmartPirateNF
+  cost:
+    Doubloon: 150
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
 #- type: listing
 #  id: UplinkRomerol
 #  name: uplink-pirate-romerol-name

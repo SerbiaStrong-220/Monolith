@@ -123,3 +123,6 @@ uplink-security-hardsuit-m82c-desc = A basic protective system for dangerous env
 
 uplink-security-pulserifle-name = Pulse Rifle
 uplink-security-pulserifle-desc = A large, automatic pulse weapon. Larger cell, and high powered, perfect for chewing through groups of foes.
+# Exodus-faction-ai-core
+uplink-security-faction-ai-core-name = TSFMC Station AI Core
+uplink-security-faction-ai-core-desc = A screwable faction AI core aligned to TSFMC friend-or-foe logic.

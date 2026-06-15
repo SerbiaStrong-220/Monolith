@@ -66,3 +66,6 @@ uplink-security-hardsuit-m82c-name = M82c Hardsuit
 uplink-security-hardsuit-m82c-desc = A basic protective system for dangerous environments (such as space). Takes the role of an armor vest in the average TSF marine's gear.
 uplink-security-pulserifle-name = Pulse Rifle
 uplink-security-pulserifle-desc = A large, automatic pulse weapon. Larger cell, and high powered, perfect for chewing through groups of foes.
+# Exodus-faction-ai-core
+uplink-security-faction-ai-core-name = Ядро корабельного ИИ ТСФ
+uplink-security-faction-ai-core-desc = Скручиваемое фракционное ядро ИИ с логикой опознавания целей ТСФ.
