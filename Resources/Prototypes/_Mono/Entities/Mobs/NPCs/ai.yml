@@ -14,7 +14,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000 # Exodus destructible NPC AI cores
+        damage: 3000 # Exodus destructible NPC AI cores
       behaviors:
       - !type:PlaySoundBehavior
         sound:

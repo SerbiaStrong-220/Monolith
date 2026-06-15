@@ -7,6 +7,17 @@
   - type: HTN
     rootTask:
       task: AttackerShuttleSmartStaticCompound
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: CleanupImmune # Factional AI cores must not despawn by mob cleanup
 
 - type: entity
