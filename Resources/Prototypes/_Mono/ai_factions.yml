@@ -7,6 +7,8 @@
 
 - type: npcFaction
   id: TSFMC
+  name: npc-faction-name-tsfmc # Exodus - faction AI radar label
+  coreControlName: npc-faction-core-control-name-tsfmc # Exodus - faction AI radar label
   neutral:
   - CC
   - NanoTrasen
@@ -30,6 +32,8 @@
 
 - type: npcFaction
   id: USSP
+  name: npc-faction-name-ussp # Exodus - faction AI radar label
+  coreControlName: npc-faction-core-control-name-ussp # Exodus - faction AI radar label
   neutral:
   - CC
   - NanoTrasen

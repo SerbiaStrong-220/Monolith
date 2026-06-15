@@ -4,9 +4,11 @@ using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client._Mono.Radar;
 using Content.Client.Station; // Frontier
 using Content.Shared._Crescent.ShipShields;
+using Content.Shared._Exodus.NPC.Components; // Exodus - faction AI radar label
 using Content.Shared._Mono.Company;
 using Content.Shared._Mono.Detection;
 using Content.Shared._Mono.Radar;
+using Content.Shared.NPC.Prototypes; // Exodus - faction AI radar label
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -42,6 +44,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private readonly SharedTransformSystem _transform;
     private readonly RadarBlipsSystem _blips;
     private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus - territory POI colors
+    private readonly IPrototypeManager _prototype; // Exodus - faction AI radar label
 
     // Exodus - SafeZone - Start
     private EntityQuery<TransformComponent> _xformQuery;
@@ -51,6 +54,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<MetaDataComponent> _metaDataQuery;
     private EntityQuery<CompanyComponent> _companyQuery;
+    private EntityQuery<FactionAiControlledGridComponent> _factionAiControlQuery; // Exodus - faction AI radar label
     private EntityQuery<ZoneComponent> _zoneQuery;
     // Exodus - SafeZone - End
 
@@ -173,6 +177,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _station = EntManager.System<StationSystem>(); // Frontier
         _blips = EntManager.System<RadarBlipsSystem>();
         _territoryPoiColors = EntManager.System<TerritoryPoiColorSystem>(); // Exodus - territory POI colors
+        _prototype = IoCManager.Resolve<IPrototypeManager>(); // Exodus - faction AI radar label
 
         // Exodus - SafeZone - Start
         _xformQuery = EntManager.GetEntityQuery<TransformComponent>();
@@ -182,6 +187,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _gridQuery = EntManager.GetEntityQuery<MapGridComponent>();
         _metaDataQuery = EntManager.GetEntityQuery<MetaDataComponent>();
         _companyQuery = EntManager.GetEntityQuery<CompanyComponent>();
+        _factionAiControlQuery = EntManager.GetEntityQuery<FactionAiControlledGridComponent>(); // Exodus - faction AI radar label
         _zoneQuery = EntManager.GetEntityQuery<ZoneComponent>();
         // Exodus - SafeZone - End
 
@@ -818,13 +824,16 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     // Shows decimal when distance is < 50m, otherwise pointless to show it.
                     var displayedDistance = distance < 50f ? $"{distance:0.0}" : distance < 1000 ? $"{distance:0}" : $"{distance / 1000:0.0}k";
                     var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName)!, ("distance", displayedDistance));
+                    if (!hideLabel) // Exodus - faction AI radar label
+                        labelText = AddFactionAiControlLabel(gUid, labelText); // Exodus - faction AI radar label
 
                     var coordsText = $"({gridMapPos.X:0.0}, {gridMapPos.Y:0.0})";
 
                     #region Mono
 
                     // Why are the magic numbers 0.9 and 0.7 used? I have no fucking clue.
-                    var labelDimensions = handle.GetDimensions(Font, labelText, 0.9f);
+                    var lines = labelText.Split('\n'); // Exodus - faction AI radar label
+                    var labelDimensions = GetMultilineLabelDimensions(handle, lines, 0.9f); // Exodus - faction AI radar label
                     var blipSize = RadarBlipSize * 0.7f;
 
                     // The center of the radar in UI space.
@@ -868,32 +877,14 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     if (!hideLabel && _companyQuery.TryGetComponent(gUid, out CompanyComponent? companyComp) && // Exodus - SafeZone
                         !string.IsNullOrEmpty(companyComp.CompanyName))
                     {
-                        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
                         CompanyPrototype? prototype = null;
-                        if (prototypeManager.TryIndex(companyComp.CompanyName, out prototype) && prototype != null)
+                        if (_prototype.TryIndex(companyComp.CompanyName, out prototype) && prototype != null)
                         {
                             displayColor = prototype.Color;
                         }
                     }
 
-                    // Split label text into lines
-                    var lines = labelText.Split('\n');
-                    var mainLabel = lines[0];
-
-                    // Draw main ship label with company color if available
-                    handle.DrawString(Font, (uiPosition + labelOffset) * UIScale, mainLabel, UIScale * 0.9f, displayColor);
-
-                    // Draw company label if present
-                    if (!hideLabel && lines.Length > 1)
-                    {
-                        var companyLabel = lines[1];
-                        var companyLabelOffset = new Vector2(
-                            labelOffset.X,
-                            labelOffset.Y + handle.GetDimensions(Font, mainLabel, 0.9f).Y
-                        );
-
-                        handle.DrawString(Font, (uiPosition + companyLabelOffset) * UIScale, companyLabel, UIScale * 0.9f, displayColor);
-                    }
+                    DrawMultilineLabel(handle, uiPosition, labelOffset, lines, UIScale * 0.9f, displayColor); // Exodus - faction AI radar label
 
                     if (isMouseOver && !HideCoords)
                     {
@@ -903,7 +894,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                             X = uiPosition.X > Width / 2f
                                 ? -coordDimensions.X - blipSize / 0.7f // right align the text to left of the blip (0.7 needed for scale)
                                 : blipSize, // left align the text to the right of the blip
-                            Y = labelOffset.Y + handle.GetDimensions(Font, mainLabel, 1f).Y + (lines.Length > 1 ? handle.GetDimensions(Font, lines[1], 1f).Y : 0) + 5
+                            Y = labelOffset.Y + labelDimensions.Y + 5 // Exodus - faction AI radar label
                         };
                         handle.DrawString(Font, (uiPosition + coordOffset) * UIScale, coordsText, 0.7f * UIScale, displayColor);
                     }
@@ -1135,6 +1126,77 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         return _consoleEntity == null ? DetectionLevel.Undetected : _detection.IsGridDetected(grid, _consoleEntity.Value);
     }
+
+    // Exodus-begin faction AI radar label
+    private string AddFactionAiControlLabel(EntityUid grid, string labelText)
+    {
+        if (!_factionAiControlQuery.TryGetComponent(grid, out var control) ||
+            !TryGetFactionAiControlLabel(control, out var controlLabel))
+        {
+            return labelText;
+        }
+
+        return $"{labelText}\n{controlLabel}";
+    }
+
+    private bool TryGetFactionAiControlLabel(FactionAiControlledGridComponent control, out string label)
+    {
+        if (control.State == FactionAiControlState.Contested)
+        {
+            label = Loc.GetString("radar-console-core-control-contested-label");
+            return true;
+        }
+
+        if (control.Faction is not { } factionId)
+        {
+            label = string.Empty;
+            return false;
+        }
+
+        var factionName = factionId.Id;
+        if (_prototype.TryIndex(factionId, out NpcFactionPrototype? faction))
+        {
+            if (faction.CoreControlName is { } coreControlName)
+                factionName = Loc.GetString(coreControlName);
+            else if (faction.Name is { } name)
+                factionName = Loc.GetString(name);
+        }
+
+        label = Loc.GetString("radar-console-core-control-label", ("faction", factionName.ToUpperInvariant()));
+        return true;
+    }
+
+    private Vector2 GetMultilineLabelDimensions(DrawingHandleScreen handle, string[] lines, float scale)
+    {
+        var dimensions = Vector2.Zero;
+
+        foreach (var line in lines)
+        {
+            var lineDimensions = handle.GetDimensions(Font, line, scale);
+            dimensions.X = MathF.Max(dimensions.X, lineDimensions.X);
+            dimensions.Y += lineDimensions.Y;
+        }
+
+        return dimensions;
+    }
+
+    private void DrawMultilineLabel(
+        DrawingHandleScreen handle,
+        Vector2 uiPosition,
+        Vector2 labelOffset,
+        string[] lines,
+        float scale,
+        Color color)
+    {
+        var y = labelOffset.Y;
+
+        foreach (var line in lines)
+        {
+            handle.DrawString(Font, (uiPosition + new Vector2(labelOffset.X, y)) * UIScale, line, scale, color);
+            y += handle.GetDimensions(Font, line, 0.9f).Y;
+        }
+    }
+    // Exodus-end
 
     private (Vector2 Top, Vector2 Left, Vector2 Offset) GetSize(Box2Rotated bounds)
     {

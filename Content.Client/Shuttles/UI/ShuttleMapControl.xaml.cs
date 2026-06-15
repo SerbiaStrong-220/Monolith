@@ -473,6 +473,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             if (string.IsNullOrEmpty(iffText))
                 continue;
 
+            if (!hideLabel)
+                iffText = AddFactionAiControlLabel(grid.Owner, iffText); // Exodus - faction AI FTL map label
+
             var existingStrings = _strings.GetOrNew(gridColor);
             existingStrings.Add((gridUiPos, iffText, !hideLabel, grid.Owner)); // Exodus - territory POI colors
         }
@@ -495,13 +498,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
             foreach (var (gridUiPos, iffText, hasLabel, gridUid) in sendStrings)
             {
-                var textWidth = handle.GetDimensions(_font, iffText, 1f);
-
-                // Split text into lines
-                var lines = iffText.Split('\n');
-                var mainLabel = lines[0];
-                var mainTextWidth = handle.GetDimensions(_font, mainLabel, 1f);
-
                 // Get company color if entity has CompanyComponent
                 var displayColor = adjustedColor;
                 if (hasLabel &&
@@ -513,22 +509,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     displayColor = Color.FromSrgb(gridCompanyProto.Color);
                 }
 
-                // Draw main ship label with company color if available
-                handle.DrawString(_font, gridUiPos + mainTextWidth with { X = -mainTextWidth.X / 2f, Y = mainTextWidth.Y * UIScale }, mainLabel, displayColor);
-
-                // Draw company label if present
-                if (hasLabel && lines.Length > 1)
-                {
-                    var companyLabel = lines[1];
-                    var companyTextWidth = handle.GetDimensions(_font, companyLabel, 1f);
-                    var companyLabelOffset = mainTextWidth with
-                    {
-                        X = -companyTextWidth.X / 2f,
-                        Y = mainTextWidth.Y * 2 * UIScale
-                    };
-
-                    handle.DrawString(_font, gridUiPos + companyLabelOffset, companyLabel, displayColor);
-                }
+                DrawMapObjectLabel(handle, gridUiPos, iffText, displayColor); // Exodus - faction AI FTL map label
             }
         }
 
