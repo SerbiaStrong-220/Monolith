@@ -45,12 +45,12 @@
         layer:
         - MachineLayer
   - type: ApcPowerReceiver
-    powerLoad: 500
+    powerLoad: 250000
   - type: PowerCharge
     charge: 0
     chargeRate: 0.05
     idlePower: 0
-    activePower: 500
+    activePower: 250000
   - type: Biocode
     whitelist:
       components: [ AsakimTrustedUser ]
