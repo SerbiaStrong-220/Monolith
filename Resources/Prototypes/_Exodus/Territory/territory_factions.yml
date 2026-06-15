@@ -26,6 +26,8 @@
 #   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
 #   5. (Optional) Add 'npcFaction' field to make captured grids friendly to matching factional AI cores.
 #   6. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
+#   7. (Optional) Add 'discountAlignment' for faction store discounts.
+#      Negative factions penalize every other faction individually, including other negative factions.
 #      TSFMC, PDV and Khsira are main claim factions; Syndicate and USSP are side claim factions.
 #
 # Captured territory scoring (via TerritoryCounterSystem):
@@ -40,6 +42,7 @@
   radarLabel: territory-faction-tsf
   banner: BannerNGC
   npcFaction: TSFMC
+  discountAlignment: Positive
   color: "#047ABD"  # TSF company ship blue
 
 - type: territoryFaction
@@ -47,6 +50,7 @@
   radarLabel: territory-faction-phaeton
   banner: BannerPDV
   npcFaction: PirateNF
+  discountAlignment: Positive
   color: "#D2B48C"  # PDV ship / equipment tan
 
 - type: territoryFaction
@@ -54,6 +58,7 @@
   radarLabel: territory-faction-khsira
   banner: BannerKhsira
   npcFaction: AsakimDefenceForces
+  discountAlignment: Positive
   color: "#BD0071"  # Medium violet red / pink-red for Khsira Empire
 
 - type: territoryFaction
@@ -61,6 +66,7 @@
   radarLabel: territory-faction-syndicate
   banner: BannerSyndicate
   npcFaction: Syndicate
+  discountAlignment: Negative
   color: "#C83737"  # Syndicate red
 
 - type: territoryFaction
@@ -68,6 +74,7 @@
   radarLabel: territory-faction-ussp
   banner: BannerUSSP
   npcFaction: USSP
+  discountAlignment: Positive
   color: "#B01340"  # USSP company red
 
 # Colossus Central is treated as its own faction so it can have a dedicated label
@@ -75,5 +82,6 @@
 - type: territoryFaction
   id: ColossusCentral
   radarLabel: territory-marker-colossus
+  discountAlignment: Positive
   # No dedicated banner yet; can be set as initial controller on the grid or via a banner later.
   # Not one of the three main POI-claiming factions for color purposes.
