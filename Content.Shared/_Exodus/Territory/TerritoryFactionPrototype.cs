@@ -37,6 +37,13 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     [DataField]
     public ProtoId<NpcFactionPrototype>? NpcFaction { get; private set; }
 
+    /// <summary>
+    /// Controls how this faction's captured territory score affects faction store discounts.
+    /// Negative factions penalize every other faction individually, while positive factions only boost themselves.
+    /// </summary>
+    [DataField]
+    public TerritoryDiscountAlignment DiscountAlignment { get; private set; } = TerritoryDiscountAlignment.Positive;
+
     // # Exodus start - faction color for territory rings on BSS map and nav radar
     /// <summary>
     /// Base color used for the territory influence rings (BSS jump map and navigation radar)

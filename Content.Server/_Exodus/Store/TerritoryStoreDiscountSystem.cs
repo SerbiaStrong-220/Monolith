@@ -15,8 +15,8 @@ namespace Content.Server._Exodus.Store;
 public sealed class TerritoryStoreDiscountSystem : EntitySystem
 {
     private const string TerritoryDiscountModifierId = "ExodusTerritoryDiscount";
-    private const string SyndicateFactionId = "Syndicate";
 
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TerritoryCounterSystem _territoryCounter = default!;
 
@@ -56,16 +56,9 @@ public sealed class TerritoryStoreDiscountSystem : EntitySystem
 
     private void OnTerritoryScoreChanged(ref TerritoryScoreChangedEvent ev)
     {
-        var syndicateFaction = new ProtoId<TerritoryFactionPrototype>(SyndicateFactionId);
         var query = EntityQueryEnumerator<StoreComponent, TerritoryStoreDiscountComponent>();
-        while (query.MoveNext(out var uid, out _, out var territoryDiscount))
+        while (query.MoveNext(out var uid, out _, out _))
         {
-            if (ev.Faction != syndicateFaction &&
-                territoryDiscount.Faction != ev.Faction)
-            {
-                continue;
-            }
-
             RefreshStore(uid);
         }
     }
@@ -133,13 +126,24 @@ public sealed class TerritoryStoreDiscountSystem : EntitySystem
 
     private int GetEffectiveScore(ProtoId<TerritoryFactionPrototype> faction)
     {
-        var syndicateFaction = new ProtoId<TerritoryFactionPrototype>(SyndicateFactionId);
         var ownScore = _territoryCounter.GetScore(faction);
-        if (faction == syndicateFaction)
-            return ownScore;
+        var negativeInfluence = 0;
+        var scores = _territoryCounter.GetAllScores();
 
-        var syndicateScore = _territoryCounter.GetScore(syndicateFaction);
-        return ownScore - syndicateScore;
+        foreach (var (otherFaction, score) in scores)
+        {
+            if (otherFaction == faction ||
+                score == 0 ||
+                !_proto.TryIndex<TerritoryFactionPrototype>(otherFaction, out var prototype) ||
+                prototype.DiscountAlignment != TerritoryDiscountAlignment.Negative)
+            {
+                continue;
+            }
+
+            negativeInfluence += score;
+        }
+
+        return ownScore - negativeInfluence;
     }
 
     private static float GetPriceEffectFraction(int effectiveScore, float discountPerPoint)
