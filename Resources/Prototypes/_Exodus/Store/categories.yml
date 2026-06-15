@@ -27,3 +27,8 @@
   id: SummoningMachineFieldReserve
   name: store-category-summoning-field-reserve
 
+- type: storeCategory
+  id: UplinkSyndicateShips
+  name: store-category-syndicate-ships
+  priority: 11
+

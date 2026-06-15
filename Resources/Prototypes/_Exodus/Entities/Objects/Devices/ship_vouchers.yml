@@ -43,3 +43,95 @@
     - Ferz
   - type: StaticPrice
     vendPrice: 325000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherHydra
+  name: syndicate hydra LPC
+  description: A small card that contains the data for the procurement of a Hydra-class corvette.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Hydra
+  - type: StaticPrice
+    vendPrice: 135000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherTalon
+  name: syndicate talon LPC
+  description: A small card that contains the data for the procurement of a Talon-class interceptor.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Talon
+  - type: StaticPrice
+    vendPrice: 45000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherInfiltrator
+  name: syndicate infiltrator LPC
+  description: A small card that contains the data for the procurement of an Infiltrator-class frigate.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Infiltrator
+  - type: StaticPrice
+    vendPrice: 275000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherHunter
+  name: syndicate hunter LPC
+  description: A small card that contains the data for the procurement of a Hunter-class gunship.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Hunter
+  - type: StaticPrice
+    vendPrice: 50000
