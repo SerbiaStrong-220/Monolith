@@ -1,7 +1,7 @@
 store-category-summoning-prefracture-relics = Node: Weapons
 store-category-summoning-kasatura = Node: Loadout
 store-category-summoning-zero-g-vector = Node: EVA Systems
-store-category-summoning-technical-contour = Power
+store-category-summoning-technical-contour = Node: Power
 store-category-summoning-emergency-beacons = Node: Beacons
 store-category-summoning-field-reserve = Node: Supplies
 
