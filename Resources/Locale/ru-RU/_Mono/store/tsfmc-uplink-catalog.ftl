@@ -67,5 +67,5 @@ uplink-security-hardsuit-m82c-desc = A basic protective system for dangerous env
 uplink-security-pulserifle-name = Pulse Rifle
 uplink-security-pulserifle-desc = A large, automatic pulse weapon. Larger cell, and high powered, perfect for chewing through groups of foes.
 # Exodus-faction-ai-core
-uplink-security-faction-ai-core-name = Ядро корабельного ИИ ТСФ
-uplink-security-faction-ai-core-desc = Скручиваемое фракционное ядро ИИ с логикой опознавания целей ТСФ.
+uplink-security-faction-ai-core-name = Боевое ядро ТСФ
+uplink-security-faction-ai-core-desc = Скручиваемое фракционное ядро дрона с уничтожение всех целей не являющихся представителями ТСФ.

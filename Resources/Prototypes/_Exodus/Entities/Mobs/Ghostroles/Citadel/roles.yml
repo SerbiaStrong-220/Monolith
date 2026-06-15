@@ -1,0 +1,36 @@
+- type: entity
+  parent: MobReptilian
+  id: MobCitadelServiceGhostRole
+  name: citadel service
+  suffix: GhostRole, Citadel
+  components:
+  - type: RandomHumanoidAppearance
+  - type: GhostRole
+    name: ghost-role-information-citadel-service-name
+    description: ghost-role-information-citadel-service-description
+    rules: ghost-role-information-citadel-service-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hrs
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ LimitedPassengerGear ]
+    roleLoadout: [ RoleSurvivalStandard ]
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+
+- type: entity
+  parent: MobCitadelServiceGhostRole
+  id: MobCitadelServiceGhostRoleNoTimelock
+  suffix: GhostRole, Citadel, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-citadel-service-name
+    description: ghost-role-information-citadel-service-description
+    rules: ghost-role-information-citadel-service-rules
+    raffle:
+      settings: default
+    requirements: []

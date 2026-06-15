@@ -1,8 +1,34 @@
 - type: startingGear
   id: SyndicateGhostOperativeGear
-  parent: SyndicateOperativeGearFullNoUplink
   equipment:
-    id: SyndicateIDCard
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicate
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsMagSyndie
+    id: SyndiPDA
+    pocket2: WeaponPistolAnaconda
+    belt: ClothingBeltMilitaryWebbing
+  inhand:
+  - ClothingBackpackDuffelSyndicateFilledWSPR
+  storage:
+    back:
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - PinpointerSyndicatePOI
+    - MicroBombImplanter
+    - DoubleEmergencyOxygenTankFilled
+    - MedkitCombatFilled
+    - SyringeCaseAltFilled
+    - JetpackMiniFilled
+    belt:
+    - HandHeldMassScannerBorg
+    - SyndicateJawsOfLife
 
 - type: randomHumanoidSettings
   id: SyndicateGhostOperative
@@ -31,7 +57,6 @@
     implants:
     - UplinkImplant
     - FreedomImplant
-    - MicroBombImplant
   - type: RandomMetadata
     nameSegments:
     - nukeops-role-operator
@@ -88,43 +113,6 @@
     mindRoles:
     - MindRoleGhostRoleNeutral
     - MindRoleNukeopsCommander
-    raffle:
-      settings: default
-    requirements: []
-
-- type: entity
-  parent: MobReptilian
-  id: MobCitadelServiceGhostRole
-  name: citadel service
-  suffix: GhostRole, Citadel
-  components:
-  - type: RandomHumanoidAppearance
-  - type: GhostRole
-    name: ghost-role-information-citadel-service-name
-    description: ghost-role-information-citadel-service-description
-    rules: ghost-role-information-citadel-service-rules
-    raffle:
-      settings: default
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 18000 # 5 hrs
-  - type: GhostTakeoverAvailable
-  - type: Loadout
-    prototypes: [ LimitedPassengerGear ]
-    roleLoadout: [ RoleSurvivalStandard ]
-  - type: NpcFactionMember
-    factions:
-    - AsakimDefenceForces
-
-- type: entity
-  parent: MobCitadelServiceGhostRole
-  id: MobCitadelServiceGhostRoleNoTimelock
-  suffix: GhostRole, Citadel, No Timelock
-  components:
-  - type: GhostRole
-    name: ghost-role-information-citadel-service-name
-    description: ghost-role-information-citadel-service-description
-    rules: ghost-role-information-citadel-service-rules
     raffle:
       settings: default
     requirements: []

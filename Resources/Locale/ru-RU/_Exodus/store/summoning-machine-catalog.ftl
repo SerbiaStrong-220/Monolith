@@ -83,5 +83,5 @@ summoning-machine-beacon-wyvern-name = Маячок: АСЗ Виверна
 summoning-machine-beacon-wyvern-desc = Одноразовый маячок вызова АСЗ Виверна. Бесполезный капитальный корабль.
 summoning-machine-beacon-azimuth-name = Маячок: АСЗ Азимут
 summoning-machine-beacon-azimuth-desc = Одноразовый маячок вызова Азимут. Передовой и разрушительный крейсер. Экипирован щитом МС-750.
-summoning-machine-asakim-ai-core-name = Дораскольное фракционное ядро ИИ
-summoning-machine-asakim-ai-core-desc = Скручиваемое боевое ядро ИИ, настроенное под параметры наведения Сил Обороны Азакимов.
+summoning-machine-asakim-ai-core-name = Боевое ядро Кхси'Ра
+summoning-machine-asakim-ai-core-desc = Скручиваемое боевое ядро, настроенное под параметры наведения Автоматической Системы Защиты, уничтожает все враждебные цели.

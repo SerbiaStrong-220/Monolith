@@ -184,5 +184,5 @@ uplink-pirate-syndisurplus-desc = Contains a large amount of imported good from 
 uplink-pirate-syndisupersurplus-name = Super Surplus Crate
 uplink-pirate-syndisupersurplus-desc = Contains a huge amount of imported good from a company backing the Phaethon Dynasty. This item is non-refundable, don't argue with our lawyers.
 # Exodus-faction-ai-core
-uplink-pirate-faction-ai-core-name = Ядро корабельного ИИ ПДВ
-uplink-pirate-faction-ai-core-desc = Скручиваемое фракционное ядро ИИ с логикой опознавания целей ПДВ.
+uplink-pirate-faction-ai-core-name = Боевое ядро ДФ
+uplink-pirate-faction-ai-core-desc = Скручиваемое фракционное ядро дрона с уничтожение всех целей не являющихся представителями ДФ.
