@@ -57,7 +57,8 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
         if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.UserId is not { } user)
             return;
 
-        if (mind.OwnedEntity is { } original && Exists(original) && _mobState.IsAlive(original))
+        // Is body alive? tracked on OriginalOwnedEntity.
+        if (TryGetEntity(mind.OriginalOwnedEntity, out var body) && _mobState.IsAlive(body.Value))
         {
             _popup.PopupEntity(Loc.GetString("life-insurance-original-alive"), uid, uid);
             return;

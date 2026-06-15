@@ -29,6 +29,7 @@ life-insurance-no-scanner = Капсула сканирования не под�
 life-insurance-no-dna = Не удалось считать ДНК пациента.
 life-insurance-not-organic = Не обнаружено органической материи для сканирования.
 life-insurance-uncloneable = Генетическую структуру этого пациента невозможно записать.
+life-insurance-incompatible-dna = Обнаружено несовместимое ДНК, немедленно сообщите представителю НИОКР Носке-Эйен.
 life-insurance-no-access = Доступ запрещён: удалять записи могут только полковник ТСФ или Великий Визирь.
 life-insurance-dna-recorded = ДНК { $name } записана.
 life-insurance-already-registered = Пациент уже внесён в базу клиентов.

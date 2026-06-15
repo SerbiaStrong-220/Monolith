@@ -10,6 +10,8 @@ using Content.Shared._Mono.Company;
 using Content.Shared._Exodus.LifeInsurance;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.UserInterface;
@@ -18,6 +20,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
@@ -33,6 +36,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private LifeInsuranceBackupBatterySystem _backup = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -113,6 +117,16 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         {
             if (actor != null)
                 _popup.PopupEntity(Loc.GetString("life-insurance-uncloneable"), consoleUid, actor.Value);
+            return false;
+        }
+
+        // Only playable races can be registered.
+        if (!TryComp<HumanoidAppearanceComponent>(body, out var humanoid) ||
+            !_prototype.TryIndex(humanoid.Species, out var species) ||
+            !species.RoundStart)
+        {
+            if (actor != null)
+                _popup.PopupEntity(Loc.GetString("life-insurance-incompatible-dna"), consoleUid, actor.Value);
             return false;
         }
 
