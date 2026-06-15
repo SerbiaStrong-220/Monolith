@@ -14,7 +14,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 4000 # Exodus destructible NPC AI cores, matches T3/plastitanium wall
+        damage: 1000 # Exodus destructible NPC AI cores
       behaviors:
       - !type:PlaySoundBehavior
         sound:
