@@ -51,7 +51,7 @@
 # Hidden POI — listening post inside green nebulas.
 - type: nebulaPoi
   id: NebulaPoiLPBravo
-  path: /Maps/_NF/POI/lpbravo.yml
+  path: /Maps/_Exodus/POI/lpbravo.yml
   spawnIn:
   - NebulaGreenMarker
   minDensity: 0.7

@@ -21,7 +21,7 @@
 - type: gameMap
   id: LPBravo
   mapName: 'Прослушивающий Пункт Браво' # Ru-Localization
-  mapPath: /Maps/_NF/POI/lpbravo.yml
+  mapPath: /Maps/_Exodus/POI/lpbravo.yml # Exodus Nebula Update
   minPlayers: 0
   stations:
     LPBravo:
