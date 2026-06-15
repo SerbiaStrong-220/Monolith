@@ -52,7 +52,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private AccessReaderSystem _reader = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
-    // [Dependency] private CommunicationsConsoleSystem _commsConsole = default!;
+    // [Dependency] private CommunicationsConsoleSystem _commsConsole = default!; // Exodus
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private DockingSystem _dock = default!;
     [Dependency] private IdCardSystem _idSystem = default!;

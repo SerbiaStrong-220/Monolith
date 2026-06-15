@@ -11,11 +11,9 @@ public sealed partial class CommunicationsConsoleComponent : SharedCommunication
     /// <summary>
     /// Remaining cooldown between making announcements.
     /// </summary>
-    [ViewVariables]
     [DataField]
     public float AnnouncementCooldownRemaining;
 
-    [ViewVariables]
     [DataField]
     public float BroadcastCooldownRemaining;
 
@@ -23,28 +21,24 @@ public sealed partial class CommunicationsConsoleComponent : SharedCommunication
     /// Fluent ID for the announcement title
     /// If a Fluent ID isn't found, just uses the raw string
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
     public LocId Title = "comms-console-announcement-title-station";
 
     /// <summary>
     /// Announcement color
     /// </summary>
-    [ViewVariables]
     [DataField]
     public Color Color = Color.Gold;
 
     /// <summary>
     /// Time in seconds between announcement delays on a per-console basis
     /// </summary>
-    [ViewVariables]
     [DataField]
     public int Delay = 90;
 
     /// <summary>
     /// Time in seconds of announcement cooldown when a new console is created on a per-console basis
     /// </summary>
-    [ViewVariables]
     [DataField]
     public int InitialDelay = 30;
 

@@ -16,9 +16,7 @@ public sealed partial class CommunicationsConsoleMenu : FancyWindow
     public bool CanAnnounce;
     public bool CanBroadcast;
     public bool AlertLevelSelectable;
-    public bool CountdownStarted;
     public string CurrentLevel = string.Empty;
-    public TimeSpan? CountdownEnd;
 
     public event Action<string>? OnAlertLevel;
     public event Action<string>? OnAnnounce;
@@ -43,7 +41,6 @@ public sealed partial class CommunicationsConsoleMenu : FancyWindow
             {
                 AnnounceButton.Disabled = !CanAnnounce;
                 AnnounceButton.ToolTip = null;
-
             }
         };
 
@@ -61,7 +58,6 @@ public sealed partial class CommunicationsConsoleMenu : FancyWindow
                 OnAlertLevel?.Invoke(cast);
             }
         };
-
 
         AlertLevelButton.Disabled = !AlertLevelSelectable;
     }
