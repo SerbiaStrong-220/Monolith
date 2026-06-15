@@ -31,7 +31,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
     private EntityQuery<ProjectileComponent> _projectileQuery;
     private EntityQuery<ShipWeaponProjectileComponent> _shipWeaponProjectileQuery;
-    private EntityQuery<ShipShieldedComponent> _shieldedQuery;
+    private EntityQuery<ShipShieldedComponent> _shieldedQuery; // Exodus
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -139,7 +139,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         base.Initialize();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
         _shipWeaponProjectileQuery = GetEntityQuery<ShipWeaponProjectileComponent>();
-        _shieldedQuery = GetEntityQuery<ShipShieldedComponent>();
+        _shieldedQuery = GetEntityQuery<ShipShieldedComponent>(); // Exodus
 
         SubscribeLocalEvent<ShipShieldComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentShutdown>(OnEmitterShutdown); // Mono
