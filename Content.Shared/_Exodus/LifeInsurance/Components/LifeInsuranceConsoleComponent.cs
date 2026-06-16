@@ -51,11 +51,6 @@ public sealed partial class LifeInsuranceConsoleComponent : Component
 public sealed class LifeInsuranceRecord
 {
     /// <summary>
-    /// Display name shown in the console list.
-    /// </summary>
-    public string Name = string.Empty;
-
-    /// <summary>
     /// Snapshot of the player's character used to rebuild the body on cloning.
     /// </summary>
     public HumanoidCharacterProfile Profile;
@@ -71,9 +66,8 @@ public sealed class LifeInsuranceRecord
     /// </summary>
     public string Company = "None";
 
-    public LifeInsuranceRecord(string name, HumanoidCharacterProfile profile, int insurances)
+    public LifeInsuranceRecord(HumanoidCharacterProfile profile, int insurances)
     {
-        Name = name;
         Profile = profile;
         Insurances = insurances;
     }

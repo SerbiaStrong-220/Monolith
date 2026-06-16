@@ -36,6 +36,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private LifeInsuranceBackupBatterySystem _backup = default!;
+    [Dependency] private LifeInsuranceClonerSystem _cloner = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
@@ -148,7 +149,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         // Clone can keep company-gated access (faction uplinks).
         var company = TryComp<CompanyComponent>(body, out var companyComp) ? companyComp.CompanyName.Id : "None";
 
-        comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0) { Company = company };
+        comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot, 0) { Company = company };
 
         _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor);
         UpdateUi(consoleUid, comp);
@@ -194,7 +195,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         }
 
         record.Insurances++;
-        _popup.PopupEntity(Loc.GetString("life-insurance-purchased", ("name", record.Name)), uid, args.Actor);
+        _popup.PopupEntity(Loc.GetString("life-insurance-purchased", ("name", record.Profile.Name)), uid, args.Actor);
         UpdateUi(uid, comp);
     }
 
@@ -273,7 +274,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             .Select(kv => new LifeInsuranceRecordEntry
             {
                 UserId = kv.Key.UserId,
-                Name = kv.Value.Name,
+                Name = kv.Value.Profile.Name,
                 Insurances = kv.Value.Insurances
             })
             .ToList();
@@ -312,9 +313,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         [NotNullWhen(true)] out LifeInsuranceConsoleComponent? consoleComp,
         [NotNullWhen(true)] out LifeInsuranceRecord? record)
     {
-        EntityUid fallbackConsole = default;
-        LifeInsuranceConsoleComponent? fallbackComp = null;
-        LifeInsuranceRecord? fallbackRecord = null;
+        (EntityUid Console, LifeInsuranceConsoleComponent Comp, LifeInsuranceRecord Record)? fallback = null;
 
         var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
         while (query.MoveNext(out var uid, out var comp))
@@ -329,7 +328,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
                 continue;
 
             // Prefer a console whose cloning capsule is actually free to use right now.
-            if (IsClonerAvailable(comp.Cloner))
+            if (comp.Cloner is { } cloner && _cloner.IsAvailable(cloner))
             {
                 console = uid;
                 consoleComp = comp;
@@ -338,16 +337,14 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             }
 
             // Otherwise remember it as a fallback so the player at least gets a clear reason.
-            fallbackConsole = uid;
-            fallbackComp = comp;
-            fallbackRecord = found;
+            fallback = (uid, comp, found);
         }
 
-        if (fallbackComp != null && fallbackRecord != null)
+        if (fallback is { } fb)
         {
-            console = fallbackConsole;
-            consoleComp = fallbackComp;
-            record = fallbackRecord;
+            console = fb.Console;
+            consoleComp = fb.Comp;
+            record = fb.Record;
             return true;
         }
 
@@ -355,15 +352,6 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         consoleComp = null;
         record = null;
         return false;
-    }
-
-    private bool IsClonerAvailable(EntityUid? cloner)
-    {
-        return cloner is { } c
-            && TryComp<LifeInsuranceClonerComponent>(c, out var cl)
-            && !cl.Active
-            && !cl.Failing
-            && _backup.IsOperational(c);
     }
 
     /// <summary>

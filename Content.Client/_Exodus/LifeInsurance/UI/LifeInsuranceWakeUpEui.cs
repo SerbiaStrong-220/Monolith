@@ -14,11 +14,7 @@ public sealed class LifeInsuranceWakeUpEui : BaseEui
     {
         _window = new LifeInsuranceWakeUpWindow();
 
-        _window.OkButton.OnPressed += _ =>
-        {
-            SendMessage(new LifeInsuranceWakeUpClosedMessage());
-            _window.Close();
-        };
+        _window.OkButton.OnPressed += _ => _window.Close();
 
         _window.OnClose += () => SendMessage(new LifeInsuranceWakeUpClosedMessage());
     }
