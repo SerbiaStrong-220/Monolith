@@ -22,3 +22,6 @@ guide-entry-exodus-rule-ghost-roles-core = Ядро Системы Защиты
 guide-entry-exodus-rule-ghost-roles-personal-protection-operator = Оператор Персональной Защиты
 guide-entry-exodus-rule-ghost-roles-chimera = Химера
 guide-entry-exodus-rule-ghost-roles-borg = Борг
+guide-entry-exodus-rule-ghost-roles-syndicate = Синдикат
+guide-entry-exodus-rule-ghost-roles-syndicate-operative = Оперативник Синдиката
+guide-entry-exodus-rule-ghost-roles-syndicate-sergeant = Сержант Синдиката

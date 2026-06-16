@@ -70,6 +70,7 @@
     - EXRuleGhostRoleKhsiraEighthFleet
     - EXRuleGhostRoleChimera
     - EXRuleGhostRoleBorg
+    - EXRuleGhostRoleSyndicate
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -147,3 +148,21 @@
   id: EXRuleGhostRoleBorg
   name: guide-entry-exodus-rule-ghost-roles-borg
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesBorg.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleSyndicate
+  name: guide-entry-exodus-rule-ghost-roles-syndicate
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicate.xml"
+  children:
+    - EXRuleGhostRoleSyndicateOperative
+    - EXRuleGhostRoleSyndicateSergeant
+
+- type: guideEntry
+  id: EXRuleGhostRoleSyndicateOperative
+  name: guide-entry-exodus-rule-ghost-roles-syndicate-operative
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicateOperative.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleSyndicateSergeant
+  name: guide-entry-exodus-rule-ghost-roles-syndicate-sergeant
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicateSergeant.xml"
