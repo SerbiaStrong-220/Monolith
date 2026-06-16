@@ -1,2 +1,2 @@
-ent-Crystallizer = crystallizer
-    .desc = Used to crystallize or solidify gases.
+ent-Crystallizer = кристаллизатор
+    .desc = Используется для кристаллизации или затвердевания газов.

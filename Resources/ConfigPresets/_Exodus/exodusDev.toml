@@ -5,8 +5,8 @@ lidgren_log_warning = false
 lidgren_log_error = false
 
 [game]
-hostname = "[RU][SS220] ✨ Exodus: Core [Frontier]"
-desc = "Русский язык, 60+ голосов, MRP"
+hostname = "Exodus: Dev"
+desc = "Сервер предназначенный для отдела разработки Exodus: закрытые тесты, публичные тесты. Элемент стабильности сборки."
 lobbyduration = 360
 
 [game.panic_bunker]
@@ -60,7 +60,7 @@ note_fresh_days = 0
 allow_multi_server_play = false
 
 [chat]
-motd = "Добро пожаловать на Exodus! Ваша история разворачивается в секторе Колосс. Присоединяйтесь к нашему Discord!\nhttps://discord.gg/ss220\n\nУ нас также присутствует удобная веб-карта для просмотра шаттлов: клик на сервер в лаунчере > веб-сайт.\nПриятной игры!"
+motd = "Добро пожаловать на Exodus!\n[REDACTED]\n\nВы находитесь в отделе разработки Exodus, за несанкционированный доступ проследует незамедлительное наказание."
 
 [console]
 loginlocal = true

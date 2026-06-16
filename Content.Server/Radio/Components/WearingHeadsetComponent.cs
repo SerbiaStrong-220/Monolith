@@ -8,6 +8,8 @@ namespace Content.Server.Radio.Components;
 [RegisterComponent]
 public sealed partial class WearingHeadsetComponent : Component
 {
-    [DataField("headset")]
-    public EntityUid Headset;
+    // Exodus-begin: support multiple active headsets
+    [DataField("headsets")]
+    public List<EntityUid> Headsets = new();
+    // Exodus-end
 }

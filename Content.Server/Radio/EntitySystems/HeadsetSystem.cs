@@ -54,13 +54,21 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
-        if (args.Channel != null
-            && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && keys.Channels.Any(c => c.Channel == args.Channel.ID && c.CanSpeak)) // Exodus: read-only channels
+        // Exodus-begin: support multiple active headsets
+        var channel = args.Channel;
+        if (channel == null)
+            return;
+
+        foreach (var headset in component.Headsets)
         {
-            _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
+            if (!CanSpeakOnChannel(headset, channel.ID))
+                continue;
+
+            _radio.SendRadioMessage(uid, args.Message, channel, headset);
             args.Channel = null; // prevent duplicate messages from other listeners.
+            return;
         }
+        // Exodus-end
     }
 
     protected override void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
@@ -68,7 +76,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
         base.OnGotEquipped(uid, component, args);
         if (component.IsEquipped && component.Enabled)
         {
-            EnsureComp<WearingHeadsetComponent>(args.Equipee).Headset = uid;
+            AddWearingHeadset(args.Equipee, uid); // Exodus: support multiple active headsets
             UpdateRadioChannels(uid, component);
         }
     }
@@ -77,7 +85,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
     {
         base.OnGotUnequipped(uid, component, args);
         RemComp<ActiveRadioComponent>(uid);
-        RemComp<WearingHeadsetComponent>(args.Equipee);
+        RemoveWearingHeadset(args.Equipee, uid); // Exodus: support multiple active headsets
     }
 
     public void SetEnabled(EntityUid uid, bool value, HeadsetComponent? component = null)
@@ -96,14 +104,50 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
             RemCompDeferred<ActiveRadioComponent>(uid);
 
             if (component.IsEquipped)
-                RemCompDeferred<WearingHeadsetComponent>(Transform(uid).ParentUid);
+                RemoveWearingHeadset(Transform(uid).ParentUid, uid); // Exodus: support multiple active headsets
         }
         else if (component.IsEquipped)
         {
-            EnsureComp<WearingHeadsetComponent>(Transform(uid).ParentUid).Headset = uid;
+            AddWearingHeadset(Transform(uid).ParentUid, uid); // Exodus: support multiple active headsets
             UpdateRadioChannels(uid, component);
         }
     }
+
+    // Exodus-begin: support multiple active headsets
+    private bool CanSpeakOnChannel(EntityUid headset, string channelId)
+    {
+        if (!TryComp(headset, out EncryptionKeyHolderComponent? keys))
+            return false;
+
+        foreach (var entry in keys.Channels)
+        {
+            if (entry.Channel == channelId && entry.CanSpeak)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void AddWearingHeadset(EntityUid wearer, EntityUid headset)
+    {
+        var wearing = EnsureComp<WearingHeadsetComponent>(wearer);
+        if (!wearing.Headsets.Contains(headset))
+            wearing.Headsets.Add(headset);
+    }
+
+    private void RemoveWearingHeadset(EntityUid wearer, EntityUid headset)
+    {
+        if (!TryComp<WearingHeadsetComponent>(wearer, out var wearing))
+            return;
+
+        wearing.Headsets.Remove(headset);
+
+        if (wearing.Headsets.Count != 0)
+            return;
+
+        RemComp<WearingHeadsetComponent>(wearer);
+    }
+    // Exodus-end
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
