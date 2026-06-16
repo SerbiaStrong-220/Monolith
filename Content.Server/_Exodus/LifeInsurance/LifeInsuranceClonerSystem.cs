@@ -193,11 +193,12 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         if (comp.FailProgress < comp.FailTime)
             return;
 
-        Spawn(comp.FailMob, _transform.GetMapCoordinates(uid));
+        var coords = Transform(uid).Coordinates;
+        Spawn(comp.FailMob, coords);
 
         // The failed revive bursts out blood.
         var blood = new Solution(comp.FailBloodReagent, comp.FailBloodAmount);
-        _puddle.TrySpillAt(Transform(uid).Coordinates, blood, out _);
+        _puddle.TrySpillAt(coords, blood, out _);
 
         comp.Failing = false;
         comp.FailProgress = 0f;

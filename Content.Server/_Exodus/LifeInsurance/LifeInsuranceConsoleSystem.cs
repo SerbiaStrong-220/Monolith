@@ -99,24 +99,22 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
     /// <summary>
     /// Stores the DNA of the given body into this console's registry.
     /// </summary>
-    public bool TryRecordDna(EntityUid consoleUid, EntityUid body, LifeInsuranceConsoleComponent? comp = null, EntityUid? actor = null)
+    private bool TryRecordDna(EntityUid consoleUid, EntityUid body, LifeInsuranceConsoleComponent comp, EntityUid actor)
     {
-        if (!Resolve(consoleUid, ref comp) || !_backup.IsOperational(consoleUid))
+        if (!_backup.IsOperational(consoleUid))
             return false;
 
         // No synth
         if (HasComp<SiliconComponent>(body))
         {
-            if (actor != null)
-                _popup.PopupEntity(Loc.GetString("life-insurance-not-organic"), consoleUid, actor.Value);
+            _popup.PopupEntity(Loc.GetString("life-insurance-not-organic"), consoleUid, actor);
             return false;
         }
 
         // Respect the uncloneable trait
         if (HasComp<UncloneableComponent>(body))
         {
-            if (actor != null)
-                _popup.PopupEntity(Loc.GetString("life-insurance-uncloneable"), consoleUid, actor.Value);
+            _popup.PopupEntity(Loc.GetString("life-insurance-uncloneable"), consoleUid, actor);
             return false;
         }
 
@@ -125,8 +123,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             !_prototype.TryIndex(humanoid.Species, out var species) ||
             !species.RoundStart)
         {
-            if (actor != null)
-                _popup.PopupEntity(Loc.GetString("life-insurance-incompatible-dna"), consoleUid, actor.Value);
+            _popup.PopupEntity(Loc.GetString("life-insurance-incompatible-dna"), consoleUid, actor);
             return false;
         }
 
@@ -134,15 +131,14 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             !_prefsManager.TryGetCachedPreferences(session.UserId, out var prefs) ||
             prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
         {
-            if (actor != null)
-                _popup.PopupEntity(Loc.GetString("life-insurance-no-dna"), consoleUid, actor.Value);
+            _popup.PopupEntity(Loc.GetString("life-insurance-no-dna"), consoleUid, actor);
             return false;
         }
 
         // A person is only enrolled once; re-scanning a known client reports their status instead.
         if (comp.Records.ContainsKey(session.UserId))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-already-registered"), consoleUid, actor ?? body);
+            _popup.PopupEntity(Loc.GetString("life-insurance-already-registered"), consoleUid, actor);
             return false;
         }
 
@@ -154,7 +150,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
 
         comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot.Name, snapshot, 0) { Company = company };
 
-        _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor ?? body);
+        _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor);
         UpdateUi(consoleUid, comp);
         return true;
     }

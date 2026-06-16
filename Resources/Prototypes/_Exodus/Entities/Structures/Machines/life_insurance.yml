@@ -59,7 +59,7 @@
   description: A cloning capsule that rebuilds an insured patient's body on demand.
   components:
   - type: LifeInsuranceCloner
-    revivalTime: 10
+    revivalTime: 180
   - type: Anchorable
     flags: Anchorable # mapper-placed, can be anchored but never unwrenched
   - type: Destructible
