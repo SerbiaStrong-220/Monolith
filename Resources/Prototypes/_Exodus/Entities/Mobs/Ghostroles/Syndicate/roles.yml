@@ -30,7 +30,7 @@
     - C4
     - C4
     - C4
-    - C4
+    - AccessBreaker
     - AmmoBox762x39mmSubsonic
     - AmmoBox762x39mmSubsonic
     - EncryptionKeyCommon
@@ -78,7 +78,7 @@
     - C4
     - C4
     - C4
-    - C4
+    - AccessBreaker
     - JetpackMiniFilled
     - EncryptionKeyCommon
     - EncryptionKeyTraffic
@@ -130,7 +130,7 @@
     - Sign
   - type: RandomMetadata
     nameSegments:
-    - nukeops-role-operator
+    - random-metadata-name-syndicate-operative
     - SyndicateNamesNormal
   - type: NpcFactionMember
     factions:
@@ -174,7 +174,7 @@
   - type: RandomMetadata
     nameSegments:
     - random-metadata-name-syndicate-leader
-    - NamesLastMilitary
+    - SyndicateNamesNormal
 
 - type: randomHumanoidSettings
   id: SyndicateGhostLeaderNoTimelock
