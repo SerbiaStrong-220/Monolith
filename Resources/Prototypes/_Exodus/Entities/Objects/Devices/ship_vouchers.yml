@@ -135,6 +135,9 @@
     - Hunter
   - type: StaticPrice
     vendPrice: 50000
+
+- type: entity
+  parent: BaseShipLPC
   id: ShipVoucherUSSPBasic
   name: USSP basic shuttle LPC
   description: A small card that authorizes the acquisition of a basic USSP shuttle.
