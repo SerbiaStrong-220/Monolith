@@ -12,8 +12,9 @@
     id: SyndiPDA
     pocket2: WeaponPistolAnaconda
     belt: ClothingBeltMilitaryWebbing
+    neck: ClothingNeckIFFRed
   inhand:
-  - ClothingBackpackDuffelSyndicateFilledWSPR
+  - WeaponRifleWSPR
   storage:
     back:
     - Telecrystal50
@@ -26,9 +27,70 @@
     - MedkitCombatFilled
     - SyringeCaseAltFilled
     - JetpackMiniFilled
+    - C4
+    - C4
+    - C4
+    - C4
+    - AmmoBox762x39mmSubsonic
+    - AmmoBox762x39mmSubsonic
+    - EncryptionKeyCommon
+    - EncryptionKeyTraffic
     belt:
     - HandHeldMassScannerBorg
     - SyndicateJawsOfLife
+    - Magazine762x39mmSubsonic
+    - Magazine762x39mmSubsonic
+    - Magazine762x39mmSubsonic
+    - Magazine762x39mmSubsonic
+
+- type: startingGear
+  id: SyndicateGhostOperativeLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicate
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieCommander
+    shoes: ClothingShoesBootsMagSyndie
+    id: SyndiPDA
+    pocket2: WeaponPistolAnaconda
+    belt: ClothingBeltMilitaryWebbing
+    neck: ClothingNeckIFFRed
+  inhand:
+  - WeaponLightMachineGunL6
+  storage:
+    back:
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - PinpointerSyndicatePOI
+    - MicroBombImplanter
+    - DoubleEmergencyOxygenTankFilled
+    - MedkitCombatFilled
+    - SyringeCaseAltFilled
+    - C4
+    - C4
+    - C4
+    - C4
+    - JetpackMiniFilled
+    - EncryptionKeyCommon
+    - EncryptionKeyTraffic
+    belt:
+    - HandHeldMassScannerBorg
+    - SyndicateJawsOfLife
+    - Magazine762x39mmBox
+    - Magazine762x39mmBox
+    - Magazine762x39mmBox
+    - Magazine762x39mmBox
+    - StimulantAutoInjector
+    - StimulantAutoInjector
 
 - type: randomHumanoidSettings
   id: SyndicateGhostOperative
@@ -37,6 +99,8 @@
   speciesBlacklist:
   - Vox
   - Asakim
+  - IPC
+  - Arachnid
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-operative-name
@@ -57,6 +121,13 @@
     implants:
     - UplinkImplant
     - FreedomImplant
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Sign
+    understands:
+    - TauCetiBasic
+    - Sign
   - type: RandomMetadata
     nameSegments:
     - nukeops-role-operator
@@ -97,6 +168,9 @@
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 90000 # 25 hrs
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeLeaderGear ]
+    roleLoadout: [ RoleSurvivalNukie ]
   - type: RandomMetadata
     nameSegments:
     - random-metadata-name-syndicate-leader
