@@ -61,6 +61,11 @@ entities:
     - type: NpcFactionMember
       factions:
       - Syndicate
+    - type: InitRepairSnapshot
+    - type: ShipRepairRestrict
+      toolWhitelist:
+        tags:
+        - SyndicateRepairTool
     - type: BecomesStation
       id: klesh_ghost
     - type: MapGrid

@@ -43,6 +43,14 @@ entities:
       parent: invalid
     - type: BecomesStation
       id: Infiltrator
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: InitRepairSnapshot
+    - type: ShipRepairRestrict
+      toolWhitelist:
+        tags:
+        - SyndicateRepairTool
     - type: MapGrid
       chunks:
         -1,-1:
