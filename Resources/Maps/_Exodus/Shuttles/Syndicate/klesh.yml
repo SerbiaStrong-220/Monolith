@@ -89,6 +89,7 @@ entities:
     - type: Broadphase
     - type: IFF
       color: '#C94242'
+    - type: ThermalSignature
     - type: Physics
       bodyStatus: InAir
       angularDamping: 0.05
