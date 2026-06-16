@@ -159,23 +159,6 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// TEMP (single-player testing): records the occupant directly from the scanner so the tester
-    /// doesn't have to be inside the capsule and press the console button at the same time.
-    /// </summary>
-    public bool TryAutoRecordFromScanner(EntityUid scannerUid, EntityUid body)
-    {
-        var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
-        while (query.MoveNext(out var consoleUid, out var comp))
-        {
-            EnsureLinks(consoleUid, comp);
-            if (comp.Scanner == scannerUid)
-                return TryRecordDna(consoleUid, body, comp);
-        }
-
-        return false;
-    }
-
     private void OnBuy(EntityUid uid, LifeInsuranceConsoleComponent comp, LifeInsuranceBuyMessage args)
     {
         if (!_backup.IsOperational(uid))

@@ -13,7 +13,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// How long the revival/cloning process takes once started, in seconds.
     /// </summary>
     [DataField]
-    public float RevivalTime = 10f;
+    public float RevivalTime = 180f;
 
     /// <summary>
     /// Console this cloner is linked to.
