@@ -1,20 +1,16 @@
-using Content.Server._EinsteinEngines.Language;
 using Content.Server.EUI;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Humanoid;
 using Content.Server.Jobs;
+using Content.Server.Traits;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared._Mono.Company;
 using Content.Shared._NF.Bank.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.Traits;
-using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -28,11 +24,8 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     [Dependency] private HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private TransformSystem _transform = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private LanguageSystem _language = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private TraitSystem _traits = default!;
     [Dependency] private SharedJobSystem _jobs = default!;
     [Dependency] private LifeInsuranceBackupBatterySystem _backup = default!;
     [Dependency] private LifeInsuranceConsoleSystem _console = default!;
@@ -65,7 +58,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
             return false;
 
         comp.Active = true;
-        comp.Progress = 0f;
+        comp.Progress = TimeSpan.Zero;
         comp.PendingMind = mindId;
         comp.PendingUser = user;
         comp.PendingProfile = profile;
@@ -99,7 +92,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
                 continue;
             }
 
-            comp.Progress += frameTime;
+            comp.Progress += TimeSpan.FromSeconds(frameTime);
             if (comp.Progress < comp.RevivalTime)
                 continue;
 
@@ -137,11 +130,11 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         if (comp.PendingProfile is not { } profile || !_prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species))
             return null;
 
-        var mob = Spawn(species.Prototype, _transform.GetMapCoordinates(uid));
+        var mob = Spawn(species.Prototype, Transform(uid).Coordinates);
         _humanoid.LoadProfile(mob, profile);
         _metaData.SetEntityName(mob, profile.Name);
         EnsureComp<BankAccountComponent>(mob);
-        ApplyTraits(mob, profile);
+        _traits.ApplyTraits(mob, profile);
 
         // Restore company/faction membership so the clone keeps company-gated access (faction uplinks).
         // CompanySystem normally sets this on PlayerSpawnCompleteEvent, which Spawn does not raise.
@@ -170,7 +163,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     {
         ClearPending(comp);
         comp.Failing = true;
-        comp.FailProgress = 0f;
+        comp.FailProgress = TimeSpan.Zero;
         _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Failed);
 
         if (comp.ConnectedConsole is { } console)
@@ -180,7 +173,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     private void ClearPending(LifeInsuranceClonerComponent comp)
     {
         comp.Active = false;
-        comp.Progress = 0f;
+        comp.Progress = TimeSpan.Zero;
         comp.PendingMind = null;
         comp.PendingUser = null;
         comp.PendingProfile = null;
@@ -189,7 +182,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
 
     private void RunFailure(EntityUid uid, LifeInsuranceClonerComponent comp, float frameTime)
     {
-        comp.FailProgress += frameTime;
+        comp.FailProgress += TimeSpan.FromSeconds(frameTime);
         if (comp.FailProgress < comp.FailTime)
             return;
 
@@ -201,53 +194,11 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
         _puddle.TrySpillAt(coords, blood, out _);
 
         comp.Failing = false;
-        comp.FailProgress = 0f;
+        comp.FailProgress = TimeSpan.Zero;
         _appearance.SetData(uid, LifeInsuranceClonerVisuals.State, LifeInsuranceClonerState.Idle);
 
         if (comp.ConnectedConsole is { } console)
             _console.UpdateUi(console);
     }
 
-    /// <summary>
-    /// Applies the character's profile traits to the clone.
-    /// </summary>
-    private void ApplyTraits(EntityUid mob, HumanoidCharacterProfile profile)
-    {
-        foreach (var traitId in profile.TraitPreferences)
-        {
-            if (!_prototype.TryIndex<TraitPrototype>(traitId, out var trait))
-                continue;
-
-            if (_whitelist.IsWhitelistFail(trait.Whitelist, mob) || _whitelist.IsBlacklistPass(trait.Blacklist, mob))
-                continue;
-
-            EntityManager.AddComponents(mob, trait.Components, false);
-
-            if (trait.RemoveLanguagesSpoken is not null)
-                foreach (var lang in trait.RemoveLanguagesSpoken)
-                    _language.RemoveLanguage(mob, lang, true, false);
-
-            if (trait.RemoveLanguagesUnderstood is not null)
-                foreach (var lang in trait.RemoveLanguagesUnderstood)
-                    _language.RemoveLanguage(mob, lang, false, true);
-
-            if (trait.LanguagesSpoken is not null)
-                foreach (var lang in trait.LanguagesSpoken)
-                    _language.AddLanguage(mob, lang, true, false);
-
-            if (trait.LanguagesUnderstood is not null)
-                foreach (var lang in trait.LanguagesUnderstood)
-                    _language.AddLanguage(mob, lang, false, true);
-
-            if (trait.TraitGear == null)
-                continue;
-
-            if (!TryComp<HandsComponent>(mob, out var hands))
-                continue;
-
-            var coords = Transform(mob).Coordinates;
-            var item = Spawn(trait.TraitGear, coords);
-            _hands.TryPickup(mob, item, checkActionBlocker: false, handsComp: hands);
-        }
-    }
 }

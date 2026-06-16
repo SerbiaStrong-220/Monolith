@@ -29,7 +29,7 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
         SubscribeLocalEvent<LifeInsuranceUserComponent, LifeInsuranceCloneActionEvent>(OnActivate);
     }
 
-    private void OnGhostPlayerAttached(EntityUid uid, GhostComponent ghost, PlayerAttachedEvent args)
+    private void OnGhostPlayerAttached(Entity<GhostComponent> ent, ref PlayerAttachedEvent args)
     {
         var user = args.Player.UserId;
 
@@ -37,36 +37,36 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
         if (charges <= 0)
             return;
 
-        var comp = EnsureComp<LifeInsuranceUserComponent>(uid);
+        var comp = EnsureComp<LifeInsuranceUserComponent>(ent);
 
         if (!Exists(comp.ActionId))
-            comp.ActionId = _actions.AddAction(uid, ActionProto);
+            comp.ActionId = _actions.AddAction(ent, ActionProto);
 
         _actions.SetCharges(comp.ActionId, charges);
     }
 
-    private void OnActivate(EntityUid uid, LifeInsuranceUserComponent comp, LifeInsuranceCloneActionEvent args)
+    private void OnActivate(Entity<LifeInsuranceUserComponent> ent, ref LifeInsuranceCloneActionEvent args)
     {
         if (args.Handled)
             return;
 
         // Only a ghost can revive.
-        if (!HasComp<GhostComponent>(uid))
+        if (!HasComp<GhostComponent>(ent))
             return;
 
-        if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.UserId is not { } user)
+        if (!_mind.TryGetMind(ent, out var mindId, out var mind) || mind.UserId is not { } user)
             return;
 
         // Is body alive? tracked on OriginalOwnedEntity.
         if (TryGetEntity(mind.OriginalOwnedEntity, out var body) && _mobState.IsAlive(body.Value))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-original-alive"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("life-insurance-original-alive"), ent, ent);
             return;
         }
 
         if (!_console.TryFindInsurance(user, out var console, out _, out var record))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-no-active-policy"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("life-insurance-no-active-policy"), ent, ent);
             return;
         }
 
@@ -74,13 +74,13 @@ public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
             consoleComp.Cloner is not { } cloner ||
             !_cloner.IsAvailable(cloner))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), ent, ent);
             return;
         }
 
         if (!_cloner.TryStartRevival(cloner, record.Profile, mindId, user, record.Company))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), ent, ent);
             return;
         }
 

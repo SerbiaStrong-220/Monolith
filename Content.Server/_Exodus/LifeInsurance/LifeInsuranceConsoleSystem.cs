@@ -65,36 +65,36 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(EntityUid uid, LifeInsuranceConsoleComponent comp, MapInitEvent args)
+    private void OnMapInit(Entity<LifeInsuranceConsoleComponent> ent, ref MapInitEvent args)
     {
-        EnsureLinks(uid, comp);
+        EnsureLinks(ent, ent.Comp);
     }
 
-    private void OnUiOpen(EntityUid uid, LifeInsuranceConsoleComponent comp, AfterActivatableUIOpenEvent args)
+    private void OnUiOpen(Entity<LifeInsuranceConsoleComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
-        UpdateUi(uid, comp);
+        UpdateUi(ent, ent.Comp);
     }
 
-    private void OnRecordDna(EntityUid uid, LifeInsuranceConsoleComponent comp, LifeInsuranceRecordDnaMessage args)
+    private void OnRecordDna(Entity<LifeInsuranceConsoleComponent> ent, ref LifeInsuranceRecordDnaMessage args)
     {
-        if (!_backup.IsOperational(uid))
+        if (!_backup.IsOperational(ent))
             return;
 
-        EnsureLinks(uid, comp);
+        EnsureLinks(ent, ent.Comp);
 
-        if (comp.Scanner is not { } scannerUid || !TryComp<LifeInsuranceScannerComponent>(scannerUid, out var scanner))
+        if (ent.Comp.Scanner is not { } scannerUid || !TryComp<LifeInsuranceScannerComponent>(scannerUid, out var scanner))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-no-scanner"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-no-scanner"), ent, args.Actor);
             return;
         }
 
         if (scanner.BodyContainer.ContainedEntity is not { } body)
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-scanner-empty"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-scanner-empty"), ent, args.Actor);
             return;
         }
 
-        TryRecordDna(uid, body, comp, args.Actor);
+        TryRecordDna(ent, body, ent.Comp, args.Actor);
     }
 
     /// <summary>
@@ -156,47 +156,47 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         return true;
     }
 
-    private void OnBuy(EntityUid uid, LifeInsuranceConsoleComponent comp, LifeInsuranceBuyMessage args)
+    private void OnBuy(Entity<LifeInsuranceConsoleComponent> ent, ref LifeInsuranceBuyMessage args)
     {
-        if (!_backup.IsOperational(uid))
+        if (!_backup.IsOperational(ent))
             return;
 
         var userId = new NetUserId(args.UserId);
 
-        if (!comp.Records.TryGetValue(userId, out var record))
+        if (!ent.Comp.Records.TryGetValue(userId, out var record))
             return;
 
         // Only reg a person who is currently alive.
         if (!IsTargetAlive(userId))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-target-not-alive"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-target-not-alive"), ent, args.Actor);
             return;
         }
 
-        if (record.Insurances >= comp.MaxInsurances)
+        if (record.Insurances >= ent.Comp.MaxInsurances)
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-max-reached"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-max-reached"), ent, args.Actor);
             return;
         }
 
         // Don't sell unless cloning capsule still connected.
-        EnsureLinks(uid, comp);
-        if (comp.Cloner is not { } cloner || !Exists(cloner))
+        EnsureLinks(ent, ent.Comp);
+        if (ent.Comp.Cloner is not { } cloner || !Exists(cloner))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-cloner-unavailable"), ent, args.Actor);
             return;
         }
 
         var price = _cfg.GetCVar(XCVars.LifeInsurancePrice);
         if (!_bank.TryBankWithdraw(args.Actor, price))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-insufficient-funds"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-insufficient-funds"), ent, args.Actor);
             return;
         }
 
         record.Insurances++;
-        _popup.PopupEntity(Loc.GetString("life-insurance-purchased", ("name", record.Profile.Name)), uid, args.Actor);
-        UpdateUi(uid, comp);
+        _popup.PopupEntity(Loc.GetString("life-insurance-purchased", ("name", record.Profile.Name)), ent, args.Actor);
+        UpdateUi(ent, ent.Comp);
     }
 
     /// <summary>
@@ -209,21 +209,21 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             && _mobState.IsAlive(ent);
     }
 
-    private void OnDelete(EntityUid uid, LifeInsuranceConsoleComponent comp, LifeInsuranceDeleteMessage args)
+    private void OnDelete(Entity<LifeInsuranceConsoleComponent> ent, ref LifeInsuranceDeleteMessage args)
     {
-        if (!_backup.IsOperational(uid))
+        if (!_backup.IsOperational(ent))
             return;
 
         // Only frac leaders may purge paid policies.
         var tags = _access.FindAccessTags(args.Actor);
-        if (!comp.DeleteAccess.Any(req => tags.Contains(req)))
+        if (!ent.Comp.DeleteAccess.Any(req => tags.Contains(req)))
         {
-            _popup.PopupEntity(Loc.GetString("life-insurance-no-access"), uid, args.Actor);
+            _popup.PopupEntity(Loc.GetString("life-insurance-no-access"), ent, args.Actor);
             return;
         }
 
-        comp.Records.Remove(new NetUserId(args.UserId));
-        UpdateUi(uid, comp);
+        ent.Comp.Records.Remove(new NetUserId(args.UserId));
+        UpdateUi(ent, ent.Comp);
     }
 
     /// <summary>
@@ -241,18 +241,25 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return;
 
         var coords = Transform(uid).Coordinates;
-        foreach (var ent in _lookup.GetEntitiesInRange(coords, comp.LinkRange))
+
+        // Filter by component via broadphase instead of scanning every entity in range.
+        if (comp.Scanner == null)
         {
-            if (comp.Scanner == null && TryComp<LifeInsuranceScannerComponent>(ent, out var scanner))
+            foreach (var (ent, scanner) in _lookup.GetEntitiesInRange<LifeInsuranceScannerComponent>(coords, comp.LinkRange))
             {
                 comp.Scanner = ent;
                 scanner.ConnectedConsole = uid;
+                break;
             }
+        }
 
-            if (comp.Cloner == null && TryComp<LifeInsuranceClonerComponent>(ent, out var cloner))
+        if (comp.Cloner == null)
+        {
+            foreach (var (ent, cloner) in _lookup.GetEntitiesInRange<LifeInsuranceClonerComponent>(coords, comp.LinkRange))
             {
                 comp.Cloner = ent;
                 cloner.ConnectedConsole = uid;
+                break;
             }
         }
     }

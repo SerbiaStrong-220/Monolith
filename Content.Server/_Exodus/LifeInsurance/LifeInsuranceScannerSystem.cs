@@ -35,9 +35,9 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
         SubscribeLocalEvent<LifeInsuranceScannerComponent, LifeInsuranceScannerEnterDoAfterEvent>(OnEnterDoAfter);
     }
 
-    private void OnInit(EntityUid uid, LifeInsuranceScannerComponent comp, ComponentInit args)
+    private void OnInit(Entity<LifeInsuranceScannerComponent> ent, ref ComponentInit args)
     {
-        comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, ContainerId);
+        ent.Comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(ent, ContainerId);
     }
 
     public bool IsOccupied(LifeInsuranceScannerComponent comp)
@@ -50,64 +50,64 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
         return HasComp<BodyComponent>(target);
     }
 
-    private void OnCanDragDropOn(EntityUid uid, LifeInsuranceScannerComponent comp, ref CanDropTargetEvent args)
+    private void OnCanDragDropOn(Entity<LifeInsuranceScannerComponent> ent, ref CanDropTargetEvent args)
     {
         args.Handled = true;
         args.CanDrop |= CanInsert(args.Dragged);
     }
 
-    private void OnRelayMovement(EntityUid uid, LifeInsuranceScannerComponent comp, ref ContainerRelayMovementEntityEvent args)
+    private void OnRelayMovement(Entity<LifeInsuranceScannerComponent> ent, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!_blocker.CanInteract(args.Entity, uid))
+        if (!_blocker.CanInteract(args.Entity, ent))
             return;
 
-        EjectBody(uid, comp);
+        EjectBody(ent, ent.Comp);
     }
 
-    private void AddAlternativeVerbs(EntityUid uid, LifeInsuranceScannerComponent comp, GetVerbsEvent<AlternativeVerb> args)
+    private void AddAlternativeVerbs(Entity<LifeInsuranceScannerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (IsOccupied(comp))
+        if (IsOccupied(ent.Comp))
         {
             args.Verbs.Add(new AlternativeVerb
             {
-                Act = () => EjectBody(uid, comp),
+                Act = () => EjectBody(ent, ent.Comp),
                 Category = VerbCategory.Eject,
                 Text = Loc.GetString("medical-scanner-verb-noun-occupant"),
                 Priority = 1
             });
         }
 
-        if (!IsOccupied(comp) && CanInsert(args.User) && _blocker.CanMove(args.User))
+        if (!IsOccupied(ent.Comp) && CanInsert(args.User) && _blocker.CanMove(args.User))
         {
             var user = args.User;
             args.Verbs.Add(new AlternativeVerb
             {
-                Act = () => TryEnter(uid, user, user, comp),
+                Act = () => TryEnter(ent, user, user, ent.Comp),
                 Text = Loc.GetString("medical-scanner-verb-enter")
             });
         }
     }
 
-    private void OnDestroyed(EntityUid uid, LifeInsuranceScannerComponent comp, DestructionEventArgs args)
+    private void OnDestroyed(Entity<LifeInsuranceScannerComponent> ent, ref DestructionEventArgs args)
     {
-        EjectBody(uid, comp);
+        EjectBody(ent, ent.Comp);
     }
 
-    private void OnDragDropOn(EntityUid uid, LifeInsuranceScannerComponent comp, ref DragDropTargetEvent args)
+    private void OnDragDropOn(Entity<LifeInsuranceScannerComponent> ent, ref DragDropTargetEvent args)
     {
-        TryEnter(uid, args.User, args.Dragged, comp);
+        TryEnter(ent, args.User, args.Dragged, ent.Comp);
         args.Handled = true;
     }
 
-    private void OnEnterDoAfter(EntityUid uid, LifeInsuranceScannerComponent comp, LifeInsuranceScannerEnterDoAfterEvent args)
+    private void OnEnterDoAfter(Entity<LifeInsuranceScannerComponent> ent, ref LifeInsuranceScannerEnterDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target is not { } target)
             return;
 
-        InsertBody(uid, target, comp);
+        InsertBody(ent, target, ent.Comp);
         args.Handled = true;
     }
 

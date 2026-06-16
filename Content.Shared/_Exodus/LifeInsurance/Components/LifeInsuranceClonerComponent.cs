@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Preferences;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -13,7 +14,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// How long the revival/cloning process takes once started, in seconds.
     /// </summary>
     [DataField]
-    public float RevivalTime = 180f;
+    public TimeSpan RevivalTime = TimeSpan.FromSeconds(180);
 
     /// <summary>
     /// Console this cloner is linked to.
@@ -31,7 +32,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// Elapsed revival time.
     /// </summary>
     [ViewVariables]
-    public float Progress;
+    public TimeSpan Progress;
 
     /// <summary>
     /// Mind to transfer into the clone once the process completes.
@@ -67,13 +68,13 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// Elapsed failure decay time.
     /// </summary>
     [ViewVariables]
-    public float FailProgress;
+    public TimeSpan FailProgress;
 
     /// <summary>
     /// How long the gory failure state lasts before the abomination crawls out, in seconds.
     /// </summary>
     [DataField]
-    public float FailTime = 30f;
+    public TimeSpan FailTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// ProtoID of mob spawned from a failed clone.
@@ -85,7 +86,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// Units of blood gushed onto the floor under the abomination when a failed batch finishes.
     /// </summary>
     [DataField]
-    public float FailBloodAmount = 100f;
+    public FixedPoint2 FailBloodAmount = 100;
 
     /// <summary>
     /// Reagent spilled under the abomination on failure.
