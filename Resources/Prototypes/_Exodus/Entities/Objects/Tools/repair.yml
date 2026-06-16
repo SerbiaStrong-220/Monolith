@@ -29,5 +29,7 @@
     - ShipRepairTool
     - SyndicateRepairTool
   - type: Biocode
+    whitelist:
+      components: [ NukeOperative ]
     mindWhitelist:
       mindRoles: [ NukeopsRole ]
