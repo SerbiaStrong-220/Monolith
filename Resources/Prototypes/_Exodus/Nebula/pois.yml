@@ -234,8 +234,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  maxSpawnDistanceFromCenter: 40000
-  protectedRadius: 500
+  maxSpawnDistanceFromCenter: 45000
+  protectedRadius: 250
   name: 'Лаборатория Аномалий'
   stationGameMap: AnomalousLab
   addComponents:
@@ -257,7 +257,7 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  maxSpawnDistanceFromCenter: 30000
+  maxSpawnDistanceFromCenter: 35000
   protectedRadius: 250
   name: "Ресторан Тинни"
   stationGameMap: Tinnia
