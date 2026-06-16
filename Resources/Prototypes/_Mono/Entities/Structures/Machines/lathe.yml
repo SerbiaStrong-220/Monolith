@@ -42,6 +42,7 @@
     - MonoTSFMiscDynamic
     - MonoTSFGearDynamic
     # USSP start
+    - MonoUSSPVouchersDynamic #Exodus-fix
     - MonoUSSPArmorDynamic
     - MonoUSSPMiscDynamic
     - MonoUSSPWeaponsDynamicRanged

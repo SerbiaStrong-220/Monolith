@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: OreCatcherMachineCircuitboard
+  parent: BaseCircuitboardRecipe
+  result: OreCatcherMachineCircuitboard
+
+- type: latheRecipePack
+  id: ExodusMiningBoards
+  recipes:
+  - OreCatcherMachineCircuitboard

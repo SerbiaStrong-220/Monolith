@@ -20,9 +20,9 @@
 # Ore vein
 - type: ore
   id: NFOreScrap
-  oreEntity: ScrapOre4
+  oreEntity: ScrapOre1 # Exodus-mining-expansion
   minOreYield: 0
-  maxOreYield: 1
+  maxOreYield: 3 # Exodus-mining-expansion
 
 # Stacks
 - type: stack

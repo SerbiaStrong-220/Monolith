@@ -11,7 +11,7 @@
   category: Large
   group: Ussp
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/Ledokol/ledokol.yml
+  shuttlePath: /Maps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
   guidebookPage: Null
   class:
   - Capital
@@ -24,7 +24,7 @@
 - type: gameMap
   id: Ledokol
   mapName: 'Ледокол' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/Ledokol/ledokol.yml
+  mapPath: /Maps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
   minPlayers: 0
   stations:
     Ledokol:
