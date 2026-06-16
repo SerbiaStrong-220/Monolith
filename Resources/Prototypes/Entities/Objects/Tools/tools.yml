@@ -377,6 +377,7 @@
     - MVCable
     - HVCable
     - CableTerminal
+    - SurveillanceCameraConstructed # Exodus RCD additions
     - Deconstruct
     # mono start
     - WallReinforced
@@ -386,6 +387,7 @@
     - Substation
     - BaseAPC
     - Plating # Not mono, taken in for prettiness
+    - FloorHullReinforced # Exodus RCD additions
     - PlatingCornerNE
     - PlatingCornerNW
     - PlatingCornerSE

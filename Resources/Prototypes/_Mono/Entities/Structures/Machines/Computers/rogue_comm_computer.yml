@@ -22,7 +22,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-rogue
     color: "#D2B48C"
-    canShuttle: false
+    # canShuttle: false # Exodus
     global: true #announce to everyone they're about to fuck shit up
     sound: /Audio/Announcements/announce.ogg
   - type: Computer
