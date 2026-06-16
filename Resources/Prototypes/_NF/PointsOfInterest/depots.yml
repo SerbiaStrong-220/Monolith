@@ -12,8 +12,8 @@
   id: CargoDepot
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Грузовое Депо' # Ru-Localization
-  minimumDistance: 40000 # Exodus-nebula-update
-  maximumDistance: 45000 # Exodus-nebula-update
+  minimumDistance: 25000 # Exodus-nebula-update
+  maximumDistance: 35000 # Exodus-nebula-update
   spawnGroup: CargoDepot
   gridPath: /Maps/_Exodus/POI/cargodepot.yml # Exodus
   addComponents: &cargoComponents
@@ -37,8 +37,8 @@
   id: CargoDepotAlt
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Грузовое Депо' # Ru-Localization
-  minimumDistance: 40000 # Exodus-nebula-update
-  maximumDistance: 45000 # Exodus-nebula-update
+  minimumDistance: 25000 # Exodus-nebula-update
+  maximumDistance: 35000 # Exodus-nebula-update
   spawnGroup: CargoDepot
   gridPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   addComponents: *cargoComponents
