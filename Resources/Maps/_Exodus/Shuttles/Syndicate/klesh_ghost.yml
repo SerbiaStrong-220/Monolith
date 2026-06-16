@@ -2419,7 +2419,7 @@ entities:
     - type: Transform
       pos: 0.5,-2.5
       parent: 1
-- proto: NitrousOxideCanister
+- proto: NitrogenCanister
   entities:
   - uid: 158
     components:
