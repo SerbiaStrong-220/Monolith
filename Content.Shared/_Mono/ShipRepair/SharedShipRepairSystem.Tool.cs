@@ -20,6 +20,10 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
 
     private void OnAfterInteract(Entity<ShipRepairToolComponent> ent, ref AfterInteractEvent args)
     {
+        // Exodus - respect earlier interaction blockers such as biocode.
+        if (args.Handled)
+            return;
+
         if (!args.CanReach)
             return;
 
