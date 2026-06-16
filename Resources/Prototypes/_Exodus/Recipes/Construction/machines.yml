@@ -1,0 +1,26 @@
+- type: construction
+  id: MachineFramePartial
+  graph: MachinePartial
+  startNode: start
+  targetNode: machine
+  category: construction-category-machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  id: MachineFrame2x2Partial
+  graph: Machine2x2Partial
+  startNode: start
+  targetNode: machine
+  category: construction-category-machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  id: MachineFrame3x3Partial
+  graph: Machine3x3Partial
+  startNode: start
+  targetNode: machine
+  category: construction-category-machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

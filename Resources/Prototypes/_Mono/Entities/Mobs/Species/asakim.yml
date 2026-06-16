@@ -43,6 +43,13 @@
   - type: Body
     prototype: Asakim
     requiredLegs: 2
+  # Exodus-asakim-mind-role
+  - type: StartingMindRole
+    mindRole: MindRoleAsakim
+  # Body-level Asakim identity marker so biocoded items recognise the body before the player's
+  # mind / role is attached (matters for loadout equip on ghost-role MapInit and for MindAddedMessage
+  # during ghost takeover, which fires before GhostRoleSystem adds the mind roles).
+  - type: AsakimTrustedUser
   - type: Butcherable
     butcheringType: Spike
     spawned:

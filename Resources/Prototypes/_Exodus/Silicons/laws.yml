@@ -1,0 +1,35 @@
+# Black Shield
+- type: siliconLaw
+  id: AsakimBlackShield1
+  order: 1
+  lawString: law-asakim-black-shield-1
+
+- type: siliconLaw
+  id: AsakimBlackShield2
+  order: 2
+  lawString: law-asakim-black-shield-2
+
+- type: siliconLaw
+  id: AsakimBlackShield3
+  order: 3
+  lawString: law-asakim-black-shield-3
+
+- type: siliconLaw
+  id: AsakimBlackShield4
+  order: 4
+  lawString: law-asakim-black-shield-4
+
+- type: siliconLaw
+  id: AsakimBlackShield5
+  order: 5
+  lawString: law-asakim-black-shield-5
+
+- type: siliconLawset
+  id: AsakimBlackShield
+  laws:
+  - AsakimBlackShield1
+  - AsakimBlackShield2
+  - AsakimBlackShield3
+  - AsakimBlackShield4
+  - AsakimBlackShield5
+  obeysTo: laws-owner-asakim-officers

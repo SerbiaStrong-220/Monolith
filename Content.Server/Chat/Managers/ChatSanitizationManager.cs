@@ -11,121 +11,14 @@ namespace Content.Server.Chat.Managers;
 ///     It currently ony removes the shorthands for emotes (like "lol" or "^-^") from a chat message and returns the last
 ///     emote in their message
 /// </summary>
-public sealed class ChatSanitizationManager : IChatSanitizationManager
+public sealed partial class ChatSanitizationManager : IChatSanitizationManager
 {
-    //private static readonly Dictionary<string, string> ShorthandToEmote = new()
-    //{
-    //    // Ru-Localization-Start
-    //    { "хд", "chatsan-laughs" },
-    //    { "о-о", "chatsan-wide-eyed" }, // cyrillic о
-    //    { "о.о", "chatsan-wide-eyed" }, // cyrillic о
-    //    { "0_о", "chatsan-wide-eyed" }, // cyrillic о
-    //    { "о/", "chatsan-waves" }, // cyrillic о
-    //    { "о7", "chatsan-salutes" }, // cyrillic о
-    //    { "0_o", "chatsan-wide-eyed" },
-    //    { "лмао", "chatsan-laughs" },
-    //    { "рофл", "chatsan-laughs" },
-    //    { "яхз", "chatsan-shrugs" },
-    //    { ":0", "chatsan-surprised" },
-    //    // Exodus-Fix | Remove :p replacement for comfy use of default channel shortcut
-    //    { "кек", "chatsan-laughs" },
-    //    { "T_T", "chatsan-cries" },
-    //    { "Т_Т", "chatsan-cries" }, // cyrillic T
-    //    { "=_(", "chatsan-cries" },
-    //    { "!с", "chatsan-laughs" },
-    //    { "!в", "chatsan-sighs" },
-    //    { "!х", "chatsan-claps" },
-    //    { "!щ", "chatsan-snaps" },
-    //    { "))", "chatsan-smiles-widely" },
-    //    { ")", "chatsan-smiles" },
-    //    { "((", "chatsan-frowns-deeply" },
-    //    { "(", "chatsan-frowns" },
-    //    // Ru-Localization-End
-    //    { ":)", "chatsan-smiles" },
-    //    { ":]", "chatsan-smiles" },
-    //    { "=)", "chatsan-smiles" },
-    //    { "=]", "chatsan-smiles" },
-    //    { "(:", "chatsan-smiles" },
-    //    { "[:", "chatsan-smiles" },
-    //    { "(=", "chatsan-smiles" },
-    //    { "[=", "chatsan-smiles" },
-    //    { "^^", "chatsan-smiles" },
-    //    { "^-^", "chatsan-smiles" },
-    //    { ":(", "chatsan-frowns" },
-    //    { ":[", "chatsan-frowns" },
-    //    { "=(", "chatsan-frowns" },
-    //    { "=[", "chatsan-frowns" },
-    //    { "):", "chatsan-frowns" },
-    //    { ")=", "chatsan-frowns" },
-    //    { "]:", "chatsan-frowns" },
-    //    { "]=", "chatsan-frowns" },
-    //    { ":D", "chatsan-smiles-widely" },
-    //    { "D:", "chatsan-frowns-deeply" },
-    //    { ":O", "chatsan-surprised" },
-    //    { ":3", "chatsan-smiles" },
-    //    { ":S", "chatsan-uncertain" },
-    //    { ":>", "chatsan-grins" },
-    //    { ":<", "chatsan-pouts" },
-    //    { "xD", "chatsan-laughs" },
-    //    { ":'(", "chatsan-cries" },
-    //    { ":'[", "chatsan-cries" },
-    //    { "='(", "chatsan-cries" },
-    //    { "='[", "chatsan-cries" },
-    //    { ")':", "chatsan-cries" },
-    //    { "]':", "chatsan-cries" },
-    //    { ")'=", "chatsan-cries" },
-    //    { "]'=", "chatsan-cries" },
-    //    { ";-;", "chatsan-cries" },
-    //    { ";_;", "chatsan-cries" },
-    //    { "qwq", "chatsan-cries" },
-    //    { ":u", "chatsan-smiles-smugly" },
-    //    { ":v", "chatsan-smiles-smugly" },
-    //    { ">:i", "chatsan-annoyed" },
-    //    { ":i", "chatsan-sighs" },
-    //    { ":|", "chatsan-sighs" },
-    //    { ":p", "chatsan-stick-out-tongue" },
-    //    { ";p", "chatsan-stick-out-tongue" },
-    //    { ":b", "chatsan-stick-out-tongue" },
-    //    { "0-0", "chatsan-wide-eyed" },
-    //    { "o-o", "chatsan-wide-eyed" },
-    //    { "o.o", "chatsan-wide-eyed" },
-    //    { "._.", "chatsan-surprised" },
-    //    { ".-.", "chatsan-confused" },
-    //    { "-_-", "chatsan-unimpressed" },
-    //    { "smh", "chatsan-unimpressed" },
-    //    { "o/", "chatsan-waves" },
-    //    { "^^/", "chatsan-waves" },
-    //    { ":/", "chatsan-uncertain" },
-    //    { ":\\", "chatsan-uncertain" },
-    //    { "lmao", "chatsan-laughs" },
-    //    { "lmfao", "chatsan-laughs" },
-    //    { "lol", "chatsan-laughs" },
-    //    { "lel", "chatsan-laughs" },
-    //    { "kek", "chatsan-laughs" },
-    //    { "rofl", "chatsan-laughs" },
-    //    { "o7", "chatsan-salutes" },
-    //    { ";_;7", "chatsan-tearfully-salutes" },
-    //    { "idk", "chatsan-shrugs" },
-    //    { ";)", "chatsan-winks" },
-    //    { ";]", "chatsan-winks" },
-    //    { "(;", "chatsan-winks" },
-    //    { "[;", "chatsan-winks" },
-    //    { ":')", "chatsan-tearfully-smiles" },
-    //    { ":']", "chatsan-tearfully-smiles" },
-    //    { "=')", "chatsan-tearfully-smiles" },
-    //    { "=']", "chatsan-tearfully-smiles" },
-    //    { "(':", "chatsan-tearfully-smiles" },
-    //    { "[':", "chatsan-tearfully-smiles" },
-    //    { "('=", "chatsan-tearfully-smiles" },
-    //    { "['=", "chatsan-tearfully-smiles" }
-    //};
-
     private static readonly (Regex regex, string emoteKey)[] ShorthandToEmote =
     [
 
         // SS220 Fard emote :DD
         Entry("пук", "chatsan-farts"),
-        // Corvax-Localization-Start
+        // Ru-Localization-Start
         Entry("хд", "chatsan-laughs"),
         Entry("о-о", "chatsan-wide-eyed"), // cyrillic о
         Entry("о.о", "chatsan-wide-eyed"), // cyrillic о
@@ -138,7 +31,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry("яхз", "chatsan-shrugs"),
         Entry(":0", "chatsan-surprised"),
         Entry(":р", "chatsan-stick-out-tongue"), // cyrillic р
-        // Corvax-Localization-End
+        // Ru-Localization-End
         Entry(":)", "chatsan-smiles"),
         Entry(":]", "chatsan-smiles"),
         Entry("=)", "chatsan-smiles"),
@@ -181,7 +74,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry(">:i", "chatsan-annoyed"),
         Entry(":i", "chatsan-sighs"),
         Entry(":|", "chatsan-sighs"),
-        Entry(":p", "chatsan-stick-out-tongue"),
+        // Entry(":p", "chatsan-stick-out-tongue"), // Exodus-Fix | Remove :p replacement for comfy use of default channel shortcut
         Entry(";p", "chatsan-stick-out-tongue"),
         Entry(":b", "chatsan-stick-out-tongue"),
         Entry("0-0", "chatsan-wide-eyed"),
@@ -203,6 +96,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry("rofl", "chatsan-laughs"),
         Entry("o7", "chatsan-salutes"),
         Entry(";_;7", "chatsan-tearfully-salutes"),
+        Entry("idk", "chatsan-shrugs"),
         Entry(";)", "chatsan-winks"),
         Entry(";]", "chatsan-winks"),
         Entry("(;", "chatsan-winks"),
@@ -217,8 +111,8 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry("['=", "chatsan-tearfully-smiles"),
     ];
 
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private bool _doSanitize;
 

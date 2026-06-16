@@ -12,8 +12,9 @@
     shape: square
   - type: SpawnItemsOnUse
     items:
-    # Money - 10k # Exodus-Economic-Rebalance
-    - id: SpaceCash10000
+    # Money - 30k # removed
+    # Scrap chunks
+    - id: ScrapOre100
       amount: 1
     # Scrap chunks
     - id: ScrapOre50 # Exodus-Economic-Rebalance
@@ -71,11 +72,8 @@
   components:
   - type: SpawnItemsOnUse
     items:
-    # Money - 30k # Exodus-Economic-Rebalance
-    - id: SpaceCash25000
-      amount: 1
-    - id: SpaceCash5000
-    # Scrap chunks  # Exodus-Economic-Rebalance
+    # Money - 80k # removed
+    # Scrap chunks
     - id: ScrapOre100
       amount: 1
     # Material # Exodus-Economic-Rebalance
@@ -123,16 +121,14 @@
   components:
   - type: SpawnItemsOnUse
     items:
-    # Money - 100k # Exodus-Economic-Rebalance
-    - id: SpaceCash100000
-      amount: 1
-    # Scrap chunks  # Exodus-Economic-Rebalance
+    # Money - 200k # removed
+    # Scrap chunks
     - id: ScrapOre100
       amount: 2
     # Material  # Exodus-Economic-Rebalance
     - id: SheetPlastitanium10
       amount: 4
-    # Parts 
+    # Parts
     - id: SuperCapacitorStockPart
       amount: 6
     - id: SuperMatterBinStockPart

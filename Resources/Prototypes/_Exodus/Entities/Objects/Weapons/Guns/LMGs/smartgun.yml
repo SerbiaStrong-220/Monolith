@@ -1,0 +1,45 @@
+- type: entity
+  id: WeaponSmartLmgAsakimBorg
+  parent: BaseItem
+  name: SKR-WS MLA-79 cyborg smart LMG
+  description: A cyborg-integrated MLA-79 with a compact ammunition fabricator.
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Weapons/Guns/SmartGuns/ml79a.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _RMC14/Objects/Weapons/Guns/SmartGuns/ml79a.rsi
+    size: Huge
+  - type: Gun
+    minAngle: 27
+    maxAngle: 73
+    angleIncrease: 2
+    angleDecay: 22
+    fireRate: 9.5
+    cameraRecoilScalar: 0
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/m41.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: CartridgeSmart
+    fireCost: 1
+  - type: Battery
+    maxCharge: 100
+    startingCharge: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2
+  - type: SmartGun
+  - type: AmmoCounter
+  - type: Appearance
+  - type: StaticPrice
+    price: 50000
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container

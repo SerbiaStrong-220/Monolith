@@ -40,6 +40,11 @@
         Quantity: 10
       - ReagentId: Blood
         Quantity: 20
+  # Exodus-asakim-body-guard: only a head carrying an Asakim brain may be attached.
+  - type: BodySlotInsertGuard
+    partSlots: [ head ]
+    whitelist:
+      components: [ AsakimBrain ]
 
 - type: entity
   id: HeadAsakim
@@ -56,6 +61,11 @@
         Quantity: 5
       - ReagentId: Blood
         Quantity: 10
+  # Exodus-asakim-body-guard: only an Asakim brain may be inserted into the brain slot.
+  - type: BodySlotInsertGuard
+    organSlots: [ brain ]
+    whitelist:
+      components: [ AsakimBrain ]
 
 - type: entity
   id: LeftArmAsakim

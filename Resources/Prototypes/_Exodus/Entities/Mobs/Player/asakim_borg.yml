@@ -1,0 +1,146 @@
+- type: entity
+  id: BorgChassisAsakimRedacted
+  parent: [BaseBorgChassisRedacted, ShowMedicalIcons]
+  name: personal protection operator
+  description: A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
+  components:
+  - type: SiliconLawProvider
+    laws: AsakimBlackShield
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/asakim_guard.rsi
+    layers:
+    - state: azakim_guard
+    - state: azakim_guard_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Azaziba
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Azaziba
+  - type: CanMoveInAir
+  - type: ThermalVision
+    toggleAction: ToggleThermalVision
+  - type: BorgChassis
+    maxModules: 10
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: azakim_guard_e
+    noMindState: azakim_guard
+  - type: Construction
+    node: derelictcyborg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-derelict-cyborg
+    interactFailureString: petting-failure-derelict-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Scrammer
+    actionProto: ActionScrammerScramADM
+    specifier:
+      teleportRadius: 40
+      teleportAttempts: 5
+      forceSafe: false
+      minRadiusFraction: 0.75
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      450: Critical
+      600: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      360: 0.7
+      420: 0.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 840
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: PlayerBorgAsakimRedacted
+  parent: BorgChassisAsakimRedacted
+  suffix: Battery, Module
+  components:
+  - type: AsakimTrustedUser
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleAsakimBlackShieldWeapon
+      - BorgModuleAsakimEsword
+      - BorgModuleJetpackADM
+      - BorgModuleAdvancedTool
+      - BorgModuleDefibrillator
+      - BorgModuleAdvancedParamedic
+      - BorgModuleRedactedRCD
+      - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProtoEmpProof
+
+- type: entity
+  id: PlayerBorgAsakimRedactedGhostRole
+  parent: PlayerBorgAsakimRedacted
+  suffix: Ghost
+  components:
+  - type: GhostRole
+    name: ghost-role-information-asakim-redacted-borg
+    description: ghost-role-information-asakim-redacted-borg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    prototype: AsakimRedactedBorg
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 180000 # 50 hrs
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgAsakimRedactedGhostRoleNoTimelock
+  parent: PlayerBorgAsakimRedactedGhostRole
+  suffix: Ghost, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-asakim-redacted-borg
+    description: ghost-role-information-asakim-redacted-borg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    prototype: AsakimRedactedBorg
+    requirements: []

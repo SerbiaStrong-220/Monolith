@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -32,7 +32,7 @@ public sealed class TagCommand : ToolshedCommand
         [CommandArgument] ProtoId<TagPrototype> tag)
     {
         _tag ??= GetSys<TagSystem>();
-        return entities.Where(e => _tag.HasTag(e, tag));
+        return entities.Where(e => _tag.HasTag(e, tag!));
     }
 
     [CommandImplementation("add")]

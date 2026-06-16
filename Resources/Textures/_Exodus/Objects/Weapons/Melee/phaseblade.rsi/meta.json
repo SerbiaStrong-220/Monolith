@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by Zethine (Discord) from Monolith, Animation by Raldjatech (Discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "e_sword_blade",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    }
+  ]
+}

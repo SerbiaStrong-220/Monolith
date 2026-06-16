@@ -38,23 +38,23 @@ public sealed partial class GunSystem
             {
                 // Exodus-AdminQoL-Begin: Provide user triggered auto-shooting
                 var shooter = uid;
-                if (TryComp(uid, out AutoShootGunComponent? autoShoot) && autoShoot.User != null)
+                if (_autoShootGunQuery.TryComp(uid, out var autoShoot) && autoShoot.User != null)
                 {
                     shooter = autoShoot.User.Value;
                 }
                 else
                 {
                     var parent = _transform.GetParentUid(uid);
-                    if (HasComp<DamageableComponent>(parent))
+                    if (_damageableQuery.HasComp(parent))
                         shooter = parent;
                 }
                 AttemptShoot(shooter, uid, gun, gun.ShootCoordinates ?? new EntityCoordinates(uid, gun.DefaultDirection));
                 // Exodus-End
             }
-            else if (TryComp(uid, out AutoShootGunComponent? autoShoot))
+            else if (_autoShootGunQuery.TryComp(uid, out var autoShoot))
             {
                 // Mono
-                if (autoShoot.RemainingTime <= TimeSpan.FromSeconds(0))
+                if (autoShoot.RemainingTime <= TimeSpan.Zero)
                 {
                     if (!autoShoot.Enabled)
                         continue;

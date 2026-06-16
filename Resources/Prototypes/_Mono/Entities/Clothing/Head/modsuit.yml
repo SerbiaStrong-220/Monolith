@@ -67,11 +67,11 @@
   - type: ItemToggle # Exodus
   - type: ComponentToggler
     components:
+    - type: BreathMask
     - type: FlashImmunity
     - type: EyeProtection
       protectionTime: 5
     # Exodus-Fix-Start
-    - type: BreathMask
     - type: PressureProtection
       highPressureMultiplier: 0.3
       lowPressureMultiplier: 1000

@@ -29,18 +29,18 @@ using System.Threading.Tasks.Dataflow;
 
 namespace Content.Server._CorvaxNext.Silicons.Borgs;
 
-public sealed class AiRemoteControlSystem : SharedAiRemoteControlSystem
+public sealed partial class AiRemoteControlSystem : SharedAiRemoteControlSystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SiliconLawSystem _lawSystem = default!;
-    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!; // Exodus ai-remote-power-check
-    [Dependency] private readonly IChatManager _chatManager = default!; // Exodus ai-remote-power-check
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SiliconLawSystem _lawSystem = default!;
+    [Dependency] private SharedStationAiSystem _stationAiSystem = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!; // Exodus ai-remote-power-check
+    [Dependency] private IChatManager _chatManager = default!; // Exodus ai-remote-power-check
 
-    [Dependency] private readonly IMapManager _map = default!; // Mono
+    [Dependency] private IMapManager _map = default!; // Mono
 
     public override void Initialize()
     {

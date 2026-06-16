@@ -1,0 +1,19 @@
+- type: entity
+  id: PinpointerAsakimBrain
+  parent: PinpointerBase
+  name: asakim pinpointer
+  description: A compact tracker tuned to the closest Asakim neural signature.
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-syndicate
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    state: pinpointer-syndicate
+  - type: Pinpointer
+    targetName: asakim neural signature
+  - type: AsakimBrainPinpointer

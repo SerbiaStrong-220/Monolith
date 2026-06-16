@@ -1,0 +1,55 @@
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerAsakimComms
+  name: asakim communications computer
+  description: A pre-fracture communications console keyed to Asakim neural patterns.
+  components:
+  - type: Biocode
+    whitelist:
+      components: [ AsakimTrustedUser ]
+    mindWhitelist:
+      mindRoles: [ AsakimRole ]
+  - type: IdentitySenderFallback
+    fallback: asakim-communications-console-sender-fallback
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-asakim
+    color: "#00CCFF"
+    canShuttle: false
+    canSetAlertLevel: false
+    global: true
+    sound: /Audio/_Exodus/Asakim/Announcements/asakim_announcement.ogg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: ShuttleTimer
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: AsakimCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#00CCFF"
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: ShipRepairable
+    repairTime: 4
+    repairCost: 8
