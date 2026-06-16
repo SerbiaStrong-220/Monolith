@@ -87,6 +87,7 @@
   spawnIn:
   - NebulaRedMarker
   minDensity: 0.7
+  maxSpawnDistanceFromCenter: 50000
   protectedRadius: 2500
   name: "Маленькая Метеостанция"
   stationGameMap: SmallMeteostation
