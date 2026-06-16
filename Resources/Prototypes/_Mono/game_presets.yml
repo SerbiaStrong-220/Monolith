@@ -18,6 +18,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoRogueTSF
@@ -34,6 +35,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoRogueUSSP
@@ -50,6 +52,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoTSFUSSP
@@ -66,6 +69,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoADS
@@ -86,6 +90,7 @@
   - MonoAsakimSTCShuttleSpawnerScheduler
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoChimera
@@ -103,6 +108,7 @@
   - MonoChimeraSTCShuttleSpawnerScheduler
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoMixed
@@ -124,12 +130,13 @@
   - MonoAsakimSTCShuttleSpawnerSchedulerSlow
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
+  - RoundEndRuleHour6 # Exodus
 
 - type: gamePreset
   id: MonoAllAtOnce
   name: mono-allatonce-title
   description: mono-allatonce-description
-  showInVote: false # we ball # Exodus
+  showInVote: true # we ball
   weight: 0.25 # requires 80% votes
   rules:
   - NFAdventure

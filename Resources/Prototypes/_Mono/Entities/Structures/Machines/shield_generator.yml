@@ -189,6 +189,11 @@
   - type: ShipRepairable
     repairTime: 30
     repairCost: 300
+# Exodus-shield-swap-fix-start
+  - type: Anchorable 
+    flags:
+    - None
+# Exodus-shield-swap-fix-end
 
 # TSF capital shield - inbetween POI and MS-500, meant for flyssa
 - type: entity
@@ -263,6 +268,11 @@
   - type: ShipRepairable
     repairTime: 30
     repairCost: 300
+# Exodus-shield-swap-fix-start
+  - type: Anchorable 
+    flags:
+    - None
+# Exodus-shield-swap-fix-end
 
 # High-End
 - type: entity
@@ -465,4 +475,4 @@
     repairTime: 20
     repairCost: 125
   - type: StaticPrice # Exodus-Price-Rebalance
-    price: 1099 
+    price: 1099

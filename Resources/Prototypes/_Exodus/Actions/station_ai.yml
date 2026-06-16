@@ -1,0 +1,15 @@
+- type: entity
+  id: ActionAiRename
+  name: action-ai-rename-name
+  description: action-ai-rename-desc
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    priority: -4
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/_Exodus/actions_ai_colossus.rsi
+      state: AI_rename
+    event: !type:AiRenameEvent
+    useDelay: 60

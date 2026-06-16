@@ -340,6 +340,7 @@
     - NFEngineeringBoards # Frontier
     - NFMedicalBoards # Frontier + Shitmed Change
     - NFServiceBoards # Frontier
+    - ExodusMiningBoards #Exodus-mining-expansion
     - MonoAdvancedShuttleComponents # Mono
     - CarpCaller # Mono
     - MechBoardsPlus

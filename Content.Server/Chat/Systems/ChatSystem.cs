@@ -29,6 +29,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
+using Content.Shared.Silicons.StationAi; // Exodus ai-rename
 using Content.Shared.SS220.TTS;
 using Content.Shared.Station.Components;
 using Content.Shared.Whitelist;
@@ -73,6 +74,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private DiscordChatLink _discordLink = default!;
     [Dependency] private LanguageSystem _language = default!; // Einstein Engines - Language
     [Dependency] private CollectiveMindUpdateSystem _collectiveMind = default!; // Goobstation - Starlight collective mind port
+    [Dependency] private SharedStationAiSystem _stationAiSystem = default!; // Exodus ai-rename
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -861,6 +863,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         // get the entity's apparent name (if no override provided).
         var ent = Identity.Entity(source, EntityManager);
+        // Exodus-begin ai-rename: use core name for AI emotes
+        if (nameOverride == null
+            && _stationAiSystem.TryGetCore(source, out var aiCore))
+            nameOverride = Name(aiCore.Owner);
+        // Exodus-end
         string name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
 
         // Emotes use Identity.Name, since it doesn't actually involve your voice at all.

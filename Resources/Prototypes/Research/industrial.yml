@@ -235,6 +235,7 @@
   - NFBlueprintAdvancedMineralScannerEmpty # Frontier
   - BorgModuleAdvancedMining # Frontier
   - MechEquipmentDrillDiamond
+  - OreCatcherMachineCircuitboard # Exodus-mining-expansion
   technologyPrerequisites:
   - SalvageEquipment
   - AdvancedParts

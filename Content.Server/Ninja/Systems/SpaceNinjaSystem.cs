@@ -1,4 +1,3 @@
-using Content.Server.Communications;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
@@ -35,7 +34,7 @@ public sealed partial class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
-        SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
+        // SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn); // Exodus
         SubscribeLocalEvent<SpaceNinjaComponent, CriminalRecordsHackedEvent>(OnCriminalRecordsHacked);
     }
 
@@ -139,10 +138,11 @@ public sealed partial class SpaceNinjaSystem : SharedSpaceNinjaSystem
         Popup.PopupEntity(str, uid, uid, PopupType.Medium);
     }
 
-    private void OnThreatCalledIn(Entity<SpaceNinjaComponent> ent, ref ThreatCalledInEvent args)
-    {
-        _codeCondition.SetCompleted(ent.Owner, ent.Comp.TerrorObjective);
-    }
+    // Exodus
+    // private void OnThreatCalledIn(Entity<SpaceNinjaComponent> ent, ref ThreatCalledInEvent args)
+    // {
+    //     _codeCondition.SetCompleted(ent.Owner, ent.Comp.TerrorObjective);
+    // }
 
     private void OnCriminalRecordsHacked(Entity<SpaceNinjaComponent> ent, ref CriminalRecordsHackedEvent args)
     {

@@ -22,7 +22,8 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Station.Components;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Server._NF.SectorServices; // Frontier
-using Content.Shared.GameTicking.Components; // Mono
+using Content.Shared.GameTicking.Components;
+using Content.Shared._Exodus.CCVar; // Mono
 
 namespace Content.Server.RoundEnd
 {
@@ -50,7 +51,8 @@ namespace Content.Server.RoundEnd
         /// <summary>
         /// Countdown to use where there is no station alert countdown to be found.
         /// </summary>
-        public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(10);
+        // public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(10); // Exodus: CVar shuttle time
+        public TimeSpan CountdownDuration { get; set; } // Exodus: CVar shuttle time
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
@@ -67,6 +69,9 @@ namespace Content.Server.RoundEnd
             base.Initialize();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => Reset());
             SetAutoCallTime();
+
+            // Exodus
+            _cfg.OnValueChanged(XCVars.EmergencyShuttleCountdown, val => CountdownDuration = TimeSpan.FromMinutes(val), true);
         }
 
         private void SetAutoCallTime()
@@ -129,19 +134,20 @@ namespace Content.Server.RoundEnd
 
         public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "round-end-system-shuttle-sender-announcement")
         {
-            var duration = DefaultCountdownDuration;
+            var duration = CountdownDuration; // Exodus: CVar shuttle time
 
-            if (requester != null)
-            {
-                var stationUid = _sectorService.GetServiceEntity(); // Frontier: sector-wide alerts
-                // var stationUid = _stationSystem.GetOwningStation(requester.Value); // Frontier: sector-wide alerts
-                if (TryComp<AlertLevelComponent>(stationUid, out var alertLevel))
-                {
-                    duration = _protoManager
-                        .Index<AlertLevelPrototype>(AlertLevelSystem.DefaultAlertLevelSet)
-                        .Levels[alertLevel.CurrentLevel].ShuttleTime;
-                }
-            }
+            // Exodus: CVar shuttle time
+            // if (requester != null)
+            // {
+            //     var stationUid = _sectorService.GetServiceEntity(); // Frontier: sector-wide alerts
+            //     // var stationUid = _stationSystem.GetOwningStation(requester.Value); // Frontier: sector-wide alerts
+            //     if (TryComp<AlertLevelComponent>(stationUid, out var alertLevel))
+            //     {
+            //         duration = _protoManager
+            //             .Index<AlertLevelPrototype>(AlertLevelSystem.DefaultAlertLevelSet)
+            //             .Levels[alertLevel.CurrentLevel].ShuttleTime;
+            //     }
+            // }
 
             RequestRoundEnd(duration, requester, checkCooldown, text, name);
         }

@@ -1,0 +1,18 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                     Title="{Loc 'ai-rename-dialog-title'}"
+                     MinWidth="320">
+    <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="8">
+        <Label Text="{Loc 'ai-rename-dialog-prompt'}"
+               HorizontalAlignment="Center"
+               HorizontalExpand="True" />
+        <LineEdit Name="NameEdit"
+                  HorizontalAlignment="Stretch"
+                  HorizontalExpand="True"
+                  PlaceHolder="{Loc 'ai-rename-dialog-placeholder'}" />
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="8">
+            <Button Name="ConfirmButton" Text="{Loc 'ai-rename-dialog-confirm'}" />
+            <Button Name="CancelButton" Text="{Loc 'ai-rename-dialog-cancel'}" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -802,7 +802,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
-    canShuttle: false
+    # canShuttle: false # Exodus
     global: true #announce to everyone they're about to fuck shit up
     sound: /Audio/Announcements/war.ogg
   - type: Computer
@@ -835,7 +835,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
-    canShuttle: false
+    # canShuttle: false # Exodus
     global: true #announce to everyone they're about to fuck shit up
     sound: /Audio/Announcements/war.ogg
   - type: Computer
@@ -868,7 +868,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
-    canShuttle: false
+    # canShuttle: false # Exodus
     global: true
   - type: Computer
     board: CentcommCommsComputerCircuitboard
