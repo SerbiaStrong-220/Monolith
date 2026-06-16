@@ -48,12 +48,12 @@
 #   (ForceAnchor, Tag {POI}, IFF, InitRepairSnapshot, etc.) — see existing entries for examples.
 
 # ───────────────────────────────────────────────────────────────────────────
-# Hidden POI — listening post inside green nebulas.
+# Hidden POI — listening post inside blue nebulas.
 - type: nebulaPoi
   id: NebulaPoiLPBravo
   path: /Maps/_Exodus/POI/lpbravo.yml
   spawnIn:
-  - NebulaGreenMarker
+  - NebulaBlueMarker
   minDensity: 0.7
   protectedRadius: 2500
   name: "Прослушивающий Пункт Браво"
@@ -233,7 +233,7 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  maxSpawnDistanceFromCenter: 45000
+  maxSpawnDistanceFromCenter: 40000
   protectedRadius: 500
   name: 'Лаборатория Аномалий'
   stationGameMap: AnomalousLab
@@ -256,8 +256,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  maxSpawnDistanceFromCenter: 35000
-  protectedRadius: 500
+  maxSpawnDistanceFromCenter: 30000
+  protectedRadius: 250
   name: "Ресторан Тинни"
   stationGameMap: Tinnia
   addComponents:
@@ -283,8 +283,8 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  maxSpawnDistanceFromCenter: 35000
-  protectedRadius: 500
+  maxSpawnDistanceFromCenter: 25000
+  protectedRadius: 250
   name: "Бензин и жратва Грифти"
   stationGameMap: Grifty
   addComponents:
@@ -309,7 +309,7 @@
   - NebulaGreenMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 500
+  protectedRadius: 250
   name: "Заброшенный МакХобольдс"
   stationGameMap: McHobo
   addComponents:
@@ -329,7 +329,7 @@
   minDensity: 0.1
   maxDensity: 1
   maxSpawnDistanceFromCenter: 45000
-  protectedRadius: 500
+  protectedRadius: 1000
   name: 'КВП | Периферийный аванпост'
   stationGameMap: TSFMCOutpost
   addComponents:
