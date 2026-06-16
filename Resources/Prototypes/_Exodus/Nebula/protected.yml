@@ -10,9 +10,6 @@
   id: TSFMCHalcyon
 
 - type: nebulaProtectedStation
-  id: TFMCHalcyon
-
-- type: nebulaProtectedStation
   id: HeliosFortress
 
 - type: nebulaProtectedStation
