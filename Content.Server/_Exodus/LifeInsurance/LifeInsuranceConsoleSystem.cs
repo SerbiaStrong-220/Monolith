@@ -156,6 +156,23 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// TEMP tests
+    /// </summary>
+    public void TryAutoRecordFromScanner(EntityUid scannerUid, EntityUid body)
+    {
+        var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
+        while (query.MoveNext(out var consoleUid, out var comp))
+        {
+            EnsureLinks(consoleUid, comp);
+            if (comp.Scanner == scannerUid)
+            {
+                TryRecordDna(consoleUid, body, comp, body);
+                return;
+            }
+        }
+    }
+
     private void OnBuy(Entity<LifeInsuranceConsoleComponent> ent, ref LifeInsuranceBuyMessage args)
     {
         if (!_backup.IsOperational(ent))
