@@ -19,7 +19,9 @@
   suffix: SYNDICATE BIOCODE
   components:
   - type: Sprite
-    sprite: _Exodus/Objects/Tools/repair_device_syndicate.rsi
+    scale: 0.8, 0.8
+    sprite: _Exodus/Objects/Tools/repair_device_syndicate_item.rsi
+    state: item
   - type: Item
     sprite: _Exodus/Objects/Tools/repair_device_syndicate.rsi
   - type: Tag
