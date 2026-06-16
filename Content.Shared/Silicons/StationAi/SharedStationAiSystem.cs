@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
+using Content.Shared._Exodus.Silicons.StationAi; // Exodus ai-rename
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
@@ -12,6 +13,7 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.NameIdentifier; // Exodus ai-rename
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
@@ -481,9 +483,46 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         // Just so text and the likes works properly
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
+        ApplyAiRenameName(ent.Owner, args.Entity); // Exodus ai-rename
 
         AttachEye(ent);
     }
+
+    // Exodus-begin ai-rename
+    private void ApplyAiRenameName(EntityUid core, EntityUid held)
+    {
+        if (!TryComp<AiRenameNameComponent>(held, out var saved) ||
+            string.IsNullOrEmpty(saved.BaseName))
+            return;
+
+        var identifier = GetAiRenameIdentifier(held);
+        if (string.IsNullOrEmpty(identifier))
+        {
+            identifier = saved.Identifier;
+        }
+        else if (_net.IsServer && saved.Identifier != identifier)
+        {
+            saved.Identifier = identifier;
+            Dirty(held, saved);
+        }
+
+        _metadata.SetEntityName(core, BuildAiRenameFullName(saved.BaseName, identifier));
+    }
+
+    public string BuildAiRenameFullName(string baseName, string identifier)
+    {
+        return string.IsNullOrEmpty(identifier)
+            ? baseName
+            : Loc.GetString("ai-rename-full-name", ("baseName", baseName), ("identifier", identifier));
+    }
+
+    private string GetAiRenameIdentifier(EntityUid uid)
+    {
+        return TryComp<NameIdentifierComponent>(uid, out var identifier)
+            ? identifier.FullIdentifier
+            : string.Empty;
+    }
+    // Exodus-end
 
     private void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
     {

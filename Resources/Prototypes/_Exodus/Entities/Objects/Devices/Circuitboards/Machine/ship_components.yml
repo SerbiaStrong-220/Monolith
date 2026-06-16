@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: MachineGCSAlfaCircuitboard
+  parent: BaseMachineCircuitboard
+  name: alfa-high-power gunnery control server board
+  description: A machine board for a GCS.
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: GunneryServerAlfa
+    requirements:
+      Capacitor: 2
+      Manipulator: 2
+    stackRequirements:
+      Glass: 10
+      Steel: 10

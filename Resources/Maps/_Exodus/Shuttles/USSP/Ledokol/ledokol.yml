@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 264.0.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/10/2025 14:24:56
-  entityCount: 2690
+  time: 06/12/2026 20:20:09
+  entityCount: 2679
 maps: []
 grids:
 - 1
@@ -918,8 +918,14 @@ entities:
             349: 41,18
     - type: OccluderTree
     - type: Shuttle
+      dampingModifier: 0.25
     - type: GridPathfinding
     - type: SpreaderGrid
+      spreadQueues:
+        MetalFoam: []
+        Puddle: []
+        Smoke: []
+        Kudzu: []
     - type: GravityShake
       shakeTimes: 10
     - type: GasTileOverlay
@@ -1187,49 +1193,15 @@ entities:
         uniqueMixes:
         - volume: 2500
           immutable: True
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+          moles: {}
+        - volume: 2500
+          temperature: 293.15
+          moles: {}
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
         chunkSize: 4
     - type: ShipGridLock
       locked: False
@@ -1269,6 +1241,8 @@ entities:
         6,4: 1
         6,0: 2170487694818476801
         5,0: 2155905024
+    - type: ThermalSignature
+    - type: ExplosionAirtightGrid
 - proto: AirAlarm
   entities:
   - uid: 2
@@ -1568,7 +1542,7 @@ entities:
       pos: 34.5,20.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -5958.347
+      secondsUntilStateChange: -6295.9097
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1579,7 +1553,7 @@ entities:
       pos: 20.5,13.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -6321.013
+      secondsUntilStateChange: -6658.5757
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7733,7 +7707,17 @@ entities:
     - type: Transform
       pos: 43.502163,18.640213
       parent: 1
-    - type: Visibility
+- proto: ComputerEliteRadar
+  entities:
+  - uid: 1230
+    components:
+    - type: Transform
+      pos: 26.5,25.5
+      parent: 1
+    - type: ApcPowerReceiver
+      powerLoad: 5
+    - type: Battery
+      startingCharge: 0
 - proto: ComputerGunneryConsole
   entities:
   - uid: 1227
@@ -7762,29 +7746,6 @@ entities:
     components:
     - type: Transform
       pos: 27.5,25.5
-      parent: 1
-    - type: ApcPowerReceiver
-      powerLoad: 5
-    - type: Battery
-      startingCharge: 0
-    - type: DeviceLinkSource
-      linkedPorts: {}
-      lastSignals: {}
-      ports:
-      - device-button-1
-      - device-button-2
-      - device-button-3
-      - device-button-4
-      - device-button-5
-      - device-button-6
-      - device-button-7
-      - device-button-8
-- proto: ComputerEliteRadar
-  entities:
-  - uid: 1230
-    components:
-    - type: Transform
-      pos: 26.5,25.5
       parent: 1
     - type: ApcPowerReceiver
       powerLoad: 5
@@ -11429,7 +11390,6 @@ entities:
       pos: 52.5,14.5
       parent: 1
     - type: DeviceNetwork
-
       deviceLists:
       - 17
     - type: AtmosPipeColor
@@ -12071,7 +12031,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 44.5,8.5
       parent: 1
-- proto: GunneryServerOmega
+- proto: GunneryServerAlfa
   entities:
   - uid: 1811
     components:
@@ -12357,6 +12317,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 28.5,26.5
       parent: 1
+- proto: LockerChemistryFilled
+  entities:
+  - uid: 1954
+    components:
+    - type: Transform
+      pos: 48.5,18.5
+      parent: 1
 - proto: LockerWallMaterialsFuelAmeJarFilled
   entities:
   - uid: 60
@@ -12382,18 +12349,8 @@ entities:
         immutable: False
         temperature: 293.14923
         moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
 - proto: MachineCentrifuge
   entities:
   - uid: 1844
@@ -12968,6 +12925,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,18.5
+      parent: 1
+- proto: ShieldGeneratorSmall
+  entities:
+  - uid: 1953
+    components:
+    - type: Transform
+      pos: 27.5,14.5
       parent: 1
 - proto: SinkWide
   entities:
@@ -13595,6 +13559,13 @@ entities:
     components:
     - type: Transform
       pos: 17.5,25.5
+      parent: 1
+- proto: VendingMachineChemicals
+  entities:
+  - uid: 1955
+    components:
+    - type: Transform
+      pos: 48.5,19.5
       parent: 1
 - proto: VendingMachineCigs
   entities:

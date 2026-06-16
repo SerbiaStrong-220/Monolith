@@ -10,7 +10,6 @@ using Content.Shared.Examine;
 using Content.Server.Explosion.Components;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Exodus.ShipShields; // Exodus
-using System.Linq; // Exodus
 using System.Diagnostics.CodeAnalysis; // Exodus
 using Robust.Shared.Prototypes;
 
@@ -95,16 +94,31 @@ public partial class ShipShieldsSystem
         }
 
         // if ship isn't shielded it doesn't means that ship doesn't have shield emitter
-        // take the first one you find on grid
         var ents = new HashSet<Entity<ShipShieldEmitterComponent>>();
         _lookup.GetGridEntities(grid, ents);
 
         if (ents.Count < 1)
             return false;
 
-        var emitterEnt = ents.First();
-        emitter = emitterEnt;
-        emitterComp = emitterEnt.Comp;
+        // Exodus-shield-swap-fix-start: report the most representative shield.
+        // Prefer the overloaded shield (it carries the recovery timer), then the most loaded one, so
+        // the gunnery console can't show an idle spare generator as "online" while the real shield is
+        // overloaded and down.
+        Entity<ShipShieldEmitterComponent>? best = null;
+        foreach (var ent in ents)
+        {
+            if (best is not { } current
+                || ent.Comp.OverloadAccumulator > current.Comp.OverloadAccumulator
+                || (ent.Comp.OverloadAccumulator == current.Comp.OverloadAccumulator
+                    && CalculateLoadDamage(ent.Comp) > CalculateLoadDamage(current.Comp)))
+            {
+                best = ent;
+            }
+        }
+
+        emitter = best!.Value.Owner;
+        emitterComp = best.Value.Comp;
+        // Exodus-shield-swap-fix-end
         return true;
     }
 

@@ -1,0 +1,116 @@
+- type: entity
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  id: OreCatcherMachine
+  name: ore catcher
+  description: An electromagnetic device that attracts nearby ore when triggered. Connect with a multitool to activate remotely. Requires power.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: OreMagnet
+    radius: 100
+    pullSpeed: 6
+    activationDuration: 10
+    whitelist:
+      tags:
+      - Ore
+      - ArtifactFragment
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: Machine
+    board: OreCatcherMachineCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 2000
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,25,12
+    storageOpenSound: /Audio/Effects/closetopen.ogg
+    storageCloseSound: /Audio/Effects/closetclose.ogg
+    whitelist:
+      tags:
+      - Ore
+      - ArtifactFragment
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Dumpable
+    multiplier: 0.15
+  - type: Sprite
+    noRot: true
+    sprite: /Textures/_Exodus/Objects/Machines/orecatcher.rsi
+    layers:
+    - state: orecatcher-top
+    - state: orecatcher
+      map: [ top ]
+      visible: false
+    - state: orecatcher
+      map: [ topUI ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OreMagnetVisuals.Active:
+        top:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.Open:
+        topUI:
+          True: { visible: true }
+          False: { visible: false }
+    anchored: true
+  - type: StaticPrice
+    price: 4500
+  - type: Tag
+    tags:
+    - Structure
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: OreCatcherMachineCircuitboard
+  name: ore catcher machine board (circuit)
+  description: A circuit board for an ore magnet machine.
+  components:
+  - type: MachineBoard
+    prototype: OreCatcherMachine
+    requirements:
+      MatterBin: 2
+      Manipulator: 2
+
+- type: entity
+  name: ore catcher flatpack
+  id: OreCatcherFlatpack
+  parent: BaseNFFlatpack
+  description: A flatpack used for constructing an ore catcher.
+  components:
+  - type: Flatpack
+    entity: OreCatcherMachine
+  - type: StaticPrice
+    price: 4500
+    vendPrice: 15000
