@@ -18,6 +18,10 @@
   description: A resonant ship repair device keyed to Syndicate operative neural patterns.
   suffix: SYNDICATE BIOCODE
   components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Tools/repair_device_syndicate.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Tools/repair_device_syndicate.rsi
   - type: Tag
     tags:
     - ShipRepairTool

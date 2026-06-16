@@ -10,6 +10,8 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerTSFNode
+  - type: Anchorable # Exodus territory-banner-anchor-delay
+    delay: 30 # Exodus territory-banner-anchor-delay
   # Exodus start - Territory claim banner for ТСФ
   - type: TerritoryBanner
     faction: TSFMC
@@ -54,6 +56,8 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerPDVNode
+  - type: Anchorable # Exodus territory-banner-anchor-delay
+    delay: 30 # Exodus territory-banner-anchor-delay
   - type: TerritoryBanner
     faction: PDV
 # Exodus end
@@ -71,6 +75,8 @@
   - type: Construction
     graph: MonoBannersGraph
     node: BannerKhsiraNode
+  - type: Anchorable # Exodus territory-banner-anchor-delay
+    delay: 30 # Exodus territory-banner-anchor-delay
   - type: TerritoryBanner
     faction: Khsira
 # Exodus end

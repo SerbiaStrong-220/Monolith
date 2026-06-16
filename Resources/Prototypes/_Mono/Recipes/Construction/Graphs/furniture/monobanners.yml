@@ -12,10 +12,10 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 5 # Exodus - territory banner install time
+              doAfter: 15 # Exodus - territory banner install time
             - material: Cloth
               amount: 2
-              doAfter: 5 # Exodus - territory banner install time
+              doAfter: 15 # Exodus - territory banner install time
           # Exodus start - enforce single territory claim banner
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
@@ -47,10 +47,10 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 5 # Exodus - territory banner install time
+              doAfter: 15 # Exodus - territory banner install time
             - material: Cloth
               amount: 2
-              doAfter: 5 # Exodus - territory banner install time
+              doAfter: 15 # Exodus - territory banner install time
           # Exodus start - enforce single territory claim banner
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
@@ -63,10 +63,26 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 5 # Exodus - territory banner install time
+              doAfter: 15 # Exodus - territory banner install time
             - material: Cloth
               amount: 2
-              doAfter: 5 # Exodus - territory banner install time
+              doAfter: 15 # Exodus - territory banner install time
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
+        # Exodus end
+        # Exodus start - build edge for USSP banner
+        - to: BannerUSSPNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 15 # Exodus - territory banner install time
+            - material: Cloth
+              amount: 2
+              doAfter: 15 # Exodus - territory banner install time
           # Exodus start - enforce single territory claim banner
           conditions:
           - !type:NoActiveTerritoryClaimOnGrid {}
@@ -85,7 +101,7 @@
           amount: 2
         steps:
         - tool: Screwing
-          doAfter: 10 # Exodus - territory banner uninstall time
+          doAfter: 30 # Exodus - territory banner uninstall time
 
     - node: BannerSHMNode
       entity: BannerSHM
@@ -131,7 +147,7 @@
           amount: 2
         steps:
         - tool: Welding
-          doAfter: 10 # Exodus - territory banner uninstall time
+          doAfter: 30 # Exodus - territory banner uninstall time
     # Exodus end
 
     # Exodus start - node for Khsira banner (Империя Кхси'Ра)
@@ -148,7 +164,7 @@
           amount: 2
         steps:
         - tool: Screwing
-          doAfter: 10 # Exodus - territory banner uninstall time
+          doAfter: 30 # Exodus - territory banner uninstall time
     # Exodus end
 
     # Exodus start - node for USSP banner
@@ -165,5 +181,5 @@
           amount: 2
         steps:
         - tool: Screwing
-          doAfter: 10 # Exodus - territory banner uninstall time
+          doAfter: 30 # Exodus - territory banner uninstall time
     # Exodus end
