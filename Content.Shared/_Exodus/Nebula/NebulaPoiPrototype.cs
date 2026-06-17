@@ -5,8 +5,8 @@ namespace Content.Shared._Exodus.Nebula;
 
 /// <summary>
 /// Describes a grid (a "point of interest") that can spawn inside specific nebula kinds at the
-/// start of a round. The spawner system distributes copies across matching nebulas with a
-/// "fill empty first, then random" policy.
+/// start of a round. The spawner system distributes copies across matching nebulas at random,
+/// subject to <see cref="DuplicateAllowed"/> and placement constraints in the spawn system.
 /// </summary>
 [Prototype("nebulaPoi")]
 public sealed partial class NebulaPoiPrototype : IPrototype
@@ -33,8 +33,8 @@ public sealed partial class NebulaPoiPrototype : IPrototype
     public int MaxCount { get; private set; } = 1;
 
     /// <summary>
-    /// Whether two copies of this POI may share one nebula. Default false; the spawner will
-    /// always prefer a nebula that doesn't yet hold this POI when this is false.
+    /// Whether two copies of this POI may share one nebula. Default false; nebulas that
+    /// already hold this POI id are excluded from the pick pool when this is false.
     /// </summary>
     [DataField]
     public bool DuplicateAllowed { get; private set; } = false;
