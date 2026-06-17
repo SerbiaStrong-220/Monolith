@@ -1,3 +1,27 @@
+- type: startingGear
+  id: CitadelCitizenGear
+  equipment:
+    jumpsuit: PirateClothingUniformJumpsuitChaplainPilgrimVest
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesEyepatchHudMedical
+    ears: ClothingHeadsetGrey
+    head: ClothingHeadHatPilgrim
+    gloves: ClothingHandsTacticalMaidGloves
+    outerClothing: ClothingOuterCoatAcidRaincoatMagenta
+    shoes: ClothingShoesClothwrapBlack
+    belt: ClothingBeltStorageWaistbag
+    neck: ClothingNeckCloakTravelerBlack
+  inhand:
+  - CaneSheathFilled
+  storage:
+    back:
+    - AdvMopItem
+    - EncryptionKeyTraffic
+    belt:
+    - PlushieRainbowLizard
+    - MedkitCombatFilled
+    - DoubleEmergencyOxygenTankFilled
+
 - type: entity
   parent: MobReptilian
   id: MobCitadelServiceGhostRole
@@ -16,13 +40,22 @@
       time: 18000 # 5 hrs
   - type: GhostTakeoverAvailable
   - type: Loadout
-    prototypes: [ LimitedPassengerGear ]
+    prototypes: [ CitadelCitizenGear ]
     roleLoadout: [ RoleSurvivalStandard ]
   - type: NpcFactionMember
     factions:
     - AsakimDefenceForces
   - type: TTS
     voice: slark_dota_2
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Draconic
+    - Azaziba
+    understands:
+    - TauCetiBasic
+    - Draconic
+    - Azaziba
 
 - type: entity
   parent: MobCitadelServiceGhostRole
