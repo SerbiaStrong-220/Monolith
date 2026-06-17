@@ -21,3 +21,11 @@ ent-SpawnAsakimRedactedBorg = спавнер Оператора Персонал
 ent-SpawnAsakimRedactedBorgNoTimelock = { ent-SpawnAsakimRedactedBorg }
     .desc = { ent-MarkerBase.desc }
     .suffix = Азаким, АСЗ, без часов
+
+ent-SpawnAsakimFighterBorg = спавнер Оператора Штурмовой Системы
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Азаким, АСЗ
+
+ent-SpawnAsakimFighterBorgNoTimelock = { ent-SpawnAsakimFighterBorg }
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Азаким, АСЗ, без часов

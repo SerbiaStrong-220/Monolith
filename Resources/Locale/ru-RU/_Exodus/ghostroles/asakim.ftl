@@ -21,3 +21,6 @@ ghost-role-information-prefect-asakim-rules =
 
 ghost-role-information-asakim-redacted-borg = Оператор Персональной Защиты
 ghost-role-information-asakim-redacted-borg-description = Синтетик-телохранитель, назначенный для защиты офицерского состава Империи Кхси'Ра.
+
+ghost-role-information-asakim-fighter-borg = Оператор Штурмовой Системы
+ghost-role-information-asakim-fighter-borg-description = Синтетик-штурмовик. Продвинутая пехотная единица Империи Кхси'Ра.

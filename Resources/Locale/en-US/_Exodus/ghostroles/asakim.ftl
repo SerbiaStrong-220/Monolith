@@ -17,3 +17,6 @@ ghost-role-information-prefect-asakim-rules =
 
 ghost-role-information-asakim-redacted-borg = Personal Protection Operator
 ghost-role-information-asakim-redacted-borg-description = A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
+
+ghost-role-information-asakim-fighter-borg = Assault System Operator
+ghost-role-information-asakim-fighter-borg-description =  A synthetic stormtrooper of the Khs'i-Ra Empire.
