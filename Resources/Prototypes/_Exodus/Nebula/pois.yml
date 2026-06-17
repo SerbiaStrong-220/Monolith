@@ -56,8 +56,9 @@
   path: /Maps/_Exodus/POI/lpbravo.yml
   spawnIn:
   - NebulaBlueMarker
+  - NebulaGreenMarker
   minDensity: 0.7
-  protectedRadius: 2500
+  protectedRadius: 3000
   name: "Прослушивающий Пункт Браво"
   stationGameMap: LPBravo
   hideWarp: true
@@ -90,7 +91,7 @@
   - NebulaRedMarker
   minDensity: 0.7
   maxSpawnDistanceFromCenter: 50000
-  protectedRadius: 2500
+  protectedRadius: 3000
   name: "Маленькая Метеостанция"
   stationGameMap: SmallMeteostation
   hideWarp: true
@@ -121,7 +122,7 @@
   minDensity: 0.7
   maxCount: 2
   duplicateAllowed: false
-  protectedRadius: 2500
+  protectedRadius: 3000
   name: "Древнее Хранилище Кхси'Ра"
   hideWarp: true
   addComponents:
@@ -177,7 +178,7 @@
   minDensity: 0.1
   maxDensity: 1
   maxSpawnDistanceFromCenter: 35000
-  protectedRadius: 500
+  protectedRadius: 1000
   name: 'Электростанция Эдисона'
   stationGameMap: Edison
   addComponents:
@@ -219,7 +220,7 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 250
+  protectedRadius: 1000
   name: 'Автоматизированный Межсекторальный Танкер'
   stationGameMap: AutomatedTanker
   addComponents:
@@ -237,7 +238,7 @@
   minDensity: 0.1
   maxDensity: 1
   maxSpawnDistanceFromCenter: 45000
-  protectedRadius: 250
+  protectedRadius: 1000
   name: 'Лаборатория Аномалий'
   stationGameMap: AnomalousLab
   addComponents:
@@ -260,7 +261,7 @@
   minDensity: 0.1
   maxDensity: 1
   maxSpawnDistanceFromCenter: 35000
-  protectedRadius: 250
+  protectedRadius: 1000
   name: "Ресторан Тинни"
   stationGameMap: Tinnia
   addComponents:
@@ -287,7 +288,7 @@
   minDensity: 0.1
   maxDensity: 1
   maxSpawnDistanceFromCenter: 25000
-  protectedRadius: 250
+  protectedRadius: 1000
   name: "Бензин и жратва Грифти"
   stationGameMap: Grifty
   addComponents:
@@ -312,7 +313,7 @@
   - NebulaGreenMarker
   minDensity: 0.1
   maxDensity: 1
-  protectedRadius: 250
+  protectedRadius: 1000
   name: "Заброшенный МакХобольдс"
   stationGameMap: McHobo
   addComponents:
@@ -362,7 +363,7 @@
   minDensity: 0.1
   maxDensity: 1
   maxSpawnDistanceFromCenter: 35000
-  protectedRadius: 250
+  protectedRadius: 1000
   name: "Маяк ВсеЦеркви"
   addComponents:
   - type: IFF
