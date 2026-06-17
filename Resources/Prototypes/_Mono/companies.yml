@@ -11,7 +11,7 @@
 - type: company
   id: TSF
   name: tsf-name # Ru-Localization
-  color: "#047ABD"
+  color: "#00a1fc" # Exodus territory update
   disabled: true
   companyUplinkCurrency: FederationMilitaryCredit
 

@@ -43,7 +43,7 @@
   banner: BannerNGC
   npcFaction: TSFMC
   discountAlignment: Positive
-  color: "#047ABD"  # TSF company ship blue
+  color: "#00a1fc"  # TSF company ship blue
 
 - type: territoryFaction
   id: PDV

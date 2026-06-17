@@ -21,7 +21,7 @@
   gridPath: /Maps/_Exodus/POI/tsfmchalcyon.yml # Exodus ai-remote-borgs
   addComponents:
   - type: IFF
-    color: "#047abd"
+    color: "#00a1fc"
     readOnly: true
   - type: NpcFactionMember # Exodus faction-owned POI target filtering
     factions:

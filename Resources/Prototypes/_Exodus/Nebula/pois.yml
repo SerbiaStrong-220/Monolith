@@ -338,7 +338,7 @@
   stationGameMap: TSFMCOutpost
   addComponents:
   - type: IFF
-    color: "#047abd"
+    color: "#00a1fc"
     flags: [HideLabel]
     readOnly: true
   - type: NpcFactionMember
