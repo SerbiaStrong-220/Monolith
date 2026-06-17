@@ -21,9 +21,10 @@ namespace Content.Server._Exodus.Nebula;
 /// <see cref="WorldEndGenerationDoneEvent"/> so the candidate list is final before we
 /// distribute POIs.
 ///
-/// Distribution policy: prefer nebulas that don't yet hold any POI; once all are non-empty,
-/// pick randomly. Per-POI duplicate rules and per-POI density / collision constraints
-/// gate individual placements. When placement fails in the picked nebula, up to
+/// Distribution policy: pick randomly among eligible nebulas (marker in
+/// <see cref="NebulaPoiPrototype.SpawnIn"/>, respecting <see cref="NebulaPoiPrototype.DuplicateAllowed"/>).
+/// Per-POI density and collision constraints gate individual placements in
+/// <see cref="TryPlaceCopy"/>. When placement fails in the picked nebula, up to
 /// <see cref="MaxNebulaFallbacks"/> other eligible nebulas are tried with the same
 /// <see cref="SampleAttempts"/> budget each.
 /// </summary>
@@ -157,7 +158,7 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
 
             for (var nebulaAttempt = 0; nebulaAttempt <= MaxNebulaFallbacks; nebulaAttempt++)
             {
-                if (!TryPickNebula(poi, allowed, poiCountByCandidate, poiIdsByCandidate, triedCandidates, out var candidateIndex))
+                if (!TryPickNebula(poi, allowed, poiIdsByCandidate, triedCandidates, out var candidateIndex))
                 {
                     if (nebulaAttempt == 0)
                         _sawmill.Debug($"POI {poi.ID}: no nebula left for copy {copy + 1}/{poi.MaxCount} (duplicates disallowed).");
@@ -197,7 +198,6 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
     private bool TryPickNebula(
         NebulaPoiPrototype poi,
         List<int> allowed,
-        int[] poiCountByCandidate,
         HashSet<string>[] poiIdsByCandidate,
         HashSet<int> excludedCandidates,
         out int candidateIndex)
@@ -221,16 +221,7 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
         if (valid.Count == 0)
             return false;
 
-        // Prefer empty nebulas (no POI of any kind yet).
-        var empty = new List<int>();
-        for (var i = 0; i < valid.Count; i++)
-        {
-            if (poiCountByCandidate[valid[i]] == 0)
-                empty.Add(valid[i]);
-        }
-
-        var pool = empty.Count > 0 ? empty : valid;
-        candidateIndex = pool[_random.Next(pool.Count)];
+        candidateIndex = valid[_random.Next(valid.Count)];
         return true;
     }
 
