@@ -12,3 +12,5 @@ uplink-syndicate-infiltrator-voucher-name = Ваучер на Лазутчик
 uplink-syndicate-infiltrator-voucher-desc = Одноразовый ваучер на фрегат класса «Лазутчик».
 uplink-syndicate-hunter-voucher-name = Ваучер на Охотник
 uplink-syndicate-hunter-voucher-desc = Одноразовый ваучер на канонерку класса «Охотник».
+uplink-syndicate-klesh-voucher-name = Ваучер на Клещ
+uplink-syndicate-klesh-voucher-desc = Одноразовый ваучер на пехотный корабль класса "Клещ"

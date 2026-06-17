@@ -57,3 +57,18 @@
     whitelist:
       tags:
       - SyndicateUplink
+
+- type: listing
+  id: UplinkSyndicateVoucherKlesh
+  name: uplink-syndicate-klesh-voucher-name
+  description: uplink-syndicate-klesh-voucher-desc
+  productEntity: ShipVoucherKlesh
+  cost:
+    Telecrystal: 80
+  categories:
+  - UplinkSyndicateShips
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SyndicateUplink

@@ -163,6 +163,29 @@
 
 - type: entity
   parent: BaseShipLPC
+  id: ShipVoucherKlesh
+  name: syndicate klesh LPC
+  description: A small card that contains the data for the procurement of an Klesh-class infantry ship.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Klesh
+  - type: StaticPrice
+    vendPrice: 50000
+
+- type: entity
+  parent: BaseShipLPC
   id: ShipVoucherHunter
   name: syndicate hunter LPC
   description: A small card that contains the data for the procurement of a Hunter-class gunship.
