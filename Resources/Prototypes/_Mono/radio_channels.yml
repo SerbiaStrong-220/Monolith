@@ -32,5 +32,5 @@
   id: Remnants
   name: chat-radio-remnants
   keycode: 'з' # Ru-Localization
-  color: "#BD0071" # Exodus-asakim-color
+  color: "#ff3db1" # Exodus-asakim-color
   longRange: true

@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _Mono/Structures/Decoration/banner.rsi
     state: ngc-banner
-    color: "#B01340"
+    color: "#ff0033"
   - type: Construction
     graph: MonoBannersGraph
     node: BannerUSSPNode

@@ -9,7 +9,7 @@
   gridPath: /Maps/_Exodus/POI/whale.yml
   addComponents:
   - type: IFF
-    color: "#BD0071"
+    color: "#ff3db1"
     readOnly: true
 
 - type: gameMap

@@ -59,7 +59,7 @@
   banner: BannerKhsira
   npcFaction: AsakimDefenceForces
   discountAlignment: Positive
-  color: "#BD0071"  # Medium violet red / pink-red for Khsira Empire
+  color: "#ff3db1"  # Medium violet red / pink-red for Khsira Empire
 
 - type: territoryFaction
   id: Syndicate
@@ -75,7 +75,7 @@
   banner: BannerUSSP
   npcFaction: USSP
   discountAlignment: Positive
-  color: "#B01340"  # USSP company red
+  color: "#ff0033"  # USSP company red
 
 # Colossus Central is treated as its own faction so it can have a dedicated label
 # even when initially "controlled" without a physical banner, or when claimed.

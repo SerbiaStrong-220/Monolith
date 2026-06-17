@@ -78,7 +78,7 @@
 - type: company
   id: USSP
   name: ussp-name # Ru-Localization
-  color: "#B01340"
+  color: "#ff0033" # Exodus USSP Company color
   disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
   image: /Textures/_Mono/Companies/USSP.png
