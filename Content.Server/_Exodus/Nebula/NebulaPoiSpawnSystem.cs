@@ -31,7 +31,7 @@ namespace Content.Server._Exodus.Nebula;
 public sealed class NebulaPoiSpawnSystem : EntitySystem
 {
     private const int SampleAttempts = 16;
-    private const int MaxNebulaFallbacks = 4;
+    private const int MaxNebulaFallbacks = 6;
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
