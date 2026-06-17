@@ -23,11 +23,14 @@ namespace Content.Server._Exodus.Nebula;
 ///
 /// Distribution policy: prefer nebulas that don't yet hold any POI; once all are non-empty,
 /// pick randomly. Per-POI duplicate rules and per-POI density / collision constraints
-/// gate individual placements.
+/// gate individual placements. When placement fails in the picked nebula, up to
+/// <see cref="MaxNebulaFallbacks"/> other eligible nebulas are tried with the same
+/// <see cref="SampleAttempts"/> budget each.
 /// </summary>
 public sealed class NebulaPoiSpawnSystem : EntitySystem
 {
     private const int SampleAttempts = 16;
+    private const int MaxNebulaFallbacks = 4;
 
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -145,24 +148,46 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
         }
 
         var placedCount = 0;
+        var triedCandidates = new HashSet<int>();
+
         for (var copy = 0; copy < poi.MaxCount; copy++)
         {
-            if (!TryPickNebula(poi, allowed, poiCountByCandidate, poiIdsByCandidate, out var candidateIndex))
+            triedCandidates.Clear();
+            var copyPlaced = false;
+
+            for (var nebulaAttempt = 0; nebulaAttempt <= MaxNebulaFallbacks; nebulaAttempt++)
             {
-                _sawmill.Debug($"POI {poi.ID}: no nebula left for copy {copy + 1}/{poi.MaxCount} (duplicates disallowed).");
-                break;
+                if (!TryPickNebula(poi, allowed, poiCountByCandidate, poiIdsByCandidate, triedCandidates, out var candidateIndex))
+                {
+                    if (nebulaAttempt == 0)
+                        _sawmill.Debug($"POI {poi.ID}: no nebula left for copy {copy + 1}/{poi.MaxCount} (duplicates disallowed).");
+                    break;
+                }
+
+                triedCandidates.Add(candidateIndex);
+                var candidate = candidates[candidateIndex];
+
+                if (TryPlaceCopy(mapId, mapComponent, poi, candidate, placedPoiPositions))
+                {
+                    poiCountByCandidate[candidateIndex]++;
+                    poiIdsByCandidate[candidateIndex].Add(poi.ID);
+                    placedCount++;
+                    copyPlaced = true;
+                    break;
+                }
+
+                if (nebulaAttempt < MaxNebulaFallbacks)
+                {
+                    _sawmill.Debug(
+                        $"POI {poi.ID}: copy {copy + 1}/{poi.MaxCount} failed in nebula index {candidate.NebulaIndex}; trying another nebula ({nebulaAttempt + 1}/{MaxNebulaFallbacks} fallbacks used).");
+                }
             }
 
-            var candidate = candidates[candidateIndex];
-            if (!TryPlaceCopy(mapId, mapComponent, poi, candidate, placedPoiPositions))
+            if (!copyPlaced && triedCandidates.Count > 0)
             {
-                _sawmill.Debug($"POI {poi.ID}: could not place copy {copy + 1}/{poi.MaxCount} in nebula index {candidate.NebulaIndex}.");
-                continue;
+                _sawmill.Debug(
+                    $"POI {poi.ID}: could not place copy {copy + 1}/{poi.MaxCount} after trying {triedCandidates.Count} nebula(s).");
             }
-
-            poiCountByCandidate[candidateIndex]++;
-            poiIdsByCandidate[candidateIndex].Add(poi.ID);
-            placedCount++;
         }
 
         if (placedCount > 0)
@@ -174,15 +199,19 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
         List<int> allowed,
         int[] poiCountByCandidate,
         HashSet<string>[] poiIdsByCandidate,
+        HashSet<int> excludedCandidates,
         out int candidateIndex)
     {
         candidateIndex = -1;
 
-        // Filter by duplicate rule.
+        // Filter by duplicate rule and nebulas already attempted for this copy.
         var valid = new List<int>();
         for (var i = 0; i < allowed.Count; i++)
         {
             var idx = allowed[i];
+            if (excludedCandidates.Contains(idx))
+                continue;
+
             if (!poi.DuplicateAllowed && poiIdsByCandidate[idx].Contains(poi.ID))
                 continue;
 
