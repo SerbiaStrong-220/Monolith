@@ -67,6 +67,31 @@
     prototypes:
     - PlayerBorgAsakimRedactedGhostRoleNoTimelock
 
+- type: entity # Exodus: Assault System Operator (ОШС)
+  name: assault system operator spawner
+  id: SpawnAsakimFighterBorg
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimFighterGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/asakim_fighter.rsi
+      state: azakim_fighter
+
+- type: entity # Exodus: Assault System Operator (ОШС)
+  name: assault system operator spawner
+  id: SpawnAsakimFighterBorgNoTimelock
+  parent: SpawnAsakimFighterBorg
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimFighterGhostRoleNoTimelock
+
 - type: entity
   name: syndicate operative spawner
   id: SpawnSyndicateGhostOperative

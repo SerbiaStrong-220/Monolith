@@ -1,7 +1,9 @@
+# Exodus: Assault System Operator (ОШС) — copy of Personal Protection Operator with fighter sprites
+
 - type: entity
-  id: BorgChassisAsakimRedacted
+  id: BorgChassisAsakimFighter
   parent: [BaseBorgChassisRedacted, ShowMedicalIcons]
-  name: personal protection operator
+  name: assault system operator
   description: A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
   components:
   - type: IonStormTarget # Exodus asakim-ion-storm-balance
@@ -11,12 +13,12 @@
     replaceChance: 0
     shuffleChance: 0
   - type: SiliconLawProvider
-    laws: AsakimBlackShield
+    laws: AsakimOccupant
   - type: Sprite
-    sprite: _Exodus/Mobs/Silicon/asakim_guard.rsi
+    sprite: _Exodus/Mobs/Silicon/asakim_fighter.rsi
     layers:
-    - state: azakim_guard
-    - state: azakim_guard_e
+    - state: azakim_fighter
+    - state: azakim_fighter_e
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
@@ -41,8 +43,8 @@
       - BorgModuleEngineering
       - BorgModuleSyndicate
       - BorgModuleSyndicateAssault
-    hasMindState: azakim_guard_e
-    noMindState: azakim_guard
+    hasMindState: azakim_fighter_e
+    noMindState: azakim_fighter
   - type: Construction
     node: derelictcyborg
   - type: InteractionPopup
@@ -95,8 +97,8 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  id: PlayerBorgAsakimRedacted
-  parent: BorgChassisAsakimRedacted
+  id: PlayerBorgAsakimFighter
+  parent: BorgChassisAsakimFighter
   suffix: Battery, Module
   components:
   - type: AsakimTrustedUser
@@ -121,32 +123,32 @@
         startingItem: PowerCellAntiqueProtoEmpProof
 
 - type: entity
-  id: PlayerBorgAsakimRedactedGhostRole
-  parent: PlayerBorgAsakimRedacted
+  id: PlayerBorgAsakimFighterGhostRole
+  parent: PlayerBorgAsakimFighter
   suffix: Ghost
   components:
   - type: GhostRole
-    name: ghost-role-information-asakim-redacted-borg
-    description: ghost-role-information-asakim-redacted-borg-description
+    name: ghost-role-information-asakim-fighter-borg
+    description: ghost-role-information-asakim-fighter-borg-description
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
-    prototype: AsakimRedactedBorg
+    prototype: AsakimFighterBorg
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 180000 # 50 hrs
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerBorgAsakimRedactedGhostRoleNoTimelock
-  parent: PlayerBorgAsakimRedactedGhostRole
+  id: PlayerBorgAsakimFighterGhostRoleNoTimelock
+  parent: PlayerBorgAsakimFighterGhostRole
   suffix: Ghost, No Timelock
   components:
   - type: GhostRole
-    name: ghost-role-information-asakim-redacted-borg
-    description: ghost-role-information-asakim-redacted-borg-description
+    name: ghost-role-information-asakim-fighter-borg
+    description: ghost-role-information-asakim-fighter-borg-description
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
-    prototype: AsakimRedactedBorg
+    prototype: AsakimFighterBorg
     requirements: []
