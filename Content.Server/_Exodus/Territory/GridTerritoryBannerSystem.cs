@@ -1,9 +1,7 @@
 using Content.Server.Popups;
 using Content.Shared._Exodus.Territory;
 using Content.Shared.Construction;
-using Content.Shared.NPC.Prototypes;
-using Content.Shared.Verbs;
-using Robust.Shared.Prototypes;
+using Content.Shared.Maps;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server._Exodus.Territory;
@@ -13,23 +11,30 @@ namespace Content.Server._Exodus.Territory;
 /// Enforces "only one active claim banner per grid" at runtime (construction condition handles build time).
 /// When a qualifying banner is anchored on a grid with GridTerritoryComponent, it claims control
 /// and the radar label updates to the faction name, or the neutral label when removed.
-/// 
+///
 /// Factions without final art can use temporary placeholder banner entities.
 /// </summary>
 public sealed class GridTerritoryBannerSystem : EntitySystem
 {
     [Dependency] private readonly GridTerritorySystem _territory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+
+    private EntityQuery<MapGridComponent> _gridQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        _gridQuery = GetEntityQuery<MapGridComponent>();
+
         SubscribeLocalEvent<TerritoryBannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<GridTerritoryComponent, GridTerritoryStartedEvent>(OnTerritoryStarted);
+        // Exodus start - claim mapped banners after GridTerritory is added to an already map-initialized grid (POI spawn).
+        SubscribeLocalEvent<GridTerritoryComponent, MapInitEvent>(OnGridTerritoryMapInit);
+        // Exodus end
         // ConstructionChangedEvent subscription removed for initial implementation
         // (anchor/parent/shutdown cover unclaim on wrench/deconstruct). Add back with correct event if needed.
         // # Exodus - construction event sub commented for now
@@ -41,17 +46,32 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
             TryClaim(ent, false);
     }
 
-    private void OnTerritoryStarted(Entity<GridTerritoryComponent> ent, ref GridTerritoryStartedEvent args)
+    // Exodus start - one-shot scan when territory appears on a loaded POI/station grid.
+    private void OnGridTerritoryMapInit(Entity<GridTerritoryComponent> ent, ref MapInitEvent args)
     {
-        var query = EntityQueryEnumerator<TerritoryBannerComponent, TransformComponent>();
-        while (query.MoveNext(out var bannerUid, out var banner, out var xform))
+        TryClaimFromAnchoredBannersOnGrid(ent);
+    }
+
+    private void TryClaimFromAnchoredBannersOnGrid(Entity<GridTerritoryComponent> territory)
+    {
+        if (!territory.Comp.Claimable)
+            return;
+
+        if (!_gridQuery.TryComp(territory.Owner, out var gridComp))
+            return;
+
+        foreach (var uid in _map.GetLocalAnchoredEntities(territory.Owner, gridComp, gridComp.LocalAABB))
         {
-            if (!xform.Anchored || xform.GridUid != ent.Owner)
+            if (!TryComp<TerritoryBannerComponent>(uid, out var banner))
                 continue;
 
-            TryClaim((bannerUid, banner), false);
+            TryClaim((uid, banner), false);
+
+            if (territory.Comp.ActiveClaimBanner is { } active && Exists(active))
+                return;
         }
     }
+    // Exodus end
 
     private void OnAnchorChanged(Entity<TerritoryBannerComponent> ent, ref AnchorStateChangedEvent args)
     {
@@ -81,7 +101,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
     private void TryClaim(Entity<TerritoryBannerComponent> banner, bool showPopup = true)
     {
         var xform = Transform(banner);
-        if (xform.GridUid is not { } grid)
+        if (!TryResolveBannerGrid(xform, out var grid))
             return;
 
         if (!TryComp<GridTerritoryComponent>(grid, out var terr))
@@ -125,7 +145,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
     private void TryUnclaim(Entity<TerritoryBannerComponent> banner)
     {
         var xform = Transform(banner);
-        if (xform.GridUid is not { } grid)
+        if (!TryResolveBannerGrid(xform, out var grid))
             return;
 
         TryUnclaimFromGrid(banner, grid);
@@ -144,4 +164,24 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("grid-territory-unclaimed"), banner);
     }
+
+    // Exodus start - tolerate late GridUid init for anchored banners parented directly to the grid.
+    private bool TryResolveBannerGrid(TransformComponent xform, out EntityUid grid)
+    {
+        if (xform.GridUid is { } gridUid)
+        {
+            grid = gridUid;
+            return true;
+        }
+
+        if (xform.Anchored && _gridQuery.HasComponent(xform.ParentUid))
+        {
+            grid = xform.ParentUid;
+            return true;
+        }
+
+        grid = default;
+        return false;
+    }
+    // Exodus end
 }

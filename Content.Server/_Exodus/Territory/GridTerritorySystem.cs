@@ -47,8 +47,6 @@ public sealed class GridTerritorySystem : EntitySystem
         EnsureVisual(ent);
         EnsureTerritoryBiomeSource(ent);
         Dirty(ent, ent.Comp); // # Exodus - ensure profile-derived values are sent to clients for map icon logic etc.
-
-        RaiseLocalEvent(ent.Owner, new GridTerritoryStartedEvent());
     }
 
     private void OnGridTerritoryShutdown(Entity<GridTerritoryComponent> ent, ref ComponentShutdown args)
