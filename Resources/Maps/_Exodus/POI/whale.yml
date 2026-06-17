@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/16/2026 18:43:54
-  entityCount: 2446
+  time: 06/17/2026 10:49:13
+  entityCount: 2448
 maps: []
 grids:
 - 1
@@ -129,10 +129,10 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Kudzu: []
         Puddle: []
         Smoke: []
         MetalFoam: []
+        Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -10283,6 +10283,18 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-15.5
+      parent: 1
+- proto: SpawnAiRemoteBorgRedacted
+  entities:
+  - uid: 2447
+    components:
+    - type: Transform
+      pos: 0.5,20.5
+      parent: 1
+  - uid: 2448
+    components:
+    - type: Transform
+      pos: 0.5,6.5
       parent: 1
 - proto: SpawnMobWeaponTurretHeavyAsakim
   entities:
