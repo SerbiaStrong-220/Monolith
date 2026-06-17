@@ -45,3 +45,6 @@ ent-AsakimShuttleEmergencyBeaconSmall = small Asakim vessel summoning beacon
 
 ent-AsakimShuttleEmergencyBeaconMedium = medium Asakim vessel summoning beacon
     .desc = A single-use emergency beacon keyed to call a medium Asakim vessel.
+
+ent-AsakimShuttleEmergencyBeaconStratostar = Asakim Stratostar summoning beacon
+    .desc = A single-use emergency beacon keyed to call the Asakim ship Stratostar.

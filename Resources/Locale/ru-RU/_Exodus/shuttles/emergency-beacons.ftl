@@ -45,3 +45,6 @@ ent-AsakimShuttleEmergencyBeaconSmall = маячок вызова азакимо
 
 ent-AsakimShuttleEmergencyBeaconMedium = маячок вызова азакимов "Среднее судно"
     .desc = Одноразовый аварийный маячок вызова среднего корабля азакимов.
+
+ent-AsakimShuttleEmergencyBeaconStratostar = маячок вызова азакимов "Стратостар"
+    .desc = Одноразовый аварийный маячок вызова корабля азакимов Стратостар.

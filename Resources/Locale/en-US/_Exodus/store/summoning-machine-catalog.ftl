@@ -85,3 +85,5 @@ summoning-machine-beacon-wyvern-name = Emergency beacon: ADS Wyvern
 summoning-machine-beacon-wyvern-desc = A single-use beacon keyed to call the ADS Wyvern. Capital-grade arrival, capital-grade price.
 summoning-machine-beacon-azimuth-name = Emergency beacon: Asakim Azimuth
 summoning-machine-beacon-azimuth-desc = A single-use beacon keyed to call the Azimuth. Cruiser-grade privilege at cruiser-grade cost.
+summoning-machine-beacon-stratostar-name = Emergency beacon: Asakim Stratostar
+summoning-machine-beacon-stratostar-desc = A single-use beacon keyed to call the Stratostar. A heavy Asakim cruiser built for sustained sector operations.

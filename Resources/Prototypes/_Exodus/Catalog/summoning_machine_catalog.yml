@@ -453,3 +453,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
+
+- type: listing
+  id: SummoningMachineBeaconStratostar
+  name: summoning-machine-beacon-stratostar-name
+  description: summoning-machine-beacon-stratostar-desc
+  productEntity: AsakimShuttleEmergencyBeaconStratostar
+  cost:
+    Telecrystal: 13200
+  categories:
+  - SummoningMachineEmergencyBeacons
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true

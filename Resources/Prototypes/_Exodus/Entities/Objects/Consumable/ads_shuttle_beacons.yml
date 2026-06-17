@@ -150,3 +150,10 @@
   components:
   - type: ShuttleEventBeacon
     rule: UnknownShuttleAsakimMedium
+
+- type: entity
+  id: AsakimShuttleEmergencyBeaconStratostar
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleStratostar
