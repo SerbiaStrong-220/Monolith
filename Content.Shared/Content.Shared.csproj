@@ -2,6 +2,8 @@
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
+    <Features>Interceptors</Features>
+    <InterceptorsNamespaces>$(InterceptorsNamespaces);Content.Shared.GeneratedInterceptors</InterceptorsNamespaces>
   </PropertyGroup>
   <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
@@ -14,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
+    <ProjectReference Include="..\SS220.Analyzers\SS220.Analyzers.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />

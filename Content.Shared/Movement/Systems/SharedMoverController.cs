@@ -25,7 +25,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using Content.Shared.StepTrigger.Components; // Delta V-NoShoesSilentFootstepsComponent
+using Content.Shared.StepTrigger.Components;
+using System.Collections.Concurrent; // Delta V-NoShoesSilentFootstepsComponent
 
 namespace Content.Shared.Movement.Systems;
 
@@ -78,8 +79,7 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
     /// </summary>
-    public Dictionary<EntityUid, bool> UsedMobMovement = new();
-
+    public ConcurrentDictionary<EntityUid, bool> UsedMobMovement = new(); // SS220-make-it-concurrent-dictionary
     private readonly HashSet<EntityUid> _aroundColliderSet = [];
 
     public override void Initialize()
