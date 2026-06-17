@@ -129,6 +129,8 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
+    - type: BecomesStation
+      id: Antares
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:

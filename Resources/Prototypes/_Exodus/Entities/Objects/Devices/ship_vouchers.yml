@@ -1,5 +1,53 @@
 - type: entity
   parent: BaseShipLPC
+  id: ShipVoucherSentinelF
+  name: TSF Sentinel-F LPC [T1]
+  description: A small card that contains the data for the procurement of a Sentinel-F-class escort from the flagship's reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: screen
+      color: "#05ffff"
+    - state: screen9
+      color: "#05ffff"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 7200 # one hour
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - SentinelF
+  - type: StaticPrice
+    vendPrice: 325000
+
+- type: entity
+  parent: BaseShipLPC
+  id: ShipVoucherAntares
+  name: TSF Antares LPC [T4]
+  description: A small card that contains the data for the procurement of an Antares-class destroyer from the flagship's reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#05ffff"
+    - state: screen3
+      color: "#05ffff"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 14400 # 2 hours
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - Antares
+  - type: StaticPrice
+    vendPrice: 900000
+
+- type: entity
+  parent: BaseShipLPC
   id: ShipVoucherLadya
   name: TSF ladya LPC
   description: A small card that contains the data for the procurement of a Ladya-class supporter from the flagship's reserves.

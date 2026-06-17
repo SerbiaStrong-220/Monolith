@@ -218,6 +218,7 @@
     companyName: TSF
     vessels:
     - Aldebaran
+    - Termite # Exodus tsfcm-termite
   - type: StaticPrice
     vendPrice: 800000
 
@@ -243,6 +244,7 @@
     - ShipVoucherDagger
     - ShipVoucherTarantula
     - ShipVoucherSentinel
+    - ShipVoucherSentinelF # Exodus tsfcm-sentinel-f
     - ShipVoucherMercury
     - ShipVoucherAldebaran
 

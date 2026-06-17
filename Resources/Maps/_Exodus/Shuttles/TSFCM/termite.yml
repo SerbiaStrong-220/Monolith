@@ -112,6 +112,8 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
+    - type: BecomesStation
+      id: Termite
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
