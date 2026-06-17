@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/15/2026 14:42:09
-  entityCount: 6317
+  time: 06/17/2026 05:26:53
+  entityCount: 6318
 maps: []
 grids:
 - 1
@@ -203,8 +203,8 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Kudzu: []
         Smoke: []
+        Kudzu: []
         Puddle: []
         MetalFoam: []
     - type: Shuttle
@@ -1597,7 +1597,7 @@ entities:
       pos: 2.5,-36.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -15188.221
+      secondsUntilStateChange: -15318.886
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1665,7 +1665,7 @@ entities:
       pos: 13.5,-18.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11147.574
+      secondsUntilStateChange: -11278.239
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1677,7 +1677,7 @@ entities:
       pos: 12.5,-18.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11147.374
+      secondsUntilStateChange: -11278.039
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1689,7 +1689,7 @@ entities:
       pos: 12.5,-15.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11146.341
+      secondsUntilStateChange: -11277.006
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1701,7 +1701,7 @@ entities:
       pos: 13.5,-15.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11146.675
+      secondsUntilStateChange: -11277.34
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1713,7 +1713,7 @@ entities:
       pos: 24.5,-18.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11145.308
+      secondsUntilStateChange: -11275.973
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1725,7 +1725,7 @@ entities:
       pos: 23.5,-18.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11145.107
+      secondsUntilStateChange: -11275.772
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1737,7 +1737,7 @@ entities:
       pos: 23.5,-15.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11145.774
+      secondsUntilStateChange: -11276.439
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1749,7 +1749,7 @@ entities:
       pos: 24.5,-15.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -11145.574
+      secondsUntilStateChange: -11276.239
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8288,6 +8288,16 @@ entities:
     components:
     - type: Transform
       pos: 39.5,-0.5
+      parent: 1
+  - uid: 2442
+    components:
+    - type: Transform
+      pos: 35.5,8.5
+      parent: 1
+  - uid: 2454
+    components:
+    - type: Transform
+      pos: 35.5,9.5
       parent: 1
   - uid: 6323
     components:
@@ -18753,12 +18763,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 33.5,2.5
       parent: 1
-  - uid: 6120
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 35.5,2.5
-      parent: 1
   - uid: 6121
     components:
     - type: Transform
@@ -19645,12 +19649,12 @@ entities:
   - uid: 6124
     components:
     - type: Transform
-      pos: 35.33462,2.5107918
+      pos: 33.407322,2.421875
       parent: 1
   - uid: 6125
     components:
     - type: Transform
-      pos: 35.693996,2.6357918
+      pos: 33.501072,2.71875
       parent: 1
   - uid: 6126
     components:
@@ -19675,6 +19679,13 @@ entities:
     components:
     - type: Transform
       pos: -27.349873,-14.564777
+      parent: 1
+- proto: ShieldGeneratorPOISmall
+  entities:
+  - uid: 2443
+    components:
+    - type: Transform
+      pos: 35.5,9.5
       parent: 1
 - proto: ShuttersNormal
   entities:
@@ -29993,11 +30004,6 @@ entities:
     components:
     - type: Transform
       pos: 43.5,-4.5
-      parent: 1
-  - uid: 3956
-    components:
-    - type: Transform
-      pos: 35.5,9.5
       parent: 1
   - uid: 3957
     components:
