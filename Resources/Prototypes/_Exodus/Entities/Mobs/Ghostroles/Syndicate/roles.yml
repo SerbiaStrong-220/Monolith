@@ -136,6 +136,8 @@
     factions:
     - Syndicate
   - type: NukeOperative
+  - type: TTS
+    voice: dragon_knight_dota_2
 
 - type: randomHumanoidSettings
   id: SyndicateGhostOperativeNoTimelock
@@ -175,6 +177,8 @@
     nameSegments:
     - random-metadata-name-syndicate-leader
     - SyndicateNamesNormal
+  - type: TTS
+    voice: outworld_destroyer_dota_2
 
 - type: randomHumanoidSettings
   id: SyndicateGhostLeaderNoTimelock

@@ -21,6 +21,8 @@
   - type: NpcFactionMember
     factions:
     - AsakimDefenceForces
+  - type: TTS
+    voice: slark_dota_2
 
 - type: entity
   parent: MobCitadelServiceGhostRole
