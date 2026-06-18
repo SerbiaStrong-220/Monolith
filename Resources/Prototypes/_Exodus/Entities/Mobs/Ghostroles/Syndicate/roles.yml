@@ -57,6 +57,7 @@
     id: SyndiPDA
     pocket2: WeaponPistolAnaconda
     belt: ClothingBeltMilitaryWebbing
+    head: ClothingHeadHatBeret
     neck: ClothingNeckIFFRed
   inhand:
   - WeaponLightMachineGunL6
@@ -194,3 +195,28 @@
     raffle:
       settings: default
     requirements: []
+
+- type: entity
+  parent: MobHuman
+  id: MobSyndicateGhostOperativeGuide
+  name: syndicate operative
+  suffix: Guidebook
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RandomHumanoidAppearance
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeGear ]
+    roleLoadout: [ RoleSurvivalNukie ]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+
+- type: entity
+  parent: MobSyndicateGhostOperativeGuide
+  id: MobSyndicateGhostLeaderGuide
+  name: syndicate squad leader
+  suffix: Guidebook
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeLeaderGear ]
+    roleLoadout: [ RoleSurvivalNukie ]

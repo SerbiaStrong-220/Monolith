@@ -71,6 +71,7 @@
     - EXRuleGhostRoleChimera
     - EXRuleGhostRoleBorg
     - EXRuleGhostRoleSyndicate
+    - EXRuleGhostRoleCitadelService
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -166,3 +167,8 @@
   id: EXRuleGhostRoleSyndicateSergeant
   name: guide-entry-exodus-rule-ghost-roles-syndicate-sergeant
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicateSergeant.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleCitadelService
+  name: guide-entry-exodus-rule-ghost-roles-citadel-service
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCitadelService.xml"

@@ -56,6 +56,10 @@
     - TauCetiBasic
     - Draconic
     - Azaziba
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleCitadelService
+    includeChildren: false
 
 - type: entity
   parent: MobCitadelServiceGhostRole

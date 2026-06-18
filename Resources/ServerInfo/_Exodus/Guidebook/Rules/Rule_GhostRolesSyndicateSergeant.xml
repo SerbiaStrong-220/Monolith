@@ -1,7 +1,7 @@
 <Document>
 ## Сержант Синдиката
     <Box>
-    <GuideEntityEmbed Entity="SyndieFlag" Caption=""/>
+    <GuideEntityEmbed Entity="MobSyndicateGhostLeaderGuide" Caption=""/>
     </Box>
 Вы - [color=#c94242][bold]Сержант отряда Синдиката[/bold][/color]. Вы один из многочисленных сержантов военной машины [color=#c94242]Синдиката[/color].
 

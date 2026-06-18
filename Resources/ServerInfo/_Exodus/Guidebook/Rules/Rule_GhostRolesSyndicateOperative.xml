@@ -1,7 +1,7 @@
 <Document>
 ## Оперативник Синдиката
     <Box>
-    <GuideEntityEmbed Entity="SyndieFlag" Caption=""/>
+    <GuideEntityEmbed Entity="MobSyndicateGhostOperativeGuide" Caption=""/>
     </Box>
 Вы - [color=#c94242][bold]Оперативник Синдиката[/bold][/color]. Вы одна из многочисленных единиц военной машины [color=#c94242]Синдиката[/color] расквартированных в секторе.
 

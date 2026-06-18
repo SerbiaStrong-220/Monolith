@@ -25,3 +25,4 @@ guide-entry-exodus-rule-ghost-roles-borg = Борг
 guide-entry-exodus-rule-ghost-roles-syndicate = Синдикат
 guide-entry-exodus-rule-ghost-roles-syndicate-operative = Оперативник Синдиката
 guide-entry-exodus-rule-ghost-roles-syndicate-sergeant = Сержант Синдиката
+guide-entry-exodus-rule-ghost-roles-citadel-service = Резидент Цитадели
