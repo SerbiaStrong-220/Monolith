@@ -26,7 +26,6 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
     private readonly HashSet<string> _empMarkers = new();
     private readonly HashSet<string> _spaceEmpMarkers = new();
     private readonly HashSet<string> _radioBlackoutMarkers = new();
-    private readonly HashSet<string> _thrustReductionMarkers = new();
 
     public override void Initialize()
     {
@@ -45,7 +44,6 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
     private bool MarkerHasEmp(EntProtoId marker) => marker.Id != null && _empMarkers.Contains(marker.Id);
     private bool MarkerHasSpaceEmp(EntProtoId marker) => marker.Id != null && _spaceEmpMarkers.Contains(marker.Id);
     private bool MarkerHasRadioBlackout(EntProtoId marker) => marker.Id != null && _radioBlackoutMarkers.Contains(marker.Id);
-    private bool MarkerHasThrustReduction(EntProtoId marker) => marker.Id != null && _thrustReductionMarkers.Contains(marker.Id);
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
@@ -61,7 +59,6 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
         _empMarkers.Clear();
         _spaceEmpMarkers.Clear();
         _radioBlackoutMarkers.Clear();
-        _thrustReductionMarkers.Clear();
 
         foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
         {
@@ -82,8 +79,6 @@ public sealed class NebulaHazardCoordinatorSystem : EntitySystem
                 _spaceEmpMarkers.Add(proto.ID);
             if (proto.TryGetComponent<NebulaRadioBlackoutSourceComponent>(out _, _componentFactory))
                 _radioBlackoutMarkers.Add(proto.ID);
-            if (proto.TryGetComponent<NebulaThrustReductionComponent>(out _, _componentFactory))
-                _thrustReductionMarkers.Add(proto.ID);
         }
     }
 

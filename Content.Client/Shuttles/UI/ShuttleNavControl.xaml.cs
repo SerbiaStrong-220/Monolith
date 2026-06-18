@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client._Exodus.NPC; // Exodus - faction AI radar label
 using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client._Mono.Radar;
 using Content.Client.Station; // Frontier
@@ -8,7 +9,7 @@ using Content.Shared._Exodus.NPC.Components; // Exodus - faction AI radar label
 using Content.Shared._Mono.Company;
 using Content.Shared._Mono.Detection;
 using Content.Shared._Mono.Radar;
-using Content.Shared.NPC.Prototypes; // Exodus - faction AI radar label
+
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -1130,40 +1131,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     // Exodus-begin faction AI radar label
     private string AddFactionAiControlLabel(EntityUid grid, string labelText)
     {
-        if (!_factionAiControlQuery.TryGetComponent(grid, out var control) ||
-            !TryGetFactionAiControlLabel(control, out var controlLabel))
-        {
-            return labelText;
-        }
-
-        return $"{labelText}\n{controlLabel}";
-    }
-
-    private bool TryGetFactionAiControlLabel(FactionAiControlledGridComponent control, out string label)
-    {
-        if (control.State == FactionAiControlState.Contested)
-        {
-            label = Loc.GetString("radar-console-core-control-contested-label");
-            return true;
-        }
-
-        if (control.Faction is not { } factionId)
-        {
-            label = string.Empty;
-            return false;
-        }
-
-        var factionName = factionId.Id;
-        if (_prototype.TryIndex(factionId, out NpcFactionPrototype? faction))
-        {
-            if (faction.CoreControlName is { } coreControlName)
-                factionName = Loc.GetString(coreControlName);
-            else if (faction.Name is { } name)
-                factionName = Loc.GetString(name);
-        }
-
-        label = Loc.GetString("radar-console-core-control-label", ("faction", factionName.ToUpperInvariant()));
-        return true;
+        _factionAiControlQuery.TryGetComponent(grid, out var control);
+        return FactionAiControlLabelHelper.AppendToLabel(labelText, control, _prototype);
     }
 
     private Vector2 GetMultilineLabelDimensions(DrawingHandleScreen handle, string[] lines, float scale)
