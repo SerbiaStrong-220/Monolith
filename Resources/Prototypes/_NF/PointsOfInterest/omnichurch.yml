@@ -25,11 +25,4 @@
       components:
       - type: StationNameSetup
         mapNameTemplate: "Маяк ВсеЦеркви" # Ru-Localization
-    Beacon:
-      stationProto: StandardFrontierOutpost
-      gridComponents:
-      - type: GridTerritory
-      components:
-      - type: StationNameSetup
-        mapNameTemplate: "Маяк ВсеЦеркви" # Ru-Localization
 # Exodus-end

@@ -22,10 +22,10 @@ public sealed class NebulaParallaxSystem : EntitySystem
     private static readonly TimeSpan BackgroundLightningMaxDelay = TimeSpan.FromSeconds(6);
     private static readonly SoundSpecifier[] BackgroundLightningSounds =
     {
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lighting_1.ogg"),
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lighting_2.ogg"),
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lighting_3.ogg"),
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lighting_4.ogg"),
+        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_1.ogg"),
+        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_2.ogg"),
+        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_3.ogg"),
+        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_4.ogg"),
     };
 
     private const float TransitionSeconds = 2f;

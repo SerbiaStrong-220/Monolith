@@ -218,7 +218,7 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: BecomesStation
-      id: PDV Helios Fortress
+      id: HeliosFortress
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
