@@ -29,7 +29,6 @@
   colorPoiByFaction: true
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:
-  - Polaris
   - Sevastopol
   - TradeMall
   - Zvezda
