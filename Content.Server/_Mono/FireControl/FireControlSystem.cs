@@ -20,7 +20,7 @@ using Content.Shared.Interaction;
 using Content.Shared._Mono.ShipGuns;
 using Content.Shared.Examine;
 using Content.Server.Salvage.Expeditions;
-using Content.Server._Exodus.Nebula; // Exodus nebula weapon cooldown
+using Content.Server._Exodus.Nebula.Hazards; // Exodus nebula weapon cooldown
 
 namespace Content.Server._Mono.FireControl;
 

@@ -1,10 +1,10 @@
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using Content.Server._Exodus.Nebula; // Exodus
+using Content.Server._Exodus.Nebula.Hazards; // Exodus
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Shared._Exodus.Nebula; // Exodus
+using Content.Shared._Exodus.Nebula.Components; // Exodus
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;

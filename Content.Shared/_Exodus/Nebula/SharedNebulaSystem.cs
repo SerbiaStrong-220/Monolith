@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Shared._Exodus.Nebula.Components;
+using Content.Shared._Exodus.Nebula.Generation;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;

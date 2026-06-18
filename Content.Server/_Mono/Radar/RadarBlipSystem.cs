@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Shared._Exodus.Nebula; // Exodus nebula-ftl-map
+using Content.Shared._Exodus.Nebula.Components; // Exodus nebula-ftl-map
 using Content.Shared._Mono.Radar;
 using Content.Shared.Projectiles;
 using Content.Shared.Shuttles.Components;

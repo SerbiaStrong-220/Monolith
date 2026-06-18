@@ -1,4 +1,5 @@
 using Content.Shared._Exodus.Nebula;
+using Content.Shared._Exodus.Nebula.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server._Exodus.Nebula;
