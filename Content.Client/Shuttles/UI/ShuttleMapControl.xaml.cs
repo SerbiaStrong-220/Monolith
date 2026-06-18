@@ -1,12 +1,12 @@
 using System.Buffers;
 using System.Numerics;
 using Content.Client._Exodus.Nebula; // Exodus nebula-ftl-map
-using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client._Mono.Radar; // Exodus nebula-ftl-map
+using Content.Shared._Mono.Radar; // Exodus nebula-ftl-map
+using Content.Client._Exodus.Territory; // Exodus - territory POI colors
 using Content.Client.Shuttles.Systems;
 using Content.Shared._Mono.Company;
 using Content.Shared._Mono.Detection;
-using Content.Shared._Mono.Radar; // Exodus nebula-ftl-map
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared._Exodus.Territory; // # Exodus - for GridTerritoryComponent radius based icons + influence rings on BSS jump map
@@ -112,7 +112,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private const float TerritoryHugeIconThreshold = 4500f;
     // # Exodus end - BSS map territory visuals
 
-    public ShuttleMapControl() : base(256f, 28000f, 512f) // Exodus nebula visibility
+    public ShuttleMapControl() : base(256f, 28000f, 512f) // Exodus nebula-ftl-map
     {
         RobustXamlLoader.Load(this);
         _detection = EntManager.System<DetectionSystem>(); // Mono
@@ -543,11 +543,13 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     // do NOT apply LocalCenter operation here because it will be adjusted in FTLFree.
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
 
-                    var targetCoordinates = new EntityCoordinates(viewedMapUid, mouseMapPos); // Exodus nebula-ftl-map
+                    // Exodus-begin nebula-ftl-map
+                    var targetCoordinates = new EntityCoordinates(viewedMapUid, mouseMapPos);
                     var ftlFree = (!beaconsOnly || foundBeacon != default) &&
                                   _shuttles.FTLFree(_shuttleEntity.Value, targetCoordinates, _ftlAngle, _viewportExclusions) &&
-                                  CanFTLToNebulaPreview(_shuttleEntity.Value, targetCoordinates, _ftlAngle) // Exodus nebula-ftl-map
-                                  || NoFTLRange; // Mono
+                                  CanFTLToNebulaPreview(_shuttleEntity.Value, targetCoordinates, _ftlAngle)
+                                  || NoFTLRange;
+                    // Exodus-end
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;
 

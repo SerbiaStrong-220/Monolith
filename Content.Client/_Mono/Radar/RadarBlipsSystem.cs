@@ -14,21 +14,23 @@ public sealed partial class RadarBlipsSystem : EntitySystem
 
     private const double BlipStaleSeconds = 3.0;
     private TimeSpan _lastRequestTime = TimeSpan.Zero;
-    private TimeSpan _lastNebulaMapRequestTime = TimeSpan.Zero; // Exodus nebula-ftl-map
-    private MapId _lastNebulaMapRequest = MapId.Nullspace; // Exodus nebula-ftl-map
     private static readonly TimeSpan RequestThrottle = TimeSpan.FromMilliseconds(500);
 
     private TimeSpan _lastUpdatedTime;
-    private TimeSpan _lastNebulaMapUpdatedTime; // Exodus nebula-ftl-map
+    // Exodus-begin nebula-ftl-map
+    private TimeSpan _lastNebulaMapRequestTime = TimeSpan.Zero;
+    private MapId _lastNebulaMapRequest = MapId.Nullspace;
+    private TimeSpan _lastNebulaMapUpdatedTime;
+    private List<BlipNetData> _nebulaMapBlips = new();
+    private List<BlipConfig> _nebulaMapConfigPalette = new();
+    private readonly List<BlipData> _cachedNebulaMapBlipData = new();
+    // Exodus-end
     private List<BlipNetData> _blips = new();
-    private List<BlipNetData> _nebulaMapBlips = new(); // Exodus nebula-ftl-map
     private List<HitscanNetData> _hitscans = new();
     private List<BlipConfig> _configPalette = new();
-    private List<BlipConfig> _nebulaMapConfigPalette = new(); // Exodus nebula-ftl-map
 
     // cached results to avoid allocating on every draw/frame
     private readonly List<BlipData> _cachedBlipData = new();
-    private readonly List<BlipData> _cachedNebulaMapBlipData = new(); // Exodus nebula-ftl-map
 
     public override void Initialize()
     {
@@ -94,7 +96,6 @@ public sealed partial class RadarBlipsSystem : EntitySystem
         var ev = new RequestBlipsEvent(netConsole, (int) mapId, true);
         RaiseNetworkEvent(ev);
     }
-    // Exodus-end
 
     /// <summary>
     /// Gets the current blips as world positions with their scale, color and shape.
@@ -135,7 +136,6 @@ public sealed partial class RadarBlipsSystem : EntitySystem
         return _cachedBlipData;
     }
 
-    // Exodus-begin nebula-ftl-map
     public List<BlipData> GetCurrentNebulaMapBlips()
     {
         _cachedNebulaMapBlipData.Clear();
@@ -145,9 +145,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
         AppendBlipData(_nebulaMapBlips, _nebulaMapConfigPalette, _cachedNebulaMapBlipData, _lastNebulaMapUpdatedTime);
         return _cachedNebulaMapBlipData;
     }
-    // Exodus-end
 
-    // Exodus-begin nebula-ftl-map
     private void AppendBlipData(List<BlipNetData> source, List<BlipConfig> palette, List<BlipData> target, TimeSpan lastUpdatedTime)
     {
         foreach (var blip in source)
