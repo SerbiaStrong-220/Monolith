@@ -55,4 +55,7 @@ public sealed partial class NebulaMapComponent : Component
 
     [ViewVariables]
     public EntProtoId WorldEndOuterMarker;
+
+    [ViewVariables]
+    public Color WorldEndRadarColor;
 }

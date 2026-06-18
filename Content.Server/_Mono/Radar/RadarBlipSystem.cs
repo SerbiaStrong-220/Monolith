@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared._Exodus.Nebula; // Exodus nebula-ftl-map
 using Content.Shared._Mono.Radar;
 using Content.Shared.Projectiles;
 using Content.Shared.Shuttles.Components;
@@ -10,6 +11,7 @@ namespace Content.Server._Mono.Radar;
 
 public sealed partial class RadarBlipSystem : EntitySystem
 {
+    [Dependency] private IMapManager _mapManager = default!; // Exodus nebula-ftl-map
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
 
@@ -33,6 +35,16 @@ public sealed partial class RadarBlipSystem : EntitySystem
             || !TryComp<RadarConsoleComponent>(radarUid, out var radar)
         )
             return;
+
+        // Exodus-begin nebula-ftl-map
+        if (ev.NebulaOnly && ev.RequestedMapId is { } nebulaMapId)
+        {
+            AssembleNebulaBlipsReport(new MapId(nebulaMapId));
+            RaiseNetworkEvent(new GiveBlipsEvent(_tempPaletteCache, _tempBlipsCache, _tempHitscansCache, ev.RequestedMapId, true), args.SenderSession);
+            ClearReportCaches();
+            return;
+        }
+        // Exodus-end
 
         var sourcesEv = new GetRadarSourcesEvent();
         RaiseLocalEvent(radarUid.Value, ref sourcesEv);
@@ -58,6 +70,45 @@ public sealed partial class RadarBlipSystem : EntitySystem
         _tempPaletteCache.Clear();
         _paletteIndex.Clear();
     }
+
+    // Exodus-begin nebula-ftl-map
+    private void AssembleNebulaBlipsReport(MapId mapId)
+    {
+        if (!_mapManager.MapExists(mapId))
+            return;
+
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        if (!TryComp<NebulaMapDataComponent>(mapUid, out var nebulaData))
+            return;
+
+        var netMap = GetNetEntity(mapUid);
+        for (var i = 0; i < nebulaData.RadarBlips.Count; i++)
+        {
+            var blip = nebulaData.RadarBlips[i];
+            if (blip.Config.Shape != RadarBlipShape.NebulaPolygon)
+                continue;
+
+            var configIndex = GetOrAddConfig(blip.Config);
+            var coordinates = new EntityCoordinates(mapUid, blip.Position);
+            _tempBlipsCache.Add(new BlipNetData(
+                netMap,
+                GetNetCoordinates(coordinates),
+                Vector2.Zero,
+                Angle.Zero,
+                configIndex,
+                null));
+        }
+    }
+
+    private void ClearReportCaches()
+    {
+        _tempBlipsCache.Clear();
+        _tempHitscansCache.Clear();
+        _tempSourcesCache.Clear();
+        _tempPaletteCache.Clear();
+        _paletteIndex.Clear();
+    }
+    // Exodus-end
 
     private void OnBlipShutdown(EntityUid blipUid, RadarBlipComponent component, ComponentShutdown args)
     {

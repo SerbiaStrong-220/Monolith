@@ -28,7 +28,9 @@ public sealed class NebulaGenerationSystem : EntitySystem
     private const string DebugBoundingPointPrototype = "NebulaDebugBoundingPoint";
     private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
     private const int NebulaRadarContourSamples = 96;
+    private const int WorldEndRadarContourSamples = 512;
     private static readonly Color FallbackRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
+    private static readonly Color FallbackWorldEndRadarColor = new(1f, 0.1f, 0f, 1f);
 
     /// <summary>
     /// Id of the <see cref="NebulaGenerationConfigPrototype"/> resolved at round start.
@@ -110,16 +112,21 @@ public sealed class NebulaGenerationSystem : EntitySystem
     {
         var data = EnsureComp<NebulaMapDataComponent>(mapUid);
         data.Nebulas.Clear();
+        data.RadarBlips.Clear();
 
         for (var i = 0; i < source.Nebulas.Count; i++)
         {
             var marker = i < source.NebulaMarkers.Count ? source.NebulaMarkers[i] : EntityUid.Invalid;
-            data.Nebulas.Add(BuildSummary(source.Nebulas[i], GetNebulaPrototype(source, i), marker));
+            var summary = BuildSummary(source.Nebulas[i], GetNebulaPrototype(source, i), marker);
+            data.Nebulas.Add(summary);
+            data.RadarBlips.Add(BuildRadarBlip(summary.Shape, summary.RadarColor));
         }
 
         data.WorldEnd = source.WorldEnd;
         data.WorldEndInnerMarker = source.WorldEndInnerMarker;
         data.WorldEndOuterMarker = source.WorldEndOuterMarker;
+        if (source.WorldEnd.IsGenerated)
+            data.RadarBlips.Add(BuildWorldEndRadarBlip(source.WorldEnd, GetWorldEndRadarColor(source)));
 
         Dirty(mapUid, data);
     }
@@ -507,6 +514,58 @@ public sealed class NebulaGenerationSystem : EntitySystem
         }
 
         return points;
+    }
+
+    private static NebulaRadarBlipSummary BuildRadarBlip(NebulaShape nebula, Color color)
+    {
+        var radius = nebula.BoundingRadius;
+        return new NebulaRadarBlipSummary(
+            nebula.Center,
+            new BlipConfig
+            {
+                Bounds = new Box2(-radius, -radius, radius, radius),
+                Color = color,
+                Shape = RadarBlipShape.NebulaPolygon,
+                Points = BuildRadarContourPoints(nebula),
+                RespectZoom = true,
+                Rotate = false,
+            });
+    }
+
+    private static NebulaRadarBlipSummary BuildWorldEndRadarBlip(WorldEndNebulaShape worldEnd, Color color)
+    {
+        return new NebulaRadarBlipSummary(
+            Vector2.Zero,
+            new BlipConfig
+            {
+                Bounds = new Box2(
+                    -worldEnd.InnerBoundingRadius, -worldEnd.InnerBoundingRadius,
+                    worldEnd.InnerBoundingRadius, worldEnd.InnerBoundingRadius),
+                Color = color,
+                Shape = RadarBlipShape.NebulaPolygon,
+                Points = BuildWorldEndBoundaryPoints(worldEnd),
+                InvertFill = true,
+                OuterFillRadius = 500000f,
+                RespectZoom = true,
+                Rotate = false,
+            });
+    }
+
+    private static List<Vector2> BuildWorldEndBoundaryPoints(WorldEndNebulaShape worldEnd)
+    {
+        var points = new List<Vector2>(WorldEndRadarContourSamples);
+        for (var i = 0; i < WorldEndRadarContourSamples; i++)
+        {
+            var theta = MathF.Tau * i / WorldEndRadarContourSamples;
+            points.Add(worldEnd.GetBoundaryPoint(theta));
+        }
+
+        return points;
+    }
+
+    private static Color GetWorldEndRadarColor(NebulaMapComponent source)
+    {
+        return source.WorldEndRadarColor == default ? FallbackWorldEndRadarColor : source.WorldEndRadarColor;
     }
 
     private int EnsureValidMarkers(MapId mapId, NebulaMapComponent component)

@@ -15,6 +15,9 @@ public sealed partial class NebulaMapDataComponent : Component
     public List<NebulaSummary> Nebulas = new();
 
     [AutoNetworkedField, ViewVariables]
+    public List<NebulaRadarBlipSummary> RadarBlips = new();
+
+    [AutoNetworkedField, ViewVariables]
     public WorldEndNebulaShape WorldEnd;
 
     /// <summary>Marker prototype for the inner concentric sub-zone (boundary..MidRadius).</summary>

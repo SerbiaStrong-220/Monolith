@@ -57,12 +57,13 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         mapComponent.WorldEndInnerMarker = config.DeathZoneInnerMarker;
         mapComponent.WorldEndOuterMarker = config.DeathZoneOuterMarker;
 
-        SpawnDeathZoneMarkers(mapId, mapComponent.WorldEnd, config);
+        mapComponent.WorldEndRadarColor = SpawnDeathZoneMarkers(mapId, mapComponent.WorldEnd, config);
 
         var data = EnsureComp<NebulaMapDataComponent>(mapUid.Value);
         data.WorldEnd = mapComponent.WorldEnd;
         data.WorldEndInnerMarker = mapComponent.WorldEndInnerMarker;
         data.WorldEndOuterMarker = mapComponent.WorldEndOuterMarker;
+        AddOrReplaceWorldEndRadarBlip(data, mapComponent.WorldEnd, mapComponent.WorldEndRadarColor);
         Dirty(mapUid.Value, data);
 
         _sawmill.Info($"Generated world-end death zone: inner radius {config.WorldEndInnerRadius}, mid radius {config.WorldEndMidRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
@@ -85,13 +86,14 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
         return new NebulaGenerationConfigPrototype();
     }
 
-    private void SpawnDeathZoneMarkers(MapId mapId, WorldEndNebulaShape worldEnd, NebulaGenerationConfigPrototype config)
+    private Color SpawnDeathZoneMarkers(MapId mapId, WorldEndNebulaShape worldEnd, NebulaGenerationConfigPrototype config)
     {
-        SpawnDeathZoneMarker(mapId, worldEnd, config, config.DeathZoneInnerMarker, withRadarBlip: true);
+        var color = SpawnDeathZoneMarker(mapId, worldEnd, config, config.DeathZoneInnerMarker, withRadarBlip: true);
         SpawnDeathZoneMarker(mapId, worldEnd, config, config.DeathZoneOuterMarker, withRadarBlip: false);
+        return color ?? FallbackRadarColor;
     }
 
-    private void SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd, NebulaGenerationConfigPrototype config, EntProtoId prototype, bool withRadarBlip)
+    private Color? SpawnDeathZoneMarker(MapId mapId, WorldEndNebulaShape worldEnd, NebulaGenerationConfigPrototype config, EntProtoId prototype, bool withRadarBlip)
     {
         var marker = Spawn(prototype, new MapCoordinates(Vector2.Zero, mapId));
 
@@ -104,7 +106,7 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
             // BlipConfig it would render as a small default circle at the world origin on any
             // radar that doesn't filter by NebulaPolygon shape. Strip it for the outer marker.
             RemComp<RadarBlipComponent>(marker);
-            return;
+            return null;
         }
 
         var color = TryComp<NebulaRadarVisualsComponent>(marker, out var visuals)
@@ -128,6 +130,8 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
             RespectZoom = true,
             Rotate = false,
         };
+
+        return color;
     }
 
     private static List<Vector2> BuildBoundaryPoints(WorldEndNebulaShape worldEnd)
@@ -139,5 +143,31 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
             points.Add(worldEnd.GetBoundaryPoint(theta));
         }
         return points;
+    }
+
+    private static void AddOrReplaceWorldEndRadarBlip(NebulaMapDataComponent data, WorldEndNebulaShape worldEnd, Color color)
+    {
+        for (var i = data.RadarBlips.Count - 1; i >= 0; i--)
+        {
+            var config = data.RadarBlips[i].Config;
+            if (config.Shape == RadarBlipShape.NebulaPolygon && config.InvertFill)
+                data.RadarBlips.RemoveAt(i);
+        }
+
+        data.RadarBlips.Add(new NebulaRadarBlipSummary(
+            Vector2.Zero,
+            new BlipConfig
+            {
+                Bounds = new Box2(
+                    -worldEnd.InnerBoundingRadius, -worldEnd.InnerBoundingRadius,
+                    worldEnd.InnerBoundingRadius, worldEnd.InnerBoundingRadius),
+                Color = color,
+                Shape = RadarBlipShape.NebulaPolygon,
+                Points = BuildBoundaryPoints(worldEnd),
+                InvertFill = true,
+                OuterFillRadius = 500000f,
+                RespectZoom = true,
+                Rotate = false,
+            }));
     }
 }
