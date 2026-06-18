@@ -324,7 +324,7 @@ public sealed class NebulaPresenceSystem : EntitySystem
         if (changedMarker)
         {
             _sawmill.Debug($"{ToPrettyString(uid)} entered {marker} nebula {index + 1} with density {density:0.00}.");
-            var ev = new NebulaPresenceChangedEvent(oldMarker, marker);
+            var ev = new NebulaPresenceChangedEvent(uid, oldMarker, marker);
             RaiseLocalEvent(uid, ref ev);
         }
     }

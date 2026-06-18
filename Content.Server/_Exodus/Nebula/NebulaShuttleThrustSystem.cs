@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Shared._Exodus.Nebula;
 using Robust.Shared.Prototypes;
 
@@ -6,9 +7,9 @@ namespace Content.Server._Exodus.Nebula;
 
 /// <summary>
 /// Applies thrust reduction to shuttles inside nebulas with
-/// <see cref="NebulaThrustReductionComponent"/>. Cache-driven because
-/// <see cref="GetNebulaShuttleThrustEvent"/> is raised from MoverController on every physics
-/// step — resolving the marker prototype and its component each time would burn lookups.
+/// <see cref="NebulaThrustReductionComponent"/>. Effective thrust is cached per shuttle because
+/// <see cref="GetNebulaShuttleThrustEvent"/> is raised from MoverController during active
+/// movement, while nebula/thruster inputs change comparatively rarely.
 /// </summary>
 public sealed class NebulaShuttleThrustSystem : EntitySystem
 {
@@ -31,6 +32,12 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
         _resistanceQuery = GetEntityQuery<NebulaThrustResistanceComponent>();
 
         SubscribeLocalEvent<GetNebulaShuttleThrustEvent>(OnGetNebulaShuttleThrust);
+        SubscribeLocalEvent<NebulaPresenceChangedEvent>(OnPresenceChanged);
+        SubscribeLocalEvent<ShuttleComponent, ShuttleLinearThrustChangedEvent>(OnShuttleLinearThrustChanged);
+        SubscribeLocalEvent<NebulaThrustMultiplierComponent, ComponentStartup>(OnThrusterNebulaModifierChanged);
+        SubscribeLocalEvent<NebulaThrustMultiplierComponent, ComponentShutdown>(OnThrusterNebulaModifierChanged);
+        SubscribeLocalEvent<NebulaThrustResistanceComponent, ComponentStartup>(OnThrusterNebulaResistanceChanged);
+        SubscribeLocalEvent<NebulaThrustResistanceComponent, ComponentShutdown>(OnThrusterNebulaResistanceChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         BuildCache();
@@ -39,7 +46,10 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (args.WasModified<EntityPrototype>())
+        {
             BuildCache();
+            DirtyAllShuttleCaches();
+        }
     }
 
     private void BuildCache()
@@ -58,20 +68,97 @@ public sealed class NebulaShuttleThrustSystem : EntitySystem
 
     private void OnGetNebulaShuttleThrust(ref GetNebulaShuttleThrustEvent args)
     {
-        var inNebula = TryGetCurrentThrustMultiplier(args.ShuttleUid, out var multiplier);
+        if (!TryComp<ShuttleComponent>(args.ShuttleUid, out var shuttle) ||
+            !TryGetCurrentThrustMultiplier(args.ShuttleUid, out var multiplier))
+        {
+            return;
+        }
 
-        args.HorizontalThrust = GetEffectiveDirectionThrust(
-            args.ShuttleUid,
-            args.HorizontalDirectionIndex,
-            args.HorizontalThrust,
-            multiplier,
-            inNebula);
-        args.VerticalThrust = GetEffectiveDirectionThrust(
-            args.ShuttleUid,
-            args.VerticalDirectionIndex,
-            args.VerticalThrust,
-            multiplier,
-            inNebula);
+        var cache = EnsureComp<NebulaShuttleThrustCacheComponent>(args.ShuttleUid);
+        if (cache.Dirty)
+            RebuildCache(args.ShuttleUid, shuttle, cache, multiplier);
+
+        args.HorizontalThrust = GetCachedDirectionThrust(cache, args.HorizontalDirectionIndex, args.HorizontalThrust);
+        args.VerticalThrust = GetCachedDirectionThrust(cache, args.VerticalDirectionIndex, args.VerticalThrust);
+    }
+
+    private void OnPresenceChanged(ref NebulaPresenceChangedEvent args)
+    {
+        DirtyCache(args.Entity);
+    }
+
+    private void OnShuttleLinearThrustChanged(Entity<ShuttleComponent> ent, ref ShuttleLinearThrustChangedEvent args)
+    {
+        DirtyCache(ent.Owner);
+    }
+
+    private void OnThrusterNebulaModifierChanged(Entity<NebulaThrustMultiplierComponent> ent, ref ComponentStartup args)
+    {
+        DirtyThrusterGridCache(ent.Owner);
+    }
+
+    private void OnThrusterNebulaModifierChanged(Entity<NebulaThrustMultiplierComponent> ent, ref ComponentShutdown args)
+    {
+        DirtyThrusterGridCache(ent.Owner);
+    }
+
+    private void OnThrusterNebulaResistanceChanged(Entity<NebulaThrustResistanceComponent> ent, ref ComponentStartup args)
+    {
+        DirtyThrusterGridCache(ent.Owner);
+    }
+
+    private void OnThrusterNebulaResistanceChanged(Entity<NebulaThrustResistanceComponent> ent, ref ComponentShutdown args)
+    {
+        DirtyThrusterGridCache(ent.Owner);
+    }
+
+    private void DirtyThrusterGridCache(EntityUid thrusterUid)
+    {
+        var xform = Transform(thrusterUid);
+        if (xform.GridUid is { Valid: true } gridUid)
+            DirtyCache(gridUid);
+    }
+
+    private void DirtyCache(EntityUid shuttleUid)
+    {
+        if (TryComp<NebulaShuttleThrustCacheComponent>(shuttleUid, out var cache))
+            cache.Dirty = true;
+    }
+
+    private void DirtyAllShuttleCaches()
+    {
+        var query = EntityQueryEnumerator<NebulaShuttleThrustCacheComponent>();
+        while (query.MoveNext(out _, out var cache))
+        {
+            cache.Dirty = true;
+        }
+    }
+
+    private void RebuildCache(
+        EntityUid shuttleUid,
+        ShuttleComponent shuttle,
+        NebulaShuttleThrustCacheComponent cache,
+        float multiplier)
+    {
+        for (var i = 0; i < cache.EffectiveLinearThrust.Length; i++)
+        {
+            cache.EffectiveLinearThrust[i] = GetEffectiveDirectionThrust(
+                shuttleUid,
+                i,
+                shuttle.LinearThrust[i],
+                multiplier,
+                true);
+        }
+
+        cache.Dirty = false;
+    }
+
+    private static float GetCachedDirectionThrust(NebulaShuttleThrustCacheComponent cache, int directionIndex, float fallbackThrust)
+    {
+        if ((uint) directionIndex >= cache.EffectiveLinearThrust.Length)
+            return fallbackThrust;
+
+        return cache.EffectiveLinearThrust[directionIndex];
     }
 
     public float GetCurrentThrustMultiplier(EntityUid shuttleUid)

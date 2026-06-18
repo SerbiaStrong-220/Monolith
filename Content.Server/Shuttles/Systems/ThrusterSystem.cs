@@ -266,6 +266,12 @@ public sealed partial class ThrusterSystem : EntitySystem
             shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
             DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
             shuttleComponent.LinearThrusters[direction].Add(uid);
+
+            // Exodus-begin nebula thrust cache
+            if (args.ParentChanged)
+                NotifyLinearThrustChanged(args.OldPosition.EntityId);
+            NotifyLinearThrustChanged(xform.GridUid);
+            // Exodus-end
         }
     }
 
@@ -355,6 +361,7 @@ public sealed partial class ThrusterSystem : EntitySystem
                 shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
                 DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Add(uid);
+                NotifyLinearThrustChanged(xform.GridUid); // Exodus nebula thrust cache
 
                 // Don't just add / remove the fixture whenever the thruster fires because perf
                 if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent) &&
@@ -464,6 +471,7 @@ public sealed partial class ThrusterSystem : EntitySystem
                 shuttleComponent.BaseLinearThrust[direction] -= component.BaseThrust;
                 DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Remove(uid);
+                NotifyLinearThrustChanged(gridId); // Exodus nebula thrust cache
                 break;
             case ThrusterType.Angular:
                 shuttleComponent.AngularThrust -= component.Thrust;
@@ -714,25 +722,45 @@ public sealed partial class ThrusterSystem : EntitySystem
     /// Registers linear thrust from a thruster onto a shuttle in the given cardinal direction index.
     /// Use this instead of writing <see cref="ShuttleComponent"/> thrust fields directly.
     /// </summary>
-    public void AddLinearThrust(ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid)
+    public void AddLinearThrust(EntityUid shuttleUid, ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid, bool raiseEvent = true) // Exodus nebula thrust cache
     {
         shuttle.LinearThrust[direction] += thrust;
         shuttle.BaseLinearThrust[direction] += baseThrust;
         DebugTools.Assert(!shuttle.LinearThrusters[direction].Contains(uid));
         shuttle.LinearThrusters[direction].Add(uid);
+        if (raiseEvent)
+            NotifyLinearThrustChanged(shuttleUid); // Exodus nebula thrust cache
     }
 
     /// <summary>
     /// Removes previously registered linear thrust from a shuttle in the given cardinal direction index.
     /// </summary>
-    public void RemoveLinearThrust(ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid)
+    public void RemoveLinearThrust(EntityUid shuttleUid, ShuttleComponent shuttle, int direction, float thrust, float baseThrust, EntityUid uid, bool raiseEvent = true) // Exodus nebula thrust cache
     {
         shuttle.LinearThrust[direction] -= thrust;
         shuttle.BaseLinearThrust[direction] -= baseThrust;
         DebugTools.Assert(shuttle.LinearThrusters[direction].Contains(uid));
         shuttle.LinearThrusters[direction].Remove(uid);
+        if (raiseEvent)
+            NotifyLinearThrustChanged(shuttleUid); // Exodus nebula thrust cache
+    }
+
+    // Exodus-begin nebula thrust cache
+    public void NotifyLinearThrustChanged(EntityUid? shuttleUid)
+    {
+        if (shuttleUid is not { Valid: true } uid)
+            return;
+
+        var ev = new ShuttleLinearThrustChangedEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 }
+
+/// <summary>
+/// Exodus: raised on a shuttle grid when its cached linear thrust or linear thruster list changes.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ShuttleLinearThrustChangedEvent;
 
 /// <summary>
 /// Exodus: raised on a thruster to let another system claim its standard handling. If handled, the

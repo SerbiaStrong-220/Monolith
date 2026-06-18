@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Content.Server._Exodus.Nebula; // Exodus
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._Exodus.Nebula; // Exodus
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
@@ -35,6 +36,7 @@ public sealed partial class MoverController : SharedMoverController
     [Dependency] private EntityQuery<DroneConsoleComponent> _droneQuery = default!;
     [Dependency] private EntityQuery<ShuttleComponent> _shuttleQuery = default!;
     [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+    [Dependency] private EntityQuery<NebulaPresenceComponent> _nebulaPresenceQuery = default!; // Exodus nebula thrust cache
 
     // Not needed for persistence; just used to save an alloc
     private readonly HashSet<EntityUid> _seenMovers = [];
@@ -421,7 +423,8 @@ public sealed partial class MoverController : SharedMoverController
         var vertThrust = shuttle.LinearThrust[vertIndex];
 
         // Exodus-begin
-        if (xform.GridUid is { Valid: true } shuttleUid)
+        if (xform.GridUid is { Valid: true } shuttleUid &&
+            _nebulaPresenceQuery.HasComp(shuttleUid)) // Exodus nebula thrust cache
         {
             var ev = new GetNebulaShuttleThrustEvent(shuttleUid, horizIndex, vertIndex, horizThrust, vertThrust);
             RaiseLocalEvent(ref ev);
