@@ -8,3 +8,5 @@ uplink-syndicate-infiltrator-voucher-name = Infiltrator Voucher
 uplink-syndicate-infiltrator-voucher-desc = A single-use voucher for the Infiltrator-class frigate.
 uplink-syndicate-hunter-voucher-name = Hunter Voucher
 uplink-syndicate-hunter-voucher-desc = A single-use voucher for the Hunter-class gunship.
+uplink-syndicate-ship-repair-device-name = Syndicate SRD [SYNDICATE BIOCODE]
+uplink-syndicate-ship-repair-device-desc = A resonant ship repair device keyed to Syndicate operative neural patterns. Required for repairing restricted Syndicate shuttles.

@@ -72,3 +72,14 @@
     whitelist:
       tags:
       - SyndicateUplink
+
+- type: listing
+  id: UplinkShipRepairDeviceSyndicate
+  name: uplink-syndicate-ship-repair-device-name
+  description: uplink-syndicate-ship-repair-device-desc
+  icon: { sprite: /Textures/_Exodus/Objects/Tools/repair_device_syndicate_item.rsi, state: item }
+  productEntity: ShipRepairDeviceSyndicate
+  cost:
+    Telecrystal: 25
+  categories:
+  - UplinkDisruption
