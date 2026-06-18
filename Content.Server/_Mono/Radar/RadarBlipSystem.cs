@@ -56,12 +56,14 @@ public sealed partial class RadarBlipSystem : EntitySystem
         else
             _tempSourcesCache.Add(radarUid.Value);
 
-        AssembleBlipsReport((EntityUid)radarUid, _tempSourcesCache, radar, ev.RequestedMapId, ev.NebulaOnly); // Exodus nebula-ftl-map
-        if (!ev.NebulaOnly) // Exodus nebula-ftl-map
+        // Exodus-begin nebula-ftl-map
+        AssembleBlipsReport((EntityUid)radarUid, _tempSourcesCache, radar, ev.RequestedMapId, ev.NebulaOnly);
+        if (!ev.NebulaOnly)
             AssembleHitscanReport((EntityUid)radarUid, _tempSourcesCache, radar);
 
         // Combine the blips and hitscan lines
-        var giveEv = new GiveBlipsEvent(_tempPaletteCache, _tempBlipsCache, _tempHitscansCache, ev.RequestedMapId, ev.NebulaOnly); // Exodus nebula-ftl-map
+        var giveEv = new GiveBlipsEvent(_tempPaletteCache, _tempBlipsCache, _tempHitscansCache, ev.RequestedMapId, ev.NebulaOnly);
+        // Exodus-end
         RaiseNetworkEvent(giveEv, args.SenderSession);
 
         _tempBlipsCache.Clear();
@@ -117,7 +119,8 @@ public sealed partial class RadarBlipSystem : EntitySystem
         RaiseNetworkEvent(removalEv);
     }
 
-    private void AssembleBlipsReport(EntityUid uid, List<EntityUid> sources, RadarConsoleComponent? component = null, int? requestedMapId = null, bool nebulaOnly = false) // Exodus nebula-ftl-map
+    // Exodus-begin nebula-ftl-map
+    private void AssembleBlipsReport(EntityUid uid, List<EntityUid> sources, RadarConsoleComponent? component = null, int? requestedMapId = null, bool nebulaOnly = false)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -125,20 +128,18 @@ public sealed partial class RadarBlipSystem : EntitySystem
         var radarXform = Transform(uid);
         var radarGrid = radarXform.GridUid;
         var radarMapId = radarXform.MapID;
-        var reportMapId = requestedMapId is { } mapId ? new MapId(mapId) : radarMapId; // Exodus nebula-ftl-map
+        var reportMapId = requestedMapId is { } mapId ? new MapId(mapId) : radarMapId;
 
         var blipQuery = EntityQueryEnumerator<RadarBlipComponent, TransformComponent, PhysicsComponent>();
 
         while (blipQuery.MoveNext(out var blipUid, out var blip, out var blipXform, out var blipPhysics))
         {
-            // Exodus-begin nebula-ftl-map
             if (nebulaOnly && blip.Config.Shape != RadarBlipShape.NebulaPolygon)
                 continue;
-            // Exodus-end
 
             if (!blip.Enabled
-                || blipXform.MapID != reportMapId // Exodus nebula-ftl-map
-                || !nebulaOnly && !NearAnySources(_xform.GetWorldPosition(blipXform), sources, blip.MaxDistance) // Exodus nebula-ftl-map
+                || blipXform.MapID != reportMapId
+                || !nebulaOnly && !NearAnySources(_xform.GetWorldPosition(blipXform), sources, blip.MaxDistance)
             )
                 continue;
 
@@ -187,6 +188,7 @@ public sealed partial class RadarBlipSystem : EntitySystem
                             gridConfigIdx));
         }
     }
+    // Exodus-end
 
     /// <summary>
     /// Gets or create palette index for blip config.

@@ -16,9 +16,7 @@ public enum RadarBlipShape
     Hexagon,
     Arrow,
     Ring,
-    // Exodus-begin nebula-radar-visualization
     NebulaPolygon, // Exodus nebula-radar-visualization
-    // Exodus-end
     TerritoryCircle // Exodus territory-marker
 }
 
@@ -40,17 +38,15 @@ public sealed class GiveBlipsEvent : EntityEventArgs
     /// </summary>
     public readonly List<HitscanNetData> HitscanLines;
 
-    // Exodus-begin nebula-ftl-map
-    public readonly int? RequestedMapId;
-    public readonly bool NebulaOnly;
-    // Exodus-end
+    public readonly int? RequestedMapId; // Exodus nebula-ftl-map
+    public readonly bool NebulaOnly; // Exodus nebula-ftl-map
 
     public GiveBlipsEvent(
         List<BlipConfig> configPalette,
         List<BlipNetData> blips,
         List<HitscanNetData> hitscans,
-        int? requestedMapId = null, // Exodus nebula-ftl-map
-        bool nebulaOnly = false) // Exodus nebula-ftl-map
+        int? requestedMapId = null,
+        bool nebulaOnly = false)
     {
         ConfigPalette = configPalette;
         Blips = blips;
@@ -64,12 +60,10 @@ public sealed class GiveBlipsEvent : EntityEventArgs
 public sealed class RequestBlipsEvent : EntityEventArgs
 {
     public NetEntity Radar;
-    // Exodus-begin nebula-ftl-map
-    public int? RequestedMapId;
-    public bool NebulaOnly;
-    // Exodus-end
+    public int? RequestedMapId; // Exodus nebula-ftl-map
+    public bool NebulaOnly; // Exodus nebula-ftl-map
 
-    public RequestBlipsEvent(NetEntity radar, int? requestedMapId = null, bool nebulaOnly = false) // Exodus nebula-ftl-map
+    public RequestBlipsEvent(NetEntity radar, int? requestedMapId = null, bool nebulaOnly = false)
     {
         Radar = radar;
         RequestedMapId = requestedMapId; // Exodus nebula-ftl-map

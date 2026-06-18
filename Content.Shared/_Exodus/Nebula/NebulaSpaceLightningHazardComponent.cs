@@ -42,10 +42,10 @@ public sealed partial class NebulaSpaceLightningHazardComponent : Component
     public float LightningLength = 8f;
 
     [DataField]
-    public SoundSpecifier ImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lighting_impact.ogg");
+    public SoundSpecifier ImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/small_lightning_impact.ogg");
 
     [DataField]
-    public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lighting_impact.ogg");
+    public SoundSpecifier ShieldImpactSound = new SoundPathSpecifier("/Audio/_Exodus/Nebula/shield_lightning_impact.ogg");
 
     [DataField]
     public float ShieldLoad = 200f;
