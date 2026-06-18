@@ -1,9 +1,6 @@
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared._Exodus.NPC.Components;
 using Content.Shared.Construction;
 using Content.Shared.NPC.Prototypes;
-using Content.Shared.Power;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
@@ -11,8 +8,6 @@ namespace Content.Server._Exodus.NPC;
 
 public sealed class FactionNpcAiCoreControlSystem : EntitySystem
 {
-    [Dependency] private PowerReceiverSystem _power = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -21,7 +16,6 @@ public sealed class FactionNpcAiCoreControlSystem : EntitySystem
         SubscribeLocalEvent<FactionNpcAiCoreComponent, ComponentShutdown>(OnCoreShutdown);
         SubscribeLocalEvent<FactionNpcAiCoreComponent, EntParentChangedMessage>(OnCoreParentChanged);
         SubscribeLocalEvent<FactionNpcAiCoreComponent, AnchorStateChangedEvent>(OnCoreAnchorChanged);
-        SubscribeLocalEvent<FactionNpcAiCoreComponent, PowerChangedEvent>(OnCorePowerChanged);
     }
 
     private void OnCoreStartup(Entity<FactionNpcAiCoreComponent> ent, ref ComponentStartup args)
@@ -44,11 +38,6 @@ public sealed class FactionNpcAiCoreControlSystem : EntitySystem
     }
 
     private void OnCoreAnchorChanged(Entity<FactionNpcAiCoreComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        RefreshCore(ent);
-    }
-
-    private void OnCorePowerChanged(Entity<FactionNpcAiCoreComponent> ent, ref PowerChangedEvent args)
     {
         RefreshCore(ent);
     }
@@ -81,7 +70,7 @@ public sealed class FactionNpcAiCoreControlSystem : EntitySystem
 
         if (Deleted(core.Owner) ||
             !TryComp(core.Owner, out TransformComponent? xform) ||
-            !IsActiveCoreOnGrid(core, xform, null))
+            !IsActiveCoreOnGrid(xform, null))
         {
             return false;
         }
@@ -90,10 +79,7 @@ public sealed class FactionNpcAiCoreControlSystem : EntitySystem
         return true;
     }
 
-    private bool IsActiveCoreOnGrid(
-        Entity<FactionNpcAiCoreComponent> core,
-        TransformComponent xform,
-        EntityUid? expectedGrid)
+    private bool IsActiveCoreOnGrid(TransformComponent xform, EntityUid? expectedGrid)
     {
         if (!xform.Anchored ||
             xform.GridUid is not { Valid: true } grid ||
@@ -104,8 +90,7 @@ public sealed class FactionNpcAiCoreControlSystem : EntitySystem
             return false;
         }
 
-        return !TryComp<ApcPowerReceiverComponent>(core.Owner, out var receiver) ||
-               _power.IsPowered(core.Owner, receiver);
+        return true;
     }
 
     private void RefreshGrid(EntityUid grid, EntityUid? ignoredCore = null)
@@ -121,7 +106,7 @@ public sealed class FactionNpcAiCoreControlSystem : EntitySystem
         while (query.MoveNext(out var coreUid, out var core, out var xform))
         {
             if (coreUid == ignoredCore ||
-                !IsActiveCoreOnGrid((coreUid, core), xform, grid))
+                !IsActiveCoreOnGrid(xform, grid))
             {
                 continue;
             }
