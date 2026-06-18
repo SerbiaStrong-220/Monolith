@@ -33,6 +33,7 @@
     name: ghost-role-information-citadel-service-name
     description: ghost-role-information-citadel-service-description
     rules: ghost-role-information-citadel-service-rules
+    allowFollow: false
     raffle:
       settings: default
     requirements:
@@ -70,6 +71,7 @@
     name: ghost-role-information-citadel-service-name
     description: ghost-role-information-citadel-service-description
     rules: ghost-role-information-citadel-service-rules
+    allowFollow: false
     raffle:
       settings: default
     requirements: []
