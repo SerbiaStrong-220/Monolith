@@ -75,7 +75,7 @@
   id: MonoADS
   name: mono-ads-title
   description: mono-ads-description
-  showInVote: true
+  showInVote: false # Exodus
   rules:
   - NFAdventure
   - BasicStationEventScheduler
@@ -134,7 +134,7 @@
   id: MonoAllAtOnce
   name: mono-allatonce-title
   description: mono-allatonce-description
-  showInVote: true # we ball
+  showInVote: false false # Exodus
   weight: 0.25 # requires 80% votes
   rules:
   - NFAdventure
