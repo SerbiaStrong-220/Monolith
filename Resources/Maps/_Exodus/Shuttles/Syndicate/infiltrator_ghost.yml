@@ -97,6 +97,9 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: IFF
+      color: '#C94242'
+      flags: HideLabel, IsPlayerShuttle
     - type: GridAtmosphere
       version: 2
       data:

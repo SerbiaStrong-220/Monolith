@@ -26,7 +26,7 @@
   mapPath: /Maps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
   minPlayers: 0
   stations:
-    Sentinel:
+    SentinelF:
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
