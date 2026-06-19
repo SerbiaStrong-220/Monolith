@@ -6,3 +6,6 @@
 
 - type: Tag
   id: POI
+
+- type: Tag
+  id: SyndicateUplink

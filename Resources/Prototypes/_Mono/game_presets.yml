@@ -134,7 +134,7 @@
   id: MonoAllAtOnce
   name: mono-allatonce-title
   description: mono-allatonce-description
-  showInVote: false false # Exodus
+  showInVote: false # Exodus
   weight: 0.25 # requires 80% votes
   rules:
   - NFAdventure

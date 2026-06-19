@@ -47,6 +47,7 @@
   - type: ApcPowerReceiver
     powerLoad: 250000
   - type: PowerCharge
+    windowTitle: summoning-machine-ui-title
     charge: 0
     chargeRate: 0.05
     idlePower: 0
