@@ -64,7 +64,7 @@
   description: uplink-syndicate-klesh-voucher-desc
   productEntity: ShipVoucherKlesh
   cost:
-    Telecrystal: 80
+    Telecrystal: 60
   categories:
   - UplinkSyndicateShips
   conditions:
