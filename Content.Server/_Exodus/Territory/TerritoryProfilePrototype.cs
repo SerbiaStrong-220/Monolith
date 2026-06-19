@@ -1,10 +1,10 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._Exodus.Territory;
+namespace Content.Server._Exodus.Territory;
 
 /// <summary>
-/// Data-driven territory settings shared by POI grids.
+/// Data-driven territory settings for POI grids.
 /// Profiles choose matching POI game map prototypes centrally, so maps do not carry territory balance values.
 /// </summary>
 [Prototype]

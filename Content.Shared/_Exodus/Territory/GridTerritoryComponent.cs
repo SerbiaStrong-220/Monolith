@@ -25,7 +25,7 @@ namespace Content.Shared._Exodus.Territory;
 /// - claimable: whether banners can claim this territory.
 ///   Some service or hub territories are display-only and cannot be controlled by factions.
 /// 
-/// Effective radius comes from TerritoryProfilePrototype.
+/// Effective radius comes from the server-side territory profile.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GridTerritoryComponent : Component
