@@ -209,6 +209,16 @@
   - SummoningMachineTechnicalContour
 
 - type: listing
+  id: SummoningMachineRadiationCollectorFlatpack
+  name: summoning-machine-radiation-collector-flatpack-name
+  description: summoning-machine-radiation-collector-flatpack-desc
+  productEntity: RadiationCollectorFullTankFlatpack
+  cost:
+    Telecrystal: 900
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
   id: SummoningMachineAsakimSrd
   name: summoning-machine-asakim-srd-name
   description: summoning-machine-asakim-srd-desc
