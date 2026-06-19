@@ -1,0 +1,15 @@
+- type: gameMap
+  id: AdsCitadel
+  mapName: 'Правительственная Цитадель'
+  mapPath: /Maps/_Exodus/POI/ads_big_ancient_storage.yml
+  minPlayers: 0
+  stations:
+    AdsCitadel:
+      stationProto: StandardFrontierOutpost
+      gridComponents:
+      - type: GridTerritory
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Правительственная Цитадель'
+      - type: StationJobs
+        availableJobs: {}
