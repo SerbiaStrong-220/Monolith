@@ -72,4 +72,4 @@ uplink-security-pulserifle-name = Pulse Rifle
 uplink-security-pulserifle-desc = A large, automatic pulse weapon. Larger cell, and high powered, perfect for chewing through groups of foes.
 # Exodus-faction-ai-core
 uplink-security-faction-ai-core-name = Боевое ядро ТСФ
-uplink-security-faction-ai-core-desc = Скручиваемое фракционное ядро дрона с уничтожение всех целей не являющихся представителями ТСФ.
+uplink-security-faction-ai-core-desc = Скручиваемое фракционное ядро дрона с уничтожение всех целей не являющихся представителями ТСФ. ПРИКРУЧЕНО ПРИ ПОКУПКЕ!!!
