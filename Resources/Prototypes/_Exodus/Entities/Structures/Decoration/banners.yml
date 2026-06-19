@@ -5,9 +5,8 @@
   description: A banner displaying the colors of the USSP.
   components:
   - type: Sprite
-    sprite: _Mono/Structures/Decoration/banner.rsi
-    state: ngc-banner
-    color: "#ff0033"
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: ussp-banner
   - type: Construction
     graph: MonoBannersGraph
     node: BannerUSSPNode
