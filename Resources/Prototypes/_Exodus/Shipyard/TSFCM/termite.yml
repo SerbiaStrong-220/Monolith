@@ -3,7 +3,7 @@
   parent: BaseVesselAntag
   name: Термит
   description: Альтернативная конфигурация корвета класса «Альдебаран».
-  price: 160200
+  price: 369000 # Exodus tsfcm-termite: appraise ~368698 after Rain/Sliver armament
   purchasable: false # voucher only
   category: Medium
   group: Security
