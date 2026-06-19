@@ -139,7 +139,36 @@
   - type: ShipRepairRestrict
     toolWhitelist:
       tags:
-      - ADSRepairTool 
+      - ADSRepairTool
+
+- type: nebulaPoi
+  id: NebulaPoiAdsCitadel
+  path: /Maps/_Exodus/POI/ads_big_ancient_storage.yml
+  spawnIn:
+  - NebulaRedMarker
+  - NebulaDeathZoneInnerMarker
+  minDensity: 0.7
+  maxCount: 1
+  duplicateAllowed: false
+  protectedRadius: 4500
+  name: "Правительственная Цитадель"
+  stationGameMap: AdsCitadel
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ff3db1"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - ADSRepairTool
 
 - type: nebulaPoi
   id: NebulaPoiLancelot
