@@ -103,8 +103,6 @@
       - BorgModuleAsakimEsword
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool
-      - BorgModuleDefibrillator
-      - BorgModuleAdvancedParamedic
       - BorgModuleRedactedRCD
       - BorgModuleGPS
   - type: ItemSlots
