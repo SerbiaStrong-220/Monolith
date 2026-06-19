@@ -94,7 +94,6 @@
     - EXRuleGhostRoleAsakim
     - EXRuleGhostRoleCenturionAsakim
     - EXRuleGhostRolePrefectAsakim
-    - EXRuleGhostRoleAssaultSystemOperator
   
 - type: guideEntry
   id: EXRuleGhostRoleAsakim
@@ -125,6 +124,7 @@
     - EXRuleGhostRoleOperator
     - EXRuleGhostRoleCore
     - EXRuleGhostRolePersonalProtectionOperator
+    - EXRuleGhostRoleAssaultSystemOperator
 
 - type: guideEntry
   id: EXRuleGhostRoleADSGeneral
