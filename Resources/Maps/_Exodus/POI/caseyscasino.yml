@@ -830,7 +830,7 @@ entities:
     - type: Transform
       pos: 14.5,4.5
       parent: 2
-- proto: APCHighCapacity
+- proto: APCBasic
   entities:
   - uid: 1311
     components:

@@ -2759,7 +2759,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-17.5
       parent: 2
-- proto: APCHighCapacity
+- proto: APCBasic
   entities:
   - uid: 3238
     components:
