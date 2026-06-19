@@ -158,30 +158,6 @@
   - type: ShipRepairable
     repairTime: 30
     repairCost: 115
-
-- type: entity
-  id: GunneryServerHyper
-  parent: [BaseStructureDisableToolUse, GunneryServerBase]
-  name: hyper-high-power gunnery control server
-  components:
-  - type: Machine
-    board: MachineGCSHyperCircuitboard
-  - type: FireControlServer
-    processingPower: 200
-  - type: Battery
-    maxCharge: 1500
-    startingCharge: 1500
-  - type: ApcPowerReceiver
-    powerLoad: 3000
-  - type: ApcPowerReceiverBattery
-    idleLoad: 75
-    batteryRechargeRate: 3600
-    batteryRechargeEfficiency: 0.95
-  - type: Anchorable
-    flags: Anchorable
-  - type: ShipRepairable
-    repairTime: 35
-    repairCost: 130
 # Exodus end
 
 - type: entity
