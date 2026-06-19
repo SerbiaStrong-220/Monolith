@@ -63,8 +63,8 @@
         Poison: 0.4
         Caustic: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
-    sprintModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
+    walkModifier: 0.9 # Exodus-asakim-hardsuit-slowdown
+    sprintModifier: 0.9 # Exodus-asakim-hardsuit-slowdown
   # Exodus-asakim-suit-biocheck-start
   - type: Biocode
     blockInteraction: false
