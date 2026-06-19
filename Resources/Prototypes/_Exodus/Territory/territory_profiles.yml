@@ -29,6 +29,7 @@
   colorPoiByFaction: true
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:
+  - AdsCitadel
   - Sevastopol
   - TradeMall
   - Zvezda
