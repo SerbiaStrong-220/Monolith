@@ -12,6 +12,7 @@
   - type: Nebula
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: CleanupImmune
   - type: RadarBlip
 
