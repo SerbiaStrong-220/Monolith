@@ -45,6 +45,7 @@ using Robust.Shared.Timing;
 using Content.Client._NF.Emp.Overlays; // Frontier
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins; // Mono
+using Content.Shared.SS220.EPA; // SS220
 
 namespace Content.Client.Entry
 {
@@ -89,6 +90,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
         [Dependency] private readonly DiscordPlayerInfoManager _discordPlayerInfoManager = default!; // SS220 discord info manager
         [Dependency] private readonly TTSManager _ttsManager = default!; // SS220 TTS
+        [Dependency] private IEPAManager _epaManager = default!; // SS220-EPA
 
 
         public override void Init()
@@ -196,6 +198,7 @@ namespace Content.Client.Entry
             _queueManager.Initialize(); // Corvax-Queue
             _discordPlayerInfoManager.Initialize(); // SS220 tier info
             _ttsManager.Initialize(); // SS220 TTS
+            _epaManager.Initialize(); // SS220
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

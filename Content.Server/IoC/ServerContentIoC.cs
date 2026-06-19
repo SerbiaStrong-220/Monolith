@@ -25,6 +25,7 @@ using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
+using Content.Server.SS220.EPA; // SS220
 using Content.Server.SS220.Discord;
 using Content.Server.SS220.JoinQueue;
 using Content.Server.SS220.TTS;
@@ -36,6 +37,7 @@ using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.SS220.EPA; // SS220
 
 namespace Content.Server.IoC
 {
@@ -94,6 +96,8 @@ namespace Content.Server.IoC
             IoCManager.Register<TTSManager>(); // Corvax-TTS
             IoCManager.Register<DiscordPlayerManager>(); // SiS220 discord player manager
             IoCManager.Register<WebAPI>(); // Exodus-WebAPI
+            IoCManager.Register<IEPAManager, EPAManager>(); // SS220-EPA
+            IoCManager.Register<IServerEPAManager, EPAManager>(); // SS220-EPA
         }
     }
 }

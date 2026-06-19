@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server._NF.Auth; // Frontier
 using Content.Shared.SS220.CCVars; // SS220-Queue
+using Content.Shared.SS220.EPA; // SS220-EPA
 
 /*
  * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
@@ -67,6 +68,7 @@ namespace Content.Server.Connection
         [Dependency] private IHttpClientHolder _http = default!;
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private MiniAuthManager _authManager = default!; //Frontier
+        [Dependency] private IServerEPAManager _epa = default!; // SS220-EPA
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
@@ -83,7 +85,8 @@ namespace Content.Server.Connection
 
             _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
 
-            _netMgr.Connecting += NetMgrOnConnecting;
+            _epa.AuthFinished += EpaOnAuthFinished; // SS220-EPA
+
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
             _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
@@ -132,11 +135,11 @@ namespace Content.Server.Connection
         }
         */
 
-        private async Task NetMgrOnConnecting(NetConnectingArgs e)
+        private async Task EpaOnAuthFinished(INetChannel e) // SS220-EPA
         {
             var deny = await ShouldDeny(e);
 
-            var addr = e.IP.Address;
+            var addr = e.RemoteEndPoint.Address; // SS220
             var userId = e.UserId;
 
             var serverId = (await _serverDbEntry.ServerEntity).Id;
@@ -156,7 +159,8 @@ namespace Content.Server.Connection
                 if (reason == ConnectionDenyReason.Full)
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
 
-                e.Deny(new NetDenyReason(msg, properties));
+                // Now we can make our own great ban panel!
+                e.Disconnect(msg); // SS220
             }
             else
             {
@@ -210,10 +214,10 @@ namespace Content.Server.Connection
          * TODO: Break this apart into is constituent steps.
          */
         private async Task<(ConnectionDenyReason, string, List<BanDef>? bansHit)?> ShouldDeny(
-            NetConnectingArgs e)
+            INetChannel e) // SS220
         {
             // Check if banned.
-            var addr = e.IP.Address;
+            var addr = e.RemoteEndPoint.Address; // SS220
             var userId = e.UserId;
             ImmutableArray<byte>? hwId = e.UserData.HWId;
             if (hwId.Value.Length == 0 || !_cfg.GetCVar(CCVars.BanHardwareIds))

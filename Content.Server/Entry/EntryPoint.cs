@@ -28,13 +28,14 @@ using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
-using Content.Server.SS220.Discord;
-using Content.Server.SS220.JoinQueue;
-using Content.Server.SS220.TTS;
+using Content.Server.SS220.Discord; // SS220
+using Content.Server.SS220.JoinQueue; // SS220
+using Content.Server.SS220.TTS; // SS220
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Content.Shared.Localizations;
+using Content.Shared.SS220.EPA; // SS220
 using Robust.Server;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
@@ -142,6 +143,7 @@ namespace Content.Server.Entry
                 _discordPlayerManager.Initialize(); // SS220 discord player manager
                 _joinQueueManager.Initialize(); // Corvax-Queue
                 IoCManager.Resolve<WebAPI>().Initialize(); // Exodus-WebAPI
+                IoCManager.Resolve<IEPAManager>().Initialize(); // SS220-EPA
             }
         }
 

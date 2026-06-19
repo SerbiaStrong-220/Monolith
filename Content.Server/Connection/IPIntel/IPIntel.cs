@@ -87,7 +87,7 @@ public sealed class IPIntel
     private float _rating;
     private float _alertAdminWarn;
 
-    public async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
+    public async Task<(bool IsBad, string Reason)> IsVpnOrProxy(INetChannel e) // SS220-EPA
     {
         // Check Exemption flags, let them skip if they have them.
         var flags = await _db.GetBanExemption(e.UserId);
@@ -107,7 +107,7 @@ public sealed class IPIntel
             }
         }
 
-        var ip = e.IP.Address;
+        var ip = e.RemoteEndPoint.Address; // SS220-EPA
         var username = e.UserName;
 
         // Is this a local ip address?

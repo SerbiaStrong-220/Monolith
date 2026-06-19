@@ -1,27 +1,21 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 
 using Content.Shared.SS220.Discord;
-using Robust.Client.State;
 using Robust.Shared.Network;
 
 namespace Content.Client.SS220.Discord;
 
-public sealed class DiscordPlayerInfoManager
+public sealed partial class DiscordPlayerInfoManager
 {
-    [Dependency] private readonly IClientNetManager _netMgr = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private IClientNetManager _net = default!;
 
     private DiscordSponsorInfo? _info;
 
     public event Action? SponsorStatusChanged;
 
-    public string AuthUrl { get; private set; } = string.Empty;
-
     public void Initialize()
     {
-        _netMgr.RegisterNetMessage<MsgUpdatePlayerDiscordStatus>(UpdateSponsorStatus);
-        _netMgr.RegisterNetMessage<MsgDiscordLinkRequired>(OnDiscordLinkRequired);
-        _netMgr.RegisterNetMessage<MsgRecheckDiscordLink>();
+        _net.RegisterNetMessage<MsgUpdatePlayerDiscordStatus>(UpdateSponsorStatus);
     }
 
     private void UpdateSponsorStatus(MsgUpdatePlayerDiscordStatus message)
@@ -34,14 +28,5 @@ public sealed class DiscordPlayerInfoManager
     public SponsorTier[] GetSponsorTier()
     {
         return _info?.Tiers ?? [];
-    }
-
-    private void OnDiscordLinkRequired(MsgDiscordLinkRequired msg)
-    {
-        if (_stateManager.CurrentState is DiscordLinkRequiredState)
-            return;
-
-        AuthUrl = msg.AuthUrl;
-        _stateManager.RequestStateChange<DiscordLinkRequiredState>();
     }
 }

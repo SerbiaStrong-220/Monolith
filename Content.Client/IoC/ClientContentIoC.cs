@@ -17,9 +17,10 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Players.RateLimiting;
 using Content.Client.Replay;
 using Content.Client.Screenshot;
-using Content.Client.SS220.Discord;
-using Content.Client.SS220.JoinQueue;
-using Content.Client.SS220.TTS;
+using Content.Client.SS220.Discord; // SS220
+using Content.Client.SS220.EPA; // SS220
+using Content.Client.SS220.JoinQueue; // SS220
+using Content.Client.SS220.TTS; // SS220
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
@@ -28,6 +29,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.SS220.EPA; // SS220
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins; // Mono
 
@@ -74,6 +76,8 @@ namespace Content.Client.IoC
             collection.Register<JoinQueueManager>(); // Corvax-Queue
             collection.Register<DiscordPlayerInfoManager>(); //SS220 discord user info
             collection.Register<TTSManager>(); // SS220 TTS
+            collection.Register<IEPAManager, EPAManager>(); // SS220-EPA
+            collection.Register<IClientEPAManager, EPAManager>(); // SS220-EPA
         }
     }
 }
