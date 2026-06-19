@@ -83,3 +83,25 @@
     Telecrystal: 25
   categories:
   - UplinkDisruption
+
+# Exodus-faction-ai-core
+- type: listing
+  id: UplinkSyndicateFactionAiCore
+  name: uplink-syndicate-faction-ai-core-name
+  description: uplink-syndicate-faction-ai-core-desc
+  productEntity: NpcStationAiAttackerStaticSmartSyndicate
+  cost:
+    Telecrystal: 150
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - SyndicateUplink
+      components:
+      - VendingMachine
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true

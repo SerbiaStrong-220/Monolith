@@ -16,3 +16,5 @@ uplink-syndicate-klesh-voucher-name = Ваучер на Клещ
 uplink-syndicate-klesh-voucher-desc = Одноразовый ваучер на пехотный корабль класса "Клещ"
 uplink-syndicate-ship-repair-device-name = СРД Синдиката [БИОКОД СИНДИКАТ]
 uplink-syndicate-ship-repair-device-desc = Резонансное устройство ремонта кораблей с биокодом Синдиката. Подходит для ремонта синдикатских шаттлов с ограниченным доступом к ремонту.
+uplink-syndicate-faction-ai-core-name = Боевое ядро Синдиката
+uplink-syndicate-faction-ai-core-desc = Скручиваемое фракционное ядро дрона с уничтожением всех целей, не являющихся представителями Синдиката.
