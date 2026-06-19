@@ -164,6 +164,7 @@
     doNotCull: true
   - type: Tag
     tags: [ POI ]
+  - type: ForceAnchor
   - type: InitRepairSnapshot
   - type: ShipRepairRestrict
     toolWhitelist:
