@@ -18,6 +18,20 @@
     icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
 
 - type: entity
+  id: BorgModuleAsakimFighterWeapon
+  parent: BorgModuleAsakimBlackShieldWeapon
+  name: assault system operator weapon cyborg module
+  components:
+  - type: ItemBorgModule
+    moduleId: Security
+    items:
+    - WeaponRifleAsakimAutopulserADM
+    - CyborgWeaponTeslaGun
+    - CyborgWeaponMinigun
+    - HoloprojectorFieldAsakimBorg
+    - CyborgWeaponLauncherRocket
+
+- type: entity
   id: BorgModuleAsakimEsword
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
   name: black shield energy sword cyborg module

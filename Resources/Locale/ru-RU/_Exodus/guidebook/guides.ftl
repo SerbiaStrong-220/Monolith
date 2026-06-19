@@ -15,6 +15,7 @@ guide-entry-exodus-rule-ghost-roles-asakims = Азакимы
 guide-entry-exodus-rule-ghost-roles-asakim = Воин Азаким
 guide-entry-exodus-rule-ghost-roles-centurion-asakim = Центурион Азаким
 guide-entry-exodus-rule-ghost-roles-prefect-asakim = Префект Азаким
+guide-entry-exodus-rule-ghost-roles-assault-system-operator = Оператор Штурмовой Системы
 guide-entry-exodus-rule-ghost-roles-ads = Автоматическая Система Защиты
 guide-entry-exodus-rule-ghost-roles-ads-general = Общее положение
 guide-entry-exodus-rule-ghost-roles-operator = Оператор Системы Защиты

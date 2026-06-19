@@ -94,6 +94,7 @@
     - EXRuleGhostRoleAsakim
     - EXRuleGhostRoleCenturionAsakim
     - EXRuleGhostRolePrefectAsakim
+    - EXRuleGhostRoleAssaultSystemOperator
   
 - type: guideEntry
   id: EXRuleGhostRoleAsakim
@@ -109,6 +110,11 @@
   id: EXRuleGhostRolePrefectAsakim
   name: guide-entry-exodus-rule-ghost-roles-prefect-asakim
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesPrefectAsakim.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleAssaultSystemOperator
+  name: guide-entry-exodus-rule-ghost-roles-assault-system-operator
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesAssaultSystemOperator.xml"
 
 - type: guideEntry
   id: EXRuleGhostRoleADS
