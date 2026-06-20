@@ -11,6 +11,6 @@
     graph: MonoBannersGraph
     node: BannerUSSPNode
   - type: Anchorable
-    delay: 30
+    delay: 60
   - type: TerritoryBanner
     faction: USSP
