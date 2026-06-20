@@ -1,8 +1,11 @@
+using Content.Server._Mono.Radar;
 using Content.Server.Popups;
 using Content.Shared._Exodus.Territory;
 using Content.Shared.Construction;
 using Content.Shared.Maps;
+using Content.Shared._Mono.Radar;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server._Exodus.Territory;
 
@@ -16,6 +19,9 @@ namespace Content.Server._Exodus.Territory;
 /// </summary>
 public sealed class GridTerritoryBannerSystem : EntitySystem
 {
+    private const float ActiveBannerRadarBlipHalfSize = 1.5f;
+    private const float ActiveBannerRadarEdgeVisibilityPadding = 10_000f;
+
     [Dependency] private readonly GridTerritorySystem _territory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -92,6 +98,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
     private void OnShutdown(Entity<TerritoryBannerComponent> ent, ref ComponentShutdown args)
     {
+        ClearActiveBannerBlip(ent.Owner);
         TryUnclaim(ent);
     }
 
@@ -117,7 +124,10 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
         // Already claimed by this exact banner?
         if (terr.ActiveClaimBanner == banner.Owner)
+        {
+            ConfigureActiveBannerBlip(banner, (grid, terr));
             return;
+        }
 
         // Check for existing claim.
         if (terr.ActiveClaimBanner is { } existing && existing != banner.Owner)
@@ -137,6 +147,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
         // Perform the claim. Label is resolved from the TerritoryFactionPrototype.
         _territory.SetController(grid, banner.Comp.Faction, banner.Owner);
+        ConfigureActiveBannerBlip(banner, (grid, terr));
 
         if (showPopup)
             _popup.PopupEntity(Loc.GetString("grid-territory-claimed"), banner);
@@ -160,9 +171,56 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
             return;
 
         // Clear to neutral.
+        ClearActiveBannerBlip(banner.Owner);
         _territory.ClearController(grid);
 
         _popup.PopupEntity(Loc.GetString("grid-territory-unclaimed"), banner);
+    }
+
+    private void ConfigureActiveBannerBlip(
+        Entity<TerritoryBannerComponent> banner,
+        Entity<GridTerritoryComponent> territory)
+    {
+        EnsureComp<PhysicsComponent>(banner);
+
+        var marker = EnsureComp<ActiveTerritoryBannerRadarBlipComponent>(banner);
+        marker.Grid = territory.Owner;
+        marker.Removing = false;
+
+        var blip = EnsureComp<RadarBlipComponent>(banner);
+        blip.Enabled = true;
+        blip.RequireNoGrid = false;
+        blip.VisibleFromOtherGrids = true;
+        blip.MaxDistance = territory.Comp.Radius + ActiveBannerRadarEdgeVisibilityPadding;
+        blip.GridConfig = null;
+        blip.Config = new BlipConfig
+        {
+            Bounds = new Box2(
+                -ActiveBannerRadarBlipHalfSize,
+                -ActiveBannerRadarBlipHalfSize,
+                ActiveBannerRadarBlipHalfSize,
+                ActiveBannerRadarBlipHalfSize),
+            Color = Color.White,
+            Shape = RadarBlipShape.Square,
+            RespectZoom = true,
+            Rotate = false,
+        };
+    }
+
+    private void ClearActiveBannerBlip(EntityUid banner)
+    {
+        if (!TryComp<ActiveTerritoryBannerRadarBlipComponent>(banner, out var marker) ||
+            marker.Removing)
+        {
+            return;
+        }
+
+        marker.Removing = true;
+
+        RemCompDeferred<ActiveTerritoryBannerRadarBlipComponent>(banner);
+
+        if (HasComp<RadarBlipComponent>(banner))
+            RemCompDeferred<RadarBlipComponent>(banner);
     }
 
     // Exodus start - tolerate late GridUid init for anchored banners parented directly to the grid.
