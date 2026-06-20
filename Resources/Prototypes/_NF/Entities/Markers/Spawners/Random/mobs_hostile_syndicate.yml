@@ -24,13 +24,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalCaptainB
-    - MobSyndicateNavalCaptainC
-    - MobSyndicateNavalCaptainD
+    # Exodus-Start
+    #- MobSyndicateNavalCaptainB
+    #- MobSyndicateNavalCaptainC
+    #- MobSyndicateNavalCaptainD
+    - MobSyndicateNavalCaptainBSmart
+    - MobSyndicateNavalCaptainCSmart
+    - MobSyndicateNavalCaptainDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalCaptainA
+    # Exodus-Start
+    #- MobSyndicateNavalCaptainA
+    - MobSyndicateNavalCaptainASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -57,13 +65,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalEngineerB
-    - MobSyndicateNavalEngineerC
-    - MobSyndicateNavalEngineerD
+    # Exodus-Start
+    #- MobSyndicateNavalEngineerB
+    #- MobSyndicateNavalEngineerC
+    #- MobSyndicateNavalEngineerD
+    - MobSyndicateNavalEngineerBSmart
+    - MobSyndicateNavalEngineerCSmart
+    - MobSyndicateNavalEngineerDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalEngineerA
+    # Exodus-Start
+    #- MobSyndicateNavalEngineerA
+    - MobSyndicateNavalEngineerASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -92,13 +108,21 @@
         state: advanced-inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalMedicB
-    - MobSyndicateNavalMedicC
-    - MobSyndicateNavalMedicD
+    # Exodus-Start
+    #- MobSyndicateNavalMedicB
+    #- MobSyndicateNavalMedicC
+    #- MobSyndicateNavalMedicD
+    - MobSyndicateNavalMedicBSmart
+    - MobSyndicateNavalMedicCSmart
+    - MobSyndicateNavalMedicDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalMedicA
+    # Exodus-Start
+    #- MobSyndicateNavalMedicA
+    - MobSyndicateNavalMedicASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -127,13 +151,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalSecondOfficerB
-    - MobSyndicateNavalSecondOfficerC
-    - MobSyndicateNavalSecondOfficerD
+    # Exodus-Start
+    #- MobSyndicateNavalSecondOfficerB
+    #- MobSyndicateNavalSecondOfficerC
+    #- MobSyndicateNavalSecondOfficerD
+    - MobSyndicateNavalSecondOfficerBSmart
+    - MobSyndicateNavalSecondOfficerCSmart
+    - MobSyndicateNavalSecondOfficerDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalSecondOfficerA
+    # Exodus-Start
+    #- MobSyndicateNavalSecondOfficerA
+    - MobSyndicateNavalSecondOfficerASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -162,13 +194,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalOperatorB
-    - MobSyndicateNavalOperatorC
-    - MobSyndicateNavalOperatorD
+    # Exodus-Start
+    #- MobSyndicateNavalOperatorB
+    #- MobSyndicateNavalOperatorC
+    #- MobSyndicateNavalOperatorD
+    - MobSyndicateNavalOperatorBSmart
+    - MobSyndicateNavalOperatorCSmart
+    - MobSyndicateNavalOperatorDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalOperatorA
+    # Exodus-Start
+    #- MobSyndicateNavalOperatorA
+    - MobSyndicateNavalOperatorASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -195,13 +235,21 @@
         state: inhand-left
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalGrenadierB
-    - MobSyndicateNavalGrenadierC
-    - MobSyndicateNavalGrenadierD
+    # Exodus-Start
+    #- MobSyndicateNavalGrenadierB
+    #- MobSyndicateNavalGrenadierC
+    #- MobSyndicateNavalGrenadierD
+    - MobSyndicateNavalGrenadierBSmart
+    - MobSyndicateNavalGrenadierCSmart
+    - MobSyndicateNavalGrenadierDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalGrenadierA
+    # Exodus-Start
+    #- MobSyndicateNavalGrenadierA
+    - MobSyndicateNavalGrenadierASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -230,13 +278,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalSaboteurB
-    - MobSyndicateNavalSaboteurC
-    - MobSyndicateNavalSaboteurD
+    # Exodus-Start
+    #- MobSyndicateNavalSaboteurB
+    #- MobSyndicateNavalSaboteurC
+    #- MobSyndicateNavalSaboteurD
+    - MobSyndicateNavalSaboteurBSmart
+    - MobSyndicateNavalSaboteurCSmart
+    - MobSyndicateNavalSaboteurDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalSaboteurA
+    # Exodus-Start
+    #- MobSyndicateNavalSaboteurA
+    - MobSyndicateNavalSaboteurASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -281,13 +337,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalCommanderB
-    - MobSyndicateNavalCommanderC
-    - MobSyndicateNavalCommanderD
+    # Exodus-Start
+    #- MobSyndicateNavalCommanderB
+    #- MobSyndicateNavalCommanderC
+    #- MobSyndicateNavalCommanderD
+    - MobSyndicateNavalCommanderBSmart
+    - MobSyndicateNavalCommanderCSmart
+    - MobSyndicateNavalCommanderDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalCommanderA
+    # Exodus-Start
+    #- MobSyndicateNavalCommanderA
+    - MobSyndicateNavalCommanderASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -312,13 +376,21 @@
         state: inhand-left
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalDeckhandB
-    - MobSyndicateNavalDeckhandC
-    - MobSyndicateNavalDeckhandD
+    # Exodus-Start
+    #- MobSyndicateNavalDeckhandB
+    #- MobSyndicateNavalDeckhandC
+    #- MobSyndicateNavalDeckhandD
+    - MobSyndicateNavalDeckhandBSmart
+    - MobSyndicateNavalDeckhandCSmart
+    - MobSyndicateNavalDeckhandDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalDeckhandA
+    # Exodus-Start
+    #- MobSyndicateNavalDeckhandA
+    - MobSyndicateNavalDeckhandASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -360,7 +432,10 @@
         state: wielded-inhand-right
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalMime
+      # Exodus-Start
+      #- MobSyndicateNavalMime
+      - MobSyndicateNavalMimeSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate naval chemwarrior spawner
@@ -388,13 +463,21 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalChemwarriorB
-    - MobSyndicateNavalChemwarriorC
-    - MobSyndicateNavalChemwarriorD
+    # Exodus-Start
+    #- MobSyndicateNavalChemwarriorB
+    #- MobSyndicateNavalChemwarriorC
+    #- MobSyndicateNavalChemwarriorD
+    - MobSyndicateNavalChemwarriorBSmart
+    - MobSyndicateNavalChemwarriorCSmart
+    - MobSyndicateNavalChemwarriorDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalChemwarriorA
+    # Exodus-Start
+    #- MobSyndicateNavalChemwarriorA
+    - MobSyndicateNavalChemwarriorASmart
+    # Exodus-End
     rareChance: 0.1
 
 - type: entity
@@ -423,18 +506,31 @@
         state: inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobSyndicateNavalGrenadierB
-    - MobSyndicateNavalGrenadierC
-    - MobSyndicateNavalGrenadierD
-    - MobSyndicateNavalChemwarriorB
-    - MobSyndicateNavalChemwarriorC
-    - MobSyndicateNavalChemwarriorD
+    # Exodus-Start
+    #- MobSyndicateNavalGrenadierB
+    #- MobSyndicateNavalGrenadierC
+    #- MobSyndicateNavalGrenadierD
+    #- MobSyndicateNavalChemwarriorB
+    #- MobSyndicateNavalChemwarriorC
+    #- MobSyndicateNavalChemwarriorD
+    - MobSyndicateNavalGrenadierBSmart
+    - MobSyndicateNavalGrenadierCSmart
+    - MobSyndicateNavalGrenadierDSmart
+    - MobSyndicateNavalChemwarriorBSmart
+    - MobSyndicateNavalChemwarriorCSmart
+    - MobSyndicateNavalChemwarriorDSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobSyndicateNavalMime
-    - MobSyndicateNavalChemwarriorA
-    - MobSyndicateNavalGrenadierA
+    # Exodus-Start
+    #- MobSyndicateNavalMime
+    #- MobSyndicateNavalChemwarriorA
+    #- MobSyndicateNavalGrenadierA
+    - MobSyndicateNavalMimeSmart
+    - MobSyndicateNavalChemwarriorASmart
+    - MobSyndicateNavalGrenadierASmart
+    # Exodus-End
     rareChance: 0.1
 
 # Voidsmen

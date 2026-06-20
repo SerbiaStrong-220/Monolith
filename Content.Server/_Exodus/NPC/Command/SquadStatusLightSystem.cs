@@ -5,14 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Command;
 
-// =====================================================================================================
-// TEST-ONLY / DEBUG. See SquadStatusLightComponent. Remove this system, the component, and the
-// PointLight/SquadStatusLight entries on the Smart mobs before release.
-// =====================================================================================================
-/// <summary>
-/// Polls each <see cref="SquadStatusLightComponent"/> mob and tints its PointLight by squad status, read from the
-/// HTN blackboard CurrentOrders (absent => not recruited => yellow; commander idling => green).
-/// </summary>
+// TEST
 public sealed class SquadStatusLightSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -40,8 +33,6 @@ public sealed class SquadStatusLightSystem : EntitySystem
 
     private Color GetColor(EntityUid uid, SquadStatusLightComponent comp)
     {
-        // The active squad order lives on the blackboard (set by NpcCommandSystem for minions and for the
-        // commander's own stance). No order => an unrecruited minion (yellow), or a commander before its first tick.
         if (TryComp<HTNComponent>(uid, out var htn)
             && htn.Blackboard.TryGetValue<Enum>(NPCBlackboard.CurrentOrders, out var raw, EntityManager)
             && raw is NpcOrder order)

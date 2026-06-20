@@ -1,15 +1,6 @@
 namespace Content.Server._Exodus.NPC.Command;
 
-// =====================================================================================================
-// TEST-ONLY / DEBUG. Tints a smart mob's PointLight to show its squad status while we diagnose the
-// command system. Remove this component, SquadStatusLightSystem, and the PointLight/SquadStatusLight
-// entries on the Smart mobs before release.
-// =====================================================================================================
-/// <summary>
-/// Drives a mob's PointLight colour from its current squad status (see <see cref="SquadStatusLightSystem"/>):
-/// yellow = no commander, green = in a squad (Follow), red = Attack, blue = Retreat, orange = Hold,
-/// purple = anything else.
-/// </summary>
+// TEST-ONLY
 [RegisterComponent]
 public sealed partial class SquadStatusLightComponent : Component
 {

@@ -18,7 +18,10 @@
         state: inhand-left
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalDeckhandVoid
+      # Exodus-Start
+      #- MobSyndicateNavalDeckhandVoid
+      - MobSyndicateNavalDeckhandVoidSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate naval engineer spawner
@@ -42,7 +45,10 @@
         state: inhand-right
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalEngineerVoid
+      # Exodus-Start
+      #- MobSyndicateNavalEngineerVoid
+      - MobSyndicateNavalEngineerVoidSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate naval medic spawner
@@ -66,7 +72,10 @@
         state: advanced-inhand-right
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalMedicVoid
+      # Exodus-Start
+      #- MobSyndicateNavalMedicVoid
+      - MobSyndicateNavalMedicVoidSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate naval operator spawner
@@ -90,7 +99,10 @@
         state: inhand-right
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalOperatorVoid
+      # Exodus-Start
+      #- MobSyndicateNavalOperatorVoid
+      - MobSyndicateNavalOperatorVoidSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate naval second officer spawner
@@ -114,7 +126,10 @@
         state: inhand-right
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalSecondOfficerVoid
+      # Exodus-Start
+      #- MobSyndicateNavalSecondOfficerVoid
+      - MobSyndicateNavalSecondOfficerVoidSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate naval captain spawner
@@ -138,7 +153,10 @@
         state: inhand-right
   - type: ConditionalSpawner
     prototypes:
-      - MobSyndicateNavalCaptainVoid
+      # Exodus-Start
+      #- MobSyndicateNavalCaptainVoid
+      - MobSyndicateNavalCaptainVoidSmart
+      # Exodus-End
 
 - type: entity
   name: syndicate cleanbot spawner

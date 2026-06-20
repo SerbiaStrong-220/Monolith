@@ -27,9 +27,14 @@
       state: wielded-inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobMercenarySoldierKnife
-    - MobMercenarySoldierPistol
-    - MobMercenarySoldierNovalite
+    # Exodus-Start
+    #- MobMercenarySoldierKnife
+    #- MobMercenarySoldierPistol
+    #- MobMercenarySoldierNovalite
+    - MobMercenarySoldierKnifeSmart
+    - MobMercenarySoldierPistolSmart
+    - MobMercenarySoldierNovaliteSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
@@ -65,9 +70,14 @@
       state: wielded-inhand-right
   - type: RandomSpawner
     prototypes:
-    - MobMercenaryBreacherShotgun
-    - MobMercenarySoldierRevolver
-    - MobMercenaryBreacherMachete
+    # Exodus-Start
+    #- MobMercenaryBreacherShotgun
+    #- MobMercenarySoldierRevolver
+    #- MobMercenaryBreacherMachete
+    - MobMercenaryBreacherShotgunSmart
+    - MobMercenarySoldierRevolverSmart
+    - MobMercenaryBreacherMacheteSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
@@ -105,11 +115,19 @@
       state: inhand-right-3
   - type: RandomSpawner
     prototypes:
-    - MobMercenarySpecialistMedic
-    - MobMercenarySpecialistAssault
+    # Exodus-Start
+    #- MobMercenarySpecialistMedic
+    #- MobMercenarySpecialistAssault
+    - MobMercenarySpecialistMedicSmart
+    - MobMercenarySpecialistAssaultSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobMercenarySpecialistMedic
-    - MobMercenarySpecialistAssault
+    # Exodus-Start
+    #- MobMercenarySpecialistMedic
+    #- MobMercenarySpecialistAssault
+    - MobMercenarySpecialistMedicSmart
+    - MobMercenarySpecialistAssaultSmart
+    # Exodus-End
     rareChance: 0.2
