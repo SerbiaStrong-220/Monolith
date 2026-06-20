@@ -1,17 +1,4 @@
 - type: entity
-  id: NebulaThrusterMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: phasic thruster machine board
-  description: A machine board for a phasic thruster.
-  components:
-  - type: MachineBoard
-    prototype: NebulaThruster
-    requirements:
-      Capacitor: 1
-    stackRequirements:
-      Steel: 5
-
-- type: entity
   id: NebulaThruster
   parent: Thruster
   name: phasic thruster

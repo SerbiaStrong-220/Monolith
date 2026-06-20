@@ -34,34 +34,6 @@
   conditions:
   - !type:TileNotBlocked
 
-# Exodus start - construction for PDV banner (Династия Фаэтон)
-- type: construction
-  id: BannerPDV
-  graph: MonoBannersGraph
-  startNode: start
-  targetNode: BannerPDVNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:TileNotBlocked
-# Exodus end
-
-# Exodus start - construction for Khsira banner (Империя Кхси'Ра)
-- type: construction
-  id: BannerKhsira
-  graph: MonoBannersGraph
-  startNode: start
-  targetNode: BannerKhsiraNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:TileNotBlocked
-# Exodus end
-
 - type: construction
   id: TargetHuman
   graph: ShootingTargets

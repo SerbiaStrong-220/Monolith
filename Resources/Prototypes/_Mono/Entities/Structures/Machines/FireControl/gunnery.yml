@@ -134,32 +134,6 @@
     repairTime: 25
     repairCost: 100
 
-# Exodus start
-- type: entity
-  id: GunneryServerSuper
-  parent: [BaseStructureDisableToolUse, GunneryServerBase]
-  name: super-high-power gunnery control server
-  components:
-  - type: Machine
-    board: MachineGCSSuperCircuitboard
-  - type: FireControlServer
-    processingPower: 120
-  - type: Battery
-    maxCharge: 1250
-    startingCharge: 1250
-  - type: ApcPowerReceiver
-    powerLoad: 2500
-  - type: ApcPowerReceiverBattery
-    idleLoad: 60
-    batteryRechargeRate: 3000
-    batteryRechargeEfficiency: 0.95
-  - type: Anchorable
-    flags: Anchorable
-  - type: ShipRepairable
-    repairTime: 30
-    repairCost: 115
-# Exodus end
-
 - type: entity
   id: GunneryServerOmega
   parent: [BaseStructureDisableToolUse, GunneryServerBase]
