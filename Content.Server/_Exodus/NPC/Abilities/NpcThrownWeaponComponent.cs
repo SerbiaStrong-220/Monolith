@@ -25,7 +25,7 @@ public sealed partial class NpcThrownWeaponComponent : Component
     [DataField]
     public bool Prime;
 
-    /// <summary>Random scatter (tiles) added to the aim. 0 = throw straight at the target, recommended to add some (3-5) for grenades.
+    /// <summary>Random scatter (tiles) added to the aim. 0 = throw straight at the target, recommended to add some (3-5) for grenades. </summary>
     [DataField]
     public float Spread = 0f;
 

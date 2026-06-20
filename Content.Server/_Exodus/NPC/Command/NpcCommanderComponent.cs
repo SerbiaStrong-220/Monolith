@@ -80,8 +80,6 @@ public sealed partial class NpcCommanderComponent : Component
     [DataField]
     public SoundSpecifier? OrderSound;
 
-    // --- runtime ---
-
     [ViewVariables]
     public TimeSpan NextUpdate;
 
@@ -89,7 +87,7 @@ public sealed partial class NpcCommanderComponent : Component
     [ViewVariables]
     public NpcOrder Order = NpcOrder.Follow;
 
-    /// <summary>Currend order time left.</summary>
+    /// <summary>Current order time left.</summary>
     [ViewVariables]
     public TimeSpan? OrderUntil;
 
