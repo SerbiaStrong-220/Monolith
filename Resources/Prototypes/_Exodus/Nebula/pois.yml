@@ -124,6 +124,7 @@
   duplicateAllowed: false
   protectedRadius: 3000
   name: "Древнее Хранилище Кхси'Ра"
+  stationGameMap: AdsSmallAncientStorage
   hideWarp: true
   addComponents:
   - type: IFF
@@ -183,6 +184,7 @@
   protectedRadius: 1000
   name: 'Шахтёрский Аванпост Ланцелот'
   stationGameMap: Lancelot
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#ccaa55"
@@ -211,6 +213,7 @@
   protectedRadius: 1000
   name: 'Электростанция Эдисона'
   stationGameMap: Edison
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#3737F8"
@@ -234,6 +237,7 @@
   protectedRadius: 1000
   name: 'Биологический центр Полярис'
   stationGameMap: Polaris
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#C83737"
@@ -253,6 +257,7 @@
   protectedRadius: 1000
   name: 'Автоматизированный Межсекторальный Танкер'
   stationGameMap: AutomatedTanker
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#44bfe3"
@@ -271,6 +276,7 @@
   protectedRadius: 1000
   name: 'Лаборатория Аномалий'
   stationGameMap: AnomalousLab
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#ffa600"  # inherited default from BaseMobilePOI
@@ -294,6 +300,7 @@
   protectedRadius: 1000
   name: "Ресторан Тинни"
   stationGameMap: Tinnia
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#ffa600"
@@ -321,6 +328,7 @@
   protectedRadius: 1000
   name: "Бензин и жратва Грифти"
   stationGameMap: Grifty
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#ffa600"
@@ -346,6 +354,7 @@
   protectedRadius: 1000
   name: "Заброшенный МакХобольдс"
   stationGameMap: McHobo
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#ffa600"
@@ -366,6 +375,7 @@
   protectedRadius: 1000
   name: 'КВП | Периферийный аванпост'
   stationGameMap: TSFMCOutpost
+  hideWarp: true
   addComponents:
   - type: IFF
     color: "#00a1fc"
@@ -387,6 +397,7 @@
   id: NebulaPoiOmnichurch
   path: /Maps/_NF/POI/beacon.yml
   stationGameMap: Omnichurch
+  hideWarp: true
   spawnIn:
   - NebulaBlueMarker
   - NebulaPurpleMarker
