@@ -1,0 +1,67 @@
+# Stalker morphotype
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteSlurvaExpeditions ]
+  id: MobArgocyteSlurvaExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteSkitterExpeditions ]
+  id: MobArgocyteSkitterExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteSwiperExpeditions ]
+  id: MobArgocyteSwiperExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteGliderExpeditions ]
+  id: MobArgocyteGliderExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteCrawlerExpeditions ]
+  id: MobArgocyteCrawlerExpeditionsSmart
+  suffix: Smart
+
+# Founder — commander.
+- type: entity
+  parent: [ BaseExodusSmartXenoCommander, MobArgocyteFounderExpeditions ]
+  id: MobArgocyteFounderExpeditionsSmart
+  suffix: Smart
+
+# Guardian morphotype
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteBarrierExpeditions ]
+  id: MobArgocyteBarrierExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteMolderExpeditions ]
+  id: MobArgocyteMolderExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocytePouncerExpeditions ]
+  id: MobArgocytePouncerExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteHarvesterExpeditions ]
+  id: MobArgocyteHarvesterExpeditionsSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteEnforcerExpeditions ]
+  id: MobArgocyteEnforcerExpeditionsSmart
+  suffix: Smart
+
+# Leviathing — commander.
+- type: entity
+  parent: [ BaseExodusSmartXenoCommander, MobArgocyteLeviathingExpeditions ]
+  id: MobArgocyteLeviathingExpeditionsSmart
+  suffix: Smart
+  components:
+  - type: NpcCommander
+    maxMedics: 0
+    maxGrunts: 8

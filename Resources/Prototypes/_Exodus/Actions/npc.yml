@@ -1,0 +1,86 @@
+# These intended as NPC-only abilities. Not really balanced for players, use some care if u do.
+# These actions are highly customizeble, before crating new one i suggest check components.
+
+- type: entity
+  id: ActionSelfHealNPC
+  name: Self-Heal (NPC)
+  description: NPC-only. Bandages itself for a few seconds — slowed, cannot shoot, heals over time.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    event: !type:NpcSelfHealActionEvent
+
+- type: entity
+  id: ActionHealInjectionNPC
+  name: Healing Injection (NPC)
+  description: NPC-only. Injects a nearby ally with a short heal-over-time.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    range: 1.5
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    event: !type:NpcHealInjectionActionEvent
+
+- type: entity
+  id: ActionHealAuraNPC
+  name: Healing Pheromones (NPC)
+  description: NPC-only. Emits a healing aura that follows it and heals nearby allies for several seconds.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    event: !type:NpcHealAuraActionEvent
+
+- type: entity
+  id: ActionThrowNPC
+  name: Throw at enemy (NPC)
+  description: NPC-only. Throws a projectile at a target (the item is set on NpcThrownWeapon).
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    range: 12
+    checkCanInteract: false
+    checkCanAccess: false
+    itemIconStyle: NoItem
+    event: !type:NpcThrowActionEvent
+
+- type: entity
+  id: ActionDashNPC
+  name: Dash (NPC)
+  description: NPC-only. Lunges forward in its facing direction.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    event: !type:GravityJumpEvent
+
+- type: entity
+  id: ActionReviveNPC
+  name: Revive (NPC)
+  description: NPC-only. Defibrillates a downed ally — a jolt heal plus jitter.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    range: 1.5
+    checkCanInteract: false
+    checkCanAccess: false
+    itemIconStyle: NoItem
+    event: !type:NpcReviveActionEvent
+
+- type: entity
+  id: ActionReviveDragNPC
+  name: Field Defib (NPC)
+  description: NPC-only. Defib applied after dragging a downed ally to cover; no cooldown, so it works even while the main revive is down.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    range: 1.5
+    checkCanInteract: false
+    checkCanAccess: false
+    itemIconStyle: NoItem
+    event: !type:NpcReviveActionEvent

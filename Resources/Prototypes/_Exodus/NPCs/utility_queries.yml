@@ -1,0 +1,32 @@
+# Picks the best ally to heal: living, friendly, reachable, most hurt and nearest.
+# Full-health allies score 0, so excluded — the operator ends up with no target and the heal branch is skipped.
+- type: utilityQuery
+  id: NearbyWoundedAllies
+  query:
+    - !type:NearbyFriendlyQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetHealthCon
+      curve: !type:QuadraticCurve
+        slope: -1
+        yOffset: 1
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+# Picks the nearest reachable riendly ally that is in CRITICAL state for defibrillation/revive.
+- type: utilityQuery
+  id: NearbyCritAllies
+  query:
+    - !type:NearbyFriendlyQuery
+  considerations:
+    - !type:TargetIsCritCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve

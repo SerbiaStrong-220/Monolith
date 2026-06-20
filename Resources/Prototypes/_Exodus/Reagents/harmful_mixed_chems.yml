@@ -1,0 +1,29 @@
+# Reagent injected by the punk thrown syringe
+
+- type: reagent
+  id: HarmfulMixedChems
+  name: reagent-name-harmful-mixed-chems
+  group: Toxins
+  desc: reagent-desc-harmful-mixed-chems
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bitter
+  color: "#a14fc4"
+  metabolisms:
+    Poison:
+      metabolismRate: 1.0
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
+      - !type:Jitter
+        time: 1
+        refresh: false
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 3
+        refresh: false
+      - !type:SatiateHunger
+        factor: -1

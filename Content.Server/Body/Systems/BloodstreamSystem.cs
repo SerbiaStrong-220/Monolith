@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Body; // Exodus
 using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
@@ -154,7 +155,8 @@ public sealed partial class BloodstreamSystem : EntitySystem
                     uid,
                     (float) bloodstream.UpdateInterval.TotalSeconds * 2,
                     applySlur: false);
-                _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
+                if (!HasComp<NoBloodlossStutterComponent>(uid)) // Exodus flexibility - can bleed without speech stutter
+                    _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
                 bloodstream.StatusTime += bloodstream.UpdateInterval * 2;

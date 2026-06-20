@@ -1,0 +1,112 @@
+# This is "base" for our liitle smort mobs. NoBloodlossStutter is for user expereince,
+# we want players to be able to understend what they saying, and not suffer from broken TTS.
+
+# Commander - gives orders, lead squads.
+- type: entity
+  abstract: true
+  id: BaseExodusSmartCommander
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusCommanderCompound
+  - type: NpcCommander
+  - type: NoBloodlossStutter
+
+# Grunt — plain squad member, fights under orders.
+- type: entity
+  abstract: true
+  id: BaseExodusSmartGrunt
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusGruntCompound
+  - type: NpcMinion
+  - type: NpcSelfHeal
+  - type: NoBloodlossStutter
+
+# Melee grunt — a grunt that also can dash. (we may need melee without knife throw)
+- type: entity
+  abstract: true
+  id: BaseExodusSmartMeleeGrunt
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusMeleeGruntCompound
+  - type: NpcMinion
+  - type: NpcSelfHeal
+  - type: JumpAbility
+    jumpDistance: 3
+  - type: NpcDash
+  - type: NoBloodlossStutter
+
+# Melee grunt + knife throw.
+- type: entity
+  abstract: true
+  parent: BaseExodusSmartMeleeGrunt
+  id: BaseExodusSmartMeleeGruntThrower
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusMeleeGruntThrowerCompound
+  - type: NpcThrownWeapon # defaults: ActionThrowNPC, proto ThrowingKnife, spread 0, cooldown 20
+
+# Grenadier — we don want grenades thrown at 100% accuracy so this exist
+- type: entity
+  abstract: true
+  id: BaseExodusSmartGrenadier
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusGrenadierCompound
+  - type: NpcMinion
+  - type: NpcSelfHeal
+  - type: NpcThrownWeapon
+    proto: ExGrenade
+    prime: true
+    spread: 3
+    cooldown: 120
+  - type: NoBloodlossStutter
+
+# Xeno grunt — fauna
+- type: entity
+  abstract: true
+  id: BaseExodusSmartXenoGrunt
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusXenoGruntCompound
+  - type: NpcMinion
+  - type: NoBloodlossStutter
+
+# Xeno commander — fauna
+- type: entity
+  abstract: true
+  id: BaseExodusSmartXenoCommander
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusXenoCommanderCompound
+  - type: NpcCommander
+    maxMedics: 0
+    maxGrunts: 5
+    # Mute alien: screech a sound on order changes instead of speaking order lines.
+    orderSound:
+      collection: ExodusXenoCommand
+  - type: NoBloodlossStutter
+
+# Medic
+- type: entity
+  abstract: true
+  id: BaseExodusSmartMedic
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusMedicCompound
+  - type: NpcMinion
+    medic: true
+  - type: Puller
+    needsHands: false
+  - type: NpcSelfHeal
+  - type: NpcHealInjection
+  - type: NpcRevive
+  - type: NoBloodlossStutter

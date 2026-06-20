@@ -1,0 +1,697 @@
+# So this is where squad magic happens. HTN tree, used only by our "Smart" mobs.
+# Note that default stance is Follow: minions stick with the commander and attack enemies that come near, no chasing.
+# Orders other than Follow (Attack/Hold/Retreat) are issued by the commander — logic is here. 
+
+# Fight with whatever we got, but fail if there's no target and falls back to following, no idle.
+- type: htnCompound
+  id: ExodusFightCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+
+# Assault: lock onto the commander's ordered target and CHARGE it into point-blank, so a fleeing target is chased down.
+# If the target slips out of sight, push to its last-known position and fight there; if there's nothing left to
+# chase, fall back to aggressive free combat.
+- type: htnCompound
+  id: ExodusAssaultCompound
+  branches:
+    # 1) ordered target visible -> charge it into point-blank
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: OrderedTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            rangeKey: MeleeRange
+            pathfindInPlanning: false
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    # 2) target lost -> advance to where it was last seen, then fight whatever's there
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: OrderedTargetCoordinates
+          operator: !type:MoveToOperator
+            targetKey: OrderedTargetCoordinates
+            rangeKey: MeleeRange
+            removeKeyOnFinish: false
+            pathfindInPlanning: false
+        - !type:HTNCompoundTask
+          task: SimpleHumanoidHostileCompound
+    # 3) nothing to chase -> aggressive free combat
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHumanoidHostileCompound
+
+# Flee: break contact and run to cover away from the nearest enemy. If no enemy in sight, regroup on the commander instead.
+- type: htnCompound
+  id: ExodusFleeCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:PickHidePointOperator
+            targetKey: Target
+            range: 25
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+
+# Retreat to cover from the nearest enemy and bandage; if there's no enemy, just bandage in place.
+- type: htnCompound
+  id: ExodusSelfHealCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:PickHidePointOperator
+            targetKey: Target
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+        - !type:HTNPrimitiveTask
+          operator: !type:UseActionOperator
+            actionId: ActionSelfHealNPC
+            targetMode: None
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UseActionOperator
+            actionId: ActionSelfHealNPC
+            targetMode: None
+
+# COMMANDER: Retreat=fall back to cover, Hold=stand ground, else fight+patrol.
+- type: htnCompound
+  id: ExodusCommanderCompound
+  branches:
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusCommanderRetreatCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Hold
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusCommanderHoldCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHumanoidHostileCompound
+
+# Fighting retreat: fall back toward cover, THEN keep firing from there. As the enemy pushes, combat re-plans and
+# we pick fresh cover further back, so the commander backs off while shooting instead of holding ground. If no
+# cover is reachable, keep firing rather than freezing; with no enemy at all, idle.
+- type: htnCompound
+  id: ExodusCommanderRetreatCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:PickHidePointOperator
+            targetKey: Target
+            range: 25
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+# Stand ground: fight enemies in reach; otherwise wait (no patrol wandering).
+- type: htnCompound
+  id: ExodusCommanderHoldCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: HoldWait
+            amount: 1
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: HoldWait
+          operator: !type:WaitOperator
+            key: HoldWait
+
+# Grunt: this is for order-driven. Attack=chase, Retreat=disengage, Follow=bandage if hurt, else fight/stay with the commander.
+- type: htnCompound
+  id: ExodusGruntCompound
+  branches:
+    # assault: charge the commander's ordered target into point-blank, ignore damage (no self-heal branch above this)
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Attack
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusAssaultCompound
+    # retreat: break contact and flee to cover
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFleeCompound
+    # hurt (and not under an active Attack/Retreat order above): bandage. Works also with no commander.
+    - preconditions:
+        - !type:HealthPrecondition
+          maxPercent: 0.6
+        - !type:AbilityReadyPrecondition
+          actionId: ActionSelfHealNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusSelfHealCompound
+    # following + near the commander: fight
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    # following: stick with the commander
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    # no commander: fight on our own
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHumanoidHostileCompound
+
+# GRENADIER: Same order logic.
+- type: htnCompound
+  id: ExodusGrenadierCompound
+  branches:
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Attack
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusAssaultCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFleeCompound
+    - preconditions:
+        - !type:HealthPrecondition
+          maxPercent: 0.6
+        - !type:AbilityReadyPrecondition
+          actionId: ActionSelfHealNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusSelfHealCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusGrenadierCombatCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusGrenadierCombatCompound
+
+- type: htnCompound
+  id: ExodusGrenadierCombatCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyGunTargets
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: RangedRange
+            - !type:TargetInLOSPrecondition
+              targetKey: Target
+              rangeKey: RangedRange
+              obstructedMask: Impassable
+            - !type:AbilityReadyPrecondition
+              actionId: ActionThrowNPC
+          operator: !type:UseActionOperator
+            actionId: ActionThrowNPC
+            targetMode: Entity
+            targetKey: Target
+    # otherwise shoot/melee (fails if no enemy)
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+
+# Melee combat core: shared by all smart melee mobs. Dash to close on a reachable enemy, then fight under
+# orders. The dash fires only when an enemy is seen AND the straight path to it is clear of impassable structures.
+- type: htnCompound
+  id: ExodusMeleeCombatCompound
+  branches:
+    # dash: lunge at a seen, reachable enemy to close the gap
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: DashRange
+            amount: 4
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:AbilityReadyPrecondition
+              actionId: ActionDashNPC
+            # clear straight path to the target: obstructedMask Impassable blocks walls and windows
+            - !type:TargetInLOSPrecondition
+              targetKey: Target
+              rangeKey: DashRange
+              obstructedMask: Impassable
+          operator: !type:UseActionOperator
+            actionId: ActionDashNPC
+            targetMode: None
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Attack
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusAssaultCompound
+    # following + near the commander
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    # following: stick with the commander
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    # no commander: fight on our own
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHumanoidHostileCompound
+
+# Melee grunt survival first, then the melee combat core.
+- type: htnCompound
+  id: ExodusMeleeGruntCompound
+  branches:
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFleeCompound
+    - preconditions:
+        - !type:HealthPrecondition
+          maxPercent: 0.6
+        - !type:AbilityReadyPrecondition
+          actionId: ActionSelfHealNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusSelfHealCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusMeleeCombatCompound
+
+# Melee grunt + throw: like the melee grunt but with a thrown knife ability, used
+# when an enemy is seen, in range, and the straight path is clear of impassable geometry
+# Priority: retreat > self-heal > throw knife > (dash/fight in the combat core).
+- type: htnCompound
+  id: ExodusMeleeGruntThrowerCompound
+  branches:
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFleeCompound
+    - preconditions:
+        - !type:HealthPrecondition
+          maxPercent: 0.6
+        - !type:AbilityReadyPrecondition
+          actionId: ActionSelfHealNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusSelfHealCompound
+    # throw ability at a seen target in range with a clear path.
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: KnifeRange
+            amount: 8
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:AbilityReadyPrecondition
+              actionId: ActionThrowNPC
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: KnifeRange
+            - !type:TargetInLOSPrecondition
+              targetKey: Target
+              rangeKey: KnifeRange
+              obstructedMask: Impassable
+          operator: !type:UseActionOperator
+            actionId: ActionThrowNPC
+            targetMode: Entity
+            targetKey: Target
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusMeleeCombatCompound
+
+# Fauna squad treessame order logic as the humanoid grunt for now
+
+# Xeno grunt
+- type: htnCompound
+  id: ExodusXenoGruntCompound
+  branches:
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Attack
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusXenoAssaultCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFleeCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHostileCompound
+
+# Xeno assault: charge the ordered target into melee; if lost, push to its last-seen spot; else fight solo.
+- type: htnCompound
+  id: ExodusXenoAssaultCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: OrderedTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            rangeKey: MeleeRange
+            pathfindInPlanning: false
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: OrderedTargetCoordinates
+          operator: !type:MoveToOperator
+            targetKey: OrderedTargetCoordinates
+            rangeKey: MeleeRange
+            removeKeyOnFinish: false
+            pathfindInPlanning: false
+        - !type:HTNCompoundTask
+          task: SimpleHostileCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHostileCompound
+
+# Xeno commander
+- type: htnCompound
+  id: ExodusXenoCommanderCompound
+  branches:
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusXenoCommanderRetreatCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Hold
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusXenoCommanderHoldCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: SimpleHostileCompound
+
+# Xeno fighting retreat: fall back to cover, then keep attack from there. Will be upgraded
+- type: htnCompound
+  id: ExodusXenoCommanderRetreatCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:PickHidePointOperator
+            targetKey: Target
+            range: 25
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+# Xeno hold: attack enemies in reach; otherwise wait in place.
+- type: htnCompound
+  id: ExodusXenoCommanderHoldCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: HoldWait
+            amount: 1
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: HoldWait
+          operator: !type:WaitOperator
+            key: HoldWait
+
+# Medic: bandage self > defib crit > drag crit > inject > defend near commander > follow > idle.
+# Never assaults; defends only nearby so it stays with the squad.
+- type: htnCompound
+  id: ExodusMedicCompound
+  branches:
+    - preconditions:
+        - !type:HealthPrecondition
+          maxPercent: 0.6
+        - !type:AbilityReadyPrecondition
+          actionId: ActionSelfHealNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusSelfHealCompound
+    - preconditions:
+        - !type:AbilityReadyPrecondition
+          actionId: ActionReviveNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusReviveCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusDragCritCompound
+    - preconditions:
+        - !type:AbilityReadyPrecondition
+          actionId: ActionHealInjectionNPC
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusInjectCompound
+    # defend nearby (leash; fails if no enemy -> follow)
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    # no commander: defend ourselves if an enemy is in sight
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+# Defibrillate a crit ally: hold (cast) -> jolt at the end.
+- type: htnCompound
+  id: ExodusReviveCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyCritAllies
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            rangeKey: MeleeRange
+            pathfindInPlanning: false
+        - !type:HTNPrimitiveTask
+          operator: !type:PlaySoundOperator
+            sound:
+              path: /Audio/Items/Defib/defib_charge.ogg
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: ReviveCastTime
+            amount: 2 # seconds: defib charge/cast time before the jolt
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: ReviveCastTime
+          operator: !type:WaitOperator
+            key: ReviveCastTime
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: InteractRange
+          operator: !type:UseActionOperator
+            actionId: ActionReviveNPC
+            targetMode: Entity
+            targetKey: Target
+
+# Inject a wounded ally with a heal-over-time.
+- type: htnCompound
+  id: ExodusInjectCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyWoundedAllies
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            rangeKey: MeleeRange
+            pathfindInPlanning: false
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: FollowCloseRange
+          operator: !type:UseActionOperator
+            actionId: ActionHealInjectionNPC
+            targetMode: Entity
+            targetKey: Target
+
+# Recover a downed ally while the main revive is on cooldown: drag them to cover (away from the nearest enemy),
+# then field-defib (a separate no-cooldown action). Requires an enemy present — the field-defib is deliberately
+# gated behind a real drag, so with no enemy to drag away from this whole compound fails and the crit instead
+# waits for the main revive to come off cooldown.
+- type: htnCompound
+  id: ExodusDragCritCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyCritAllies
+            key: PullTarget
+            keyCoordinates: PullTargetCoordinates
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            targetKey: PullTargetCoordinates
+            rangeKey: MeleeRange
+            pathfindInPlanning: false
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: PullTarget
+              rangeKey: InteractRange
+          operator: !type:PullOperator
+            targetKey: PullTarget
+        - !type:HTNPrimitiveTask
+          operator: !type:PickHidePointOperator
+            targetKey: Target
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+        - !type:HTNPrimitiveTask
+          operator: !type:StopPullingOperator
+        # Same defib cast as the main revive
+        - !type:HTNPrimitiveTask
+          operator: !type:PlaySoundOperator
+            sound:
+              path: /Audio/Items/Defib/defib_charge.ogg
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: ReviveCastTime
+            amount: 2 # seconds: defib charge/cast time before the jolt
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: ReviveCastTime
+          operator: !type:WaitOperator
+            key: ReviveCastTime
+        - !type:HTNPrimitiveTask
+          operator: !type:UseActionOperator
+            actionId: ActionReviveDragNPC
+            targetMode: Entity
+            targetKey: PullTarget

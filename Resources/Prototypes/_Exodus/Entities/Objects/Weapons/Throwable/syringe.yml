@@ -1,0 +1,21 @@
+- type: entity
+  parent: MobHostileThrowableWeapon
+  id: ThrownSyringeHarmfulChems
+  name: chem syringe
+  description: A crude syringe loaded with a nasty street cocktail. Sticks where it lands.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringeproj
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+        reagents:
+        - ReagentId: HarmfulMixedChems
+          Quantity: 15
+  - type: SolutionInjectOnEmbed
+    transferAmount: 15 # we need to dump all chem fast bc empty syringe gets deleted real fast by cleanup system.
+    solution: ammo
+    pierceArmor: true # well, everyone is wearing armor, let punks pierce it
