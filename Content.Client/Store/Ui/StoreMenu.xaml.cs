@@ -333,17 +333,24 @@ public sealed partial class StoreMenu : DefaultWindow
 
         SummoningStatusContainer.Visible = true;
 
+        // Exodus-begin: limited-stock listings drop from the store list after purchase; resolve from prototype instead.
         var listing = _allListings.FirstOrDefault(l => l.ID == _activeSummoning.ListingId);
-        if (listing != null)
+        ListingData? listingData = listing;
+
+        if (listingData == null && _prototypeManager.TryIndex(_activeSummoning.ListingId, out var listingProto))
+            listingData = listingProto;
+
+        if (listingData != null)
         {
-            SummoningStatusTitle.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager);
-            SummoningStatusIcon.Texture = GetListingTexture(listing);
+            SummoningStatusTitle.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager);
+            SummoningStatusIcon.Texture = GetListingTexture(listingData);
         }
         else
         {
             SummoningStatusTitle.Text = _activeSummoning.ListingId.ToString();
             SummoningStatusIcon.Texture = null;
         }
+        // Exodus-end
 
         SummoningStatusTimer.Text = FormatDuration(_activeSummoning.Remaining);
         SummoningStatusNote.Text = _activeSummoning.Paused
