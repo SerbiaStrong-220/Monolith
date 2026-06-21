@@ -45,7 +45,7 @@ public sealed class LifeInsuranceClonerSystem : EntitySystem
     /// Begins the revival process. Only the capsule animation runs during this time; the body is not
     /// spawned until the process succeeds, so a failure mid-way leaves no stray body to clean up.
     /// </summary>
-    public bool TryStartRevival(EntityUid uid, HumanoidCharacterProfile profile, EntityUid mindId, NetUserId user, string company, LifeInsuranceClonerComponent? comp = null)
+    public bool TryStartRevival(EntityUid uid, HumanoidCharacterProfile profile, EntityUid mindId, NetUserId user, ProtoId<CompanyPrototype> company, LifeInsuranceClonerComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return false;

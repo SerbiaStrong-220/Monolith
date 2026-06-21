@@ -30,6 +30,7 @@ life-insurance-no-dna = Could not read DNA from the occupant.
 life-insurance-not-organic = No organic material detected for scanning.
 life-insurance-uncloneable = This patient's genetic structure cannot be recorded.
 life-insurance-incompatible-dna = Incompatible DNA detected, contact Nosske-Eien R&D support immediately.
+life-insurance-foreign-signature = Error. A foreign biological signature detected in the subject.
 life-insurance-no-access = Access denied: only the TSF Colonel or the Grand Vizier may delete records.
 life-insurance-dna-recorded = Recorded DNA for { $name }.
 life-insurance-already-registered = This patient is already in the client database.

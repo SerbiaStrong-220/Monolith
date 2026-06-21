@@ -8,6 +8,8 @@ namespace Content.Client._Exodus.LifeInsurance.UI;
 [UsedImplicitly]
 public sealed class LifeInsuranceWakeUpEui : BaseEui
 {
+    [Dependency] private IClyde _clyde = default!;
+
     private readonly LifeInsuranceWakeUpWindow _window;
 
     public LifeInsuranceWakeUpEui()
@@ -21,7 +23,7 @@ public sealed class LifeInsuranceWakeUpEui : BaseEui
 
     public override void Opened()
     {
-        IoCManager.Resolve<IClyde>().RequestWindowAttention();
+        _clyde.RequestWindowAttention();
         _window.OpenCentered();
     }
 

@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Shared._EinsteinEngines.Silicon.Components;
 using Content.Shared._Exodus.CCVar;
 using Content.Shared._Mono.Company;
+using Content.Shared._Mono.CorticalBorer;
 using Content.Shared._Exodus.LifeInsurance;
 using Content.Shared._Exodus.LifeInsurance.Components;
 using Content.Shared.Access.Systems;
@@ -128,6 +129,13 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return false;
         }
 
+        // Body would record the possesing borer's profile, not the host's.
+        if (TryComp<CorticalBorerInfestedComponent>(body, out var infested) && infested.ControlTimeEnd != null)
+        {
+            _popup.PopupEntity(Loc.GetString("life-insurance-foreign-signature"), consoleUid, actor);
+            return false;
+        }
+
         if (!_playerManager.TryGetSessionByEntity(body, out var session) ||
             !_prefsManager.TryGetCachedPreferences(session.UserId, out var prefs) ||
             prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
@@ -147,30 +155,15 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
         var snapshot = profile.Clone();
 
         // Clone can keep company-gated access (faction uplinks).
-        var company = TryComp<CompanyComponent>(body, out var companyComp) ? companyComp.CompanyName.Id : "None";
+        var company = TryComp<CompanyComponent>(body, out var companyComp)
+            ? companyComp.CompanyName
+            : new ProtoId<CompanyPrototype>("None");
 
         comp.Records[session.UserId] = new LifeInsuranceRecord(snapshot, 0) { Company = company };
 
         _popup.PopupEntity(Loc.GetString("life-insurance-dna-recorded", ("name", profile.Name)), consoleUid, actor);
         UpdateUi(consoleUid, comp);
         return true;
-    }
-
-    /// <summary>
-    /// TEMP tests
-    /// </summary>
-    public void TryAutoRecordFromScanner(EntityUid scannerUid, EntityUid body)
-    {
-        var query = EntityQueryEnumerator<LifeInsuranceConsoleComponent>();
-        while (query.MoveNext(out var consoleUid, out var comp))
-        {
-            EnsureLinks(consoleUid, comp);
-            if (comp.Scanner == scannerUid)
-            {
-                TryRecordDna(consoleUid, body, comp, body);
-                return;
-            }
-        }
     }
 
     private void OnBuy(Entity<LifeInsuranceConsoleComponent> ent, ref LifeInsuranceBuyMessage args)

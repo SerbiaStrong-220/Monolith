@@ -1,3 +1,4 @@
+using Content.Shared._Mono.Company;
 using Content.Shared.Access;
 using Content.Shared.Preferences;
 using Robust.Shared.Network;
@@ -64,7 +65,7 @@ public sealed class LifeInsuranceRecord
     /// Company/faction the player belonged to when recorded. Restored on the clone so it keeps
     /// company-gated access (e.g. faction uplinks). "None" when the player had no company.
     /// </summary>
-    public string Company = "None";
+    public ProtoId<CompanyPrototype> Company = "None";
 
     public LifeInsuranceRecord(HumanoidCharacterProfile profile, int insurances)
     {

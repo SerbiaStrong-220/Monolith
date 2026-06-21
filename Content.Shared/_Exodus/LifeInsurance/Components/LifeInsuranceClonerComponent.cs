@@ -1,3 +1,4 @@
+using Content.Shared._Mono.Company;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Preferences;
@@ -56,7 +57,7 @@ public sealed partial class LifeInsuranceClonerComponent : Component
     /// Company/faction to restore on the finished clone.
     /// </summary>
     [ViewVariables]
-    public string PendingCompany = "None";
+    public ProtoId<CompanyPrototype> PendingCompany = "None";
 
     /// <summary>
     /// True when cloning is failed (power is fully lost mid-revival).

@@ -19,7 +19,6 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private LifeInsuranceConsoleSystem _console = default!; // TEMP: auto-record on insert
 
     public const string ContainerId = "life-insurance-scanner-body";
 
@@ -141,9 +140,6 @@ public sealed class LifeInsuranceScannerSystem : EntitySystem
             return;
 
         _appearance.SetData(uid, LifeInsuranceScannerVisuals.State, LifeInsuranceScannerState.Occupied);
-
-        // TEMP tetst
-        _console.TryAutoRecordFromScanner(uid, toInsert);
     }
 
     public void EjectBody(EntityUid uid, LifeInsuranceScannerComponent comp)

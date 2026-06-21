@@ -25,10 +25,11 @@
     price: 800
   - type: ShipRepairable
     repairCost: 100
-  - type: LifeInsuranceBackupBattery
-    drainRate: 50
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50 # ~15 min
+    batteryRechargeRate: 100
   - type: Battery
-    maxCharge: 45000 # ~15 minutes of backup power
+    maxCharge: 45000 # ~15 min
     startingCharge: 45000
   - type: ApcPowerReceiver
     powerLoad: 200
@@ -59,7 +60,7 @@
   description: A cloning capsule that rebuilds an insured patient's body on demand.
   components:
   - type: LifeInsuranceCloner
-    revivalTime: 10 # TEMP tests
+    revivalTime: 180
   - type: Anchorable
     flags: Anchorable # mapper-placed, can be anchored but never unwrenched
   - type: Destructible
@@ -78,8 +79,9 @@
     price: 1000
   - type: ShipRepairable
     repairCost: 100
-  - type: LifeInsuranceBackupBattery
-    drainRate: 50
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50 # ~15 min
+    batteryRechargeRate: 100
   - type: Battery
     maxCharge: 45000
     startingCharge: 45000
@@ -124,10 +126,11 @@
     price: 500
   - type: ShipRepairable
     repairCost: 100
-  - type: LifeInsuranceBackupBattery
-    drainRate: 30
+  - type: ApcPowerReceiverBattery
+    idleLoad: 30 # ~15 min
+    batteryRechargeRate: 60
   - type: Battery
-    maxCharge: 27000 # ~15 minutes of backup power
+    maxCharge: 27000 # ~15 min
     startingCharge: 27000
   - type: ApcPowerReceiver
     powerLoad: 200
