@@ -244,6 +244,8 @@
     - id: MedicalBiofabMachineBoard
     - id: MMI # Shitmed
     - id: BoxEncryptionKeyMedicalSpeak # Exodus
+    - id: PetCapsuleMedibot # Exodus
+    
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

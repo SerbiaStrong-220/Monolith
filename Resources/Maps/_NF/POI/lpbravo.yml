@@ -2215,13 +2215,14 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-- proto: AK570Flatpack
+- proto: PetCapsuleHoloparasiteGuardian # Exodus pets
   entities:
   - uid: 2390
     components:
     - type: Transform
       pos: -0.2624247,-16.587656
       parent: 1
+- proto:  
   - uid: 2580
     components:
     - type: Transform

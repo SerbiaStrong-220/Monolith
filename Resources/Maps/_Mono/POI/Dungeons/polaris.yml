@@ -14130,6 +14130,7 @@ entities:
     - type: Transform
       pos: 2.5,1.5
       parent: 1
+- proto: PetCapsuleMedibot # Exodus pets
   - uid: 1159
     components:
     - type: Transform
