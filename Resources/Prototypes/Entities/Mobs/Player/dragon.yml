@@ -245,9 +245,14 @@
     spawned:
     - id: FoodMeatDragon
       amount: 3
-    - id: DragonEgg #Frontier
-      amount: 1 #Frontier
-      prob: 0.3 #Frontier
+    # Exodus-Start
+    #- id: DragonEgg #Frontier
+    #  amount: 1 #Frontier
+    #  prob: 0.3 #Frontier
+    - id: DragonEggPet
+      amount: 1
+      prob: 0.3
+    # Exodus-End
   # half damage, spread evenly
   - type: MeleeWeapon
     damage:
