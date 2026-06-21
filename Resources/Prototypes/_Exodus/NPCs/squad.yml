@@ -470,6 +470,18 @@
 - type: htnCompound
   id: ExodusXenoCommanderCompound
   branches:
+    # Pop the healing aura when an ally is hurt.
+    - preconditions:
+        - !type:AbilityReadyPrecondition
+          actionId: ActionHealAuraNPC
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyWoundedAllies
+        - !type:HTNPrimitiveTask
+          operator: !type:UseActionOperator
+            actionId: ActionHealAuraNPC
+            targetMode: None
     - preconditions:
         - !type:HasOrdersPrecondition
           orders: enum.NpcOrder.Retreat
@@ -695,3 +707,110 @@
             actionId: ActionReviveDragNPC
             targetMode: Entity
             targetKey: PullTarget
+
+# Suicide bomber - charges the nearest enemy and detonates, idle if no target.
+- type: htnCompound
+  id: ExodusBomberCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        # No shutdownState:PlanFinished here — we WANT MoveTo to block until actually in range, or it
+        # finishes while still moving and mob uses action too far away (UseAction has no range check).
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            brakeMaxVelocity: null
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: BombRange
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: BombRange
+            - !type:AbilityReadyPrecondition
+              actionId: ActionDetonateNPC
+          operator: !type:UseActionOperator
+            actionId: ActionDetonateNPC
+            targetMode: None
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+# Build - stand and cast for BuildCastTime, then trigger the build action. Fails (so the parent
+# falls through to patrol/hold) when at the structure limit or on cooldown.
+- type: htnCompound
+  id: ExodusBuildCompound
+  branches:
+    - preconditions:
+        - !type:CanBuildPrecondition
+        - !type:AbilityReadyPrecondition
+          actionId: ActionBuildNPC
+      tasks:
+        # Show a build progress bar for the cast, then hold still for the same time, then spawn the structure.
+        - !type:HTNPrimitiveTask
+          operator: !type:ProgressBarOperator
+            key: BuildCastTime
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: BuildCastTime
+        - !type:HTNPrimitiveTask
+          operator: !type:UseActionOperator
+            actionId: ActionBuildNPC
+            targetMode: None
+
+# Builder - builds on hold position order. Once at limit of build - branch fails through to fighting.
+- type: htnCompound
+  id: ExodusBuilderCompound
+  branches:
+    # Flee first — don't build while told to retreat.
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Retreat
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFleeCompound
+    # Hold near the commander, if close enough, build, otherwise fails to next branch.
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Hold
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusBuildCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Hold
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    # Move orders behave like a normal squad member.
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Attack
+      tasks:
+        - !type:HTNCompoundTask
+          task: ExodusAssaultCompound
+    - preconditions:
+        - !type:HasOrdersPrecondition
+          orders: enum.NpcOrder.Follow
+      tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    # Solo - build, then defend nearby, else wander.
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusBuildCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
+using Content.Server._Exodus.NPC.Abilities;
 using Content.Shared.Chat;
 using Content.Shared._Exodus.NPC.Command;
 using Content.Shared.Damage;
@@ -156,6 +157,8 @@ public sealed class NpcCommandSystem : EntitySystem
                 {
                     NpcOrder.Attack => NpcOrder.Attack,
                     NpcOrder.Retreat => NpcOrder.Retreat,
+                    // Builders get Hold so they build somewhat near the commander.
+                    NpcOrder.Hold when HasComp<NpcBuilderComponent>(minion) => NpcOrder.Hold,
                     _ => NpcOrder.Follow,
                 };
 

@@ -17,6 +17,12 @@ public sealed partial class NpcHealAuraActionEvent : InstantActionEvent;
 /// <summary>Raised when an NPC throws an item at a target. Handled by NpcThrowSystem.</summary>
 public sealed partial class NpcThrowActionEvent : EntityTargetActionEvent;
 
+/// <summary>Raised when a suicide-bomber NPC detonates itself. Handled by NpcSuicideBombSystem.</summary>
+public sealed partial class NpcDetonateActionEvent : InstantActionEvent;
+
+/// <summary>Raised when a builder NPC constructs its structure. Handled by NpcBuilderSystem.</summary>
+public sealed partial class NpcBuildActionEvent : InstantActionEvent;
+
 /// <summary>
 /// Raised when NPC medic defibrillates a downed ally. Handled by NpcHealAbilitiesSystem. 
 /// The charge sound + wait are done in the HTN tree so the medic holds position.

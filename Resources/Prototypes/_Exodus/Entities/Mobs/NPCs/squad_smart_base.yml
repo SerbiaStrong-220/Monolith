@@ -92,6 +92,7 @@
     # Mute alien: screech a sound on order changes instead of speaking order lines.
     orderSound:
       collection: ExodusXenoCommand
+  - type: NpcHealAura
   - type: NoBloodlossStutter
 
 # Medic
@@ -109,4 +110,27 @@
   - type: NpcSelfHeal
   - type: NpcHealInjection
   - type: NpcRevive
+  - type: NoBloodlossStutter
+
+# Suicide bomber
+- type: entity
+  abstract: true
+  id: BaseExodusSmartBomber
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusBomberCompound
+  - type: NpcSuicideBomb
+  - type: NoBloodlossStutter
+
+# Builder
+- type: entity
+  abstract: true
+  id: BaseExodusSmartBuilder
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusBuilderCompound
+  - type: NpcBuilder
+  - type: NpcMinion
   - type: NoBloodlossStutter

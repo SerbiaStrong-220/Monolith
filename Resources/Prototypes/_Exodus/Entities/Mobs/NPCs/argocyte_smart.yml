@@ -30,11 +30,21 @@
   id: MobArgocyteFounderExpeditionsSmart
   suffix: Smart
 
-# Guardian morphotype
+# Guardian morphotype 
+# This one is suicide bomber - charges at enemy and bursts.
 - type: entity
-  parent: [ BaseExodusSmartXenoGrunt, MobArgocyteBarrierExpeditions ]
+  parent: [ BaseExodusSmartBomber, MobArgocyteBarrierExpeditions ]
   id: MobArgocyteBarrierExpeditionsSmart
   suffix: Smart
+  components:
+  - type: NpcSuicideBomb
+    damage:
+      types:
+        Caustic: 15
+    spill:
+      reagents:
+      - ReagentId: PolytrinicAcid
+        Quantity: 30
 
 - type: entity
   parent: [ BaseExodusSmartXenoGrunt, MobArgocyteMolderExpeditions ]

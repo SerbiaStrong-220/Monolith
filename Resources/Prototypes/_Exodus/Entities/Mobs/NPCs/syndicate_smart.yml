@@ -142,29 +142,38 @@
   id: MobSyndicateNavalCaptainVoidSmart
   suffix: Smart
 
-# Engineers - for now just grunts
+# Engineers — can deploy a syndicate laser turret (limit 1).
 - type: entity
-  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalEngineerA ]
+  abstract: true
+  parent: BaseExodusSmartBuilder
+  id: BaseExodusSmartSyndieEngineer
+  components:
+  - type: NpcBuilder
+    build: WeaponTurretLaserSyndicateNF
+    limit: 1
+
+- type: entity
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerA ]
   id: MobSyndicateNavalEngineerASmart
   suffix: Smart
 
 - type: entity
-  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalEngineerB ]
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerB ]
   id: MobSyndicateNavalEngineerBSmart
   suffix: Smart
 
 - type: entity
-  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalEngineerC ]
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerC ]
   id: MobSyndicateNavalEngineerCSmart
   suffix: Smart
 
 - type: entity
-  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalEngineerD ]
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerD ]
   id: MobSyndicateNavalEngineerDSmart
   suffix: Smart
 
 - type: entity
-  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalEngineerVoid ]
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerVoid ]
   id: MobSyndicateNavalEngineerVoidSmart
   suffix: Smart
 

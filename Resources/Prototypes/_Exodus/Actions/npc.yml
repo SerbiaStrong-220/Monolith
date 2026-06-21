@@ -60,6 +60,28 @@
     event: !type:GravityJumpEvent
 
 - type: entity
+  id: ActionDetonateNPC
+  name: Detonate (NPC)
+  description: NPC-only. Blows itself up — effects are set on NpcSuicideBomb.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    event: !type:NpcDetonateActionEvent
+
+- type: entity
+  id: ActionBuildNPC
+  name: Build (NPC)
+  description: NPC-only. Constructs a structure — what/how is set on NpcBuilder.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    event: !type:NpcBuildActionEvent
+
+- type: entity
   id: ActionReviveNPC
   name: Revive (NPC)
   description: NPC-only. Defibrillates a downed ally — a jolt heal plus jitter.
