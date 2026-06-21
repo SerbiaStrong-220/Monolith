@@ -27,7 +27,8 @@ public sealed partial class ProgressBarOperator : HTNOperator
 
         if (blackboard.TryGetValue<float>(Key, out var seconds, _entManager) && seconds > 0f)
         {
-            var args = new DoAfterArgs(_entManager, owner, seconds, new NpcCastDoAfterEvent(), null)
+            // eventTarget must be a real entity (so we dont catch DebugAssertException)
+            var args = new DoAfterArgs(_entManager, owner, seconds, new NpcCastDoAfterEvent(), owner)
             {
                 BreakOnMove = true,
                 RequireCanInteract = false,
