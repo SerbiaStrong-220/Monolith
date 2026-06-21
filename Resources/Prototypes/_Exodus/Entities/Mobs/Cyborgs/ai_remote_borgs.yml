@@ -19,6 +19,51 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
 
+# Colossus-Central borg
+- type: entity
+  id: AiRemoteBorgColossus
+  parent: AiRemoteBorgBattery
+  suffix: AI Remote, Colossus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Access
+    groups:
+    - AllAccess
+    enabled: true
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Traffic
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Traffic
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: BorgSwitchableType
+    inherentRadioChannels:
+    - Common
+    - Traffic
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+
 # TSF borg
 - type: entity
   id: AiRemoteBorgTSF
