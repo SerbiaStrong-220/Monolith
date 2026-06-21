@@ -21508,8 +21508,6 @@ entities:
       pos: -27.5,5.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 6818
   - uid: 3723
@@ -21734,8 +21732,6 @@ entities:
       pos: -26.5,6.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 6818
     - type: AtmosPipeLayers
