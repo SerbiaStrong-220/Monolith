@@ -101,8 +101,6 @@ entities:
     - type: IFF
       color: '#C94242'
       flags: HideLabel, IsPlayerShuttle
-    - type: CloakHeat
-      lastUpdateTime: 0
     - type: GridAtmosphere
       version: 2
       data:
