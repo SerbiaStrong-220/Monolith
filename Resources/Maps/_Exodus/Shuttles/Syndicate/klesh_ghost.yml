@@ -397,8 +397,6 @@ entities:
         -1,-5: 2305843009213693952
     - type: ThermalSignature
     - type: ExplosionAirtightGrid
-    - type: CloakHeat
-      lastUpdateTime: 0
 - proto: AirAlarm
   entities:
   - uid: 201
