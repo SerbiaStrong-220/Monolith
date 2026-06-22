@@ -12,7 +12,7 @@ namespace Content.Server._Exodus.Territory;
 /// </summary>
 public sealed class TerritoryCounterSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     private readonly Dictionary<ProtoId<TerritoryFactionPrototype>, int> _scores = new();
     private bool _roundStarted;

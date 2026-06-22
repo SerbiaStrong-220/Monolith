@@ -19,10 +19,10 @@ namespace Content.Server._Exodus.Nebula.Generation;
 /// </summary>
 public sealed class NebulaDebrisExclusionSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private readonly HashSet<string> _debrisBlockerMarkers = new();
 

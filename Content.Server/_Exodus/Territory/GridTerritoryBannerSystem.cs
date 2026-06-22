@@ -22,9 +22,9 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
     private const float ActiveBannerRadarBlipHalfSize = 1.5f;
     private const float ActiveBannerRadarEdgeVisibilityPadding = 10_000f;
 
-    [Dependency] private readonly GridTerritorySystem _territory = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private GridTerritorySystem _territory = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
 

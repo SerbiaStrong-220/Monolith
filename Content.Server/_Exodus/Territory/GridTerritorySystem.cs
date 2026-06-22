@@ -27,10 +27,10 @@ namespace Content.Server._Exodus.Territory;
 /// </summary>
 public sealed class GridTerritorySystem : EntitySystem
 {
-    [Dependency] private readonly TerritoryMarkerSystem _marker = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly GridTerritoryNpcFactionSystem _npcFaction = default!;
+    [Dependency] private TerritoryMarkerSystem _marker = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private GridTerritoryNpcFactionSystem _npcFaction = default!;
 
     public override void Initialize()
     {

@@ -34,10 +34,10 @@ public sealed class DeathZoneGenerationSystem : EntitySystem
     // Real colour should always come from the marker's YAML radarColor field.
     private static readonly Color FallbackRadarColor = new(1f, 0.1f, 0f, 1f);
 
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 

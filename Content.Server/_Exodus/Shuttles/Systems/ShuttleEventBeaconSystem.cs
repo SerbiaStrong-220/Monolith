@@ -8,8 +8,8 @@ namespace Content.Server._Exodus.Shuttles.Systems;
 
 public sealed class ShuttleEventBeaconSystem : EntitySystem
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

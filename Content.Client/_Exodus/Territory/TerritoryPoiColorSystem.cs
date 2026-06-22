@@ -5,7 +5,7 @@ namespace Content.Client._Exodus.Territory;
 
 public sealed class TerritoryPoiColorSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public bool TryGetColor(EntityUid grid, out Color color)
     {

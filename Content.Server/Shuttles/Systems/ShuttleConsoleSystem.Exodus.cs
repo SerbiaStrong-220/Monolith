@@ -5,7 +5,7 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem
 {
-    [Dependency] private readonly NebulaSystem _nebula = default!;
+    [Dependency] private NebulaSystem _nebula = default!;
 
     private bool CanFTLToNebula(EntityUid shuttleUid, EntityCoordinates targetCoordinates, Angle targetAngle, out string rejection)
     {

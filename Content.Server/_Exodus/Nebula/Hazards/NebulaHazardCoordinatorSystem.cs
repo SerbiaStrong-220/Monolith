@@ -19,9 +19,9 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 /// </summary>
 public sealed class NebulaHazardCoordinatorSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     private readonly HashSet<string> _ftlBlockerMarkers = new();
     private readonly HashSet<string> _lightningMarkers = new();

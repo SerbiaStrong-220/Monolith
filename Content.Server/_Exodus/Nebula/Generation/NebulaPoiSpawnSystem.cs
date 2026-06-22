@@ -36,15 +36,15 @@ public sealed class NebulaPoiSpawnSystem : EntitySystem
     private const int SampleAttempts = 16;
     private const int MaxNebulaFallbacks = 6;
 
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly StationRenameWarpsSystems _renameWarps = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private MapLoaderSystem _map = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private StationRenameWarpsSystems _renameWarps = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 

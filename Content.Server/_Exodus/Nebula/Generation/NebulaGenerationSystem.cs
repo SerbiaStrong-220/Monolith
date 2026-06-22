@@ -44,13 +44,13 @@ public sealed class NebulaGenerationSystem : EntitySystem
     [ValidatePrototypeId<NebulaGenerationConfigPrototype>]
     private const string DefaultConfigId = "Default";
 
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 

@@ -22,7 +22,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()

@@ -16,8 +16,8 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 /// </summary>
 public sealed class NebulaShuttleThrustSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     private EntityQuery<ThrusterComponent> _thrusterQuery;
     private EntityQuery<NebulaThrustMultiplierComponent> _thrusterMultiplierQuery;

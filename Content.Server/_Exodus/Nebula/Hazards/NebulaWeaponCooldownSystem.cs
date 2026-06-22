@@ -18,8 +18,8 @@ public sealed class NebulaWeaponCooldownSystem : EntitySystem
 {
     private const float MinCooldownMultiplier = 0.1f;
 
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     private EntityQuery<AutoShootGunComponent> _autoShootGunQuery;
     private EntityQuery<FireControllableComponent> _fireControllableQuery;

@@ -8,7 +8,7 @@ namespace Content.Client._Exodus.Nebula.Rendering;
 
 public sealed class NebulaLightningOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     private readonly NebulaParallaxSystem _nebulaParallax;
 

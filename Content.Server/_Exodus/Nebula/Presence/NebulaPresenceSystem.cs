@@ -28,16 +28,16 @@ public sealed class NebulaPresenceSystem : EntitySystem
     private const float DirtyThreshold = 0.01f;
     public const float NpcGridScanRadius = 1500f;
 
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 

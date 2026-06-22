@@ -14,8 +14,8 @@ namespace Content.Shared._Exodus.Nebula;
 /// </summary>
 public abstract class SharedNebulaSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedMapSystem MapSystem = default!;
-    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] protected SharedMapSystem MapSystem = default!;
+    [Dependency] protected SharedTransformSystem TransformSystem = default!;
 
     private const float FTLFootprintSampleStep = 8f;
 

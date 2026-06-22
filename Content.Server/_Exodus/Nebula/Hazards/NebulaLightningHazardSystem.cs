@@ -47,17 +47,17 @@ public sealed class NebulaLightningHazardSystem : EntitySystem
         new(0, -1),
     };
 
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly ExplosionSystem _explosions = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private ExplosionSystem _explosions = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private List<Entity<MapGridComponent>> _shieldSearchBuffer = new();
     private TimeSpan _nextUpdate;

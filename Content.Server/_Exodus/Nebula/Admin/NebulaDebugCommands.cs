@@ -26,7 +26,7 @@ namespace Content.Server._Exodus.Nebula.Admin;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaDebugVisualizeCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public string Command => "nebula_debug_visualize";
     public string Description => "Spawns temporary debug points for generated nebula contours.";
@@ -80,7 +80,7 @@ public sealed class NebulaDebugVisualizeCommand : IConsoleCommand
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaDebugClearCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public string Command => "nebula_debug_clear";
     public string Description => "Deletes temporary nebula debug points.";
@@ -103,7 +103,7 @@ public sealed class NebulaDebugClearCommand : IConsoleCommand
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaStatusCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public string Command => "nebula_status";
     public string Description => "Prints generated nebula and marker status.";
@@ -131,7 +131,7 @@ public sealed class NebulaStatusCommand : IConsoleCommand
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaAreaCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public string Command => "nebula_area";
     public string Description => "Prints total generated nebula area.";
@@ -166,7 +166,7 @@ public sealed class NebulaAreaCommand : IConsoleCommand
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaPresenceCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public string Command => "nebula_presence";
     public string Description => "Prints nebula presence for your attached entity.";
@@ -220,7 +220,7 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaThrustStatusCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     private static readonly (string Name, int Index)[] Directions =
     {
@@ -350,8 +350,8 @@ public sealed class NebulaNpcPresenceStatusCommand : IConsoleCommand
     private const float MaxNearbyRadius = 5000f;
     private const int MaxNearbyEntries = 100;
 
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly HashSet<Entity<NebulaNpcGridPresenceSourceComponent>> _nearbyNpcCoreBuffer = new();
     private readonly HashSet<EntityUid> _nearbyEligibleGrids = new();
@@ -675,10 +675,10 @@ public sealed class NebulaNpcPresenceStatusCommand : IConsoleCommand
 [AdminCommand(AdminFlags.Debug)]
 public sealed class NebulaHazardStatusCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public string Command => "nebula_hazard_status";
     public string Description => "Prints nebula hazard timers for the grid you are standing on.";

@@ -28,13 +28,13 @@ public sealed class NebulaEmpHazardSystem : EntitySystem
     private static readonly TimeSpan EmptyPulseTileCacheRetryInterval = TimeSpan.FromSeconds(5);
     private const string SparksPrototype = "EffectSparks";
 
-    [Dependency] private readonly EmpSystem _emp = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private EmpSystem _emp = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private TimeSpan _nextUpdate;
 

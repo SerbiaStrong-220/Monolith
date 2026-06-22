@@ -16,9 +16,9 @@ public sealed class TerritoryStoreDiscountSystem : EntitySystem
 {
     private const string TerritoryDiscountModifierId = "ExodusTerritoryDiscount";
 
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly TerritoryCounterSystem _territoryCounter = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private StoreSystem _store = default!;
+    [Dependency] private TerritoryCounterSystem _territoryCounter = default!;
 
     public override void Initialize()
     {

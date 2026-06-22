@@ -34,15 +34,15 @@ public sealed class NebulaParallaxSystem : EntitySystem
     private const string ParallaxOverrideKey = "exodus-nebula";
     private const int ParallaxOverridePriority = 100;
 
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly ParallaxSystem _parallax = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private ParallaxSystem _parallax = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     private EntProtoId? _activeMarker;
     private ProtoId<ParallaxPrototype>? _activeParallax;
