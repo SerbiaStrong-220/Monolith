@@ -232,7 +232,6 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
                 foreach (var hit in sortedHits)
                 {
                     var hitEnt = hit.HitEntity;
-                    if (hitEnt == uid) continue;
 
                     if (!_physQuery.TryComp(hitEnt, out var otherBody) || !_fixQuery.TryComp(hitEnt, out var otherFix))
                         continue;
