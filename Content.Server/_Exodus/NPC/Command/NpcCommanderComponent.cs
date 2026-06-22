@@ -17,14 +17,10 @@ public sealed partial class NpcCommanderComponent : Component
     [DataField]
     public float KeepRange = 25f;
 
-    /// <summary>This is max available slots for recruited NPCs simultaniously .</summary>
-    /// What is medic - defined inside mob proto   
-    /// - type: NpcMinion
-    ///         medic: true
+    /// <summary>This is max available slots for recruited NPCs simultaniously.</summary>
     [DataField]
     public int MaxMedics = 1;
 
-    /// Grunt is - type: NpcMinion
     [DataField]
     public int MaxGrunts = 3;
 

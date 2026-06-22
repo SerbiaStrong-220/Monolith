@@ -43,7 +43,7 @@ public sealed partial class NpcSelfHealComponent : Component
     [DataField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Items/Medical/brutepack_begin.ogg");
 
-    // U probably dont want to touch whats below
+    // Runtime points below
 
     /// <summary>Buff end point. Null if inactive.</summary>
     [ViewVariables]

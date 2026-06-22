@@ -65,10 +65,11 @@ public sealed class NpcSuicideBombSystem : EntitySystem
 
     private void OnDetonate(Entity<NpcSuicideBombComponent> ent, ref NpcDetonateActionEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || ent.Comp.Detonated)
             return;
 
         args.Handled = true;
+        ent.Comp.Detonated = true;
         var comp = ent.Comp;
         var coords = Transform(ent).Coordinates;
 

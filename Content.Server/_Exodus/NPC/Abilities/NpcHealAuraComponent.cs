@@ -47,7 +47,7 @@ public sealed partial class NpcHealAuraComponent : Component
     [DataField]
     public EntProtoId Effect = "EffectHealAuraNPC";
 
-    // U probably dont want to touch whats below
+    // Runtime points below
 
     /// <summary>When the aura ends. Null if inactive.</summary>
     [ViewVariables]
