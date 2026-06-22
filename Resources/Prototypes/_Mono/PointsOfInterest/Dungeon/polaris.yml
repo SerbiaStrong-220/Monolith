@@ -23,7 +23,6 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      - type: GridTerritory
       # Exodus end
       components:
         - type: StationNameSetup
