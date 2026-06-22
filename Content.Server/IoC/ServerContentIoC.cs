@@ -1,6 +1,7 @@
 using Content.Server._Exodus.Adminbus.WebAPI; // Exodus-WebAPI
 using Content.Server._Mono.Company; // Mono
 using Content.Server._Mono.MonoCoins; // Mono
+using Content.Server._Exodus.Bank; // Exodus
 using Content.Server._NF.Auth;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -86,6 +87,7 @@ namespace Content.Server.IoC
             IoCManager.Register<MiniAuthManager>(); //Frontier
             IoCManager.Register<CompanyManager>(); // Mono
             IoCManager.Register<MonoCoinsManager>(); // Mono
+            IoCManager.Register<SavingsTransferManager>(); // Exodus
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();

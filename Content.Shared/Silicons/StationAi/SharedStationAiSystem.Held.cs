@@ -43,7 +43,12 @@ public abstract partial class SharedStationAiSystem
         {
             return;
         }
+
         args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
+        // Exodus-begin ai-rename
+        if (TryGetCore(args.ForActor, out var core))
+            args.Title = $"{Name(core.Owner)} ({Loc.GetString(JobNameLocId)})";
+        // Exodus-end
         args.Handled = true;
     }
 

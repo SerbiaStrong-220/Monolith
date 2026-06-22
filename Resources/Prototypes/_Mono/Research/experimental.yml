@@ -77,7 +77,7 @@
 - type: technology
   id: DataFarmingTechnology
   name: research-technology-data-farms
-  entityIcon: DatafarmCrypto
+  entityIcon: DatafarmResearch # Exodus - DataFarmRefactor
   discipline: Experimental
   tier: 3
   cost: 25000

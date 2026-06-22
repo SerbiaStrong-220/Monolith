@@ -1,0 +1,27 @@
+- type: rcd
+  id: FloorHullReinforced
+  name: tiles-hull-reinforced
+  category: PlatingTiles
+  sprite: /Textures/Tiles/hull_reinforced.png
+  mode: ConstructTile
+  prototype: FloorHullReinforced
+  cost: 75
+  delay: 2
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct2
+
+- type: rcd
+  id: SurveillanceCameraConstructed
+  name: surveillance-camera-constructed
+  category: Electrical
+  sprite: { sprite: Structures/Wallmounts/camera.rsi, state: camera_off }
+  mode: ConstructObject
+  prototype: SurveillanceCameraConstructed
+  cost: 15
+  delay: 2
+  collisionMask: TabletopMachineMask
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
+  rotation: User
+  fx: EffectRCDConstruct2

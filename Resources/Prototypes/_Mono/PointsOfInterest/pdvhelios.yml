@@ -13,7 +13,7 @@
   maximumDistance: 9500
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
-  gridPath: /Maps/_Mono/POI/pdvhelios.yml
+  gridPath: /Maps/_Exodus/POI/pdvhelios.yml # Exodus ai-remote-borgs
   addComponents:
   - type: IFF
     color: "#DE9E59"
@@ -22,7 +22,7 @@
 - type: gameMap
   id: HeliosFortress
   mapName: 'ДФ | Крепость Гелиос' # Ru-Localization
-  mapPath: /Maps/_Mono/POI/pdvhelios.yml
+  mapPath: /Maps/_Exodus/POI/pdvhelios.yml # Exodus ai-remote-borgs
   minPlayers: 0
   stations:
     HeliosFortress:

@@ -24,11 +24,6 @@
           False: {visible: false}
   - type: ApcPowerReceiver
     powerLoad: 40000
-  - type: AmbientSound
-    volume: -9
-    range: 5
-    sound:
-      path: /Audio/Ambience/Objects/server_fans.ogg
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
@@ -64,22 +59,41 @@
           collection: MetalBreak
   - type: Anchorable
 
+# Exodus - DataFarmRefactor - Start
 - type: entity
   id: BaseDataFarmResearch
   parent: BaseDataFarm
   abstract: true
   components:
   - type: Sprite
-    sprite: _Mono/Structures/Machines/neapolitan_server.rsi
+    sprite: _Exodus/Structures/Machines/datafarm_research.rsi
     layers:
-    - state: icon
-    - state: unlit
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      offset: 0, -0.2
+    - map: ["enum.DataFarmVisualLayers.State"]
+      state: DatafarmResearch-off
+      offset: 0, 0.1
+    - map: ["enum.DataFarmVisualLayers.Light"]
+      state: null
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: stripe
-      color: "#b3aa79"
-    - state: stripe2
-      color: "#5b0093"
+      offset: 0, 0.1
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DataFarmVisuals.State:
+        enum.DataFarmVisualLayers.State:
+          Off: { state: DatafarmResearch-off }
+          Process: { state: DatafarmResearch-on-proces }
+          Normal: { state: DatafarmResearch-on-normal }
+          Warning: { state: DatafarmResearch-on-notgood }
+          Destruct: { state: DatafarmResearch-on-destract }
+        enum.DataFarmVisualLayers.Light:
+          Process: { state: DatafarmResearch-on-proces-light }
+          Normal: { state: DatafarmResearch-on-normal-light }
+          Warning: { state: DatafarmResearch-on-notgood-light }
+          Destruct: { state: DatafarmResearch-on-destract-light }
   - type: ResearchClient
   - type: ActivatableUI
     key: enum.ResearchClientUiKey.Key
@@ -96,8 +110,19 @@
     guides:
     - Science
   - type: ResearchPointSource
-    pointsPerSecond: 20
+    pointsPerSecond: 25
     active: true
+  - type: AtmosDevice
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: DataFarm
+    inletName: inlet
+    cycleDuration: 1.0
+    intakePerSecond: 10.0
 
 - type: entity
   id: DatafarmResearchFaction
@@ -124,34 +149,35 @@
   - type: Machine
     board: DataFarmResearchCircuitboard
 
-- type: entity
-  id: DatafarmCrypto
-  parent: [BaseDataFarm, ConstructibleMachine]
-  name: data farm (Crypto)
-  description: A power-hungry server dedicated towards scraping data from... somewhere. This one generates valuable but random cryptocurrency at a rate of one every 10 minutes.
-  components:
-  - type: Sprite
-    sprite: _Mono/Structures/Machines/neapolitan_server.rsi
-    layers:
-    - state: icon
-    - state: unlit
-      shader: unshaded
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: stripe
-      color: "#b3aa79"
-    - state: stripe2
-      color: "#009360"
-  - type: ApcPowerReceiver
-    powerLoad: 40000
-  - type: PointLight
-    radius: 1.1
-    energy: 1.1
-    color: "#009360"
-  - type: ItemMiner
-    proto: SpawnLootDatafarmBitcoin
-    interval: 6
-    spawnChance: 0.01 # highly random like real cryptomining
-    minedSound: /Audio/Effects/Cargo/ping.ogg
-    needApcPower: true
-  - type: Machine
-    board: DataFarmCryptoCircuitboard
+#- type: entity
+#  id: DatafarmCrypto
+#  parent: [BaseDataFarm, ConstructibleMachine]
+#  name: data farm (Crypto)
+#  description: A power-hungry server dedicated towards scraping data from... somewhere. This one generates valuable but random cryptocurrency at a rate of one every 10 minutes.
+#  components:
+#  - type: Sprite
+#    sprite: _Mono/Structures/Machines/neapolitan_server.rsi
+#    layers:
+#    - state: icon
+#    - state: unlit
+#      shader: unshaded
+#      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+#    - state: stripe
+#      color: "#b3aa79"
+#    - state: stripe2
+#      color: "#009360"
+#  - type: ApcPowerReceiver
+#    powerLoad: 40000
+#  - type: PointLight
+#    radius: 1.1
+#    energy: 1.1
+#    color: "#009360"
+#  - type: ItemMiner
+#    proto: SpawnLootDatafarmBitcoin
+#    interval: 6
+#    spawnChance: 0.01 # highly random like real cryptomining
+#    minedSound: /Audio/Effects/Cargo/ping.ogg
+#    needApcPower: true
+#  - type: Machine
+#    board: DataFarmCryptoCircuitboard
+#Exodus - DataFarmRefactor - End

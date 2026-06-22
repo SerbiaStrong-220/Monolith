@@ -43,21 +43,21 @@
 # Low yields
 - type: ore
   id: NFOrePlasma
-  oreEntity: PlasmaOre5
+  oreEntity: PlasmaOre1 # Exodis-mining-expansion
   minOreYield: 1
-  maxOreYield: 2
+  maxOreYield: 5 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreUranium
-  oreEntity: UraniumOre5
+  oreEntity: UraniumOre1 # Exodis-mining-expansion
   minOreYield: 1
-  maxOreYield: 2
+  maxOreYield: 5 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreBananium
-  oreEntity: BananiumOre5
+  oreEntity: BananiumOre1 # Exodis-mining-expansion
   minOreYield: 1
-  maxOreYield: 2
+  maxOreYield: 5 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreBluespace
@@ -71,69 +71,69 @@
 - type: ore
   id: NFOreSteelDense
   oreEntity: SteelOre5
-  minOreYield: 5
-  maxOreYield: 7
+  minOreYield: 2 # Exodis-mining-expansion
+  maxOreYield: 4 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreSpaceQuartzDense
   oreEntity: SpaceQuartz5
-  minOreYield: 5
-  maxOreYield: 7
+  minOreYield: 2 # Exodis-mining-expansion
+  maxOreYield: 4 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreCoalDense
   oreEntity: Coal5
-  minOreYield: 5
-  maxOreYield: 7
+  minOreYield: 2 # Exodis-mining-expansion
+  maxOreYield: 4 # Exodis-mining-expansion
 
 # Medium yields
 - type: ore
   id: NFOreGoldDense
   oreEntity: GoldOre5
-  minOreYield: 3
-  maxOreYield: 5
+  minOreYield: 1 # Exodis-mining-expansion
+  maxOreYield: 2 # Exodus-mining-expansion
 
 - type: ore
   id: NFOreSilverDense
   oreEntity: SilverOre5
-  minOreYield: 3
-  maxOreYield: 5
+  minOreYield: 1 # Exodis-mining-expansion
+  maxOreYield: 2 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreSaltDense
   oreEntity: Salt5
-  minOreYield: 3
-  maxOreYield: 5
+  minOreYield: 1 # Exodis-mining-expansion
+  maxOreYield: 2 # Exodis-mining-expansion
 
 # Low yields
 - type: ore
   id: NFOrePlasmaDense
   oreEntity: PlasmaOre5
-  minOreYield: 2
-  maxOreYield: 4
+  minOreYield: 1 # Exodis-mining-expansion
+  maxOreYield: 2 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreUraniumDense
   oreEntity: UraniumOre5
-  minOreYield: 2
-  maxOreYield: 4
+  minOreYield: 1 # Exodis-mining-expansion
+  maxOreYield: 2 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreBananiumDense
   oreEntity: BananiumOre5
-  minOreYield: 2
-  maxOreYield: 4
+  minOreYield: 1 # Exodis-mining-expansion
+  maxOreYield: 2 # Exodis-mining-expansion
 
 - type: ore
   id: NFOreBluespaceDense
   oreEntity: BluespaceOre1
-  minOreYield: 2
+  minOreYield: 1 # Exodis-mining-expansion
   maxOreYield: 2
 
 - type: ore
   id: NFOreDiamondDense
   oreEntity: DiamondOre1
-  minOreYield: 2
+  minOreYield: 1 # Exodis-mining-expansion
   maxOreYield: 2
 
 # Frontier - Mobs

@@ -1,0 +1,87 @@
+# Exodus: Colossus-Central AI Core
+
+- type: entity
+  id: PlayerStationAiColossus
+  parent: PlayerStationAiEmpty
+  suffix: Ghost Role, Colossus
+  components:
+  - type: ContainerComp
+    proto: AiHeldColossus
+    container: station_ai_mind_slot
+  - type: ContainerFill
+    containers:
+      station_ai_mind_slot:
+      - StationAiBrainColossus
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+  - type: Anchorable
+
+- type: entity
+  id: StationAiBrainColossus
+  parent: StationAiBrain
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Sprite
+  - type: SiliconLawProvider
+    laws: ColossusLawset
+  - type: GhostRole
+    name: ghost-role-information-colossus-core
+    description: ghost-role-information-colossus-core-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    # Exodus-Rework-Time-Roles-Start
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 108000 # 30 hrs
+    # Exodus-Rework-Time-Roles-End
+  - type: GhostTakeoverAvailable
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - SolCommon
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - SolCommon
+
+- type: entity
+  id: AiHeldColossus
+  parent: AiHeld
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Traffic
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Traffic
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: CollectiveMind
+    channels:
+    - Binary
+    defaultChannel: Binary
+  - type: CommunicationsConsole
+    canShuttle: false
+    title: comms-console-announcement-title-colossus-ai
+    color: "#5ed7aa"

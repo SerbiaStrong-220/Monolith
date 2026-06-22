@@ -31,6 +31,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
     private EntityQuery<ProjectileComponent> _projectileQuery;
     private EntityQuery<ShipWeaponProjectileComponent> _shipWeaponProjectileQuery;
+    private EntityQuery<ShipShieldedComponent> _shieldedQuery; // Exodus
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -80,7 +81,14 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             if (emitter.Damage > emitter.DamageLimit)
                 emitter.OverloadAccumulator = emitter.DamageOverloadTimePunishment;
 
-            if (!emitter.Recharging && emitter.Shield is null && emitter.OverloadAccumulator < 1)
+            // Exodus-shield-swap-fix-start: a ship's shield downtime is grid-wide. Don't raise a shield
+            // if the grid is already shielded (prevents a second generator shadowing the active shield),
+            // or if any other emitter on the grid is still serving its overload lockout. The lockout is
+            // checked here at raise time, so it also blocks generators anchored/powered mid-window.
+            if (!emitter.Recharging && emitter.Shield is null && emitter.OverloadAccumulator < 1
+                && !_shieldedQuery.HasComp(parent.Value)
+                && !IsGridShieldOnCooldown(parent.Value, uid))
+            // Exodus-shield-swap-fix-end
             {
                 var shield = ShieldEntity(parent.Value, uid);
                 if (shield != EntityUid.Invalid)
@@ -100,11 +108,38 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
         }
     }
+
+    // Exodus-shield-swap-fix-start
+    /// <summary>
+    /// A ship's shield downtime belongs to the ship, not the individual generator. Returns true if any
+    /// shield emitter on the grid (other than <paramref name="ignore"/>) is still serving its overload
+    /// lockout, so a second generator can't cover the vulnerability window. Because this is evaluated at
+    /// shield-raise time, it also blocks generators that were anchored or powered on during the window.
+    /// </summary>
+    private bool IsGridShieldOnCooldown(EntityUid grid, EntityUid ignore)
+    {
+        var ents = new HashSet<Entity<ShipShieldEmitterComponent>>();
+        _lookup.GetGridEntities(grid, ents);
+
+        foreach (var ent in ents)
+        {
+            if (ent.Owner == ignore)
+                continue;
+
+            if (ent.Comp.OverloadAccumulator > 0)
+                return true;
+        }
+
+        return false;
+    }
+    // Exodus-shield-swap-fix-end
+
     public override void Initialize()
     {
         base.Initialize();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
         _shipWeaponProjectileQuery = GetEntityQuery<ShipWeaponProjectileComponent>();
+        _shieldedQuery = GetEntityQuery<ShipShieldedComponent>(); // Exodus
 
         SubscribeLocalEvent<ShipShieldComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentShutdown>(OnEmitterShutdown); // Mono
