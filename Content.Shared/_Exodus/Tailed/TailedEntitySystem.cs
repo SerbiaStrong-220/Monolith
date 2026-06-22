@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Tailed;
 
@@ -22,6 +23,7 @@ public sealed partial class TailedEntitySystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedJointSystem _joint = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -76,6 +78,9 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
     private void OnSegmentShutdown(EntityUid uid, TailedEntitySegmentComponent component, ComponentShutdown args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         _joint.ClearJoints(uid);
         QueueDel(component.HeadEntity);
     }
@@ -145,6 +150,12 @@ public sealed partial class TailedEntitySystem : EntitySystem
     {
         if (head.Comp.TailSegments.Count == 0)
             return;
+
+        foreach (var segment in head.Comp.TailSegments)
+        {
+            if (!TerminatingOrDeleted(segment))
+                return;
+        }
 
         CalculateSegmentTargets(head, out var targetPositions);
 

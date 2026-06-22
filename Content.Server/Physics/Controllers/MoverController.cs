@@ -230,7 +230,8 @@ public sealed partial class MoverController : SharedMoverController
             UsedMobMovement.EnsureCapacity(_moversToUpdate.Count);
             foreach (var entity in CollectionsMarshal.AsSpan(_moversToUpdate))
             {
-                UsedMobMovement.Add(entity.Owner, false);
+                // UsedMobMovement.Add(entity.Owner, false);
+                UsedMobMovement.TryAdd(entity.Owner, false); // TODO: discover why "UsedMobMovement" can be not cleared
             }
 
             var movementHandle = ProcessMobMovementParallel(_moversToUpdate, frameTime, 4);
