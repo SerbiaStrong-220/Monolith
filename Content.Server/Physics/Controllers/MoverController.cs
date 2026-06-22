@@ -236,7 +236,7 @@ public sealed partial class MoverController : SharedMoverController
                 UsedMobMovement.TryAdd(entity.Owner, false); // TODO: discover why "UsedMobMovement" can be not cleared
             }
 
-            var movementHandle = ProcessMobMovementParallel(_moversToUpdate, frameTime, 4);
+            var movementHandle = ProcessMobMovementParallel(_moversToUpdate, frameTime, _parallelThreadCount);
 
             while (!movementHandle.WaitOne(0))
             {
