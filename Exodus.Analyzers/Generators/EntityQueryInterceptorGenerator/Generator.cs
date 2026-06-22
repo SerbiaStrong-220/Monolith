@@ -1,18 +1,16 @@
+// (c) Space Exodus Team - EXDS-RL with CLA
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Text;
 
-namespace SS220.Analyzers.Generators.EntityQueryInterceptorGenerator;
+namespace Exodus.Analyzers.Generators.EntityQueryInterceptorGenerator;
 
 [Generator]
 public class EntityQueryInterceptorGenerator : IIncrementalGenerator
 {
-    // ---- Вспомогательные методы (бывший Collector) ----
-
     private readonly struct InvocationCallInfo
     {
         public readonly string MethodName;
@@ -62,34 +60,20 @@ public class EntityQueryInterceptorGenerator : IIncrementalGenerator
         return false;
     }
 
-    private static bool IsPartial(INamedTypeSymbol classSymbol)
-    {
-        foreach (var decl in classSymbol.DeclaringSyntaxReferences)
-        {
-            if (decl.GetSyntax() is TypeDeclarationSyntax typeDecl
-                && typeDecl.Modifiers.Any(SyntaxKind.PartialKeyword))
-                return true;
-        }
-        return false;
-    }
-
     private static INamedTypeSymbol? GetContainingClass(SyntaxNode node, SemanticModel model)
     {
         var parent = node.Parent;
         while (parent != null)
         {
             if (parent is TypeDeclarationSyntax typeDecl)
-                return model.GetDeclaredSymbol(typeDecl) as INamedTypeSymbol;
+                return model.GetDeclaredSymbol(typeDecl);
             parent = parent.Parent;
         }
         return null;
     }
 
-    // ---- Генератор ----
-
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // Атрибут InterceptsLocation (если отсутствует)
         context.RegisterPostInitializationOutput(ctx =>
         {
             ctx.AddSource("InterceptsLocationAttribute.g.cs", @"
@@ -132,9 +116,6 @@ namespace System.Runtime.CompilerServices
         if (containingClass is null || !IsEntitySystemClass(containingClass))
             return null;
 
-        if (!IsPartial(containingClass))
-            return null;
-
         var methodName = method.Name;
         if (methodName is not ("TryComp" or "HasComp"))
             return null;
@@ -168,10 +149,10 @@ namespace System.Runtime.CompilerServices
         var argList = new List<string>();
         foreach (var p in method.Parameters)
         {
-            string mod = p.RefKind switch { RefKind.Out => "out ", RefKind.Ref => "ref ", _ => "" };
-            string type = p.Type.ToDisplayString(typeFormat);
-            bool isNullableOut = p.RefKind == RefKind.Out && type.EndsWith("?");
-            string paramDecl = isNullableOut
+            var mod = p.RefKind switch { RefKind.Out => "out ", RefKind.Ref => "ref ", _ => "" };
+            var type = p.Type.ToDisplayString(typeFormat);
+            var isNullableOut = p.RefKind == RefKind.Out && type.EndsWith("?");
+            var paramDecl = isNullableOut
                 ? $"[global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] {mod}{type} {p.Name}"
                 : $"{mod}{type} {p.Name}";
             paramList.Add(paramDecl);
@@ -198,65 +179,50 @@ namespace System.Runtime.CompilerServices
             .Select(x => x!.Value)
             .ToImmutableArray();
 
-        var callsByClass = new Dictionary<INamedTypeSymbol, ImmutableArray<InvocationCallInfo>>(SymbolEqualityComparer.Default);
+        // Group calls by the assembly that contains the calling EntitySystem.
+        var callsByAssembly = new Dictionary<IAssemblySymbol, List<InvocationCallInfo>>(SymbolEqualityComparer.Default);
         foreach (var (containingClass, call) in methodCalls)
         {
-            if (callsByClass.ContainsKey(containingClass))
-                callsByClass[containingClass] = callsByClass[containingClass].Add(call);
-            else
-                callsByClass[containingClass] = ImmutableArray.Create(call);
+            var assembly = containingClass.ContainingAssembly;
+            if (!callsByAssembly.TryGetValue(assembly, out var list))
+            {
+                list = new List<InvocationCallInfo>();
+                callsByAssembly[assembly] = list;
+            }
+            list.Add(call);
         }
 
-        foreach (var kvp in callsByClass)
+        foreach (var kvp in callsByAssembly)
         {
-            var systemClass = kvp.Key;
+            var assembly = kvp.Key;
             var calls = kvp.Value;
             var uniqueComponents = calls.Select(c => c.ComponentTypeName).Distinct().ToImmutableArray();
 
-            spc.AddSource($"{systemClass.Name}.g.queries.cs", GenerateQueriesPartial(systemClass, uniqueComponents));
-            spc.AddSource($"{systemClass.Name}.g.interceptors.cs", GenerateInterceptors(systemClass, calls));
+            var className = GetCachingSystemClassName(assembly);
+            var ns = assembly.Name + ".GameObjects.EntitySystems";
+
+            spc.AddSource($"{className}.g.cs", GenerateCachingSystem(ns, className, uniqueComponents, calls));
         }
     }
 
-    private static string GenerateQueriesPartial(INamedTypeSymbol systemClass, ImmutableArray<string> componentTypeNames)
+    private static string GetCachingSystemClassName(IAssemblySymbol assembly)
     {
-        var ns = systemClass.ContainingNamespace.IsGlobalNamespace ? null : systemClass.ContainingNamespace.ToDisplayString();
-        var sb = new StringBuilder();
-        sb.AppendLine("// <auto-generated/>");
-        sb.AppendLine("#nullable enable");
-        sb.AppendLine("#pragma warning disable CS0649");
-        if (ns != null) { sb.AppendLine($"namespace {ns}"); sb.AppendLine("{"); }
-        var indent = ns == null ? "" : "    ";
-        sb.AppendLine($"{indent}public partial class {systemClass.Name}");
-        sb.AppendLine($"{indent}{{");
-        // Флаг ленивой инициализации
-        sb.AppendLine($"{indent}    [global::System.Runtime.CompilerServices.CompilerGenerated]");
-        sb.AppendLine($"{indent}    internal bool ___queriesInitialized = false;");
-        sb.AppendLine();
-        foreach (var compType in componentTypeNames)
-        {
-            var fieldName = GetFieldName(compType);
-            sb.AppendLine($"{indent}    [global::System.Runtime.CompilerServices.CompilerGenerated]");
-            sb.AppendLine($"{indent}    internal global::Robust.Shared.GameObjects.EntityQuery<{compType}> {fieldName};");
-        }
-        sb.AppendLine();
-        sb.AppendLine($"{indent}    [global::System.Runtime.CompilerServices.CompilerGenerated]");
-        sb.AppendLine($"{indent}    internal void ___InitializeQueries()");
-        sb.AppendLine($"{indent}    {{");
-        foreach (var compType in componentTypeNames)
-        {
-            var fieldName = GetFieldName(compType);
-            sb.AppendLine($"{indent}        {fieldName} = this.GetEntityQuery<{compType}>();");
-        }
-        sb.AppendLine($"{indent}    }}");
-        sb.AppendLine($"{indent}}}");
-        if (ns != null) sb.AppendLine("}");
-        return sb.ToString();
+        var name = assembly.Name;
+        var prefix = string.Empty;
+        if (name.StartsWith("Content."))
+            prefix = name.Substring("Content.".Length);
+        else
+            prefix = name.Contains('.') ? name.Substring(name.LastIndexOf('.') + 1) : name;
+
+        if (prefix.Length > 0 && char.IsLower(prefix[0]))
+            prefix = char.ToUpperInvariant(prefix[0]) + prefix.Substring(1);
+
+        return prefix + "ComponentCachingSystem";
     }
 
-    private static string GenerateInterceptors(INamedTypeSymbol systemClass, ImmutableArray<InvocationCallInfo> calls)
+    private static string GenerateCachingSystem(string ns, string className,
+        ImmutableArray<string> componentTypeNames, List<InvocationCallInfo> calls)
     {
-        var fullName = systemClass.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
         var sb = new StringBuilder();
         sb.AppendLine("// <auto-generated/>");
         sb.AppendLine("#nullable enable");
@@ -264,33 +230,42 @@ namespace System.Runtime.CompilerServices
         sb.AppendLine("using System.Diagnostics.CodeAnalysis;");
         sb.AppendLine("using Robust.Shared.GameObjects;");
         sb.AppendLine();
-        sb.AppendLine("namespace Content.Shared.GeneratedInterceptors");
+        sb.AppendLine($"namespace {ns}");
         sb.AppendLine("{");
-        sb.AppendLine($"    internal static class Interceptors_{systemClass.Name}");
+
+        sb.AppendLine($"    public sealed class {className} : EntitySystem");
         sb.AppendLine("    {");
-        int counter = 0;
+
+        foreach (var compType in componentTypeNames)
+        {
+            var fieldName = GetFieldName(compType);
+            sb.AppendLine($"        public static global::Robust.Shared.GameObjects.EntityQuery<{compType}> {fieldName};");
+        }
+
+        sb.AppendLine();
+        sb.AppendLine("        public override void Initialize()");
+        sb.AppendLine("        {");
+        sb.AppendLine("            base.Initialize();");
+        foreach (var compType in componentTypeNames)
+        {
+            var fieldName = GetFieldName(compType);
+            sb.AppendLine($"            {fieldName} = GetEntityQuery<{compType}>();");
+        }
+        sb.AppendLine("        }");
+        sb.AppendLine("    }"); // end class
+
+        sb.AppendLine();
+        sb.AppendLine($"    public static class {className}_Interceptors");
+        sb.AppendLine("    {");
+        var counter = 0;
         foreach (var call in calls)
         {
             var fieldName = GetFieldName(call.ComponentTypeName);
-            string parameters = "this EntitySystem __system";
+            var parameters = "this EntitySystem __system";
             if (!string.IsNullOrEmpty(call.ParameterListNoThis))
                 parameters += $", {call.ParameterListNoThis}";
 
-            // Тело с ленивой инициализацией запросов
-            string body = $@"
-        var sys = ({fullName})__system;
-        if (!sys.___queriesInitialized)
-        {{
-            sys.___InitializeQueries();
-            sys.___queriesInitialized = true;
-        }}
-        return sys.{fieldName}.{call.MethodName}Comp({call.ArgumentNamesNoThis});".TrimStart();
-
-            // Для TryComp имя метода в EntityQuery — TryGetComponent или TryComp?
-            // В исходниках EntityQuery есть оба варианта: TryComp и HasComp.
-            // Используем TryComp/HasComp напрямую, т.к. они есть в EntityQuery<T>.
-            body = body.Replace("TryCompComp", "TryComp")  // на случай лишнего Comp
-                       .Replace("HasCompComp", "HasComp");
+            var body = $"return {className}.{fieldName}.{call.MethodName}({call.ArgumentNamesNoThis});";
 
             sb.AppendLine($"        [global::System.Runtime.CompilerServices.InterceptsLocation({call.InterceptVersion}, \"{call.InterceptData}\")]");
             sb.AppendLine($"        public static {call.ReturnType} {call.MethodName}_{counter}({parameters})");
@@ -300,8 +275,9 @@ namespace System.Runtime.CompilerServices
             sb.AppendLine();
             counter++;
         }
-        sb.AppendLine("    }");
-        sb.AppendLine("}");
+        sb.AppendLine("    }"); // end Interceptors
+
+        sb.AppendLine("}"); // end namespace
         return sb.ToString();
     }
 

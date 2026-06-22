@@ -54,7 +54,7 @@ public sealed partial class WebAPI : IPostInjectInit
 
     private void UpdateToken()
     {
-        var tok = _config.GetCVar(XCVars.WebAPIToken);
+        var tok = _config.GetCVar(EXCVars.WebAPIToken);
         _webapiToken = string.IsNullOrEmpty(tok) ? null : tok;
     }
 

@@ -63,7 +63,7 @@ public sealed partial class MoverController : SharedMoverController
 
         SubscribeLocalEvent<PilotedShuttleComponent, StartCollideEvent>(PilotedShuttleRelayEvent<StartCollideEvent>); // Mono
 
-        _configManager.OnValueChanged(XCVars.ParallelMoverUpdate, x => _useParallelMobMover = x, true); // Exodus-ParallelMover
+        _configManager.OnValueChanged(EXCVars.ParallelMoverUpdate, x => _useParallelMobMover = x, true); // Exodus-ParallelMover
     }
 
     private void OnEntityPaused(Entity<ActiveInputMoverComponent> ent, ref EntityPausedEvent args)

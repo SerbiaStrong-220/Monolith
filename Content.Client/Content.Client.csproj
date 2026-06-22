@@ -4,6 +4,8 @@
     <OutputPath>..\bin\Content.Client\</OutputPath>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
     <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
+    <Features>Interceptors</Features>
+    <InterceptorsNamespaces>$(InterceptorsNamespaces);Content.Client</InterceptorsNamespaces>
   </PropertyGroup>
   <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
@@ -20,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
+    <ProjectReference Include="..\Exodus.Analyzers\Exodus.Analyzers.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="_Mono\Research\UI\" />
