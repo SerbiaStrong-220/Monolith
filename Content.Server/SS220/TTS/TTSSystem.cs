@@ -1,7 +1,6 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 
 using Content.Server.Chat.Systems;
-using Content.Shared.SS220.CCCVars;
 using Content.Shared.GameTicking;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.SS220.TTS;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.SS220.CCCVars;
+﻿using Content.Shared.Corvax.CCCVars;
 using Content.Shared._CorvaxGoob.OfferItem;
 using Robust.Client.Graphics;
 using Robust.Client.Input;

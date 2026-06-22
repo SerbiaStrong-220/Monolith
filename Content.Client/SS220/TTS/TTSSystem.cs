@@ -1,7 +1,6 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 
 using System.IO;
-using Content.Shared.SS220.CCCVars;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.SS220.TTS;
 using Content.Shared.SS220.TTS.Commands;

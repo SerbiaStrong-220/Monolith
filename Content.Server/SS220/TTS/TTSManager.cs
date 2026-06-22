@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Content.Shared.SS220.CCCVars;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.SS220.TTS;
 using Microsoft.IO;
