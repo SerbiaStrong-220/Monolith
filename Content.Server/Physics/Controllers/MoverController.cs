@@ -47,6 +47,7 @@ public sealed partial class MoverController : SharedMoverController
     private readonly List<Entity<InputMoverComponent>> _moversToUpdate = [];
 
     private bool _useParallelMobMover = false; // Exodus-ParallelMover
+    private int _parallelThreadCount; // Exodus-ParallelMover
 
     public override void Initialize()
     {
@@ -64,6 +65,7 @@ public sealed partial class MoverController : SharedMoverController
         SubscribeLocalEvent<PilotedShuttleComponent, StartCollideEvent>(PilotedShuttleRelayEvent<StartCollideEvent>); // Mono
 
         _configManager.OnValueChanged(EXCVars.ParallelMoverUpdate, x => _useParallelMobMover = x, true); // Exodus-ParallelMover
+        _configManager.OnValueChanged(EXCVars.ParallelMoverThreads, x => _parallelThreadCount = x, true); // Exodus-ParallelMover
     }
 
     private void OnEntityPaused(Entity<ActiveInputMoverComponent> ent, ref EntityPausedEvent args)

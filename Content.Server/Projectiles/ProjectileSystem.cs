@@ -203,8 +203,9 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
             var data = _rayData[i];
             var hits = _physics.IntersectRay(data.MapId, data.Ray, data.MaxDistance, data.Ignore, false);
             // Sort by distance so the sequential phase can just pick the first valid one
-            var sorted = hits.OrderBy(h => h.Distance).ToArray();
-            data.Hits = sorted;
+            var hitsArray = hits.ToArray();
+            Array.Sort(hitsArray, static (a, b) => a.Distance.CompareTo(b.Distance));
+            data.Hits = hitsArray;
             _rayData[i] = data;
         });
 
