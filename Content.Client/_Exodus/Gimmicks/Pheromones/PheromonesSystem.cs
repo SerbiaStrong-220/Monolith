@@ -9,8 +9,8 @@ namespace Content.Client._Exodus.Gimmicks.Pheromones;
 
 public sealed partial class PheromonesSystem : SharedPheromonesSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

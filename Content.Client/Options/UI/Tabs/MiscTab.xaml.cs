@@ -9,7 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Prototypes;
-using Content.Shared.Corvax.CCCVars; // # CorvaxGoob-Offer
+using Content.Shared.SS220.CCCVars; // # CorvaxGoob-Offer
 
 namespace Content.Client.Options.UI.Tabs;
 

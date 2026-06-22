@@ -13,9 +13,13 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
-using Robust.Shared.Map.Components;
-using Prometheus;
 using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
+using Content.Shared._Exodus.CCVar;
+using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -27,6 +31,8 @@ public sealed partial class MoverController : SharedMoverController
 
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ThrusterSystem _thruster = default!;
+    [Dependency] private IConfigurationManager _configManager = default!; // Exodus
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
@@ -39,6 +45,8 @@ public sealed partial class MoverController : SharedMoverController
     private readonly HashSet<EntityUid> _seenMovers = [];
     private readonly HashSet<EntityUid> _seenRelayMovers = [];
     private readonly List<Entity<InputMoverComponent>> _moversToUpdate = [];
+
+    private bool _useParallelMobMover = false; // Exodus-ParallelMover
 
     public override void Initialize()
     {
@@ -54,6 +62,8 @@ public sealed partial class MoverController : SharedMoverController
         SubscribeLocalEvent<PilotComponent, GetShuttleInputsEvent>(OnPilotGetInputs); // Mono
 
         SubscribeLocalEvent<PilotedShuttleComponent, StartCollideEvent>(PilotedShuttleRelayEvent<StartCollideEvent>); // Mono
+
+        _configManager.OnValueChanged(XCVars.ParallelMoverUpdate, x => _useParallelMobMover = x, true); // Exodus-ParallelMover
     }
 
     private void OnEntityPaused(Entity<ActiveInputMoverComponent> ent, ref EntityPausedEvent args)
@@ -210,10 +220,59 @@ public sealed partial class MoverController : SharedMoverController
 
         ActiveMoverGauge.Set(_moversToUpdate.Count);
 
-        foreach (var ent in _moversToUpdate)
+        // Exodus-ParallelMover-Start
+        if (_useParallelMobMover)
         {
-            HandleMobMovement(ent, frameTime);
+            SoundQueue.Clear();
+            SetLocalRotationQueue.Clear();
+
+            DebugTools.Assert(UsedMobMovement.Count == 0);
+            UsedMobMovement.EnsureCapacity(_moversToUpdate.Count);
+            foreach (var entity in CollectionsMarshal.AsSpan(_moversToUpdate))
+            {
+                UsedMobMovement.Add(entity.Owner, false);
+            }
+
+            var movementHandle = ProcessMobMovementParallel(_moversToUpdate, frameTime, 4);
+
+            while (!movementHandle.WaitOne(0))
+            {
+                var processedAny = false;
+                while (SoundQueue.TryDequeue(out var queuedSound))
+                {
+                    _audio.PlayPredicted(queuedSound.Sound, queuedSound.Key, queuedSound.User, queuedSound.AudioParams);
+                    processedAny = true;
+                }
+
+                while (SetLocalRotationQueue.TryDequeue(out var localRotation))
+                {
+                    _transform.SetLocalRotation(localRotation.Target, localRotation.Value, localRotation.Xform);
+                    processedAny = true;
+                }
+
+                if (!processedAny)
+                    Thread.Yield();
+            }
+
+            while (SoundQueue.TryDequeue(out var queuedSound))
+            {
+                _audio.PlayPredicted(queuedSound.Sound, queuedSound.Key, queuedSound.User, queuedSound.AudioParams);
+            }
+
+            while (SetLocalRotationQueue.TryDequeue(out var localRotation))
+            {
+                _transform.SetLocalRotation(localRotation.Target, localRotation.Value, localRotation.Xform);
+            }
+
         }
+        else
+        {
+            foreach (var ent in _moversToUpdate)
+            {
+                HandleMobMovement(ent, frameTime, false, ref AroundColliderSet);
+            }
+        }
+        // Exodus-ParallelMover-end
 
         HandleShuttlePilot(frameTime);
 

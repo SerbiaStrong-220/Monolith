@@ -4,6 +4,6 @@ namespace Content.Shared._Exodus.CCVar;
 
 public partial class XCVars
 {
-    public static readonly CVarDef<float> AutoUnstuckTime =
-        CVarDef.Create("exds.auto_unstuck_time", 15f, CVar.SERVERONLY);
+    public static readonly CVarDef<bool> ParallelMoverUpdate =
+        CVarDef.Create("exds.parallel_mover_update", false, CVar.SERVERONLY);
 }

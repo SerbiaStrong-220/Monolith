@@ -79,8 +79,17 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
     /// </summary>
-    public ConcurrentDictionary<EntityUid, bool> UsedMobMovement = new(); // SS220-make-it-concurrent-dictionary
-    private readonly HashSet<EntityUid> _aroundColliderSet = [];
+    public Dictionary<EntityUid, bool> UsedMobMovement = new();
+
+    // Exodus-ParallelMover-Start
+    protected readonly record struct QueuedSound(SoundSpecifier Sound, EntityUid Key, EntityUid User, AudioParams AudioParams);
+    protected readonly ConcurrentQueue<QueuedSound> SoundQueue = new();
+
+    protected readonly record struct QueuedSetLocalRotation(EntityUid Target, Angle Value, TransformComponent Xform);
+    protected readonly ConcurrentQueue<QueuedSetLocalRotation> SetLocalRotationQueue = new();
+    // Exodus-ParallelMover-End
+
+    protected HashSet<EntityUid> AroundColliderSet = []; // SS220 make collider hashset changeable
 
     public override void Initialize()
     {
@@ -138,7 +147,9 @@ public abstract partial class SharedMoverController : VirtualController
     /// </summary>
     protected void HandleMobMovement(
         Entity<InputMoverComponent> entity,
-        float frameTime)
+        float frameTime,
+        bool calledInParallel, // Exodus-ParallelMover
+        ref HashSet<EntityUid> threadColliderSet) // Exodus-ParallelMover
     {
         var uid = entity.Owner;
         var mover = entity.Comp;
@@ -208,9 +219,29 @@ public abstract partial class SharedMoverController : VirtualController
             || !PhysicsQuery.TryComp(uid, out var physicsComponent)
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
-            UsedMobMovement[uid] = false;
+            // Exodus-ParallelMover-Start
+            if (calledInParallel)
+                DebugTools.Assert(UsedMobMovement.TryGetValue(uid, out var used) && used == false);
+            else
+                UsedMobMovement[uid] = false;
+            // Exodus-ParallelMover-End
             return;
         }
+
+        // Exodus-ParallelMover-Start: reduce computing cost for idle mobs
+        if (AssertValidWish(mover, MovementSpeedModifierComponent.DefaultBaseWalkSpeed, MovementSpeedModifierComponent.DefaultBaseSprintSpeed) == Vector2.Zero
+            && physicsComponent.LinearVelocity.LengthSquared() < 0.00001f)
+        {
+            if (calledInParallel)
+                DebugTools.Assert(UsedMobMovement.ContainsKey(uid));
+            UsedMobMovement[uid] = true;
+
+            if (physicsComponent.AngularVelocity != 0f)
+                PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
+
+            return;
+        }
+        // Exodus-ParallelMover-End
 
         // If the body is in air but isn't weightless then it can't move
         // TODO: MAKE ISWEIGHTLESS EVENT BASED
@@ -221,12 +252,19 @@ public abstract partial class SharedMoverController : VirtualController
         {
             if (!weightless)
             {
-                UsedMobMovement[uid] = false;
+                // Exodus-ParallelMover-Start
+                if (calledInParallel)
+                    DebugTools.Assert(UsedMobMovement.TryGetValue(uid, out var used) && used == false);
+                else
+                    UsedMobMovement[uid] = false;
+                // Exodus-ParallelMover-End
                 return;
             }
             inAirHelpless = true;
         }
 
+        if (calledInParallel)
+            DebugTools.Assert(UsedMobMovement.ContainsKey(uid));
         UsedMobMovement[uid] = true;
 
         var moveSpeedComponent = ModifierQuery.CompOrNull(uid);
@@ -256,7 +294,7 @@ public abstract partial class SharedMoverController : VirtualController
 
             // If we're not on a grid, and not able to move in space check if we're close enough to a grid to touch.
             if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
-                touching |= IsAroundCollider(_lookup, (uid, physicsComponent, mobMover, xform));
+                touching |= IsAroundCollider(_lookup, (uid, physicsComponent, mobMover, xform), ref threadColliderSet); // Exodus-ParallelMover
 
             // If we're touching then use the weightless values
             if (touching)
@@ -335,8 +373,6 @@ public abstract partial class SharedMoverController : VirtualController
         // Ensures that players do not spiiiiiiin
         PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
 
-        UpdateTailedMob(uid, frameTime); // Exodus-TailedMobs
-
         // Handle footsteps at the end
         if (wishDir != Vector2.Zero)
         {
@@ -346,7 +382,12 @@ public abstract partial class SharedMoverController : VirtualController
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                 var worldRot = _transform.GetWorldRotation(xform);
 
-                _transform.SetLocalRotation(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform);
+                // Exodus-ParallelMover-Start
+                if (calledInParallel)
+                    SetLocalRotationQueue.Enqueue(new(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform));
+                else
+                // Exodus-ParallelMover-End
+                    _transform.SetLocalRotation(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
@@ -358,6 +399,14 @@ public abstract partial class SharedMoverController : VirtualController
                 var audioParams = sound.Params
                     .WithVolume(sound.Params.Volume + soundModifier)
                     .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
+
+                // Exodus-ParallelMover-Start
+                if (calledInParallel)
+                {
+                    SoundQueue.Enqueue(new(sound, uid, relaySource ?? uid, audioParams));
+                    return;
+                }
+                // Exodus-ParallelMover-End
 
                 // If we're a relay target then predict the sound for all relays.
                 if (relaySource != null)
@@ -472,14 +521,14 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Used for weightlessness to determine if we are near a wall.
     /// </summary>
-    private bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
+    private bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity, ref HashSet<EntityUid> threadColliderSet) // Exodus-ParallelMover: Make IsAroundCollider thread safe
     {
         var (uid, collider, mover, transform) = entity;
         var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
 
-        _aroundColliderSet.Clear();
-        lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB, _aroundColliderSet);
-        foreach (var otherEntity in _aroundColliderSet)
+        threadColliderSet.Clear(); // Exodus
+        lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB, threadColliderSet); // Exodus
+        foreach (var otherEntity in threadColliderSet) // Exodus
         {
             if (otherEntity == uid)
                 continue; // Don't try to push off of yourself!
