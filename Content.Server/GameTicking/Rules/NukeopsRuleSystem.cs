@@ -1,5 +1,4 @@
 using Content.Server.Antag;
-using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Nuke;
 using Content.Server.NukeOps;
@@ -61,7 +60,7 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
 
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
         SubscribeLocalEvent<WarDeclaredEvent>(OnWarDeclared);
-        SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
+        // SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt); // Exodus
 
         SubscribeLocalEvent<NukeopsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
         SubscribeLocalEvent<NukeopsRuleComponent, RuleLoadedGridsEvent>(OnRuleLoadedGrids);
@@ -303,25 +302,26 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         }
     }
 
-    private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
-    {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out _, out _, out var nukeops, out _))
-        {
-            // Can't call while war nukies are preparing to arrive
-            if (nukeops is { WarDeclaredTime: not null })
-            {
-                // Nukies must wait some time after declaration of war to get on the station
-                var warTime = Timing.CurTime.Subtract(nukeops.WarDeclaredTime.Value);
-                if (warTime < nukeops.WarEvacShuttleDisabled)
-                {
-                    ev.Cancelled = true;
-                    ev.Reason = Loc.GetString("war-ops-shuttle-call-unavailable");
-                    return;
-                }
-            }
-        }
-    }
+    // Exodus
+    // private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
+    // {
+    //     var query = QueryActiveRules();
+    //     while (query.MoveNext(out _, out _, out var nukeops, out _))
+    //     {
+    //         // Can't call while war nukies are preparing to arrive
+    //         if (nukeops is { WarDeclaredTime: not null })
+    //         {
+    //             // Nukies must wait some time after declaration of war to get on the station
+    //             var warTime = Timing.CurTime.Subtract(nukeops.WarDeclaredTime.Value);
+    //             if (warTime < nukeops.WarEvacShuttleDisabled)
+    //             {
+    //                 ev.Cancelled = true;
+    //                 ev.Reason = Loc.GetString("war-ops-shuttle-call-unavailable");
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // }
 
     private void OnWarDeclared(ref WarDeclaredEvent ev)
     {

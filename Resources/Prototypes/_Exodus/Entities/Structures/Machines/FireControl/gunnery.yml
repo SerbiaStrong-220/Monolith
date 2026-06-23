@@ -1,0 +1,24 @@
+﻿# Exodus : Gunnery Server
+- type: entity
+  id: GunneryServerAlfa
+  parent: [BaseStructureDisableToolUse, GunneryServerBase]
+  name: alfa-high-power gunnery control server
+  components:
+  - type: Machine
+    board: MachineGCSAlfaCircuitboard
+  - type: FireControlServer
+    processingPower: 200
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: ApcPowerReceiver
+    powerLoad: 4000
+  - type: ApcPowerReceiverBattery
+    idleLoad: 100
+    batteryRechargeRate: 4800
+    batteryRechargeEfficiency: 0.95
+  - type: Anchorable # Sorry Flyssa, but I am NOT risking this being used for a missile bus.
+    flags: Anchorable
+  - type: ShipRepairable
+    repairTime: 40
+    repairCost: 150

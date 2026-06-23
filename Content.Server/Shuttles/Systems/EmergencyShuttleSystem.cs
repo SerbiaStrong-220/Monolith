@@ -5,7 +5,6 @@ using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.Communications;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Pinpointer;
@@ -53,7 +52,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private AccessReaderSystem _reader = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
-    [Dependency] private CommunicationsConsoleSystem _commsConsole = default!;
+    // [Dependency] private CommunicationsConsoleSystem _commsConsole = default!; // Exodus
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private DockingSystem _dock = default!;
     [Dependency] private IdCardSystem _idSystem = default!;
@@ -470,7 +469,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             AnnounceShuttleDock(shuttleDockResult, multiplier > 1);
         }
 
-        _commsConsole.UpdateCommsConsoleInterface();
+        // _commsConsole.UpdateCommsConsoleInterface(); // Exodus
     }
 
     private void SetupEmergencyShuttle()
