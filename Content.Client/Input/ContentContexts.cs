@@ -46,7 +46,7 @@ namespace Content.Client.Input
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
 
-            // Exodus-Start: copy decal(s) under the cursor; only act while the decal spawn window is open.
+            // Exodus-Start copy decal(s) under the cursor, only act while the decal spawn window is open.
             common.AddFunction(ContentKeyFunctions.EditorCopyDecal);
             common.AddFunction(ContentKeyFunctions.EditorCopyDecalStack);
             // Exodus-End

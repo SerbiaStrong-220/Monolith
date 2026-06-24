@@ -10,7 +10,6 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
 
     private readonly List<Color> _colors = new();
 
-    /// <summary>Raised whenever the favorites list changes, so open windows can refresh.</summary>
     public event Action? FavoritesChanged;
 
     public IReadOnlyList<Color> Colors => _colors;
@@ -26,7 +25,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
         return _colors.Any(c => SameColor(c, color));
     }
 
-    /// <summary>Adds the color, or removes it if already a favorite.</summary>
+    // Adds the color, or removes it if already a favorite.
     public bool Toggle(Color color)
     {
         if (Remove(color))
@@ -37,7 +36,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
         return true;
     }
 
-    /// <summary>Removes the color if present. Returns true if something was removed.</summary>
+    // Removes the color if present. Returns true if something was removed.
     private bool Remove(Color color)
     {
         var index = _colors.FindIndex(c => SameColor(c, color));

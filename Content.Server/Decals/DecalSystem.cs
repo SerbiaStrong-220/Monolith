@@ -266,7 +266,7 @@ namespace Content.Server.Decals
             if (gridId == null)
                 return;
 
-            // Exodus-Start: remove only the topmost decal per click instead of wiping the whole tile.
+            // Exodus-Start remove only the topmost decal per click instead of wiping the whole tile.
             // Original behaviour removed every decal in range:
             // // remove all decals on the same tile
             // foreach (var (decalId, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))

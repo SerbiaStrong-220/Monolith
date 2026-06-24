@@ -32,7 +32,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        // Exodus-Start: while a tool is active, draw its preview instead of the single-decal preview.
+        // Exodus-Start
         if (_placement.EyedropperActive)
         {
             DrawEyedropper(args);
@@ -84,7 +84,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
         handle.SetTransform(Matrix3x2.Identity);
     }
 
-    // Exodus-Start: preview of the copied decal stack, following the cursor before it is stamped.
+    // Exodus-Start preview of the copied decal stack.
     private void DrawStamp(in OverlayDrawArgs args)
     {
         var mouseScreenPos = _inputManager.MouseScreenPosition;
@@ -120,7 +120,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
         handle.SetTransform(Matrix3x2.Identity);
     }
 
-    // crosshair shown at the cursor marking the sample point of the eyedropper tool.
+    // crosshair of eyedropper tool.
     private void DrawEyedropper(in OverlayDrawArgs args)
     {
         var mouseScreenPos = _inputManager.MouseScreenPosition;
@@ -129,13 +129,13 @@ public sealed partial class DecalPlacementOverlay : Overlay
         if (mousePos.MapId != args.MapId)
             return;
 
-        // The handle is already in world space here (we never set a transform), so draw directly.
+        // The handle is already in world space here so draw directly.
         var handle = args.WorldHandle;
         var pos = mousePos.Position;
         const float arm = 0.35f;
         const float gap = 0.08f;
 
-        // Draw a dark outline first so the crosshair stays visible over any decal color.
+        // Dark outline first so crosshair stays visible over any decal.
         DrawCross(handle, pos, arm, gap, 0.04f, Color.Black.WithAlpha(0.6f));
         DrawCross(handle, pos, arm, gap, 0f, Color.White);
         handle.DrawCircle(pos, gap, Color.White, false);

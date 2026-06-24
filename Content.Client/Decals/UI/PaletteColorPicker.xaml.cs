@@ -19,7 +19,6 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     private readonly TextureResource _tex;
 
     // Exodus-Start
-    // Sentinel metadata marking the synthetic "Favorites" entry (not a prototype).
     private static readonly object FavoritesMarker = new();
     private readonly FavoriteDecalColorsSystem _favorites;
     // Exodus-End
@@ -43,7 +42,7 @@ public sealed partial class PaletteColorPicker : DefaultWindow
             i += 1;
         }
 
-        // Exodus-Start: append the user's favorites as a synthetic palette.
+        // Exodus-Start
         Palettes.AddItem(Loc.GetString("decal-placer-palette-favorites"));
         Palettes.SetItemMetadata(i, FavoritesMarker);
         _favorites.FavoritesChanged += OnFavoritesChanged;
@@ -63,7 +62,7 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     {
         PaletteList.Clear();
 
-        // Exodus: the Favorites entry is dynamic.
+        // Exodus Favorites entry is dynamic.
         if (Palettes.SelectedMetadata is ColorPalettePrototype palette)
         {
             foreach (var (name, value) in palette.Colors)

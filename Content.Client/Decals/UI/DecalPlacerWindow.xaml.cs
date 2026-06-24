@@ -57,13 +57,11 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         ColorPicker.OnColorChanged += OnColorPicked;
 
         // Exodus-Start
-        // Arm the eyedropper. Subscribe for this window instance's lifetime (unsubscribed in Dispose);
-        // tying it to Opened/Close leaks a stale handler when the window is disposed without closing.
         EyedropperButton.OnPressed += _ => _decalPlacementSystem.SetEyedropper(!_decalPlacementSystem.EyedropperActive);
         _decalPlacementSystem.EyedropperPicked += OnEyedropperPicked;
         _decalPlacementSystem.DecalCopied += OnDecalCopied; // "O" copy hotkey
 
-        // Star toggles the current color in/out of favorites; keep it lit when the color matches.
+        // Star toggles the current color in/out of favorites, keep it lit when the color matches.
         FavoriteButton.OnPressed += _ =>
         {
             _favorites.Toggle(_color);
@@ -141,12 +139,9 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         UpdateFavoriteStar(); // Exodus
     }
 
-    // Exodus-Start
-    // Reflect whether the current color is saved as a favorite (★ lit / ☆ unlit).
+    // Exodus-Start.
     private void UpdateFavoriteStar()
     {
-        // These run from a system event; a dead instance must not touch its controls (it would
-        // throw and abort the event's multicast before live windows run).
         if (Disposed)
             return;
 
@@ -155,13 +150,13 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         FavoriteButton.Modulate = saved ? Color.Gold : Color.White;
     }
 
-    // Apply a color copied from a decal via the eyedropper tool.
+    // Apply a color via eyedropper tool.
     private void OnEyedropperPicked(Color color)
     {
         if (Disposed)
             return;
 
-        // Make sure the copied color is actually used when placing.
+        // Make sure the copied color is actually used.
         _useColor = true;
         EnableColor.Pressed = true;
 
@@ -169,7 +164,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         OnColorPicked(color);
     }
 
-    // Mirror a decal copied from the map (hotkey "O") into the placer settings.
+    // Mirror a decal copied from the map into settings.
     private void OnDecalCopied(Decal decal)
     {
         if (Disposed)
@@ -255,8 +250,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         if (obj.Button.Name == null)
             return;
 
-        // Exodus-Start: clicking the already-selected decal again clears the selection
-        // instead of leaving it stuck to the cursor.
+        // Exodus-Start clicking the selected decal again clears selection instead of leaving it stuck to the cursor.
         if (obj.Button.Name == _selected)
         {
             _selected = null;
@@ -313,7 +307,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         _decalPlacementSystem.SetActive(false);
     }
 
-    // Exodus-Start: drop subscriptions and owned windows when this instance is destroyed.
+    // Exodus-Start drop subscriptions and owned windows when this instance is destroyed.
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -322,8 +316,6 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
             _decalPlacementSystem.EyedropperPicked -= OnEyedropperPicked;
             _decalPlacementSystem.DecalCopied -= OnDecalCopied;
             _favorites.FavoritesChanged -= UpdateFavoriteStar;
-            // The palette picker is owned by this window; dispose it so its own
-            // FavoritesChanged subscription doesn't leak past this window's lifetime.
             _picker?.Dispose();
         }
     }

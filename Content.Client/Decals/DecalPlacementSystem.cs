@@ -42,14 +42,8 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     // Exodus-Start
     private bool _eyedropper;
 
-    /// <summary>
-    /// Whether the eyedropper is currently selected.
-    /// </summary>
     public bool EyedropperActive => _eyedropper;
 
-    /// <summary>
-    /// Raised when the eyedropper successfully copies a color from a decal.
-    /// </summary>
     public event Action<Color>? EyedropperPicked;
 
     public void SetEyedropper(bool active)
@@ -68,16 +62,12 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     private readonly List<(Vector2 Offset, Decal Decal)> _stamp = new();
     private bool _stamping;
 
-    /// <summary>
-    /// Whether a multi-decal stamp is currently held and ready to be placed.
-    /// </summary>
+    // Whether a multi-decal stamp is currently held and ready to be placed.
     public bool Stamping => _stamping && _stamp.Count > 0;
 
     public IReadOnlyList<(Vector2 Offset, Decal Decal)> Stamp => _stamp;
 
-    /// <summary>
-    /// Raised when a single decal is copied from the map, so the window can mirror its settings.
-    /// </summary>
+    // Raised when a single decal is copied from the map, so the window can mirror its settings.
     public event Action<Decal>? DecalCopied;
     // Exodus-End
 
@@ -96,7 +86,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
-                // Exodus-Start: left click while the eyedropper is active copies a color.
+                // Exodus-Start
                 if (_eyedropper)
                 {
                     _eyedropper = false;
@@ -148,7 +138,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
             .Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
-                // Exodus-Start: right click cancels the eyedropper or a held stamp instead of erasing.
+                // Exodus-Start
                 if (_eyedropper)
                 {
                     _eyedropper = false;
@@ -179,7 +169,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
 
                 return true;
             }, true))
-            // Exodus-Start: copy the decal (O - not 0) or the whole stack (Ctrl+O) under the cursor.
+            // Exodus-Start copy the decal (O - not 0) or the whole stack (Ctrl+O) under the cursor.
             .Bind(ContentKeyFunctions.EditorCopyDecal, new PointerInputCmdHandler(OnCopyDecal))
             .Bind(ContentKeyFunctions.EditorCopyDecalStack, new PointerInputCmdHandler(OnCopyDecalStack))
             // Exodus-End
