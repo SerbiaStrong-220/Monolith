@@ -10,7 +10,7 @@ namespace Content.Server._Exodus.Territory;
 /// Tracks captured territory score per faction.
 /// Recalculates on round start, updates by delta on claim changes, and keeps every declared territory faction present at score 0.
 /// </summary>
-public sealed class TerritoryCounterSystem : EntitySystem
+public sealed partial class TerritoryCounterSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
 

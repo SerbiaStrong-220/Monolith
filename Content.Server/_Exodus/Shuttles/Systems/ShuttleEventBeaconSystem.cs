@@ -6,7 +6,7 @@ using Content.Shared.Popups;
 
 namespace Content.Server._Exodus.Shuttles.Systems;
 
-public sealed class ShuttleEventBeaconSystem : EntitySystem
+public sealed partial class ShuttleEventBeaconSystem : EntitySystem
 {
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private SharedPopupSystem _popup = default!;

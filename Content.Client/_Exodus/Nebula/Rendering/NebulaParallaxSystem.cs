@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Nebula.Rendering;
 
-public sealed class NebulaParallaxSystem : EntitySystem
+public sealed partial class NebulaParallaxSystem : EntitySystem
 {
     private static readonly TimeSpan BackgroundLightningDuration = TimeSpan.FromSeconds(0.38f);
     private static readonly TimeSpan BackgroundLightningMinDelay = TimeSpan.FromSeconds(2);

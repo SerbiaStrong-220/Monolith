@@ -3,7 +3,7 @@ using Content.Server.Radio;
 
 namespace Content.Server._Exodus.Nebula.Hazards;
 
-public sealed class NebulaRadioBlackoutSystem : EntitySystem
+public sealed partial class NebulaRadioBlackoutSystem : EntitySystem
 {
     private const int MaxParentChecks = 8;
 

@@ -12,7 +12,7 @@ namespace Content.Shared._Exodus.Nebula;
 /// <c>Content.Server</c> and <c>Content.Client</c> and only differ in where they read the
 /// nebula summary list from.
 /// </summary>
-public abstract class SharedNebulaSystem : EntitySystem
+public abstract partial class SharedNebulaSystem : EntitySystem
 {
     [Dependency] protected SharedMapSystem MapSystem = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;

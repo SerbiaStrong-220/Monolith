@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Content.Server._Exodus.Store;
 
-public sealed class TerritoryStoreDiscountSystem : EntitySystem
+public sealed partial class TerritoryStoreDiscountSystem : EntitySystem
 {
     private const string TerritoryDiscountModifierId = "ExodusTerritoryDiscount";
 

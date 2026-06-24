@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.NPC;
 
-public sealed class FactionNpcAiCoreControlSystem : EntitySystem
+public sealed partial class FactionNpcAiCoreControlSystem : EntitySystem
 {
     public override void Initialize()
     {

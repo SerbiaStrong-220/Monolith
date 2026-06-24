@@ -23,7 +23,7 @@ namespace Content.Server._Exodus.Nebula.Generation;
 /// <see cref="NebulaGenerationConfigPrototype.WorldEndMidRadius"/>); only the inner marker
 /// carries a radar blip — the mid-radius boundary is intentionally invisible to players.
 /// </summary>
-public sealed class DeathZoneGenerationSystem : EntitySystem
+public sealed partial class DeathZoneGenerationSystem : EntitySystem
 {
     private const int RadarContourSamples = 512;
 

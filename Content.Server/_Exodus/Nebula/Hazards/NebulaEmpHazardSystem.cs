@@ -21,7 +21,7 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 /// pulled from the marker prototype's
 /// <see cref="Content.Shared._Exodus.Nebula.Hazards.NebulaEmpHazardComponent"/>.
 /// </summary>
-public sealed class NebulaEmpHazardSystem : EntitySystem
+public sealed partial class NebulaEmpHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
     private static readonly TimeSpan PulseTileCacheRefreshInterval = TimeSpan.FromSeconds(60);

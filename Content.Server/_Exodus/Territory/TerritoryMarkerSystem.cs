@@ -5,7 +5,7 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server._Exodus.Territory;
 
-public sealed class TerritoryMarkerSystem : EntitySystem
+public sealed partial class TerritoryMarkerSystem : EntitySystem
 {
     private const float RadarEdgeVisibilityPadding = 10_000f;
 

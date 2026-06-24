@@ -27,7 +27,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula.Generation;
 
-public sealed class NebulaGenerationSystem : EntitySystem
+public sealed partial class NebulaGenerationSystem : EntitySystem
 {
     private const string DebugContourPointPrototype = "NebulaDebugContourPoint";
     private const string DebugBoundingPointPrototype = "NebulaDebugBoundingPoint";

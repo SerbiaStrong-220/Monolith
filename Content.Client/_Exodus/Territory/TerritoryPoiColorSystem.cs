@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Exodus.Territory;
 
-public sealed class TerritoryPoiColorSystem : EntitySystem
+public sealed partial class TerritoryPoiColorSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
 

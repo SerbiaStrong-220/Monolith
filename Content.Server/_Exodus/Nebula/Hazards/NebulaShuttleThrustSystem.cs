@@ -14,7 +14,7 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 /// <see cref="GetNebulaShuttleThrustEvent"/> is raised from MoverController during active
 /// movement, while nebula/thruster inputs change comparatively rarely.
 /// </summary>
-public sealed class NebulaShuttleThrustSystem : EntitySystem
+public sealed partial class NebulaShuttleThrustSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;

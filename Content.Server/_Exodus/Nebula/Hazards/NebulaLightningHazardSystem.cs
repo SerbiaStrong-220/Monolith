@@ -29,7 +29,7 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 /// is pulled from the marker prototype's
 /// <see cref="Content.Shared._Exodus.Nebula.Hazards.NebulaLightningHazardComponent"/>.
 /// </summary>
-public sealed class NebulaLightningHazardSystem : EntitySystem
+public sealed partial class NebulaLightningHazardSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
     private static readonly TimeSpan StrikeTileCacheRefreshInterval = TimeSpan.FromSeconds(30);

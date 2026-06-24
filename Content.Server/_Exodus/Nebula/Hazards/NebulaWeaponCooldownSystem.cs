@@ -14,7 +14,7 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 /// plus per-weapon nebula rate multipliers and resistance.
 /// Cache-driven so gun fire checks do not resolve marker prototype components every shot.
 /// </summary>
-public sealed class NebulaWeaponCooldownSystem : EntitySystem
+public sealed partial class NebulaWeaponCooldownSystem : EntitySystem
 {
     private const float MinCooldownMultiplier = 0.1f;
 

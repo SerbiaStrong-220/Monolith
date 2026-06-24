@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Territory;
 
-public sealed class GridTerritoryNpcFactionSystem : EntitySystem
+public sealed partial class GridTerritoryNpcFactionSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private NpcFactionSystem _npcFaction = default!;

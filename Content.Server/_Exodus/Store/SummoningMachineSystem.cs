@@ -16,7 +16,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server._Exodus.Store;
 
-public sealed class SummoningMachineSystem : EntitySystem
+public sealed partial class SummoningMachineSystem : EntitySystem
 {
     [Dependency] private BiocodeSystem _biocode = default!;
     [Dependency] private PopupSystem _popup = default!;

@@ -20,7 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Nebula.Presence;
 
-public sealed class NebulaPresenceSystem : EntitySystem
+public sealed partial class NebulaPresenceSystem : EntitySystem
 {
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
     public static readonly TimeSpan NpcGridScanInterval = TimeSpan.FromSeconds(20);

@@ -17,7 +17,7 @@ namespace Content.Server._Exodus.Nebula.Generation;
 /// Bluespace events and other dynamic spawners are not affected — this only gates the
 /// chunk-driven worldgen pipeline.
 /// </summary>
-public sealed class NebulaDebrisExclusionSystem : EntitySystem
+public sealed partial class NebulaDebrisExclusionSystem : EntitySystem
 {
     [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private IPrototypeManager _prototype = default!;

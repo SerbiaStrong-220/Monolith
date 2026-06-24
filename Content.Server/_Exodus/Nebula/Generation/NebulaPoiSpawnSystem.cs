@@ -31,7 +31,7 @@ namespace Content.Server._Exodus.Nebula.Generation;
 /// <see cref="MaxNebulaFallbacks"/> other eligible nebulas are tried with the same
 /// <see cref="SampleAttempts"/> budget each.
 /// </summary>
-public sealed class NebulaPoiSpawnSystem : EntitySystem
+public sealed partial class NebulaPoiSpawnSystem : EntitySystem
 {
     private const int SampleAttempts = 16;
     private const int MaxNebulaFallbacks = 6;

@@ -17,7 +17,7 @@ namespace Content.Server._Exodus.Nebula.Hazards;
 ///
 /// Also caches "marker prototype has component X" results so per-effect lookups are O(1).
 /// </summary>
-public sealed class NebulaHazardCoordinatorSystem : EntitySystem
+public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;
