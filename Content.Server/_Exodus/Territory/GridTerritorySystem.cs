@@ -63,6 +63,7 @@ public sealed class GridTerritorySystem : EntitySystem
         ent.Comp.Radius = profile.Radius;
         ent.Comp.BiomeSourcePrototype = profile.BiomeSourcePrototype;
         ent.Comp.Claimable = profile.Claimable;
+        ent.Comp.MinClaimRepairIntegrity = profile.MinClaimRepairIntegrity;
         ent.Comp.ColorPoiByFaction = profile.ColorPoiByFaction;
         ent.Comp.NeutralPoiColor = profile.NeutralPoiColor;
     }

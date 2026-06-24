@@ -1,7 +1,7 @@
 using Content.Server._Mono.Radar;
 using Content.Server.Popups;
 using Content.Shared._Exodus.Territory;
-using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Maps;
 using Content.Shared._Mono.Radar;
 using Robust.Shared.Map.Components;
@@ -23,6 +23,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
     private const float ActiveBannerRadarEdgeVisibilityPadding = 10_000f;
 
     [Dependency] private GridTerritorySystem _territory = default!;
+    [Dependency] private TerritoryClaimIntegritySystem _claimIntegrity = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedMapSystem _map = default!;
 
@@ -34,6 +35,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
         _gridQuery = GetEntityQuery<MapGridComponent>();
 
+        SubscribeLocalEvent<TerritoryBannerComponent, AnchorAttemptEvent>(OnAnchorAttempt);
         SubscribeLocalEvent<TerritoryBannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentStartup>(OnStartup);
@@ -78,6 +80,25 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         }
     }
     // Exodus end
+
+    private void OnAnchorAttempt(Entity<TerritoryBannerComponent> ent, ref AnchorAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        var xform = Transform(ent);
+        if (!TryResolveBannerGrid(xform, out var grid))
+            return;
+
+        if (!TryComp<GridTerritoryComponent>(grid, out var territory))
+            return;
+
+        if (_claimIntegrity.CanAnchorClaimBanner((grid, territory)))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("grid-territory-claim-low-integrity"), ent, args.User);
+        args.Cancel();
+    }
 
     private void OnAnchorChanged(Entity<TerritoryBannerComponent> ent, ref AnchorStateChangedEvent args)
     {
@@ -223,7 +244,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
             RemCompDeferred<RadarBlipComponent>(banner);
     }
 
-    // Exodus start - tolerate late GridUid init for anchored banners parented directly to the grid.
+    // Exodus start - tolerate late GridUid init for banners parented directly to the grid.
     private bool TryResolveBannerGrid(TransformComponent xform, out EntityUid grid)
     {
         if (xform.GridUid is { } gridUid)
@@ -232,7 +253,7 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
             return true;
         }
 
-        if (xform.Anchored && _gridQuery.HasComponent(xform.ParentUid))
+        if (_gridQuery.HasComponent(xform.ParentUid))
         {
             grid = xform.ParentUid;
             return true;

@@ -59,6 +59,15 @@ public sealed partial class GridTerritoryComponent : Component
     public bool Claimable = true;
 
     /// <summary>
+    /// Minimum fraction of snapshotted SRD-repairable entities that must still be anchored on this grid
+    /// before a territory banner can be anchored to claim it.
+    /// Server applies this from the territory profile resolved by game map / station id.
+    /// Zero disables the integrity gate.
+    /// </summary>
+    [AutoNetworkedField]
+    public float MinClaimRepairIntegrity = 0f;
+
+    /// <summary>
     /// The faction currently controlling this territory.
     /// Defined in TerritoryFactionPrototype (data-driven config under _Exodus).
     /// Null / unset = neutral.
