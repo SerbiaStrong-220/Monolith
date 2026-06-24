@@ -139,7 +139,7 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
         public CollisionRay Ray;
         public float MaxDistance;
         public EntityUid Ignore;
-        public RayCastResults[] Hits;
+        public IEnumerable<RayCastResults> Hits;
         public Vector2 Velocity;
     }
     // Exodus-OptimizeProjectiles-End
@@ -203,9 +203,9 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
             var data = _rayData[i];
             var hits = _physics.IntersectRay(data.MapId, data.Ray, data.MaxDistance, data.Ignore, false);
             // Sort by distance so the sequential phase can just pick the first valid one
-            var hitsArray = hits.ToArray();
-            Array.Sort(hitsArray, static (a, b) => a.Distance.CompareTo(b.Distance));
-            data.Hits = hitsArray;
+            var hitsList = (List<RayCastResults>)hits;
+            hitsList.Sort(static (a, b) => a.Distance.CompareTo(b.Distance));
+            data.Hits = hitsList;
             _rayData[i] = data;
         });
 
@@ -227,7 +227,7 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
             }
 
             bool ProcessHitsSequential(EntityUid uid, ProjectileComponent comp, PhysicsComponent body,
-                TransformComponent xform, Fixture projFix, RayCastResults[] sortedHits, Vector2 velocity, float frameTime)
+                TransformComponent xform, Fixture projFix, IEnumerable<RayCastResults> sortedHits, Vector2 velocity, float frameTime)
             {
                 foreach (var hit in sortedHits)
                 {

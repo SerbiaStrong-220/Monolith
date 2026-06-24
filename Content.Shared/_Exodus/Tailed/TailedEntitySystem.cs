@@ -35,9 +35,9 @@ public sealed partial class TailedEntitySystem : EntitySystem
         SubscribeLocalEvent<TailedEntitySegmentComponent, ComponentShutdown>(OnSegmentShutdown);
     }
 
-    public override void FrameUpdate(float frameTime)
+    public override void Update(float frameTime)
     {
-        base.FrameUpdate(frameTime);
+        base.Update(frameTime);
 
         var query = EntityQueryEnumerator<TailedEntityComponent>();
         while (query.MoveNext(out var uid, out var tailed))
