@@ -42,10 +42,6 @@
   <Project Path="Content.Tests/Content.Tests.csproj" />
   <Project Path="Content.Tools/Content.Tools.csproj" />
   <Project Path="Content.YAMLLinter/Content.YAMLLinter.csproj" />
-  <Project Path="Exodus.Analyzers/Exodus.Analyzers.csproj">
-    <BuildType Solution="DebugOpt|*" Project="Debug" />
-    <BuildType Solution="Tools|*" Project="Debug" />
-  </Project>
   <Project Path="Pow3r/Pow3r.csproj" />
   <Folder Name="/RobustToolbox/.github/" />
   <Folder Name="/RobustToolbox/.github/workflows/">
