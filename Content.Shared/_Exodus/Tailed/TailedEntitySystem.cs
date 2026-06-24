@@ -153,7 +153,7 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
         foreach (var segment in head.Comp.TailSegments)
         {
-            if (!TerminatingOrDeleted(segment))
+            if (TerminatingOrDeleted(segment))
                 return;
         }
 
