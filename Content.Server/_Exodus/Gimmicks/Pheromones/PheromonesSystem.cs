@@ -17,11 +17,11 @@ namespace Content.Server._Exodus.Gimmicks.Pheromones;
 
 public sealed partial class PheromonesSystem : SharedPheromonesSystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private InteractionSystem _interaction = default!;
 
     #region Public API
 

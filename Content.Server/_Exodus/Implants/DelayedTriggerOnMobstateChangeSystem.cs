@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Implants;
 
-public sealed class DelayedTriggerOnMobstateChangeSystem : EntitySystem
+public sealed partial class DelayedTriggerOnMobstateChangeSystem : EntitySystem
 {
     private const float UpdateTimer = 5f;
 
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     private float _updateTimer = 0f;
 

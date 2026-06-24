@@ -7,7 +7,7 @@ namespace Content.Server._Exodus.Adminbus.Admin;
 
 public sealed partial class XAdminSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
 
     public override void Initialize()
     {

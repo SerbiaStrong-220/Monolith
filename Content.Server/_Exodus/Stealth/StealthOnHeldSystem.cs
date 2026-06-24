@@ -6,9 +6,9 @@ using Content.Shared.Hands;
 
 namespace Content.Server._Exodus.Stealth;
 
-public sealed class StealthOnHeldSystem : EntitySystem
+public sealed partial class StealthOnHeldSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStealthSystem _stealthSystem = default!;
+    [Dependency] private SharedStealthSystem _stealthSystem = default!;
 
     public override void Initialize()
     {

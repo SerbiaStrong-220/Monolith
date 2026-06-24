@@ -1,9 +1,11 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 // Authors: Lokilife
+using System.Numerics;
 using Content.Shared.Damage;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Tailed;
 
@@ -17,9 +19,11 @@ namespace Content.Shared._Exodus.Tailed;
 /// </summary>
 public sealed partial class TailedEntitySystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedJointSystem _joint = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedJointSystem _joint = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -29,6 +33,17 @@ public sealed partial class TailedEntitySystem : EntitySystem
         SubscribeLocalEvent<TailedEntityComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<TailedEntitySegmentComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<TailedEntitySegmentComponent, ComponentShutdown>(OnSegmentShutdown);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<TailedEntityComponent>();
+        while (query.MoveNext(out var uid, out var tailed))
+        {
+            UpdateTailedMob((uid, tailed), frameTime);
+        }
     }
 
     private void OnDamageChanged(EntityUid uid, TailedEntitySegmentComponent component, DamageChangedEvent args)
@@ -63,6 +78,9 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
     private void OnSegmentShutdown(EntityUid uid, TailedEntitySegmentComponent component, ComponentShutdown args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         _joint.ClearJoints(uid);
         QueueDel(component.HeadEntity);
     }
@@ -126,5 +144,151 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
             prev = segment;
         }
+    }
+
+    private void UpdateTailedMob(Entity<TailedEntityComponent> head, float frameTime)
+    {
+        if (head.Comp.TailSegments.Count == 0)
+            return;
+
+        foreach (var segment in head.Comp.TailSegments)
+        {
+            if (TerminatingOrDeleted(segment))
+                return;
+        }
+
+        CalculateSegmentTargets(head, out var targetPositions);
+
+        ApplySegmentVelocities(head.Comp, targetPositions, frameTime);
+
+        UpdateSegmentRotation(head, frameTime);
+    }
+
+    private void CalculateSegmentTargets(
+        Entity<TailedEntityComponent> head,
+        out Vector2[] targetPositions)
+    {
+        targetPositions = new Vector2[head.Comp.TailSegments.Count];
+
+        var headPos = _transform.GetWorldPosition(head);
+        var headDir = _transform.GetWorldRotation(head).ToWorldVec();
+
+        targetPositions[0] = headPos - headDir * head.Comp.Spacing;
+
+        for (var i = 1; i < head.Comp.TailSegments.Count; i++)
+        {
+            var prevSegment = head.Comp.TailSegments[i - 1];
+            var prevPos = _transform.GetWorldPosition(prevSegment);
+            var prevDir = _transform.GetWorldRotation(prevSegment).ToWorldVec();
+
+            targetPositions[i] = prevPos - prevDir * head.Comp.Spacing;
+        }
+    }
+
+    private void ApplySegmentVelocities(
+        TailedEntityComponent tail,
+        Vector2[] targetPositions,
+        float frameTime)
+    {
+        var prevPos = Vector2.Zero;
+        EntityUid? prevEntity = null;
+
+        for (var i = 0; i < tail.TailSegments.Count; i++)
+        {
+            var segment = tail.TailSegments[i];
+
+            if (!TryComp<PhysicsComponent>(segment, out var physics))
+                continue;
+
+            var currentPos = _transform.GetWorldPosition(segment);
+            Vector2 desiredVelocity;
+
+            if (prevEntity != null)
+            {
+                var toPrev = prevPos - currentPos;
+                var currentDistance = toPrev.Length();
+                var directionToPrev = toPrev.Normalized();
+
+                if (currentDistance < tail.Spacing * tail.MinLengthMultiplier)
+                {
+                    desiredVelocity = -directionToPrev * tail.MaxSegmentSpeed * 0.5f;
+                }
+                else if (currentDistance > tail.Spacing * tail.MaxLengthMultiplier)
+                {
+                    desiredVelocity = directionToPrev * tail.MaxSegmentSpeed;
+                }
+                else
+                {
+                    var targetPos = targetPositions[i];
+                    var toTarget = targetPos - currentPos;
+                    desiredVelocity = toTarget * tail.FollowSharpness;
+                }
+            }
+            else
+            {
+                var targetPos = targetPositions[i];
+                var toTarget = targetPos - currentPos;
+                desiredVelocity = toTarget * tail.FollowSharpness;
+            }
+
+            if (desiredVelocity.Length() > tail.MaxSegmentSpeed)
+            {
+                desiredVelocity = desiredVelocity.Normalized() * tail.MaxSegmentSpeed;
+            }
+
+            var currentVelocity = physics.LinearVelocity;
+
+            var newVelocity = Vector2.Lerp(
+                currentVelocity,
+                desiredVelocity,
+                frameTime * tail.VelocitySmoothing);
+
+            _physics.SetLinearVelocity(segment, newVelocity, body: physics);
+
+            prevEntity = segment;
+            prevPos = currentPos;
+        }
+    }
+
+    private void UpdateSegmentRotation(
+        Entity<TailedEntityComponent> head,
+        float frameTime)
+    {
+        if (!head.Comp.EnableRotationControl) return;
+
+        var prevPos = _transform.GetWorldPosition(head);
+
+        for (var i = 0; i < head.Comp.TailSegments.Count; i++)
+        {
+            var segment = head.Comp.TailSegments[i];
+
+            var segmentPos = _transform.GetWorldPosition(segment);
+
+            var direction = prevPos - segmentPos;
+
+            if (direction.LengthSquared() > 0.1f)
+            {
+                var targetAngle = NormalizeAngle(MathF.Atan2(direction.Y, direction.X) + head.Comp.RotationModifier);
+
+                var currentAngle = _transform.GetWorldRotation(segment);
+
+                var newAngle = Angle.Lerp(
+                    currentAngle,
+                    targetAngle,
+                    frameTime * head.Comp.RotationLerpSpeed);
+
+                _transform.SetWorldRotation(segment, newAngle);
+            }
+
+            prevPos = segmentPos;
+        }
+    }
+
+    private static Angle NormalizeAngle(Angle angle)
+    {
+        angle %= MathHelper.TwoPi;
+        if (angle < 0)
+            angle += MathHelper.TwoPi;
+        return angle;
     }
 }

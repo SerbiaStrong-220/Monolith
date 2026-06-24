@@ -177,6 +177,10 @@ public sealed class OreMagnetSystem : EntitySystem
 
         foreach (var (entityUid, (magnetUid, magnetComp, distance)) in _pullTargets)
         {
+            // Don't pull ore if can't actually store
+            if (!_storage.CanInsert(magnetUid, entityUid, out _))
+                continue;
+
             var magnetPos = _transform.GetWorldPosition(Transform(magnetUid));
             var entityPos = _transform.GetWorldPosition(Transform(entityUid));
             var direction = magnetPos - entityPos;
