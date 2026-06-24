@@ -70,3 +70,6 @@ discord = "https://discord.gg/ss220"
 wiki = "https://ex.ss220.club"
 github = "https://github.com/SerbiaStrong-220/Monolith"
 website = "https://serbiastrong-220.github.io/webmap-exodus"
+
+[exds]
+parallel_mover_update = true

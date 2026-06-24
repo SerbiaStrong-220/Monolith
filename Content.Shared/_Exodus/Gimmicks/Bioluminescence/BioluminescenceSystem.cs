@@ -7,8 +7,8 @@ namespace Content.Shared._Exodus.Gimmicks.Bioluminescence;
 
 public sealed partial class BioluminescenceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private SharedPointLightSystem _light = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     public override void Initialize()
     {

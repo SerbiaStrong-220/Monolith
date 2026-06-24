@@ -15,14 +15,14 @@ namespace Content.Server._Exodus.EmergencyActions;
 /// <summary>
 /// Injects a configured reagent pool into the trigger user.
 /// </summary>
-public sealed class AddReagentOnTriggerSystem : EntitySystem
+public sealed partial class AddReagentOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ReactiveSystem _reactive = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

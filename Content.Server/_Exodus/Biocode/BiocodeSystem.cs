@@ -17,10 +17,10 @@ namespace Content.Server._Exodus.Biocode;
 /// </summary>
 public sealed class BiocodeSystem : SharedBiocodeSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {

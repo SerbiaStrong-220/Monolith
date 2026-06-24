@@ -11,9 +11,9 @@ namespace Content.Server._Exodus.ShipShields;
 /// or the hard damage cap (Damage &gt; DamageLimit) was crossed while the emitter was powered.
 /// Skips overloads caused by pure power loss.
 /// </summary>
-public sealed class ExplodeOnShieldOverloadSystem : EntitySystem
+public sealed partial class ExplodeOnShieldOverloadSystem : EntitySystem
 {
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private ExplosionSystem _explosion = default!;
 
     public override void Update(float frameTime)
     {
