@@ -7,7 +7,7 @@ namespace Content.Server._Exodus.Territory;
 /// <summary>
 /// Checks whether a grid still has enough SRD-snapshotted repairable structure to be worth claiming.
 /// </summary>
-public sealed class TerritoryClaimIntegritySystem : EntitySystem
+public sealed partial class TerritoryClaimIntegritySystem : EntitySystem
 {
     public bool CanAnchorClaimBanner(Entity<GridTerritoryComponent> territory)
     {

@@ -17,6 +17,8 @@ grid-territory-already-claimed = This station already has an active control bann
 grid-territory-claimed = Station control claimed.
 grid-territory-unclaimed = Station control released.
 grid-territory-claim-disabled = This territory cannot be claimed with a banner.
+grid-territory-claim-round-cooldown = Territory claims will be available in {$minutes} min.
+grid-territory-claim-faction-cooldown = This faction can claim another territory in {$minutes} min.
 grid-territory-claim-low-integrity = This station is too damaged to be worth claiming.
 
 construction-examine-condition-territory-claim-exists = This station already has an active territory control banner.

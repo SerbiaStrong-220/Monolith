@@ -25,12 +25,13 @@ namespace Content.Server._Exodus.Territory;
 /// 
 /// All new territory control code lives under _Exodus as per project style.
 /// </summary>
-public sealed class GridTerritorySystem : EntitySystem
+public sealed partial class GridTerritorySystem : EntitySystem
 {
     [Dependency] private TerritoryMarkerSystem _marker = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private GridTerritoryNpcFactionSystem _npcFaction = default!;
+    [Dependency] private TerritoryClaimRulesSystem _claimRules = default!;
 
     public override void Initialize()
     {
@@ -63,7 +64,8 @@ public sealed class GridTerritorySystem : EntitySystem
         ent.Comp.Radius = profile.Radius;
         ent.Comp.BiomeSourcePrototype = profile.BiomeSourcePrototype;
         ent.Comp.Claimable = profile.Claimable;
-        ent.Comp.MinClaimRepairIntegrity = profile.MinClaimRepairIntegrity;
+        ent.Comp.MinClaimRepairIntegrity =
+            profile.MinClaimRepairIntegrity ?? _claimRules.GetDefaultMinClaimRepairIntegrity();
         ent.Comp.ColorPoiByFaction = profile.ColorPoiByFaction;
         ent.Comp.NeutralPoiColor = profile.NeutralPoiColor;
     }

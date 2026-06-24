@@ -36,6 +36,11 @@
 #     This is equivalent to round-half-up for positive kilometer values.
 #   - Scores updated live on claim changes (GridTerritoryControllerChangedEvent).
 #   - Other systems should query TerritoryCounterSystem.GetScore(faction) or subscribe to TerritoryScoreChangedEvent.
+#
+# Claim cooldown:
+#   - claimCooldown is optional and written in seconds.
+#   - If unset, territoryClaimRules.defaultFactionClaimCooldown is used.
+#   - Set claimCooldown: 0 to disable the cooldown for a specific faction.
 
 - type: territoryFaction
   id: TSFMC

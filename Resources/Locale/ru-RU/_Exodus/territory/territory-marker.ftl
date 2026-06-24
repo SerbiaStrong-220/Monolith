@@ -17,6 +17,8 @@ grid-territory-already-claimed = Эта станция уже имеет уст�
 grid-territory-claimed = Станция перешла под контроль.
 grid-territory-unclaimed = Контроль над станцией снят.
 grid-territory-claim-disabled = Эту территорию нельзя захватить баннером.
+grid-territory-claim-round-cooldown = Захват территорий будет доступен через { $minutes } мин.
+grid-territory-claim-faction-cooldown = Эта фракция сможет захватить другую территорию через { $minutes } мин.
 grid-territory-claim-low-integrity = Станция слишком разрушена и не представляет ценности для захвата.
 
 construction-examine-condition-territory-claim-exists = На этой станции уже установлен баннер контроля территории.

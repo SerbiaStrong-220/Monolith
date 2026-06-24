@@ -17,12 +17,13 @@ namespace Content.Server._Exodus.Territory;
 ///
 /// Factions without final art can use temporary placeholder banner entities.
 /// </summary>
-public sealed class GridTerritoryBannerSystem : EntitySystem
+public sealed partial class GridTerritoryBannerSystem : EntitySystem
 {
     private const float ActiveBannerRadarBlipHalfSize = 1.5f;
     private const float ActiveBannerRadarEdgeVisibilityPadding = 10_000f;
 
     [Dependency] private GridTerritorySystem _territory = default!;
+    [Dependency] private TerritoryClaimRulesSystem _claimRules = default!;
     [Dependency] private TerritoryClaimIntegritySystem _claimIntegrity = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedMapSystem _map = default!;
@@ -92,6 +93,13 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
 
         if (!TryComp<GridTerritoryComponent>(grid, out var territory))
             return;
+
+        if (!_claimRules.CanStartClaim(ent.Comp.Faction, out var popup))
+        {
+            _popup.PopupEntity(popup, ent, args.User);
+            args.Cancel();
+            return;
+        }
 
         if (_claimIntegrity.CanAnchorClaimBanner((grid, territory)))
             return;
@@ -171,7 +179,16 @@ public sealed class GridTerritoryBannerSystem : EntitySystem
         ConfigureActiveBannerBlip(banner, (grid, terr));
 
         if (showPopup)
+        {
+            if (terr.ActiveClaimBanner == banner.Owner &&
+                terr.ControllingFaction is { } controllingFaction &&
+                controllingFaction.Equals(banner.Comp.Faction))
+            {
+                _claimRules.RecordSuccessfulClaim(banner.Comp.Faction);
+            }
+
             _popup.PopupEntity(Loc.GetString("grid-territory-claimed"), banner);
+        }
     }
 
     private void TryUnclaim(Entity<TerritoryBannerComponent> banner)

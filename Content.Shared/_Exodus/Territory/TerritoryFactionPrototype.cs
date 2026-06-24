@@ -44,6 +44,14 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     [DataField]
     public TerritoryDiscountAlignment DiscountAlignment { get; private set; } = TerritoryDiscountAlignment.Positive;
 
+    /// <summary>
+    /// Optional cooldown before this faction can claim another territory.
+    /// If unset, territoryClaimRules.defaultFactionClaimCooldown is used.
+    /// Zero disables per-faction claim cooldown for this faction.
+    /// </summary>
+    [DataField]
+    public TimeSpan? ClaimCooldown { get; private set; }
+
     // # Exodus start - faction color for territory rings on BSS map and nav radar
     /// <summary>
     /// Base color used for the territory influence rings (BSS jump map and navigation radar)

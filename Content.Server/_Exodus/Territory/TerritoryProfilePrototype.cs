@@ -48,10 +48,11 @@ public sealed partial class TerritoryProfilePrototype : IPrototype
     /// <summary>
     /// Minimum fraction of snapshotted SRD-repairable entities that must still be anchored on this grid
     /// before a territory banner can be anchored to claim it.
-    /// Zero disables the integrity gate.
+    /// If unset, territoryClaimRules.defaultMinClaimRepairIntegrity is used.
+    /// Zero disables the integrity gate and avoids scanning the SRD snapshot.
     /// </summary>
     [DataField]
-    public float MinClaimRepairIntegrity { get; private set; } = 0f;
+    public float? MinClaimRepairIntegrity { get; private set; }
 
     /// <summary>
     /// If true, POI icon/label colors on shuttle maps follow territory ownership.
