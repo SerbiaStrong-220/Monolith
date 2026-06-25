@@ -130,7 +130,7 @@ public sealed partial class SharpSystem : EntitySystem
         if (hasBody)
             _bodySystem.GibBody(args.Args.Target.Value, body: body);
 
-        _destructibleSystem.DestroyEntity(args.Args.Target.Value);
+        _destructibleSystem.DestroyEntity(args.Args.Target.Value, args.Args.User); // Exodus
 
         args.Handled = true;
 

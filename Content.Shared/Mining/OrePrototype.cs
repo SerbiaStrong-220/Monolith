@@ -25,3 +25,16 @@ public sealed partial class OrePrototype : IPrototype
     [DataField]
     public SpriteSpecifier? OreSprite;
 }
+
+// Exodus-Start: a way to balance ore drop
+// Raised on damage origin
+public sealed class MaxOreYieldModifierEvent : EntityEventArgs
+{
+    public float Modifier { get; private set; } = 1;
+
+    public void Modify(float modifier)
+    {
+        Modifier *= modifier;
+    }
+}
+// Exodus-End

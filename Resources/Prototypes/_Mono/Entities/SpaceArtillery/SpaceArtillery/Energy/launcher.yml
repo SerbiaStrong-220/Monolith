@@ -208,7 +208,7 @@
     range: 500
   - type: FireControlRotate
   - type: Gun
-    fireRate: 5
+    fireRate: 2 # Exodus-Balance: 5>2
     recoil: 2 # 2/25x
     projectileSpeed: 20
     minAngle: 0
@@ -614,7 +614,7 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: Gun
-    fireRate: 20
+    fireRate: 10 # Exodus-Balance: 20>10
     recoil: 0
     minAngle: 0
     maxAngle: 0
