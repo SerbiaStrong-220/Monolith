@@ -154,7 +154,7 @@ namespace Content.Shared.Damage
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
         public void DamageChanged(EntityUid uid, DamageableComponent component, DamageSpecifier? damageDelta = null,
-            bool interruptsDoAfters = true, EntityUid? origin = null, bool? canSever = null, float armorPenetration = 0f) // Shitmed Change
+            bool interruptsDoAfters = true, EntityUid? origin = null, EntityUid? tool = null, bool? canSever = null, float armorPenetration = 0f) // Shitmed Change // Exodus: add tool arg
         {
             component.Damage.GetDamagePerGroup(_prototypeManager, component.DamagePerGroup);
             component.TotalDamage = component.Damage.GetTotal();
@@ -165,7 +165,7 @@ namespace Content.Shared.Damage
                 var data = new DamageVisualizerGroupData(component.DamagePerGroup.Keys.ToList());
                 _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
-            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin, canSever ?? true)); // Shitmed Change
+            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin, tool, canSever ?? true)); // Shitmed Change // Exodus: add tool arg
         }
 
         // Mono: damage origin flags for if we can't or don't want to discern by UID
@@ -266,7 +266,7 @@ namespace Content.Shared.Damage
             }
 
             if (delta.DamageDict.Count > 0)
-                DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin, canSever); // Shitmed Change
+                DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin, tool, canSever); // Shitmed Change // Exodus: add tool arg
 
             return delta;
         }
@@ -522,15 +522,21 @@ namespace Content.Shared.Damage
         public readonly EntityUid? Origin;
 
         /// <summary>
+        ///     Exodus: Contains the entity which was used to cause change in damage, if any
+        /// </summary>
+        public readonly EntityUid? Tool;
+
+        /// <summary>
         ///     Shitmed Change: Can this damage event sever parts?
         /// </summary>
         public readonly bool CanSever;
 
-        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters, EntityUid? origin, bool canSever = true) // Shitmed Change
+        public DamageChangedEvent(DamageableComponent damageable, DamageSpecifier? damageDelta, bool interruptsDoAfters, EntityUid? origin, EntityUid? tool, bool canSever = true) // Shitmed Change // Exodus: Add tool arg
         {
             Damageable = damageable;
             DamageDelta = damageDelta;
             Origin = origin;
+            Tool = tool; // Exodus
             CanSever = canSever; // Shitmed Change
             if (DamageDelta == null)
                 return;

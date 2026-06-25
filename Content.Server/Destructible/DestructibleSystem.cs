@@ -90,7 +90,7 @@ namespace Content.Server.Destructible
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
 
-                    threshold.Reached(uid, this, args.Origin, spaceOrigin);
+                    threshold.Reached(uid, this, args.Tool ?? args.Origin, spaceOrigin); // Exodus: try use tool ar origin and if its not possible then user
                 }
 
                 // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.

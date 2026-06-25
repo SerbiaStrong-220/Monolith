@@ -86,11 +86,6 @@ public sealed class OreMagnetSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        _scanTimer += frameTime;
-        if (_scanTimer < ScanInterval)
-            return;
-        _scanTimer = 0;
-
         if (_activeCount <= 0 && _lidOpenCount <= 0)
             return;
 
@@ -112,6 +107,11 @@ public sealed class OreMagnetSystem : EntitySystem
                 }
             }
         }
+
+        _scanTimer += frameTime;
+        if (_scanTimer < ScanInterval)
+            return;
+        _scanTimer = 0;
 
         PullEntities();
     }
