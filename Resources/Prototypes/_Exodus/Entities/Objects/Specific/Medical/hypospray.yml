@@ -31,3 +31,43 @@
     rechargeInterval: 30
   - type: UseDelay
     delay: 0.5
+
+- type: entity
+  id: BorgAdvancedParamedicHypo
+  parent: BaseItem
+  name: advanced borg hypospray
+  description: A sterile injector for rapid administration of advanced synthesized emergency medicine.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: borghypo
+  - type: Item
+    sprite: Objects/Specific/Medical/hypospray.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 30
+        reagents:
+        - ReagentId: Aglomorphine
+          Quantity: 30
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: true
+    injectOnly: true
+    transferAmount: 5
+    preventCombatInjection: true
+  - type: CyclingHypospray
+    reagents:
+    - Aglomorphine
+    - Dermaline
+    - DexalinPlus
+    - Oculine
+    - Leporazine
+  - type: ReagentAutoRecharge
+    solutionName: hypospray
+    reagent: Aglomorphine
+    rechargeAmount: 5
+    rechargeInterval: 30
+  - type: UseDelay
+    delay: 0.5

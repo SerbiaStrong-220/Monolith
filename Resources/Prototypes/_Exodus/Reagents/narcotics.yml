@@ -1,0 +1,48 @@
+- type: reagent
+  id: Aglomorphine
+  name: reagent-name-aglomorphine
+  group: Narcotics
+  desc: reagent-desc-aglomorphine
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
+  color: "#9168a6"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.1
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 3
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.17
+        sprintSpeedModifier: 1.17
+        statusLifetime: 2
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.6
+            Slash: -0.6
+            Piercing: -0.6
+            Heat: -0.6
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+        type: Add
+        time: 3
+        refresh: true
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Aglomorphine
+          min: 10
+        damage:
+          types:
+            Cellular: 5
+            Poison: 5
+      - !type:Jitter
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
