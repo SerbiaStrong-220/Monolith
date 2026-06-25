@@ -175,9 +175,8 @@ public sealed class OreMagnetSystem : EntitySystem
 
             if (!_storage.CanInsert(magnetUid, entityUid, out _))
             {
-                // Deactivate magnet if it cant pull items - its cheaper than CanInsert per item
-                magnetComp.DeactivateAt = null;
-                _activeCount--;
+                // New checks of IsActive is way cheaper that repeating CanInsert on full magnet
+                DeactivateMagnet(magnet);
                 continue;
             }
 
