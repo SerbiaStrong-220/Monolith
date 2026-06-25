@@ -5,7 +5,7 @@
   desc: reagent-desc-aglomorphine
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
-  color: "#9168a6"
+  color: white
   metabolisms:
     Narcotic:
       metabolismRate: 0.1
