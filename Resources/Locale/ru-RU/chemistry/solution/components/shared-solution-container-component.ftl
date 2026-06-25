@@ -1,8 +1,4 @@
-shared-solution-container-component-on-examine-main-text =
-    Содержит [color={ $color }]{ $desc }[/color] { $chemCount ->
-        [1] вещество.
-       *[other] смесь веществ.
-    }
+shared-solution-container-component-on-examine-main-text = Содержит [color={ $color }]{ $desc }[/color] { $wordedAmount }
 examinable-solution-has-recognizable-chemicals = Вам удаётся распознать { $recognizedString } в этом растворе.
 examinable-solution-recognized = [color={ $color }]{ $chemical }[/color]
 examinable-solution-on-examine-volume = Ёмкость { $fillLevel ->
@@ -35,6 +31,6 @@ examinable-solution-on-examine-volume-puddle =
 examinable-solution-recognized-first = [color={ $color }]{ $chemical }[/color]
 examinable-solution-recognized-next = , [color={ $color }]{ $chemical }[/color]
 examinable-solution-recognized-last = and [color={ $color }]{ $chemical }[/color]
-shared-solution-container-component-on-examine-worded-amount-one-reagent = chemical.
-shared-solution-container-component-on-examine-worded-amount-multiple-reagents = mixture of chemicals.
-shared-solution-container-component-on-examine-empty-container = Contains no chemicals.
+shared-solution-container-component-on-examine-worded-amount-one-reagent = вещество.
+shared-solution-container-component-on-examine-worded-amount-multiple-reagents = смесь веществ.
+shared-solution-container-component-on-examine-empty-container = Не содержит веществ.

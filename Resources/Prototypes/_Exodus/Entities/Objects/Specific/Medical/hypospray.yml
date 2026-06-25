@@ -1,8 +1,6 @@
 - type: entity
   id: BorgParamedicHypo
   parent: BaseItem
-  name: paramedic borg hypospray
-  description: A sterile injector for rapid administration of synthesized emergency medicine.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
@@ -35,8 +33,6 @@
 - type: entity
   id: BorgAdvancedParamedicHypo
   parent: BaseItem
-  name: advanced borg hypospray
-  description: A sterile injector for rapid administration of advanced synthesized emergency medicine.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
