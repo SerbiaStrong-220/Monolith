@@ -35,6 +35,7 @@ public sealed partial class SpaceCleanupSystem : BaseCleanupSystem<PhysicsCompon
     private float _maxDistance;
     private float _maxGridDistance;
     private float _maxPrice;
+    private const float MinCleanupPrice = 10f; // Exodus - so ~1.5 tiles to grid, ~36 tiles to player radius instead of 0.
 
     private EntityQuery<CleanupImmuneComponent> _immuneQuery;
     private EntityQuery<FixturesComponent> _fixQuery;
@@ -95,8 +96,10 @@ public sealed partial class SpaceCleanupSystem : BaseCleanupSystem<PhysicsCompon
             && !_mindQuery.HasComp(uid) // no deleting anything that can have a mind - should be handled by MobCleanupSystem anyway
             && (price = (float)_pricing.GetPrice(uid)) <= _maxPrice
             && (isStuck
-                || !_cleanup.HasNearbyGrids(xform.Coordinates, _maxGridDistance * aggression * MathF.Sqrt(price / _maxPrice))
-                    && !_cleanup.HasNearbyPlayers(xform.Coordinates, _maxDistance * aggression * MathF.Sqrt(price / _maxPrice)));
+            // Exodus-Start
+                || !_cleanup.HasNearbyGrids(xform.Coordinates, _maxGridDistance * aggression * MathF.Sqrt(MathF.Max(price, MinCleanupPrice) / _maxPrice))
+                    && !_cleanup.HasNearbyPlayers(xform.Coordinates, _maxDistance * aggression * MathF.Sqrt(MathF.Max(price, MinCleanupPrice) / _maxPrice)));
+            // Exodus-End
     }
 
     private bool GetWallStuck(Entity<TransformComponent> ent)

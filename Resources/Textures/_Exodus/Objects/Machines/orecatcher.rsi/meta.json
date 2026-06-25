@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Edit by 20kdc, с использованием частей autolathe и tcboss из tgstation. Resprited by Lanc for SS220",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "orecatcher"
+    },
+    {
+      "name": "orecatcher-top"
+    }
+  ]
+}

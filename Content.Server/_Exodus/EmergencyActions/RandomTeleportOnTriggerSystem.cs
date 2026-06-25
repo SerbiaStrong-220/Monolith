@@ -9,13 +9,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.EmergencyActions;
 
-public sealed class RandomTeleportOnTriggerSystem : EntitySystem
+public sealed partial class RandomTeleportOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly TeleportSystem _teleport = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private TeleportSystem _teleport = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

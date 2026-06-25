@@ -22,13 +22,13 @@ namespace Content.Server._Exodus.Adminbus.WebAPI;
 
 public sealed partial class WebAPI : IPostInjectInit
 {
-    [Dependency] private readonly IStatusHost _statusHost = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly ITaskManager _task = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IBaseServer _server = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private IStatusHost _statusHost = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private ITaskManager _task = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IBaseServer _server = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IAdminManager _admin = default!;
 
     private string? _webapiToken;
     private ISawmill _sawmill = default!;
@@ -54,7 +54,7 @@ public sealed partial class WebAPI : IPostInjectInit
 
     private void UpdateToken()
     {
-        var tok = _config.GetCVar(XCVars.WebAPIToken);
+        var tok = _config.GetCVar(EXCVars.WebAPIToken);
         _webapiToken = string.IsNullOrEmpty(tok) ? null : tok;
     }
 

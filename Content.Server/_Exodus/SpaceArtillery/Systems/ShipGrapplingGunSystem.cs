@@ -16,15 +16,15 @@ using System.Numerics;
 
 namespace Content.Server._Exodus.SpaceArtillery;
 
-public sealed class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
+public sealed partial class ShipGrapplingGunSystem : SharedShipGrapplingGunSystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PvsOverrideSystem _override = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private SharedJointSystem _joints = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private PvsOverrideSystem _override = default!;
 
     private EntityQuery<ShipGrapplingGunComponent> _grapQuerry;
 

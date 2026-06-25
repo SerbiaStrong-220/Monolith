@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Corvax.Sponsors;
+namespace Content.Shared.SS220.Sponsors;
 
 
 [Serializable, NetSerializable]

@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests
                 config.SetCVar(CCVars.RoundRestartTime, 1f);
 
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromMilliseconds(100);
-                roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMilliseconds(300);
+                roundEndSystem.CountdownDuration = TimeSpan.FromMilliseconds(300); // Exodus
             });
 
             await server.WaitAssertion(() =>
@@ -145,7 +145,7 @@ namespace Content.IntegrationTests.Tests
                 config.SetCVar(CCVars.RoundRestartTime, CCVars.RoundRestartTime.DefaultValue);
 
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromSeconds(30);
-                roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
+                roundEndSystem.CountdownDuration = TimeSpan.FromMinutes(25); // Exodus
                 ticker.RestartRound();
             });
             await pair.CleanReturnAsync();

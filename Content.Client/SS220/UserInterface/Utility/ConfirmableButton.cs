@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Content.Client.SS220.UserInterface.Utility;
 
 [Virtual]
-public class ConfirmableButton : Button
+public partial class ConfirmableButton : Button
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public Action? OnConfirmed;
 

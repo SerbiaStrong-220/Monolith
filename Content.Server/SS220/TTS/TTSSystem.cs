@@ -1,7 +1,6 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 
 using Content.Server.Chat.Systems;
-using Content.Shared.Corvax.CCCVars;
 using Content.Shared.GameTicking;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.SS220.TTS;
@@ -24,16 +23,16 @@ namespace Content.Server.SS220.TTS;
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IServerNetManager _netManager = default!;
-    [Dependency] private readonly SharedTransformSystem _xforms = default!;
-    [Dependency] private readonly TTSManager _ttsManager = default!;
-    [Dependency] private readonly LanguageSystem _language = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IServerNetManager _netManager = default!;
+    [Dependency] private SharedTransformSystem _xforms = default!;
+    [Dependency] private TTSManager _ttsManager = default!;
+    [Dependency] private LanguageSystem _language = default!;
+    [Dependency] private ChatSystem _chat = default!;
 
     private int _maxMessageChars;
     private int _maxAnnounceMessageChars;

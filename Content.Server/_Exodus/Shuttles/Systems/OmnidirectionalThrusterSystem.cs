@@ -17,13 +17,13 @@ namespace Content.Server._Exodus.Shuttles.Systems;
 /// Handles thrusters that provide linear thrust in all 4 directions simultaneously.
 /// Each direction receives the full Thrust value from ThrusterComponent.
 /// </summary>
-public sealed class OmnidirectionalThrusterSystem : EntitySystem
+public sealed partial class OmnidirectionalThrusterSystem : EntitySystem
 {
-    [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly PoweredRadiationSourceSystem _poweredRadiation = default!;
-    [Dependency] private readonly ThrusterSystem _thruster = default!;
+    [Dependency] private AmbientSoundSystem _ambient = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPointLightSystem _light = default!;
+    [Dependency] private PoweredRadiationSourceSystem _poweredRadiation = default!;
+    [Dependency] private ThrusterSystem _thruster = default!;
 
     public override void Initialize()
     {

@@ -30,7 +30,7 @@ namespace Content.Server.GameTicking
         /// </summary>
         [Dependency] private SharedGameTicker _gameTicker = default!;
 
-        [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
+        [Dependency] private JoinQueueManager _queueManager = default!; // Corvax-Queue
 
         private void InitializeStatusShell()
         {

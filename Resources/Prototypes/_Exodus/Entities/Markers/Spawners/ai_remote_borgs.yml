@@ -1,0 +1,107 @@
+# Exodus: Map spawner markers for AI-remote-controlled borgs.
+# Place these on a map so Station AI can take control of the borg from round start.
+
+- type: entity
+  name: AI remote borg spawner (NT)
+  id: SpawnAiRemoteBorgBattery
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgBattery
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+
+- type: entity
+  name: AI remote borg spawner (TSF)
+  id: SpawnAiRemoteBorgTSF
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgTSF
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+
+- type: entity
+  name: AI remote borg spawner (PDV)
+  id: SpawnAiRemoteBorgPDV
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgPDV
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+
+- type: entity
+  name: AI remote borg spawner (ADS)
+  id: SpawnAiRemoteBorgRedacted
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgRedacted
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: derelict_icon
+
+- type: entity
+  name: AI remote borg spawner (Syndicate Assault)
+  id: SpawnAiRemoteBorgSyndicateAssault
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgSyndicateAssaultBattery
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: synd_sec
+
+- type: entity
+  name: AI remote borg spawner (Syndicate Saboteur)
+  id: SpawnAiRemoteBorgSyndicateSaboteur
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgSyndicateSaboteurBattery
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: synd_engi
+
+- type: entity
+  name: AI remote borg spawner (Derelict)
+  id: SpawnAiRemoteBorgDerelict
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgDerelict
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: derelict_icon
