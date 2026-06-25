@@ -1,8 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server._Exodus.Mining.Components;
+namespace Content.Server._Exodus.OreMagnet;
 
 [RegisterComponent]
 public sealed partial class OreMagnetComponent : Component
@@ -41,11 +42,12 @@ public sealed partial class OreMagnetComponent : Component
     /// Absolute server time at which the magnet deactivates.
     /// Null when the magnet is inactive. Avoids per-tick float subtraction drift.
     /// </summary>
-    [NonSerialized]
+    [ViewVariables]
     public TimeSpan? DeactivateAt;
 
-    [NonSerialized]
+    [ViewVariables]
     public TimeSpan? LidCloseAt;
 
+    [MemberNotNullWhen(true, nameof(DeactivateAt))]
     public bool IsActive => DeactivateAt.HasValue;
 }

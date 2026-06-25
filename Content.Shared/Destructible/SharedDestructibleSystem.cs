@@ -5,9 +5,9 @@ public abstract class SharedDestructibleSystem : EntitySystem
     /// <summary>
     ///     Force entity to be destroyed and deleted.
     /// </summary>
-    public void DestroyEntity(EntityUid owner)
+    public void DestroyEntity(EntityUid owner, EntityUid? cause = null) // Exodus: add information about causer of destruction
     {
-        var eventArgs = new DestructionEventArgs();
+        var eventArgs = new DestructionEventArgs() { Cause = cause }; // Exodus
 
         RaiseLocalEvent(owner, eventArgs);
         QueueDel(owner);
@@ -28,7 +28,7 @@ public abstract class SharedDestructibleSystem : EntitySystem
 /// </summary>
 public sealed class DestructionEventArgs : EntityEventArgs
 {
-
+    public EntityUid? Cause; // Exodus
 }
 
 /// <summary>
