@@ -12,10 +12,10 @@
 
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
-            <!-- Exodus-Start toggle the current color settings as a favorite (★ = saved, ☆ = not saved) -->
+            <!-- Exodus-Start toggle the current color settings as a favorite -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'decal-placer-window-favorite-label'}" HorizontalExpand="True" />
-                <Button Name="FavoriteButton" Text="☆" MinWidth="40"
+                <Button Name="FavoriteButton" Text="{Loc 'decal-placer-window-favorite-off'}" MinWidth="40"
                         ToolTip="{Loc 'decal-placer-window-favorite-tooltip'}" />
             </BoxContainer>
             <!-- Exodus-End -->

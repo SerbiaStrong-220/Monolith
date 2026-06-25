@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client._Exodus.Decals; // Exodus
 using Content.Shared.Decals; // Exodus
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -15,6 +16,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IPrototypeManager _protoMan = default!; // Exodus
+    [Dependency] private IDecalToolManager _tool = default!; // Exodus
     private readonly DecalPlacementSystem _placement;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
@@ -33,13 +35,13 @@ public sealed partial class DecalPlacementOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         // Exodus-Start
-        if (_placement.EyedropperActive)
+        if (_tool.EyedropperActive)
         {
             DrawEyedropper(args);
             return;
         }
 
-        if (_placement.Stamping)
+        if (_tool.Stamping)
         {
             DrawStamp(args);
             return;
@@ -102,7 +104,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
         var localPos = Vector2.Transform(mousePos.Position, _transform.GetInvWorldMatrix(gridUid));
         var origin = localPos.Floored();
 
-        foreach (var (offset, decal) in _placement.Stamp)
+        foreach (var (offset, decal) in _tool.Stamp)
         {
             if (!_protoMan.TryIndex<DecalPrototype>(decal.Id, out var proto))
                 continue;

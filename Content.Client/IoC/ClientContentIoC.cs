@@ -30,6 +30,7 @@ using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins; // Mono
+using Content.Client._Exodus.Decals; // Exodus
 
 namespace Content.Client.IoC
 {
@@ -69,6 +70,11 @@ namespace Content.Client.IoC
 
             collection.Register<CompanyManager>(); // Mono
             collection.Register<MonoCoinsManager>(); // Mono
+
+            // Exodus-Start
+            collection.Register<IDecalToolManager, DecalToolManager>();
+            collection.Register<IDecalFavoritesManager, DecalFavoritesManager>();
+            // Exodus-End
 
             collection.Register<SponsorsManager>(); // Corvax-Sponsors
             collection.Register<JoinQueueManager>(); // Corvax-Queue

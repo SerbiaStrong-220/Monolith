@@ -3,31 +3,46 @@ using Content.Shared._Exodus.CCVar;
 using Robust.Shared.Configuration;
 
 namespace Content.Client._Exodus.Decals;
+public interface IDecalFavoritesManager
+{
+    /// <summary>Raised whenever the favorites list changes, so open windows can refresh.</summary>
+    event Action? FavoritesChanged;
 
-public sealed class FavoriteDecalColorsSystem : EntitySystem
+    IReadOnlyList<Color> Colors { get; }
+
+    bool Contains(Color color);
+
+    /// <summary>Adds the color, or removes it if already a favorite. Returns true if it was added.</summary>
+    bool Toggle(Color color);
+}
+
+public sealed class DecalFavoritesManager : IDecalFavoritesManager
 {
     [Dependency] private IConfigurationManager _cfg = default!;
 
     private readonly List<Color> _colors = new();
+    private bool _loaded;
 
     public event Action? FavoritesChanged;
 
-    public IReadOnlyList<Color> Colors => _colors;
-
-    public override void Initialize()
+    public IReadOnlyList<Color> Colors
     {
-        base.Initialize();
-        Load();
+        get
+        {
+            EnsureLoaded();
+            return _colors;
+        }
     }
 
     public bool Contains(Color color)
     {
+        EnsureLoaded();
         return _colors.Any(c => SameColor(c, color));
     }
 
-    // Adds the color, or removes it if already a favorite.
     public bool Toggle(Color color)
     {
+        EnsureLoaded();
         if (Remove(color))
             return false;
 
@@ -36,7 +51,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
         return true;
     }
 
-    // Removes the color if present. Returns true if something was removed.
+    /// <summary>Removes the color if present. Returns true if something was removed.</summary>
     private bool Remove(Color color)
     {
         var index = _colors.FindIndex(c => SameColor(c, color));
@@ -48,14 +63,17 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
         return true;
     }
 
-    // Compare at the 8-bit precision colors are stored/serialized at, without allocating hex strings.
     private static bool SameColor(Color a, Color b)
-        => a.RByte == b.RByte && a.GByte == b.GByte && a.BByte == b.BByte && a.AByte == b.AByte;
+        => a.ToArgb() == b.ToArgb();
 
-    private void Load()
+    private void EnsureLoaded()
     {
+        if (_loaded)
+            return;
+
+        _loaded = true;
         _colors.Clear();
-        var raw = _cfg.GetCVar(XCVars.DecalFavoriteColors);
+        var raw = _cfg.GetCVar(EXCVars.DecalFavoriteColors);
         foreach (var token in raw.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
         {
             if (Color.TryFromHex(token) is { } color)
@@ -65,7 +83,7 @@ public sealed class FavoriteDecalColorsSystem : EntitySystem
 
     private void Save()
     {
-        _cfg.SetCVar(XCVars.DecalFavoriteColors, string.Join(';', _colors.Select(c => c.ToHex())));
+        _cfg.SetCVar(EXCVars.DecalFavoriteColors, string.Join(';', _colors.Select(c => c.ToHex())));
         _cfg.SaveToFile();
         FavoritesChanged?.Invoke();
     }

@@ -14,21 +14,19 @@ public sealed partial class PaletteColorPicker : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
-    [Dependency] private IEntityManager _entManager = default!; // Exodus
+    [Dependency] private IDecalFavoritesManager _favorites = default!; // Exodus
 
     private readonly TextureResource _tex;
 
     // Exodus-Start
     private static readonly object FavoritesMarker = new();
-    private readonly FavoriteDecalColorsSystem _favorites;
+    private static readonly LocId FavoritesPaletteName = "decal-placer-palette-favorites";
     // Exodus-End
 
     public PaletteColorPicker()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-
-        _favorites = _entManager.System<FavoriteDecalColorsSystem>(); // Exodus
 
         _tex = _resourceCache.GetResource<TextureResource>("/Textures/Interface/Nano/button.svg.96dpi.png");
 
@@ -43,7 +41,7 @@ public sealed partial class PaletteColorPicker : DefaultWindow
         }
 
         // Exodus-Start
-        Palettes.AddItem(Loc.GetString("decal-placer-palette-favorites"));
+        Palettes.AddItem(Loc.GetString(FavoritesPaletteName));
         Palettes.SetItemMetadata(i, FavoritesMarker);
         _favorites.FavoritesChanged += OnFavoritesChanged;
         // Exodus-End
@@ -62,7 +60,14 @@ public sealed partial class PaletteColorPicker : DefaultWindow
     {
         PaletteList.Clear();
 
-        // Exodus Favorites entry is dynamic.
+        // Exodus-Start
+        // foreach (var (color, value) in (Palettes.SelectedMetadata as ColorPalettePrototype)!.Colors)
+        // {
+        //     var item = PaletteList.AddItem(color, _tex.Texture);
+        //     item.Metadata = value;
+        //     item.IconModulate = value;
+        // }
+        // sFavorites entry is not a prototype, so branch on it.
         if (Palettes.SelectedMetadata is ColorPalettePrototype palette)
         {
             foreach (var (name, value) in palette.Colors)
@@ -81,6 +86,7 @@ public sealed partial class PaletteColorPicker : DefaultWindow
                 item.IconModulate = color;
             }
         }
+        // Exodus-End
     }
 
     // Exodus-Start

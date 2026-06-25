@@ -18,9 +18,15 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IEntityManager _e = default!;
+    [Dependency] private IDecalToolManager _tool = default!; // Exodus
+    [Dependency] private IDecalFavoritesManager _favorites = default!; // Exodus
 
     private readonly DecalPlacementSystem _decalPlacementSystem;
-    private readonly FavoriteDecalColorsSystem _favorites; // Exodus
+
+    // Exodus-Start
+    private static readonly LocId FavoriteSavedLabel = "decal-placer-window-favorite-on";
+    private static readonly LocId FavoriteUnsavedLabel = "decal-placer-window-favorite-off";
+    // Exodus-End
 
     public FloatSpinBox RotationSpinBox;
 
@@ -43,7 +49,6 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         IoCManager.InjectDependencies(this);
 
         _decalPlacementSystem = _e.System<DecalPlacementSystem>();
-        _favorites = _e.System<FavoriteDecalColorsSystem>(); // Exodus
 
         // This needs to be done in C# so we can have custom stuff passed in the constructor
         // and thus have a proper step size
@@ -57,9 +62,9 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         ColorPicker.OnColorChanged += OnColorPicked;
 
         // Exodus-Start
-        EyedropperButton.OnPressed += _ => _decalPlacementSystem.SetEyedropper(!_decalPlacementSystem.EyedropperActive);
-        _decalPlacementSystem.EyedropperPicked += OnEyedropperPicked;
-        _decalPlacementSystem.DecalCopied += OnDecalCopied; // "O" copy hotkey
+        EyedropperButton.OnPressed += _ => _tool.SetEyedropper(!_tool.EyedropperActive);
+        _tool.EyedropperColorPicked += OnEyedropperColorPicked;
+        _tool.DecalCopied += OnDecalCopied; // "O" copy hotkey
 
         // Star toggles the current color in/out of favorites, keep it lit when the color matches.
         FavoriteButton.OnPressed += _ =>
@@ -146,12 +151,12 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
             return;
 
         var saved = _favorites.Contains(_color);
-        FavoriteButton.Text = saved ? "★" : "☆";
+        FavoriteButton.Text = Loc.GetString(saved ? FavoriteSavedLabel : FavoriteUnsavedLabel);
         FavoriteButton.Modulate = saved ? Color.Gold : Color.White;
     }
 
     // Apply a color via eyedropper tool.
-    private void OnEyedropperPicked(Color color)
+    private void OnEyedropperColorPicked(Color color)
     {
         if (Disposed)
             return;
@@ -313,8 +318,8 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         base.Dispose(disposing);
         if (disposing)
         {
-            _decalPlacementSystem.EyedropperPicked -= OnEyedropperPicked;
-            _decalPlacementSystem.DecalCopied -= OnDecalCopied;
+            _tool.EyedropperColorPicked -= OnEyedropperColorPicked;
+            _tool.DecalCopied -= OnDecalCopied;
             _favorites.FavoritesChanged -= UpdateFavoriteStar;
             _picker?.Dispose();
         }

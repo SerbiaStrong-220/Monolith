@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Actions;
 using Content.Client.Decals.Overlays;
+using Content.Client._Exodus.Decals; // Exodus
 using Content.Shared.Actions;
 using Content.Shared.Decals;
 using Content.Shared.Input; // Exodus
@@ -27,6 +28,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IDecalToolManager _tool = default!; // Exodus
 
     private string? _decalId;
     private Color _decalColor = Color.White;
@@ -38,38 +40,6 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     private bool _active;
     private bool _placing;
     private bool _erasing;
-
-    // Exodus-Start
-    private bool _eyedropper;
-
-    public bool EyedropperActive => _eyedropper;
-
-    public event Action<Color>? EyedropperPicked;
-
-    public void SetEyedropper(bool active)
-    {
-        _eyedropper = active && _active;
-
-        // The eyedropper and a paste (in copypaste mode) are mutually exclusive.
-        if (_eyedropper)
-        {
-            _stamping = false;
-            _stamp.Clear();
-        }
-    }
-
-    // Copy decal(s) under the cursor, only while the window is open.
-    private readonly List<(Vector2 Offset, Decal Decal)> _stamp = new();
-    private bool _stamping;
-
-    // Whether a multi-decal stamp is currently held and ready to be placed.
-    public bool Stamping => _stamping && _stamp.Count > 0;
-
-    public IReadOnlyList<(Vector2 Offset, Decal Decal)> Stamp => _stamp;
-
-    // Raised when a single decal is copied from the map, so the window can mirror its settings.
-    public event Action<Decal>? DecalCopied;
-    // Exodus-End
 
     public (DecalPrototype? Decal, bool Snap, Angle Angle, Color Color) GetActiveDecal()
     {
@@ -87,16 +57,16 @@ public sealed partial class DecalPlacementSystem : EntitySystem
             (session, coords, uid) =>
             {
                 // Exodus-Start
-                if (_eyedropper)
+                if (_tool.EyedropperActive)
                 {
-                    _eyedropper = false;
+                    _tool.SetEyedropper(false);
 
                     if (TryPickDecalColor(coords, out var picked))
-                        EyedropperPicked?.Invoke(picked);
+                        _tool.NotifyEyedropperColorPicked(picked);
 
                     return true;
                 }
-                if (_stamping)
+                if (_tool.Stamping)
                 {
                     PlaceStamp(coords);
                     return true;
@@ -139,16 +109,15 @@ public sealed partial class DecalPlacementSystem : EntitySystem
             (session, coords, uid) =>
             {
                 // Exodus-Start
-                if (_eyedropper)
+                if (_tool.EyedropperActive)
                 {
-                    _eyedropper = false;
+                    _tool.SetEyedropper(false);
                     return true;
                 }
 
-                if (_stamping)
+                if (_tool.Stamping)
                 {
-                    _stamping = false;
-                    _stamp.Clear();
+                    _tool.ClearStamp();
                     return true;
                 }
                 // Exodus-End
@@ -272,11 +241,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     public void SetActive(bool active)
     {
         _active = active;
-        // Exodus-Start: arming/holding a tool is always an explicit user action.
-        _eyedropper = false;
-        _stamping = false;
-        _stamp.Clear();
-        // Exodus-End
+        _tool.SetActive(active); // Exodus mirror active state so the tool manager can reset/gate itself
         if (_active)
             _inputManager.Contexts.SetActiveContext("editor");
         else
@@ -284,41 +249,38 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     }
 
     // Exodus-Start
-    /// <summary>"O": copy the top decal under the cursor into the placer.</summary>
     private bool OnCopyDecal(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
         if (!_active)
             return false;
 
-        _eyedropper = false;
-        _stamping = false;
-        _stamp.Clear();
+        _tool.SetEyedropper(false);
+        _tool.ClearStamp();
 
         if (TryGetDecalsUnder(coords, out _, out var decals) && Topmost(decals) is { } top)
-            DecalCopied?.Invoke(top.Decal);
+            _tool.NotifyDecalCopied(top.Decal);
 
         return true;
     }
 
-    /// <summary>"Ctrl+O": copy every decal under the cursor as a stamp to place as a group.</summary>
     private bool OnCopyDecalStack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
         if (!_active)
             return false;
 
-        _eyedropper = false;
-        _stamp.Clear();
-        _stamping = false;
+        _tool.SetEyedropper(false);
+        _tool.ClearStamp();
 
         if (!TryGetDecalsUnder(coords, out var localPos, out var decals))
             return true;
 
         // So stamp stays tile-aligned when placed.
         var origin = localPos.Floored();
+        var stamp = new List<(Vector2 Offset, Decal Decal)>();
         foreach (var (_, decal) in decals)
-            _stamp.Add((decal.Coordinates - origin, decal));
+            stamp.Add((decal.Coordinates - origin, decal));
 
-        _stamping = true;
+        _tool.BeginStamp(stamp);
         return true;
     }
 
@@ -328,7 +290,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
             return;
 
         var origin = localPos.Floored();
-        foreach (var (offset, decal) in _stamp)
+        foreach (var (offset, decal) in _tool.Stamp)
         {
             var newPos = origin + offset;
             var target = new EntityCoordinates(gridUid, newPos);
