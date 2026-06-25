@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Numerics;
 using Content.Server.Power.Components;
-using Content.Server._Exodus.Mining.Components;
 using Content.Shared._Exodus.Mining;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -32,11 +27,11 @@ public sealed class OreMagnetSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<StorageComponent> _storageQuery;
-    private readonly List<(EntityUid Uid, OreMagnetComponent Comp, Vector2 Pos, MapId MapId)> _magnets = new();
-    private readonly Dictionary<EntityUid, (EntityUid MagnetUid, OreMagnetComponent MagnetComp, float Distance)> _pullTargets = new();
+    private readonly List<(Entity<OreMagnetComponent> Magnet, Vector2 Pos, MapId MapId)> _magnets = new();
+    private readonly Dictionary<EntityUid, (Entity<OreMagnetComponent> Magnet, float Distance)> _pullTargets = new();
     private readonly HashSet<Entity<ItemComponent>> _lookupEnts = new();
 
-    private const float ScanInterval = 0.5f;
+    private const float ScanInterval = 1f;
     private float _scanTimer;
 
     // Tracks how many magnets are currently active.
@@ -91,10 +86,7 @@ public sealed class OreMagnetSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        _scanTimer -= frameTime;
-
-        // Fast path: no magnets are active and scan isn't due — nothing to do.
-        if (_activeCount <= 0 && _lidOpenCount <= 0 && _scanTimer > 0f)
+        if (_activeCount <= 0 && _lidOpenCount <= 0)
             return;
 
         if (_activeCount > 0 || _lidOpenCount > 0)
@@ -102,11 +94,8 @@ public sealed class OreMagnetSystem : EntitySystem
             var timerQuery = EntityQueryEnumerator<OreMagnetComponent>();
             while (timerQuery.MoveNext(out var uid, out var comp))
             {
-                if (comp.IsActive && _timing.CurTime >= comp.DeactivateAt!.Value)
-                {
-                    comp.DeactivateAt = null;
-                    _activeCount--;
-                }
+                if (comp.IsActive && _timing.CurTime >= comp.DeactivateAt)
+                    DeactivateMagnet((uid, comp));
 
                 if (comp.LidCloseAt.HasValue && _timing.CurTime >= comp.LidCloseAt.Value)
                 {
@@ -119,9 +108,10 @@ public sealed class OreMagnetSystem : EntitySystem
             }
         }
 
-        if (_scanTimer > 0f)
+        _scanTimer += frameTime;
+        if (_scanTimer < ScanInterval)
             return;
-        _scanTimer = ScanInterval;
+        _scanTimer = 0;
 
         PullEntities();
     }
@@ -140,7 +130,7 @@ public sealed class OreMagnetSystem : EntitySystem
         {
             if (!comp.IsActive || !power.Powered)
                 continue;
-            _magnets.Add((uid, comp, _transform.GetWorldPosition(xform), xform.MapID));
+            _magnets.Add(((uid, comp), _transform.GetWorldPosition(xform), xform.MapID));
         }
 
         if (_magnets.Count == 0)
@@ -150,17 +140,18 @@ public sealed class OreMagnetSystem : EntitySystem
         // Prevents two active magnets from fighting over the same ore.
         _pullTargets.Clear();
 
-        foreach (var (magnetUid, comp, magnetPos, mapId) in _magnets)
+        foreach (var (magnet, magnetPos, mapId) in _magnets)
         {
+            var (magnetUid, comp) = magnet;
             _lookupEnts.Clear();
-            _lookup.GetEntitiesInRange(mapId, magnetPos, comp.Radius, _lookupEnts, LookupFlags.Dynamic | LookupFlags.Sundries);
+            _lookup.GetEntitiesInRange(mapId, magnetPos, comp.Radius, _lookupEnts, LookupFlags.Dynamic);
 
             foreach (var ent in _lookupEnts)
             {
                 var entityUid = ent.Owner;
                 if (entityUid == magnetUid)
                     continue;
-                if (comp.Whitelist != null && !_whitelist.IsValid(comp.Whitelist, entityUid))
+                if (_whitelist.IsWhitelistFail(comp.Whitelist, entityUid))
                     continue;
 
                 var entityPos = _transform.GetWorldPosition(Transform(entityUid));
@@ -168,18 +159,26 @@ public sealed class OreMagnetSystem : EntitySystem
 
                 if (_pullTargets.TryGetValue(entityUid, out var existing) && existing.Distance <= distance)
                     continue;
-                if (!_interaction.InRangeUnobstructed(magnetUid, entityUid, comp.Radius, CollisionGroup.Impassable))
+                if (!_interaction.InRangeUnobstructed(magnetUid, entityUid, comp.Radius))
                     continue;
 
-                _pullTargets[entityUid] = (magnetUid, comp, distance);
+                _pullTargets[entityUid] = ((magnetUid, comp), distance);
             }
         }
 
-        foreach (var (entityUid, (magnetUid, magnetComp, distance)) in _pullTargets)
+        foreach (var (entityUid, (magnet, _)) in _pullTargets)
         {
-            // Don't pull ore if can't actually store
-            if (!_storage.CanInsert(magnetUid, entityUid, out _))
+            var (magnetUid, magnetComp) = magnet;
+
+            if (!magnetComp.IsActive)
                 continue;
+
+            if (!_storage.CanInsert(magnetUid, entityUid, out _))
+            {
+                // New checks of IsActive is way cheaper that repeating CanInsert on full magnet
+                DeactivateMagnet(magnet);
+                continue;
+            }
 
             var magnetPos = _transform.GetWorldPosition(Transform(magnetUid));
             var entityPos = _transform.GetWorldPosition(Transform(entityUid));
@@ -198,6 +197,15 @@ public sealed class OreMagnetSystem : EntitySystem
                 animated: false,
                 playSound: false);
         }
+    }
+
+    private void DeactivateMagnet(Entity<OreMagnetComponent> magnet)
+    {
+        if (!magnet.Comp.IsActive)
+            return;
+
+        magnet.Comp.DeactivateAt = null;
+        _activeCount--;
     }
 
     // Physics collision — ore hits the machine after being thrown toward it

@@ -24,7 +24,7 @@
 
             if (HasAct(ThresholdActs.Destruction))
             {
-                system.DestroyEntity(owner);
+                system.DestroyEntity(owner, cause); // Exodus
             }
         }
     }
