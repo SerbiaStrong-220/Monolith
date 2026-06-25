@@ -13,7 +13,7 @@ namespace Content.Shared._Exodus.Stealth.Systems;
 
 public abstract class SharedStealthSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

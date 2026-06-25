@@ -5,7 +5,7 @@ using Robust.Shared.Configuration;
 namespace Content.Shared._Exodus.CCVar;
 
 [CVarDefs]
-public sealed partial class XCVars
+public sealed partial class EXCVars
 {
     /// <summary>
     /// Contains ID used to identify central station by station ID (from BecomesStation)

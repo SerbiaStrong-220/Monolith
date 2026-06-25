@@ -2,7 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
-using Content.Client.Corvax.Sponsors;
+using Content.Client.SS220.Sponsors;
 using Content.Client.DebugMon;
 using Content.Client.Eui;
 using Content.Client.Fullscreen;
@@ -32,6 +32,7 @@ using Content.Shared.Players.RateLimiting;
 using Content.Shared.SS220.EPA; // SS220
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins; // Mono
+using Content.Client._Exodus.Bank; // Exodus
 
 namespace Content.Client.IoC
 {
@@ -71,6 +72,7 @@ namespace Content.Client.IoC
 
             collection.Register<CompanyManager>(); // Mono
             collection.Register<MonoCoinsManager>(); // Mono
+            collection.Register<SavingsTransferManager>(); // Exodus
 
             collection.Register<SponsorsManager>(); // Corvax-Sponsors
             collection.Register<JoinQueueManager>(); // Corvax-Queue

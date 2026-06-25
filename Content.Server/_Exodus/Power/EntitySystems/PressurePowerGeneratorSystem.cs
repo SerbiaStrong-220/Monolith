@@ -9,10 +9,10 @@ using Content.Shared.Power;
 
 namespace Content.Server._Exodus.Power.EntitySystems;
 
-public sealed class PressurePowerGeneratorSystem : EntitySystem
+public sealed partial class PressurePowerGeneratorSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

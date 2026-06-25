@@ -8,9 +8,9 @@ namespace Content.Server._Exodus.ShipShields;
 /// Mirrors a shield emitter's active state to its <see cref="PoweredRadiationSourceComponent"/>.
 /// The emitter radiates only while it has an active shield entity on a grid (Shield != null).
 /// </summary>
-public sealed class RadiatingShieldEmitterSystem : EntitySystem
+public sealed partial class RadiatingShieldEmitterSystem : EntitySystem
 {
-    [Dependency] private readonly PoweredRadiationSourceSystem _poweredRadiation = default!;
+    [Dependency] private PoweredRadiationSourceSystem _poweredRadiation = default!;
 
     public override void Update(float frameTime)
     {

@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server._Exodus.Adminbus.Crutches;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class RepairBroadphaseCommand : IConsoleCommand
+public sealed partial class RepairBroadphaseCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public string Command => "repairbroadphase";
     public string Description => "Repairs broadphase of specified entity if it was broken.";

@@ -1,14 +1,14 @@
 ﻿// (c) Space Exodus Team - EXDS-RL with CLA
 
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Corvax.Sponsors;
+using Content.Shared.SS220.Sponsors;
 using Robust.Shared.Network;
 
-namespace Content.Client.Corvax.Sponsors;
+namespace Content.Client.SS220.Sponsors;
 
-public sealed class SponsorsManager
+public sealed partial class SponsorsManager
 {
-    [Dependency] private readonly IClientNetManager _netMgr = default!;
+    [Dependency] private IClientNetManager _netMgr = default!;
 
     private SponsorInfo? _info;
 

@@ -2,7 +2,7 @@ using Content.Client._NF.Emp.Overlays; // Frontier
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
-using Content.Client.Corvax.Sponsors;
+using Content.Client.SS220.Sponsors;
 using Content.Client.DebugMon;
 using Content.Client.Eui;
 using Content.Client.Fullscreen;
@@ -46,6 +46,7 @@ using Content.Client._NF.Emp.Overlays; // Frontier
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins; // Mono
 using Content.Shared.SS220.EPA; // SS220
+using Content.Client._Exodus.Bank; // Exodus
 
 namespace Content.Client.Entry
 {
@@ -85,11 +86,12 @@ namespace Content.Client.Entry
         [Dependency] private IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private CompanyManager _companyManager = default!; // Mono
         [Dependency] private MonoCoinsManager _coinsManager = default!; // Mono
+        [Dependency] private SavingsTransferManager _savingsTransferManager = default!; // Exodus
 
-        [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
-        [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
-        [Dependency] private readonly DiscordPlayerInfoManager _discordPlayerInfoManager = default!; // SS220 discord info manager
-        [Dependency] private readonly TTSManager _ttsManager = default!; // SS220 TTS
+        [Dependency] private SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
+        [Dependency] private JoinQueueManager _queueManager = default!; // Corvax-Queue
+        [Dependency] private DiscordPlayerInfoManager _discordPlayerInfoManager = default!; // SS220 discord info manager
+        [Dependency] private TTSManager _ttsManager = default!; // SS220 TTS
         [Dependency] private IEPAManager _epaManager = default!; // SS220-EPA
 
 
@@ -156,6 +158,7 @@ namespace Content.Client.Entry
             _playbackMan.Initialize();
             _companyManager.Initialize(); // Mono
             _coinsManager.Initialize(); // Mono
+            _savingsTransferManager.Initialize(); // Exodus
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);

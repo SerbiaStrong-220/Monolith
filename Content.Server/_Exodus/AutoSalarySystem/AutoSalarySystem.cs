@@ -20,14 +20,14 @@ namespace Content.Server._Exodus.AutoSalarySystem;
 
 public sealed class AutoSalarySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly InventorySystem _inv = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly BankSystem _bank = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MindSystem _mindSystem = default!;
+    [Dependency] private InventorySystem _inv = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private BankSystem _bank = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

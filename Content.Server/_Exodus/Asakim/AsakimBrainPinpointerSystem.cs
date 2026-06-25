@@ -9,9 +9,9 @@ namespace Content.Server._Exodus.Asakim;
 
 public sealed class AsakimBrainPinpointerSystem : EntitySystem
 {
-    [Dependency] private readonly PinpointerSystem _pinpointer = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private PinpointerSystem _pinpointer = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

@@ -7,7 +7,7 @@ namespace Content.Server._Exodus.GameTicking.Requirements;
 // TODO: this system should probably be implemented via observer pattern but I'm too lazy currently
 public sealed partial class GameRuleRequirementsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public bool CheckRule(EntityUid uid)
     {
