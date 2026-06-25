@@ -28,7 +28,6 @@ public sealed class OreMagnetSystem : EntitySystem
 
     private EntityQuery<StorageComponent> _storageQuery;
     private readonly List<(Entity<OreMagnetComponent> Magnet, Vector2 Pos, MapId MapId)> _magnets = new();
-    // private readonly Dictionary<Entity<OreMagnetComponent>, (EntityUid Item, float Distance)> _pullTargets = new();
     private readonly Dictionary<EntityUid, (Entity<OreMagnetComponent> Magnet, float Distance)> _pullTargets = new();
     private readonly HashSet<Entity<ItemComponent>> _lookupEnts = new();
 
