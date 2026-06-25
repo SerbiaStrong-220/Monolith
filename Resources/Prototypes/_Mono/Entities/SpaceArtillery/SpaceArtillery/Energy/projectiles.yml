@@ -223,8 +223,6 @@
   - type: GatheringProjectile
   - type: MiningGatheringSoft
   - type: MiningGatheringHard
-  - type: OreDropModifier # Exodus: half ore drop by ship gun
-    modifier: 0.5
 
 # RUBICON
 
@@ -467,8 +465,6 @@
   - type: HitscanBasicRaycast
     maxDistance: 600
   - type: HitscanGathering
-  - type: OreDropModifier # Exodus: half ore drop by ship gun
-    modifier: 0.5
 
 # Prometheus
 

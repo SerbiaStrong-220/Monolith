@@ -252,6 +252,8 @@
   - type: ShipRepairable
     repairTime: 10
     repairCost: 20
+  - type: OreDropModifier # Exodus: half ore drop by ship gun
+    modifier: 0.5
 
 # RUBICON
 
@@ -648,6 +650,8 @@
   - type: ShipRepairable
     repairTime: 25
     repairCost: 100
+  - type: OreDropModifier # Exodus: half ore drop by ship gun
+    modifier: 0.5
 
 # PRE- FRACTURE
 

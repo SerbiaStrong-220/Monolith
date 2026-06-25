@@ -47,8 +47,8 @@ public sealed partial class MiningSystem : EntitySystem
         // Exodus-Start: MaxOreYield modifier
         var modifierEv = new MaxOreYieldModifierEvent();
         if (args.Cause != null)
-            RaiseLocalEvent(args.Cause.Value, modifierEv);
-        var maxOreYield = (int)Math.Ceiling(modifierEv.Modifier * proto.MaxOreYield);
+            RaiseLocalEvent(args.Cause.Value, ref modifierEv);
+        var maxOreYield = Math.Max(proto.MinOreYield, (int)Math.Ceiling(modifierEv.Modifier * proto.MaxOreYield));
         var yield = _random.Next(proto.MinOreYield, maxOreYield);
         // Exodus-End
         _spawnCount.SpawnCount(proto.OreEntity.Value, coords.Offset(_random.NextVector2(0.2f)), yield);

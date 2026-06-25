@@ -28,9 +28,14 @@ public sealed partial class OrePrototype : IPrototype
 
 // Exodus-Start: a way to balance ore drop
 // Raised on damage origin
-public sealed class MaxOreYieldModifierEvent : EntityEventArgs
+[ByRefEvent]
+public record struct MaxOreYieldModifierEvent
 {
-    public float Modifier { get; private set; } = 1;
+    public float Modifier { get; private set; } = 1f;
+
+    public MaxOreYieldModifierEvent()
+    {
+    }
 
     public void Modify(float modifier)
     {
