@@ -12,7 +12,7 @@ namespace Content.Client.SS220.JoinQueue;
 [GenerateTypedNameReferences]
 public sealed partial class QueueGui : Control
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public event Action? QuitPressed;
 

@@ -8,8 +8,8 @@ namespace Content.Shared._Exodus.Mining;
 
 public sealed partial class MiningScannerViewerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public void CreateScan(EntityUid uid, float range, TimeSpan delay, float animationDuration = 1.5f)
     {

@@ -24,8 +24,8 @@ namespace Content.Client._Exodus.Calculator.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CalculatorMenu : BaseWindow
 {
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     [Animatable]
     public Vector2 BodyOffset
@@ -124,7 +124,7 @@ public sealed partial class CalculatorMenu : BaseWindow
             return;
         }
         // Press UI button even if closed via Esc or other means,
-        // return cos pressing close button will lead us back here again. 
+        // return cos pressing close button will lead us back here again.
         if (!_isClosedWithButton)
         {
             _buttons.PressButton(ButtonClose, _buttonPressedDuration);

@@ -5,10 +5,10 @@ namespace Content.Shared._Exodus.GhostHiding;
 
 public sealed partial class GhostHidingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedVisibilitySystem _visibility = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedVisibilitySystem _visibility = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

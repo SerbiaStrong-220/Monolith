@@ -20,7 +20,7 @@
     access: [["HeadOfPersonnel"], ["HeadOfSecurity"]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
-    canShuttle: false
+    # canShuttle: false # Exodus
     global: true #SR WILL NOT BE IGNORED
   - type: DeviceNetwork
     deviceNetId: Wireless # Frontier

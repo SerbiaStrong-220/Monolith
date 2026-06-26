@@ -14,4 +14,12 @@ public sealed partial class ConveyedComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Conveying;
+
+    /// <summary>
+    /// Conveyors currently contacting this entity. Managed by Start/End collide handlers.
+    /// This allows conveyor force to be computed without iterating physics contacts.
+    /// They're not ensured to exists, if entity was on conveyor and conveyor got deleted then entity might have deleted conveoyr uid.
+    /// </summary>
+    [ViewVariables]
+    public HashSet<EntityUid> CurrentConveyors = new();
 }

@@ -6,3 +6,10 @@
     delay:
       min: 7200
       max: 7200
+
+- type: entity
+  id: RoundEndRuleHour6
+  parent: BaseGameRule
+  components:
+  - type: RoundEndTimeRule
+    endAt: 21600 # 6 hour

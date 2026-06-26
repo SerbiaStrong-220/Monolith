@@ -210,6 +210,7 @@
     - MonoRogueWeaponsDynamicMelee
     - MonoRogueWeaponsDynamicRanged
     - MonoRogueMiscDynamic
+    - MonoUSSPVouchersDynamic #Exodus-fix
     - MonoUSSPArmorDynamic
     - MonoUSSPMiscDynamic
     - MonoUSSPWeaponsDynamicRanged
@@ -282,6 +283,7 @@
     - MonoRogueWeaponsDynamicMelee
     - MonoRogueWeaponsDynamicRanged
     - MonoRogueMiscDynamic
+    - MonoUSSPVouchersDynamic #Exodus-fix
     - MonoUSSPArmorDynamic
     - MonoUSSPMiscDynamic
     - MonoViperGroupDynamic

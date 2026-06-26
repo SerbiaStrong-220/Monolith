@@ -7,8 +7,8 @@ namespace Content.Server._Exodus.Calculator;
 
 public sealed class CalculatorSystem : SharedCalculatorSystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {

@@ -152,15 +152,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         // Corvax-Next-AiRemoteControl-Start
         if (component.BrainEntity == null && HasComp<AiRemoteBrainComponent>(used) &&
-    _whitelistSystem.IsWhitelistPassOrNull(component.BrainWhitelist, used))
+            _whitelistSystem.IsWhitelistPassOrNull(component.BrainWhitelist, used))
         {
-            EnsureComp<AiRemoteControllerComponent>(uid);
             _container.Insert(used, component.BrainContainer);
             _adminLog.Add(LogType.Action, LogImpact.Medium,
                 $"{ToPrettyString(args.User):player} installed ai remote brain {ToPrettyString(used)} into borg {ToPrettyString(uid)}");
             args.Handled = true;
-            BorgActivate(uid, component);
 
+            // Exodus ai-remote-brain-init: activation is centralized in OnInserted.
             UpdateUI(uid, component);
         }
         // Corvax-Next-AiRemoteControl-End
@@ -179,15 +178,35 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _container.Insert(module, ent.Comp.ModuleContainer);
     }
 
+    // Exodus-begin ai-remote-brain-init
+    private void ActivateAiRemoteBrain(EntityUid uid, BorgChassisComponent component)
+    {
+        EnsureComp<AiRemoteControllerComponent>(uid);
+        BorgActivate(uid, component);
+    }
+    // Exodus-end
+
     // todo: consider transferring over the ghost role? managing that might suck.
     protected override void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
     {
         base.OnInserted(uid, component, args);
 
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind) && args.Container == component.BrainContainer)
+        // Exodus-begin ai-remote-brain-init
+        if (args.Container != component.BrainContainer)
+            return;
+
+        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
         {
             _mind.TransferTo(mindId, uid, mind: mind);
+            return;
         }
+
+        if (HasComp<AiRemoteBrainComponent>(args.Entity))
+        {
+            ActivateAiRemoteBrain(uid, component);
+            return;
+        }
+        // Exodus-end
     }
 
     protected override void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)

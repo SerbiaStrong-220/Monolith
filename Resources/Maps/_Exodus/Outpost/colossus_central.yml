@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 271.2.0
+  engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 02/27/2026 13:18:01
-  entityCount: 10725
+  time: 05/10/2026 21:27:34
+  entityCount: 10727
 maps:
 - 1
 grids:
@@ -302,10 +302,10 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Kudzu: []
-        Puddle: []
         MetalFoam: []
+        Kudzu: []
         Smoke: []
+        Puddle: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -8716,6 +8716,7 @@ entities:
     - type: NavMap
     - type: ShipGridLock
       locked: False
+    - type: ThermalSignature
 - proto: ActionToggleLight
   entities:
   - uid: 4
@@ -8736,13 +8737,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 5
-- proto: AiCoreElectronics
-  entities:
-  - uid: 8
-    components:
-    - type: Transform
-      pos: -14.5,68.5
-      parent: 2
 - proto: AirAlarm
   entities:
   - uid: 9
@@ -15418,6 +15412,11 @@ entities:
       parent: 2
 - proto: CableApcExtension
   entities:
+  - uid: 8
+    components:
+    - type: Transform
+      pos: -13.5,68.5
+      parent: 2
   - uid: 1064
     components:
     - type: Transform
@@ -23102,6 +23101,11 @@ entities:
     components:
     - type: Transform
       pos: -57.5,17.5
+      parent: 2
+  - uid: 10726
+    components:
+    - type: Transform
+      pos: -14.5,68.5
       parent: 2
 - proto: CableApcStack1
   entities:
@@ -54566,11 +54570,6 @@ entities:
       parent: 2
 - proto: MachineFrameDestroyed
   entities:
-  - uid: 7202
-    components:
-    - type: Transform
-      pos: -14.5,68.5
-      parent: 2
   - uid: 7203
     components:
     - type: Transform
@@ -55448,6 +55447,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -35.5,47.5
+      parent: 2
+- proto: PlayerStationAiColossus
+  entities:
+  - uid: 7202
+    components:
+    - type: Transform
+      pos: -14.5,68.5
       parent: 2
 - proto: PlushieAbductor
   entities:
@@ -61899,6 +61905,13 @@ entities:
     components:
     - type: Transform
       pos: 6.5,62.5
+      parent: 2
+- proto: SpawnAiRemoteBorgBattery
+  entities:
+  - uid: 10727
+    components:
+    - type: Transform
+      pos: -12.5,70.5
       parent: 2
 - proto: SpawnMobAlexander
   entities:

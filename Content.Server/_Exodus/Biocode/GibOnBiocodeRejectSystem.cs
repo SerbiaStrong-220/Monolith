@@ -6,8 +6,8 @@ namespace Content.Server._Exodus.Biocode;
 
 public sealed class GibOnBiocodeRejectSystem : EntitySystem
 {
-    [Dependency] private readonly BodySystem _body = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     public override void Initialize()
     {

@@ -2,7 +2,7 @@ using Content.Client._NF.Emp.Overlays; // Frontier
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
-using Content.Client.Corvax.Sponsors;
+using Content.Client.SS220.Sponsors;
 using Content.Client.DebugMon;
 using Content.Client.Eui;
 using Content.Client.Fullscreen;
@@ -87,10 +87,10 @@ namespace Content.Client.Entry
         [Dependency] private MonoCoinsManager _coinsManager = default!; // Mono
         [Dependency] private SavingsTransferManager _savingsTransferManager = default!; // Exodus
 
-        [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
-        [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
-        [Dependency] private readonly DiscordPlayerInfoManager _discordPlayerInfoManager = default!; // SS220 discord info manager
-        [Dependency] private readonly TTSManager _ttsManager = default!; // SS220 TTS
+        [Dependency] private SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
+        [Dependency] private JoinQueueManager _queueManager = default!; // Corvax-Queue
+        [Dependency] private DiscordPlayerInfoManager _discordPlayerInfoManager = default!; // SS220 discord info manager
+        [Dependency] private TTSManager _ttsManager = default!; // SS220 TTS
 
 
         public override void Init()

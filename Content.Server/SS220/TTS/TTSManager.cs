@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Content.Shared.Corvax.CCCVars;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.SS220.TTS;
 using Microsoft.IO;
@@ -52,8 +51,8 @@ public sealed partial class TTSManager
 
     private const string AudioFileExtension = "ogg";
 
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IServerNetManager _netManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IServerNetManager _netManager = default!;
 
     private readonly HttpClient _httpClient = new();
 
