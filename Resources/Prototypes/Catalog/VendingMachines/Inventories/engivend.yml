@@ -13,8 +13,8 @@
     GeigerCounter: 10       # Frontier
     PowerCellMedium: 15 # Frontier: 5<15
 #    NetworkConfigurator: 5 # Frontier
-    ShipRepairDevice: 10 # Mono
-    ShipRepairDeviceAmmo: 20 # Mono
+#    ShipRepairDevice: 10 # Mono # до полноценного фикса абуза/дюпа
+#    ShipRepairDeviceAmmo: 20 # Mono # до полноценного фикса абуза/дюпа
     JerryCanNaniteFuel: 20 # Monolith edit
     NaniteApplicator: 10 # Monolith edit - Nanite applicator
     AirGrenade: 6 # Mono
