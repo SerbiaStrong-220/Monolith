@@ -16,16 +16,16 @@
 
 - type: entity
   parent: Jug
-  suffix: aglomorphine
-  id: JugAglomorphine
+  suffix: homeostatin
+  id: JugHomeostatin
   components:
   - type: Label
-    currentLabel: reagent-name-aglomorphine
+    currentLabel: reagent-name-homeostatin
   - type: SolutionContainerManager
     solutions:
       beaker:
         reagents:
-        - ReagentId: Aglomorphine
+        - ReagentId: Homeostatin
           Quantity: 200
   - type: StaticPrice
     vendPrice: 90000

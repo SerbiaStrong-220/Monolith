@@ -1,0 +1,40 @@
+- type: reagent
+  id: Homeostatin
+  name: reagent-name-homeostatin
+  group: Medicine
+  desc: reagent-desc-homeostatin
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: white
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.9
+        sprintSpeedModifier: 0.9
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TotalDamage
+          min: 8
+        damage:
+          Brute: -0.6
+          Burn: -0.6
+          Toxin: -0.4
+          Airloss: -0.5
+      - !type:ModifyBleedAmount
+        amount: 0.1
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
+        time: 1
+        type: Add
+        refresh: false
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Poison: 1.5
+            Asphyxiation: 1

@@ -44,7 +44,7 @@
       hypospray:
         maxVol: 30
         reagents:
-        - ReagentId: Aglomorphine
+        - ReagentId: Homeostatin
           Quantity: 30
   - type: ExaminableSolution
     solution: hypospray
@@ -55,14 +55,14 @@
     preventCombatInjection: true
   - type: CyclingHypospray
     reagents:
-    - Aglomorphine
+    - Homeostatin
     - Dermaline
     - DexalinPlus
     - Oculine
     - Ultravasculine
   - type: ReagentAutoRecharge
     solutionName: hypospray
-    reagent: Aglomorphine
+    reagent: Homeostatin
     rechargeAmount: 5
     rechargeInterval: 30
   - type: UseDelay

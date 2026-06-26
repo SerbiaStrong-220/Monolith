@@ -1,5 +1,5 @@
 - type: reaction
-  id: Aglomorphine
+  id: Homeostatin
   reactants:
     Desoxyephedrine:
       amount: 1
@@ -7,7 +7,5 @@
       amount: 1
     Phenol:
       amount: 1
-    SpaceDrugs: # TODO Exodus: replace with Opium when the reagent is added.
-      amount: 1
   products:
-    Aglomorphine: 4
+    Homeostatin: 3

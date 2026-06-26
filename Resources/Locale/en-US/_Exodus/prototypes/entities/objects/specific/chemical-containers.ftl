@@ -1,3 +1,3 @@
-ent-JugAglomorphine = aglomorphine jug
-    .desc = A jug filled with aglomorphine.
-    .suffix = Aglomorphine, 200
+ent-JugHomeostatin = homeostatin jug
+    .desc = A jug filled with homeostatin.
+    .suffix = Homeostatin, 200
