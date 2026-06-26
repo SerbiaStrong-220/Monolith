@@ -68,7 +68,7 @@ public sealed partial class TraitSystem : EntitySystem
 
             if (traitPrototype.LanguagesSpoken is not null)
                 foreach (var lang in traitPrototype.LanguagesSpoken)
-                    language.AddLanguage(mob, lang, true, false);
+                    language.AddLanguage(mob, lang, true, false); // Exodus
 
             if (traitPrototype.LanguagesUnderstood is not null)
                 foreach (var lang in traitPrototype.LanguagesUnderstood)
