@@ -197,7 +197,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             return;
         }
 
-        var price = _cfg.GetCVar(XCVars.LifeInsurancePrice);
+        var price = _cfg.GetCVar(EXCVars.LifeInsurancePrice);
         if (!_bank.TryBankWithdraw(args.Actor, price))
         {
             _popup.PopupEntity(Loc.GetString("life-insurance-insufficient-funds"), ent, args.Actor);
@@ -317,7 +317,7 @@ public sealed class LifeInsuranceConsoleSystem : EntitySystem
             occupantName,
             scannerStatus,
             clonerStatus,
-            _cfg.GetCVar(XCVars.LifeInsurancePrice));
+            _cfg.GetCVar(EXCVars.LifeInsurancePrice));
 
         _ui.SetUiState(uid, LifeInsuranceConsoleUiKey.Key, state);
     }

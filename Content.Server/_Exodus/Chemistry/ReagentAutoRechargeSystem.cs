@@ -8,8 +8,8 @@ namespace Content.Server._Exodus.Chemistry;
 
 public sealed class ReagentAutoRechargeSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
 
     public override void Initialize()
     {

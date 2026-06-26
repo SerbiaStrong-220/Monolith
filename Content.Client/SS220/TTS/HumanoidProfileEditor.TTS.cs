@@ -1,7 +1,7 @@
 ﻿// (c) Space Exodus Team - EXDS-RL with CLA
 
 using System.Linq;
-using Content.Client.Corvax.Sponsors;
+using Content.Client.SS220.Sponsors;
 using Content.Client.SS220.TTS;
 using Content.Shared.SS220.TTS;
 using Content.Shared.Preferences;

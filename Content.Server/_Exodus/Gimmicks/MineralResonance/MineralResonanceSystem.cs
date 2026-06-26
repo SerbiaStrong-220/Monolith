@@ -9,9 +9,9 @@ namespace Content.Server._Exodus.Gimmicks.MineralResonance;
 
 public sealed partial class MineralResonanceSystem : EntitySystem
 {
-    [Dependency] private readonly MiningScannerViewerSystem _miningScanner = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private MiningScannerViewerSystem _miningScanner = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private ChatSystem _chat = default!;
     public override void Initialize()
     {
         base.Initialize();

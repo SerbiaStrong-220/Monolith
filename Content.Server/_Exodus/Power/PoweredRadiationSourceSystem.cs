@@ -10,9 +10,9 @@ namespace Content.Server._Exodus.Power;
 /// Gates RadiationSource by both machine power and explicit active state.
 /// Works with any machine that has ApcPowerReceiver + RadiationSource + PoweredRadiationSourceComponent.
 /// </summary>
-public sealed class PoweredRadiationSourceSystem : EntitySystem
+public sealed partial class PoweredRadiationSourceSystem : EntitySystem
 {
-    [Dependency] private readonly RadiationSystem _radiation = default!;
+    [Dependency] private RadiationSystem _radiation = default!;
 
     public override void Initialize()
     {

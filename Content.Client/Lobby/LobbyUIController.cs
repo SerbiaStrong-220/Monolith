@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client._Mono.Company; // Mono
 using Content.Client._Mono.MonoCoins;
+using Content.Client._Exodus.Bank; // Exodus
 using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
@@ -44,6 +45,7 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     [Dependency] private MarkingManager _markings = default!;
     [Dependency] private CompanyManager _companyManager = default!; // Mono
     [Dependency] private MonoCoinsManager _monoCoins = default!; // Mono
+    [Dependency] private SavingsTransferManager _savingsTransfer = default!; // Exodus
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
@@ -270,6 +272,21 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
         UpdateMonoCoinsDisplay();
     }
 
+    // Exodus-Start
+    /// <summary>
+    /// Refreshes only the bank balance label in the lobby preview (e.g. after a savings transfer).
+    /// Avoids rebuilding the preview entity since only the balance changed.
+    /// </summary>
+    public void RefreshPreviewBalance()
+    {
+        if (PreviewPanel == null)
+            return;
+
+        if (_preferencesManager.Preferences?.SelectedCharacter is HumanoidCharacterProfile humanoid)
+            PreviewPanel.SetBankBalanceText(humanoid.BankBalanceText);
+    }
+    // Exodus-End
+
     private void RefreshProfileEditor()
     {
         _profileEditor?.RefreshAntags();
@@ -353,7 +370,9 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
             _resourceCache,
             _requirements,
             _markings,
-            _companyManager); // Mono
+            _companyManager, // Mono
+            _monoCoins, // Exodus
+            _savingsTransfer); // Exodus
 
         _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
 

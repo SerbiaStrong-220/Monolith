@@ -209,17 +209,28 @@ public sealed partial class MonoCVars
 
     #region Bank
 
+    // Exodus-Start
     /// <summary>
-    ///     Threshold before the IRS comes into effect.
+    ///     Bank balance at or below which deposits are not taxed at all (0% marginal rate).
     /// </summary>
     public static readonly CVarDef<float> DepositThreshold =
-        CVarDef.Create("mono.deposit.threshold", 2000000f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("mono.deposit.threshold", 5000000f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     How exponential taxes are. When I set this to 5, it broke the integer limit, so probably don't mess with it.
+    ///     Bank balance at which the marginal deposit tax rate would reach 100%.
+    ///     Between <see cref="DepositThreshold"/> and this value the marginal rate grows linearly.
+    ///     With threshold 5,000,000 and this at 12,000,000 the curve is stretched over 5M-12M,
+    ///     rising ~14.3% per 1,000,000 (6M -> ~14%, 8M -> ~43%, 10M -> ~71%, 12M -> 100%).
     /// </summary>
-    public static readonly CVarDef<float> DepositHighExp =
-        CVarDef.Create("mono.deposit.high_exp", 2f, CVar.SERVER | CVar.REPLICATED);
+    public static readonly CVarDef<float> DepositFullTaxBalance =
+        CVarDef.Create("mono.deposit.full_tax_balance", 12000000f, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Maximum marginal deposit tax rate (cap). 0.99 means at most 99% of a marginal deposit is taxed away.
+    /// </summary>
+    public static readonly CVarDef<float> DepositMaxRate =
+        CVarDef.Create("mono.deposit.max_rate", 0.99f, CVar.SERVER | CVar.REPLICATED);
+    // Exodus-End
 
     /// <summary>
     ///     Whether to enable depositing cash. Good for admin events or sandbox.
