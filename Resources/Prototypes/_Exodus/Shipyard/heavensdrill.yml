@@ -1,0 +1,37 @@
+- type: vessel
+  id: HeavensDrill
+  parent: BaseVessel
+  name: Небесный Бур
+  description: Крупный многоцелевой корабль для добычи, утилизации и дальних автономных вылетов. Оснащён промышленным оборудованием, научным блоком и базовой обороной.
+  price: 220000
+  category: Large
+  group: Shipyard
+  shuttlePath: /Maps/_Exodus/Shuttles/heavensdrill.yml
+  guidebookPage: Null
+  class:
+  - Salvage
+  - Science
+  - Medical
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: HeavensDrill
+  mapName: 'Небесный Бур'
+  mapPath: /Maps/_Exodus/Shuttles/heavensdrill.yml
+  minPlayers: 0
+  stations:
+    HeavensDrill:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: SalvageMagnetData
+      - type: StationNameSetup
+        mapNameTemplate: 'Небесный Бур{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]
