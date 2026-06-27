@@ -7,7 +7,7 @@
   category: Large
   group: Shipyard
   shuttlePath: /Maps/_Exodus/Shuttles/heavensdrill.yml
-  guidebookPage: Null
+  guidebookPage: null
   class:
   - Salvage
   - Science
@@ -24,7 +24,6 @@
     HeavensDrill:
       stationProto: StandardFrontierVessel
       components:
-      - type: SalvageMagnetData
       - type: StationNameSetup
         mapNameTemplate: 'Небесный Бур{1}'
         nameGenerator:
