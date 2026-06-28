@@ -50,6 +50,8 @@
     items:
     - WeaponEnergyGunLawbringer
     - CyborgStunbaton
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
   - type: DroppableBorgModule
     moduleId: ColossusSecurity
     items:
@@ -57,6 +59,22 @@
       whitelist:
         tags:
         - Handcuffs
+
+- type: entity
+  id: BorgModuleColossusField
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: colossus field cyborg module
+  description: A module that comes with an energy shotgun and a force field projector.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    moduleId: ColossusField
+    items:
+    - WeaponEnergyShotgunBorg
+    - HoloprojectorFieldColossusBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
 

@@ -7,5 +7,8 @@ ent-BorgModuleAsakimEsword = black shield energy sword cyborg module
 ent-BorgModuleColossusSecurity = colossus security cyborg module
     .desc = A law-enforcement module with a Lawbringer, stun baton, and a handcuff storage slot.
 
+ent-BorgModuleColossusField = colossus field cyborg module
+    .desc = A module that comes with an energy shotgun and a force field projector.
+
 ent-BorgModuleColossusCombat = colossus combat cyborg module
     .desc = A heavy combat module with a self-loading Anaconda and a high-frequency katana.

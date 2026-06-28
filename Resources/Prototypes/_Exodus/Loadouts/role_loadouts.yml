@@ -1,4 +1,4 @@
 - type: roleLoadout
   id: JobColossusSecurityBorg
-  nameDataset: NFNamesBorg
+  nameDataset: NamesBorg
   canCustomizeName: true
