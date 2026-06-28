@@ -124,12 +124,28 @@ namespace Content.Shared.Maps
         [DataField]
         public float Mass = 1000f;
 
+        [DataField("collision")]
+        public bool HasCollision { get; private set; } = true;
+
         // <Mono>
         /// <summary>
         /// Vertices for drawing purposes. Has to be a convex shape.
         /// </summary>
         [DataField]
         public List<Vector2> Vertices = new() { Vector2.Zero, new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
+
+        public IReadOnlyList<Vector2>? CollisionVertices => IsFullTileVertices() ? null : Vertices;
+
+        private bool IsFullTileVertices()
+        {
+            if (Vertices.Count != 4)
+                return false;
+
+            return Vertices.Contains(Vector2.Zero) &&
+                   Vertices.Contains(new Vector2(0, 1)) &&
+                   Vertices.Contains(new Vector2(1, 1)) &&
+                   Vertices.Contains(new Vector2(1, 0));
+        }
         // </Mono>
 
         /// <summary>

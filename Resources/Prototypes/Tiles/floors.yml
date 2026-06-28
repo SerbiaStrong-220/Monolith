@@ -1872,6 +1872,18 @@
   heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
 
 - type: tile
+  id: FloorHullReinforcedNoCollision
+  name: tiles-hull-reinforced-nocollision
+  sprite: /Textures/Tiles/hull_reinforced.png
+  baseTurf: Plating
+  isSubfloor: false
+  collision: false
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel
+  heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+
+- type: tile
   id: FloorReinforcedHardened
   name: tiles-super-reinforced-floor
   sprite: /Textures/Tiles/super_reinforced.png

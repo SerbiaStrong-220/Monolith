@@ -490,7 +490,7 @@ public partial class NavMapControl : MapGridControl
             for (var i = 0; i < poly.VertexCount; i++)
             {
                 var vert = poly.Vertices[i];
-                verts[i] = new Vector2(MathF.Round(vert.X), MathF.Round(vert.Y));
+                verts[i] = vert;
             }
 
             TilePolygons.Add((verts[..poly.VertexCount], TileColor));
