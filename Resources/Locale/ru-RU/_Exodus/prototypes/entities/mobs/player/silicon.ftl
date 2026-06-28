@@ -15,6 +15,12 @@ ent-PlayerBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
 ent-ConstructedBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
     .desc = { ent-BorgChassisColossusSecurity.desc }
 
+ent-ConstructedBorgChassisSelectablePDV = борг ДФ
+    .desc = Специализированный киборг Династии Фаэтона.
+
+ent-ConstructedBorgChassisSelectableTSF = борг ТСФ
+    .desc = Специализированный киборг Транс-Солнечной Федерации.
+
 ent-PlayerBorgColossusSecurityGhostRole = { ent-PlayerBorgColossusSecurity }
     .desc = { ent-PlayerBorgColossusSecurity.desc }
     .suffix = Призрак

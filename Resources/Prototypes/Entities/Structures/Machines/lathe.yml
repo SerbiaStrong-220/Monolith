@@ -399,6 +399,7 @@
     - BorgModules
     - ColossusBorgModules # Exodus colossus-borg-modules
     - ColossusBorgEndoskeletons # Exodus colossus-security-borg-endoskeleton
+    - FactionBorgEndoskeletons # Exodus faction-borg-endoskeletons
     - MechParts
     - MechEquipment
     # Shitmed Change

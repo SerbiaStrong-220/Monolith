@@ -7,6 +7,12 @@ ent-PlayerBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
 ent-ConstructedBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
     .desc = { ent-BorgChassisColossusSecurity.desc }
 
+ent-ConstructedBorgChassisSelectablePDV = PDV cyborg
+    .desc = A purpose built cyborg used by the PDV.
+
+ent-ConstructedBorgChassisSelectableTSF = TSF cyborg
+    .desc = A purpose built cyborg used by the TSF.
+
 ent-PlayerBorgColossusSecurityGhostRole = { ent-PlayerBorgColossusSecurity }
     .desc = { ent-PlayerBorgColossusSecurity.desc }
     .suffix = Ghost

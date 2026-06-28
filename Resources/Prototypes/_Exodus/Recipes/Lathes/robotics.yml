@@ -5,3 +5,19 @@
   completetime: 3
   materials:
     Steel: 1500
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeletonPDV
+  result: CyborgEndoskeletonPDV
+  completetime: 3
+  materials:
+    Steel: 1500
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeletonTSF
+  result: CyborgEndoskeletonTSF
+  completetime: 3
+  materials:
+    Steel: 1500

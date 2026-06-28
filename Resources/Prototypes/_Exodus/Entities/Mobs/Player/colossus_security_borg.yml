@@ -116,6 +116,8 @@
     containers:
     - part-container
     - cell_slot
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
 
 - type: entity
   id: PlayerBorgColossusSecurityGhostRole
