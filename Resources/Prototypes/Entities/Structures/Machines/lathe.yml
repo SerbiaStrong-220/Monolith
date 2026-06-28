@@ -397,6 +397,7 @@
     dynamicPacks:
     - Robotics
     - BorgModules
+    - ColossusBorgModules # Exodus colossus-borg-modules
     - MechParts
     - MechEquipment
     # Shitmed Change

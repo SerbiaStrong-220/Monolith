@@ -177,9 +177,7 @@
     startingCharge: 1200
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 24
-    autoRechargePause: true
-    autoRechargePauseTime: 30
+    autoRechargeRate: 30
 
 - type: entity
   name: cyborg energy cutlass

@@ -10,5 +10,8 @@ ent-BorgModuleColossusSecurity = colossus security cyborg module
 ent-BorgModuleColossusField = colossus field cyborg module
     .desc = A module that comes with an energy shotgun and a force field projector.
 
+ent-BorgModuleColossusBreaching = colossus breaching cyborg module
+    .desc = A module that comes with a cyborg-adapted breaching hammer.
+
 ent-BorgModuleColossusCombat = colossus combat cyborg module
     .desc = A heavy combat module with a self-loading Anaconda and a high-frequency katana.

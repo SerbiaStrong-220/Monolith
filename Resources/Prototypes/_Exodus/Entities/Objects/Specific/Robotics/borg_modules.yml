@@ -79,6 +79,23 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
 
 - type: entity
+  id: BorgModuleColossusBreaching
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: colossus breaching cyborg module
+  description: A module that comes with a cyborg-adapted breaching hammer.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    moduleId: ColossusBreaching
+    items:
+    - SecBreachingHammerBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
+
+- type: entity
   id: BorgModuleColossusCombat
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
   name: colossus combat cyborg module

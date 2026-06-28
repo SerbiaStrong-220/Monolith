@@ -1,0 +1,33 @@
+- type: entity
+  name: cyborg breaching hammer
+  parent: BaseItem
+  id: SecBreachingHammerBorg
+  suffix: One-Handed, For Borgs
+  description: A breaching hammer adapted for cyborg use. Its reinforced actuator gives it the full force of a two-handed swing without requiring a second hand.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi
+    state: icon
+  - type: Item
+    size: Huge
+  - type: MeleeWeapon
+    attackRate: 0.5
+    range: 1.70
+    damage:
+      types:
+        Blunt: 65
+        Structural: 300
+    bluntStaminaDamageFactor: 1.50
+  - type: Tool
+    qualities:
+    - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Prying
+  - type: ToolTileCompatible
+  - type: Clothing
+    sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
