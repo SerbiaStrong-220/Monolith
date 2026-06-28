@@ -99,6 +99,7 @@
   - PublicAffairsLiaison # Frontier
   - TsfEngineer # Mono
   - TsfBorg # Mono
+  - ColossusSecurityBorg # Exodus colossus-security-borg
 
 # Exodus
 - type: department

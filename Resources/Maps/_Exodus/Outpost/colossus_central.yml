@@ -61913,6 +61913,13 @@ entities:
     - type: Transform
       pos: -12.5,70.5
       parent: 2
+- proto: SpawnAiRemoteBorgColossusSecurity
+  entities:
+  - uid: 10728
+    components:
+    - type: Transform
+      pos: -13.5,70.5
+      parent: 2
 - proto: SpawnMobAlexander
   entities:
   - uid: 8319
@@ -61971,6 +61978,8 @@ entities:
     - type: Transform
       pos: -34.5,41.5
       parent: 2
+- proto: SpawnPointColossusSecurityBorg
+  entities:
   - uid: 8328
     components:
     - type: Transform

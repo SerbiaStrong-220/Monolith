@@ -5,3 +5,17 @@ ent-StationAiBrainColossus = Секториальный смотритель
     .desc = { ent-StationAiBrain.desc }
 ent-AiHeldColossus = { ent-AiHeld }
     .desc = { ent-AiHeld.desc }
+
+ent-BorgChassisColossusSecurity = борг-охранник Колосса
+    .desc = Киборг службы безопасности Колосс-Централа.
+
+ent-PlayerBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
+    .desc = { ent-BorgChassisColossusSecurity.desc }
+
+ent-PlayerBorgColossusSecurityGhostRole = { ent-PlayerBorgColossusSecurity }
+    .desc = { ent-PlayerBorgColossusSecurity.desc }
+    .suffix = Призрак
+
+ent-AiRemoteBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
+    .desc = { ent-BorgChassisColossusSecurity.desc }
+    .suffix = AI Remote

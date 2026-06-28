@@ -34,3 +34,46 @@
     - PinpointerAsakimBrain
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
+
+- type: entity
+  id: BorgModuleColossusSecurity
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: colossus security cyborg module
+  description: A law-enforcement module with a Lawbringer, stun baton, and a handcuff storage slot.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    moduleId: ColossusSecurity
+    items:
+    - WeaponEnergyGunLawbringer
+    - CyborgStunbaton
+  - type: DroppableBorgModule
+    moduleId: ColossusSecurity
+    items:
+    - id: Handcuffs
+      whitelist:
+        tags:
+        - Handcuffs
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
+
+- type: entity
+  id: BorgModuleColossusCombat
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  name: colossus combat cyborg module
+  description: A heavy combat module with a self-loading Anaconda and a high-frequency katana.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    moduleId: ColossusCombat
+    items:
+    - WeaponPistolAnaconda
+    - WeaponHFKatana
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }

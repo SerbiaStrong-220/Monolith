@@ -13,3 +13,7 @@ ent-SpawnAsakimRedactedBorg = спавнер Оператора Персонал
 ent-SpawnAsakimRedactedBorgNoTimelock = { ent-SpawnAsakimRedactedBorg }
     .desc = { ent-MarkerBase.desc }
     .suffix = Азаким, АСЗ, без часов
+
+ent-SpawnBorgColossusSecurity = спавнер борга-охранника Колосса
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Колосс, Борг-охранник

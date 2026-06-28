@@ -37,6 +37,7 @@
             Pilot: [ -1, -1 ]
             Mercenary: [ -1, -1 ]
             Borg: [ -1, -1 ]
+            ColossusSecurityBorg: [ 1, 1 ] # Exodus colossus-security-borg
             StationRepresentative: [ 1, 1 ]
             StationTrafficController: [ 2, 2 ]
             SecurityGuard: [ 3, 3 ]
