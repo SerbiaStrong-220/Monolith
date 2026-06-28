@@ -12,6 +12,9 @@ ent-BorgChassisColossusSecurity = борг-охранник Колосса
 ent-PlayerBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
     .desc = { ent-BorgChassisColossusSecurity.desc }
 
+ent-ConstructedBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
+    .desc = { ent-BorgChassisColossusSecurity.desc }
+
 ent-PlayerBorgColossusSecurityGhostRole = { ent-PlayerBorgColossusSecurity }
     .desc = { ent-PlayerBorgColossusSecurity.desc }
     .suffix = Призрак

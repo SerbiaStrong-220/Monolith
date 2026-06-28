@@ -398,6 +398,7 @@
     - Robotics
     - BorgModules
     - ColossusBorgModules # Exodus colossus-borg-modules
+    - ColossusBorgEndoskeletons # Exodus colossus-security-borg-endoskeleton
     - MechParts
     - MechEquipment
     # Shitmed Change

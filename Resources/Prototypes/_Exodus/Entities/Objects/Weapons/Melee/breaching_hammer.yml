@@ -15,9 +15,12 @@
     range: 1.70
     damage:
       types:
-        Blunt: 65
+        Blunt: 55
         Structural: 300
     bluntStaminaDamageFactor: 1.50
+  - type: HeldSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
   - type: Tool
     qualities:
     - Prying

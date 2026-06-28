@@ -1,0 +1,13 @@
+- type: entity
+  id: CyborgEndoskeletonColossusSecurity
+  parent: CyborgEndoskeleton
+  name: colossus security cyborg endoskeleton
+  description: A reinforced cyborg frame configured for assembling a Colossus-Central security cyborg.
+  components:
+  - type: Construction
+    graph: ColossusSecurityCyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot

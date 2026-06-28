@@ -4,6 +4,9 @@ ent-BorgChassisColossusSecurity = colossus security borg
 ent-PlayerBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
     .desc = { ent-BorgChassisColossusSecurity.desc }
 
+ent-ConstructedBorgColossusSecurity = { ent-BorgChassisColossusSecurity }
+    .desc = { ent-BorgChassisColossusSecurity.desc }
+
 ent-PlayerBorgColossusSecurityGhostRole = { ent-PlayerBorgColossusSecurity }
     .desc = { ent-PlayerBorgColossusSecurity.desc }
     .suffix = Ghost

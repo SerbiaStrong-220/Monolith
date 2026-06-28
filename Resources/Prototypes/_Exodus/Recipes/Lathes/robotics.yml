@@ -1,0 +1,7 @@
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeletonColossusSecurity
+  result: CyborgEndoskeletonColossusSecurity
+  completetime: 3
+  materials:
+    Steel: 1500
