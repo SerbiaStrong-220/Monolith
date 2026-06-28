@@ -13,8 +13,8 @@
     GeigerCounter: 10       # Frontier
     PowerCellMedium: 15 # Frontier: 5<15
 #    NetworkConfigurator: 5 # Frontier
-#    ShipRepairDevice: 10 # Mono # Exodus
-#    ShipRepairDeviceAmmo: 20 # Mono # Exodus
+#    ShipRepairDevice: 10 # Exodus RCD dupe fix
+#    ShipRepairDeviceAmmo: 20 # Exodus RCD dupe fix
     JerryCanNaniteFuel: 20 # Monolith edit
     NaniteApplicator: 10 # Monolith edit - Nanite applicator
     AirGrenade: 6 # Mono
