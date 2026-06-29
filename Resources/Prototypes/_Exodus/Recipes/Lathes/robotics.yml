@@ -4,7 +4,11 @@
   result: CyborgEndoskeletonColossusSecurity
   completetime: 3
   materials:
-    Steel: 1500
+    Steel: 20000
+    Plasteel: 10000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 1000
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
@@ -12,7 +16,11 @@
   result: CyborgEndoskeletonPDV
   completetime: 3
   materials:
-    Steel: 1500
+    Steel: 20000
+    Plasteel: 10000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 1000
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
@@ -20,4 +28,8 @@
   result: CyborgEndoskeletonTSF
   completetime: 3
   materials:
-    Steel: 1500
+    Steel: 20000
+    Plasteel: 10000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 1000
