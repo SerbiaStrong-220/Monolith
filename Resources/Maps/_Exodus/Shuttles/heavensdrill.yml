@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/27/2026 18:37:51
-  entityCount: 1715
+  time: 06/29/2026 21:56:02
+  entityCount: 1717
 maps: []
 grids:
 - 1
@@ -101,10 +101,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
-        Puddle: []
         Smoke: []
         MetalFoam: []
         Kudzu: []
+        Puddle: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: ImplicitRoof
@@ -116,6 +116,15 @@ entities:
       chunkCollection:
         version: 2
         nodes:
+        - node:
+            color: '#FFFFFFFF'
+            id: Arrows
+          decals:
+            262: 0,19
+            276: 0,16
+            277: 0,17
+            278: 0,18
+            279: 0,15
         - node:
             color: '#FFFFFFFF'
             id: Bot
@@ -130,6 +139,22 @@ entities:
             86: -3,4
             87: -4,2
             88: 4,2
+            268: -1,2
+            269: 0,2
+            270: 1,2
+            271: 1,0
+            272: 0,0
+            273: -1,0
+            274: 4,2
+            275: -4,2
+        - node:
+            color: '#FFFFFFFF'
+            id: BotGreyscale
+          decals:
+            282: 3,10
+            283: 4,12
+            284: 4,13
+            288: 2,10
         - node:
             color: '#FFFFFFFF'
             id: Box
@@ -140,11 +165,12 @@ entities:
             74: 4,15
             89: 4,-1
             90: -4,-1
+            267: 0,1
         - node:
-            color: '#5C6D76FF'
-            id: BrickBoxOverlay
+            color: '#FFFFFFFF'
+            id: BoxGreyscale
           decals:
-            83: 0,1
+            292: 2,12
         - node:
             color: '#5C6D76FF'
             id: BrickCornerOverlayNE
@@ -185,6 +211,59 @@ entities:
             id: BrickLineOverlayW
           decals:
             80: -1,1
+        - node:
+            color: '#FFFFFFFF'
+            id: Caution
+          decals:
+            259: 0,19
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: Dirt
+          decals:
+            238: -3,4
+            239: -2,4
+            240: -2,3
+            246: 0,-1
+            247: 0,-2
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: DirtHeavy
+          decals:
+            234: 2,0
+            235: 1,3
+            241: -2,3
+            242: -1,4
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: DirtHeavyMonotile
+          decals:
+            248: 0,-1
+            249: -1,-1
+            250: 0,0
+            251: -1,0
+            256: -4,0
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: DirtLight
+          decals:
+            236: 2,2
+            243: -3,-1
+            244: -4,0
+            245: 3,-1
+            252: 1,-1
+            253: 1,0
+            254: 1,1
+            255: -1,2
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: DirtMedium
+          decals:
+            237: -2,1
         - node:
             color: '#FFFFFFFF'
             id: LoadingArea
@@ -285,6 +364,235 @@ entities:
             36: -2,2
             37: -2,3
         - node:
+            color: '#9FDAFFFF'
+            id: MiniTileWhiteLineE
+          decals:
+            192: 0,13
+            193: 0,12
+            194: 0,11
+            195: 0,10
+        - node:
+            color: '#D39FFFFF'
+            id: MiniTileWhiteLineW
+          decals:
+            186: 0,10
+            187: 0,11
+            188: 0,12
+            189: 0,13
+        - node:
+            color: '#FFFFFF95'
+            id: PavementVerticalCheckerAOverlay
+          decals:
+            224: -3,-16
+            226: -3,-14
+            228: -3,-12
+            229: -4,-16
+            231: -4,-14
+            233: -4,-12
+        - node:
+            color: '#FFFFFF95'
+            id: PavementVerticalCheckerBOverlay
+          decals:
+            225: -3,-15
+            227: -3,-13
+            230: -4,-15
+            232: -4,-13
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineEast
+          decals:
+            112: 4,-15
+            113: 4,-14
+            114: 4,-13
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineNorthEast
+          decals:
+            94: 3,-10
+            102: 3,-17
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineNorthEnd
+          decals:
+            107: 4,-12
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineNorthWest
+          decals:
+            91: 2,-10
+            99: 2,-17
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineSouthEast
+          decals:
+            93: 3,-11
+            101: 3,-18
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineSouthEnd
+          decals:
+            108: 4,-16
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineSouthWest
+          decals:
+            92: 2,-11
+            100: 2,-18
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestOverlayTrimlineWest
+          decals:
+            109: 4,-15
+            110: 4,-14
+            111: 4,-13
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestQuarterTileOverlayGreyscale
+          decals:
+            98: 3,-11
+            106: 3,-18
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestQuarterTileOverlayGreyscale180
+          decals:
+            95: 2,-10
+            104: 2,-17
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestQuarterTileOverlayGreyscale270
+          decals:
+            96: 3,-10
+            103: 3,-17
+        - node:
+            color: '#FFFFFFFF'
+            id: ShiptestQuarterTileOverlayGreyscale90
+          decals:
+            97: 2,-11
+            105: 2,-18
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineEast
+          decals:
+            206: 3,11
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineEast
+          decals:
+            145: -1,11
+            146: -1,12
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineNorth
+          decals:
+            203: 2,13
+            204: 3,13
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineNorth
+          decals:
+            158: -3,13
+            168: -2,13
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineNorthEast
+          decals:
+            196: 4,13
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineNorthEast
+          decals:
+            156: -1,13
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineNorthWest
+          decals:
+            200: 1,13
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineNorthWest
+          decals:
+            159: -4,13
+        - node:
+            color: '#5F82A1FF'
+            id: ShiptestSplineSouth
+          decals:
+            287: 2,10
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineSouth
+          decals:
+            162: -2,10
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineSouthEast
+          decals:
+            197: 4,12
+            198: 3,10
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineSouthEast
+          decals:
+            163: -1,10
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineSouthEastCorner
+          decals:
+            207: 3,12
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineSouthWest
+          decals:
+            199: 1,10
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineSouthWest
+          decals:
+            160: -4,12
+            161: -3,10
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineSouthWestCorner
+          decals:
+            140: -3,12
+        - node:
+            color: '#9FDAFFFF'
+            id: ShiptestSplineWest
+          decals:
+            201: 1,12
+            202: 1,11
+        - node:
+            color: '#FF9FFFFF'
+            id: ShiptestSplineWest
+          decals:
+            141: -3,11
+        - node:
+            color: '#FFFFFFFF'
+            id: StandClear
+          decals:
+            260: -1,19
+            261: 1,19
+        - node:
+            color: '#FFFFFFFF'
+            id: TechNE
+          decals:
+            115: 0,-10
+        - node:
+            color: '#79DAFFFF'
+            id: TrimWarnEast
+          decals:
+            208: 0,10
+            209: 0,11
+            210: 0,12
+            211: 0,13
+        - node:
+            color: '#F5A2FFFF'
+            id: TrimWarnWest
+          decals:
+            212: 0,10
+            213: 0,11
+            214: 0,12
+            215: 0,13
+        - node:
             color: '#FFFFFFFF'
             id: WarnCornerSW
           decals:
@@ -294,6 +602,7 @@ entities:
             id: WarnFull
           decals:
             51: 3,18
+            216: 0,14
         - node:
             color: '#FFFFFFFF'
             id: WarnLineN
@@ -2235,6 +2544,16 @@ entities:
     components:
     - type: Transform
       pos: 1.5,22.5
+      parent: 1
+  - uid: 1716
+    components:
+    - type: Transform
+      pos: 5.5,4.5
+      parent: 1
+  - uid: 1717
+    components:
+    - type: Transform
+      pos: 5.5,-3.5
       parent: 1
 - proto: AutolatheHyperConvection
   entities:
