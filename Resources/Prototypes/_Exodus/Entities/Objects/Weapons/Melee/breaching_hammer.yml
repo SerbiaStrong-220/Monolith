@@ -32,9 +32,3 @@
   - type: ToolTileCompatible
   - type: StaminaDamageOnHit
     damage: 85
-  - type: Clothing
-    sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi
-    quickEquip: false
-    slots:
-    - back
-    - suitStorage

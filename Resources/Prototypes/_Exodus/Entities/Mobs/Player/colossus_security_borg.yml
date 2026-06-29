@@ -27,6 +27,7 @@
       tags:
       - BorgModuleGeneric
       - BorgModuleSyndicate
+      - BorgModuleColossus
     hasMindState: sec_borg_e_blue
     noMindState: sec_borg_l_blue
   - type: BorgTransponder
