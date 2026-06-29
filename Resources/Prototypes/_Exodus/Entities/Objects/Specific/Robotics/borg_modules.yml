@@ -53,7 +53,7 @@
     - WeaponEnergyGunLawbringer
     - CyborgStunbaton
   - type: BorgModuleIcon
-    icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
   - type: DroppableBorgModule
     moduleId: ColossusSecurity
     items:
@@ -80,7 +80,7 @@
     - WeaponEnergyShotgunBorg
     - HoloprojectorFieldColossusBorg
   - type: BorgModuleIcon
-    icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
 
 - type: entity
   id: BorgModuleColossusBreaching
@@ -100,7 +100,7 @@
     items:
     - SecBreachingHammerBorg
   - type: BorgModuleIcon
-    icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
 
 - type: entity
   id: BorgModuleColossusCombat
@@ -120,4 +120,4 @@
     - WeaponPistolAnaconda
     - WeaponHFKatana
   - type: BorgModuleIcon
-    icon: { sprite: _Mono/Interface/Action/actions_borg.rsi, state: mercenary-weapon-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
