@@ -20,25 +20,6 @@
   vertices: ["0, 0", "1, 1", "0, 1"]
 
 - type: tile
-  id: InvisibleSupport
-  name: tiles-invisible-support
-  sprite: /Textures/_Mono/Tiles/invisible_support.png
-  baseTurf: Space
-  isSubfloor: true
-  deconstructTools: [ Cutting ]
-  deconstructTimeMultiplier: 1
-  weather: true
-  footstepSounds:
-    collection: FootstepCatwalk
-  friction: 1.5
-  isSpace: true
-  itemDrop: PartRodMetal1
-  heatCapacity: 10000
-  sturdy: true
-  collision: false
-  mass: 0
-
-- type: tile
   id: LatticeCornerSE
   parent: Lattice
   name: SE lattice

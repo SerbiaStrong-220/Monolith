@@ -490,7 +490,7 @@ public partial class NavMapControl : MapGridControl
             for (var i = 0; i < poly.VertexCount; i++)
             {
                 var vert = poly.Vertices[i];
-                verts[i] = vert;
+                verts[i] = vert; // Exodus-diagonal-tiles-collision
             }
 
             TilePolygons.Add((verts[..poly.VertexCount], TileColor));

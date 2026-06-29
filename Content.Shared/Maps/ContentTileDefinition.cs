@@ -124,8 +124,10 @@ namespace Content.Shared.Maps
         [DataField]
         public float Mass = 1000f;
 
+        // Exodus-diagonal-tiles-collision-begin
         [DataField("collision")]
         public bool HasCollision { get; private set; } = true;
+        // Exodus-diagonal-tiles-collision-end
 
         // <Mono>
         /// <summary>
@@ -134,6 +136,7 @@ namespace Content.Shared.Maps
         [DataField]
         public List<Vector2> Vertices = new() { Vector2.Zero, new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
 
+        // Exodus-diagonal-tiles-collision-begin
         public IReadOnlyList<Vector2>? CollisionVertices => IsFullTileVertices() ? null : Vertices;
 
         private bool IsFullTileVertices()
@@ -146,6 +149,7 @@ namespace Content.Shared.Maps
                    Vertices.Contains(new Vector2(1, 1)) &&
                    Vertices.Contains(new Vector2(1, 0));
         }
+        // Exodus-diagonal-tiles-collision-end
         // </Mono>
 
         /// <summary>

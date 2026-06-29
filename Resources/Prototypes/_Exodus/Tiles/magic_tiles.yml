@@ -1,0 +1,30 @@
+- type: tile
+  id: InvisibleSupport
+  name: tiles-invisible-support
+  sprite: /Textures/_Exodus/Tiles/invisible_support.png
+  baseTurf: Space
+  isSubfloor: true
+  deconstructTools: [ Cutting ]
+  deconstructTimeMultiplier: 1
+  weather: true
+  footstepSounds:
+    collection: FootstepCatwalk
+  friction: 1.5
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+  sturdy: true
+  collision: false
+  mass: 0
+
+- type: tile
+  id: FloorHullReinforcedNoCollision
+  name: tiles-hull-reinforced-nocollision
+  sprite: /Textures/Tiles/hull_reinforced.png
+  baseTurf: Plating
+  isSubfloor: false
+  collision: false
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel
+  heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
