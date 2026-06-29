@@ -1,0 +1,44 @@
+# Author Info
+# GitHub: R-R0S
+# Discord: mq.gg
+
+# Shuttle Notes: Thanks to Heidem for the decals
+
+- type: vessel
+  id: Epione
+  parent: BaseVessel
+  name: Эпиона
+  description: Современный военно-медицинский шаттл, предназначенный для спасательных операций и оказания медицинской помощи в самых тяжёлых условиях. Имеет на борту генератор щита MS-100 и весьма неплохое корабельное вооружение. Его задача — вытащить вас из любой беды, невзирая на угрозы.
+  price: 195000 # ~135k base price.
+  category: Medium
+  group: Medical
+  access: Medical
+  shuttlePath: /Maps/_Exodus/Shuttles/epione.yml
+  guidebookPage: Null
+  class:
+  - Corvette
+  - Medical
+  - Chemistry
+  engine:
+  - Bananium
+
+- type: gameMap
+  id: Epione
+  mapName: 'Эпиона'
+  mapPath: /Maps/_Exodus/Shuttles/epione.yml
+  minPlayers: 0
+  stations:
+    Epione:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Эпиона{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            MdMedic: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

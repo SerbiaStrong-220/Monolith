@@ -17,3 +17,35 @@ ent-SpawnAsakimRedactedBorgNoTimelock = { ent-SpawnAsakimRedactedBorg }
 ent-SpawnBorgColossusSecurity = colossus security borg spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = Colossus, Security Borg
+
+ent-SpawnAiRemoteBorgBattery = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = NT
+
+ent-SpawnAiRemoteBorgColossus = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Colossus
+
+ent-SpawnAiRemoteBorgTSF = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = TSF
+
+ent-SpawnAiRemoteBorgPDV = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = PDV
+
+ent-SpawnAiRemoteBorgRedacted = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = ADS
+
+ent-SpawnAiRemoteBorgSyndicateAssault = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Syndicate Assault
+
+ent-SpawnAiRemoteBorgSyndicateSaboteur = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Syndicate Saboteur
+
+ent-SpawnAiRemoteBorgDerelict = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Derelict
