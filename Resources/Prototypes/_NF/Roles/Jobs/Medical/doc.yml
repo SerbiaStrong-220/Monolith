@@ -16,7 +16,7 @@
   #     time: 234000 # mono 65 hours
     - !type:RoleTimeRequirement
       role: MdMedic
-      time: 36000 # 10 hours
+      time: 54000 # 15 hours # Exodus paramed-lead-hours
     - !type:OverallPlaytimeRequirement
       time: 72000 # 20 hours
   # Exodus-Rework-Time-Roles-End
