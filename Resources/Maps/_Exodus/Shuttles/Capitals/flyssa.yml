@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 04/16/2026 13:15:13
-  entityCount: 3238
+  entityCount: 3239
 maps: []
 grids:
 - 1
@@ -15260,6 +15260,13 @@ entities:
     components:
     - type: Transform
       pos: 2.5,29.5
+      parent: 1
+- proto: SpawnAiRemoteBorgTSF
+  entities:
+  - uid: 3239
+    components:
+    - type: Transform
+      pos: 1.5,29.5
       parent: 1
 - proto: SpawnMechRipley
   entities:
