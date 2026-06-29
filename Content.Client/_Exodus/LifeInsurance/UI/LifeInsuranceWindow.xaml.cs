@@ -99,6 +99,9 @@ public sealed partial class LifeInsuranceWindow : FancyWindow
         if (!status.Connected)
             return Loc.GetString("life-insurance-status-disconnected", ("machine", name));
 
+        if (status.Unpowered)
+            return Loc.GetString("life-insurance-status-unpowered", ("machine", name));
+
         if (status.OnGridPower)
             return Loc.GetString("life-insurance-status-grid", ("machine", name));
 

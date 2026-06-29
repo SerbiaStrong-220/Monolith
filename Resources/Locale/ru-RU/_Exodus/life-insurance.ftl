@@ -23,6 +23,7 @@ life-insurance-status-cloner = Капсула клонирования
 life-insurance-status-disconnected = { $machine }: не подключён
 life-insurance-status-grid = { $machine }: питание от сети
 life-insurance-status-battery = { $machine }: батарея { $percent }%
+life-insurance-status-unpowered = { $machine }: нет питания
 
 # Всплывающие сообщения консоли
 life-insurance-no-scanner = Капсула сканирования не подключена.

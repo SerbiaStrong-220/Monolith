@@ -23,6 +23,9 @@ public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
     {
         var status = new LifeInsuranceMachineStatus { Connected = connected };
 
+        // No power, grid is down and battery is depleted.
+        status.Unpowered = !_power.IsPowered(uid);
+
         // Running on grid power, otherwise running on battery.
         status.OnGridPower = !(TryComp<ApcPowerReceiverBatteryComponent>(uid, out var backup) && backup.Enabled);
 

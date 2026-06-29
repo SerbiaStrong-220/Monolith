@@ -34,7 +34,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: Sprite
-    sprite: Structures/Machines/scanner.rsi
+    sprite: _Exodus/Structures/Machines/life_insurance_scanner.rsi
     snapCardinals: true
     layers:
     - state: open
@@ -88,7 +88,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: Sprite
-    sprite: Structures/Machines/cloning.rsi
+    sprite: _Exodus/Structures/Machines/life_insurance_cloner.rsi
     snapCardinals: true
     layers:
     - state: pod_0
@@ -142,12 +142,12 @@
         type: LifeInsuranceBoundUserInterface
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
-    snapCardinals: true
     layers:
     - map: ["computerLayerBody"]
       state: computer
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: generic
+      sprite: _Exodus/Structures/Machines/life_insurance_console.rsi
+      state: cloningnew
   - type: Appearance

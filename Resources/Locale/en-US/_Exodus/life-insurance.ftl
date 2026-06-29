@@ -23,6 +23,7 @@ life-insurance-status-cloner = Cloning capsule
 life-insurance-status-disconnected = { $machine }: not connected
 life-insurance-status-grid = { $machine }: powered (grid)
 life-insurance-status-battery = { $machine }: battery { $percent }%
+life-insurance-status-unpowered = { $machine }: no power
 
 # Console popups
 life-insurance-no-scanner = No scanning capsule connected.

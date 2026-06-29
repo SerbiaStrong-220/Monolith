@@ -26,6 +26,7 @@ public struct LifeInsuranceRecordEntry
 public struct LifeInsuranceMachineStatus
 {
     public bool Connected;
+    public bool Unpowered;
     public bool OnGridPower;
     /// <summary>Internal battery charge percent (0..1), shown when not on grid power.</summary>
     public float BatteryPercent;
