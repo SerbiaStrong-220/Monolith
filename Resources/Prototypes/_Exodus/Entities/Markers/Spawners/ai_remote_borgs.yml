@@ -17,6 +17,21 @@
       state: robot
 
 - type: entity
+  name: AI remote borg spawner (Colossus)
+  id: SpawnAiRemoteBorgColossus
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgColossus
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+
+- type: entity
   name: AI remote borg spawner (TSF)
   id: SpawnAiRemoteBorgTSF
   parent: MarkerBase

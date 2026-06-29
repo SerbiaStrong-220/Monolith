@@ -61906,7 +61906,7 @@ entities:
     - type: Transform
       pos: 6.5,62.5
       parent: 2
-- proto: SpawnAiRemoteBorgBattery
+- proto: SpawnAiRemoteBorgColossus
   entities:
   - uid: 10727
     components:
