@@ -137,7 +137,19 @@ namespace Content.Shared.Maps
         public List<Vector2> Vertices = new() { Vector2.Zero, new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
 
         // Exodus-diagonal-tiles-collision-begin
-        public IReadOnlyList<Vector2>? CollisionVertices => IsFullTileVertices() ? null : Vertices;
+        private bool? _isFullTileVertices;
+
+        public IReadOnlyList<Vector2>? CollisionVertices
+        {
+            get
+            {
+                if (!HasCollision)
+                    return null;
+
+                _isFullTileVertices ??= IsFullTileVertices();
+                return _isFullTileVertices.Value ? null : Vertices;
+            }
+        }
 
         private bool IsFullTileVertices()
         {
