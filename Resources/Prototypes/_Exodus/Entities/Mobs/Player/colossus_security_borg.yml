@@ -53,12 +53,14 @@
     - Traffic
     - Security
     - Command
+    - Service
   - type: ActiveRadio
     channels:
     - Common
     - Traffic
     - Security
     - Command
+    - Service
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
@@ -93,6 +95,8 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellCombat
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
 
 - type: entity
   id: ConstructedBorgColossusSecurity
