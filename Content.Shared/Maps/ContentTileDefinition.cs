@@ -143,7 +143,7 @@ namespace Content.Shared.Maps
         {
             get
             {
-                if (!HasCollision || Vertices.Count < 3)
+                if (!HasCollision || Vertices == null || Vertices.Count < 3)
                     return null;
 
                 _isFullTileVertices ??= IsFullTileVertices();
@@ -153,7 +153,7 @@ namespace Content.Shared.Maps
 
         private bool IsFullTileVertices()
         {
-            if (Vertices.Count != 4)
+            if (Vertices == null || Vertices.Count != 4)
                 return false;
 
             return Vertices.Contains(Vector2.Zero) &&
