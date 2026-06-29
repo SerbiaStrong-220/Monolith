@@ -15,12 +15,14 @@
     range: 1.70
     damage:
       types:
-        Blunt: 55
-        Structural: 300
+        Blunt: 50
+        Structural: 400
     bluntStaminaDamageFactor: 1.50
+    soundHit:
+      collection: MetalThud
   - type: HeldSpeedModifier
-    walkModifier: 0.5
-    sprintModifier: 0.5
+    walkModifier: 0.4
+    sprintModifier: 0.4
   - type: Tool
     qualities:
     - Prying
@@ -28,6 +30,8 @@
       path: /Audio/Items/crowbar.ogg
   - type: Prying
   - type: ToolTileCompatible
+  - type: StaminaDamageOnHit
+    damage: 85
   - type: Clothing
     sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi
     quickEquip: false
