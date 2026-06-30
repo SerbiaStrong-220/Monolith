@@ -8,7 +8,7 @@
     Plasteel: 10000
     Gold: 2000
     Silver: 2000
-    Bluespace: 1000
+    Bluespace: 300
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
@@ -20,7 +20,7 @@
     Plasteel: 10000
     Gold: 2000
     Silver: 2000
-    Bluespace: 1000
+    Bluespace: 300
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
@@ -32,4 +32,4 @@
     Plasteel: 10000
     Gold: 2000
     Silver: 2000
-    Bluespace: 1000
+    Bluespace: 300
