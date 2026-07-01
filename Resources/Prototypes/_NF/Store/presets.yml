@@ -58,6 +58,7 @@
     - UplinkPirateUtility
     - UplinkPirateExplosives
     - UplinkPdvVouchers
+    - UplinkPdvIdCards # Exodus
 #    - UplinkPirateGambling
     currencyWhitelist:
     - Doubloon #Rename to Mark/Slip/Chit in code to represent blackmarket currency instead of doubloons

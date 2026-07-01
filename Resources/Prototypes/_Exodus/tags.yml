@@ -9,3 +9,12 @@
 
 - type: Tag
   id: SyndicateUplink
+
+- type: Tag
+  id: FoamGrenadeAluminium
+
+- type: Tag
+  id: FoamGrenadeNanolaminate
+
+- type: Tag
+  id: FoamGrenadeIron
