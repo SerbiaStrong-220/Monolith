@@ -19,8 +19,9 @@
   - type: Item
     size: Small
   - type: Storage
+    maxItemSize: Tiny # Exodus: fit default dice fill
     grid:
-    - 0,0,3,1
+    - 0,0,8,1 # Exodus: fit default dice fill
     whitelist:
       tags:
       - Dice

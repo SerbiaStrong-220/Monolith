@@ -7,7 +7,7 @@
   price: 78500
   category: Small
   group: Security
-  access: Command # Exodus-Cadet-No-TSF-Shutles
+  access: Security
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/hoplite.yml
   guidebookPage: Null
   class:

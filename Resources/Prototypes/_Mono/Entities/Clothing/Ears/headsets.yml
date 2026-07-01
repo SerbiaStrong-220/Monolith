@@ -24,6 +24,7 @@
     containers:
       key_slots:
       - EncryptionKeyStationMaster
+      - EncryptionKeyCommon # Exodus tsfmc-commander-common-radio
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing

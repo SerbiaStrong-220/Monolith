@@ -11,7 +11,7 @@
   purchasable: false # voucher only
   category: Medium
   group: Security
-  access: Command # Exodus-Cadet-No-TSF-Shutles
+  access: Security
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
   guidebookPage: Null
   class:

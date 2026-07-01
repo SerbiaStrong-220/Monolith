@@ -12,6 +12,9 @@
     smokePrototype: NanolaminateFoam
   - type: StaticPrice
     price: 1500
+  - type: Tag # Exodus foam-trap
+    tags:
+    - FoamGrenadeNanolaminate
 
 - type: entity
   id: NanolaminateFoam

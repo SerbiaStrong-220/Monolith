@@ -6,3 +6,12 @@
 
 - type: Tag
   id: POI
+
+- type: Tag
+  id: FoamGrenadeAluminium
+
+- type: Tag
+  id: FoamGrenadeNanolaminate
+
+- type: Tag
+  id: FoamGrenadeIron

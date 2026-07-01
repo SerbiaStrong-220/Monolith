@@ -1,0 +1,124 @@
+- type: entity
+  abstract: true
+  id: FoamTrapBase
+  name: foam trap
+  description: A concealed trap loaded with a foam grenade. Releases foam when destroyed.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    drawdepth: Items
+    sprite: _Exodus/Structures/Traps/foam_trap.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Transform
+    anchored: true
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  parent: FoamTrapBase
+  id: FoamTrapAssembly
+  name: foam trap assembly
+  description: An incomplete foam trap frame. Insert a foam grenade to arm it.
+  components:
+  - type: Sprite
+    state: assembly
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: Construction
+    graph: FoamTrap
+    node: assembly
+
+- type: entity
+  abstract: true
+  parent: FoamTrapBase
+  id: FoamTrapArmedBase
+  name: foam trap
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: SoundOnTrigger
+    sound: /Audio/_Mono/Weapons/Grenades/smoke_bomb.ogg
+
+- type: entity
+  parent: FoamTrapArmedBase
+  id: FoamTrapAluminium
+  name: aluminium foam trap
+  description: An armed trap loaded with an aluminium foam grenade. Releases foam when destroyed.
+  components:
+  - type: Sprite
+    state: armed_aluminium
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 13
+    smokePrototype: AluminiumMetalFoam
+  - type: Construction
+    graph: FoamTrap
+    node: trapAluminium
+
+- type: entity
+  parent: FoamTrapArmedBase
+  id: FoamTrapNanolaminate
+  name: nanolaminate foam trap
+  description: An armed trap loaded with a nanolaminate foam grenade. Releases reinforced foam when destroyed.
+  components:
+  - type: Sprite
+    state: armed_nanolaminate
+  - type: SmokeOnTrigger
+    duration: 4
+    spreadAmount: 17
+    smokePrototype: NanolaminateFoam
+  - type: Construction
+    graph: FoamTrap
+    node: trapNanolaminate
+
+- type: entity
+  parent: FoamTrapArmedBase
+  id: FoamTrapIron
+  name: iron foam trap
+  description: An armed trap loaded with an iron foam grenade. Releases iron foam when destroyed.
+  components:
+  - type: Sprite
+    state: armed_iron
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 13
+    smokePrototype: IronMetalFoam
+  - type: Construction
+    graph: FoamTrap
+    node: trapIron

@@ -1,0 +1,8 @@
+- type: construction
+  id: FoamTrap
+  graph: FoamTrap
+  startNode: start
+  targetNode: assembly
+  category: construction-category-utilities
+  objectType: Structure
+  placementMode: SnapgridCenter

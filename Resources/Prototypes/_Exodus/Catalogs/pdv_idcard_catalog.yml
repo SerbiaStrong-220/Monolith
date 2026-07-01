@@ -1,0 +1,68 @@
+# Exodus: PDV uplink ID card section.
+# Lets PDV crew (e.g. life-insurance clones who respawn without gear) buy a
+# rank ID card. Restricted to the PDV uplink via the FactionStaticUplinkPdv tag.
+# Grand Vizier card is intentionally excluded.
+
+- type: storeCategory
+  id: UplinkPdvIdCards
+  name: store-category-pdvidcards
+
+- type: listing
+  id: UplinkPdvIdCardRakhshan
+  name: uplink-pdv-idcard-rakhshan-name
+  description: uplink-pdv-idcard-rakhshan-desc
+  productEntity: PDVRakhshanIDCard
+  cost:
+    Doubloon: 1
+  categories:
+  - UplinkPdvIdCards
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv
+
+- type: listing
+  id: UplinkPdvIdCardDenasvar
+  name: uplink-pdv-idcard-denasvar-name
+  description: uplink-pdv-idcard-denasvar-desc
+  productEntity: PDVDenasvarIDCard
+  cost:
+    Doubloon: 3
+  categories:
+  - UplinkPdvIdCards
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv
+
+- type: listing
+  id: UplinkPdvIdCardAsvaran
+  name: uplink-pdv-idcard-asvaran-name
+  description: uplink-pdv-idcard-asvaran-desc
+  productEntity: PDVAsvaranIDCard
+  cost:
+    Doubloon: 5
+  categories:
+  - UplinkPdvIdCards
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv
+
+- type: listing
+  id: UplinkPdvIdCardSpasaka
+  name: uplink-pdv-idcard-spasaka-name
+  description: uplink-pdv-idcard-spasaka-desc
+  productEntity: PDVSpasakaIDCard
+  cost:
+    Doubloon: 10
+  categories:
+  - UplinkPdvIdCards
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv

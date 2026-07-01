@@ -9,7 +9,7 @@
   purchasable: false # voucher only
   category: Medium
   group: Security
-  access: Command # Exodus-Cadet-No-TSF-Shutles
+  access: Security
   shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
   guidebookPage: Null
   class:
