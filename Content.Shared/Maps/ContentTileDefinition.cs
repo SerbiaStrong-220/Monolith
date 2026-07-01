@@ -137,16 +137,20 @@ namespace Content.Shared.Maps
         public List<Vector2> Vertices = new() { Vector2.Zero, new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
 
         // Exodus-diagonal-tiles-collision-begin
-        private readonly Lazy<IReadOnlyList<Vector2>?> _collisionVertices;
-
-        public ContentTileDefinition()
-        {
-            _collisionVertices = new Lazy<IReadOnlyList<Vector2>?>(GetCollisionVertices, System.Threading.LazyThreadSafetyMode.ExecutionAndPublication);
-        }
+        private IReadOnlyList<Vector2>? _collisionVertices;
+        private bool _collisionVerticesCached;
 
         public IReadOnlyList<Vector2>? CollisionVertices
         {
-            get => _collisionVertices.Value;
+            get
+            {
+                if (_collisionVerticesCached)
+                    return _collisionVertices;
+
+                _collisionVertices = GetCollisionVertices();
+                _collisionVerticesCached = true;
+                return _collisionVertices;
+            }
         }
 
         private IReadOnlyList<Vector2>? GetCollisionVertices()
