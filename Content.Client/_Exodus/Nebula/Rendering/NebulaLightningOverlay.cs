@@ -3,14 +3,17 @@ using Content.Client.Parallax;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client._Exodus.Nebula.Rendering;
 
 public sealed class NebulaLightningOverlay : Overlay
 {
     [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private readonly NebulaParallaxSystem _nebulaParallax;
+    private readonly ShaderInstance _unshadedShader;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
@@ -19,6 +22,7 @@ public sealed class NebulaLightningOverlay : Overlay
         ZIndex = ParallaxSystem.ParallaxZIndex + 1;
         IoCManager.InjectDependencies(this);
         _nebulaParallax = _entManager.System<NebulaParallaxSystem>();
+        _unshadedShader = _prototype.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -34,6 +38,7 @@ public sealed class NebulaLightningOverlay : Overlay
         if (!_nebulaParallax.TryGetBackgroundLightning(out var lightning, out var alpha))
             return;
 
+        args.WorldHandle.UseShader(_unshadedShader);
         DrawBackgroundLightning(args, lightning, alpha);
         args.WorldHandle.UseShader(null);
     }
@@ -47,7 +52,6 @@ public sealed class NebulaLightningOverlay : Overlay
             return;
 
         var worldHandle = args.WorldHandle;
-        worldHandle.UseShader(null);
         worldHandle.DrawRect(args.WorldAABB, new Color(1f, 0.2f, 0.1f, 0.055f * alpha));
 
         for (var i = 0; i < lightning.PointCount - 1; i++)
