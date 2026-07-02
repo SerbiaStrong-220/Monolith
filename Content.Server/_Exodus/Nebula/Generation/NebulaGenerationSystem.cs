@@ -4,12 +4,10 @@ using Content.Server._Exodus.Nebula.Components;
 using Content.Server._Mono.Cleanup;
 using Content.Server._Mono.Radar;
 using Content.Server._NF.GameRule;
-using Content.Server._NF.GameTicking.Events;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Station.Components;
 using Content.Shared._Exodus.Nebula.Components;
-using Content.Shared._Exodus.Nebula.Events;
 using Content.Shared._Exodus.Nebula.Generation;
 using Content.Shared._Exodus.Nebula.Prototypes;
 using Content.Shared._Mono.Radar;
@@ -59,15 +57,13 @@ public sealed partial class NebulaGenerationSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<StationsGeneratedEvent>(OnStationsGenerated);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
-    private void OnStationsGenerated(StationsGeneratedEvent args)
+    public bool Generate(MapId mapId)
     {
-        var mapId = _ticker.DefaultMap;
         if (!_mapManager.MapExists(mapId))
-            return;
+            return false;
 
         _config = ResolveConfig();
         var settings = BuildSettings(_config);
@@ -109,8 +105,7 @@ public sealed partial class NebulaGenerationSystem : EntitySystem
 
         _sawmill.Info($"Generated {component.Nebulas.Count} nebulas covering {component.TotalArea:0}/{component.MaxTotalArea:0} area and {component.NebulaMarkers.Count} markers on map {mapId} with seed {seed} after {component.Attempts}/{component.MaxAttempts} attempts.");
 
-        var doneEv = new NebulaBlobGenerationDoneEvent();
-        RaiseLocalEvent(ref doneEv);
+        return true;
     }
 
     private void SyncMapData(EntityUid mapUid, NebulaMapComponent source)
@@ -272,7 +267,7 @@ public sealed partial class NebulaGenerationSystem : EntitySystem
             foreach (var gridUid in station.Grids)
             {
                 if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                    !TryComp<TransformComponent>(gridUid, out var xform) ||
+                    !TryComp(gridUid, out TransformComponent? xform) ||
                     xform.MapID != mapId)
                 {
                     continue;

@@ -4,8 +4,9 @@ namespace Content.Shared._Exodus.Nebula.Prototypes;
 
 /// <summary>
 /// All tunable parameters of the round-start nebula generator. Resolved by
-/// <c>NebulaGenerationSystem</c> at <c>StationsGeneratedEvent</c> time. Edit the YAML to
-/// rebalance nebula counts, sizes, shapes, marker weights, and death-zone radii without C#.
+/// <c>NebulaRoundstartGenerationSystem</c> after regular round-start station/POI generation.
+/// Edit the YAML to rebalance nebula counts, sizes, shapes, marker weights, and death-zone
+/// radii without C#.
 /// </summary>
 [Prototype("nebulaGenerationConfig")]
 public sealed partial class NebulaGenerationConfigPrototype : IPrototype

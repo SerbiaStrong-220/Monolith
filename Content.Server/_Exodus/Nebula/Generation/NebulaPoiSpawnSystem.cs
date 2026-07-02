@@ -1,13 +1,10 @@
 using System.Numerics;
 using Content.Server._Exodus.Nebula.Components;
 using Content.Server._NF.Station.Systems;
-using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Station.Systems;
-using Content.Shared._Exodus.Nebula.Events;
 using Content.Shared._Exodus.Nebula.Generation;
 using Content.Shared._Exodus.Nebula.Prototypes;
-using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization.Systems;
@@ -20,9 +17,9 @@ namespace Content.Server._Exodus.Nebula.Generation;
 
 /// <summary>
 /// Spawns POI grids from <see cref="NebulaPoiPrototype"/> definitions inside nebulas at the
-/// start of the round. Waits for both <see cref="NebulaBlobGenerationDoneEvent"/> and
-/// <see cref="WorldEndGenerationDoneEvent"/> so the candidate list is final before we
-/// distribute POIs.
+/// start of the round. Called by <see cref="NebulaRoundstartGenerationSystem"/> after blob
+/// nebulas and the world-end zone have both been generated, so the candidate list is final
+/// before we distribute POIs.
 ///
 /// Distribution policy: pick randomly among eligible nebulas (marker in
 /// <see cref="NebulaPoiPrototype.SpawnIn"/>, respecting <see cref="NebulaPoiPrototype.DuplicateAllowed"/>).
@@ -39,7 +36,6 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private GameTicker _ticker = default!;
     [Dependency] private MapLoaderSystem _map = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
@@ -48,55 +44,18 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 
-    private bool _blobReady;
-    private bool _worldEndReady;
-
     private List<Entity<MapGridComponent>> _gridBuffer = new();
 
-    public override void Initialize()
+    public bool TrySpawnAllPois(MapId mapId)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<NebulaBlobGenerationDoneEvent>(OnBlobReady);
-        SubscribeLocalEvent<WorldEndGenerationDoneEvent>(OnWorldEndReady);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-    }
-
-    private void OnBlobReady(ref NebulaBlobGenerationDoneEvent ev)
-    {
-        _blobReady = true;
-        TrySpawn();
-    }
-
-    private void OnWorldEndReady(ref WorldEndGenerationDoneEvent ev)
-    {
-        _worldEndReady = true;
-        TrySpawn();
-    }
-
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
-    {
-        _blobReady = false;
-        _worldEndReady = false;
-    }
-
-    private void TrySpawn()
-    {
-        if (!_blobReady || !_worldEndReady)
-            return;
-
-        // Consume the flags so a stray re-raise doesn't double-spawn.
-        _blobReady = false;
-        _worldEndReady = false;
-
-        var mapId = _ticker.DefaultMap;
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
-            return;
+            return false;
 
         if (!TryComp<NebulaMapComponent>(mapUid, out var mapComponent))
-            return;
+            return false;
 
         SpawnAllPois(mapId, mapComponent);
+        return true;
     }
 
     private void SpawnAllPois(MapId mapId, NebulaMapComponent mapComponent)

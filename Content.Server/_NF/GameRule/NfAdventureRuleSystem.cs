@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Content.Server._Exodus.Nebula.Generation; // Exodus nebula roundstart generation
 using Content.Server._NF.Bank;
 using Content.Server._NF.GameRule.Components;
 using Content.Server._NF.GameTicking.Events;
@@ -37,6 +38,7 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
     [Dependency] private BankSystem _bank = default!;
     [Dependency] private GameTicker _ticker = default!;
     [Dependency] private PointOfInterestSystem _poi = default!;
+    [Dependency] private NebulaRoundstartGenerationSystem _nebulaRoundstart = default!; // Exodus nebula roundstart generation coordinator
     [Dependency] private IBaseServer _baseServer = default!;
     [Dependency] private IEntitySystemManager _entSys = default!;
 
@@ -364,6 +366,11 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
 
         // Using invalid entity, we don't have a relevant entity to reference here.
         RaiseLocalEvent(EntityUid.Invalid, new StationsGeneratedEvent(), broadcast: true); // TODO: attach this to a meaningful entity.
+
+        // Exodus-begin nebula roundstart generation coordinator
+        // Run nebula generation explicitly after regular NF station-generation listeners have fired.
+        _nebulaRoundstart.GenerateRoundstartContent(mapUid);
+        // Exodus-end
     }
 
     private async Task ReportRound(string message, int color = 0x77DDE7)

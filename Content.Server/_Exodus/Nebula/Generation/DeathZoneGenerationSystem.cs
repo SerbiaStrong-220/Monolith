@@ -1,10 +1,7 @@
 using System.Numerics;
 using Content.Server._Exodus.Nebula.Components;
 using Content.Server._Mono.Radar;
-using Content.Server._NF.GameTicking.Events;
-using Content.Server.GameTicking;
 using Content.Shared._Exodus.Nebula.Components;
-using Content.Shared._Exodus.Nebula.Events;
 using Content.Shared._Exodus.Nebula.Generation;
 using Content.Shared._Exodus.Nebula.Prototypes;
 using Content.Shared._Mono.Radar;
@@ -34,24 +31,16 @@ public sealed partial class DeathZoneGenerationSystem : EntitySystem
     // Real colour should always come from the marker's YAML radarColor field.
     private static readonly Color FallbackRadarColor = new(1f, 0.1f, 0f, 1f);
 
-    [Dependency] private GameTicker _ticker = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
 
     private ISawmill _sawmill = Logger.GetSawmill("nebula");
 
-    public override void Initialize()
+    public bool Generate(MapId mapId)
     {
-        base.Initialize();
-        SubscribeLocalEvent<StationsGeneratedEvent>(OnStationsGenerated);
-    }
-
-    private void OnStationsGenerated(StationsGeneratedEvent args)
-    {
-        var mapId = _ticker.DefaultMap;
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
-            return;
+            return false;
 
         var config = ResolveConfig();
         var mapComponent = EnsureComp<NebulaMapComponent>(mapUid.Value);
@@ -72,14 +61,12 @@ public sealed partial class DeathZoneGenerationSystem : EntitySystem
 
         _sawmill.Info($"Generated world-end death zone: inner radius {config.WorldEndInnerRadius}, mid radius {config.WorldEndMidRadius}, outer radius {mapComponent.WorldEnd.OuterBoundingRadius:0}, seed {seed}.");
 
-        var doneEv = new WorldEndGenerationDoneEvent();
-        RaiseLocalEvent(ref doneEv);
+        return true;
     }
 
     /// <summary>
-    /// Same fallback pattern as <c>NebulaGenerationSystem.ResolveConfig</c> — both subscribers
-    /// of <c>StationsGeneratedEvent</c> resolve independently; the prototype is read once each
-    /// round and stays consistent across both.
+    /// Same fallback pattern as <c>NebulaGenerationSystem.ResolveConfig</c>; the prototype is
+    /// resolved once each round by the explicit round-start generation coordinator.
     /// </summary>
     private NebulaGenerationConfigPrototype ResolveConfig()
     {
