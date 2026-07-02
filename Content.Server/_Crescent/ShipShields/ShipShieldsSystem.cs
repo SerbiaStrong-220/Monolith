@@ -12,7 +12,6 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Timing; // Exodus
 using System.Numerics;
 
 
@@ -40,10 +39,17 @@ public sealed partial class ShipShieldsSystem : EntitySystem
     private EntityQuery<ShipShieldVisualsComponent> _shieldVisualsQuery;
     private EntityQuery<TransformComponent> _transformQuery;
     // Exodus-end
+    // Exodus-begin shield deflection queue
+    private readonly List<QueuedShieldDeflection> _queuedShieldDeflections = new();
+
+    private readonly record struct QueuedShieldDeflection(EntityUid Source, EntityUid Deflected);
+    // Exodus-end
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        ProcessQueuedShieldDeflections(); // Exodus shield deflection queue
 
         var query = EntityQueryEnumerator<ShipShieldEmitterComponent, ApcPowerReceiverComponent>();
         while (query.MoveNext(out var uid, out var emitter, out var power))
@@ -196,24 +202,41 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
         if (component.Source is { } source)
         {
-            // Exodus-begin | defer shield deflection side effects outside physics contact enumeration
+            // Exodus-begin shield deflection queue
             var deflected = args.OtherEntity;
             projectile.ProjectileSpent = true;
-            Timer.Spawn(0, () =>
-            {
-                if (Deleted(source) ||
-                    Deleted(deflected) ||
-                    !_projectileQuery.TryGetComponent(deflected, out var deferredProjectile))
-                {
-                    return;
-                }
-
-                var ev = new ShieldDeflectedEvent(deflected, deferredProjectile);
-                RaiseLocalEvent(source, ref ev);
-            });
+            _queuedShieldDeflections.Add(new QueuedShieldDeflection(source, deflected));
             // Exodus-end
         }
     }
+
+    // Exodus-begin shield deflection queue
+    private void ProcessQueuedShieldDeflections()
+    {
+        if (_queuedShieldDeflections.Count == 0)
+            return;
+
+        var count = _queuedShieldDeflections.Count;
+        for (var i = 0; i < count; i++)
+        {
+            var queued = _queuedShieldDeflections[i];
+            if (Deleted(queued.Source) ||
+                Deleted(queued.Deflected) ||
+                !_projectileQuery.TryGetComponent(queued.Deflected, out var projectile))
+            {
+                continue;
+            }
+
+            var ev = new ShieldDeflectedEvent(queued.Deflected, projectile);
+            RaiseLocalEvent(queued.Source, ref ev);
+        }
+
+        if (_queuedShieldDeflections.Count == count)
+            _queuedShieldDeflections.Clear();
+        else
+            _queuedShieldDeflections.RemoveRange(0, count);
+    }
+    // Exodus-end
 
     private void OnEmitterShutdown(EntityUid uid, ShipShieldEmitterComponent emitter, ComponentShutdown args) // Mono
     {
