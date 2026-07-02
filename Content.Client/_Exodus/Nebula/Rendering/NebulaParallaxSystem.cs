@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Data;
@@ -68,23 +69,21 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        ProtoId<ParallaxPrototype> targetParallax = default;
-        var hasLightning = false;
-        var targetActive = TryGetLocalPresence(out var presence) &&
-                           TryGetMarkerData(presence.Marker, out targetParallax, out hasLightning);
-
-        if (targetActive)
+        var targetActive = false;
+        if (TryGetLocalPresence(out var presence) &&
+            TryGetMarkerData(presence.Marker, out var targetParallax, out var hasLightning) &&
+            targetParallax is { } parallax)
         {
-            if (_parallax.IsParallaxLoaded(targetParallax))
+            if (_parallax.IsParallaxLoaded(parallax))
             {
-                _activeParallax = targetParallax;
+                _activeParallax = parallax;
                 _activeMarker = presence.Marker;
                 _activeMarkerHasLightning = hasLightning;
+                targetActive = true;
             }
             else
             {
-                _parallax.LoadParallax(targetParallax);
-                targetActive = false;
+                _parallax.LoadParallax(parallax);
             }
         }
 
@@ -243,9 +242,9 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         return true;
     }
 
-    private bool TryGetMarkerData(EntProtoId marker, out ProtoId<ParallaxPrototype> parallax, out bool hasLightning)
+    private bool TryGetMarkerData(EntProtoId marker, [NotNullWhen(true)] out ProtoId<ParallaxPrototype>? parallax, out bool hasLightning)
     {
-        parallax = default;
+        parallax = null;
         hasLightning = false;
 
         if (string.IsNullOrEmpty(marker.Id))
