@@ -16,6 +16,12 @@ public sealed partial class ParallaxSystem : SharedParallaxSystem
 
     // Exodus-begin parallax-overrides
     private readonly Dictionary<string, ParallaxOverrideRequest> _overrides = new();
+
+    private readonly record struct ParallaxOverrideRequest(
+        ProtoId<ParallaxPrototype> Parallax,
+        int Priority,
+        float Alpha,
+        bool Replace);
     // Exodus-end
 
     [ValidatePrototypeId<ParallaxPrototype>]
@@ -121,8 +127,8 @@ public sealed partial class ParallaxSystem : SharedParallaxSystem
     }
 
     /// <summary>
-    /// Returns the override with the highest <see cref="ParallaxOverrideRequest.Priority"/>.
-    /// Behavior on equal priority is undefined — pick distinct priorities.
+    /// Returns the override with the highest priority.
+    /// Behavior on equal priority is undefined - pick distinct priorities.
     /// </summary>
     public bool TryGetHighestParallaxOverride(out ParallaxOverrideState state)
     {

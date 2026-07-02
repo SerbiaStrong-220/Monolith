@@ -18,9 +18,3 @@ public readonly record struct ParallaxOverrideState(
     int Priority,
     float Alpha,
     bool Replace);
-
-internal readonly record struct ParallaxOverrideRequest(
-    ProtoId<ParallaxPrototype> Parallax,
-    int Priority,
-    float Alpha,
-    bool Replace);
