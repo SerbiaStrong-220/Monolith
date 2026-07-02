@@ -3,7 +3,6 @@ using System.Numerics;
 using Content.Client._Exodus.Nebula; // Exodus nebula-ftl-map
 using Content.Shared._Exodus.NPC.Components; // Exodus faction AI FTL map label
 using Content.Client._Mono.Radar; // Exodus nebula-ftl-map
-using Content.Shared._Mono.Radar; // Exodus nebula-ftl-map
 using Content.Client._Exodus.Territory; // Exodus territory POI colors
 using Content.Client.Shuttles.Systems;
 using Content.Shared._Mono.Company;
@@ -36,7 +35,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IEntityManager _entManager = default!; // Frontier
     private readonly DetectionSystem _detection; // Mono
-    private readonly RadarBlipsSystem _blips; // Exodus nebula-ftl-map
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
     private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus territory POI colors
@@ -108,18 +106,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly Dictionary<Color, List<Vector2>> _edges = new();
     private readonly Dictionary<Color, List<(Vector2 Position, string Text, bool HasLabel, EntityUid? GridUid)>> _strings = new(); // Exodus territory POI colors
     private readonly List<ShuttleExclusionObject> _viewportExclusions = new();
-    // Exodus-begin nebula-ftl-map
-    private const float NebulaFillAlpha = 0.08f;
-    private Vector2[] _nebulaFillBuffer = [];
-    private Vector2[] _nebulaLineBuffer = [];
-    // Exodus-end
-
-    // Exodus-begin BSS map territory visuals
-    private const float BssMapBackgroundTileScale = 30f;
-    private const float TerritoryMediumIconThreshold = 1750f;
-    private const float TerritoryLargeIconThreshold = 3750f;
-    private const float TerritoryHugeIconThreshold = 4500f;
-    // Exodus-end
+    private const float BssMapBackgroundTileScale = 30f; // Exodus reduce BSS map background tile churn when zoomed out
 
     public ShuttleMapControl() : base(256f, 28000f, 512f) // Exodus nebula-ftl-map
     {
@@ -659,103 +646,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         edges.Add(bottom);
     }
 
-    // Exodus-begin radius-aware territory rings on BSS jump map
-    private Box2 GetControlViewBounds()
-    {
-        var margin = 3f * UIScale;
-        return new Box2(-margin, -margin, PixelSize.X + margin, PixelSize.Y + margin);
-    }
-
-    private void DrawTerritoryRings(DrawingHandleScreen handle, List<IMapObject> mapObjects, Matrix3x2 matty, Box2 viewBounds)
-    {
-        foreach (var mapObj in mapObjects)
-        {
-            if (mapObj is not GridMapObject gridObj ||
-                !_gridTerritoryQuery.TryGetComponent(gridObj.Entity, out var terrRing) ||
-                terrRing.Radius <= 0f)
-            {
-                continue;
-            }
-
-            if (!TryGetVisibleGridMapObject(mapObj, matty, out _, out _, out var gridUiPos))
-                continue;
-
-            var ringRadius = terrRing.Radius * MinimapScale;
-            if (!CircleIntersectsBox(gridUiPos, ringRadius, viewBounds))
-                continue;
-
-            var ringBase = GetTerritoryRingColor(terrRing);
-            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.035f));
-            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.28f), filled: false);
-        }
-    }
-
-    private bool TryGetVisibleGridMapObject(
-        IMapObject mapObj,
-        Matrix3x2 matty,
-        out Entity<MapGridComponent> grid,
-        out Vector2 gridRelativePos,
-        out Vector2 gridUiPos)
-    {
-        grid = default;
-        gridRelativePos = default;
-        gridUiPos = default;
-
-        if (mapObj is not GridMapObject gridObj || !_mapGridQuery.TryGetComponent(gridObj.Entity, out var mapGrid))
-            return false;
-
-        if (EntManager.HasComponent<MapComponent>(gridObj.Entity) || !_entManager.EntityExists(gridObj.Entity))
-            return false;
-
-        grid = (gridObj.Entity, mapGrid);
-        IFFComponent? iffComp = null;
-
-        if (grid.Owner != _shuttleEntity &&
-            _iffQuery.TryGetComponent(grid.Owner, out iffComp) &&
-            (iffComp.Flags & IFFFlags.Hide) != 0x0)
-        {
-            return false;
-        }
-
-        var hideLabel = iffComp != null && (iffComp.Flags & IFFFlags.HideLabel) != 0x0;
-        var detectionLevel = _console == null ? DetectionLevel.Detected : _detection.IsGridDetected(grid.Owner, _console.Value);
-        var detected = detectionLevel != DetectionLevel.Undetected || !hideLabel;
-        if (!detected)
-            return false;
-
-        if (!_physicsQuery.TryGetComponent(grid.Owner, out var gridPhysics))
-            return false;
-
-        var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid.Owner);
-        gridPos = Maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
-
-        gridRelativePos = Vector2.Transform(gridPos, matty);
-        gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
-        gridUiPos = ScalePosition(gridRelativePos);
-        return true;
-    }
-
-    private Color GetTerritoryRingColor(GridTerritoryComponent terrRing)
-    {
-        if (terrRing.ControllingFaction is { } factionId &&
-            PrototypeManager.TryIndex(factionId, out var factionProto))
-        {
-            return factionProto.Color;
-        }
-
-        return new Color(0.65f, 0.65f, 0.65f);
-    }
-
-    private static bool CircleIntersectsBox(Vector2 center, float radius, Box2 box)
-    {
-        var closest = new Vector2(
-            Math.Clamp(center.X, box.Left, box.Right),
-            Math.Clamp(center.Y, box.Bottom, box.Top));
-
-        return (closest - center).LengthSquared() <= radius * radius;
-    }
-    // Exodus-end
-
     /// <summary>
     /// Returns the beacons that intersect the viewport.
     /// </summary>
@@ -804,82 +694,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         return mapObj;
     }
 
-    // Exodus-begin differentiated icons on BSS jump map (FTL destinations) based ONLY on GridTerritoryComponent + radius
-    // Regular grids (no territory) = default ship icon (current diamond)
-    // Small radius = triangle, medium = square, large = 5-point pentagon, huge/Colossus = 6-point hexagon.
-    // The same GridTerritoryComponent + Radius also drives the influence ring (circle) drawn for these grids (see Draw).
-    // All other drawing, labels, IFF, beacons, FTL preview etc. unchanged to avoid breaking anything.
-    private ValueList<Vector2> GetTerritoryMapObject(Vector2 localPos, Angle angle, float territoryRadius, float scale = 1f, bool scalePosition = false)
-    {
-        var sides = GetTerritoryMapSides(territoryRadius);
-
-        var baseRadius = GetMapObjectRadius(); // base, then * scale
-        float vertexRadius = 2 * baseRadius * scale; // match current diamond extent
-
-        var points = new ValueList<Vector2>(sides);
-
-        float startAng = sides switch
-        {
-            3 => MathF.PI / 2,
-            4 => MathF.PI / 4,
-            _ => -MathF.PI / 2
-        };
-        float angleStep = 2 * MathF.PI / sides;
-
-        for (int i = 0; i < sides; i++)
-        {
-            float a = startAng + i * angleStep;
-            var dir = new Vector2(MathF.Cos(a), MathF.Sin(a));
-            points.Add(localPos + angle.RotateVec(dir * vertexRadius));
-        }
-
-        if (scalePosition)
-        {
-            for (var i = 0; i < points.Count; i++)
-            {
-                points[i] = ScalePosition(points[i]);
-            }
-        }
-
-        return points;
-    }
-
-    private static int GetTerritoryMapSides(float territoryRadius)
-    {
-        if (territoryRadius < TerritoryMediumIconThreshold)
-            return 3;
-
-        if (territoryRadius < TerritoryLargeIconThreshold)
-            return 4;
-
-        if (territoryRadius < TerritoryHugeIconThreshold)
-            return 5;
-
-        return 6;
-    }
-
-    private void AddMapPolygon(List<Vector2> edges, List<Vector2> verts, ValueList<Vector2> points)
-    {
-        if (points.Count < 3)
-            return;
-
-        // fill: triangle fan from first point (safe for convex polygons)
-        for (int i = 1; i < points.Count - 1; i++)
-        {
-            verts.Add(points[0]);
-            verts.Add(points[i]);
-            verts.Add(points[i + 1]);
-        }
-
-        // edges: closed loop
-        for (int i = 0; i < points.Count; i++)
-        {
-            edges.Add(points[i]);
-            edges.Add(points[(i + 1) % points.Count]);
-        }
-    }
-    // Exodus-end
-
     private bool TryGetBeacon(IEnumerable<IMapObject> mapObjects, Matrix3x2 mapTransform, Vector2 mousePos, UIBox2i area, out ShuttleBeaconObject foundBeacon, out Vector2 foundLocalPos)
     {
         // In pixels
@@ -924,103 +738,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         return foundBeacon != default;
     }
-
-    // Exodus-begin nebula-ftl-map
-    private void DrawNebulaBlips(DrawingHandleScreen handle, Matrix3x2 mapTransform)
-    {
-        if (_console != null)
-            _blips.RequestNebulaMapBlips(_console.Value, ViewingMap);
-
-        var blips = _blips.GetCurrentNebulaMapBlips();
-        foreach (var blip in blips)
-        {
-            if (blip.Config.Shape != RadarBlipShape.NebulaPolygon ||
-                blip.Config.Points == null ||
-                blip.Config.Points.Count < 3)
-            {
-                continue;
-            }
-
-            var mapCoords = _xformSystem.ToMapCoordinates(blip.Position);
-            if (mapCoords.MapId != ViewingMap)
-                continue;
-
-            var relativePos = Vector2.Transform(mapCoords.Position, mapTransform);
-            var uiPosition = ScalePosition(relativePos with { Y = -relativePos.Y });
-            DrawNebulaPolygon(handle, uiPosition, blip.Config);
-        }
-    }
-
-    private void DrawNebulaPolygon(DrawingHandleScreen handle, Vector2 position, BlipConfig config)
-    {
-        if (config.Points == null || config.Points.Count < 3)
-            return;
-
-        if (config.InvertFill && config.OuterFillRadius > 0f)
-        {
-            var n = config.Points.Count;
-            var ringCount = 2 * (n + 1);
-            if (_nebulaFillBuffer.Length < ringCount)
-                _nebulaFillBuffer = new Vector2[ringCount];
-
-            for (var i = 0; i <= n; i++)
-            {
-                var k = i % n;
-                var theta = MathF.Tau * k / n;
-                var outerPoint = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta));
-                var innerPoint = config.Points[k];
-
-                if (config.RespectZoom)
-                {
-                    outerPoint *= MinimapScale;
-                    innerPoint *= MinimapScale;
-                }
-
-                _nebulaFillBuffer[2 * i] = position + (outerPoint with { Y = -outerPoint.Y });
-                _nebulaFillBuffer[2 * i + 1] = position + (innerPoint with { Y = -innerPoint.Y });
-            }
-
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, new Span<Vector2>(_nebulaFillBuffer, 0, ringCount), config.Color.WithAlpha(NebulaFillAlpha));
-        }
-        else
-        {
-            var fillCount = config.Points.Count + 2;
-            if (_nebulaFillBuffer.Length < fillCount)
-                _nebulaFillBuffer = new Vector2[fillCount];
-
-            _nebulaFillBuffer[0] = position;
-
-            for (var i = 0; i < config.Points.Count; i++)
-            {
-                var point = config.Points[i];
-                if (config.RespectZoom)
-                    point *= MinimapScale;
-
-                _nebulaFillBuffer[i + 1] = position + (point with { Y = -point.Y });
-            }
-
-            _nebulaFillBuffer[fillCount - 1] = _nebulaFillBuffer[1];
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_nebulaFillBuffer, 0, fillCount), config.Color.WithAlpha(NebulaFillAlpha));
-        }
-
-        var lineCount = config.Points.Count + 1;
-        if (_nebulaLineBuffer.Length < lineCount)
-            _nebulaLineBuffer = new Vector2[lineCount];
-
-        for (var i = 0; i < config.Points.Count; i++)
-        {
-            var point = config.Points[i];
-            if (config.RespectZoom)
-                point *= MinimapScale;
-
-            _nebulaLineBuffer[i] = position + (point with { Y = -point.Y });
-        }
-
-        _nebulaLineBuffer[lineCount - 1] = _nebulaLineBuffer[0];
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_nebulaLineBuffer, 0, lineCount), config.Color.WithAlpha(0.9f));
-    }
-
-    // Exodus-end
 
     /// <summary>
     /// Sets the map objects for the next draw.
