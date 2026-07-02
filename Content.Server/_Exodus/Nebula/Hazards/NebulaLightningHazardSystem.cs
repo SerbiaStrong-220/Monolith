@@ -4,6 +4,7 @@ using Content.Server._Exodus.Nebula.Presence;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared._Crescent.ShipShields;
 using Content.Shared._Exodus.Nebula.Components;
+using Content.Shared._Exodus.Nebula.Generation;
 using Content.Shared._Exodus.Nebula.Hazards;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
@@ -118,21 +119,36 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
             if (config.EnableSmall && _timing.CurTime >= hazard.NextSmallStrike)
             {
                 hazard.NextSmallStrike = _timing.CurTime + config.SmallStrikeInterval;
-                if (TryStrikeGrid((uid, grid, xform), hazard, config, LightningStrikeTier.Small))
+                if (TryStrikeGrid(
+                        (uid, grid, xform),
+                        hazard,
+                        presence.NebulaIndex,
+                        config,
+                        LightningStrikeTier.Small))
                     RecordStrike(hazard, LightningStrikeTier.Small);
             }
 
             if (config.EnableHeavy && _timing.CurTime >= hazard.NextHeavyStrike)
             {
                 hazard.NextHeavyStrike = _timing.CurTime + config.HeavyStrikeInterval;
-                if (TryStrikeGrid((uid, grid, xform), hazard, config, LightningStrikeTier.Heavy))
+                if (TryStrikeGrid(
+                        (uid, grid, xform),
+                        hazard,
+                        presence.NebulaIndex,
+                        config,
+                        LightningStrikeTier.Heavy))
                     RecordStrike(hazard, LightningStrikeTier.Heavy);
             }
 
             if (config.EnableSuperHeavy && _timing.CurTime >= hazard.NextSuperHeavyStrike)
             {
                 hazard.NextSuperHeavyStrike = _timing.CurTime + config.SuperHeavyStrikeInterval;
-                if (TryStrikeGrid((uid, grid, xform), hazard, config, LightningStrikeTier.SuperHeavy))
+                if (TryStrikeGrid(
+                        (uid, grid, xform),
+                        hazard,
+                        presence.NebulaIndex,
+                        config,
+                        LightningStrikeTier.SuperHeavy))
                     RecordStrike(hazard, LightningStrikeTier.SuperHeavy);
             }
         }
@@ -214,10 +230,11 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
     private bool TryStrikeGrid(
         Entity<MapGridComponent, TransformComponent> grid,
         NebulaLightningGridHazardComponent hazard,
+        int nebulaIndex,
         NebulaLightningHazardComponent config,
         LightningStrikeTier tier)
     {
-        if (!TrySelectStrikeTile(grid, hazard, out _, out var targetCoords, out var targetGridCoords))
+        if (!TrySelectStrikeTile(grid, hazard, nebulaIndex, out _, out var targetCoords, out var targetGridCoords))
             return false;
 
         var lightning = GetLightningPrototype(config, tier);
@@ -245,6 +262,7 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
     private bool TrySelectStrikeTile(
         Entity<MapGridComponent, TransformComponent> grid,
         NebulaLightningGridHazardComponent hazard,
+        int nebulaIndex,
         out TileRef selected,
         out MapCoordinates selectedCoords,
         out EntityCoordinates selectedGridCoords)
@@ -257,28 +275,66 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
         if (!TryGetNebulaMapComponent(mapId, out var mapComponent))
             return false;
 
+        var hasStrikeNebulaTarget = TryGetStrikeNebulaTarget(
+            mapComponent,
+            hazard.Marker,
+            nebulaIndex,
+            out var strikeNebulaTarget);
+
         var rebuilt = false;
         if (!hazard.StrikeTileCacheInitialized || _timing.CurTime >= hazard.NextStrikeTileCacheRefresh)
         {
-            RebuildStrikeTileCache(grid, hazard, mapId, mapComponent);
+            RebuildStrikeTileCache(
+                grid,
+                hazard,
+                mapId,
+                mapComponent,
+                hasStrikeNebulaTarget,
+                in strikeNebulaTarget);
             rebuilt = true;
         }
 
-        if (TryPickStrikeTileFromCache(grid, hazard, mapId, mapComponent, out selected, out selectedCoords, out selectedGridCoords))
+        if (TryPickStrikeTileFromCache(
+                grid,
+                hazard,
+                mapId,
+                mapComponent,
+                hasStrikeNebulaTarget,
+                in strikeNebulaTarget,
+                out selected,
+                out selectedCoords,
+                out selectedGridCoords))
             return true;
 
         if (rebuilt)
             return false;
 
-        RebuildStrikeTileCache(grid, hazard, mapId, mapComponent);
-        return TryPickStrikeTileFromCache(grid, hazard, mapId, mapComponent, out selected, out selectedCoords, out selectedGridCoords);
+        RebuildStrikeTileCache(
+            grid,
+            hazard,
+            mapId,
+            mapComponent,
+            hasStrikeNebulaTarget,
+            in strikeNebulaTarget);
+        return TryPickStrikeTileFromCache(
+            grid,
+            hazard,
+            mapId,
+            mapComponent,
+            hasStrikeNebulaTarget,
+            in strikeNebulaTarget,
+            out selected,
+            out selectedCoords,
+            out selectedGridCoords);
     }
 
     private void RebuildStrikeTileCache(
         Entity<MapGridComponent, TransformComponent> grid,
         NebulaLightningGridHazardComponent hazard,
         MapId mapId,
-        NebulaMapComponent mapComponent)
+        NebulaMapComponent mapComponent,
+        bool hasStrikeNebulaTarget,
+        in StrikeNebulaTarget strikeNebulaTarget)
     {
         hazard.CachedStrikeTiles.Clear();
 
@@ -297,7 +353,12 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
 
             // The grid may overlap a nebula only partially; only fire on tiles that are
             // actually inside a nebula whose marker matches this hazard.
-            if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, hazard.Marker))
+            if (!IsPositionInsideStrikeNebula(
+                    mapComponent,
+                    coords.Position,
+                    hazard.Marker,
+                    hasStrikeNebulaTarget,
+                    in strikeNebulaTarget))
                 continue;
 
             hazard.CachedStrikeTiles.Add(tileRef.GridIndices);
@@ -315,6 +376,8 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
         NebulaLightningGridHazardComponent hazard,
         MapId mapId,
         NebulaMapComponent mapComponent,
+        bool hasStrikeNebulaTarget,
+        in StrikeNebulaTarget strikeNebulaTarget,
         out TileRef selected,
         out MapCoordinates selectedCoords,
         out EntityCoordinates selectedGridCoords)
@@ -328,7 +391,17 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
             var index = _random.Next(hazard.CachedStrikeTiles.Count);
             var tile = hazard.CachedStrikeTiles[index];
 
-            if (TryResolveStrikeTile(grid, hazard, mapId, mapComponent, tile, out selected, out selectedCoords, out selectedGridCoords))
+            if (TryResolveStrikeTile(
+                    grid,
+                    hazard,
+                    mapId,
+                    mapComponent,
+                    hasStrikeNebulaTarget,
+                    in strikeNebulaTarget,
+                    tile,
+                    out selected,
+                    out selectedCoords,
+                    out selectedGridCoords))
                 return true;
 
             RemoveCachedStrikeTileAt(hazard, index);
@@ -342,6 +415,8 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
         NebulaLightningGridHazardComponent hazard,
         MapId mapId,
         NebulaMapComponent mapComponent,
+        bool hasStrikeNebulaTarget,
+        in StrikeNebulaTarget strikeNebulaTarget,
         Vector2i tile,
         out TileRef selected,
         out MapCoordinates selectedCoords,
@@ -363,7 +438,12 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
         if (coords.MapId != mapId)
             return false;
 
-        if (!NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, coords.Position, hazard.Marker))
+        if (!IsPositionInsideStrikeNebula(
+                mapComponent,
+                coords.Position,
+                hazard.Marker,
+                hasStrikeNebulaTarget,
+                in strikeNebulaTarget))
             return false;
 
         selectedCoords = coords;
@@ -376,6 +456,100 @@ public sealed partial class NebulaLightningHazardSystem : EntitySystem
         var last = hazard.CachedStrikeTiles.Count - 1;
         hazard.CachedStrikeTiles[index] = hazard.CachedStrikeTiles[last];
         hazard.CachedStrikeTiles.RemoveAt(last);
+    }
+
+    private static bool IsPositionInsideStrikeNebula(
+        NebulaMapComponent mapComponent,
+        Vector2 position,
+        EntProtoId marker,
+        bool hasStrikeNebulaTarget,
+        in StrikeNebulaTarget strikeNebulaTarget)
+    {
+        if (hasStrikeNebulaTarget)
+            return strikeNebulaTarget.Contains(mapComponent, position);
+
+        return NebulaQueryHelper.IsPositionInsideMarkerNebula(mapComponent, position, marker);
+    }
+
+    private static bool TryGetStrikeNebulaTarget(
+        NebulaMapComponent mapComponent,
+        EntProtoId marker,
+        int nebulaIndex,
+        out StrikeNebulaTarget target)
+    {
+        target = default;
+
+        if (string.IsNullOrEmpty(marker.Id))
+            return false;
+
+        if (nebulaIndex >= 0 &&
+            nebulaIndex < mapComponent.Nebulas.Count &&
+            nebulaIndex < mapComponent.NebulaPrototypes.Count &&
+            mapComponent.NebulaPrototypes[nebulaIndex] == marker)
+        {
+            target = StrikeNebulaTarget.FromShape(mapComponent.Nebulas[nebulaIndex]);
+            return true;
+        }
+
+        if (!mapComponent.WorldEnd.IsGenerated)
+            return false;
+
+        if (marker == mapComponent.WorldEndInnerMarker)
+        {
+            target = StrikeNebulaTarget.FromWorldEndZone(WorldEndZone.Inner);
+            return true;
+        }
+
+        if (marker == mapComponent.WorldEndOuterMarker)
+        {
+            target = StrikeNebulaTarget.FromWorldEndZone(WorldEndZone.Outer);
+            return true;
+        }
+
+        return false;
+    }
+
+    private readonly struct StrikeNebulaTarget
+    {
+        private readonly NebulaShape _shape;
+        private readonly WorldEndZone _zone;
+        private readonly bool _isWorldEnd;
+
+        private StrikeNebulaTarget(NebulaShape shape)
+        {
+            _shape = shape;
+            _zone = default;
+            _isWorldEnd = false;
+        }
+
+        private StrikeNebulaTarget(WorldEndZone zone)
+        {
+            _shape = default;
+            _zone = zone;
+            _isWorldEnd = true;
+        }
+
+        public static StrikeNebulaTarget FromShape(NebulaShape shape)
+        {
+            return new StrikeNebulaTarget(shape);
+        }
+
+        public static StrikeNebulaTarget FromWorldEndZone(WorldEndZone zone)
+        {
+            return new StrikeNebulaTarget(zone);
+        }
+
+        public bool Contains(NebulaMapComponent mapComponent, Vector2 position)
+        {
+            if (_isWorldEnd)
+                return mapComponent.WorldEnd.TryGetZone(position, out var zone) && zone == _zone;
+
+            var delta = position - _shape.Center;
+            if (delta.LengthSquared() > _shape.BoundingRadius * _shape.BoundingRadius)
+                return false;
+
+            return _shape.Contains(position);
+        }
     }
 
     private bool TryGetNebulaMapComponent(MapId mapId, out NebulaMapComponent component)
