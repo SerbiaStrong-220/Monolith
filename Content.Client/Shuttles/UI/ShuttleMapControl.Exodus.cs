@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Client._Exodus.Nebula;
 using Content.Client._Exodus.NPC;
-using Content.Shared._Exodus.NPC.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Map;
 
@@ -18,7 +17,7 @@ public sealed partial class ShuttleMapControl
 
     private string AddFactionAiControlLabel(EntityUid grid, string labelText)
     {
-        EntManager.TryGetComponent(grid, out FactionAiControlledGridComponent? control);
+        _factionAiControlQuery.TryGetComponent(grid, out var control);
         return FactionAiControlLabelHelper.AppendToLabel(labelText, control, PrototypeManager);
     }
 

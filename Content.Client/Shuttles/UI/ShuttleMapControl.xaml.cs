@@ -1,6 +1,7 @@
 using System.Buffers;
 using System.Numerics;
 using Content.Client._Exodus.Nebula; // Exodus nebula-ftl-map
+using Content.Shared._Exodus.NPC.Components; // Exodus faction AI FTL map label
 using Content.Client._Mono.Radar; // Exodus nebula-ftl-map
 using Content.Shared._Mono.Radar; // Exodus nebula-ftl-map
 using Content.Client._Exodus.Territory; // Exodus territory POI colors
@@ -39,6 +40,14 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
     private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus territory POI colors
+    // Exodus-begin BSS map hot-path component queries
+    private readonly EntityQuery<CompanyComponent> _companyQuery;
+    private readonly EntityQuery<FactionAiControlledGridComponent> _factionAiControlQuery;
+    private readonly EntityQuery<GridTerritoryComponent> _gridTerritoryQuery;
+    private readonly EntityQuery<IFFComponent> _iffQuery;
+    private readonly EntityQuery<MapGridComponent> _mapGridQuery;
+    private readonly EntityQuery<TransformComponent> _transformQuery;
+    // Exodus-end
 
     protected override bool Draggable => true;
 
@@ -124,6 +133,14 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _physicsQuery = EntManager.GetEntityQuery<PhysicsComponent>();
+        // Exodus-begin BSS map hot-path component queries
+        _companyQuery = EntManager.GetEntityQuery<CompanyComponent>();
+        _factionAiControlQuery = EntManager.GetEntityQuery<FactionAiControlledGridComponent>();
+        _gridTerritoryQuery = EntManager.GetEntityQuery<GridTerritoryComponent>();
+        _iffQuery = EntManager.GetEntityQuery<IFFComponent>();
+        _mapGridQuery = EntManager.GetEntityQuery<MapGridComponent>();
+        _transformQuery = EntManager.GetEntityQuery<TransformComponent>();
+        // Exodus-end
 
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
     }
@@ -196,8 +213,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
     private void DrawParallax(DrawingHandleScreen handle)
     {
-        if (!EntManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) || shuttleXform.MapUid == null)
+        if (_shuttleEntity is not { } shuttle ||
+            !_transformQuery.TryGetComponent(shuttle, out var shuttleXform) ||
+            shuttleXform.MapUid == null)
+        {
             return;
+        }
 
         // TODO: Figure out how the fuck to make this common between the 3 slightly different parallax methods and move to parallaxsystem.
         // Draw background texture
@@ -314,9 +335,10 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         // Do it up here because we want this layered below most things.
         if ((FtlMode || ShowFTLRangeOnly) && ShowFTLRange) // Mono
         {
-            if (EntManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var shuttleXform))
+            if (_shuttleEntity is { } shuttle &&
+                _transformQuery.TryGetComponent(shuttle, out var shuttleXform))
             {
-                var gridUid = _shuttleEntity.Value;
+                var gridUid = shuttle;
                 var gridPhysics = _physicsQuery.GetComponent(gridUid);
                 var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
                 gridPos = Maps.GetGridPosition((gridUid, gridPhysics), gridPos, gridRot);
@@ -383,9 +405,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 // Get company color if the beacon has it
                 var displayColor = beaconColor;
                 if (mapO is GridMapObject gridObj &&
-                    EntManager.TryGetComponent(gridObj.Entity, out Shared._Mono.Company.CompanyComponent? companyComp) &&
+                    _companyQuery.TryGetComponent(gridObj.Entity, out var companyComp) &&
                     !string.IsNullOrEmpty(companyComp.CompanyName) &&
-                    IoCManager.Resolve<IPrototypeManager>().TryIndex<CompanyPrototype>(companyComp.CompanyName, out var beaconCompanyProto))
+                    PrototypeManager.TryIndex<CompanyPrototype>(companyComp.CompanyName, out var beaconCompanyProto))
                 {
                     displayColor = Color.FromSrgb(beaconCompanyProto.Color);
                 }
@@ -403,7 +425,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         foreach (var mapObj in viewportObjects)
         {
-            if (mapObj is not GridMapObject gridObj || !EntManager.TryGetComponent(gridObj.Entity, out MapGridComponent? mapGrid))
+            if (mapObj is not GridMapObject gridObj || !_mapGridQuery.TryGetComponent(gridObj.Entity, out var mapGrid))
                 continue;
 
             Entity<MapGridComponent> grid = (gridObj.Entity, mapGrid);
@@ -411,7 +433,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
             // Rudimentary IFF for now, if IFF hiding on then we don't show on the map at all
             if (grid.Owner != _shuttleEntity &&
-                EntManager.TryGetComponent(grid, out iffComp) &&
+                _iffQuery.TryGetComponent(grid.Owner, out iffComp) &&
                 (iffComp.Flags & IFFFlags.Hide) != 0x0)
             {
                 continue;
@@ -444,7 +466,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             // Exodus-begin territory icons on the BSS map:
             // normal grids keep the default diamond, territory grids use radius-based polygons.
             ValueList<Vector2> mapObject;
-            if (EntManager.TryGetComponent<GridTerritoryComponent>(grid.Owner, out var terr) && terr.Radius > 0)
+            if (_gridTerritoryQuery.TryGetComponent(grid.Owner, out var terr) && terr.Radius > 0)
             {
                 mapObject = GetTerritoryMapObject(gridRelativePos, Angle.Zero, terr.Radius, scalePosition: true);
                 AddMapPolygon(existingEdges, existingVerts, mapObject);
@@ -503,9 +525,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 var displayColor = adjustedColor;
                 if (hasLabel &&
                     gridUid is { } labelGrid &&
-                    EntManager.TryGetComponent(labelGrid, out CompanyComponent? companyComp) &&
+                    _companyQuery.TryGetComponent(labelGrid, out var companyComp) &&
                     !string.IsNullOrEmpty(companyComp.CompanyName) &&
-                    IoCManager.Resolve<IPrototypeManager>().TryIndex<CompanyPrototype>(companyComp.CompanyName, out var gridCompanyProto))
+                    PrototypeManager.TryIndex<CompanyPrototype>(companyComp.CompanyName, out var gridCompanyProto))
                 {
                     displayColor = Color.FromSrgb(gridCompanyProto.Color);
                 }
@@ -524,8 +546,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             if (mousePos.Window != WindowId.Invalid)
             {
                 // If mouse inbounds then draw it.
-                if (_shuttleEntity != null && controlLocalBounds.Contains(mouseLocalPos.Floored()) &&
-                    EntManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) &&
+                if (_shuttleEntity is { } shuttle &&
+                    controlLocalBounds.Contains(mouseLocalPos.Floored()) &&
+                    _transformQuery.TryGetComponent(shuttle, out var shuttleXform) &&
                     shuttleXform.MapID != MapId.Nullspace)
                 {
                     // If it's a beacon only map then snap the mouse to a nearby spot.
@@ -537,10 +560,10 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                         mouseLocalPos = foundLocalPos;
                     }
 
-                    var grid = EntManager.GetComponent<MapGridComponent>(_shuttleEntity.Value);
+                    var grid = _mapGridQuery.GetComponent(shuttle);
 
                     var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
-                    gridPos = Maps.GetGridPosition(_shuttleEntity.Value, gridPos, gridRot);
+                    gridPos = Maps.GetGridPosition(shuttle, gridPos, gridRot);
 
                     // do NOT apply LocalCenter operation here because it will be adjusted in FTLFree.
                     var mouseMapPos = InverseMapPosition(mouseLocalPos);
@@ -548,8 +571,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     // Exodus-begin nebula-ftl-map
                     var targetCoordinates = new EntityCoordinates(viewedMapUid, mouseMapPos);
                     var ftlFree = (!beaconsOnly || foundBeacon != default) &&
-                                  _shuttles.FTLFree(_shuttleEntity.Value, targetCoordinates, _ftlAngle, _viewportExclusions) &&
-                                  CanFTLToNebulaPreview(_shuttleEntity.Value, targetCoordinates, _ftlAngle)
+                                  _shuttles.FTLFree(shuttle, targetCoordinates, _ftlAngle, _viewportExclusions) &&
+                                  CanFTLToNebulaPreview(shuttle, targetCoordinates, _ftlAngle)
                                   || NoFTLRange;
                     // Exodus-end
 
@@ -560,7 +583,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     var gridUiPos = ScalePosition(gridRelativePos);
 
                     // Draw FTL buffer around the mouse.
-                    var ourFTLBuffer = _shuttles.GetFTLBufferRange(_shuttleEntity.Value, grid);
+                    var ourFTLBuffer = _shuttles.GetFTLBufferRange(shuttle, grid);
                     ourFTLBuffer *= MinimapScale;
                     handle.DrawCircle(mouseLocalPos, ourFTLBuffer, Color.Magenta.WithAlpha(0.01f));
                     handle.DrawCircle(mouseLocalPos, ourFTLBuffer, Color.Magenta, filled: false);
@@ -599,9 +622,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         // Get company color if available
         var coordColor = Color.White;
         if (_shuttleEntity != null &&
-            EntManager.TryGetComponent(_shuttleEntity.Value, out Shared._Mono.Company.CompanyComponent? shipCompanyComp) &&
+            _companyQuery.TryGetComponent(_shuttleEntity.Value, out var shipCompanyComp) &&
             !string.IsNullOrEmpty(shipCompanyComp.CompanyName) &&
-            IoCManager.Resolve<IPrototypeManager>().TryIndex<CompanyPrototype>(shipCompanyComp.CompanyName, out var shipCompanyProto))
+            PrototypeManager.TryIndex<CompanyPrototype>(shipCompanyComp.CompanyName, out var shipCompanyProto))
         {
             coordColor = shipCompanyProto.Color;
         }
@@ -648,7 +671,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         foreach (var mapObj in mapObjects)
         {
             if (mapObj is not GridMapObject gridObj ||
-                !EntManager.TryGetComponent<GridTerritoryComponent>(gridObj.Entity, out var terrRing) ||
+                !_gridTerritoryQuery.TryGetComponent(gridObj.Entity, out var terrRing) ||
                 terrRing.Radius <= 0f)
             {
                 continue;
@@ -678,7 +701,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         gridRelativePos = default;
         gridUiPos = default;
 
-        if (mapObj is not GridMapObject gridObj || !EntManager.TryGetComponent(gridObj.Entity, out MapGridComponent? mapGrid))
+        if (mapObj is not GridMapObject gridObj || !_mapGridQuery.TryGetComponent(gridObj.Entity, out var mapGrid))
             return false;
 
         if (EntManager.HasComponent<MapComponent>(gridObj.Entity) || !_entManager.EntityExists(gridObj.Entity))
@@ -688,7 +711,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         IFFComponent? iffComp = null;
 
         if (grid.Owner != _shuttleEntity &&
-            EntManager.TryGetComponent(grid, out iffComp) &&
+            _iffQuery.TryGetComponent(grid.Owner, out iffComp) &&
             (iffComp.Flags & IFFFlags.Hide) != 0x0)
         {
             return false;

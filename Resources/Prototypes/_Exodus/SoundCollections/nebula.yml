@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: ExodusNebulaAmbientLightning
+  files:
+  - /Audio/_Exodus/Nebula/ambient_lightning_1.ogg
+  - /Audio/_Exodus/Nebula/ambient_lightning_2.ogg
+  - /Audio/_Exodus/Nebula/ambient_lightning_3.ogg
+  - /Audio/_Exodus/Nebula/ambient_lightning_4.ogg

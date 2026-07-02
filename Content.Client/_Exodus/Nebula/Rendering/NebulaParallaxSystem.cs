@@ -21,13 +21,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
     private static readonly TimeSpan BackgroundLightningDuration = TimeSpan.FromSeconds(0.38f);
     private static readonly TimeSpan BackgroundLightningMinDelay = TimeSpan.FromSeconds(2);
     private static readonly TimeSpan BackgroundLightningMaxDelay = TimeSpan.FromSeconds(6);
-    private static readonly SoundSpecifier[] BackgroundLightningSounds =
-    {
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_1.ogg"),
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_2.ogg"),
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_3.ogg"),
-        new SoundPathSpecifier("/Audio/_Exodus/Nebula/ambient_lightning_4.ogg"),
-    };
+    private static readonly SoundSpecifier BackgroundLightningSound = new SoundCollectionSpecifier("ExodusNebulaAmbientLightning");
 
     private const float TransitionSeconds = 2f;
     private const float BackgroundLightningBlendThreshold = 0.35f;
@@ -53,16 +47,21 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
     private TimeSpan _backgroundLightningStart;
     private TimeSpan _backgroundLightningEnd;
     private bool _hasBackgroundLightning;
+    private bool _parallaxEnabled;
+    private EntityQuery<NebulaPresenceComponent> _nebulaPresenceQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+        _nebulaPresenceQuery = GetEntityQuery<NebulaPresenceComponent>();
+        _configuration.OnValueChanged(CCVars.ParallaxEnabled, OnParallaxEnabledChanged, true);
         _overlay.AddOverlay(new NebulaLightningOverlay());
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
+        _configuration.UnsubValueChanged(CCVars.ParallaxEnabled, OnParallaxEnabledChanged);
         _parallax.ClearParallaxOverride(ParallaxOverrideKey);
         _overlay.RemoveOverlay<NebulaLightningOverlay>();
     }
@@ -124,7 +123,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         lightning = _backgroundLightning;
         alpha = 0f;
 
-        if (!_configuration.GetCVar(CCVars.ParallaxEnabled) ||
+        if (!_parallaxEnabled ||
             !_hasBackgroundLightning ||
             _timing.CurTime >= _backgroundLightningEnd)
         {
@@ -151,7 +150,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         if (_hasBackgroundLightning && _timing.CurTime >= _backgroundLightningEnd)
             _hasBackgroundLightning = false;
 
-        if (!_configuration.GetCVar(CCVars.ParallaxEnabled))
+        if (!_parallaxEnabled)
             return;
 
         if (_nextBackgroundLightning == TimeSpan.Zero)
@@ -212,18 +211,22 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
 
     private void PlayBackgroundLightningSound()
     {
-        var sound = _random.Pick(BackgroundLightningSounds);
         var audioParams = AudioParams.Default
             .WithVolume(_random.NextFloat(-8f, -3f))
             .WithPitchScale(_random.NextFloat(0.94f, 1.06f));
 
-        _audio.PlayGlobal(sound, Filter.Local(), false, audioParams);
+        _audio.PlayGlobal(BackgroundLightningSound, Filter.Local(), false, audioParams);
     }
 
     private void ScheduleNextBackgroundLightning()
     {
         var delay = _random.NextFloat((float) BackgroundLightningMinDelay.TotalSeconds, (float) BackgroundLightningMaxDelay.TotalSeconds);
         _nextBackgroundLightning = _timing.CurTime + TimeSpan.FromSeconds(delay);
+    }
+
+    private void OnParallaxEnabledChanged(bool enabled)
+    {
+        _parallaxEnabled = enabled;
     }
 
     private bool TryGetLocalPresence(out NebulaPresenceComponent presence)
@@ -233,7 +236,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         if (_player.LocalEntity is not { Valid: true } player)
             return false;
 
-        if (!TryComp<NebulaPresenceComponent>(player, out var playerPresence))
+        if (!_nebulaPresenceQuery.TryGetComponent(player, out var playerPresence))
             return false;
 
         presence = playerPresence;
