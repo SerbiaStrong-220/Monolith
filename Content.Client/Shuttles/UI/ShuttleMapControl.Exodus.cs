@@ -16,7 +16,6 @@ public sealed partial class ShuttleMapControl
         return _nebula.CanFTL(shuttleUid, targetCoordinates, targetAngle, out _);
     }
 
-    // Exodus-begin faction AI FTL map label
     private string AddFactionAiControlLabel(EntityUid grid, string labelText)
     {
         EntManager.TryGetComponent(grid, out FactionAiControlledGridComponent? control);
@@ -36,5 +35,4 @@ public sealed partial class ShuttleMapControl
             y += dimensions.Y * UIScale;
         }
     }
-    // Exodus-end
 }

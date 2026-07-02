@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles;
 [GenerateTypedNameReferences]
 public sealed partial class GhostRoleEntryButtons : BoxContainer
 {
-    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!; // Exodus ghost-role-follow-toggle
     [Dependency] private IGameTiming _timing = default!;
     private readonly GhostRoleKind _ghostRoleKind;
     private readonly uint _playerCount;
@@ -30,7 +30,7 @@ public sealed partial class GhostRoleEntryButtons : BoxContainer
         }
 
         UpdateRequestButton();
-        UpdateFollowButton(ghostRoleInfo);
+        UpdateFollowButton(ghostRoleInfo); // Exodus ghost-role-follow-toggle
     }
 
     // Exodus-begin ghost-role-follow-toggle

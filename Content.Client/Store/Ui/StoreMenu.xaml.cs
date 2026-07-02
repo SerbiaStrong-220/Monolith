@@ -33,18 +33,15 @@ public sealed partial class StoreMenu : DefaultWindow
     public string CurrentCategory = string.Empty;
 
     private List<ListingDataWithCostModifiers> _cachedListings = new();
-    // Exodus
+
+    // Exodus-begin summoning stores and territory price modifiers
     private List<ListingDataWithCostModifiers> _allListings = new();
-    // Exodus
     private StoreUiMode _mode = StoreUiMode.Default;
-    // Exodus
     private bool _hasPriceModifier;
-    // Exodus
     private float _territoryPriceEffect;
-    // Exodus
     private float _summoningPriceMultiplier = 1f;
-    // Exodus
     private StoreSummoningUiData? _activeSummoning;
+    // Exodus-end
 
     public StoreMenu()
     {
@@ -60,6 +57,7 @@ public sealed partial class StoreMenu : DefaultWindow
     {
         Balance = balance;
 
+        // Exodus-begin summoning stores reuse the balance label for territory speed modifiers
         if (_mode == StoreUiMode.Summoning)
         {
             BalanceInfo.SetMarkup(GetTerritoryDiscountText());
@@ -67,6 +65,7 @@ public sealed partial class StoreMenu : DefaultWindow
             RefundButton.Visible = false;
             return;
         }
+        // Exodus-end
 
         WithdrawButton.Visible = true;
         RefundButton.Visible = true;
@@ -81,8 +80,10 @@ public sealed partial class StoreMenu : DefaultWindow
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
         }
 
+        // Exodus-begin territory price modifiers are shown below the regular balance
         if (_hasPriceModifier)
             balanceStr += "\n" + GetTerritoryDiscountText();
+        // Exodus-end
 
         BalanceInfo.SetMarkup(balanceStr.TrimEnd());
 
@@ -99,7 +100,7 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    // Exodus
+    // Exodus-begin summoning stores and territory price modifiers
     public void SetMode(StoreUiMode mode, bool hasPriceModifier, float priceMultiplier, float summoningPriceMultiplier)
     {
         _mode = mode;
@@ -111,12 +112,12 @@ public sealed partial class StoreMenu : DefaultWindow
         UpdateSummoningStatus();
     }
 
-    // Exodus
     public void SetSummoning(StoreSummoningUiData? summoning)
     {
         _activeSummoning = summoning;
         UpdateSummoningStatus();
     }
+    // Exodus-end
 
     public void UpdateListing(List<ListingDataWithCostModifiers> listings)
     {
@@ -125,12 +126,13 @@ public sealed partial class StoreMenu : DefaultWindow
         UpdateListing();
     }
 
-    // Exodus
+    // Exodus-begin summoning status needs the full listing set after limited-stock purchases
     public void SetAllListings(List<ListingDataWithCostModifiers> listings)
     {
         _allListings = listings;
         UpdateSummoningStatus();
     }
+    // Exodus-end
 
     public void UpdateListing()
     {
@@ -178,12 +180,13 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        // Exodus
+        // Exodus-begin summoning mode disables new purchases while one item is active and shows icons
         var hasBalance = _mode == StoreUiMode.Summoning
             ? _activeSummoning == null
             : listing.CanBuyWith(Balance);
 
         var texture = GetListingTexture(listing);
+        // Exodus-end
 
         var listingInStock = GetListingPriceString(listing);
         var discount = GetDiscountString(listing);
@@ -197,9 +200,10 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private string GetListingPriceString(ListingDataWithCostModifiers listing)
     {
-        // Exodus
+        // Exodus-begin summoning stores show summon duration instead of currency cost
         if (_mode == StoreUiMode.Summoning)
             return FormatDuration(GetSummoningDuration(listing));
+        // Exodus-end
 
         var text = string.Empty;
 
@@ -231,6 +235,7 @@ public sealed partial class StoreMenu : DefaultWindow
             return string.Empty;
         }
 
+        // Exodus-begin show territory price modifiers as discount/surcharge text
         var relativeModifiersSummary = listingDataWithCostModifiers.GetModifiersSummaryRelative();
         if (relativeModifiersSummary.Count > 1)
         {
@@ -271,10 +276,11 @@ public sealed partial class StoreMenu : DefaultWindow
             );
         }
 
+        // Exodus-end
         return discountMessage;
     }
 
-    // Exodus
+    // Exodus-begin listing icons for summoning stores
     private Texture? GetListingTexture(ListingData listing)
     {
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
@@ -302,13 +308,15 @@ public sealed partial class StoreMenu : DefaultWindow
 
         return texture;
     }
+    // Exodus-end
 
-    // Exodus
+    // Exodus-begin summoning duration scales with modified listing cost
     private TimeSpan GetSummoningDuration(ListingDataWithCostModifiers listing)
     {
         var seconds = listing.Cost.Values.Sum(cost => cost.Float()) * _summoningPriceMultiplier;
         return TimeSpan.FromSeconds(MathF.Ceiling(Math.Max(1f, seconds)));
     }
+    // Exodus-end
 
     private string GetTerritoryDiscountText()
     {
@@ -322,7 +330,7 @@ public sealed partial class StoreMenu : DefaultWindow
             ("amount", FormatPercent(Math.Abs(_territoryPriceEffect))));
     }
 
-    // Exodus
+    // Exodus-begin summoning status panel
     private void UpdateSummoningStatus()
     {
         if (_mode != StoreUiMode.Summoning || _activeSummoning == null)
@@ -333,7 +341,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         SummoningStatusContainer.Visible = true;
 
-        // Exodus-begin: limited-stock listings drop from the store list after purchase; resolve from prototype instead.
+        // Limited-stock listings drop from the store list after purchase; resolve from prototype instead.
         var listing = _allListings.FirstOrDefault(l => l.ID == _activeSummoning.ListingId);
         ListingData? listingData = listing;
 
@@ -361,8 +369,9 @@ public sealed partial class StoreMenu : DefaultWindow
         var completed = Math.Clamp((_activeSummoning.Duration - _activeSummoning.Remaining).TotalSeconds / totalSeconds, 0, 1);
         SummoningProgressBar.Value = (float) completed;
     }
+    // Exodus-end
 
-    // Exodus
+    // Exodus-begin summoning status time formatting
     private static string FormatDuration(TimeSpan duration)
     {
         if (duration.TotalHours >= 1)
@@ -370,6 +379,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         return duration.ToString(@"mm\:ss");
     }
+    // Exodus-end
 
     private static string FormatPercent(float value)
     {
@@ -433,6 +443,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public void UpdateRefund(bool allowRefund)
     {
+        // Exodus summoning stores do not support the refund flow
         RefundButton.Visible = _mode != StoreUiMode.Summoning && allowRefund;
     }
 
