@@ -33,6 +33,14 @@ public sealed partial class ShipShieldsSystem : EntitySystem
     private EntityQuery<ProjectileComponent> _projectileQuery;
     private EntityQuery<ShipWeaponProjectileComponent> _shipWeaponProjectileQuery;
     private EntityQuery<ShipShieldedComponent> _shieldedQuery; // Exodus
+    // Exodus-begin shield hit absorption hot-path queries
+    private EntityQuery<ApcPowerReceiverComponent> _apcPowerReceiverQuery;
+    private EntityQuery<MapGridComponent> _mapGridQuery;
+    private EntityQuery<ShipShieldEmitterComponent> _shieldEmitterQuery;
+    private EntityQuery<ShipShieldVisualsComponent> _shieldVisualsQuery;
+    private EntityQuery<TransformComponent> _transformQuery;
+    // Exodus-end
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -141,6 +149,13 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
         _shipWeaponProjectileQuery = GetEntityQuery<ShipWeaponProjectileComponent>();
         _shieldedQuery = GetEntityQuery<ShipShieldedComponent>(); // Exodus
+        // Exodus-begin shield hit absorption hot-path queries
+        _apcPowerReceiverQuery = GetEntityQuery<ApcPowerReceiverComponent>();
+        _mapGridQuery = GetEntityQuery<MapGridComponent>();
+        _shieldEmitterQuery = GetEntityQuery<ShipShieldEmitterComponent>();
+        _shieldVisualsQuery = GetEntityQuery<ShipShieldVisualsComponent>();
+        _transformQuery = GetEntityQuery<TransformComponent>();
+        // Exodus-end
 
         SubscribeLocalEvent<ShipShieldComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentShutdown>(OnEmitterShutdown); // Mono

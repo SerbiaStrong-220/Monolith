@@ -30,14 +30,14 @@ public sealed partial class ShipShieldsSystem
 
     private bool IsPointInsideShield(EntityUid grid, ShipShieldedComponent shielded, MapCoordinates point)
     {
-        if (!TryComp<MapGridComponent>(grid, out var mapGrid) ||
-            !TryComp(grid, out TransformComponent? xform) ||
+        if (!_mapGridQuery.TryGetComponent(grid, out var mapGrid) ||
+            !_transformQuery.TryGetComponent(grid, out var xform) ||
             xform.MapID != point.MapId)
         {
             return false;
         }
 
-        var padding = TryComp<ShipShieldVisualsComponent>(shielded.Shield, out var visuals)
+        var padding = _shieldVisualsQuery.TryGetComponent(shielded.Shield, out var visuals)
             ? visuals.Padding
             : 0f;
 
@@ -57,7 +57,7 @@ public sealed partial class ShipShieldsSystem
     private bool TryApplyShieldLoad(ShipShieldedComponent shielded, float loadWatts)
     {
         if (shielded.Source is not { } source ||
-            !TryComp<ShipShieldEmitterComponent>(source, out var emitter))
+            !_shieldEmitterQuery.TryGetComponent(source, out var emitter))
         {
             return false;
         }
@@ -70,7 +70,7 @@ public sealed partial class ShipShieldsSystem
         // Avoid the regular shield recovery tick immediately eating the same strike.
         emitter.Accumulator = 0f;
 
-        if (TryComp<ApcPowerReceiverComponent>(source, out var receiver))
+        if (_apcPowerReceiverQuery.TryGetComponent(source, out var receiver))
             AdjustEmitterLoad(source, emitter, receiver);
 
         return true;
