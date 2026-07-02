@@ -118,7 +118,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         _parallax.SetParallaxOverride(ParallaxOverrideKey, parallax, ParallaxOverridePriority, _blend, replace: true);
     }
 
-    public bool TryGetBackgroundLightning(out NebulaBackgroundLightning lightning, out float alpha)
+    internal bool TryGetBackgroundLightning(out NebulaBackgroundLightning lightning, out float alpha)
     {
         lightning = _backgroundLightning;
         alpha = 0f;
@@ -266,7 +266,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
     }
 }
 
-public sealed class NebulaBackgroundLightning
+internal sealed class NebulaBackgroundLightning
 {
     public const int MaxPoints = 7;
     public const int MaxBranches = 3;
