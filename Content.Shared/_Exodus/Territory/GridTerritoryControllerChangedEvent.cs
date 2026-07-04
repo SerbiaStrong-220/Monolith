@@ -15,5 +15,7 @@ public readonly record struct GridTerritoryControllerChangedEvent(
     EntityUid Grid,
     ProtoId<TerritoryFactionPrototype>? OldFaction,
     ProtoId<TerritoryFactionPrototype>? NewFaction,
-    EntityUid? SourceBanner // the banner entity that caused the change (if any)
+    EntityUid? OldSourceBanner, // the banner entity that provided the previous claim, if any
+    EntityUid? SourceBanner, // the banner entity that caused the new claim, if any
+    EntityUid? Actor // the player that caused the change, if known
 );

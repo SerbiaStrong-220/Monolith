@@ -184,7 +184,8 @@ public sealed partial class GridTerritorySystem : EntitySystem
     public void SetController(
         EntityUid grid,
         ProtoId<TerritoryFactionPrototype>? faction,
-        EntityUid? sourceBanner = null)
+        EntityUid? sourceBanner = null,
+        EntityUid? actor = null)
     {
         if (!TryComp<GridTerritoryComponent>(grid, out var terr))
             return;
@@ -247,16 +248,16 @@ public sealed partial class GridTerritorySystem : EntitySystem
 
         _npcFaction.SyncControllerFaction(grid, faction);
 
-        var ev = new GridTerritoryControllerChangedEvent(grid, oldFaction, faction, sourceBanner);
-        RaiseLocalEvent(grid, ref ev);
+        var ev = new GridTerritoryControllerChangedEvent(grid, oldFaction, faction, oldClaimBanner, sourceBanner, actor);
+        RaiseLocalEvent(grid, ref ev, true);
     }
 
     /// <summary>
     /// Convenience for neutral/unclaimed state.
     /// </summary>
-    public void ClearController(EntityUid grid)
+    public void ClearController(EntityUid grid, EntityUid? actor = null)
     {
-        SetController(grid, null, null);
+        SetController(grid, null, null, actor);
     }
 
     /// <summary>

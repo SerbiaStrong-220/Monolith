@@ -37,6 +37,8 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
         _gridQuery = GetEntityQuery<MapGridComponent>();
 
         SubscribeLocalEvent<TerritoryBannerComponent, AnchorAttemptEvent>(OnAnchorAttempt);
+        SubscribeLocalEvent<TerritoryBannerComponent, BeforeAnchoredEvent>(OnBeforeAnchored);
+        SubscribeLocalEvent<TerritoryBannerComponent, UserAnchoredEvent>(OnUserAnchored);
         SubscribeLocalEvent<TerritoryBannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentStartup>(OnStartup);
@@ -108,12 +110,36 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
         args.Cancel();
     }
 
+    private void OnBeforeAnchored(Entity<TerritoryBannerComponent> ent, ref BeforeAnchoredEvent args)
+    {
+        var pendingActor = EnsureComp<PendingTerritoryClaimActorComponent>(ent.Owner);
+        pendingActor.Actor = args.User;
+    }
+
     private void OnAnchorChanged(Entity<TerritoryBannerComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
-            TryClaim(ent);
+        {
+            EntityUid? actor = null;
+            if (TryComp<PendingTerritoryClaimActorComponent>(ent.Owner, out var pendingActor))
+            {
+                actor = pendingActor.Actor;
+                ClearPendingClaimActor(ent.Owner, pendingActor);
+            }
+
+            TryClaim(ent, actor: actor);
+        }
         else
+        {
+            ClearPendingClaimActor(ent.Owner);
+
             TryUnclaim(ent);
+        }
+    }
+
+    private void OnUserAnchored(Entity<TerritoryBannerComponent> ent, ref UserAnchoredEvent args)
+    {
+        ClearPendingClaimActor(ent.Owner);
     }
 
     private void OnParentChanged(Entity<TerritoryBannerComponent> ent, ref EntParentChangedMessage args)
@@ -134,7 +160,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     // OnConstructionChanged removed (event type may differ; anchor/parent/shutdown suffice for now).
     // # Exodus
 
-    private void TryClaim(Entity<TerritoryBannerComponent> banner, bool showPopup = true)
+    private void TryClaim(Entity<TerritoryBannerComponent> banner, bool showPopup = true, EntityUid? actor = null)
     {
         var xform = Transform(banner);
         if (!TryResolveBannerGrid(xform, out var grid))
@@ -175,7 +201,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
         }
 
         // Perform the claim. Label is resolved from the TerritoryFactionPrototype.
-        _territory.SetController(grid, banner.Comp.Faction, banner.Owner);
+        _territory.SetController(grid, banner.Comp.Faction, banner.Owner, actor);
         ConfigureActiveBannerBlip(banner, (grid, terr));
 
         if (showPopup)
@@ -259,6 +285,17 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
 
         if (HasComp<RadarBlipComponent>(banner))
             RemCompDeferred<RadarBlipComponent>(banner);
+    }
+
+    private void ClearPendingClaimActor(EntityUid banner, PendingTerritoryClaimActorComponent? pendingActor = null)
+    {
+        if (!Resolve(banner, ref pendingActor, false))
+            return;
+
+        if (pendingActor.LifeStage >= ComponentLifeStage.Stopping)
+            return;
+
+        RemCompDeferred<PendingTerritoryClaimActorComponent>(banner);
     }
 
     // Exodus start - tolerate late GridUid init for banners parented directly to the grid.
