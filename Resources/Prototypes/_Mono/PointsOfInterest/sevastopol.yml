@@ -24,6 +24,7 @@
       stationProto: RecordsFrontierOutpostCargo
       # Exodus start - Territory for DC Sevastopol
       gridComponents:
+      - type: InitRepairSnapshot # Exodus sevastopol-srd-snapshot
       - type: GridTerritory
       # Exodus end
       components:
