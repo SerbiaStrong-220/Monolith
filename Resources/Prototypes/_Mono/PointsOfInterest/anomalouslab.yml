@@ -20,6 +20,7 @@
       stationProto: StandardFrontierOutpost
       # Exodus start - Territory for Anomaly Laboratory
       gridComponents:
+      - type: InitRepairSnapshot # Exodus anomalous-lab-srd-snapshot
       - type: GridTerritory
       # Exodus end
       components:

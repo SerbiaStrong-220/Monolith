@@ -30,6 +30,7 @@
       stationProto: RecordsFrontierOutpostCargo
       # Exodus-begin territory-grid
       gridComponents:
+      - type: InitRepairSnapshot # Exodus zvezda-srd-snapshot
       - type: GridTerritory
       # Exodus-end
       components:
