@@ -338,9 +338,16 @@ public sealed partial class NebulaPresenceSystem : EntitySystem
             return;
 
         _sawmill.Debug($"{ToPrettyString(uid)} left nebula {component.NebulaIndex + 1}.");
+        var oldMarker = component.Marker;
+        component.NebulaIndex = -1;
+        component.Marker = default;
+        component.Density = 0f;
+        component.Alpha = 0f;
+        Dirty(uid, component);
+
+        var ev = new NebulaPresenceChangedEvent(uid, oldMarker, default);
+        RaiseLocalEvent(uid, ref ev, broadcast: true);
         RemCompDeferred<NebulaPresenceComponent>(uid);
-        // The hazard coordinator listens to ComponentRemove on NebulaPresenceComponent, so it
-        // tears down per-effect components without needing a separate event here.
     }
 
     private void ClearStalePresence()
@@ -378,7 +385,7 @@ public sealed partial class NebulaPresenceSystem : EntitySystem
         var query = EntityQueryEnumerator<NebulaPresenceComponent>();
         while (query.MoveNext(out var uid, out _))
         {
-            RemCompDeferred<NebulaPresenceComponent>(uid);
+            ClearPresence(uid);
         }
     }
 

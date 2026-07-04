@@ -85,14 +85,14 @@ public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
         }
     }
 
-    private void OnPresenceChanged(EntityUid uid, NebulaPresenceComponent comp, ref NebulaPresenceChangedEvent ev)
+    private void OnPresenceChanged(Entity<NebulaPresenceComponent> ent, ref NebulaPresenceChangedEvent ev)
     {
-        ApplyEffects(uid, ev.NewMarker);
+        ApplyEffects(ent.Owner, ev.NewMarker);
     }
 
-    private void OnPresenceRemoved(EntityUid uid, NebulaPresenceComponent component, ComponentRemove args)
+    private void OnPresenceRemoved(Entity<NebulaPresenceComponent> ent, ref ComponentRemove args)
     {
-        ApplyEffects(uid, default);
+        ApplyEffects(ent.Owner, default);
     }
 
     private void ApplyEffects(EntityUid uid, EntProtoId marker)
@@ -145,7 +145,7 @@ public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
         }
         else if (HasComp<NebulaLightningGridHazardComponent>(uid))
         {
-            RemCompDeferred<NebulaLightningGridHazardComponent>(uid);
+            RemComp<NebulaLightningGridHazardComponent>(uid);
         }
     }
 
@@ -159,7 +159,7 @@ public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
         }
         else if (HasComp<NebulaSpaceLightningTargetComponent>(uid))
         {
-            RemCompDeferred<NebulaSpaceLightningTargetComponent>(uid);
+            RemComp<NebulaSpaceLightningTargetComponent>(uid);
         }
     }
 
@@ -175,7 +175,7 @@ public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
         }
         else if (HasComp<NebulaEmpGridHazardComponent>(uid))
         {
-            RemCompDeferred<NebulaEmpGridHazardComponent>(uid);
+            RemComp<NebulaEmpGridHazardComponent>(uid);
         }
     }
 
@@ -189,7 +189,7 @@ public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
         }
         else if (HasComp<NebulaSpaceEmpTargetComponent>(uid))
         {
-            RemCompDeferred<NebulaSpaceEmpTargetComponent>(uid);
+            RemComp<NebulaSpaceEmpTargetComponent>(uid);
         }
     }
 
@@ -198,7 +198,7 @@ public sealed partial class NebulaHazardCoordinatorSystem : EntitySystem
         if (wanted)
             EnsureComp<NebulaRadioBlackoutComponent>(uid);
         else if (HasComp<NebulaRadioBlackoutComponent>(uid))
-            RemCompDeferred<NebulaRadioBlackoutComponent>(uid);
+            RemComp<NebulaRadioBlackoutComponent>(uid);
     }
 
     private static void ResetGridLightning(NebulaLightningGridHazardComponent hazard, EntProtoId marker)
