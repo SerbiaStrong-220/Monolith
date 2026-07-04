@@ -120,6 +120,9 @@
   - PirateCaptain
   - PDVDenasvar
   - PDVInfiltrator
+  - AsakimWarrior # Exodus asakim-combatant
+  - AsakimCenturion # Exodus asakim-combatant
+  - AsakimPrefect # Exodus asakim-combatant
 
 - type: department
   id: Science
