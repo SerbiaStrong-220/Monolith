@@ -28,9 +28,15 @@
   - type: PoweredRadiationSource
   - type: RadarBlip
     radarColor: "#D4AF37"
-    scale: 1.5
-    shape: Circle
     visibleFromOtherGrids: true
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#D4AF37"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
   - type: Sprite
     sprite: _Mono/Structures/ShuttleComponents/shield.rsi
     snapCardinals: true
@@ -73,7 +79,7 @@
         sound:
           collection: MetalBreak
   - type: ShipRepairable
-    repairTime: 30
+    repairTime: 300
     repairCost: 750
   - type: ShipRepairableRestrict
     toolWhitelist:
