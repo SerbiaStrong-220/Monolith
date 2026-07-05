@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/05/2026 10:08:00
-  entityCount: 1503
+  entityCount: 1504
 maps: []
 grids:
 - 1
@@ -10647,4 +10647,14 @@ entities:
     - type: Transform
       pos: -26.239395,8.0737
       parent: 1
+- proto: WarpPointAdmin
+  entities:
+  - uid: 1504
+    components:
+    - type: Transform
+      pos: 0,0
+      parent: 1
+    - type: WarpPoint
+      adminOnly: true
+      location: "Покинутый круизный корабль"
 ...

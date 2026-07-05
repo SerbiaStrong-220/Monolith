@@ -114,6 +114,64 @@
       - SyndicateRepairTool
 
 - type: nebulaPoi
+  id: NebulaPoiBurnedShuttle
+  path: /Maps/_Exodus/POI/burnedshuttle.yml
+  spawnIn:
+  - NebulaBlueMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 150
+  name: "Погибшая спасательная капсула"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiFragmentOfPrison
+  path: /Maps/_Exodus/POI/fragmentofprison.yml
+  spawnIn:
+  - NebulaGreenMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 150
+  name: "Обломок тюремного корабля"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiCruiseShip
+  path: /Maps/_Exodus/POI/cruiseship.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 150
+  name: "Покинутый круизный корабль"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
   id: NebulaPoiAdsSmallAncientStorage
   path: /Maps/_Exodus/POI/ads_small_ancient_storage.yml
   spawnIn:
@@ -167,10 +225,6 @@
     tags: [ POI ]
   - type: ForceAnchor
   - type: InitRepairSnapshot
-  - type: ShipRepairRestrict
-    toolWhitelist:
-      tags:
-      - ADSRepairTool
 
 - type: nebulaPoi
   id: NebulaPoiLancelot

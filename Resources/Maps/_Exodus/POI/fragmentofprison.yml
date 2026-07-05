@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/05/2026 09:46:07
-  entityCount: 520
+  entityCount: 521
 maps: []
 grids:
 - 1
@@ -3258,4 +3258,14 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
+- proto: WarpPointAdmin
+  entities:
+  - uid: 521
+    components:
+    - type: Transform
+      pos: 0,0
+      parent: 1
+    - type: WarpPoint
+      adminOnly: true
+      location: "Обломок тюремного корабля"
 ...
