@@ -34,7 +34,7 @@
   description: summoning-machine-kasatura-centurion-desc
   productEntity: ClothingOuterHardsuitCenturionAsakimUnremoveable
   cost:
-    Telecrystal: 2400
+    Telecrystal: 2100
   categories:
   - SummoningMachineKasatura
 
@@ -44,7 +44,7 @@
   description: summoning-machine-kasatura-prefect-desc
   productEntity: ClothingOuterHardsuitPrefectAsakimUnremoveable
   cost:
-    Telecrystal: 3000
+    Telecrystal: 3300
   categories:
   - SummoningMachineKasatura
 
