@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/20/2025 20:52:36
-  entityCount: 3330
+  entityCount: 3336
 maps: []
 grids:
 - 1
@@ -18474,6 +18474,15 @@ entities:
     - type: Transform
       pos: 5.5,9.5
       parent: 1
+# Exodus-begin remote borg spawner
+- proto: SpawnAiRemoteBorgBattery
+  entities:
+  - uid: 3336
+    components:
+    - type: Transform
+      pos: -0.5,24.5
+      parent: 1
+# Exodus-end
 - proto: SpawnPointLatejoin
   entities:
   - uid: 2118

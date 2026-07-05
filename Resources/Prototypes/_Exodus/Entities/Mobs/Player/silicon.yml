@@ -1,6 +1,18 @@
 # Exodus: Colossus-Central AI Core
 
 - type: entity
+  id: StationAiHoloRedacted
+  parent: StationAiHolo
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/station_ai_redacted.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
+
+- type: entity
   id: PlayerStationAiColossus
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, Colossus

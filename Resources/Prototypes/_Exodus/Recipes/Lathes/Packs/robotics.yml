@@ -1,0 +1,10 @@
+- type: latheRecipePack
+  id: ColossusBorgEndoskeletons
+  recipes:
+  - CyborgEndoskeletonColossusSecurity
+
+- type: latheRecipePack
+  id: FactionBorgEndoskeletons
+  recipes:
+  - CyborgEndoskeletonPDV
+  - CyborgEndoskeletonTSF

@@ -6,3 +6,6 @@
 
 - type: playTimeTracker
   id: JobAsakimPrefect
+
+- type: playTimeTracker
+  id: JobColossusSecurityBorg

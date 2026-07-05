@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 03/23/2026 00:20:28
-  entityCount: 2351
+  entityCount: 2352
 maps: []
 grids:
 - 4270
@@ -10176,6 +10176,14 @@ entities:
     components:
     - type: Transform
       pos: 17.5,-12.5
+      parent: 4270
+# Exodus: Colossus security AI remote borg shell.
+- proto: SpawnAiRemoteBorgColossusSecurity
+  entities:
+  - uid: 4902
+    components:
+    - type: Transform
+      pos: 17.5,-7.5
       parent: 4270
 - proto: PortableGeneratorJrPacman
   entities:

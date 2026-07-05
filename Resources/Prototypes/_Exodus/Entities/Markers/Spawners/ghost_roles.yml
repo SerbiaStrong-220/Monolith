@@ -153,3 +153,18 @@
   - type: ConditionalSpawner
     prototypes:
     - MobCitadelServiceGhostRoleNoTimelock
+
+- type: entity
+  name: colossus security borg spawner
+  id: SpawnBorgColossusSecurity
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgColossusSecurityGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/security_colossus.rsi
+      state: sec_borg_red

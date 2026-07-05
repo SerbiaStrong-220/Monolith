@@ -1,0 +1,142 @@
+# Exodus: Colossus-Central security borg
+
+- type: entity
+  id: BorgChassisColossusSecurity
+  parent: [ BaseFactionBorgChassis, BaseBorgTransponder, ShowSecurityIcons ]
+  name: colossus security borg
+  description: A security cyborg assigned to Colossus-Central.
+  components:
+  - type: SiliconLawProvider
+    laws: RobocopLawset
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/security_colossus.rsi
+    layers:
+    - state: sec_borg_red
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: sec_borg_e_blue
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: sec_borg_l_blue
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 9
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSyndicate
+      - BorgModuleColossus
+    hasMindState: sec_borg_e_blue
+    noMindState: sec_borg_l_blue
+  - type: BorgTransponder
+    sprite:
+      sprite: _Exodus/Mobs/Silicon/security_colossus.rsi
+      state: sec_borg_red
+    name: colossus security borg
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Access
+    tags:
+    - Security
+    - Brig
+    - Armory
+    - Maintenance
+    - External
+    - Command
+  - type: AccessReader
+    access: [["Security"], ["Brig"], ["Armory"], ["Command"]]
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Traffic
+    - Security
+    - Command
+    - Service
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Traffic
+    - Security
+    - Command
+    - Service
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - SolCommon
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - SolCommon
+  - type: ShowJobIcons
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  id: PlayerBorgColossusSecurity
+  parent: BorgChassisColossusSecurity
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleColossusSecurity
+      - BorgModuleColossusCombat
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellCombat
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  id: ConstructedBorgColossusSecurity
+  parent: BorgChassisColossusSecurity
+  suffix: Constructed, Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleColossusSecurity
+      - BorgModuleColossusCombat
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellCombat
+  - type: Construction
+    graph: ColossusSecurityCyborg
+    node: cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  id: PlayerBorgColossusSecurityGhostRole
+  parent: PlayerBorgColossusSecurity
+  suffix: Ghost
+  components:
+  - type: GhostRole
+    name: ghost-role-information-colossus-security-borg
+    description: ghost-role-information-colossus-security-borg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    prototype: ColossusSecurityBorg
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 108000 # 30 hrs
+  - type: GhostTakeoverAvailable

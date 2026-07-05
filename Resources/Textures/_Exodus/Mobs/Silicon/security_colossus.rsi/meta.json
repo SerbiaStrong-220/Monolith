@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "for Exodus by Renascitur (discord: renascitur)",
+  "states": [
+    {
+      "name": "sec_borg_red",
+      "directions": 4
+    },
+    {
+      "name": "sec_borg_e_blue",
+      "directions": 4
+    },
+    {
+      "name": "sec_borg_l_blue",
+      "directions": 4
+    }
+  ]
+}

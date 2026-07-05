@@ -16,12 +16,9 @@
     # Scrap chunks
     - id: ScrapOre100
       amount: 1
-    # Scrap chunks
-    - id: ScrapOre50 # Exodus-Economic-Rebalance
-      amount: 1
-    # Material # Exodus-Economic-Rebalance
+    # Material
     - id: SheetPlastitanium10
-      amount: 1
+      amount: 2
     # Parts
     - id: SuperCapacitorStockPart
       prob: 0.8
@@ -75,10 +72,10 @@
     # Money - 80k # removed
     # Scrap chunks
     - id: ScrapOre100
-      amount: 1
-    # Material # Exodus-Economic-Rebalance
+      amount: 3
+    # Material
     - id: SheetPlastitanium10
-      amount: 2
+      amount: 4
     # Parts
     - id: SuperCapacitorStockPart
       amount: 3
@@ -86,14 +83,14 @@
       amount: 1
     - id: PicoManipulatorStockPart
       amount: 2
-    # rare t4 parts # Exodus-Economic-Rebalance
+    # rare t4 parts
     - id: QuadraticCapacitorStockPart
       amount: 2
-      prob: 0.4
+      prob: 0.8
     - id: FemtoManipulatorStockPart
-      prob: 0.4
+      prob: 0.8
     - id: BluespaceMatterBinStockPart
-      prob: 0.3
+      prob: 0.6
     - id: SpawnDungeonLootPowerCell
       prob: 0.5
     - id: PowerCellMicroreactor
@@ -124,10 +121,10 @@
     # Money - 200k # removed
     # Scrap chunks
     - id: ScrapOre100
-      amount: 2
-    # Material  # Exodus-Economic-Rebalance
+      amount: 6
+    # Material
     - id: SheetPlastitanium10
-      amount: 4
+      amount: 8
     # Parts
     - id: SuperCapacitorStockPart
       amount: 6
@@ -155,10 +152,10 @@
       maxAmount: 2
     - id: WeaponTurretPinholeFlatpack
     # no flatpacks or boards, just gamble scrap
-    # Research disk, expected value 200k/drone  # Exodus-Economic-Rebalance
+    # Research disk, expected value 200k/drone
     - id: RogueSiliconResearchDisk50000
-      amount: 1
-      maxAmount: 3
+      amount: 3
+      maxAmount: 5
     # Tech disk
     - id: SpawnLootTechDisksT3Mech
       prob: 0.6
