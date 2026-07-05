@@ -46,7 +46,15 @@ public sealed partial class DeathZoneGenerationSystem : EntitySystem
         var mapComponent = EnsureComp<NebulaMapComponent>(mapUid.Value);
 
         var seed = _random.Next();
-        mapComponent.WorldEnd = WorldEndNebulaShape.Generate(seed, config.WorldEndInnerRadius, config.WorldEndMidRadius);
+        mapComponent.WorldEnd = WorldEndNebulaShape.Generate(
+            seed,
+            config.WorldEndInnerRadius,
+            config.WorldEndMidRadius,
+            samples: config.SampleCount,
+            minWaveAmplitude: config.WorldEndMinWaveAmplitude,
+            maxWaveAmplitude: config.WorldEndMaxWaveAmplitude,
+            clearanceMultiplier: config.WorldEndClearanceMultiplier,
+            waveFrequencies: config.WorldEndWaveFrequencies);
         mapComponent.WorldEndInnerMarker = config.DeathZoneInnerMarker;
         mapComponent.WorldEndOuterMarker = config.DeathZoneOuterMarker;
 

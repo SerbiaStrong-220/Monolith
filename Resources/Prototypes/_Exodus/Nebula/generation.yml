@@ -38,6 +38,17 @@
   worldEndInnerRadius: 75000
   worldEndMidRadius: 90000
 
+  # Death zone boundary waves.
+  worldEndMinWaveAmplitude: 0.002
+  worldEndMaxWaveAmplitude: 0.006
+  worldEndClearanceMultiplier: 1.04
+  # Positive entries only; generation clamps to 16 entries and max frequency 64.
+  worldEndWaveFrequencies:
+  - 3
+  - 5
+  - 7
+  - 11
+
   # Marker pool with weights. All four colors equal-weight by default → ~25 % each.
   markers:
   - proto: NebulaBlueMarker

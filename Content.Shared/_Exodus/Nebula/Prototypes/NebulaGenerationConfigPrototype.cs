@@ -6,7 +6,7 @@ namespace Content.Shared._Exodus.Nebula.Prototypes;
 /// All tunable parameters of the round-start nebula generator. Resolved by
 /// <c>NebulaRoundstartGenerationSystem</c> after regular round-start station/POI generation.
 /// Edit the YAML to rebalance nebula counts, sizes, shapes, marker weights, and death-zone
-/// radii without C#.
+/// radii and shape without C#.
 /// </summary>
 [Prototype("nebulaGenerationConfig")]
 public sealed partial class NebulaGenerationConfigPrototype : IPrototype
@@ -61,6 +61,18 @@ public sealed partial class NebulaGenerationConfigPrototype : IPrototype
 
     /// <summary>Concentric radius that splits death zone into inner / outer sub-zones.</summary>
     [DataField] public float WorldEndMidRadius = 90_000f;
+
+    /// <summary>Lower bound for death-zone boundary wave amplitude.</summary>
+    [DataField] public float WorldEndMinWaveAmplitude = 0.002f;
+
+    /// <summary>Upper bound for death-zone boundary wave amplitude.</summary>
+    [DataField] public float WorldEndMaxWaveAmplitude = 0.006f;
+
+    /// <summary>Minimum death-zone boundary radius multiplier over <see cref="WorldEndInnerRadius"/>.</summary>
+    [DataField] public float WorldEndClearanceMultiplier = 1.04f;
+
+    /// <summary>Death-zone boundary wave frequencies.</summary>
+    [DataField] public List<int> WorldEndWaveFrequencies = new() { 3, 5, 7, 11 };
 
     // ─── Marker housekeeping ───
     /// <summary>

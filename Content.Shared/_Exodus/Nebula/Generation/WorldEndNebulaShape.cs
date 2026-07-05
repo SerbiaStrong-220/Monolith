@@ -10,19 +10,25 @@ namespace Content.Shared._Exodus.Nebula.Generation;
 ///
 /// Unlike <see cref="NebulaShape"/> (finite blob), this shape covers everything
 /// outside the boundary — from ~75 000 tiles to infinity. The boundary itself is
-/// randomised each round via a four-harmonic sinusoidal formula so the entry zone
+/// randomised each round via a configurable sinusoidal formula so the entry zone
 /// has the same natural irregularity as regular nebulas.
 ///
-/// Boundary formula: B(θ) = 1 + Σ Aᵢ·sin(fᵢ·θ + φᵢ),  f = {3,5,7,11}
+/// Boundary formula: B(θ) = 1 + Σ Aᵢ·sin(fᵢ·θ + φᵢ)
 /// After RMS-normalisation: r(θ) = R_base · B(θ) / √⟨B²⟩
-/// R_base is chosen so that min r(θ) == innerRadius exactly.
+/// R_base is chosen so that min r(θ) matches the configured clearance boundary.
 /// </summary>
 [Serializable, NetSerializable]
 public readonly struct WorldEndNebulaShape
 {
     public const int SampleCount = 512;
+    public const float DefaultMinWaveAmplitude = 0.002f;
+    public const float DefaultMaxWaveAmplitude = 0.006f;
+    public const float DefaultClearanceMultiplier = 1.04f;
 
-    private static readonly int[] WaveFrequencies = { 3, 5, 7, 11 };
+    private const int MaxWaveCount = 16;
+    private const int MaxWaveFrequency = 64;
+
+    private static readonly int[] DefaultWaveFrequencies = { 3, 5, 7, 11 };
 
     public readonly Vector2 Center;
     public readonly float InnerBoundingRadius;
@@ -59,18 +65,29 @@ public readonly struct WorldEndNebulaShape
         float innerRadius,
         float midRadius = 0f,
         Vector2 center = default,
-        int samples = SampleCount)
+        int samples = SampleCount,
+        float minWaveAmplitude = DefaultMinWaveAmplitude,
+        float maxWaveAmplitude = DefaultMaxWaveAmplitude,
+        float clearanceMultiplier = DefaultClearanceMultiplier,
+        IReadOnlyList<int>? waveFrequencies = null)
     {
         var rng = new System.Random(seed);
+        samples = Math.Max(1, samples);
+        innerRadius = MathF.Max(1f, innerRadius);
+        clearanceMultiplier = MathF.Max(1f, IsValidFinite(clearanceMultiplier) ? clearanceMultiplier : DefaultClearanceMultiplier);
+        SanitizeWaveAmplitude(ref minWaveAmplitude, ref maxWaveAmplitude);
 
-        var amplitudes = new float[4];
-        var phases = new float[4];
+        var frequencies = ResolveWaveFrequencies(waveFrequencies);
+        var amplitudes = new float[frequencies.Length];
+        var phases = new float[frequencies.Length];
 
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < frequencies.Length; i++)
         {
-            amplitudes[i] = (float)(rng.NextDouble() * 0.004 + 0.002); // [0.002, 0.006]
+            amplitudes[i] = NextFloat(rng, minWaveAmplitude, maxWaveAmplitude);
             phases[i] = (float)(rng.NextDouble() * MathF.Tau);
         }
+
+        NormalizeAmplitudes(amplitudes);
 
         // Pass 1: compute B(θ) samples and RMS normalisation factor.
         var bSamples = new float[samples];
@@ -81,8 +98,8 @@ public readonly struct WorldEndNebulaShape
             var theta = MathF.Tau * i / samples;
             var b = 1f;
 
-            for (var w = 0; w < 4; w++)
-                b += amplitudes[w] * MathF.Sin(WaveFrequencies[w] * theta + phases[w]);
+            for (var w = 0; w < frequencies.Length; w++)
+                b += amplitudes[w] * MathF.Sin(frequencies[w] * theta + phases[w]);
 
             bSamples[i] = b;
             meanSquare += b * b;
@@ -94,7 +111,7 @@ public readonly struct WorldEndNebulaShape
         // Pass 2: find minimum normalised B using a dense search so the continuous minimum
         // between sample points is not missed. A coarse sample search would underestimate
         // rBase and allow the boundary to dip below innerRadius.
-        const int minSearchSamples = SampleCount * 32; // 16 384 — ~1500 points per highest-freq cycle
+        var minSearchSamples = Math.Max(samples * 32, GetMaxFrequency(frequencies) * 1536);
         var minNormB = float.MaxValue;
 
         for (var i = 0; i < minSearchSamples; i++)
@@ -102,8 +119,8 @@ public readonly struct WorldEndNebulaShape
             var theta = MathF.Tau * i / minSearchSamples;
             var b = 1f;
 
-            for (var w = 0; w < 4; w++)
-                b += amplitudes[w] * MathF.Sin(WaveFrequencies[w] * theta + phases[w]);
+            for (var w = 0; w < frequencies.Length; w++)
+                b += amplitudes[w] * MathF.Sin(frequencies[w] * theta + phases[w]);
 
             var normB = b / normalization;
             if (normB < minNormB)
@@ -111,8 +128,8 @@ public readonly struct WorldEndNebulaShape
         }
 
         // Enforce a clearance buffer so the boundary never touches the nebula generation zone.
-        // minBoundaryRadius is the guaranteed minimum radius — 4 % above innerRadius.
-        var minBoundaryRadius = innerRadius * 1.04f;
+        // minBoundaryRadius is the guaranteed minimum radius from the configured clearance.
+        var minBoundaryRadius = innerRadius * clearanceMultiplier;
         var rBase = minBoundaryRadius / minNormB;
 
         // Pass 3: compute final boundary radii, clamped to the clearance minimum.
@@ -132,6 +149,89 @@ public readonly struct WorldEndNebulaShape
         }
 
         return new WorldEndNebulaShape(center, boundary, innerBound, outerBound, midRadius);
+    }
+
+    private static int[] ResolveWaveFrequencies(IReadOnlyList<int>? waveFrequencies)
+    {
+        if (waveFrequencies == null || waveFrequencies.Count == 0)
+            return DefaultWaveFrequencies;
+
+        var validCount = 0;
+        for (var i = 0; i < waveFrequencies.Count; i++)
+        {
+            if (waveFrequencies[i] > 0)
+                validCount++;
+
+            if (validCount >= MaxWaveCount)
+                break;
+        }
+
+        if (validCount == 0)
+            return DefaultWaveFrequencies;
+
+        var frequencies = new int[validCount];
+        var write = 0;
+        for (var i = 0; i < waveFrequencies.Count; i++)
+        {
+            if (waveFrequencies[i] <= 0)
+                continue;
+
+            frequencies[write] = Math.Min(waveFrequencies[i], MaxWaveFrequency);
+            write++;
+
+            if (write >= validCount)
+                break;
+        }
+
+        return frequencies;
+    }
+
+    private static int GetMaxFrequency(IReadOnlyList<int> frequencies)
+    {
+        var max = 1;
+        for (var i = 0; i < frequencies.Count; i++)
+            max = Math.Max(max, frequencies[i]);
+
+        return max;
+    }
+
+    private static void SanitizeWaveAmplitude(ref float minWaveAmplitude, ref float maxWaveAmplitude)
+    {
+        if (!IsValidFinite(minWaveAmplitude))
+            minWaveAmplitude = DefaultMinWaveAmplitude;
+
+        if (!IsValidFinite(maxWaveAmplitude))
+            maxWaveAmplitude = DefaultMaxWaveAmplitude;
+
+        minWaveAmplitude = MathF.Max(0f, minWaveAmplitude);
+        maxWaveAmplitude = MathF.Max(0f, maxWaveAmplitude);
+
+        if (maxWaveAmplitude < minWaveAmplitude)
+            (minWaveAmplitude, maxWaveAmplitude) = (maxWaveAmplitude, minWaveAmplitude);
+    }
+
+    private static void NormalizeAmplitudes(float[] amplitudes)
+    {
+        var totalAmplitude = 0f;
+        for (var i = 0; i < amplitudes.Length; i++)
+            totalAmplitude += amplitudes[i];
+
+        if (totalAmplitude <= 0.95f)
+            return;
+
+        var scale = 0.95f / totalAmplitude;
+        for (var i = 0; i < amplitudes.Length; i++)
+            amplitudes[i] *= scale;
+    }
+
+    private static float NextFloat(System.Random rng, float min, float max)
+    {
+        return min + (float)rng.NextDouble() * (max - min);
+    }
+
+    private static bool IsValidFinite(float value)
+    {
+        return !float.IsNaN(value) && !float.IsInfinity(value);
     }
 
     /// <summary>
