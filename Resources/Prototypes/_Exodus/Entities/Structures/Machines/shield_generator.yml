@@ -6,10 +6,10 @@
   suffix: ADS ONLY
   components:
   - type: ShipShieldEmitter
-    damageLimit: 2000000
+    damageLimit: 1000000
     healPerSecond: 800
     damageExp: 1.05
-    powerModifier: 0.0752
+    powerModifier: 0.10024
     baseDraw: 100000
     maxDraw: 200000
     unpoweredBonus: 6
@@ -79,7 +79,7 @@
         sound:
           collection: MetalBreak
   - type: ShipRepairable
-    repairTime: 300
+    repairTime: 60
     repairCost: 750
   - type: ShipRepairableRestrict
     toolWhitelist:
