@@ -30,6 +30,17 @@
   - type: NpcFactionMember
     factions:
     - AsakimDefenceForces
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#ff3db1"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#ff3db1"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
 
 - type: entity
   id: NpcStationAiAttackerStaticSmartAsakimUnanchorable
@@ -49,6 +60,17 @@
   - type: NpcFactionMember
     factions:
     - PirateNF
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#D2B48C"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#D2B48C"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
 
 - type: entity
   id: NpcStationAiAttackerStaticSmartPirateNFUnanchorable
@@ -68,6 +90,17 @@
   - type: NpcFactionMember
     factions:
     - TSFMC
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#00a1fc"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#00a1fc"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
 
 - type: entity
   id: NpcStationAiAttackerStaticSmartTSFMCUnanchorable
@@ -87,6 +120,17 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#C83737"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#C83737"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
 
 - type: entity
   id: NpcStationAiAttackerStaticSmartUSSP
@@ -98,6 +142,17 @@
   - type: NpcFactionMember
     factions:
     - USSP
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#ff0033"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#ff0033"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
 
 - type: entity
   id: NpcStationAiAttackerStaticSmartUSSPUnanchorable
