@@ -28,35 +28,37 @@
   category: cargoproduct-category-name-shuttle
   group: market
 
-- type: cargoProduct
-  id: ShuttleTurretM220
-  icon:
-    sprite: _Mono/Objects/ShuttleWeapons/rubicon.rsi
-    state: space_artillery
-  product: CrateWeaponTurretM220
-  cost: 60000
-  category: cargoproduct-category-name-shuttle
-  group: market
+# EMP missle begin
+#- type: cargoProduct
+#  id: ShuttleTurretM220
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/rubicon.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretM220
+#  cost: 60000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
 
-- type: cargoProduct
-  id: ShuttleTurretTarnyxReload
-  icon:
-    sprite: _Mono/Objects/ShuttleWeapons/tarnyx.rsi
-    state: space_artillery
-  product: CrateWeaponTurretTarnyxReload
-  cost: 50000
-  category: cargoproduct-category-name-shuttle
-  group: market
+#- type: cargoProduct
+#  id: ShuttleTurretTarnyxReload
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/tarnyx.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretTarnyxReload
+#  cost: 50000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
 
-- type: cargoProduct
-  id: ShuttleTurretTovek
-  icon:
-    sprite: _Mono/Objects/ShuttleWeapons/tovek.rsi
-    state: space_artillery
-  product: CrateWeaponTurretTovek
-  cost: 50000
-  category: cargoproduct-category-name-shuttle
-  group: market
+#- type: cargoProduct
+#  id: ShuttleTurretTovek
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/tovek.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretTovek
+#  cost: 50000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
+# EMP missle end
 
 - type: cargoProduct
   id: ShuttleTurretVespera
