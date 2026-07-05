@@ -189,6 +189,26 @@
   - SummoningMachineFieldReserve
 
 - type: listing
+  id: SummoningMachineAsakimEncryptionKey
+  name: summoning-machine-asakim-encryption-key-name
+  description: summoning-machine-asakim-encryption-key-desc
+  productEntity: EncryptionKeyAsakimRemnants
+  cost:
+    Telecrystal: 180
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineAsakimTrackingImplanter
+  name: summoning-machine-asakim-tracking-implanter-name
+  description: summoning-machine-asakim-tracking-implanter-desc
+  productEntity: AsakimTrackingImplanter
+  cost:
+    Telecrystal: 180
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
   id: SummoningMachineRTGFlatpack
   name: summoning-machine-rtg-flatpack-name
   description: summoning-machine-rtg-flatpack-desc
