@@ -88,6 +88,13 @@
       Quantity: 5
     - ReagentId: DexalinPlus
       Quantity: 5
+  - type: RandomTeleportOnTrigger
+    cooldown: 240
+    specifier:
+      teleportRadius: 10
+      teleportAttempts: 5
+      forceSafe: false
+      minRadiusFraction: 0.75
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     requiredSlot: outerclothing
