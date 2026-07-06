@@ -37,10 +37,10 @@
     implants: [ MindShieldImplant ] # Mono - remove TSFMC implant
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
-      #- type: NpcFactionMember - Commented out to seperate them from TSFMC.
-      #  factions:
-      #  - TSFMC
+    - type: CommandStaff
+    - type: NpcFactionMember # Exodus SecColossus faction
+      factions:
+      - SecColossus
   - !type:GiveItemOnHolidaySpecial
     holiday: FrontierBirthday
     prototype: FrontierBirthdayGift

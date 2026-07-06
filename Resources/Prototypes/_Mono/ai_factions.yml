@@ -9,6 +9,8 @@
   id: TSFMC
   name: npc-faction-name-tsfmc # Exodus - faction AI radar label
   coreControlName: npc-faction-core-control-name-tsfmc # Exodus - faction AI radar label
+  friendly:
+  - SecColossus # Exodus SecColossus faction
   neutral:
   - CC
   - NanoTrasen
@@ -19,6 +21,7 @@
   id: TSFMCTurret
   friendly:
   - TSFMC
+  - SecColossus # Exodus SecColossus faction
   neutral:
   - CC
   - NanoTrasen
@@ -58,6 +61,7 @@
   id: MD
   friendly:
   - CC
+  - SecColossus # Exodus SecColossus faction
   neutral:
   - CC
   - NanoTrasen
