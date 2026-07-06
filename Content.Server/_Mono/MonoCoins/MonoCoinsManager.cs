@@ -102,9 +102,11 @@ public sealed partial class MonoCoinsManager
         // return await _db.AddMonoCoinsAsync(userId, amount);
         var newBalance = await _db.AddMonoCoinsAsync(userId, amount);
         _cachedBalance[userId] = newBalance;
+        // Exodus-End
         if (_player.TryGetSessionById(userId, out var session)) {
             SendBalance(session.Channel);
         }
+        // Exodus-Start
         return newBalance;
         // Exodus-End
     }

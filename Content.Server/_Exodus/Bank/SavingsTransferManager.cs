@@ -130,16 +130,15 @@ public sealed class SavingsTransferManager
 
     private async Task SavingsToAccount(ICommonSession session, long requested)
     {
-        long before;
-        long after;
+        int move;
         try
         {
-            before = await _coins.GetMonoCoinsBalanceAsync(session.UserId);
-            var move = (int)Math.Min(requested, before);
+            var before = await _coins.GetMonoCoinsBalanceAsync(session.UserId);
+            move = (int)Math.Min(requested, before);
             if (move <= 0)
                 return;
 
-            after = await _coins.AddMonoCoinsAsync(session.UserId, -move);
+            await _coins.AddMonoCoinsAsync(session.UserId, -move);
         }
         catch (Exception e)
         {
@@ -148,23 +147,18 @@ public sealed class SavingsTransferManager
             return;
         }
 
-        // Deposit exactly what actually left savings.
-        var debited = (int)(before - after);
-        if (debited <= 0)
-            return;
-
         if (!_prefs.TryGetCachedPreferences(session.UserId, out var prefs) ||
             prefs.SelectedCharacter is not HumanoidCharacterProfile profile ||
-            !_bank.TryBankDeposit(session, prefs, profile, debited, out _))
+            !_bank.TryBankDeposit(session, prefs, profile, move, out _))
         {
-            var refunded = await TryRefundToSavings(session, debited);
+            var refunded = await TryRefundToSavings(session, move);
             _adminLogger.Add(LogType.SavingsTransfer, LogImpact.High,
-                $"{session:player} savings->account of {debited} FAILED on account deposit; savings refund {(refunded ? "ok" : "ALSO FAILED")}.");
+                $"{session:player} savings->account of {move} FAILED on account deposit; savings refund {(refunded ? "ok" : "ALSO FAILED")}.");
             return;
         }
 
         _adminLogger.Add(LogType.SavingsTransfer, LogImpact.Medium,
-            $"{session:player} moved {debited} from savings to account.");
+            $"{session:player} moved {move} from savings to account.");
     }
 
     private bool TryRefundToAccount(ICommonSession session, int amount)
