@@ -1,0 +1,36 @@
+- type: vessel
+  id: HeavensDrill
+  parent: BaseVessel
+  name: Небесный Бур
+  description: Крупный многоцелевой корабль для добычи, утилизации. Оснащён промышленным оборудованием, научным блоком, ядром ИИ. Снабжен тремя курсовыми Л-20 Аполлон.
+  price: 220000
+  category: Large
+  group: Shipyard
+  shuttlePath: /Maps/_Exodus/Shuttles/heavensdrill.yml
+  guidebookPage: null
+  class:
+  - Salvage
+  - Science
+  - Medical
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: HeavensDrill
+  mapName: 'Небесный Бур'
+  mapPath: /Maps/_Exodus/Shuttles/heavensdrill.yml
+  minPlayers: 0
+  stations:
+    HeavensDrill:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Небесный Бур{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

@@ -1,0 +1,29 @@
+# Exodus: constructed faction borg chassis variants.
+
+- type: entity
+  id: ConstructedBorgChassisSelectablePDV
+  parent: BorgChassisSelectablePDV
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: PDVCyborg
+    node: cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: RandomMetadata
+    nameSegments: [MonoPDVBorgNameset]
+
+- type: entity
+  id: ConstructedBorgChassisSelectableTSF
+  parent: BorgChassisSelectableTSF
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: TSFCyborg
+    node: cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: RandomMetadata
+    nameSegments: [MonoTSFBorgNameset]

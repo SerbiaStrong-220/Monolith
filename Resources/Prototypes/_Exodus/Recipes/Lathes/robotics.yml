@@ -1,0 +1,44 @@
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeletonColossusSecurity
+  result: CyborgEndoskeletonColossusSecurity
+  completetime: 3
+  materials:
+    Steel: 10000
+    Plasteel: 5000
+    Plastitanium: 4000
+    Plastic: 3000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 200
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeletonPDV
+  result: CyborgEndoskeletonPDV
+  completetime: 3
+  materials:
+    Steel: 10000
+    Plasteel: 5000
+    Plastitanium: 4000
+    Plastic: 3000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 200
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeletonTSF
+  result: CyborgEndoskeletonTSF
+  completetime: 3
+  materials:
+    Steel: 10000
+    Plasteel: 5000
+    Plastitanium: 4000
+    Plastic: 3000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 200
+    Diamond: 100

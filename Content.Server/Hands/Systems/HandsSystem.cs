@@ -132,7 +132,7 @@ namespace Content.Server.Hands.Systems
             if (part.Comp.Enabled
                 && _bodySystem.TryGetParentBodyPart(part, out var _, out var parentPartComp)
                 && parentPartComp.Enabled)
-                AddHand(uid, slot, location);
+                AddHand(uid, slot, location, part.Comp.InhandVisualOffset, component); // Exodus: support visual offsets for additional hands
         }
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)

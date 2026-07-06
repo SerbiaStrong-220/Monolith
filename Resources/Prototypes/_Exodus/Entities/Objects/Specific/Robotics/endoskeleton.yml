@@ -1,0 +1,41 @@
+- type: entity
+  id: CyborgEndoskeletonColossusSecurity
+  parent: CyborgEndoskeleton
+  name: colossus security cyborg endoskeleton
+  description: A reinforced cyborg frame configured for assembling a Colossus-Central security cyborg.
+  components:
+  - type: Construction
+    graph: ColossusSecurityCyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot
+
+- type: entity
+  id: CyborgEndoskeletonPDV
+  parent: CyborgEndoskeleton
+  name: PDV cyborg endoskeleton
+  description: A cyborg frame configured for assembling a PDV cyborg.
+  components:
+  - type: Construction
+    graph: PDVCyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot
+
+- type: entity
+  id: CyborgEndoskeletonTSF
+  parent: CyborgEndoskeleton
+  name: TSF cyborg endoskeleton
+  description: A cyborg frame configured for assembling a TSF cyborg.
+  components:
+  - type: Construction
+    graph: TSFCyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot

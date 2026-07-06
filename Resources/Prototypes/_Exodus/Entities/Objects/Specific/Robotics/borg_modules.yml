@@ -34,3 +34,90 @@
     - PinpointerAsakimBrain
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
+
+- type: entity
+  id: BorgModuleColossusSecurity
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: colossus security cyborg module
+  description: A law-enforcement module with a Lawbringer, stun baton, and a handcuff storage slot.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+  - type: Tag
+    tags:
+    - BorgModuleColossus
+  - type: ItemBorgModule
+    moduleId: ColossusSecurity
+    items:
+    - WeaponEnergyGunLawbringer
+    - CyborgStunbaton
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
+  - type: DroppableBorgModule
+    moduleId: ColossusSecurity
+    items:
+    - id: Handcuffs
+      whitelist:
+        tags:
+        - Handcuffs
+
+- type: entity
+  id: BorgModuleColossusField
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: colossus field cyborg module
+  description: A module that comes with an energy shotgun and a force field projector.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+  - type: Tag
+    tags:
+    - BorgModuleColossus
+  - type: ItemBorgModule
+    moduleId: ColossusField
+    items:
+    - WeaponEnergyShotgunBorg
+    - HoloprojectorFieldColossusBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
+
+- type: entity
+  id: BorgModuleColossusBreaching
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: colossus breaching cyborg module
+  description: A module that comes with a cyborg-adapted breaching hammer.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-construction
+  - type: Tag
+    tags:
+    - BorgModuleColossus
+  - type: ItemBorgModule
+    moduleId: ColossusBreaching
+    items:
+    - SecBreachingHammerBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
+
+- type: entity
+  id: BorgModuleColossusCombat
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: colossus combat cyborg module
+  description: A heavy combat module with a self-loading Anaconda and a high-frequency katana.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+  - type: Tag
+    tags:
+    - BorgModuleColossus
+  - type: ItemBorgModule
+    moduleId: ColossusCombat
+    items:
+    - WeaponPistolAnaconda
+    - WeaponHFKatana
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }

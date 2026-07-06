@@ -14,6 +14,10 @@ ent-SpawnAsakimRedactedBorgNoTimelock = { ent-SpawnAsakimRedactedBorg }
     .desc = { ent-MarkerBase.desc }
     .suffix = Asakim, ADS, No Timelock
 
+ent-SpawnBorgColossusSecurity = colossus security borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Colossus, Security Borg
+
 ent-SpawnAiRemoteBorgBattery = AI remote borg spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = NT

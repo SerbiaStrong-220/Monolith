@@ -14,6 +14,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private MarkingManager _markingManager = default!;
+    [Dependency] private SpriteSystem _spriteSystem = default!; // Exodus: humanoid base layer offsets
 
     public override void Initialize()
     {
@@ -100,6 +101,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         if (proto.BaseSprite != null)
             sprite.LayerSetSprite(layerIndex, proto.BaseSprite);
+
+        _spriteSystem.LayerSetOffset((sprite.Owner, sprite), layerIndex, proto.Offset); // Exodus: humanoid base layer offsets
     }
 
     /// <summary>

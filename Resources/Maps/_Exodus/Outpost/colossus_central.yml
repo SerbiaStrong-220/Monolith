@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 05/10/2026 21:27:34
-  entityCount: 10727
+  entityCount: 10728
 maps:
 - 1
 grids:
@@ -61971,6 +61971,8 @@ entities:
     - type: Transform
       pos: -34.5,41.5
       parent: 2
+- proto: SpawnPointColossusSecurityBorg
+  entities:
   - uid: 8328
     components:
     - type: Transform
@@ -77118,5 +77120,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -27.583374,7.87181
+      parent: 2
+- proto: TechDiskColossusSecurityBorgEndoskeleton
+  entities:
+  - uid: 10728
+    components:
+    - type: Transform
+      pos: -13.5,75.5
       parent: 2
 ...
