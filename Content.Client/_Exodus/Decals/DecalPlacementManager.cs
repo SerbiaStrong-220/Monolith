@@ -1,29 +1,96 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared._Exodus.CCVar;
+using Content.Shared.Decals;
 using Robust.Shared.Configuration;
 
 namespace Content.Client._Exodus.Decals;
-public interface IDecalFavoritesManager
+
+public interface IDecalPlacementManager
 {
-    /// <summary>Raised whenever the favorites list changes, so open windows can refresh.</summary>
+    bool EyedropperActive { get; }
+
+    bool Stamping { get; }
+
+    IReadOnlyList<(Vector2 Offset, Decal Decal)> Stamp { get; }
+
+    event Action<Color>? EyedropperColorPicked;
+
+    event Action<Decal>? DecalCopied;
+
+    void SetActive(bool active);
+
+    void SetEyedropper(bool active);
+
+    void BeginStamp(IReadOnlyList<(Vector2 Offset, Decal Decal)> stamp);
+
+    void ClearStamp();
+
+    void NotifyEyedropperColorPicked(Color color);
+
+    void NotifyDecalCopied(Decal decal);
+
     event Action? FavoritesChanged;
 
     IReadOnlyList<Color> Colors { get; }
 
     bool Contains(Color color);
 
-    /// <summary>Adds the color, or removes it if already a favorite. Returns true if it was added.</summary>
     bool Toggle(Color color);
 }
 
-public sealed class DecalFavoritesManager : IDecalFavoritesManager
+public sealed class DecalPlacementManager : IDecalPlacementManager
 {
     [Dependency] private IConfigurationManager _cfg = default!;
+
+    private readonly List<(Vector2 Offset, Decal Decal)> _stamp = new();
+    private bool _active;
+    private bool _eyedropper;
+    private bool _stamping;
 
     private readonly List<Color> _colors = new();
     private bool _loaded;
 
+    public bool EyedropperActive => _eyedropper;
+    public bool Stamping => _stamping && _stamp.Count > 0;
+    public IReadOnlyList<(Vector2 Offset, Decal Decal)> Stamp => _stamp;
+
+    public event Action<Color>? EyedropperColorPicked;
+    public event Action<Decal>? DecalCopied;
     public event Action? FavoritesChanged;
+
+    public void SetActive(bool active)
+    {
+        _active = active;
+        _eyedropper = false;
+        ClearStamp();
+    }
+
+    public void SetEyedropper(bool active)
+    {
+        _eyedropper = active && _active;
+
+        if (_eyedropper)
+            ClearStamp();
+    }
+
+    public void BeginStamp(IReadOnlyList<(Vector2 Offset, Decal Decal)> stamp)
+    {
+        _eyedropper = false;
+        _stamp.Clear();
+        _stamp.AddRange(stamp);
+        _stamping = _stamp.Count > 0;
+    }
+
+    public void ClearStamp()
+    {
+        _stamping = false;
+        _stamp.Clear();
+    }
+
+    public void NotifyEyedropperColorPicked(Color color) => EyedropperColorPicked?.Invoke(color);
+
+    public void NotifyDecalCopied(Decal decal) => DecalCopied?.Invoke(decal);
 
     public IReadOnlyList<Color> Colors
     {
@@ -51,7 +118,6 @@ public sealed class DecalFavoritesManager : IDecalFavoritesManager
         return true;
     }
 
-    /// <summary>Removes the color if present. Returns true if something was removed.</summary>
     private bool Remove(Color color)
     {
         var index = _colors.FindIndex(c => SameColor(c, color));

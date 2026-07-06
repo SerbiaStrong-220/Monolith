@@ -14,7 +14,7 @@ public sealed partial class PaletteColorPicker : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
-    [Dependency] private IDecalFavoritesManager _favorites = default!; // Exodus
+    [Dependency] private IDecalPlacementManager _favorites = default!; // Exodus
 
     private readonly TextureResource _tex;
 

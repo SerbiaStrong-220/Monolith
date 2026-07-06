@@ -73,10 +73,7 @@ namespace Content.Client.IoC
             collection.Register<MonoCoinsManager>(); // Mono
             collection.Register<SavingsTransferManager>(); // Exodus
 
-            // Exodus-Start
-            collection.Register<IDecalToolManager, DecalToolManager>();
-            collection.Register<IDecalFavoritesManager, DecalFavoritesManager>();
-            // Exodus-End
+            collection.Register<IDecalPlacementManager, DecalPlacementManager>(); // Exodus
 
             collection.Register<SponsorsManager>(); // Corvax-Sponsors
             collection.Register<JoinQueueManager>(); // Corvax-Queue

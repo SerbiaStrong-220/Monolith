@@ -28,7 +28,7 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private IDecalToolManager _tool = default!; // Exodus
+    [Dependency] private IDecalPlacementManager _tool = default!; // Exodus
 
     private string? _decalId;
     private Color _decalColor = Color.White;

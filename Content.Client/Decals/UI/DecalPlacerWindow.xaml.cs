@@ -18,8 +18,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IEntityManager _e = default!;
-    [Dependency] private IDecalToolManager _tool = default!; // Exodus
-    [Dependency] private IDecalFavoritesManager _favorites = default!; // Exodus
+    [Dependency] private IDecalPlacementManager _placement = default!; // Exodus
 
     private readonly DecalPlacementSystem _decalPlacementSystem;
 
@@ -62,17 +61,17 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         ColorPicker.OnColorChanged += OnColorPicked;
 
         // Exodus-Start
-        EyedropperButton.OnPressed += _ => _tool.SetEyedropper(!_tool.EyedropperActive);
-        _tool.EyedropperColorPicked += OnEyedropperColorPicked;
-        _tool.DecalCopied += OnDecalCopied; // "O" copy hotkey
+        EyedropperButton.OnPressed += _ => _placement.SetEyedropper(!_placement.EyedropperActive);
+        _placement.EyedropperColorPicked += OnEyedropperColorPicked;
+        _placement.DecalCopied += OnDecalCopied; // "O" copy hotkey
 
         // Star toggles the current color in/out of favorites, keep it lit when the color matches.
         FavoriteButton.OnPressed += _ =>
         {
-            _favorites.Toggle(_color);
+            _placement.Toggle(_color);
             UpdateFavoriteStar();
         };
-        _favorites.FavoritesChanged += UpdateFavoriteStar;
+        _placement.FavoritesChanged += UpdateFavoriteStar;
         UpdateFavoriteStar();
         // Exodus-End
 
@@ -150,7 +149,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         if (Disposed)
             return;
 
-        var saved = _favorites.Contains(_color);
+        var saved = _placement.Contains(_color);
         FavoriteButton.Text = Loc.GetString(saved ? FavoriteSavedLabel : FavoriteUnsavedLabel);
         FavoriteButton.Modulate = saved ? Color.Gold : Color.White;
     }
@@ -318,9 +317,9 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         base.Dispose(disposing);
         if (disposing)
         {
-            _tool.EyedropperColorPicked -= OnEyedropperColorPicked;
-            _tool.DecalCopied -= OnDecalCopied;
-            _favorites.FavoritesChanged -= UpdateFavoriteStar;
+            _placement.EyedropperColorPicked -= OnEyedropperColorPicked;
+            _placement.DecalCopied -= OnDecalCopied;
+            _placement.FavoritesChanged -= UpdateFavoriteStar;
             _picker?.Dispose();
         }
     }

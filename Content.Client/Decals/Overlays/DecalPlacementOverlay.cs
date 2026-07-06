@@ -16,7 +16,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IPrototypeManager _protoMan = default!; // Exodus
-    [Dependency] private IDecalToolManager _tool = default!; // Exodus
+    [Dependency] private IDecalPlacementManager _tool = default!; // Exodus
     private readonly DecalPlacementSystem _placement;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
