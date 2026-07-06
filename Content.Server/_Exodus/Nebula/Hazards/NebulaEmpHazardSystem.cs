@@ -414,12 +414,18 @@ public sealed partial class NebulaEmpHazardSystem : EntitySystem
     private readonly struct PulseNebulaTarget
     {
         private readonly NebulaShape _shape;
+        private readonly float _shapeRotationCos;
+        private readonly float _shapeRotationSin;
+        private readonly float _shapeBoundingRadiusSquared;
         private readonly WorldEndZone _zone;
         private readonly bool _isWorldEnd;
 
         private PulseNebulaTarget(NebulaShape shape)
         {
             _shape = shape;
+            _shapeRotationCos = MathF.Cos(shape.Rotation);
+            _shapeRotationSin = MathF.Sin(shape.Rotation);
+            _shapeBoundingRadiusSquared = shape.BoundingRadius * shape.BoundingRadius;
             _zone = default;
             _isWorldEnd = false;
         }
@@ -427,6 +433,9 @@ public sealed partial class NebulaEmpHazardSystem : EntitySystem
         private PulseNebulaTarget(WorldEndZone zone)
         {
             _shape = default;
+            _shapeRotationCos = 0f;
+            _shapeRotationSin = 0f;
+            _shapeBoundingRadiusSquared = 0f;
             _zone = zone;
             _isWorldEnd = true;
         }
@@ -447,10 +456,17 @@ public sealed partial class NebulaEmpHazardSystem : EntitySystem
                 return mapComponent.WorldEnd.TryGetZone(position, out var zone) && zone == _zone;
 
             var delta = position - _shape.Center;
-            if (delta.LengthSquared() > _shape.BoundingRadius * _shape.BoundingRadius)
+            if (delta.LengthSquared() > _shapeBoundingRadiusSquared)
                 return false;
 
-            return _shape.Contains(position);
+            var px = delta.X * _shapeRotationCos + delta.Y * _shapeRotationSin;
+            var py = -delta.X * _shapeRotationSin + delta.Y * _shapeRotationCos;
+            var ex = px / _shape.Stretch;
+            var ey = py * _shape.Stretch;
+            var theta = MathF.Atan2(ey, ex);
+            var radius = _shape.GetRadius(theta);
+
+            return radius > 0f && ex * ex + ey * ey <= radius * radius;
         }
     }
 
