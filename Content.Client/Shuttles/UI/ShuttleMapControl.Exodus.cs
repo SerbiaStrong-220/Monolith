@@ -42,15 +42,22 @@ public sealed partial class ShuttleMapControl
 
     private void DrawMapObjectLabel(DrawingHandleScreen handle, Vector2 position, string text, Color color)
     {
-        var lines = text.Split('\n');
+        var remaining = text.AsSpan();
         var y = 0f;
 
-        foreach (var line in lines)
+        while (true)
         {
+            var lineEnd = remaining.IndexOf('\n');
+            var line = lineEnd >= 0 ? remaining[..lineEnd] : remaining;
             var dimensions = handle.GetDimensions(_font, line, 1f);
             var offset = new Vector2(-dimensions.X / 2f, y + dimensions.Y * UIScale);
-            handle.DrawString(_font, position + offset, line, color);
+            handle.DrawString(_font, position + offset, line, 1f, color);
             y += dimensions.Y * UIScale;
+
+            if (lineEnd < 0)
+                break;
+
+            remaining = remaining[(lineEnd + 1)..];
         }
     }
 

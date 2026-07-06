@@ -1258,6 +1258,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (config.Points == null || config.Points.Count < 3)
             return;
 
+        var rotation = (float) -worldRotation.Theta;
+        var cos = MathF.Cos(rotation);
+        var sin = MathF.Sin(rotation);
+
         if (config.InvertFill && config.OuterFillRadius > 0f)
         {
             var n = config.Points.Count;
@@ -1271,8 +1275,9 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 var theta = MathF.Tau * k / n;
                 // Exodus nebula-radar-visualization: rotate outer ring endpoints into the same frame as the inner contour;
                 // otherwise the triangle strip skews and shows diagonal fill stripes when the radar rotates with the shuttle.
-                var outerPoint = (-worldRotation).RotateVec(new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta)));
-                var innerPoint = (-worldRotation).RotateVec(config.Points[k]);
+                var rawOuter = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta));
+                var outerPoint = RotateNebulaPoint(rawOuter, cos, sin);
+                var innerPoint = RotateNebulaPoint(config.Points[k], cos, sin);
 
                 if (config.RespectZoom)
                 {
@@ -1296,7 +1301,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
             for (var i = 0; i < config.Points.Count; i++)
             {
-                var point = (-worldRotation).RotateVec(config.Points[i]);
+                var point = RotateNebulaPoint(config.Points[i], cos, sin);
                 if (config.RespectZoom)
                     point *= MinimapScale;
 
@@ -1314,7 +1319,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         for (var i = 0; i < config.Points.Count; i++)
         {
-            var point = (-worldRotation).RotateVec(config.Points[i]);
+            var point = RotateNebulaPoint(config.Points[i], cos, sin);
             if (config.RespectZoom)
                 point *= MinimapScale;
 
@@ -1323,6 +1328,13 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
         _nebulaLineBuffer[lineCount - 1] = _nebulaLineBuffer[0];
         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_nebulaLineBuffer, 0, lineCount), color.WithAlpha(0.9f));
+    }
+
+    private static Vector2 RotateNebulaPoint(Vector2 point, float cos, float sin)
+    {
+        return new Vector2(
+            point.X * cos - point.Y * sin,
+            point.X * sin + point.Y * cos);
     }
 
     private void DrawRing(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
