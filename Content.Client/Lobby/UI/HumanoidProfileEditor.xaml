@@ -45,6 +45,18 @@
                 </BoxContainer>
             </BoxContainer>
             <Control MinHeight="10" />
+            <!-- Exodus-Start -->
+            <!-- savings button, sits at the left just above the tab strip -->
+            <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
+                <Button Name="SavingsButton">
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextureRect Name="SavingsIcon" Stretch="KeepAspect"
+                                     SetSize="32 32" VerticalAlignment="Center" Margin="0 0 6 0" />
+                        <Label Text="{Loc 'humanoid-profile-editor-savings-button'}" VerticalAlignment="Center" />
+                    </BoxContainer>
+                </Button>
+            </BoxContainer>
+            <!-- Exodus-End -->
             <!-- tabContainer -->
             <TabContainer Name="TabContainer" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical">

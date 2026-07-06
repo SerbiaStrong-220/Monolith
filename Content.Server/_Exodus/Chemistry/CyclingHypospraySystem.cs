@@ -14,10 +14,10 @@ namespace Content.Server._Exodus.Chemistry;
 
 public sealed class CyclingHypospraySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly ReagentAutoRechargeSystem _reagentAutoRecharge = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private ReagentAutoRechargeSystem _reagentAutoRecharge = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
 
     public override void Initialize()
     {

@@ -5,10 +5,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Silicons.Borgs;
 
-public sealed class BorgModuleStackRechargerSystem : EntitySystem
+public sealed partial class BorgModuleStackRechargerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private StackSystem _stack = default!;
 
     public override void Update(float frameTime)
     {

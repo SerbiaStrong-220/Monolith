@@ -7,7 +7,7 @@ namespace Content.Shared._Exodus.Stealth.Systems;
 
 public sealed partial class InstantStealthSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStealthSystem _stealthSystem = default!;
+    [Dependency] private SharedStealthSystem _stealthSystem = default!;
 
     public override void Initialize()
     {

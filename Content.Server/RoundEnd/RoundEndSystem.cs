@@ -71,7 +71,7 @@ namespace Content.Server.RoundEnd
             SetAutoCallTime();
 
             // Exodus
-            _cfg.OnValueChanged(XCVars.EmergencyShuttleCountdown, val => CountdownDuration = TimeSpan.FromMinutes(val), true);
+            _cfg.OnValueChanged(EXCVars.EmergencyShuttleCountdown, val => CountdownDuration = TimeSpan.FromMinutes(val), true);
         }
 
         private void SetAutoCallTime()
