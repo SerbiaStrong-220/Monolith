@@ -121,14 +121,22 @@ public sealed partial class RadarBlipsSystem : EntitySystem
 
             var config = _configPalette[blip.ConfigIndex];
             var rotation = blip.Rotation;
-            // hijack our shape if we're on a grid and we want to do that
-            if (_map.TryFindGridAt(predictedMap, out var grid, out _) && grid != EntityUid.Invalid)
+            EntityUid? maybeGrid = null;
+
+            // Exodus mass-scanner-perf: static map overlays don't need grid lookups.
+            if (config.Shape is not RadarBlipShape.NebulaPolygon and not RadarBlipShape.TerritoryCircle)
             {
-                if (blip.OnGridConfigIndex is { } gridIdx)
-                    config = _configPalette[gridIdx];
-                rotation += Transform(grid).LocalRotation;
+                var grid = EntityUid.Invalid;
+                // hijack our shape if we're on a grid and we want to do that
+                if (_map.TryFindGridAt(predictedMap, out grid, out _) && grid != EntityUid.Invalid)
+                {
+                    if (blip.OnGridConfigIndex is { } gridIdx)
+                        config = _configPalette[gridIdx];
+                    rotation += Transform(grid).LocalRotation;
+                }
+
+                maybeGrid = grid != EntityUid.Invalid ? grid : null;
             }
-            var maybeGrid = grid != EntityUid.Invalid ? grid : (EntityUid?)null;
 
             _cachedBlipData.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config));
         }
@@ -163,15 +171,23 @@ public sealed partial class RadarBlipsSystem : EntitySystem
 
             var config = palette[blip.ConfigIndex];
             var rotation = blip.Rotation;
-            if (_map.TryFindGridAt(predictedMap, out var grid, out _) && grid != EntityUid.Invalid)
-            {
-                if (blip.OnGridConfigIndex is { } gridIdx && gridIdx < palette.Count)
-                    config = palette[gridIdx];
+            EntityUid? maybeGrid = null;
 
-                rotation += Transform(grid).LocalRotation;
+            // Exodus mass-scanner-perf: static map overlays don't need grid lookups.
+            if (config.Shape is not RadarBlipShape.NebulaPolygon and not RadarBlipShape.TerritoryCircle)
+            {
+                var grid = EntityUid.Invalid;
+                if (_map.TryFindGridAt(predictedMap, out grid, out _) && grid != EntityUid.Invalid)
+                {
+                    if (blip.OnGridConfigIndex is { } gridIdx && gridIdx < palette.Count)
+                        config = palette[gridIdx];
+
+                    rotation += Transform(grid).LocalRotation;
+                }
+
+                maybeGrid = grid != EntityUid.Invalid ? grid : null;
             }
 
-            var maybeGrid = grid != EntityUid.Invalid ? grid : (EntityUid?) null;
             target.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config));
         }
     }

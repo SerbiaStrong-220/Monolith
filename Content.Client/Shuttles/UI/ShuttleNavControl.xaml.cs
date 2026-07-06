@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client._Exodus.NPC; // Exodus - faction AI radar label
 using Content.Client._Exodus.Territory; // Exodus - territory POI colors
@@ -83,6 +82,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private Vector2[] _nebulaLineBuffer = [];
     // Exodus-end
 
+    // Exodus-begin mass-scanner-perf
+    private Vector2[] _radarPosVerts = new Vector2[RadarPosVertsCache.Length];
+    private Vector2[] _shapeDrawBuffer = new Vector2[97];
+    // Exodus-end
+
     // Exodus-begin territory-marker
     /// <summary>
     /// World-space repeat distance (in meters) for the diagonal repeated faction label pattern inside territory rings.
@@ -95,6 +99,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private const float TerritoryTextFullDiagMultiplier = 7f;
     private const float TerritoryTextFadeOutViewDiagMultiplier = 0.9f;
     private const float TerritoryTextHiddenViewDiagMultiplier = 1.35f;
+    private readonly Dictionary<string, string> _territoryLabelCache = new(); // Exodus mass-scanner-perf
     // Exodus-end
     // Exodus-begin dock-label-fade
     private const float DockLabelFadeOutWorldRange = 250f;
@@ -694,14 +699,13 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         // Draw radar position on the station
-        // Mono - use precalculated verts and scale each point rather than allocating a fresh array
-        var radarPosVerts = new Vector2[RadarPosVertsCache.Length];
-        for (var i = 0; i < radarPosVerts.Length; i++)
+        // Exodus mass-scanner-perf: reuse verts buffer instead of allocating each frame.
+        for (var i = 0; i < _radarPosVerts.Length; i++)
         {
-            radarPosVerts[i] = ScalePosition(RadarPosVertsCache[i]);
+            _radarPosVerts[i] = ScalePosition(RadarPosVertsCache[i]);
         }
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, radarPosVerts, Color.Lime);
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _radarPosVerts, Color.Lime);
 
         var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(mapPos.Position), worldRot, mapPos.Position);
         var viewAABB = viewBounds.CalcBoundingBox();
@@ -833,8 +837,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     #region Mono
 
                     // Why are the magic numbers 0.9 and 0.7 used? I have no fucking clue.
-                    var lines = labelText.Split('\n'); // Exodus - faction AI radar label
-                    var labelDimensions = GetMultilineLabelDimensions(handle, lines, 0.9f); // Exodus - faction AI radar label
+                    var labelDimensions = GetMultilineLabelDimensions(handle, labelText.AsSpan(), 0.9f); // Exodus - faction AI radar label
                     var blipSize = RadarBlipSize * 0.7f;
 
                     // The center of the radar in UI space.
@@ -847,20 +850,13 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                     var labelPosition = uiPosition + new Vector2(-labelDimensions.X - blipSize, -labelDimensions.Y * 0.5f) - uiCenter;
 
                     // The bounds corners of the label, relative to labelPosition.
-                    var labelCorners = new Vector2[] {
-                        labelPosition,
-                        labelPosition + new Vector2(labelDimensions.X, 0),
-                        labelPosition + new Vector2(0, labelDimensions.Y),
-                        labelPosition + labelDimensions
-                    };
-
                     // The radius and squared radius of the radar, in virtual pixels.
                     var radius = Width * 0.5f;
                     var squaredRadius = radius * radius;
 
                     // If true, flip the entire label to the right side of the blip and left-align it.
                     // We default to the label being on the left side of the blip because it looked better to me in testing. (arbitrary)
-                    var flipLabel = isOnLeftSide && labelCorners.Any(corner => corner.LengthSquared() > squaredRadius);
+                    var flipLabel = isOnLeftSide && LabelExtendsBeyondRadar(labelPosition, labelDimensions, squaredRadius); // Exodus mass-scanner-perf
 
                     // Calculate unscaled offsets.
                     var labelOffset = new Vector2()
@@ -885,7 +881,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                         }
                     }
 
-                    DrawMultilineLabel(handle, uiPosition, labelOffset, lines, UIScale * 0.9f, displayColor); // Exodus - faction AI radar label
+                    DrawMultilineLabel(handle, uiPosition, labelOffset, labelText.AsSpan(), UIScale * 0.9f, displayColor); // Exodus - faction AI radar label
 
                     if (isMouseOver && !HideCoords)
                     {
@@ -1051,22 +1047,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             }
 
             // Exodus-begin nebula-radar-visualization
-            // RespectZoom blips can be huge; cull against their screen-space bounds, not only their center.
-            var blipViewBounds = monoViewBounds;
-            if (blip.Config.RespectZoom)
-            {
-                var maxOffset = MathF.Max(
-                    MathF.Max(box.TopLeft.Length(), box.TopRight.Length()),
-                    MathF.Max(box.BottomLeft.Length(), box.BottomRight.Length()));
-                blipViewBounds = blipViewBounds.Enlarged(maxOffset);
-            }
+            if (!BlipIntersectsView(position, blip.Config, monoViewBounds))
+                continue;
             // Exodus-end
 
-            // Check if this blip is within view bounds before drawing
-            if (blipViewBounds.Contains(position)) // Exodus nebula-radar-visualization
-            {
-                DrawBlipShape(handle, position, box, color, blip.Config, worldRot); // Exodus nebula-radar-visualization
-            }
+            DrawBlipShape(handle, position, box, color, blip.Config, worldRot); // Exodus nebula-radar-visualization
         }
 
         // Draw hitscan lines from the radar blips system
@@ -1135,35 +1120,98 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         return FactionAiControlLabelHelper.AppendToLabel(labelText, control, _prototype);
     }
 
-    private Vector2 GetMultilineLabelDimensions(DrawingHandleScreen handle, string[] lines, float scale)
+    // Exodus mass-scanner-perf: span-based multiline sizing avoids Split allocations.
+    private Vector2 GetMultilineLabelDimensions(DrawingHandleScreen handle, ReadOnlySpan<char> text, float scale)
     {
         var dimensions = Vector2.Zero;
+        var remaining = text;
 
-        foreach (var line in lines)
+        while (true)
         {
+            var lineEnd = remaining.IndexOf('\n');
+            var line = lineEnd >= 0 ? remaining[..lineEnd] : remaining;
             var lineDimensions = handle.GetDimensions(Font, line, scale);
             dimensions.X = MathF.Max(dimensions.X, lineDimensions.X);
             dimensions.Y += lineDimensions.Y;
+
+            if (lineEnd < 0)
+                break;
+
+            remaining = remaining[(lineEnd + 1)..];
         }
 
         return dimensions;
     }
 
+    // Exodus mass-scanner-perf: span-based multiline draw avoids Split allocations.
     private void DrawMultilineLabel(
         DrawingHandleScreen handle,
         Vector2 uiPosition,
         Vector2 labelOffset,
-        string[] lines,
+        ReadOnlySpan<char> text,
         float scale,
         Color color)
     {
         var y = labelOffset.Y;
+        var remaining = text;
 
-        foreach (var line in lines)
+        while (true)
         {
+            var lineEnd = remaining.IndexOf('\n');
+            var line = lineEnd >= 0 ? remaining[..lineEnd] : remaining;
             handle.DrawString(Font, (uiPosition + new Vector2(labelOffset.X, y)) * UIScale, line, scale, color);
             y += handle.GetDimensions(Font, line, 0.9f).Y;
+
+            if (lineEnd < 0)
+                break;
+
+            remaining = remaining[(lineEnd + 1)..];
         }
+    }
+
+    // Exodus-end
+
+    // Exodus-begin mass-scanner-perf
+    private static bool LabelExtendsBeyondRadar(Vector2 labelPosition, Vector2 labelDimensions, float squaredRadius)
+    {
+        return labelPosition.LengthSquared() > squaredRadius
+            || (labelPosition + new Vector2(labelDimensions.X, 0)).LengthSquared() > squaredRadius
+            || (labelPosition + new Vector2(0, labelDimensions.Y)).LengthSquared() > squaredRadius
+            || (labelPosition + labelDimensions).LengthSquared() > squaredRadius;
+    }
+
+    private bool BlipIntersectsView(Vector2 position, BlipConfig config, Box2 viewBounds)
+    {
+        var extent = GetBlipScreenExtent(config);
+        return extent <= 0f || CircleIntersectsBox(position, extent, viewBounds);
+    }
+
+    private float GetBlipScreenExtent(BlipConfig config)
+    {
+        if (config.Shape == RadarBlipShape.NebulaPolygon && config.Points is { Count: >= 3 })
+        {
+            var extent = 0f;
+
+            foreach (var point in config.Points)
+            {
+                var scaled = config.RespectZoom ? point * MinimapScale : point;
+                extent = MathF.Max(extent, scaled.Length());
+            }
+
+            if (config.InvertFill && config.OuterFillRadius > 0f)
+            {
+                var outer = config.RespectZoom ? config.OuterFillRadius * MinimapScale : config.OuterFillRadius;
+                extent = MathF.Max(extent, outer);
+            }
+
+            return extent;
+        }
+
+        var bounds = config.Bounds;
+        if (config.RespectZoom)
+            bounds = new Box2(bounds.BottomLeft * MinimapScale, bounds.TopRight * MinimapScale);
+
+        return bounds.MaxDimension * 0.5f;
     }
     // Exodus-end
 
@@ -1234,10 +1282,12 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
     }
 
+    // Exodus mass-scanner-perf: reuse shape buffer instead of allocating per blip draw.
     private void DrawCircle(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {
         const int segments = 64;
-        var buffer = new Vector2[segments + 1];
+        var count = segments + 1;
+        EnsureShapeDrawBuffer(count);
         var size = GetSize(bounds);
         var offsetPos = position + size.Offset;
 
@@ -1246,10 +1296,17 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             var angle = i * MathF.Tau / segments;
             var pos = size.Left * MathF.Sin(angle) + size.Top * MathF.Cos(angle);
 
-            buffer[i] = offsetPos + pos;
+            _shapeDrawBuffer[i] = offsetPos + pos;
         }
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, buffer, color);
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, new Span<Vector2>(_shapeDrawBuffer, 0, count), color);
+    }
+
+    // Exodus mass-scanner-perf
+    private void EnsureShapeDrawBuffer(int count)
+    {
+        if (_shapeDrawBuffer.Length < count)
+            _shapeDrawBuffer = new Vector2[count];
     }
 
     // Exodus-begin nebula-radar-visualization
@@ -1269,13 +1326,16 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (_nebulaFillBuffer.Length < ringCount)
                 _nebulaFillBuffer = new Vector2[ringCount];
 
+            var viewBounds = new Box2(-3f, -3f, Size.X + 3f, Size.Y + 3f);
+            var drawOuterRadius = GetInvertDrawOuterRadius(config, position, viewBounds);
+
             for (var i = 0; i <= n; i++)
             {
                 var k = i % n;
                 var theta = MathF.Tau * k / n;
                 // Exodus nebula-radar-visualization: rotate outer ring endpoints into the same frame as the inner contour;
                 // otherwise the triangle strip skews and shows diagonal fill stripes when the radar rotates with the shuttle.
-                var rawOuter = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta));
+                var rawOuter = new Vector2(drawOuterRadius * MathF.Cos(theta), drawOuterRadius * MathF.Sin(theta));
                 var outerPoint = RotateNebulaPoint(rawOuter, cos, sin);
                 var innerPoint = RotateNebulaPoint(config.Points[k], cos, sin);
 
@@ -1291,7 +1351,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
             handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, new Span<Vector2>(_nebulaFillBuffer, 0, ringCount), color.WithAlpha(NebulaFillAlpha));
         }
-        else
+        else if (!config.InvertFill)
         {
             var fillCount = config.Points.Count + 2;
             if (_nebulaFillBuffer.Length < fillCount)
@@ -1337,10 +1397,34 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             point.X * sin + point.Y * cos);
     }
 
+    // Exodus mass-scanner-perf: clamp huge world-space outer radii to viewport coverage so death-zone fill stays visible.
+    private float GetInvertDrawOuterRadius(BlipConfig config, Vector2 position, Box2 viewBounds)
+    {
+        var maxCornerDist = 0f;
+        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Left, viewBounds.Top) - position).Length());
+        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Right, viewBounds.Top) - position).Length());
+        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Left, viewBounds.Bottom) - position).Length());
+        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Right, viewBounds.Bottom) - position).Length());
+
+        var neededScreenOuter = maxCornerDist * 1.05f;
+        var configScreenOuter = config.RespectZoom
+            ? config.OuterFillRadius * MinimapScale
+            : config.OuterFillRadius;
+
+        if (configScreenOuter <= neededScreenOuter * 1.5f)
+            return config.OuterFillRadius;
+
+        return config.RespectZoom
+            ? neededScreenOuter / MinimapScale
+            : neededScreenOuter;
+    }
+
+    // Exodus mass-scanner-perf: reuse shape buffer instead of allocating per blip draw.
     private void DrawRing(DrawingHandleScreen handle, Vector2 position, Box2Rotated bounds, Color color)
     {
         const int segments = 96;
-        var buffer = new Vector2[segments + 1];
+        var count = segments + 1;
+        EnsureShapeDrawBuffer(count);
         var size = GetSize(bounds);
         var offsetPos = position + size.Offset;
 
@@ -1349,10 +1433,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             var angle = i * MathF.Tau / segments;
             var pos = size.Left * MathF.Sin(angle) + size.Top * MathF.Cos(angle);
 
-            buffer[i] = offsetPos + pos;
+            _shapeDrawBuffer[i] = offsetPos + pos;
         }
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, buffer, color);
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_shapeDrawBuffer, 0, count), color);
     }
     // Exodus-end
 
@@ -1619,7 +1703,13 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (config.Label == null)
             return;
 
-        var text = Loc.GetString(config.Label);
+        // Exodus mass-scanner-perf: cache localized territory labels across frames.
+        if (!_territoryLabelCache.TryGetValue(config.Label, out var text))
+        {
+            text = Loc.GetString(config.Label);
+            _territoryLabelCache[config.Label] = text;
+        }
+
         if (string.IsNullOrEmpty(text))
             return;
 
