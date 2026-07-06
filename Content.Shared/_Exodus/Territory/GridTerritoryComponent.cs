@@ -99,6 +99,6 @@ public sealed partial class GridTerritoryComponent : Component
     /// The entity currently providing the active claim (the anchored banner).
     /// Server-authoritative. Used to know which banner to "remove" to clear the claim.
     /// </summary>
-    [DataField, NonSerialized]
+    [DataField, AutoNetworkedField, NonSerialized]
     public EntityUid? ActiveClaimBanner = null;
 }
