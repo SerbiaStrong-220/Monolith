@@ -137,10 +137,22 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         if (left.Count != right.Count)
             return false;
 
-        var rightById = right.ToDictionary(listing => listing.ID);
         foreach (var listing in left)
         {
-            if (!rightById.TryGetValue(listing.ID, out var other) || !listing.Equals(other))
+            var found = false;
+            foreach (var other in right)
+            {
+                if (other.ID != listing.ID)
+                    continue;
+
+                if (!listing.Equals(other))
+                    return false;
+
+                found = true;
+                break;
+            }
+
+            if (!found)
                 return false;
         }
 
