@@ -7,19 +7,11 @@ public sealed partial class TerritoryPoiColorSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
 
-    private EntityQuery<GridTerritoryComponent> _territoryQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        _territoryQuery = GetEntityQuery<GridTerritoryComponent>();
-    }
-
     public bool TryGetColor(EntityUid grid, out Color color)
     {
         color = default;
 
-        if (!_territoryQuery.TryGetComponent(grid, out var territory) ||
+        if (!TryComp<GridTerritoryComponent>(grid, out var territory) ||
             territory.Radius <= 0f ||
             !territory.ColorPoiByFaction)
         {
