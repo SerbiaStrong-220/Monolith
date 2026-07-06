@@ -82,6 +82,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private EntityQuery<RequireProjectileTargetComponent> _requireTargetQuery; // Mono
     private EntityQuery<NpcFactionMemberComponent> _factionQuery; // Mono
     private EntityQuery<FactionAiControlledGridComponent> _factionAiGridQuery; // Exodus
+    private EntityQuery<FactionNpcAiCoreComponent> _factionAiCoreQuery; // Exodus
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
@@ -100,6 +101,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
         _requireTargetQuery = GetEntityQuery<RequireProjectileTargetComponent>(); // Mono
         _factionQuery = GetEntityQuery<NpcFactionMemberComponent>(); // Mono
         _factionAiGridQuery = GetEntityQuery<FactionAiControlledGridComponent>(); // Exodus
+        _factionAiCoreQuery = GetEntityQuery<FactionNpcAiCoreComponent>(); // Exodus
     }
 
     /// <summary>
@@ -562,7 +564,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 var xform = Transform(owner);
                 var ownGrid = xform.GridUid;
                 // Exodus-begin faction-aware ship NPC targeting
-                var hasFactionSource = TryGetFactionSource(owner, ownGrid, out var factionSource, out var sourceFaction);
+                var hasFactionSource = TryGetFactionSource(owner, ownGrid, out var factionSource, out var sourceFaction, out var sourceCore);
                 // Exodus-end
                 foreach (var (target, targetComp) in _lookup.GetEntitiesInRange<ShipNpcTargetComponent>(_transform.GetMapCoordinates(xform), shuttlesQuery.Range))
                 {
@@ -580,7 +582,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                     }
 
                     // Exodus-begin faction-aware ship NPC targeting
-                    if (hasFactionSource && IsFriendlyNpcTarget(factionSource, sourceFaction, target, targetGrid))
+                    if (hasFactionSource && IsFriendlyNpcTarget(factionSource, sourceFaction, sourceCore, target, targetGrid))
                         continue;
                     // Exodus-end
 
@@ -607,26 +609,38 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     }
 
     // Exodus-begin faction-aware ship NPC targeting
-    private bool IsFriendlyNpcTarget(EntityUid source, NpcFactionMemberComponent? sourceFaction, EntityUid target, EntityUid? targetGrid)
+    private bool IsFriendlyNpcTarget(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        EntityUid target,
+        EntityUid? targetGrid)
     {
         if (sourceFaction != null &&
             targetGrid != null &&
             _factionAiGridQuery.TryGetComponent(targetGrid.Value, out var control) &&
             control.State == FactionAiControlState.Controlled &&
             control.Faction is { } controlFaction &&
-            HasFriendlyFaction(source, sourceFaction, controlFaction))
+            HasFriendlyFaction(source, sourceFaction, sourceCore, controlFaction))
         {
             return true;
         }
 
-        if (_factionQuery.HasComponent(target))
-            return HasFriendlyFaction(source, sourceFaction, target);
+        if (_factionQuery.TryGetComponent(target, out var targetFaction))
+            return HasFriendlyFaction(source, sourceFaction, sourceCore, target, targetFaction);
 
-        return targetGrid != null && HasFriendlyFaction(source, sourceFaction, targetGrid.Value);
+        return targetGrid != null && HasFriendlyFaction(source, sourceFaction, sourceCore, targetGrid.Value);
     }
 
-    private bool TryGetFactionSource(EntityUid owner, EntityUid? ownerGrid, out EntityUid source, out NpcFactionMemberComponent? faction)
+    private bool TryGetFactionSource(
+        EntityUid owner,
+        EntityUid? ownerGrid,
+        out EntityUid source,
+        out NpcFactionMemberComponent? faction,
+        out FactionNpcAiCoreComponent? core)
     {
+        _factionAiCoreQuery.TryGetComponent(owner, out core);
+
         if (_factionQuery.TryGetComponent(owner, out faction))
         {
             source = owner;
@@ -641,18 +655,39 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
         source = default;
         faction = null;
+        core = null;
         return false;
     }
 
-    private bool HasFriendlyFaction(EntityUid source, NpcFactionMemberComponent? sourceFaction, EntityUid target)
+    private bool HasFriendlyFaction(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        EntityUid target)
     {
         return _factionQuery.TryGetComponent(target, out var targetFaction) &&
+               HasFriendlyFaction(source, sourceFaction, sourceCore, target, targetFaction);
+    }
+
+    private bool HasFriendlyFaction(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        EntityUid target,
+        NpcFactionMemberComponent targetFaction)
+    {
+        return (sourceCore != null && sourceCore.IgnoredFactions.Overlaps(targetFaction.Factions)) ||
                _npcFaction.IsEntityFriendly((source, sourceFaction), (target, targetFaction));
     }
 
-    private bool HasFriendlyFaction(EntityUid source, NpcFactionMemberComponent? sourceFaction, ProtoId<NpcFactionPrototype> targetFaction)
+    private bool HasFriendlyFaction(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        ProtoId<NpcFactionPrototype> targetFaction)
     {
-        return _npcFaction.IsFactionFriendlyOrSame(targetFaction, (source, sourceFaction));
+        return (sourceCore != null && sourceCore.IgnoredFactions.Contains(targetFaction)) ||
+               _npcFaction.IsFactionFriendlyOrSame(targetFaction, (source, sourceFaction));
     }
     // Exodus-end
 

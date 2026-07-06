@@ -16,6 +16,12 @@ public sealed partial class FactionNpcAiCoreComponent : Component
     public ProtoId<NpcFactionPrototype> Faction;
 
     /// <summary>
+    /// Additional factions this core treats as friendly targets for ship AI targeting.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<NpcFactionPrototype>> IgnoredFactions = new();
+
+    /// <summary>
     /// Runtime grid currently marked by this core.
     /// </summary>
     [ViewVariables]

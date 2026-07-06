@@ -57,6 +57,8 @@
   components:
   - type: FactionNpcAiCore
     faction: PirateNF
+    ignoredFactions:
+    - MD
   - type: NpcFactionMember
     factions:
     - PirateNF
@@ -87,6 +89,9 @@
   components:
   - type: FactionNpcAiCore
     faction: TSFMC
+    ignoredFactions:
+    - SecColossus
+    - MD
   - type: NpcFactionMember
     factions:
     - TSFMC
@@ -139,6 +144,9 @@
   components:
   - type: FactionNpcAiCore
     faction: USSP
+    ignoredFactions:
+    - NanoTrasen
+    - MD
   - type: NpcFactionMember
     factions:
     - USSP
