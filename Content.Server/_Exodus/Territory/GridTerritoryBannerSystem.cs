@@ -28,13 +28,9 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedMapSystem _map = default!;
 
-    private EntityQuery<MapGridComponent> _gridQuery;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _gridQuery = GetEntityQuery<MapGridComponent>();
 
         SubscribeLocalEvent<TerritoryBannerComponent, AnchorAttemptEvent>(OnAnchorAttempt);
         SubscribeLocalEvent<TerritoryBannerComponent, BeforeAnchoredEvent>(OnBeforeAnchored);
@@ -68,7 +64,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
         if (!territory.Comp.Claimable)
             return;
 
-        if (!_gridQuery.TryComp(territory.Owner, out var gridComp))
+        if (!TryComp<MapGridComponent>(territory.Owner, out var gridComp))
             return;
 
         foreach (var uid in _map.GetLocalAnchoredEntities(territory.Owner, gridComp, gridComp.LocalAABB))
@@ -307,7 +303,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
             return true;
         }
 
-        if (_gridQuery.HasComponent(xform.ParentUid))
+        if (HasComp<MapGridComponent>(xform.ParentUid))
         {
             grid = xform.ParentUid;
             return true;
