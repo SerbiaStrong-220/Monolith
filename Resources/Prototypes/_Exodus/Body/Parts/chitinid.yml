@@ -1,0 +1,51 @@
+# Exodus-restore: secondary arm pair for ChitinidExodus body.
+
+- type: entity
+  id: LeftArm2Chitinid
+  name: left chitinid lower arm
+  parent: [PartChitinidBase, BaseLeftArm]
+  components:
+  - type: Sprite
+    state: l_arm
+  - type: BodyPart
+    baseLayerId: MobChitinidLArm2
+    visualLayerOverride: LArmExtension
+    canSever: false
+
+- type: entity
+  id: RightArm2Chitinid
+  name: right chitinid lower arm
+  parent: [PartChitinidBase, BaseRightArm]
+  components:
+  - type: Sprite
+    state: r_arm
+  - type: BodyPart
+    baseLayerId: MobChitinidRArm2
+    visualLayerOverride: RArmExtension
+    canSever: false
+
+- type: entity
+  id: LeftHand2Chitinid
+  name: left chitinid lower hand
+  parent: [PartChitinidBase, BaseLeftHand]
+  components:
+  - type: Sprite
+    state: l_hand
+  - type: BodyPart
+    baseLayerId: MobChitinidLHand2
+    visualLayerOverride: LHandExtension
+    inhandVisualOffset: 0, -0.125
+    canSever: false
+
+- type: entity
+  id: RightHand2Chitinid
+  name: right chitinid lower hand
+  parent: [PartChitinidBase, BaseRightHand]
+  components:
+  - type: Sprite
+    state: r_hand
+  - type: BodyPart
+    baseLayerId: MobChitinidRHand2
+    visualLayerOverride: RHandExtension
+    inhandVisualOffset: 0, -0.125
+    canSever: false

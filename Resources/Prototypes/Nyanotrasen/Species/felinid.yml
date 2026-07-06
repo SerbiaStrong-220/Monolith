@@ -1,12 +1,16 @@
 - type: species
   id: Felinid
   name: species-name-felinid
-  roundStart: false # Mono
+  roundStart: true # Exodus-restore
   prototype: MobFelinid
   sprites: MobHumanSprites
   markingLimits: MobFelinidMarkingLimits
   dollPrototype: MobFelinidDummy
   skinColoration: HumanToned
+  maleFirstNames: NamesFelinidFirstMale # Exodus-felinid-names
+  femaleFirstNames: NamesFelinidFirstFemale # Exodus-felinid-names
+  lastNames: NamesFelinidLast # Exodus-felinid-names
+  naming: FirstLast # Exodus-felinid-names
 
 - type: markingPoints
   id: MobFelinidMarkingLimits

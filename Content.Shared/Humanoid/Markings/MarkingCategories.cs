@@ -48,6 +48,8 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.Tail => MarkingCategories.Tail,
                 HumanoidVisualLayers.RArmExtension => MarkingCategories.Arms, // Frontier: species-specific layer
                 HumanoidVisualLayers.LArmExtension => MarkingCategories.Arms, // Frontier: species-specific layer
+                HumanoidVisualLayers.LHandExtension => MarkingCategories.Arms, // Exodus: chitinid lower hands
+                HumanoidVisualLayers.RHandExtension => MarkingCategories.Arms, // Exodus: chitinid lower hands
                 _ => MarkingCategories.Overlay
             };
         }
