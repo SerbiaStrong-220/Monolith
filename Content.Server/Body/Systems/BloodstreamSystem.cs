@@ -1,4 +1,4 @@
-using Content.Shared._Exodus.Body; // Exodus
+using Content.Shared._Exodus.Body;
 using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;

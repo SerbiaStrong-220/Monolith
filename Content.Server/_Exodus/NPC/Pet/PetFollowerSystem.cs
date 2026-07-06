@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server._Exodus.NPC.Pet;
 
-public sealed class PetFollowerSystem : EntitySystem
+public sealed partial class PetFollowerSystem : EntitySystem
 {
     [Dependency] private NPCSystem _npc = default!;
 

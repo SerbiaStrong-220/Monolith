@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.NPC.Pet;
 
-public sealed class PetCapsuleSystem : EntitySystem
+public sealed partial class PetCapsuleSystem : EntitySystem
 {
     [Dependency] private PetSystem _pet = default!;
     [Dependency] private SharedMindSystem _mind = default!;
@@ -26,7 +26,7 @@ public sealed class PetCapsuleSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private IPrototypeManager _proto = default!;
 
     // One shared non-init map holds every stored pet.
@@ -56,7 +56,7 @@ public sealed class PetCapsuleSystem : EntitySystem
     {
         var amount = _material.GetMaterialAmount(ent, ent.Comp.Material);
         var cap = TryComp<MaterialStorageComponent>(ent, out var ms) ? ms.StorageLimit ?? 0 : 0;
-        var material = Loc.GetString(_proto.Index(ent.Comp.Material).Name);
+        var material = _proto.TryIndex(ent.Comp.Material, out var mat) ? Loc.GetString(mat.Name) : string.Empty;
 
         args.PushMarkup(Loc.GetString("pet-capsule-examine",
             ("material", material),
@@ -169,9 +169,9 @@ public sealed class PetCapsuleSystem : EntitySystem
         if (_storageMap is { } map && !TerminatingOrDeleted(map))
             return map;
 
-        var mapId = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(mapId, true);
-        _storageMap = _mapManager.GetMapEntityId(mapId);
-        return _storageMap.Value;
+        var mapUid = _map.CreateMap(out var mapId);
+        _map.SetPaused(mapId, true);
+        _storageMap = mapUid;
+        return mapUid;
     }
 }

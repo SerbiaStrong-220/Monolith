@@ -1,14 +1,8 @@
 # Commanders
-# CommanderA keeps the TEST-ONLY squad status light (remove before release) — see SquadStatusLightSystem.
 - type: entity
   parent: [ BaseExodusSmartCommander, MobSyndicateNavalCommanderA ]
   id: MobSyndicateNavalCommanderASmart
   suffix: Smart
-  components:
-  - type: PointLight
-    radius: 2
-    energy: 1.5
-  - type: SquadStatusLight
 
 - type: entity
   parent: [ BaseExodusSmartCommander, MobSyndicateNavalCommanderB ]
@@ -26,16 +20,10 @@
   suffix: Smart
 
 # Grenadiers
-# GrenadierA keeps the TEST-ONLY squad status light (remove before release).
 - type: entity
   parent: [ BaseExodusSmartGrenadier, MobSyndicateNavalGrenadierA ]
   id: MobSyndicateNavalGrenadierASmart
   suffix: Smart
-  components:
-  - type: PointLight
-    radius: 2
-    energy: 1.5
-  - type: SquadStatusLight
 
 - type: entity
   parent: [ BaseExodusSmartGrenadier, MobSyndicateNavalGrenadierB ]
@@ -53,16 +41,10 @@
   suffix: Smart
 
 # Medics
-# MedicA keeps the TEST-ONLY squad status light (remove before release).
 - type: entity
   parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicA ]
   id: MobSyndicateNavalMedicASmart
   suffix: Smart
-  components:
-  - type: PointLight
-    radius: 2
-    energy: 1.5
-  - type: SquadStatusLight
 
 - type: entity
   parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicB ]
@@ -85,16 +67,10 @@
   suffix: Smart
 
 # Grunts (ranged)
-# OperatorA keeps the TEST-ONLY squad status light (remove before release).
 - type: entity
   parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorA ]
   id: MobSyndicateNavalOperatorASmart
   suffix: Smart
-  components:
-  - type: PointLight
-    radius: 2
-    energy: 1.5
-  - type: SquadStatusLight
 
 - type: entity
   parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorB ]

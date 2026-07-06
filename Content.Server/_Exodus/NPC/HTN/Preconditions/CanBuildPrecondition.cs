@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server._Exodus.NPC.Abilities;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN.Preconditions;
@@ -16,6 +15,13 @@ public sealed partial class CanBuildPrecondition : HTNPrecondition
         if (!_entManager.TryGetComponent<NpcBuilderComponent>(owner, out var comp))
             return false;
 
-        return comp.Built.Count(e => !_entManager.Deleted(e)) < comp.Limit;
+        var alive = 0;
+        foreach (var e in comp.Built)
+        {
+            if (!_entManager.Deleted(e))
+                alive++;
+        }
+
+        return alive < comp.Limit;
     }
 }

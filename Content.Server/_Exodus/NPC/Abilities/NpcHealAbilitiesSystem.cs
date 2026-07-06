@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class NpcHealAbilitiesSystem : EntitySystem
+public sealed partial class NpcHealAbilitiesSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private HealOverTimeSystem _healOverTime = default!;
@@ -39,8 +39,6 @@ public sealed class NpcHealAbilitiesSystem : EntitySystem
         SubscribeLocalEvent<NpcHealAuraComponent, NpcHealAuraActionEvent>(OnAura);
     }
 
-    // Injection
-
     private void OnInjectionMapInit(Entity<NpcHealInjectionComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
@@ -61,8 +59,6 @@ public sealed class NpcHealAbilitiesSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.Sound, args.Target);
         _healOverTime.Apply(args.Target, ent.Comp.HealPerSecond, ent.Comp.Duration);
     }
-
-    // Defib (basic)
 
     private void OnReviveMapInit(Entity<NpcReviveComponent> ent, ref MapInitEvent args)
     {
@@ -86,12 +82,9 @@ public sealed class NpcHealAbilitiesSystem : EntitySystem
 
         args.Handled = true;
         _jitter.DoJitter(args.Target, ent.Comp.JitterDuration, refresh: true);
-        // Queue so heal applied after HTN updates enumeration, avoid "Collection was modified".
         _healOverTime.QueueHeal(args.Target, ent.Comp.Heal);
         _audio.PlayPvs(ent.Comp.Sound, args.Target);
     }
-
-    // Healing aura
 
     private void OnAuraMapInit(Entity<NpcHealAuraComponent> ent, ref MapInitEvent args)
     {
@@ -101,7 +94,6 @@ public sealed class NpcHealAbilitiesSystem : EntitySystem
 
     private void OnAuraShutdown(Entity<NpcHealAuraComponent> ent, ref ComponentShutdown args)
     {
-        // Clean up
         if (ent.Comp.VisualEntity is { } visual)
             QueueDel(visual);
 
@@ -155,6 +147,8 @@ public sealed class NpcHealAbilitiesSystem : EntitySystem
                 continue;
 
             comp.NextTick += comp.Interval;
+            if (comp.NextTick <= now)
+                comp.NextTick = now + comp.Interval;
             HealAura((uid, comp));
         }
     }

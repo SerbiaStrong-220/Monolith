@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
@@ -15,7 +14,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server._Exodus.NPC.Pet;
 
-public sealed class PetSystem : EntitySystem
+public sealed partial class PetSystem : EntitySystem
 {
     [Dependency] private NpcFactionSystem _faction = default!;
     [Dependency] private NPCSystem _npc = default!;
@@ -24,10 +23,6 @@ public sealed class PetSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
 
     public const string MasterKey = "PetMaster";
-
-    // What a feral (capsule-lost) pet becomes.
-    private const string FeralFaction = "SimpleHostile";
-    private const string FeralCompound = "SimpleHostileCompound";
 
     public const string MasterCoordinatesKey = "PetMasterCoordinates";
 
@@ -68,7 +63,11 @@ public sealed class PetSystem : EntitySystem
     private void BindToBody(Entity<PetComponent> pet, EntityUid body)
     {
         if (pet.Comp.Master is { } oldBody && oldBody != body && TryComp<PetMasterComponent>(oldBody, out var oldMaster))
+        {
             oldMaster.Pets.Remove(pet);
+            if (oldMaster.Pets.Count == 0 && !TerminatingOrDeleted(oldBody))
+                RemComp<PetMasterComponent>(oldBody);
+        }
 
         pet.Comp.Master = body;
         MirrorFaction(pet, body);
@@ -94,7 +93,11 @@ public sealed class PetSystem : EntitySystem
     private void OnPetShutdown(Entity<PetComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.Master is { } body && TryComp<PetMasterComponent>(body, out var bodyComp))
+        {
             bodyComp.Pets.Remove(ent);
+            if (bodyComp.Pets.Count == 0 && !TerminatingOrDeleted(body))
+                RemComp<PetMasterComponent>(body);
+        }
 
         if (ent.Comp.MasterMind is { } mind && TryComp<PetOwnerMindComponent>(mind, out var mindComp))
             mindComp.Pets.Remove(ent);
@@ -126,16 +129,18 @@ public sealed class PetSystem : EntitySystem
         if (!Resolve(pet, ref pet.Comp))
             return;
 
+        // Capture feral config before PetComponent is stripped below.
+        var feralFaction = pet.Comp.FeralFaction;
+        var feralCompound = pet.Comp.FeralCompound;
+
         RemComp<PetFollowerComponent>(pet);
         RemComp<PetWarriorComponent>(pet);
         RemComp<PetComponent>(pet);
 
         if (TryComp<NpcFactionMemberComponent>(pet, out var faction))
         {
-            foreach (var f in faction.Factions.Select(x => x.Id).ToList())
-                _faction.RemoveFaction((pet.Owner, faction), f);
-
-            _faction.AddFaction((pet.Owner, faction), FeralFaction);
+            _faction.ClearFactions((pet.Owner, faction));
+            _faction.AddFaction((pet.Owner, faction), feralFaction);
         }
 
         // Swap to kill them all tree.
@@ -144,7 +149,7 @@ public sealed class PetSystem : EntitySystem
             if (htn.Plan != null)
                 _htn.ShutdownPlan(htn);
 
-            htn.RootTask = new HTNCompoundTask { Task = FeralCompound };
+            htn.RootTask = new HTNCompoundTask { Task = feralCompound };
             _htn.Replan(htn);
         }
     }
@@ -157,8 +162,7 @@ public sealed class PetSystem : EntitySystem
 
         var petFaction = EnsureComp<NpcFactionMemberComponent>(pet);
 
-        foreach (var f in petFaction.Factions.Select(x => x.Id).ToList())
-            _faction.RemoveFaction((pet, petFaction), f);
+        _faction.ClearFactions((pet, petFaction));
 
         foreach (var f in masterFaction.Factions)
             _faction.AddFaction((pet, petFaction), f.Id);

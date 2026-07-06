@@ -2,7 +2,7 @@ using Content.Server.NPC.Systems;
 
 namespace Content.Server._Exodus.NPC.HomePoint;
 
-public sealed class HomePointSystem : EntitySystem
+public sealed partial class HomePointSystem : EntitySystem
 {
     [Dependency] private NPCSystem _npc = default!;
 

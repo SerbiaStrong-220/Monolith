@@ -4,24 +4,18 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class HealOverTimeSystem : EntitySystem
+public sealed partial class HealOverTimeSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     private readonly Queue<(EntityUid Target, FixedPoint2 Amount)> _pending = new();
 
-    /// <summary>
-    /// Queues heal to be applied next Update.
-    /// </summary>
     public void QueueHeal(EntityUid target, FixedPoint2 amount)
     {
         _pending.Enqueue((target, amount));
     }
 
-    /// <summary>
-    /// Adds or refreshes a heal-over-time buff.
-    /// </summary>
     public void Apply(EntityUid target, FixedPoint2 healPerSecond, TimeSpan duration)
     {
         var comp = EnsureComp<HealOverTimeComponent>(target);
@@ -31,9 +25,6 @@ public sealed class HealOverTimeSystem : EntitySystem
         comp.NextTick = now + comp.Interval;
     }
 
-    /// <summary>
-    /// Heals damaged entity, spread across the current damage types.
-    /// </summary>
     public void Heal(Entity<DamageableComponent?> target, FixedPoint2 amount)
     {
         if (amount <= FixedPoint2.Zero || !Resolve(target, ref target.Comp, false))
@@ -79,6 +70,8 @@ public sealed class HealOverTimeSystem : EntitySystem
                 continue;
 
             comp.NextTick += comp.Interval;
+            if (comp.NextTick <= now)
+                comp.NextTick = now + comp.Interval;
             Heal(uid, comp.HealPerSecond * (float) comp.Interval.TotalSeconds);
         }
     }

@@ -13,6 +13,12 @@ ent-ActionHealAuraNPC = Лечебные феромоны
 ent-ActionDashNPC = Рывок
     .desc = Сделать рывок.
 
+ent-ActionDetonateNPC = Подрыв
+    .desc = Взорвать себя.
+
+ent-ActionBuildNPC = Постройка
+    .desc = Возвести конструкцию.
+
 ent-ActionReviveNPC = Реанимация
     .desc = Дефибриллировать цель.
 

@@ -12,14 +12,13 @@ public sealed partial class PullOperator : HTNOperator
 
     [DataField]
     public string TargetKey = "Target";
-    
-    // This allows NPC to pull another
+
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
         _pulling = sysManager.GetEntitySystem<PullingSystem>();
     }
-    // LMAO it actually works great
+
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);

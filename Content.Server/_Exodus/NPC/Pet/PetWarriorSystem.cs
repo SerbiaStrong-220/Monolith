@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Pet;
 
-public sealed class PetWarriorSystem : EntitySystem
+public sealed partial class PetWarriorSystem : EntitySystem
 {
     [Dependency] private NpcFactionSystem _faction = default!;
     [Dependency] private IGameTiming _timing = default!;

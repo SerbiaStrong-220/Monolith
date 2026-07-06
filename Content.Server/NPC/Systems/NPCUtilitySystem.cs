@@ -554,9 +554,8 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                     if (ent.Owner == owner)
                         continue;
 
-                    // Same-faction or allied; (FriendlyFactions alone excludes our own faction - but we want healer to heal ownFaction). 
                     // probably better to include self-faction in FriendlyFactions? but im lazy clearing factions protos after that
-                    if (!_npcFaction.IsEntityFriendly(owner, ent.Owner))
+                    if (!_npcFaction.IsEntityFriendly(owner, (ent.Owner, ent.Comp)))
                         continue;
 
                     entities.Add(ent.Owner);

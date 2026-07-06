@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class NpcSelfHealSystem : EntitySystem
+public sealed partial class NpcSelfHealSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private HealOverTimeSystem _healOverTime = default!;
@@ -79,6 +79,8 @@ public sealed class NpcSelfHealSystem : EntitySystem
                 continue;
 
             comp.NextHeal += comp.HealInterval;
+            if (comp.NextHeal <= now)
+                comp.NextHeal = now + comp.HealInterval;
             var amount = FixedPoint2.Min(comp.PerTick, comp.TotalHeal - comp.Healed);
             if (amount > FixedPoint2.Zero)
             {
@@ -117,6 +119,6 @@ public sealed class NpcSelfHealSystem : EntitySystem
     private void OnShotAttempted(Entity<NpcSelfHealComponent> ent, ref ShotAttemptedEvent args)
     {
         if (ent.Comp.EndTime != null)
-            args.Cancel(); // can't shoot while active
+            args.Cancel();
     }
 }

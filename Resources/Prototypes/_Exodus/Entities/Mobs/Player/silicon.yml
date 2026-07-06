@@ -82,5 +82,6 @@
     - Binary
     defaultChannel: Binary
   - type: CommunicationsConsole
+    canShuttle: false
     title: comms-console-announcement-title-colossus-ai
     color: "#5ed7aa"

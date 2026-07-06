@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class NpcThrowSystem : EntitySystem
+public sealed partial class NpcThrowSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private ThrowingSystem _throwing = default!;

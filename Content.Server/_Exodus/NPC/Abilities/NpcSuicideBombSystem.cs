@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class NpcSuicideBombSystem : EntitySystem
+public sealed partial class NpcSuicideBombSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private NPCSystem _npc = default!;
@@ -47,7 +47,6 @@ public sealed class NpcSuicideBombSystem : EntitySystem
             || 1f - (float) incap > threshold)
             return;
 
-        ent.Comp.Detonated = true; // if mob survives, dont trigger again.
         if (ent.Comp.ActionEntity is { } action && _actions.TryGetActionData(action, out var data))
             _actions.PerformAction(ent.Owner, null, action, data, data.BaseEvent, _timing.CurTime, false);
     }

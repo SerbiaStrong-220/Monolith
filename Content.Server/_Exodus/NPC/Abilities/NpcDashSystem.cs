@@ -2,7 +2,7 @@ using Content.Shared.Actions;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class NpcDashSystem : EntitySystem
+public sealed partial class NpcDashSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
 

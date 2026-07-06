@@ -4,7 +4,7 @@ using Content.Shared.Actions;
 
 namespace Content.Server._Exodus.NPC.Abilities;
 
-public sealed class NpcBuilderSystem : EntitySystem
+public sealed partial class NpcBuilderSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private NPCSystem _npc = default!;
@@ -38,7 +38,7 @@ public sealed class NpcBuilderSystem : EntitySystem
 
         args.Handled = true;
 
-        ent.Comp.Built.RemoveAll(e => Deleted(e)); // forgor destroyed structures so we can rebuild up to the limit
+        ent.Comp.Built.RemoveAll(e => Deleted(e)); // forget destroyed structures so mob can rebuild up to the limit
 
         if (ent.Comp.Built.Count < ent.Comp.Limit)
             ent.Comp.Built.Add(Spawn(ent.Comp.Build, Transform(ent).Coordinates));

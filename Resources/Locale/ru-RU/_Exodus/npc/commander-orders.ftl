@@ -1,5 +1,4 @@
-# Фразы командира при отдаче приказов. Добавляй варианты как npc-order-1, -2 и т.д.
-# Обязателно не забудь увеличить count в commander_lines.yml.
+# Если будешь добавлять что-то, не забудь увеличить count в commander_lines.yml.
 
 npc-order-attack-1 = В атаку!
 npc-order-attack-2 = Вперёд!

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.NPC;
@@ -7,7 +6,6 @@ using Content.Server._Exodus.NPC.Abilities;
 using Content.Shared.Chat;
 using Content.Shared._Exodus.NPC.Command;
 using Content.Shared.Damage;
-using Content.Shared.Dataset;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Robust.Shared.Audio.Systems;
@@ -18,9 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.NPC.Command;
 
-/// So this is squad manager. Here we recruit NPCs, define what orders is, giving orders, define what team can do.
-/// Behaviour itself is in the HTN trees. This just decides and relays.
-public sealed class NpcCommandSystem : EntitySystem
+public sealed partial class NpcCommandSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
@@ -34,16 +30,20 @@ public sealed class NpcCommandSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IPrototypeManager _proto = default!;
 
-    // Reused per-tick recruitment scratch buffers, so we don't allocate two Lists every commander update.
     private readonly List<(EntityUid Ent, float Dist)> _medics = new();
     private readonly List<(EntityUid Ent, float Dist)> _grunts = new();
+    private readonly List<EntityUid> _chosenGrunts = new();
 
-    // Blackboard key carrying the assault target's last-known position to grunts.
+    // Scratch for PickSlots' cached comparison so the sort allocates no per-tick closure.
+    private HashSet<EntityUid> _pickCurrent = default!;
+    private Comparison<(EntityUid Ent, float Dist)> _pickComparison = default!;
+
     private const string OrderedTargetCoordinatesKey = "OrderedTargetCoordinates";
 
     public override void Initialize()
     {
         base.Initialize();
+        _pickComparison = ComparePick;
         SubscribeLocalEvent<NpcCommanderComponent, ComponentShutdown>(OnCommanderShutdown);
     }
 
@@ -81,7 +81,6 @@ public sealed class NpcCommandSystem : EntitySystem
         _medics.Clear();
         _grunts.Clear();
 
-        // Scans KeepRange so existing members aren't loose, new ones still recruit within range.
         foreach (var minion in _lookup.GetEntitiesInRange<NpcMinionComponent>(coords, c.KeepRange))
         {
             if (minion.Owner == ent.Owner || !_faction.IsEntityFriendly(ent.Owner, minion.Owner))
@@ -92,21 +91,20 @@ public sealed class NpcCommandSystem : EntitySystem
 
             var dist = (coords.Position - _xform.GetMapCoordinates(minion.Owner).Position).Length();
 
-            // Pull in new NPCs that are within recruit range.
             if (dist > c.Range && !c.Retinue.Contains(minion.Owner))
                 continue;
 
             (minion.Comp.Medic ? _medics : _grunts).Add((minion.Owner, dist));
         }
 
-        var chosenGrunts = PickSlots(_grunts, c.Retinue, c.MaxGrunts).ToList();
-        var chosen = new HashSet<EntityUid>(PickSlots(_medics, c.Retinue, c.MaxMedics));
-        chosen.UnionWith(chosenGrunts);
-
-        // Tracks active grunts so a downed member still counts as a loss even if dragged out of range.
-        foreach (var g in chosenGrunts)
+        _chosenGrunts.Clear();
+        PickSlots(_grunts, c.Retinue, c.MaxGrunts, _chosenGrunts);
+        var chosen = new HashSet<EntityUid>();
+        PickSlots(_medics, c.Retinue, c.MaxMedics, chosen);
+        chosen.UnionWith(_chosenGrunts);
+        foreach (var g in _chosenGrunts)
             c.Members.Add(g);
-        c.Members.RemoveWhere(m => Deleted(m) || (!chosen.Contains(m) && !_mobState.IsCritical(m) && !_mobState.IsDead(m)));
+        c.Members.RemoveWhere(m => Deleted(m) || _mobState.IsDead(m) || (!chosen.Contains(m) && !_mobState.IsCritical(m)));
 
         var reduced = false;
         foreach (var m in c.Members)
@@ -118,29 +116,26 @@ public sealed class NpcCommandSystem : EntitySystem
             break;
         }
 
-        // States
         var enemy = GetEnemy(ent);
         var hp = HealthFraction(ent.Owner);
         var newOrder = DecideOrder(c, now, enemy, hp, reduced);
 
-        // Give order voiceline, but only when it actually changes (no spam).
+        // Give order voiceline, cool.
         if (newOrder != c.Order)
             Announce(ent.Owner, c, newOrder);
 
         c.Order = newOrder;
 
-        // Remember where the assault target is while coma can see it and use later. Cleared afterwards.
-        if (c.Order == NpcOrder.Attack)
+        if (c.Order == NpcOrder.Attack && c.AssaultTarget is { } at && !Deleted(at) && !_mobState.IsDead(at))
         {
-            if (c.AssaultTarget is { } at && !Deleted(at) && !_mobState.IsDead(at))
-                c.AssaultTargetCoordinates = Transform(at).Coordinates;
+            c.AssaultTargetCoordinates = Transform(at).Coordinates;
         }
         else
         {
+            // Drop stale coords when not attacking or the target vanished, so grunts don't push to a ghost.
             c.AssaultTargetCoordinates = null;
         }
 
-        // Orders and stance: coma fights/patrols on Follow, and only retreats/holds if orders.
         SetCurrentOrder(ent.Owner, c.Order is NpcOrder.Retreat or NpcOrder.Hold ? c.Order : NpcOrder.Follow, null, ent.Owner);
 
         foreach (var minion in chosen)
@@ -150,21 +145,18 @@ public sealed class NpcCommandSystem : EntitySystem
 
             comp.Commander = ent.Owner;
 
-            // The medic always follows + heals, grunts take the orders.
             var minionOrder = comp.Medic
                 ? NpcOrder.Follow
                 : c.Order switch
                 {
                     NpcOrder.Attack => NpcOrder.Attack,
                     NpcOrder.Retreat => NpcOrder.Retreat,
-                    // Builders get Hold so they build somewhat near the commander.
                     NpcOrder.Hold when HasComp<NpcBuilderComponent>(minion) => NpcOrder.Hold,
                     _ => NpcOrder.Follow,
                 };
 
             SetCurrentOrder(minion, minionOrder, minionOrder == NpcOrder.Attack ? c.AssaultTarget : null, ent.Owner);
 
-            // Relay the assault target's last-known position so grunts can push to it.
             if (minionOrder == NpcOrder.Attack && c.AssaultTargetCoordinates is { } atc && TryComp<HTNComponent>(minion, out var minionHtn))
                 minionHtn.Blackboard.SetValue(OrderedTargetCoordinatesKey, atc);
         }
@@ -185,7 +177,6 @@ public sealed class NpcCommandSystem : EntitySystem
         c.Retinue = chosen;
     }
 
-    // The squad order state
     private NpcOrder DecideOrder(NpcCommanderComponent c, TimeSpan now, EntityUid? enemy, float hp, bool reduced)
     {
         // Flee NOW.
@@ -202,7 +193,6 @@ public sealed class NpcCommandSystem : EntitySystem
         if (c.Order == NpcOrder.Retreat && c.OrderUntil is { } ru && now < ru)
             return NpcOrder.Retreat;
 
-        // Hold - timed, but renewed if got down members, exited once the squad is whole again.
         if (c.Order == NpcOrder.Hold)
         {
             c.EngageSince = null;
@@ -247,7 +237,6 @@ public sealed class NpcCommandSystem : EntitySystem
             return NpcOrder.Follow;
         }
 
-        // If enemy lost - keep the engage timer alive for grace preiood so it doesn't restart the engage delay.
         if (c.LastSeenEnemyTime is { } seen && now - seen < c.EnemyGrace)
             return NpcOrder.Follow;
 
@@ -255,13 +244,22 @@ public sealed class NpcCommandSystem : EntitySystem
         return NpcOrder.Follow;
     }
 
-    private IEnumerable<EntityUid> PickSlots(List<(EntityUid Ent, float Dist)> candidates, HashSet<EntityUid> current, int max)
+    // Sorts candidates in place (current members first, then nearest) and writes the closest `max` into output.
+    private void PickSlots(List<(EntityUid Ent, float Dist)> candidates, HashSet<EntityUid> current, int max, ICollection<EntityUid> output)
     {
-        return candidates
-            .OrderBy(x => current.Contains(x.Ent) ? 0 : 1)
-            .ThenBy(x => x.Dist)
-            .Take(max)
-            .Select(x => x.Ent);
+        _pickCurrent = current;
+        candidates.Sort(_pickComparison);
+
+        var count = Math.Min(max, candidates.Count);
+        for (var i = 0; i < count; i++)
+            output.Add(candidates[i].Ent);
+    }
+
+    private int ComparePick((EntityUid Ent, float Dist) a, (EntityUid Ent, float Dist) b)
+    {
+        var aCur = _pickCurrent.Contains(a.Ent) ? 0 : 1;
+        var bCur = _pickCurrent.Contains(b.Ent) ? 0 : 1;
+        return aCur != bCur ? aCur - bCur : a.Dist.CompareTo(b.Dist);
     }
 
     private EntityUid? GetEnemy(Entity<NpcCommanderComponent> ent)
@@ -316,7 +314,6 @@ public sealed class NpcCommandSystem : EntitySystem
         _chat.TrySendInGameICMessage(commander, Loc.GetString(_random.Pick(lines.Values)), InGameICChatType.Speak, hideChat: false, hideLog: true);
     }
 
-    // Sets CurrentOrders + the relevant target/follow key and replans if change.
     private void SetCurrentOrder(EntityUid uid, NpcOrder order, EntityUid? target, EntityUid commander)
     {
         if (!TryComp<HTNComponent>(uid, out var htn))
@@ -327,7 +324,6 @@ public sealed class NpcCommandSystem : EntitySystem
 
         if (order == NpcOrder.Attack)
         {
-            // So grunts dont target a missing/deleted entity.
             if (target is not { } attackTarget || Deleted(attackTarget))
                 return;
 
@@ -345,6 +341,8 @@ public sealed class NpcCommandSystem : EntitySystem
 
             bb.SetValue(NPCBlackboard.CurrentOrders, order);
             bb.SetValue(NPCBlackboard.FollowTarget, new EntityCoordinates(commander, Vector2.Zero));
+            bb.Remove<EntityUid>(NPCBlackboard.CurrentOrderedTarget);
+            bb.Remove<EntityCoordinates>(OrderedTargetCoordinatesKey);
         }
 
         Replan(htn);
@@ -369,8 +367,7 @@ public sealed class NpcCommandSystem : EntitySystem
 
         _htn.Replan(htn);
     }
-    
-    // clear
+
     private void OnCommanderShutdown(Entity<NpcCommanderComponent> ent, ref ComponentShutdown args)
     {
         DisbandSquad(ent);
