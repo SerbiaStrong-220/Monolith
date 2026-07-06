@@ -49,12 +49,10 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
     private TimeSpan _backgroundLightningEnd;
     private bool _hasBackgroundLightning;
     private bool _parallaxEnabled;
-    private EntityQuery<NebulaPresenceComponent> _nebulaPresenceQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-        _nebulaPresenceQuery = GetEntityQuery<NebulaPresenceComponent>();
         _configuration.OnValueChanged(CCVars.ParallaxEnabled, OnParallaxEnabledChanged, true);
         _overlay.AddOverlay(new NebulaLightningOverlay());
     }
@@ -235,7 +233,7 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         if (_player.LocalEntity is not { Valid: true } player)
             return false;
 
-        if (!_nebulaPresenceQuery.TryGetComponent(player, out var playerPresence))
+        if (!TryComp<NebulaPresenceComponent>(player, out var playerPresence))
             return false;
 
         presence = playerPresence;
