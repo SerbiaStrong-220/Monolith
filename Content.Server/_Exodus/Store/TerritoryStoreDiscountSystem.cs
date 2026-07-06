@@ -109,12 +109,12 @@ public sealed partial class TerritoryStoreDiscountSystem : EntitySystem
             if (amount <= FixedPoint2.Zero)
                 continue;
 
-            var discountedAmount = Math.Ceiling(amount.Float() * priceMultiplier);
-            if (discountedAmount < 1d)
-                discountedAmount = 1d;
+            var roundedAmount = Math.Ceiling(amount.Float() * priceMultiplier);
+            if (roundedAmount < 1d)
+                roundedAmount = 1d;
 
-            var discountedFixedPoint = FixedPoint2.New(discountedAmount);
-            var delta = discountedFixedPoint - amount;
+            var modifiedFixedPoint = FixedPoint2.New(roundedAmount);
+            var delta = modifiedFixedPoint - amount;
             if (delta == FixedPoint2.Zero)
                 continue;
 
