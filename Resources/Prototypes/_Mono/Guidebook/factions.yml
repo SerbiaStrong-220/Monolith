@@ -4,7 +4,14 @@
   text: "/ServerInfo/_Mono/Guidebook/Factions/factions.xml"
   priority: 1
   children:
+  - FactionCores # Exodus faction AI cores guide
   - TSFMC_Entry
+
+- type: guideEntry # Exodus faction AI cores guide
+  id: FactionCores
+  name: guide-entry-faction-cores
+  text: "/ServerInfo/_Exodus/Guidebook/Factions/FactionCores.xml"
+  priority: 1
 
 - type: guideEntry
   id: TSFMC_Entry
