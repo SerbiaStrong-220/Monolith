@@ -5,14 +5,14 @@
 - type: vessel
   id: Pacem
   parent: BaseVessel
-  name: Пасем # Ru-Localization
-  description: Патрульный корвет для обороны внутреннего кольца и его патрулирования. Рекомендуемый экипаж - 2 человека. # Ru-Localization
+  name: ╨Я╨░╤Б╨╡╨╝ # Ru-Localization
+  description: ╨Я╨░╤В╤А╤Г╨╗╤М╨╜╤Л╨╣ ╨║╨╛╤А╨▓╨╡╤В ╨┤╨╗╤П ╨╛╨▒╨╛╤А╨╛╨╜╤Л ╨▓╨╜╤Г╤В╤А╨╡╨╜╨╜╨╡╨│╨╛ ╨║╨╛╨╗╤М╤Ж╨░ ╨╕ ╨╡╨│╨╛ ╨┐╨░╤В╤А╤Г╨╗╨╕╤А╨╛╨▓╨░╨╜╨╕╤П. ╨а╨╡╨║╨╛╨╝╨╡╨╜╨┤╤Г╨╡╨╝╤Л╨╣ ╤Н╨║╨╕╨┐╨░╨╢ - 2 ╤З╨╡╨╗╨╛╨▓╨╡╨║╨░. # Ru-Localization
   price: 130000 #Roughly 20% markup from appraisegrid
   category: Medium
   group: Sr
   access: Brig
   mapchecker_group_override: Security
-  shuttlePath: /Maps/_Mono/Shuttles/pacem.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/pacem.yml
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -25,15 +25,15 @@
 
 - type: gameMap
   id: Pacem
-  mapName: 'Пасем' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/pacem.yml
+  mapName: '╨Я╨░╤Б╨╡╨╝' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/pacem.yml
   minPlayers: 0
   stations:
     Pacem:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Пасем{1}' # Ru-Localization
+          mapNameTemplate: '╨Я╨░╤Б╨╡╨╝{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

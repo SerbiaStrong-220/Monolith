@@ -7,12 +7,12 @@
 - type: vessel
   id: Leaf
   parent: BaseVessel
-  name: Лист # Ru-Localization
-  description: Списанный военный шаттл, большая часть обшивки которого убрана, чтобы он доживал свои дни в качестве ботанического и химического судна. # Ru-Localization
+  name: ╨Ы╨╕╤Б╤В # Ru-Localization
+  description: ╨б╨┐╨╕╤Б╨░╨╜╨╜╤Л╨╣ ╨▓╨╛╨╡╨╜╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╨▒╨╛╨╗╤М╤И╨░╤П ╤З╨░╤Б╤В╤М ╨╛╨▒╤И╨╕╨▓╨║╨╕ ╨║╨╛╤В╨╛╤А╨╛╨│╨╛ ╤Г╨▒╤А╨░╨╜╨░, ╤З╤В╨╛╨▒╤Л ╨╛╨╜ ╨┤╨╛╨╢╨╕╨▓╨░╨╗ ╤Б╨▓╨╛╨╕ ╨┤╨╜╨╕ ╨▓ ╨║╨░╤З╨╡╤Б╤В╨▓╨╡ ╨▒╨╛╤В╨░╨╜╨╕╤З╨╡╤Б╨║╨╛╨│╨╛ ╨╕ ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨│╨╛ ╤Б╤Г╨┤╨╜╨░. # Ru-Localization
   price: 69500
   category: Medium
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/leaf.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/leaf.yml
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -26,15 +26,15 @@
 
 - type: gameMap
   id: Leaf
-  mapName: 'Лист' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/leaf.yml
+  mapName: '╨Ы╨╕╤Б╤В' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/leaf.yml
   minPlayers: 0
   stations:
     Leaf:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Лист{1}' # Ru-Localization
+          mapNameTemplate: '╨Ы╨╕╤Б╤В{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

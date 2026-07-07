@@ -9,15 +9,17 @@
 - type: vessel
   id: Saturn
   parent: BaseVesselAntag
-  name: Сатурн # Ru-Localization
-  description: Заказан Династией Фаэтон ввиду острой необходимости в тяжёлой огневой мощи против Федерации. Уникальный шаттл, специально разработанный с учётом запросово Династии, расквартированного на Гелиосе. # Ru-Localization
+  name: ╨б╨░╤В╤Г╤А╨╜ # Ru-Localization
+  description: ╨Ч╨░╨║╨░╨╖╨░╨╜ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╡╨╣ ╨д╨░╤Н╤В╨╛╨╜ ╨▓╨▓╨╕╨┤╤Г ╨╛╤Б╤В╤А╨╛╨╣ ╨╜╨╡╨╛╨▒╤Е╨╛╨┤╨╕╨╝╨╛╤Б╤В╨╕ ╨▓ ╤В╤П╨╢╤С╨╗╨╛╨╣ ╨╛╨│╨╜╨╡╨▓╨╛╨╣ ╨╝╨╛╤Й╨╕ ╨┐╤А╨╛╤В╨╕╨▓ ╨д╨╡╨┤╨╡╤А╨░╤Ж╨╕╨╕. ╨г╨╜╨╕╨║╨░╨╗╤М╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╤Б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╨╛ ╤А╨░╨╖╤А╨░╨▒╨╛╤В╨░╨╜╨╜╤Л╨╣ ╤Б ╤Г╤З╤С╤В╨╛╨╝ ╨╖╨░╨┐╤А╨╛╤Б╨╛╨▓╨╛ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕, ╤А╨░╤Б╨║╨▓╨░╤А╤В╨╕╤А╨╛╨▓╨░╨╜╨╜╨╛╨│╨╛ ╨╜╨░ ╨У╨╡╨╗╨╕╨╛╤Б╨╡. # Ru-Localization
   limit: 1
+  hyperwarLimit: 3
   price: 1540950
   purchasable: false # voucher only
   category: Large
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
+  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -36,21 +38,18 @@
 
 - type: gameMap
   id: Saturn
-  mapName: 'Сатурн' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
+  mapName: '╨б╨░╤В╤Г╤А╨╜' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
   minPlayers: 0
   stations:
     Saturn:
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "Ответ Династии Фаэтон захватчикам из ТСФ. Она выдерживает удары, как никакой другой шаттл. Слава Династии!" # Ru-Localization
-      - type: NpcFactionMember # Exodus faction-owned flagship target filtering
-        factions:
-        - PirateNF
+        description: "╨Ю╤В╨▓╨╡╤В ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕ ╨д╨░╤Н╤В╨╛╨╜ ╨╖╨░╤Е╨▓╨░╤В╤З╨╕╨║╨░╨╝ ╨╕╨╖ ╨в╨б╨д. ╨Ю╨╜╨░ ╨▓╤Л╨┤╨╡╤А╨╢╨╕╨▓╨░╨╡╤В ╤Г╨┤╨░╤А╤Л, ╨║╨░╨║ ╨╜╨╕╨║╨░╨║╨╛╨╣ ╨┤╤А╤Г╨│╨╛╨╣ ╤И╨░╤В╤В╨╗. ╨б╨╗╨░╨▓╨░ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕!" # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Сатурн{1}' # Ru-Localization
+        mapNameTemplate: '╨б╨░╤В╤Г╤А╨╜{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

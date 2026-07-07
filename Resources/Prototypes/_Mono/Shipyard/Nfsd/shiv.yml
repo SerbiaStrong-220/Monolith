@@ -3,13 +3,13 @@
 - type: vessel
   id: Shiv
   parent: BaseVesselAntag
-  name: Шив # Ru-Localization
-  description: Рабочая лошадка флота ТСФ. Оснащена исследовательским отсеком для изучения артефактов и хорошими рудодобывающими возможностями. # Ru-Localization
+  name: ╨и╨╕╨▓ # Ru-Localization
+  description: ╨а╨░╨▒╨╛╤З╨░╤П ╨╗╨╛╤И╨░╨┤╨║╨░ ╤Д╨╗╨╛╤В╨░ ╨в╨б╨д. ╨Ю╤Б╨╜╨░╤Й╨╡╨╜╨░ ╨╕╤Б╤Б╨╗╨╡╨┤╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╝ ╨╛╤В╤Б╨╡╨║╨╛╨╝ ╨┤╨╗╤П ╨╕╨╖╤Г╤З╨╡╨╜╨╕╤П ╨░╤А╤В╨╡╤Д╨░╨║╤В╨╛╨▓ ╨╕ ╤Е╨╛╤А╨╛╤И╨╕╨╝╨╕ ╤А╤Г╨┤╨╛╨┤╨╛╨▒╤Л╨▓╨░╤О╤Й╨╕╨╝╨╕ ╨▓╨╛╨╖╨╝╨╛╨╢╨╜╨╛╤Б╤В╤П╨╝╨╕. # Ru-Localization
   price: 60000
   category: Small
   group: Security
   access: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/shiv.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/shiv.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -23,15 +23,15 @@
 
 - type: gameMap
   id: Shiv
-  mapName: 'Шив' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/shiv.yml
+  mapName: '╨и╨╕╨▓' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/shiv.yml
   minPlayers: 0
   stations:
     Shiv:
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Шив{1}' # Ru-Localization
+        mapNameTemplate: '╨и╨╕╨▓{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -39,4 +39,3 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
-

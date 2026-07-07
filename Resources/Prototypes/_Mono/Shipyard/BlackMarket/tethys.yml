@@ -3,13 +3,13 @@
 - type: vessel
   id: Tethys
   parent: BaseVesselAntag
-  name: Тефида # Ru-Localization
-  description: Медицинский шаттл Династии Фаэтона. Оснащён четырьмя 90-мм орудиями и двумя ракетными установками АДМХ-23 Товек. # Ru-Localization
+  name: ╨в╨╡╤Д╨╕╨┤╨░ # Ru-Localization
+  description: ╨Ь╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕ ╨д╨░╤Н╤В╨╛╨╜╨░. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╤З╨╡╤В╤Л╤А╤М╨╝╤П 90-╨╝╨╝ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨╕ ╨┤╨▓╤Г╨╝╤П ╤А╨░╨║╨╡╤В╨╜╤Л╨╝╨╕ ╤Г╤Б╤В╨░╨╜╨╛╨▓╨║╨░╨╝╨╕ ╨Р╨Ф╨Ь╨е-23 ╨в╨╛╨▓╨╡╨║. # Ru-Localization
   price: 72000
   category: Medium
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/tethys.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/tethys.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -22,15 +22,15 @@
 
 - type: gameMap
   id: Tethys
-  mapName: 'Тефида' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/BlackMarket/tethys.yml
+  mapName: '╨в╨╡╤Д╨╕╨┤╨░' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/tethys.yml
   minPlayers: 0
   stations:
     Tethys:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Тефида{1}' # Ru-Localization
+          mapNameTemplate: '╨в╨╡╤Д╨╕╨┤╨░{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

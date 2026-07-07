@@ -3,14 +3,15 @@
 - type: vessel
   id: Aldebaran
   parent: BaseVesselAntag
-  name: Альдебаран # Ru-Localization
-  description: Корвет с усиленным носовым вооружением, оснащённый двумя Цирексами для боя на дальних дистанциях и ракетами для тяжёлых целей и ближнего боя. # Ru-Localization
+  name: ╨Р╨╗╤М╨┤╨╡╨▒╨░╤А╨░╨╜ # Ru-Localization
+  description: ╨Ъ╨╛╤А╨▓╨╡╤В ╤Б ╤Г╤Б╨╕╨╗╨╡╨╜╨╜╤Л╨╝ ╨╜╨╛╤Б╨╛╨▓╤Л╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╨╡╨╝, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨┤╨▓╤Г╨╝╤П ╨ж╨╕╤А╨╡╨║╤Б╨░╨╝╨╕ ╨┤╨╗╤П ╨▒╨╛╤П ╨╜╨░ ╨┤╨░╨╗╤М╨╜╨╕╤Е ╨┤╨╕╤Б╤В╨░╨╜╤Ж╨╕╤П╤Е ╨╕ ╤А╨░╨║╨╡╤В╨░╨╝╨╕ ╨┤╨╗╤П ╤В╤П╨╢╤С╨╗╤Л╤Е ╤Ж╨╡╨╗╨╡╨╣ ╨╕ ╨▒╨╗╨╕╨╢╨╜╨╡╨│╨╛ ╨▒╨╛╤П. # Ru-Localization
   price: 160200
   purchasable: false # voucher only
   category: Medium
   group: Security
   access: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/aldebaran.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/aldebaran.yml
+  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -24,15 +25,15 @@
 
 - type: gameMap
   id: Aldebaran
-  mapName: 'Альдебаран' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/aldebaran.yml
+  mapName: '╨Р╨╗╤М╨┤╨╡╨▒╨░╤А╨░╨╜' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/aldebaran.yml
   minPlayers: 0
   stations:
     Aldebaran:
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Альдебаран{1}' # Ru-Localization
+        mapNameTemplate: '╨Р╨╗╤М╨┤╨╡╨▒╨░╤А╨░╨╜{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -40,4 +41,3 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
-

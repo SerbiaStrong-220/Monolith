@@ -8,8 +8,9 @@
   price: 85290
   category: Medium
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
   guidebookPage: Null
   class:
   - Pursuit
@@ -20,18 +21,18 @@
 - type: gameMap
   id: Drakon
   mapName: 'Дракон' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/USSP/drakon.yml # Exodus
   minPlayers: 0
   stations:
     Drakon:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Дракон{1}' # Ru-Localization
+          mapNameTemplate: 'Дракон СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]

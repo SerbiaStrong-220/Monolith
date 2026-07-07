@@ -1,13 +1,13 @@
 - type: vessel
   id: Solarsail
   parent: BaseVessel
-  name: Парусник # Ru-Localization
-  description: Личный транспорт и мобильный офис Коменданта. # Ru-Localization
+  name: ╨Я╨░╤А╤Г╤Б╨╜╨╕╨║ # Ru-Localization
+  description: ╨Ы╨╕╤З╨╜╤Л╨╣ ╤В╤А╨░╨╜╤Б╨┐╨╛╤А╤В ╨╕ ╨╝╨╛╨▒╨╕╨╗╤М╨╜╤Л╨╣ ╨╛╤Д╨╕╤Б ╨Ъ╨╛╨╝╨╡╨╜╨┤╨░╨╜╤В╨░. # Ru-Localization
   price: 25500
   category: Small
   group: Sr
   access: HeadOfPersonnel
-  shuttlePath: /Maps/_Mono/Shuttles/solarsail.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/solarsail.yml
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -20,15 +20,15 @@
 
 - type: gameMap
   id: Solarsail
-  mapName: 'Парусник' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/solarsail.yml
+  mapName: '╨Я╨░╤А╤Г╤Б╨╜╨╕╨║' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/solarsail.yml
   minPlayers: 0
   stations:
     Solarsail:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Парусник{1}' # Ru-Localization
+          mapNameTemplate: '╨Я╨░╤А╤Г╤Б╨╜╨╕╨║{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

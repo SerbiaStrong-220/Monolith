@@ -1,13 +1,13 @@
 - type: vessel
   id: Hydra
   parent: BaseVesselAntag
-  name: Гидра # Ru-Localization
-  description: Ракетный корвет Синдиката, предназначенный для скрытных быстрых налётов и подавления противника. # Ru-Localization
+  name: ╨У╨╕╨┤╤А╨░ # Ru-Localization
+  description: ╨а╨░╨║╨╡╤В╨╜╤Л╨╣ ╨║╨╛╤А╨▓╨╡╤В ╨б╨╕╨╜╨┤╨╕╨║╨░╤В╨░, ╨┐╤А╨╡╨┤╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╤Б╨║╤А╤Л╤В╨╜╤Л╤Е ╨▒╤Л╤Б╤В╤А╤Л╤Е ╨╜╨░╨╗╤С╤В╨╛╨▓ ╨╕ ╨┐╨╛╨┤╨░╨▓╨╗╨╡╨╜╨╕╤П ╨┐╤А╨╛╤В╨╕╨▓╨╜╨╕╨║╨░. # Ru-Localization
   price: 135000
   category: Medium
   group: Syndicate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/hydra.yml
   purchasable: false # Exodus syndicate voucher only
-  shuttlePath: /Maps/_Mono/Shuttles/Syndicate/hydra.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -20,15 +20,15 @@
 
 - type: gameMap
   id: Hydra
-  mapName: 'Гидра' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Syndicate/hydra.yml
+  mapName: '╨У╨╕╨┤╤А╨░' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Syndicate/hydra.yml
   minPlayers: 0
   stations:
     Hydra:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Гидра{1}' # Ru-Localization
+          mapNameTemplate: '╨У╨╕╨┤╤А╨░{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

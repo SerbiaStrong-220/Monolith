@@ -7,21 +7,22 @@
   purchasable: false # voucher only
   category: Large
   group: Custom
-  access: USSP
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/Ledokol/Attatchments/molotok.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/Ledokol/Attachments/molotok.yml
   guidebookPage: Null
 
 - type: gameMap
   id: Molotok
   mapName: 'М-Молот' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/Ledokol/Attatchments/molotok.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/Ledokol/Attachments/molotok.yml
   minPlayers: 0
   stations:
     Molotok:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'М-Молот{1}' # Ru-Localization
+          mapNameTemplate: 'М-Молот СССП Мод{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

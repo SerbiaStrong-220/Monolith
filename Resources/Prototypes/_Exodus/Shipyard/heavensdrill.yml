@@ -6,7 +6,7 @@
   price: 220000
   category: Large
   group: Shipyard
-  shuttlePath: /Maps/_Exodus/Shuttles/heavensdrill.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/heavensdrill.yml
   guidebookPage: null
   class:
   - Salvage
@@ -18,7 +18,7 @@
 - type: gameMap
   id: HeavensDrill
   mapName: 'Небесный Бур'
-  mapPath: /Maps/_Exodus/Shuttles/heavensdrill.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/heavensdrill.yml
   minPlayers: 0
   stations:
     HeavensDrill:

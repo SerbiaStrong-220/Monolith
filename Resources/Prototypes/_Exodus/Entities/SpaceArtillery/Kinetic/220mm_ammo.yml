@@ -1,0 +1,80 @@
+# Exodus: TYPHON-exclusive 220mm SAPHE ammunition
+
+- type: entity
+  id: 220mmCartridgeSAPHE
+  name: 220mm SAPHE shell
+  description: A semi-armor-piercing high-explosive shell for TYPHON 220mm autocannons. Penetrates less than APHE, but detonates with a much larger blast.
+  parent: BaseGrenade
+  components:
+  - type: Tag
+    tags:
+    - 220mmCartridge
+  - type: Item
+    size: Huge
+  - type: CartridgeAmmo
+    proto: 220mmBulletSAPHE
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: _Mono/Objects/SpaceArtillery/shells.rsi
+    layers:
+    - state: 220mmHE
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 3
+    totalIntensity: 30
+  - type: ExplodeOnTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+
+- type: entity
+  id: 220mmBulletSAPHE
+  name: 220mm SAPHE projectile
+  parent: BaseBulletTriggerSpent
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Structural: 1400
+        Blunt: 220
+    penetrationThreshold: 1800
+  - type: Sprite
+    sprite: _Mono/Objects/SpaceArtillery/shells.rsi
+    layers:
+    - state: 220mmHE
+  - type: Ammo
+    muzzleFlash: null
+  - type: ShipWeaponProjectile
+  - type: RadarBlip
+    scale: 3.25
+    shape: triangle
+    radarColor: "#f55e1d"
+  - type: TimedDespawn
+    lifetime: 5.15
+  - type: PointLight
+    color: "#FC6A03"
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    deleteAfterExplosion: false
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 8
+    maxIntensity: 40
+    maxTileBreak: 3
+  - type: GatheringProjectile
+  - type: MiningGatheringSoft
+  - type: MiningGatheringHard

@@ -3,14 +3,15 @@
 - type: vessel
   id: Neptune
   parent: BaseVesselAntag
-  name: Нептун # Ru-Localization
-  description: Оснащён тяжёлой лобовой бронёй, шестью тяжёлыми 90-мм орудиями Клык и двумя АСМ-220 Трезубец. Хорош для борьбы с крупными целями в лобовых столкновениях, но неспособен эффективно сражаться с юркими и мелкими целями. # Ru-Localization
+  name: ╨Э╨╡╨┐╤В╤Г╨╜ # Ru-Localization
+  description: ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╤В╤П╨╢╤С╨╗╨╛╨╣ ╨╗╨╛╨▒╨╛╨▓╨╛╨╣ ╨▒╤А╨╛╨╜╤С╨╣, ╤И╨╡╤Б╤В╤М╤О ╤В╤П╨╢╤С╨╗╤Л╨╝╨╕ 90-╨╝╨╝ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨Ъ╨╗╤Л╨║ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨Р╨б╨Ь-220 ╨в╤А╨╡╨╖╤Г╨▒╨╡╤Ж. ╨е╨╛╤А╨╛╤И ╨┤╨╗╤П ╨▒╨╛╤А╤М╨▒╤Л ╤Б ╨║╤А╤Г╨┐╨╜╤Л╨╝╨╕ ╤Ж╨╡╨╗╤П╨╝╨╕ ╨▓ ╨╗╨╛╨▒╨╛╨▓╤Л╤Е ╤Б╤В╨╛╨╗╨║╨╜╨╛╨▓╨╡╨╜╨╕╤П╤Е, ╨╜╨╛ ╨╜╨╡╤Б╨┐╨╛╤Б╨╛╨▒╨╡╨╜ ╤Н╤Д╤Д╨╡╨║╤В╨╕╨▓╨╜╨╛ ╤Б╤А╨░╨╢╨░╤В╤М╤Б╤П ╤Б ╤О╤А╨║╨╕╨╝╨╕ ╨╕ ╨╝╨╡╨╗╨║╨╕╨╝╨╕ ╤Ж╨╡╨╗╤П╨╝╨╕. # Ru-Localization
   price: 153555 #126k appraisal
   purchasable: false # voucher only
   category: Medium
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/neptune.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/neptune.yml
+  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -25,15 +26,15 @@
 
 - type: gameMap
   id: Neptune
-  mapName: 'Нептун' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/BlackMarket/neptune.yml
+  mapName: '╨Э╨╡╨┐╤В╤Г╨╜' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/neptune.yml
   minPlayers: 0
   stations:
     Neptune:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Нептун{1}' # Ru-Localization
+          mapNameTemplate: '╨Э╨╡╨┐╤В╤Г╨╜{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

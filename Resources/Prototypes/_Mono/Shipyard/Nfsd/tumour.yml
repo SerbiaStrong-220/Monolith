@@ -3,13 +3,13 @@
 - type: vessel
   id: Tumour
   parent: BaseVesselAntag
-  name: Тумор # Ru-Localization
-  description: Уродливая картофелина-носитель. Почти не имеет вооружения для самообороны, но оснащена техфаюами для поддержки своих шаттлов. # Ru-Localization
+  name: ╨в╤Г╨╝╨╛╤А # Ru-Localization
+  description: ╨г╤А╨╛╨┤╨╗╨╕╨▓╨░╤П ╨║╨░╤А╤В╨╛╤Д╨╡╨╗╨╕╨╜╨░-╨╜╨╛╤Б╨╕╤В╨╡╨╗╤М. ╨Я╨╛╤З╤В╨╕ ╨╜╨╡ ╨╕╨╝╨╡╨╡╤В ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╤П ╨┤╨╗╤П ╤Б╨░╨╝╨╛╨╛╨▒╨╛╤А╨╛╨╜╤Л, ╨╜╨╛ ╨╛╤Б╨╜╨░╤Й╨╡╨╜╨░ ╤В╨╡╤Е╤Д╨░╤О╨░╨╝╨╕ ╨┤╨╗╤П ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨║╨╕ ╤Б╨▓╨╛╨╕╤Е ╤И╨░╤В╤В╨╗╨╛╨▓. # Ru-Localization
   price: 68250
   category: Medium
   group: Security
   access: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tumour.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/tumour.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -23,15 +23,15 @@
 
 - type: gameMap
   id: Tumour
-  mapName: 'Тумор' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/tumour.yml
+  mapName: '╨в╤Г╨╝╨╛╤А' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/tumour.yml
   minPlayers: 0
   stations:
     Tumour:
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Тумор{1}' # Ru-Localization
+        mapNameTemplate: '╨в╤Г╨╝╨╛╤А{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -39,4 +39,3 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
-

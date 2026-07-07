@@ -7,12 +7,12 @@
 - type: vessel
   id: Artemis
   parent: BaseVessel
-  name: Артемида # Ru-Localization
-  description: Артемида - компактный шаттл-амбулатория, предназначенный для быстрой эвакуации пациентов и выхода из зоны так же быстро, как и прибыл. # Ru-Localization
-  price: 34000 # Its a barebones med ship, basically acting as a paramedic ship. 
+  name: ╨Р╤А╤В╨╡╨╝╨╕╨┤╨░ # Ru-Localization
+  description: ╨Р╤А╤В╨╡╨╝╨╕╨┤╨░ - ╨║╨╛╨╝╨┐╨░╨║╤В╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗-╨░╨╝╨▒╤Г╨╗╨░╤В╨╛╤А╨╕╤П, ╨┐╤А╨╡╨┤╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨▒╤Л╤Б╤В╤А╨╛╨╣ ╤Н╨▓╨░╨║╤Г╨░╤Ж╨╕╨╕ ╨┐╨░╤Ж╨╕╨╡╨╜╤В╨╛╨▓ ╨╕ ╨▓╤Л╤Е╨╛╨┤╨░ ╨╕╨╖ ╨╖╨╛╨╜╤Л ╤В╨░╨║ ╨╢╨╡ ╨▒╤Л╤Б╤В╤А╨╛, ╨║╨░╨║ ╨╕ ╨┐╤А╨╕╨▒╤Л╨╗. # Ru-Localization
+  price: 34000 # Its a barebones med ship, basically acting as a paramedic ship.
   category: Small
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/artemis.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/artemis.yml
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -25,15 +25,15 @@
 
 - type: gameMap
   id: Artemis
-  mapName: 'Артемида' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/artemis.yml
+  mapName: '╨Р╤А╤В╨╡╨╝╨╕╨┤╨░' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/artemis.yml
   minPlayers: 0
   stations:
     Artemis:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Артемида{1}' # Ru-Localization
+          mapNameTemplate: '╨Р╤А╤В╨╡╨╝╨╕╨┤╨░{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

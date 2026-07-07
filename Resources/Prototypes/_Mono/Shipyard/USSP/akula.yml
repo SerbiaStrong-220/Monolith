@@ -8,8 +8,9 @@
   price: 64000
   category: Medium
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/akula.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/akula.yml
   guidebookPage: Null
   class:
   - Patrol
@@ -19,18 +20,18 @@
 - type: gameMap
   id: Akula
   mapName: 'Акула' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/akula.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/akula.yml
   minPlayers: 0
   stations:
     Akula:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Акула{1}' # Ru-Localization
+          mapNameTemplate: 'Акула СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+            USSPSergeant: [ 0, 0 ]
+            USSPRifleman: [ 0, 0 ]

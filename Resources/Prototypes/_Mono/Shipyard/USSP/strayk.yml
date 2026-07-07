@@ -8,8 +8,9 @@
   price: 45820
   category: Small
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/strayk.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/strayk.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -20,18 +21,18 @@
 - type: gameMap
   id: Strayk
   mapName: 'Страус' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/strayk.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/strayk.yml
   minPlayers: 0
   stations:
     Strayk:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Страус{1}' # Ru-Localization
+          mapNameTemplate: 'Страус СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]

@@ -7,12 +7,12 @@
 - type: vessel
   id: Promise
   parent: BaseVessel
-  name: Обещание # Ru-Localization
-  description: Старая вариация медицинского корабля, относящаяся ещё к эпохе Раскола. Оснащён всем, что только можно пожелать от медицинского судна, а также просторными жилыми помещениями для экипажа на время долгих смен. # Ru-Localization
+  name: ╨Ю╨▒╨╡╤Й╨░╨╜╨╕╨╡ # Ru-Localization
+  description: ╨б╤В╨░╤А╨░╤П ╨▓╨░╤А╨╕╨░╤Ж╨╕╤П ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╛╨│╨╛ ╨║╨╛╤А╨░╨▒╨╗╤П, ╨╛╤В╨╜╨╛╤Б╤П╤Й╨░╤П╤Б╤П ╨╡╤Й╤С ╨║ ╤Н╨┐╨╛╤Е╨╡ ╨а╨░╤Б╨║╨╛╨╗╨░. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨▓╤Б╨╡╨╝, ╤З╤В╨╛ ╤В╨╛╨╗╤М╨║╨╛ ╨╝╨╛╨╢╨╜╨╛ ╨┐╨╛╨╢╨╡╨╗╨░╤В╤М ╨╛╤В ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╛╨│╨╛ ╤Б╤Г╨┤╨╜╨░, ╨░ ╤В╨░╨║╨╢╨╡ ╨┐╤А╨╛╤Б╤В╨╛╤А╨╜╤Л╨╝╨╕ ╨╢╨╕╨╗╤Л╨╝╨╕ ╨┐╨╛╨╝╨╡╤Й╨╡╨╜╨╕╤П╨╝╨╕ ╨┤╨╗╤П ╤Н╨║╨╕╨┐╨░╨╢╨░ ╨╜╨░ ╨▓╤А╨╡╨╝╤П ╨┤╨╛╨╗╨│╨╕╤Е ╤Б╨╝╨╡╨╜. # Ru-Localization
   price: 106500
   category: Medium
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/promise.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/promise.yml
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -26,15 +26,15 @@
 
 - type: gameMap
   id: Promise
-  mapName: 'Обещание' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/promise.yml
+  mapName: '╨Ю╨▒╨╡╤Й╨░╨╜╨╕╨╡' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/promise.yml
   minPlayers: 0
   stations:
     Promise:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Обещание{1}' # Ru-Localization
+          mapNameTemplate: '╨Ю╨▒╨╡╤Й╨░╨╜╨╕╨╡{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

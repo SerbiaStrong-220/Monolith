@@ -2,15 +2,17 @@
 - type: vessel
   id: Altair
   parent: BaseVesselAntag
-  name: Альтаир # Ru-Localization
-  description: Тяжеловооружённый фрегат с четырьмя Цирексами, лазерными орудиями и главной фишкой — рельсотроном Харон. Создан как тяжёлый фронтовой боец и основа небольшого флота. # Ru-Localization
+  name: ╨Р╨╗╤М╤В╨░╨╕╤А # Ru-Localization
+  description: ╨в╤П╨╢╨╡╨╗╨╛╨▓╨╛╨╛╤А╤Г╨╢╤С╨╜╨╜╤Л╨╣ ╤Д╤А╨╡╨│╨░╤В ╤Б ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨ж╨╕╤А╨╡╨║╤Б╨░╨╝╨╕, ╨╗╨░╨╖╨╡╤А╨╜╤Л╨╝╨╕ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨╕ ╨│╨╗╨░╨▓╨╜╨╛╨╣ ╤Д╨╕╤И╨║╨╛╨╣ тАФ ╤А╨╡╨╗╤М╤Б╨╛╤В╤А╨╛╨╜╨╛╨╝ ╨е╨░╤А╨╛╨╜. ╨б╨╛╨╖╨┤╨░╨╜ ╨║╨░╨║ ╤В╤П╨╢╤С╨╗╤Л╨╣ ╤Д╤А╨╛╨╜╤В╨╛╨▓╨╛╨╣ ╨▒╨╛╨╡╤Ж ╨╕ ╨╛╤Б╨╜╨╛╨▓╨░ ╨╜╨╡╨▒╨╛╨╗╤М╤И╨╛╨│╨╛ ╤Д╨╗╨╛╤В╨░. # Ru-Localization
   limit: 2
+  hyperwarLimit: 4
   price: 425000
   purchasable: false # voucher only
   category: Large
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/altair.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/altair.yml
+  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -25,18 +27,18 @@
 
 - type: gameMap
   id: Altair
-  mapName: 'Альтаир' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/altair.yml
+  mapName: '╨Р╨╗╤М╤В╨░╨╕╤А' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/altair.yml
   minPlayers: 0
   stations:
     Altair:
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "Стоит ли оно того? Волна сожаления накрывает вас, а затем отступает." # Ru-Localization
+        description: "╨б╤В╨╛╨╕╤В ╨╗╨╕ ╨╛╨╜╨╛ ╤В╨╛╨│╨╛? ╨Т╨╛╨╗╨╜╨░ ╤Б╨╛╨╢╨░╨╗╨╡╨╜╨╕╤П ╨╜╨░╨║╤А╤Л╨▓╨░╨╡╤В ╨▓╨░╤Б, ╨░ ╨╖╨░╤В╨╡╨╝ ╨╛╤В╤Б╤В╤Г╨┐╨░╨╡╤В." # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Альтаир{1}' # Ru-Localization
+        mapNameTemplate: '╨Р╨╗╤М╤В╨░╨╕╤А{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

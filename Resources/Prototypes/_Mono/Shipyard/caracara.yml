@@ -12,7 +12,7 @@
   price: 71000
   category: Medium
   group: Shipyard
-  shuttlePath: /Maps/_Exodus/Shuttles/caracara.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/caracara.yml # Exodus
   guidebookPage: null
   class:
   - Salvage
@@ -23,7 +23,7 @@
 - type: gameMap
   id: caracara
   mapName: 'КараКара' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/caracara.yml #  Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/caracara.yml #  Exodus
   minPlayers: 0
   stations:
     caracara:

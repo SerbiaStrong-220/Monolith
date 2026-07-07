@@ -1,18 +1,18 @@
 # Author Info
 # GitHub: Leon-Krol
-# Discord: Vinny Shick 
+# Discord: Vinny Shick
 
 # Shuttle Notes:
 #
 - type: vessel
   id: Tokarev
   parent: BaseVessel
-  name: Токарев # Ru-Localization
-  description: Многоцелевой шаттл, который может сопровождать медицинский персонал в исследовании новых рубежей, всегда оставаясь готовым прийти на помощь нуждающимся. Имеет в своем снаряжении кинетический якорь, что может помочб вытащить и отбуксировать шаттл пострадавшего если это нужно. # Ru-Localization
+  name: ╨в╨╛╨║╨░╤А╨╡╨▓ # Ru-Localization
+  description: ╨Ь╨╜╨╛╨│╨╛╤Ж╨╡╨╗╨╡╨▓╨╛╨╣ ╤И╨░╤В╤В╨╗, ╨║╨╛╤В╨╛╤А╤Л╨╣ ╨╝╨╛╨╢╨╡╤В ╤Б╨╛╨┐╤А╨╛╨▓╨╛╨╢╨┤╨░╤В╤М ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╨┐╨╡╤А╤Б╨╛╨╜╨░╨╗ ╨▓ ╨╕╤Б╤Б╨╗╨╡╨┤╨╛╨▓╨░╨╜╨╕╨╕ ╨╜╨╛╨▓╤Л╤Е ╤А╤Г╨▒╨╡╨╢╨╡╨╣, ╨▓╤Б╨╡╨│╨┤╨░ ╨╛╤Б╤В╨░╨▓╨░╤П╤Б╤М ╨│╨╛╤В╨╛╨▓╤Л╨╝ ╨┐╤А╨╕╨╣╤В╨╕ ╨╜╨░ ╨┐╨╛╨╝╨╛╤Й╤М ╨╜╤Г╨╢╨┤╨░╤О╤Й╨╕╨╝╤Б╤П. ╨Ш╨╝╨╡╨╡╤В ╨▓ ╤Б╨▓╨╛╨╡╨╝ ╤Б╨╜╨░╤А╤П╨╢╨╡╨╜╨╕╨╕ ╨║╨╕╨╜╨╡╤В╨╕╤З╨╡╤Б╨║╨╕╨╣ ╤П╨║╨╛╤А╤М, ╤З╤В╨╛ ╨╝╨╛╨╢╨╡╤В ╨┐╨╛╨╝╨╛╤З╨▒ ╨▓╤Л╤В╨░╤Й╨╕╤В╤М ╨╕ ╨╛╤В╨▒╤Г╨║╤Б╨╕╤А╨╛╨▓╨░╤В╤М ╤И╨░╤В╤В╨╗ ╨┐╨╛╤Б╤В╤А╨░╨┤╨░╨▓╤И╨╡╨│╨╛ ╨╡╤Б╨╗╨╕ ╤Н╤В╨╛ ╨╜╤Г╨╢╨╜╨╛. # Ru-Localization
   price: 120000
   category: Large
   group: Medical
-  shuttlePath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -26,15 +26,15 @@
 
 - type: gameMap
   id: Tokarev
-  mapName: 'Токарев' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
+  mapName: '╨в╨╛╨║╨░╤А╨╡╨▓' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   minPlayers: 0
   stations:
     Tokarev:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Токарев{1}' # Ru-Localization
+          mapNameTemplate: '╨в╨╛╨║╨░╤А╨╡╨▓{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

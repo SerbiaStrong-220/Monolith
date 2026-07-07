@@ -9,14 +9,14 @@
 - type: vessel
   id: Rook
   parent: BaseVessel
-  name: Грач # Ru-Localization
-  description: Хрупкий, но мощный боевой шаттл. Оснащён два Дваронами и одиночным 30мм пулемётом. # Ru-Localization
+  name: ╨У╤А╨░╤З # Ru-Localization
+  description: ╨е╤А╤Г╨┐╨║╨╕╨╣, ╨╜╨╛ ╨╝╨╛╤Й╨╜╤Л╨╣ ╨▒╨╛╨╡╨▓╨╛╨╣ ╤И╨░╤В╤В╨╗. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨┤╨▓╨░ ╨Ф╨▓╨░╤А╨╛╨╜╨░╨╝╨╕ ╨╕ ╨╛╨┤╨╕╨╜╨╛╤З╨╜╤Л╨╝ 30╨╝╨╝ ╨┐╤Г╨╗╨╡╨╝╤С╤В╨╛╨╝. # Ru-Localization
   price: 15000
   category: Small
   group: Custom
   access: Brig
   mapchecker_group_override: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Carrier/rook.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Carrier/rook.yml
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -29,14 +29,14 @@
 
 - type: gameMap
   id: Rook
-  mapName: 'Грач' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Carrier/rook.yml
+  mapName: '╨У╤А╨░╤З' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Carrier/rook.yml
   minPlayers: 0
   stations:
     Rook:
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Грач{1}' # Ru-Localization
+        mapNameTemplate: '╨У╤А╨░╤З{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'

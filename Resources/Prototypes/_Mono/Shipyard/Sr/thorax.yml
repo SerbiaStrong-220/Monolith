@@ -5,14 +5,14 @@
 - type: vessel
   id: Thorax
   parent: BaseVessel
-  name: Торакс # Ru-Localization
-  description: Лёгкий носитель мехов с заранее построенной фабрикой, включающая 4 различных дока для обеспечения поддержки. # Ru-Localization
+  name: ╨в╨╛╤А╨░╨║╤Б # Ru-Localization
+  description: ╨Ы╤С╨│╨║╨╕╨╣ ╨╜╨╛╤Б╨╕╤В╨╡╨╗╤М ╨╝╨╡╤Е╨╛╨▓ ╤Б ╨╖╨░╤А╨░╨╜╨╡╨╡ ╨┐╨╛╤Б╤В╤А╨╛╨╡╨╜╨╜╨╛╨╣ ╤Д╨░╨▒╤А╨╕╨║╨╛╨╣, ╨▓╨║╨╗╤О╤З╨░╤О╤Й╨░╤П 4 ╤А╨░╨╖╨╗╨╕╤З╨╜╤Л╤Е ╨┤╨╛╨║╨░ ╨┤╨╗╤П ╨╛╨▒╨╡╤Б╨┐╨╡╤З╨╡╨╜╨╕╤П ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨║╨╕. # Ru-Localization
   price: 63450
   category: Medium
   group: Sr
   access: Brig
   mapchecker_group_override: Security
-  shuttlePath: /Maps/_Mono/Shuttles/thorax.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/thorax.yml
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -25,15 +25,15 @@
 
 - type: gameMap
   id: Thorax
-  mapName: 'Торакс' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/thorax.yml
+  mapName: '╨в╨╛╤А╨░╨║╤Б' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/thorax.yml
   minPlayers: 0
   stations:
     Thorax:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Торакс{1}' # Ru-Localization
+          mapNameTemplate: '╨в╨╛╤А╨░╨║╤Б{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

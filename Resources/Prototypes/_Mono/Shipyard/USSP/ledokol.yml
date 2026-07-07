@@ -10,8 +10,9 @@
   purchasable: false # voucher only
   category: Large
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
   guidebookPage: Null
   class:
   - Capital
@@ -24,7 +25,7 @@
 - type: gameMap
   id: Ledokol
   mapName: 'Ледокол' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
   minPlayers: 0
   stations:
     Ledokol:
@@ -34,11 +35,11 @@
         description: "Зачем я здесь?..." # Ru-Localization
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Ледокол{1}' # Ru-Localization
+          mapNameTemplate: 'Ледокол СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]

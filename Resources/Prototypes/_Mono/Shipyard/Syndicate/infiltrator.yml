@@ -1,13 +1,13 @@
 - type: vessel
   id: Infiltrator
   parent: BaseVesselAntag
-  name: Лазутчик # Ru-Localization
-  description: Лёгкий фрегат Синдиката, предназначенный для нападения на вражеские станции. Вооружён до зубов ракетами и Гидрами. # Ru-Localization
+  name: ╨Ы╨░╨╖╤Г╤В╤З╨╕╨║ # Ru-Localization
+  description: ╨Ы╤С╨│╨║╨╕╨╣ ╤Д╤А╨╡╨│╨░╤В ╨б╨╕╨╜╨┤╨╕╨║╨░╤В╨░, ╨┐╤А╨╡╨┤╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨╜╨░╨┐╨░╨┤╨╡╨╜╨╕╤П ╨╜╨░ ╨▓╤А╨░╨╢╨╡╤Б╨║╨╕╨╡ ╤Б╤В╨░╨╜╤Ж╨╕╨╕. ╨Т╨╛╨╛╤А╤Г╨╢╤С╨╜ ╨┤╨╛ ╨╖╤Г╨▒╨╛╨▓ ╤А╨░╨║╨╡╤В╨░╨╝╨╕ ╨╕ ╨У╨╕╨┤╤А╨░╨╝╨╕. # Ru-Localization
   price: 275000
   category: Large
   group: Syndicate
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
   purchasable: false # Exodus syndicate voucher only
-  shuttlePath: /Maps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -20,15 +20,15 @@
 
 - type: gameMap
   id: Infiltrator
-  mapName: 'Лазутчик' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
+  mapName: '╨Ы╨░╨╖╤Г╤В╤З╨╕╨║' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
   minPlayers: 0
   stations:
     Infiltrator:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Лазутчик{1}' # Ru-Localization
+          mapNameTemplate: '╨Ы╨░╨╖╤Г╤В╤З╨╕╨║{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -9,12 +9,12 @@
 - type: vessel
   id: Kuldi
   parent: BaseVessel
-  name: Мороз # Ru-Localization
-  description: Оснащённый полной химической лабораторией и криокапсулой, этот корабль - хорошее решение для большинства медицинских потребностей. # Ru-Localization
+  name: ╨Ь╨╛╤А╨╛╨╖ # Ru-Localization
+  description: ╨Ю╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨┐╨╛╨╗╨╜╨╛╨╣ ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨╣ ╨╗╨░╨▒╨╛╤А╨░╤В╨╛╤А╨╕╨╡╨╣ ╨╕ ╨║╤А╨╕╨╛╨║╨░╨┐╤Б╤Г╨╗╨╛╨╣, ╤Н╤В╨╛╤В ╨║╨╛╤А╨░╨▒╨╗╤М - ╤Е╨╛╤А╨╛╤И╨╡╨╡ ╤А╨╡╤И╨╡╨╜╨╕╨╡ ╨┤╨╗╤П ╨▒╨╛╨╗╤М╤И╨╕╨╜╤Б╤В╨▓╨░ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╤Е ╨┐╨╛╤В╤А╨╡╨▒╨╜╨╛╤Б╤В╨╡╨╣. # Ru-Localization
   price: 95000 # A bit higher than the grid appraisal +vendors
   category: Medium
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/kuldi.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/kuldi.yml
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -28,15 +28,15 @@
 
 - type: gameMap
   id: Kuldi
-  mapName: 'Мороз' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/kuldi.yml
+  mapName: '╨Ь╨╛╤А╨╛╨╖' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/kuldi.yml
   minPlayers: 0
   stations:
     Kuldi:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Мороз{1}' # Ru-Localization
+          mapNameTemplate: '╨Ь╨╛╤А╨╛╨╖{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

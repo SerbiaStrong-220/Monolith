@@ -3,13 +3,16 @@
 - type: vessel
   id: Saintie
   parent: BaseVesselAntag
-  name: Сэнти # Ru-Localization
-  description: Дорогостоящий фрегат, разработанный верфью Династии Фаэтона. Используется для стремительных атак на вражеские шаттлы. # Ru-Localization
+  name: ╨б╤Н╨╜╤В╨╕ # Ru-Localization
+  description: ╨Ф╨╛╤А╨╛╨│╨╛╤Б╤В╨╛╤П╤Й╨╕╨╣ ╤Д╤А╨╡╨│╨░╤В, ╤А╨░╨╖╤А╨░╨▒╨╛╤В╨░╨╜╨╜╤Л╨╣ ╨▓╨╡╤А╤Д╤М╤О ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕ ╨д╨░╤Н╤В╨╛╨╜╨░. ╨Ш╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П ╨┤╨╗╤П ╤Б╤В╤А╨╡╨╝╨╕╤В╨╡╨╗╤М╨╜╤Л╤Е ╨░╤В╨░╨║ ╨╜╨░ ╨▓╤А╨░╨╢╨╡╤Б╨║╨╕╨╡ ╤И╨░╤В╤В╨╗╤Л. # Ru-Localization
+  limit: 2
+  hyperwarLimit: 4
   price: 345000
   purchasable: false # Voucher only
   category: Large
   group: BlackMarket
-  shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/saintie.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/saintie.yml
+  purchasable: false # Voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -23,15 +26,15 @@
 
 - type: gameMap
   id: Saintie
-  mapName: 'Сэнти' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/BlackMarket/saintie.yml
+  mapName: '╨б╤Н╨╜╤В╨╕' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/saintie.yml
   minPlayers: 0
   stations:
     Saintie:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Сэнти{1}' # Ru-Localization
+          mapNameTemplate: '╨б╤Н╨╜╤В╨╕{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

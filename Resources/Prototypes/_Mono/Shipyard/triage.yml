@@ -7,12 +7,12 @@
 - type: vessel
   id: Triage
   parent: BaseVessel
-  name: Триэйдж # Ru-Localization
-  description: Чрезвычайно компактный медицинский корабль, который способен удивить своей огневой мощью. # Ru-Localization
+  name: ╨в╤А╨╕╤Н╨╣╨┤╨╢ # Ru-Localization
+  description: ╨з╤А╨╡╨╖╨▓╤Л╤З╨░╨╣╨╜╨╛ ╨║╨╛╨╝╨┐╨░╨║╤В╨╜╤Л╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╨║╨╛╤А╨░╨▒╨╗╤М, ╨║╨╛╤В╨╛╤А╤Л╨╣ ╤Б╨┐╨╛╤Б╨╛╨▒╨╡╨╜ ╤Г╨┤╨╕╨▓╨╕╤В╤М ╤Б╨▓╨╛╨╡╨╣ ╨╛╨│╨╜╨╡╨▓╨╛╨╣ ╨╝╨╛╤Й╤М╤О. # Ru-Localization
   price: 49200 #Approx 41K with a 20% tax.
   category: Small
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/triage.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/triage.yml
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -25,15 +25,15 @@
 
 - type: gameMap
   id: Triage
-  mapName: 'Триэйдж' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/triage.yml
+  mapName: '╨в╤А╨╕╤Н╨╣╨┤╨╢' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/triage.yml
   minPlayers: 0
   stations:
     Triage:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Триэйдж{1}' # Ru-Localization
+          mapNameTemplate: '╨в╤А╨╕╤Н╨╣╨┤╨╢{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

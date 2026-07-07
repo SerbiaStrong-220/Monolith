@@ -5,14 +5,14 @@
 - type: vessel
   id: Parabellum
   parent: BaseVessel
-  name: Парабеллум # Ru-Localization
-  description: Парабеллум - патрульный шаттл, созданный для сопровождения и, как несложно догадаться, для патрулирования сектора для защиты от вражеских шаттлов. Оснащён двумя АДМХ-23 Товек, а также двумя М220 Рубикон для более серьёзных столкновений. # Ru-Localization
+  name: ╨Я╨░╤А╨░╨▒╨╡╨╗╨╗╤Г╨╝ # Ru-Localization
+  description: ╨Я╨░╤А╨░╨▒╨╡╨╗╨╗╤Г╨╝ - ╨┐╨░╤В╤А╤Г╨╗╤М╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╤Б╨╛╨┐╤А╨╛╨▓╨╛╨╢╨┤╨╡╨╜╨╕╤П ╨╕, ╨║╨░╨║ ╨╜╨╡╤Б╨╗╨╛╨╢╨╜╨╛ ╨┤╨╛╨│╨░╨┤╨░╤В╤М╤Б╤П, ╨┤╨╗╤П ╨┐╨░╤В╤А╤Г╨╗╨╕╤А╨╛╨▓╨░╨╜╨╕╤П ╤Б╨╡╨║╤В╨╛╤А╨░ ╨┤╨╗╤П ╨╖╨░╤Й╨╕╤В╤Л ╨╛╤В ╨▓╤А╨░╨╢╨╡╤Б╨║╨╕╤Е ╤И╨░╤В╤В╨╗╨╛╨▓. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨┤╨▓╤Г╨╝╤П ╨Р╨Ф╨Ь╨е-23 ╨в╨╛╨▓╨╡╨║, ╨░ ╤В╨░╨║╨╢╨╡ ╨┤╨▓╤Г╨╝╤П ╨Ь220 ╨а╤Г╨▒╨╕╨║╨╛╨╜ ╨┤╨╗╤П ╨▒╨╛╨╗╨╡╨╡ ╤Б╨╡╤А╤М╤С╨╖╨╜╤Л╤Е ╤Б╤В╨╛╨╗╨║╨╜╨╛╨▓╨╡╨╜╨╕╨╣. # Ru-Localization
   price: 92000
   category: Medium
   group: Sr
   access: Brig # Oddball, matches guard ID, specific enough to exclude cadets
   mapchecker_group_override: Security  # Treat this as a security vessel for mapchecker purposes
-  shuttlePath: /Maps/_Mono/Shuttles/parabellum.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/parabellum.yml
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -25,15 +25,15 @@
 
 - type: gameMap
   id: Parabellum
-  mapName: 'Парабеллум' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/parabellum.yml
+  mapName: '╨Я╨░╤А╨░╨▒╨╡╨╗╨╗╤Г╨╝' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/parabellum.yml
   minPlayers: 0
   stations:
     Parabellum:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Парабеллум{1}'
+          mapNameTemplate: '╨Я╨░╤А╨░╨▒╨╡╨╗╨╗╤Г╨╝{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

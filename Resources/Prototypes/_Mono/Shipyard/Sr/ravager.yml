@@ -5,15 +5,16 @@
 - type: vessel
   id: Ravager
   parent: BaseVessel
-  name: Опустошитель # Ru-Localization
-  description: Большой материнский корабль безопасности класса, созданный для быстрой нейтрализации угроз гражданам. # Ru-Localization
+  name: ╨Ю╨┐╤Г╤Б╤В╨╛╤И╨╕╤В╨╡╨╗╤М # Ru-Localization
+  description: ╨С╨╛╨╗╤М╤И╨╛╨╣ ╨╝╨░╤В╨╡╤А╨╕╨╜╤Б╨║╨╕╨╣ ╨║╨╛╤А╨░╨▒╨╗╤М ╨▒╨╡╨╖╨╛╨┐╨░╤Б╨╜╨╛╤Б╤В╨╕ ╨║╨╗╨░╤Б╤Б╨░, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨▒╤Л╤Б╤В╤А╨╛╨╣ ╨╜╨╡╨╣╤В╤А╨░╨╗╨╕╨╖╨░╤Ж╨╕╨╕ ╤Г╨│╤А╨╛╨╖ ╨│╤А╨░╨╢╨┤╨░╨╜╨░╨╝. # Ru-Localization
   price: 875800
   purchasable: false # voucher only
   category: Large
   group: Sr
   access: Security # Shouldn't be buyable with sec voucher.
   mapchecker_group_override: Security
-  shuttlePath: /Maps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
+  purchasable: false # voucher only
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -26,15 +27,15 @@
 
 - type: gameMap
   id: Ravager
-  mapName: 'Опустошитель' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
+  mapName: '╨Ю╨┐╤Г╤Б╤В╨╛╤И╨╕╤В╨╡╨╗╤М' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
   minPlayers: 0
   stations:
     Ravager:
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Опустошитель{1}' # Ru-Localization
+        mapNameTemplate: '╨Ю╨┐╤Г╤Б╤В╨╛╤И╨╕╤В╨╡╨╗╤М{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'
       - type: StationJobs

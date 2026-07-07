@@ -5,14 +5,14 @@
 - type: vessel
   id: Manus
   parent: BaseVessel
-  name: Манус # Ru-Localization
-  description: Корабль в форме когтя с внушительным вооружением. Имеет четыре АОЭД-7 Дравона, два АСМ-302 Ванека и один ЭМИ ОАД-31 Тарникс. # Ru-Localization
+  name: ╨Ь╨░╨╜╤Г╤Б # Ru-Localization
+  description: ╨Ъ╨╛╤А╨░╨▒╨╗╤М ╨▓ ╤Д╨╛╤А╨╝╨╡ ╨║╨╛╨│╤В╤П ╤Б ╨▓╨╜╤Г╤И╨╕╤В╨╡╨╗╤М╨╜╤Л╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╨╡╨╝. ╨Ш╨╝╨╡╨╡╤В ╤З╨╡╤В╤Л╤А╨╡ ╨Р╨Ю╨н╨Ф-7 ╨Ф╤А╨░╨▓╨╛╨╜╨░, ╨┤╨▓╨░ ╨Р╨б╨Ь-302 ╨Т╨░╨╜╨╡╨║╨░ ╨╕ ╨╛╨┤╨╕╨╜ ╨н╨Ь╨Ш ╨Ю╨Р╨Ф-31 ╨в╨░╤А╨╜╨╕╨║╤Б. # Ru-Localization
   price: 62125
   category: Medium
   group: Sr
   access: Brig # Oddball, matches guard ID, specific enough to exclude cadets
   mapchecker_group_override: Security  # Treat this as a security vessel for mapchecker purposes
-  shuttlePath: /Maps/_Mono/Shuttles/manus.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/manus.yml
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
@@ -25,15 +25,15 @@
 
 - type: gameMap
   id: Manus
-  mapName: 'Манус' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/manus.yml
+  mapName: '╨Ь╨░╨╜╤Г╤Б' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/manus.yml
   minPlayers: 0
   stations:
     Manus:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Манус{1}' # Ru-Localization
+          mapNameTemplate: '╨Ь╨░╨╜╤Г╤Б{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

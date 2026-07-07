@@ -7,12 +7,12 @@
 - type: vessel
   id: Tzipora
   parent: BaseVessel
-  name: Тзипора # Ru-Localization
-  description: Продвинутый медицинский шаттл, оснащённый криокапсулой, химической лабораторией и другим хирургическим оборудованием. # Ru-Localization
+  name: ╨в╨╖╨╕╨┐╨╛╤А╨░ # Ru-Localization
+  description: ╨Я╤А╨╛╨┤╨▓╨╕╨╜╤Г╤В╤Л╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨║╤А╨╕╨╛╨║╨░╨┐╤Б╤Г╨╗╨╛╨╣, ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨╣ ╨╗╨░╨▒╨╛╤А╨░╤В╨╛╤А╨╕╨╡╨╣ ╨╕ ╨┤╤А╤Г╨│╨╕╨╝ ╤Е╨╕╤А╤Г╤А╨│╨╕╤З╨╡╤Б╨║╨╕╨╝ ╨╛╨▒╨╛╤А╤Г╨┤╨╛╨▓╨░╨╜╨╕╨╡╨╝. # Ru-Localization
   price: 145530
   category: Large
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/tzipora.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/tzipora.yml
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -26,15 +26,15 @@
 
 - type: gameMap
   id: Tzipora
-  mapName: 'Тзипора' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/tzipora.yml
+  mapName: '╨в╨╖╨╕╨┐╨╛╤А╨░' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/tzipora.yml
   minPlayers: 0
   stations:
     Tzipora:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Тзипора{1}' # Ru-Localization
+          mapNameTemplate: '╨в╨╖╨╕╨┐╨╛╤А╨░{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -5,14 +5,15 @@
 - type: vessel
   id: Tarantula
   parent: BaseVesselAntag
-  name: Тарантула # Ru-Localization
-  description: Живучий шаттл, созданный для затяжных боев на ближней дистанции. Оснащён четырьмя Цербера и двумя Мародёрами, чтобы испепелять корабли противника. # Ru-Localization
+  name: ╨в╨░╤А╨░╨╜╤В╤Г╨╗╨░ # Ru-Localization
+  description: ╨Ц╨╕╨▓╤Г╤З╨╕╨╣ ╤И╨░╤В╤В╨╗, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨╖╨░╤В╤П╨╢╨╜╤Л╤Е ╨▒╨╛╨╡╨▓ ╨╜╨░ ╨▒╨╗╨╕╨╢╨╜╨╡╨╣ ╨┤╨╕╤Б╤В╨░╨╜╤Ж╨╕╨╕. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨ж╨╡╤А╨▒╨╡╤А╨░ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨Ь╨░╤А╨╛╨┤╤С╤А╨░╨╝╨╕, ╤З╤В╨╛╨▒╤Л ╨╕╤Б╨┐╨╡╨┐╨╡╨╗╤П╤В╤М ╨║╨╛╤А╨░╨▒╨╗╨╕ ╨┐╤А╨╛╤В╨╕╨▓╨╜╨╕╨║╨░. # Ru-Localization
   price: 140850
   purchasable: false # voucher only
   category: Medium
   group: Security
   access: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/tarantula.yml
+  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -26,15 +27,15 @@
 
 - type: gameMap
   id: Tarantula
-  mapName: 'Тарантула' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
+  mapName: '╨в╨░╤А╨░╨╜╤В╤Г╨╗╨░' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/tarantula.yml
   minPlayers: 0
   stations:
     Tarantula:
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Тарантула{1}' # Ru-Localization
+        mapNameTemplate: '╨в╨░╤А╨░╨╜╤В╤Г╨╗╨░{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -42,4 +43,3 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
-

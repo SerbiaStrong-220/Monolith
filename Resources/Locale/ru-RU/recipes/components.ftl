@@ -28,3 +28,6 @@ construction-graph-component-welder = сварочный аппарат
 construction-graph-component-encryption-key = ключ шифрования
 construction-graph-component-any-tabletop-computer-circuit-board = любая консольная настольная плата
 construction-graph-component-any-wallmount-computer-circuit-board = любая консольная настенная плата
+
+construction-graph-component-pdv-cyborg-intrinsics = PDV Cyborg Intrinsics
+construction-graph-component-tsf-cyborg-intrinsics = TSF Cyborg Intrinsics

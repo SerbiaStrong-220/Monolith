@@ -1,13 +1,13 @@
 - type: vessel
   id: Talon
   parent: BaseVesselAntag
-  name: Коготь # Ru-Localization
-  description: Тяжёлый перехватчик синдиката с четырьмя носовыми Клыками и двумя боковыми Гадюками. # Ru-Localization
+  name: ╨Ъ╨╛╨│╨╛╤В╤М # Ru-Localization
+  description: ╨в╤П╨╢╤С╨╗╤Л╨╣ ╨┐╨╡╤А╨╡╤Е╨▓╨░╤В╤З╨╕╨║ ╤Б╨╕╨╜╨┤╨╕╨║╨░╤В╨░ ╤Б ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨╜╨╛╤Б╨╛╨▓╤Л╨╝╨╕ ╨Ъ╨╗╤Л╨║╨░╨╝╨╕ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨▒╨╛╨║╨╛╨▓╤Л╨╝╨╕ ╨У╨░╨┤╤О╨║╨░╨╝╨╕. # Ru-Localization
   price: 45000
   category: Small
   group: Syndicate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/talon.yml
   purchasable: false # Exodus syndicate voucher only
-  shuttlePath: /Maps/_Mono/Shuttles/Syndicate/talon.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -20,15 +20,15 @@
 
 - type: gameMap
   id: Talon
-  mapName: 'Коготь' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Syndicate/talon.yml
+  mapName: '╨Ъ╨╛╨│╨╛╤В╤М' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Syndicate/talon.yml
   minPlayers: 0
   stations:
     Talon:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Коготь{1}' # Ru-Localization
+          mapNameTemplate: '╨Ъ╨╛╨│╨╛╤В╤М{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

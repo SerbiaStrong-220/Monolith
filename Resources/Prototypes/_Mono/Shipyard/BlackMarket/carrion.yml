@@ -3,13 +3,13 @@
 - type: vessel
   id: Carrion
   parent: BaseVesselAntag
-  name: Керрион # Ru-Localization
-  description: Истребитель, вооружённый четырьмя 90-мм Дравонами и малым боевым отсеком вооружения. Создан для разведки и скоротечных боёв на больших скоростях. # Ru-Localization
+  name: ╨Ъ╨╡╤А╤А╨╕╨╛╨╜ # Ru-Localization
+  description: ╨Ш╤Б╤В╤А╨╡╨▒╨╕╤В╨╡╨╗╤М, ╨▓╨╛╨╛╤А╤Г╨╢╤С╨╜╨╜╤Л╨╣ ╤З╨╡╤В╤Л╤А╤М╨╝╤П 90-╨╝╨╝ ╨Ф╤А╨░╨▓╨╛╨╜╨░╨╝╨╕ ╨╕ ╨╝╨░╨╗╤Л╨╝ ╨▒╨╛╨╡╨▓╤Л╨╝ ╨╛╤В╤Б╨╡╨║╨╛╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╤П. ╨б╨╛╨╖╨┤╨░╨╜ ╨┤╨╗╤П ╤А╨░╨╖╨▓╨╡╨┤╨║╨╕ ╨╕ ╤Б╨║╨╛╤А╨╛╤В╨╡╤З╨╜╤Л╤Е ╨▒╨╛╤С╨▓ ╨╜╨░ ╨▒╨╛╨╗╤М╤И╨╕╤Е ╤Б╨║╨╛╤А╨╛╤Б╤В╤П╤Е. # Ru-Localization
   price: 29000 #Appraised at 26000-ish
   category: Small
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/carrion.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/carrion.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -23,15 +23,15 @@
 
 - type: gameMap
   id: Carrion
-  mapName: 'Керрион' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/BlackMarket/carrion.yml
+  mapName: '╨Ъ╨╡╤А╤А╨╕╨╛╨╜' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/carrion.yml
   minPlayers: 0
   stations:
     Carrion:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Керрион{1}' # Ru-Localization
+          mapNameTemplate: '╨Ъ╨╡╤А╤А╨╕╨╛╨╜{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

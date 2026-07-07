@@ -7,21 +7,22 @@
   purchasable: false # voucher only
   category: Large
   group: Custom
-  access: USSP
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/Ledokol/Attatchments/kopye.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/Ledokol/Attachments/kopye.yml
   guidebookPage: Null
 
 - type: gameMap
   id: Kopye
   mapName: 'М-Копьё' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/Ledokol/Attatchments/kopye.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/Ledokol/Attachments/kopye.yml
   minPlayers: 0
   stations:
     Kopye:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'М-Копьё{1}' # Ru-Localization
+          mapNameTemplate: 'М-Копьё СССП Мод{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

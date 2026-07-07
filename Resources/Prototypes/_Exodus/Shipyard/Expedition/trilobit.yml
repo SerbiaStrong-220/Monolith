@@ -7,7 +7,7 @@
   category: Medium
   group: Expedition
   access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/Expedition/trilobit.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Expedition/trilobit.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -18,7 +18,7 @@
 - type: gameMap
   id: Trilobit
   mapName: 'Трилобит'
-  mapPath: /Maps/_Exodus/Shuttles/Expedition/trilobit.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/Expedition/trilobit.yml
   minPlayers: 0
   stations:
     Trilobit:

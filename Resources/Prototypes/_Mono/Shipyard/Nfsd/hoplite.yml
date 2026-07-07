@@ -2,13 +2,13 @@
 - type: vessel
   id: Hoplite
   parent: BaseVesselAntag
-  name: Гоплит # Ru-Localization
-  description: Патрульный шаттл, предназначенный для перехвата контрабандистов и легких вражеских кораблей, оснащённый мощными двигателями и ЭМИ-орудиями. Вооружён двумя Рубиконами, двумя плазменными пульсаторами и двумя Мародёрами. # Ru-Localization
+  name: ╨У╨╛╨┐╨╗╨╕╤В # Ru-Localization
+  description: ╨Я╨░╤В╤А╤Г╨╗╤М╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╨┐╤А╨╡╨┤╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨┐╨╡╤А╨╡╤Е╨▓╨░╤В╨░ ╨║╨╛╨╜╤В╤А╨░╨▒╨░╨╜╨┤╨╕╤Б╤В╨╛╨▓ ╨╕ ╨╗╨╡╨│╨║╨╕╤Е ╨▓╤А╨░╨╢╨╡╤Б╨║╨╕╤Е ╨║╨╛╤А╨░╨▒╨╗╨╡╨╣, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨╝╨╛╤Й╨╜╤Л╨╝╨╕ ╨┤╨▓╨╕╨│╨░╤В╨╡╨╗╤П╨╝╨╕ ╨╕ ╨н╨Ь╨Ш-╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕. ╨Т╨╛╨╛╤А╤Г╨╢╤С╨╜ ╨┤╨▓╤Г╨╝╤П ╨а╤Г╨▒╨╕╨║╨╛╨╜╨░╨╝╨╕, ╨┤╨▓╤Г╨╝╤П ╨┐╨╗╨░╨╖╨╝╨╡╨╜╨╜╤Л╨╝╨╕ ╨┐╤Г╨╗╤М╤Б╨░╤В╨╛╤А╨░╨╝╨╕ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨Ь╨░╤А╨╛╨┤╤С╤А╨░╨╝╨╕. # Ru-Localization
   price: 78500
   category: Small
   group: Security
   access: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/hoplite.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/hoplite.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -22,15 +22,15 @@
 
 - type: gameMap
   id: Hoplite
-  mapName: 'Гоплит' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/hoplite.yml
+  mapName: '╨У╨╛╨┐╨╗╨╕╤В' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/hoplite.yml
   minPlayers: 0
   stations:
     Hoplite:
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Гоплит{1}' # Ru-Localization
+        mapNameTemplate: '╨У╨╛╨┐╨╗╨╕╤В{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

@@ -3,15 +3,17 @@
 - type: vessel
   id: Andromeda
   parent: BaseVesselAntag
-  name: Андромеда # Ru-Localization
-  description: Экспериментальный тяжёлый фрегат с мощным залповым носовым вооружением и высокой манёвренностью. # Ru-Localization
+  name: ╨Р╨╜╨┤╤А╨╛╨╝╨╡╨┤╨░ # Ru-Localization
+  description: ╨н╨║╤Б╨┐╨╡╤А╨╕╨╝╨╡╨╜╤В╨░╨╗╤М╨╜╤Л╨╣ ╤В╤П╨╢╤С╨╗╤Л╨╣ ╤Д╤А╨╡╨│╨░╤В ╤Б ╨╝╨╛╤Й╨╜╤Л╨╝ ╨╖╨░╨╗╨┐╨╛╨▓╤Л╨╝ ╨╜╨╛╤Б╨╛╨▓╤Л╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╨╡╨╝ ╨╕ ╨▓╤Л╤Б╨╛╨║╨╛╨╣ ╨╝╨░╨╜╤С╨▓╤А╨╡╨╜╨╜╨╛╤Б╤В╤М╤О. # Ru-Localization
   limit: 3
+  hyperwarLimit: 5
   price: 320000
   purchasable: false # voucher only
   category: Large
   group: Security
   access: Armory
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/andromeda.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/andromeda.yml
+  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -24,18 +26,18 @@
 
 - type: gameMap
   id: Andromeda
-  mapName: 'Андромеда' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/andromeda.yml
+  mapName: '╨Р╨╜╨┤╤А╨╛╨╝╨╡╨┤╨░' # Ru-Localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/andromeda.yml
   minPlayers: 0
   stations:
     Andromeda:
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "Достаточно орудий, чтобы затмить звёзды." # Ru-Localization
+        description: "╨Ф╨╛╤Б╤В╨░╤В╨╛╤З╨╜╨╛ ╨╛╤А╤Г╨┤╨╕╨╣, ╤З╤В╨╛╨▒╤Л ╨╖╨░╤В╨╝╨╕╤В╤М ╨╖╨▓╤С╨╖╨┤╤Л." # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Андромеда{1}' # Ru-Localization
+        mapNameTemplate: '╨Р╨╜╨┤╤А╨╛╨╝╨╡╨┤╨░{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
