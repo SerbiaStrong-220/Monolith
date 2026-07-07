@@ -5,3 +5,11 @@
   rules: ghost-role-information-silicon-rules
   entityPrototype: PlayerBorgAsakimRedacted
   whitelisted: false
+
+- type: ghostRole
+  id: ColossusSecurityBorg
+  name: ghost-role-information-colossus-security-borg
+  description: ghost-role-information-colossus-security-borg-description
+  rules: ghost-role-information-silicon-rules
+  entityPrototype: PlayerBorgColossusSecurity
+  whitelisted: false

@@ -1,0 +1,37 @@
+- type: vessel
+  id: Ganimed
+  parent: BaseVesselAntag
+  name: Ганимед
+  description: Тяжеловооружённый эскорт Династии Фаэтон, рассчитанный на длительные боевые вылеты.
+  price: 300000
+  purchasable: false # voucher only
+  category: Medium
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /Maps/_Exodus/Shuttles/PDV/ganimed.yml
+  guidebookPage: Null
+  class:
+  - Pirate
+  - Pursuit
+  - Corvette
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Ganimed
+  mapName: 'Ганимед'
+  mapPath: /Maps/_Exodus/Shuttles/PDV/ganimed.yml
+  minPlayers: 0
+  stations:
+    Ganimed:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Ганимед{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Pirate: [ 0, 0 ]
+          PdvBorg: [ 0, 0 ]

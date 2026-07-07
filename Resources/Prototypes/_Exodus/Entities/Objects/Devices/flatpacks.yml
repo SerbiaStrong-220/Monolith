@@ -16,3 +16,21 @@
   components:
   - type: Flatpack
     entity: GeneratorASRGDamaged
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretFlareFlatpack
+  name: GS-002 flare system flatpack
+  description: A flatpack used for constructing a GS-002 Sunny flare system.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretFlare
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretTyphonFlatpack
+  name: TYPHON autocannon flatpack
+  description: A flatpack used for constructing a TYPHON 220mm autocannon.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretTyphon

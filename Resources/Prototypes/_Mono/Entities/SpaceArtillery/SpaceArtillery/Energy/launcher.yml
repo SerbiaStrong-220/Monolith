@@ -208,7 +208,7 @@
     range: 500
   - type: FireControlRotate
   - type: Gun
-    fireRate: 2 # Exodus-Balance: 5>2
+    fireRate: 4 # Exodus-Balance: 5>4
     recoil: 2 # 2/25x
     projectileSpeed: 20
     minAngle: 0
@@ -252,8 +252,8 @@
   - type: ShipRepairable
     repairTime: 10
     repairCost: 20
-  - type: OreDropModifier # Exodus: half ore drop by ship gun
-    modifier: 0.5
+#  - type: OreDropModifier # Exodus: half ore drop by ship gun
+#    modifier: 0.5
 
 # RUBICON
 
@@ -616,7 +616,7 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: Gun
-    fireRate: 10 # Exodus-Balance: 20>10
+    fireRate: 15 # Exodus-Balance: 20>15
     recoil: 0
     minAngle: 0
     maxAngle: 0
@@ -650,8 +650,8 @@
   - type: ShipRepairable
     repairTime: 25
     repairCost: 100
-  - type: OreDropModifier # Exodus: half ore drop by ship gun
-    modifier: 0.5
+#  - type: OreDropModifier # Exodus: half ore drop by ship gun
+#    modifier: 0.5
 
 # PRE- FRACTURE
 

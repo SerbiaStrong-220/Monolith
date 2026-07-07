@@ -1,0 +1,10 @@
+ent-FoamTrapBase = foam trap
+    .desc = A concealed trap loaded with a foam grenade. Releases foam when destroyed.
+ent-FoamTrapAssembly = foam trap assembly
+    .desc = An incomplete foam trap frame. Insert a foam grenade to arm it.
+ent-FoamTrapAluminium = aluminium foam trap
+    .desc = An armed trap loaded with an aluminium foam grenade. Releases foam when destroyed.
+ent-FoamTrapNanolaminate = nanolaminate foam trap
+    .desc = An armed trap loaded with a nanolaminate foam grenade. Releases reinforced foam when destroyed.
+ent-FoamTrapIron = iron foam trap
+    .desc = An armed trap loaded with an iron foam grenade. Releases iron foam when destroyed.

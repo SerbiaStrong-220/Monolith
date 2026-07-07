@@ -51,6 +51,7 @@
       - id: WeaponOverseerMace # Mono
       - id: PhoneInstrumentHigh # Mono
       - id: WeaponCaseShortBombCollar # Mono
+      - id: TechDiskColossusBorgModules # Exodus colossus-borg-modules
 
 - type: entity
   id: LockerNfsdSheriffFilled

@@ -47,6 +47,24 @@
       state: robot
 
 - type: entity
+  name: AI remote borg spawner (Colossus Security)
+  id: SpawnAiRemoteBorgColossusSecurity
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgColossusSecurity
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/security_colossus.rsi
+      state: sec_borg_red
+    - sprite: _Exodus/Mobs/Silicon/security_colossus.rsi
+      state: sec_borg_e_blue
+      shader: unshaded
+
+- type: entity
   name: AI remote borg spawner (PDV)
   id: SpawnAiRemoteBorgPDV
   parent: MarkerBase

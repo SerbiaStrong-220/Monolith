@@ -5,15 +5,15 @@
 - type: species
   id: Hydrakin
   name: species-name-hydrakin
-  roundStart: false # Exodus
+  roundStart: true # Exodus-restore
   prototype: MobHydrakin
   sprites: MobHydrakinSprites
   defaultSkinTone: "#ffffff"
   markingLimits: MobHydrakinMarkingLimits
   dollPrototype: MobHydrakinDummy
   skinColoration: Hues
-  # maleFirstNames: names_hydrakin_unisex
-  # femaleFirstNames: names_hydrakin_unisex
+  maleFirstNames: NamesHydrakinUnisex # Exodus-hydrakin-names
+  femaleFirstNames: NamesHydrakinUnisex # Exodus-hydrakin-names
   naming: First
   sexes:
   - Unsexed

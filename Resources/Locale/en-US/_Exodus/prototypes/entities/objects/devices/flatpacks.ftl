@@ -3,3 +3,7 @@ ent-GeneratorASRGFlatpack = ASRG generator flatpack
 ent-GeneratorASRGDamagedFlatpack = ASRG generator flatpack
     .suffix = Damaged
     .desc = A flatpack used for constructing a radioisotope Stirling generator. The packaging seems to be somewhat damaged.
+ent-WeaponTurretFlareFlatpack = GS-002 flare system flatpack
+    .desc = A flatpack used for constructing a GS-002 Sunny flare system.
+ent-WeaponTurretTyphonFlatpack = TYPHON autocannon flatpack
+    .desc = A flatpack used for constructing a TYPHON 220mm autocannon.

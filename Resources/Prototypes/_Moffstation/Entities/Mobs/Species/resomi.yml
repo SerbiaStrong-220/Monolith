@@ -96,7 +96,14 @@
       242: 0.6
       196: 0.4
   - type: MovementSpeedModifier
+    baseWalkSpeed: 2.875 # Exodus-restore: +15% over default 2.5
+    baseSprintSpeed: 5.175 # Exodus-restore: +15% over default 4.5
     weightlessAcceleration: 2.5 # Birb move fast in zero-g
+  - type: MobThresholds # Exodus-restore: fragile resomi — half standard HP thresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      100: Dead
   - type: PseudoItem # Baggable; certified smol ops
     storedOffset: -10,0
     shape:

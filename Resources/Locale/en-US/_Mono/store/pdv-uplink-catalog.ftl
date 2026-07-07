@@ -271,8 +271,10 @@ uplink-pdv-t1-garm-voucher-desc = A small card that contains the data for the pr
 uplink-pdv-t1-fenrir-voucher-name = PDV Fenrir LPC [T1]
 uplink-pdv-t1-fenrir-voucher-desc = A small card that contains the data for the procurement of a Fenrir-class railgun destroyer from the flagship's reserves.
 
-uplink-pdv-t1-scorpion-voucher-name = PDV Scorpion LPC [T1]
-uplink-pdv-t1-scorpion-voucher-desc = A small card that contains the data for the procurement of a Scorpion-class escort from the flagship's reserves.
+# Exodus-begin - Ganimed voucher option
+uplink-pdv-t1-scorpion-voucher-name = PDV Scorpion/Ganimed LPC [T1]
+uplink-pdv-t1-scorpion-voucher-desc = A small card that authorizes the procurement of either a Scorpion- or Ganimed-class escort from the flagship's reserves.
+# Exodus-end
 
 uplink-pdv-t1-bastion-voucher-name = PDV Bastion LPC [T1]
 uplink-pdv-t1-bastion-voucher-desc = A small card that contains the data for the procurement of a Bastion-class brawler from the flagship's reserves.

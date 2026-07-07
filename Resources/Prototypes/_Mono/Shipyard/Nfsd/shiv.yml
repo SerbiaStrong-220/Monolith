@@ -8,7 +8,7 @@
   price: 60000
   category: Small
   group: Security
-  access: Command # Exodus-Cadet-No-TSF-Shutles
+  access: Security
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/shiv.yml
   guidebookPage: Null
   class:

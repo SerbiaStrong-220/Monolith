@@ -1,0 +1,211 @@
+- type: cargoProduct
+  id: ShuttleTurretDravon
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/dravon.rsi
+    state: space_artillery
+  product: CrateWeaponTurretDravon
+  cost: 45000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+#- type: cargoProduct
+#  id: ShuttleTurretFang
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/fang.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretFang
+#  cost: 115000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretLongbow
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/longbow.rsi
+    state: space_artillery
+  product: CrateWeaponTurretLongbow
+  cost: 80000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+# EMP missle begin
+#- type: cargoProduct
+#  id: ShuttleTurretM220
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/rubicon.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretM220
+#  cost: 60000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
+
+#- type: cargoProduct
+#  id: ShuttleTurretTarnyxReload
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/tarnyx.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretTarnyxReload
+#  cost: 50000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
+
+#- type: cargoProduct
+#  id: ShuttleTurretTovek
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/tovek.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretTovek
+#  cost: 50000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
+# EMP missle end
+
+- type: cargoProduct
+  id: ShuttleTurretVespera
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/vespera.rsi
+    state: space_artillery
+  product: CrateWeaponTurretVespera
+  cost: 60000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretVanyk
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/vanyk.rsi
+    state: space_artillery
+  product: CrateWeaponTurretVanyk
+  cost: 50000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretRAC30
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/rac-30_draupnir.rsi
+    state: space_artillery
+  product: CrateWeaponTurretRAC30
+  cost: 35000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretPrometheus
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/prometheus.rsi
+    state: space_artillery
+  product: CrateWeaponTurretPrometheus
+  cost: 45000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretL1Phalanx
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/hlgg9.rsi
+    state: space_artillery
+  product: CrateWeaponTurretL1Phalanx
+  cost: 30000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretAdder
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/adder.rsi
+    state: space_artillery
+  product: CrateWeaponTurretAdder
+  cost: 25000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretCerberus
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/cerberus.rsi
+    state: space_artillery
+  product: CrateWeaponTurretCerberus
+  cost: 50000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretType35
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/t35.rsi
+    state: space_artillery
+  product: CrateWeaponTurretType35
+  cost: 35000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+#- type: cargoProduct
+#  id: ShuttleTurretType54
+#  icon:
+#    sprite: _Mono/Objects/ShuttleWeapons/t54.rsi
+#    state: space_artillery
+#  product: CrateWeaponTurretType54
+#  cost: 60000
+#  category: cargoproduct-category-name-shuttle
+#  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretASM220
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/asm220.rsi
+    state: space_artillery
+  product: CrateWeaponTurretASM220
+  cost: 50000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretAK570
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/artillery.rsi
+    state: space_artillery
+  product: CrateWeaponTurretAK570
+  cost: 57000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretL85
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/L85.rsi
+    state: icon
+  product: CrateWeaponTurretL85
+  cost: 20000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleTurretM25
+  icon:
+    sprite: _Mono/Objects/ShuttleWeapons/m25.rsi
+    state: space_artillery
+  product: CrateWeaponTurretM25
+  cost: 25000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleAmmoLoader
+  icon:
+    sprite: _Mono/Objects/AmmoLoader/powdergate_sealed.rsi
+    state: icon
+  product: CrateAmmoLoader
+  cost: 15000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleAmmoLoaderSmall
+  icon:
+    sprite: _Mono/Objects/AmmoLoader/payloadgate_sealed.rsi
+    state: icon
+  product: CrateAmmoLoaderSmall
+  cost: 7500
+  category: cargoproduct-category-name-shuttle
+  group: market

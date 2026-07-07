@@ -102,6 +102,27 @@
   - type: RandomMetadata
     nameSegments: [MonoPDVBorgNameset]
 
+# Colossus-Central security borg
+- type: entity
+  id: AiRemoteBorgColossusSecurity
+  parent: BorgChassisColossusSecurity
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleColossusSecurity
+      - BorgModuleColossusCombat
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellCombat
+
 # ADS (Redacted) borg
 - type: entity
   id: AiRemoteBorgRedacted

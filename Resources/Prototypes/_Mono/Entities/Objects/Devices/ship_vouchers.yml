@@ -460,6 +460,7 @@
     companyName: PDV
     vessels:
     - Scorpion
+    - Ganimed # Exodus - alternative Scorpion voucher vessel
   - type: StaticPrice
     vendPrice: 20000
 

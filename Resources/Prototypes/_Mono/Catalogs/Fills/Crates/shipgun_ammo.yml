@@ -63,31 +63,31 @@
   parent: CrateAmmoSecureMercenary
   id: CrateAmmoBoxVanyk
   name: ASM-150 Vanyk HEAT missile box
-  description: Contains 60 missles. 2 full loads.
+  description: Contains 300 missiles. 10 full loads. # Exodus-cargo-extension
   components:
   - type: StorageFill
     contents:
     - id: VanykMagazine
-      amount: 2 # 2 reloads
+      amount: 10 # Exodus-cargo-extension
 
 - type: entity
   parent: CrateAmmoSecureMercenary
   id: CrateAmmoBoxVespera
   name: ADMP-50 Vespera HE missile box
-  description: Contains 12 bursts of 13 high-explosive missiles. 2 full loads.
+  description: Contains 60 bursts of 13 missiles. 10 full loads. # Exodus-cargo-extension
   components:
   - type: StorageFill
     contents:
     - id: MissileMagazine50mmHE
-      amount: 2 # 2 reload
+      amount: 10 # Exodus-cargo-extension
 
 - type: entity
   parent: CrateAmmoSecureMercenary
   id: CrateAmmoBoxTovek
   name: ASM-250 Tovek EMPHE missile box
-  description: Contains 4 missiles, 2 loads worth.
+  description: Contains 20 missiles, 10 loads worth. # Exodus-cargo-extension
   components:
   - type: StorageFill
     contents:
     - id: TovekCartridge
-      amount: 4 # 2 reloads
+      amount: 20 # Exodus-cargo-extension

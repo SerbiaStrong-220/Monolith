@@ -1,0 +1,14 @@
+- type: job
+  id: ColossusSecurityBorg
+  name: job-name-colossus-security-borg
+  description: job-description-colossus-security-borg
+  playTimeTracker: JobColossusSecurityBorg
+  setPreference: true
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 108000 # 30 hrs
+  canBeAntag: false
+  icon: JobIconBorg
+  supervisors: job-supervisors-hire
+  jobEntity: PlayerBorgColossusSecurity
+  applyTraits: false

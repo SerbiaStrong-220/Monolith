@@ -1,0 +1,106 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'life-insurance-window-title'}"
+    SetSize="530 540"
+    MinSize="530 540">
+    <!-- Terminal "screen" backing -->
+    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#16131C" />
+        </PanelContainer.PanelOverride>
+
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8 8 8 6">
+
+            <!-- Corporate header -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#2A2140" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Horizontal" Margin="8 6 8 6" VerticalAlignment="Center">
+                    <TextureRect TexturePath="/Textures/_Mono/Companies/ne_rd.png"
+                                 Stretch="KeepAspectCentered"
+                                 SetSize="56 56"
+                                 Margin="0 0 10 0" />
+                    <BoxContainer Orientation="Vertical" VerticalAlignment="Center" HorizontalExpand="True">
+                        <Label Text="{Loc 'life-insurance-brand-title'}"
+                               StyleClasses="LabelHeading"
+                               Modulate="#C9B3E6" />
+                        <Label Text="{Loc 'life-insurance-brand-subtitle'}"
+                               Modulate="#9573AF" />
+                        <Label Text="{Loc 'life-insurance-flavor-line'}"
+                               StyleClasses="LabelSubText"
+                               Modulate="#6E5E86" />
+                    </BoxContainer>
+                </BoxContainer>
+            </PanelContainer>
+
+            <!-- Accent divider -->
+            <PanelContainer MinSize="0 2" Margin="0 4 0 6">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#9573AF" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+
+            <!-- Scanner controls -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1E1A28" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical" Margin="8 6 8 8">
+                    <Label Text="{Loc 'life-insurance-section-scanner'}" Modulate="#9573AF" StyleClasses="LabelKeyText" />
+                    <Label Name="ScannerOccupantLabel" Text="{Loc 'life-insurance-scanner-empty'}" Margin="0 2 0 4" />
+                    <Button Name="RecordButton"
+                            Access="Public"
+                            Text="{Loc 'life-insurance-record-button'}"
+                            HorizontalAlignment="Stretch" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <Control MinSize="0 6" />
+
+            <!-- Recorded people list -->
+            <Label Text="{Loc 'life-insurance-records-label'}" Modulate="#9573AF" StyleClasses="LabelKeyText" />
+            <PanelContainer VerticalExpand="True" Margin="0 2 0 0">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1E1A28" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                    <BoxContainer Name="RecordList"
+                                  Access="Public"
+                                  Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  Margin="6 6 6 6" />
+                </ScrollContainer>
+            </PanelContainer>
+
+            <Control MinSize="0 6" />
+
+            <!-- Machine status -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1E1A28" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical" Margin="8 6 8 6">
+                    <Label Text="{Loc 'life-insurance-section-status'}" Modulate="#9573AF" StyleClasses="LabelKeyText" />
+                    <RichTextLabel Name="ScannerStatusLabel" Access="Public" HorizontalExpand="True" Margin="0 2 0 0" />
+                    <RichTextLabel Name="ClonerStatusLabel" Access="Public" HorizontalExpand="True" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <!-- Footer: OS version (bottom-left) + ownership tag -->
+            <BoxContainer Orientation="Horizontal" Margin="2 6 2 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'life-insurance-os-version'}"
+                       StyleClasses="LabelSubText"
+                       Modulate="#FFFFFF38"
+                       HorizontalAlignment="Left"
+                       HorizontalExpand="True" />
+                <Label Text="{Loc 'life-insurance-terminal-tag'}"
+                       StyleClasses="LabelSubText"
+                       Modulate="#FFFFFF30"
+                       HorizontalAlignment="Right" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</controls:FancyWindow>

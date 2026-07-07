@@ -23,6 +23,7 @@
   - NFJanitor
   - MailCarrier # nyano
   - SecurityGuard
+  - ColossusSecurityBorg # Exodus colossus-security-borg
 
 - type: department
   id: Antag

@@ -144,7 +144,7 @@ public sealed class OreMagnetSystem : EntitySystem
         {
             var (magnetUid, comp) = magnet;
             _lookupEnts.Clear();
-            _lookup.GetEntitiesInRange(mapId, magnetPos, comp.Radius, _lookupEnts, LookupFlags.Dynamic);
+            _lookup.GetEntitiesInRange(mapId, magnetPos, comp.Radius, _lookupEnts, LookupFlags.Dynamic | LookupFlags.Sundries);
 
             foreach (var ent in _lookupEnts)
             {

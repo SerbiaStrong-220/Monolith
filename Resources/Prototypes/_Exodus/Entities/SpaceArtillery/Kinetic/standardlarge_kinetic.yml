@@ -1,0 +1,52 @@
+# TYPHON 220mm — single-barrel autocannon, fires SAPHE shells
+
+- type: entity
+  id: WeaponTurretTyphon
+  name: TYPHON 220mm autocannon
+  parent: WeaponTurretCyrexa
+  suffix: Large, T4
+  description: A single-barrel 220mm autocannon for sustained automatic fire. Fires 220mm auto shells with slightly reduced brute strength. Can be remotely activated or linked up to a GCS.
+  components:
+  - type: Anchorable
+    delay: 10
+  - type: Rotatable
+    rotateWhilePulling: false
+    rotateWhileAnchored: false
+    increment: 90
+  - type: Pullable
+  - type: PirateBountyItem
+    id: ShipWeapon
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/typhon.rsi
+    layers:
+    - state: space_artillery
+    scale: 1, 1
+  - type: Gun
+    projectileSpeed: 320
+    minAngle: 0
+    maxAngle: 4
+    fireRate: 0.25
+    recoil: 60
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    shootThermalSignature: 65000000
+    soundGunshot:
+      path: /Audio/_Mono/Weapons/Guns/Gunshots/cannon.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: SpaceArtillery
+    powerChargeRate: 12000
+    powerUsePassive: 1800
+    powerUseActive: 0
+  - type: BallisticAmmoProvider
+    infiniteUnspawned: true
+    whitelist:
+      tags:
+      - 220mmCartridge
+    capacity: 14
+    proto: 220mmCartridgeSAPHE
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ShipGunClass
+    shipClass: Heavy
