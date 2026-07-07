@@ -9,7 +9,7 @@
   category: Large
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/antares.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/antares.yml
   addComponents:
   - type: NpcFactionMember
     factions:
@@ -28,7 +28,7 @@
 - type: gameMap
   id: Antares
   mapName: 'Антарес'
-  mapPath: /Maps/_Exodus/Shuttles/TSFCM/antares.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/antares.yml
   minPlayers: 0
   stations:
     Antares:

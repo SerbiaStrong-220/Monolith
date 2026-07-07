@@ -19,7 +19,6 @@
   group: BlackMarket
   access: Pirate
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
-  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:

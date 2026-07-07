@@ -12,7 +12,6 @@
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/altair.yml
-  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:

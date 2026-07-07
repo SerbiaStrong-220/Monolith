@@ -13,7 +13,6 @@
   group: Security
   access: Armory
   shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/andromeda.yml
-  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:

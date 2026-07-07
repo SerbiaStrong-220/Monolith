@@ -11,7 +11,6 @@
   group: BlackMarket
   access: Pirate
   shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/garm.yml
-  purchasable: false # voucher only
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:

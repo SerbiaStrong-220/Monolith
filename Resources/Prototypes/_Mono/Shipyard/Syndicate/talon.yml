@@ -6,8 +6,8 @@
   price: 45000
   category: Small
   group: Syndicate
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/talon.yml
   purchasable: false # Exodus syndicate voucher only
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/talon.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:

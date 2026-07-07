@@ -6,8 +6,8 @@
   price: 135000
   category: Medium
   group: Syndicate
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/hydra.yml
   purchasable: false # Exodus syndicate voucher only
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/hydra.yml
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:

@@ -7,7 +7,7 @@
   category: Small
   group: Shipyard
   access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/scout.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/scout.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -17,7 +17,7 @@
 - type: gameMap
   id: Scout
   mapName: 'Скаут'
-  mapPath: /Maps/_Exodus/Shuttles/scout.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/scout.yml
   minPlayers: 0
   stations:
     Scout:

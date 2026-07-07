@@ -8,7 +8,7 @@
   category: Medium
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
   addComponents:
   - type: NpcFactionMember
     factions:
@@ -23,7 +23,7 @@
 - type: gameMap
   id: SentinelF
   mapName: 'Центинел-Ф'
-  mapPath: /Maps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
   minPlayers: 0
   stations:
     SentinelF:

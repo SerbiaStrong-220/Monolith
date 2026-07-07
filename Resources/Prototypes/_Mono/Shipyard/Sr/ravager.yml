@@ -14,7 +14,6 @@
   access: Security # Shouldn't be buyable with sec voucher.
   mapchecker_group_override: Security
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
-  purchasable: false # voucher only
   addComponents:
   - type: NpcFactionMember # Exodus SecColossus faction
     factions:
