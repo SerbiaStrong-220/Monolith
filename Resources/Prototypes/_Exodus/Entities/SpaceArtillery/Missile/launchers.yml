@@ -129,8 +129,14 @@
     radarColor: "#ffffff"
     scale: 3
     shape: hexagon
+  - type: Projectile # Exodus sliver-rain-nerf
+    damage:
+      types:
+        Structural: 125
+        Blunt: 10
+        Heat: 30
   - type: Explosive
     explosionType: Default
-    maxIntensity: 50
-    intensitySlope: 3
-    totalIntensity: 150
+    maxIntensity: 25
+    intensitySlope: 2
+    totalIntensity: 100
