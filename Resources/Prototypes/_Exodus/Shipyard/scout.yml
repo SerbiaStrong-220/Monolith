@@ -6,7 +6,6 @@
   price: 89500
   category: Small
   group: Shipyard
-  access: Mercenary
   shuttlePath: /SharedMaps/_Exodus/Shuttles/scout.yml
   guidebookPage: Null
   class:
