@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Drakon
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Дракон # Ru-Localization
   description: Быстрый боевой шаттл с довольно опасным баллистическим арсеналом орудий. # Ru-Localization
   price: 85290

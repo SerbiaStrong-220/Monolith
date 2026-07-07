@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Sulak
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Судак # Ru-Localization
   description: Эсминец среднего размера, вооружённый Хароном для уничтожения крупных целей. # Ru-Localization
   limit: 2

@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Natisk
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Натиск # Ru-Localization
   description: Шаттл-танк со слоем усиленных стен под внешним корпусом, что позволяет ему выдерживать колоссальную нагрузку и использовать чудовищное количество огневой мощи. # Ru-Localization
   price: 53500

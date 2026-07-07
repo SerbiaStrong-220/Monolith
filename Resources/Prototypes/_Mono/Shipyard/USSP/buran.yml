@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Buran
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Буран # Ru-Localization
   description: Фрегат СССП с огромной бортовой огневой мощью и толстой бронёй. Слава великому комиссариату! # Ru-Localization
   limit: 2

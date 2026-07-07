@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Gruznyk
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Грузчик # Ru-Localization
   description: Тесный грузовой шаттл СССП, используемый для перевозки легальных и нелегальных грузов. Оснащён лёгким вооружением и бронёй, а также модулем БСС. Рекомендуемый размер экипажа - 1–3 человека. Произведён Народным производственным союзом. # Ru-Localization
   price: 64200

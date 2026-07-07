@@ -1,6 +1,6 @@
 - type: vessel
   id: Kopye
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: М-Копьё # Ru-Localization
   description: Тонкий заострённый таран, подходящий для стыковочного порта Ледокола. # Ru-Localization
   price: 45000

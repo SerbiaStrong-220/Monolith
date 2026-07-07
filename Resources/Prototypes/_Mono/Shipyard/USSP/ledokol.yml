@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Ledokol
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Ледокол # Ru-Localization
   description: Массивный шаттл, изначально созданный для тарана сквозь плотные поля обломков. Жертвует огневой мощью ради мощности двигателей. # Ru-Localization
   limit: 1

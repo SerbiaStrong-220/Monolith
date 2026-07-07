@@ -14,6 +14,7 @@
   color: "#00a1fc" # Exodus territory update
   disabled: true
   companyUplinkCurrency: FederationMilitaryCredit
+  npcFaction: TSFMC # Exodus - company NPC faction
 
 - type: company
   id: PDV
@@ -21,6 +22,7 @@
   color: "#D2B48C"
   disabled: true
   companyUplinkCurrency: Doubloon
+  npcFaction: PirateNF # Exodus - company NPC faction (PDV)
 
 - type: company
   id: MD
