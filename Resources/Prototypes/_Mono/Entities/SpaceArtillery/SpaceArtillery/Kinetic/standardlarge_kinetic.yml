@@ -5,7 +5,7 @@
   id: WeaponTurretCyrexa
   name: CYREXA 220mm cannon
   parent:
-  - BallisticArtilleryUnanchorableCartridge
+  - BallisticArtilleryCartridge # Exodus turret-anchorable (no RequiresGrid)
   - ShipGunTier4HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier4HP)
   - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
   suffix: Large, T4
@@ -89,7 +89,7 @@
   id: WeaponTurretBofors
   name: Bofors 255mm cannon
   parent:
-  - BallisticArtilleryUnanchorableCartridge
+  - BallisticArtilleryCartridge # Exodus turret-anchorable (no RequiresGrid)
   - ShipGunTier4HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier4HP)
   - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
   suffix: Large, T4

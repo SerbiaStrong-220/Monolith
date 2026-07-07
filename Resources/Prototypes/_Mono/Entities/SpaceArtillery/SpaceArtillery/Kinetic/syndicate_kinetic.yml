@@ -155,7 +155,7 @@
   name: Hydra 220mm battery
   suffix: Large, T3
   parent:
-  - BallisticArtilleryUnanchorable
+  - BallisticArtillery # Exodus turret-anchorable (no RequiresGrid)
   - ShipGunExplodes5x5 # Exodus self-destruct (blast size only; HP/armor stay unique below)
   description: A main cannonade of syndicate origin, the hydra is a monstrous tri-barreled battery of 220-millimeter pain, designed to shatter corpations' toughest vessels. Loads with a similar mechanism as the anaconda handgun.
   components:
