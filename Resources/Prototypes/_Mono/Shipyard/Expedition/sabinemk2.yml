@@ -14,6 +14,10 @@
   group: Expedition
   access: Mercenary
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/sabinemk2.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Expedition

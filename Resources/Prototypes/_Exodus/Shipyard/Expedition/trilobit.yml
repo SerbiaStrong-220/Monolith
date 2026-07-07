@@ -8,6 +8,10 @@
   group: Expedition
   access: Mercenary
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Expedition/trilobit.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Pursuit

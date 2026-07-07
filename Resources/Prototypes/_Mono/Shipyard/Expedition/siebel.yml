@@ -11,6 +11,10 @@
   group: Expedition
   access: Mercenary
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Expedition

@@ -12,6 +12,10 @@
   category: Medium
   group: Scrap
   shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/mudskipper.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Scrapyard

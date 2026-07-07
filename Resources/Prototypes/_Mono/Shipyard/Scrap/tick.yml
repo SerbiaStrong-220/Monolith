@@ -13,6 +13,10 @@
   category: Small
   group: Scrap
   shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/tick.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Scrapyard
