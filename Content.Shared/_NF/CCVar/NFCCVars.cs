@@ -52,7 +52,7 @@ public sealed class NFCCVars
     /// Exodus: Changed to _Exodus busdart.yml
     /// </summary>
     public static readonly CVarDef<string> PublicTransitBusMap =
-        CVarDef.Create("nf14.publictransit.bus_map", "/Maps/_Exodus/Shuttles/Bus/busdart.yml", CVar.SERVERONLY); // Exodus public-transit-bus — TODO: migrate to SharedMaps
+        CVarDef.Create("nf14.publictransit.bus_map", "/SharedMaps/_Exodus/Shuttles/Bus/busdart.yml", CVar.SERVERONLY); // Exodus public-transit-bus
 
     /// <summary>
     /// The amount of time the bus waits at a station.
