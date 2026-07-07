@@ -10,10 +10,10 @@
   parent: BaseVessel
   name: Стабби # Ru-Localization
   description: Бронированный лёгкий шаттл с минимальным медицинским оборудованием. Тесноват, но юркий и живучий, как пёс. # Ru-Localization
-  price: 31000 # appraised at ~25000 
+  price: 31000 # appraised at ~25000
   category: Small
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/stubby.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/stubby.yml
   guidebookPage: null
   class:
   - Medical
@@ -23,7 +23,7 @@
 - type: gameMap
   id: Stubby
   mapName: 'Стабби' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/stubby.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/stubby.yml
   minPlayers: 0
   stations:
     Stubby:

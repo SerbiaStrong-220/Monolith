@@ -79,7 +79,7 @@
   id: USSP
   name: ussp-name # Ru-Localization
   color: "#B01340"
-  disabled: false # Mercs are now USSP-pilled.
+  # disabled: true # Exodus disable-ussp-faction — USSP as lobby company
   description: ussp-description
   image: /Textures/_Mono/Companies/USSP.png
 
@@ -180,13 +180,15 @@
   image: /Textures/_Mono/Companies/CSP.png
   whitelisted: true
 
+# Exodus disable-viper-group — prototype kept for job refs; hidden from lobby
 - type: company
   id: TheViperGroup
   name: viper-group-name # Ru-Localization
   description: viper-group-description
   color: "#B82121"
-  image: /Textures/_Mono/Companies/thevipergroup.png # Example
-  whitelisted: true
+  image: /Textures/_Mono/Companies/thevipergroup.png
+  disabled: true
+  # whitelisted: true
 
 - type: company
   id: RedSailCorsairs

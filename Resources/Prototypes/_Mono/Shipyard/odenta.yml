@@ -13,7 +13,7 @@
   price: 112000 # 98K base + markup
   category: Medium
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/odenta.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/odenta.yml
   guidebookPage: null
   class:
   - Medical
@@ -25,7 +25,7 @@
 - type: gameMap
   id: Odenta
   mapName: 'Одента' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/odenta.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/odenta.yml
   minPlayers: 0
   stations:
     Odenta:

@@ -6,7 +6,7 @@
   price: 275000
   category: Large
   group: Syndicate
-  shuttlePath: /Maps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
   guidebookPage: Null
   class:
   - Syndicate
@@ -16,7 +16,7 @@
 - type: gameMap
   id: Infiltrator
   mapName: 'Лазутчик' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/Syndicate/infiltrator.yml # Exodus
   minPlayers: 0
   stations:
     Infiltrator:

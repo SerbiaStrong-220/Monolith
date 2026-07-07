@@ -13,7 +13,7 @@
   category: Medium
   group: Expedition
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/Expedition/fortunate.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/fortunate.yml
   guidebookPage: Null
   class:
   - Expedition
@@ -24,7 +24,7 @@
 - type: gameMap
   id: Fortunate
   mapName: 'Фортуна' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Expedition/fortunate.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Expedition/fortunate.yml
   minPlayers: 0
   stations:
     Fortunate:

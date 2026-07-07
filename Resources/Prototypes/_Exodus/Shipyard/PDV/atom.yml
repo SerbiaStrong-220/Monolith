@@ -9,7 +9,7 @@
   category: Small
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Exodus/Shuttles/PDV/atom.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/PDV/atom.yml
   guidebookPage: Null
   class:
   - Pirate
@@ -20,7 +20,7 @@
 - type: gameMap
   id: Atom
   mapName: 'Атом'
-  mapPath: /Maps/_Exodus/Shuttles/PDV/atom.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/PDV/atom.yml
   minPlayers: 0
   stations:
     Atom:

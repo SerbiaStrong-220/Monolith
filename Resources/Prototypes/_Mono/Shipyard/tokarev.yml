@@ -1,6 +1,6 @@
 # Author Info
 # GitHub: Leon-Krol
-# Discord: Vinny Shick 
+# Discord: Vinny Shick
 
 # Shuttle Notes:
 #
@@ -12,7 +12,7 @@
   price: 120000
   category: Large
   group: Medical
-  shuttlePath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   guidebookPage: null
   class:
   - Science
@@ -23,7 +23,7 @@
 - type: gameMap
   id: Tokarev
   mapName: 'Токарев' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
+  mapPath: /SharedMaps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
   minPlayers: 0
   stations:
     Tokarev:

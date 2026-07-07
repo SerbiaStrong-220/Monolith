@@ -5,11 +5,13 @@
   parent: BaseVesselAntag
   name: Сэнти # Ru-Localization
   description: Дорогостоящий фрегат, разработанный верфью Династии Фаэтона. Используется для стремительных атак на вражеские шаттлы. # Ru-Localization
+  limit: 2
+  hyperwarLimit: 4
   price: 345000
   purchasable: false # Voucher only
   category: Large
   group: BlackMarket
-  shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/saintie.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/saintie.yml
   guidebookPage: Null
   class:
   - Pirate
@@ -20,7 +22,7 @@
 - type: gameMap
   id: Saintie
   mapName: 'Сэнти' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/BlackMarket/saintie.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/saintie.yml
   minPlayers: 0
   stations:
     Saintie:

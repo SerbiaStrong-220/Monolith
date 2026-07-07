@@ -12,12 +12,13 @@
   name: Сатурн # Ru-Localization
   description: Заказан Династией Фаэтон ввиду острой необходимости в тяжёлой огневой мощи против Федерации. Уникальный шаттл, специально разработанный с учётом запросово Династии, расквартированного на Гелиосе. # Ru-Localization
   limit: 1
+  hyperwarLimit: 3
   price: 1540950
   purchasable: false # voucher only
   category: Large
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
   guidebookPage: Null
   class:
   - Pirate
@@ -33,7 +34,7 @@
 - type: gameMap
   id: Saturn
   mapName: 'Сатурн' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
   minPlayers: 0
   stations:
     Saturn:

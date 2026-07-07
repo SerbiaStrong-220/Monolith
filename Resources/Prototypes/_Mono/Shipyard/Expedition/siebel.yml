@@ -10,7 +10,7 @@
   category: Medium
   group: Expedition
   access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
   guidebookPage: null
   class:
   - Expedition
@@ -21,7 +21,7 @@
 - type: gameMap
   id: Siebel
   mapName: 'Зибель' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/Expedition/siebel.yml # Exodus
   minPlayers: 0
   stations:
     Siebel:

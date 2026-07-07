@@ -8,5 +8,5 @@ uplink-pdv-typhon-flatpack-desc = Упаковка, при помощи кото
 
 # MARK: Vouchers
 
-uplink-pdv-t1-scorpion-voucher-name = ваучер Династии Фаэтон «Скорпион/Ганимед» [T1]
-uplink-pdv-t1-scorpion-voucher-desc = Небольшая карта, позволяющая заказать со складов флагмана эскорт класса «Скорпион» или «Ганимед».
+uplink-pdv-t1-scorpion-voucher-name = ваучер Династии Фаэтон «Скорпион/Каллисто» [T1]
+uplink-pdv-t1-scorpion-voucher-desc = Небольшая карта, позволяющая заказать со складов флагмана эскорт класса «Скорпион» или «Каллисто».

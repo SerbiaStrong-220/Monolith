@@ -10,7 +10,7 @@
   group: BlackMarket
   access: Pirate
   purchasable: false # voucher only
-  shuttlePath: /Maps/_Exodus/Shuttles/PDV/ferz.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/PDV/ferz.yml
   guidebookPage: Null
   class:
   - Pirate
@@ -21,7 +21,7 @@
 - type: gameMap
   id: Ferz
   mapName: 'Ферзь'
-  mapPath: /Maps/_Exodus/Shuttles/PDV/ferz.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/PDV/ferz.yml
   minPlayers: 0
   stations:
     Ferz:

@@ -4,12 +4,13 @@
   name: Флисса # Ru-Localization
   description: Передан вам, КПВ ТСФ, от Флота ТСФ. В этом шаттле - целый флот в одном. # Ru-Localization
   limit: 1
+  hyperwarLimit: 3
   price: 1225950
   purchasable: false # voucher only
   category: Large
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Exodus/Shuttles/Capitals/flyssa.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/flyssa.yml # Exodus
   guidebookPage: Null
   class:
   - Capital
@@ -24,7 +25,7 @@
 - type: gameMap
   id: Flyssa
   mapName: 'Флисса' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/Capitals/flyssa.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/Capitals/flyssa.yml # Exodus
   minPlayers: 0
   stations:
     Flyssa:

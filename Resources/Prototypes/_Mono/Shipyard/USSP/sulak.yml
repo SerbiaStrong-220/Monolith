@@ -5,11 +5,14 @@
   parent: BaseVesselAntag
   name: Судак # Ru-Localization
   description: Эсминец среднего размера, вооружённый Хароном для уничтожения крупных целей. # Ru-Localization
+  limit: 2
   price: 142500
+  purchasable: false # voucher only
   category: Medium
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/sulak.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/sulak.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -20,18 +23,18 @@
 - type: gameMap
   id: Sulak
   mapName: 'Судак' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/sulak.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/sulak.yml
   minPlayers: 0
   stations:
     Sulak:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Судак{1}' # Ru-Localization
+          mapNameTemplate: 'Судак СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]

@@ -5,11 +5,14 @@
   parent: BaseVesselAntag
   name: Буран # Ru-Localization
   description: Фрегат СССП с огромной бортовой огневой мощью и толстой бронёй. Слава великому комиссариату! # Ru-Localization
+  limit: 2
   price: 320000
+  purchasable: false # voucher only
   category: Large
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   guidebookPage: ShipyardNFROperation
   class:
   - Frigate
@@ -19,7 +22,7 @@
 - type: gameMap
   id: Buran
   mapName: 'Буран' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/USSP/buran.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   minPlayers: 0
   stations:
     Buran:
@@ -29,12 +32,12 @@
         description: "Старый, но не бесполезный." # Ru-Localization
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Буран' # Ru-Localization
+          mapNameTemplate: 'Буран СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]
 

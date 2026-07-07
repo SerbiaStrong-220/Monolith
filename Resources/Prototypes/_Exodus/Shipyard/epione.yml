@@ -13,7 +13,7 @@
   category: Medium
   group: Medical
   access: Medical
-  shuttlePath: /Maps/_Exodus/Shuttles/epione.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/epione.yml
   guidebookPage: Null
   class:
   - Corvette
@@ -25,7 +25,7 @@
 - type: gameMap
   id: Epione
   mapName: 'Эпиона'
-  mapPath: /Maps/_Exodus/Shuttles/epione.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/epione.yml
   minPlayers: 0
   stations:
     Epione:

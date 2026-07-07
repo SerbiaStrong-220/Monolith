@@ -5,12 +5,13 @@
   name: Альтаир # Ru-Localization
   description: Тяжеловооружённый фрегат с четырьмя Цирексами, лазерными орудиями и главной фишкой — рельсотроном Харон. Создан как тяжёлый фронтовой боец и основа небольшого флота. # Ru-Localization
   limit: 2
+  hyperwarLimit: 4
   price: 425000
   purchasable: false # voucher only
   category: Large
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/altair.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/altair.yml
   guidebookPage: Null
   class:
   - Frigate
@@ -22,7 +23,7 @@
 - type: gameMap
   id: Altair
   mapName: 'Альтаир' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/altair.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/altair.yml
   minPlayers: 0
   stations:
     Altair:

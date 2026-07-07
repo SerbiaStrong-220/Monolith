@@ -60,7 +60,9 @@
     - state: panel
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: AccessReader
-    access: [["Mercenary"], ["Security"]]
+    # Exodus temp-ussp-mercenary-access: Mercenary access until USSP faction returns.
+    # access: [["USSP"], ["USSPHigh"]]
+    access: [["Mercenary"]]
 
 - type: entity
   parent: [BaseStructureDisableToolUse, VendingMachineSyndieContraband]

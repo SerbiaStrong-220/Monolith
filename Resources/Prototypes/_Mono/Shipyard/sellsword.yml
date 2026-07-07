@@ -10,11 +10,11 @@
   parent: BaseVessel
   name: Селлсворд # Ru-Localization
   description: Шаттл сопровождения, представляющий собой клаустрофобический гроб из литого пластитана, внутри которого размещены 255-мм орудие и Вспеоа. Ожидаемая продолжительность жизни шаттла в бою - 4 минуты.  # Ru-Localization
-  price: 56000 # markup 15% from 48600. 
+  price: 56000 # markup 15% from 48600.
   category: Small
   group: Shipyard
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/sellsword.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/sellsword.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -24,7 +24,7 @@
 - type: gameMap
   id: Sellsword
   mapName: 'Селлсворд' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/sellsword.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/sellsword.yml
   minPlayers: 0
   stations:
     Sellsword:
