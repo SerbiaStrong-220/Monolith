@@ -3,8 +3,8 @@
 - type: vessel
   id: Andromeda
   parent: BaseVesselAntag
-  name: ╨Р╨╜╨┤╤А╨╛╨╝╨╡╨┤╨░ # Ru-Localization
-  description: ╨н╨║╤Б╨┐╨╡╤А╨╕╨╝╨╡╨╜╤В╨░╨╗╤М╨╜╤Л╨╣ ╤В╤П╨╢╤С╨╗╤Л╨╣ ╤Д╤А╨╡╨│╨░╤В ╤Б ╨╝╨╛╤Й╨╜╤Л╨╝ ╨╖╨░╨╗╨┐╨╛╨▓╤Л╨╝ ╨╜╨╛╤Б╨╛╨▓╤Л╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╨╡╨╝ ╨╕ ╨▓╤Л╤Б╨╛╨║╨╛╨╣ ╨╝╨░╨╜╤С╨▓╤А╨╡╨╜╨╜╨╛╤Б╤В╤М╤О. # Ru-Localization
+  name: Андромеда # Ru-Localization
+  description: Экспериментальный тяжёлый фрегат с мощным залповым носовым вооружением и высокой манёвренностью. # Ru-Localization
   limit: 3
   hyperwarLimit: 5
   price: 320000
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Andromeda
-  mapName: '╨Р╨╜╨┤╤А╨╛╨╝╨╡╨┤╨░' # Ru-Localization
+  mapName: 'Андромеда' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/andromeda.yml
   minPlayers: 0
   stations:
@@ -34,10 +34,10 @@
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "╨Ф╨╛╤Б╤В╨░╤В╨╛╤З╨╜╨╛ ╨╛╤А╤Г╨┤╨╕╨╣, ╤З╤В╨╛╨▒╤Л ╨╖╨░╤В╨╝╨╕╤В╤М ╨╖╨▓╤С╨╖╨┤╤Л." # Ru-Localization
+        description: "Достаточно орудий, чтобы затмить звёзды." # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨Р╨╜╨┤╤А╨╛╨╝╨╡╨┤╨░{1}' # Ru-Localization
+        mapNameTemplate: 'Андромеда{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

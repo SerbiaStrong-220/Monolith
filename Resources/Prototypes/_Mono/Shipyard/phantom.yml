@@ -7,8 +7,8 @@
 - type: vessel
   id: Phantom
   parent: BaseVessel
-  name: ╨д╨░╨╜╤В╨╛╨╝ # Ru-Localization
-  description: ╨н╨║╤Б╨┐╨╡╤А╨╕╨╝╨╡╨╜╤В╨░╨╗╤М╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗ ╤Б  ╨▓╨╛╨╖╨╝╨╛╨╢╨╜╨╛╤Б╤В╤М╤О ╤А╨░╨╖╨▓╨╕╤В╨╕╤П ╨╛╨│╤А╨╛╨╝╨╜╤Л╤Е ╤Б╨║╨╛╤А╨╛╤Б╤В╨╡╨╣. ╨Ш╨╝╨╡╨╡╤В ╨╝╨╛╨┤╤Г╨╗╤М ╨С╨б╨б-25╨г. # Ru-Localization
+  name: Фантом # Ru-Localization
+  description: Экспериментальный шаттл с  возможностью развития огромных скоростей. Имеет модуль БСС-25У. # Ru-Localization
   price: 90000
   category: Small
   group: Medical
@@ -27,7 +27,7 @@
 
 - type: gameMap
   id: Phantom
-  mapName: '╨д╨░╨╜╤В╨╛╨╝' # Ru-Localization
+  mapName: 'Фантом' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/phantom.yml
   minPlayers: 0
   stations:
@@ -35,7 +35,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨д╨░╨╜╤В╨╛╨╝{1}' # Ru-Localization
+          mapNameTemplate: 'Фантом{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

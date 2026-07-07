@@ -1,8 +1,8 @@
 - type: vessel
   id: Hydra
   parent: BaseVesselAntag
-  name: ╨У╨╕╨┤╤А╨░ # Ru-Localization
-  description: ╨а╨░╨║╨╡╤В╨╜╤Л╨╣ ╨║╨╛╤А╨▓╨╡╤В ╨б╨╕╨╜╨┤╨╕╨║╨░╤В╨░, ╨┐╤А╨╡╨┤╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╤Б╨║╤А╤Л╤В╨╜╤Л╤Е ╨▒╤Л╤Б╤В╤А╤Л╤Е ╨╜╨░╨╗╤С╤В╨╛╨▓ ╨╕ ╨┐╨╛╨┤╨░╨▓╨╗╨╡╨╜╨╕╤П ╨┐╤А╨╛╤В╨╕╨▓╨╜╨╕╨║╨░. # Ru-Localization
+  name: Гидра # Ru-Localization
+  description: Ракетный корвет Синдиката, предназначенный для скрытных быстрых налётов и подавления противника. # Ru-Localization
   price: 135000
   category: Medium
   group: Syndicate
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Hydra
-  mapName: '╨У╨╕╨┤╤А╨░' # Ru-Localization
+  mapName: 'Гидра' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Syndicate/hydra.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨У╨╕╨┤╤А╨░{1}' # Ru-Localization
+          mapNameTemplate: 'Гидра{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -9,8 +9,8 @@
 - type: vessel
   id: Hound
   parent: BaseVessel
-  name: ╨У╨╛╨╜╤З╨░╤П # Ru-Localization
-  description: ╨Ф╤А╨╛╨╜, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨╛╤А╤Г╨┤╨╕╨╡╨╝ ╨Я╤А╨╛╨╝╨╡╤В╨╡╤Г╤Б. # Ru-Localization
+  name: Гончая # Ru-Localization
+  description: Дрон, оснащённый орудием Прометеус. # Ru-Localization
   price: 35000
   category: Small
   group: Custom
@@ -29,7 +29,7 @@
 
 - type: gameMap
   id: Hound
-  mapName: '╨У╨╛╨╜╤З╨░╤П' # Ru-Localization
+  mapName: 'Гончая' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Carrier/hound.yml
   minPlayers: 0
   stations:
@@ -37,6 +37,6 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨У╨╛╨╜╤З╨░╤П{1}' # Ru-Localization
+        mapNameTemplate: 'Гончая{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'

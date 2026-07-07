@@ -7,8 +7,8 @@
 - type: vessel
   id: Tzipora
   parent: BaseVessel
-  name: ╨в╨╖╨╕╨┐╨╛╤А╨░ # Ru-Localization
-  description: ╨Я╤А╨╛╨┤╨▓╨╕╨╜╤Г╤В╤Л╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨║╤А╨╕╨╛╨║╨░╨┐╤Б╤Г╨╗╨╛╨╣, ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨╣ ╨╗╨░╨▒╨╛╤А╨░╤В╨╛╤А╨╕╨╡╨╣ ╨╕ ╨┤╤А╤Г╨│╨╕╨╝ ╤Е╨╕╤А╤Г╤А╨│╨╕╤З╨╡╤Б╨║╨╕╨╝ ╨╛╨▒╨╛╤А╤Г╨┤╨╛╨▓╨░╨╜╨╕╨╡╨╝. # Ru-Localization
+  name: Тзипора # Ru-Localization
+  description: Продвинутый медицинский шаттл, оснащённый криокапсулой, химической лабораторией и другим хирургическим оборудованием. # Ru-Localization
   price: 145530
   category: Large
   group: Medical
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Tzipora
-  mapName: '╨в╨╖╨╕╨┐╨╛╤А╨░' # Ru-Localization
+  mapName: 'Тзипора' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/tzipora.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨в╨╖╨╕╨┐╨╛╤А╨░{1}' # Ru-Localization
+          mapNameTemplate: 'Тзипора{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

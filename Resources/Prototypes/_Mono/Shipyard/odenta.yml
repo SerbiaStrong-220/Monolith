@@ -8,8 +8,8 @@
 - type: vessel
   id: Odenta
   parent: BaseVessel
-  name: ╨Ю╨┤╨╡╨╜╤В╨░ # Ru-Localization
-  description: ╨Ю╨┤╨╡╨╜╤В╨░ - ╤В╤П╨╢╨╡╨╗╨╛╨▒╤А╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╤Б╨┐╨░╤Б╨░╤В╨╡╨╗╤М╨╜╤Л╤Е ╨╛╨┐╨╡╤А╨░╤Ж╨╕╨╣ ╨╕ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╛╨╣ ╤А╨░╨▒╨╛╤В╤Л ╨▓ ╤Г╤Б╨╗╨╛╨▓╨╕╤П╤Е ╨▓╤Л╤Б╨╛╨║╨╛╨│╨╛ ╤А╨╕╤Б╨║╨░. ╨Т╨╛╨╛╤А╤Г╨╢╤С╨╜ ╤Б╨┤╨▓╨╛╨╡╨╜╨╜╤Л╨╝╨╕ ╨╗╨░╨╖╨╡╤А╨╜╤Л╨╝╨╕ ╨┐╤Г╤И╨║╨░╨╝╨╕ ╨Я╤А╨╛╨╝╨╡╤В╨╡╨╣, ╨╛╨┤╨╜╨╛╨╣ 255-╨╝╨╝ ╨┐╤Г╤И╨║╨╛╨╣ ┬л╨С╨╛╤Д╨╛╤А╤Б┬╗, 30-╨╝╨╝ ╨┐╤Г╤И╨║╨╛╨╣ ┬л╨Ф╤А╨░╤Г╨┐╨╜╨╕╤А┬╗, 20-╨╝╨╝ ╨┐╤Г╤И╨║╨╛╨╣ ╨╕ ╨╖╨╡╨╜╨╕╤В╨╜╤Л╨╝╨╕ ╨╗╨░╨╖╨╡╤А╨░╨╝╨╕ ╨┤╨╗╤П ╨╖╨░╤Й╨╕╤В╤Л ╨▒╨╛╤А╤В╨╛╨▓╨╛╨│╨╛ ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨│╨╛ ╨╛╤В╤Б╨╡╨║╨░ ╨╕ ╨║╤А╨╕╨╛╨│╨╡╨╜╨╜╨╛╨│╨╛ ╨║╨╛╨╝╨┐╨╗╨╡╨║╤Б╨░. # Ru-Localization
+  name: Одента # Ru-Localization
+  description: Одента - тяжелобронированный медицинский шаттл, созданный для спасательных операций и медицинской работы в условиях высокого риска. Вооружён сдвоенными лазерными пушками Прометей, одной 255-мм пушкой «Бофорс», 30-мм пушкой «Драупнир», 20-мм пушкой и зенитными лазерами для защиты бортового химического отсека и криогенного комплекса. # Ru-Localization
   price: 112000 # 98K base + markup
   category: Medium
   group: Medical
@@ -28,7 +28,7 @@
 
 - type: gameMap
   id: Odenta
-  mapName: '╨Ю╨┤╨╡╨╜╤В╨░' # Ru-Localization
+  mapName: 'Одента' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/odenta.yml
   minPlayers: 0
   stations:
@@ -36,7 +36,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ю╨┤╨╡╨╜╤В╨░{1}' # Ru-Localization
+          mapNameTemplate: 'Одента{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

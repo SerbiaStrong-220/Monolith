@@ -9,8 +9,8 @@
 - type: vessel
   id: Saturn
   parent: BaseVesselAntag
-  name: ╨б╨░╤В╤Г╤А╨╜ # Ru-Localization
-  description: ╨Ч╨░╨║╨░╨╖╨░╨╜ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╡╨╣ ╨д╨░╤Н╤В╨╛╨╜ ╨▓╨▓╨╕╨┤╤Г ╨╛╤Б╤В╤А╨╛╨╣ ╨╜╨╡╨╛╨▒╤Е╨╛╨┤╨╕╨╝╨╛╤Б╤В╨╕ ╨▓ ╤В╤П╨╢╤С╨╗╨╛╨╣ ╨╛╨│╨╜╨╡╨▓╨╛╨╣ ╨╝╨╛╤Й╨╕ ╨┐╤А╨╛╤В╨╕╨▓ ╨д╨╡╨┤╨╡╤А╨░╤Ж╨╕╨╕. ╨г╨╜╨╕╨║╨░╨╗╤М╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╤Б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╨╛ ╤А╨░╨╖╤А╨░╨▒╨╛╤В╨░╨╜╨╜╤Л╨╣ ╤Б ╤Г╤З╤С╤В╨╛╨╝ ╨╖╨░╨┐╤А╨╛╤Б╨╛╨▓╨╛ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕, ╤А╨░╤Б╨║╨▓╨░╤А╤В╨╕╤А╨╛╨▓╨░╨╜╨╜╨╛╨│╨╛ ╨╜╨░ ╨У╨╡╨╗╨╕╨╛╤Б╨╡. # Ru-Localization
+  name: Сатурн # Ru-Localization
+  description: Заказан Династией Фаэтон ввиду острой необходимости в тяжёлой огневой мощи против Федерации. Уникальный шаттл, специально разработанный с учётом запросово Династии, расквартированного на Гелиосе. # Ru-Localization
   limit: 1
   hyperwarLimit: 3
   price: 1540950
@@ -38,7 +38,7 @@
 
 - type: gameMap
   id: Saturn
-  mapName: '╨б╨░╤В╤Г╤А╨╜' # Ru-Localization
+  mapName: 'Сатурн' # Ru-Localization
   mapPath: /SharedMaps/_Exodus/Shuttles/Capitals/saturn.yml # Exodus
   minPlayers: 0
   stations:
@@ -46,10 +46,10 @@
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "╨Ю╤В╨▓╨╡╤В ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕ ╨д╨░╤Н╤В╨╛╨╜ ╨╖╨░╤Е╨▓╨░╤В╤З╨╕╨║╨░╨╝ ╨╕╨╖ ╨в╨б╨д. ╨Ю╨╜╨░ ╨▓╤Л╨┤╨╡╤А╨╢╨╕╨▓╨░╨╡╤В ╤Г╨┤╨░╤А╤Л, ╨║╨░╨║ ╨╜╨╕╨║╨░╨║╨╛╨╣ ╨┤╤А╤Г╨│╨╛╨╣ ╤И╨░╤В╤В╨╗. ╨б╨╗╨░╨▓╨░ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕!" # Ru-Localization
+        description: "Ответ Династии Фаэтон захватчикам из ТСФ. Она выдерживает удары, как никакой другой шаттл. Слава Династии!" # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨б╨░╤В╤Г╤А╨╜{1}' # Ru-Localization
+        mapNameTemplate: 'Сатурн{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

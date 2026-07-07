@@ -1,8 +1,8 @@
 - type: vessel
   id: Solarsail
   parent: BaseVessel
-  name: ╨Я╨░╤А╤Г╤Б╨╜╨╕╨║ # Ru-Localization
-  description: ╨Ы╨╕╤З╨╜╤Л╨╣ ╤В╤А╨░╨╜╤Б╨┐╨╛╤А╤В ╨╕ ╨╝╨╛╨▒╨╕╨╗╤М╨╜╤Л╨╣ ╨╛╤Д╨╕╤Б ╨Ъ╨╛╨╝╨╡╨╜╨┤╨░╨╜╤В╨░. # Ru-Localization
+  name: Парусник # Ru-Localization
+  description: Личный транспорт и мобильный офис Коменданта. # Ru-Localization
   price: 25500
   category: Small
   group: Sr
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Solarsail
-  mapName: '╨Я╨░╤А╤Г╤Б╨╜╨╕╨║' # Ru-Localization
+  mapName: 'Парусник' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/solarsail.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Я╨░╤А╤Г╤Б╨╜╨╕╨║{1}' # Ru-Localization
+          mapNameTemplate: 'Парусник{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

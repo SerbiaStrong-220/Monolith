@@ -3,8 +3,8 @@
 - type: vessel
   id: Sentinel
   parent: BaseVesselAntag
-  name: ╨ж╨╡╨╜╤В╨╕╨╜╨╡╨╗ # Ru-Localization
-  description: ╨С╤А╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨║╨╛╤А╨▓╨╡╤В ╤Б ╨┤╨▓╤Г╨╝╤П ╨╜╨╛╤Б╨╛╨▓╤Л╨╝╨╕ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨С╨╛╤Д╨╛╤А╤Б, ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨┐╨╗╨░╨╖╨╝╨╡╨╜╨╜╤Л╨╝╨╕ ╨┐╤Г╤И╨║╨░╨╝╨╕ ╨Ь╨░╤А╨╛╨┤╤С╤А ╨╕ ╨┤╨▓╤Г╨╝╤П ╨║╨╛╤А╨╝╨╛╨▓╤Л╨╝╨╕ 20-╨╝╨╝ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨Ы85 ╨┤╨╗╤П ╨╛╨▒╨╛╤А╨╛╨╜╤Л. # Ru-Localization
+  name: Центинел # Ru-Localization
+  description: Бронированный корвет с двумя носовыми орудиями Бофорс, четырьмя плазменными пушками Мародёр и двумя кормовыми 20-мм орудиями Л85 для обороны. # Ru-Localization
   price: 210200 # Appraises around 100k, but marked up since appraisegrid is too stupid to realize the true value of my creations (plastitanium walls probably has their value set really low)
   purchasable: false # voucher only
   category: Medium
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Sentinel
-  mapName: '╨ж╨╡╨╜╤В╨╕╨╜╨╡╨╗' # Ru-Localization
+  mapName: 'Центинел' # Ru-Localization
   mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨ж╨╡╨╜╤В╨╕╨╜╨╡╨╗{1}' # Ru-Localization
+        mapNameTemplate: 'Центинел{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -41,3 +41,4 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
+

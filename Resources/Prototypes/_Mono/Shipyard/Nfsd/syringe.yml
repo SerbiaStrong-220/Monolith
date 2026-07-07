@@ -3,8 +3,8 @@
 - type: vessel
   id: Syringe
   parent: BaseVesselAntag
-  name: ╨б╨╕╤А╨╡╨╜╨╢ # Ru-Localization
-  description: ╨Э╨╡╨▒╨╛╨╗╤М╤И╨╛╨╣ ╤И╨░╤В╤В╨╗, ╨┐╤А╨╡╨┤╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╤Б╨╛╨┐╤А╨╛╨▓╨╛╨╢╨┤╨╡╨╜╨╕╤П ╨╕ ╨╛╨║╨░╨╖╨░╨╜╨╕╤П ╨┐╨╛╨╝╨╛╤Й╨╕ ╨┤╤А╤Г╨│╨╕╨╝ ╤И╨░╤В╤В╨╗╨░╨╝ ╨в╨б╨д. ╨Ш╨╝╨╡╨╡╤В ╤В╨╡╤Б╨╜╤Л╨╣ ╨╕╨╜╤В╨╡╤А╤М╨╡╤А ╨╕ ╨╗╤С╨│╨║╨╛╨╡ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╨╡. # Ru-Localization
+  name: Сиренж # Ru-Localization
+  description: Небольшой шаттл, предназначенный для сопровождения и оказания помощи другим шаттлам ТСФ. Имеет тесный интерьер и лёгкое вооружение. # Ru-Localization
   price: 58500
   category: Small
   group: Security
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Syringe
-  mapName: '╨б╨╕╤А╨╡╨╜╨╢' # Ru-Localization
+  mapName: 'Сиренж' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/syringe.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨б╨╕╤А╨╡╨╜╨╢{1}' # Ru-Localization
+        mapNameTemplate: 'Сиренж{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -41,3 +41,4 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
+

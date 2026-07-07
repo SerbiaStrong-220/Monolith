@@ -3,8 +3,8 @@
 - type: vessel
   id: Tumour
   parent: BaseVesselAntag
-  name: ╨в╤Г╨╝╨╛╤А # Ru-Localization
-  description: ╨г╤А╨╛╨┤╨╗╨╕╨▓╨░╤П ╨║╨░╤А╤В╨╛╤Д╨╡╨╗╨╕╨╜╨░-╨╜╨╛╤Б╨╕╤В╨╡╨╗╤М. ╨Я╨╛╤З╤В╨╕ ╨╜╨╡ ╨╕╨╝╨╡╨╡╤В ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╤П ╨┤╨╗╤П ╤Б╨░╨╝╨╛╨╛╨▒╨╛╤А╨╛╨╜╤Л, ╨╜╨╛ ╨╛╤Б╨╜╨░╤Й╨╡╨╜╨░ ╤В╨╡╤Е╤Д╨░╤О╨░╨╝╨╕ ╨┤╨╗╤П ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨║╨╕ ╤Б╨▓╨╛╨╕╤Е ╤И╨░╤В╤В╨╗╨╛╨▓. # Ru-Localization
+  name: Тумор # Ru-Localization
+  description: Уродливая картофелина-носитель. Почти не имеет вооружения для самообороны, но оснащена техфаюами для поддержки своих шаттлов. # Ru-Localization
   price: 68250
   category: Medium
   group: Security
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Tumour
-  mapName: '╨в╤Г╨╝╨╛╤А' # Ru-Localization
+  mapName: 'Тумор' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/tumour.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨в╤Г╨╝╨╛╤А{1}' # Ru-Localization
+        mapNameTemplate: 'Тумор{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -39,3 +39,4 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
+

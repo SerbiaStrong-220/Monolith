@@ -3,8 +3,8 @@
 - type: vessel
   id: Europa
   parent: BaseVesselAntag
-  name: ╨Х╨▓╤А╨╛╨┐╨░ # Ru-Localization
-  description: ╨Я╨╡╤А╨╡╨╛╨▒╨╛╤А╤Г╨┤╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╤Б ╨░╨║╤Ж╨╡╨╜╤В╨╛╨╝ ╨╜╨░ ╨▒╨╛╤А╤В╨╛╨▓╤Г╤О ╨╛╨│╨╜╨╡╨▓╤Г╤О ╨╝╨╛╤Й╤М ╨╕ ╨▒╤А╨╛╨╜╤О. # Ru-Localization
+  name: Европа # Ru-Localization
+  description: Переоборудованный медицинский шаттл с акцентом на бортовую огневую мощь и броню. # Ru-Localization
   limit: 3
   hyperwarLimit: 5
   price: 280650
@@ -27,18 +27,18 @@
 
 - type: gameMap
   id: Europa
-  mapName: '╨Х╨▓╤А╨╛╨┐╨░' # Ru-Localization
+  mapName: 'Европа' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/europa.yml
   minPlayers: 0
   stations:
     Europa:
       gridComponents:
       - type: VesselInfo
-        description: "╨б╨╡╤Б╤В╤А╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╨б╨░╤В╤Г╤А╨╜╨░" # Ru-Localization
+        description: "Сестринский шаттл Сатурна" # Ru-Localization
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Х╨▓╤А╨╛╨┐╨░{1}' # Ru-Localization
+          mapNameTemplate: 'Европа{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

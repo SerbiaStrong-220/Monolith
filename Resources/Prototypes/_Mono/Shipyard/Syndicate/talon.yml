@@ -1,8 +1,8 @@
 - type: vessel
   id: Talon
   parent: BaseVesselAntag
-  name: ╨Ъ╨╛╨│╨╛╤В╤М # Ru-Localization
-  description: ╨в╤П╨╢╤С╨╗╤Л╨╣ ╨┐╨╡╤А╨╡╤Е╨▓╨░╤В╤З╨╕╨║ ╤Б╨╕╨╜╨┤╨╕╨║╨░╤В╨░ ╤Б ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨╜╨╛╤Б╨╛╨▓╤Л╨╝╨╕ ╨Ъ╨╗╤Л╨║╨░╨╝╨╕ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨▒╨╛╨║╨╛╨▓╤Л╨╝╨╕ ╨У╨░╨┤╤О╨║╨░╨╝╨╕. # Ru-Localization
+  name: Коготь # Ru-Localization
+  description: Тяжёлый перехватчик синдиката с четырьмя носовыми Клыками и двумя боковыми Гадюками. # Ru-Localization
   price: 45000
   category: Small
   group: Syndicate
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Talon
-  mapName: '╨Ъ╨╛╨│╨╛╤В╤М' # Ru-Localization
+  mapName: 'Коготь' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Syndicate/talon.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ъ╨╛╨│╨╛╤В╤М{1}' # Ru-Localization
+          mapNameTemplate: 'Коготь{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -9,8 +9,8 @@
 - type: vessel
   id: Rook
   parent: BaseVessel
-  name: ╨У╤А╨░╤З # Ru-Localization
-  description: ╨е╤А╤Г╨┐╨║╨╕╨╣, ╨╜╨╛ ╨╝╨╛╤Й╨╜╤Л╨╣ ╨▒╨╛╨╡╨▓╨╛╨╣ ╤И╨░╤В╤В╨╗. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨┤╨▓╨░ ╨Ф╨▓╨░╤А╨╛╨╜╨░╨╝╨╕ ╨╕ ╨╛╨┤╨╕╨╜╨╛╤З╨╜╤Л╨╝ 30╨╝╨╝ ╨┐╤Г╨╗╨╡╨╝╤С╤В╨╛╨╝. # Ru-Localization
+  name: Грач # Ru-Localization
+  description: Хрупкий, но мощный боевой шаттл. Оснащён два Дваронами и одиночным 30мм пулемётом. # Ru-Localization
   price: 15000
   category: Small
   group: Custom
@@ -29,7 +29,7 @@
 
 - type: gameMap
   id: Rook
-  mapName: '╨У╤А╨░╤З' # Ru-Localization
+  mapName: 'Грач' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Carrier/rook.yml
   minPlayers: 0
   stations:
@@ -37,6 +37,6 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨У╤А╨░╤З{1}' # Ru-Localization
+        mapNameTemplate: 'Грач{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'

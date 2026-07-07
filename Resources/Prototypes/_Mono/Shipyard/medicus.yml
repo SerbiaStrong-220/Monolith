@@ -8,8 +8,8 @@
 - type: vessel
   id: Medicus
   parent: BaseVessel
-  name: ╨Ь╨╡╨┤╨╕╨║╤Г╤Б #medisus # Ru-Localization
-  description: ╨Э╨░╨┤╤С╨╢╨╜╤Л╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨║╤А╨╕╨╛╨║╨░╨┐╤Б╤Г╨╗╨╛╨╣, ╨▒╨╛╤В╨░╨╜╨╕╤З╨╡╤Б╨║╨╕╨╝ ╨╛╤В╤Б╨╡╨║╨╛╨╝, ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨╣ ╨╗╨░╨▒╨╛╤А╨░╤В╨╛╤А╨╕╨╡╨╣ ╨╕ ╤А╨░╨▒╨╛╤З╨╕╨╝ ╨╝╨╡╤Б╤В╨╛╨╝ ╨┤╨╗╤П ╨┐╨░╤А╨░╨╝╨╡╨┤╨╕╨║╨╛╨▓. # Ru-Localization
+  name: Медикус #medisus # Ru-Localization
+  description: Надёжный медицинский шаттл, оснащённый криокапсулой, ботаническим отсеком, химической лабораторией и рабочим местом для парамедиков. # Ru-Localization
   price: 76500 #appraises at 70000
   category: Medium
   group: Medical
@@ -28,7 +28,7 @@
 
 - type: gameMap
   id: Medicus
-  mapName: '╨Ь╨╡╨┤╨╕╨║╤Г╤Б' # Ru-Localization
+  mapName: 'Медикус' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/medicus.yml
   minPlayers: 0
   stations:
@@ -36,7 +36,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ь╨╡╨┤╨╕╨║╤Г╤Б{1}' # Ru-Localization
+          mapNameTemplate: 'Медикус{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

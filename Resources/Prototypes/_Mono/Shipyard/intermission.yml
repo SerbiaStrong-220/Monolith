@@ -9,8 +9,8 @@
 - type: vessel
   id: Intermission
   parent: BaseVessel
-  name: ╨Р╨╜╤В╤А╨░╨║╤В # Ru-Localization
-  description: ╨С╨╛╨╗╤М╤И╨╛╨╣ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╤Б ╤Е╨╛╨╗╨╗╨╛╨╝, ╨▒╨░╤А╨╛╨╝, ╨╡╨┤╨╛╨╣ ╨╕ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╝╨╕ ╨┐╤А╨╕╨╝╨╛╤З╨║╨░╨╝╨╕. ╨б╨┐╨╛╤Б╨╛╨▒╨╡╨╜ ╤Б╨┐╨░╤Б╨░╤В╤М ╨╢╨╕╨╖╨╜╨╕ ╨╕ ╤Г╤В╨╛╨╗╤П╤В╤М ╨░╨┐╨┐╨╡╤В╨╕╤В╤Л - ╨▓╤Б╤С ╨╖╨┤╨╡╤Б╤М ╨╕ ╤Б╤А╨░╨╖╤Г. # Ru-Localization
+  name: Антракт # Ru-Localization
+  description: Большой медицинский шаттл с холлом, баром, едой и медицинскими примочками. Способен спасать жизни и утолять аппетиты - всё здесь и сразу. # Ru-Localization
   price: 134750
   category: Large
   group: Medical
@@ -30,7 +30,7 @@
 
 - type: gameMap
   id: Intermission
-  mapName: '╨Р╨╜╤В╤А╨░╨║╤В' # Ru-Localization
+  mapName: 'Антракт' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/intermission.yml
   minPlayers: 0
   stations:
@@ -38,7 +38,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Р╨╜╤В╤А╨░╨║╤В{1}' # Ru-Localization
+          mapNameTemplate: 'Антракт{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

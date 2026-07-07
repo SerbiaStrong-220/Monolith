@@ -8,8 +8,8 @@
 - type: vessel
   id: Stubby
   parent: BaseVessel
-  name: ╨б╤В╨░╨▒╨▒╨╕ # Ru-Localization
-  description: ╨С╤А╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨╗╤С╨│╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╤Б ╨╝╨╕╨╜╨╕╨╝╨░╨╗╤М╨╜╤Л╨╝ ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╝ ╨╛╨▒╨╛╤А╤Г╨┤╨╛╨▓╨░╨╜╨╕╨╡╨╝. ╨в╨╡╤Б╨╜╨╛╨▓╨░╤В, ╨╜╨╛ ╤О╤А╨║╨╕╨╣ ╨╕ ╨╢╨╕╨▓╤Г╤З╨╕╨╣, ╨║╨░╨║ ╨┐╤С╤Б. # Ru-Localization
+  name: Стабби # Ru-Localization
+  description: Бронированный лёгкий шаттл с минимальным медицинским оборудованием. Тесноват, но юркий и живучий, как пёс. # Ru-Localization
   price: 31000 # appraised at ~25000
   category: Small
   group: Medical
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Stubby
-  mapName: '╨б╤В╨░╨▒╨▒╨╕' # Ru-Localization
+  mapName: 'Стабби' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/stubby.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨б╤В╨░╨▒╨▒╨╕{1}' # Ru-Localization
+          mapNameTemplate: 'Стабби{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

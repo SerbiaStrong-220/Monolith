@@ -5,8 +5,8 @@
 - type: vessel
   id: Ravager
   parent: BaseVessel
-  name: ╨Ю╨┐╤Г╤Б╤В╨╛╤И╨╕╤В╨╡╨╗╤М # Ru-Localization
-  description: ╨С╨╛╨╗╤М╤И╨╛╨╣ ╨╝╨░╤В╨╡╤А╨╕╨╜╤Б╨║╨╕╨╣ ╨║╨╛╤А╨░╨▒╨╗╤М ╨▒╨╡╨╖╨╛╨┐╨░╤Б╨╜╨╛╤Б╤В╨╕ ╨║╨╗╨░╤Б╤Б╨░, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨▒╤Л╤Б╤В╤А╨╛╨╣ ╨╜╨╡╨╣╤В╤А╨░╨╗╨╕╨╖╨░╤Ж╨╕╨╕ ╤Г╨│╤А╨╛╨╖ ╨│╤А╨░╨╢╨┤╨░╨╜╨░╨╝. # Ru-Localization
+  name: Опустошитель # Ru-Localization
+  description: Большой материнский корабль безопасности класса, созданный для быстрой нейтрализации угроз гражданам. # Ru-Localization
   price: 875800
   purchasable: false # voucher only
   category: Large
@@ -27,7 +27,7 @@
 
 - type: gameMap
   id: Ravager
-  mapName: '╨Ю╨┐╤Г╤Б╤В╨╛╤И╨╕╤В╨╡╨╗╤М' # Ru-Localization
+  mapName: 'Опустошитель' # Ru-Localization
   mapPath: /SharedMaps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
   minPlayers: 0
   stations:
@@ -35,7 +35,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨Ю╨┐╤Г╤Б╤В╨╛╤И╨╕╤В╨╡╨╗╤М{1}' # Ru-Localization
+        mapNameTemplate: 'Опустошитель{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'
       - type: StationJobs

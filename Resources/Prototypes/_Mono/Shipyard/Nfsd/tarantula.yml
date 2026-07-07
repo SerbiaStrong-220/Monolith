@@ -5,8 +5,8 @@
 - type: vessel
   id: Tarantula
   parent: BaseVesselAntag
-  name: ╨в╨░╤А╨░╨╜╤В╤Г╨╗╨░ # Ru-Localization
-  description: ╨Ц╨╕╨▓╤Г╤З╨╕╨╣ ╤И╨░╤В╤В╨╗, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨╖╨░╤В╤П╨╢╨╜╤Л╤Е ╨▒╨╛╨╡╨▓ ╨╜╨░ ╨▒╨╗╨╕╨╢╨╜╨╡╨╣ ╨┤╨╕╤Б╤В╨░╨╜╤Ж╨╕╨╕. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨ж╨╡╤А╨▒╨╡╤А╨░ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨Ь╨░╤А╨╛╨┤╤С╤А╨░╨╝╨╕, ╤З╤В╨╛╨▒╤Л ╨╕╤Б╨┐╨╡╨┐╨╡╨╗╤П╤В╤М ╨║╨╛╤А╨░╨▒╨╗╨╕ ╨┐╤А╨╛╤В╨╕╨▓╨╜╨╕╨║╨░. # Ru-Localization
+  name: Тарантула # Ru-Localization
+  description: Живучий шаттл, созданный для затяжных боев на ближней дистанции. Оснащён четырьмя Цербера и двумя Мародёрами, чтобы испепелять корабли противника. # Ru-Localization
   price: 140850
   purchasable: false # voucher only
   category: Medium
@@ -27,7 +27,7 @@
 
 - type: gameMap
   id: Tarantula
-  mapName: '╨в╨░╤А╨░╨╜╤В╤Г╨╗╨░' # Ru-Localization
+  mapName: 'Тарантула' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/tarantula.yml
   minPlayers: 0
   stations:
@@ -35,7 +35,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨в╨░╤А╨░╨╜╤В╤Г╨╗╨░{1}' # Ru-Localization
+        mapNameTemplate: 'Тарантула{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -43,3 +43,4 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
+

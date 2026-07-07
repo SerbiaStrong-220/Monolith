@@ -3,8 +3,8 @@
 - type: vessel
   id: Aldebaran
   parent: BaseVesselAntag
-  name: ╨Р╨╗╤М╨┤╨╡╨▒╨░╤А╨░╨╜ # Ru-Localization
-  description: ╨Ъ╨╛╤А╨▓╨╡╤В ╤Б ╤Г╤Б╨╕╨╗╨╡╨╜╨╜╤Л╨╝ ╨╜╨╛╤Б╨╛╨▓╤Л╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╨╡╨╝, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨┤╨▓╤Г╨╝╤П ╨ж╨╕╤А╨╡╨║╤Б╨░╨╝╨╕ ╨┤╨╗╤П ╨▒╨╛╤П ╨╜╨░ ╨┤╨░╨╗╤М╨╜╨╕╤Е ╨┤╨╕╤Б╤В╨░╨╜╤Ж╨╕╤П╤Е ╨╕ ╤А╨░╨║╨╡╤В╨░╨╝╨╕ ╨┤╨╗╤П ╤В╤П╨╢╤С╨╗╤Л╤Е ╤Ж╨╡╨╗╨╡╨╣ ╨╕ ╨▒╨╗╨╕╨╢╨╜╨╡╨│╨╛ ╨▒╨╛╤П. # Ru-Localization
+  name: Альдебаран # Ru-Localization
+  description: Корвет с усиленным носовым вооружением, оснащённый двумя Цирексами для боя на дальних дистанциях и ракетами для тяжёлых целей и ближнего боя. # Ru-Localization
   price: 160200
   purchasable: false # voucher only
   category: Medium
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Aldebaran
-  mapName: '╨Р╨╗╤М╨┤╨╡╨▒╨░╤А╨░╨╜' # Ru-Localization
+  mapName: 'Альдебаран' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/aldebaran.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨Р╨╗╤М╨┤╨╡╨▒╨░╤А╨░╨╜{1}' # Ru-Localization
+        mapNameTemplate: 'Альдебаран{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -41,3 +41,4 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
+

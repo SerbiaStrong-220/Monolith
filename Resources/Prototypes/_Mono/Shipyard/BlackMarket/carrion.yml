@@ -3,8 +3,8 @@
 - type: vessel
   id: Carrion
   parent: BaseVesselAntag
-  name: ╨Ъ╨╡╤А╤А╨╕╨╛╨╜ # Ru-Localization
-  description: ╨Ш╤Б╤В╤А╨╡╨▒╨╕╤В╨╡╨╗╤М, ╨▓╨╛╨╛╤А╤Г╨╢╤С╨╜╨╜╤Л╨╣ ╤З╨╡╤В╤Л╤А╤М╨╝╤П 90-╨╝╨╝ ╨Ф╤А╨░╨▓╨╛╨╜╨░╨╝╨╕ ╨╕ ╨╝╨░╨╗╤Л╨╝ ╨▒╨╛╨╡╨▓╤Л╨╝ ╨╛╤В╤Б╨╡╨║╨╛╨╝ ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╤П. ╨б╨╛╨╖╨┤╨░╨╜ ╨┤╨╗╤П ╤А╨░╨╖╨▓╨╡╨┤╨║╨╕ ╨╕ ╤Б╨║╨╛╤А╨╛╤В╨╡╤З╨╜╤Л╤Е ╨▒╨╛╤С╨▓ ╨╜╨░ ╨▒╨╛╨╗╤М╤И╨╕╤Е ╤Б╨║╨╛╤А╨╛╤Б╤В╤П╤Е. # Ru-Localization
+  name: Керрион # Ru-Localization
+  description: Истребитель, вооружённый четырьмя 90-мм Дравонами и малым боевым отсеком вооружения. Создан для разведки и скоротечных боёв на больших скоростях. # Ru-Localization
   price: 29000 #Appraised at 26000-ish
   category: Small
   group: BlackMarket
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Carrion
-  mapName: '╨Ъ╨╡╤А╤А╨╕╨╛╨╜' # Ru-Localization
+  mapName: 'Керрион' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/carrion.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ъ╨╡╤А╤А╨╕╨╛╨╜{1}' # Ru-Localization
+          mapNameTemplate: 'Керрион{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

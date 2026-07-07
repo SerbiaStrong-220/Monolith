@@ -2,8 +2,8 @@
 - type: vessel
   id: Altair
   parent: BaseVesselAntag
-  name: ╨Р╨╗╤М╤В╨░╨╕╤А # Ru-Localization
-  description: ╨в╤П╨╢╨╡╨╗╨╛╨▓╨╛╨╛╤А╤Г╨╢╤С╨╜╨╜╤Л╨╣ ╤Д╤А╨╡╨│╨░╤В ╤Б ╤З╨╡╤В╤Л╤А╤М╨╝╤П ╨ж╨╕╤А╨╡╨║╤Б╨░╨╝╨╕, ╨╗╨░╨╖╨╡╤А╨╜╤Л╨╝╨╕ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨╕ ╨│╨╗╨░╨▓╨╜╨╛╨╣ ╤Д╨╕╤И╨║╨╛╨╣ тАФ ╤А╨╡╨╗╤М╤Б╨╛╤В╤А╨╛╨╜╨╛╨╝ ╨е╨░╤А╨╛╨╜. ╨б╨╛╨╖╨┤╨░╨╜ ╨║╨░╨║ ╤В╤П╨╢╤С╨╗╤Л╨╣ ╤Д╤А╨╛╨╜╤В╨╛╨▓╨╛╨╣ ╨▒╨╛╨╡╤Ж ╨╕ ╨╛╤Б╨╜╨╛╨▓╨░ ╨╜╨╡╨▒╨╛╨╗╤М╤И╨╛╨│╨╛ ╤Д╨╗╨╛╤В╨░. # Ru-Localization
+  name: Альтаир # Ru-Localization
+  description: Тяжеловооружённый фрегат с четырьмя Цирексами, лазерными орудиями и главной фишкой — рельсотроном Харон. Создан как тяжёлый фронтовой боец и основа небольшого флота. # Ru-Localization
   limit: 2
   hyperwarLimit: 4
   price: 425000
@@ -27,7 +27,7 @@
 
 - type: gameMap
   id: Altair
-  mapName: '╨Р╨╗╤М╤В╨░╨╕╤А' # Ru-Localization
+  mapName: 'Альтаир' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/altair.yml
   minPlayers: 0
   stations:
@@ -35,10 +35,10 @@
       stationProto: StandardFrontierSecurityVessel
       gridComponents:
       - type: VesselInfo
-        description: "╨б╤В╨╛╨╕╤В ╨╗╨╕ ╨╛╨╜╨╛ ╤В╨╛╨│╨╛? ╨Т╨╛╨╗╨╜╨░ ╤Б╨╛╨╢╨░╨╗╨╡╨╜╨╕╤П ╨╜╨░╨║╤А╤Л╨▓╨░╨╡╤В ╨▓╨░╤Б, ╨░ ╨╖╨░╤В╨╡╨╝ ╨╛╤В╤Б╤В╤Г╨┐╨░╨╡╤В." # Ru-Localization
+        description: "Стоит ли оно того? Волна сожаления накрывает вас, а затем отступает." # Ru-Localization
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨Р╨╗╤М╤В╨░╨╕╤А{1}' # Ru-Localization
+        mapNameTemplate: 'Альтаир{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

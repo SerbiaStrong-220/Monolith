@@ -3,8 +3,8 @@
 - type: vessel
   id: Spica
   parent: BaseVesselAntag
-  name: ╨б╨┐╨╕╨║╨░ # Ru-Localization
-  description: ╨Ы╤С╨│╨║╨░╤П ╤Д╤А╨╛╨╜╤В╨╛╨▓╨░╤П ╨╛╨┐╨╛╤А╨░ ╤Д╨╗╨╛╤В╨╛╨▓ ╨в╨б╨д. ╨г╨┤╨╕╨▓╨╕╤В╨╡╨╗╤М╨╜╤Л╨╣ ╨╜╨░╨▒╨╛╤А ╨▓╨╛╨╛╤А╤Г╨╢╨╡╨╜╨╕╤П ╨▓ ╨║╨╛╨╝╨┐╨░╨║╤В╨╜╨╛╨╝ ╨║╨╛╤А╨┐╤Г╤Б╨╡, ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨▒╨╛╤П ╤Б ╨▒╨╛╨╗╨╡╨╡ ╨║╤А╤Г╨┐╨╜╤Л╨╝╨╕ ╤Ж╨╡╨╗╤П╨╝╨╕. # Ru-Localization
+  name: Спика # Ru-Localization
+  description: Лёгкая фронтовая опора флотов ТСФ. Удивительный набор вооружения в компактном корпусе, созданный для боя с более крупными целями. # Ru-Localization
   price: 117000
   purchasable: false # voucher only
   category: Small
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Spica
-  mapName: '╨б╨┐╨╕╨║╨░' # Ru-Localization
+  mapName: 'Спика' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/spica.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨б╨┐╨╕╨║╨░{1}' # Ru-Localization
+        mapNameTemplate: 'Спика{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

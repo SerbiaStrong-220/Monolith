@@ -9,8 +9,8 @@
 - type: vessel
   id: Taser
   parent: BaseVessel
-  name: ╨в╨░╨╖╨╡╤А # Ru-Localization
-  description: ╨Ф╤А╨╛╨╜, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╨н╨Ь╨Ш-╨┐╤Г╤Б╨║╨╛╨▓╨╛╨╣ ╤Г╤Б╤В╨░╨╜╨╛╨▓╨║╨╛╨╣. # Ru-Localization
+  name: Тазер # Ru-Localization
+  description: Дрон, оснащённый ЭМИ-пусковой установкой. # Ru-Localization
   price: 12500
   category: Small
   group: Custom
@@ -29,7 +29,7 @@
 
 - type: gameMap
   id: Taser
-  mapName: '╨в╨░╨╖╨╡╤А' # Ru-Localization
+  mapName: 'Тазер' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Carrier/taser.yml
   minPlayers: 0
   stations:
@@ -37,6 +37,6 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨в╨░╨╖╨╡╤А{1}' # Ru-Localization
+        mapNameTemplate: 'Тазер{1}' # Ru-Localization
         nameGenerator: !type:NanotrasenNameGenerator
           prefixCreator: '14'

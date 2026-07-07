@@ -7,8 +7,8 @@
 - type: vessel
   id: Promise
   parent: BaseVessel
-  name: ╨Ю╨▒╨╡╤Й╨░╨╜╨╕╨╡ # Ru-Localization
-  description: ╨б╤В╨░╤А╨░╤П ╨▓╨░╤А╨╕╨░╤Ж╨╕╤П ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╛╨│╨╛ ╨║╨╛╤А╨░╨▒╨╗╤П, ╨╛╤В╨╜╨╛╤Б╤П╤Й╨░╤П╤Б╤П ╨╡╤Й╤С ╨║ ╤Н╨┐╨╛╤Е╨╡ ╨а╨░╤Б╨║╨╛╨╗╨░. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨▓╤Б╨╡╨╝, ╤З╤В╨╛ ╤В╨╛╨╗╤М╨║╨╛ ╨╝╨╛╨╢╨╜╨╛ ╨┐╨╛╨╢╨╡╨╗╨░╤В╤М ╨╛╤В ╨╝╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╛╨│╨╛ ╤Б╤Г╨┤╨╜╨░, ╨░ ╤В╨░╨║╨╢╨╡ ╨┐╤А╨╛╤Б╤В╨╛╤А╨╜╤Л╨╝╨╕ ╨╢╨╕╨╗╤Л╨╝╨╕ ╨┐╨╛╨╝╨╡╤Й╨╡╨╜╨╕╤П╨╝╨╕ ╨┤╨╗╤П ╤Н╨║╨╕╨┐╨░╨╢╨░ ╨╜╨░ ╨▓╤А╨╡╨╝╤П ╨┤╨╛╨╗╨│╨╕╤Е ╤Б╨╝╨╡╨╜. # Ru-Localization
+  name: Обещание # Ru-Localization
+  description: Старая вариация медицинского корабля, относящаяся ещё к эпохе Раскола. Оснащён всем, что только можно пожелать от медицинского судна, а также просторными жилыми помещениями для экипажа на время долгих смен. # Ru-Localization
   price: 106500
   category: Medium
   group: Medical
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Promise
-  mapName: '╨Ю╨▒╨╡╤Й╨░╨╜╨╕╨╡' # Ru-Localization
+  mapName: 'Обещание' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/promise.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ю╨▒╨╡╤Й╨░╨╜╨╕╨╡{1}' # Ru-Localization
+          mapNameTemplate: 'Обещание{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

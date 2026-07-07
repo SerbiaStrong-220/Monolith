@@ -5,8 +5,8 @@
 - type: vessel
   id: Sunrise
   parent: BaseVessel
-  name: ╨Т╨╛╤Б╤Е╨╛╨┤ # Ru-Localization
-  description: ╨и╨░╤В╤В╨╗ ╨╛╨▒╨╛╤А╤Г╨┤╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨┐╨╛╨┤ ╨╜╤Г╨╢╨┤╤Л ╤З╨░╤Б╤В╨╜╨╛╨│╨╛ ╨┤╨╡╤В╨╡╨║╤В╨╕╨▓╨░. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨╜╨░╨▒╨╛╤А╨╛╨╝ ╨║╤А╨╕╨╝╨╕╨╜╨░╨╗╨╕╤Б╤В╨╕╤З╨╡╤Б╨║╨╕╤Е ╨╕╨╜╤Б╤В╤А╤Г╨╝╨╡╨╜╤В╨╛╨▓ ╨┤╨╗╤П ╤А╨░╤Б╤Б╨╗╨╡╨┤╨╛╨▓╨░╨╜╨╕╨╣. ╨б╨┐╨╛╤Б╨╛╨▒╨╡╨╜ ╨╛╤Б╤В╨░╨╜╨░╨▓╨╗╨╕╨▓╨░╤В╤М ╨║╨╛╨╜╤В╤А╨░╨▒╨░╨╜╨┤╨╕╤Б╤В╨╛╨▓ ╨╕ ╨│╤А╨░╨╢╨┤╨░╨╜╤Б╨║╨╕╨╡ ╨║╨╛╤А╨░╨▒╨╗╨╕ ╤Б ╨┐╨╛╨╝╨╛╤Й╤М╤О ╨Ь220 ╨а╤Г╨▒╨╕╨║╨╛╨╜ ╨╕ ╤Б╨▒╨╡╨│╨░╤В╤М ╨╛╤В ╨▓╤Б╨╡╨│╨╛, ╤З╤В╨╛ ╨╛╨┐╨░╤Б╨╜╨╡╨╡ ╨╡╨│╨╛ ╤Б╨░╨╝╨╛╨│╨╛. # Ru-Localization
+  name: Восход # Ru-Localization
+  description: Шаттл оборудованный под нужды частного детектива. Оснащён набором криминалистических инструментов для расследований. Способен останавливать контрабандистов и гражданские корабли с помощью М220 Рубикон и сбегать от всего, что опаснее его самого. # Ru-Localization
   price: 59000
   category: Small
   group: Sr
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Sunrise
-  mapName: '╨Т╨╛╤Б╤Е╨╛╨┤' # Ru-Localization
+  mapName: 'Восход' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/sunrise.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Т╨╛╤Б╤Е╨╛╨┤{1}' # Ru-Localization
+          mapNameTemplate: 'Восход{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

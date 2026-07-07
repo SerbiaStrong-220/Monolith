@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Drakon
-  parent: [BaseVesselAntag, BaseVesselUSSP] # Exodus - USSP NPC faction
+  parent: BaseVesselAntag
   name: Дракон # Ru-Localization
   description: Быстрый боевой шаттл с довольно опасным баллистическим арсеналом орудий. # Ru-Localization
   price: 85290

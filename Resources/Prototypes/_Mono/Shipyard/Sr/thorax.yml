@@ -5,8 +5,8 @@
 - type: vessel
   id: Thorax
   parent: BaseVessel
-  name: ╨в╨╛╤А╨░╨║╤Б # Ru-Localization
-  description: ╨Ы╤С╨│╨║╨╕╨╣ ╨╜╨╛╤Б╨╕╤В╨╡╨╗╤М ╨╝╨╡╤Е╨╛╨▓ ╤Б ╨╖╨░╤А╨░╨╜╨╡╨╡ ╨┐╨╛╤Б╤В╤А╨╛╨╡╨╜╨╜╨╛╨╣ ╤Д╨░╨▒╤А╨╕╨║╨╛╨╣, ╨▓╨║╨╗╤О╤З╨░╤О╤Й╨░╤П 4 ╤А╨░╨╖╨╗╨╕╤З╨╜╤Л╤Е ╨┤╨╛╨║╨░ ╨┤╨╗╤П ╨╛╨▒╨╡╤Б╨┐╨╡╤З╨╡╨╜╨╕╤П ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨║╨╕. # Ru-Localization
+  name: Торакс # Ru-Localization
+  description: Лёгкий носитель мехов с заранее построенной фабрикой, включающая 4 различных дока для обеспечения поддержки. # Ru-Localization
   price: 63450
   category: Medium
   group: Sr
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Thorax
-  mapName: '╨в╨╛╤А╨░╨║╤Б' # Ru-Localization
+  mapName: 'Торакс' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/thorax.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨в╨╛╤А╨░╨║╤Б{1}' # Ru-Localization
+          mapNameTemplate: 'Торакс{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

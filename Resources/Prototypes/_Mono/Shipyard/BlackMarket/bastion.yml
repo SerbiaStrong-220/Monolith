@@ -3,8 +3,8 @@
 - type: vessel
   id: Bastion
   parent: BaseVesselAntag
-  name: ╨С╨░╤Б╤В╨╕╨╛╨╜ # Ru-Localization
-  description: ╨Ф╨░╨╗╤М╨╜╨╛╨▒╨╛╨╣╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╨╛╨╛╤А╤Г╨╢╤С╨╜╨╜╤Л╨╣ ╨┤╨▓╤Г╨╝╤П 220-╨╝╨╝ ╨┐╤Г╤И╨║╨░╨╝╨╕ ╨У╨╕╨┤╤А╨░ ╨╕ ╤З╨╡╤В╤Л╤А╤М╨╝╤П 57-╨╝╨╝ ╨░╨▓╤В╨╛╨┐╤Г╤И╨║╨░╨╝╨╕ ╨Р╨Ъ570. ╨Т╨░╤И╨░ ╨╖╨░╨┤╨░╤З╨░ тАФ ╤Б╤В╨╛╤П╤В╤М ╨╜╨░╤Б╨╝╨╡╤А╤В╤М ╨╕ ╤В╨╛╨┐╨╕╤В╤М ╨▓╤А╨░╨│╨░. # Ru-Localization
+  name: Бастион # Ru-Localization
+  description: Дальнобойный шаттл, ооружённый двумя 220-мм пушками Гидра и четырьмя 57-мм автопушками АК570. Ваша задача — стоять насмерть и топить врага. # Ru-Localization
   price: 95500
   purchasable: false # voucher only
   category: Medium
@@ -24,7 +24,7 @@
 
 - type: gameMap
   id: Bastion
-  mapName: '╨С╨░╤Б╤В╨╕╨╛╨╜' # Ru-Localization
+  mapName: 'Бастион' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/bastion.yml
   minPlayers: 0
   stations:
@@ -32,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨С╨░╤Б╤В╨╕╨╛╨╜{1}' # Ru-Localization
+          mapNameTemplate: 'Бастион{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

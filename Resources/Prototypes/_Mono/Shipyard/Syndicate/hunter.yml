@@ -1,8 +1,8 @@
 - type: vessel
   id: Hunter
   parent: BaseVesselAntag
-  name: ╨Ю╤Е╨╛╤В╨╜╨╕╨║ # Ru-Localization
-  description: ╨Ф╨╡╤И╤С╨▓╤Л╨╣ ╨▒╤А╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╨▓╨╛╨╛╤А╤Г╨╢╤С╨╜╨╜╤Л╨╣ ╤З╨╡╤В╤Л╤А╤М╨╝╤П 90╨╝╨╝ ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕. # Ru-Localization
+  name: Охотник # Ru-Localization
+  description: Дешёвый бронированный шаттл, вооружённый четырьмя 90мм орудиями. # Ru-Localization
   price: 50000
   category: Small
   group: Syndicate
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Hunter
-  mapName: '╨Ю╤Е╨╛╤В╨╜╨╕╨║' # Ru-Localization
+  mapName: 'Охотник' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Syndicate/hunter.yml
   minPlayers: 0
   stations:
@@ -28,7 +28,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ю╤Е╨╛╤В╨╜╨╕╨║{1}' # Ru-Localization
+          mapNameTemplate: 'Охотник{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

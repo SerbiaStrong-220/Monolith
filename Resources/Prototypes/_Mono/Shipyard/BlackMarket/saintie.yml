@@ -3,8 +3,8 @@
 - type: vessel
   id: Saintie
   parent: BaseVesselAntag
-  name: ╨б╤Н╨╜╤В╨╕ # Ru-Localization
-  description: ╨Ф╨╛╤А╨╛╨│╨╛╤Б╤В╨╛╤П╤Й╨╕╨╣ ╤Д╤А╨╡╨│╨░╤В, ╤А╨░╨╖╤А╨░╨▒╨╛╤В╨░╨╜╨╜╤Л╨╣ ╨▓╨╡╤А╤Д╤М╤О ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕ ╨д╨░╤Н╤В╨╛╨╜╨░. ╨Ш╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П ╨┤╨╗╤П ╤Б╤В╤А╨╡╨╝╨╕╤В╨╡╨╗╤М╨╜╤Л╤Е ╨░╤В╨░╨║ ╨╜╨░ ╨▓╤А╨░╨╢╨╡╤Б╨║╨╕╨╡ ╤И╨░╤В╤В╨╗╤Л. # Ru-Localization
+  name: Сэнти # Ru-Localization
+  description: Дорогостоящий фрегат, разработанный верфью Династии Фаэтона. Используется для стремительных атак на вражеские шаттлы. # Ru-Localization
   limit: 2
   hyperwarLimit: 4
   price: 345000
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Saintie
-  mapName: '╨б╤Н╨╜╤В╨╕' # Ru-Localization
+  mapName: 'Сэнти' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/saintie.yml
   minPlayers: 0
   stations:
@@ -34,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨б╤Н╨╜╤В╨╕{1}' # Ru-Localization
+          mapNameTemplate: 'Сэнти{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

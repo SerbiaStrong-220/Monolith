@@ -1,6 +1,6 @@
 - type: vessel
   id: Molotok
-  parent: [BaseVesselAntag, BaseVesselUSSP] # Exodus - USSP NPC faction
+  parent: BaseVesselAntag
   name: М-Молот # Ru-Localization
   description: Таран с широким наконечником, подходящий для стыковочного порта Ледокола. # Ru-Localization
   price: 60000

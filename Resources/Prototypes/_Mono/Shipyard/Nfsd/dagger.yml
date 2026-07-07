@@ -3,8 +3,8 @@
 - type: vessel
   id: Dagger
   parent: BaseVesselAntag
-  name: ╨Ф╨░╨│╨│╨╡╤А # Ru-Localization
-  description: ╨Я╤А╤П╨╝╨╛ ╤Б ╨▓╨╡╤А╤Д╨╡╨╣ ╨в╤А╨░╨╜╤Б-╨б╨╛╨╗╨╜╨╡╤З╨╜╨╛╨╣ ╨д╨╡╨┤╨╡╤А╨░╤Ж╨╕╨╕, ╤Н╤В╨╛╤В ╤И╨░╤В╤В╨╗ ╨╛╤Б╨╜╨░╤Й╤С╨╜ ╤А╨╡╨╗╤М╤Б╨╛╤В╤А╨╛╨╜╨╛╨╝ ╨▓ ╨║╨░╤З╨╡╤Б╤В╨▓╨╡ ╨╛╤Б╨╜╨╛╨▓╨╜╨╛╨│╨╛ ╨╛╤А╤Г╨┤╨╕╤П ╨┤╨╗╤П ╨┤╨░╨╗╤М╨╜╨╡╨╣ ╨╛╨│╨╜╨╡╨▓╨╛╨╣ ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨║╨╕. # Ru-Localization
+  name: Даггер # Ru-Localization
+  description: Прямо с верфей Транс-Солнечной Федерации, этот шаттл оснащён рельсотроном в качестве основного орудия для дальней огневой поддержки. # Ru-Localization
   price: 120000
   purchasable: false # voucher only
   category: Medium
@@ -25,7 +25,7 @@
 
 - type: gameMap
   id: Dagger
-  mapName: '╨Ф╨░╨│╨│╨╡╤А' # Ru-Localization
+  mapName: 'Даггер' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/dagger.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: '╨Ф╨░╨│╨│╨╡╤А{1}' # Ru-Localization
+        mapNameTemplate: 'Даггер{1}' # Ru-Localization
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'
@@ -41,3 +41,4 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
+

@@ -3,8 +3,8 @@
 - type: vessel
   id: Vulture
   parent: BaseVesselAntag
-  name: ╨У╤А╨╕╤Д # Ru-Localization
-  description: ╨в╤П╨╢╤С╨╗╤Л╨╣ ╤Г╤В╨╕╨╗╨╕╨╖╨░╤В╨╛╤А╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╨┐╤А╨╛╨╕╨╖╨▓╨╛╨┤╤Б╤В╨▓╨░ "╨г╨╗╤М╨╝╨░╨╜ ╨Ш╨╜╨┤╨░╤Б╤В╤А╨╕╤Б", ╨╕╨╖╨╜╨░╤З╨░╨╗╤М╨╜╨╛ ╤Б╨╛╨╖╨┤╨░╨╜╨╜╤Л╨╣ ╨┤╨╗╤П ╨┤╨╛╨▒╤Л╤З╨╕ ╨▓ ╨│╨╗╤Г╨▒╨╛╨║╨╛╨╝ ╨║╨╛╤Б╨╝╨╛╤Б╨╡, ╨╜╨╛ ╨╜╨╡╨┤╨░╨▓╨╜╨╛ ╨▒╤Л╨╗ ╨┐╨╡╤А╨╡╨┤╨╡╨╗╨░╨╜ ╨┐╨╛╨┤ ╨▒╨╛╨╗╨╡╨╡ ╨▒╨╛╨╡╨▓╤Л╨╡ ╨╖╨░╨┤╨░╤З╨╕ ╨╕ ╨┐╤А╨╛╨┤╨░╨╜ ╨Ф╨╕╨╜╨░╤Б╤В╨╕╨╕ ╨д╨░╤Н╤В╨╛╨╜╨░. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╤В╤А╨╡╨╝╤П ╨╛╤А╤Г╨┤╨╕╤П╨╝╨╕ ╨С╨╛╤Д╨╛╤А╤Б. # Ru-Localization
+  name: Гриф # Ru-Localization
+  description: Тяжёлый утилизаторский шаттл производства "Ульман Индастрис", изначально созданный для добычи в глубоком космосе, но недавно был переделан под более боевые задачи и продан Династии Фаэтона. Оснащён тремя орудиями Бофорс. # Ru-Localization
   limit: 2
   price: 285580
   purchasable: false # voucher only
@@ -26,7 +26,7 @@
 
 - type: gameMap
   id: Vulture
-  mapName: '╨У╤А╨╕╤Д' # Ru-Localization
+  mapName: 'Гриф' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/vulture.yml
   minPlayers: 0
   stations:
@@ -34,10 +34,10 @@
       stationProto: StandardFrontierVessel
       gridComponents:
       - type: VesselInfo
-        description: "╨е╨╛╨┤╤П╤В ╤Б╨╗╤Г╤Е╨╕, ╤З╤В╨╛ ╨╛╨┤╨╕╨╜ ╨У╤А╨╕╤Д ╤Б╨░╨╝╨╛╤Б╤В╨╛╤П╤В╨╡╨╗╤М╨╜╨╛ ╤Г╨╜╨╕╤З╤В╨╛╨╢╨╕╨╗ ╨╜╨╡╨▒╨╛╨╗╤М╤И╤Г╤О ╨┐╨╗╨░╨╜╨╡╤В╤Г. ╨в╨╡╨┐╨╡╤А╤М ╨▓╨░╤И╨░ ╨╛╤З╨╡╤А╨╡╨┤╤М ╨┐╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╤Н╤В╨╛ ╨╜╨░ ╤Б╨╡╨▒╨╡." # Ru-Localization
+        description: "Ходят слухи, что один Гриф самостоятельно уничтожил небольшую планету. Теперь ваша очередь проверить это на себе." # Ru-Localization
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨У╤А╨╕╤Д{1}' # Ru-Localization
+          mapNameTemplate: 'Гриф{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

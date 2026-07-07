@@ -5,8 +5,8 @@
 - type: vessel
   id: Dervi
   parent: BaseVessel
-  name: ╨Ф╨╡╤А╨▓╨╕ # Ru-Localization
-  description: ╨Ь╨╡╨┤╨╕╤Ж╨╕╨╜╤Б╨║╨╕╨╣ ╤И╨░╤В╤В╨╗ ╨╜╨╡╨╛╨▒╤Л╤З╨╜╨╛╨╣ ╤Д╨╛╤А╨╝╤Л ╤Б ╨┤╨▓╤Г╨╝╤П ╨╖╨░╤Й╨╕╤В╨╜╤Л╨╝╨╕ ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨░╨╝╨╕. ╨Ю╤Б╨╜╨░╤Й╤С╨╜ ╨▒╨░╨╖╨╛╨▓╤Л╨╝ ╨╝╨╡╨┤╨╛╤В╤Б╨╡╨║╨╛╨╝, ╤Е╨╕╨╝╨╕╤З╨╡╤Б╨║╨╛╨╣ ╨╗╨░╨▒╨╛╤А╨░╤В╨╛╤А╨╕╨╡╨╣ ╨╕ ╤Г╤Б╤В╨░╨╜╨╛╨▓╨║╨╛╨╣ ╨┤╨╗╤П ╨║╨╗╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╕╤П. # Ru-Localization
+  name: Дерви # Ru-Localization
+  description: Медицинский шаттл необычной формы с двумя защитными элементами. Оснащён базовым медотсеком, химической лабораторией и установкой для клонирования. # Ru-Localization
   price: 64300
   category: Small
   group: Medical
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Dervi
-  mapName: '╨Ф╨╡╤А╨▓╨╕' # Ru-Localization
+  mapName: 'Дерви' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/dervi.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨Ф╨╡╤А╨▓╨╕{1}' # Ru-Localization
+          mapNameTemplate: 'Дерви{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -3,8 +3,8 @@
 - type: vessel
   id: Hazel
   parent: BaseVesselAntag
-  name: ╨е╨╡╨╣╨╖╨╡╨╗ # Ru-Localization
-  description: ╨Ь╨░╨╗╨╡╨╜╤М╨║╨╕╨╣, ╤В╨╡╤Б╨╜╤Л╨╣ ╤И╨░╤В╤В╨╗, ╨╛╤Б╨╜╨░╤Й╤С╨╜╨╜╤Л╨╣ ╤Б╨╕╨╜╨┤╨╕╨║╨░╤В╤Б╨║╨╛╨╣ ╤В╤А╤С╤Е╤Б╤В╨▓╨╛╨╗╤М╨╜╨╛╨╣ 220-╨╝╨╝ ╨▒╨░╤В╨░╤А╨╡╨╡╨╣ ╨╕ ╨┤╨▓╤Г╨╝╤П ╨Р╨б╨Ь-302 ╨Т╨░╨╜╨╡╨║. ╨е╨╛╤А╨╛╤И╨╛ ╨▒╤А╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜ ╨┤╨╗╤П ╤Б╨▓╨╛╨╕╤Е ╤А╨░╨╖╨╝╨╡╤А╨╛╨▓. ╨Э╨╡ ╨╕╨╝╨╡╨╡╤В ╨╝╨╛╨┤╤Г╨╗╤П ╨С╨б╨б. ╨Ф╨╡╤И╤С╨▓╤Л╨╣ ╨▓╨░╤А╨╕╨░╨╜╤В, ╨╜╨╛ ╨╜╨░╨┤╤С╨╢╨╜╨╛╤Б╤В╤М ╨┐╤А╨╕ ╤Н╤В╨╛╨╝ ╨▓╤Л╨╖╤Л╨▓╨░╨╡╤В ╨▓╨╛╨┐╤А╨╛╤Б╤Л. # Ru-Localization
+  name: Хейзел # Ru-Localization
+  description: Маленький, тесный шаттл, оснащённый синдикатской трёхствольной 220-мм батареей и двумя АСМ-302 Ванек. Хорошо бронирован для своих размеров. Не имеет модуля БСС. Дешёвый вариант, но надёжность при этом вызывает вопросы. # Ru-Localization
   price: 67000
   category: Small
   group: BlackMarket
@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Hazel
-  mapName: '╨е╨╡╨╣╨╖╨╡╨╗' # Ru-Localization
+  mapName: 'Хейзел' # Ru-Localization
   mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/hazel.yml
   minPlayers: 0
   stations:
@@ -31,7 +31,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: '╨е╨╡╨╣╨╖╨╡╨╗{1}' # Ru-Localization
+          mapNameTemplate: 'Хейзел{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
