@@ -7,6 +7,10 @@
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/pillbox.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Civilian
