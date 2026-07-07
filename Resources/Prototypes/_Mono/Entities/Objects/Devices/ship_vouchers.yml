@@ -559,7 +559,7 @@
     companyName: PDV
     vessels:
     - Scorpion
-    - Callisto # Exodus rename-ganimed-to-callisto - alternative Scorpion voucher vessel
+    - Scarab # Exodus rename-callisto-to-scarab - alternative Scorpion voucher vessel
   - type: StaticPrice
     vendPrice: 20000
 

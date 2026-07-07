@@ -39,7 +39,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Callisto
+      name: Scarab
     - type: Transform
       pos: 0.5,0.5
       parent: invalid
@@ -530,7 +530,7 @@ entities:
       flags: HideLabel
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Callisto
+      id: Scarab
     - type: ShipGridLock
       locked: False
     - type: Roof
