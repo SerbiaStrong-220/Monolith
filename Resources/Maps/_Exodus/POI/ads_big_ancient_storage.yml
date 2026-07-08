@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/01/2026 10:42:59
-  entityCount: 6839
+  entityCount: 6842
 maps: []
 grids:
 - 1
@@ -26791,6 +26791,37 @@ entities:
     components:
     - type: Transform
       pos: -19.489794,-18.319147
+      parent: 1
+- proto: ComputerShipyardCitadel
+  entities:
+  - uid: 6840
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,10.5
+      parent: 1
+    - type: ApcPowerReceiver
+      powerLoad: 5
+    - type: Battery
+      startingCharge: 0
+- proto: ComputerIFF
+  entities:
+  - uid: 6842
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,10.5
+      parent: 1
+    - type: ApcPowerReceiver
+      powerLoad: 5
+    - type: Battery
+      startingCharge: 0
+- proto: ShipVoucherLuxury
+  entities:
+  - uid: 6841
+    components:
+    - type: Transform
+      pos: -11.5,26.5
       parent: 1
 - proto: SignalButton
   entities:

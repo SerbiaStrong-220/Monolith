@@ -333,3 +333,26 @@
     companyName: USSP
     vessels:
     - Kupol
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherLuxury
+  name: ADF luxury LPC
+  description: A small card that authorizes the procurement of a Luxury-class imperial yacht from the Citadel shipyard reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#ff3db1"
+    - state: screen9
+      color: "#ff3db1"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 28800 # 8 hours
+    consoleType: Citadel
+    vessels:
+    - Luxury
+  - type: StaticPrice
+    vendPrice: 450000
