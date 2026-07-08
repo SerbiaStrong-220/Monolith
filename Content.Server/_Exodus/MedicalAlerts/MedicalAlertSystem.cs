@@ -23,10 +23,10 @@ public sealed partial class MedicalAlertSystem : EntitySystem
 {
     public const int MaxEntries = 64;
 
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SectorServiceSystem _sectorService = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SectorServiceSystem _sectorService = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<CartridgeLoaderComponent> _cartridgeLoaderQuery;
 

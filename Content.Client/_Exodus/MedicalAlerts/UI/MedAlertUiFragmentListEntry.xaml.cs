@@ -12,7 +12,7 @@ namespace Content.Client._Exodus.MedicalAlerts.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MedAlertUiFragmentListEntry : Control
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public MedAlertUiFragmentListEntry(MedicalAlertEntry entry)
     {
