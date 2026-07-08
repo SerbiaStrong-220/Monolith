@@ -1326,16 +1326,13 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (_nebulaFillBuffer.Length < ringCount)
                 _nebulaFillBuffer = new Vector2[ringCount];
 
-            var viewBounds = new Box2(-3f, -3f, Size.X + 3f, Size.Y + 3f);
-            var drawOuterRadius = GetInvertDrawOuterRadius(config, position, viewBounds);
-
             for (var i = 0; i <= n; i++)
             {
                 var k = i % n;
                 var theta = MathF.Tau * k / n;
                 // Exodus nebula-radar-visualization: rotate outer ring endpoints into the same frame as the inner contour;
                 // otherwise the triangle strip skews and shows diagonal fill stripes when the radar rotates with the shuttle.
-                var rawOuter = new Vector2(drawOuterRadius * MathF.Cos(theta), drawOuterRadius * MathF.Sin(theta));
+                var rawOuter = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta)); // Exodus mass-scanner-fix: keep invert-fill outer radius stable in world space.
                 var outerPoint = RotateNebulaPoint(rawOuter, cos, sin);
                 var innerPoint = RotateNebulaPoint(config.Points[k], cos, sin);
 
@@ -1395,28 +1392,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         return new Vector2(
             point.X * cos - point.Y * sin,
             point.X * sin + point.Y * cos);
-    }
-
-    // Exodus mass-scanner-perf: clamp huge world-space outer radii to viewport coverage so death-zone fill stays visible.
-    private float GetInvertDrawOuterRadius(BlipConfig config, Vector2 position, Box2 viewBounds)
-    {
-        var maxCornerDist = 0f;
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Left, viewBounds.Top) - position).Length());
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Right, viewBounds.Top) - position).Length());
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Left, viewBounds.Bottom) - position).Length());
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Right, viewBounds.Bottom) - position).Length());
-
-        var neededScreenOuter = maxCornerDist * 1.05f;
-        var configScreenOuter = config.RespectZoom
-            ? config.OuterFillRadius * MinimapScale
-            : config.OuterFillRadius;
-
-        if (configScreenOuter <= neededScreenOuter * 1.5f)
-            return config.OuterFillRadius;
-
-        return config.RespectZoom
-            ? neededScreenOuter / MinimapScale
-            : neededScreenOuter;
     }
 
     // Exodus mass-scanner-perf: reuse shape buffer instead of allocating per blip draw.
