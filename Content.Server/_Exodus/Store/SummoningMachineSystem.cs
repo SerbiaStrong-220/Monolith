@@ -131,6 +131,45 @@ public sealed partial class SummoningMachineSystem : EntitySystem
             paused);
     }
 
+    public void RefreshActiveSummon(Entity<SummoningMachineComponent, StoreComponent> ent)
+    {
+        var (uid, summoning, store) = ent;
+
+        if (summoning.ActiveListingId == null ||
+            summoning.ActiveDuration <= TimeSpan.Zero)
+        {
+            return;
+        }
+
+        ListingDataWithCostModifiers? listing = null;
+        foreach (var candidate in store.FullListingsCatalog)
+        {
+            if (candidate.ID != summoning.ActiveListingId.Value)
+                continue;
+
+            listing = candidate;
+            break;
+        }
+
+        if (listing == null)
+            return;
+
+        var newDuration = GetSummonDuration(listing, summoning);
+        if (newDuration == summoning.ActiveDuration)
+            return;
+
+        var oldDurationTicks = Math.Max(1L, summoning.ActiveDuration.Ticks);
+        var remainingTicks = Math.Clamp(summoning.RemainingDuration.Ticks, 0L, oldDurationTicks);
+        var remainingRatio = remainingTicks / (double) oldDurationTicks;
+        var newRemainingTicks = Math.Clamp((long) Math.Ceiling(newDuration.Ticks * remainingRatio), 0L, newDuration.Ticks);
+
+        summoning.ActiveDuration = newDuration;
+        summoning.RemainingDuration = TimeSpan.FromTicks(newRemainingTicks);
+        summoning.UiAccumulator = summoning.UiUpdateInterval;
+
+        _store.UpdateUserInterface(null, uid, store);
+    }
+
     private void CompleteSummon(EntityUid uid, SummoningMachineComponent component, StoreComponent store)
     {
         if (component.ActiveProductEntity != null)
