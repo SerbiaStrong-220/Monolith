@@ -2,13 +2,14 @@
 
 - type: vessel
   id: Remontnik
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Ремонтник # Ru-Localization
   description: Инженерно-добывающий корабль СССП, спроектированный народным производственным союзом. Оснащён модулем БСС, картошкой с маслом и алкоголем в холодильнике. # Ru-Localization
   price: 102000
   category: Medium
   group: Ussp
-  access: USSP
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
   shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/remontnik.yml # Exodus-Tweak
   guidebookPage: Null
   class:

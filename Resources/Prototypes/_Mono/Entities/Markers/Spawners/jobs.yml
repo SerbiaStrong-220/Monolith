@@ -37,40 +37,42 @@
     - sprite: Mobs/Silicon/chassis.rsi
       state: robot_e
 
+# Exodus-begin disable-ussp-faction
 #USSP
-
-- type: entity
-  id: SpawnPointUSSPRifleman
-  parent: SpawnPointJobBase
-  name: USSP Rifleman
-  components:
-  - type: SpawnPoint
-    job_id: USSPRifleman
-  - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
-
-- type: entity
-  id: SpawnPointUSSPSergeant
-  parent: SpawnPointJobBase
-  name: USSP Serzhant
-  components:
-  - type: SpawnPoint
-    job_id: USSPSergeant
-  - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
-
-- type: entity
-  id: SpawnPointUSSPCommissar
-  parent: SpawnPointJobBase
-  name: USSP Commissar
-  components:
-  - type: SpawnPoint
-    job_id: USSPCommissar
-  - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
+#
+#- type: entity
+#  id: SpawnPointUSSPRifleman
+#  parent: SpawnPointJobBase
+#  name: USSP Rifleman
+#  components:
+#  - type: SpawnPoint
+#    job_id: USSPRifleman
+#  - type: Sprite
+#    sprite: Structures/Decoration/banner.rsi
+#    state: banner-red
+#
+#- type: entity
+#  id: SpawnPointUSSPSergeant
+#  parent: SpawnPointJobBase
+#  name: USSP Serzhant
+#  components:
+#  - type: SpawnPoint
+#    job_id: USSPSergeant
+#  - type: Sprite
+#    sprite: Structures/Decoration/banner.rsi
+#    state: banner-red
+#
+#- type: entity
+#  id: SpawnPointUSSPCommissar
+#  parent: SpawnPointJobBase
+#  name: USSP Commissar
+#  components:
+#  - type: SpawnPoint
+#    job_id: USSPCommissar
+#  - type: Sprite
+#    sprite: Structures/Decoration/banner.rsi
+#    state: banner-red
+# Exodus-end
 
 #MD
 
@@ -116,37 +118,39 @@
     - sprite: Mobs/Silicon/chassis.rsi
       state: robot_e
 
+# Exodus-begin disable-viper-group
 # Viper Group
-
-- type: entity
-  id: SpawnPointVGInfanteer
-  parent: SpawnPointJobBase
-  name: VG Infanteer
-  components:
-  - type: SpawnPoint
-    job_id: VGInfanteer
-  - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
-
-- type: entity
-  id: SpawnPointVGLieutenant
-  parent: SpawnPointJobBase
-  name: VG Lieutenant
-  components:
-  - type: SpawnPoint
-    job_id: VGLieutenant
-  - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
-
-- type: entity
-  id: SpawnPointVGCommander
-  parent: SpawnPointJobBase
-  name: VG Commander
-  components:
-  - type: SpawnPoint
-    job_id: VGCommander
-  - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
+#
+#- type: entity
+#  id: SpawnPointVGInfanteer
+#  parent: SpawnPointJobBase
+#  name: VG Infanteer
+#  components:
+#  - type: SpawnPoint
+#    job_id: VGInfanteer
+#  - type: Sprite
+#    sprite: Structures/Decoration/banner.rsi
+#    state: banner-red
+#
+#- type: entity
+#  id: SpawnPointVGLieutenant
+#  parent: SpawnPointJobBase
+#  name: VG Lieutenant
+#  components:
+#  - type: SpawnPoint
+#    job_id: VGLieutenant
+#  - type: Sprite
+#    sprite: Structures/Decoration/banner.rsi
+#    state: banner-red
+#
+#- type: entity
+#  id: SpawnPointVGCommander
+#  parent: SpawnPointJobBase
+#  name: VG Commander
+#  components:
+#  - type: SpawnPoint
+#    job_id: VGCommander
+#  - type: Sprite
+#    sprite: Structures/Decoration/banner.rsi
+#    state: banner-red
+# Exodus-end

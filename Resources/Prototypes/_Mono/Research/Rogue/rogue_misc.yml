@@ -109,6 +109,7 @@
   recipeUnlocks:
   - BasicBorgCombatModulePDV
   - CyborgEndoskeletonPDV # Exodus faction-borg-endoskeletons
+  - BorgIFFPDV # Exodus faction-borg-endoskeletons
   technologyPrerequisites:
   - UniversalMaterialResearchT1
   position: 12, -4

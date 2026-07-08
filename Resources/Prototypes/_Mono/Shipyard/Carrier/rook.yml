@@ -17,6 +17,10 @@
   access: Brig
   mapchecker_group_override: Security
   shuttlePath: /SharedMaps/_Mono/Shuttles/Carrier/rook.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus SecColossus faction
+    factions:
+    - SecColossus
   guidebookPage: Null
   class:
   - Pursuit

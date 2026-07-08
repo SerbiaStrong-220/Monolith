@@ -4,9 +4,30 @@
   text: "/ServerInfo/_Mono/Guidebook/Factions/factions.xml"
   priority: 1
   children:
+  - FactionCores # Exodus faction AI cores guide
+  - TerritoryCapture # Exodus territory capture guide
+  - SummoningGateway # Exodus summoning gateway guide
   - TSFMC_Entry
   - PDV_Entry
   - Minor_Factions
+
+- type: guideEntry # Exodus faction AI cores guide
+  id: FactionCores
+  name: guide-entry-faction-cores
+  text: "/ServerInfo/_Exodus/Guidebook/Factions/FactionCores.xml"
+  priority: 1
+
+- type: guideEntry # Exodus territory capture guide
+  id: TerritoryCapture
+  name: guide-entry-territory-capture
+  text: "/ServerInfo/_Exodus/Guidebook/Factions/TerritoryCapture.xml"
+  priority: 2
+
+- type: guideEntry # Exodus summoning gateway guide
+  id: SummoningGateway
+  name: guide-entry-summoning-gateway
+  text: "/ServerInfo/_Exodus/Guidebook/Factions/SummoningGateway.xml"
+  priority: 3
 
 - type: guideEntry
   id: TSFMC_Entry

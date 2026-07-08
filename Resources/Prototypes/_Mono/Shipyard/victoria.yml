@@ -16,6 +16,10 @@
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/victoria.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Science

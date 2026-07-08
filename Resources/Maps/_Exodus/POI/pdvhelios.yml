@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/16/2026 19:08:03
-  entityCount: 8430
+  time: 06/16/2026 20:58:16
+  entityCount: 8439
 maps: []
 grids:
 - 1
@@ -218,7 +218,7 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: BecomesStation
-      id: PDV Helios Fortress
+      id: HeliosFortress
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
@@ -4219,8 +4219,8 @@ entities:
       spreadQueues:
         Kudzu: []
         MetalFoam: []
-        Smoke: []
         Puddle: []
+        Smoke: []
     - type: GridAtmosphere
       version: 2
       data:
@@ -4973,10 +4973,10 @@ entities:
             Oxygen: 21.824879
             Nitrogen: 82.10312
         - volume: 2500
-          immutable: True
+          temperature: 293.15
           moles: {}
         - volume: 2500
-          temperature: 293.15
+          immutable: True
           moles: {}
         - volume: 2500
           temperature: 235
@@ -9238,6 +9238,58 @@ entities:
     components:
     - type: Transform
       pos: -14.5,26.5
+      parent: 1
+- proto: BannerPDV
+  entities:
+  - uid: 8431
+    components:
+    - type: Transform
+      anchored: True
+      pos: -10.5,31.5
+      parent: 1
+    - type: Anchorable
+      currentDelay: 30
+    - type: Physics
+      bodyType: Static
+  - uid: 8432
+    components:
+    - type: Transform
+      pos: -6.5,61.5
+      parent: 1
+  - uid: 8433
+    components:
+    - type: Transform
+      pos: -2.5,61.5
+      parent: 1
+  - uid: 8434
+    components:
+    - type: Transform
+      pos: -1.5,40.5
+      parent: 1
+  - uid: 8435
+    components:
+    - type: Transform
+      pos: -17.5,32.5
+      parent: 1
+  - uid: 8436
+    components:
+    - type: Transform
+      pos: -17.5,34.5
+      parent: 1
+  - uid: 8437
+    components:
+    - type: Transform
+      pos: -12.5,18.5
+      parent: 1
+  - uid: 8438
+    components:
+    - type: Transform
+      pos: -14.5,24.5
+      parent: 1
+  - uid: 8439
+    components:
+    - type: Transform
+      pos: -10.5,8.5
       parent: 1
 - proto: BarSign
   entities:

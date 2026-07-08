@@ -29,3 +29,5 @@ shuttle-console-verb-unlock-ship = Unlock Ship
 
 ## Shuttle Console FTL
 shuttle-ftl-proximity = Unable to FTL while around other ships.
+shuttle-ftl-nebula = Unable to FTL into hazardous nebula clouds.
+shuttle-ftl-nebula-source = Unable to FTL out of this nebula.

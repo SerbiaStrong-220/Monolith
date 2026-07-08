@@ -699,7 +699,7 @@
     - PortableGeneratorPacmanMachineCircuitboard
     - ReagentGrinderMachineCircuitboard
     - OreProcessorMachineCircuitboard
-    - OreMagnetMachineCircuitboard
+    # - OreMagnetMachineCircuitboard # Exodus disable ore-magnet
     - MicrowaveMachineCircuitboard
     - SurveillanceWirelessCameraMovableCircuitboard
     - PowerComputerCircuitboard

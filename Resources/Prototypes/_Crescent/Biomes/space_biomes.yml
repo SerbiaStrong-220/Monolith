@@ -39,9 +39,9 @@
 
 #actual biomes
 - type: ambientSpaceBiome
-  id: BiomeOuterRing
-  name: Внешнее Кольцо
-  description: "Граница - это не линия на карте. Это место, где заканчиваются волны и свет звёзд слабее."
+  id: BiomeExternalSpace
+  name: Внешний Космос
+  description: "Обычный космос за пределами зон влияния станций. Здесь правит тишина и холод."
 
 - type: ambientSpaceBiome
   id: BiomeMiddleRing

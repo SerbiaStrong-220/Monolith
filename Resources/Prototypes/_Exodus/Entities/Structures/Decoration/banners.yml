@@ -1,0 +1,50 @@
+- type: entity
+  id: BannerPDV
+  parent: BannerBase
+  name: PDV banner
+  description: A banner displaying the sigil of the Phaeton Dynasty.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: pdv-banner
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerPDVNode
+  - type: Anchorable
+    delay: 60
+  - type: TerritoryBanner
+    faction: PDV
+
+- type: entity
+  id: BannerKhsira
+  parent: BannerBase
+  name: Khsira banner
+  description: A banner bearing the emblem of the Khsira Empire.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: khsira-banner
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerKhsiraNode
+  - type: Anchorable
+    delay: 60
+  - type: TerritoryBanner
+    faction: Khsira
+
+- type: entity
+  id: BannerUSSP
+  parent: BannerBase
+  name: USSP banner
+  description: A banner displaying the colors of the USSP.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: ussp-banner
+  - type: Construction
+    graph: MonoBannersGraph
+    node: BannerUSSPNode
+  - type: Anchorable
+    delay: 60
+  - type: TerritoryBanner
+    faction: USSP

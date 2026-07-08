@@ -277,7 +277,7 @@
     - SalvageTechFabCircuitboardNF
     - AutolatheMachineCircuitboard
     - OreProcessorMachineCircuitboard
-    - OreMagnetMachineCircuitboard
+    # - OreMagnetMachineCircuitboard # Exodus disable ore-magnet
     # Machines
     - MaterialReclaimerMachineCircuitboard
     - SpaceHeaterMachineCircuitBoard

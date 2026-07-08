@@ -3010,41 +3010,7 @@ entities:
     - type: Transform
       pos: -0.5,-7.5
       parent: 1
-- proto: SpawnPointUSSPCommissar
-  entities:
-  - uid: 374
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-- proto: SpawnPointUSSPCorporal
-  entities:
-  - uid: 375
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-- proto: SpawnPointUSSPMedic
-  entities:
-  - uid: 376
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-- proto: SpawnPointUSSPRifleman
-  entities:
-  - uid: 377
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-- proto: SpawnPointUSSPSergeant
-  entities:
-  - uid: 378
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
+# Exodus disable-ussp-faction — USSP spawn points removed
 - proto: SubstationBasic
   entities:
   - uid: 379

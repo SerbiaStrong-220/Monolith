@@ -13,6 +13,10 @@
   category: Large
   group: Medical
   shuttlePath: /SharedMaps/_Exodus/Shuttles/tokarev.yml # Exodus-Tweak
+  addComponents:
+  - type: NpcFactionMember # Exodus MD faction
+    factions:
+    - MD
   guidebookPage: null
   class:
   - Science

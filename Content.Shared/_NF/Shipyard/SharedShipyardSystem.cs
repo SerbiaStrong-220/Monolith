@@ -24,6 +24,7 @@ public enum ShipyardConsoleUiKey : byte
     SHM,
     DrakeIndustries,
     Viper,
+    Citadel, // Exodus
     // Add ships to this key if they are only available from mothership consoles. Shipyards using it are inherently empty and are populated using the ShipyardListingComponent.
     Custom
 }

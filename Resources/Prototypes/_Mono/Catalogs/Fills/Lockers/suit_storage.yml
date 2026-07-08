@@ -162,7 +162,8 @@
     - id: ClothingShoesBootsMagSecurity
     - id: ClothingNeckViperGroupMantle
   - type: AccessReader
-    access: [ [ "Viper" ] ]
+    # access: [ [ "Viper" ] ] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
+    access: [ [ "Mercenary" ] ]
 
 - type: entity
   id: SuitStorageViperJackal

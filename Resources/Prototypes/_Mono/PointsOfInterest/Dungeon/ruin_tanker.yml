@@ -7,19 +7,8 @@
 # Discord: _starch_
 
 # Notes:
-- type: pointOfInterest
-  id: AutomatedTanker
-  parent: BaseMobilePOI
-  name: 'Автоматизированный Межсекторальный Танкер' # Ru-Localization
-  minimumDistance: 10000
-  maximumDistance: 15000
-  spawnGroup: Optional
-  gridPath: /Maps/_Mono/POI/Dungeons/ruin_tanker.yml
-  addComponents:
-  - type: IFF
-    color: "#44bfe3"
-    flags: [HideLabel]
-    readOnly: true
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Purple nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept.
 
 - type: gameMap
   id: AutomatedTanker

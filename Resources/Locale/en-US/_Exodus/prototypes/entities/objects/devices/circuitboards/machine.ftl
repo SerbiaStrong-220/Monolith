@@ -6,3 +6,6 @@ ent-GyrodyneMachineCircuitboard = gyrodyne machine board
 
 ent-MachineShieldMS750Circuitboard = MS-750 shield generator board
     .desc = A machine board for a vintage Prometheus shield generator. Lost technology.
+
+ent-NebulaThrusterMachineCircuitboard = nebula-tuned thruster machine board
+    .desc = A machine board for a nebula-tuned thruster.

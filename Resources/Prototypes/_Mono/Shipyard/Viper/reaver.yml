@@ -12,8 +12,13 @@
   price: 61440
   category: Small
   group: Viper
-  access: Viper
+  access: Mercenary # Exodus temp-viper-mercenary-access
+  # access: Viper # Exodus temp-viper-mercenary-access
   shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/reaver.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Scrapyard

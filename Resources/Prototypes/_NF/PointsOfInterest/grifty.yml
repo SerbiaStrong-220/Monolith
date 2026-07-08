@@ -7,22 +7,8 @@
 # Discord: ???
 
 # Notes:
-# Down at your local saloon
-- type: pointOfInterest
-  id: Grifty
-  parent: [BasePOI, BaseRepairablePOI]
-  name: "Бензин и жратва Грифти" # Ru-Localization
-  minimumDistance: 6250
-  maximumDistance: 8600
-  spawnGroup: Scrapyard
-  gridPath: /Maps/_NF/POI/grifty.yml
-  addComponents:
-  - type: SolarPoweredGrid
-    trackOnInit: true
-    doNotCull: true
-  - type: StationTransit # Mono
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Blue / Purple nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept.
 
 - type: gameMap
   id: Grifty
@@ -32,6 +18,10 @@
   stations:
     Grifty:
       stationProto: DeadDropRecordsFrontierOutpost
+      # Exodus start - Territory for Grifty's Gas & Grub
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Бензин и жратва Грифти" # Ru-Localization

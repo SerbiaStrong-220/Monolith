@@ -89,6 +89,9 @@ entities:
       toolWhitelist:
         tags:
         - ADSRepairTool
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces
     - type: MapGrid
       chunks:
         0,0:
@@ -1838,7 +1841,7 @@ entities:
       locked: False
     - type: RadiationGridResistance
     - type: IFF
-      color: '#00CCFFFF'
+      color: '#ff3db1'
     - type: ThermalSignature
 - proto: AirAlarmXeno
   entities:

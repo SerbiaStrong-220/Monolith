@@ -13,6 +13,10 @@
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/brute.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Cargo

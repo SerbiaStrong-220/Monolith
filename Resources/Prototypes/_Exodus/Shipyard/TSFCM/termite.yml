@@ -1,0 +1,40 @@
+- type: vessel
+  id: Termite
+  parent: BaseVesselAntag
+  name: Термит
+  description: Альтернативная конфигурация корвета класса «Альдебаран».
+  price: 369000 # Exodus tsfcm-termite: appraise ~368698 after Rain/Sliver armament
+  purchasable: false # voucher only
+  category: Medium
+  group: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/termite.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Patrol
+  - Corvette
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Termite
+  mapName: 'Термит'
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/termite.yml
+  minPlayers: 0
+  stations:
+    Termite:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Термит{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

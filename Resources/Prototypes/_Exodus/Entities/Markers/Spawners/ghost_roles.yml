@@ -14,6 +14,15 @@
       state: full
 
 - type: entity
+  name: asakim prefect spawner
+  id: SpawnPrefectAsakimWarrior
+  parent: SpawnCenturionAsakimWarrior
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPrefectAsakimGhostrole
+
+- type: entity
   name: asakim centurion spawner
   id: SpawnCenturionAsakimWarriorNoTimelock
   parent: SpawnCenturionAsakimWarrior
@@ -22,6 +31,16 @@
   - type: ConditionalSpawner
     prototypes:
     - MobCenturionAsakimGhostroleNoTimelock
+
+- type: entity
+  name: asakim prefect spawner
+  id: SpawnPrefectAsakimWarriorNoTimelock
+  parent: SpawnPrefectAsakimWarrior
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPrefectAsakimGhostroleNoTimelock
 
 - type: entity
   name: personal protection operator spawner
@@ -47,6 +66,93 @@
   - type: ConditionalSpawner
     prototypes:
     - PlayerBorgAsakimRedactedGhostRoleNoTimelock
+
+- type: entity # Exodus: Assault System Operator (ОШС)
+  name: assault system operator spawner
+  id: SpawnAsakimFighterBorg
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimFighterGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/asakim_fighter.rsi
+      state: azakim_fighter
+
+- type: entity # Exodus: Assault System Operator (ОШС)
+  name: assault system operator spawner
+  id: SpawnAsakimFighterBorgNoTimelock
+  parent: SpawnAsakimFighterBorg
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimFighterGhostRoleNoTimelock
+
+- type: entity
+  name: syndicate operative spawner
+  id: SpawnSyndicateGhostOperative
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_syndicate
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostOperative
+
+- type: entity
+  name: syndicate operative spawner
+  id: SpawnSyndicateGhostOperativeNoTimelock
+  parent: SpawnSyndicateGhostOperative
+  suffix: No Timelock
+  components:
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostOperativeNoTimelock
+
+- type: entity
+  name: syndicate leader spawner
+  id: SpawnSyndicateGhostLeader
+  parent: SpawnSyndicateGhostOperative
+  components:
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostLeader
+
+- type: entity
+  name: syndicate leader spawner
+  id: SpawnSyndicateGhostLeaderNoTimelock
+  parent: SpawnSyndicateGhostLeader
+  suffix: No Timelock
+  components:
+  - type: RandomHumanoidSpawner
+    settings: SyndicateGhostLeaderNoTimelock
+
+- type: entity
+  name: citadel service spawner
+  id: SpawnCitadelServiceGhostRole
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCitadelServiceGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Reptilian/parts.rsi
+      state: full
+
+- type: entity
+  name: citadel service spawner
+  id: SpawnCitadelServiceGhostRoleNoTimelock
+  parent: SpawnCitadelServiceGhostRole
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCitadelServiceGhostRoleNoTimelock
 
 - type: entity
   name: colossus security borg spawner

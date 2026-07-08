@@ -18,6 +18,12 @@
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/bratan.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  - type: SolarPoweredGrid
+    doNotCull: true
   guidebookPage: Null
   class:
   - Civilian
@@ -26,9 +32,6 @@
   engine:
   - AME
   - Solar
-  addComponents:
-  - type: SolarPoweredGrid
-    doNotCull: true
 
 
 - type: gameMap

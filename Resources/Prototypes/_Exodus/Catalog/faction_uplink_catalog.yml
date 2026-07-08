@@ -1,0 +1,41 @@
+- type: listing
+  id: UplinkTsfFactionDevelopmentMaterials
+  name: uplink-faction-development-materials-name
+  description: uplink-faction-development-materials-desc
+  productEntity: CrateFactionDevelopmentMaterials
+  cost:
+    FederationMilitaryCredit: 50
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - FactionStaticUplinkTsf
+      components:
+      - VendingMachine
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true
+
+- type: listing
+  id: UplinkPdvFactionDevelopmentMaterials
+  name: uplink-faction-development-materials-name
+  description: uplink-faction-development-materials-desc
+  productEntity: CrateFactionDevelopmentMaterials
+  cost:
+    Doubloon: 50
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - FactionStaticUplinkPdv
+      components:
+      - VendingMachine
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true

@@ -2,13 +2,14 @@
 
 - type: vessel
   id: Natisk
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Натиск # Ru-Localization
   description: Шаттл-танк со слоем усиленных стен под внешним корпусом, что позволяет ему выдерживать колоссальную нагрузку и использовать чудовищное количество огневой мощи. # Ru-Localization
   price: 53500
   category: Medium
   group: Ussp
-  access: USSP
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
   shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/natisk.yml
   guidebookPage: Null
   class:

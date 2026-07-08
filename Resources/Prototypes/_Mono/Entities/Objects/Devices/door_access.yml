@@ -4,7 +4,9 @@
   suffix: USSP, Locked
   components:
   - type: AccessReader
-    access: [["USSP"]]
+    # Exodus temp-ussp-mercenary-access: Mercenary access until USSP faction returns.
+    # access: [["USSP"]]
+    access: [["Mercenary"]]
 
 - type: entity
   parent: DoorElectronics
@@ -12,7 +14,9 @@
   suffix: USSP Secure, Locked
   components:
   - type: AccessReader
-    access: [["USSPHigh"]]
+    # Exodus temp-ussp-mercenary-access: Mercenary access until USSP faction returns.
+    # access: [["USSPHigh"]]
+    access: [["Mercenary"]]
 
 - type: entity
   parent: DoorElectronics
@@ -20,7 +24,9 @@
   suffix: USSP Command, Locked
   components:
   - type: AccessReader
-    access: [["USSPCommand"]]
+    # Exodus temp-ussp-mercenary-access: Mercenary access until USSP faction returns.
+    # access: [["USSPCommand"]]
+    access: [["Mercenary"]]
 
 - type: entity
   parent: DoorElectronics
@@ -52,7 +58,8 @@
   suffix: Viper Group, Locked
   components:
   - type: AccessReader
-    access: [["Viper"]]
+    # access: [["Viper"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
+    access: [["Mercenary"]]
 
 - type: entity
   parent: DoorElectronics
@@ -60,4 +67,5 @@
   suffix: Viper Group Command, Locked
   components:
   - type: AccessReader
-    access: [["ViperCommand"]]
+    # access: [["ViperCommand"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
+    access: [["Mercenary"]]

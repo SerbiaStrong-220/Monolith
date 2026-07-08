@@ -15,6 +15,10 @@
   group: Shipyard
   access: Mercenary
   shuttlePath: /SharedMaps/_Mono/Shuttles/claymore.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Pursuit

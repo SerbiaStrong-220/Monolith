@@ -1,3 +1,4 @@
+# Exodus temp-ussp-mercenary-access: Ussp-group vessels use access: Mercenary until USSP faction returns.
 - type: entity
   id: ComputerShipyardUSSP
   parent: ComputerShipyard # Exodus
@@ -83,6 +84,7 @@
       secretShipyardChannel: Nfsd
       canTransferDeed: false
 
+# Exodus temp-viper-mercenary-access: Viper-group vessels use access: Mercenary until VG faction returns.
 - type: entity
   id: ComputerShipyardViper
   parent: ComputerShipyardBase

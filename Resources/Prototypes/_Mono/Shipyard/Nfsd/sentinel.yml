@@ -11,6 +11,10 @@
   group: Security
   access: Security
   shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol

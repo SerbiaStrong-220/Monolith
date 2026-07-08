@@ -270,7 +270,7 @@
     - id: MaterialReclaimerMachineCircuitboard
     - id: OreProcessorIndustrialMachineCircuitboard
     - id: OreProcessorMachineCircuitboard
-    - id: OreMagnetMachineCircuitboard # Mono
+    # - id: OreMagnetMachineCircuitboard # Exodus disable ore-magnet
     - id: ShredderMachineCircuitboard
     - id: ShuttleGunKineticCircuitboard
     - id: NFScrapProcessorCircuitboard

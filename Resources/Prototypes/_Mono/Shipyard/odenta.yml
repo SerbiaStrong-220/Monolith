@@ -14,6 +14,10 @@
   category: Medium
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/odenta.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus MD faction
+    factions:
+    - MD
   guidebookPage: null
   class:
   - Medical

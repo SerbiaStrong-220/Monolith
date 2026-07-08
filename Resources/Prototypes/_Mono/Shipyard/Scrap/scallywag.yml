@@ -14,6 +14,10 @@
   group: Scrap
   access: Mercenary
   shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/scallywag.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - pursuit

@@ -80,7 +80,7 @@
     sprite: _NF/Structures/Storage/Crates/secure_ammo.rsi
     state: icon
   product: CrateAmmoBoxVanyk
-  cost: 3000
+  cost: 15000 # Exodus-cargo-extension
   category: cargoproduct-category-name-shipammo
   group: market
 
@@ -90,7 +90,7 @@
     sprite: _NF/Structures/Storage/Crates/secure_ammo.rsi
     state: icon
   product: CrateAmmoBoxVespera
-  cost: 5000
+  cost: 25000 # Exodus-cargo-extension
   category: cargoproduct-category-name-shipammo
   group: market
 
@@ -100,6 +100,6 @@
     sprite: _NF/Structures/Storage/Crates/secure_ammo.rsi
     state: icon
   product: CrateAmmoBoxTovek
-  cost: 7500
+  cost: 37500 # Exodus-cargo-extension
   category: cargoproduct-category-name-shipammo
   group: market

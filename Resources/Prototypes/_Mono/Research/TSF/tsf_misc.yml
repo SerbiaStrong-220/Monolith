@@ -136,6 +136,7 @@
   recipeUnlocks:
   - BasicBorgCombatModuleTSF
   - CyborgEndoskeletonTSF # Exodus faction-borg-endoskeletons
+  - BorgIFFTSF # Exodus faction-borg-endoskeletons
   technologyPrerequisites:
   - UniversalMaterialResearchT1
   position: 12, -4

@@ -1,0 +1,7 @@
+- type: entity
+  parent: MaterialDurathread
+  id: MaterialDurathread40
+  suffix: 40
+  components:
+  - type: Stack
+    count: 40

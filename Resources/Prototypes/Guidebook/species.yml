@@ -14,15 +14,15 @@
   # - Goblin # Frontier # Exodus-Removed
   - Vulpkanin # DeltaV
   # - Harpy # DeltaV # Exodus-Removed
-  # - Felinid # DeltaV # Exodus-Removed
+  - Felinid # DeltaV # Exodus-restore
   # - Oni # DeltaV # Exodus-Removed
-  # - Chitinid # DeltaV # Exodus-Removed
-  # - Resomi # Floof # Exodus-Removed
+  - Chitinid # DeltaV # Exodus-restore
+  - Resomi # Floof # Exodus-restore
   # - Protogen # Mono # Exodus-Removed
   - IPC # EE
   # - Rodentia # DeltaV # Exodus-Removed
   - Tajaran # Goobstation
-  # - Hydrakin # Monolith/Obelisk # Exodus-Removed
+  - Hydrakin # Monolith/Obelisk # Exodus-restore
 
 - type: guideEntry
   id: Arachnid
@@ -64,10 +64,10 @@
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
 
-# - type: guideEntry # Exodus-Removed
-#   id: Resomi
-#   name: species-name-resomi
-#   text: "/ServerInfo/Guidebook/Mobs/Resomi.xml"
+- type: guideEntry # Exodus-restore
+  id: Resomi
+  name: species-name-resomi
+  text: "/ServerInfo/_Exodus/Guidebook/Mobs/Resomi.xml"
 
 # - type: guideEntry
 #   id: Protogen
@@ -84,7 +84,7 @@
   name: species-name-tajaran
   text: "/ServerInfo/Guidebook/Mobs/Tajaran.xml"
 
-# - type: guideEntry # Exodus-Removed
-#   id: Hydrakin
-#   name: species-name-hydrakin
-#   text: "/ServerInfo/Guidebook/Mobs/Hydrakin.xml"
+- type: guideEntry # Exodus-restore
+  id: Hydrakin
+  name: species-name-hydrakin
+  text: "/ServerInfo/_Exodus/Guidebook/Mobs/Hydrakin.xml"

@@ -96,6 +96,8 @@ uplink-security-t1-tarantula-voucher-desc = A small card that contains the data 
 
 uplink-security-t1-sentinel-voucher-name = TSFMC Sentinel LPC [T1]
 uplink-security-t1-sentinel-voucher-desc = A small card that contains the data for the procurement of a Sentinel-class escort from the flagship's reserves.
+uplink-security-t1-sentinel-f-voucher-name = TSFMC Sentinel-F LPC [T1]
+uplink-security-t1-sentinel-f-voucher-desc = A small card that contains the data for the procurement of a Sentinel-F-class escort from the flagship's reserves.
 
 uplink-security-t1-mercury-voucher-name = TSFMC Mercury LPC [T1]
 uplink-security-t1-mercury-voucher-desc = A small card that contains the data for the procurement of a Mercury-class corvette from the flagship's reserves.
@@ -117,6 +119,8 @@ uplink-security-t3-polaris-voucher-desc = A small card that contains the data fo
 
 uplink-security-flyssa-voucher-name = TSFMC Flyssa LPC [T4]
 uplink-security-flyssa-voucher-desc = A small card that contains the data for the procurement of a Flyssa-class destroyer from the flagship's reserves.
+uplink-security-antares-voucher-name = TSFMC Antares LPC [T4]
+uplink-security-antares-voucher-desc = A small card that contains the data for the procurement of an Antares-class destroyer from the flagship's reserves.
 
 uplink-security-sentry-mk290-name = MK-290 Deployable Sentry System
 uplink-security-sentry-mk290-desc = A multipurpose portable sentry, capable of feeding from 5.56x45mm, 6.8x52mm, and 7.62x39mm magazines. Requires a screwdriver to disassemble once placed.
@@ -129,3 +133,6 @@ uplink-security-hardsuit-m82c-desc = A basic protective system for dangerous env
 
 uplink-security-pulserifle-name = Pulse Rifle
 uplink-security-pulserifle-desc = A large, automatic pulse weapon. Larger cell, and high powered, perfect for chewing through groups of foes.
+# Exodus-faction-ai-core
+uplink-security-faction-ai-core-name = TSFMC Station AI Core
+uplink-security-faction-ai-core-desc = A screwable faction AI core aligned to TSFMC friend-or-foe logic.

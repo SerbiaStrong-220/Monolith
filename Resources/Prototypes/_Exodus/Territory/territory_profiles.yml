@@ -1,0 +1,67 @@
+# Shared territory profiles for POI grids.
+# GridTerritory maps only mark that a grid has territory.
+# Radius/color behavior is selected here by game map / station id.
+# Biome source is opt-in; static sector biome sources handle default space rings.
+
+- type: territoryProfile
+  id: PoiSmall
+  radius: 1000
+  minClaimRepairIntegrity: 0.65
+  colorPoiByFaction: true
+  neutralPoiColor: "#A6A6A6"
+  gameMapPrototypes:
+  - AnomalousLab
+  - Bahama
+  - CaseysCasino
+  - CargoDepot
+  - CargoDepotAlt
+  - Edison
+  - Grifty
+  - McHobo
+  - Omnichurch
+  - ThePit
+  - TSFMCOutpost
+  - Tinnia
+  - Mining
+
+- type: territoryProfile
+  id: PoiMedium
+  default: true
+  radius: 2500
+  minClaimRepairIntegrity: 0.65
+  colorPoiByFaction: true
+  neutralPoiColor: "#A6A6A6"
+  gameMapPrototypes:
+  - AdsCitadel
+  - Sevastopol
+  - TradeMall
+  - Zvezda
+
+- type: territoryProfile
+  id: PoiLarge
+  radius: 4000
+  minClaimRepairIntegrity: 0.65
+  colorPoiByFaction: true
+  neutralPoiColor: "#A6A6A6"
+  gameMapPrototypes:
+  - HeliosFortress
+  - TSFMCHalcyon
+  - USSPCamelot
+
+- type: territoryProfile
+  id: ColossusCentral
+  radius: 5000
+  claimable: false
+  colorPoiByFaction: false
+  neutralPoiColor: "#A6A6A6"
+  gameMapPrototypes:
+  - Frontier
+
+- type: territoryProfile
+  id: Hospital
+  radius: 2500
+  claimable: false
+  colorPoiByFaction: false
+  neutralPoiColor: "#A6A6A6"
+  gameMapPrototypes:
+  - Medical

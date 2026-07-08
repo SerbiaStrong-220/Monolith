@@ -14,6 +14,10 @@
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/zeros.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Civilian

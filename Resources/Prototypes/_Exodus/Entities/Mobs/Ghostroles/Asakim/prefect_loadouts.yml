@@ -1,0 +1,5 @@
+- type: startingGear
+  parent: AsakimCenturionGear
+  id: AsakimPrefectGear
+  equipment:
+    outerClothing: ClothingOuterHardsuitPrefectAsakimUnremoveable

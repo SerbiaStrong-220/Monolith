@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Ledokol
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Ледокол # Ru-Localization
   description: Массивный шаттл, изначально созданный для тарана сквозь плотные поля обломков. Жертвует огневой мощью ради мощности двигателей. # Ru-Localization
   limit: 1
@@ -10,7 +10,8 @@
   purchasable: false # voucher only
   category: Large
   group: Ussp
-  access: USSP
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
   shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/Ledokol/ledokol.yml
   guidebookPage: Null
   class:

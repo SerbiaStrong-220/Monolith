@@ -37,12 +37,14 @@
             StyleClasses="ButtonSquare"
             Margin="0 0 12 0"
             HorizontalAlignment="Right" /> <!-- Left margin only -->
+        <!-- Exodus-begin disable shipyard-preview
         <Button Name="Preview"
                 Access="Public"
                 Text="{Loc 'shipyard-console-preview'}"
                 StyleClasses="ButtonSquare"
                 Margin="0 0 12 0"
                 HorizontalAlignment="Right" />
+        Exodus-end -->
     </BoxContainer>
         <PanelContainer VerticalExpand="True">
         <PanelContainer.PanelOverride>

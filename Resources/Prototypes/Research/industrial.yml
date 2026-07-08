@@ -12,7 +12,7 @@
   - WeaponGrapplingGun # Frontier
   - MineralScannerEmpty
   - OreProcessorIndustrialMachineCircuitboard
-  - OreMagnetMachineCircuitboard
+  # - OreMagnetMachineCircuitboard # Exodus disable ore-magnet
   - ClothingMaskWeldingGas
   - ClothingShoesBootsJump
   - MechEquipmentDrill # Goobstation

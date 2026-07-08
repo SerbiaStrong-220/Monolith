@@ -11,6 +11,10 @@
   group: Security
   access: Command # Exodus-Cadet-No-TSF-Shutles
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/flyssa.yml # Exodus
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Capital

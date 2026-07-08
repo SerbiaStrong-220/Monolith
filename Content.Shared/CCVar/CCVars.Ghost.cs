@@ -21,4 +21,13 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> GhostKillCrit =
         CVarDef.Create("ghost.kill_crit", true, CVar.REPLICATED | CVar.SERVER);
+
+    // Exodus-begin ghost-role-follow-toggle
+    /// <summary>
+    ///     Global switch for the ghost role "Follow" button. Per-role <c>allowFollow</c> on
+    ///     <see cref="Content.Server.Ghost.Roles.Components.GhostRoleComponent"/> can still disable follow individually.
+    /// </summary>
+    public static readonly CVarDef<bool> GhostRoleFollowEnabled =
+        CVarDef.Create("ghost.role_follow_enabled", true, CVar.REPLICATED | CVar.SERVER);
+    // Exodus-end
 }

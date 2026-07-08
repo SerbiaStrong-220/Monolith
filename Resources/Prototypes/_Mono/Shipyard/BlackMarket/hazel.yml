@@ -10,6 +10,10 @@
   group: BlackMarket
   access: Pirate
   shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/hazel.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: Null
   class:
   - Pirate

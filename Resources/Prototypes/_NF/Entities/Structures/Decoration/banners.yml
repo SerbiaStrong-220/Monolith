@@ -10,6 +10,12 @@
   - type: Construction
     graph: BannersGraph
     node: BannerSecurityNode
+  # Exodus start - territory claim banner for TSFMC
+  - type: Anchorable
+    delay: 60
+  - type: TerritoryBanner
+    faction: TSFMC
+  # Exodus end
 
 - type: entity
   id: FlagNfsd

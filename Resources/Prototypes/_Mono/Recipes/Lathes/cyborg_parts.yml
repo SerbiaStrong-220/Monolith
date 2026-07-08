@@ -1,23 +1,32 @@
 # Cyborg Intrinsic Parts for crafting Faction Cyborgs
+# Exodus-begin faction-borg-endoskeletons
 - type: latheRecipe
+  parent: BaseRoboticsRecipe # Exodus faction-borg-endoskeletons
   id: BorgIFFPDV
   result: BorgIFFPDV
-  completetime: 5
-  materials: 
-    Steel: 1000
-    Plastic: 500
-    Glass: 500
-    Gold: 200
-    Silver: 200
+  completetime: 3
+  materials:
+    Steel: 10000
+    Plasteel: 5000
+    Plastitanium: 4000
+    Plastic: 3000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 200
+    Diamond: 100
 
 - type: latheRecipe
+  parent: BaseRoboticsRecipe # Exodus faction-borg-endoskeletons
   id: BorgIFFTSF
   result: BorgIFFTSF
-  completetime: 5
-  materials: 
-    Steel: 1000
-    Plastic: 500
-    Glass: 500
-    Gold: 200
-    Silver: 200
-
+  completetime: 3
+  materials:
+    Steel: 10000
+    Plasteel: 5000
+    Plastitanium: 4000
+    Plastic: 3000
+    Gold: 2000
+    Silver: 2000
+    Bluespace: 200
+    Diamond: 100
+# Exodus-end

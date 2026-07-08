@@ -234,6 +234,7 @@
     companyName: TSF
     vessels:
     - Aldebaran
+    - Termite # Exodus tsfcm-termite
   - type: StaticPrice
     vendPrice: 800000
 
@@ -262,6 +263,7 @@
     - Spica
     - Mercury
     - Sentinel
+    - SentinelF # Exodus tsfcm-sentinel-f
     - Dagger
     - Calypso
 
@@ -557,6 +559,7 @@
     companyName: PDV
     vessels:
     - Scorpion
+    - Scarab # Exodus rename-callisto-to-scarab - alternative Scorpion voucher vessel
   - type: StaticPrice
     vendPrice: 20000
 

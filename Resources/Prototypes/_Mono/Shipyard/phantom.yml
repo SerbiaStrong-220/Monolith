@@ -15,6 +15,10 @@
   access: Command # DoC exclusive.
   limit: 2
   shuttlePath: /SharedMaps/_Mono/Shuttles/phantom.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus MD faction
+    factions:
+    - MD
   guidebookPage: null
   class:
   - Medical

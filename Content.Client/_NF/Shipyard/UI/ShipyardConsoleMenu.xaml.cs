@@ -173,7 +173,7 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
                 Price = { Text = priceText },
             };
             vesselEntry.Purchase.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
-            vesselEntry.Preview.OnPressed += (args) => { OnPreviewShip?.Invoke(args); };
+            // vesselEntry.Preview.OnPressed += (args) => { OnPreviewShip?.Invoke(args); }; // Exodus disable shipyard-preview
             Vessels.AddChild(vesselEntry);
         }
     }

@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Buran
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Буран # Ru-Localization
   description: Фрегат СССП с огромной бортовой огневой мощью и толстой бронёй. Слава великому комиссариату! # Ru-Localization
   limit: 2
@@ -10,7 +10,8 @@
   purchasable: false # voucher only
   category: Large
   group: Ussp
-  access: USSP
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
   shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/buran.yml # Exodus
   guidebookPage: ShipyardNFROperation
   class:

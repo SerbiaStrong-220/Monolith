@@ -1,3 +1,4 @@
+using System.Numerics; // Exodus: per-hand visual offsets
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
@@ -63,7 +64,7 @@ public sealed partial class HandsComponent : Component
     ///     Data about the current sprite layers that the hand is contributing to the owner entity. Used for sprite in-hands.
     ///     Used by the client.
     /// </summary>
-    public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
+    public readonly Dictionary<string, HashSet<string>> RevealedLayers = new(); // Exodus: support multiple hands at the same location
 
     /// <summary>
     ///     The time at which throws will be allowed again.
@@ -112,6 +113,11 @@ public sealed class Hand //TODO: This should definitely be a struct - Jezi
     [ViewVariables]
     public HandLocation Location { get; }
 
+    // Exodus-begin: support visual offsets for additional hands
+    [ViewVariables]
+    public Vector2 VisualOffset { get; set; }
+    // Exodus-end
+
     /// <summary>
     ///     The container used to hold the contents of this hand. Nullable because the client must get the containers via <see cref="ContainerManagerComponent"/>,
     ///     which may not be synced with the server when the client hands are created.
@@ -124,11 +130,12 @@ public sealed class Hand //TODO: This should definitely be a struct - Jezi
 
     public bool IsEmpty => HeldEntity == null;
 
-    public Hand(string name, HandLocation location, ContainerSlot? container = null)
+    public Hand(string name, HandLocation location, ContainerSlot? container = null, Vector2 visualOffset = default) // Exodus: per-hand visual offsets
     {
         Name = name;
         Location = location;
         Container = container;
+        VisualOffset = visualOffset; // Exodus: per-hand visual offsets
     }
 }
 

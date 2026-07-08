@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/16/2026 19:18:49
-  entityCount: 10080
+  time: 06/16/2026 20:55:33
+  entityCount: 10081
 maps: []
 grids:
 - 1
@@ -228,8 +228,8 @@ entities:
       spreadQueues:
         Kudzu: []
         MetalFoam: []
-        Smoke: []
         Puddle: []
+        Smoke: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -10853,6 +10853,16 @@ entities:
     - type: Transform
       pos: 21.5,28.5
       parent: 1
+  - uid: 10082
+    components:
+    - type: Transform
+      anchored: True
+      pos: -2.5,9.5
+      parent: 1
+    - type: Anchorable
+      currentDelay: 30
+    - type: Physics
+      bodyType: Static
 - proto: BarricadeBlock
   entities:
   - uid: 1207

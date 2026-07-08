@@ -22,3 +22,11 @@
   components:
     - type: Implanter
       implant: CombatImplant
+
+- type: entity
+  id: AsakimTrackingImplanter
+  parent: BaseImplantOnlyImplanter
+  suffix: Asakim, Tracking
+  components:
+    - type: Implanter
+      implant: AsakimTrackingImplant

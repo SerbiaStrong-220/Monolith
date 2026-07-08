@@ -6635,27 +6635,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-12.5
       parent: 1
-- proto: SpawnPointVGCommander
-  entities:
-  - uid: 898
-    components:
-    - type: Transform
-      pos: 4.5,-12.5
-      parent: 1
-- proto: SpawnPointVGInfanteer
-  entities:
-  - uid: 899
-    components:
-    - type: Transform
-      pos: 4.5,-13.5
-      parent: 1
-- proto: SpawnPointVGLieutenant
-  entities:
-  - uid: 900
-    components:
-    - type: Transform
-      pos: 3.5,-13.5
-      parent: 1
+# Exodus disable-viper-group — VG spawn points removed
 - proto: SubstationBasic
   entities:
   - uid: 260

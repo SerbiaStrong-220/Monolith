@@ -1,0 +1,159 @@
+- type: entity
+  id: BaseADSShuttleEmergencyBeacon
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Beacons/little_beacon.rsi
+    layers:
+    - state: beacon
+  - type: Item
+    size: Small
+    sprite: _Exodus/Objects/Consumable/Beacons/little_beacon.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: ShuttleEventBeacon
+  - type: Tag
+    tags:
+    - Payload
+
+- type: entity
+  id: BaseADSShuttleEmergencyBeaconTier1
+  parent: BaseADSShuttleEmergencyBeacon
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: beacon
+    - state: emission_tier1
+      shader: unshaded
+
+- type: entity
+  id: BaseADSShuttleEmergencyBeaconTier2
+  parent: BaseADSShuttleEmergencyBeacon
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: beacon
+    - state: emission_tier2
+      shader: unshaded
+
+- type: entity
+  id: BaseADSShuttleEmergencyBeaconTier3
+  parent: BaseADSShuttleEmergencyBeacon
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: beacon
+    - state: emission_tier3
+      shader: unshaded
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconZenith
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleZenith
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconWyrm
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleWyrm
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconNebula
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleNebula
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconOmen
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleOmen
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconCrow
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleCrow
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconZenithA
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleZenithA
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconZenithE
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleZenithE
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconRazorN
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleRazorN
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconWyvern
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleWyvern
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconConcordX
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleConcordX
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconMantaray
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleMantaray
+
+- type: entity
+  id: ADSShuttleEmergencyBeaconAzimuth
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleAzimuth
+
+- type: entity
+  id: AsakimShuttleEmergencyBeaconSmall
+  parent: BaseADSShuttleEmergencyBeaconTier1
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleAsakimSmall
+
+- type: entity
+  id: AsakimShuttleEmergencyBeaconMedium
+  parent: BaseADSShuttleEmergencyBeaconTier2
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleAsakimMedium
+
+- type: entity
+  id: AsakimShuttleEmergencyBeaconStratostar
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleStratostar

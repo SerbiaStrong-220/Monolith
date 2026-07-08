@@ -10,6 +10,10 @@
   group: Security
   access: Security
   shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/welder.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol

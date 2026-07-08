@@ -15,6 +15,7 @@
     - id: UnknownShuttleCrowApoc # Exodus
     - id: UnknownShuttleOmenApoc # Exodus
     - id: UnknownShuttleAzimuthApoc # Exodus-azimuth
+    - id: UnknownShuttleStratostarApoc # Exodus-stratostar
     - id: UnknownShuttleZenithAApoc # Exodus
 
 - type: entity

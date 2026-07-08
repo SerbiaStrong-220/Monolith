@@ -27,3 +27,25 @@
     whitelist:
       tags:
       - PirateUplink
+
+# Exodus-faction-ai-core
+- type: listing
+  id: UplinkPirateFactionAiCore
+  name: uplink-pirate-faction-ai-core-name
+  description: uplink-pirate-faction-ai-core-desc
+  productEntity: NpcStationAiAttackerStaticSmartPirateNF
+  cost:
+    Doubloon: 150
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - FactionStaticUplinkPdv
+      components:
+      - VendingMachine
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true

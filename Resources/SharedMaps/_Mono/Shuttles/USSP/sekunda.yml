@@ -1,4 +1,4 @@
-meta:
+﻿meta:
   format: 7
   category: Grid
   engineVersion: 264.0.0
@@ -2700,27 +2700,6 @@ entities:
       pos: -0.5,-8.5
       parent: 1
   - uid: 386
-    components:
-    - type: Transform
-      pos: 1.5,0.5
-      parent: 1
-- proto: SpawnPointUSSPCommissar
-  entities:
-  - uid: 387
-    components:
-    - type: Transform
-      pos: 1.5,0.5
-      parent: 1
-- proto: SpawnPointUSSPRifleman
-  entities:
-  - uid: 390
-    components:
-    - type: Transform
-      pos: 1.5,0.5
-      parent: 1
-- proto: SpawnPointUSSPSergeant
-  entities:
-  - uid: 391
     components:
     - type: Transform
       pos: 1.5,0.5

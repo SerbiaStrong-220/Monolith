@@ -9,6 +9,10 @@
   category: Large
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/sagittarius.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Expedition

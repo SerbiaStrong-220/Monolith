@@ -1,0 +1,209 @@
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretDravon
+  name: ADBP-7 DRAVON 90mm Autocannon crate
+  description: Contains a ADBP-7 DRAVON 90mm Autocannon.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretDravonFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretFang
+  name: Fang heavy 90mm autocannon crate
+  description: Contains a Fang heavy 90mm autocannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretFangFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretLongbow
+  name: L65-"Longbow" 90mm autocannon crate
+  description: Contains a L65-"Longbow" 90mm autocannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretLongbowFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretM220
+  name: M220 RUBICON EMP launcher crate
+  description: Contains a M220 RUBICON EMP launcher flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretM220Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretTarnyxReload
+  name: ADBX-31 TARNYX 150mm EMP Cannon crate
+  description: Contains ADBX-31 TARNYX 150mm EMP Cannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretTarnyxReloadFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretTovek
+  name: ADMX-250 TOVEK Missile Pod crate
+  description: Contains ADMX-250 TOVEK Missile Pod flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretTovekFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretVanyk
+  name: ASM-150 "Vanyk" Missile Pod crate
+  description: Contains ASM-150 "Vanyk" Missile Pod flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretVanykFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretVespera
+  name: ADMP-50 VESPERA Missile Rack crate
+  description: Contains ADMP-50 VESPERA Missile Rack flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretVesperaFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretRAC30
+  name: RAC-30 Draupnir Autocannon crate
+  description: Contains RAC-30 Draupnir Autocannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretRAC30Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretPrometheus
+  name: TPC Prometheus Laser Cannon crate
+  description: Contains TPC Prometheus Laser Cannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserTurretPrometheusFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretL1Phalanx
+  name: L-1 Phalanx laser turret crate
+  description: L-1 Phalanx laser turret flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserTurretL1PhalanxFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretAdder
+  name: Adder scattercannon turret crate
+  description: Contains Adder scattercannon turret flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretAdderScattercannonFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretCerberus
+  name: TPC Cerberus Plasma scattercannon crate
+  description: Contains TPC Cerberus Plasma scattercannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretCerberusFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretType35
+  name: Type-35 MARAUDER-type plasma cannon crate
+  description: Contains Type-35 MARAUDER-type plasma cannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Type35Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretType54
+  name: Type-54C plasma autopulser crate
+  description: Contains Type-54C plasma autopulser flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretType54Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretASM220
+  name: ASM-220 "Trident" Torpedo Rack crate
+  description: Contains ASM-220 "Trident" Torpedo Rack flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponTurretASM220Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretAK570
+  name: AK570 57mm autocannon crate
+  description: Contains AK570 57mm autocannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: AK570Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretL85
+  name: L85 20mm autocannon crate
+  description: Contains L85 20mm autocannon flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: L58Flatpack #yes L58 is correct id.
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateWeaponTurretM25
+  name: M25 mining pulsar crate
+  description: Contains M25 mining pulsar flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: M25Flatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateAmmoLoader
+  name: Ammo loader crate
+  description: Contains ammo loader flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: AmmoLoaderFlatpack
+
+- type: entity
+  parent: CrateAmmoSecureMercenary
+  id: CrateAmmoLoaderSmall
+  name: Small ammo loader crate
+  description: Contains small ammo loader flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: AmmoLoaderSmallFlatpack
