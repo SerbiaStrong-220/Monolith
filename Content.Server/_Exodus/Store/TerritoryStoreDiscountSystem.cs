@@ -17,6 +17,7 @@ public sealed partial class TerritoryStoreDiscountSystem : EntitySystem
     private const string TerritoryDiscountModifierId = "ExodusTerritoryDiscount";
 
     [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SummoningMachineSystem _summoning = default!;
     [Dependency] private StoreSystem _store = default!;
     [Dependency] private TerritoryCounterSystem _territoryCounter = default!;
 
@@ -98,6 +99,9 @@ public sealed partial class TerritoryStoreDiscountSystem : EntitySystem
         }
 
         _store.UpdateUserInterface(null, uid, store);
+
+        if (TryComp<SummoningMachineComponent>(uid, out var summoning))
+            _summoning.RefreshActiveSummon((uid, summoning, store));
     }
 
     private static Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> BuildModifier(ListingDataWithCostModifiers listing, float priceMultiplier)
