@@ -29,3 +29,4 @@ guide-entry-exodus-rule-ghost-roles-syndicate-sergeant = Сержант Синд
 guide-entry-exodus-rule-ghost-roles-citadel-service = Резидент Цитадели
 guide-entry-faction-cores = Фракционные Ядра
 guide-entry-territory-capture = Захват территории
+guide-entry-summoning-gateway = Межпространственный шлюз
