@@ -159,6 +159,12 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
             if (comp.ProjectileSpent || TerminatingOrDeleted(uid))
                 continue;
 
+            // Exodus-Start
+            // we don't raycast inert projectiles
+            if (comp is { Weapon: null, OnlyCollideWhenShot: true })
+                continue;
+            // Exodus-End
+
             var xform = Transform(uid);
             var vel = comp.RaycastResetVelocity ?? _physics.GetMapLinearVelocity(uid, body, xform);
             var velLen = vel.Length();
