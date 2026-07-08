@@ -5,6 +5,7 @@
   priority: 1
   children:
   - FactionCores # Exodus faction AI cores guide
+  - TerritoryCapture # Exodus territory capture guide
   - TSFMC_Entry
   - PDV_Entry
   - Minor_Factions
@@ -14,6 +15,12 @@
   name: guide-entry-faction-cores
   text: "/ServerInfo/_Exodus/Guidebook/Factions/FactionCores.xml"
   priority: 1
+
+- type: guideEntry # Exodus territory capture guide
+  id: TerritoryCapture
+  name: guide-entry-territory-capture
+  text: "/ServerInfo/_Exodus/Guidebook/Factions/TerritoryCapture.xml"
+  priority: 2
 
 - type: guideEntry
   id: TSFMC_Entry

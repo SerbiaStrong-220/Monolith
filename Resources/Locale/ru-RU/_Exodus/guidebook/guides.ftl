@@ -28,3 +28,4 @@ guide-entry-exodus-rule-ghost-roles-syndicate-operative = Оперативник
 guide-entry-exodus-rule-ghost-roles-syndicate-sergeant = Сержант Синдиката
 guide-entry-exodus-rule-ghost-roles-citadel-service = Резидент Цитадели
 guide-entry-faction-cores = Фракционные Ядра
+guide-entry-territory-capture = Захват территории
