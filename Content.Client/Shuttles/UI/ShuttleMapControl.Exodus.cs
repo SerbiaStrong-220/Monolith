@@ -259,13 +259,11 @@ public sealed partial class ShuttleMapControl
             if (_nebulaFillBuffer.Length < ringCount)
                 _nebulaFillBuffer = new Vector2[ringCount];
 
-            var drawOuterRadius = GetInvertDrawOuterRadius(config, position, GetControlViewBounds());
-
             for (var i = 0; i <= n; i++)
             {
                 var k = i % n;
                 var theta = MathF.Tau * k / n;
-                var outerPoint = new Vector2(drawOuterRadius * MathF.Cos(theta), drawOuterRadius * MathF.Sin(theta));
+                var outerPoint = new Vector2(config.OuterFillRadius * MathF.Cos(theta), config.OuterFillRadius * MathF.Sin(theta)); // Exodus mass-scanner-fix: keep invert-fill outer radius stable in world space.
                 var innerPoint = config.Points[k];
 
                 if (config.RespectZoom)
@@ -316,27 +314,5 @@ public sealed partial class ShuttleMapControl
 
         _nebulaLineBuffer[lineCount - 1] = _nebulaLineBuffer[0];
         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, new Span<Vector2>(_nebulaLineBuffer, 0, lineCount), config.Color.WithAlpha(0.9f));
-    }
-
-    // Exodus mass-scanner-perf: clamp huge world-space outer radii to viewport coverage so death-zone fill stays visible.
-    private float GetInvertDrawOuterRadius(BlipConfig config, Vector2 position, Box2 viewBounds)
-    {
-        var maxCornerDist = 0f;
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Left, viewBounds.Top) - position).Length());
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Right, viewBounds.Top) - position).Length());
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Left, viewBounds.Bottom) - position).Length());
-        maxCornerDist = MathF.Max(maxCornerDist, (new Vector2(viewBounds.Right, viewBounds.Bottom) - position).Length());
-
-        var neededScreenOuter = maxCornerDist * 1.05f;
-        var configScreenOuter = config.RespectZoom
-            ? config.OuterFillRadius * MinimapScale
-            : config.OuterFillRadius;
-
-        if (configScreenOuter <= neededScreenOuter * 1.5f)
-            return config.OuterFillRadius;
-
-        return config.RespectZoom
-            ? neededScreenOuter / MinimapScale
-            : neededScreenOuter;
     }
 }
