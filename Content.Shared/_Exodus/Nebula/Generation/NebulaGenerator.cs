@@ -9,6 +9,7 @@ namespace Content.Shared._Exodus.Nebula.Generation;
 public static class NebulaGenerator
 {
     private const int ShapeOverlapSampleCount = 96;
+    private const float MinSpatialCellSize = 4096f;
 
     public static NebulaGenerationResult Generate(
         int seed,
@@ -279,7 +280,7 @@ public static class NebulaGenerator
 
     private static float CreateSpatialCellSize(NebulaGenerationSettings settings)
     {
-        return MathF.Max(4096f, NebulaShape.RadiusFromArea(settings.MaxArea));
+        return MathF.Max(MinSpatialCellSize, NebulaShape.RadiusFromArea(settings.MaxArea));
     }
 
     private static float NextFloat(global::System.Random random, float min, float max)

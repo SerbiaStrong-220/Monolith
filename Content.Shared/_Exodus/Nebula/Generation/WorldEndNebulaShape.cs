@@ -27,6 +27,9 @@ public readonly struct WorldEndNebulaShape
 
     private const int MaxWaveCount = 16;
     private const int MaxWaveFrequency = 64;
+    private const int MinSearchSamplesPerBoundarySample = 32;
+    private const int MinSearchSamplesPerWaveFrequency = 1536;
+    private const float MaxTotalWaveAmplitude = 0.95f;
 
     private static readonly int[] DefaultWaveFrequencies = { 3, 5, 7, 11 };
 
@@ -111,7 +114,9 @@ public readonly struct WorldEndNebulaShape
         // Pass 2: find minimum normalised B using a dense search so the continuous minimum
         // between sample points is not missed. A coarse sample search would underestimate
         // rBase and allow the boundary to dip below innerRadius.
-        var minSearchSamples = Math.Max(samples * 32, GetMaxFrequency(frequencies) * 1536);
+        var minSearchSamples = Math.Max(
+            samples * MinSearchSamplesPerBoundarySample,
+            GetMaxFrequency(frequencies) * MinSearchSamplesPerWaveFrequency);
         var minNormB = float.MaxValue;
 
         for (var i = 0; i < minSearchSamples; i++)
@@ -216,10 +221,10 @@ public readonly struct WorldEndNebulaShape
         for (var i = 0; i < amplitudes.Length; i++)
             totalAmplitude += amplitudes[i];
 
-        if (totalAmplitude <= 0.95f)
+        if (totalAmplitude <= MaxTotalWaveAmplitude)
             return;
 
-        var scale = 0.95f / totalAmplitude;
+        var scale = MaxTotalWaveAmplitude / totalAmplitude;
         for (var i = 0; i < amplitudes.Length; i++)
             amplitudes[i] *= scale;
     }

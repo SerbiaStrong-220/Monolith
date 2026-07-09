@@ -23,6 +23,7 @@ namespace Content.Server._Exodus.Nebula.Generation;
 public sealed partial class DeathZoneGenerationSystem : EntitySystem
 {
     private const int RadarContourSamples = 512;
+    private const float WorldEndRadarOuterFillRadius = 500000f;
 
     [ValidatePrototypeId<NebulaGenerationConfigPrototype>]
     private const string DefaultConfigId = "Default";
@@ -125,7 +126,7 @@ public sealed partial class DeathZoneGenerationSystem : EntitySystem
             Shape = RadarBlipShape.NebulaPolygon,
             Points = BuildBoundaryPoints(worldEnd),
             InvertFill = true,
-            OuterFillRadius = 500000f,
+            OuterFillRadius = WorldEndRadarOuterFillRadius,
             RespectZoom = true,
             Rotate = false,
         };
@@ -164,7 +165,7 @@ public sealed partial class DeathZoneGenerationSystem : EntitySystem
                 Shape = RadarBlipShape.NebulaPolygon,
                 Points = BuildBoundaryPoints(worldEnd),
                 InvertFill = true,
-                OuterFillRadius = 500000f,
+                OuterFillRadius = WorldEndRadarOuterFillRadius,
                 RespectZoom = true,
                 Rotate = false,
             }));
