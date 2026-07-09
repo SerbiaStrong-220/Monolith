@@ -1,3 +1,4 @@
+using Content.Server._Exodus.NPC;
 using Content.Shared._Exodus.NPC.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Prototypes;
@@ -6,15 +7,28 @@ using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Mono.NPC.HTN;
 
 public sealed partial class ShipTargetingSystem
 {
+    [Dependency] private IGameTiming _exodusTiming = default!;
     [Dependency] private NpcFactionSystem _exodusNpcFaction = default!;
     [Dependency] private EntityQuery<NpcFactionMemberComponent> _exodusFactionQuery;
     [Dependency] private EntityQuery<FactionAiControlledGridComponent> _exodusFactionAiGridQuery;
     [Dependency] private EntityQuery<FactionNpcAiCoreComponent> _exodusFactionAiCoreQuery;
+
+    private static readonly TimeSpan UnavailableTargetCooldown = TimeSpan.FromSeconds(3);
+
+    public void MarkTargetUnavailable(EntityUid owner, EntityUid target)
+    {
+        if (TerminatingOrDeleted(owner) || TerminatingOrDeleted(target))
+            return;
+
+        var unavailable = EnsureComp<ShipNpcUnavailableTargetsComponent>(owner);
+        unavailable.Targets[target] = _exodusTiming.CurTime + UnavailableTargetCooldown;
+    }
 
     private bool CanFireWithoutFactionFriendlyFire(
         EntityUid sourceUid,

@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Destructible; // Mono
 using Content.Server.Fluids.EntitySystems;
 using Content.Server._Mono.NPC.HTN; // Mono
+using Content.Server._Exodus.NPC; // Exodus
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
@@ -39,6 +40,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Physics.Components; // Mono
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 using Content.Shared.Atmos.Components;
 using System.Linq;
 using Content.Shared.StatusEffect; // Frontier
@@ -54,6 +56,7 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed partial class NPCUtilitySystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!; // Exodus
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private DrinkSystem _drink = default!;
@@ -83,6 +86,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private EntityQuery<NpcFactionMemberComponent> _factionQuery; // Mono
     private EntityQuery<FactionAiControlledGridComponent> _factionAiGridQuery; // Exodus
     private EntityQuery<FactionNpcAiCoreComponent> _factionAiCoreQuery; // Exodus
+    private EntityQuery<ShipNpcUnavailableTargetsComponent> _shipUnavailableTargetsQuery; // Exodus
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
@@ -102,6 +106,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
         _factionQuery = GetEntityQuery<NpcFactionMemberComponent>(); // Mono
         _factionAiGridQuery = GetEntityQuery<FactionAiControlledGridComponent>(); // Exodus
         _factionAiCoreQuery = GetEntityQuery<FactionNpcAiCoreComponent>(); // Exodus
+        _shipUnavailableTargetsQuery = GetEntityQuery<ShipNpcUnavailableTargetsComponent>(); // Exodus
     }
 
     /// <summary>
@@ -565,6 +570,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 var ownGrid = xform.GridUid;
                 // Exodus-begin faction-aware ship NPC targeting
                 var hasFactionSource = TryGetFactionSource(owner, ownGrid, out var factionSource, out var sourceFaction, out var sourceCore);
+                _shipUnavailableTargetsQuery.TryGetComponent(owner, out var unavailableTargets);
                 // Exodus-end
                 foreach (var (target, targetComp) in _lookup.GetEntitiesInRange<ShipNpcTargetComponent>(_transform.GetMapCoordinates(xform), shuttlesQuery.Range))
                 {
@@ -576,7 +582,8 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                         || targetGrid == ownGrid
                         || (_transform.GetWorldPosition(target) - _transform.GetWorldPosition(xform)).Length() > shuttlesQuery.Range
                         || targetComp.NeedPower && !this.IsPowered(target, EntityManager)
-                        || targetGrid != null && _whitelistSystem.IsBlacklistPass(shuttlesQuery.Blacklist, targetGrid.Value))
+                        || targetGrid != null && _whitelistSystem.IsBlacklistPass(shuttlesQuery.Blacklist, targetGrid.Value)
+                        || IsShipTargetTemporarilyUnavailable(unavailableTargets, target)) // Exodus faction NPC unavailable target fallback
                     {
                         continue;
                     }
@@ -594,6 +601,20 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 throw new NotImplementedException();
         }
     }
+
+    // Exodus-begin faction NPC unavailable target fallback
+    private bool IsShipTargetTemporarilyUnavailable(ShipNpcUnavailableTargetsComponent? unavailableTargets, EntityUid target)
+    {
+        if (unavailableTargets == null || !unavailableTargets.Targets.TryGetValue(target, out var unavailableUntil))
+            return false;
+
+        if (unavailableUntil > _timing.CurTime)
+            return true;
+
+        unavailableTargets.Targets.Remove(target);
+        return false;
+    }
+    // Exodus-end
 
     private void RecursiveAdd(EntityUid uid, HashSet<EntityUid> entities)
     {

@@ -135,6 +135,15 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
         if (target.EntityId == EntityUid.Invalid)
             return HTNOperatorStatus.Finished;
 
+        // Exodus-begin faction NPC unavailable target fallback
+        if (comp.TargetUnavailable)
+        {
+            _targeting.MarkTargetUnavailable(owner, target.EntityId);
+            blackboard.Remove<EntityCoordinates>(TargetKey);
+            return HTNOperatorStatus.Failed;
+        }
+        // Exodus-end
+
         if (ShutdownState == HTNPlanState.PlanFinished)
             return HTNOperatorStatus.Finished;
 

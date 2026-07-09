@@ -50,4 +50,9 @@ public sealed partial class ShipTargetingComponent : Component
     /// </summary>
     [ViewVariables]
     public float WeaponCheckSpacing = 3f;
+
+    // Exodus-begin faction NPC unavailable target fallback
+    [ViewVariables]
+    public bool TargetUnavailable;
+    // Exodus-end
 }
