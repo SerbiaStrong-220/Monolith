@@ -528,6 +528,13 @@ public sealed partial class FireControlSystem : EntitySystem
     /// <summary>
     /// Checks if a weapon is ready to fire.
     /// </summary>
+    // Exodus-begin faction NPC friendly fire prevention
+    public bool CanAttemptFire(EntityUid weapon, FireControllableComponent? comp = null, bool noServer = false)
+    {
+        return Resolve(weapon, ref comp, false) && CanFire(weapon, comp, noServer);
+    }
+    // Exodus-end
+
     private bool CanFire(EntityUid weapon, FireControllableComponent comp, bool noServer = false)
     {
         // Check if weapon is powered
