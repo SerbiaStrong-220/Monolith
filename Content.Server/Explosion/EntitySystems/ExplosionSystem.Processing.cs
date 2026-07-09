@@ -241,6 +241,7 @@ public sealed partial class ExplosionSystem
         foreach (var entity in _anchored)
         {
             processed.Add(entity);
+            // Exodus-Start
             if (_subFloorQuery.HasComponent(entity))
             {
                 _subFloorDeferred.Add(entity);
@@ -270,6 +271,7 @@ public sealed partial class ExplosionSystem
             }
         }
 
+        // Exodus-Start
         if (!tileBlocked)
         {
             foreach (var entity in _subFloorDeferred)
