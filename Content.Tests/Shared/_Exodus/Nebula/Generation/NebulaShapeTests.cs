@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared._Exodus.Nebula.Generation;
 using Content.Shared._Exodus.Nebula.Prototypes;
 using NUnit.Framework;
+using Robust.Shared.Random;
 
 namespace Content.Tests.Shared._Exodus.Nebula.Generation;
 
@@ -54,7 +55,8 @@ public sealed class NebulaShapeTests
     public void TryGetRandomPointDensityRespectsBounds()
     {
         Assert.That(TryCreateCircle(out var shape), Is.True);
-        var rng = new Random(12345);
+        var rng = new RobustRandom();
+        rng.SetSeed(12345);
 
         for (var i = 0; i < 64; i++)
         {
@@ -73,7 +75,8 @@ public sealed class NebulaShapeTests
     public void TryGetRandomPointSwapsInvertedDensityRange()
     {
         Assert.That(TryCreateCircle(out var shape), Is.True);
-        var rng = new Random(12345);
+        var rng = new RobustRandom();
+        rng.SetSeed(12345);
 
         Assert.That(shape.TryGetRandomPoint(rng, 0.8f, 0.4f, out var point, 256), Is.True);
 

@@ -12,6 +12,12 @@ public sealed class NebulaLightningOverlay : Overlay
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
 
+    private const float BackgroundFlashAlpha = 0.055f;
+    private const float BranchAlphaMultiplier = 0.65f;
+    private const float GlowAlpha = 0.36f;
+    private const float GlowOffset = 0.085f;
+    private const float InnerGlowOffsetMultiplier = 0.45f;
+
     private readonly NebulaParallaxSystem _nebulaParallax;
     private readonly ShaderInstance _unshadedShader;
 
@@ -52,7 +58,7 @@ public sealed class NebulaLightningOverlay : Overlay
             return;
 
         var worldHandle = args.WorldHandle;
-        worldHandle.DrawRect(args.WorldAABB, new Color(1f, 0.2f, 0.1f, 0.055f * alpha));
+        worldHandle.DrawRect(args.WorldAABB, new Color(1f, 0.2f, 0.1f, BackgroundFlashAlpha * alpha));
 
         for (var i = 0; i < lightning.PointCount - 1; i++)
         {
@@ -62,7 +68,7 @@ public sealed class NebulaLightningOverlay : Overlay
         for (var i = 0; i < lightning.BranchCount; i++)
         {
             var branchIndex = i * 2;
-            DrawLightningSegment(args, lightning.Branches[branchIndex], lightning.Branches[branchIndex + 1], alpha * 0.65f);
+            DrawLightningSegment(args, lightning.Branches[branchIndex], lightning.Branches[branchIndex + 1], alpha * BranchAlphaMultiplier);
         }
     }
 
@@ -75,14 +81,14 @@ public sealed class NebulaLightningOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var start = ToWorld(args.WorldAABB, from);
         var end = ToWorld(args.WorldAABB, to);
-        var glow = new Color(1f, 0.08f, 0.04f, 0.36f * alpha);
+        var glow = new Color(1f, 0.08f, 0.04f, GlowAlpha * alpha);
         var core = new Color(1f, 0.9f, 0.72f, alpha);
-        var offset = new Vector2(0.085f, 0.085f);
+        var offset = new Vector2(GlowOffset, GlowOffset);
 
         worldHandle.DrawLine(start - offset, end - offset, glow);
         worldHandle.DrawLine(start + offset, end + offset, glow);
-        worldHandle.DrawLine(start - offset * 0.45f, end - offset * 0.45f, glow);
-        worldHandle.DrawLine(start + offset * 0.45f, end + offset * 0.45f, glow);
+        worldHandle.DrawLine(start - offset * InnerGlowOffsetMultiplier, end - offset * InnerGlowOffsetMultiplier, glow);
+        worldHandle.DrawLine(start + offset * InnerGlowOffsetMultiplier, end + offset * InnerGlowOffsetMultiplier, glow);
         worldHandle.DrawLine(start, end, core);
     }
 

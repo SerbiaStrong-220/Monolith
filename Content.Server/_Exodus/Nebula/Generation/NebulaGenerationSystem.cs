@@ -32,6 +32,8 @@ public sealed partial class NebulaGenerationSystem : EntitySystem
     private const string DebugProtectedPointPrototype = "NebulaDebugProtectedPoint";
     private const int NebulaRadarContourSamples = 96;
     private const int WorldEndRadarContourSamples = 512;
+    private const int MaxProtectedDebugSamples = 64;
+    private const float WorldEndRadarOuterFillRadius = 500000f;
     private static readonly Color FallbackRadarColor = new(0.38f, 0.70f, 1f, 0.85f);
     private static readonly Color FallbackWorldEndRadarColor = new(1f, 0.1f, 0f, 1f);
 
@@ -359,7 +361,7 @@ public sealed partial class NebulaGenerationSystem : EntitySystem
             count += SpawnNebulaDebugPoints(mapId, i, nebula, sampleCount, lifetime);
         }
 
-        var protectedSampleCount = Math.Min(sampleCount, 64);
+        var protectedSampleCount = Math.Min(sampleCount, MaxProtectedDebugSamples);
         for (var i = 0; i < component.ProtectedAreas.Count; i++)
         {
             count += SpawnProtectedAreaDebugPoints(mapId, component.ProtectedAreas[i], protectedSampleCount, lifetime);
@@ -545,7 +547,7 @@ public sealed partial class NebulaGenerationSystem : EntitySystem
                 Shape = RadarBlipShape.NebulaPolygon,
                 Points = BuildWorldEndBoundaryPoints(worldEnd),
                 InvertFill = true,
-                OuterFillRadius = 500000f,
+                OuterFillRadius = WorldEndRadarOuterFillRadius,
                 RespectZoom = true,
                 Rotate = false,
             });

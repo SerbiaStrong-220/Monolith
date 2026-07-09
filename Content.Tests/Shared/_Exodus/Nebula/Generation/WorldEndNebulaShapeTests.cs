@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using Content.Shared._Exodus.Nebula.Generation;
 using NUnit.Framework;
+using Robust.Shared.Random;
 
 namespace Content.Tests.Shared._Exodus.Nebula.Generation;
 
@@ -90,7 +91,8 @@ public sealed class WorldEndNebulaShapeTests
     public void TryGetRandomPointInnerSamplesInsideInnerZone()
     {
         var shape = WorldEndNebulaShape.Generate(12345, InnerRadius, MidRadius);
-        var rng = new Random(12345);
+        var rng = new RobustRandom();
+        rng.SetSeed(12345);
 
         for (var i = 0; i < 64; i++)
         {
@@ -107,7 +109,8 @@ public sealed class WorldEndNebulaShapeTests
     public void TryGetRandomPointOuterReturnsFalseAtDefaultParams()
     {
         var shape = WorldEndNebulaShape.Generate(12345, InnerRadius, MidRadius);
-        var rng = new Random(12345);
+        var rng = new RobustRandom();
+        rng.SetSeed(12345);
 
         Assert.That(shape.TryGetRandomPoint(rng, WorldEndZone.Outer, out _, 256), Is.False);
     }

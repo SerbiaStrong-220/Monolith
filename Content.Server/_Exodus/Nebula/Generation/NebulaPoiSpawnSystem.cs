@@ -194,7 +194,8 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
         PoiCandidate candidate,
         List<(Vector2 Position, float Radius)> placedPoiPositions)
     {
-        var rng = new System.Random(_random.Next());
+        var rng = new RobustRandom();
+        rng.SetSeed(_random.Next());
 
         for (var attempt = 0; attempt < SampleAttempts; attempt++)
         {
@@ -232,7 +233,7 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
         return point.LengthSquared() <= limit * limit;
     }
 
-    private bool TrySamplePoint(System.Random rng, NebulaMapComponent mapComponent, PoiCandidate candidate, NebulaPoiPrototype poi, out Vector2 point)
+    private bool TrySamplePoint(IRobustRandom rng, NebulaMapComponent mapComponent, PoiCandidate candidate, NebulaPoiPrototype poi, out Vector2 point)
     {
         if (candidate.WorldEndZone is { } zone)
             return mapComponent.WorldEnd.TryGetRandomPoint(rng, zone, out point);

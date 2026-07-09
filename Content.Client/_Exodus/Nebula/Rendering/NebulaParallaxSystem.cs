@@ -26,6 +26,35 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
 
     private const float TransitionSeconds = 2f;
     private const float BackgroundLightningBlendThreshold = 0.35f;
+    private const float BackgroundLightningFlickerFlashEnd = 0.18f;
+    private const float BackgroundLightningFlickerDimEnd = 0.36f;
+    private const float BackgroundLightningFlickerDimAlpha = 0.35f;
+    private const float BackgroundLightningVisibleAlphaThreshold = 0.03f;
+    private const int BackgroundLightningMinPoints = 6;
+    private const float BackgroundLightningStartMinX = 0.12f;
+    private const float BackgroundLightningStartMaxX = 0.88f;
+    private const float BackgroundLightningStartY = 1.05f;
+    private const float BackgroundLightningEndMinY = 0.16f;
+    private const float BackgroundLightningEndMaxY = 0.48f;
+    private const float BackgroundLightningEndMaxXOffset = 0.26f;
+    private const float BackgroundLightningEndMinX = 0.08f;
+    private const float BackgroundLightningEndMaxX = 0.92f;
+    private const float BackgroundLightningJitter = 0.14f;
+    private const float BackgroundLightningPointMinX = 0.04f;
+    private const float BackgroundLightningPointMaxX = 0.96f;
+    private const float BackgroundLightningBranchChance = 0.55f;
+    private const float BackgroundLightningBranchDirectionChance = 0.5f;
+    private const float BackgroundLightningBranchMinLength = 0.11f;
+    private const float BackgroundLightningBranchMaxLength = 0.24f;
+    private const float BackgroundLightningBranchVerticalJitter = 0.1f;
+    private const float BackgroundLightningBranchMinX = 0.02f;
+    private const float BackgroundLightningBranchMaxX = 0.98f;
+    private const float BackgroundLightningBranchMinY = 0.08f;
+    private const float BackgroundLightningBranchMaxY = 0.98f;
+    private const float BackgroundLightningMinVolume = -8f;
+    private const float BackgroundLightningMaxVolume = -3f;
+    private const float BackgroundLightningMinPitch = 0.94f;
+    private const float BackgroundLightningMaxPitch = 1.06f;
     private const string ParallaxOverrideKey = "exodus-nebula";
     private const int ParallaxOverridePriority = 100;
 
@@ -132,14 +161,14 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
             return false;
 
         var life = (float) ((_timing.CurTime - _backgroundLightningStart).TotalSeconds / duration);
-        var flicker = life < 0.18f
+        var flicker = life < BackgroundLightningFlickerFlashEnd
             ? 1f
-            : life < 0.36f
-                ? 0.35f
+            : life < BackgroundLightningFlickerDimEnd
+                ? BackgroundLightningFlickerDimAlpha
                 : 1f - life;
 
         alpha = Math.Clamp(flicker * _blend, 0f, 1f);
-        return alpha > 0.03f;
+        return alpha > BackgroundLightningVisibleAlphaThreshold;
     }
 
     private void UpdateBackgroundLightning()
@@ -172,17 +201,22 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
 
     private void GenerateBackgroundLightning()
     {
-        var pointCount = _random.Next(6, NebulaBackgroundLightning.MaxPoints + 1);
-        var start = new Vector2(_random.NextFloat(0.12f, 0.88f), 1.05f);
-        var end = new Vector2(Math.Clamp(start.X + _random.NextFloat(-0.26f, 0.26f), 0.08f, 0.92f), _random.NextFloat(0.16f, 0.48f));
+        var pointCount = _random.Next(BackgroundLightningMinPoints, NebulaBackgroundLightning.MaxPoints + 1);
+        var start = new Vector2(_random.NextFloat(BackgroundLightningStartMinX, BackgroundLightningStartMaxX), BackgroundLightningStartY);
+        var end = new Vector2(
+            Math.Clamp(
+                start.X + _random.NextFloat(-BackgroundLightningEndMaxXOffset, BackgroundLightningEndMaxXOffset),
+                BackgroundLightningEndMinX,
+                BackgroundLightningEndMaxX),
+            _random.NextFloat(BackgroundLightningEndMinY, BackgroundLightningEndMaxY));
 
         _backgroundLightning.PointCount = pointCount;
         for (var i = 0; i < pointCount; i++)
         {
             var t = pointCount == 1 ? 0f : i / (pointCount - 1f);
             var point = Vector2.Lerp(start, end, t);
-            var jitter = MathF.Sin(t * MathF.PI) * _random.NextFloat(-0.14f, 0.14f);
-            point.X = Math.Clamp(point.X + jitter, 0.04f, 0.96f);
+            var jitter = MathF.Sin(t * MathF.PI) * _random.NextFloat(-BackgroundLightningJitter, BackgroundLightningJitter);
+            point.X = Math.Clamp(point.X + jitter, BackgroundLightningPointMinX, BackgroundLightningPointMaxX);
             _backgroundLightning.Points[i] = point;
         }
 
@@ -190,14 +224,16 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
         var branchTarget = _random.Next(1, NebulaBackgroundLightning.MaxBranches + 1);
         for (var i = 1; i < pointCount - 1 && _backgroundLightning.BranchCount < branchTarget; i++)
         {
-            if (!_random.Prob(0.55f))
+            if (!_random.Prob(BackgroundLightningBranchChance))
                 continue;
 
             var origin = _backgroundLightning.Points[i];
-            var direction = _random.Prob(0.5f) ? -1f : 1f;
-            var branchEnd = origin + new Vector2(direction * _random.NextFloat(0.11f, 0.24f), _random.NextFloat(-0.1f, 0.1f));
-            branchEnd.X = Math.Clamp(branchEnd.X, 0.02f, 0.98f);
-            branchEnd.Y = Math.Clamp(branchEnd.Y, 0.08f, 0.98f);
+            var direction = _random.Prob(BackgroundLightningBranchDirectionChance) ? -1f : 1f;
+            var branchEnd = origin + new Vector2(
+                direction * _random.NextFloat(BackgroundLightningBranchMinLength, BackgroundLightningBranchMaxLength),
+                _random.NextFloat(-BackgroundLightningBranchVerticalJitter, BackgroundLightningBranchVerticalJitter));
+            branchEnd.X = Math.Clamp(branchEnd.X, BackgroundLightningBranchMinX, BackgroundLightningBranchMaxX);
+            branchEnd.Y = Math.Clamp(branchEnd.Y, BackgroundLightningBranchMinY, BackgroundLightningBranchMaxY);
 
             var branchIndex = _backgroundLightning.BranchCount * 2;
             _backgroundLightning.Branches[branchIndex] = origin;
@@ -209,8 +245,8 @@ public sealed partial class NebulaParallaxSystem : EntitySystem
     private void PlayBackgroundLightningSound()
     {
         var audioParams = AudioParams.Default
-            .WithVolume(_random.NextFloat(-8f, -3f))
-            .WithPitchScale(_random.NextFloat(0.94f, 1.06f));
+            .WithVolume(_random.NextFloat(BackgroundLightningMinVolume, BackgroundLightningMaxVolume))
+            .WithPitchScale(_random.NextFloat(BackgroundLightningMinPitch, BackgroundLightningMaxPitch));
 
         _audio.PlayGlobal(BackgroundLightningSound, Filter.Local(), false, audioParams);
     }

@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared._Exodus.Nebula.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared._Exodus.Nebula.Generation;
 
@@ -9,6 +10,7 @@ namespace Content.Shared._Exodus.Nebula.Generation;
 public static class NebulaGenerator
 {
     private const int ShapeOverlapSampleCount = 96;
+    private const float MinSpatialCellSize = 4096f;
 
     public static NebulaGenerationResult Generate(
         int seed,
@@ -37,7 +39,8 @@ public static class NebulaGenerator
             return result;
         }
 
-        var random = new global::System.Random(seed);
+        var random = new RobustRandom();
+        random.SetSeed(seed);
         var maxTotalArea = settings.MaxTotalAreaOptions[random.Next(settings.MaxTotalAreaOptions.Length)];
         result.MaxTotalArea = maxTotalArea;
         result.MaxAttempts = settings.MaxAttempts;
@@ -187,7 +190,7 @@ public static class NebulaGenerator
         return false;
     }
 
-    private static bool TryCreateCandidate(global::System.Random random, NebulaGenerationSettings settings, out NebulaShape shape)
+    private static bool TryCreateCandidate(IRobustRandom random, NebulaGenerationSettings settings, out NebulaShape shape)
     {
         var area = NextFloat(random, settings.MinArea, settings.MaxArea);
         var radius = NebulaShape.RadiusFromArea(area);
@@ -210,7 +213,7 @@ public static class NebulaGenerator
     }
 
     private static bool TryPlaceCandidate(
-        global::System.Random random,
+        IRobustRandom random,
         NebulaGenerationSettings settings,
         NebulaShape candidate,
         out NebulaShape placed)
@@ -222,8 +225,8 @@ public static class NebulaGenerator
             return false;
 
         // Uniform distribution over a disk: r = limit * sqrt(U) avoids centre concentration.
-        var angle = (float)(random.NextDouble() * MathF.Tau);
-        var r = limit * MathF.Sqrt((float)random.NextDouble());
+        var angle = random.NextFloat() * MathF.Tau;
+        var r = limit * MathF.Sqrt(random.NextFloat());
         var center = new Vector2(r * MathF.Cos(angle), r * MathF.Sin(angle));
 
         return NebulaShape.TryCreate(
@@ -240,7 +243,7 @@ public static class NebulaGenerator
             settings.SampleCount);
     }
 
-    private static NebulaWave CreateWave(global::System.Random random, NebulaGenerationSettings settings)
+    private static NebulaWave CreateWave(IRobustRandom random, NebulaGenerationSettings settings)
     {
         var amplitude = NextFloat(random, settings.MinWaveAmplitude, settings.MaxWaveAmplitude);
         var frequency = random.Next(settings.MinWaveFrequency, settings.MaxWaveFrequency + 1);
@@ -279,15 +282,15 @@ public static class NebulaGenerator
 
     private static float CreateSpatialCellSize(NebulaGenerationSettings settings)
     {
-        return MathF.Max(4096f, NebulaShape.RadiusFromArea(settings.MaxArea));
+        return MathF.Max(MinSpatialCellSize, NebulaShape.RadiusFromArea(settings.MaxArea));
     }
 
-    private static float NextFloat(global::System.Random random, float min, float max)
+    private static float NextFloat(IRobustRandom random, float min, float max)
     {
-        return min + (float) random.NextDouble() * (max - min);
+        return min + random.NextFloat() * (max - min);
     }
 
-    private static Robust.Shared.Prototypes.EntProtoId PickRandomPrototype(global::System.Random random, NebulaGenerationSettings settings)
+    private static Robust.Shared.Prototypes.EntProtoId PickRandomPrototype(IRobustRandom random, NebulaGenerationSettings settings)
     {
         var pool = settings.NebulaPrototypePool;
         if (pool == null || pool.Length == 0)
@@ -301,7 +304,7 @@ public static class NebulaGenerator
         if (totalWeight <= 0f)
             return pool[random.Next(pool.Length)].Proto;
 
-        var roll = (float) random.NextDouble() * totalWeight;
+        var roll = random.NextFloat() * totalWeight;
         var cumulative = 0f;
         for (var i = 0; i < pool.Length; i++)
         {
