@@ -178,8 +178,8 @@ public sealed partial class ShipTargetingSystem : EntitySystem
             if (!CanFireWithoutFactionFriendlyFire(sourceUid, shipUid, targetUid, uid, targetMapPos)) // Exodus faction NPC friendly fire prevention
                 continue;
 
-            _cannon.AttemptFire(uid, uid, _transform.ToCoordinates(targetMapPos), noServer: true);
-            fired = true;
+            if (_cannon.AttemptFire(uid, uid, _transform.ToCoordinates(targetMapPos), noServer: true)) // Exodus faction NPC unavailable target fallback
+                fired = true;
         }
 
         if (fired)
