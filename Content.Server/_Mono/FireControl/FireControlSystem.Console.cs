@@ -279,16 +279,7 @@ public sealed partial class FireControlSystem : EntitySystem
 
                 // Exodus-Start
                 if (TryComp<GunComponent>(controllable, out var gun))
-                {
                     controlled.NextFire = gun.NextFire;
-
-                    var burst = gun.SelectedMode == SelectiveFire.Burst || gun.BurstActivated;
-                    controlled.Cooldown = burst && gun.BurstCooldown > 0f
-                        ? TimeSpan.FromSeconds(gun.BurstCooldown)
-                        : gun.FireRateModified > 0f
-                            ? TimeSpan.FromSeconds(1f / gun.FireRateModified)
-                            : TimeSpan.Zero;
-                }
                 // Exodus-End
 
                 controllables.Add(controlled);

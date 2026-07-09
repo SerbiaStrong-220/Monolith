@@ -379,7 +379,6 @@ public sealed partial class FireControlWindow : FancyWindow
                 _entityManager.TryGetComponent<GunComponent>(_entityManager.GetEntity(controllable.NetEntity), out var gun)
                     ? gun.NextFire
                     : controllable.NextFire;
-            reloadButton.Cooldown = controllable.Cooldown;
         }
     }
     // Exodus-End

@@ -108,11 +108,6 @@ public struct FireControllableEntry
     /// Fallback for the console UI reload bar when the gun is outside the client's PVS.
     /// </summary>
     public TimeSpan NextFire;
-
-    /// <summary>
-    /// Length of a full reload for this gun. UI bar fills over this span.
-    /// </summary>
-    public TimeSpan Cooldown;
     // Exodus-End
 
     public FireControllableEntry(NetEntity entity, NetCoordinates coordinates, string name, int? ammoCount = null, bool hasManualReload = false)
