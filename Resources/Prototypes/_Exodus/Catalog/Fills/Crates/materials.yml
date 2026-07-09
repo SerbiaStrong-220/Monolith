@@ -1,0 +1,24 @@
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateFactionDevelopmentMaterials
+  name: faction development materials crate
+  description: Contains a strategic reserve of construction and research materials.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel
+      amount: 6
+    - id: SheetUranium
+      amount: 3
+    - id: IngotGold
+      amount: 3
+    - id: IngotSilver
+      amount: 3
+    - id: MaterialBluespace
+    - id: MaterialDurathread40
+    - id: MaterialDiamond5
+    - id: SheetPlasma
+      amount: 2
+    - id: SheetPlasteel
+    - id: SheetPlastitanium
+    - id: SheetPlastitanium10

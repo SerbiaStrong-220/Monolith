@@ -1,0 +1,17 @@
+- type: vessel
+  id: BaseVesselUSSP
+  abstract: true
+  parent: BaseVessel
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - USSP
+
+- type: vessel
+  id: BaseVesselUSSPAntag
+  abstract: true
+  parent: BaseVesselAntag
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - USSP

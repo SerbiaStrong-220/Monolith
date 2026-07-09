@@ -59,6 +59,7 @@
     sleepPlayerCheckRangeOverride: 100000 # 100k aka basically never sleep
     rootTask:
       task: DroneCompound
+  - type: NebulaNpcGridPresenceSource # Exodus nebula NPC grid presence
   - type: WorldLoader
     radius: 256
   - type: DeviceNetwork

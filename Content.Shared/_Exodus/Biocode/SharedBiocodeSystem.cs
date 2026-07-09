@@ -22,6 +22,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -31,8 +32,10 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
         SubscribeLocalEvent<BiocodeComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<BiocodeComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(SharedShipRepairSystem)]);
         SubscribeLocalEvent<BiocodeComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<BiocodeComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<BiocodeComponent, ActivateInWorldEvent>(OnActivateInWorld, before: [typeof(ActivatableUISystem)]);
         SubscribeLocalEvent<BiocodeComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUiOpenAttempt);
+        SubscribeLocalEvent<BiocodeComponent, BoundUserInterfaceMessageAttempt>(OnBoundUiMessageAttempt);
+        SubscribeLocalEvent<BiocodeComponent, AfterActivatableUIOpenEvent>(OnAfterActivatableUiOpen);
         // Run after action-granting systems so their actions are already in the set and can be cleared.
         SubscribeLocalEvent<BiocodeComponent, GetItemActionsEvent>(OnGetItemActions, after: [typeof(DashAbilitySystem)]);
         SubscribeLocalEvent<BiocodeComponent, BeingEquippedAttemptEvent>(OnBeingEquippedAttempt);
@@ -61,7 +64,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
         return _whitelist.IsValid(mindWhitelist, mindId);
     }
 
-    private bool CanInteract(Entity<BiocodeComponent> ent, EntityUid user)
+    public bool TryAccess(Entity<BiocodeComponent> ent, EntityUid user)
     {
         if (IsAllowed(ent, user))
             return true;
@@ -82,7 +85,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
     private void OnBeforeRangedInteract(Entity<BiocodeComponent> ent, ref BeforeRangedInteractEvent args)
     {
-        if (!ent.Comp.BlockInteraction || CanInteract(ent, args.User))
+        if (!ent.Comp.BlockInteraction || TryAccess(ent, args.User))
             return;
 
         args.Handled = true;
@@ -90,7 +93,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
     private void OnAfterInteract(Entity<BiocodeComponent> ent, ref AfterInteractEvent args)
     {
-        if (!ent.Comp.BlockInteraction || args.Handled || CanInteract(ent, args.User))
+        if (!ent.Comp.BlockInteraction || args.Handled || TryAccess(ent, args.User))
             return;
 
         args.Handled = true;
@@ -98,7 +101,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
     private void OnUseInHand(Entity<BiocodeComponent> ent, ref UseInHandEvent args)
     {
-        if (!ent.Comp.BlockInteraction || args.Handled || CanInteract(ent, args.User))
+        if (!ent.Comp.BlockInteraction || args.Handled || TryAccess(ent, args.User))
             return;
 
         args.Handled = true;
@@ -106,7 +109,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
     private void OnActivateInWorld(Entity<BiocodeComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (!ent.Comp.BlockInteraction || args.Handled || CanInteract(ent, args.User))
+        if (!ent.Comp.BlockInteraction || args.Handled || TryAccess(ent, args.User))
             return;
 
         args.Handled = true;
@@ -114,10 +117,27 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
     private void OnActivatableUiOpenAttempt(Entity<BiocodeComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (!ent.Comp.BlockInteraction || args.Cancelled || CanInteract(ent, args.User))
+        if (!ent.Comp.BlockInteraction || args.Cancelled || TryAccess(ent, args.User))
             return;
 
         args.Cancel();
+    }
+
+    private void OnBoundUiMessageAttempt(Entity<BiocodeComponent> ent, ref BoundUserInterfaceMessageAttempt args)
+    {
+        if (!ent.Comp.BlockInteraction || args.Cancelled || args.Target != ent.Owner || TryAccess(ent, args.Actor))
+            return;
+
+        args.Cancel();
+    }
+
+    private void OnAfterActivatableUiOpen(Entity<BiocodeComponent> ent, ref AfterActivatableUIOpenEvent args)
+    {
+        if (!ent.Comp.BlockInteraction || TryAccess(ent, args.User))
+            return;
+
+        if (TryComp(ent.Owner, out ActivatableUIComponent? activatable) && activatable.Key != null)
+            _ui.CloseUi(ent.Owner, activatable.Key, args.User);
     }
 
     private void OnGetItemActions(Entity<BiocodeComponent> ent, ref GetItemActionsEvent args)

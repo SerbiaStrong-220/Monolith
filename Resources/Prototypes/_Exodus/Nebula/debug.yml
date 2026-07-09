@@ -1,0 +1,41 @@
+- type: entity
+  id: NebulaDebugContourPoint
+  parent: MarkerBase
+  name: nebula debug contour point
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 180
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    layers:
+    - state: blue
+      shader: unshaded
+
+- type: entity
+  id: NebulaDebugBoundingPoint
+  parent: MarkerBase
+  name: nebula debug bounding point
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 180
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    layers:
+    - state: red
+      shader: unshaded
+
+- type: entity
+  id: NebulaDebugProtectedPoint
+  parent: MarkerBase
+  name: nebula debug protected point
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 180
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    layers:
+    - state: green
+      shader: unshaded

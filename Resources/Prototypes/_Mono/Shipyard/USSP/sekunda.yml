@@ -2,14 +2,15 @@
 
 - type: vessel
   id: Sekunda
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Секунда # Ru-Localization
   description: Корабль медицинской и огневой поддержки СССП. Оснащён модулем БСС, небольшим медицинским и химическим отсеками, лёгким вооружением и тесным интерьером. Произведён народным производственным союзом. # Ru-Localization
   price: 60000
   category: Medium
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/sekunda.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/sekunda.yml
   guidebookPage: Null
   class:
   - Patrol
@@ -21,19 +22,19 @@
 - type: gameMap
   id: Sekunda
   mapName: 'Секунда' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/sekunda.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/sekunda.yml
   minPlayers: 0
   stations:
     Sekunda:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Секунда{1}' # Ru-Localization
+          mapNameTemplate: 'Секунда СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]
 #Idfk what im doing I will not lie at all. What am I doing? Hello? Mooooooooooooom? AAAAAAAAAAAAAAAAA! *crashes your entire game and dies*

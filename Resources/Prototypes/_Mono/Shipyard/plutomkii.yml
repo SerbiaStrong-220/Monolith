@@ -12,7 +12,11 @@
   price: 32900
   category: Small
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/plutomkii.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/plutomkii.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Cargo
@@ -22,7 +26,7 @@
 - type: gameMap
   id: Plutomkii
   mapName: 'Плутон М2' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/plutomkii.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/plutomkii.yml
   minPlayers: 0
   stations:
     Plutomkii:

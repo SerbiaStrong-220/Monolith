@@ -36,6 +36,9 @@
       path: /Audio/_Mono/Weapons/Guns/Gunshots/slammer.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: NebulaWeaponCooldownResistance # Exodus nebula weapon cooldown
+    shotCooldownResistance: 1
+    reloadCooldownResistance: 1
   - type: SpaceArtillery
     powerChargeRate: 100
     powerUsePassive: 100

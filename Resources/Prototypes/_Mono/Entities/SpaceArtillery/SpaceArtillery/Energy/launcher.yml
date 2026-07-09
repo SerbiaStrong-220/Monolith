@@ -218,6 +218,12 @@
       path: /Audio/Weapons/Guns/Gunshots/ship_svalinn.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: NebulaWeaponCooldownMultiplier # Exodus nebula weapon cooldown
+    shotCooldownMultiplier: 1.25
+    reloadCooldownMultiplier: 1.25
+  - type: NebulaWeaponCooldownResistance # Exodus nebula weapon cooldown
+    shotCooldownResistance: 1.6 # Exodus nebula weapon cooldown: ignores purple x4, then adds 1.6x rate.
+    reloadCooldownResistance: 1.6 # Exodus nebula weapon cooldown: stacks with the direct 1.25x nebula rate.
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 350
@@ -625,6 +631,12 @@
       path: /Audio/Weapons/Guns/Gunshots/ship_perforator.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: NebulaWeaponCooldownMultiplier # Exodus nebula weapon cooldown
+    shotCooldownMultiplier: 1.25
+    reloadCooldownMultiplier: 1.25
+  - type: NebulaWeaponCooldownResistance # Exodus nebula weapon cooldown
+    shotCooldownResistance: 1.6 # Exodus nebula weapon cooldown: ignores purple x4, then adds 1.6x rate.
+    reloadCooldownResistance: 1.6 # Exodus nebula weapon cooldown: stacks with the direct 1.25x nebula rate.
   - type: ShipGunClass
     shipClass: Heavy
   - type: HitscanBatteryAmmoProvider

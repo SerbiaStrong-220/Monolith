@@ -6,12 +6,9 @@ ILLEGAL_MATCHES = [
     "Admeme",
     "EncryptionKeyCommand",
     "SurveillanceCameraWireless",
-    "APCHighCapacity",
-    "APCSuperCapacity",
-    "APCHyperCapacity",
+    "DebugAPC",
     "PDA",
     "SpawnPointPassenger",
-    "Python",
     "SalvageShuttleMarker",
     "FTLPoint",
 ]

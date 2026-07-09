@@ -7,11 +7,14 @@
   suffix: AI
   parent: [BaseStructure, BaseFactionGearOtherFactionT2]
   components:
+  - type: Damageable # Exodus destructible NPC AI cores
+    damageContainer: StructuralInorganic
+    damageModifierSet: WallDefense3
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 3000 # Exodus destructible NPC AI cores
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -28,8 +31,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer # Exodus destructible NPC AI cores
   - type: InteractionOutline
   - type: Sprite
     sprite: _Mono/Mobs/Core/drone.rsi
@@ -50,12 +52,19 @@
     sleepMaxGridSpeed: 10 # don't sleep so we can still dodge grids or such if drifting far from players
     rootTask:
       task: RammerShuttleCompound
+  - type: NebulaNpcGridPresenceSource # Exodus nebula NPC grid presence
   - type: StaticPrice
     price: 10000 # Exodus-Price-Rebalance
   - type: ApcPowerReceiver
     powerLoad: 1000 # suspiciously low power-using AI
   - type: ExtensionCableReceiver
   - type: TargetSeekingTarget
+  - type: NpcFactionMember # Exodus rogue NPC station AI faction
+    factions:
+    - RogueNpcStationAi
+  - type: ShipNpcTarget # Exodus faction-aware NPC core targeting
+    priority: 1
+    needPower: true # Exodus powered NPC core targeting
   - type: PassiveThermalSignature # Mono
     signature: 500000 # vibe number
   - type: ThermalSignature # Mono

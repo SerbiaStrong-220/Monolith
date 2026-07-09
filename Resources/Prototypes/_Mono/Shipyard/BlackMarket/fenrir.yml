@@ -10,7 +10,11 @@
   category: Medium
   group: BlackMarket
   access: Pirate
-  shuttlePath: /Maps/_Mono/Shuttles/BlackMarket/fenrir.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/fenrir.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: ShipyardFenrir
   class:
   - Pirate
@@ -21,7 +25,7 @@
 - type: gameMap
   id: Fenrir
   mapName: 'Фенрир' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/BlackMarket/fenrir.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/fenrir.yml
   minPlayers: 0
   stations:
     Fenrir:

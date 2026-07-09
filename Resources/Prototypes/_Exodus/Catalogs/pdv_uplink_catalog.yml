@@ -1,0 +1,33 @@
+# MARK: Weapons
+
+- type: listing
+  id: UplinkPdvFlareFlatpack
+  name: uplink-pdv-flare-flatpack-name
+  description: uplink-pdv-flare-flatpack-desc
+  icon: { sprite: _Mono/Objects/ShuttleWeapons/flare.rsi, state: space_artillery }
+  productEntity: WeaponTurretFlareFlatpack
+  cost:
+    Doubloon: 15
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv
+
+- type: listing
+  id: UplinkPdvTyphonFlatpack
+  name: uplink-pdv-typhon-flatpack-name
+  description: uplink-pdv-typhon-flatpack-desc
+  icon: { sprite: _Exodus/Objects/ShuttleWeapons/typhon.rsi, state: space_artillery }
+  productEntity: WeaponTurretTyphonFlatpack
+  cost:
+    Doubloon: 35
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv

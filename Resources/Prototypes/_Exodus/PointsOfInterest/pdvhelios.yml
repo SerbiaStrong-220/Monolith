@@ -1,0 +1,109 @@
+# Author Info
+# GitHub: starch70
+# Discord: _starch_
+
+# Maintainer Info
+# GitHub: ???
+# Discord: ???
+- type: pointOfInterest
+  id: HeliosFortress
+  parent: [BasePOI, BaseRepairablePOI]
+  name: 'ДФ | Крепость Гелиос' # Ru-Localization
+  minimumDistance: 17500 # Exodus-nebula-update
+  maximumDistance: 30000 # Exodus-nebula-update
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Exodus paired faction POI spawn
+  spawnGroup: PairedFactionPoi # Exodus paired faction POI spawn
+  gridPath: /Maps/_Exodus/POI/pdvhelios.yml # Exodus ai-remote-borgs
+  addComponents:
+  - type: IFF
+    color: "#DE9E59"
+    readOnly: true # mono
+  - type: NpcFactionMember # Exodus faction-owned POI target filtering
+    factions:
+    - PirateNF
+
+- type: gameMap
+  id: HeliosFortress
+  mapName: 'ДФ | Крепость Гелиос' # Ru-Localization
+  mapPath: /Maps/_Exodus/POI/pdvhelios.yml # Exodus ai-remote-borgs
+  minPlayers: 0
+  stations:
+    HeliosFortress:
+      stationProto: RecordsFrontierOutpostCargo
+      gridComponents:
+      - type: VesselInfo
+        description: "Здесь царит гнетущая имперская аура." # Ru-Localization
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - PirateNF
+      # Exodus start - Territory for Helios Fortress
+      - type: GridTerritory
+      # Exodus end
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'ДФ | Крепость Гелиос' # Ru-Localization
+        - type: ExtraStationInformation
+          icon: /Textures/_NF/Interface/Pirate/piratelogo.png
+          stationSubtext: 'frontier-lobby-pirate-subtext'
+          stationDescription: 'frontier-lobby-pirate-description'
+        - type: StationJobs
+          availableJobs:
+            PirateCaptain: [ 1, 1 ]
+            PirateFirstMate: [ 1, 1 ]
+            PDVDenasvar: [ 3, 3 ]
+            PDVInfiltrator: [ 2, 2 ]
+            Pirate: [ -1, -1 ]
+            PdvBorg: [ 2, 2 ]
+          tags:
+          - GrandVizier
+        - type: StationDeadDropReporting
+          messageSet: Pirate
+        - type: StationDeadDropHintExempt
+
+### Hyperwar
+
+- type: pointOfInterest
+  id: HeliosFortressHyperwar
+  parent: [BasePOI, BaseRepairablePOI]
+  name: 'PDV Helios Fortress'
+  minimumDistance: 7500
+  maximumDistance: 9500
+  spawnGamePreset: [ MonoRogueTSFHyperwar ]
+  spawnGroup: Required
+  gridPath: /Maps/_Mono/POI/pdvhelios_hw.yml
+  addComponents:
+  - type: IFF
+    color: "#DE9E59"
+    readOnly: true # mono
+
+- type: gameMap
+  id: HeliosFortressHyperwar
+  mapName: 'PDV Helios Fortress'
+  mapPath: /Maps/_Mono/POI/pdvhelios_hw.yml
+  minPlayers: 0
+  stations:
+    HeliosFortressHyperwar:
+      stationProto: RecordsFrontierOutpostCargo
+      gridComponents:
+      - type: VesselInfo
+        description: "An oppressive imperial aura lurks here. Glory to the Sultan."
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'PDV Helio Fortress'
+        - type: ExtraStationInformation
+          icon: /Textures/_NF/Interface/Pirate/piratelogo.png
+          stationSubtext: 'frontier-lobby-pirate-subtext'
+          stationDescription: 'frontier-lobby-pirate-description'
+        - type: StationJobs
+          availableJobs:
+            PirateCaptain: [ 1, 1 ]
+            PirateFirstMate: [ 3, 3 ]
+            PDVDenasvar: [ 5, 5 ]
+            PDVInfiltrator: [ 2, 2 ]
+            Pirate: [ -1, -1 ]
+            PdvBorg: [ 2, 2 ]
+          tags:
+          - GrandVizier
+        - type: StationDeadDropReporting
+          messageSet: Pirate
+        - type: StationDeadDropHintExempt

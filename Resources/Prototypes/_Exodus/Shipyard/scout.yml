@@ -1,0 +1,38 @@
+- type: vessel
+  id: Scout
+  parent: BaseVessel
+  name: Скаут
+  description: Компактный разведывательный шаттл, спроектированный для исследования туманностей. Четыре 30-мм турели RAC, модуль БСС, генератор щита. Оснащён медицинским отсеком и плазменным z-пинч реактором для автономного исследования.
+  price: 89500
+  category: Small
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/scout.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Pursuit
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Scout
+  mapName: 'Скаут'
+  mapPath: /SharedMaps/_Exodus/Shuttles/scout.yml
+  minPlayers: 0
+  stations:
+    Scout:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Скаут{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

@@ -174,11 +174,9 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
-  - type: IonStormTarget
-    chance: 0.2
   - type: ShowJobIcons
   - type: SiliconLawProvider
-    laws: RedactedBorg
+    laws: AsakimOccupant # Exodus asakim-occupant-laws
 
 
 - type: entity
@@ -187,6 +185,12 @@
   name: remnant automated defense system tender
   description: A tender to an automated drone ship, to keep its internal mechanisms intact.
   components:
+  - type: IonStormTarget # Exodus asakim-ion-storm-balance
+    chance: 0.1
+    randomLawsetChance: 0.125
+    removeChance: 0.1
+    replaceChance: 0.1
+    shuffleChance: 0.1
   - type: Sprite
     layers:
     - state: synd_engi
@@ -373,7 +377,7 @@
   - type: AsakimTrustedUser # Exodus-asakim-access
   - type: Sprite
   - type: SiliconLawProvider
-    laws: Redacted
+    laws: AsakimOccupant # Exodus asakim-occupant-laws
   - type: GhostRole
     name: ghost-role-information-redacted-core
     description: ghost-role-information-redacted-core-description

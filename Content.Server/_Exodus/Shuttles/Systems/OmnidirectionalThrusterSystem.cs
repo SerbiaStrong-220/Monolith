@@ -149,7 +149,9 @@ public sealed partial class OmnidirectionalThrusterSystem : EntitySystem
         ent.Comp.CurrentGrid = xform.GridUid;
 
         for (var i = 0; i < 4; i++)
-            _thruster.AddLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, ent.Owner);
+            _thruster.AddLinearThrust(xform.GridUid.Value, shuttle, i, thruster.Thrust, thruster.BaseThrust, ent.Owner, raiseEvent: false);
+
+        _thruster.NotifyLinearThrustChanged(xform.GridUid);
 
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             _appearance.SetData(ent.Owner, ThrusterVisualState.State, true, appearance);
@@ -183,7 +185,9 @@ public sealed partial class OmnidirectionalThrusterSystem : EntitySystem
         if (TryComp<ShuttleComponent>(ent.Comp.CurrentGrid, out var shuttle))
         {
             for (var i = 0; i < 4; i++)
-                _thruster.RemoveLinearThrust(shuttle, i, thruster.Thrust, thruster.BaseThrust, ent.Owner);
+                _thruster.RemoveLinearThrust(ent.Comp.CurrentGrid.Value, shuttle, i, thruster.Thrust, thruster.BaseThrust, ent.Owner, raiseEvent: false);
+
+            _thruster.NotifyLinearThrustChanged(ent.Comp.CurrentGrid);
         }
 
         ent.Comp.CurrentGrid = null;

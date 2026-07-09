@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/05/2026 06:58:33
-  entityCount: 1937
+  time: 06/19/2026 17:24:42
+  entityCount: 1938
 maps: []
 grids:
 - 1
@@ -62,6 +62,9 @@ entities:
       toolWhitelist:
         tags:
         - ADSRepairTool
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces
     - type: MapGrid
       chunks:
         0,0:
@@ -114,10 +117,10 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Smoke: []
         MetalFoam: []
-        Kudzu: []
         Puddle: []
+        Smoke: []
+        Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -125,7 +128,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: IFF
-      color: '#00CCFFFF'
+      color: '#FF3DB1FF'
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -4899,14 +4902,14 @@ entities:
       parent: 1
 - proto: ClothingOuterHardsuitAsakimUnremoveable
   entities:
-  - uid: 815
+  - uid: 814
     components:
     - type: Transform
       parent: 813
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 824
+  - uid: 821
     components:
     - type: Transform
       parent: 820
@@ -4915,14 +4918,14 @@ entities:
     - type: InsideEntityStorage
 - proto: ClothingShoesBootsMagAsakim
   entities:
-  - uid: 816
+  - uid: 815
     components:
     - type: Transform
       parent: 813
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 821
+  - uid: 822
     components:
     - type: Transform
       parent: 820
@@ -7513,14 +7516,14 @@ entities:
       parent: 1
 - proto: OxygenTankFilled
   entities:
-  - uid: 817
+  - uid: 816
     components:
     - type: Transform
       parent: 813
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 822
+  - uid: 823
     components:
     - type: Transform
       parent: 820
@@ -7966,14 +7969,14 @@ entities:
       parent: 1
 - proto: ShipRepairDeviceAsakimRedacted
   entities:
-  - uid: 819
+  - uid: 817
     components:
     - type: Transform
       parent: 813
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 826
+  - uid: 824
     components:
     - type: Transform
       parent: 820
@@ -8069,6 +8072,13 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-8.5
+      parent: 1
+- proto: SpawnAiRemoteBorgRedacted
+  entities:
+  - uid: 1938
+    components:
+    - type: Transform
+      pos: 0.5,-0.5
       parent: 1
 - proto: SpawnAsakimRedactedBorg
   entities:
@@ -8180,11 +8190,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 817
+          - 815
           - 819
           - 816
           - 814
-          - 817
-          - 815
           - 818
     - type: Pullable
       prevFixedRotation: True
@@ -8209,11 +8219,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 824
+          - 822
           - 826
           - 821
           - 823
-          - 824
-          - 822
           - 825
     - type: Pullable
       prevFixedRotation: True
@@ -11894,14 +11904,14 @@ entities:
     - type: InsideEntityStorage
 - proto: WeaponRifleAsakimAutopulser
   entities:
-  - uid: 814
+  - uid: 819
     components:
     - type: Transform
       parent: 813
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 823
+  - uid: 826
     components:
     - type: Transform
       parent: 820

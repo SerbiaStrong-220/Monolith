@@ -152,10 +152,29 @@
   - type: ActivatableUI
     key: enum.StoreUiKey.Key
   - type: Store
+    categories: # Exodus-begin syndicate ship vouchers
+    - UplinkWeaponry
+    - UplinkAmmo
+    - UplinkExplosives
+    - UplinkChemicals
+    - UplinkDeception
+    - UplinkDisruption
+    - UplinkImplants
+    - UplinkAllies
+    - UplinkWearables
+    - UplinkJob
+    - UplinkPointless
+    - UplinkSyndicateShips
+    currencyWhitelist:
+    - Telecrystal
+    # Exodus-end syndicate ship vouchers
     balance:
       Telecrystal: 25 # Mono
   - type: AccessReader
     access: [["NuclearOperative"], ["SyndicateAgent"]]
+  - type: Tag # Exodus syndicate ship vouchers
+    tags:
+    - SyndicateUplink
 
 - type: entity
   parent: VendingMachine

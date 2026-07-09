@@ -40,6 +40,8 @@
     - FederationMilitaryCredit
     balance:
       FederationMilitaryCredit: 0
+  - type: TerritoryStoreDiscount # Exodus territory-store-discount
+    faction: TSFMC # Exodus territory-store-discount
 
 # mono edit
 - type: entity
@@ -62,4 +64,6 @@
     - Doubloon #Rename to Mark/Slip/Chit in code to represent blackmarket currency instead of doubloons
     balance:
       Doubloon: 0
+  - type: TerritoryStoreDiscount # Exodus territory-store-discount
+    faction: PDV # Exodus territory-store-discount
 # mono edit end

@@ -1,2 +1,11 @@
 - type: playTimeTracker
+  id: JobAsakimWarrior
+
+- type: playTimeTracker
+  id: JobAsakimCenturion
+
+- type: playTimeTracker
+  id: JobAsakimPrefect
+
+- type: playTimeTracker
   id: JobColossusSecurityBorg

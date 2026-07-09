@@ -1,0 +1,20 @@
+# Stations, POIs, and grids that nebula generation must not touch. Matched against
+# PointOfInterestPrototype id, GameMapPrototype id, and BecomesStationComponent.Id.
+- type: nebulaProtectedStation
+  id: Frontier
+
+- type: nebulaProtectedStation
+  id: Medical
+
+- type: nebulaProtectedStation
+  id: TSFMCHalcyon
+
+- type: nebulaProtectedStation
+  id: HeliosFortress
+
+
+
+# Fixed world-space safe spots. Radius 0 falls back to the default ProtectedRadius.
+- type: nebulaProtectedPoint
+  id: MapOrigin
+  position: 0,0

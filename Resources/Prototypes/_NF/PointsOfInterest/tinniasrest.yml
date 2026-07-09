@@ -7,22 +7,8 @@
 # Discord: ???
 
 # Notes:
-# Down at your local saloon
-- type: pointOfInterest
-  id: Tinnia
-  parent: [BasePOI, BaseRepairablePOI]
-  name: "Ресторан Тинни" # Ru-Localization
-  minimumDistance: 3400
-  maximumDistance: 5800
-  spawnGroup: RestStop
-  gridPath: /Maps/_NF/POI/tinnia.yml
-  addComponents:
-  - type: StationTransit
-  - type: SolarPoweredGrid
-    trackOnInit: true
-    doNotCull: true
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Blue / Purple nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept.
 
 - type: gameMap
   id: Tinnia
@@ -32,6 +18,10 @@
   stations:
     Tinnia:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for Tinnia's Restaurant
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Ресторан Тинни" # Ru-Localization

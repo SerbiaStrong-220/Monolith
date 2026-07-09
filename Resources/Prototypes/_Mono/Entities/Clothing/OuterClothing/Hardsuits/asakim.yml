@@ -56,15 +56,15 @@
       coefficients:
         Blunt: 0.35
         Slash: 0.5 # Exodus-asakim-slash-resist
-        Piercing: 0.3
+        Piercing: 0.35 # Exodus-asakim-kasatura-piercing-nerf
         Heat: 0.4
         Radiation: 0
         Shock: 0.8
         Poison: 0.4
         Caustic: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
-    sprintModifier: 1.0 # Exodus-asakim-no-hardsuit-slowdown
+    walkModifier: 0.85 # Exodus-asakim-hardsuit-slowdown
+    sprintModifier: 0.85 # Exodus-asakim-hardsuit-slowdown
   # Exodus-asakim-suit-biocheck-start
   - type: Biocode
     blockInteraction: false
