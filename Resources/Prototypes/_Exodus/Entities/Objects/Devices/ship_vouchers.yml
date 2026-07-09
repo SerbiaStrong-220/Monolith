@@ -1,5 +1,53 @@
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherSentinelF
+  name: TSF Sentinel-F LPC [T1]
+  description: A small card that contains the data for the procurement of a Sentinel-F-class escort from the flagship's reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: screen
+      color: "#05ffff"
+    - state: screen9
+      color: "#05ffff"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 7200 # one hour
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - SentinelF
+  - type: StaticPrice
+    vendPrice: 325000
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherAntares
+  name: TSF Antares LPC [T4]
+  description: A small card that contains the data for the procurement of an Antares-class destroyer from the flagship's reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#05ffff"
+    - state: screen3
+      color: "#05ffff"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 14400 # 2 hours
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - Antares
+  - type: StaticPrice
+    vendPrice: 900000
+
+- type: entity
+  parent: BaseShipLPCRenewable
   id: ShipVoucherLadya
   name: TSF ladya LPC
   description: A small card that contains the data for the procurement of a Ladya-class supporter from the flagship's reserves.
@@ -14,6 +62,7 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
+    cooldown: 7200 # one hour
     consoleType: Security
     companyName: TSF
     vessels:
@@ -22,7 +71,7 @@
     vendPrice: 200000
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
   id: ShipVoucherFerz
   name: PDV ferz LPC
   description: A small card that authorizes the procurement of a Ferz.
@@ -37,6 +86,7 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
+    cooldown: 10800 # 3 hours
     consoleType: BlackMarket
     companyName: PDV
     vessels:
@@ -45,7 +95,127 @@
     vendPrice: 325000
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherHydra
+  name: syndicate hydra LPC
+  description: A small card that contains the data for the procurement of a Hydra-class corvette.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    cooldown: 7200 # one hour
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Hydra
+  - type: StaticPrice
+    vendPrice: 135000
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherTalon
+  name: syndicate talon LPC
+  description: A small card that contains the data for the procurement of a Talon-class interceptor.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    cooldown: 7200 # one hour
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Talon
+  - type: StaticPrice
+    vendPrice: 45000
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherInfiltrator
+  name: syndicate infiltrator LPC
+  description: A small card that contains the data for the procurement of an Infiltrator-class frigate.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    cooldown: 10800 # 3 hours
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Infiltrator
+  - type: StaticPrice
+    vendPrice: 275000
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherKlesh
+  name: syndicate klesh LPC
+  description: A small card that contains the data for the procurement of an Klesh-class infantry ship.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    cooldown: 7200 # one hour
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Klesh
+  - type: StaticPrice
+    vendPrice: 50000
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherHunter
+  name: syndicate hunter LPC
+  description: A small card that contains the data for the procurement of a Hunter-class gunship.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_fighter
+    - state: screen
+      color: "#eb0023"
+    - state: screen6
+      color: "#eb0023"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    cooldown: 7200 # one hour
+    consoleType: Syndicate
+    companyName: Syndicate
+    vessels:
+    - Hunter
+  - type: StaticPrice
+    vendPrice: 50000
+
+- type: entity
+  parent: BaseShipLPCRenewable
   id: ShipVoucherUSSPBasic
   name: USSP basic shuttle LPC
   description: A small card that authorizes the acquisition of a basic USSP shuttle.
@@ -67,7 +237,7 @@
     - Strayk
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
   id: ShipVoucherUSSPIntermediate
   name: USSP intermediate shuttle LPC
   description: A small card that authorizes the acquisition of an intermediate USSP shuttle.
@@ -89,7 +259,7 @@
     - Sekunda
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
   id: ShipVoucherUSSPAdvanced
   name: USSP advanced shuttle LPC
   description: A small card that authorizes the acquisition of an advanced USSP shuttle.
@@ -109,7 +279,7 @@
     - Buran
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
   id: ShipVoucherUSSPLedokol
   name: USSP ledokol LPC
   description: A small card that authorizes the acquisition of a Ledokol.
@@ -128,7 +298,7 @@
     - Ledokol
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
   id: ShipVoucherUSSPLedokolRam
   name: USSP ledokol ram LPC
   description: A small card that authorizes the acquisition of a Ledokol ram.
@@ -147,7 +317,7 @@
     - Molotok
 
 - type: entity
-  parent: BaseShipLPC
+  parent: BaseShipLPCRenewable
   id: ShipVoucherUSSPLedokolAttatchment
   name: USSP ledokol attatchment LPC
   description: A small card that authorizes the acquisition of a Ledokol attatchment.
@@ -163,3 +333,26 @@
     companyName: USSP
     vessels:
     - Kupol
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherLuxury
+  name: ADF luxury LPC
+  description: A small card that authorizes the procurement of a Luxury-class imperial yacht from the Citadel shipyard reserves.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#ff3db1"
+    - state: screen9
+      color: "#ff3db1"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 28800 # 8 hours
+    consoleType: Citadel
+    vessels:
+    - Luxury
+  - type: StaticPrice
+    vendPrice: 450000

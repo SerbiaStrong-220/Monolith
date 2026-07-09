@@ -4,6 +4,12 @@
   name: personal protection operator
   description: A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
   components:
+  - type: IonStormTarget # Exodus asakim-ion-storm-balance
+    chance: 0
+    randomLawsetChance: 0
+    removeChance: 0
+    replaceChance: 0
+    shuffleChance: 0
   - type: SiliconLawProvider
     laws: AsakimBlackShield
   - type: Sprite
@@ -56,8 +62,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      450: Critical
-      600: Dead
+      400: Critical
+      550: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       360: 0.7

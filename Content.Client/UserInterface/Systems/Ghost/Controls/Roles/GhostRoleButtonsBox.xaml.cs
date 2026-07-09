@@ -25,7 +25,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             {
                 var button = new GhostRoleEntryButtons(role);
                 button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
-                button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
+
+                // Exodus-begin ghost-role-follow-toggle
+                if (button.FollowButton.Visible)
+                    button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
+                // Exodus-end
 
                 if (!hasAccess)
                 {

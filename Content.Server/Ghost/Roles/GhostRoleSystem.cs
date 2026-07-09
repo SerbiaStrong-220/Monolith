@@ -520,7 +520,13 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
     public void Follow(ICommonSession player, uint identifier)
     {
+        if (!_cfg.GetCVar(CCVars.GhostRoleFollowEnabled)) // Exodus ghost-role-follow-toggle
+            return;
+
         if (!_ghostRoles.TryGetValue(identifier, out var role))
+            return;
+
+        if (!role.Comp.AllowFollow) // Exodus ghost-role-follow-toggle
             return;
 
         if (player.AttachedEntity == null)
@@ -606,7 +612,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
                 Kind = kind,
                 Prototype = role.Prototype, // Frontier
                 RafflePlayerCount = rafflePlayerCount,
-                RaffleEndTime = raffleEndTime
+                RaffleEndTime = raffleEndTime,
+                AllowFollow = role.AllowFollow, // Exodus ghost-role-follow-toggle
             });
         }
 

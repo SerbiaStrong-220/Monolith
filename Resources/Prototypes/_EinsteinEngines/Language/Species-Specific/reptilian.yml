@@ -100,7 +100,7 @@
 - type: language
   id: Azaziba
   speech:
-    color: "#257bb0dd" # Mono
+    color: "#CC1F58DD" # Exodus-asakim-color
     fontId: "CorrectionTape" # Exodus
   obfuscation:
     !type:SyllableObfuscation

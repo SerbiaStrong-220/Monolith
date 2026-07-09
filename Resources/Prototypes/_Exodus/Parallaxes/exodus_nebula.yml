@@ -1,0 +1,351 @@
+# Exodus nebula-parallax
+- type: parallax
+  id: RedNebula
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Background.png"
+      slowness: 0.998046875
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_1.png"
+      slowness: 0.992
+      scale: "1, 1"
+      scrolling: "0.002, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_5.png"
+      slowness: 0.984
+      scale: "1, 1"
+      worldAdjustPosition: "9, -6"
+      scrolling: "-0.002, 0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_6.png"
+      slowness: 0.976
+      scale: "1, 1"
+      worldAdjustPosition: "-11, 7"
+      scrolling: "0.0015, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_2.png"
+      slowness: 0.958
+      scale: "1, 1"
+      scrolling: "-0.003, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_3.png"
+      slowness: 0.932
+      scale: "1, 1"
+      scrolling: "0.0025, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_7.png"
+      slowness: 0.904
+      scale: "1, 1"
+      worldAdjustPosition: "14, 10"
+      scrolling: "-0.002, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_9.png"
+      slowness: 0.882
+      scale: "1, 1"
+      worldAdjustPosition: "-6, 11"
+      scrolling: "0.002, -0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_5.png"
+      slowness: 0.876
+      scale: "1, 1"
+      scrolling: "0.004, 0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_6.png"
+      slowness: 0.848
+      scale: "1, 1"
+      scrolling: "-0.002, 0.004"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_4.png"
+      slowness: 0.792
+      scale: "1, 1"
+      scrolling: "-0.003, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_8.png"
+      slowness: 0.746
+      scale: "1, 1"
+      scrolling: "-0.004, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_7.png"
+      slowness: 0.708
+      scale: "1, 1"
+      scrolling: "-0.0025, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Red_Nebula_Cloud/Red_Nebula_Cloud_8.png"
+      slowness: 0.674
+      scale: "1, 1"
+      worldAdjustPosition: "-8, -12"
+      scrolling: "0.003, 0.0015"
+  layersLQUseHQ: true
+
+- type: parallax
+  id: BlueNebula
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Background.png"
+      slowness: 0.998046875
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_1.png"
+      slowness: 0.992
+      scale: "1, 1"
+      scrolling: "0.002, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_5.png"
+      slowness: 0.984
+      scale: "1, 1"
+      worldAdjustPosition: "9, -6"
+      scrolling: "-0.002, 0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_6.png"
+      slowness: 0.976
+      scale: "1, 1"
+      worldAdjustPosition: "-11, 7"
+      scrolling: "0.0015, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_2.png"
+      slowness: 0.958
+      scale: "1, 1"
+      scrolling: "-0.003, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_3.png"
+      slowness: 0.932
+      scale: "1, 1"
+      scrolling: "0.0025, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_7.png"
+      slowness: 0.904
+      scale: "1, 1"
+      worldAdjustPosition: "14, 10"
+      scrolling: "-0.002, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_5.png"
+      slowness: 0.876
+      scale: "1, 1"
+      scrolling: "0.004, 0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_6.png"
+      slowness: 0.848
+      scale: "1, 1"
+      scrolling: "-0.002, 0.004"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_4.png"
+      slowness: 0.792
+      scale: "1, 1"
+      scrolling: "-0.003, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_8.png"
+      slowness: 0.746
+      scale: "1, 1"
+      scrolling: "-0.004, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_7.png"
+      slowness: 0.708
+      scale: "1, 1"
+      scrolling: "-0.0025, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Blue_Nebula_Cloud/Blue_Nebula_Cloud_8.png"
+      slowness: 0.674
+      scale: "1, 1"
+      worldAdjustPosition: "-8, -12"
+      scrolling: "0.003, 0.0015"
+  layersLQUseHQ: true
+
+- type: parallax
+  id: GreenNebula
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Background.png"
+      slowness: 0.998046875
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_1.png"
+      slowness: 0.992
+      scale: "1, 1"
+      scrolling: "0.002, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_5.png"
+      slowness: 0.984
+      scale: "1, 1"
+      worldAdjustPosition: "9, -6"
+      scrolling: "-0.002, 0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_6.png"
+      slowness: 0.976
+      scale: "1, 1"
+      worldAdjustPosition: "-11, 7"
+      scrolling: "0.0015, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_2.png"
+      slowness: 0.958
+      scale: "1, 1"
+      scrolling: "-0.003, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_3.png"
+      slowness: 0.932
+      scale: "1, 1"
+      scrolling: "0.0025, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_7.png"
+      slowness: 0.904
+      scale: "1, 1"
+      worldAdjustPosition: "14, 10"
+      scrolling: "-0.002, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_5.png"
+      slowness: 0.876
+      scale: "1, 1"
+      scrolling: "0.004, 0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_6.png"
+      slowness: 0.848
+      scale: "1, 1"
+      scrolling: "-0.002, 0.004"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_4.png"
+      slowness: 0.792
+      scale: "1, 1"
+      scrolling: "-0.003, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_8.png"
+      slowness: 0.746
+      scale: "1, 1"
+      scrolling: "-0.004, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_7.png"
+      slowness: 0.708
+      scale: "1, 1"
+      scrolling: "-0.0025, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Green_Nebula_Cloud/Green_Nebula_Cloud_8.png"
+      slowness: 0.674
+      scale: "1, 1"
+      worldAdjustPosition: "-8, -12"
+      scrolling: "0.003, 0.0015"
+  layersLQUseHQ: true
+
+- type: parallax
+  id: PurpleNebula
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Background.png"
+      slowness: 0.998046875
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_1.png"
+      slowness: 0.992
+      scale: "1, 1"
+      scrolling: "0.002, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_5.png"
+      slowness: 0.984
+      scale: "1, 1"
+      worldAdjustPosition: "9, -6"
+      scrolling: "-0.002, 0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_6.png"
+      slowness: 0.976
+      scale: "1, 1"
+      worldAdjustPosition: "-11, 7"
+      scrolling: "0.0015, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_2.png"
+      slowness: 0.958
+      scale: "1, 1"
+      scrolling: "-0.003, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_3.png"
+      slowness: 0.932
+      scale: "1, 1"
+      scrolling: "0.0025, 0.003"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_7.png"
+      slowness: 0.904
+      scale: "1, 1"
+      worldAdjustPosition: "14, 10"
+      scrolling: "-0.002, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_5.png"
+      slowness: 0.876
+      scale: "1, 1"
+      scrolling: "0.004, 0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_6.png"
+      slowness: 0.848
+      scale: "1, 1"
+      scrolling: "-0.002, 0.004"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_4.png"
+      slowness: 0.792
+      scale: "1, 1"
+      scrolling: "-0.003, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_8.png"
+      slowness: 0.746
+      scale: "1, 1"
+      scrolling: "-0.004, -0.001"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_7.png"
+      slowness: 0.708
+      scale: "1, 1"
+      scrolling: "-0.0025, -0.002"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Exodus/Parallaxes/Nebula/Purple_Nebula_Cloud/Purple_Nebula_Cloud_8.png"
+      slowness: 0.674
+      scale: "1, 1"
+      worldAdjustPosition: "-8, -12"
+      scrolling: "0.003, 0.0015"
+  layersLQUseHQ: true

@@ -14,7 +14,11 @@
   group: Medical
   access: Command # DoC exclusive.
   limit: 2
-  shuttlePath: /Maps/_Mono/Shuttles/phantom.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/phantom.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus MD faction
+    factions:
+    - MD
   guidebookPage: null
   class:
   - Medical
@@ -24,7 +28,7 @@
 - type: gameMap
   id: Phantom
   mapName: 'Фантом' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/phantom.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/phantom.yml
   minPlayers: 0
   stations:
     Phantom:

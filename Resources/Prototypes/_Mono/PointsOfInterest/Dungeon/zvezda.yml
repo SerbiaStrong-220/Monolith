@@ -10,9 +10,9 @@
 - type: pointOfInterest
   id: Zvezda
   parent: BasePOI
-  name: 'Zvezda Orbital Habitation'
-  minimumDistance: 10000
-  maximumDistance: 15000
+  name: 'Среда Обитания "Звезда"' # Exodus
+  minimumDistance: 20000 # Exodus-nebula-update
+  maximumDistance: 30000 # Exodus-nebula-update
   spawnGroup: Optional
   gridPath: /Maps/_Mono/POI/Dungeons/zvezda.yml
   addComponents:
@@ -22,13 +22,18 @@
 
 - type: gameMap
   id: Zvezda
-  mapName: 'Zvezda Orbital Habitation'
+  mapName: 'Среда Обитания "Звезда"' # Exodus
   mapPath: /Maps/_Mono/POI/Dungeons/zvezda.yml
   minPlayers: 0
   stations:
     Zvezda:
       stationProto: RecordsFrontierOutpostCargo
+      # Exodus-begin territory-grid
+      gridComponents:
+      - type: InitRepairSnapshot # Exodus zvezda-srd-snapshot
+      - type: GridTerritory
+      # Exodus-end
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Zvezda Orbital Habitation'
+          mapNameTemplate: 'Среда Обитания "Звезда"' # Exodus
         - type: StationDeadDropHintExempt

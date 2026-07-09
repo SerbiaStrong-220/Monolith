@@ -16,7 +16,11 @@
   group: Custom
   access: Brig
   mapchecker_group_override: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Carrier/rook.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Carrier/rook.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus SecColossus faction
+    factions:
+    - SecColossus
   guidebookPage: Null
   class:
   - Pursuit
@@ -26,7 +30,7 @@
 - type: gameMap
   id: Rook
   mapName: 'Грач' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Carrier/rook.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Carrier/rook.yml
   minPlayers: 0
   stations:
     Rook:

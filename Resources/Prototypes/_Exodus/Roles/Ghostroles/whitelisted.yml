@@ -6,6 +6,14 @@
   entityPrototype: PlayerBorgAsakimRedacted
   whitelisted: false
 
+- type: ghostRole # Exodus: Assault System Operator (ОШС)
+  id: AsakimFighterBorg
+  name: ghost-role-information-asakim-fighter-borg
+  description: ghost-role-information-asakim-fighter-borg-description
+  rules: ghost-role-information-silicon-rules
+  entityPrototype: PlayerBorgAsakimFighter
+  whitelisted: false
+
 - type: ghostRole
   id: ColossusSecurityBorg
   name: ghost-role-information-colossus-security-borg

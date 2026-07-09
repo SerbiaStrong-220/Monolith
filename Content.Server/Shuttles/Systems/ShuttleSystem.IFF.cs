@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Components;
+using Content.Shared.Database; // Exodus IFF admin logs
 using Content.Shared.CCVar;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -75,14 +76,10 @@ public sealed partial class ShuttleSystem
             return;
         }
 
-        if (!args.Show)
-        {
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-        }
-        else
-        {
-            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-        }
+        // Exodus-begin IFF admin logs
+        if (!TrySetIFFFlagVisibility(uid, xform.GridUid.Value, args.Actor, IFFFlags.HideLabel, args.Show, "IFF label"))
+            return;
+        // Exodus-end
     }
 
     private void OnIFFShowVessel(EntityUid uid, IFFConsoleComponent component, IFFShowVesselMessage args)
@@ -93,15 +90,42 @@ public sealed partial class ShuttleSystem
             return;
         }
 
-        if (!args.Show)
-        {
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
-        }
-        else
-        {
-            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
-        }
+        // Exodus-begin IFF admin logs
+        if (!TrySetIFFFlagVisibility(uid, xform.GridUid.Value, args.Actor, IFFFlags.Hide, args.Show, "vessel IFF visibility"))
+            return;
+        // Exodus-end
     }
+
+    // Exodus-begin IFF admin logs
+    private bool TrySetIFFFlagVisibility(EntityUid consoleUid, EntityUid gridUid, EntityUid actorUid, IFFFlags flag, bool show, string label)
+    {
+        if (show)
+        {
+            if (!TryComp<IFFComponent>(gridUid, out var iff) ||
+                iff.ReadOnly ||
+                (iff.Flags & flag) == 0x0)
+            {
+                return false;
+            }
+
+            RemoveIFFFlag(gridUid, flag, iff);
+            _logger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actorUid):player} enabled {label} for {ToPrettyString(gridUid):grid} via {ToPrettyString(consoleUid):console}");
+            return true;
+        }
+
+        var component = CompOrNull<IFFComponent>(gridUid);
+        if (component != null &&
+            (component.ReadOnly ||
+             (component.Flags & flag) == flag))
+        {
+            return false;
+        }
+
+        AddIFFFlag(gridUid, flag, component);
+        _logger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actorUid):player} disabled {label} for {ToPrettyString(gridUid):grid} via {ToPrettyString(consoleUid):console}");
+        return true;
+    }
+    // Exodus-end
 
     private void OnIFFConsoleAnchor(EntityUid uid, IFFConsoleComponent component, ref AnchorStateChangedEvent args)
     {

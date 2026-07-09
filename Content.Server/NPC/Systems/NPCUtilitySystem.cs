@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Destructible; // Mono
 using Content.Server.Fluids.EntitySystems;
 using Content.Server._Mono.NPC.HTN; // Mono
+using Content.Server._Exodus.NPC; // Exodus
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
@@ -23,6 +24,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Components; // Mono
+using Content.Shared.NPC.Prototypes; // Exodus
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -38,11 +40,13 @@ using Robust.Server.Containers;
 using Robust.Shared.Physics.Components; // Mono
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 using Content.Shared.Atmos.Components;
 using System.Linq;
 using Content.Shared.StatusEffect; // Frontier
 using Content.Shared._Exodus.Stealth.Systems; // Exodus
 using Content.Shared._Exodus.Stealth.Components; // Exodus
+using Content.Shared._Exodus.NPC.Components; // Exodus
 using Content.Server.NPC.Components;
 
 namespace Content.Server.NPC.Systems;
@@ -52,6 +56,7 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed partial class NPCUtilitySystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!; // Exodus
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private DrinkSystem _drink = default!;
@@ -79,6 +84,9 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private EntityQuery<PhysicsComponent> _physicsQuery; // Mono
     private EntityQuery<RequireProjectileTargetComponent> _requireTargetQuery; // Mono
     private EntityQuery<NpcFactionMemberComponent> _factionQuery; // Mono
+    private EntityQuery<FactionAiControlledGridComponent> _factionAiGridQuery; // Exodus
+    private EntityQuery<FactionNpcAiCoreComponent> _factionAiCoreQuery; // Exodus
+    private EntityQuery<ShipNpcUnavailableTargetsComponent> _shipUnavailableTargetsQuery; // Exodus
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
@@ -96,6 +104,9 @@ public sealed partial class NPCUtilitySystem : EntitySystem
         _physicsQuery = GetEntityQuery<PhysicsComponent>(); // Mono
         _requireTargetQuery = GetEntityQuery<RequireProjectileTargetComponent>(); // Mono
         _factionQuery = GetEntityQuery<NpcFactionMemberComponent>(); // Mono
+        _factionAiGridQuery = GetEntityQuery<FactionAiControlledGridComponent>(); // Exodus
+        _factionAiCoreQuery = GetEntityQuery<FactionNpcAiCoreComponent>(); // Exodus
+        _shipUnavailableTargetsQuery = GetEntityQuery<ShipNpcUnavailableTargetsComponent>(); // Exodus
     }
 
     /// <summary>
@@ -441,6 +452,14 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             {
                 return !TryComp<MobStateComponent>(targetUid, out var mobState) || _mobState.IsAlive(targetUid, mobState) ? 1f : 0f;
             }
+            // Exodus-begin faction-aware NPC core targeting
+            case TargetShipNpcPriorityCon:
+            {
+                return TryComp<ShipNpcTargetComponent>(targetUid, out var target)
+                    ? Math.Clamp(target.Priority, 0f, 1f)
+                    : 0f;
+            }
+            // Exodus-end
             default:
                 throw new NotImplementedException();
         }
@@ -549,6 +568,10 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             {
                 var xform = Transform(owner);
                 var ownGrid = xform.GridUid;
+                // Exodus-begin faction-aware ship NPC targeting
+                var hasFactionSource = TryGetFactionSource(owner, ownGrid, out var factionSource, out var sourceFaction, out var sourceCore);
+                _shipUnavailableTargetsQuery.TryGetComponent(owner, out var unavailableTargets);
+                // Exodus-end
                 foreach (var (target, targetComp) in _lookup.GetEntitiesInRange<ShipNpcTargetComponent>(_transform.GetMapCoordinates(xform), shuttlesQuery.Range))
                 {
                     var targetXform = Transform(target);
@@ -559,10 +582,16 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                         || targetGrid == ownGrid
                         || (_transform.GetWorldPosition(target) - _transform.GetWorldPosition(xform)).Length() > shuttlesQuery.Range
                         || targetComp.NeedPower && !this.IsPowered(target, EntityManager)
-                        || targetGrid != null && _whitelistSystem.IsBlacklistPass(shuttlesQuery.Blacklist, targetGrid.Value))
+                        || targetGrid != null && _whitelistSystem.IsBlacklistPass(shuttlesQuery.Blacklist, targetGrid.Value)
+                        || IsShipTargetTemporarilyUnavailable(unavailableTargets, target)) // Exodus faction NPC unavailable target fallback
                     {
                         continue;
                     }
+
+                    // Exodus-begin faction-aware ship NPC targeting
+                    if (hasFactionSource && IsFriendlyNpcTarget(factionSource, sourceFaction, sourceCore, target, targetGrid))
+                        continue;
+                    // Exodus-end
 
                     entities.Add(target);
                 }
@@ -572,6 +601,20 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 throw new NotImplementedException();
         }
     }
+
+    // Exodus-begin faction NPC unavailable target fallback
+    private bool IsShipTargetTemporarilyUnavailable(ShipNpcUnavailableTargetsComponent? unavailableTargets, EntityUid target)
+    {
+        if (unavailableTargets == null || !unavailableTargets.Targets.TryGetValue(target, out var unavailableUntil))
+            return false;
+
+        if (unavailableUntil > _timing.CurTime)
+            return true;
+
+        unavailableTargets.Targets.Remove(target);
+        return false;
+    }
+    // Exodus-end
 
     private void RecursiveAdd(EntityUid uid, HashSet<EntityUid> entities)
     {
@@ -585,6 +628,89 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             RecursiveAdd(child, entities);
         }
     }
+
+    // Exodus-begin faction-aware ship NPC targeting
+    private bool IsFriendlyNpcTarget(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        EntityUid target,
+        EntityUid? targetGrid)
+    {
+        if (sourceFaction != null &&
+            targetGrid != null &&
+            _factionAiGridQuery.TryGetComponent(targetGrid.Value, out var control) &&
+            control.State == FactionAiControlState.Controlled &&
+            control.Faction is { } controlFaction &&
+            HasFriendlyFaction(source, sourceFaction, sourceCore, controlFaction))
+        {
+            return true;
+        }
+
+        if (_factionQuery.TryGetComponent(target, out var targetFaction))
+            return HasFriendlyFaction(source, sourceFaction, sourceCore, target, targetFaction);
+
+        return targetGrid != null && HasFriendlyFaction(source, sourceFaction, sourceCore, targetGrid.Value);
+    }
+
+    private bool TryGetFactionSource(
+        EntityUid owner,
+        EntityUid? ownerGrid,
+        out EntityUid source,
+        out NpcFactionMemberComponent? faction,
+        out FactionNpcAiCoreComponent? core)
+    {
+        _factionAiCoreQuery.TryGetComponent(owner, out core);
+
+        if (_factionQuery.TryGetComponent(owner, out faction))
+        {
+            source = owner;
+            return true;
+        }
+
+        if (ownerGrid != null && _factionQuery.TryGetComponent(ownerGrid.Value, out faction))
+        {
+            source = ownerGrid.Value;
+            return true;
+        }
+
+        source = default;
+        faction = null;
+        core = null;
+        return false;
+    }
+
+    private bool HasFriendlyFaction(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        EntityUid target)
+    {
+        return _factionQuery.TryGetComponent(target, out var targetFaction) &&
+               HasFriendlyFaction(source, sourceFaction, sourceCore, target, targetFaction);
+    }
+
+    private bool HasFriendlyFaction(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        EntityUid target,
+        NpcFactionMemberComponent targetFaction)
+    {
+        return (sourceCore != null && sourceCore.IgnoredFactions.Overlaps(targetFaction.Factions)) ||
+               _npcFaction.IsEntityFriendly((source, sourceFaction), (target, targetFaction));
+    }
+
+    private bool HasFriendlyFaction(
+        EntityUid source,
+        NpcFactionMemberComponent? sourceFaction,
+        FactionNpcAiCoreComponent? sourceCore,
+        ProtoId<NpcFactionPrototype> targetFaction)
+    {
+        return (sourceCore != null && sourceCore.IgnoredFactions.Contains(targetFaction)) ||
+               _npcFaction.IsFactionFriendlyOrSame(targetFaction, (source, sourceFaction));
+    }
+    // Exodus-end
 
     private void Filter(NPCBlackboard blackboard, HashSet<EntityUid> entities, UtilityQueryFilter filter)
     {

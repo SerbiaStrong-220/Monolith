@@ -70,6 +70,8 @@
     - EXRuleGhostRoleKhsiraEighthFleet
     - EXRuleGhostRoleChimera
     - EXRuleGhostRoleBorg
+    - EXRuleGhostRoleSyndicate
+    - EXRuleGhostRoleCitadelService
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -91,6 +93,7 @@
   children:
     - EXRuleGhostRoleAsakim
     - EXRuleGhostRoleCenturionAsakim
+    - EXRuleGhostRolePrefectAsakim
   
 - type: guideEntry
   id: EXRuleGhostRoleAsakim
@@ -103,6 +106,16 @@
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCenturionAsakim.xml"
 
 - type: guideEntry
+  id: EXRuleGhostRolePrefectAsakim
+  name: guide-entry-exodus-rule-ghost-roles-prefect-asakim
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesPrefectAsakim.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleAssaultSystemOperator
+  name: guide-entry-exodus-rule-ghost-roles-assault-system-operator
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesAssaultSystemOperator.xml"
+
+- type: guideEntry
   id: EXRuleGhostRoleADS
   name: guide-entry-exodus-rule-ghost-roles-ads
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesADS.xml"
@@ -111,6 +124,7 @@
     - EXRuleGhostRoleOperator
     - EXRuleGhostRoleCore
     - EXRuleGhostRolePersonalProtectionOperator
+    - EXRuleGhostRoleAssaultSystemOperator
 
 - type: guideEntry
   id: EXRuleGhostRoleADSGeneral
@@ -141,3 +155,26 @@
   id: EXRuleGhostRoleBorg
   name: guide-entry-exodus-rule-ghost-roles-borg
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesBorg.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleSyndicate
+  name: guide-entry-exodus-rule-ghost-roles-syndicate
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicate.xml"
+  children:
+    - EXRuleGhostRoleSyndicateOperative
+    - EXRuleGhostRoleSyndicateSergeant
+
+- type: guideEntry
+  id: EXRuleGhostRoleSyndicateOperative
+  name: guide-entry-exodus-rule-ghost-roles-syndicate-operative
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicateOperative.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleSyndicateSergeant
+  name: guide-entry-exodus-rule-ghost-roles-syndicate-sergeant
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesSyndicateSergeant.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleCitadelService
+  name: guide-entry-exodus-rule-ghost-roles-citadel-service
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCitadelService.xml"

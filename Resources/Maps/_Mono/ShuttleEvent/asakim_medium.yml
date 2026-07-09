@@ -33,6 +33,9 @@ entities:
       name: Неопознанное судно # Ru-Localization
     - type: Transform
       parent: invalid
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces # Exodus-asakim-faction
     - type: MapGrid
       chunks:
         0,-1:
@@ -297,7 +300,7 @@ entities:
     - type: ShipGridLock
       locked: False
     - type: IFF
-      color: '#00FFCCFF'
+      color: '#ff3db1' # Exodus-asakim-iff-color
       flags: HideLabel, IsPlayerShuttle
     - type: CloakHeat
       lastUpdateTime: 0

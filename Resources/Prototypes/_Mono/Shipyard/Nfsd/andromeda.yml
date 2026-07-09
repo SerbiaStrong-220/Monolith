@@ -6,12 +6,17 @@
   name: Андромеда # Ru-Localization
   description: Экспериментальный тяжёлый фрегат с мощным залповым носовым вооружением и высокой манёвренностью. # Ru-Localization
   limit: 3
+  hyperwarLimit: 5
   price: 320000
   purchasable: false # voucher only
   category: Large
   group: Security
   access: Armory
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/andromeda.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/andromeda.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Frigate
@@ -21,7 +26,7 @@
 - type: gameMap
   id: Andromeda
   mapName: 'Андромеда' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/andromeda.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/andromeda.yml
   minPlayers: 0
   stations:
     Andromeda:

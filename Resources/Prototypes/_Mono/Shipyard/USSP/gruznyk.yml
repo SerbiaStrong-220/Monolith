@@ -2,14 +2,15 @@
 
 - type: vessel
   id: Gruznyk
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Грузчик # Ru-Localization
   description: Тесный грузовой шаттл СССП, используемый для перевозки легальных и нелегальных грузов. Оснащён лёгким вооружением и бронёй, а также модулем БСС. Рекомендуемый размер экипажа - 1–3 человека. Произведён Народным производственным союзом. # Ru-Localization
   price: 64200
   category: Medium
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/gruznyk.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/gruznyk.yml
   guidebookPage: Null
   class:
   - Cargo
@@ -20,18 +21,18 @@
 - type: gameMap
   id: Gruznyk
   mapName: 'Грузчик' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/gruznyk.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/gruznyk.yml
   minPlayers: 0
   stations:
     Gruznyk:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Грузчик{1}' # Ru-Localization
+          mapNameTemplate: 'Грузчик СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Mercenary: [0, 0]
-            Pilot: [0, 0]
+           USSPSergeant: [ 0, 0 ]
+           USSPRifleman: [ 0, 0 ]

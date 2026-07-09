@@ -1,0 +1,222 @@
+- type: startingGear
+  id: SyndicateGhostOperativeGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicate
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsMagSyndie
+    id: SyndiPDA
+    pocket2: WeaponPistolAnaconda
+    belt: ClothingBeltMilitaryWebbing
+    neck: ClothingNeckIFFRed
+  inhand:
+  - WeaponRifleWSPR
+  storage:
+    back:
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - PinpointerSyndicatePOI
+    - MicroBombImplanter
+    - DoubleEmergencyOxygenTankFilled
+    - MedkitCombatFilled
+    - SyringeCaseAltFilled
+    - JetpackMiniFilled
+    - C4
+    - C4
+    - C4
+    - AccessBreaker
+    - AmmoBox762x39mmSubsonic
+    - AmmoBox762x39mmSubsonic
+    - EncryptionKeyCommon
+    - EncryptionKeyTraffic
+    belt:
+    - HandHeldMassScannerBorg
+    - SyndicateJawsOfLife
+    - Magazine762x39mmSubsonic
+    - Magazine762x39mmSubsonic
+    - Magazine762x39mmSubsonic
+    - Magazine762x39mmSubsonic
+
+- type: startingGear
+  id: SyndicateGhostOperativeLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicate
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieCommander
+    shoes: ClothingShoesBootsMagSyndie
+    id: SyndiPDA
+    pocket2: WeaponPistolAnaconda
+    belt: ClothingBeltMilitaryWebbing
+    head: ClothingHeadHatBeret
+    neck: ClothingNeckIFFRed
+  inhand:
+  - WeaponLightMachineGunL6
+  storage:
+    back:
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - Telecrystal50
+    - PinpointerSyndicatePOI
+    - MicroBombImplanter
+    - DoubleEmergencyOxygenTankFilled
+    - MedkitCombatFilled
+    - SyringeCaseAltFilled
+    - C4
+    - C4
+    - C4
+    - AccessBreaker
+    - JetpackMiniFilled
+    - EncryptionKeyCommon
+    - EncryptionKeyTraffic
+    belt:
+    - HandHeldMassScannerBorg
+    - SyndicateJawsOfLife
+    - Magazine762x39mmBox
+    - Magazine762x39mmBox
+    - Magazine762x39mmBox
+    - Magazine762x39mmBox
+    - StimulantAutoInjector
+    - StimulantAutoInjector
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostOperative
+  parent: EventHumanoid
+  randomizeName: false
+  speciesBlacklist:
+  - Vox
+  - Asakim
+  - IPC
+  - Arachnid
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-operative-name
+    description: ghost-role-information-syndicate-operative-description
+    rules: ghost-role-information-syndicate-operative-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeops
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 54000 # 15 hrs
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeGear ]
+    roleLoadout: [ RoleSurvivalNukie ]
+  - type: AutoImplant
+    implants:
+    - UplinkImplant
+    - FreedomImplant
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Sign
+    understands:
+    - TauCetiBasic
+    - Sign
+  - type: RandomMetadata
+    nameSegments:
+    - random-metadata-name-syndicate-operative
+    - SyndicateNamesNormal
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: NukeOperative
+  - type: TTS
+    voice: dragon_knight_dota_2
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostOperativeNoTimelock
+  parent: SyndicateGhostOperative
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-operative-name
+    description: ghost-role-information-syndicate-operative-description
+    rules: ghost-role-information-syndicate-operative-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeops
+    raffle:
+      settings: default
+    requirements: []
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostLeader
+  parent: SyndicateGhostOperative
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-leader-name
+    description: ghost-role-information-syndicate-leader-description
+    rules: ghost-role-information-syndicate-leader-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeopsCommander
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 90000 # 25 hrs
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeLeaderGear ]
+    roleLoadout: [ RoleSurvivalNukie ]
+  - type: RandomMetadata
+    nameSegments:
+    - random-metadata-name-syndicate-leader
+    - SyndicateNamesNormal
+  - type: TTS
+    voice: outworld_destroyer_dota_2
+
+- type: randomHumanoidSettings
+  id: SyndicateGhostLeaderNoTimelock
+  parent: SyndicateGhostLeader
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-leader-name
+    description: ghost-role-information-syndicate-leader-description
+    rules: ghost-role-information-syndicate-leader-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    - MindRoleNukeopsCommander
+    raffle:
+      settings: default
+    requirements: []
+
+- type: entity
+  parent: MobHuman
+  id: MobSyndicateGhostOperativeGuide
+  name: syndicate operative
+  suffix: Guidebook
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RandomHumanoidAppearance
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeGear ]
+    roleLoadout: [ RoleSurvivalNukie ]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+
+- type: entity
+  parent: MobSyndicateGhostOperativeGuide
+  id: MobSyndicateGhostLeaderGuide
+  name: syndicate squad leader
+  suffix: Guidebook
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateGhostOperativeLeaderGear ]
+    roleLoadout: [ RoleSurvivalNukie ]

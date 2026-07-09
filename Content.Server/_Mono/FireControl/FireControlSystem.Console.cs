@@ -22,6 +22,7 @@ using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
 using Content.Server._Crescent.ShipShields; // Exodus
+using Content.Server._Exodus.Territory; // Exodus territory fire logs
 
 namespace Content.Server._Mono.FireControl;
 
@@ -36,6 +37,7 @@ public sealed partial class FireControlSystem : EntitySystem
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IMapManager _mapMan = default!;
     [Dependency] private ShipShieldsSystem _shields = default!; // Exodus
+    [Dependency] private GridTerritorySystem _territory = default!; // Exodus territory fire logs
 
     private bool _completedCheck = false;
 
@@ -143,7 +145,8 @@ public sealed partial class FireControlSystem : EntitySystem
         FireWeapons((EntityUid)component.ConnectedServer, args.Selected, args.Coordinates, args.Actor, server); // Exodus-AdminQoL: Provide user triggered auto-shooting
         if ((component.NextLog == null || component.NextLog < _timing.CurTime) && args.Selected.Any())
         {
-            var firePos = _transform.ToMapCoordinates(GetCoordinates(args.Coordinates)).Position;
+            var fireCoordinates = _transform.ToMapCoordinates(GetCoordinates(args.Coordinates)); // Exodus territory fire logs
+            var firePos = fireCoordinates.Position; // Exodus territory fire logs
             var ourPos = _transform.GetWorldPosition(grid.Value);
             var grids = new List<Entity<MapGridComponent>>();
             var adjust = new Vector2(component.LogGridLookupRange, component.LogGridLookupRange);
@@ -157,8 +160,20 @@ public sealed partial class FireControlSystem : EntitySystem
                     closest = gridUid;
             }
 
-            _adminLogger.Add(LogType.ShipgunFired, LogImpact.High,
+            // Exodus start - territory info in ship gun logs
+            if (_territory.TryGetTerritoryAt(fireCoordinates, out var territory))
+            {
+                var territoryOwner = territory.Comp.ControllingFaction?.Id ?? "unclaimed";
+
+                _adminLogger.Add(LogType.ShipgunFired, LogImpact.High,
+                    $"{ToPrettyString(args.Actor):user} fired weaponry of ship {ToPrettyString(grid):entity} from ({ourPos}) to ({firePos}), closest grid: {ToPrettyString(closest)}, in territory {ToPrettyString(territory.Owner):entity}, territory owner: {territoryOwner}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.ShipgunFired, LogImpact.High,
                     $"{ToPrettyString(args.Actor):user} fired weaponry of ship {ToPrettyString(grid):entity} from ({ourPos}) to ({firePos}), closest grid: {ToPrettyString(closest)}");
+            }
+            // Exodus end - territory info in ship gun logs
 
             component.NextLog = _timing.CurTime + component.LogSpacing;
         }

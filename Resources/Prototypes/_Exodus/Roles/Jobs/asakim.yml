@@ -1,0 +1,50 @@
+- type: job
+  id: AsakimWarrior
+  name: job-name-asakim-warrior
+  description: job-description-asakim-warrior
+  playTimeTracker: JobAsakimWarrior
+  setPreference: true
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 180000 # 50 hrs
+  canBeAntag: false
+  icon: JobIconAsakimWarrior
+  supervisors: job-supervisors-asakim-centurion-and-prefect
+  jobEntity: MobAsakimWarrior
+  applyTraits: false
+  weight: 60
+  displayWeight: 60
+
+- type: job
+  id: AsakimCenturion
+  name: job-name-asakim-centurion
+  description: job-description-asakim-centurion
+  playTimeTracker: JobAsakimCenturion
+  setPreference: true
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 270000 # 75 hrs
+  canBeAntag: false
+  icon: JobIconAsakimCenturion
+  supervisors: job-supervisors-asakim-prefect
+  jobEntity: MobCenturionAsakim
+  applyTraits: false
+  weight: 40
+  displayWeight: 40
+
+- type: job
+  id: AsakimPrefect
+  name: job-name-asakim-prefect
+  description: job-description-asakim-prefect
+  playTimeTracker: JobAsakimPrefect
+  setPreference: true
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 360000 # 100 hrs
+  canBeAntag: false
+  icon: JobIconAsakimPrefect
+  supervisors: job-supervisors-nobody
+  jobEntity: MobPrefectAsakim
+  applyTraits: false
+  weight: 20
+  displayWeight: 20

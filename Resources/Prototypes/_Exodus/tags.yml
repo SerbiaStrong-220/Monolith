@@ -8,6 +8,9 @@
   id: POI
 
 - type: Tag
+  id: SyndicateUplink
+
+- type: Tag
   id: FoamGrenadeAluminium
 
 - type: Tag

@@ -17,7 +17,13 @@
   price: 142000
   category: Large
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/bratan.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/bratan.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  - type: SolarPoweredGrid
+    doNotCull: true
   guidebookPage: Null
   class:
   - Civilian
@@ -26,15 +32,12 @@
   engine:
   - AME
   - Solar
-  addComponents:
-  - type: SolarPoweredGrid
-    doNotCull: true
 
 
 - type: gameMap
   id: Bratan
   mapName: 'Братан' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/bratan.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/bratan.yml
   minPlayers: 0
   stations:
     Bratan:

@@ -129,6 +129,12 @@
       xOffset: 0
   - !type:TargetIsAliveOrNACon
     curve: !type:BoolCurve
+  - !type:TargetShipNpcPriorityCon # Exodus faction-aware NPC core targeting
+    curve: !type:QuadraticCurve
+      slope: 1
+      exponent: 1
+      yOffset: 0
+      xOffset: 0
 
 - type: htnCompound
   id: ShuttleRamCompound

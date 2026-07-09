@@ -123,6 +123,62 @@
   - type: Appearance
 
 - type: entity
+  id: CyborgWeaponTeslaGun
+  parent: WeaponTeslaGun
+  suffix: For Borgs
+  description: A tesla gun adapted for cyborg use. Its internal power system cannot be reloaded externally and slowly recharges itself.
+  components:
+  - type: Item
+    size: Huge
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 60
+
+- type: entity
+  name: PA RPG-7
+  id: CyborgWeaponLauncherRocket
+  parent: BaseItem
+  suffix: For Borgs
+  description: A rocket launcher adapted for cyborg use. Its internal ammo fabricator cannot be reloaded externally and slowly recharges itself.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    size: Huge
+  - type: Gun
+    projectileSpeed: 18
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletRocket
+    fireCost: 100
+  - type: Battery
+    maxCharge: 100
+    startingCharge: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 10
+  - type: AmmoCounter
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+
+- type: entity
   name: cyborg NT energy shotgun
   id: WeaponEnergyShotgunBorg
   parent: BaseWeaponBattery

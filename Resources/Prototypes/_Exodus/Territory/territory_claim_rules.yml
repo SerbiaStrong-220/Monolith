@@ -1,0 +1,11 @@
+# Global claim balance for territory banners.
+# TimeSpan fields are written as seconds: 300 = 5 minutes.
+# Per-faction claim cooldown can be overridden with claimCooldown in territory_factions.yml.
+# defaultMinClaimRepairIntegrity is only used when a territoryProfile does not set minClaimRepairIntegrity.
+# Set defaultMinClaimRepairIntegrity to 0 to skip the SRD integrity scan for profiles without an override.
+
+- type: territoryClaimRules
+  id: Default
+  roundStartClaimCooldown: 0
+  defaultFactionClaimCooldown: 0
+  defaultMinClaimRepairIntegrity: 0

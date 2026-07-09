@@ -7,15 +7,6 @@
   suffix: Large, T4
   description: A single-barrel 220mm autocannon for sustained automatic fire. Fires 220mm auto shells with slightly reduced brute strength. Can be remotely activated or linked up to a GCS.
   components:
-  - type: Anchorable
-    delay: 10
-  - type: Rotatable
-    rotateWhilePulling: false
-    rotateWhileAnchored: false
-    increment: 90
-  - type: Pullable
-  - type: PirateBountyItem
-    id: ShipWeapon
   - type: Sprite
     sprite: _Exodus/Objects/ShuttleWeapons/typhon.rsi
     layers:

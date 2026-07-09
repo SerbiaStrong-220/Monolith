@@ -1,21 +1,9 @@
 - type: entity
-  parent: MobAsakim
+  parent: MobAsakimWarrior # Exodus-asakim-lobby
   id: MobAsakimGhostrole
   name: asakim warrior
   suffix: Asakim
   components:
-  - type: RandomHumanoidAppearance
-    randomizeName: True
-  - type: HumanoidAppearance
-  - type: Loadout
-    prototypes: [AsakimGear]
-    roleLoadout: [RoleSurvivalTankOnly]
-  # Exodus-asakim-auto-implant-start
-  - type: AutoImplant
-    implants:
-    - FreedomImplant
-    - AsakimTrackingImplant
-  # Exodus-asakim-auto-implant-end
   - type: GhostRole
     name: ghost-role-information-asakim-name
     description: ghost-role-information-asakim-description
@@ -29,13 +17,4 @@
     - !type:OverallPlaytimeRequirement
       time: 180000 # 50 hrs
   - type: GhostTakeoverAvailable
-  - type: RandomMetadata
-    nameSegments:
-    - NamesFirstMilitary
-    - NamesLastMilitary
-  - type: NpcFactionMember
-    factions:
-    - Syndicate
-  - type: SurgerySpeedModifier
-    speedModifier: 1.5
   # Exodus-asakim-suit-radio: Remnants radio moved to the Asakim hardsuit.

@@ -1,0 +1,107 @@
+- type: listing
+  id: UplinkSyndicateVoucherHydra
+  name: uplink-syndicate-hydra-voucher-name
+  description: uplink-syndicate-hydra-voucher-desc
+  productEntity: ShipVoucherHydra
+  cost:
+    Telecrystal: 70
+  categories:
+  - UplinkSyndicateShips
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SyndicateUplink
+
+- type: listing
+  id: UplinkSyndicateVoucherTalon
+  name: uplink-syndicate-talon-voucher-name
+  description: uplink-syndicate-talon-voucher-desc
+  productEntity: ShipVoucherTalon
+  cost:
+    Telecrystal: 40
+  categories:
+  - UplinkSyndicateShips
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SyndicateUplink
+
+- type: listing
+  id: UplinkSyndicateVoucherInfiltrator
+  name: uplink-syndicate-infiltrator-voucher-name
+  description: uplink-syndicate-infiltrator-voucher-desc
+  productEntity: ShipVoucherInfiltrator
+  cost:
+    Telecrystal: 115
+  categories:
+  - UplinkSyndicateShips
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SyndicateUplink
+
+- type: listing
+  id: UplinkSyndicateVoucherHunter
+  name: uplink-syndicate-hunter-voucher-name
+  description: uplink-syndicate-hunter-voucher-desc
+  productEntity: ShipVoucherHunter
+  cost:
+    Telecrystal: 40
+  categories:
+  - UplinkSyndicateShips
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SyndicateUplink
+
+- type: listing
+  id: UplinkSyndicateVoucherKlesh
+  name: uplink-syndicate-klesh-voucher-name
+  description: uplink-syndicate-klesh-voucher-desc
+  productEntity: ShipVoucherKlesh
+  cost:
+    Telecrystal: 60
+  categories:
+  - UplinkSyndicateShips
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SyndicateUplink
+
+- type: listing
+  id: UplinkShipRepairDeviceSyndicate
+  name: uplink-syndicate-ship-repair-device-name
+  description: uplink-syndicate-ship-repair-device-desc
+  icon: { sprite: /Textures/_Exodus/Objects/Tools/repair_device_syndicate_item.rsi, state: item }
+  productEntity: ShipRepairDeviceSyndicate
+  cost:
+    Telecrystal: 25
+  categories:
+  - UplinkDisruption
+
+# Exodus-faction-ai-core
+- type: listing
+  id: UplinkSyndicateFactionAiCore
+  name: uplink-syndicate-faction-ai-core-name
+  description: uplink-syndicate-faction-ai-core-desc
+  productEntity: NpcStationAiAttackerStaticSmartSyndicate
+  cost:
+    Telecrystal: 150
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - SyndicateUplink
+      components:
+      - VendingMachine
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true

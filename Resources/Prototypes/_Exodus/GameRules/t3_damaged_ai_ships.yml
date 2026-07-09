@@ -3,6 +3,7 @@
   table: !type:AllSelector
     children:
     - id: UnknownShuttleAzimuth
+    - id: UnknownShuttleStratostar
 
 - type: entity
   id: ExodusT3ShipsScheduler
@@ -66,6 +67,54 @@
     minPlayers: 35
   - type: LoadMapRule
     gridPath: /Maps/_Exodus/ShuttleEvent/azimuth.yml
+  - type: GameRuleRequirements
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+    - !type:MindWhitelistedPlayersRequirement
+      minPlayers: 1
+      whitelist:
+        mindRoles: [ AsakimRole ]
+
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleStratostar
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-cruiser-detected
+    startAudio:
+      path: /Audio/_Exodus/Asakim/Announcements/azimuth.ogg
+    weight: 1.5
+    maxOccurrences: 1
+  - type: GameRule
+    minPlayers: 40
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/stratostar.yml
+  - type: GameRuleRequirements
+    requirements:
+    - !type:JobGameRuleRequirement
+      department: Combatant
+      minDepartmentPlayers: 6
+    - !type:MindWhitelistedPlayersRequirement
+      minPlayers: 1
+      whitelist:
+        mindRoles: [ AsakimRole ]
+
+- type: entity
+  parent: BaseRandomShuttleRule
+  id: UnknownShuttleStratostarApoc
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ai-cruiser-detected
+    startAudio:
+      path: /Audio/_Exodus/Asakim/Announcements/azimuth.ogg
+    weight: 5
+    maxOccurrences: 2
+  - type: GameRule
+    minPlayers: 35
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/ShuttleEvent/stratostar.yml
   - type: GameRuleRequirements
     requirements:
     - !type:JobGameRuleRequirement

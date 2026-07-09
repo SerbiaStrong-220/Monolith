@@ -1,8 +1,0 @@
-- type: latheRecipePack
-  id: MonoUSSPVouchersDynamic
-  recipes:
-  - BasicVoucherUssp
-  - IntermediateVoucherUssp
-  - AdvancedVoucherUssp
-  - LedokolVoucherUssp
-  - LedokolRamVoucherUssp

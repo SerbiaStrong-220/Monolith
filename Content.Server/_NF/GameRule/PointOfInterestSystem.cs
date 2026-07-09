@@ -21,6 +21,12 @@ namespace Content.Server._NF.GameRule;
 //[Access(typeof(NfAdventureRuleSystem))]
 public sealed partial class PointOfInterestSystem : EntitySystem
 {
+    // Exodus-begin paired faction POI spawn
+    private const string PairedFactionPoiGroup = "PairedFactionPoi";
+
+    private ISawmill _sawmill = Logger.GetSawmill("poi");
+    // Exodus-end
+
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -49,6 +55,42 @@ public sealed partial class PointOfInterestSystem : EntitySystem
         _stationCoords.Add(coords);
     }
 
+    // Exodus-begin paired faction POI spawn
+    public void GeneratePairedFactionPois(MapId mapUid, List<PointOfInterestPrototype> pairedPrototypes, out List<EntityUid> pairedStations)
+    {
+        pairedStations = new List<EntityUid>();
+
+        if (pairedPrototypes.Count == 0)
+            return;
+
+        if (pairedPrototypes.Count != 2)
+        {
+            _sawmill.Warning($"{PairedFactionPoiGroup} expected exactly 2 POIs, got {pairedPrototypes.Count}.");
+            return;
+        }
+
+        var rotation = _random.NextAngle();
+        for (var i = 0; i < pairedPrototypes.Count; i++)
+        {
+            var proto = pairedPrototypes[i];
+            float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+            int minD = (int)(proto.MinimumDistance * mod);
+            int maxD = (int)(proto.MaximumDistance * mod);
+            Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
+            offset = offset.Rotate(rotation + Angle.FromDegrees(180 * i));
+
+            if (TrySpawnPoiGrid(mapUid, proto, offset, out var pairedUid) && pairedUid is { Valid: true } paired)
+            {
+                pairedStations.Add(paired);
+                AddStationCoordsToSet(offset);
+                continue;
+            }
+
+            _sawmill.Warning($"Failed to spawn paired faction POI {proto.ID}.");
+        }
+    }
+    // Exodus-end
+
     public void GenerateDepots(MapId mapUid, List<PointOfInterestPrototype> depotPrototypes, out List<EntityUid> depotStations)
     {
         //For depots, we want them to fill a circular type dystance formula to try to keep them as far apart as possible
@@ -73,7 +115,12 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             if (proto.SpawnGamePreset.Length > 0 && !proto.SpawnGamePreset.Contains(currentPreset))
                 continue;
 
-            Vector2i offset = new Vector2i(_random.Next(proto.MinimumDistance, proto.MaximumDistance), 0);
+            // Exodus-begin territory-poi-spread
+            float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+            int minD = (int)(proto.MinimumDistance * mod);
+            int maxD = (int)(proto.MaximumDistance * mod);
+            Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
+            // Exodus-end
             offset = offset.Rotate(rotationOffset);
             rotationOffset += rotation;
             // Append letter to depot name.
@@ -274,9 +321,14 @@ public sealed partial class PointOfInterestSystem : EntitySystem
     private Vector2 GetRandomPOICoord(float unscaledMinRange, float unscaledMaxRange)
     {
         int numRetries = int.Max(_cfg.GetCVar(NFCCVars.POIPlacementRetries), 0);
-        float minDistance = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance), 0); // Constant at the end to avoid NaN weirdness
+        // Exodus-begin territory-poi-spread
+        float modifier = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+        float minRange = unscaledMinRange * modifier;
+        float maxRange = unscaledMaxRange * modifier;
+        float minDistance = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance) * modifier, 0);
+        // Exodus-end
 
-        Vector2 coords = _random.NextVector2(unscaledMinRange, unscaledMaxRange);
+        Vector2 coords = _random.NextVector2(minRange, maxRange);
         for (int i = 0; i < numRetries; i++)
         {
             bool positionIsValid = true;
@@ -294,7 +346,7 @@ public sealed partial class PointOfInterestSystem : EntitySystem
                 break;
 
             // No vector yet, get next value.
-            coords = _random.NextVector2(unscaledMinRange, unscaledMaxRange);
+            coords = _random.NextVector2(minRange, maxRange);
         }
 
         return coords;

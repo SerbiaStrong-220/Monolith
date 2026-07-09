@@ -6,22 +6,10 @@
 # GitHub: ???
 # Discord: ???
 
-# Notes: Wow.
-#
-- type: pointOfInterest
-  id: TSFMCOutpost
-  parent: [BasePOI, BaseRepairablePOI]
-  name: 'КВП | Периферийный аванпост' # Ru-Localization
-  minimumDistance: 11000
-  maximumDistance: 14000
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
-  spawnGroup: Required
-  gridPath: /Maps/_Mono/POI/tsfmcoutpost.yml
-  addComponents:
-  - type: IFF
-    color: "#047abd"
-    flags: [HideLabel]
-    readOnly: true # mono
+# Notes:
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Blue / Purple nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept (job
+# slots and lobby info live here).
 
 - type: gameMap
   id: TSFMCOutpost
@@ -31,6 +19,13 @@
   stations:
     TSFMCOutpost:
       stationProto: SecurityFrontierOutpost
+      # Exodus start - Territory grid control for peripheral outpost
+      gridComponents:
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - TSFMC
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'КВП | Периферийный аванпост' # Ru-Localization

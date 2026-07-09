@@ -4,6 +4,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Content.Server._Exodus.Nebula.Generation; // Exodus nebula roundstart generation
+using Content.Server._Mono.GameRule.Systems;
 using Content.Server._NF.Bank;
 using Content.Server._NF.GameRule.Components;
 using Content.Server._NF.GameTicking.Events;
@@ -37,8 +39,10 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
     [Dependency] private BankSystem _bank = default!;
     [Dependency] private GameTicker _ticker = default!;
     [Dependency] private PointOfInterestSystem _poi = default!;
+    [Dependency] private NebulaRoundstartGenerationSystem _nebulaRoundstart = default!; // Exodus nebula roundstart generation coordinator
     [Dependency] private IBaseServer _baseServer = default!;
     [Dependency] private IEntitySystemManager _entSys = default!;
+    [Dependency] private HyperwarRuleSystem _hyperwar = default!;
 
     private readonly HttpClient _httpClient = new();
 
@@ -307,11 +311,18 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
 
     protected override void Started(EntityUid uid, NFAdventureRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
+        if (_hyperwar.HyperwarActive)
+        {
+            base.Started(uid, component, gameRule, args);
+            return;
+        }
+
         var mapUid = GameTicker.DefaultMap;
 
         //First, we need to grab the list and sort it into its respective spawning logics
         List<PointOfInterestPrototype> depotProtos = [];
         List<PointOfInterestPrototype> marketProtos = [];
+        List<PointOfInterestPrototype> pairedFactionProtos = []; // Exodus paired faction POI spawn
         List<PointOfInterestPrototype> requiredProtos = [];
         List<PointOfInterestPrototype> optionalProtos = [];
         Dictionary<string, List<PointOfInterestPrototype>> remainingUniqueProtosBySpawnGroup = new();
@@ -333,6 +344,9 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
                 case "MarketStation":
                     marketProtos.Add(location);
                     break;
+                case "PairedFactionPoi": // Exodus paired faction POI spawn
+                    pairedFactionProtos.Add(location);
+                    break;
                 case "Required":
                     requiredProtos.Add(location);
                     break;
@@ -351,6 +365,7 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
         }
         _poi.GenerateDepots(mapUid, depotProtos, out component.CargoDepots);
         _poi.GenerateMarkets(mapUid, marketProtos, out component.MarketStations);
+        _poi.GeneratePairedFactionPois(mapUid, pairedFactionProtos, out _); // Exodus paired faction POI spawn
         _poi.GenerateRequireds(mapUid, requiredProtos, out component.RequiredPois);
         _poi.GenerateOptionals(mapUid, optionalProtos, out component.OptionalPois);
         _poi.GenerateUniques(mapUid, remainingUniqueProtosBySpawnGroup, out component.UniquePois);
@@ -359,6 +374,11 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
 
         // Using invalid entity, we don't have a relevant entity to reference here.
         RaiseLocalEvent(EntityUid.Invalid, new StationsGeneratedEvent(), broadcast: true); // TODO: attach this to a meaningful entity.
+
+        // Exodus-begin nebula roundstart generation coordinator
+        // Run nebula generation explicitly after regular NF station-generation listeners have fired.
+        _nebulaRoundstart.GenerateRoundstartContent(mapUid);
+        // Exodus-end
     }
 
     private async Task ReportRound(string message, int color = 0x77DDE7)

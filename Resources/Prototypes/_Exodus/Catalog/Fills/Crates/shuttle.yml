@@ -1,0 +1,9 @@
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringNebulaThruster
+  name: phasic thruster crate
+  description: Contains a phasic thruster flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: NebulaThrusterFlatpack

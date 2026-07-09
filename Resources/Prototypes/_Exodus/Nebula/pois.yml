@@ -1,0 +1,475 @@
+# POI grids that spawn inside specific nebula kinds at round start.
+# Picked up by NebulaPoiSpawnSystem once both blob and world-end nebula generation finish.
+#
+# How to add a new POI:
+#
+# - type: nebulaPoi
+#   id: NebulaPoiYourId                              # unique prototype id
+#   path: Maps/_Whatever/your_grid.yml               # ResPath to the grid YAML to load
+#   spawnIn:                                         # marker prototype ids of allowed nebulas
+#   - NebulaBlueMarker
+#   - NebulaGreenMarker
+#   - NebulaPurpleMarker
+#   - NebulaRedMarker
+#   - NebulaDeathZoneInnerMarker
+#   # (NebulaDeathZoneOuterMarker is intentionally avoided — players cannot survive there.)
+#   maxCount: 1                                      # total copies across the whole map
+#   duplicateAllowed: false                          # may two copies share one nebula
+#   protectedRadius: 500                             # broadphase clearance (world tiles)
+#   minDensity: 0.5                                  # density floor inside blob nebulas
+#   maxDensity: 1.0                                  # density ceiling
+#   maxSpawnDistanceFromCenter: 45000                # optional max world distance from map center; unset = no limit
+#   name: "Имя на карте"                             # optional display name override
+#   addComponents:                                   # optional components attached to the grid
+#   - type: IFF
+#     color: "#C83737"
+#     flags: [HideLabel]
+#   - type: SyndicateFOB
+#   stationGameMap: LPBravo                          # optional, register grid as a station
+#   hideWarp: true                                   # optional, station warp = admin-only
+#
+# Notes:
+# - density semantics: 1 = nebula core, 0 = outer edge. Death zones are dense everywhere; the
+#   density bounds are ignored for them.
+# - protectedRadius is checked via broadphase against existing grids and other POIs placed by
+#   this spawner in the same round.
+# - maxSpawnDistanceFromCenter is optional. Leave it unset to allow the POI anywhere inside a
+#   matching nebula. Set it to a world-tile radius to keep the POI inside that distance from
+#   the map center while still requiring it to be inside the selected nebula.
+# - duplicateAllowed only matters when maxCount > 1.
+# - The spawner picks a random eligible nebula (spawnIn + duplicateAllowed). Different POI ids
+#   may share one nebula when TryPlaceCopy finds a valid point. If 16 placement attempts fail
+#   in the picked nebula, up to 4 other eligible nebulas are tried (already-attempted excluded).
+# - stationGameMap is optional. Most POIs should leave it unset — the grid loads as plain
+#   decoration without station bookkeeping. Set it ONLY when the POI hosts station-aware
+#   machinery: shipyard consoles, cargo bounty terminals, anything calling GetOwningStation.
+#   The referenced gameMap prototype must have a stations entry whose key matches its own id.
+# - addComponents are applied directly to the loaded grid — NebulaPoiSpawnSystem does NOT
+#   inherit from BasePOI / BaseRepairablePOI. If you migrate a POI from the upstream
+#   pointOfInterest pipeline, copy here the components those base prototypes used to add
+#   (ForceAnchor, Tag {POI}, IFF, InitRepairSnapshot, etc.) — see existing entries for examples.
+
+# ───────────────────────────────────────────────────────────────────────────
+# Hidden POI — listening post inside blue nebulas.
+- type: nebulaPoi
+  id: NebulaPoiLPBravo
+  path: /Maps/_Exodus/POI/lpbravo.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaGreenMarker
+  minDensity: 0.7
+  protectedRadius: 3000
+  name: "Прослушивающий Пункт Браво"
+  stationGameMap: LPBravo
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#C83737"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SyndicateFOB
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor       # inherited from BasePOI in the upstream prototype
+  - type: Tag               # inherited from BasePOI
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - SyndicateRepairTool
+
+# ───────────────────────────────────────────────────────────────────────────
+# Migrated from upstream pointOfInterest pipeline. minDensity 0.1, maxDensity 1,
+# protectedRadius 2500, maxCount 1, duplicateAllowed false (default).
+
+- type: nebulaPoi
+  id: NebulaPoiSmallMeteostation
+  path: /Maps/_Exodus/POI/small_meteo_station.yml
+  spawnIn:
+  - NebulaRedMarker
+  minDensity: 0.7
+  maxSpawnDistanceFromCenter: 50000
+  protectedRadius: 3000
+  name: "Маленькая Метеостанция"
+  stationGameMap: SmallMeteostation
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#C83737"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SyndicateFOB
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - SyndicateRepairTool
+
+- type: nebulaPoi
+  id: NebulaPoiBurnedShuttle
+  path: /Maps/_Exodus/POI/burnedshuttle.yml
+  spawnIn:
+  - NebulaBlueMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 150
+  name: "Погибшая спасательная капсула"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiFragmentOfPrison
+  path: /Maps/_Exodus/POI/fragmentofprison.yml
+  spawnIn:
+  - NebulaGreenMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 150
+  name: "Обломок тюремного корабля"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiCruiseShip
+  path: /Maps/_Exodus/POI/cruiseship.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 150
+  name: "Покинутый круизный корабль"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiAdsSmallAncientStorage
+  path: /Maps/_Exodus/POI/ads_small_ancient_storage.yml
+  spawnIn:
+  - NebulaRedMarker
+  - NebulaDeathZoneInnerMarker
+  minDensity: 0.7
+  maxCount: 2
+  duplicateAllowed: false
+  protectedRadius: 3000
+  name: "Древнее Хранилище Кхси'Ра"
+  stationGameMap: AdsSmallAncientStorage
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ff3db1"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - ADSRepairTool
+
+- type: nebulaPoi
+  id: NebulaPoiAdsCitadel
+  path: /Maps/_Exodus/POI/ads_big_ancient_storage.yml
+  spawnIn:
+  - NebulaRedMarker
+  - NebulaDeathZoneInnerMarker
+  minDensity: 0.7
+  maxCount: 1
+  duplicateAllowed: false
+  protectedRadius: 4500
+  name: "Правительственная Цитадель"
+  stationGameMap: AdsCitadel
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ff3db1"
+    flags: [HideLabel]
+    readOnly: false
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tag
+    tags: [ POI ]
+  - type: ForceAnchor
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiLancelot
+  path: /Maps/_Mono/POI/Dungeons/lancelot.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  - NebulaGreenMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 1000
+  name: 'Шахтёрский Аванпост Ланцелот'
+  stationGameMap: Lancelot
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ccaa55"
+    flags: [HideLabel]
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - SyndicateRepairTool
+
+- type: nebulaPoi
+  id: NebulaPoiEdison
+  path: /Maps/_NF/POI/edison.yml
+  spawnIn:
+  - NebulaBlueMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 1000
+  name: 'Электростанция Эдисона'
+  stationGameMap: Edison
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#3737F8"
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot  # inherited from BaseRepairablePOI
+
+- type: nebulaPoi
+  id: NebulaPoiPolaris
+  path: /Maps/_Mono/POI/Dungeons/polaris.yml
+  spawnIn:
+  - NebulaBlueMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 1000
+  name: 'Биологический центр Полярис'
+  stationGameMap: Polaris
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#C83737"
+    flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+- type: nebulaPoi
+  id: NebulaPoiAutomatedTanker
+  path: /Maps/_Mono/POI/Dungeons/ruin_tanker.yml
+  spawnIn:
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 1000
+  name: 'Автоматизированный Межсекторальный Танкер'
+  stationGameMap: AutomatedTanker
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#44bfe3"
+    flags: [HideLabel]
+    readOnly: true
+  # BaseMobilePOI parent — no ForceAnchor / Tag POI inherited (mobile by design).
+
+- type: nebulaPoi
+  id: NebulaPoiAnomalousLab
+  path: /Maps/_Mono/POI/anomalouslab.yml
+  spawnIn:
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 45000
+  protectedRadius: 1000
+  name: 'Лаборатория Аномалий'
+  stationGameMap: AnomalousLab
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ffa600"  # inherited default from BaseMobilePOI
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+- type: nebulaPoi
+  id: NebulaPoiTinnia
+  path: /Maps/_NF/POI/tinnia.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 1000
+  name: "Ресторан Тинни"
+  stationGameMap: Tinnia
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: StationTransit
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiGrifty
+  path: /Maps/_NF/POI/grifty.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 25000
+  protectedRadius: 1000
+  name: "Бензин и жратва Грифти"
+  stationGameMap: Grifty
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: StationTransit
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+- type: nebulaPoi
+  id: NebulaPoiMcHobo
+  path: /Maps/_NF/POI/mchobo.yml
+  spawnIn:
+  - NebulaGreenMarker
+  minDensity: 0.1
+  maxDensity: 1
+  protectedRadius: 1000
+  name: "Заброшенный МакХобольдс"
+  stationGameMap: McHobo
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+
+- type: nebulaPoi
+  id: NebulaPoiTSFMCOutpost
+  path: /Maps/_Mono/POI/tsfmcoutpost.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 45000
+  protectedRadius: 1000
+  name: 'КВП | Периферийный аванпост'
+  stationGameMap: TSFMCOutpost
+  hideWarp: true
+  addComponents:
+  - type: IFF
+    color: "#00a1fc"
+    flags: [HideLabel]
+    readOnly: true
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+# Exodus-begin territory-nebula-merge
+# Territory adds the Omnichurch gameMap registration; keep the POI in nebula spawn,
+# but initialize it as a station so GridTerritory is applied through StationSystem.
+# Exodus-end
+- type: nebulaPoi
+  id: NebulaPoiOmnichurch
+  path: /Maps/_NF/POI/beacon.yml
+  stationGameMap: Omnichurch
+  hideWarp: true
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 1000
+  name: "Маяк ВсеЦеркви"
+  addComponents:
+  - type: IFF
+    color: "#ffa600"
+    readOnly: true
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
+  - type: Tower7G # Exodus-Adminbus
+    range: 256
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot

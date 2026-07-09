@@ -18,7 +18,7 @@
   id: NFAsteroidsNear
   parent: NFBiomeBase
   priority: 2
-  distanceRange: 0, 5000
+  distanceRange: 0, 10000 # Exodus-nebula-update
   chunkComponents:
   - type: SimpleDebrisSelector
     debrisTable:
@@ -91,7 +91,7 @@
   id: NFAsteroidsMid
   parent: NFBiomeBase
   priority: 1
-  distanceRange: 5000, 9500
+  distanceRange: 10000, 20000 # Exodus-nebula-update
   chunkComponents:
   - type: SimpleDebrisSelector
     debrisTable:
@@ -243,7 +243,7 @@
   id: NFAsteroidsFar
   parent: NFBiomeBase
   priority: 0
-  distanceRange: 9500, 18000 # Mono
+  distanceRange: 20000, 40000 # Exodus-nebula-update
   noiseRanges: {}
   chunkComponents:
   - type: SimpleDebrisSelector

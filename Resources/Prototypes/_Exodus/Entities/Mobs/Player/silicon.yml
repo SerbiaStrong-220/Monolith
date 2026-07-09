@@ -30,6 +30,9 @@
     - state: base
     - state: ai
       shader: unshaded
+  - type: NpcFactionMember
+    factions:
+    - SecColossus
   - type: Anchorable
 
 - type: entity
@@ -40,6 +43,9 @@
   - type: Sprite
   - type: SiliconLawProvider
     laws: ColossusLawset
+  - type: NpcFactionMember
+    factions:
+    - SecColossus
   - type: GhostRole
     name: ghost-role-information-colossus-core
     description: ghost-role-information-colossus-core-description
