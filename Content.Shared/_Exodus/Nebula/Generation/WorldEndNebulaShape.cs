@@ -1,4 +1,5 @@
 using System.Numerics;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.Nebula.Generation;
@@ -74,7 +75,8 @@ public readonly struct WorldEndNebulaShape
         float clearanceMultiplier = DefaultClearanceMultiplier,
         IReadOnlyList<int>? waveFrequencies = null)
     {
-        var rng = new System.Random(seed);
+        var rng = new RobustRandom();
+        rng.SetSeed(seed);
         samples = Math.Max(1, samples);
         innerRadius = MathF.Max(1f, innerRadius);
         clearanceMultiplier = MathF.Max(1f, IsValidFinite(clearanceMultiplier) ? clearanceMultiplier : DefaultClearanceMultiplier);
@@ -87,7 +89,7 @@ public readonly struct WorldEndNebulaShape
         for (var i = 0; i < frequencies.Length; i++)
         {
             amplitudes[i] = NextFloat(rng, minWaveAmplitude, maxWaveAmplitude);
-            phases[i] = (float)(rng.NextDouble() * MathF.Tau);
+            phases[i] = rng.NextFloat() * MathF.Tau;
         }
 
         NormalizeAmplitudes(amplitudes);
@@ -229,9 +231,9 @@ public readonly struct WorldEndNebulaShape
             amplitudes[i] *= scale;
     }
 
-    private static float NextFloat(System.Random rng, float min, float max)
+    private static float NextFloat(IRobustRandom rng, float min, float max)
     {
-        return min + (float)rng.NextDouble() * (max - min);
+        return min + rng.NextFloat() * (max - min);
     }
 
     private static bool IsValidFinite(float value)
@@ -293,7 +295,7 @@ public readonly struct WorldEndNebulaShape
     /// only happens for the inner sub-zone on rays where the boundary contour bulges past
     /// <see cref="MidRadius"/>, leaving no inner band on that ray.
     /// </summary>
-    public bool TryGetRandomPoint(System.Random rng, WorldEndZone zone, out Vector2 point, int maxAttempts = 32)
+    public bool TryGetRandomPoint(IRobustRandom rng, WorldEndZone zone, out Vector2 point, int maxAttempts = 32)
     {
         point = default;
 
@@ -302,7 +304,7 @@ public readonly struct WorldEndNebulaShape
 
         for (var i = 0; i < maxAttempts; i++)
         {
-            var theta = (float) (rng.NextDouble() * MathF.Tau);
+            var theta = rng.NextFloat() * MathF.Tau;
             var boundary = SampleBoundary(theta);
 
             float minR, maxR;
@@ -320,7 +322,7 @@ public readonly struct WorldEndNebulaShape
             if (maxR <= minR)
                 continue;
 
-            var r = minR + (float) rng.NextDouble() * (maxR - minR);
+            var r = minR + rng.NextFloat() * (maxR - minR);
             point = Center + new Vector2(r * MathF.Cos(theta), r * MathF.Sin(theta));
             return true;
         }

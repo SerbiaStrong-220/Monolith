@@ -1,4 +1,5 @@
 using System.Numerics;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.Nebula.Generation;
@@ -165,7 +166,7 @@ public readonly record struct NebulaShape
     /// Sampling domain is the bounding box [-BoundingRadius .. BoundingRadius]² around
     /// <see cref="Center"/>, so coverage is uniform over the nebula's actual area.
     /// </summary>
-    public bool TryGetRandomPoint(System.Random rng, float minDensity, float maxDensity, out Vector2 point, int maxAttempts = 32)
+    public bool TryGetRandomPoint(IRobustRandom rng, float minDensity, float maxDensity, out Vector2 point, int maxAttempts = 32)
     {
         point = default;
 
@@ -177,8 +178,8 @@ public readonly record struct NebulaShape
 
         for (var i = 0; i < maxAttempts; i++)
         {
-            var dx = ((float) rng.NextDouble() * 2f - 1f) * BoundingRadius;
-            var dy = ((float) rng.NextDouble() * 2f - 1f) * BoundingRadius;
+            var dx = (rng.NextFloat() * 2f - 1f) * BoundingRadius;
+            var dy = (rng.NextFloat() * 2f - 1f) * BoundingRadius;
             var candidate = Center + new Vector2(dx, dy);
 
             if (!Contains(candidate))
