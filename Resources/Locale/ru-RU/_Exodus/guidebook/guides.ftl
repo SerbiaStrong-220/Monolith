@@ -1,10 +1,10 @@
 guide-entry-exodus-rules = Правила Exodus
-guide-entry-exodus-rule-zero-dont-be-asshole = 0. Не будь мудаком
+guide-entry-exodus-rule-zero-dont-be-asshole = 0. Не быть мудаком
 guide-entry-exodus-rule-one-grief = 1. Гриф
 guide-entry-exodus-rule-two-conflicts = 2. Конфликты
-guide-entry-exodus-rule-three-in-game-atmosphere = 3. Внутриигровая атмосфера
+guide-entry-exodus-rule-three-in-game-atmosphere = 3. Нарушение игровой атмосферы
 guide-entry-exodus-rule-four-fraction-interactions = 4. Взаимодействие с фракциями
-guide-entry-exodus-rule-five-ssd = 5. Злоупотребление OOC, LOOC, эмоциями
+guide-entry-exodus-rule-five-ssd = 5. Игроки в АФК и ССД
 guide-entry-exodus-rule-six-memory = 6. Память и возрождение
 guide-entry-exodus-rule-seven-erp = 7. ERP
 guide-entry-exodus-rule-eight-bug-abuse = 8. Нечестная игра
