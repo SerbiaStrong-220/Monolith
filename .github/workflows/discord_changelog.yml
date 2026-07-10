@@ -19,5 +19,5 @@ jobs:
           pull_request_url: ${{ github.event.pull_request.url }}
           # changelog_replace_data: '{"add:": ":newspaper:", "remove:": ":scissors:", "tweak:": ":gear:", "fix:": ":tools:"}'
           # webhhok_embed_color: '#346EEB'
-          # webhook_username: SS220 changelog
+          # webhook_username: 'SS220 changelog'
           # webhook_avatar_url: 'https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/refs/heads/master/logo.png'
