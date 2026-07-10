@@ -11,8 +11,8 @@
   id: Mining
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Брошенный Буровой Комплекс' # Ru-Localization
-  minimumDistance: 5500
-  maximumDistance: 9500
+  minimumDistance: 10000 # Exodus-nebula-update
+  maximumDistance: 35000 # Exodus-nebula-update
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/derelictdrillsite.yml
   addComponents:
@@ -27,6 +27,10 @@
   stations:
     Mining:
       stationProto: RecordsFrontierOutpost
+      # Exodus start 
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Брошенный Буровой Комплекс' # Ru-Localization

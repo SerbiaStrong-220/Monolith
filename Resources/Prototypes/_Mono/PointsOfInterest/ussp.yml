@@ -12,8 +12,8 @@
   id: USSPCamelot
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Форт Камелот' # Ru-Localization
-  minimumDistance: 10650
-  maximumDistance: 12400
+  minimumDistance: 20000 # Exodus-nebula-update
+  maximumDistance: 37500 # Exodus-nebula-update
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/camelot.yml # Exodus
@@ -36,6 +36,9 @@
           ambientMusicPrototype: CamelotMusic
         - type: VesselInfo
           description: "Ветхая станция, некогда принадлежавшая СССП. Холодно и темно." # Ru-Localization
+        # Exodus start - Territory for Camelot
+        - type: GridTerritory
+        # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Форт Камелот' # Ru-Localization

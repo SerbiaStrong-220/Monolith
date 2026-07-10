@@ -25,4 +25,10 @@ public sealed partial class FireControllableComponent : Component
     /// </summary>
     [DataField]
     public float FireCooldown = 0.2f;
+
+    /// <summary>
+    /// Optional explicit gunnery server processing power cost.
+    /// </summary>
+    [DataField("processingPowerCost")]
+    public int? ProcessingPowerCost;
 }

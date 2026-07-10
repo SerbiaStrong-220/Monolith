@@ -1,6 +1,6 @@
 - type: vessel
   id: Kupol
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: М-Купол # Ru-Localization
   description: Оружейный модуль, созданный для компенсации недостаточной огневой мощи Ледокола. # Ru-Localization
   limit: 1

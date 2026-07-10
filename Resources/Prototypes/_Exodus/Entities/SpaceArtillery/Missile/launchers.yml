@@ -1,0 +1,142 @@
+- type: entity
+  id: WeaponTurretRainMissile
+  name: Rain rocket launcher
+  parent:
+  - BallisticArtilleryUnanchorable
+  - BallisticArtilleryTier3HP
+  description: A self-loading fixed missile launcher. It fires light guided rockets at high speed.
+  components:
+  - type: StaticPrice
+    price: 50000
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/Rain.rsi
+    layers:
+    - state: RainRocketLauncher
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Battery
+    maxCharge: 113400
+    startingCharge: 113400
+  - type: ExaminableBattery
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: FireControllable
+    processingPowerCost: 10
+  - type: Gun
+    fireRate: 2
+    recoil: 10
+    shootThermalSignature: 32000000
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: SpaceArtillery
+    powerChargeRate: 250
+    powerUsePassive: 200
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 180
+  - type: Actions
+  - type: ProjectileBatteryAmmoProvider
+    proto: ShipMissileSliverRain
+    fireCost: 350
+  - type: RadarBlip
+    radarColor: "#FCBA03"
+    scale: 2.75
+    visibleFromOtherGrids: true
+  - type: ShipGunType
+    shipType: Missile
+  - type: ShipGunClass
+    shipClass: Heavy
+  - type: ShipRepairable
+    repairTime: 30
+    repairCost: 120
+
+- type: entity
+  id: WeaponTurretSliverMissile
+  name: Sliver rocket launcher
+  parent:
+  - BallisticArtilleryUnanchorable
+  - BallisticArtilleryTier3HP
+  description: A self-loading fixed missile launcher. It fires light guided rockets.
+  components:
+  - type: StaticPrice
+    price: 25000
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/Sliver.rsi
+    layers:
+    - state: SliverRocketLauncher
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Battery
+    maxCharge: 63700
+    startingCharge: 63700
+  - type: ExaminableBattery
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: FireControllable
+    processingPowerCost: 6
+  - type: Gun
+    fireRate: 1
+    recoil: 10
+    shootThermalSignature: 32000000
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: SpaceArtillery
+    powerChargeRate: 250
+    powerUsePassive: 200
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 300
+  - type: Actions
+  - type: ProjectileBatteryAmmoProvider
+    proto: ShipMissileSliverRain
+    fireCost: 350
+  - type: RadarBlip
+    radarColor: "#FCBA03"
+    scale: 2.75
+    visibleFromOtherGrids: true
+  - type: ShipGunType
+    shipType: Missile
+  - type: ShipGunClass
+    shipClass: Heavy
+  - type: ShipRepairable
+    repairTime: 20
+    repairCost: 90
+
+- type: entity
+  id: ShipMissileSliverRain
+  name: Sliver rocket
+  parent: ShipMissileSerpent
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/ShuttleWeapons/SmallRocket.rsi
+    layers:
+    - state: SmallRocket
+  - type: TimedDespawn
+    lifetime: 17.5
+  - type: TargetSeeking
+    acceleration: 70
+    detectionRange: 800
+    scanArc: 60
+    launchSpeed: 75
+    maxSpeed: 300
+    trackDelay: 2
+  - type: RadarBlip
+    radarColor: "#ffffff"
+    scale: 3
+    shape: hexagon
+  - type: Projectile # Exodus sliver-rain-nerf
+    damage:
+      types:
+        Structural: 125
+        Blunt: 10
+        Heat: 30
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 25
+    intensitySlope: 2
+    totalIntensity: 100

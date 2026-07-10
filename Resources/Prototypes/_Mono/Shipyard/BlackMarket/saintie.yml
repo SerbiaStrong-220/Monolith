@@ -12,6 +12,10 @@
   category: Large
   group: BlackMarket
   shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/saintie.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: Null
   class:
   - Pirate

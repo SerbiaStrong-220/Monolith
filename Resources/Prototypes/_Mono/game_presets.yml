@@ -75,7 +75,7 @@
   id: MonoADS
   name: mono-ads-title
   description: mono-ads-description
-  showInVote: true
+  showInVote: false # Exodus
   rules:
   - NFAdventure
   - BasicStationEventScheduler
@@ -84,10 +84,7 @@
   - BluespaceSalvageEventScheduler
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
-  - MonoAISTCShuttleSpawnerScheduler
-  - MonoAISTCShuttleSpawnerSchedulerTier2
-  - ExodusT3ShipsScheduler # Exodus-azimuth
-  - MonoAsakimSTCShuttleSpawnerScheduler
+  # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
   - RoundEndRuleHour6 # Exodus
@@ -124,10 +121,11 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoChimeraSTCShuttleSpawnerSchedulerSlow
-  - MonoAISTCShuttleSpawnerSchedulerSlow
-  - MonoAISTCShuttleSpawnerSchedulerTier2Slow
-  - ExodusT3ShipsSchedulerSlow # Exodus-azimuth
-  - MonoAsakimSTCShuttleSpawnerSchedulerSlow
+  # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
+  # - MonoAISTCShuttleSpawnerSchedulerSlow # Exodus-disable-mixed-ads
+  # - MonoAISTCShuttleSpawnerSchedulerTier2Slow # Exodus-disable-mixed-ads
+  # - MonoAsakimSTCShuttleSpawnerSchedulerSlow # Exodus-disable-mixed-asakim
+  - ExodusSyndicateScheduler # Exodus-syndicate-ships
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
   - RoundEndRuleHour6 # Exodus
@@ -136,7 +134,7 @@
   id: MonoAllAtOnce
   name: mono-allatonce-title
   description: mono-allatonce-description
-  showInVote: true # we ball
+  showInVote: false # Exodus
   weight: 0.25 # requires 80% votes
   rules:
   - NFAdventure
@@ -147,8 +145,7 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoChimeraSTCShuttleSpawnerSchedulerApocalypse
-  - MonoAISTCShuttleSpawnerSchedulerApocalypse
-  - MonoAsakimSTCShuttleSpawnerSchedulerApocalypse
+  # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   - RoundEndRuleHour3
   - PortstrikeAnnounceRuleHour1

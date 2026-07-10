@@ -6,10 +6,10 @@
   suffix: ADS ONLY
   components:
   - type: ShipShieldEmitter
-    damageLimit: 2000000
+    damageLimit: 1000000
     healPerSecond: 800
     damageExp: 1.05
-    powerModifier: 0.0752
+    powerModifier: 0.10024
     baseDraw: 100000
     maxDraw: 200000
     unpoweredBonus: 6
@@ -28,9 +28,15 @@
   - type: PoweredRadiationSource
   - type: RadarBlip
     radarColor: "#D4AF37"
-    scale: 1.5
-    shape: Circle
     visibleFromOtherGrids: true
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#D4AF37"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
   - type: Sprite
     sprite: _Mono/Structures/ShuttleComponents/shield.rsi
     snapCardinals: true
@@ -73,9 +79,88 @@
         sound:
           collection: MetalBreak
   - type: ShipRepairable
-    repairTime: 30
-    repairCost: 400
+    repairTime: 60
+    repairCost: 750
   - type: ShipRepairableRestrict
     toolWhitelist:
       tags:
       - ADSRepairTool
+
+# POI Low-End — mechanically a Sentinel (MS-100) but ram-immune and POI-only.
+# Lives only on hand-built POI stations; cannot be constructed or deconstructed.
+- type: entity
+  id: ShieldGeneratorPOISmall
+  parent: ShieldGeneratorBase
+  name: FS-411 "Outpost" Shield Generator
+  description: The Outpost. A static-deployment derivative of the Sentinel - same compact
+    profile and recharge cycle, hardened against kinetic impacts for fixed installations.
+  suffix: POI ONLY
+  components:
+  - type: ShipShieldEmitter
+    damageLimit: 65000
+    healPerSecond: 500
+    damageExp: 1.05
+    baseDraw: 20000
+    maxDraw: 60000
+    unpoweredBonus: 3
+    damageOverloadTimePunishment: 80
+    shieldColor: "#FF9933"
+    collisionResistanceMultiplier: 0.0
+  - type: Sprite
+    sprite: _Mono/Structures/ShuttleComponents/fobshield.rsi
+    snapCardinals: true
+    layers:
+    - state: fobshield
+    - state: fobshield_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#FF9933"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+          - 194 # oxygen
+          - 0 # nitrogen
+          - 0 # carbon dioxide
+          - 6 # plasma
+          temperature: 752.48
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 4000
+    intensitySlope: 4
+    totalIntensity: 300
+  - type: ApcPowerReceiver
+    powerLoad: 20000
+  - type: PointLight
+    enabled: false
+    castShadows: true
+    radius: 2
+    energy: 1.5
+    color: "#FF9933"
+  - type: ShipRepairable
+    repairTime: 20
+    repairCost: 125
+  - type: Anchorable 
+    flags:
+    - None

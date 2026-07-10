@@ -484,7 +484,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.BurstActivated = false;
             gun.BurstShotsCount = 0;
             gun.ShotCounter = 0;
-            gun.NextFire += TimeSpan.FromSeconds(gun.BurstCooldown);
+            gun.NextFire += GetReloadCooldown(gunUid, gun.BurstCooldown); // Exodus nebula weapon cooldown
 
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -515,7 +515,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.BurstShotsCount += shots;
             if (gun.BurstShotsCount >= gun.ShotsPerBurstModified)
             {
-                gun.NextFire += TimeSpan.FromSeconds(gun.BurstCooldown);
+                gun.NextFire += GetReloadCooldown(gunUid, gun.BurstCooldown); // Exodus nebula weapon cooldown
                 if (!gun.LockOnTargetBurst || gun.ShootCoordinates == null) // Goobstation
                     gun.Target = null;
                 gun.BurstActivated = false;
@@ -536,6 +536,16 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         CauseImpulse(toCoordinates.Value, (gunUid, gun), ev.Ammo.Count);
     }
+
+    // Exodus-begin nebula weapon cooldown
+    private TimeSpan GetReloadCooldown(EntityUid gunUid, float baseCooldown)
+    {
+        var cooldown = TimeSpan.FromSeconds(baseCooldown);
+        var cooldownMulEv = new QueryGunReloadCooldownMultiplierEvent(1f);
+        RaiseLocalEvent(gunUid, ref cooldownMulEv);
+        return cooldown * cooldownMulEv.ReloadCooldownMultiplier;
+    }
+    // Exodus-end
 
     public void Shoot(
         EntityUid gunUid,

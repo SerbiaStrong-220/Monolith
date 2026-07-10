@@ -49,10 +49,10 @@ public sealed class NFCCVars
 
     /// <summary>
     /// The map to use for the public bus.
-	/// Mono: Changed to _Mono busdart.yml
+    /// Exodus: Changed to _Exodus busdart.yml
     /// </summary>
     public static readonly CVarDef<string> PublicTransitBusMap =
-        CVarDef.Create("nf14.publictransit.bus_map", "/SharedMaps/_Mono/Shuttles/Bus/busdart.yml", CVar.SERVERONLY);
+        CVarDef.Create("nf14.publictransit.bus_map", "/SharedMaps/_Exodus/Shuttles/Bus/busdart.yml", CVar.SERVERONLY); // Exodus public-transit-bus
 
     /// <summary>
     /// The amount of time the bus waits at a station.
@@ -97,14 +97,16 @@ public sealed class NFCCVars
     /// <summary>
     /// The rough minimum distance between POIs in meters.
     /// </summary>
+    // Exodus-begin territory-poi-spread
     public static readonly CVarDef<float> MinPOIDistance =
-        CVarDef.Create("nf14.worldgen.min_poi_distance", 400f, CVar.SERVERONLY);
+        CVarDef.Create("nf14.worldgen.min_poi_distance", 3500f, CVar.SERVERONLY);
 
     /// <summary>
     /// The maximum number of times to retry POI placement during world generation.
     /// </summary>
     public static readonly CVarDef<int> POIPlacementRetries =
-        CVarDef.Create("nf14.worldgen.poi_placement_retries", 10, CVar.SERVERONLY);
+        CVarDef.Create("nf14.worldgen.poi_placement_retries", 50, CVar.SERVERONLY);
+    // Exodus-end
 
     /*
     * Shipyard

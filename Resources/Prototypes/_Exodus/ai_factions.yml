@@ -1,0 +1,21 @@
+- type: npcFaction
+  id: RogueNpcStationAi
+  defaultHostile: true
+
+- type: npcFaction
+  id: SecColossus
+  name: npc-faction-name-sec-colossus
+  coreControlName: npc-faction-core-control-name-sec-colossus
+  friendly:
+  - CC
+  - MD
+  - TSFMC
+  - TSFMCTurret
+  neutral:
+  - CC
+  - NanoTrasen
+  - SimpleNeutral
+  - Cat
+  - PetsNT
+  - Mouse
+  defaultHostile: true

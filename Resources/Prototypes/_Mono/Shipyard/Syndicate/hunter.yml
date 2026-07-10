@@ -6,7 +6,12 @@
   price: 50000
   category: Small
   group: Syndicate
+  purchasable: false # Exodus syndicate voucher only
   shuttlePath: /SharedMaps/_Mono/Shuttles/Syndicate/hunter.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
   guidebookPage: Null
   class:
   - Syndicate

@@ -34,3 +34,12 @@
   components:
   - type: Flatpack
     entity: WeaponTurretTyphon
+
+- type: entity
+  parent: ThrusterFlatpack
+  id: NebulaThrusterFlatpack
+  name: phasic thruster flatpack
+  description: A flatpack used for constructing a phasic thruster.
+  components:
+  - type: Flatpack
+    entity: NebulaThruster

@@ -3,6 +3,8 @@
   <Box>
     <GuideEntityEmbed Entity="BannerNGC"/>
     <GuideEntityEmbed Entity="BannerSHM"/>
+    <GuideEntityEmbed Entity="BannerPDV"/>
+    <GuideEntityEmbed Entity="BannerKhsira"/>
     <GuideEntityEmbed Entity="BannerNanotrasen"/>
     <GuideEntityEmbed Entity="BannerCargo"/>
   </Box>

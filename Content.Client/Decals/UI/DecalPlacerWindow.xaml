@@ -12,7 +12,15 @@
 
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorPicker" IsAlphaVisible="True" />
+            <!-- Exodus-Start toggle the current color settings as a favorite -->
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'decal-placer-window-favorite-label'}" HorizontalExpand="True" />
+                <Button Name="FavoriteButton" Text="{Loc 'decal-placer-window-favorite-off'}" MinWidth="40"
+                        ToolTip="{Loc 'decal-placer-window-favorite-tooltip'}" />
+            </BoxContainer>
+            <!-- Exodus-End -->
             <Button Name="PickerOpen" Text="{Loc 'decal-placer-window-palette'}" />
+            <Button Name="EyedropperButton" Text="{Loc 'decal-placer-window-eyedropper'}" />
         </BoxContainer>
         <CheckBox Name="EnableAuto" Text="{Loc 'decal-placer-window-enable-auto'}" Margin="0 0 0 10"/>
         <CheckBox Name="EnableColor" Text="{Loc 'decal-placer-window-use-color'}" />

@@ -52,6 +52,8 @@
 
 - type: npcFaction
   id: Syndicate
+  name: npc-faction-name-syndicate # Exodus - faction AI radar label
+  coreControlName: npc-faction-core-control-name-syndicate # Exodus - faction AI radar label
   friendly: # Frontier
   - SyndicateNF # Frontier
   - Passive

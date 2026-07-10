@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Sekunda
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Секунда # Ru-Localization
   description: Корабль медицинской и огневой поддержки СССП. Оснащён модулем БСС, небольшим медицинским и химическим отсеками, лёгким вооружением и тесным интерьером. Произведён народным производственным союзом. # Ru-Localization
   price: 60000

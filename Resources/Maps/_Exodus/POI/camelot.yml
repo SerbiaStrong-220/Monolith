@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 07/07/2026 10:32:50
-  entityCount: 11859
+  time: 07/07/2026 18:27:47
+  entityCount: 11865
 maps: []
 grids:
 - 1
@@ -263,10 +263,10 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Puddle: []
         Kudzu: []
         MetalFoam: []
         Smoke: []
+        Puddle: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -7681,7 +7681,7 @@ entities:
       pos: 1.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -15777.293
+      secondsUntilStateChange: -16002.393
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7719,7 +7719,7 @@ entities:
       pos: -30.5,38.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -58970.977
+      secondsUntilStateChange: -59196.074
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9045,6 +9045,38 @@ entities:
     components:
     - type: Transform
       pos: 22.5,49.5
+      parent: 1
+- proto: BannerUSSP
+  entities:
+  - uid: 11753
+    components:
+    - type: Transform
+      pos: 0.5,19.5
+      parent: 1
+  - uid: 11754
+    components:
+    - type: Transform
+      pos: 5.5,-5.5
+      parent: 1
+  - uid: 11755
+    components:
+    - type: Transform
+      pos: 17.5,-11.5
+      parent: 1
+  - uid: 11756
+    components:
+    - type: Transform
+      pos: 16.5,-16.5
+      parent: 1
+  - uid: 11864
+    components:
+    - type: Transform
+      pos: 12.5,-3.5
+      parent: 1
+  - uid: 11865
+    components:
+    - type: Transform
+      pos: -27.5,50.5
       parent: 1
 - proto: Barricade
   entities:
@@ -26088,7 +26120,7 @@ entities:
       pos: 22.5,53.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -54164.746
+      secondsUntilStateChange: -54389.844
       state: Closing
   - uid: 4605
     components:
@@ -26101,7 +26133,7 @@ entities:
       pos: 22.5,55.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -54166.746
+      secondsUntilStateChange: -54391.844
       state: Closing
   - uid: 9858
     components:
@@ -58594,6 +58626,13 @@ entities:
     - type: Transform
       pos: -10.5,28.5
       parent: 1
+- proto: NpcStationAiAttackerStaticSmartUSSP
+  entities:
+  - uid: 1738
+    components:
+    - type: Transform
+      pos: 2.5,23.5
+      parent: 1
 - proto: NuclearCentrifuge
   entities:
   - uid: 113
@@ -63209,12 +63248,6 @@ entities:
       parent: 1
 - proto: RandomSpawner
   entities:
-  - uid: 1738
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 2.5,23.5
-      parent: 1
   - uid: 10012
     components:
     - type: Transform

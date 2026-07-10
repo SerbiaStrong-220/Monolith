@@ -1,10 +1,12 @@
 using System.Linq;
 using Content.Client.Eui;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Shared.CCVar;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes; // Frontier
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
@@ -49,6 +51,12 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             _window.OnRoleFollow += info =>
             {
+                // Exodus-begin ghost-role-follow-toggle
+                var cfg = IoCManager.Resolve<IConfigurationManager>();
+                if (!cfg.GetCVar(CCVars.GhostRoleFollowEnabled) || !info.AllowFollow)
+                    return;
+                // Exodus-end
+
                 SendMessage(new FollowGhostRoleMessage(info.Identifier));
             };
 

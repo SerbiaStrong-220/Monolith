@@ -1,0 +1,36 @@
+- type: vessel
+  id: Klesh
+  parent: BaseVesselAntag
+  name: Клещ # Ru-Localization
+  description: Пехотный корабль Синдиката, предназначенный для высадок на вражеские судна. Оборудован ЭМИ торпедами для выведение из строя систем противника.
+  price: 275000
+  category: Small
+  group: Syndicate
+  purchasable: false # Exodus syndicate voucher only
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Syndicate/klesh.yml 
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  guidebookPage: Null
+  class:
+  - Syndicate
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Klesh
+  mapName: 'Клещ' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/Syndicate/klesh.yml 
+  minPlayers: 0
+  stations:
+    Klesh:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Клещ{1}' # Ru-Localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs: {}

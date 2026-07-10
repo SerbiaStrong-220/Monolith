@@ -14989,14 +14989,7 @@ entities:
     - type: Transform
       pos: -24.422615,50.456326
       parent: 2
-- proto: BiomeSourceMiddleRing
-  entities:
-  - uid: 1000
-    components:
-    - type: Transform
-      pos: -24.578865,50.5657
-      parent: 2
-- proto: BiomeSourceOuterRing
+- proto: BiomeSourceExternalSpace
   entities:
   - uid: 1001
     components:

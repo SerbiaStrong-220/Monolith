@@ -14,3 +14,6 @@ ent-ShieldGeneratorMedium = генератор щита МС-250 Эгида
     .desc = { ent-ShieldGeneratorBase.desc }
 ent-ShieldGeneratorSmall = генератор щита МС-100 Сентинел
     .desc = { ent-ShieldGeneratorBase.desc }
+ent-ShieldGeneratorPOISmall = генератор щита аванпостов ФС-411 Аванпост
+    .suffix = Только Точки Интереса
+    .desc = { ent-ShieldGeneratorBase.desc }

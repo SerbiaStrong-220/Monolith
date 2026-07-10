@@ -7,3 +7,5 @@ ent-WeaponTurretFlareFlatpack = GS-002 flare system flatpack
     .desc = A flatpack used for constructing a GS-002 Sunny flare system.
 ent-WeaponTurretTyphonFlatpack = TYPHON autocannon flatpack
     .desc = A flatpack used for constructing a TYPHON 220mm autocannon.
+ent-NebulaThrusterFlatpack = phasic thruster flatpack
+    .desc = A flatpack used for constructing a phasic thruster.

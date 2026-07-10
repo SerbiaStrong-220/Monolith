@@ -32,9 +32,24 @@ public sealed partial class ShipShieldsSystem : EntitySystem
     private EntityQuery<ProjectileComponent> _projectileQuery;
     private EntityQuery<ShipWeaponProjectileComponent> _shipWeaponProjectileQuery;
     private EntityQuery<ShipShieldedComponent> _shieldedQuery; // Exodus
+    // Exodus-begin shield hit absorption hot-path queries
+    private EntityQuery<ApcPowerReceiverComponent> _apcPowerReceiverQuery;
+    private EntityQuery<MapGridComponent> _mapGridQuery;
+    private EntityQuery<ShipShieldEmitterComponent> _shieldEmitterQuery;
+    private EntityQuery<ShipShieldVisualsComponent> _shieldVisualsQuery;
+    private EntityQuery<TransformComponent> _transformQuery;
+    // Exodus-end
+    // Exodus-begin shield deflection queue
+    private readonly List<QueuedShieldDeflection> _queuedShieldDeflections = new();
+
+    private readonly record struct QueuedShieldDeflection(EntityUid Source, EntityUid Deflected);
+    // Exodus-end
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        ProcessQueuedShieldDeflections(); // Exodus shield deflection queue
 
         var query = EntityQueryEnumerator<ShipShieldEmitterComponent, ApcPowerReceiverComponent>();
         while (query.MoveNext(out var uid, out var emitter, out var power))
@@ -140,12 +155,20 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
         _shipWeaponProjectileQuery = GetEntityQuery<ShipWeaponProjectileComponent>();
         _shieldedQuery = GetEntityQuery<ShipShieldedComponent>(); // Exodus
+        // Exodus-begin shield hit absorption hot-path queries
+        _apcPowerReceiverQuery = GetEntityQuery<ApcPowerReceiverComponent>();
+        _mapGridQuery = GetEntityQuery<MapGridComponent>();
+        _shieldEmitterQuery = GetEntityQuery<ShipShieldEmitterComponent>();
+        _shieldVisualsQuery = GetEntityQuery<ShipShieldVisualsComponent>();
+        _transformQuery = GetEntityQuery<TransformComponent>();
+        // Exodus-end
 
         SubscribeLocalEvent<ShipShieldComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentShutdown>(OnEmitterShutdown); // Mono
 
         InitializeCommands();
         InitializeEmitters();
+        InitializeShieldHitAbsorption(); // Exodus | shield hit absorption events
     }
 
     private void OnPreventCollide(EntityUid uid, ShipShieldComponent component, ref PreventCollideEvent args)
@@ -179,10 +202,41 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
         if (component.Source is { } source)
         {
-            var ev = new ShieldDeflectedEvent(args.OtherEntity, projectile);
-            RaiseLocalEvent(source, ref ev);
+            // Exodus-begin shield deflection queue
+            var deflected = args.OtherEntity;
+            projectile.ProjectileSpent = true;
+            _queuedShieldDeflections.Add(new QueuedShieldDeflection(source, deflected));
+            // Exodus-end
         }
     }
+
+    // Exodus-begin shield deflection queue
+    private void ProcessQueuedShieldDeflections()
+    {
+        if (_queuedShieldDeflections.Count == 0)
+            return;
+
+        var count = _queuedShieldDeflections.Count;
+        for (var i = 0; i < count; i++)
+        {
+            var queued = _queuedShieldDeflections[i];
+            if (Deleted(queued.Source) ||
+                Deleted(queued.Deflected) ||
+                !_projectileQuery.TryGetComponent(queued.Deflected, out var projectile))
+            {
+                continue;
+            }
+
+            var ev = new ShieldDeflectedEvent(queued.Deflected, projectile);
+            RaiseLocalEvent(queued.Source, ref ev);
+        }
+
+        if (_queuedShieldDeflections.Count == count)
+            _queuedShieldDeflections.Clear();
+        else
+            _queuedShieldDeflections.RemoveRange(0, count);
+    }
+    // Exodus-end
 
     private void OnEmitterShutdown(EntityUid uid, ShipShieldEmitterComponent emitter, ComponentShutdown args) // Mono
     {

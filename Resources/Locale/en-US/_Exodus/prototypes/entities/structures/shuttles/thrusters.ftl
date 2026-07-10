@@ -3,3 +3,6 @@ ent-VacuumGradientThruster = vacuum gradient thruster
 
 ent-Gyrodyne = gyrodyne
     .desc = A massive bluespace-assisted gyroscope capable of rotating even the largest vessels. Requires significant power to operate.
+
+ent-NebulaThruster = nebula-tuned thruster
+    .desc = A standard shuttle thruster tuned to overperform in nebula fields.

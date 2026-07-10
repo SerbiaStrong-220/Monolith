@@ -228,6 +228,17 @@ public sealed partial class NpcFactionSystem : EntitySystem
         return ent.Comp.Factions.Overlaps(other.Comp.Factions) || ent.Comp.FriendlyFactions.Overlaps(other.Comp.Factions);
     }
 
+    // Exodus-begin faction AI controlled grid targeting
+    public bool IsFactionFriendlyOrSame(ProtoId<NpcFactionPrototype> target, Entity<NpcFactionMemberComponent?> with)
+    {
+        if (!Resolve(with, ref with.Comp, false))
+            return false;
+
+        return with.Comp.Factions.Contains(target) ||
+               with.Comp.FriendlyFactions.Contains(target);
+    }
+    // Exodus-end
+
     public bool IsFactionFriendly(string target, string with)
     {
         return _factions[target].Friendly.Contains(with) && _factions[with].Friendly.Contains(target);

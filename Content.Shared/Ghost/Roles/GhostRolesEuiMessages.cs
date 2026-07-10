@@ -34,6 +34,13 @@ namespace Content.Shared.Ghost.Roles
         /// </summary>
         public TimeSpan RaffleEndTime { get; set; }
 
+        // Exodus-begin ghost-role-follow-toggle
+        /// <summary>
+        /// If false, the "Follow" button is hidden for this ghost role.
+        /// </summary>
+        public bool AllowFollow { get; set; }
+        // Exodus-end
+
     }
 
     [NetSerializable, Serializable]

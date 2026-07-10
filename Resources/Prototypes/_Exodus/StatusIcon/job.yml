@@ -1,0 +1,23 @@
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAsakimWarrior
+  icon:
+    sprite: /Textures/_Exodus/Interface/Misc/job_icons.rsi
+    state: khsirawarrior
+  jobName: job-name-asakim-warrior
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAsakimCenturion
+  icon:
+    sprite: /Textures/_Exodus/Interface/Misc/job_icons.rsi
+    state: khsiracenturion
+  jobName: job-name-asakim-centurion
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAsakimPrefect
+  icon:
+    sprite: /Textures/_Exodus/Interface/Misc/job_icons.rsi
+    state: khsiraprefect
+  jobName: job-name-asakim-prefect

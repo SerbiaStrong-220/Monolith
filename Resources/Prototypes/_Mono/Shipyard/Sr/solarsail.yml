@@ -8,6 +8,10 @@
   group: Sr
   access: HeadOfPersonnel
   shuttlePath: /SharedMaps/_Mono/Shuttles/solarsail.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus SecColossus faction
+    factions:
+    - SecColossus
   guidebookPage: Null
   class:
   - Civilian

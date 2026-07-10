@@ -1,0 +1,32 @@
+<Document>
+## Оператор Штурмовой Системы (ОШС)
+    <Box>
+    <GuideEntityEmbed Entity="PlayerBorgAsakimFighter" Caption=""/>
+    </Box>
+    <Box>
+    [color=gray][italic]Синтетик-штурмовик. Продвинутая пехотная единица Империи Кхси'Ра.[/italic][/color]
+    </Box>
+
+ОШС не является [textlink="Оператором Персональной Защиты" link="EXRuleGhostRolePersonalProtectionOperator"] и не предназначен для сопровождения отдельных офицеров. Это боевая штурмовая единица, усиление пехоты азакимов и [textlink="Автоматической Системы Защиты" link="EXRuleGhostRoleADS"]. Ваш приоритет — выполнение приказов офицерского состава, удержание занятых позиций и нанесение огневого поражения противнику.
+
+## Имперские директивы
+1. [locid="law-asakim-occupant-1"]
+
+2. [locid="law-asakim-occupant-2"]
+
+3. [locid="law-asakim-occupant-3"]
+
+4. [locid="law-asakim-occupant-4"]
+
+5. [locid="law-asakim-occupant-5"]
+
+6. [locid="law-asakim-occupant-6"]
+
+## Что делать
+- Подчиняйтесь офицерскому составу по градации ранга: Легат, Трибун, [textlink="Префект" link="EXRuleGhostRolePrefectAsakim"], [textlink="Центурион" link="EXRuleGhostRoleCenturionAsakim"].
+- Участвуйте в штурме и удержании точек интереса вместе с [textlink="воинами азаким" link="EXRuleGhostRoleAsakim"], [textlink="ОСЗ" link="EXRuleGhostRoleOperator"] и силами АСЗ.
+- Подавляйте враждебные силы в рамках директив Империи, не нарушая директиву усмирения.
+- Сохраняйте целостность своего шасси и имперские технологии согласно директивам.
+- Свяжитесь с другими азакимами и силами АСЗ через радиоканал (на [color=#ff3db1]:з[/color]), если в секторе нет офицерского состава.
+- Помогайте АСЗ в выполнении их задач, если это не противоречит имперским директивам.
+</Document>

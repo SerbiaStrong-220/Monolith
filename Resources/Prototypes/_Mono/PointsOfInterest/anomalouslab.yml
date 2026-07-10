@@ -7,19 +7,8 @@
 # Discord: ???
 
 # Notes:
-# The local Science lab
-- type: pointOfInterest
-  id: AnomalousLab
-  parent: BasePOI
-  name: 'Лаборатория Аномалий' # Ru-Localization
-  minimumDistance: 7000
-  maximumDistance: 10800
-  spawnGroup: ScienceLab
-  gridPath: /Maps/_Mono/POI/anomalouslab.yml
-  addComponents:
-  - type: SolarPoweredGrid
-    trackOnInit: true
-    doNotCull: true
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Purple nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept.
 
 - type: gameMap
   id: AnomalousLab
@@ -29,6 +18,11 @@
   stations:
     AnomalousLab:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for Anomaly Laboratory
+      gridComponents:
+      - type: InitRepairSnapshot # Exodus anomalous-lab-srd-snapshot
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Лаборатория Аномалий' # Ru-Localization

@@ -1,0 +1,81 @@
+# Active nebula generation parameters. NebulaGenerationSystem and DeathZoneGenerationSystem
+# both look up the "Default" entry at round start. To rebalance — tweak the YAML here, no C#
+# changes needed. To run a totally different preset (e.g. Hardcore), duplicate this entry
+# with a new id, change DefaultConfigId in the systems, and ship the YAML.
+#
+# Field reference: see NebulaGenerationConfigPrototype.cs (Content.Shared/_Exodus/Nebula).
+# Marker weights: higher value = more frequent picks. 0 disables an entry.
+
+- type: nebulaGenerationConfig
+  id: Default
+
+  # Area budget — per-nebula and total cap.
+  minArea: 13000000
+  maxArea: 450000000
+  maxTotalArea: 6000000000
+
+  # Blob shape parameters.
+  minStretch: 0.65
+  maxStretch: 2.1
+  minPower: 1.15
+  maxPower: 2.25
+
+  # Boundary waves.
+  minWaveAmplitude: 0.02
+  maxWaveAmplitude: 0.12
+  minWaveFrequency: 2
+  maxWaveFrequency: 11
+
+  # Placement.
+  coordinateLimit: 75000
+  protectedRadius: 1000
+  separation: 0
+  maxAttempts: 16384
+  sampleCount: 512
+
+  # Death zone radii (mid >= inner). Player-facing pacing of the death zone is set on the
+  # NebulaDeathZoneInner/OuterMarker prototypes, not here.
+  worldEndInnerRadius: 75000
+  worldEndMidRadius: 90000
+
+  # Death zone boundary waves.
+  worldEndMinWaveAmplitude: 0.001
+  worldEndMaxWaveAmplitude: 0.020
+  worldEndClearanceMultiplier: 1.001
+  # Positive entries only; generation clamps to 16 entries and max frequency 64.
+  worldEndWaveFrequencies:
+  - 1
+  - 2
+  - 3
+  - 8
+  - 9
+  - 13
+  - 21
+  - 23
+  - 24
+  - 30
+  - 34
+  - 36
+  - 55
+  - 60
+  - 64
+
+  # Marker pool with weights. All four colors equal-weight by default → ~25 % each.
+  markers:
+  - proto: NebulaBlueMarker
+    weight: 1
+  - proto: NebulaRedMarker
+    weight: 1
+  - proto: NebulaGreenMarker
+    weight: 1
+  - proto: NebulaPurpleMarker
+    weight: 1
+
+  deathZoneInnerMarker: NebulaDeathZoneInnerMarker
+  deathZoneOuterMarker: NebulaDeathZoneOuterMarker
+
+  fallbackMarker: NebulaBlueMarker
+
+  # Radar / runtime housekeeping.
+  radarMaxDistance: 250000
+  markerValidationInterval: 30

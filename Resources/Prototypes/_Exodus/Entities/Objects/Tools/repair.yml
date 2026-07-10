@@ -10,3 +10,26 @@
       components: [ AsakimTrustedUser ]
     mindWhitelist:
       mindRoles: [ AsakimRole ]
+
+- type: entity
+  id: ShipRepairDeviceSyndicate
+  parent: ShipRepairDeviceRedacted
+  name: syndicate SRD
+  description: A resonant ship repair device keyed to Syndicate operative neural patterns.
+  suffix: SYNDICATE BIOCODE
+  components:
+  - type: Sprite
+    scale: 0.8, 0.8
+    sprite: _Exodus/Objects/Tools/repair_device_syndicate_item.rsi
+    state: item
+  - type: Item
+    sprite: _Exodus/Objects/Tools/repair_device_syndicate.rsi
+  - type: Tag
+    tags:
+    - ShipRepairTool
+    - SyndicateRepairTool
+  - type: Biocode
+    whitelist:
+      components: [ NukeOperative ]
+    mindWhitelist:
+      mindRoles: [ NukeopsRole ]

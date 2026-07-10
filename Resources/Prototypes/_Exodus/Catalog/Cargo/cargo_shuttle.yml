@@ -1,4 +1,14 @@
 - type: cargoProduct
+  id: ShuttleNebulaThruster
+  icon:
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster.rsi
+    state: base
+  product: CrateEngineeringNebulaThruster
+  cost: 4000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
   id: ShuttleTurretDravon
   icon:
     sprite: _Mono/Objects/ShuttleWeapons/dravon.rsi

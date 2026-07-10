@@ -300,3 +300,6 @@ uplink-pdv-t3-saintie-voucher-desc = A small card that contains the data for the
 
 uplink-pdv-t4-saturn-voucher-name = PDV Saturn LPC [T4]
 uplink-pdv-t4-saturn-voucher-desc = A small card that authorizes the procurement of the Saturn.
+# Exodus-faction-ai-core
+uplink-pirate-faction-ai-core-name = PDV Station AI Core
+uplink-pirate-faction-ai-core-desc = A screwable faction AI core aligned to PirateNF friend-or-foe logic.

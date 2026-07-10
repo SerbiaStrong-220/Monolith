@@ -2,7 +2,7 @@
 
 - type: vessel
   id: Strayk
-  parent: BaseVesselAntag
+  parent: BaseVesselUSSPAntag
   name: Страус # Ru-Localization
   description: Плохо оснащённый и тесный ударный шаттл. Оснащён двумя торпедными установками и одним 30-мм орудием. # Ru-Localization
   price: 45820

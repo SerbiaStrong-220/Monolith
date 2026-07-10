@@ -11,9 +11,10 @@
 - type: company
   id: TSF
   name: tsf-name # Ru-Localization
-  color: "#047ABD"
+  color: "#00a1fc" # Exodus territory update
   disabled: true
   companyUplinkCurrency: FederationMilitaryCredit
+  npcFaction: TSFMC # Exodus - company NPC faction
 
 - type: company
   id: PDV
@@ -21,6 +22,7 @@
   color: "#D2B48C"
   disabled: true
   companyUplinkCurrency: Doubloon
+  npcFaction: PirateNF # Exodus - company NPC faction (PDV)
 
 - type: company
   id: MD
@@ -78,10 +80,11 @@
 - type: company
   id: USSP
   name: ussp-name # Ru-Localization
-  color: "#B01340"
-  # disabled: true # Exodus disable-ussp-faction — USSP as lobby company
+  color: "#ff0033" # Exodus USSP Company color
+  disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
   image: /Textures/_Mono/Companies/USSP.png
+  npcFaction: USSP # Exodus - company NPC faction
 
 # Major companies
 

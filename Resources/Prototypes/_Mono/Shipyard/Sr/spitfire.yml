@@ -13,6 +13,10 @@
   access: Brig
   mapchecker_group_override: Security
   shuttlePath: /SharedMaps/_Mono/Shuttles/spitfire.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus SecColossus faction
+    factions:
+    - SecColossus
   guidebookPage: Null
   class:
   - Civilian

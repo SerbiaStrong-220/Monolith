@@ -14,6 +14,12 @@
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/takeaway.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  - type: SolarPoweredGrid
+    doNotCull: true
   guidebookPage: ShipyardTakeaway
   class:
   - Civilian
@@ -22,9 +28,6 @@
   engine:
   - Uranium
   - Solar
-  addComponents:
-  - type: SolarPoweredGrid
-    doNotCull: true
 
 - type: gameMap
   id: Takeaway

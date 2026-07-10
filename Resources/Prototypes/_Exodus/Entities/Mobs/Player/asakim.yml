@@ -1,0 +1,57 @@
+- type: entity
+  parent: MobAsakim
+  id: MobAsakimWarrior
+  name: asakim warrior
+  suffix: Asakim, Shared
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: true
+  - type: HumanoidAppearance
+  - type: Loadout
+    prototypes: [AsakimGear]
+    roleLoadout: [RoleSurvivalTankOnly]
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+    - AsakimTrackingImplant
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstMilitary
+    - NamesLastMilitary
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5
+
+- type: entity
+  parent: MobAsakimWarrior
+  id: MobCenturionAsakim
+  name: centurion asakim warrior
+  suffix: Asakim, Centurion, Shared
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: Loadout
+    prototypes: [AsakimCenturionGear]
+    roleLoadout: [RoleSurvivalTankOnly]
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+    - AsakimTrackingImplant
+    - DeathAcidifierImplantDeadEXDS
+  - type: RandomMetadata
+    nameSegments:
+    - random-metadata-name-asakim-centurion
+    - NamesLastMilitary
+
+- type: entity
+  parent: MobCenturionAsakim
+  id: MobPrefectAsakim
+  name: prefect asakim warrior
+  suffix: Asakim, Prefect, Shared
+  components:
+  - type: Loadout
+    prototypes: [AsakimPrefectGear]
+    roleLoadout: [RoleSurvivalTankOnly]
+  - type: RandomMetadata
+    nameSegments:
+    - random-metadata-name-asakim-prefect
+    - NamesLastMilitary

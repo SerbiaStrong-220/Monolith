@@ -87,21 +87,23 @@ public sealed partial class ShipTargetingSystem : EntitySystem
                 comp.WeaponCheckAccum += comp.WeaponCheckSpacing;
             }
 
-            FireWeapons(shipUid.Value, comp.Cannons, mapTarget, linVel, comp.CurrentLeadingVelocity);
+            comp.TargetUnavailable = FireWeapons(uid, shipUid.Value, targetUid, comp.Cannons, mapTarget, linVel, comp.CurrentLeadingVelocity) == ShipTargetingFireResult.TargetUnavailable; // Exodus faction NPC unavailable target fallback
         }
     }
 
-    private void FireWeapons(EntityUid shipUid, List<EntityUid> cannons, MapCoordinates destMapPos, Vector2 ourVel, Vector2 otherVel)
+    private ShipTargetingFireResult FireWeapons(EntityUid sourceUid, EntityUid shipUid, EntityUid targetUid, List<EntityUid> cannons, MapCoordinates destMapPos, Vector2 ourVel, Vector2 otherVel) // Exodus faction NPC friendly fire prevention
     {
         var shipXform = Transform(shipUid);
         if (!_physQuery.TryComp(shipUid, out var shipBody))
-            return;
+            return ShipTargetingFireResult.NoReadyWeapons;
 
         if (!_cannon.CanFireWeapons(shipUid))
-            return;
+            return ShipTargetingFireResult.NoReadyWeapons;
 
         var shipAngVel = shipBody.AngularVelocity;
         var shipCenter = shipBody.LocalCenter;
+        var friendlyFireBlocked = false;
+        var fired = false;
 
         foreach (var uid in cannons)
         {
@@ -111,6 +113,9 @@ public sealed partial class ShipTargetingSystem : EntitySystem
             var gXform = Transform(uid);
 
             if (!gXform.Anchored || !_gunQuery.TryComp(uid, out var gun))
+                continue;
+
+            if (!_cannon.CanAttemptFire(uid, noServer: true)) // Exodus faction NPC friendly fire prevention
                 continue;
 
             var hitTime = 0f;
@@ -168,8 +173,27 @@ public sealed partial class ShipTargetingSystem : EntitySystem
 
             var targetMapPos = destMapPos.Offset(leadBy * hitTime);
 
-            _cannon.AttemptFire(uid, uid, _transform.ToCoordinates(targetMapPos), noServer: true);
+            if (!CanFireWithoutFactionFriendlyFire(sourceUid, shipUid, targetUid, uid, targetMapPos)) // Exodus faction NPC friendly fire prevention
+            {
+                friendlyFireBlocked = true; // Exodus faction NPC unavailable target fallback
+                continue;
+            }
+
+            if (_cannon.AttemptFire(uid, uid, _transform.ToCoordinates(targetMapPos), noServer: true)) // Exodus faction NPC unavailable target fallback
+                fired = true;
         }
+
+        if (fired)
+            return ShipTargetingFireResult.Fired;
+
+        return friendlyFireBlocked ? ShipTargetingFireResult.TargetUnavailable : ShipTargetingFireResult.NoReadyWeapons; // Exodus faction NPC unavailable target fallback
+    }
+
+    private enum ShipTargetingFireResult : byte
+    {
+        NoReadyWeapons,
+        TargetUnavailable,
+        Fired
     }
 
     public Vector2 NormalizedOrZero(Vector2 vec)
@@ -188,6 +212,9 @@ public sealed partial class ShipTargetingSystem : EntitySystem
 
         if (!Resolve(ent, ref ent.Comp, false))
             ent.Comp = AddComp<ShipTargetingComponent>(ent);
+
+        if (ent.Comp.Target != coordinates)
+            ent.Comp.TargetUnavailable = false; // Exodus faction NPC unavailable target fallback
 
         ent.Comp.Target = coordinates;
 

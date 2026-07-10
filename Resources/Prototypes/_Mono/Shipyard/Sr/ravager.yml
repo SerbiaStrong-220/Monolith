@@ -14,6 +14,10 @@
   access: Security # Shouldn't be buyable with sec voucher.
   mapchecker_group_override: Security
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Capitals/ravager.yml # Exodus
+  addComponents:
+  - type: NpcFactionMember # Exodus SecColossus faction
+    factions:
+    - SecColossus
   guidebookPage: Null
   class:
   - Science

@@ -7,6 +7,10 @@
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Exodus/Shuttles/heavensdrill.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Salvage

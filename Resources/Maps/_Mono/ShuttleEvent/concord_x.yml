@@ -28,6 +28,9 @@ entities:
     - type: Transform
       pos: -0.5,-0.46875
       parent: invalid
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces # Exodus-asakim-faction
     - type: MapGrid
       chunks:
         0,0:
@@ -76,7 +79,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: IFF
-      color: '#00CCFFFF'
+      color: '#ff3db1' # Exodus-asakim-iff-color
     - type: DecalGrid
       chunkCollection:
         version: 2

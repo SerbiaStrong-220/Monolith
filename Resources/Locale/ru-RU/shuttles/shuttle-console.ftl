@@ -32,3 +32,5 @@ shuttle-console-verb-unlock-ship = Разблокировать шаттл
 ## Shuttle Console FTL
 
 shuttle-ftl-proximity = Невозможно совершить БСС прыжок пока рядом есть другие шаттлы.
+shuttle-ftl-nebula = Невозможно совершить БСС прыжок в опасную туманность.
+shuttle-ftl-nebula-source = Невозможно совершить БСС прыжок из этой туманности.

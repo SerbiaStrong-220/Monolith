@@ -9,6 +9,10 @@
   access: Security
   purchasable: false # voucher only
   shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/ladya.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol

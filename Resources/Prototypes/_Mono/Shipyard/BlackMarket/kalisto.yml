@@ -11,6 +11,10 @@
   group: BlackMarket
   access: Pirate
   shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/kalisto.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
   guidebookPage: Null
   class:
   - Pirate

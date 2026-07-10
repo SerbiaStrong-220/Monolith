@@ -126,6 +126,12 @@
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerSyndicateNode # Frontier
+  - type: Anchorable # Exodus territory-banner-anchor-delay
+    delay: 60 # Exodus territory-banner-anchor-delay
+  # Exodus start - territory claim banner for Syndicate
+  - type: TerritoryBanner
+    faction: Syndicate
+  # Exodus end
 
 - type: entity
   id: BannerScience

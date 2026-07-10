@@ -165,6 +165,15 @@ binds:
 - function: EditorCopyObject
   type: State
   key: P
+# Exodus-Start copy decal under cursor (O not 0) / copy whole decal stack (Ctrl+O)
+- function: EditorCopyDecal
+  type: State
+  key: O
+- function: EditorCopyDecalStack
+  type: State
+  key: O
+  mod1: Control
+# Exodus-End
 - function: SwapHands
   type: State
   key: X

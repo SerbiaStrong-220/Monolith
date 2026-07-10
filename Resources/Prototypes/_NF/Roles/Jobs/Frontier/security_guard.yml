@@ -27,6 +27,11 @@
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ] # Mono - remove TSFMC implant
+  - !type:AddComponentSpecial
+    components:
+    - type: NpcFactionMember # Exodus SecColossus faction
+      factions:
+      - SecColossus
   - !type:GiveItemOnHolidaySpecial
     holiday: FrontierBirthday
     prototype: FrontierBirthdayGift

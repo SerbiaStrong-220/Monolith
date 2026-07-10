@@ -147,6 +147,10 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote8 = "Vote8";
         public static readonly BoundKeyFunction Vote9 = "Vote9";
         public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
+        // Exodus-Start copy decal(s) under the cursor in decal placer
+        public static readonly BoundKeyFunction EditorCopyDecal = "EditorCopyDecal";
+        public static readonly BoundKeyFunction EditorCopyDecalStack = "EditorCopyDecalStack";
+        // Exodus-End
         public static readonly BoundKeyFunction EditorFlipObject = "EditorFlipObject";
         public static readonly BoundKeyFunction InspectEntity = "InspectEntity";
 
