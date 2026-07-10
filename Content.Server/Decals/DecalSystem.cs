@@ -266,22 +266,53 @@ namespace Content.Server.Decals
             if (gridId == null)
                 return;
 
-            // remove all decals on the same tile
-            foreach (var (decalId, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
-            {
-                if (eventArgs.SenderSession.AttachedEntity != null)
-                {
-                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
-                        $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
-                }
-                else
-                {
-                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
-                        $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
-                }
+            // Exodus-Start remove only the topmost decal per click instead of wiping the whole tile.
+            // Original behaviour removed every decal in range:
+            // // remove all decals on the same tile
+            // foreach (var (decalId, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
+            // {
+            //     if (eventArgs.SenderSession.AttachedEntity != null)
+            //     {
+            //         _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+            //             $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+            //     }
+            //     else
+            //     {
+            //         _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+            //             $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+            //     }
+            //
+            //     RemoveDecal(gridId.Value, decalId);
+            // }
 
-                RemoveDecal(gridId.Value, decalId);
+            // Pick the decal on top (highest ZIndex, then highest id).
+            (uint Index, Decal Decal)? topmost = null;
+            foreach (var entry in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
+            {
+                if (topmost is not { } top
+                    || entry.Decal.ZIndex > top.Decal.ZIndex
+                    || (entry.Decal.ZIndex == top.Decal.ZIndex && entry.Index > top.Index))
+                {
+                    topmost = entry;
+                }
             }
+
+            if (topmost is not { } target)
+                return;
+
+            if (eventArgs.SenderSession.AttachedEntity != null)
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {target.Decal.Color} {target.Decal.Id} at {ev.Coordinates}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{eventArgs.SenderSession.Name} removed a {target.Decal.Color} {target.Decal.Id} at {ev.Coordinates}");
+            }
+
+            RemoveDecal(gridId.Value, target.Index);
+            // Exodus-End
         }
 
         protected override void DirtyChunk(EntityUid uid, Vector2i chunkIndices, DecalChunk chunk)

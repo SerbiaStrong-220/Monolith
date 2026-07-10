@@ -292,6 +292,11 @@ public sealed partial class FireControlSystem : EntitySystem
                 controlled.AmmoCount = ammoCount;
                 controlled.HasManualReload = hasManualReload;
 
+                // Exodus-Start
+                if (TryComp<GunComponent>(controllable, out var gun))
+                    controlled.NextFire = gun.NextFire;
+                // Exodus-End
+
                 controllables.Add(controlled);
             }
         }

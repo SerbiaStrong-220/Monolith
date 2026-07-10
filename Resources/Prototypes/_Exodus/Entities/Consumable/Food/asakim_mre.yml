@@ -1,0 +1,26 @@
+- type: entity
+  id: AsakimBoxMRE
+  parent: BoxMRE
+  name: Asakim M.R.E.
+  description: A military ration pack issued to the Asakim remnants. It contains an extra nutribrick, but no brownie.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,2
+  - type: StorageFill
+    contents:
+    - id: DrinkMREFlask
+    - id: FoodSnackNutribrick
+      amount: 2
+    - id: FoodCondimentPacketKetchup
+
+- type: entity
+  id: CrateAsakimMRE
+  parent: CrateFoodMRE
+  name: Asakim M.R.E. crate
+  description: A crate of military ration packs issued to the Asakim remnants.
+  components:
+  - type: StorageFill
+    contents:
+    - id: AsakimBoxMRE
+      amount: 6

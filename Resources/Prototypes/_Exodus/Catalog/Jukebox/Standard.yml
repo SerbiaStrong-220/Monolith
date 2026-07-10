@@ -201,3 +201,45 @@
   name: Turjan Aylahn - Tanc A Lelek
   path:
     path: /Audio/_Exodus/CombatMode/tanc-a-lelek.ogg
+
+- type: jukebox
+  id: ebilla_big_hole
+  name: E6illa - Big hole
+  path:
+    path: /Audio/_Exodus/Jukebox/big_hole.ogg
+
+- type: jukebox
+  id: ebilla_since_2569
+  name: E6illa - Since 2569
+  path:
+    path: /Audio/_Exodus/Jukebox/since_2569.ogg
+
+- type: jukebox
+  id: ebilla_nordic
+  name: E6illa - Nordic
+  path:
+    path: /Audio/_Exodus/Jukebox/nordic.ogg
+
+- type: jukebox
+  id: ebilla_blues
+  name: E6illa - Blues
+  path:
+    path: /Audio/_Exodus/Jukebox/blues.ogg
+
+- type: jukebox
+  id: ebilla_station_area
+  name: E6illa - Station area
+  path:
+    path: /Audio/_Exodus/Jukebox/station_area.ogg
+
+- type: jukebox
+  id: ebilla_silence_and_you
+  name: E6illa - Silence and you
+  path:
+    path: /Audio/_Exodus/Jukebox/silence_and_you.ogg
+
+- type: jukebox
+  id: ebilla_sky_rocket
+  name: E6illa - Sky rocket
+  path:
+    path: /Audio/_Exodus/Jukebox/sky_rocket.ogg

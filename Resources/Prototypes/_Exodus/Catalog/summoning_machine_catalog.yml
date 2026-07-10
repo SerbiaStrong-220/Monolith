@@ -286,7 +286,7 @@
   id: SummoningMachineMRECrate
   name: summoning-machine-mre-crate-name
   description: summoning-machine-mre-crate-desc
-  productEntity: CrateFoodMRE
+  productEntity: CrateAsakimMRE
   cost:
     Telecrystal: 240
   categories:
