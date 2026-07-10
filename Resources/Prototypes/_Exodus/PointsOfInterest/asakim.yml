@@ -10,7 +10,7 @@
   addComponents:
   - type: IFF
     color: "#ff3db1"
-    readOnly: true
+    readOnly: false
 
 - type: gameMap
   id: ADSKashalot
