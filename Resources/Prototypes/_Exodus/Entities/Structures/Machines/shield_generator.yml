@@ -7,7 +7,7 @@
   components:
   - type: ShipShieldEmitter
     damageLimit: 1000000
-    healPerSecond: 800
+    healPerSecond: 1150
     damageExp: 1.05
     powerModifier: 0.10024
     baseDraw: 100000
@@ -161,6 +161,6 @@
   - type: ShipRepairable
     repairTime: 20
     repairCost: 125
-  - type: Anchorable 
+  - type: Anchorable
     flags:
     - None
