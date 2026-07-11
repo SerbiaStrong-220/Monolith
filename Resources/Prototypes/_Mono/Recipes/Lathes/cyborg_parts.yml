@@ -6,13 +6,13 @@
   result: BorgIFFPDV
   completetime: 3
   materials:
-    Steel: 10000
-    Plasteel: 5000
-    Plastitanium: 4000
+    Steel: 8000
+    Plasteel: 1000
+    Plastitanium: 1000
     Plastic: 3000
     Gold: 2000
     Silver: 2000
-    Bluespace: 200
+    Bluespace: 100
     Diamond: 100
 
 - type: latheRecipe
@@ -21,12 +21,12 @@
   result: BorgIFFTSF
   completetime: 3
   materials:
-    Steel: 10000
-    Plasteel: 5000
-    Plastitanium: 4000
+    Steel: 8000
+    Plasteel: 1000
+    Plastitanium: 1000
     Plastic: 3000
     Gold: 2000
     Silver: 2000
-    Bluespace: 200
+    Bluespace: 100
     Diamond: 100
 # Exodus-end
