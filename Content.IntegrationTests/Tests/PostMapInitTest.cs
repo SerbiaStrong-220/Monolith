@@ -94,7 +94,7 @@ namespace Content.IntegrationTests.Tests
             // "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
             "/Maps/_NF/Outpost/frontier.yml", // Contains janitorial bomb suit closet
             "/Maps/_NF/POI/tinnia.yml", // Contains syndicate rubber stamp
-            "/Maps/_NF/POI/lpbravo.yml", // Contains syndicate rubber stamp
+            "/Maps/_Exodus/POI/lpbravo.yml", // Exodus nebula update remove to Exodus folder. Contains syndicate rubber stamp
             "/Maps/_NF/Shuttles/Admin/fishbowl.yml", // Contains CentComm folder
             "/Maps/_Mono/Admin/minicentcomm.yml", // Admeme centcomm
             // End Frontier
@@ -111,7 +111,7 @@ namespace Content.IntegrationTests.Tests
         // private static readonly string[] GameMaps = GameDataScrounger.PrototypesOfKind<GameMapPrototype>().Where(x => x != PoolManager.TestMap).ToArray();
         private static readonly string[] GameMaps = FrontierConstants.GameMapPrototypes;
         private static readonly ResPath[] AllMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps/_Mono", "*.yml");
-        private static readonly ResPath[] ShuttleMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps/_Mono/Shuttles", "*.yml");
+        private static readonly ResPath[] ShuttleMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/SharedMaps/_Mono/Shuttles", "*.yml");
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
 
@@ -509,9 +509,8 @@ namespace Content.IntegrationTests.Tests
                 // Frontier: FIXME - hacky test fix
                 .Where(x =>
                     x.ID == PoolManager.TestMap || // Frontier: check test map
-
                     x.MapPath.ToString().StartsWith("/Maps/_Mono") && // Mono: check Mono maps only
-                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/Shuttles") && // Mono: skip shuttles (not loaded as maps)
+                    !x.MapPath.ToString().StartsWith("/SharedMaps/_Mono/Shuttles") && // Mono: skip shuttles (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Mono/Deprecated") && // Mono: skip deprecated (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Mono/ShuttleEvent") && // Mono: skip shuttleevents (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Mono/POI") || // Mono: skip POIs (not loaded as maps)

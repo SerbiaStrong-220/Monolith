@@ -1,0 +1,17 @@
+- type: localizedDataset
+  id: NamesFelinidFirstMale
+  values:
+    prefix: names-felinid-first-male-dataset-
+    count: 36
+
+- type: localizedDataset
+  id: NamesFelinidFirstFemale
+  values:
+    prefix: names-felinid-first-female-dataset-
+    count: 36
+
+- type: localizedDataset
+  id: NamesFelinidLast
+  values:
+    prefix: names-felinid-last-dataset-
+    count: 28

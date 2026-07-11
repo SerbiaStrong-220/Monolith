@@ -1,0 +1,65 @@
+# Exodus-restore: Chitinid body with four functional arms (surgery unchanged — only upper pair in standard slots).
+- type: body
+  id: ChitinidExodus
+  name: chitinid
+  root: torso
+  slots:
+    head:
+      part: HeadChitinid
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoChitinid
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganChitinidStomach
+        liver: OrganChitinidLiver
+        kidneys: OrganHumanKidneys
+      connections:
+      - left arm
+      - left arm 2
+      - right arm
+      - right arm 2
+      - right leg
+      - left leg
+      - head
+    right arm:
+      part: RightArmChitinid
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmChitinid
+      connections:
+      - left hand
+    left arm 2:
+      part: LeftArm2Chitinid
+      connections:
+      - left hand 2
+    right arm 2:
+      part: RightArm2Chitinid
+      connections:
+      - right hand 2
+    right hand:
+      part: RightHandChitinid
+    left hand:
+      part: LeftHandChitinid
+    left hand 2:
+      part: LeftHand2Chitinid
+    right hand 2:
+      part: RightHand2Chitinid
+    right leg:
+      part: RightLegChitinid
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegChitinid
+      connections:
+      - left foot
+    right foot:
+      part: RightFootChitinid
+    left foot:
+      part: LeftFootChitinid

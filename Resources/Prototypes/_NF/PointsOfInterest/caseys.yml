@@ -12,9 +12,9 @@
   id: CaseysCasino
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Казино Крейзи Кейси' # Ru-Localization
-  minimumDistance: 4250
-  maximumDistance: 5600
-  gridPath: /Maps/_NF/POI/caseyscasino.yml
+  minimumDistance: 10000 # Exodus-nebula-update
+  maximumDistance: 15000 # Exodus-nebula-update
+  gridPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
   addComponents:
   - type: Tower7G # Exodus-Adminbus
     range: 256
@@ -22,11 +22,15 @@
 - type: gameMap
   id: CaseysCasino
   mapName: 'Казино Крейзи Кейси' # Ru-Localization
-  mapPath: /Maps/_NF/POI/caseyscasino.yml
+  mapPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
   minPlayers: 0
   stations:
     CaseysCasino:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for Crazy Casey's
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Казино Крейзи Кейси' # Ru-Localization

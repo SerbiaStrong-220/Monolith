@@ -1,0 +1,44 @@
+- type: vessel
+  id: Luxury
+  parent: BaseVessel
+  name: Лакшери
+  description: Имперская яхта класса «Лакшери» — роскошное судно Цитадели Кхси'Ра с апартаментами, кухней, баром, генератором щита. Доступно только по ваучеру на верфи Цитадели.
+  price: 385000
+  purchasable: false
+  category: Large
+  group: Citadel
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/luxury.yml
+  addComponents:
+  - type: IFF
+    color: '#ff3db1'
+    flags: [IsPlayerShuttle]
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+    - AsakimDefenceForces
+  guidebookPage: Null
+  class:
+  - Civilian
+  - Frigate
+  engine:
+  - RTG
+
+- type: gameMap
+  id: Luxury
+  mapName: 'Лакшери'
+  mapPath: /SharedMaps/_Exodus/Shuttles/luxury.yml
+  minPlayers: 0
+  stations:
+    Luxury:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Лакшери'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

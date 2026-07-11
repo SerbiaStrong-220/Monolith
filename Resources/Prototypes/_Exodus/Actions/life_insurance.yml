@@ -1,0 +1,14 @@
+- type: entity
+  id: ActionLifeInsuranceRevive
+  name: Activate Life Insurance
+  description: Spend one insurance policy to clone your body and return to life.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    charges: 3
+    itemIconStyle: BigAction
+    priority: -10
+    icon:
+      sprite: Structures/Machines/cloning.rsi
+      state: pod_0
+    event: !type:LifeInsuranceCloneActionEvent

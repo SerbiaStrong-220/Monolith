@@ -12,7 +12,11 @@
   price: 77850
   category: Medium
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/brute.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/brute.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Cargo
@@ -22,7 +26,7 @@
 - type: gameMap
   id: Brute
   mapName: 'Брут' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/brute.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/brute.yml
   minPlayers: 0
   stations:
     Brute:

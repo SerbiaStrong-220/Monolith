@@ -122,10 +122,10 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 1
+              doAfter: 30 # Exodus - territory banner install time
             - material: Cloth
               amount: 2
-              doAfter: 1
+              doAfter: 30 # Exodus - territory banner install time
         - to: BannerGoblin01
           completed:
             - !type:SnapToGrid { }
@@ -255,7 +255,7 @@
               amount: 2
           steps:
             - tool: Screwing
-              doAfter: 1
+              doAfter: 60 # Exodus - territory banner uninstall time
 
     - node: BannerBlueNode
       entity: BannerBlue

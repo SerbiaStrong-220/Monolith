@@ -8,7 +8,11 @@
   price: 165000
   category: Large
   group: Expedition
-  shuttlePath: /Maps/_Mono/Shuttles/Expedition/sagittarius.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/sagittarius.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Expedition
@@ -20,7 +24,7 @@
 - type: gameMap
   id: Sagittarius
   mapName: 'Сагиттариус' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Expedition/sagittarius.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Expedition/sagittarius.yml
   minPlayers: 0
   stations:
     Sagittarius:

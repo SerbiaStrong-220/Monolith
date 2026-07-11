@@ -1,0 +1,77 @@
+- type: startingGear
+  id: CitadelCitizenGear
+  equipment:
+    jumpsuit: PirateClothingUniformJumpsuitChaplainPilgrimVest
+    back: ClothingBackpackSatchelLeather
+    eyes: ClothingEyesEyepatchHudMedical
+    ears: ClothingHeadsetGrey
+    head: ClothingHeadHatPilgrim
+    gloves: ClothingHandsTacticalMaidGloves
+    outerClothing: ClothingOuterCoatAcidRaincoatMagenta
+    shoes: ClothingShoesClothwrapBlack
+    belt: ClothingBeltStorageWaistbag
+    neck: ClothingNeckCloakTravelerBlack
+  inhand:
+  - CaneSheathFilled
+  storage:
+    back:
+    - AdvMopItem
+    - EncryptionKeyTraffic
+    belt:
+    - PlushieRainbowLizard
+    - MedkitCombatFilled
+    - DoubleEmergencyOxygenTankFilled
+
+- type: entity
+  parent: MobReptilian
+  id: MobCitadelServiceGhostRole
+  name: citadel service
+  suffix: GhostRole, Citadel
+  components:
+  - type: RandomHumanoidAppearance
+  - type: GhostRole
+    name: ghost-role-information-citadel-service-name
+    description: ghost-role-information-citadel-service-description
+    rules: ghost-role-information-citadel-service-rules
+    allowFollow: false
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hrs
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ CitadelCitizenGear ]
+    roleLoadout: [ RoleSurvivalStandard ]
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+  - type: TTS
+    voice: slark_dota_2
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Draconic
+    - Azaziba
+    understands:
+    - TauCetiBasic
+    - Draconic
+    - Azaziba
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleCitadelService
+    includeChildren: false
+
+- type: entity
+  parent: MobCitadelServiceGhostRole
+  id: MobCitadelServiceGhostRoleNoTimelock
+  suffix: GhostRole, Citadel, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-citadel-service-name
+    description: ghost-role-information-citadel-service-description
+    rules: ghost-role-information-citadel-service-rules
+    allowFollow: false
+    raffle:
+      settings: default
+    requirements: []

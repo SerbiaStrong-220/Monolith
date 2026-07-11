@@ -12,10 +12,10 @@
   id: TradeMall
   parent: [BasePOI, BaseRepairablePOI]
   name: "Торговый Центр" # Ru-Localization
-  minimumDistance: 3500
-  maximumDistance: 6500
+  minimumDistance: 12500 # Exodus-nebula-update
+  maximumDistance: 17500 # Exodus-nebula-update
   spawnGroup: MarketStation
-  gridPath: /Maps/_NF/POI/trademall.yml
+  gridPath: /Maps/_Exodus/POI/trademall.yml # Exodus
   addComponents:
   - type: IFF
     color: "#37C837"
@@ -38,11 +38,15 @@
 - type: gameMap
   id: TradeMall
   mapName: "Торговый Центр" # Ru-Localization
-  mapPath: /Maps/_NF/POI/trademall.yml
+  mapPath: /Maps/_Exodus/POI/trademall.yml # Exodus
   minPlayers: 0
   stations:
     TradeMall:
       stationProto: MarketFrontierOutpost
+      # Exodus start - Territory for Trade Mall
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationCargoOrderDatabase
           capacity: 60

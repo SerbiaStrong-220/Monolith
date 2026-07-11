@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "for Exodus by NullReference {Discord: nrfr}",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "khsiracenturion"
+        },
+        {
+            "name": "khsiraprefect"
+        },
+        {
+            "name": "khsirawarrior"
+        }
+    ]
+}

@@ -1,6 +1,18 @@
 # Exodus: Colossus-Central AI Core
 
 - type: entity
+  id: StationAiHoloRedacted
+  parent: StationAiHolo
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/station_ai_redacted.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
+
+- type: entity
   id: PlayerStationAiColossus
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, Colossus
@@ -18,6 +30,9 @@
     - state: base
     - state: ai
       shader: unshaded
+  - type: NpcFactionMember
+    factions:
+    - SecColossus
   - type: Anchorable
 
 - type: entity
@@ -28,6 +43,9 @@
   - type: Sprite
   - type: SiliconLawProvider
     laws: ColossusLawset
+  - type: NpcFactionMember
+    factions:
+    - SecColossus
   - type: GhostRole
     name: ghost-role-information-colossus-core
     description: ghost-role-information-colossus-core-description

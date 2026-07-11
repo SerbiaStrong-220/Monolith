@@ -117,6 +117,15 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
         _handLookup.Clear();
         _playerHandsComponent = null;
 
+        // Exodus-begin: reset hand status tracking when rebuilding the HUD
+        _activeHand = null;
+        _statusHandLeft = null;
+        _statusHandRight = null;
+        HandsGui?.UpdatePanelEntityLeft(null);
+        HandsGui?.UpdatePanelEntityRight(null);
+        HandsGui?.SetHighlightHand(null);
+        // Exodus-end
+
         foreach (var container in _handsContainers)
         {
             container.Clear();
@@ -130,8 +139,10 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
             HandsGui.Visible = true;
 
         _playerHandsComponent = handsComp;
-        foreach (var (name, hand) in handsComp.Hands)
+        // Exodus-begin: preserve server hand ordering for species with more than two hands
+        foreach (var name in handsComp.SortedHands)
         {
+            var hand = handsComp.Hands[name];
             var handButton = AddHand(name, hand.Location);
 
             if (_entities.TryGetComponent(hand.HeldEntity, out VirtualItemComponent? virt))
@@ -152,6 +163,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
                 handButton.Blocked = false;
             }
         }
+        // Exodus-end
 
         var activeHand = handsComp.ActiveHand;
         if (activeHand == null)

@@ -1,0 +1,153 @@
+# Life insurance machine: three static, mapper-placed pieces that auto-link by proximity.
+# Each piece carries an internal backup battery sized to outlast ~15 minute power outages.
+
+- type: entity
+  id: LifeInsuranceScanner
+  parent: BaseMachinePowered
+  name: life insurance scanning capsule
+  description: A patient scanning capsule that records DNA onto a linked life insurance console.
+  components:
+  - type: LifeInsuranceScanner
+  - type: Anchorable
+    flags: Anchorable # mapper-placed, can be anchored but never unwrenched
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 800
+  - type: ShipRepairable
+    repairCost: 100
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50 # ~15 min
+    batteryRechargeRate: 100
+  - type: Battery
+    maxCharge: 45000 # ~15 min
+    startingCharge: 45000
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/life_insurance_scanner.rsi
+    snapCardinals: true
+    layers:
+    - state: open
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LifeInsuranceScannerVisuals.State:
+        base:
+          Open: { state: open }
+          Occupied: { state: occupied }
+  - type: ContainerContainer
+    containers:
+      life-insurance-scanner-body: !type:ContainerSlot
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - life-insurance-scanner-body
+
+- type: entity
+  id: LifeInsuranceCloner
+  parent: BaseMachinePowered
+  name: life insurance cloning capsule
+  description: A cloning capsule that rebuilds an insured patient's body on demand.
+  components:
+  - type: LifeInsuranceCloner
+    revivalTime: 180
+  - type: Anchorable
+    flags: Anchorable # mapper-placed, can be anchored but never unwrenched
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Climbable
+  - type: StaticPrice
+    price: 1000
+  - type: ShipRepairable
+    repairCost: 100
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50 # ~15 min
+    batteryRechargeRate: 100
+  - type: Battery
+    maxCharge: 45000
+    startingCharge: 45000
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/life_insurance_cloner.rsi
+    snapCardinals: true
+    layers:
+    - state: pod_0
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LifeInsuranceClonerVisuals.State:
+        base:
+          Idle: { state: pod_0 }
+          Cloning: { state: pod_1 }
+          Failed: { state: pod_g } # gore state, shown for the 30s failure decay
+
+- type: entity
+  id: LifeInsuranceConsole
+  parent: BaseMachinePowered
+  name: life insurance console
+  description: Records patient DNA, sells life insurance policies, and runs the cloning capsule.
+  components:
+  - type: LifeInsuranceConsole
+  - type: Anchorable
+    flags: Anchorable # mapper-placed, can be anchored but never unwrenched
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 500
+  - type: ShipRepairable
+    repairCost: 100
+  - type: ApcPowerReceiverBattery
+    idleLoad: 30 # ~15 min
+    batteryRechargeRate: 60
+  - type: Battery
+    maxCharge: 27000 # ~15 min
+    startingCharge: 27000
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ActivatableUI
+    key: enum.LifeInsuranceConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.LifeInsuranceConsoleUiKey.Key:
+        type: LifeInsuranceBoundUserInterface
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      sprite: _Exodus/Structures/Machines/life_insurance_console.rsi
+      state: cloningnew
+  - type: Appearance

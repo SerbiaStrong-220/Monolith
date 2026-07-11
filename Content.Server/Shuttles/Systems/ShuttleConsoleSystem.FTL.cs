@@ -164,6 +164,15 @@ public sealed partial class ShuttleConsoleSystem
             return;
         }
 
+        // Exodus-begin
+        if (!CanFTLToNebula(shuttleUid.Value, targetCoordinates, targetAngle, out var nebulaRejection))
+        {
+            _popup.PopupEntity(Loc.GetString(nebulaRejection), ent.Owner, PopupType.Medium);
+            UpdateConsoles(shuttleUid.Value);
+            return;
+        }
+        // Exodus-end
+
         if (!TryComp(shuttleUid.Value, out PhysicsComponent? shuttlePhysics))
         {
             return;

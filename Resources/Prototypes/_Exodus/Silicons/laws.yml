@@ -33,3 +33,45 @@
   - AsakimBlackShield4
   - AsakimBlackShield5
   obeysTo: laws-owner-asakim-officers
+
+# Occupant
+- type: siliconLaw
+  id: AsakimOccupant1
+  order: 1
+  lawString: law-asakim-occupant-1
+
+- type: siliconLaw
+  id: AsakimOccupant2
+  order: 2
+  lawString: law-asakim-occupant-2
+
+- type: siliconLaw
+  id: AsakimOccupant3
+  order: 3
+  lawString: law-asakim-occupant-3
+
+- type: siliconLaw
+  id: AsakimOccupant4
+  order: 4
+  lawString: law-asakim-occupant-4
+
+- type: siliconLaw
+  id: AsakimOccupant5
+  order: 5
+  lawString: law-asakim-occupant-5
+
+- type: siliconLaw
+  id: AsakimOccupant6
+  order: 6
+  lawString: law-asakim-occupant-6
+
+- type: siliconLawset
+  id: AsakimOccupant
+  laws:
+  - AsakimOccupant1
+  - AsakimOccupant2
+  - AsakimOccupant3
+  - AsakimOccupant4
+  - AsakimOccupant5
+  - AsakimOccupant6
+  obeysTo: laws-owner-asakim-officers

@@ -1,0 +1,23 @@
+- type: construction
+  id: BannerPDV
+  graph: MonoBannersGraph
+  startNode: start
+  targetNode: BannerPDVNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: BannerKhsira
+  graph: MonoBannersGraph
+  startNode: start
+  targetNode: BannerKhsiraNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked

@@ -1,0 +1,26 @@
+- type: entity
+  id: ComputerShipyardCitadel
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, ComputerShipyardBase]
+  name: citadel shipyard console
+  description: Used to commission imperial yachts from the Citadel shipyard reserves.
+  components:
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.Citadel
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.Citadel:
+        type: ShipyardConsoleBoundUserInterface
+  - type: Sprite
+    sprite: _NF/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shipyard_medical
+    - map: ["computerLayerKeys"]
+      state: telesci_key
+  - type: ShipyardConsole
+    ignoreBaseSaleRate: true
+    canTransferDeed: false

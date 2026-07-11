@@ -4,4 +4,14 @@
   parent: LockableButton
   components:
   - type: AccessReader
+    # Exodus temp-ussp-mercenary-access: Mercenary access until USSP faction returns.
+    access: [["Mercenary"]]
+
+- type: entity
+  id: LockableButtonViper
+  suffix: Viper
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    # access: [["Viper"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
     access: [["Mercenary"]]

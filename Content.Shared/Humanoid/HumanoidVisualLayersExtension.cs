@@ -77,6 +77,22 @@ namespace Content.Shared.Humanoid
                 case HumanoidVisualLayers.RFoot:
                     yield return HumanoidVisualLayers.RFoot;
                     break;
+                // Exodus-begin: chitinid lower limbs
+                case HumanoidVisualLayers.LArmExtension:
+                    yield return HumanoidVisualLayers.LArmExtension;
+                    yield return HumanoidVisualLayers.LHandExtension;
+                    break;
+                case HumanoidVisualLayers.RArmExtension:
+                    yield return HumanoidVisualLayers.RArmExtension;
+                    yield return HumanoidVisualLayers.RHandExtension;
+                    break;
+                case HumanoidVisualLayers.LHandExtension:
+                    yield return HumanoidVisualLayers.LHandExtension;
+                    break;
+                case HumanoidVisualLayers.RHandExtension:
+                    yield return HumanoidVisualLayers.RHandExtension;
+                    break;
+                // Exodus-end
                 // Shitmed Change End
                 default:
                     yield break;
@@ -85,6 +101,11 @@ namespace Content.Shared.Humanoid
 
         public static HumanoidVisualLayers? ToHumanoidLayers(this BodyPartComponent part)
         {
+            // Exodus-begin: chitinid four arms
+            if (part.VisualLayerOverride is { } layerOverride)
+                return layerOverride;
+            // Exodus-end
+
             switch (part.PartType)
             {
                 case BodyPartType.Other:

@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "for Exodus by NullReference {Discord: nrfr}",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "beacon"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "emission_tier1",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "emission_tier2",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "emission_tier3",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        }
+    ]
+}

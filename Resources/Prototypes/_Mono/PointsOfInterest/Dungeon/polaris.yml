@@ -7,19 +7,8 @@
 # Discord: _starch_
 
 # Notes:
-- type: pointOfInterest
-  id: Polaris
-  parent: BasePOI
-  name: 'Биологический центр Полярис' # Ru-Localization
-  minimumDistance: 10000
-  maximumDistance: 15000
-  spawnGroup: Optional
-  gridPath: /Maps/_Mono/POI/Dungeons/polaris.yml
-  addComponents:
-  - type: IFF
-    color: "#C83737"
-    flags: [HideLabel]
-    readOnly: true
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Blue nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept.
 
 - type: gameMap
   id: Polaris
@@ -29,6 +18,12 @@
   stations:
     Polaris:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Syndicate-owned territory and NPC target filtering
+      gridComponents:
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Биологический центр Полярис' # Ru-Localization

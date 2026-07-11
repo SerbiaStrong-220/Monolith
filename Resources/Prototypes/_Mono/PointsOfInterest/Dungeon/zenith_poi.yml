@@ -11,8 +11,8 @@
   id: Zenith
   parent: BaseMobilePOI
   name: 'ADS Zenith CK-395'
-  minimumDistance: 10000
-  maximumDistance: 15000
+  minimumDistance: 35000 # Exodus-nebula-update
+  maximumDistance: 60000 # Exodus-nebula-update
   spawnGroup: Optional
   gridPath: /Maps/_Mono/POI/Dungeons/zenith_poi.yml
   addComponents:

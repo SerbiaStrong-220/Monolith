@@ -38,7 +38,7 @@
   id: MonoWorldgenVeryFarT1
   parent: NFBiomeBase
   priority: -1
-  distanceRange: 18000, 22000
+  distanceRange: 40000, 45000 # Exodus-nebula-update
   chunkComponents:
   - type: DebrisFeaturePlacerController
     densityNoiseChannel: DensityRare
@@ -161,15 +161,13 @@
     - id: MonoDroneSpawnerT1
       prob: 3
       orGroup: wreck
-    - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
-      prob: 0.5
-      orGroup: wreck
+    # Exodus-nebula-update: leviathans moved out of early far rings into the hardcore outer sector.
 
 - type: spaceBiome
   id: MonoWorldgenVeryFarT2Inner
   parent: MonoWorldgenVeryFarT1
   priority: -2
-  distanceRange: 22000, 25000
+  distanceRange: 45000, 52500 # Exodus-nebula-update
   chunkComponents:
   - type: NoiseDrivenDebrisSelector
     noiseChannel: WreckRare
@@ -192,15 +190,13 @@
     - id: MonoDroneSpawnerT2Inner
       prob: 1.5
       orGroup: wreck
-    - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
-      prob: 0.5
-      orGroup: wreck
+    # Exodus-nebula-update: leviathans moved out of early far rings into the hardcore outer sector.
 
 - type: spaceBiome
   id: MonoWorldgenVeryFarT2Middle
   parent: MonoWorldgenVeryFarT1
   priority: -3
-  distanceRange: 25000, 30000
+  distanceRange: 52500, 65000 # Exodus-nebula-update
   chunkComponents:
   - type: NoiseDrivenDebrisSelector
     noiseChannel: WreckRare
@@ -254,5 +250,5 @@
       prob: 1
       orGroup: wreck
     - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
-      prob: 0.5
+      prob: 1.5 # Exodus-nebula-update
       orGroup: wreck

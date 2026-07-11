@@ -7,22 +7,11 @@
 # Discord: _starch_
 
 # Notes:
-- type: pointOfInterest
-  id: Lancelot
-  parent: BasePOI
-  name: 'Шахтёрский Аванпост Ланцелот' # Ru-Localization
-  minimumDistance: 10000
-  maximumDistance: 15000
-  spawnGroup: Optional
-  gridPath: /Maps/_Mono/POI/Dungeons/lancelot.yml
-  addComponents:
-  - type: IFF
-    color: "#ccaa55"
-    flags: [HideLabel]
-    readOnly: true
-  - type: SolarPoweredGrid
-    trackOnInit: true
-    doNotCull: true
+# Exodus nebula-poi-migration:
+# The original `pointOfInterest` entry was removed so this POI no longer participates in the
+# upstream NF round-start POI roulette. It now spawns only inside Blue / Purple / Green nebulas
+# via NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml.
+# The `gameMap` prototype is kept for station registration / map validation tests.
 
 - type: gameMap
   id: Lancelot

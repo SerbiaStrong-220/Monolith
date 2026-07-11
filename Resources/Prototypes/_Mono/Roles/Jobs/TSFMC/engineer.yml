@@ -9,7 +9,7 @@
     #   time: 21600 # 6 hours # mono
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 7200 # 2 hours # Exodus
     # Exodus-Rework-Time-Roles-End
   startingGear: TsfEngiGear
   icon: JobIconTSFEngi
@@ -41,9 +41,9 @@
 
 - type: startingGear
   id: TsfEngiGear
-  equipment:
-    pocket1: WeaponPistolMk58 #WeaponPistolMk58Nonlethal
-    pocket2: Magazine45_ACPPistolFMJ
+#  equipment:
+#    pocket1: WeaponPistolMk58 #WeaponPistolMk58Nonlethal
+#    pocket2: Magazine45_ACPPistolFMJ
   storage:
     back:
     - RadioHandheldNF

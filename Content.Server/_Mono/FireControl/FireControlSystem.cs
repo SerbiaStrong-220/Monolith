@@ -20,6 +20,7 @@ using Content.Shared.Interaction;
 using Content.Shared._Mono.ShipGuns;
 using Content.Shared.Examine;
 using Content.Server.Salvage.Expeditions;
+using Content.Server._Exodus.Nebula.Hazards; // Exodus nebula weapon cooldown
 
 namespace Content.Server._Mono.FireControl;
 
@@ -31,6 +32,7 @@ public sealed partial class FireControlSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private RotateToFaceSystem _rotateToFace = default!;
+    [Dependency] private NebulaWeaponCooldownSystem _nebulaWeaponCooldown = default!; // Exodus nebula weapon cooldown
     /// <summary>
     /// Dictionary of entities that have visualization enabled
     /// </summary>
@@ -303,6 +305,9 @@ public sealed partial class FireControlSystem : EntitySystem
         if (!Resolve(controllable, ref component))
             return 0;
 
+        if (component.ProcessingPowerCost is { } processingPowerCost)
+            return Math.Max(0, processingPowerCost);
+
         if (!TryComp<ShipGunClassComponent>(controllable, out var classComponent))
             return 0;
 
@@ -501,7 +506,8 @@ public sealed partial class FireControlSystem : EntitySystem
             return false;
 
         // Set the cooldown for next firing
-        comp.NextFire = _timing.CurTime + TimeSpan.FromSeconds(comp.FireCooldown);
+        var fireCooldown = _nebulaWeaponCooldown.GetModifiedReloadCooldown(weapon, TimeSpan.FromSeconds(comp.FireCooldown)); // Exodus nebula weapon cooldown
+        comp.NextFire = _timing.CurTime + fireCooldown;
 
         if (_fireRotateQuery.HasComp(weapon))
         {
@@ -522,6 +528,13 @@ public sealed partial class FireControlSystem : EntitySystem
     /// <summary>
     /// Checks if a weapon is ready to fire.
     /// </summary>
+    // Exodus-begin faction NPC friendly fire prevention
+    public bool CanAttemptFire(EntityUid weapon, FireControllableComponent? comp = null, bool noServer = false)
+    {
+        return Resolve(weapon, ref comp, false) && CanFire(weapon, comp, noServer);
+    }
+    // Exodus-end
+
     private bool CanFire(EntityUid weapon, FireControllableComponent comp, bool noServer = false)
     {
         // Check if weapon is powered

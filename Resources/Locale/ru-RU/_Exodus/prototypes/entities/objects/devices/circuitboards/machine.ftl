@@ -6,3 +6,6 @@ ent-GyrodyneMachineCircuitboard = плата гиродина
 
 ent-MachineShieldMS750Circuitboard = плата генератора щита МС-750
     .desc = Плата машины для дораскольного генератора щита Прометей. Утерянная технология.
+
+ent-NebulaThrusterMachineCircuitboard = плата фазового двигателя
+    .desc = Плата машины для двигателя, настроенного для эффективной работы в туманностях.

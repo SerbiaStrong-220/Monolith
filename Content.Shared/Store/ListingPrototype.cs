@@ -35,6 +35,7 @@ public partial class ListingData : IEquatable<ListingData>
         other.ProductEvent,
         other.RaiseProductEventOnUser,
         other.PurchaseAmount,
+        other.RemainingStock,
         other.ID,
         other.Categories,
         other.OriginalCost,
@@ -60,6 +61,7 @@ public partial class ListingData : IEquatable<ListingData>
         object? productEvent,
         bool raiseProductEventOnUser,
         int purchaseAmount,
+        int? remainingStock,
         string id,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
@@ -81,6 +83,7 @@ public partial class ListingData : IEquatable<ListingData>
         ProductEvent = productEvent;
         RaiseProductEventOnUser = raiseProductEventOnUser;
         PurchaseAmount = purchaseAmount;
+        RemainingStock = remainingStock;
         ID = id;
         Categories = categories.ToHashSet();
         OriginalCost = originalCost;
@@ -186,6 +189,12 @@ public partial class ListingData : IEquatable<ListingData>
     public int PurchaseAmount;
 
     /// <summary>
+    /// Server-computed remaining stock for UI. Null means the listing is not stock-limited.
+    /// </summary>
+    [DataField]
+    public int? RemainingStock;
+
+    /// <summary>
     /// Used to delay purchase of some items.
     /// </summary>
     [DataField]
@@ -215,7 +224,8 @@ public partial class ListingData : IEquatable<ListingData>
             ProductEntity != listing.ProductEntity ||
             ProductAction != listing.ProductAction ||
             ProductEvent?.GetType() != listing.ProductEvent?.GetType() ||
-            RestockTime != listing.RestockTime)
+            RestockTime != listing.RestockTime ||
+            RemainingStock != listing.RemainingStock)
             return false;
 
         if (Icon != null && !Icon.Equals(listing.Icon))
@@ -292,6 +302,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.ProductEvent,
             listingData.RaiseProductEventOnUser,
             listingData.PurchaseAmount,
+            listingData.RemainingStock,
             listingData.ID,
             listingData.Categories,
             listingData.OriginalCost,

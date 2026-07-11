@@ -12,7 +12,11 @@
   price: 77150
   category: Medium
   group: Expedition
-  shuttlePath: /Maps/_Mono/Shuttles/Expedition/picses.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/picses.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Expedition
@@ -22,7 +26,7 @@
 - type: gameMap
   id: Picses
   mapName: 'Пиксес' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Expedition/picses.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Expedition/picses.yml
   minPlayers: 0
   stations:
     Picses:

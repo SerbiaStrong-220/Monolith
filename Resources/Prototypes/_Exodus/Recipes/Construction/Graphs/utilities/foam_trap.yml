@@ -1,0 +1,84 @@
+- type: constructionGraph
+  id: FoamTrap
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2.0
+
+  - node: assembly
+    entity: FoamTrapAssembly
+    edges:
+    - to: trapAluminium
+      steps:
+      - tag: FoamGrenadeAluminium
+        name: construction-graph-tag-foam-grenade-aluminium
+        icon:
+          sprite: Objects/Weapons/Grenades/metalfoam.rsi
+          state: icon
+        doAfter: 2
+    - to: trapNanolaminate
+      steps:
+      - tag: FoamGrenadeNanolaminate
+        name: construction-graph-tag-foam-grenade-nanolaminate
+        icon:
+          sprite: Objects/Weapons/Grenades/metalfoam.rsi
+          state: icon
+        doAfter: 2
+    - to: trapIron
+      steps:
+      - tag: FoamGrenadeIron
+        name: construction-graph-tag-foam-grenade-iron
+        icon:
+          sprite: Objects/Weapons/Grenades/metalfoam.rsi
+          state: icon
+        doAfter: 2
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: trapAluminium
+    entity: FoamTrapAluminium
+    edges:
+    - to: assembly
+      completed:
+      - !type:SpawnPrototype
+        prototype: MetalFoamGrenade
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: trapNanolaminate
+    entity: FoamTrapNanolaminate
+    edges:
+    - to: assembly
+      completed:
+      - !type:SpawnPrototype
+        prototype: NanolaminateFoamGrenade
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: trapIron
+    entity: FoamTrapIron
+    edges:
+    - to: assembly
+      completed:
+      - !type:SpawnPrototype
+        prototype: IronFoamGrenade
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
