@@ -2,6 +2,7 @@
   id: NFScrapStatic
   recipes:
   - SmeltScrap
+  - ScrapSheetPlastitanium1 # Exodus plastitanium recycling
   - ScrapShipRepairDeviceAmmo
   - ScrapPartRodMetal1
   - ScrapSheetSteel1

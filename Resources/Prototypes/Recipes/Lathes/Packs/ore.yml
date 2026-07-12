@@ -38,5 +38,6 @@
   id: AdvancedSmelting
   recipes:
   - SheetPlasteel1
+  - SmeltPlastitanium # Exodus plastitanium smelting
   - SheetUGlass1
   - SheetRUGlass1
