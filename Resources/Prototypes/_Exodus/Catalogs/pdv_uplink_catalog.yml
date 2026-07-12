@@ -31,3 +31,21 @@
     whitelist:
       tags:
       - FactionStaticUplinkPdv
+
+# MARK: Utility
+
+# Exodus-territory-banner
+- type: listing
+  id: UplinkPdvBanner
+  name: uplink-pdv-banner-name
+  description: uplink-pdv-banner-desc
+  productEntity: BannerPDV
+  cost:
+    Doubloon: 2
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink

@@ -234,6 +234,19 @@
     - names_tajaran_first
     - names_tajaran_last
 
+# Exodus add arachnid cube begin
+- type: entity
+  parent: MobArachnid
+  id: MobArachnidRandom
+  name: Urist McWebs
+  suffix: Random Appearance
+  components:
+  - type: RandomHumanoidAppearance
+  - type: RandomMetadata
+    nameSegments:
+    - NamesArachnidFirst
+    - NamesArachnidLast
+# Exodus add arachnid cube end
 # Goob Central Command!
 
 # Navy Officer

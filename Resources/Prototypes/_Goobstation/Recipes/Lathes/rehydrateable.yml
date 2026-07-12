@@ -171,7 +171,21 @@
 - type: latheRecipe
   id: TajaranCube
   result: TajaranCube
+  categories: # Exodus
+  - Species
   completetime: 30
   materials:
-    Biomass: 70
+    Biomass: 80 # Exodus
     Plasma: 250
+
+# Exodus add arachnid cube begin
+- type: latheRecipe
+  id: ArachnidCube
+  result: ArachnidCube
+  categories:
+  - Species
+  completetime: 30
+  materials:
+    Biomass: 80
+    Plasma: 250
+# Exodus add arachnid cube end

@@ -64,7 +64,7 @@
     shape: triangle
     radarColor: "#f55e1d"
   - type: TimedDespawn
-    lifetime: 5.15
+    lifetime: 6
   - type: PointLight
     color: "#FC6A03"
   - type: ExplodeOnTrigger

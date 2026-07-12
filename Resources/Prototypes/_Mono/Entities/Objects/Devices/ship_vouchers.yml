@@ -259,6 +259,7 @@
     companyName: TSF
     vessels:
     - Aldebaran
+    - Termite # Exodus tsfcm-termite
     - Tarantula
     - Spica
     - Mercury

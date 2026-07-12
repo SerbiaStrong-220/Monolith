@@ -119,6 +119,26 @@
   - SummoningMachineTechnicalContour
 
 - type: listing
+  id: SummoningMachineEmag
+  name: summoning-machine-emag-name
+  description: summoning-machine-emag-desc
+  productEntity: Emag
+  cost:
+    Telecrystal: 540
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAccessBreaker
+  name: summoning-machine-access-breaker-name
+  description: summoning-machine-access-breaker-desc
+  productEntity: AccessBreaker
+  cost:
+    Telecrystal: 540
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
   id: SummoningMachineCombatMedkit
   name: summoning-machine-combat-medkit-name
   description: summoning-machine-combat-medkit-desc
@@ -249,6 +269,16 @@
   - SummoningMachineTechnicalContour
 
 - type: listing
+  id: SummoningMachineRcdRecharging
+  name: summoning-machine-rcd-recharging-name
+  description: summoning-machine-rcd-recharging-desc
+  productEntity: RCDRecharging
+  cost:
+    Telecrystal: 1200
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
   id: SummoningMachineAsakimAiCore
   name: summoning-machine-asakim-ai-core-name
   description: summoning-machine-asakim-ai-core-desc
@@ -289,6 +319,17 @@
   productEntity: CrateAsakimMRE
   cost:
     Telecrystal: 240
+  categories:
+  - SummoningMachineFieldReserve
+
+# 120 cost units = 2 minutes at 1 second per unit
+- type: listing
+  id: SummoningMachineBannerKhsira
+  name: summoning-machine-banner-khsira-name
+  description: summoning-machine-banner-khsira-desc
+  productEntity: BannerKhsira
+  cost:
+    Telecrystal: 120
   categories:
   - SummoningMachineFieldReserve
 
@@ -382,7 +423,7 @@
   description: summoning-machine-beacon-concord-x-desc
   productEntity: ADSShuttleEmergencyBeaconConcordX
   cost:
-    Telecrystal: 5400
+    Telecrystal: 6600
   categories:
   - SummoningMachineEmergencyBeacons
   conditions:
@@ -396,7 +437,7 @@
   description: summoning-machine-beacon-zenith-a-desc
   productEntity: ADSShuttleEmergencyBeaconZenithA
   cost:
-    Telecrystal: 6600
+    Telecrystal: 5700
   categories:
   - SummoningMachineEmergencyBeacons
   conditions:
@@ -424,7 +465,7 @@
   description: summoning-machine-beacon-razor-n-desc
   productEntity: ADSShuttleEmergencyBeaconRazorN
   cost:
-    Telecrystal: 10800
+    Telecrystal: 9600
   categories:
   - SummoningMachineEmergencyBeacons
   conditions:
@@ -501,3 +542,18 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
+
+- type: listing
+  id: SummoningMachineBeaconKitSurplus
+  name: summoning-machine-beacon-kit-surplus-name
+  description: summoning-machine-beacon-kit-surplus-desc
+  productEntity: CrateAsakimBeaconKitSurplus
+  cost:
+    Telecrystal: 9000
+  categories:
+  - SummoningMachineEmergencyBeacons
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true
+

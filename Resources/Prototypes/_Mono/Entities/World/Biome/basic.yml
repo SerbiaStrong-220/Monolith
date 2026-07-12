@@ -249,6 +249,7 @@
     - id: MonoDroneSpawnerT2Far
       prob: 1
       orGroup: wreck
-    - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
-      prob: 1.5 # Exodus-nebula-update
-      orGroup: wreck
+  # Exodus: SpaceLeviathanSpawner removed from world generation.
+  # - id: SpaceLeviathanSpawner # Exodus-SpaceWhale
+  #    prob: 1.5 # Exodus-nebula-update
+  #    orGroup: wreck

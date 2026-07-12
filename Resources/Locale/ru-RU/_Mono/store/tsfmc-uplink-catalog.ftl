@@ -73,3 +73,6 @@ uplink-security-pulserifle-desc = A large, automatic pulse weapon. Larger cell, 
 # Exodus-faction-ai-core
 uplink-security-faction-ai-core-name = Боевое ядро ТСФ
 uplink-security-faction-ai-core-desc = Скручиваемое фракционное ядро дрона с уничтожение всех целей не являющихся представителями ТСФ. ПРИКРУЧЕНО ПРИ ПОКУПКЕ!!!
+# Exodus-territory-banner
+uplink-security-banner-tsf-name = знамя ТСФ
+uplink-security-banner-tsf-desc = Знамя Транс-Солнечной Федерации. Закрепите на станции, чтобы заявить контроль над территорией.
