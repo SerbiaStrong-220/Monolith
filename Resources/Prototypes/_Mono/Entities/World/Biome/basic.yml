@@ -249,7 +249,4 @@
     - id: MonoDroneSpawnerT2Far
       prob: 1
       orGroup: wreck
-    # Exodus: SpaceLeviathanSpawner disabled from world generation.
-    # - id: SpaceLeviathanSpawner
-    #   prob: 1.5
-    #   orGroup: wreck
+    # Exodus: SpaceLeviathanSpawner removed from world generation.
