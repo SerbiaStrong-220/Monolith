@@ -1,0 +1,10 @@
+construction-space-leviathan-chitin-armor-plate = Leviathan chitin armor plate
+construction-space-leviathan-chitin-armor-plate-desc = An armor plate for compatible hardsuits.
+construction-space-leviathan-chitin-crown = Leviathan chitin crown
+construction-space-leviathan-chitin-crown-desc = A crown that improves shuttle handling while worn.
+construction-space-leviathan-chitin-gloves = Leviathan chitin gloves
+construction-space-leviathan-chitin-gloves-desc = Reinforced combat gloves for devastating punches.
+construction-graph-tag-speed-armor-plate = a speed armor plate
+construction-graph-tag-pierce-armor-plate = a pierce armor plate
+construction-graph-tag-leviathan-chitin = leviathan chitin
+construction-graph-tag-combat-gloves = combat gloves

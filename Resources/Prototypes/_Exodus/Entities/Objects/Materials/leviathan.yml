@@ -2,13 +2,16 @@
   parent: BaseItem
   id: SpaceLeviathanChitin
   name: leviathan chitin
-  description: A fragment of an unusually durable shell. It has no practical use yet.
+  description: A fragment of an unusually durable shell, suitable for advanced equipment.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Specific/Xeno/xeno_materials.rsi
     state: chitin-chunk
   - type: Item
     size: Small
+  - type: Tag
+    tags:
+    - SpaceLeviathanChitin
 
 - type: entity
   parent: PuddleTemporary

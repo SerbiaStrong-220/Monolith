@@ -43,6 +43,11 @@
   - type: Item
     sprite: _Mono/Clothing/ArmorPlate/armor_plates.rsi
     size: Normal
+  # Exodus-begin: leviathan crafting
+  - type: Tag
+    tags:
+    - ArmorPlatePierce
+  # Exodus-end: leviathan crafting
   - type: ArmorPlateItem
     maxDurability: 50
     walkSpeedModifier: 0.95
@@ -105,6 +110,11 @@
   - type: Item
     sprite: _Mono/Clothing/ArmorPlate/armor_plates.rsi
     size: Normal
+  # Exodus-begin: leviathan crafting
+  - type: Tag
+    tags:
+    - ArmorPlateSpeed
+  # Exodus-end: leviathan crafting
   - type: ArmorPlateItem
     maxDurability: 25
     walkSpeedModifier: 1.1

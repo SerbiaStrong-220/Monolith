@@ -1,0 +1,68 @@
+- type: entity
+  parent: BaseItem
+  id: SpaceLeviathanChitinArmorPlate
+  name: leviathan chitin armor plate
+  description: A resilient hardsuit armor plate made from leviathan chitin.
+  components:
+  - type: Sprite
+    sprite: _Mono/Clothing/ArmorPlate/armor_plates.rsi
+    state: pierce
+  - type: Item
+    sprite: _Mono/Clothing/ArmorPlate/armor_plates.rsi
+    size: Normal
+  - type: ArmorPlateItem
+    maxDurability: 200
+    walkSpeedModifier: 1.15
+    sprintSpeedModifier: 1.15
+    absorptionRatios:
+      Blunt: 0.35
+      Slash: 0.35
+      Piercing: 0.35
+      Heat: 0.35
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatLeviathanChitinCrown
+  name: leviathan chitin crown
+  description: A crown of leviathan chitin that attunes its wearer to shuttle control.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: ClothingGrantComponent
+    component:
+    - type: ShuttleBoostingPilot
+      angularMultiplier: 1.1
+      accelerationMultiplier: 1.1
+
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesLeviathanChitin
+  name: leviathan chitin gloves
+  description: Combat gloves reinforced with leviathan chitin.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/combat.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/combat.rsi
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Structural: 300
+        Blunt: 40
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true

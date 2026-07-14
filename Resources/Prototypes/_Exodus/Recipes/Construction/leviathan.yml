@@ -1,0 +1,88 @@
+- type: construction
+  id: SpaceLeviathanChitinArmorPlate
+  name: construction-space-leviathan-chitin-armor-plate
+  description: construction-space-leviathan-chitin-armor-plate-desc
+  graph: SpaceLeviathanChitinArmorPlate
+  startNode: start
+  targetNode: chitinArmorPlate
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ClothingHeadHatLeviathanChitinCrown
+  name: construction-space-leviathan-chitin-crown
+  description: construction-space-leviathan-chitin-crown-desc
+  graph: SpaceLeviathanChitinCrown
+  startNode: start
+  targetNode: chitinCrown
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ClothingHandsGlovesLeviathanChitin
+  name: construction-space-leviathan-chitin-gloves
+  description: construction-space-leviathan-chitin-gloves-desc
+  graph: SpaceLeviathanChitinGloves
+  startNode: start
+  targetNode: chitinGloves
+  category: construction-category-clothing
+  objectType: Item
+
+- type: constructionGraph
+  id: SpaceLeviathanChitinArmorPlate
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: chitinArmorPlate
+      steps:
+      - tag: ArmorPlateSpeed
+        name: construction-graph-tag-speed-armor-plate
+      - tag: ArmorPlatePierce
+        name: construction-graph-tag-pierce-armor-plate
+      - tag: SpaceLeviathanChitin
+        name: construction-graph-tag-leviathan-chitin
+  - node: chitinArmorPlate
+    entity: SpaceLeviathanChitinArmorPlate
+
+- type: constructionGraph
+  id: SpaceLeviathanChitinCrown
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: chitinCrown
+      steps:
+      - material: Gold
+        amount: 20
+      - material: Diamond
+        amount: 5
+      - material: Bluespace
+        amount: 5
+      - tag: SpaceLeviathanChitin
+        name: construction-graph-tag-leviathan-chitin
+      - tag: SpaceLeviathanChitin
+        name: construction-graph-tag-leviathan-chitin
+  - node: chitinCrown
+    entity: ClothingHeadHatLeviathanChitinCrown
+
+- type: constructionGraph
+  id: SpaceLeviathanChitinGloves
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: chitinGloves
+      steps:
+      - tag: CombatGloves
+        name: construction-graph-tag-combat-gloves
+      - material: Durathread
+        amount: 40
+      - material: Diamond
+        amount: 2
+      - tag: SpaceLeviathanChitin
+        name: construction-graph-tag-leviathan-chitin
+      - tag: SpaceLeviathanChitin
+        name: construction-graph-tag-leviathan-chitin
+  - node: chitinGloves
+    entity: ClothingHandsGlovesLeviathanChitin
