@@ -25,10 +25,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: SpaceLeviathanChitinArmorPlate
+    node: chitinArmorPlate
 
 - type: entity
   parent: ClothingHeadBase
@@ -45,6 +48,9 @@
     - type: ShuttleBoostingPilot
       angularMultiplier: 1.1
       accelerationMultiplier: 1.1
+  - type: Construction
+    graph: SpaceLeviathanChitinCrown
+    node: chitinCrown
 
 - type: entity
   parent: ClothingHandsGlovesCombat
@@ -66,3 +72,6 @@
       collection: Punch
     animation: WeaponArcFist
     mustBeEquippedToUse: true
+  - type: Construction
+    graph: SpaceLeviathanChitinGloves
+    node: chitinGloves

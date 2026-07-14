@@ -213,6 +213,22 @@
       maxAmount: 4
     - id: SpaceLeviathanOreSpawner
       amount: 24
+    - id: ClothingHeadHatLeviathanChitinCrown
+      prob: 0.2
+    - id: ClothingHandsGlovesLeviathanChitin
+      prob: 0.2
+    - id: EffectLeviathanButcherSound
+
+- type: entity
+  id: EffectLeviathanButcherSound
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/_Exodus/Ambience/Leviathan/leviathan-appear.ogg
+    positional: true
 
 - type: entity
   id: SpaceLeviathanDespawn
