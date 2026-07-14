@@ -109,7 +109,13 @@
         !type:DamageTrigger
         damage: 16000
       behaviors:
-      - !type:GibBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SpaceLeviathanCorpse:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - SpaceLeviathan
@@ -167,6 +173,46 @@
     ignoreWhitelist:
       tags:
       - SpaceLeviathan
+
+- type: entity
+  id: SpaceLeviathanCorpse
+  name: space leviathan corpse
+  description: A massive segment of a slain space leviathan. Its shell is still valuable.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Monolith/leviathan.rsi
+    state: segment
+    noRot: false
+  - type: RadarBlip
+    scale: 3
+    shape: diamond
+    visibleFromOtherGrids: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1,-1,1,1"
+        density: 137992
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Pullable
+  - type: Butcherable
+    butcherDelay: 20
+    spawned:
+    - id: PuddleIchorLeviathan
+      amount: 4
+    - id: SpaceLeviathanChitin
+      amount: 1
+      maxAmount: 4
+    - id: SpaceLeviathanOreSpawner
+      amount: 24
 
 - type: entity
   id: SpaceLeviathanDespawn
