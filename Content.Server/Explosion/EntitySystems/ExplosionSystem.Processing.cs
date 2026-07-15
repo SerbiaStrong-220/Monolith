@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
+using Content.Shared._Exodus.ShipArmor; // Exodus dynamic armor tile protection
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -569,6 +570,11 @@ public sealed partial class ExplosionSystem
         }
 
         if (tileDef.TileId == tileRef.Tile.TypeId)
+            return;
+
+        var tileDamage = new ShipArmorTileDamageEvent(tileRef.GridUid, tileRef.GridIndices, effectiveIntensity);
+        RaiseLocalEvent(tileRef.GridUid, ref tileDamage); // Exodus dynamic armor tile protection
+        if (tileDamage.Cancelled)
             return;
 
         damagedTiles.Add((tileRef.GridIndices, new Tile(tileDef.TileId)));

@@ -49,3 +49,52 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
+
+# Exodus-begin: portable PDV utility restock
+- type: listing
+  id: UplinkPiratePowerCellHigh
+  name: uplink-pirate-power-cell-high-name
+  description: uplink-pirate-power-cell-high-desc
+  productEntity: PowerCellHigh
+  icon: { sprite: Objects/Power/power_cells.rsi, state: high }
+  cost:
+    Doubloon: 3
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateToolbox
+  name: uplink-pirate-toolbox-name
+  description: uplink-pirate-toolbox-desc
+  productEntity: ToolboxSyndicateFilled
+  icon: { sprite: _Impstation/Objects/Tools/Toolboxes/toolbox_syn.rsi, state: icon }
+  cost:
+    Doubloon: 6
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateGps
+  name: uplink-pirate-gps-name
+  description: uplink-pirate-gps-desc
+  productEntity: HandheldGPSBasic
+  cost:
+    Doubloon: 2
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+# Exodus-end

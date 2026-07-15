@@ -47,12 +47,12 @@
 
 - type: crystallizerRecipe
   id: Plastitanium
-  name: Plastitanium (10)
+  name: Plastitanium (50) # Exodus plastitanium crystallizing
   minimumTemperature: 7920
   maximumTemperature: 8150
   energyRelease: 1840
   products:
-    SheetPlastitanium10: 1
+    SheetPlastitanium10: 5 # Exodus plastitanium crystallizing
   dangerous: true
   minimumRequirements:
   - 35     # oxygen

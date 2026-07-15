@@ -48,6 +48,11 @@ public sealed partial class ShipSteeringSystem : EntitySystem
     // collision evasion input consideration sectors: 24 outer, 12 inner, 1 zero-input
     private List<EvadeCandidate> _sectors = new();
 
+    // Exodus-begin stop NPC ships when their target is lost
+    private const float StopMaxLinearVelocity = 0.1f;
+    private const float StopMaxAngularVelocity = 0.01f;
+    // Exodus-end
+
     public override void Initialize()
     {
         base.Initialize();
@@ -65,7 +70,6 @@ public sealed partial class ShipSteeringSystem : EntitySystem
         var targetUid = target.EntityId;
 
         if (shipUid == null
-            || TerminatingOrDeleted(targetUid)
             || !_shuttleQuery.TryComp(shipUid, out var shuttle)
             || !_physQuery.TryComp(shipUid, out var shipBody)
             || !_gridQuery.TryComp(shipUid, out var shipGrid))
@@ -73,6 +77,29 @@ public sealed partial class ShipSteeringSystem : EntitySystem
             ent.Comp.Status = ShipSteeringStatus.InRange;
             return;
         }
+
+        // Exodus-begin stop NPC ships when their target is lost
+        if (TerminatingOrDeleted(targetUid))
+        {
+            if (shipBody.LinearVelocity.LengthSquared() > StopMaxLinearVelocity * StopMaxLinearVelocity ||
+                MathF.Abs(shipBody.AngularVelocity) > StopMaxAngularVelocity)
+            {
+                ent.Comp.Status = ShipSteeringStatus.Moving;
+                args.GotInput = true;
+                args.Input = new ShuttleInput(Vector2.Zero, 0f, 1f);
+                _shuttle.SetInertiaDampening(shipUid.Value, shipBody, shuttle, Transform(shipUid.Value), InertiaDampeningMode.Anchor);
+                return;
+            }
+
+            _physics.SetLinearVelocity(shipUid.Value, Vector2.Zero, body: shipBody);
+            _physics.SetAngularVelocity(shipUid.Value, 0f, body: shipBody);
+            _shuttle.SetInertiaDampening(shipUid.Value, shipBody, shuttle, Transform(shipUid.Value), InertiaDampeningMode.Off);
+            ent.Comp.Status = ShipSteeringStatus.InRange;
+            RemCompDeferred<ShipSteererComponent>(ent);
+            return;
+        }
+        // Exodus-end
+
         ent.Comp.Status = ShipSteeringStatus.Moving;
 
         var shipXform = Transform(shipUid.Value);
@@ -726,7 +753,18 @@ public sealed partial class ShipSteeringSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        RemComp<ShipSteererComponent>(ent);
+        // Exodus-begin stop NPC ships instead of leaving them drifting
+        if (!TryComp(ent, out TransformComponent? xform) ||
+            xform.GridUid is not { } grid ||
+            !_shuttleQuery.TryComp(grid, out _))
+        {
+            RemComp<ShipSteererComponent>(ent);
+            return;
+        }
+
+        ent.Comp.Coordinates = EntityCoordinates.Invalid;
+        ent.Comp.Status = ShipSteeringStatus.Moving;
+        // Exodus-end
     }
 
     private ref struct SteeringContext

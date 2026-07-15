@@ -130,7 +130,7 @@
   unit: materials-unit-sheet
   icon: { sprite: /Textures/_Mono/Objects/Materials/plastitanium.rsi, state: plastitanium }
   color: "#5c5c5c"
-  price: 6 # 600/sheet
+  price: 3 # Exodus plastitanium price rebalance, 300/sheet
   properties: # FH edit
     electrical: 3
     thermal: 5

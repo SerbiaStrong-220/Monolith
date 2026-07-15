@@ -43,3 +43,17 @@
   components:
   - type: Flatpack
     entity: NebulaThruster
+
+- type: entity
+  parent: BaseFlatpack
+  id: ShipArmorModuleFlatpack
+  name: dynamic armor module flatpack
+  description: A flatpack used for constructing a dynamic armor module.
+  components:
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: false
+    increment: 90
+  - type: Flatpack
+    entity: ShipArmorModule

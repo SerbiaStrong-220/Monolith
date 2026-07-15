@@ -96,9 +96,7 @@
       242: 0.6
       196: 0.4
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2.875 # Exodus-restore: +15% over default 2.5
-    baseSprintSpeed: 5.175 # Exodus-restore: +15% over default 4.5
-    weightlessAcceleration: 2.5 # Birb move fast in zero-g
+    weightlessAcceleration: 2.5 # Birb move fast in zero-g; walk/sprint +15% is on Resomi legs (MovementBodyPart) # Exodus
   - type: MobThresholds # Exodus resomi-hp: 90% of standard human thresholds
     thresholds:
       0: Alive

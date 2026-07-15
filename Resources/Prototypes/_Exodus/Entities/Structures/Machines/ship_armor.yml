@@ -1,0 +1,63 @@
+# Local regenerating ship armor block. Passive — no APC power required.
+# Place on a grid (anchored). Protects damageable entities and floor tiles within radius.
+
+- type: entity
+  id: ShipArmorModule
+  parent: BaseMachine
+  name: dynamic armor module
+  description: A passive local armor matrix. Absorbs damage to nearby hull, equipment and floor tiles, then slowly regenerates its charge.
+  components:
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/ship_armor_placeholder.rsi
+    layers:
+    - state: armor_stage_0
+  - type: ShipArmor
+    maxCharge: 9800 # 3.5 x (2500 Structural + 300 Blunt) from a Bofors shell
+    currentCharge: 9800
+    radius: 5
+    regenRate: 25
+    regenDelay: 7
+    regenInterval: 2
+    chargeCostMultiplier: 1
+    # Empty absorbRatios = all positive damage types at 100%.
+    # Example selective setup:
+    # absorbRatios:
+    #   Blunt: 1
+    #   Slash: 1
+    #   Piercing: 1
+    #   Heat: 0.75
+    #   Structural: 1
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 800
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Repairable
+    doAfterDelay: 8

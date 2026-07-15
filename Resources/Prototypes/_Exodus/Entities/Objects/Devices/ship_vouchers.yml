@@ -356,3 +356,29 @@
     - Luxury
   - type: StaticPrice
     vendPrice: 450000
+
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherEnceladusPrime
+  name: PDV Enceladus Prime LPC
+  description: A small card that authorizes the procurement of an Enceladus Prime-class heavy escort from the flagship's reserves.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/lpcnew.rsi
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#1eff00"
+    - state: screen1
+      color: "#1eff00"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 7200 # 2 hours
+    consoleType: BlackMarket
+    companyName: PDV
+    vessels:
+    - EnceladusPrime
+  - type: StaticPrice
+    vendPrice: 400000
+

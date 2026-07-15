@@ -92,6 +92,11 @@
   - type: Sprite
     sprite: _Moffstation/Mobs/Species/Resomi/parts.rsi
     state: "l_leg"
+  # Exodus-begin: +15% movespeed (body system overwrites mob MovementSpeedModifier from legs)
+  - type: MovementBodyPart
+    walkSpeed: 2.875
+    sprintSpeed: 5.175
+  # Exodus-end
 
 - type: entity
   id: RightLegResomi
@@ -101,6 +106,11 @@
   - type: Sprite
     sprite: _Moffstation/Mobs/Species/Resomi/parts.rsi
     state: "r_leg"
+  # Exodus-begin: +15% movespeed (body system overwrites mob MovementSpeedModifier from legs)
+  - type: MovementBodyPart
+    walkSpeed: 2.875
+    sprintSpeed: 5.175
+  # Exodus-end
 
 - type: entity
   id: LeftFootResomi
