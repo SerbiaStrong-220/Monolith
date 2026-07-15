@@ -406,6 +406,7 @@
   - type: Anchorable
     flags:
     - Anchorable
+    - Unanchorable # Exodus: allow AI cores to be unanchored with a wrench
   - type: Rotatable
   #- type: WarpPoint # Mono - comment out
   #  blacklist:
@@ -414,11 +415,16 @@
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
+  # Exodus-begin: AI core durability
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Electronic
+  # Exodus-end: AI core durability
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 1000 # Exodus: AI core durability
       behaviors:
       - !type:PlaySoundBehavior
         sound:

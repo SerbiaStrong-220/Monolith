@@ -259,6 +259,7 @@
     companyName: TSF
     vessels:
     - Aldebaran
+    - Termite # Exodus tsfcm-termite
     - Tarantula
     - Spica
     - Mercury
@@ -640,6 +641,7 @@
     - Garm
     - Kalisto
     - Metis
+    - Enceladus # Exodus enceladus
 # end T1
 
 # start T2

@@ -49,3 +49,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
+
+# Exodus-territory-banner
+- type: listing
+  id: UplinkSecurityBannerTSF
+  name: uplink-security-banner-tsf-name
+  description: uplink-security-banner-tsf-desc
+  productEntity: BannerNGC
+  cost:
+    FederationMilitaryCredit: 2
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink

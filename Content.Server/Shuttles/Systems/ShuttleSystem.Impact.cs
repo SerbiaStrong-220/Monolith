@@ -27,6 +27,7 @@ using System.Numerics;
 
 using Content.Server._Mono.Cleanup;
 using Content.Shared._Mono.CCVar;
+using Content.Shared._Exodus.ShipArmor; // Exodus dynamic armor tile protection
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -480,7 +481,12 @@ public sealed partial class ShuttleSystem
             // Mark tiles for breaking/effects
             var def = _turf.GetContentTileDefinition(_mapSystem.GetTileRef(uid, grid, tileData.Tile));
             if (tileData.Energy > def.Mass * _tileBreakEnergyMultiplier)
-                brokenTiles.Add((tileData.Tile, Tile.Empty));
+            {
+                var tileDamage = new ShipArmorTileDamageEvent(uid, tileData.Tile, tileData.Energy);
+                RaiseLocalEvent(uid, ref tileDamage); // Exodus dynamic armor tile protection
+                if (!tileDamage.Cancelled)
+                    brokenTiles.Add((tileData.Tile, Tile.Empty));
+            }
 
         }
     }

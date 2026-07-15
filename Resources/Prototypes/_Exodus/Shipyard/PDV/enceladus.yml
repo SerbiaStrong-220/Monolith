@@ -1,0 +1,43 @@
+#Author: Exodus
+
+- type: vessel
+  id: Enceladus
+  parent: BaseVesselAntag
+  name: Энцелад # Ru-Localization
+  description: Корвет Династии Фаэтон с 220-мм «Тифоном», 30-мм РАК-30 и системой вспышек. Универсальный боевой корабль для сопровождения и патруля. # Ru-Localization
+  price: 165000
+  purchasable: false # voucher only
+  category: Medium
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/PDV/enceladus.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Pirate
+  - Pursuit
+  - Corvette
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Enceladus
+  mapName: 'Энцелад' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/PDV/enceladus.yml
+  minPlayers: 0
+  stations:
+    Enceladus:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Энцелад{1}' # Ru-Localization
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Pirate: [ 0, 0 ]
+          PdvBorg: [ 0, 0 ]

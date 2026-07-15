@@ -17,8 +17,10 @@
     idleLoad: 60
     batteryRechargeRate: 3000
     batteryRechargeEfficiency: 0.95
+  - type: DisableToolUse
+    anchoring: false
   - type: Anchorable
-    flags: Anchorable
+    flags: Anchorable, Unanchorable
   - type: ShipRepairable
     repairTime: 30
     repairCost: 115

@@ -20,4 +20,9 @@ public sealed partial class JukeboxPrototype : IPrototype
 
     [DataField(required: true)]
     public SoundPathSpecifier Path = default!;
+
+    // Exodus-begin add category to songs
+    [DataField]
+    public string SongCategory = "jukebox";
+    // Exodus-end
 }

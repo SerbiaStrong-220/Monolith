@@ -13,7 +13,7 @@
     - state: space_artillery
     scale: 1, 1
   - type: Gun
-    projectileSpeed: 320
+    projectileSpeed: 350
     minAngle: 0
     maxAngle: 4
     fireRate: 0.25

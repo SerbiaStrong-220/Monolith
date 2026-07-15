@@ -151,6 +151,7 @@
   - type: Rehydratable
     possibleSpawns:
     - MobProtogenRandom # mono end
+
 - type: entity
   parent: MonkeyCube
   id: TajaranCube
@@ -159,3 +160,14 @@
   - type: Rehydratable
     possibleSpawns:
     - MobTajaranRandom
+
+# Exodus add arachnid cube begin
+- type: entity
+  parent: MonkeyCube
+  id: ArachnidCube
+  name: arachnid cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobArachnidRandom
+# Exodus add arachnid cube end
