@@ -682,6 +682,11 @@ public sealed partial class ShipSteeringSystem : EntitySystem
     {
         var args = outerArgs.Args;
         var targetEnt = ent.Comp.Coordinates.EntityId;
+
+        // Exodus - the target can disappear while the ship is performing an emergency stop.
+        if (TerminatingOrDeleted(targetEnt))
+            return;
+
         var targetGrid = Transform(targetEnt).GridUid;
 
         // if we want to finish movement on collide with target, do so
@@ -740,6 +745,8 @@ public sealed partial class ShipSteeringSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             ent.Comp = AddComp<ShipSteererComponent>(ent);
 
+        // Exodus - preserve the pilot-selected dampening mode while autopilot manages its own braking.
+        ent.Comp.PreviousDampeningMode ??= _shuttle.NfGetInertiaDampeningMode(ent.Owner);
         ent.Comp.Coordinates = coordinates;
 
         return ent.Comp;
@@ -753,17 +760,17 @@ public sealed partial class ShipSteeringSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        // Exodus-begin stop NPC ships instead of leaving them drifting
-        if (!TryComp(ent, out TransformComponent? xform) ||
-            xform.GridUid is not { } grid ||
-            !_shuttleQuery.TryComp(grid, out _))
+        // Exodus-begin immediately release the ship when its autopilot is disabled
+        var xform = Transform(ent);
+        if (xform.GridUid is { } grid &&
+            ent.Comp.PreviousDampeningMode is { } dampeningMode &&
+            _shuttleQuery.TryComp(grid, out var shuttle) &&
+            _physQuery.TryComp(grid, out var body))
         {
-            RemComp<ShipSteererComponent>(ent);
-            return;
+            _shuttle.SetInertiaDampening(grid, body, shuttle, Transform(grid), dampeningMode);
         }
 
-        ent.Comp.Coordinates = EntityCoordinates.Invalid;
-        ent.Comp.Status = ShipSteeringStatus.Moving;
+        RemComp<ShipSteererComponent>(ent);
         // Exodus-end
     }
 
