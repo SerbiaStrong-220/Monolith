@@ -107,6 +107,8 @@
       weight: 10
     - id: SpawnDroneQuake
       weight: 10
+    - id: SpawnDroneDeflector # Exodus drone-deflector
+      weight: 10
 
 - type: entityTable
   id: DroneSpawnTableT2Middle
@@ -419,3 +421,25 @@
       - DroneHex
       - DroneHex
     nameGrid: false
+
+# Exodus-begin drone-deflector
+- type: entity
+  id: SpawnDroneDeflector
+  parent: SpawnDroneBase
+  components:
+  - type: GridSpawner
+    path: /SharedMaps/_Exodus/Shuttles/World/deflector.yml
+    addComponents:
+    - type: RandomMetadata
+      nameSeparator: ""
+      nameSegments:
+      - "ДЕФЛЕКТОР"
+      - DroneAltHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+    nameGrid: false
+# Exodus-end drone-deflector
