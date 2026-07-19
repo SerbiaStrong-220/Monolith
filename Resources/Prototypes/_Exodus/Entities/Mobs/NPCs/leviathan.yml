@@ -1,6 +1,6 @@
 - type: entity
   id: SpaceLeviathan
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, ShowMedicalIcons ]
   name: space leviathan
   description: When the space becomes too quiet, there is no hope, there is no escape, but there is this.
   suffix: no despawn
@@ -19,6 +19,18 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 70
     baseWalkSpeed: 70
+  - type: Eye
+    pvsScale: 8.916104
+  - type: ContentEye
+    targetZoom: 8.916104, 8.916104
+    maxZoom: 8.916104, 8.916104
+  - type: TemporarySpeedBoost
+    action: ActionLeviathanSurge
+    duration: 8
+    walkSpeedMultiplier: 2
+    sprintSpeedMultiplier: 2
+    weightlessSpeedMultiplier: 2
+    weightlessAccelerationMultiplier: 2
   - type: RadarBlip
     scale: 3
     shape: hexagon
@@ -30,7 +42,7 @@
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
-        toggleAction: ActionAGhostShowRadar
+        toggleAction: ActionLeviathanShowRadar
   - type: RadarConsole
     followEntity: true
     hideCoords: false # Frontier
@@ -69,6 +81,7 @@
   - type: MeleeWeapon
     altDisarm: false
     attackRate: 0.3
+    range: 8
     angle: 0
     animation: WeaponArcBite
     soundHit:
