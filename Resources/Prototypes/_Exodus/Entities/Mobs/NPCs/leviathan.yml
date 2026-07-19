@@ -51,6 +51,10 @@
     scale: 3
     shape: hexagon
     visibleFromOtherGrids: true
+  - type: BluespaceMapBlip
+    color: "#FF8227"
+    scale: 1.5
+    label: bluespace-map-blip-space-leviathan
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:

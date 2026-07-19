@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared._Mono.Radar;
 using Robust.Shared.Map;
+using Robust.Shared.Localization; // Exodus bluespace-map-blips
 using Robust.Shared.Timing;
 using System.Linq;
 
@@ -138,7 +139,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
                 maybeGrid = grid != EntityUid.Invalid ? grid : null;
             }
 
-            _cachedBlipData.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config));
+            _cachedBlipData.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config, blip.Label));
         }
 
         return _cachedBlipData;
@@ -188,7 +189,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
                 maybeGrid = grid != EntityUid.Invalid ? grid : null;
             }
 
-            target.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config));
+            target.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config, blip.Label));
         }
     }
     // Exodus-end
@@ -211,5 +212,6 @@ public record struct BlipData
     EntityCoordinates Position,
     Angle Rotation,
     EntityUid? GridUid,
-    BlipConfig Config
+    BlipConfig Config,
+    LocId? Label
 );

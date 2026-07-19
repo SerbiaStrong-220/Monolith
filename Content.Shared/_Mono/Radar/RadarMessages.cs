@@ -1,5 +1,6 @@
 using System.Numerics;
 using Robust.Shared.Map;
+using Robust.Shared.Localization; // Exodus bluespace-map-blips
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Mono.Radar;
@@ -90,7 +91,8 @@ public record struct BlipNetData
     Vector2 Vel,
     Angle Rotation,
     ushort ConfigIndex,
-    ushort? OnGridConfigIndex
+    ushort? OnGridConfigIndex,
+    LocId? Label = null // Exodus bluespace-map-blips
 );
 
 [Serializable, NetSerializable]
