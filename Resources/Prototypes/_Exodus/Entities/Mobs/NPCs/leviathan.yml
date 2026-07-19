@@ -60,10 +60,14 @@
     interfaces:
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
+      enum.ReadOnlyBluespaceMapUiKey.Key:
+        type: ReadOnlyBluespaceMapBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
         toggleAction: ActionLeviathanShowRadar
+      enum.ReadOnlyBluespaceMapUiKey.Key:
+        toggleAction: ActionShowBluespaceMap
   - type: RadarConsole
     followEntity: true
     hideCoords: false # Frontier

@@ -17,3 +17,16 @@
   components:
   - type: InstantAction
     itemIconStyle: NoItem
+- type: entity
+  id: ActionShowBluespaceMap
+  categories: [ HideSpawnMenu ]
+  name: bluespace map
+  description: View the sector map.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: mass_scanner
+    event: !type:ToggleIntrinsicUIEvent
+      key: enum.ReadOnlyBluespaceMapUiKey.Key
