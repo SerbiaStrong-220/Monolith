@@ -248,27 +248,36 @@ public sealed partial class ShuttleMapControl
             }
 
             var scale = MathF.Max(blip.Config.Bounds.Width, blip.Config.Bounds.Height) * 0.5f;
-            var mapObject = GetMapObject(relativePos with { Y = -relativePos.Y }, blip.Rotation, scale, scalePosition: true);
-            var bottom = mapObject[0];
-            var right = mapObject[1];
-            var top = mapObject[2];
-            var left = mapObject[3];
-            _bluespaceMapBlipVertices[0] = bottom;
-            _bluespaceMapBlipVertices[1] = right;
-            _bluespaceMapBlipVertices[2] = top;
-            _bluespaceMapBlipVertices[3] = bottom;
-            _bluespaceMapBlipVertices[4] = top;
-            _bluespaceMapBlipVertices[5] = left;
-            _bluespaceMapBlipEdges[0] = bottom;
-            _bluespaceMapBlipEdges[1] = right;
-            _bluespaceMapBlipEdges[2] = right;
-            _bluespaceMapBlipEdges[3] = top;
-            _bluespaceMapBlipEdges[4] = top;
-            _bluespaceMapBlipEdges[5] = left;
-            _bluespaceMapBlipEdges[6] = left;
-            _bluespaceMapBlipEdges[7] = bottom;
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _bluespaceMapBlipVertices, blip.Config.Color.WithAlpha(0.05f));
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _bluespaceMapBlipEdges, blip.Config.Color);
+            if (blip.Config.Shape == RadarBlipShape.Ring)
+            {
+                var radius = GetMapObjectRadius(scale) * MinimapScale;
+                handle.DrawCircle(uiPosition, radius, blip.Config.Color.WithAlpha(0.05f));
+                handle.DrawCircle(uiPosition, radius, blip.Config.Color, filled: false);
+            }
+            else
+            {
+                var mapObject = GetMapObject(relativePos with { Y = -relativePos.Y }, blip.Rotation, scale, scalePosition: true);
+                var bottom = mapObject[0];
+                var right = mapObject[1];
+                var top = mapObject[2];
+                var left = mapObject[3];
+                _bluespaceMapBlipVertices[0] = bottom;
+                _bluespaceMapBlipVertices[1] = right;
+                _bluespaceMapBlipVertices[2] = top;
+                _bluespaceMapBlipVertices[3] = bottom;
+                _bluespaceMapBlipVertices[4] = top;
+                _bluespaceMapBlipVertices[5] = left;
+                _bluespaceMapBlipEdges[0] = bottom;
+                _bluespaceMapBlipEdges[1] = right;
+                _bluespaceMapBlipEdges[2] = right;
+                _bluespaceMapBlipEdges[3] = top;
+                _bluespaceMapBlipEdges[4] = top;
+                _bluespaceMapBlipEdges[5] = left;
+                _bluespaceMapBlipEdges[6] = left;
+                _bluespaceMapBlipEdges[7] = bottom;
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _bluespaceMapBlipVertices, blip.Config.Color.WithAlpha(0.05f));
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _bluespaceMapBlipEdges, blip.Config.Color);
+            }
 
             if (blip.Label != null)
                 DrawMapObjectLabel(handle, uiPosition, Loc.GetString(blip.Label), blip.Config.Color);

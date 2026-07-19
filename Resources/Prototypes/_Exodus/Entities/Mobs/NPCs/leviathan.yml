@@ -52,6 +52,7 @@
     shape: hexagon
     visibleFromOtherGrids: true
   - type: BluespaceMapBlip
+    shape: Ring
     color: "#FF8227"
     scale: 1.5
     label: bluespace-map-blip-space-leviathan

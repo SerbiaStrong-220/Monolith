@@ -112,7 +112,7 @@ public sealed partial class RadarBlipSystem : EntitySystem
             var configIndex = GetOrAddConfig(new BlipConfig
             {
                 Color = blip.Color,
-                Shape = RadarBlipShape.Diamond,
+                Shape = blip.Shape,
                 Bounds = new Box2(-blip.Scale, -blip.Scale, blip.Scale, blip.Scale),
             });
 

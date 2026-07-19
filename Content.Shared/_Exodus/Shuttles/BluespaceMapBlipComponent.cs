@@ -1,3 +1,4 @@
+using Content.Shared._Mono.Radar;
 using Robust.Shared.Localization;
 
 namespace Content.Shared._Exodus.Shuttles;
@@ -8,6 +9,12 @@ namespace Content.Shared._Exodus.Shuttles;
 [RegisterComponent]
 public sealed partial class BluespaceMapBlipComponent : Component
 {
+    /// <summary>
+    /// Shape used to represent the entity on the bluespace navigation map.
+    /// </summary>
+    [DataField]
+    public RadarBlipShape Shape = RadarBlipShape.Diamond;
+
     /// <summary>
     /// Color of the marker and its optional label.
     /// </summary>
