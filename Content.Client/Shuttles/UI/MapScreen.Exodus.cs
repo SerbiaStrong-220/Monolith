@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Systems;
 
@@ -18,6 +19,9 @@ public sealed partial class MapScreen
         MapRadar.ShowFTLRangeOnly = false;
         Startup();
         PingMap();
-        RightDisplayMap.Visible = false;
+        MapRadar.MaxSize = new Vector2(float.PositiveInfinity);
+
+        if (RightDisplayMap.Parent?.Parent is { } rightPanel)
+            rightPanel.Visible = false;
     }
 }
