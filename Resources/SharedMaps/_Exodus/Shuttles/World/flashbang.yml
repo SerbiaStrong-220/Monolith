@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 07/16/2026 17:02:29
-  entityCount: 101
+  time: 07/19/2026 22:52:31
+  entityCount: 100
 maps: []
 grids:
 - 1
@@ -97,10 +97,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
-        Kudzu: []
+        Puddle: []
         Smoke: []
         MetalFoam: []
-        Puddle: []
+        Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -120,6 +120,14 @@ entities:
     - type: RadiationGridResistance
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+- proto: APCBasic
+  entities:
+  - uid: 27
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,-2.5
+      parent: 1
 - proto: CableApcExtension
   entities:
   - uid: 4
@@ -289,6 +297,18 @@ entities:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
+- proto: CableMV
+  entities:
+  - uid: 42
+    components:
+    - type: Transform
+      pos: -2.5,-2.5
+      parent: 1
+  - uid: 50
+    components:
+    - type: Transform
+      pos: -1.5,-2.5
+      parent: 1
 - proto: ClothingBackpackDroneLootT21
   entities:
   - uid: 40
@@ -360,13 +380,6 @@ entities:
     - type: Transform
       pos: -1.5,-1.5
       parent: 1
-- proto: LargeAPC
-  entities:
-  - uid: 42
-    components:
-    - type: Transform
-      pos: -1.5,-2.5
-      parent: 1
 - proto: NpcStationAiAttackerSmart
   entities:
   - uid: 84
@@ -382,6 +395,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-1.5
+      parent: 1
+- proto: SubstationBasic
+  entities:
+  - uid: 28
+    components:
+    - type: Transform
+      pos: -1.5,-2.5
       parent: 1
 - proto: Thruster
   entities:
