@@ -4,7 +4,7 @@
   components:
   - type: GameRule
   - type: RingEntitySpawnRule
-    prototype: SpaceLeviathanDespawn
+    prototype: SpaceLeviathan
     minimumDistance: 60000
     maximumDistance: 70000
     announcement: space-leviathan-arrival-announcement

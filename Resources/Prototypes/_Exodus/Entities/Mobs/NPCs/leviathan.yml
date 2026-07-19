@@ -8,6 +8,22 @@
   - type: Damageable
     damageModifierSet: Leviathan
     damageContainer: Biological
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-space-leviathan-name
+    description: ghost-role-information-space-leviathan-description
+    rules: ghost-role-information-space-leviathan-rules
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hrs
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: WorldChunkLoadingExempt
   - type: PointLight
     color: "#FF8227FF"
     radius: 3
@@ -246,11 +262,7 @@
 - type: entity
   id: SpaceLeviathanDespawn
   parent: SpaceLeviathan
-  suffix: despawns
-  components:
-  - type: TimedDespawn
-    lifetime: 300
-
+  suffix: legacy no despawn
 - type: entity
   id: SpaceLeviathanSpawner
   parent: MarkerBase
@@ -263,4 +275,4 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - SpaceLeviathanDespawn
+    - SpaceLeviathan

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._Exodus.Worldgen.Components; // Exodus worldgen-loader-exempt
 using Content.Server._Mono.Worldgen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Worldgen.Components;
@@ -125,6 +126,7 @@ public sealed partial class WorldControllerSystem : EntitySystem
         var mindEnum = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
         var chunkLoaderEnum = EntityQueryEnumerator<ChunkLoaderComponent, TransformComponent>();
         var ghostQuery = GetEntityQuery<GhostComponent>();
+        var worldChunkLoadingExemptQuery = GetEntityQuery<WorldChunkLoadingExemptComponent>(); // Exodus worldgen-loader-exempt
 
         // Mindful entities get special privilege as they're always a player and we don't want the illusion being broken around them.
         while (mindEnum.MoveNext(out var uid, out var mind, out var xform))
@@ -133,6 +135,9 @@ public sealed partial class WorldControllerSystem : EntitySystem
                 continue;
 
             if (ghostQuery.HasComponent(uid))
+                continue;
+
+            if (worldChunkLoadingExemptQuery.HasComponent(uid)) // Exodus worldgen-loader-exempt
                 continue;
 
             // Mono edit
