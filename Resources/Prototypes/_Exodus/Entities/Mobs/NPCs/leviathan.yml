@@ -42,11 +42,11 @@
     maxZoom: 8.916104, 8.916104
   - type: TemporarySpeedBoost
     action: ActionLeviathanSurge
-    duration: 8
-    walkSpeedMultiplier: 2
-    sprintSpeedMultiplier: 2
-    weightlessSpeedMultiplier: 2
-    weightlessAccelerationMultiplier: 2
+    duration: 10
+    walkSpeedMultiplier: 3
+    sprintSpeedMultiplier: 3
+    weightlessSpeedMultiplier: 3
+    weightlessAccelerationMultiplier: 3
   - type: RadarBlip
     scale: 3
     shape: hexagon

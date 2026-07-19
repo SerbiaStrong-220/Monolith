@@ -1,2 +1,2 @@
 ent-ActionLeviathanSurge = leviathan surge
-    .desc = Double your speed for eight seconds.
+    .desc = Temporarily increases your speed.
