@@ -40,9 +40,13 @@
   description: A crown of leviathan chitin that attunes its wearer to shuttle control.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/fancycrown.rsi
+    sprite: _Exodus/Clothing/Head/Misc/leviathan_chitin_crown.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/fancycrown.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.09375"
+    sprite: _Exodus/Clothing/Head/Misc/leviathan_chitin_crown.rsi
   - type: ClothingGrantComponent
     component:
     - type: ShuttleBoostingPilot
