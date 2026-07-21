@@ -37,7 +37,7 @@
   - type: RandomSpawner
     prototypes:
     - SteelOreLeviathan10
-    - Coal10
+    - CoalLeviathan50
     - SpaceQuartzLeviathan10
     - PlasmaOreLeviathan10
     rarePrototypes:
@@ -47,12 +47,22 @@
     - BananiumOreLeviathan10
     - DiamondOreLeviathan10
     rareChance: 0.25
-    offset: 5
+    offset: 0
 
 - type: entity
   parent: SteelOre
   id: SteelOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 250
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 250
+    maxCountOverride: 250
+
+- type: entity
+  parent: Coal
+  id: CoalLeviathan50
+  suffix: Leviathan, Fifty
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
@@ -61,62 +71,67 @@
 - type: entity
   parent: SpaceQuartz
   id: SpaceQuartzLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 250
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 50
+    count: 250
+    maxCountOverride: 250
 
 - type: entity
   parent: PlasmaOre
   id: PlasmaOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 250
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 50
+    count: 250
+    maxCountOverride: 250
 
 - type: entity
   parent: GoldOre
   id: GoldOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 250
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 50
+    count: 250
+    maxCountOverride: 250
 
 - type: entity
   parent: SilverOre
   id: SilverOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 250
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 50
+    count: 250
+    maxCountOverride: 250
 
 - type: entity
   parent: UraniumOre
   id: UraniumOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 250
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 50
+    count: 250
+    maxCountOverride: 250
 
 - type: entity
   parent: BananiumOre
   id: BananiumOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 100
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 20
+    count: 100
 
 - type: entity
   parent: DiamondOre
   id: DiamondOreLeviathan10
-  suffix: Leviathan, Ten
+  suffix: Leviathan, 100
   categories: [ HideSpawnMenu ]
   components:
   - type: Stack
-    count: 20
+    count: 100

@@ -272,6 +272,8 @@
       prob: 0.2
     - id: ClothingHandsGlovesLeviathanChitin
       prob: 0.2
+    - id: MachineGCSSuperCircuitboard
+      prob: 0.2
     - id: EffectLeviathanButcherSound
 
 - type: entity
