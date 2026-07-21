@@ -37,6 +37,7 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: WorldChunkLoadingExempt
+  - type: CleanupImmune
   - type: PointLight
     color: "#FF8227FF"
     radius: 3
@@ -189,6 +190,7 @@
   - FlyingMobBase
   suffix: do not spawn
   components:
+  - type: CleanupImmune
   - type: Damageable
     damageModifierSet: Leviathan
     damageContainer: Biological
@@ -234,6 +236,7 @@
   name: space leviathan corpse
   description: A massive segment of a slain space leviathan. Its shell is still valuable.
   components:
+  - type: CleanupImmune
   - type: Sprite
     sprite: _Exodus/Mobs/Monolith/leviathan.rsi
     state: segment
