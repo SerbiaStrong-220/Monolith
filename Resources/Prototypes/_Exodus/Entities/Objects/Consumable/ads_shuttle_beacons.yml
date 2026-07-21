@@ -73,6 +73,8 @@
   components:
   - type: ShuttleEventBeacon
     rule: LeviathanArrival
+  - type: StaticPrice
+    price: 95000
 
 - type: entity
   id: ADSShuttleEmergencyBeaconNebula

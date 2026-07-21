@@ -258,6 +258,8 @@
         layer:
         - MobLayer
   - type: Pullable
+  - type: StaticPrice
+    price: 0
   - type: Butcherable
     butcherDelay: 20
     spawned:

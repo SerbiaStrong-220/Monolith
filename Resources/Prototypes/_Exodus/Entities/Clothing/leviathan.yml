@@ -10,6 +10,8 @@
   - type: Item
     sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
     size: Normal
+  - type: StaticPrice
+    price: 110000
   - type: ArmorPlateItem
     maxDurability: 100
     walkSpeedModifier: 1.15
@@ -47,6 +49,8 @@
       - state: equipped-HELMET
         offset: "0, 0.09375"
     sprite: _Exodus/Clothing/Head/Misc/leviathan_chitin_crown.rsi
+  - type: StaticPrice
+    price: 120000
   - type: ClothingGrantComponent
     component:
     - type: ShuttleBoostingPilot
@@ -66,6 +70,8 @@
     sprite: _Exodus/Clothing/Hands/Gloves/leviathan_chitin.rsi
   - type: Clothing
     sprite: _Exodus/Clothing/Hands/Gloves/leviathan_chitin.rsi
+  - type: StaticPrice
+    price: 110000
   - type: MeleeWeapon
     attackRate: 1
     damage:
