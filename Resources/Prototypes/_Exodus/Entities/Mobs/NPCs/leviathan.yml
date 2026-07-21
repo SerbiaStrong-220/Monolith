@@ -132,7 +132,7 @@
       types:
         Blunt: 50
         Slash: 45
-        Structural: 800
+        Structural: 3000
   - type: Speech
     speechVerb: LargeMob
   - type: InteractionPopup
