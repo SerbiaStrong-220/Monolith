@@ -272,7 +272,7 @@
       prob: 0.2
     - id: ClothingHandsGlovesLeviathanChitin
       prob: 0.2
-    - id: MachineGCSSuperCircuitboard
+    - id: GunneryServerSuperFlatpack
       prob: 0.2
     - id: EffectLeviathanButcherSound
 

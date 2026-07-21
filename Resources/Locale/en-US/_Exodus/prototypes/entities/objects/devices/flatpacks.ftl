@@ -9,3 +9,5 @@ ent-WeaponTurretTyphonFlatpack = TYPHON autocannon flatpack
     .desc = A flatpack used for constructing a TYPHON 220mm autocannon.
 ent-NebulaThrusterFlatpack = phasic thruster flatpack
     .desc = A flatpack used for constructing a phasic thruster.
+ent-GunneryServerSuperFlatpack = super-high-power gunnery control server flatpack
+    .desc = A flatpack used for constructing a gunnery control server with 120 processing power.
