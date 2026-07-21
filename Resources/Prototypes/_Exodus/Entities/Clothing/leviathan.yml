@@ -5,10 +5,10 @@
   description: A resilient hardsuit armor plate made from leviathan chitin.
   components:
   - type: Sprite
-    sprite: _Mono/Clothing/ArmorPlate/armor_plates.rsi
-    state: pierce
+    sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
+    state: icon
   - type: Item
-    sprite: _Mono/Clothing/ArmorPlate/armor_plates.rsi
+    sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
     size: Normal
   - type: ArmorPlateItem
     maxDurability: 200
