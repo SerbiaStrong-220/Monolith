@@ -8,6 +8,9 @@
   - type: Damageable
     damageModifierSet: Leviathan
     damageContainer: Biological
+  - type: RadialDamageFieldTarget
+    profiles:
+    - Leviathan
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
