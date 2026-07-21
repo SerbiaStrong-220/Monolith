@@ -17,6 +17,22 @@
       - FactionStaticUplinkPdv
 
 - type: listing
+  id: UplinkPdvShipArmorModuleFlatpack
+  name: uplink-pdv-ship-armor-flatpack-name
+  description: uplink-pdv-ship-armor-flatpack-desc
+  icon: { sprite: _Exodus/Structures/Machines/ship_armor_placeholder.rsi, state: armor_stage_0 }
+  productEntity: ShipArmorModuleFlatpack
+  cost:
+    Doubloon: 4
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv
+
+- type: listing
   id: UplinkPdvTyphonFlatpack
   name: uplink-pdv-typhon-flatpack-name
   description: uplink-pdv-typhon-flatpack-desc
@@ -49,3 +65,23 @@
     whitelist:
       tags:
       - PirateUplink
+
+# MARK: Vouchers
+
+- type: listing
+  id: UplinkPdvVoucherEnceladusPrime
+  name: uplink-pdv-enceladus-prime-voucher-name
+  description: uplink-pdv-enceladus-prime-voucher-desc
+  productEntity: ShipVoucherEnceladusPrime
+  cost:
+    Doubloon: 400
+  categories:
+  - UplinkPdvVouchers
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv
+  - !type:ListingLimitedStockCondition
+    stock: 3
+    shared: true

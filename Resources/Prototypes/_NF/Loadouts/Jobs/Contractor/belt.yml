@@ -247,3 +247,17 @@
   price: 0 # Mono
   equipment:
     belt: ClothingBeltSheathFilled
+
+# Exodus-begin add webbing to loadout
+- type: loadout
+  id: ContractorCombatWebbingMedical
+  price: 0
+  equipment:
+    belt: ClothingBeltMilitaryWebbingMed
+
+- type: loadout
+  id: ContractorClothingBeltMilitaryWebbing
+  price: 0 # Mono
+  equipment:
+    belt: ClothingBeltMilitaryWebbing
+# Exodus-end

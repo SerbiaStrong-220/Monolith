@@ -128,8 +128,10 @@
     idleLoad: 50
     batteryRechargeRate: 2400
     batteryRechargeEfficiency: 0.95
-  - type: Anchorable # Sorry Tunguska, but I am NOT risking this being used for a missile bus. - "what could go wrong" says redrover -- It turns out, a lot could and did.
-    flags: Anchorable
+  - type: DisableToolUse # Exodus gunnery-server-unanchorable
+    anchoring: false
+  - type: Anchorable # Exodus gunnery-server-unanchorable
+    flags: Anchorable, Unanchorable
   - type: ShipRepairable
     repairTime: 25
     repairCost: 100

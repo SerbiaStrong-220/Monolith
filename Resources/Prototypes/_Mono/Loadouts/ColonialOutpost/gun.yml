@@ -26,8 +26,11 @@
   id: SecurityGuardPistol
   name: loadout-group-pistol
   minLimit: 1
+  maxLimit: 2 # Exodus 1 > 2
   loadouts:
   - SecurityGuardMk58Loadout #MK58
+  - StationRepStunbatonLoadout # Exodus add Stunbaton
+  - StationRepTruncheonLoadout # Exodus add Truncheon
   fallbacks:
   - SecurityGuardMk58Loadout
 

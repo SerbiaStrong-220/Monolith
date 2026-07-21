@@ -14,7 +14,7 @@
   minimumDistance: 10000 # Exodus-nebula-update
   maximumDistance: 35000 # Exodus-nebula-update
   spawnGroup: Required
-  gridPath: /Maps/_Mono/POI/derelictdrillsite.yml
+  gridPath: /Maps/_Exodus/POI/derelictdrillsite.yml # Exodus derelict drill site map relocation
   addComponents:
   - type: IFF
     color: "#ccaa55"
@@ -22,7 +22,7 @@
 - type: gameMap
   id: Mining
   mapName: 'Брошенный Буровой Комплекс' # Ru-Localization
-  mapPath: /Maps/_Mono/POI/derelictdrillsite.yml
+  mapPath: /Maps/_Exodus/POI/derelictdrillsite.yml # Exodus derelict drill site map relocation
   minPlayers: 0
   stations:
     Mining:

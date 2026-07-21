@@ -1,0 +1,43 @@
+#Author: Exodus
+
+- type: vessel
+  id: EnceladusPrime
+  parent: BaseVesselAntag
+  name: Энцелад Прайм # Ru-Localization
+  description: 'Эсминец из семейства "Энцеладов": 220-мм «Тифон», 30-мм РАК-30, «Бофорс», «Товек» и система вспышек. Тяжёлый ударный эскорт Династии Фаэтон.' # Ru-Localization
+  price: 420000
+  purchasable: false # voucher only
+  category: Medium
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/PDV/enceladus_prime.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Pirate
+  - Pursuit
+  - Destroyer
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: EnceladusPrime
+  mapName: 'Энцелад Прайм' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/PDV/enceladus_prime.yml
+  minPlayers: 0
+  stations:
+    EnceladusPrime:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Энцелад Прайм{1}' # Ru-Localization
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Pirate: [ 0, 0 ]
+          PdvBorg: [ 0, 0 ]

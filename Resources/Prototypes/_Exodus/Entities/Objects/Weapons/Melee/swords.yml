@@ -1,0 +1,7 @@
+- type: entity
+  name: plasteel arming sword
+  parent: PlasteelArmingSword
+  id: PlasteelArmingSwordEngraveable
+  description: An ancient design manufactured with modern materials and machines for a very specific target demographic.
+  components:
+  - type: Engraveable

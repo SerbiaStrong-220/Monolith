@@ -176,3 +176,23 @@
   price: 500
   inhand:
     - KoboldCubeWrapped
+
+# Exodus-begin add tools
+- type: loadout
+  id: ContractorWeaponGrapplingGun
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  price: 900
+  inhand:
+    - WeaponGrapplingGun
+
+- type: loadout
+  id: ContractorToolboxMechanicalFilled
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  price: 650
+  inhand:
+    - ToolboxMechanicalFilled
+# Exodus-end

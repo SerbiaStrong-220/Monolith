@@ -19,8 +19,13 @@ uplink-pirate-toolbox-desc = Полный набор: лом, гаечный к�
 
 uplink-pirate-gps-name = GPS
 uplink-pirate-gps-desc = Ручной GPS-навигатор. Показывает ваши координаты в секторе.
+uplink-pdv-ship-armor-flatpack-name = упакованный модуль динамической защиты
+uplink-pdv-ship-armor-flatpack-desc = Упаковка с пассивным модулем динамической защиты, поглощающим урон вокруг себя.
 
 # MARK: Vouchers
 
 uplink-pdv-t1-scorpion-voucher-name = ваучер ДФ «Скорпион/Скарабей» [T1]
 uplink-pdv-t1-scorpion-voucher-desc = Небольшая карта, позволяющая заказать со складов флагмана эскорт класса «Скорпион» или «Скарабей».
+
+uplink-pdv-enceladus-prime-voucher-name = ваучер ДФ «Энцелад Прайм»
+uplink-pdv-enceladus-prime-voucher-desc = Небольшая карта, позволяющая заказать со складов флагмана тяжёлый эскорт класса «Энцелад Прайм».

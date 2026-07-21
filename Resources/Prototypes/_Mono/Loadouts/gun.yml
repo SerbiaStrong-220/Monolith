@@ -56,6 +56,29 @@
     back:
     - SurvivalKnife
 
+# Exodus-begin add melee-weapon to loadout
+- type: loadout # Crusher Dagger
+  id: ContractorWeaponCrusherDaggerLoadout
+  price: 600
+  storage:
+    back:
+    - WeaponCrusherDagger
+
+- type: loadout # Stunbaton
+  id: ContractorStunbatonLoadout
+  price: 1600
+  storage:
+    back:
+    - Stunbaton
+
+- type: loadout # Truncheon
+  id: ContractorTruncheonLoadout
+  price: 2400
+  storage:
+    back:
+    - Truncheon
+# Exodus-end
+
 # Shotguns
 
 - type: loadout #Double Barrel Beanbag
@@ -395,13 +418,43 @@
     back:
     - CombatKnife
 
+# Exodus-begin add melee-weapon to loadout
+- type: loadout # Crusher Dagger
+  id: MercenaryWeaponCrusherDaggerLoadout
+  price: 900
+  storage:
+    back:
+    - WeaponCrusherDagger
+
+- type: loadout # Plasteel Arming Sword
+  id: MercenaryPlasteelArmingSwordEngraveableLoadout
+  price: 7000
+  storage:
+    back:
+    - PlasteelArmingSwordEngraveable
+
+- type: loadout # Stunbaton
+  id: MercenaryStunbatonLoadout
+  price: 2400
+  storage:
+    back:
+    - Stunbaton
+
+- type: loadout # Truncheon
+  id: MercenaryTruncheonLoadout
+  price: 3200
+  storage:
+    back:
+    - Truncheon
+# Exodus-end
+
 #region Security Guard
 
 # Rifles
 
 - type: loadout #Iroh
   id: SecurityGuardIrohLoadout
-  name: iroh gun case
+  name: HWL FG.J "Iroh" (5.56x45mm) # Exodus change name
   price: 0
   inhand:
   - WeaponCaseLongIrohSecurity
@@ -506,6 +559,29 @@
   storage:
     back:
     - WeaponRifleAk
+
+# Exodus-begin add melee-weapon to loadout
+- type: loadout # Stunbaton
+  id: StationRepStunbatonLoadout
+  price: 0
+  storage:
+    back:
+    - Stunbaton
+
+- type: loadout # Truncheon
+  id: StationRepTruncheonLoadout
+  price: 0
+  storage:
+    back:
+    - Truncheon
+
+- type: loadout # Combat Knife
+  id: StationRepCombatKnifeLoadout
+  price: 0
+  storage:
+    back:
+    - CombatKnife
+# Exodus-end
 
 #region Factions
 
@@ -756,3 +832,12 @@
   storage:
     back:
     - WeaponPistolViper
+
+# Exodus-begin add melee-weapon to loadout
+- type: loadout # Energy Dagger Loud
+  id: FactionEnergyDaggerLoudLoadout
+  price: 10000
+  storage:
+    back:
+    - EnergyDaggerLoud
+# Exodus-end

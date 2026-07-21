@@ -2,6 +2,7 @@
   id: USSPCommissar
   name: job-name-ussp-commissar
   description: job-description-ussp-commissar
+  setPreference: false # Exodus disable-ussp-faction
   playTimeTracker: JobUSSPCommissar
   requirements:
   # - !type:DepartmentTimeRequirement # Disabled until newgens get hours in
