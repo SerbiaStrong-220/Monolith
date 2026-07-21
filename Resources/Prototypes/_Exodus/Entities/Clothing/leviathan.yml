@@ -11,7 +11,7 @@
     sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
     size: Normal
   - type: StaticPrice
-    price: 110000
+    price: 60000
   - type: ArmorPlateItem
     maxDurability: 100
     walkSpeedModifier: 1.15
