@@ -63,9 +63,9 @@
   description: Combat gloves reinforced with leviathan chitin.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/combat.rsi
+    sprite: _Exodus/Clothing/Hands/Gloves/leviathan_chitin.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/combat.rsi
+    sprite: _Exodus/Clothing/Hands/Gloves/leviathan_chitin.rsi
   - type: MeleeWeapon
     attackRate: 1
     damage:
