@@ -11,7 +11,7 @@
     sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
     size: Normal
   - type: ArmorPlateItem
-    maxDurability: 200
+    maxDurability: 100
     walkSpeedModifier: 1.15
     sprintSpeedModifier: 1.15
     absorptionRatios:
