@@ -47,14 +47,17 @@ public sealed partial class RadialDamageFieldSystem : EntitySystem
             {
                 if (fieldXform.MapID != targetXform.MapID ||
                     !_prototype.TryIndex(field.Profile, out var profile) ||
-                    profile.Range <= 0f ||
                     !ProfilesMatch(target.Profiles, profile.TargetProfiles))
                 {
                     continue;
                 }
 
+                var range = field.RangeOverride ?? profile.Range;
+                if (range <= 0f)
+                    continue;
+
                 var delta = targetPosition - _transform.GetWorldPosition(fieldXform);
-                if (delta.LengthSquared() > profile.Range * profile.Range)
+                if (delta.LengthSquared() > range * range)
                     continue;
 
                 _damageable.TryChangeDamage(

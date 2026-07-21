@@ -15,4 +15,10 @@ public sealed partial class RadialDamageFieldComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ProtoId<RadialDamageFieldProfilePrototype> Profile;
+
+    /// <summary>
+    /// Optional per-emitter range. If unset, the profile range is used.
+    /// </summary>
+    [DataField]
+    public float? RangeOverride;
 }
