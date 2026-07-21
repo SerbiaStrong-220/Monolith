@@ -5,6 +5,6 @@
   - Leviathan
   damage:
     types:
-      Heat: 2000
+      Heat: 1000
   ignoreResistances: true
   targetPopup: tower-8g-target-popup

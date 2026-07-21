@@ -8,6 +8,16 @@
   - type: Damageable
     damageModifierSet: Leviathan
     damageContainer: Biological
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      groups:
+        Brute: -25
+        Burn: -25
+        Toxin: -25
+      types:
+        Bloodloss: -3
   - type: RadialDamageFieldTarget
     profiles:
     - Leviathan
@@ -39,10 +49,10 @@
     baseSprintSpeed: 70
     baseWalkSpeed: 70
   - type: Eye
-    pvsScale: 8.916104
+    pvsScale: 4.458052
   - type: ContentEye
-    targetZoom: 8.916104, 8.916104
-    maxZoom: 8.916104, 8.916104
+    targetZoom: 4.458052, 4.458052
+    maxZoom: 4.458052, 4.458052
   - type: TemporarySpeedBoost
     action: ActionLeviathanSurge
     duration: 10
