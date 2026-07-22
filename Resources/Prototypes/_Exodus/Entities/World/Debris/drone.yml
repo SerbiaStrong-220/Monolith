@@ -1,0 +1,42 @@
+# Exodus drone spawners.
+
+- type: entity
+  id: SpawnDroneDeflector
+  parent: SpawnDroneBase
+  components:
+  - type: GridSpawner
+    path: /SharedMaps/_Exodus/Shuttles/World/deflector.yml
+    addComponents:
+    - type: RandomMetadata
+      nameSeparator: ""
+      nameSegments:
+      - "ДЕФЛЕКТОР"
+      - DroneAltHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+    nameGrid: false
+
+- type: entity
+  id: SpawnDroneFlashbang
+  parent: SpawnDroneBase
+  components:
+  - type: GridSpawner
+    path: /SharedMaps/_Exodus/Shuttles/World/flashbang.yml
+    addComponents:
+    - type: RandomMetadata
+      nameSeparator: ""
+      nameSegments:
+      - "ФЛЕШБЭНГ"
+      - DroneAltHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+    nameGrid: false

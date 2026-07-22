@@ -1,1 +1,1 @@
-guide-entry-automation = Automation
+guide-entry-automation = Автоматизация

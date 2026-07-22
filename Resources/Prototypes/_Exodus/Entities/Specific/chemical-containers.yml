@@ -13,3 +13,19 @@
           Quantity: 100
   - type: StaticPrice
     vendPrice: 60000
+
+- type: entity
+  parent: Jug
+  suffix: homeostatin
+  id: JugHomeostatin
+  components:
+  - type: Label
+    currentLabel: reagent-name-homeostatin
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Homeostatin
+          Quantity: 200
+  - type: StaticPrice
+    vendPrice: 90000

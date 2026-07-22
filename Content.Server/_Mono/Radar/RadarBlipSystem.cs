@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared._Exodus.Nebula.Components; // Exodus nebula-ftl-map
+using Content.Shared._Exodus.Shuttles; // Exodus bluespace-map-blips
 using Content.Shared._Mono.Radar;
 using Content.Shared.Projectiles;
 using Content.Shared.Shuttles.Components;
@@ -80,26 +81,56 @@ public sealed partial class RadarBlipSystem : EntitySystem
             return;
 
         var mapUid = _mapManager.GetMapEntityId(mapId);
-        if (!TryComp<NebulaMapDataComponent>(mapUid, out var nebulaData))
-            return;
-
-        var netMap = GetNetEntity(mapUid);
-        for (var i = 0; i < nebulaData.RadarBlips.Count; i++)
+        if (TryComp<NebulaMapDataComponent>(mapUid, out var nebulaData))
         {
-            var blip = nebulaData.RadarBlips[i];
-            if (blip.Config.Shape != RadarBlipShape.NebulaPolygon)
+            var netMap = GetNetEntity(mapUid);
+            for (var i = 0; i < nebulaData.RadarBlips.Count; i++)
+            {
+                var blip = nebulaData.RadarBlips[i];
+                if (blip.Config.Shape != RadarBlipShape.NebulaPolygon)
+                    continue;
+
+                var configIndex = GetOrAddConfig(blip.Config);
+                var coordinates = new EntityCoordinates(mapUid, blip.Position);
+                _tempBlipsCache.Add(new BlipNetData(
+                    netMap,
+                    GetNetCoordinates(coordinates),
+                    Vector2.Zero,
+                    Angle.Zero,
+                    configIndex,
+                    null));
+            }
+        }
+
+        // Exodus-begin bluespace-map-blips
+        var blipQuery = EntityQueryEnumerator<BluespaceMapBlipComponent, TransformComponent>();
+        while (blipQuery.MoveNext(out var blipUid, out var blip, out var xform))
+        {
+            if (xform.MapID != mapId)
                 continue;
 
-            var configIndex = GetOrAddConfig(blip.Config);
-            var coordinates = new EntityCoordinates(mapUid, blip.Position);
+            var configIndex = GetOrAddConfig(new BlipConfig
+            {
+                Color = blip.Color,
+                Shape = blip.Shape,
+                Bounds = new Box2(-blip.Scale, -blip.Scale, blip.Scale, blip.Scale),
+            });
+
+            var coordinates = xform.Coordinates;
+            var gridUid = xform.GridUid;
+            if (xform.ParentUid != xform.MapUid && xform.ParentUid != gridUid)
+                coordinates = _xform.WithEntityId(coordinates, gridUid ?? xform.MapUid!.Value);
+
             _tempBlipsCache.Add(new BlipNetData(
-                netMap,
+                GetNetEntity(blipUid),
                 GetNetCoordinates(coordinates),
                 Vector2.Zero,
                 Angle.Zero,
                 configIndex,
-                null));
+                null,
+                blip.Label));
         }
+        // Exodus-end
     }
 
     private void ClearReportCaches()

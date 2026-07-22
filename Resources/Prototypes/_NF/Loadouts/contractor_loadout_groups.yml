@@ -407,6 +407,8 @@
   - ContractorClothingBeltMedicalFilled
   - ContractorClothingBeltMedicalEMT
   - ContractorClothingBeltMedicalEMTFilled
+  - ContractorCombatWebbingMedical # Exodus add Webbing Medical
+  - ContractorClothingBeltMilitaryWebbing # Exodus add Webbing Military
   - ContractorClothingBeltUtility
   - ContractorClothingBeltUtilityFilled
   - ContractorClothingBeltSalvageWebbing
@@ -773,6 +775,8 @@
   loadouts:
   - ContractorAppraisalTool
   - ContractorPickaxe
+  - ContractorWeaponGrapplingGun # Exodus add Grapple Gun
+  - ContractorToolboxMechanicalFilled # Exodus add Mechanical Toolbox
   - ContractorHandheldGPSBasic
   - ContractorRadioHandheld
   - ContractorNetworkConfigurator

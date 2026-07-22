@@ -1,0 +1,9 @@
+- type: entity
+  id: SpaceLeviathanHeadGuidebook
+  parent: BaseItem
+  name: space leviathan
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Monolith/leviathan.rsi
+    state: head

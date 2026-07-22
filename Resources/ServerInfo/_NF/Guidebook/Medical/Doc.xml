@@ -1,30 +1,29 @@
 <Document>
   <Box>
-    <GuideEntityEmbed Entity="BannerMedical" Caption="Director of Care"/>
+    <GuideEntityEmbed Entity="BannerMedical" Caption="Заведующий СНМП"/>
   </Box>
-  # Director of Care
+  # Заведующий СНМП
 
-  DoC shift objectives:
+  Цели смены Заведующего СНМП:
 
-  1) Ensure the health and well-being of the sector's populace.
+  1) Обеспечивать здоровье и благополучие населения сектора.
 
-  2) Foster collaboration and coordinate efforts of medical teams where possible.
+  2) По возможности налаживать сотрудничество и координировать работу медицинских команд.
 
-  3) Encourage medical mentorship, either personally, time permitting, or by finding appropriate placement for interns.
+  3) Поддерживать медицинское наставничество — лично, если есть время, или подбирая подходящее место для интернов.
 
-  4) Compensate medical teams for their work in assisting with the above three goals.
+  4) Оплачивать медицинским командам работу, помогающую выполнять три цели выше.
 
-  ## Your Ledger
+  ## Ваша касса
 
-  To compensate medical teams and station staff you have been provided a discretionary fund.
+  Для оплаты медицинских команд и станционного персонала вам выдан дискреционный фонд.
 
-  Nanotrasen is prepared to provide additional resources for the successful return of each medical bounty.
+  Nanotrasen готова выделить дополнительные ресурсы за успешный возврат каждого медицинского запроса.
 
-  ## The Medical Dispatch Center
+  ## Центр медицинской диспетчеризации
 
-  As a new DoC, the maintenance of the Medical Dispatch Center is one of your responsibilities. Consider hiring contractors as needed to ensure it is kept in good working order.
+  Для нового Заведующего СНМП содержание Центра медицинской диспетчеризации — одна из обязанностей. При необходимости нанимайте подрядчиков, чтобы центр работал исправно.
 
-  The shift DoC is not expected to remain at the Medical Dispatch Center. You are encouraged to be present where needed and act in a capacity that best fulfills your primary goals.
+  От Заведующего СНМП не ждут, что он весь смену просидит в Центре. Вас поощряют быть там, где нужно, и действовать так, чтобы лучше выполнять основные цели.
 
-</Document>  
-
+</Document>

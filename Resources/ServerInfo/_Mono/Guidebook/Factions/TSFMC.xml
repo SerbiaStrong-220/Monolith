@@ -1,44 +1,44 @@
 <Document>
-# TSFMC
+# КМП ТСФ
 
-  The [color=cyan]Trans-Solarian Federation Marine Corps[/color], the space-ground fighting force for the TSF, is one of the primary actors in the Colossus Sector. This brigade-level detachment has been deployed to Colossus in the interest of keeping the peace, although their constant conflicts with insurgent cells, pirates, and the local [color=tan]Phaethon Dynasty[/color] speak otherwise. Their natural militant approach and tendency to overhanded brute force methods have painted them as invaders to the locals who side with the [color=tan]Dynasty[/color], the 'rightful rulers of the sector.'
+  [color=cyan]Корпус морской пехоты Транс-Солнечной Федерации[/color] — космическо-наземные силы ТСФ и один из главных игроков сектора Колосс. Эта бригадная группировка развёрнута в Колоссе «ради поддержания мира», хотя постоянные столкновения с повстанцами, пиратами и местной [color=tan]Династией Фаэтон[/color] говорят об обратном. Их воинственный подход и склонность к грубой силе сделали их оккупантами в глазах местных, поддерживающих [color=tan]Династию[/color] — «законных правителей сектора».
 
-  The [color=cyan]TSFMC[/color] detachment is backed by powerful futuristic technology, their gear favoring durable equipment and heavier weapons such as pulse lasers.
-  However, they are at an extreme disadvantage due to being separated from reinforcements by interference from the monolithic region and the many AI drones corrupted by the [color=pink]local anomalous emissions[/color].
+  Отряд [color=cyan]КМП ТСФ[/color] опирается на мощные футуристические технологии: снаряжение делает ставку на прочность и тяжёлое вооружение вроде импульсных лазеров.
+  Однако они в крайне невыгодном положении: подкрепления отрезаны помехами региона Монолита и множеством ИИ-дронов, испорченных [color=pink]местными аномальными излучениями[/color].
 
-  Because of this, the [color=cyan]TSFMC[/color] [color=yellow]Marines[/color] are in a defensive position, forced to use local resources and strategies varying from their training or risk being picked off by their enemies.
+  Из-за этого [color=yellow]морпехи[/color] [color=cyan]КМП ТСФ[/color] вынуждены обороняться, использовать местные ресурсы и стратегии, расходящиеся с подготовкой, иначе враги будут уничтожать их поодиночке.
 
-  The detachment's overall objectives, as briefed by High Command before deployment to the Colossus sector, are to:
+  Общие задачи отряда, поставленные Верховным командованием перед высадкой в сектор Колосс:
 
-  > [bold][color=red]Confiscate and study Corporate-war era technology wielded by the locals[/bold][/color]
+  > [bold][color=red]Изъять и изучить технологии эпохи Корпоративной войны, которыми пользуются местные[/color][/bold]
 
-  > [bold][color=red]Eliminate opposition and establish control over the sector for the TSF[/bold][/color]
+  > [bold][color=red]Устранить сопротивление и установить контроль ТСФ над сектором[/color][/bold]
 
-  Detailed objectives for the everyday [color=yellow]Marine[/color] will be outlined by the commanding officer in charge as situations unfold, but with the detachment largely cut off from High Command and the outer sectors of [color=cyan]TSF[/color] space, the overall task is clear: survival. [color=yellow]Marines[/color] might very well be called upon to fend off anomalous threats, collect resources from debris and detritus, and study any relevant technology to strengthen their local military. Only through discipline and following the Chain of Command can a [color=yellow]Marine[/color] expect to thrive in this unforgiving sector.
+  Подробные задачи для рядового [color=yellow]морпеха[/color] формулирует командир по мере развития событий, но поскольку отряд почти отрезан от Верховного командования и внешних секторов пространства [color=cyan]ТСФ[/color], главная цель ясна: выживание. [color=yellow]Морпехов[/color] могут призвать отражать аномальные угрозы, собирать ресурсы с обломков и изучать полезные технологии для усиления местного контингента. Только дисциплина и соблюдение цепи командования дают [color=yellow]морпеху[/color] шанс уцелеть в этом безжалостном секторе.
 
-# The Chain of Command
+# Цепь командования
 
-  The [color=gold][bold]Chain of Command[/bold][/color] is a tool to keep order and discipline in the [color=cyan]TSFMC[/color], but it is not a weapon to brutalize your fellow [color=yellow]Marines[/color]. Follow it, obey orders, and treat your fellow [color=yellow]Marines[/color] with respect, no matter if they are above you, the same rank as you, or below you. The CoC is made up of, in order of authority, [color=gold]Colonel[/color]s, [color=cyan]Captain[/color], [color=silver]Fireteam Leaders[/color], [color=yellow]Marines[/color] (of multiple roles), and Cyborgs.
+  [color=gold][bold]Цепь командования[/bold][/color] — инструмент порядка и дисциплины в [color=cyan]КМП ТСФ[/color], а не оружие против сослуживцев-[color=yellow]морпехов[/color]. Следуйте ей, выполняйте приказы и относитесь к товарищам с уважением — выше вас по званию, равных или ниже. В порядке полномочий: [color=gold]полковники[/color], [color=cyan]капитан[/color], [color=silver]командиры огневых групп[/color], [color=yellow]морпехи[/color] (разных специальностей) и киборги.
 
-1.  The [color=gold]Colonel[/color] is the [bold]Commanding Officer (CO)[/bold] and ultimate authority in the sector for the [color=cyan]TSF[/color], answering only to [color=cyan]TSFMC High Command[/color]. The overall goals and objectives of the detachment as well as forward-facing diplomacy falls under their purview. Most tasks will be delegated to their [color=cyan]Captain[/color]s, who will delegate it to the [color=silver]FTL[/color]s. While they may personally head operations themselves, commanding a vessel and soaring into the fray, [color=gold]Colonel[/color]s who do so often don't return and become a detriment to the operation as a whole.
+1.  [color=gold]Полковник[/color] — [bold]командующий офицер (CO)[/bold] и высшая власть [color=cyan]ТСФ[/color] в секторе; он подчиняется только [color=cyan]Верховному командованию КМП ТСФ[/color]. Общие цели отряда и внешняя дипломатия — в его ведении. Большинство задач делегируется [color=cyan]капитанам[/color], те — [color=silver]КОГ[/color]. Полковник может лично вести операцию и корабль в бой, но [color=gold]полковники[/color], которые так поступают, часто не возвращаются и вредят операции в целом.
 
-  Keep in mind the realities your troops fight against as well — while you may be in charge, you are responsible for your [color=yellow]Marines[/color]' safety and success, and for their failures and deaths.
+  Учитывайте реалии, с которыми сталкиваются ваши люди: вы командуете, но отвечаете за безопасность и успех [color=yellow]морпехов[/color], а также за их неудачи и смерти.
   
-2.  The [color=cyan]Captain[/color] is the [bold]Executive Officer (XO)[/bold] of the detachment and right hand of the [color=gold]Colonel[/color]. Their job entails taking the directives laid down by the [color=gold]Colonel[/color] and breaking them down into detailed objectives for the Fireteams under their battalion. They may also be an experienced officer in combat, able to head out into the fray to personally oversee operations as needed.
+2.  [color=cyan]Капитан[/color] — [bold]исполнительный офицер (XO)[/bold] отряда и правая рука [color=gold]полковника[/color]. Он разбивает директивы [color=gold]полковника[/color] на конкретные задачи для огневых групп батальона. Также это может быть опытный боевой офицер, способный выйти на линию и лично контролировать операции.
 
-3.  [color=silver]Fireteam Leaders[/color] live on the front line with the [color=yellow]Marines[/color] under their command and are directly responsible for the training and real-time organization of their fireteam in battle, be it in space or on the ground. They are a [color=yellow]Marines[/color]'s closest connection to detachment command, and as such [color=silver]FTL[/color]s should be in constant communication with their [color=yellow]Marines[/color]. [color=silver]FTL[/color]s answer to the [color=cyan]Captain[/color] and command their own fireteam, assigned either by their superiors or handpicked from among the unassigned [color=yellow]Marines[/color].
+3.  [color=silver]Командиры огневых групп (КОГ)[/color] живут на передовой с [color=yellow]морпехами[/color] своего подразделения и отвечают за подготовку и организацию группы в бою — в космосе или на земле. Для [color=yellow]морпеха[/color] это ближайшая связь с командованием отряда, поэтому [color=silver]КОГ[/color] должны постоянно поддерживать связь с людьми. [color=silver]КОГ[/color] подчиняются [color=cyan]капитану[/color] и командуют своей группой, назначенной сверху или набранной из свободных [color=yellow]морпехов[/color].
 
-4.  [color=yellow]Marines[/color] answer to every high-ranking officer and fall into multiple roles of equal position: [color=yellow]Marines[/color], [color=red]Corpsmen[/color], and [color=orange]Engineers[/color].
+4.  [color=yellow]Морпехи[/color] подчиняются всем старшим офицерам и делятся на роли равного статуса: [color=yellow]морпехи[/color], [color=red]санитары[/color] и [color=orange]инженеры[/color].
 
-  [color=yellow]Marines[/color] are the front line soldiers, existing to follow the orders of their superiors and to live or die for the glory of the Federation. They are assigned into Fireteams, and conduct boarding operations, extract technology, and do typical grunt combat work.
+  [color=yellow]Морпехи[/color] — солдаты первой линии: выполняют приказы и живут или умирают во славу Федерации. Их распределяют по огневым группам; они проводят абордажи, извлекают технологии и выполняют обычную боевую работу.
 
-4(a).  [color=red]Corpsmen[/color] are specialized [color=yellow]Marines[/color], acting as medical professionals in times of combat. If a [color=yellow]Marine[/color] is wounded, a Corpsman is the one to keep them alive. Their goal is to preserve the lives of other [color=yellow]Marines[/color], but they aren't afraid to shoot some rounds themselves.
+4(a).  [color=red]Санитары[/color] — специализированные [color=yellow]морпехи[/color], медицинские специалисты в бою. Если [color=yellow]морпех[/color] ранен, санитар удерживает его в живых. Их цель — сохранять жизни товарищей, но и стрелять они не боятся.
 
-4(b).  [color=orange]Engineers[/color] are also specialized [color=yellow]Marines[/color], prioritizing repairs and modifications to existing ships, handling logistics, and creating fortifications. If a ship has half its hull gone from a railgun shot, [color=orange]Engineers[/color] are the ones to make it seem like the ship came right from the drydock.
+4(b).  [color=orange]Инженеры[/color] — тоже специализированные [color=yellow]морпехи[/color]: ремонт и доработка кораблей, логистика и укрепления. Если рельсотрон сорвал половину корпуса, [color=orange]инженеры[/color] сделают так, будто корабль только что сошёл со стапелей.
 
-5.  [color=gray]Cyborgs[/color] are AI-controlled constructs, the latest advancement of superior Federation technology. They answer to their Federation Laws and any other [color=cyan]TSFMC[/color] personnel.
+5.  [color=gray]Киборги[/color] — ИИ-управляемые конструкции, последнее слово технологий Федерации. Они подчиняются своим федеративным законам и любому персоналу [color=cyan]КМП ТСФ[/color].
 
-# Gear
+# Снаряжение
 
   <Box>
     <GuideEntityEmbed Entity="WeaponDEWCalico"/>
@@ -46,18 +46,18 @@
     <GuideEntityEmbed Entity="WeaponEnergyRevolver"/>
   </Box>
 
-  The [color=cyan]TSFMC[/color] use a variety of weapons in ground combat, usually wielding state-of-the-art yet fickle energy weapons, advanced rifles, high-caliber SMGs, and plasma melee equipment.
+  [color=cyan]КМП ТСФ[/color] использует разнообразное оружие в наземном бою: обычно современное, но капризное энергетическое оружие, продвинутые винтовки, крупнокалиберные ПП и плазменное оружие ближнего боя.
 
-  [color=green]Strengths:
-  - [color=cyan]TSFMC[/color] weapons are capable of dealing significant amounts of damage in a quick period of time.
-  - Energy weapons are often easy to charge or reload, with most of their material investment being initial production.
-  - Their advanced equipment has many different additional functions, ranging from EMP protection to additional ammo storage.
-  - Energy weapons are able to pierce through glass - if you can see something, you can shoot it.
+  [color=green]Сильные стороны:[/color]
+  - Оружие [color=cyan]КМП ТСФ[/color] способно за короткое время наносить значительный урон.
+  - Энергетическое оружие обычно легко заряжать или перезаряжать; основная «стоимость» — в производстве.
+  - Продвинутое снаряжение даёт дополнительные функции: от защиты от ЭМИ до увеличенного запаса боеприпасов.
+  - Энергетическое оружие пробивает стекло — если цель видна, в неё можно стрелять.
 
-  [color=red]Weaknesses:
-  - Like most of their gear, the [color=cyan]TSFMC[/color]'s energy weapons are vulnerable to high-strength EMP attacks, discharging their batteries.
-  - Their heavier weapons are not good for quick responses - tight corridors will lead to a fast downfall without preperation.
-  - While their weapons are powerful, they can each be countered through specific items - vary your loadout or stay with your squad.
+  [color=red]Слабые стороны:[/color]
+  - Как и многое из их снаряжения, энергетическое оружие [color=cyan]КМП ТСФ[/color] уязвимо к сильным ЭМИ: батареи разряжаются.
+  - Тяжёлое оружие плохо подходит для быстрой реакции — в узких коридорах без подготовки вас быстро сметут.
+  - Оружие мощное, но каждое контрится конкретными средствами — меняйте нагрузку или держитесь отряда.
 
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitM82c"/>
@@ -65,14 +65,14 @@
     <GuideEntityEmbed Entity="ClothingOuterHardsuitNfsdExperimental"/>
   </Box>
 
-  The [color=cyan]TSFMC[/color] use heavy power armor for boarding operations, with more advanced equipment sacrificing base statistics for additional combat features.
+  [color=cyan]КМП ТСФ[/color] использует тяжёлую силовую броню для абордажей; более продвинутые образцы жертвуют базовыми характеристиками ради боевых функций.
 
-  [color=green]Strengths:
-  - [color=cyan]TSFMC[/color] armor is durable and effective. With the right selection of gear, a [color=yellow]Marine[/color] can become nigh invincible.
-  - Higher-level armor feature more perks and additions allowing for better adaptivity in combat, such as energy shields and optical enhancements.
+  [color=green]Сильные стороны:[/color]
+  - Броня [color=cyan]КМП ТСФ[/color] прочна и эффективна. При правильном наборе снаряжения [color=yellow]морпех[/color] почти неуязвим.
+  - Броня высоких уровней даёт больше бонусов и адаптивности в бою: энергощиты, оптические улучшения и т.п.
 
-  [color=red]Weaknesses:
-  - Like most of their gear, some [color=cyan]TSFMC[/color] armors are vulnerable to high-strength EMP attacks, discharging their shield capacitors.
-  - While durable, their armor is quite heavy, reducing wearer maneuverability in combat and becoming a nuisance outside of it.
+  [color=red]Слабые стороны:[/color]
+  - Как и многое из их снаряжения, часть брони [color=cyan]КМП ТСФ[/color] уязвима к сильным ЭМИ: конденсаторы щитов разряжаются.
+  - При прочности броня тяжёлая: снижает манёвренность в бою и мешает вне него.
 
 </Document>

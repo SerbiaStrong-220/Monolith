@@ -1,0 +1,79 @@
+- type: listing
+  id: SummoningMachineAirGrenade
+  name: summoning-machine-air-grenade-name
+  description: summoning-machine-air-grenade-desc
+  productEntity: AirGrenade
+  cost:
+    Telecrystal: 120
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineAirGrenadeBox
+  name: summoning-machine-air-grenade-box-name
+  description: summoning-machine-air-grenade-box-desc
+  productEntity: BoxAirGrenades
+  cost:
+    Telecrystal: 480
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineCloningKit
+  name: summoning-machine-cloning-kit-name
+  description: summoning-machine-cloning-kit-desc
+  productEntity: CrateAsakimCloningKit
+  cost:
+    Telecrystal: 2100
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineOmnimedTool
+  name: summoning-machine-omnimed-tool-name
+  description: summoning-machine-omnimed-tool-desc
+  productEntity: OmnimedTool
+  cost:
+    Telecrystal: 480
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineMultitool
+  name: summoning-machine-multitool-name
+  description: summoning-machine-multitool-desc
+  productEntity: Multitool
+  cost:
+    Telecrystal: 120
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineAsakimRedactedBorg
+  name: summoning-machine-asakim-redacted-borg-name
+  description: summoning-machine-asakim-redacted-borg-desc
+  productEntity: AiRemoteBorgRedacted
+  cost:
+    Telecrystal: 1800
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAsakimRedactedBorgGhostRole
+  name: summoning-machine-asakim-redacted-borg-ghost-role-name
+  description: summoning-machine-asakim-redacted-borg-ghost-role-desc
+  productEntity: PlayerBorgRedactedGhostRole
+  cost:
+    Telecrystal: 1500
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAsakimOccupantCircuitBoard
+  name: summoning-machine-asakim-occupant-circuit-board-name
+  description: summoning-machine-asakim-occupant-circuit-board-desc
+  productEntity: AsakimOccupantCircuitBoard
+  cost:
+    Telecrystal: 600
+  categories:
+  - SummoningMachineTechnicalContour

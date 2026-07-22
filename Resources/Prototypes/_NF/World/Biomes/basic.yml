@@ -362,6 +362,4 @@
     - id: NFWreckDebrisBrassExtraLarge
       prob: 0.1
       orGroup: wreck
-    - id: MonoDroneSpawnerT1 # Mono
-      prob: 0.15
-      orGroup: wreck
+    # Exodus: hostile drone ships start spawning only after 40 km.

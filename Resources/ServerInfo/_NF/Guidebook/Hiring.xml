@@ -1,21 +1,21 @@
 <Document>
-  # Hiring Crew
+  # Найм экипажа
   <Box>
     <GuideEntityEmbed Entity="ComputerStationRecords"/>
-    <GuideEntityEmbed Entity="ClothingHeadsetGrey" Caption="headset"/>
+    <GuideEntityEmbed Entity="ClothingHeadsetGrey" Caption="гарнитура"/>
     <GuideEntityEmbed Entity="IntercomCommon"/>
   </Box>
-  As the Captain of a Independent Colossus Vessel, you have the authority to hire and fire crew members, and to delegate work.
-There are two ways to hire crew:
-- Use the [color=#a4885c]station records computer[/color] on your ship to open crew slots. Players that join later can spawn in on your ship.
-- Invite other players to join your crew through in-game communications.
+  Как капитан независимого судна Colossus, вы вправе нанимать и увольнять членов экипажа и делегировать работу.
+Есть два способа нанять экипаж:
+- Используйте [color=#a4885c]консоль станционных записей[/color] на корабле, чтобы открыть слоты экипажа. Игроки, зашедшие позже, смогут появиться на вашем корабле.
+- Пригласите других игроков в экипаж через внутриигровые средства связи.
 
-Crew membership is informal - you don't need to sign any forms, but feel free to roleplay!
-It's a good idea to make sure your crew understand:
-- What you expect of them (What tasks should they do? Who do they report to or work with?)
-- What they can expect from you (An hourly wage? A split of rewards? The promise of adventure?).
+Членство в экипаже неформально — бумаги подписывать не нужно, но ролевая игра приветствуется!
+Полезно убедиться, что экипаж понимает:
+- Что вы от них ждёте (какие задачи? кому подчиняются и с кем работают?)
+- Что они могут ждать от вас (почасовая оплата? доля награды? обещание приключений?).
 
-As a Captain, remember:
-- You're responsible for the well-being of your crew.
-- A Captain's only as good as their word!
+Как капитан, помните:
+- Вы отвечаете за благополучие экипажа.
+- Капитан хорош ровно настолько, насколько держит слово!
 </Document>

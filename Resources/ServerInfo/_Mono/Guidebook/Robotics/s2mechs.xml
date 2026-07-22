@@ -1,43 +1,43 @@
 <Document>
-  # Series 2 Combat Mechs
+  # Боевые мехи серии 2
 
-  An expensive and adaptable selection, the S2 Armored Frames provide a stronger and faster combat platform compared to S1 mechs but find it difficult to maneuver indoors.
+  Дорогая и гибкая линейка: бронированные рамы S2 дают более сильную и быструю боевую платформу, чем мехи S1, но в помещениях им сложно маневрировать.
 
-  All S2 mechs are space insulated and provide breathable atmosphere, but the Sabre lacks maneuvering jets.
+  Все мехи S2 изолированы для космоса и обеспечивают пригодную для дыхания атмосферу, но у Sabre нет маневровых двигателей.
 
   <Box>
     <GuideEntityEmbed Entity="AFInterceptor"/>
     <GuideEntityEmbed Entity="AFInterceptorM"/>
   </Box>
 
-##Broadsword
+## Broadsword
 
-The Broadsword is the standard S2 platform, capable of mounting "Light" mech weapons. It moves very fast in space, and is primarily useful for contesting lighter combat frames and spaceborn infantry.
+Broadsword — стандартная платформа S2, способная нести «лёгкое» оружие мехов. Очень быстра в космосе и в первую очередь полезна против более лёгких боевых рам и космической пехоты.
 
-##Halberd
+## Halberd
 
-The Halberd is a variant of the Broadsword, sacrificing some Armor and Speed for the ability to mount "Medium" mech weapons. It is still capable of moving fast in space, but is no longer able to outrun some ships.
+Halberd — вариант Broadsword: жертвует частью брони и скорости ради «среднего» оружия мехов. В космосе всё ещё быстр, но уже не обгоняет некоторые корабли.
 
-##Light Mech Weapons
+## Лёгкое оружие мехов
   <Box>
     <GuideEntityEmbed Entity="LightMechaSMG"/>
     <GuideEntityEmbed Entity="LightMechaAutocannon"/>
     <GuideEntityEmbed Entity="LightMechaShotgun"/>
   </Box>
- - The RAC-6 is a low-accuracy machine gun suitable for providing suppressive fire against infantry targets.
- - The LAC-29 is an accurate 20mm autocannon suitable for fighting other Armored Frames and doing light damage to Ships.
- - The SH-0.5 is a mech-scale shotgun effective against infantry and Armored Frames.
+ - RAC-6 — низкоточный пулемёт, подходит для подавляющего огня по пехоте.
+ - LAC-29 — точная 20-мм автоматическая пушка против других бронированных рам и лёгкого урона кораблям.
+ - SH-0.5 — дробовик мехового масштаба, эффективен против пехоты и бронированных рам.
 
-##Medium Mech Weapons
-Medium Mech Weapons cannot be fired while under the effects of Gravity.
+## Среднее оружие мехов
+Среднее оружие мехов нельзя стрелять под действием гравитации.
 
   <Box>
     <GuideEntityEmbed Entity="MediumMechDMR"/>
     <GuideEntityEmbed Entity="MediumMechCoilgun"/>
     <GuideEntityEmbed Entity="MediumMechTOW"/>
   </Box>
-  - The DMR-90mm Autocannon is a dedicated anti-armor marksman rifle scaled up to Mech caliber, effective against Armored Frames and shuttle components.
-  - The CL-03 EMP Coilgun is a dedicated anti-ship weapon, capable of disabling electrical devices in a large radius.
-  - The ASM-55 TOW is a dedicated anti-ship weapon, firing long-range guided 150mm missiles that lock on to ships.
+  - DMR-90mm — снайперская автоматическая пушка противоброневого назначения в меховом калибре; эффективна против бронированных рам и компонентов шаттлов.
+  - CL-03 EMP-катушка — специализированное противокорабельное оружие, отключает электронику в большом радиусе.
+  - ASM-55 TOW — специализированное противокорабельное оружие: дальнобойные управляемые 150-мм ракеты с захватом кораблей.
 
 </Document>

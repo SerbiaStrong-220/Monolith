@@ -316,7 +316,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         _viewportExclusions.Clear();
         var controlViewBounds = GetControlViewBounds(); // Exodus territory rings need viewport culling before grid batching
 
-        DrawNebulaBlips(handle, matty); // Exodus nebula-ftl-map
+        DrawBluespaceMapBlips(handle, matty); // Exodus bluespace-map-blips
 
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.

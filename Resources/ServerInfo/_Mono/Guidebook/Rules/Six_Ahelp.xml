@@ -1,14 +1,14 @@
 <Document>
-# Core Rule 6.
-## Do not abuse the Admin Help System.
+# Базовое правило 6.
+## Не злоупотребляйте системой Admin Help.
 
-[italic][color=green]Before reading below, please note this rule does not apply to requests of fixing bugs such as being stuck in walls or requesting mentorship on topics such as "How do I do x?" or "What is y?"[/color][/italic]
+[italic][color=green]Прежде чем читать дальше: это правило не касается просьб починить баги вроде застревания в стенах или запросов на менторство в духе «Как сделать x?» или «Что такое y?»[/color][/italic]
 
-- Monolith is an MRP server where gods that grant people 3 wishes when summoned don't usually exist when players magically use the "Ahelp" button.
+- Monolith — MRP-сервер, где боги, исполняющие 3 желания по вызову, обычно не появляются, когда игрок волшебно жмёт кнопку «Ahelp».
 
-- There are [color=green]IC alternatives[/color] that admins get alerted of [color=yellow](Prayers, Genie lamps, Phones, etc.)[/color] when you use them, and they should be used when making IC requests such as spawning clothes.
+- Есть [color=green]IC-альтернативы[/color], о которых администраторы узнают [color=yellow](молитвы, лампы джинна, телефоны и т.п.)[/color], когда вы ими пользуетесь; ими и нужно пользоваться для IC-просьб вроде спавна одежды.
 
--- If the items requested are not spawned for you, [color=red]don't[/color] take it as permission to ahelp asking if any admins are on to take your prayer.
+-- Если запрошенные предметы вам не заспавнили, [color=red]не[/color] воспринимайте это как разрешение ahelp'ить с вопросом, есть ли админы, чтобы принять вашу молитву.
 
-- This rule also covers situations such as spamming, flooding with text, or arguing in the admin help window.
+- Правило также охватывает спам, заливку текстом и споры в окне ahelp.
 </Document>

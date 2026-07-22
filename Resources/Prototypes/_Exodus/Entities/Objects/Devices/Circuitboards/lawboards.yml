@@ -1,0 +1,11 @@
+- type: entity
+  id: AsakimOccupantCircuitBoard
+  parent: BaseElectronics
+  name: law board (Occupant)
+  description: An electronics board containing the Occupant lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: AsakimOccupant

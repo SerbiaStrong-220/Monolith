@@ -1,20 +1,20 @@
 ﻿<Document>
-  # Ramping
-  Contrary to what one might expect from a video game electrical simulation, power is not instantly provided upon request.
+  # Нарастающий темп
+  Вопреки тому, чего можно ожидать от игровой симуляции электрики, мощность не появляется мгновенно по запросу.
 
-  Generators and batteries take time to ramp up to match the draw imposed on them, which leads to brownouts when there are large changes in current draw all at once; for example, when batteries run out.
+  Генераторам и батареям нужно время, чтобы нарастить отдачу под нагрузку — отсюда просадки (brownout), когда потребление резко меняется, например при разряде батарей.
 
-  Observe the following example:
-  - Say you have a generator that outputs 100 kW of power.
-  - If you have a device that draws 50 kW of power, the generator will output 50 kW of power to match the grid's demand to its supply.
-  - If you then turn on a device that draws another 50 kW of power, the generator will take time to ramp up to 100 kW of power. It will not provide this power instantly.
-  - During this time, devices will not recieve the power they need, and the grid will experience a temporary brownout.
-  - After some seconds have passed, the generator will have ramped up to 100 kW of power, and the brownout will end. All devices are now satisfied with the power they are receiving.
+  Пример:
+  - Допустим, генератор выдаёт 100 кВт.
+  - Устройство потребляет 50 кВт — генератор отдаёт 50 кВт, выравнивая спрос сети и предложение.
+  - Затем включают устройство ещё на 50 кВт — генератору нужно время, чтобы нарастить отдачу до 100 кВт. Мгновенно он эту мощность не даст.
+  - В это время устройства не получают нужную мощность, и в сети временная просадка.
+  - Через несколько секунд генератор нарастит отдачу до 100 кВт, просадка закончится. Все устройства снова получают достаточно энергии.
 
-  During a shift, this is most commonly observed when a generator runs out of fuel and suddenly stops producing power.
-  Suddenly the grid is hit with a large deficit of power (as supply has fallen below demand), and all devices will experience a brownout until SMESes or other generators can ramp up to match the new demand.
+  В смене это чаще всего видно, когда генератор кончает топливо и внезапно перестаёт давать мощность.
+  Сеть мгновенно оказывается в большом дефиците (предложение ниже спроса), и все устройства проседают, пока СМЭС или другие генераторы не нарастят отдачу под новый спрос.
 
-  This can also happen when a large power consuming device or department is reconnected to the grid.
-  The sudden increase in power draw will cause a brownout until the generators can ramp up to match the new demand.
+  То же бывает, когда к сети снова подключают крупного потребителя или целый отдел.
+  Резкий рост потребления вызывает просадку, пока генераторы не догонят новый спрос.
 
 </Document>

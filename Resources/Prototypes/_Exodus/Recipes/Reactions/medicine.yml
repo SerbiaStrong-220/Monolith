@@ -1,0 +1,11 @@
+- type: reaction
+  id: Homeostatin
+  reactants:
+    Desoxyephedrine:
+      amount: 1
+    SodiumCarbonate:
+      amount: 1
+    Phenol:
+      amount: 1
+  products:
+    Homeostatin: 3

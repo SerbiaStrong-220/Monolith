@@ -1,0 +1,13 @@
+- type: entity
+  parent: CrateMedicalSecure
+  id: CrateAsakimCloningKit
+  name: cloning kit crate
+  description: Contains four flatpacks for constructing a cloning facility and one full stack of biomass.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedicalScannerFlatpack
+    - id: ComputerCloningConsoleFlatpack
+    - id: CloningPodFlatpack
+    - id: BiomassReclaimerFlatpack
+    - id: MaterialBiomass

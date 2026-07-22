@@ -1,61 +1,61 @@
 <Document>
-  # Reptilians
+  # Унатхи
 
   <Box>
     <GuideEntityEmbed Entity="MobReptilian" Caption=""/>
   </Box>
 
 
-  ## Food
-  Reptilians are capable of eating raw meat, but will get ill from consuming chocolate or any other food containing theobromine.
+  ## Пища
+  Унатхи могут есть сырое мясо, но заболевают от шоколада и любой другой еды с теобромином.
 
 
-  ## Physical properties
-  They can drag objects with their tail, keeping both their hands free.
+  ## Физические свойства
+  Они могут тащить предметы хвостом, оставляя обе руки свободными.
 
-  They receive [color=#FFA500]15%[/color] less damage from slash and [color=#FF0000]5%[/color] less damage from heat, but [color=#FFA500]25%[/color] more damage from blunt.
+  Получают на [color=#FFA500]15%[/color] меньше режущего урона и на [color=#FF0000]5%[/color] меньше урона от жары, но на [color=#FFA500]25%[/color] больше дробящего урона.
 
-  Their raw melee is way more powerful than human - 8 slash with 1.5 attack rate
+  Безоружный бой заметно сильнее человеческого — 8 режущего при скорости атаки 1.5
 
 
-  ## Claws
-  Reptilians are equipped with dangerous claws that have different stages.
+  ## Когти
+  У унатхов опасные когти с несколькими стадиями.
 
-  - Stage 0 - [color=#FFA500]8 slash damage.[/color]
-  - Stage 1 - [color=#FFA500]11 slash damage.[/color] [color=#FFDEAD]Gun spread is increased by 10%, Handheld weapon damage is decreased by 5%[/color]
-  - Stage 2 - [color=#FFA500]13 slash damage, 2 piercing damage.[/color] [color=#FFDEAD]Gun spread is increased by 25%, Handheld weapon damage is decreased by 13%.[/color] Starting from this stage, you are capable of wideswinging with your claws
-  - Stage 3 - [color=#FFA500]15 slash damage, 5 piercing damage.[/color] [color=#FFDEAD]Gun spread is increased by 45%, Handheld weapon damage is decreased by 25%[/color]
-  - Stage 4 - [color=#FFA500]18 slash damage, 12 piercing damage.[/color] [color=#FFDEAD]You are not capable of using all guns but bows anymore, Handheld weapon damage is decreased by 50%.[/color]
+  - Стадия 0 — [color=#FFA500]8 режущего урона.[/color]
+  - Стадия 1 — [color=#FFA500]11 режущего урона.[/color] [color=#FFDEAD]Разброс огнестрельного оружия +10%, урон от ручного оружия −5%[/color]
+  - Стадия 2 — [color=#FFA500]13 режущего, 2 колющего.[/color] [color=#FFDEAD]Разброс огнестрельного оружия +25%, урон от ручного оружия −13%.[/color] С этой стадии доступен широкий замах когтями
+  - Стадия 3 — [color=#FFA500]15 режущего, 5 колющего.[/color] [color=#FFDEAD]Разброс огнестрельного оружия +45%, урон от ручного оружия −25%[/color]
+  - Стадия 4 — [color=#FFA500]18 режущего, 12 колющего.[/color] [color=#FFDEAD]Огнестрельное оружие, кроме луков, больше недоступно; урон от ручного оружия −50%.[/color]
 
-  ### Cutting Claws
+  ### Подрезание когтей
 
-  Using [color=#FFA500]wirecutters[/color], you can cut Reptilian's claws, reducing their stage by 1 and resetting the current growth progress.
+  [color=#FFA500]Кусачками[/color] можно подрезать когти унатха: стадия снижается на 1, текущий прогресс роста сбрасывается.
 
   <Box>
     <GuideEntityEmbed Entity="Wirecutter" Caption=""/>
   </Box>
 
-  ### Chemicals
+  ### Химикаты
 
-  Certain chemicals allow greater control over Reptilian claw growth. Phenoxzine boosts claw growth by 20x, while Meroxzine pauses all claw growth entirely. Both metabolize slowly, allowing long term usage to be effective.
+  Некоторые реагенты дают больший контроль над ростом когтей. Феноксазин ускоряет рост в 20 раз, мероксазин полностью останавливает рост. Оба медленно метаболизируются, поэтому долгосрочное применение эффективно.
 
   <GuideReagentEmbed Reagent="Phenoxzine"/>
   <GuideReagentEmbed Reagent="Meroxzine"/>
 
-  ## Temperature
+  ## Температура
 
-  Due to being cold-blooded, they are not capable of generating enough heat to sustain themselfs in the [color=#4169E1]20C[/color] environment.
-  Temperatures lower than [color=#4169E1]22C[/color] are extremely dangerous for them! They will start getting [color=#FF0000]drowsy and start periodically falling unconscious[/color].
-  However, they receive small regeneration and speed boost if they manage to sustain body temperature higher than [color=#FFA500]47C[/color].
+  Из-за холоднокровности они не вырабатывают достаточно тепла, чтобы комфортно жить при [color=#4169E1]20 °C[/color].
+  Температуры ниже [color=#4169E1]22 °C[/color] для них крайне опасны! Начнут [color=#FF0000]клевать носом и периодически терять сознание[/color].
+  Зато при температуре тела выше [color=#FFA500]47 °C[/color] получают небольшую регенерацию и ускорение.
 
-  ### Heating up
+  ### Как согреться
 
-  - Welders, emergency flares and campfires are now capable of heating up humanoids, including Reptilians.
+  - Сварки, аварийные фальшфейеры и костры греют гуманоидов, включая унатхов.
   <Box>
     <GuideEntityEmbed Entity="Welder" Caption=""/>
     <GuideEntityEmbed Entity="Flare" Caption=""/>
     <GuideEntityEmbed Entity="Bonfire" Caption=""/>
   </Box>
-  - Wearing winter clothes or hardsuits will let you to generate enough heat to stay somewhat comfortable.
-  - Reptilians are capable of exchanging heat with other creatures by hugging them. Hugging colder creature, however, will make situation worse.
+  - Зимняя одежда или скафандры позволяют вырабатывать достаточно тепла для относительного комфорта.
+  - Унатхи могут обмениваться теплом с другими существами объятиями. Объятие более холодного существа, наоборот, ухудшит ситуацию.
 </Document>

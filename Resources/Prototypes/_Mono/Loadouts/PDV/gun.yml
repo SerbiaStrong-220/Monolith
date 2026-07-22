@@ -31,6 +31,7 @@
   loadouts:
   - FactionPythonLoadout
   - FactionViperLoadout
+  - FactionEnergyDaggerLoudLoadout # Exodus add Energy Dagger
 
 - type: loadoutGroup
   id: RogueMag

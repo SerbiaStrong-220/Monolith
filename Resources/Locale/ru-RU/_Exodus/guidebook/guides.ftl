@@ -27,6 +27,7 @@ guide-entry-exodus-rule-ghost-roles-syndicate = Синдикат
 guide-entry-exodus-rule-ghost-roles-syndicate-operative = Оперативник Синдиката
 guide-entry-exodus-rule-ghost-roles-syndicate-sergeant = Сержант Синдиката
 guide-entry-exodus-rule-ghost-roles-citadel-service = Резидент Цитадели
+guide-entry-exodus-rule-ghost-roles-leviathan = Космический левиафан
 guide-entry-faction-cores = Фракционные Ядра
 guide-entry-territory-capture = Захват территории
 guide-entry-summoning-gateway = Межпространственный шлюз

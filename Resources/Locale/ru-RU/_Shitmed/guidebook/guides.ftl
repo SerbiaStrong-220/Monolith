@@ -1,2 +1,2 @@
-guide-entry-autodoc = Autodoc
-guide-entry-abductors = Abductors
+guide-entry-autodoc = Автодок
+guide-entry-abductors = Абдукторы

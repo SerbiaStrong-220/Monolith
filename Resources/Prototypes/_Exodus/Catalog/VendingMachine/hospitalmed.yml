@@ -8,7 +8,7 @@
     Gauze: 4294967295 # Infinite
     EmergencyMedipen: 4294967295 # Infinite
     PillCanisterTricordrazine: 4294967295 # Infinite
-    JugOmnizine: 10 # Limited to 10 
+    JugHomeostatin: 10 # Limited to 10
     HypoMini: 4294967295 # Infinite
     HypoMiniLimitedEdition: 10 # Limited because its a direct upgrade, and can be found on expeds 
     Hypospray: 1 # only one in stock. its supposed to be really rare to use these, but still findable. 

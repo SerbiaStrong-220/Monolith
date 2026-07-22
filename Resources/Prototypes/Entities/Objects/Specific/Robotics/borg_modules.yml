@@ -500,6 +500,7 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+    - BorgParamedicHypo # Exodus borg-paramedic-hypo-module-move
   - type: BorgModuleStackRecharger # Exodus borg-medical-recharge
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }

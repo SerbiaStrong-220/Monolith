@@ -1,12 +1,12 @@
 <Document>
-  # Shuttle-craft
+  # Шаттлостроение
 
-  Shuttle construction is straightforward, albeit rather expensive and hard to pull off within an hour.
+  Строительство шаттла относительно прямолинейно, хотя и довольно дорого и трудно успеть за час.
 
-  It's a good activity if you have a significant amount of spare time on your hands and want a bit of a challenge.
+  Хорошее занятие, если у вас много свободного времени и хочется вызова.
 
-  ## Getting started
-  <Box>Required parts:</Box>
+  ## С чего начать
+  <Box>Необходимые части:</Box>
   <Box>
   <GuideEntityEmbed Entity="Thruster"/>
   <GuideEntityEmbed Entity="Gyroscope"/>
@@ -21,10 +21,10 @@
   <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
 
-  <Box>Optional parts:</Box>
+  <Box>Опциональные части:</Box>
   <Box>
   <GuideEntityEmbed Entity="AirCanister"/>
-  <GuideEntityEmbed Entity="LightTube" Caption="lighting"/>
+  <GuideEntityEmbed Entity="LightTube" Caption="освещение"/>
   <GuideEntityEmbed Entity="AirlockGlassShuttle"/>
   <GuideEntityEmbed Entity="SMESBasic"/>
   </Box>
@@ -33,8 +33,8 @@
   <GuideEntityEmbed Entity="NuclearBomb"/>
   </Box>
 
-  ## Foundation
-  For this step you'll need steel sheets, metal rods, and floor tiles (optional).
+  ## Основа
+  Для этого шага понадобятся стальные листы, металлические стержни и плитка пола (по желанию).
 
   <Box>
     <GuideEntityEmbed Entity="SheetSteel" Caption=""/>
@@ -46,32 +46,32 @@
     <GuideEntityEmbed Entity="FloorTileItemWhite" Caption=""/>
   </Box>
 
-  Head out into space with steel sheets and metal rods in hand and click on the edge of the station to place lattice.
+  Выйдите в космос со стальными листами и металлическими стержнями в руках и нажмите на край станции, чтобы поставить решётку.
 
-  Place a line of lattice about 3-4 tiles away from the station, then start building a platform with lattice.
+  Положите линию решётки примерно в 3–4 клетки от станции, затем начните собирать платформу из решётки.
 
-  Keep doing this until you have a platform that is at least 3x3 in size, which is connected to the station via a single lattice line.
+  Продолжайте, пока не получите платформу минимум 3×3, соединённую со станцией одной линией решётки.
 
-  Once you're finished constructing the base of your shuttle, you can use wirecutters to snip the connecting lattice that joins your new ship and the station.
+  Когда база шаттла готова, кусачками можно перерезать соединяющую решётку между новым кораблём и станцией.
 
-  This platform is considered a different grid from the station and thus will not have any gravity or be held in place by a station anchor — it can move around freely.
+  Эта платформа считается отдельным гридом от станции: на ней нет гравитации и она не удерживается станционным якорем — может свободно двигаться.
 
-  You can expand your lattice platform further by clicking just off the edge with some rods in hand.
+  Расширять решётчатую платформу можно, кликая чуть за край со стержнями в руке.
 
-  ## Docking Ports
-  Shuttle airlocks serve as docking ports, where ships can dock to stations safely.
+  ## Стыковочные порты
+  Шаттловые шлюзы служат стыковочными портами, через которые корабли безопасно стыкуются со станциями.
 
-  The orientation of docking ports is important, as it determines on which face the shuttle will dock.
+  Ориентация стыковочного порта важна: от неё зависит, какой стороной шаттл пристыкуется.
 
-  The little numb on the bottom of the docking port determines the direction of the docking port.
+  Небольшой выступ снизу стыковочного порта задаёт направление стыковки.
 
   <Box>
     <GuideEntityEmbed Entity="AirlockShuttle"/>
     <GuideEntityEmbed Entity="AirlockGlassShuttle"/>
   </Box>
 
-  ## Directional Control
-  From there, once you have the shape you want, bring out and install thrusters at the edges.
+  ## Направление полета
+  Когда форма готова, поставьте и установите ракетные двигатели по краям.
 
   <Box>
     <GuideEntityEmbed Entity="Thruster" Caption="" Rotation="0"/>
@@ -80,28 +80,28 @@
     <GuideEntityEmbed Entity="Thruster" Caption="" Rotation="270"/>
   </Box>
 
-  It's a good idea to install four thrusters, one on each side of the platform, to ensure you can move in any direction.
+  Имеет смысл поставить четыре ракетных двигателя — по одному на каждую сторону платформы, чтобы двигаться в любом направлении.
 
-  They must be pointing outward into space to function and will not fire if there's a tile in the way of the nozzle.
-  You can rotate thrusters—even anchored ones—using either [color=yellow][bold][keybind="RotateObjectClockwise"][/bold][/color] or [color=yellow][bold][keybind="RotateObjectCounterclockwise"][/bold][/color] to rotate clockwise or counterclockwise.
+  Они должны смотреть наружу, в космос, и не сработают, если перед соплом есть клетка.
+  Двигатели — даже закреплённые — можно вращать клавишами [color=yellow][bold][keybind="RotateObjectClockwise"][/bold][/color] или [color=yellow][bold][keybind="RotateObjectCounterclockwise"][/bold][/color] по и против часовой стрелки.
 
-  Thrusters can be disabled or enabled using [color=yellow][bold][keybind="Use"][/bold][/color] with an empty hand or [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
+  Двигатели можно включать и выключать через [color=yellow][bold][keybind="Use"][/bold][/color] пустой рукой или [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
 
-  ## Rotational Control
-  Now that you have directional control, you'll need to install a gyroscope to control your rotation.
+  ## Управление вращением
+  Когда есть управление направлением, нужно установить гироскоп для контроля вращения.
 
   <Box>
     <GuideEntityEmbed Entity="Gyroscope"/>
   </Box>
-  The placement of the gyroscope is not as important as the thrusters, but it should be somewhere convenient for you to access and power.
+  Размещение гироскопа не так критично, как у двигателей, но он должен быть удобно доступен и подключён к питанию.
 
-  Note for large mass objects, you may need more than one gyroscope to rotate effectively.
+  У крупных массивных объектов может понадобиться больше одного гироскопа для эффективного вращения.
 
-  ## Power
-  Now that you have all the systems in place, you'll need to power them.
+  ## Питание
+  Когда все системы на месте, их нужно запитать.
 
-  For small shuttles, a J.R.P.A.C.M.A.N.-type portable generator is a good choice. It provides straight LV power, so you don't have to worry about transformers.
-  Fuel for the generator is also commonly found in maintenance tunnels.
+  Для малых шаттлов хорош портативный генератор типа J.R.P.A.C.M.A.N. Он даёт сразу низковольтное питание, так что о трансформаторах можно не думать.
+  Топливо для генератора обычно легко найти в технических туннелях.
 
   <Box HorizontalAlignment="Stretch">
     <Box>
@@ -112,9 +112,9 @@
     </Box>
   </Box>
 
-  Some stations, however, provide much better generators and compact solutions like the Shuttle APU or the static generator.
-  These output HV and will have to be stepped down to MV and LV.
-  Luckily, these stations also usually provide wallmount substation boards for this purpose.
+  На некоторых станциях есть более мощные генераторы и компактные решения вроде ВСУ шаттла (Shuttle APU) или стационарного генератора.
+  Они выдают высокое напряжение и требуют понижения до среднего и низкого.
+  К счастью, на таких станциях обычно есть платы настенных подстанций.
 
   <Box HorizontalAlignment="Stretch">
     <Box>
@@ -128,9 +128,9 @@
     </Box>
   </Box>
 
-  ## Piloting
-  Finally, install the shuttle computer wherever it is convenient and ensure all your thrusters and gyroscopes are receiving power (remember to wire the MV and LV networks!).
-  If they are, congratulations! You should have a functional shuttle!
+  ## Пилотирование
+  Наконец, установите консоль шаттла в удобном месте и убедитесь, что все двигатели и гироскопы получают питание (не забудьте проложить среднюю и низковольтную сети!).
+  Если всё работает — поздравляем! У вас есть рабочий шаттл!
 
-  Making it livable and good-looking is left as an exercise to the reader.
+  Сделать его обитаемым и красивым оставляем читателю в качестве упражнения.
 </Document>

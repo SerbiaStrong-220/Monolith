@@ -1,207 +1,207 @@
 <Document>
-  # Argocytes
+  # Аргоциты
   
-  A distant relative of Xenos, Argocytes are known throughout the sector for their ability to eat and digest almost anything, from organic matter to reinforced plastitanium vault walls. Just like Xenos, this species is well-acclimated to hostile environments: neither the vacuum of space nor the extreme heat and pressure of a planet consumed by plasma fire can kill these creatures.
+  Дальние родственники ксеносов. Аргоциты известны по всему сектору способностью есть и переваривать почти всё — от органики до армированных пластитановых стен хранилищ. Как и ксеносы, этот вид хорошо приспособлен к враждебной среде: ни вакуум космоса, ни экстремальный жар и давление планеты в плазменном огне не убивают этих существ.
 
-  From our observations, we know Argocytes live in large hives, and have two specialized morphotypes: "Stalkers" and "Guardians". Stalkers are the hive's scouts and workers, hunting for sustainance and digging tunnels with their sharp claws and teeth. Guardians are builders and soldiers, defending and maintaining the hive and accompanying stalkers when the hive needs to settle new areas.
+  По нашим наблюдениям, аргоциты живут большими ульями и имеют два специализированных морфотипа: «Сталкеры» и «Стражи». Сталкеры — разведчики и рабочие улья: охотятся за пропитанием и роют тоннели острыми когтями и зубами. Стражи — строители и солдаты: защищают и поддерживают улей и сопровождают сталкеров, когда улью нужно освоить новые территории.
   
-  This species has fluorosulfuric acid for blood. Argocytes can be butchered for xeno meat (questionably edible), and their stomachs may contain reclaimable construction materials.
+  Кровь этого вида — фторсерная кислота. Аргоцитов можно разделать на ксеномясо (условно съедобное), а в желудках иногда находятся пригодные для повторного использования стройматериалы.
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # Known Variants
-  # "Slurva"
+  # Известные варианты
+  # «Слурва»
   
-  The first lifecycle stage of the Stalker morphotype. A pathetic creature, incapable of doing much. It is better to kill it now before it has a chance to mature.
+  Первая стадия жизненного цикла морфотипа Сталкера. Жалкое существо, почти ни на что не способное. Лучше убить его сейчас, пока не созрело.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteSlurvaExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 15 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3 m/s (3 m/s)[bold][color=#a4885c]*[/color][/bold]
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 3 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 15 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3 м/с (3 м/с)[bold][color=#a4885c]*[/color][/bold]
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 3 [color=red]Режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
-  [bold][color=#a4885c]*[/color][/bold] - [italic]an average human can run at 4.5 m/s and walk at 2.5 m/s.[/italic]
+  [bold][color=#a4885c]*[/color][/bold] - [italic]средний человек бежит со скоростью 4,5 м/с и ходит со скоростью 2,5 м/с.[/italic]
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Skitter"
+  # «Скиттер»
   
-  The second lifecycle stage of the Stalker morphotype. Still small, these creatures tend to travel in small packs for safety.
+  Вторая стадия жизненного цикла морфотипа Сталкера. Всё ещё мелкие, эти существа обычно ходят небольшими стаями ради безопасности.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteSkitterExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 30 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 6 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 30 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 6 [color=red]Режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Swiper"
+  # «Свайпер»
   
-  The third lifecycle stage of the Stalker morphotype. Roaming scavengers, usually out on reconnaisance or gathering materials.
+  Третья стадия жизненного цикла морфотипа Сталкера. Бродячие падальщики, обычно на разведке или сборе материалов.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteSwiperExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 40 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 40 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=red]Режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Glider"
+  # «Глайдер»
   
-  The fourth lifecycle stage of the Stalker morphotype. Born and bred hunters, these stalk and prey upon smaller wildlife.
+  Четвёртая стадия жизненного цикла морфотипа Сталкера. Прирождённые охотники: выслеживают и добывают мелкую дичь.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteGliderExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 50 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4.5 m/s (4.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 10 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 50 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 4,5 м/с (4,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 10 [color=red]Режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Crawler"
+  # «Кроулер»
   
-  The fifth lifecycle stage of the Stalker morphotype. These deadly pack animals ambush and maul unsuspecting travelers.
+  Пятая стадия жизненного цикла морфотипа Сталкера. Смертоносные стайные животные: устраивают засады и разрывают неосторожных путников.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteCrawlerExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 60 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 5 m/s (5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 12 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 60 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 5 м/с (5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 12 [color=red]Режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Founder"
+  # «Фаундер»
   
-  The last known lifecycle stage of the Stalker morphotype. Most often seen in mature hives preparing for an expansion.
+  Последняя известная стадия жизненного цикла морфотипа Сталкера. Чаще всего встречается в зрелых ульях, готовящихся к экспансии.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteFounderExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 150 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4.5 m/s (4.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 16 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 150 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 4,5 м/с (4,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 16 [color=red]Режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Barrier"
+  # «Барьер»
   
-  The first lifecycle stage of the Guardian morphotype. Equally as pathetic as the "Slurva". Not yet fully formed, its protective plates are still soft.
+  Первая стадия жизненного цикла морфотипа Стража. Так же жалка, как «Слурва». Ещё не до конца сформирована — защитные пластины всё ещё мягкие.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteBarrierExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 35 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 3 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 35 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 3 [color=red]Ударный[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Molder"
+  # «Мольдер»
   
-  The second lifecycle stage of the Guardian morphotype. Usually seen building and repairing structures in the hive.
+  Вторая стадия жизненного цикла морфотипа Стража. Обычно строит и чинит конструкции улья.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteMolderExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 80 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 80 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=red]Ударный[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Pouncer"
+  # «Паунсер»
   
-  The third lifecycle stage of the Guardian morphotype. Provides rapid response for minor threats to the hive.
+  Третья стадия жизненного цикла морфотипа Стража. Обеспечивает быстрый отклик на мелкие угрозы улью.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocytePouncerExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 100 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 10 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 100 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 10 [color=red]Ударный[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Harvester"
+  # «Харвестер»
   
-  A mutation that develops in the third lifecycle stage of the Guardian morphotype. "Harvesters" use their highly caustic saliva to break down and process materials for the hive.
+  Мутация, развивающаяся на третьей стадии жизненного цикла морфотипа Стража. «Харвестеры» используют крайне едкую слюну, чтобы разрушать и перерабатывать материалы для улья.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteHarvesterExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 90 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=orange]Caustic[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 90 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=orange]Кислотный[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Enforcer"
+  # «Энфорсер»
   
-  The fourth lifecycle stage of the Guardian morphotype. The main guards of the hive, these fend off would-be attackers.
+  Четвёртая стадия жизненного цикла морфотипа Стража. Основные охранники улья: отбивают нападающих.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteEnforcerExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 140 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 16 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 140 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 16 [color=red]Ударный[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # "Leviathing"
+  # «Левиасинг»
   
-  The final known lifecycle stage of the Guardian morphotype. These hulking beasts lead attacks on the hive's enemies.
+  Финальная известная стадия жизненного цикла морфотипа Стража. Эти массивные чудовища возглавляют атаки на врагов улья.
   
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteLeviathingExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 500 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3.5 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 25 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 500 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3,5 м/с (3,5 м/с)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 25 [color=red]Ударный[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
   [bold][color=#a4885c]________________________________________________________________________[/color]
   
-  # Mission Objectives
-  ## Elimination
+  # Цели миссий
+  ## Уничтожение
   <Box>
   <GuideEntityEmbed Entity="MobArgocyteLeviathingExpeditions"/>
   </Box>
-  Eliminate a large and dangerous creature - a [color=#a4885c]leviathing[/color] within given time constraints to earn a monetary reward.
+  Уничтожьте крупное и опасное существо — [color=#a4885c]левиасинга[/color] — в отведённое время, чтобы получить денежную награду.
   
-  ## Destruction
+  ## Разрушение
   <Box>
   <GuideEntityEmbed Entity="ArgocyteEgg"/>
   </Box>
-  Destroy a certain number of [color=#a4885c]argocyte eggs[/color] within given time constraints to earn a monetary reward.
+  Уничтожьте определённое число [color=#a4885c]яиц аргоцитов[/color] в отведённое время, чтобы получить денежную награду.
 </Document>

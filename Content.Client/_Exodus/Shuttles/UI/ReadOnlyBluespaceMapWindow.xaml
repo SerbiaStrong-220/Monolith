@@ -1,0 +1,8 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+                      Title="{Loc 'read-only-bluespace-map-title'}"
+                      SetSize="900 820"
+                      MinSize="600 500">
+    <ui:MapScreen Name="Map" HorizontalExpand="True" VerticalExpand="True" />
+</controls:FancyWindow>

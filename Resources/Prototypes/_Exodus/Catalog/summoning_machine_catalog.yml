@@ -164,7 +164,7 @@
   description: summoning-machine-antique-battery-desc
   productEntity: PowerCellAntiqueProto
   cost:
-    Telecrystal: 1500
+    Telecrystal: 600
   categories:
   - SummoningMachineTechnicalContour
 
@@ -556,4 +556,3 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
-

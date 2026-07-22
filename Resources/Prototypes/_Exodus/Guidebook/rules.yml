@@ -72,6 +72,7 @@
     - EXRuleGhostRoleBorg
     - EXRuleGhostRoleSyndicate
     - EXRuleGhostRoleCitadelService
+    - EXRuleGhostRoleLeviathan
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -178,3 +179,8 @@
   id: EXRuleGhostRoleCitadelService
   name: guide-entry-exodus-rule-ghost-roles-citadel-service
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesCitadelService.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleLeviathan
+  name: guide-entry-exodus-rule-ghost-roles-leviathan
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesLeviathan.xml"

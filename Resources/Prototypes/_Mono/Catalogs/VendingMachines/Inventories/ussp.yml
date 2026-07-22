@@ -32,7 +32,7 @@
     Ointment: 4294967295 # Infinite
     Gauze: 4294967295 # Infinite
     EmergencyMedipen: 4294967295 # Infinite
-    JugOmnizineUSSP: 10 # Limited to 10 # Exodus-Replace
+    JugOmnizineUSSP: 10 # Limited to 10 # Exodus-Restore-Omnizine
     ClothingOuterHardsuitUsspL27: 4294967295 # Infinite
     ClothingOuterHardsuitUsspL10: 4294967295 # Infinite
     ClothingOuterHardsuitUsspM10: 4294967295 # Infinite
@@ -43,4 +43,5 @@
     WeaponDP29: 4294967295 # Infinite
     RubberStampUSSP: 4294967295 # Infinite
     RDServerUSSPFlatpack: 4294967295 # Infinite
+    MercenaryTechFabFlatpack: 4294967295 # Infinite
     USSPLatheFlatpack: 4294967295 # Infinite

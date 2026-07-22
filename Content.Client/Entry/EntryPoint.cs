@@ -144,6 +144,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
             _prototypeManager.RegisterIgnore("pointOfInterest"); // Frontier: worldgen-related, server-only
             _prototypeManager.RegisterIgnore("territoryProfile"); // Exodus: territory profiles use server-only gameMap prototypes
+            _prototypeManager.RegisterIgnore("radialDamageFieldProfile"); // Exodus: radial damage field profiles are server-only
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();

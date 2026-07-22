@@ -28,6 +28,8 @@ public sealed partial class ShuttleMapControl
 
     private Vector2[] _nebulaFillBuffer = [];
     private Vector2[] _nebulaLineBuffer = [];
+    private readonly Vector2[] _bluespaceMapBlipVertices = new Vector2[6];
+    private readonly Vector2[] _bluespaceMapBlipEdges = new Vector2[8];
 
     private bool CanFTLToNebulaPreview(EntityUid shuttleUid, EntityCoordinates targetCoordinates, Angle targetAngle)
     {
@@ -222,7 +224,7 @@ public sealed partial class ShuttleMapControl
         }
     }
 
-    private void DrawNebulaBlips(DrawingHandleScreen handle, Matrix3x2 mapTransform)
+    private void DrawBluespaceMapBlips(DrawingHandleScreen handle, Matrix3x2 mapTransform)
     {
         if (_console != null)
             _blips.RequestNebulaMapBlips(_console.Value, ViewingMap);
@@ -230,20 +232,55 @@ public sealed partial class ShuttleMapControl
         var blips = _blips.GetCurrentNebulaMapBlips();
         foreach (var blip in blips)
         {
-            if (blip.Config.Shape != RadarBlipShape.NebulaPolygon ||
-                blip.Config.Points == null ||
-                blip.Config.Points.Count < 3)
-            {
-                continue;
-            }
-
             var mapCoords = _xformSystem.ToMapCoordinates(blip.Position);
             if (mapCoords.MapId != ViewingMap)
                 continue;
 
             var relativePos = Vector2.Transform(mapCoords.Position, mapTransform);
             var uiPosition = ScalePosition(relativePos with { Y = -relativePos.Y });
-            DrawNebulaPolygon(handle, uiPosition, blip.Config);
+            if (blip.Config.Shape == RadarBlipShape.NebulaPolygon)
+            {
+                if (blip.Config.Points == null || blip.Config.Points.Count < 3)
+                    continue;
+
+                DrawNebulaPolygon(handle, uiPosition, blip.Config);
+                continue;
+            }
+
+            var scale = MathF.Max(blip.Config.Bounds.Width, blip.Config.Bounds.Height) * 0.5f;
+            if (blip.Config.Shape == RadarBlipShape.Ring)
+            {
+                var radius = GetMapObjectRadius(scale) * MinimapScale;
+                handle.DrawCircle(uiPosition, radius, blip.Config.Color.WithAlpha(0.05f));
+                handle.DrawCircle(uiPosition, radius, blip.Config.Color, filled: false);
+            }
+            else
+            {
+                var mapObject = GetMapObject(relativePos with { Y = -relativePos.Y }, blip.Rotation, scale, scalePosition: true);
+                var bottom = mapObject[0];
+                var right = mapObject[1];
+                var top = mapObject[2];
+                var left = mapObject[3];
+                _bluespaceMapBlipVertices[0] = bottom;
+                _bluespaceMapBlipVertices[1] = right;
+                _bluespaceMapBlipVertices[2] = top;
+                _bluespaceMapBlipVertices[3] = bottom;
+                _bluespaceMapBlipVertices[4] = top;
+                _bluespaceMapBlipVertices[5] = left;
+                _bluespaceMapBlipEdges[0] = bottom;
+                _bluespaceMapBlipEdges[1] = right;
+                _bluespaceMapBlipEdges[2] = right;
+                _bluespaceMapBlipEdges[3] = top;
+                _bluespaceMapBlipEdges[4] = top;
+                _bluespaceMapBlipEdges[5] = left;
+                _bluespaceMapBlipEdges[6] = left;
+                _bluespaceMapBlipEdges[7] = bottom;
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _bluespaceMapBlipVertices, blip.Config.Color.WithAlpha(0.05f));
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, _bluespaceMapBlipEdges, blip.Config.Color);
+            }
+
+            if (blip.Label != null)
+                DrawMapObjectLabel(handle, uiPosition, Loc.GetString(blip.Label), blip.Config.Color);
         }
     }
 

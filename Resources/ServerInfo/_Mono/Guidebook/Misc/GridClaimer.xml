@@ -1,5 +1,5 @@
 <Document>
-  # Claiming Debris
+  # Захват обломков
   <Box>
     <GuideEntityEmbed Entity="BannerNGC"/>
     <GuideEntityEmbed Entity="BannerSHM"/>
@@ -8,15 +8,15 @@
     <GuideEntityEmbed Entity="BannerNanotrasen"/>
     <GuideEntityEmbed Entity="BannerCargo"/>
   </Box>
-  Sometimes, you might want to make a wreck or an asteroid into your new home.
-  Unfortunately, if you try to do just that, you will find that if you go away from it, it will very likely get permanently lost.
+  Иногда хочется сделать из обломка или астероида новый дом.
+  К сожалению, если просто так уйти, грид с большой вероятностью навсегда пропадёт.
 
-  Banners can help you avoid that.
-  Interact with the banner to claim the grid (make sure the banner is anchored and stays anchored!), preventing it from despawning even when you go away.
-  If you're done with the grid, interact with the banner again.
+  Баннеры помогают этого избежать.
+  Взаимодействуйте с баннером, чтобы захватить грид (баннер должен быть закреплён и оставаться закреплённым!) — тогда он не исчезнет, даже если вы уйдёте.
+  Когда грид больше не нужен, снова взаимодействуйте с баннером.
 
-  The following grids may be claimed:
-  - Event grids (VGroids, unidentified vessels, etc.)
-  - Debris
-  - Asteroids
+  Можно захватывать следующие гриды:
+  - Ивентовые гриды (VGroid'ы, неопознанные суда и т.п.)
+  - Обломки
+  - Астероиды
 </Document>

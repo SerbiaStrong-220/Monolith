@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Hazards.RadialDamageField;
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
@@ -30,6 +31,13 @@ public sealed partial class TerritoryProfilePrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public float Radius { get; private set; }
+
+    /// <summary>
+    /// Optional radial damage field attached to territory grids using this profile.
+    /// Its effective range is synchronized with <see cref="Radius"/>.
+    /// </summary>
+    [DataField]
+    public ProtoId<RadialDamageFieldProfilePrototype>? RadialDamageFieldProfile { get; private set; }
 
     /// <summary>
     /// Entity prototype spawned at the territory center to provide biome/ambient selection.

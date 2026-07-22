@@ -114,6 +114,7 @@
   - MercenaryClothingHandsGlovesMercFingerless
   - MercenaryClothingHandsMercenaryGlovesCombat
   - MercenaryClothingHandsGlovesCombat
+  - MercenaryClothingHandsConcussiveGauntlets # Exodus add Concussive Gauntlets
   subgroups:
   - MonoMercenaryGloves # Mono
   - PilotGloves
@@ -137,6 +138,7 @@
   loadouts:
   - MercenaryClothingEyesGlassesMercenary
   - MercenaryClothingEyesGlassesSunglasses
+  - MercenaryClothingEyesGlassesMesonTray # Exodus add Meson Tray
   subgroups:
   - MonoMercenaryBallisticGoggles # Mono
   - PilotGlasses

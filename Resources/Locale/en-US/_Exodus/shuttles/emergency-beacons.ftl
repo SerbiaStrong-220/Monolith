@@ -48,3 +48,6 @@ ent-AsakimShuttleEmergencyBeaconMedium = medium Asakim vessel summoning beacon
 
 ent-AsakimShuttleEmergencyBeaconStratostar = Asakim Stratostar summoning beacon
     .desc = A single-use emergency beacon keyed to call the Asakim ship Stratostar.
+
+ent-SpaceLeviathanEmergencyBeacon = space leviathan summoning beacon
+    .desc = A single-use bluespace beacon that lures a space leviathan to the outer sector and broadcasts its coordinates to the sector.

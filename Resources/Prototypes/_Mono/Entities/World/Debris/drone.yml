@@ -87,6 +87,8 @@
       weight: 10
     - id: SpawnDronePiercer
       weight: 10
+    - id: SpawnDroneFlashbang # Exodus drone-flashbang
+      weight: 10
 
 - type: entityTable
   id: DroneTableT22
@@ -106,6 +108,8 @@
     - id: SpawnDroneMauler
       weight: 10
     - id: SpawnDroneQuake
+      weight: 10
+    - id: SpawnDroneDeflector # Exodus drone-deflector
       weight: 10
 
 - type: entityTable

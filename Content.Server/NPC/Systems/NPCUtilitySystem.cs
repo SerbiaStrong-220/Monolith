@@ -583,6 +583,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                         || (_transform.GetWorldPosition(target) - _transform.GetWorldPosition(xform)).Length() > shuttlesQuery.Range
                         || targetComp.NeedPower && !this.IsPowered(target, EntityManager)
                         || targetGrid != null && _whitelistSystem.IsBlacklistPass(shuttlesQuery.Blacklist, targetGrid.Value)
+                        || targetComp.FactionCoresOnly && sourceCore == null // Exodus faction-only NPC targets
                         || IsShipTargetTemporarilyUnavailable(unavailableTargets, target)) // Exodus faction NPC unavailable target fallback
                     {
                         continue;

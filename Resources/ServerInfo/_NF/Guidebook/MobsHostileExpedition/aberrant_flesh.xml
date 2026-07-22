@@ -1,154 +1,154 @@
 <Document>
-  # Aberrant Flesh
+  # Аномальная плоть
 
-  Shambling masses of flesh, animated by anomalous energy. The anomaly that spawned them has long since vanished, but these creatures are resilient enough to survive on their own. Not much is known about their lifecycle or biological makeup; it is clear that they will attack and attempt to assimilate any biological life forms. They are highly aggressive, and attack anything they consider a threat - approach with caution.
+  Бродячие массы плоти, оживлённые аномальной энергией. Аномалия, породившая их, давно исчезла, но эти существа достаточно живучи, чтобы существовать самостоятельно. Об их жизненном цикле и биологии известно мало; ясно, что они нападают и пытаются ассимилировать любые биологические формы жизни. Они крайне агрессивны и атакуют всё, что считают угрозой — приближайтесь с осторожностью.
   
-  For the most part, aberrant flesh monsters use brute force and numerical advantage to eliminate threats. However, some of them have evolved to attack at range.
+  В основном монстры аномальной плоти полагаются на грубую силу и численное преимущество. Однако часть из них эволюционировала для атак на дистанции.
   
-  Can be butchered for meat. Edible if you can keep it down.
+  Можно разделать на мясо. Съедобно, если у вас хватит желудка.
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # Known Variants
-  # "Jared"
+  # Известные варианты
+  # «Джаред»
   
-  "Jareds" are mindless meat shields who run at threats without any concern for their survival. They seem to be more fragile than the average human.
+  «Джареды» — безмозглые мясные щиты, которые бросаются на угрозу без заботы о собственной жизни. Они кажутся хрупче среднего человека.
   
   <Box>
   <GuideEntityEmbed Entity="MobFleshJaredExpeditions"/>
   <GuideEntityEmbed Entity="MobFleshJaredOldExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 50 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 4.5 m/s[bold][color=#a4885c]*[/color][/bold]
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 50 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 4.5 м/с[bold][color=#a4885c]*[/color][/bold]
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=red]тупой[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
-  [bold][color=#a4885c]*[/color][/bold] - [italic]an average human can run at 4.5 m/s and walk at 2.5 m/s.[/italic]
+  [bold][color=#a4885c]*[/color][/bold] — [italic]средний человек бегает со скоростью 4.5 м/с и ходит со скоростью 2.5 м/с.[/italic]
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # "Golem"
+  # «Голем»
   
-  "Golems" are mindless brutes, similar to "Jareds" but with a heavier build. This makes them slightly more resilient, but less agile.
+  «Големы» — безмозглые громилы, похожие на «джаредов», но с более тяжёлым телосложением. Это делает их чуть живучее, но менее проворными.
   
   <Box>
   <GuideEntityEmbed Entity="MobFleshGolemExpeditions"/>
   <GuideEntityEmbed Entity="MobFleshGolemAltExpeditions"/>
   <GuideEntityEmbed Entity="MobFleshGolemOldExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 70 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 4.5 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 70 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 4.5 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=red]тупой[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # "Clamp"
+  # «Клэмп»
   
-  "Clamps" are flying variants that have mutated to shoot biological projectiles, such as [color=#a4885c]bone spikes[/color] containing naturally secreted [color=lime]gastro toxins[/color] or small living organisms known simply as [color=#a4885c]"maws"[/color].
+  «Клэмпы» — летающие варианты, мутировавшие так, чтобы стрелять биологическими снарядами: например, [color=#a4885c]костными шипами[/color] с природным [color=lime]гастротоксином[/color] или мелкими живыми организмами, известными просто как [color=#a4885c]«пасти»[/color].
   
-  [color=#a4885c]Flier[/color]: creature levitates above the ground and can bypass low obstacles such as tables, machine frames, or railings without being blocked or slowed down.
+  [color=#a4885c]Летающий[/color]: существо парит над землёй и может обходить низкие препятствия вроде столов, каркасов машин или перил, не блокируясь и не замедляясь.
   
   <Box>
   <GuideEntityEmbed Entity="MobFleshClampExpeditions"/>
   <GuideEntityEmbed Entity="DartAberrantFleshHorrorSpikeGuidebook"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 40 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 4.5 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 6 [color=yellow]Piercing[/color], 6 [color=lime]Toxin[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] Flier, Shooter: bone spike / maw
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 40 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 4.5 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 6 [color=yellow]колющий[/color], 6 [color=lime]токсины[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] Летающий, стрелок: костный шип / пасть
   
   <GuideReagentEmbed Reagent="GastroToxin"/>
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
   <Box>
   <GuideEntityEmbed Entity="MobFleshClampOldExpeditions"/>
   <GuideEntityEmbed Entity="MobMawExpeditionsGuidebook"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 40 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 4.5 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 4 [color=red]Slash[/color] (maw)
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] Flier, Shooter: bone spike / maw
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 40 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 4.5 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 4 [color=red]режущий[/color] (пасть)
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] Летающий, стрелок: костный шип / пасть
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # "Maw"
+  # «Пасть»
   
-  Immobile, flesh-boring creatures that are launched at victims. They'll latch on with their teeth and bite their victims until killed or shaken off.
+  Неподвижные плотоядные создания, которых выстреливают в жертв. Они вцепляются зубами и кусают, пока их не убьют или не стряхнут.
   
   <Box>
   <GuideEntityEmbed Entity="MobMawExpeditionsGuidebook"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 8 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 0 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 4 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 8 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 0 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 4 [color=red]режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # "Lover"
+  # «Любовник»
   
-  The "Lover" shares similarities with "Jareds" and "Golems". Its light frame makes it fragile, but capable of flight.
+  «Любовник» похож на «джаредов» и «големов». Лёгкий каркас делает его хрупким, но способным к полёту.
   
-  [color=#a4885c]Flier[/color]: creature levitates above the ground and can bypass low obstacles such as tables, machine frames, or railings without being blocked or slowed down.
+  [color=#a4885c]Летающий[/color]: существо парит над землёй и может обходить низкие препятствия вроде столов, каркасов машин или перил, не блокируясь и не замедляясь.
   
   <Box>
   <GuideEntityEmbed Entity="MobFleshLoverExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 30 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 5 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] Flier
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 30 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 5 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=red]тупой[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] Летающий
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # "Partially assimilated miner"
+  # «Частично ассимилированный шахтёр»
   
-  An unfortunate miner that was "infected" upon contact with aberrant flesh and has been slowly assimilated.
+  Несчастный шахтёр, который «заразился» при контакте с аномальной плотью и медленно ассимилируется.
   
   <Box>
   <GuideEntityEmbed Entity="MobFleshAssimilatedMiner"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 100 (crit), 140 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 4.5 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 100 (крит), 140 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 4.5 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 8 [color=red]тупой[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # "Horror"
+  # «Ужас»
   
-  Tougher and more resilient than the average aberrant flesh monster, the "Horror" possesses sharp bone protrusions and highly developed musculature, allowing it to rend the flesh of its victims and tear through armor with efficiency.
+  Крепче и живучее типичного монстра аномальной плоти: «Ужас» обладает острыми костными выступами и развитой мускулатурой, позволяющими рвать плоть жертв и эффективно пробивать броню.
   
   <Box>
   <GuideEntityEmbed Entity="MobHorrorExpeditions"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 200 (death)
-  - [bold][color=#a4885c]Run speed:[/color][/bold] 4.6 m/s
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 12 [color=red]Slash[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] bone spike salvo (ghost role)
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 200 (смерть)
+  - [bold][color=#a4885c]Скорость бега:[/color][/bold] 4.6 м/с
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 12 [color=red]режущий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] залп костных шипов (гост-роль)
   
-  [bold][color=#a4885c]________________________________________________________________________[/color]
+  [bold][color=#a4885c]________________________________________________________________________[/color][/bold]
   
-  # Mission Objectives
-  ## Elimination
+  # Цели миссии
+  ## Уничтожение
   <Box>
   <GuideEntityEmbed Entity="MobHorrorExpeditions"/>
   </Box>
-  Eliminate a large and dangerous creature - an [color=#a4885c]aberrant flesh horror[/color] within given time constraints to earn a monetary reward.
+  Уничтожьте крупное и опасное существо — [color=#a4885c]ужас аномальной плоти[/color] — в отведённое время, чтобы получить денежную награду.
   
-  ## Destruction
+  ## Разрушение
   <Box>
   <GuideEntityEmbed Entity="AberrantFleshDigestiveSack"/>
   </Box>
-  Destroy a certain number of [color=#a4885c]assimilation sacks[/color] within given time constraints to earn a monetary reward. [bold][color=#a4885c]Note[/color][/bold]: each assimilation sack may spawn a few newborn aberrant flesh monsters periodically. Newborns are less robust than their fully grown counterparts.
+  Уничтожьте определённое число [color=#a4885c]мешков ассимиляции[/color] в отведённое время, чтобы получить денежную награду. [bold][color=#a4885c]Примечание[/color][/bold]: каждый мешок ассимиляции может периодически порождать несколько новорождённых монстров аномальной плоти. Новорождённые слабее полностью выросших сородичей.
 </Document>

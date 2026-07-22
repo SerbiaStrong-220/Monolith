@@ -45,7 +45,7 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - SyringeBluespace
-    - BorgParamedicHypo # Exodus borg-paramedic-hypo
+    - BorgAdvancedParamedicHypo # Exodus advanced-borg-hypo
   - type: BorgModuleStackRecharger # Exodus borg-medical-recharge
   - type: BorgModuleIcon
     icon: { sprite: _NF/Interface/Actions/actions_borg.rsi, state: adv-paramed-module }

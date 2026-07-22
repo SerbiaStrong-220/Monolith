@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Hazards.RadialDamageField;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._Exodus.Territory;
@@ -52,6 +53,7 @@ public sealed partial class GridTerritorySystem : EntitySystem
 
     private void OnGridTerritoryShutdown(Entity<GridTerritoryComponent> ent, ref ComponentShutdown args)
     {
+        RemCompDeferred<RadialDamageFieldComponent>(ent);
         DeleteTerritoryBiomeSource(ent);
     }
 
@@ -68,6 +70,22 @@ public sealed partial class GridTerritorySystem : EntitySystem
             profile.MinClaimRepairIntegrity ?? _claimRules.GetDefaultMinClaimRepairIntegrity();
         ent.Comp.ColorPoiByFaction = profile.ColorPoiByFaction;
         ent.Comp.NeutralPoiColor = profile.NeutralPoiColor;
+        ApplyRadialDamageField(ent, profile);
+    }
+
+    private void ApplyRadialDamageField(
+        Entity<GridTerritoryComponent> ent,
+        TerritoryProfilePrototype profile)
+    {
+        if (profile.RadialDamageFieldProfile is not { } fieldProfile)
+        {
+            RemCompDeferred<RadialDamageFieldComponent>(ent);
+            return;
+        }
+
+        var field = EnsureComp<RadialDamageFieldComponent>(ent);
+        field.Profile = fieldProfile;
+        field.RangeOverride = ent.Comp.Radius;
     }
 
     private TerritoryProfilePrototype? ResolveProfile(Entity<GridTerritoryComponent> ent)

@@ -1,0 +1,139 @@
+- type: entity
+  parent: BaseItem
+  id: SpaceLeviathanChitin
+  name: leviathan chitin
+  description: A fragment of an unusually durable shell, suitable for advanced equipment.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Specific/Xeno/xeno_materials.rsi
+    state: chitin-chunk
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 45000
+  - type: Tag
+    tags:
+    - SpaceLeviathanChitin
+
+- type: entity
+  parent: PuddleTemporary
+  id: PuddleIchorLeviathan
+  suffix: Ichor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 50
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  parent: MarkerBase
+  id: SpaceLeviathanOreSpawner
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RandomSpawner
+    prototypes:
+    - SteelOreLeviathan10
+    - CoalLeviathan50
+    - SpaceQuartzLeviathan10
+    - PlasmaOreLeviathan10
+    rarePrototypes:
+    - GoldOreLeviathan10
+    - SilverOreLeviathan10
+    - UraniumOreLeviathan10
+    - BananiumOreLeviathan10
+    - DiamondOreLeviathan10
+    rareChance: 0.25
+    offset: 0
+
+- type: entity
+  parent: SteelOre
+  id: SteelOreLeviathan10
+  suffix: Leviathan, 125
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 125
+    maxCountOverride: 125
+
+- type: entity
+  parent: Coal
+  id: CoalLeviathan50
+  suffix: Leviathan, 25
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 25
+
+- type: entity
+  parent: SpaceQuartz
+  id: SpaceQuartzLeviathan10
+  suffix: Leviathan, 125
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 125
+    maxCountOverride: 125
+
+- type: entity
+  parent: PlasmaOre
+  id: PlasmaOreLeviathan10
+  suffix: Leviathan, 125
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 125
+    maxCountOverride: 125
+
+- type: entity
+  parent: GoldOre
+  id: GoldOreLeviathan10
+  suffix: Leviathan, 125
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 125
+    maxCountOverride: 125
+
+- type: entity
+  parent: SilverOre
+  id: SilverOreLeviathan10
+  suffix: Leviathan, 125
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 125
+    maxCountOverride: 125
+
+- type: entity
+  parent: UraniumOre
+  id: UraniumOreLeviathan10
+  suffix: Leviathan, 125
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 125
+    maxCountOverride: 125
+
+- type: entity
+  parent: BananiumOre
+  id: BananiumOreLeviathan10
+  suffix: Leviathan, 50
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 50
+
+- type: entity
+  parent: DiamondOre
+  id: DiamondOreLeviathan10
+  suffix: Leviathan, 50
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    count: 50

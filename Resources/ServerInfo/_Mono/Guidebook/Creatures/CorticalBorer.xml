@@ -1,39 +1,39 @@
 <Document>
-  # Cortical Borer
+  # Кортикальный бурильщик
 
   <Box>
     <GuideEntityEmbed Entity="MobCorticalBorer"/>
   </Box>
-  Cortical Borers are a worm-like parasitic species that inhabit the Colossus sector. They burrow into one's brain and feed off the body. It's said they can speak to their host, often try to persuade them to do certain things for unknown reasons.
+  Кортикальные бурильщики — червеобразные паразиты, обитающие в секторе Колоссус. Они проникают в мозг и питаются телом. Говорят, они могут разговаривать с носителем и часто уговаривают его делать определённые вещи по неизвестным причинам.
 
-  ### Inject Chemicals
+  ### Ввод химикатов
   <Box>
     <GuideEntityEmbed Entity="Beaker"/>
   </Box>
-  The Cortical Borer injects reagents into its host, could be useful, could be harmful...
+  Кортикальный бурильщик вводит реагенты в носителя — это может быть полезно, а может и навредить...
 
-  ### Check Blood
+  ### Проверка крови
   <Box>
     <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
   </Box>
-  The Cortical Borer can use the host's blood in order to inspect its condition.
+  Кортикальный бурильщик может использовать кровь носителя, чтобы оценить его состояние.
 
-  ### Take Control
+  ### Захват контроля
   <Box>
     <GuideEntityEmbed Entity="OrganHumanBrain"/>
   </Box>
-  The Cortical Borer take's control of the host fully for 40 seconds.
+  Кортикальный бурильщик полностью берёт контроль над носителем на 40 секунд.
 
-  ### Lay Egg
+  ### Откладывание яйца
   <Box>
     <GuideEntityEmbed Entity="CorticalBorerEgg"/>
   </Box>
-  While the Cortical Borer has full control of it's host's body, it can lay an egg and force its host to vomit it out.
+  Пока кортикальный бурильщик полностью контролирует тело носителя, он может отложить яйцо и заставить носителя его вырвать.
 
-  ## How do I Stop them?
+  ## Как от них защититься?
   <Box>
     <GuideEntityEmbed Entity="JugSugar"/>
     <GuideEntityEmbed Entity="ClothingHeadHelmetHardsuitBasic"/>
   </Box>
-  While these creatures can be helpful, there is still a risk in letting them into your body. Wearing a helmet will prevent them from entering your body at all. Ingesting sugar will prevent it from getting into your body and suppress the abilities of one already inside. They can be removed from your body with a surgery to the brain, but it's recommended to consume sugar first, lest they take over your body during the procedure.
+  Хотя эти существа иногда полезны, пускать их в тело всё равно рискованно. Шлем не даст им проникнуть внутрь. Приём сахара мешает проникновению и подавляет способности уже поселившегося паразита. Удалить его можно операцией на мозге, но сначала рекомендуется принять сахар — иначе во время процедуры он может захватить контроль над телом.
 </Document>

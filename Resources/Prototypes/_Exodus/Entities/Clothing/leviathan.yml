@@ -1,0 +1,87 @@
+- type: entity
+  parent: BaseItem
+  id: SpaceLeviathanChitinArmorPlate
+  name: leviathan chitin armor plate
+  description: A resilient hardsuit armor plate made from leviathan chitin.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
+    state: icon
+  - type: Item
+    sprite: _Exodus/Clothing/ArmorPlate/leviathan_chitin.rsi
+    size: Normal
+  - type: StaticPrice
+    price: 60000
+  - type: ArmorPlateItem
+    maxDurability: 100
+    walkSpeedModifier: 1.15
+    sprintSpeedModifier: 1.15
+    absorptionRatios:
+      Blunt: 0.35
+      Slash: 0.35
+      Piercing: 0.35
+      Heat: 0.35
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SpaceLeviathanChitinArmorPlate
+    node: chitinArmorPlate
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatLeviathanChitinCrown
+  name: leviathan chitin crown
+  description: A crown of leviathan chitin that attunes its wearer to shuttle control.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Head/Misc/leviathan_chitin_crown.rsi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.09375"
+    sprite: _Exodus/Clothing/Head/Misc/leviathan_chitin_crown.rsi
+  - type: StaticPrice
+    price: 120000
+  - type: ClothingGrantComponent
+    component:
+    - type: ShuttleBoostingPilot
+      angularMultiplier: 1.1
+      accelerationMultiplier: 1.1
+  - type: Construction
+    graph: SpaceLeviathanChitinCrown
+    node: chitinCrown
+
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesLeviathanChitin
+  name: leviathan chitin gloves
+  description: Combat gloves reinforced with leviathan chitin.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Hands/Gloves/leviathan_chitin.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Hands/Gloves/leviathan_chitin.rsi
+  - type: StaticPrice
+    price: 110000
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Structural: 300
+        Blunt: 40
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+  - type: Construction
+    graph: SpaceLeviathanChitinGloves
+    node: chitinGloves
