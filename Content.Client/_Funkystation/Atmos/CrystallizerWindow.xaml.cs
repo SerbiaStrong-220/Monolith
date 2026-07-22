@@ -271,7 +271,12 @@ namespace Content.Client._Funkystation.Atmos
                         gasContainer.AddChild(gasControl);
                         gasContainer.AddChild(molesLabel);
 
-                        var panel = new PanelContainer { Children = { gasContainer }, HorizontalExpand = true };
+                        var panel = new PanelContainer
+                        {
+                            Children = { gasContainer },
+                            HorizontalExpand = true
+                        };
+
                         var backgroundColor = (index % 2 == 0) ? Color.FromHex("#1B1B1E") : Color.FromHex("#2F2F38");
                         panel.PanelOverride = new StyleBoxFlat { BackgroundColor = backgroundColor };
 
