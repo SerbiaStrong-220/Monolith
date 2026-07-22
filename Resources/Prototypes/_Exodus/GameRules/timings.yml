@@ -8,8 +8,8 @@
       max: 7200
 
 - type: entity
-  id: RoundEndRuleHour6
+  id: RoundEndRuleHour8
   parent: BaseGameRule
   components:
   - type: RoundEndTimeRule
-    endAt: 21600 # 6 hour
+    endAt: 26820 # 7 hours 27 minutes; 25 minute shuttle countdown
