@@ -1,5 +1,5 @@
 <Document>
-  # TAKEAWAY-CLASS SERVICE SHUTTLE
+  # СЕРВИСНЫЙ ШАТТЛ КЛАССА TAKEAWAY
   <Box>
   <GuideEntityEmbed Entity="ServiceTechFab"/>
   <GuideEntityEmbed Entity="KitchenElectricRange"/>
@@ -9,44 +9,44 @@
   <GuideEntityEmbed Entity="PaintingNightHawks"/>
   <GuideEntityEmbed Entity="ShelfBar"/>
   </Box>
-    [color=#a4885c]Ship Size:[/color] Medium
+    [color=#a4885c]Размер корабля:[/color] Средний
 
-	[color=#a4885c]Recommended Crew:[/color] 1-3
+	[color=#a4885c]Рекомендуемый экипаж:[/color] 1–3
 
-	[color=#a4885c]Power Gen Type:[/color] Uranium, Solar
+	[color=#a4885c]Тип генерации энергии:[/color] Уран, солнце
 
-	[color=#a4885c]Expeditions:[/color] None
+	[color=#a4885c]Экспедиции:[/color] Нет
 
-	[color=#a4885c]IFF Console:[/color] None
+	[color=#a4885c]Консоль IFF:[/color] Нет
 
-  "An aptly named medium botanical-kitchen vessel with a customer-facing gantry for ordering to-go. Also comes with dine-in."
+  «Метко названный средний ботанико-кухонный корабль с выносной стойкой для заказов «с собой». Также можно поесть на месте.»
 
-  # PREFLIGHT CHECKLIST
+  # ПРЕДПОЛЁТНЫЙ ЧЕКЛИСТ
 
-  ## 1. Power supply
+  ## 1. Электропитание
 
-  ## 1.1. Battery units
+  ## 1.1. Батарейные блоки
   <Box>
   <GuideEntityEmbed Entity="SMESBasic"/>
   <GuideEntityEmbed Entity="SubstationBasic"/>
   <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
 
-  - Check that the S.U.P.E.R.P.A.C.M.A.N. generator unit is connected to the cable terminal.
-  - Check that the SMES unit is anchored to the floor.
-  - Check that the substation unit is anchored to the floor.
-  - Check that all APC unit's Main Breakers are toggled on.
-  
-  ## 1.2. Solar control
+  - Убедитесь, что генератор S.U.P.E.R.P.A.C.M.A.N. подключён к кабельному терминалу.
+  - Убедитесь, что блок СМЭС закреплён к полу.
+  - Убедитесь, что подстанция закреплена к полу.
+  - Убедитесь, что на всех APC включён главный переключатель.
+
+  ## 1.2. Управление солнечными панелями
   <Box>
   <GuideEntityEmbed Entity="SolarPanel"/>
   <GuideEntityEmbed Entity="ComputerSolarControl"/>
   </Box>
-  
-  -Adjust the solar control computer's tracking angle to match the sun angle.
-  -Check and adjust panel angular velocity until tracking is stable.
 
-  ## 1.3. S.U.P.E.R.P.A.C.M.A.N. generator unit.
+  - Выставьте угол слежения консоли солнечных панелей под угол солнца.
+  - Проверьте и подстройте угловую скорость панелей, пока слежение не станет стабильным.
+
+  ## 1.3. Генератор S.U.P.E.R.P.A.C.M.A.N.
   <Box>
   <GuideEntityEmbed Entity="PortableGeneratorSuperPacmanShuttle"/>
   </Box>
@@ -55,14 +55,14 @@
   <GuideEntityEmbed Entity="ComputerPowerMonitoring"/>
   </Box>
 
-  - Check power sourced by solar panels at power monitoring computer* (W).
-  - Check the power monitoring computer's current network Load* (W).
-  - Check the fuel remaining in the generator unit.
-  - Set the generator unit output power to cover solar power shortfall.
+  - Проверьте выработку солнечных панелей на консоли мониторинга питания* (Вт).
+  - Проверьте текущую нагрузку сети на консоли мониторинга питания* (Вт).
+  - Проверьте оставшееся топливо генератора.
+  - Выставьте выходную мощность генератора так, чтобы закрыть нехватку солнечной энергии.
 
-  ## 2. Atmospherics
+  ## 2. Атмосфера
 
-  ## 2.1. Distribution Loop
+  ## 2.1. Контур распределения
   <Box>
   <GuideEntityEmbed Entity="OxygenCanister"/>
   <GuideEntityEmbed Entity="NitrogenCanister"/>
@@ -70,33 +70,33 @@
   <GuideEntityEmbed Entity="GasPressurePump"/>
   </Box>
 
-  - Ensure O2 and N2 canisters are anchored to mixer connector ports.
-  - Check that the mixer settings are suitable (~22% oxygen, ~78% nitrogen, 101.325 kpa).
-  - Enable the gas mixer.
+  - Убедитесь, что канистры O₂ и N₂ закреплены на коннекторах смесителя.
+  - Убедитесь, что настройки смесителя подходящие (~22% кислорода, ~78% азота, 101.325 кПа).
+  - Включите смеситель газа.
 
-  ## 2.2. Waste Loop
+  ## 2.2. Контур отходов
   <Box>
   <GuideEntityEmbed Entity="AirAlarm"/>
   <GuideEntityEmbed Entity="GasValve"/>
   </Box>
 
-  - Ensure manual waste valve is in the open position.
+  - Убедитесь, что ручной клапан контура отходов открыт.
 
-  ## 3. Other checks
+  ## 3. Прочие проверки
   <Box>
   <GuideEntityEmbed Entity="Gyroscope"/>
   <GuideEntityEmbed Entity="GravityGeneratorMini"/>
   <GuideEntityEmbed Entity="ButtonFrameCaution"/>
   </Box>
 
-  - Check that the gyroscope is anchored, powered, and enabled.
-  - Check that the mini gravity generator is anchored, powered, and enabled.
-  - Check that the thrusters are powered, and enabled.**
+  - Убедитесь, что гироскоп закреплён, запитан и включён.
+  - Убедитесь, что мини-генератор гравитации закреплён, запитан и включён.
+  - Убедитесь, что двигатели запитаны и включены.**
 
-  ## Sidenotes
+  ## Примечания
 
-  * - Takeaway-class service shuttles are equipped with a power monitoring computer that can be used to appraise the ship's total power production and consumption. An unmodified Takeaway-class shuttle requires ~26.25 kW of power to remain operational.
-  
-  ** - The bridge houses a thruster power switch that enables conservation of power. The thrusters will be disabled when the indicator strobe is on. In the incident of external tampering, this switch can also be used to cycle and correct the thrusters. Take care to observe power draw at the power monitoring computer upon making changes. 
+  * — Сервисные шаттлы класса Takeaway оснащены консолью мониторинга питания, по которой можно оценить суммарную выработку и потребление. Неизменённый Takeaway требует около ~26.25 кВт для штатной работы.
+
+  ** — На мостике есть выключатель питания двигателей для экономии энергии. Двигатели отключены, когда мигает индикатор. При внешнем вмешательстве этим же выключателем можно перезапустить двигатели. После изменений следите за потреблением на консоли мониторинга питания.
 
 </Document>

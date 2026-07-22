@@ -1,11 +1,11 @@
 <Document>
-# Bartender
-The bartender has a pretty simple job: serve drinks. People will come up to you and request drinks, and your job is just to hand it to them.
+# Бармен
+У бармена довольно простая работа: подавать напитки. Люди подходят и заказывают, ваша задача — просто выдать им заказ.
 
-[textlink="Click here to see a complete list of drinks." link="Drinks"]
+[textlink="Нажмите сюда, чтобы увидеть полный список напитков." link="Drinks"]
 
 <Box>
-The materials for these drinks can be found in various places:
+Ингредиенты для напитков можно найти в разных местах:
 </Box>
 <Box>
 <GuideEntityEmbed Entity="BoozeDispenser"/>
@@ -14,14 +14,14 @@ The materials for these drinks can be found in various places:
 </Box>
 
 <Box>
-Don't forget containers to serve them in!
+Не забудьте тару, в которой их подавать!
 </Box>
 <Box>
-<GuideEntityEmbed Entity="DrinkGlass" Caption="Glass"/>
+<GuideEntityEmbed Entity="DrinkGlass" Caption="Стакан"/>
 <GuideEntityEmbed Entity="DrinkGlassCoupeShaped"/>
 <GuideEntityEmbed Entity="DrinkShaker"/>
 <GuideEntityEmbed Entity="DrinkJigger"/>
 </Box>
 
-You can find a list of every drink that can be requested under the Reference Tables entry.
+Полный список напитков, которые могут заказать, есть в разделе «Таблицы и референсы».
 </Document>

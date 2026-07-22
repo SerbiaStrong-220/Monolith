@@ -1,76 +1,76 @@
 <Document>
-  # Airlock Upgrades
-  It is not uncommon for plucky individuals to try and bypass an airlock by meddling with its internal wiring.
+  # Улучшение шлюзов
+  Нередко предприимчивые личности пытаются обойти шлюз, копаясь во внутренней проводке.
 
-  Fortunately, certain countermeasures can be installed into airlocks to inconvenience any would-be trespassers.
+  К счастью, в шлюзы можно установить меры противодействия, чтобы затруднить жизнь самозваным «гостям».
 
-  ## Medium security airlocks
-  The most basic form of intrusion deterrence is to install a secured steel plating that will prevent access to internal wiring of the airlock.
+  ## Шлюзы средней защиты
+  Самая базовая защита — закреплённая стальная обшивка, закрывающая доступ к внутренней проводке шлюза.
 
-  To upgrade a basic airlock to a medium security airlock, you will require the following materials:
+  Чтобы улучшить обычный шлюз до средней защиты, понадобится:
   <Box HorizontalAlignment="Stretch">
 	  <Box>
-		  <GuideEntityEmbed Entity="SheetSteel" Caption="2 steel sheets"/>
+		  <GuideEntityEmbed Entity="SheetSteel" Caption="2 стальных листа"/>
 	  </Box>
 	  <Box>
-		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+		  <GuideEntityEmbed Entity="Screwdriver" Caption="Отвёртка"/>
 	  </Box>
 	  <Box>
-		  <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+		  <GuideEntityEmbed Entity="Welder" Caption="Сварочный аппарат"/>
 	  </Box>
   </Box>
 
-  To upgrade a basic airlock:
-  -	Use the screwdriver to open the airlock maintenance panel.
-  -	Add the steel sheets to the airlock.
-  -	Weld the steel sheets into place.
-  -	Close the maintenance panel using the screwdriver.
+  Порядок улучшения обычного шлюза:
+  -	Откройте панель обслуживания шлюза отвёрткой.
+  -	Добавьте стальные листы в шлюз.
+  -	Приварите стальные листы.
+  -	Закройте панель обслуживания отвёрткой.
 
-  ## High security airlocks
-  For airlocks leading to the more sensitive areas of the space station, the use of stronger deterrents are advised. High security airlocks have improved armor plating to protect its internal wiring.
+  ## Шлюзы высокой защиты
+  Для шлюзов в более чувствительные зоны станции нужны более сильные меры. Шлюзы высокой защиты имеют усиленную броню, защищающую внутреннюю проводку.
 
-  To upgrade a medium security airlock to a high security airlock, you will require the following materials:
+  Чтобы улучшить шлюз средней защиты до высокой, понадобится:
   <Box HorizontalAlignment="Stretch">
 	  <Box>
-		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 plasteel sheets"/>
+		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 листа пластали"/>
 	  </Box>
 	  <Box>
-		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+		  <GuideEntityEmbed Entity="Screwdriver" Caption="Отвёртка"/>
 	  </Box>
 	  <Box>
-		  <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+		  <GuideEntityEmbed Entity="Welder" Caption="Сварочный аппарат"/>
 	  </Box>
   </Box>
 
-  To upgrade a medium security airlock:
-  - Use the screwdriver to open the airlock maintenance panel.
-  - Add the plasteel sheets to the airlock.
-  - Weld the plasteel sheets into place.
-  - Close the maintenance panel using the screwdriver.
+  Порядок улучшения шлюза средней защиты:
+  - Откройте панель обслуживания шлюза отвёрткой.
+  - Добавьте листы пластали в шлюз.
+  - Приварите листы пластали.
+  - Закройте панель обслуживания отвёрткой.
 
-  ## Maximum security airlocks
-  You can optionally upgrade a high security airlock to a maximum security airlock. Maximum security airlocks possess an additional layer of electrified wire mesh on top of its other protections, which can shock any unauthorized personnel attempting to tamper with the airlock.
+  ## Шлюзы максимальной защиты
+  Шлюз высокой защиты можно опционально улучшить до максимальной. У шлюзов максимальной защиты поверх прочих защит есть слой электрифицированной сетки, которая бьёт током любого неавторизованного, кто лезет в шлюз.
 
-  To upgrade a high security airlock to a maximum security airlock, you will require the following materials:
+  Чтобы улучшить шлюз высокой защиты до максимальной, понадобится:
   <Box HorizontalAlignment="Stretch">
 	  <Box>
-		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 plasteel sheets"/>
+		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 листа пластали"/>
 	  </Box>
     <Box>
-      <GuideEntityEmbed Entity="PartRodMetal" Caption="2 metal rods"/>
+      <GuideEntityEmbed Entity="PartRodMetal" Caption="2 металлических стержня"/>
     </Box>
 	  <Box>
-		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+		  <GuideEntityEmbed Entity="Screwdriver" Caption="Отвёртка"/>
 	  </Box>
 	  <Box>
-		  <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+		  <GuideEntityEmbed Entity="Welder" Caption="Сварочный аппарат"/>
 	  </Box>
   </Box>
 
-  To upgrade a high security airlock:
-  -	Use the screwdriver to open the airlock maintenance panel.
-  -	Add the plasteel sheets to the airlock.
-  -	Weld the plasteel sheets into place.
-  - Add the metal rods to the airlock.
-  -	Close the maintenance panel using the screwdriver.
+  Порядок улучшения шлюза высокой защиты:
+  -	Откройте панель обслуживания шлюза отвёрткой.
+  -	Добавьте листы пластали в шлюз.
+  -	Приварите листы пластали.
+  - Добавьте металлические стержни в шлюз.
+  -	Закройте панель обслуживания отвёрткой.
 </Document>

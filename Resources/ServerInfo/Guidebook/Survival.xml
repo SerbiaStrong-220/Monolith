@@ -1,38 +1,38 @@
 <Document>   
-# Survival 
-It is generally wise to avoid situations that will cause you harm, because medical can only heal you so much with limited chemicals and medical items and especially when there's nuclear operatives on your doorstep. 
+# Выживание 
+Обычно разумно избегать ситуаций, в которых вам навредят: медицина может вылечить далеко не всё при ограниченном запасе химикатов и расходников — особенно когда ядерные оперативники уже у порога. 
 
-## Identifying your situation 
-Your PDA contains both a vessel name and list of crew currently active in your vessel, a reminder for your name if needed, and your assigned job for the shift, allowing you to quickly assess the situation. 
+## Оцените обстановку 
+В вашем КПК есть название судна и список экипажа на нём, напоминание вашего имени и назначенная на смену должность — так можно быстро понять, что происходит. 
 
-## Emergency Treatment 
-In the event of a serious emergency, there're a few things you can do to help ensure your long-term survival, including: 
-- If entering critical condition, use the emergency medipen from your emergency box, it'll make sure you don't end up unable to do anything. Emergency medipens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc. 
+## Экстренная помощь 
+В серьёзной аварии есть несколько вещей, которые повышают шансы на долгосрочное выживание: 
+- При входе в критическое состояние используйте аварийный медипен из аварийного набора — он не даст вам полностью «отключиться». Аварийные медипены также поднимают лежащих в крите и продлевают время, чтобы справиться с ядами и прочим. 
 
 <Box> 
   <GuideEntityEmbed Entity="EmergencyMedipen"/> 
 </Box>
 
-- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that nitrogen replaces oxygen for you and that your emergency box will start with a red tank of nitrogen replacing the standard blue/yellow oxygen tank. 
+- В аварийном наборе есть дыхательная маска и баллон с кислородом — они помогут дольше продержаться при разгерметизации. Если вы слаймолюд, помните: вместо кислорода вам нужен азот, и в наборе будет красный баллон с азотом вместо обычного синего/жёлтого кислородного. 
 
 <Box> 
   <GuideEntityEmbed Entity="ClothingMaskBreath"/> 
   <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/> 
 </Box>
 
-- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze in the crafting menu to stem bleeding with, however cloth alone can be used to less of a degree in emergencies. 
+- При активном кровотечении или просто для подготовки можно нарезать тканевые предметы ножом или другим острым предметом и из ткани в меню крафта сделать бинты, чтобы остановить кровь; в крайнем случае ткань можно применить и саму по себе, но слабее. 
 
 <Box>
   <GuideEntityEmbed Entity="Gauze"/>
   <GuideEntityEmbed Entity="MaterialCloth"/>
 </Box>
 
-## Other Various Tips
-- In lieu of an actual health analyzer, simply examining yourself and using the detailed examine is a good way to figure out what wounds you have. 
-- If going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness) should they be available. 
-- Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly. 
-- Simple bed rest can allow some wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. 
-- Actually sleeping on a bed boosts your healing rate even farther. 
-- Meals that contain proteins, such as meat, will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though. 
+## Разные советы
+- Без настоящего анализатора здоровья осмотр себя и подробный осмотр (examine) — хороший способ понять, какие у вас раны. 
+- При слепоте морковь тоже помогает (в ней есть окулин — химикат для лечения слепоты), если она есть. 
+- Хорошо приготовленная еда (приготовленная, не из автомата) обычно лучше для здоровья и быстрее закрывает мелкие раны. 
+- Простой покой в постели позволяет некоторым ранам затягиваться самим. Лучше всего медицинские койки — стерильная поверхность и поддержка повреждённых частей тела, — но подойдёт любая. 
+- Сон на койке ещё сильнее ускоряет заживление. 
+- Блюда с белками (например, мясо) сильно помогают организму после тяжёлой кровопотери. Всё равно лучше сходить к врачу. 
   
 </Document> 

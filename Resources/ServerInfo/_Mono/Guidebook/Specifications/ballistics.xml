@@ -1,42 +1,42 @@
 <Document>
-  # Ballistic Weapons Specifications
-  Notes:
-  - Munition range & ammo capacity is taken from the standard magazine & ammunition that comes loaded with the weapon.
-  - For munitions that accelerate over time (such as missiles), range is a rough estimate.
-  - For munitions that are fired at a static speed (such as normal weapons), range is simply just the launch velocity * projectile lifetime.
-  - RPS may not be accurate due to it being capped by server tick speed (usually 20 or 30 ticks/second).
-  - Rare guns such as ADS/NT/Syndicate shipguns will not be included.
+  # Спецификации баллистического оружия
+  Примечания:
+  - Дальность боеприпаса и ёмкость магазина взяты из стандартного магазина и боеприпаса, с которыми оружие идёт по умолчанию.
+  - Для боеприпасов, разгоняющихся со временем (например, ракет), дальность — приблизительная оценка.
+  - Для боеприпасов со статичной скоростью (обычное оружие) дальность = начальная скорость × время жизни снаряда.
+  - RPS может быть неточным из‑за ограничения частотой тиков сервера (обычно 20 или 30 тиков/с).
+  - Редкое оружие вроде корабельных пушек ADS/NT/Синдиката не включено.
 
-  ## Specifications (as of 24-Oct-2025)
+  ## Спецификации (на 24.10.2025)
   <Table Columns="7">
     <ColorBox>
       <Box>
-        Name
+        Название
       </Box>
     </ColorBox>
     <ColorBox>
       <Box>
-        Ammo Capacity
+        Ёмкость
       </Box>
     </ColorBox>
     <ColorBox>
       <Box>
-        Firerate
+        Скорострельность
       </Box>
     </ColorBox>
     <ColorBox>
       <Box>
-        Munition Range
+        Дальность
       </Box>
     </ColorBox>
     <ColorBox>
       <Box>
-        Velocity
+        Скорость
       </Box>
     </ColorBox>
     <ColorBox>
       <Box>
-        Size Class
+        Класс размера
       </Box>
     </ColorBox>
     <!--L85-->
@@ -57,7 +57,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        320 meters
+        320 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -67,7 +67,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Light
+        Лёгкий
       </Box>
     </ColorBox>
     <!--Draupnir-->
@@ -88,7 +88,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        540 meters
+        540 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -98,7 +98,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Medium
+        Средний
       </Box>
     </ColorBox>
     <!--Dravon-->
@@ -119,7 +119,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        1750 meters
+        1750 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -129,7 +129,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Medium
+        Средний
       </Box>
     </ColorBox>
     <!--AK570-->
@@ -150,7 +150,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        714 meters
+        714 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -160,7 +160,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Medium
+        Средний
       </Box>
     </ColorBox>
     <!--Longbow-->
@@ -181,7 +181,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        870 meters
+        870 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -191,7 +191,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Heavy
+        Тяжёлый
       </Box>
     </ColorBox>
     <!--Tarnyx-->
@@ -212,7 +212,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        2000 meters
+        2000 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -222,7 +222,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Heavy
+        Тяжёлый
       </Box>
     </ColorBox>
     <!--Cyrexa-->
@@ -243,7 +243,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        ~1416 meters
+        ~1416 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -253,7 +253,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Medium
+        Средний
       </Box>
     </ColorBox>
     <!--Bofors-->
@@ -274,7 +274,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        ~2503 meters
+        ~2503 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -284,7 +284,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Medium
+        Средний
       </Box>
     </ColorBox>
     <!--CHARON-->
@@ -305,7 +305,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        2465 meters
+        2465 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -315,7 +315,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Superheavy
+        Сверхтяжёлый
       </Box>
     </ColorBox>
     <!--THANTOS-->
@@ -336,7 +336,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        1870 meters
+        1870 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -346,7 +346,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Superheavy
+        Сверхтяжёлый
       </Box>
     </ColorBox>
     <!--THANTOS-->
@@ -367,7 +367,7 @@
     </ColorBox>
     <ColorBox Color="#8f2b65">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        3500 meters
+        3500 метров
       </Box>
     </ColorBox>
     <ColorBox Color="#8f2b65">
@@ -377,7 +377,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Superheavy
+        Сверхтяжёлый
       </Box>
     </ColorBox>
   </Table>

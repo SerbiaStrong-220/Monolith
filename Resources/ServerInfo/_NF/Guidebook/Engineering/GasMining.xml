@@ -1,77 +1,77 @@
 <Document>
-# Gas Mining
-Asteroids in the Frontier sector are a reliable source of large amounts of normally gaseous elements in the form of [color=gold]solidified deposits[/color].
+# Добыча газов
+Астероиды сектора Frontier — надёжный источник больших объёмов обычно газообразных элементов в виде [color=gold]затвердевших месторождений[/color].
 
 <Box>
-<GuideEntityEmbed Entity="GasDepositOxygen" Caption="oxygen deposit"/>
-<GuideEntityEmbed Entity="GasDepositNitrogen" Caption="nitrogen deposit"/>
-<GuideEntityEmbed Entity="GasDepositPlasma" Caption="plasma deposit"/>
+<GuideEntityEmbed Entity="GasDepositOxygen" Caption="месторождение кислорода"/>
+<GuideEntityEmbed Entity="GasDepositNitrogen" Caption="месторождение азота"/>
+<GuideEntityEmbed Entity="GasDepositPlasma" Caption="месторождение плазмы"/>
 </Box>
 
-Atmospheric ships, for example, the [color=yellow]Gasbender[/color] and [color=yellow]Ambition[/color], come equipped with the equipment needed to extract from these deposits. Check for the [color=cyan]Atmospherics[/color] category at the [color=steelblue]shipyard console[/color] when buying ships.
+Атмосферные корабли, например [color=yellow]Gasbender[/color] и [color=yellow]Ambition[/color], уже оснащены оборудованием для добычи из этих месторождений. При покупке кораблей ищите категорию [color=cyan]Atmospherics[/color] на [color=steelblue]консоли верфи[/color].
 
-## Needed Equipment
+## Необходимое оборудование
 
-The equipment you'll need:
-- A mining drill
-- A portable gaslock
-- Steel for pipes
-- A source of power (J.R.P.A.C.M.A.N. recommended)
-- LV cable
-- A gas deposit locator (optional)
+Вам понадобится:
+- Буровая установка для газов
+- Переносной газовый шлюз
+- Сталь для труб
+- Источник питания (рекомендуется J.R.P.A.C.M.A.N.)
+- НВ-кабель
+- Локатор газовых месторождений (по желанию)
 
 <Box>
 <GuideEntityEmbed Entity="GasMiningDrill"/>
 <GuideEntityEmbed Entity="GaslockFrame"/>
-<GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="power supply"/>
+<GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="источник питания"/>
 <GuideEntityEmbed Entity="GasDepositLocator"/>
 </Box>
 
-## Mining Procedure
+## Порядок добычи
 
-Standard procedure for drilling for gas is as follows:
+Стандартная процедура бурения газа:
 
-1. Find an asteroid with gas deposits on it. A [color=green]gas deposit scanner[/color] can help you find these, it'll beep when it's close to one, print one off at an [color=orange]engineering techfab[/color].
+1. Найдите астероид с газовыми месторождениями. [color=green]Сканер газовых месторождений[/color] поможет: он пикает, когда вы рядом. Напечатайте его на [color=orange]инженерном техфабе[/color].
 
-2. Drill out some of the asteroid, and look for [color=lightpink]whisps of solid elements[/color].
+2. Пробурите часть астероида и ищите [color=lightpink]вкрапления затвердевших элементов[/color].
 
-3. Anchor your gas mining drill onto the deposit.
+3. Закрепите газовую буровую установку на месторождении.
 
-4. Build a set of pipes connecting the drill to the most convenient edge of the asteroid.
+4. Постройте сеть труб от бура до наиболее удобного края астероида.
 
-5. Make sure that your shuttle can dock with the edge. You may find constructing a lattice jetty can help.
+5. Убедитесь, что шаттл может пристыковаться к краю. Иногда помогает постройка решётчатого пирса.
 
-6. Note that gas filters, mixers and other equipment may not work on the asteroid. For efficient processing, set up your shuttle for onboard filtration, processing and storage.
+6. Учтите: газовые фильтры, миксеры и прочее оборудование на астероиде могут не работать. Для эффективной обработки настройте фильтрацию, переработку и хранение на борту шаттла.
 
-7. Anchor a portable gaslock onto the edge of the asteroid. Point the red outlet port with the docking lights out towards space.
+7. Закрепите переносной газовый шлюз на краю астероида. Красный выходной порт со стыковочными огнями направьте в космос.
 
-8. Dock your shuttle's gaslock with the portable gaslock, do this with the shuttle console like you're docking with a station.
+8. Состыкуйте газовый шлюз шаттла с переносным — через консоль шаттла, как при стыковке со станцией.
 
-9. Anchor a portable generator on the asteroid, turn it on, and set up cables so both the mining drill and portable gaslock are powered.
+9. Закрепите на астероиде портативный генератор, включите его и проложите кабели так, чтобы и бур, и переносной газовый шлюз были под питанием.
 
-10. Set the target pressure on your drill.
+10. Установите целевое давление на буре.
 
-11. Set the pressure and direction on both the portable gaslock and your shuttle's gaslock.
+11. Установите давление и направление на переносном газовом шлюзе и на газовом шлюзе шаттла.
 
-12. Note that the gaslocks are bidirectional, and the direction the lights are moving is the direction the gas will flow. Both should point in the same direction to pump gas.
+12. Учтите: газовые шлюзы двунаправленные, а направление движения огней — это направление потока газа. Оба должны указывать в одну сторону, чтобы качать газ.
 
-13. Wait until the gas deposit is depleted - the light on the miner should glow [color=yellow]yellow[/color] when low, and [color=red]red[/color] when empty. If you find other deposits, it is efficient to pump multiple deposits at the same time!
+13. Ждите, пока месторождение истощится — индикатор на буре должен светиться [color=yellow]жёлтым[/color] при низком уровне и [color=red]красным[/color], когда пусто. Если найдёте другие месторождения, выгоднее качать несколько сразу!
 
-14. If the miner glows [color=orange]orange[/color], your pipe network is backed up. Double check your pressures and pump directions!
+14. Если бур светится [color=orange]оранжевым[/color], сеть труб забита. Перепроверьте давления и направления насоса!
 
-## Gas Filtering and Processing
+## Фильтрация и переработка
 
-Gas deposits are impure, and should be filtered before selling. [color=cyan]Gas filters[/color] can help extract one gas at a time through their side port.
+Месторождения нечистые — перед продажей газ нужно фильтровать. [color=cyan]Газовые фильтры[/color] помогают извлекать по одному газу через боковой порт.
 
-Different gases have different values. The most valuable gases are [color=cyan]frezon[/color] followed by [color=limegreen]tritium[/color]. Ask someone who knows more about atmospherics about how to process plasma into tritium, and tritium into frezon.
+Разные газы стоят по-разному. Самые ценные — [color=cyan]фрезон[/color], затем [color=limegreen]тритий[/color]. Спросите у кого-то, кто разбирается в атмосфере, как перерабатывать плазму в тритий, а тритий — во фрезон.
 
-Selling gas can be done through canisters, which can be crafted from [color=gray]plasteel[/color], or in bulk at a [color=lightgreen]gas sale point[/color], e.g. at Edison Power Plant.
+Продавать газ можно канистрами, которые крафтятся из [color=gray]пластали[/color], или оптом в [color=lightgreen]точке продажи газа[/color], например на электростанции Edison.
 
-- Canisters can be sold using cargo pallets and cargo sales consoles, like any other good.
-- Gas sales points can accept massive amounts of gas at a time, and require gas to be pumped in through a gaslock.
+- Канистры продаются через грузовые палеты и консоли продажи карго, как любой другой товар.
+- Точки продажи газа принимают огромные объёмы за раз и требуют подачи газа через газовый шлюз.
 
-Both sales methods pay according to the [bold]purity[/bold] of your mix. Be sure to filter your gas! The easier it is for NT to separate your gases out, the better the pay.
+Оба способа оплаты зависят от [bold]чистоты[/bold] смеси. Фильтруйте газ! Чем проще NT разделить ваши газы, тем выше оплата.
 
-Best of luck out there, greenhorn, and keep at it.
+Удачи, новичок, и не сдавайтесь.
 
 </Document>

@@ -1,24 +1,24 @@
 <Document>
-  # Tajaran
+  # Таяры
 
   <Box>
     <GuideEntityEmbed Entity="MobTajaran" Caption=""/>
   </Box>
 
-  Tajara are a species of omnivorous, bipedal humanoids with features strongly resembling Terran felines.
-  Their most distinguishing traits include a layer of fur, large ears atop their heads, and a tail that aids in balance.
-  They hail from the icy moon of [color=turquoise]Ahdomai[/color], only relatively recently making their debut on the galactic stage.
-  Originally a clan-centric society, Tajara endured centuries of dictatorial rule.
-  Following a civil war, their government fractured, and power returned to the clans, where it remains to this day.
+  Таяры — всеядные двуногие гуманоиды с чертами, сильно напоминающими земных кошачьих.
+  Их отличительные признаки — слой меха, крупные уши на макушке и хвост, помогающий держать равновесие.
+  Они родом с ледяной луны [color=turquoise]Ахдомай[/color] и относительно недавно вышли на галактическую сцену.
+  Изначально это было клановое общество; затем таяры пережили столетия диктатуры.
+  После гражданской войны правительство раскололось, и власть снова вернулась к кланам — так остаётся и по сей день.
 
-  ## Mechanics
+  ## Механики
 
-  Due to their [color=yellow]small stature[/color], Tajara [color=#ec3a3a]take 15% more Brute damage[/color], but they can also [color=#1e90ff]fit into duffel bags[/color].
+  Из‑за [color=yellow]небольшого роста[/color] таяры [color=#ec3a3a]получают на 15% больше механического урона[/color], но могут [color=#1e90ff]помещаться в спортивные сумки[/color].
 
-  Their layer of fur gives them some [color=#1e90ff]resistance to Cold[/color], at the cost of [color=#ec3a3a]taking more Heat damage[/color]
+  Слой меха даёт им некоторую [color=#1e90ff]устойчивость к холоду[/color] ценой [color=#ec3a3a]большего урона от жары[/color].
 
-  They use their claws for unarmed attacks, dealing [color=#ec3a3a]Slashing[/color] and [color=#ec3a3a]Piercing[/color] damage.
+  В безоружной атаке они бьют когтями, нанося [color=#ec3a3a]режущий[/color] и [color=#ec3a3a]колющий[/color] урон.
 
-  Thanks to their innate agility, they [color=#1e90ff]take reduced damage from impacts or falls[/color], and their soft feet allow them to [color=#1e90ff]walk shoeless without making noise[/color].
+  Благодаря природной ловкости они [color=#1e90ff]получают меньше урона от ударов и падений[/color], а мягкие ступни позволяют [color=#1e90ff]ходить без обуви бесшумно[/color].
 
 </Document>
