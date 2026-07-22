@@ -240,7 +240,10 @@ namespace Content.Client._Funkystation.Atmos
                 Text = Loc.GetString(recipe.EnergyRelease > 0 ? "crystallizer-ui-exothermic" : "crystallizer-ui-endothermic") // Exodus loc changes
             });
 
+            // Update GasList
             GasList.Children.Clear();
+            if (recipe == null)
+                return;
 
             int index = 0;
             for (int i = 0; i < recipe.MinimumRequirements.Length && i < Atmospherics.TotalNumberOfGases; i++)
