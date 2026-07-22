@@ -70,7 +70,7 @@ public sealed partial class TailedEntitySystem : EntitySystem
             if (!TerminatingOrDeleted(segment) && !EntityManager.IsQueuedForDeletion(segment))
             {
                 _joint.ClearJoints(segment);
-                QueueDel(segment);
+                PredictedQueueDel(segment);
             }
         }
         component.TailSegments.Clear();
@@ -78,11 +78,13 @@ public sealed partial class TailedEntitySystem : EntitySystem
 
     private void OnSegmentShutdown(EntityUid uid, TailedEntitySegmentComponent component, ComponentShutdown args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted ||
+            TerminatingOrDeleted(component.HeadEntity) ||
+            EntityManager.IsQueuedForDeletion(component.HeadEntity))
             return;
 
         _joint.ClearJoints(uid);
-        QueueDel(component.HeadEntity);
+        PredictedQueueDel(component.HeadEntity);
     }
 
     private void InitializeTailSegments(Entity<TailedEntityComponent, TransformComponent> ent)

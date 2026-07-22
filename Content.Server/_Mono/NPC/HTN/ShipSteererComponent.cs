@@ -1,3 +1,4 @@
+using Content.Shared._NF.Shuttles.Events; // Exodus - restore pre-autopilot dampening
 using Robust.Shared.Map;
 using System.Numerics;
 
@@ -9,6 +10,11 @@ namespace Content.Server._Mono.NPC.HTN;
 [RegisterComponent]
 public sealed partial class ShipSteererComponent : Component
 {
+    // Exodus-begin restore the player-selected dampening mode when autopilot releases the ship
+    [ViewVariables(VVAccess.ReadWrite)]
+    public InertiaDampeningMode? PreviousDampeningMode;
+    // Exodus-end
+
     [ViewVariables(VVAccess.ReadWrite)]
     public ShipSteeringStatus Status = ShipSteeringStatus.Moving;
 

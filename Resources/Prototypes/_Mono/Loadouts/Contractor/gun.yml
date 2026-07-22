@@ -1,6 +1,7 @@
 - type: loadoutGroup
   id: ContractorFirearm
   minLimit: 0
+  maxLimit: 2 # Exodus 1 > 2
   name: loadout-group-weapon-civilian
   loadouts:
   - ContractorMk32Loadout
@@ -10,6 +11,9 @@
   - ContractorArgentiLoadout
   - ContractorSvalinnLoadout
   - ContractorDoubleBarreledLoadout
+  - ContractorWeaponCrusherDaggerLoadout # Exodus add Crusher Dagger
+  - ContractorStunbatonLoadout # Exodus add Stunbaton
+  - ContractorTruncheonLoadout # Exodus add Truncheon
   fallbacks:
   - ContractorMk32Loadout
 

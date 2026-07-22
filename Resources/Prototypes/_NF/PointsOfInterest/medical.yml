@@ -12,8 +12,8 @@
   id: Medical
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Госпиталь' # Ru-Localization
-  minimumDistance: 1650
-  maximumDistance: 2700
+  minimumDistance: 6000 # Exodus-nebula-update
+  maximumDistance: 8000 # Exodus-nebula-update
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
   addComponents:
@@ -32,6 +32,11 @@
   stations:
     Medical:
       stationProto: RecordsFrontierOutpost
+      # Exodus start - Territory for Medical Center
+      gridComponents:
+      - type: GridTerritory
+        defaultLabel: territory-marker-hospital # Exodus territory-hospital-label
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Госпиталь' # Ru-Localization

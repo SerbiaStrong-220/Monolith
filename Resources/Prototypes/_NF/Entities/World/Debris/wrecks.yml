@@ -174,6 +174,9 @@
         # "Mobs"
         - id: PlayerBorgDerelictGhostRole
           prob: 0.005
+        # Exodus-space-leviathan
+        - id: SpaceLeviathanEmergencyBeacon
+          prob: 0.005
         - id: PlushieRatvar # Yes
           prob: 0.005
         - id: SevastopolPlushie # Mono

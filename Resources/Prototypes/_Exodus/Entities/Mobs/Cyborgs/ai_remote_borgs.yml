@@ -137,7 +137,7 @@
       borg_module:
       - BorgModuleOperative
       - BorgModuleRedactedWeapon
-      - BorgModuleEsword
+      - BorgModuleAsakimEsword
       - BorgModuleJetpackADM
       - BorgModuleAdvancedTool
       - BorgModuleConstruction

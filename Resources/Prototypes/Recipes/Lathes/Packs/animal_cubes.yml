@@ -25,7 +25,7 @@
   recipes:
   - HumanCube
   - DionaCube
-  # - FelinidCube # Exodus-Removed
+  - FelinidCube
   - GingerbreadCube
   - MothCube
   - DwarfCube
@@ -36,9 +36,10 @@
   - SlimePersonCube
   # - YowieCube # Exodus-Removed
   - VoxCube
-  # - ResomiCube # Exodus-Removed
+  - ResomiCube
   # - GoblinCube # Exodus-Removed
-  # - ChitinidCube # Exodus-Removed
+  - ChitinidCube
 #  - ProtogenCube #mono: retired
   - TajaranCube # Exodus-Add
   - KidanCube # Exodus-Add
+  - ArachnidCube # Exodus-Add

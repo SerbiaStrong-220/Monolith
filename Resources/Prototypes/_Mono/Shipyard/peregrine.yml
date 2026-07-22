@@ -11,7 +11,11 @@
   price: 59525
   category: Medium
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/peregrine.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/peregrine.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Salvage
@@ -21,7 +25,7 @@
 - type: gameMap
   id: Peregrine
   mapName: 'Перегрин' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/peregrine.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/peregrine.yml
   minPlayers: 0
   stations:
     Peregrine:

@@ -1,0 +1,131 @@
+# Author Info
+# GitHub: onezerooo0, Redrover1760
+# Discord: onezero00, Gnarlysheep
+# -
+# Maintainer Info
+# GitHub: Redrover1760
+# Discord: Gnarlysheep
+# I'm not a maintainer lmao, but rover is
+# so true fluffan
+
+# Notes: Wow.
+#
+- type: pointOfInterest
+  id: TSFMCHalcyon
+  parent: [BasePOI, BaseRepairablePOI]
+  name: 'КВП | Флагман Фалкон' # Ru-Localization
+  minimumDistance: 15500 # Exodus-nebula-update
+  maximumDistance: 25000 # Exodus-nebula-update
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Exodus paired faction POI spawn
+  spawnGroup: PairedFactionPoi # Exodus paired faction POI spawn
+  gridPath: /Maps/_Exodus/POI/tsfmchalcyon.yml # Exodus ai-remote-borgs
+  addComponents:
+  - type: IFF
+    color: "#00a1fc"
+    readOnly: true
+  - type: NpcFactionMember # Exodus faction-owned POI target filtering
+    factions:
+    - TSFMC
+  - type: SolarPoweredGrid
+    doNotCull: true
+
+- type: gameMap
+  id: TSFMCHalcyon
+  mapName: 'КВП | Флагман Фалкон' # Ru-Localization
+  mapPath: /Maps/_Exodus/POI/tsfmchalcyon.yml # Exodus ai-remote-borgs
+  minPlayers: 0
+  randomRotation: false
+  stations:
+    TSFMCHalcyon:
+      stationProto: SecurityFrontierOutpost
+      gridComponents:
+      - type: VesselInfo
+        description: "Законсервированный военный корабль КВП, переоборудованный в передовую оперативную базу." # Ru-Localization
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - TSFMC
+      # Exodus start - Territory for TSFMC Halcyon
+      - type: GridTerritory
+      # Exodus end
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'КВП | Флагман Фалкон' # Ru-Localization
+        - type: ExtraStationInformation
+          icon:
+            sprite: _NF/Structures/Decoration/banner.rsi
+            state: nfsd-banner
+          stationSubtext: 'frontier-lobby-nfsd-subtext'
+          stationDescription: 'frontier-lobby-nfsd-description'
+          lobbySortOrder: 2
+        - type: StationJobs
+          availableJobs:
+            Sheriff: [ 1, 1 ]
+            Bailiff: [1, 1 ]
+            SeniorOfficer: [ 3, 3 ] # Mono
+            Brigmedic: [ 2, 2 ] # Mono
+            Deputy: [ -1, -1 ] # Mono
+            Cadet: [ 6, 6 ] # Exodus-Cadet-Return
+            TsfEngineer: [ 2, 2 ]
+            TsfBorg: [ 2, 2 ]
+          tags:
+          - HeadOfPersonnel
+          - HeadOfSecurity
+        - type: StationDeadDropReporting
+          messageSet: Nfsd
+        - type: StationDeadDropHintExempt
+
+### Hyperwar
+
+- type: pointOfInterest
+  id: TSFMCHalcyonHyperwar
+  parent: [BasePOI, BaseRepairablePOI]
+  name: 'TSFMC Flagship Halcyon'
+  minimumDistance: 4500
+  maximumDistance: 5500
+  spawnGamePreset: [ MonoRogueTSFHyperwar ]
+  spawnGroup: Required
+  gridPath: /Maps/_Mono/POI/tsfmchalcyon_hw.yml
+  addComponents:
+  - type: IFF
+    color: "#047abd"
+    readOnly: true
+  - type: SolarPoweredGrid
+    doNotCull: true
+
+- type: gameMap
+  id: TSFMCHalcyonHyperwar
+  mapName: 'TSFMC Flagship Halcyon'
+  mapPath: /Maps/_Mono/POI/tsfmchalcyon_hw.yml
+  minPlayers: 0
+  randomRotation: false
+  stations:
+    TSFMCHalcyonHyperwar:
+      stationProto: SecurityFrontierOutpost
+      gridComponents:
+      - type: VesselInfo
+        description: "A mothballed battleship-turned-FOB, and Home of the TSFMC operations."
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'TSFMC Flagship Halcyon'
+        - type: ExtraStationInformation
+          icon:
+            sprite: _NF/Structures/Decoration/banner.rsi
+            state: nfsd-banner
+          stationSubtext: 'frontier-lobby-nfsd-subtext'
+          stationDescription: 'frontier-lobby-nfsd-description'
+          lobbySortOrder: 2
+        - type: StationJobs
+          availableJobs:
+            Sheriff: [ 1, 1 ]
+            Bailiff: [3, 3 ]
+            SeniorOfficer: [ 5, 5 ] # Mono
+            Brigmedic: [ 2, 2 ] # Mono
+            Deputy: [ -1, -1 ] # Mono
+            TsfEngineer: [ 2, 2 ]
+            TsfBorg: [ 2, 2 ]
+          tags:
+          - HeadOfPersonnel
+          - HeadOfSecurity
+        - type: StationDeadDropReporting
+          messageSet: Nfsd
+        - type: StationDeadDropHintExempt

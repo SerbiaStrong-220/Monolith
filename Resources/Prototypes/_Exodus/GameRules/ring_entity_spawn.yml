@@ -1,0 +1,13 @@
+- type: entity
+  id: LeviathanArrival
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GameRule
+  - type: RingEntitySpawnRule
+    prototype: SpaceLeviathan
+    minimumDistance: 60000
+    maximumDistance: 70000
+    announcement: space-leviathan-arrival-announcement
+    announcementColor: "#FF0000"
+    announcementSound:
+      path: /Audio/Misc/notice1.ogg

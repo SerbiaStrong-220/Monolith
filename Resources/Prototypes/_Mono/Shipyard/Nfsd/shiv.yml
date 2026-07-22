@@ -9,7 +9,11 @@
   category: Small
   group: Security
   access: Security
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/shiv.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/shiv.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Salvage
@@ -20,7 +24,7 @@
 - type: gameMap
   id: Shiv
   mapName: 'Шив' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/shiv.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/shiv.yml
   minPlayers: 0
   stations:
     Shiv:

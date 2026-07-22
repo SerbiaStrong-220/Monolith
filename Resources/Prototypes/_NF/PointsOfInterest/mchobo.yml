@@ -9,14 +9,8 @@
 # Notes:
 # Dumping ground of broken dreams and broken ships.
 # Based on the McCargo built by Dvir01 (https://github.com/dvir001) and ruined with drunken pride by Tych0.
-- type: pointOfInterest
-  id: McHobo
-  parent: BasePOI
-  name: "Заброшенный МакХобольдс" # Ru-Localization
-  minimumDistance: 6250
-  maximumDistance: 7600
-  spawnGroup: Scrapyard
-  gridPath: /Maps/_NF/POI/mchobo.yml
+# Exodus nebula-poi-migration: pointOfInterest removed, spawns inside Green nebulas via
+# NebulaPoiSpawnSystem; see Resources/Prototypes/_Exodus/Nebula/pois.yml. gameMap kept.
 
 - type: gameMap
   id: McHobo
@@ -26,6 +20,10 @@
   stations:
     McHobo:
       stationProto: DeadDropRecordsFrontierOutpost
+      # Exodus start - Territory for McHobo
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: "Заброшенный МакХобольдс" # Ru-Localization

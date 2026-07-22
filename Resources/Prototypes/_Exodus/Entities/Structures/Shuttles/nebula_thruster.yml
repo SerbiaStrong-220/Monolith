@@ -1,0 +1,17 @@
+- type: entity
+  id: NebulaThruster
+  parent: Thruster
+  name: phasic thruster
+  description: A shuttle thruster tuned to underperform in open space and overperform in nebula fields.
+  components:
+  - type: Machine
+    board: NebulaThrusterMachineCircuitboard
+  - type: Thruster
+    thrust: 100
+    baseThrust: 100
+  - type: NebulaThrustMultiplier
+    multiplier: 4
+  - type: NebulaThrustResistance
+    resistance: 1
+  - type: Sprite
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster.rsi

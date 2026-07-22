@@ -1,9 +1,9 @@
 <Document>
-  # Series 4 Combat Mechs
+  # Боевые мехи 4 серии
 
- The very expensive finale to the Mechanized lineup in the Colossus Sector, S4 Mechs are exclusively usable in microgravity and mount weapons intended for use against ships.
+ Самый дорогой финал линейки мехов в секторе Колосс: мехи S4 пригодны только в микрогравитации и несут оружие, предназначенное против кораблей.
 
- All S4 Mechs are space insulated, provide breathable atmosphere, and have maneuvering jets. They also all possess improved ocular processors and radar modules, allowing their operators to see further both visually and on the scanner.
+ Все мехи S4 изолированы от космоса, обеспечивают пригодную для дыхания атмосферу и имеют маневровые двигатели. Также у всех улучшены оптические процессоры и радарные модули, позволяя операторам видеть дальше и визуально, и на сканере.
 
   <Box>
     <GuideEntityEmbed Entity="AFFlail" Scale="0.9"/>
@@ -13,36 +13,35 @@
 
 ##Flail
 
- The Flail is an extremely durable, very fast Armored Frame capable of fighting military-grade ships.
+ Flail — крайне живучий, очень быстрый бронированный каркас (Armored Frame), способный сражаться с военными кораблями.
 
 ##Mace
 
- The Mace is a variant of the Flail that sacrifices half its Armor and all but one of its weapon mounts to go even faster.
+ Mace — вариант Flail, жертвующий половиной брони и всеми креплениями оружия, кроме одного, ради ещё большей скорости.
 
 ##Spyglass
 
- The Spyglass is an EWAR variant of the Flail, which sacrifices Armor, Speed, and can only mount "Light" mech weapons in exchange for the ability to also mount EWAR modules.\n
+ Spyglass — EWAR-вариант Flail: жертвует бронёй, скоростью и может нести только «лёгкое» оружие мехов в обмен на возможность ставить EWAR-модули.
 
-
-##Heavy Mech Weapons
- All Heavy Mech weapons are incapable of operating while under Gravity.
+##Тяжёлое оружие мехов
+ Всё тяжёлое оружие мехов не работает в гравитации.
   <Box>
     <GuideEntityEmbed Entity="HeavyMechCannon" Caption="Metronome 220mm"/>
     <GuideEntityEmbed Entity="HeavyMechProjector" Caption="Ravager Plasma Cannon"/>
     <GuideEntityEmbed Entity="HeavyMechRPG" Caption="R-3 Bazooka"/>
   </Box>
- - The Metronome 220mm Heavy Burst Cannon is a mostly-accurate 3-round burst, long range autocannon. Max Range: ~800m.
- - The Ravager-type Plasma Cannon is an [italic]extremely[/italic] damaging ship-destroying automatic cannon. Max Range: ~550m.
- - The R-3 Bazooka is a very slow firing short-ranged missile launcher with minimal target tracking. Max Range: ~256m.
+ - Metronome 220mm Heavy Burst Cannon — в целом точная трёхзарядная дальнобойная автопушка. Макс. дальность: ~800 м.
+ - Ravager-type Plasma Cannon — [italic]чрезвычайно[/italic] разрушительная автоматическая пушка, способная уничтожать корабли. Макс. дальность: ~550 м.
+ - R-3 Bazooka — очень медленно стреляющая ракетница малой дальности с минимальным наведением. Макс. дальность: ~256 м.
 
-##EWAR Modules
- Electronic Warfare modules provide screening to other Mechs and small ships by emitting radar signatures that interfere with targeting.
+##Модули EWAR
+ Модули радиоэлектронной борьбы маскируют другие мехи и малые корабли, испуская радарные сигнатуры, мешающие наведению.
 
   <Box>
     <GuideEntityEmbed Entity="EWACMechaJammer"/>
     <GuideEntityEmbed Entity="EWACMechaFlares"/>
   </Box>
-  - The E-58 "Blanket" Jammer launches a radar emitter producing a 40m radius radar jamming "blanket", somewhat obscuring Mechs and projectiles from radar observation.
-  - The E-58 "Spark" Jammer launches a series of small emitters that are visible from radar observation.
+  - E-58 «Blanket» Jammer выпускает радарный излучатель, создающий «покрывало» глушения радиусом 40 м, частично скрывая мехи и снаряды от радара.
+  - E-58 «Spark» Jammer выпускает серию малых излучателей, видимых на радаре.
 
 </Document>

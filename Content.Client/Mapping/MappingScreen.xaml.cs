@@ -209,4 +209,13 @@ public sealed partial class MappingScreen : InGameScreen
         Pick.Pressed = Pick == except;
         Delete.Pressed = Delete == except;
     }
+
+    // Exodus-Start Dispose palette picker so its FavoritesChanged subscription doesn't leak.
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+            _picker?.Dispose();
+    }
+    // Exodus-End
 }

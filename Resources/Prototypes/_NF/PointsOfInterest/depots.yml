@@ -12,10 +12,10 @@
   id: CargoDepot
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Грузовое Депо' # Ru-Localization
-  minimumDistance: 8000
-  maximumDistance: 10000
+  minimumDistance: 25000 # Exodus-nebula-update
+  maximumDistance: 35000 # Exodus-nebula-update
   spawnGroup: CargoDepot
-  gridPath: /Maps/_NF/POI/cargodepot.yml
+  gridPath: /Maps/_Exodus/POI/cargodepot.yml # Exodus
   addComponents: &cargoComponents
   - type: IFF
     color: "#37C837"
@@ -31,27 +31,30 @@
         prob: 0.0
       - maxDistance: 1000
         prob: 0.3
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
+  # Exodus-nebula-update: cargo depots spawn in the outer sector and should not extend 7G coverage that far.
 
 - type: pointOfInterest
   id: CargoDepotAlt
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Грузовое Депо' # Ru-Localization
-  minimumDistance: 8000
-  maximumDistance: 10000
+  minimumDistance: 25000 # Exodus-nebula-update
+  maximumDistance: 35000 # Exodus-nebula-update
   spawnGroup: CargoDepot
-  gridPath: /Maps/_NF/POI/cargodepotalt.yml
+  gridPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   addComponents: *cargoComponents
 
 - type: gameMap
   id: CargoDepot
   mapName: 'Cargo Depot' # Has a letter appended in PointOfInterestSystem
-  mapPath: /Maps/_NF/POI/cargodepotalt.yml
+  mapPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   minPlayers: 0
   stations:
     CargoDepot:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for Cargo Depot
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components: &cargoStationComponents
         - type: StationNameSetup
           mapNameTemplate: 'Грузовое Депо' # Ru-Localization # Has a letter appended in PointOfInterestSystem
@@ -61,9 +64,13 @@
 - type: gameMap
   id: CargoDepotAlt
   mapName: 'Грузовое Депо' # Ru-Localization # Has a letter appended in PointOfInterestSystem
-  mapPath: /Maps/_NF/POI/cargodepotalt.yml
+  mapPath: /Maps/_Exodus/POI/cargodepotalt.yml # Exodus
   minPlayers: 0
   stations:
     CargoDepotAlt:
       stationProto: StandardFrontierOutpost
+      # Exodus start - Territory for Cargo Depot Alt
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components: *cargoStationComponents

@@ -56,6 +56,8 @@
 # Todo: Add/Change to PDV - Mono
 - type: npcFaction
   id: PirateNF
+  name: npc-faction-name-pirate-nf # Exodus - faction AI radar label
+  coreControlName: npc-faction-core-control-name-pirate-nf # Exodus - faction AI radar label
   defaultHostile: true
 
 - type: npcFaction
@@ -109,6 +111,8 @@
 # Exodus-asakim-fix-start 
 - type: npcFaction
   id: AsakimDefenceForces
+  name: npc-faction-name-asakim-defence-forces # Exodus - faction AI radar label
+  coreControlName: npc-faction-core-control-name-asakim-defence-forces # Exodus - faction AI radar label
   friendly:
   - SiliconsExpeditionNF
   defaultHostile: true

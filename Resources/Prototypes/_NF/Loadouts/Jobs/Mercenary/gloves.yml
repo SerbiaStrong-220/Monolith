@@ -16,3 +16,11 @@
   price: 0
   equipment:
     gloves: ClothingHandsGlovesCombat
+
+# Exodus-begin add Concussive Gauntlets to loadout
+- type: loadout
+  id: MercenaryClothingHandsConcussiveGauntlets
+  price: 50000
+  equipment:
+    gloves: ClothingHandsConcussiveGauntlets
+# Exodus-end

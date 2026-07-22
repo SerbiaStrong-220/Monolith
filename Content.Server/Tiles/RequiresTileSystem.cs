@@ -18,7 +18,8 @@ public sealed partial class RequiresTileSystem : EntitySystem
     {
         base.Initialize();
         _tilesQuery = GetEntityQuery<RequiresTileComponent>();
-        SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChange,
+            before: [typeof(SharedTransformSystem)]); // Exodus: delete before removed tiles deparent their entities
     }
 
     private void OnTileChange(ref TileChangedEvent ev)

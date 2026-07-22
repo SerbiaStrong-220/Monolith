@@ -11,6 +11,17 @@ public sealed partial class ShipNpcTargetComponent : Component
 
     [DataField]
     public NpcTargetGridMode NeedGrid = NpcTargetGridMode.OnGrid;
+
+    // Exodus-begin faction-aware NPC core targeting
+    [DataField]
+    public float Priority = 0.05f;
+
+    /// <summary>
+    /// Whether this target may only be selected by NPC cores with FactionNpcAiCore.
+    /// </summary>
+    [DataField]
+    public bool FactionCoresOnly;
+    // Exodus-end
 }
 
 public enum NpcTargetGridMode

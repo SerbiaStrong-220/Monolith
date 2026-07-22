@@ -15,7 +15,8 @@
     isEquipment: true
     toggleAction: PulseThermalVision
   - type: PointLight
-    radius: 5
+    radius: 10 # Exodus: was 5; brighter than salvage (8/4)
+    energy: 5 # Exodus: was base ~3
     color: green
   - type: PressureProtection
     highPressureMultiplier: 0.08

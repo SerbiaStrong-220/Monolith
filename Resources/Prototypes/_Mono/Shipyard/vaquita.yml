@@ -12,7 +12,11 @@
   price: 37900
   category: Small
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/vaquita.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/vaquita.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Salvage
@@ -22,7 +26,7 @@
 - type: gameMap
   id: Vaquita
   mapName: 'Вакита' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/vaquita.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/vaquita.yml
   minPlayers: 0
   stations:
     Vaquita:

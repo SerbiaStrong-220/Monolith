@@ -1,4 +1,43 @@
 - type: entity
+  id: SpawnPointAsakimWarrior
+  parent: SpawnPointJobBase
+  name: asakim warrior
+  components:
+  - type: SpawnPoint
+    job_id: AsakimWarrior
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: _Mono/Mobs/Species/Asakim/parts.rsi
+      state: full
+
+- type: entity
+  id: SpawnPointAsakimCenturion
+  parent: SpawnPointJobBase
+  name: asakim centurion
+  components:
+  - type: SpawnPoint
+    job_id: AsakimCenturion
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: _Mono/Mobs/Species/Asakim/parts.rsi
+      state: full
+
+- type: entity
+  id: SpawnPointAsakimPrefect
+  parent: SpawnPointJobBase
+  name: asakim prefect
+  components:
+  - type: SpawnPoint
+    job_id: AsakimPrefect
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: _Mono/Mobs/Species/Asakim/parts.rsi
+      state: full
+
+- type: entity
   id: SpawnPointColossusSecurityBorg
   parent: SpawnPointJobBase
   name: colossus security borg

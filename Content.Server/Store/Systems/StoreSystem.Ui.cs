@@ -94,6 +94,8 @@ public sealed partial class StoreSystem
                 .ToHashSet();
         }
 
+        UpdateLimitedStockState(component.LastAvailableListings); // Exodus
+
         //dictionary for all currencies, including 0 values for currencies on the whitelist
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
         foreach (var supported in component.CurrencyWhitelist)
@@ -110,7 +112,20 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
 
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
+        // Exodus
+        var uiData = new GetStoreUiDataEvent();
+        RaiseLocalEvent(store, ref uiData);
+
+        var state = new StoreUpdateState(
+            component.LastAvailableListings,
+            allCurrency,
+            showFooter,
+            component.RefundAllowed,
+            uiData.Mode,
+            uiData.HasPriceModifier,
+            uiData.PriceMultiplier,
+            uiData.SummoningPriceMultiplier,
+            uiData.ActiveSummoning);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
@@ -151,6 +166,15 @@ public sealed partial class StoreSystem
 
             if (!conditionsMet)
                 return;
+        }
+
+        // Exodus
+        var beforeBuy = new BeforeStoreBuyAttemptEvent(uid, buyer, component, listing);
+        RaiseLocalEvent(uid, ref beforeBuy);
+        if (beforeBuy.Handled || beforeBuy.Cancelled)
+        {
+            UpdateUserInterface(buyer, uid, component);
+            return;
         }
 
         //check that we have enough money
@@ -266,7 +290,7 @@ public sealed partial class StoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
 
-        listing.PurchaseAmount++; //track how many times something has been purchased
+        MarkListingPurchased(listing); // Exodus
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
         var buyFinished = new StoreBuyFinishedEvent
@@ -407,3 +431,40 @@ public readonly record struct StoreBuyFinishedEvent(
     EntityUid StoreUid,
     ListingDataWithCostModifiers PurchasedItem
 );
+
+// Exodus
+[ByRefEvent]
+public record struct BeforeStoreBuyAttemptEvent(
+    EntityUid StoreUid,
+    EntityUid Buyer,
+    StoreComponent Store,
+    ListingDataWithCostModifiers Listing)
+{
+    public bool Cancelled { get; private set; }
+    public bool Handled { get; set; }
+
+    public void Cancel()
+    {
+        Cancelled = true;
+    }
+}
+
+// Exodus
+[ByRefEvent]
+public record struct GetStoreUiDataEvent
+{
+    public StoreUiMode Mode { get; set; }
+    public bool HasPriceModifier { get; set; }
+    public float PriceMultiplier { get; set; }
+    public float SummoningPriceMultiplier { get; set; }
+    public StoreSummoningUiData? ActiveSummoning { get; set; }
+
+    public GetStoreUiDataEvent()
+    {
+        Mode = StoreUiMode.Default;
+        HasPriceModifier = false;
+        PriceMultiplier = 0f;
+        SummoningPriceMultiplier = 1f;
+        ActiveSummoning = null;
+    }
+}

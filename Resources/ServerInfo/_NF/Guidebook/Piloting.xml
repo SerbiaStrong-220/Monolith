@@ -1,35 +1,35 @@
 <Document>
-  # Piloting
+  # Пилотирование
   <Box>
     <GuideEntityEmbed Entity="ComputerShuttle"/>
   </Box>
-  To move a shuttle, you first need to click on the [color=#a4885c]shuttle console[/color] in its cockpit. After clicking the shuttle console, you should see a radar view of the space around your shuttle.
+  Чтобы управлять шаттлом, сначала кликните по [color=#a4885c]консоли шаттла[/color] в кабине. После клика вы увидите радарный обзор пространства вокруг шаттла.
 
-Newly purchased shuttles start docked with Colonial Outpost. To undock, follow these steps:
+Новокупленные шаттлы стартуют пристыкованными к Colonial Outpost. Чтобы отстыковаться, выполните следующие шаги:
 
-- Tell people you are undocking using the shortband channel ([color=#CC6633]:d[/color]). Include your ship's callsign, which can be found on the NAV screen (e.g. "[color=#CC6633]:d Sabine CIV-123 undocking.[/color]")
-- Click on the DOCK tab, disconnect any airlocks that are docked to the station.
-- Return to the NAV tab.
+- Сообщите о расстыковке в канал трафика ([color=#CC6633]:d[/color]). Укажите позывной корабля — его можно найти на вкладке «НАВИГАЦИЯ» (например: «[color=#CC6633]:d Sabine CIV-123 отстыковка.[/color]»)
+- Откройте вкладку «СТЫКОВКА» и отсоедините все шлюзы, пристыкованные к станции.
+- Вернитесь на вкладку «НАВИГАЦИЯ».
 
-- To move a shuttle, the default controls (for a QWERTY keyboard) are:
+- Для перемещения шаттла стандартное управление (для клавиатуры QWERTY):
 
--[color=#028ed9][keybind="ShuttleStrafeUp"/][/color] & [color=#028ed9][keybind="ShuttleStrafeDown"/][/color]: Move forward and backward.
--[color=#028ed9][keybind="ShuttleStrafeLeft"/][/color] & [color=#028ed9][keybind="ShuttleStrafeRight"/][/color]: Move left and right.
--[color=#028ed9][keybind="ShuttleRotateLeft"/][/color] & [color=#028ed9][keybind="ShuttleRotateRight"/][/color]: Rotate left and right.
--[color=#028ed9][keybind="ShuttleBrake"/][/color]: Slow down.
--[color=#028ed9][keybind="ShuttleBrake"/][/color] + [color=#028ed9]any input[/color]: Move and rotate slowly.
+-[color=#028ed9][keybind="ShuttleStrafeUp"/][/color] и [color=#028ed9][keybind="ShuttleStrafeDown"/][/color]: движение вперёд и назад.
+-[color=#028ed9][keybind="ShuttleStrafeLeft"/][/color] и [color=#028ed9][keybind="ShuttleStrafeRight"/][/color]: движение влево и вправо.
+-[color=#028ed9][keybind="ShuttleRotateLeft"/][/color] и [color=#028ed9][keybind="ShuttleRotateRight"/][/color]: поворот влево и вправо.
+-[color=#028ed9][keybind="ShuttleBrake"/][/color]: замедление.
+-[color=#028ed9][keybind="ShuttleBrake"/][/color] + [color=#028ed9]любой ввод[/color]: медленное движение и поворот.
 
-# Docking
+# Стыковка
   <Box>
     <GuideEntityEmbed Entity="AirlockGlassShuttle"/>
   </Box>
-  [bold]Before docking your ship with:[/bold]
-- [bold][color=#979797]Another ship[/color][/bold], it is best practice to announce your intention to dock over the traffic channel ([color=#CC6633]:d[/color]).
-- [bold][color=#ffd700]Colonial Outpost[/color][/bold], stop 200m out, request permission to dock from the Station Traffic Controller (STC) over the traffic radio channel ([color=#CC6633]:d[/color]).
-- [bold][color=#ffa500]Another station[/color][/bold], docks are first come, first serve. Be courteous and leave space where possible.
+  [bold]Перед стыковкой вашего корабля с:[/bold]
+- [bold][color=#979797]Другим кораблём[/color][/bold] хорошей практикой будет объявить о намерении стыковаться в канале трафика ([color=#CC6633]:d[/color]).
+- [bold][color=#ffd700]Colonial Outpost[/color][/bold] — остановитесь в 200 м, запросите разрешение на стыковку у диспетчера трафика станции (STC) по радиоканалу трафика ([color=#CC6633]:d[/color]).
+- [bold][color=#ffa500]Другой станцией[/color][/bold] — доки работают по принципу «кто первый». Будьте вежливы и оставляйте место, когда возможно.
 
-To dock the ship:
-- Pilot towards the target so a set of its airlocks are nearby a set of airlocks of the target.
-- When very close, click on the DOCK tab for a closer view.
-- When next to the airlock, you can click "Dock" when highlighted to attach to the target.
+Чтобы пристыковать корабль:
+- Подведитесь к цели так, чтобы ваши шлюзы оказались рядом с шлюзами цели.
+- Подойдя очень близко, откройте вкладку «СТЫКОВКА» для более детального вида.
+- Рядом со шлюзом нажмите «Пристыковать» при подсветке, чтобы пристыковаться к цели.
 </Document>

@@ -148,7 +148,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        if (!TryComp<BankAccountComponent>(player, out var bank))
+        // Exodus-begin: voucher purchases do not require a bank account
+        var hasBank = TryComp<BankAccountComponent>(player, out var bank);
+        if (voucher is null && !hasBank)
         {
             ConsolePopup(player, Loc.GetString("shipyard-console-no-bank"));
             PlayDenySound(player, shipyardConsoleUid, component);
@@ -224,7 +226,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
         else
         {
-            if (bank.Balance <= vessel.Price)
+            if (bank!.Balance <= vessel.Price)
             {
                 Del(shuttleUid);
                 ConsolePopup(player, Loc.GetString("cargo-console-insufficient-funds", ("cost", vessel.Price)));
@@ -240,6 +242,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 return;
             }
         }
+        // Exodus-end
 
         // Add company information to the shuttle from the ID card or voucher
         string? companyName = null;
@@ -433,7 +436,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         var purchaseEv = new ShipyardShuttlePurchaseEvent(shuttleUid, player); // Mono: half of this shit could be an event.
         RaiseLocalEvent(purchaseEv);
-        RefreshState(shipyardConsoleUid, bank.Balance, true, name, sellValue, targetId, (ShipyardConsoleUiKey)args.UiKey, voucherUsed);
+        // Exodus-begin: keep voucher purchases working without a bank account
+        var balance = 0;
+        if (hasBank)
+            balance = bank!.Balance;
+        // Exodus-end
+
+        RefreshState(shipyardConsoleUid, balance, true, name, sellValue, targetId, (ShipyardConsoleUiKey)args.UiKey, voucherUsed);
     }
 
     private void TryParseShuttleName(ShuttleDeedComponent deed, string name)
@@ -602,7 +611,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (!component.Initialized)
             return;
 
-        // kind of cursed. We need to update the UI when an Id is entered, but the UI needs to know the player characters bank account.
+        // Exodus-begin: allow shipyard UI to refresh for bankless players
         if (!TryComp<ActivatableUIComponent>(uid, out var uiComp) || uiComp.Key == null)
             return;
 
@@ -611,9 +620,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         //      mayhaps re-enable this later for HoS/SA
         //        var station = _station.GetOwningStation(uid);
-
-        if (!TryComp<BankAccountComponent>(player, out var bank))
-            return;
 
         var targetId = component.TargetIdSlot.ContainerSlot?.ContainedEntity;
 
@@ -645,7 +651,12 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             // For now we'll just let them see the cooldown message when they try to use it
         }
 
-        RefreshState(uid, bank.Balance, true, fullName, sellValue, targetId, (ShipyardConsoleUiKey)args.UiKey, voucherUsed);
+        var balance = 0;
+        if (TryComp<BankAccountComponent>(player, out var bank))
+            balance = bank.Balance;
+
+        RefreshState(uid, balance, true, fullName, sellValue, targetId, (ShipyardConsoleUiKey)args.UiKey, voucherUsed);
+        // Exodus-end
     }
 
     private void ConsolePopup(EntityUid uid, string text)
@@ -701,7 +712,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (args.Container.ID != component.TargetIdSlot.ID)
             return;
 
-        // kind of cursed. We need to update the UI when an Id is entered, but the UI needs to know the player characters bank account.
+        // Exodus-begin: allow shipyard UI to refresh for bankless players
         if (!TryComp<ActivatableUIComponent>(uid, out var uiComp) || uiComp.Key == null)
             return;
 
@@ -710,9 +721,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         foreach (var user in uiUsers)
         {
             if (user is not { Valid: true } player)
-                continue;
-
-            if (!TryComp<BankAccountComponent>(player, out var bank))
                 continue;
 
             var targetId = component.TargetIdSlot.ContainerSlot?.ContainedEntity;
@@ -736,8 +744,12 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             }
 
             var fullName = deed != null ? GetFullName(deed) : null;
+            var balance = 0;
+            if (TryComp<BankAccountComponent>(player, out var bank))
+                balance = bank.Balance;
+
             RefreshState(uid,
-                bank.Balance,
+                balance,
                 true,
                 fullName,
                 sellValue,
@@ -746,6 +758,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 voucherUsed);
 
         }
+        // Exodus-end
     }
 
     /// <summary>

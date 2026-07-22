@@ -20,6 +20,8 @@
     - Telecrystal
     balance:
       Telecrystal: 0
+  - type: TerritoryStoreDiscount # Exodus territory-store-discount
+    faction: Syndicate # Exodus territory-store-discount
 
 - type: entity
   id: StorePresetSpellbook

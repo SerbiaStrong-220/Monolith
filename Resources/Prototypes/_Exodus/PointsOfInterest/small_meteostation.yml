@@ -1,0 +1,18 @@
+- type: gameMap
+  id: SmallMeteostation
+  mapName: 'Маленькая Метеостанция'
+  mapPath: /Maps/_Exodus/POI/small_meteo_station.yml
+  minPlayers: 0
+  stations:
+    SmallMeteostation:
+      stationProto: StandardFrontierOutpost
+      gridComponents:
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Маленькая Метеостанция'
+        - type: StationJobs
+          availableJobs: {}
+        - type: StationDeadDropHintExempt

@@ -86,6 +86,7 @@
 #        - id: ClothingMaskGas # Mono
         - id: JetpackBlackFilled # Frontier
         - id: ClothingShoesBootsMagAshen # Mono
+        - id: ClothingBeltUtilityFilled # Exodus
 
 #NTSRA Voidsuit
 - type: entity

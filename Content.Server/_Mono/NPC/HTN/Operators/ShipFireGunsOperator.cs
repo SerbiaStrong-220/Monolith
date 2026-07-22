@@ -57,9 +57,8 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
     [DataField]
     public bool RequirePowered = true;
 
-    private EntityCoordinates? wasTarget = null;
-
     private const string TargetingCancelToken = "ShipTargetingCancelToken";
+    private const string WasTargetKey = "ShipFireGunsWasTarget"; // Exodus shared HTN operator state fix
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -110,20 +109,25 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
                 && _entManager.TryGetComponent<AnchorableComponent>(owner, out var anchorable) && !xform.Anchored
             || RequirePowered
                 && _entManager.TryGetComponent<ApcPowerReceiverComponent>(owner, out var receiver) && !_power.IsPowered(owner, receiver)
+            // Exodus-begin powered NPC core targeting
+            || !IsPoweredTarget(target)
+            // Exodus-end
         )
             return HTNOperatorStatus.Failed;
 
         // hack to update ShipMoveTo or such when we swap targets
-        if (wasTarget != null && wasTarget != target)
+        // Exodus-begin shared HTN operator state fix
+        if (blackboard.TryGetValue<EntityCoordinates>(WasTargetKey, out var wasTarget, _entManager) && wasTarget != target)
         {
-            wasTarget = null;
+            blackboard.Remove<EntityCoordinates>(WasTargetKey);
             return HTNOperatorStatus.Finished;
         }
+        // Exodus-end
 
         // ensure we're still targeting if we e.g. move grids
         var comp = _targeting.Target(owner, target);
 
-        wasTarget = target;
+        blackboard.SetValue(WasTargetKey, target); // Exodus shared HTN operator state fix
 
         if (comp == null)
             return HTNOperatorStatus.Finished;
@@ -131,11 +135,36 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
         if (target.EntityId == EntityUid.Invalid)
             return HTNOperatorStatus.Finished;
 
+        // Exodus-begin faction NPC unavailable target fallback
+        if (comp.TargetUnavailable)
+        {
+            _targeting.MarkTargetUnavailable(owner, target.EntityId);
+            blackboard.Remove<EntityCoordinates>(TargetKey);
+            return HTNOperatorStatus.Failed;
+        }
+        // Exodus-end
+
         if (ShutdownState == HTNPlanState.PlanFinished)
             return HTNOperatorStatus.Finished;
 
         return HTNOperatorStatus.Continuing;
     }
+
+    // Exodus-begin powered NPC core targeting
+    private bool IsPoweredTarget(EntityCoordinates target)
+    {
+        var targetUid = target.EntityId;
+        if (targetUid == EntityUid.Invalid ||
+            !_entManager.TryGetComponent<ShipNpcTargetComponent>(targetUid, out var targetComp) ||
+            !targetComp.NeedPower)
+        {
+            return true;
+        }
+
+        return !_entManager.TryGetComponent<ApcPowerReceiverComponent>(targetUid, out var receiver) ||
+               _power.IsPowered(targetUid, receiver);
+    }
+    // Exodus-end
 
     public void ConditionalShutdown(NPCBlackboard blackboard)
     {
@@ -148,6 +177,8 @@ public sealed partial class ShipFireGunsOperator : HTNOperator, IHtnConditionalS
 
         if (RemoveKeyOnFinish)
             blackboard.Remove<EntityCoordinates>(TargetKey);
+
+        blackboard.Remove<EntityCoordinates>(WasTargetKey); // Exodus shared HTN operator state fix
 
         _targeting.Stop(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
     }

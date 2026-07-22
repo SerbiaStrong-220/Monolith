@@ -102,6 +102,14 @@ public struct FireControllableEntry
     /// </summary>
     public bool HasManualReload;
 
+    // Exodus-Start
+    /// <summary>
+    /// Server time at which this weapon's gun can next fire.
+    /// Fallback for the console UI reload bar when the gun is outside the client's PVS.
+    /// </summary>
+    public TimeSpan NextFire;
+    // Exodus-End
+
     public FireControllableEntry(NetEntity entity, NetCoordinates coordinates, string name, int? ammoCount = null, bool hasManualReload = false)
     {
         NetEntity = entity;

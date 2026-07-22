@@ -8,7 +8,11 @@
   group: Security
   access: Security
   purchasable: false # voucher only
-  shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/ladya.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/ladya.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol
@@ -19,7 +23,7 @@
 - type: gameMap
   id: Ladya
   mapName: 'Ладья'
-  mapPath: /Maps/_Exodus/Shuttles/TSFCM/ladya.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/ladya.yml
   minPlayers: 0
   stations:
     Ladya:

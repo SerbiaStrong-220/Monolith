@@ -1,145 +1,145 @@
 <Document>
-  # Xenos
-  
-  Xenos, occasionally referred to as simply "Aliens", are extraterrestrial lifeforms that use other living beings as hosts for development during their lifecycle. With black carapaces and wicked sharp claws, powerful night vision, and the ability to see people through walls, xenos are extremely dangerous. They are intelligent and capable of communicating to one another via hivemind. They hunt using co-operative tactics, and pose a massive threat to stations and planetside facilities if left unchecked.
-  
-  This species has fluorosulfuric acid for blood. Can be butchered for xeno meat.
-  
+  # Ксеноморфы
+
+  Ксеноморфы, иногда просто «пришельцы», — внеземные формы жизни, которые используют другие живые существа как хозяев для развития на этапах своего жизненного цикла. Чёрный панцирь и острые когти, мощное ночное зрение и способность видеть людей сквозь стены делают их крайне опасными. Они разумны и общаются друг с другом через коллективный разум. Охотятся слаженно и представляют огромную угрозу станциям и наземным объектам, если их не сдерживать.
+
+  У этого вида кровь — фторсерная кислота. Можно разделать на ксеномясо.
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # Known Variants
-  # "Burrower"
-  
-  A young stage of development, burrowers stay close to their nests and dig underground to stay in relative safety.
-  
+
+  # Известные варианты
+  # «Бурильщик»
+
+  Молодая стадия развития: бурильщики держатся у гнёзд и роют ходы под землёй, оставаясь в относительной безопасности.
+
   <Box>
   <GuideEntityEmbed Entity="MobXeno"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 50 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4 m/s (4 m/s)[bold][color=#a4885c]*[/color][/bold]
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 6 [color=red]Brute[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
-  
-  [bold][color=#a4885c]*[/color][/bold] - [italic]an average human can run at 4.5 m/s and walk at 2.5 m/s.[/italic]
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 50 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 4 m/s (4 m/s)[bold][color=#a4885c]*[/color][/bold]
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 6 [color=red]механический[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
+
+  [bold][color=#a4885c]*[/color][/bold] - [italic]средний человек бегает со скоростью 4.5 m/s и ходит со скоростью 2.5 m/s.[/italic]
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Drone"
-  
-  The backbone of any xeno hive, drones serve as workers and nurses. They shape the environment to suit the hive's needs and care for unhatched eggs.
-  
+
+  # «Дрон»
+
+  Опора любого улья ксеноморфов: дроны — рабочие и няньки. Они формируют окружение под нужды улья и ухаживают за невылупившимися яйцами.
+
   <Box>
   <GuideEntityEmbed Entity="MobXenoDrone"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 70 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (3 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 5 [color=red]Brute[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 70 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3.5 m/s (3 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 5 [color=red]механический[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Praetorian"
-  
-  Praetorians are larger than the smaller drones, with their robust body designed for protection and strength. Their impressive size also enables them to efficiently transport large prey back to the hive.
-  
+
+  # «Преторианец»
+
+  Преторианцы крупнее дронов: мощное тело рассчитано на защиту и силу. Размер также позволяет эффективно переносить крупную добычу обратно в улей.
+
   <Box>
   <GuideEntityEmbed Entity="MobXenoPraetorian"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 100 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4 m/s (4 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 10 [color=red]Brute[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 100 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 4 m/s (4 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 10 [color=red]механический[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Ravager"
-  
-  Ravagers are large, vicious killers that specialize in brutal, high-damage hit-and-run attacks.
-  
+
+  # «Разоритель»
+
+  Разорители — крупные свирепые убийцы, специализирующиеся на жёстких ударах «ударил — отбежал» с высоким уроном.
+
   <Box>
   <GuideEntityEmbed Entity="MobXenoRavager"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 150 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4.2 m/s (2.3 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 14 [color=red]Brute[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 150 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 4.2 m/s (2.3 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 14 [color=red]механический[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Runner"
-  
-  Built for speed, the Runner is a very fast caste that excels at hit and run tactics and individual combat. Its lightweight frame leaves it vulnerable, though.
-  
+
+  # «Бегун»
+
+  Бегун создан для скорости: быстрая каста, сильная в тактике «ударил — отбежал» и одиночном бою. Лёгкий корпус, однако, делает его уязвимым.
+
   <Box>
   <GuideEntityEmbed Entity="MobXenoRunner"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 50 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 6 m/s (2.7 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 3 [color=red]Brute[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 50 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 6 m/s (2.7 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 3 [color=red]механический[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Spitter"
-  
-  The Spitter, a master of ranged combat among Xenos, spits globs of caustic saliva that can incapacitate foes with ease. With a quick flick of its elongated tongue, the Spitter unleashes a stream of corrosive goo that can burn through armor and sizzle flesh.
-  
+
+  # «Плевун»
+
+  Плевун — мастер дальнего боя среди ксеноморфов: плюёт сгустками едкой слюны, легко выводящими противников из строя. Быстрым движением удлинённого языка он выпускает струю разъедающей жижи, прожигающей броню и плоть.
+
   <Box>
   <GuideEntityEmbed Entity="MobXenoSpitter"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 75 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4 m/s (4 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 5 [color=orange]Caustic[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] Shooter (acid)
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 75 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 4 m/s (4 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 5 [color=orange]едкий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] стрелок (кислота)
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Xeno turret"
-  
-  The Xeno turret is an odd, immobile creature that secretes and spits the same caustic saliva as the Spitter.
-  
+
+  # «Турель ксено»
+
+  Турель ксено — странное неподвижное существо, выделяющее и плюющее ту же едкую слюну, что и плевун.
+
   <Box>
   <GuideEntityEmbed Entity="WeaponTurretXeno"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 75 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 0 m/s (0 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 5 [color=orange]Caustic[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] Turret, Shooter (acid)
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 75 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 0 m/s (0 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 5 [color=orange]едкий[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] турель, стрелок (кислота)
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # "Queen"
-  
-  Responsible for both laying eggs and providing direction to her children, the Queen is the most important member of a Xeno hive. If she dies, the hive will lose all direction.
-  
+
+  # «Королева»
+
+  Королева и откладывает яйца, и направляет потомство — самый важный член улья ксеноморфов. Если она погибнет, улей лишится управления.
+
   <Box>
   <GuideEntityEmbed Entity="MobXenoQueen"/>
   </Box>
-  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 250 (death)
-  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.8 m/s (2.8 m/s)
-  - [bold][color=#a4885c]Damage (type):[/color][/bold] 20 [color=red]Brute[/color]
-  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
-  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
-  
+  - [bold][color=#a4885c]Пороги здоровья:[/color][/bold] 250 (смерть)
+  - [bold][color=#a4885c]Скорость бега (ходьбы):[/color][/bold] 3.8 m/s (2.8 m/s)
+  - [bold][color=#a4885c]Урон (тип):[/color][/bold] 20 [color=red]механический[/color]
+  - [bold][color=#a4885c]Сопротивления урону:[/color][/bold] нет
+  - [bold][color=#a4885c]Особые способности:[/color][/bold] нет
+
   [bold][color=#a4885c]________________________________________________________________________[/color]
-  
-  # Mission Objectives
-  ## Elimination
+
+  # Цели миссии
+  ## Уничтожение
   <Box>
   <GuideEntityEmbed Entity="MobXenoQueen"/>
   </Box>
-  Eliminate a large and dangerous creature - a [color=#a4885c]queen[/color] within given time constraints to earn a monetary reward.
-  
-  ## Destruction
+  Уничтожьте крупное и опасное существо — [color=#a4885c]королеву[/color] — в отведённое время, чтобы получить денежную награду.
+
+  ## Разрушение
   <Box>
   <GuideEntityEmbed Entity="XenoWardingTower"/>
   </Box>
-  Destroy a certain number of [color=#a4885c]xeno warding towers[/color] within given time constraints to earn a monetary reward.
+  Уничтожьте заданное число [color=#a4885c]сторожевых башен ксено[/color] в отведённое время, чтобы получить денежную награду.
 </Document>

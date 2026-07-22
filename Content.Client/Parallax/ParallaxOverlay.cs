@@ -52,8 +52,40 @@ public sealed partial class ParallaxOverlay : Overlay
         var layers = _parallax.GetParallaxLayers(args.MapId);
         var realTime = (float) _timing.RealTime.TotalSeconds;
 
-        foreach (var layer in layers)
+        // Exodus-begin parallax-overrides
+        var hasOverride = _parallax.TryGetHighestParallaxOverride(out var parallaxOverride);
+        var skipBase = hasOverride && parallaxOverride.Replace && parallaxOverride.Alpha >= 1f;
+
+        if (!skipBase)
+            DrawLayers(args, layers, position, realTime);
+
+        if (hasOverride)
+            DrawLayers(args, parallaxOverride.Layers, position, realTime, parallaxOverride.Alpha);
+        // Exodus-end
+
+        worldHandle.UseShader(null);
+    }
+
+    // Exodus-begin parallax-overrides
+    private void DrawLayers(
+        in OverlayDrawArgs args,
+        ParallaxLayerPrepared[] layers,
+        Vector2 position,
+        float realTime,
+        float alpha = 1f,
+        int startLayer = 0,
+        int layerCount = -1)
+    {
+        if (alpha <= 0f)
+            return;
+
+        var worldHandle = args.WorldHandle;
+        Color? modulate = alpha >= 1f ? null : Color.White.WithAlpha(alpha);
+        var endLayer = layerCount < 0 ? layers.Length : Math.Min(layers.Length, startLayer + layerCount);
+
+        for (var layerIndex = startLayer; layerIndex < endLayer; layerIndex++)
         {
+            var layer = layers[layerIndex];
             ShaderInstance? shader;
 
             if (!string.IsNullOrEmpty(layer.Config.Shader))
@@ -102,17 +134,15 @@ public sealed partial class ParallaxOverlay : Overlay
                 {
                     for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
                     {
-                        worldHandle.DrawTextureRect(tex, Box2.FromDimensions(new Vector2(x, y), size));
+                        worldHandle.DrawTextureRect(tex, Box2.FromDimensions(new Vector2(x, y), size), modulate);
                     }
                 }
             }
             else
             {
-                worldHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
+                worldHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size), modulate);
             }
         }
-
-        worldHandle.UseShader(null);
     }
+    // Exodus-end
 }
-

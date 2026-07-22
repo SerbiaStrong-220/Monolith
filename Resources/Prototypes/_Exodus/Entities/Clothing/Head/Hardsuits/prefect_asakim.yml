@@ -1,0 +1,5 @@
+- type: entity
+  parent: ClothingHelmetHardsuitCenturionAsakim
+  id: ClothingHelmetHardsuitPrefectAsakim
+  name: prefect kasature-pattern command harness helmet
+  description: The helmet of a senior pre-fracture Asakim command harness.

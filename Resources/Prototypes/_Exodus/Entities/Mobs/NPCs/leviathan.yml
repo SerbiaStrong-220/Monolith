@@ -1,6 +1,6 @@
 - type: entity
   id: SpaceLeviathan
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, ShowMedicalIcons ]
   name: space leviathan
   description: When the space becomes too quiet, there is no hope, there is no escape, but there is this.
   suffix: no despawn
@@ -8,6 +8,36 @@
   - type: Damageable
     damageModifierSet: Leviathan
     damageContainer: Biological
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      groups:
+        Brute: -25
+        Burn: -25
+        Toxin: -25
+      types:
+        Bloodloss: -3
+  - type: RadialDamageFieldTarget
+    profiles:
+    - Leviathan
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-space-leviathan-name
+    description: ghost-role-information-space-leviathan-description
+    rules: ghost-role-information-space-leviathan-rules
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hrs
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: WorldChunkLoadingExempt
+  - type: CleanupImmune
   - type: PointLight
     color: "#FF8227FF"
     radius: 3
@@ -19,18 +49,43 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 70
     baseWalkSpeed: 70
+  - type: Eye
+    pvsScale: 4.458052
+  - type: ContentEye
+    targetZoom: 4.458052, 4.458052
+    maxZoom: 4.458052, 4.458052
+  - type: TemporarySpeedBoost
+    action: ActionLeviathanSurge
+    duration: 10
+    walkSpeedMultiplier: 3
+    sprintSpeedMultiplier: 3
+    weightlessSpeedMultiplier: 3
+    weightlessAccelerationMultiplier: 3
   - type: RadarBlip
     scale: 3
     shape: hexagon
     visibleFromOtherGrids: true
+  - type: ShipNpcTarget
+    needGrid: NoGrid
+    priority: 1
+    factionCoresOnly: true
+  - type: BluespaceMapBlip
+    shape: Ring
+    color: "#FF8227"
+    scale: 1.5
+    label: bluespace-map-blip-space-leviathan
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
+      enum.ReadOnlyBluespaceMapUiKey.Key:
+        type: ReadOnlyBluespaceMapBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
-        toggleAction: ActionAGhostShowRadar
+        toggleAction: ActionLeviathanShowRadar
+      enum.ReadOnlyBluespaceMapUiKey.Key:
+        toggleAction: ActionShowBluespaceMap
   - type: RadarConsole
     followEntity: true
     hideCoords: false # Frontier
@@ -69,15 +124,16 @@
   - type: MeleeWeapon
     altDisarm: false
     attackRate: 0.3
+    range: 8
     angle: 0
     animation: WeaponArcBite
     soundHit:
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Blunt: 50
-        Slash: 45
-        Structural: 800
+        Blunt: 500
+        Slash: 250
+        Structural: 3000
   - type: Speech
     speechVerb: LargeMob
   - type: InteractionPopup
@@ -109,7 +165,13 @@
         !type:DamageTrigger
         damage: 16000
       behaviors:
-      - !type:GibBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SpaceLeviathanCorpse:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - SpaceLeviathan
@@ -128,6 +190,7 @@
   - FlyingMobBase
   suffix: do not spawn
   components:
+  - type: CleanupImmune
   - type: Damageable
     damageModifierSet: Leviathan
     damageContainer: Biological
@@ -169,13 +232,74 @@
       - SpaceLeviathan
 
 - type: entity
-  id: SpaceLeviathanDespawn
-  parent: SpaceLeviathan
-  suffix: despawns
+  id: SpaceLeviathanCorpse
+  name: space leviathan corpse
+  description: A massive segment of a slain space leviathan. Its shell is still valuable.
+  components:
+  - type: CleanupImmune
+  - type: Sprite
+    sprite: _Exodus/Mobs/Monolith/leviathan.rsi
+    state: segment
+    noRot: false
+  - type: RadarBlip
+    scale: 3
+    shape: diamond
+    visibleFromOtherGrids: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1,-1,1,1"
+        density: 137992
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Pullable
+  - type: StaticPrice
+    price: 0
+  - type: Butcherable
+    butcherDelay: 20
+    spawned:
+    - id: PuddleIchorLeviathan
+      amount: 4
+    - id: SpaceLeviathanChitin
+      amount: 1
+      maxAmount: 4
+    - id: SpaceLeviathanOreSpawner
+      amount: 24
+    - id: ClothingBackpackDroneLootT22
+      amount: 4
+    - id: ClothingBackpackFleetLootT1
+      prob: 0.3
+    - id: ClothingHeadHatLeviathanChitinCrown
+      prob: 0.2
+    - id: ClothingHandsGlovesLeviathanChitin
+      prob: 0.2
+    - id: GunneryServerSuperFlatpack
+      prob: 0.2
+    - id: EffectLeviathanButcherSound
+
+- type: entity
+  id: EffectLeviathanButcherSound
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
-    lifetime: 300
+    lifetime: 1
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/_Exodus/Ambience/Leviathan/leviathan-appear.ogg
+    positional: true
 
+- type: entity
+  id: SpaceLeviathanDespawn
+  parent: SpaceLeviathan
+  suffix: legacy no despawn
 - type: entity
   id: SpaceLeviathanSpawner
   parent: MarkerBase
@@ -188,4 +312,4 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - SpaceLeviathanDespawn
+    - SpaceLeviathan

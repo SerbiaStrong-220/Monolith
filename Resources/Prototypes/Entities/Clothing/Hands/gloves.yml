@@ -272,6 +272,13 @@
     fiberMaterial: fibers-insulative
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.95 # *grabs ur baton* nice knife
+  # Exodus-begin: leviathan crafting
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+    - CombatGloves
+  # Exodus-end: leviathan crafting
 
 # can't parent combat gloves since they are butcherable
 - type: entity

@@ -49,6 +49,9 @@ entities:
       toolWhitelist:
         tags:
         - ADSRepairTool
+    - type: NpcFactionMember
+      factions:
+      - AsakimDefenceForces
     - type: MapGrid
       chunks:
         0,0:
@@ -96,7 +99,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: IFF
-      color: '#00CCFFFF'
+      color: '#ff3db1'
     - type: DecalGrid
       chunkCollection:
         version: 2

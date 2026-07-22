@@ -1,0 +1,45 @@
+- type: vessel
+  id: Antares
+  parent: BaseVesselAntag
+  name: Антарес
+  description: Капитальный эсминец с ракетами Rain и Sliver, 20-мм орудиями L85, лазерными турелями и сервером артиллерийского управления Омега.
+  limit: 1
+  price: 1225950
+  purchasable: false # voucher only
+  category: Large
+  group: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/antares.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Capital
+  - Destroyer
+  - Medical
+  - Chemistry
+  - Pursuit
+  - Patrol
+  engine:
+  - AME
+
+- type: gameMap
+  id: Antares
+  mapName: 'Антарес'
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/antares.yml
+  minPlayers: 0
+  stations:
+    Antares:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Антарес{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

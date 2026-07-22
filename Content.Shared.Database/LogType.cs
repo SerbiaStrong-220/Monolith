@@ -498,5 +498,9 @@ public enum LogType
     // Exodus-Begin
     AutoUnstuck = 104,
     Movement = 105,
+    /// <summary>
+    /// A lobby transfer between a character's main bank account and savings.
+    /// </summary>
+    SavingsTransfer = 106,
     // Exodus-End
 }

@@ -20,6 +20,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.NukeOps;
 using Content.Shared.Pinpointer;
 using Content.Shared.Station.Components;
+using Content.Shared._Exodus.Roles; // Exodus-syndicate-biocode
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;

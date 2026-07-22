@@ -1,0 +1,143 @@
+# Exodus: Assault System Operator (ОШС) — copy of Personal Protection Operator with fighter sprites
+
+- type: entity
+  id: BorgChassisAsakimFighter
+  parent: [BaseBorgChassisRedacted, ShowMedicalIcons]
+  name: assault system operator
+  description: A synthetic bodyguard assigned to protect the officer corps of the Khs'i-Ra Empire.
+  components:
+  - type: IonStormTarget # Exodus asakim-ion-storm-balance
+    chance: 0
+    randomLawsetChance: 0
+    removeChance: 0
+    replaceChance: 0
+    shuffleChance: 0
+  - type: SiliconLawProvider
+    laws: AsakimOccupant
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/asakim_fighter.rsi
+    layers:
+    - state: azakim_fighter
+    - state: azakim_fighter_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Azaziba
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Azaziba
+  - type: CanMoveInAir
+  - type: BorgChassis
+    maxModules: 10
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: azakim_fighter_e
+    noMindState: azakim_fighter
+  - type: Construction
+    node: derelictcyborg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-derelict-cyborg
+    interactFailureString: petting-failure-derelict-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Critical
+      450: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      360: 0.7
+      420: 0.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 840
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: PlayerBorgAsakimFighter
+  parent: BorgChassisAsakimFighter
+  suffix: Battery, Module
+  components:
+  - type: AsakimTrustedUser
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleAsakimFighterWeapon
+      - BorgModuleAsakimEsword
+      - BorgModuleJetpackADM
+      - BorgModuleAdvancedTool
+      - BorgModuleRedactedRCD
+      - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProtoEmpProof
+
+- type: entity
+  id: PlayerBorgAsakimFighterGhostRole
+  parent: PlayerBorgAsakimFighter
+  suffix: Ghost
+  components:
+  - type: GhostRole
+    name: ghost-role-information-asakim-fighter-borg
+    description: ghost-role-information-asakim-fighter-borg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    prototype: AsakimFighterBorg
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 180000 # 50 hrs
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgAsakimFighterGhostRoleNoTimelock
+  parent: PlayerBorgAsakimFighterGhostRole
+  suffix: Ghost, No Timelock
+  components:
+  - type: GhostRole
+    name: ghost-role-information-asakim-fighter-borg
+    description: ghost-role-information-asakim-fighter-borg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    prototype: AsakimFighterBorg
+    requirements: []

@@ -10,7 +10,11 @@
   category: Medium
   group: Security
   access: Security
-  shuttlePath: /Maps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol
@@ -21,7 +25,7 @@
 - type: gameMap
   id: Sentinel
   mapName: 'Центинел' # Ru-Localization
-  mapPath: /Maps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel.yml # Exodus
   minPlayers: 0
   stations:
     Sentinel:

@@ -1,47 +1,47 @@
 <Document>
-  # Colossus Shipyards
+  # Верфи Колосса
 
-To assist in developing the Colossus Sector, shuttles from SHM or various corporations can be rented for use.
-All rentals last for one shift. Rented shuttles return to the corporate parent company at the end of shift.
-The value of shuttles is returned to the purchaser when ended through a ship console.
-To avoid losses, [bold]make sure you end your rental before ending your shift[/bold].
+Для развития сектора Колосс можно арендовать шаттлы SHM или различных корпораций.
+Все аренды длятся одну смену. Арендованные шаттлы возвращаются материнской корпорации в конце смены.
+Стоимость шаттла возвращается покупателю, если аренду завершить через консоль кораблей.
+Чтобы не потерять деньги, [bold]завершите аренду до конца смены[/bold].
 
-## Shipyard Console
+## Консоль верфи
   <Box>
     <GuideEntityEmbed Entity="PassengerIDCard"/>
     <GuideEntityEmbed Entity="SpaceCash1000"/>
     <GuideEntityEmbed Entity="ComputerShipyard"/>
   </Box>
-  To rent a ship:
-- Eject the ID card from your PDA.
-- Insert the ID card into an unused [color=#cccc00]shipyard console[/color].
-- Use the shipyard console to bring up its interface.
-- Select the ship you would like to rent.
-- Press the Purchase button on the console.
-- Press the Eject button to remove your ID from the console.
-- Reinsert your ID card into your PDA.
+  Чтобы арендовать корабль:
+- Извлеките ID-карту из КПК.
+- Вставьте ID-карту в свободную [color=#cccc00]консоль верфи[/color].
+- Откройте интерфейс консоли верфи.
+- Выберите нужный корабль.
+- Нажмите кнопку покупки на консоли.
+- Нажмите «Извлечь», чтобы забрать ID из консоли.
+- Верните ID-карту в КПК.
 
-Congratulations, you're now the Captain of your own ship!
+Поздравляем, вы теперь капитан собственного корабля!
 
-To end your rental:
-- Make sure your rented ship is docked with Colonial Outpost.
-- Make sure nobody is aboard the ship.
-- Eject the ID card [bold]used to purchase the ship[/bold] from your PDA.
-- Insert the ID card into an unused [color=#cccc00]shipyard console[/color].
-- Use the shipyard console to bring up its interface.
-- Press the Sell button on the console. The value will be deposited into your bank account.
-- Press the Eject button to remove your ID from the console.
-- Reinsert your ID card into your PDA.
+Чтобы завершить аренду:
+- Убедитесь, что арендованный корабль пристыкован к Колониальному аванпосту.
+- Убедитесь, что на корабле никого нет.
+- Извлеките из КПК ID-карту, [bold]которой покупали корабль[/bold].
+- Вставьте ID-карту в свободную [color=#cccc00]консоль верфи[/color].
+- Откройте интерфейс консоли верфи.
+- Нажмите кнопку продажи. Сумма поступит на ваш банковский счёт.
+- Нажмите «Извлечь», чтобы забрать ID из консоли.
+- Верните ID-карту в КПК.
 
-## Provisions
+## Снабжение
   <Box>
     <GuideEntityEmbed Entity="LockerCaptain"/>
     <GuideEntityEmbed Entity="SuitStorageBase"/>
     <GuideEntityEmbed Entity="LockerParamedic"/>
   </Box>
-  Ships come equipped with the tools and supplies needed to perform one or more tasks in the Colossus Sector (e.g. mining, research, medical, food services).
+  Корабли оснащены инструментами и припасами для одной или нескольких задач в секторе Колосс (например, добыча, исследования, медицина, общепит).
 
-Ships, especially larger ones, work best with a crew. Refer to the [bold]Hiring[/bold] section for more info.
-Space is a lonely, dangerous place, and you'll have a much better time when you work with a crew.
+Корабли, особенно крупные, лучше работают с экипажем. См. раздел [bold]Найм[/bold].
+Космос одинок и опасен — с экипажем вам будет гораздо проще.
 
 </Document>

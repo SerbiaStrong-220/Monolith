@@ -9,10 +9,14 @@
   parent: BaseVessel
   name: Артемида # Ru-Localization
   description: Артемида - компактный шаттл-амбулатория, предназначенный для быстрой эвакуации пациентов и выхода из зоны так же быстро, как и прибыл. # Ru-Localization
-  price: 34000 # Its a barebones med ship, basically acting as a paramedic ship. 
+  price: 34000 # Its a barebones med ship, basically acting as a paramedic ship.
   category: Small
   group: Medical
-  shuttlePath: /Maps/_Mono/Shuttles/artemis.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/artemis.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus MD faction
+    factions:
+    - MD
   guidebookPage: null
   class:
   - Medical
@@ -22,7 +26,7 @@
 - type: gameMap
   id: Artemis
   mapName: 'Артемида' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/artemis.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/artemis.yml
   minPlayers: 0
   stations:
     Artemis:

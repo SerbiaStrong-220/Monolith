@@ -7,3 +7,7 @@ ent-SpaceWhaleSegment = Левиафан
 ent-SpaceLeviathanDespawn = { ent-SpaceLeviathan }
     .desc = { ent-SpaceLeviathan.desc }
     .suffix = 5 минут
+ent-SpaceLeviathanCorpse = труп левиафана
+    .desc = Огромный сегмент убитого космического левиафана. Его панцирь всё ещё представляет ценность.
+ent-SpaceLeviathanChitin = хитин левиафана
+    .desc = Фрагмент необычайно прочного панциря, подходящий для создания продвинутого снаряжения.

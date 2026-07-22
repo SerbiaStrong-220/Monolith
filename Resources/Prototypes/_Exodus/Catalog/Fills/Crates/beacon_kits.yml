@@ -1,0 +1,39 @@
+# Gamble crate: exactly one random fixed beacon pack.
+# Capital packs (Wing, Pearl) are the rarest; mid packs share the rest.
+
+- type: entityTable
+  id: AsakimBeaconKitTable
+  table: !type:GroupSelector
+    children:
+    # Mid / solid outcomes
+    - id: BoxAsakimBeaconKitFamily
+      weight: 18
+    - id: BoxAsakimBeaconKitTwins
+      weight: 15
+    - id: BoxAsakimBeaconKitWatch
+      weight: 14
+    - id: BoxAsakimBeaconKitAssault
+      weight: 14
+    - id: BoxAsakimBeaconKitPrayer
+      weight: 14
+    # Strategic
+    - id: BoxAsakimBeaconKitArgument
+      weight: 10
+    # Capitals — intentionally low
+    - id: BoxAsakimBeaconKitWing
+      weight: 8
+    - id: BoxAsakimBeaconKitPearl
+      weight: 7
+
+- type: entity
+  id: CrateAsakimBeaconKitSurplus
+  parent: CrateGenericSteel
+  name: sealed beacon allocation crate
+  description: A sealed pre-fracture allocation crate. Contains one random beacon pack. No refunds, no inventory list, no second chances.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: AsakimBeaconKitTable
+        rolls: !type:ConstantNumberSelector
+          value: 1

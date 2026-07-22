@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
+using Content.Shared._Exodus.ShipArmor; // Exodus dynamic armor tile protection
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -65,6 +66,8 @@ public sealed partial class ExplosionSystem
     private readonly List<(EntityUid, DamageSpecifier)> _toDamage = new();
 
     private List<EntityUid> _anchored = new();
+
+    private readonly List<EntityUid> _subFloorDeferred = new(); // Exodus
 
     private void OnMapRemoved(MapRemovedEvent ev)
     {
@@ -235,9 +238,17 @@ public sealed partial class ExplosionSystem
         var tileBlocked = false;
         _anchored.Clear();
         _map.GetAnchoredEntities(grid, tile, _anchored);
+        _subFloorDeferred.Clear(); // Exodus
         foreach (var entity in _anchored)
         {
             processed.Add(entity);
+            // Exodus-Start
+            if (_subFloorQuery.HasComponent(entity))
+            {
+                _subFloorDeferred.Add(entity);
+                continue;
+            }
+            // Exodus-End
             ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
         }
 
@@ -260,6 +271,14 @@ public sealed partial class ExplosionSystem
                 tileBlocked |= IsBlockingTurf(entity);
             }
         }
+
+        // Exodus-Start
+        if (!tileBlocked)
+        {
+            foreach (var entity in _subFloorDeferred)
+                ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+        }
+        // Exodus-End
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
         // windows will be flung outwards, and not stay where they spawned. This is however somewhat unnecessary, and a
@@ -551,6 +570,11 @@ public sealed partial class ExplosionSystem
         }
 
         if (tileDef.TileId == tileRef.Tile.TypeId)
+            return;
+
+        var tileDamage = new ShipArmorTileDamageEvent(tileRef.GridUid, tileRef.GridIndices, effectiveIntensity);
+        RaiseLocalEvent(tileRef.GridUid, ref tileDamage); // Exodus dynamic armor tile protection
+        if (tileDamage.Cancelled)
             return;
 
         damagedTiles.Add((tileRef.GridIndices, new Tile(tileDef.TileId)));

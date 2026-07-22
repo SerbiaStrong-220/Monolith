@@ -11,22 +11,25 @@
   price: 120000
   category: Large
   group: Shipyard
-  shuttlePath: /Maps/_Mono/Shuttles/ethereal.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/ethereal.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  - type: SolarPoweredGrid
+    doNotCull: true
   guidebookPage: null
   class:
   - Science
   engine:
   - AME
   - Solar
-  addComponents:
-  - type: SolarPoweredGrid
-    doNotCull: true
 
 
 - type: gameMap
   id: Ethereal
   mapName: 'Эзериал' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/ethereal.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/ethereal.yml
   minPlayers: 0
   stations:
     Ethereal:

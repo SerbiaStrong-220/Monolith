@@ -1,16 +1,16 @@
 <Document>
-  # Chimeras and Letoferol
+  # Химеры и летоферол
 
-Chimeras are the result of a bioweapon chemical known as [bold][color=#a84387]Letoferol[/color][/bold].
+Химеры — результат биологического оружия, известного как [bold][color=#a84387]летоферол[/color][/bold].
 
   <Box>
     <GuideEntityEmbed Entity="SyringeLetoferol"/>
     <GuideEntityEmbed Entity="MobLetoferolHorror"/>
   </Box>
 
-There are 2 types of Letoferol:
- - There is [italic][color=#ebba34]natural Letoferol[/color][/italic], which is the pure form made in Chimeras. It is their bloodstream, and it is injected with their spike and melee attacks.
- - However, to get your infection in the first place, there is of course the base lab-grown [italic][color=#a84387]Letoferol[/color][/italic], which is a weaker kind, but still dangerous.
+Существует 2 вида летоферола:
+ - [italic][color=#ebba34]натуральный летоферол[/color][/italic] — чистая форма, производимая химерами. Вырабатывается в их кровеносной системе, вводится шипом и рукопашными атаками.
+ - Чтобы получить инфекцию изначально, есть лабораторный [italic][color=#a84387]летоферол[/color][/italic] — более слабый, но всё ещё опасный.
 
   <GuideReagentEmbed Reagent="Letoferol"/>
   <GuideReagentEmbed Reagent="NaturalLetoferol"/>
@@ -19,38 +19,38 @@ There are 2 types of Letoferol:
     <GuideEntityEmbed Entity="ChimeraFleshKudzu"/>
   </Box>
 
-Natural Letoferol will spread biomass on tiles it's exposed to. This can make killing a Chimera a difficult task, as this biomass will spread and slowdown non-Chimeras on it.
- - To avoid the spread of biomass, options that don't involve bleeding are suggested (such as chemicals, acid or fire).
+Натуральный летоферол распространяет биомассу по тайлам, с которыми соприкасается. Из-за этого убить химеру бывает сложно: биомасса расползается и замедляет других существ не-химер.
+ - Чтобы не давать биомассе распространяться, лучше использовать методы без кровотечения (химикаты, кислота или огонь).
 
-Both types of Letoferol will not turn people into Chimera outside of critical condition. 
+Оба вида летоферола не превращают людей в химер, пока те не в критическом состоянии.
   
-## Mesotaxinide and Mesophenerol
+## Мезотаксинид и мезофенерол
 
-  There are 2 cures for a Chimera infection, the advanced [color=#437ca8][bold]Mesotaxinide[/bold][/color], and the much simpler, but less effective [color=#4ca832][bold]Mesophenerol[/bold][/color].
-   - Mesotaxinide will do extreme damage on contact with Chimeras, so a spray or nozzle with the substance is the absolute best option for killing Chimeras.
-   - To create Mesotaxinide, you can use [color=#a85832]protoletoferol[/color] from putting [color=#ebba34]natural Letoferol[/color] or normal [color=#a84387]Letoferol[/color] in a electrolysis machine.
-   - Protoletoferol is mostly harmless, and its only use is for Mesotaxinide.
+  Есть 2 лекарства от инфекции химеры: продвинутый [color=#437ca8][bold]мезотаксинид[/bold][/color] и более простой, но менее эффективный [color=#4ca832][bold]мезофенерол[/bold][/color].
+   - Мезотаксинид наносит химерам огромный урон при контакте, поэтому спрей или насадка с этим веществом — лучший способ их убивать.
+   - Чтобы получить мезотаксинид, используйте [color=#a85832]протолетоферол[/color] — его получают, помещая [color=#ebba34]натуральный летоферол[/color] или обычный [color=#a84387]летоферол[/color] в электролизёр.
+   - Протолетоферол почти безвреден; его единственное применение — мезотаксинид.
 
   <GuideReagentEmbed Reagent="Mesotaxinide"/>
   <GuideReagentEmbed Reagent="Mesophenerol"/>
   <GuideReagentEmbed Reagent="ProtoLetoferol"/>
 
-## Ruling, Goals, and Abilities
+## Правила, цели и способности
 
-  As a Chimera, your goal is simply to infect as many as possible, at any cost.
+  Как химера, ваша цель — просто заразить как можно больше, любой ценой.
 
-  - To help you with this task, you can access a hivemind with the [bold]"+"[/bold] prefix before your chat messages.
-  - Chimeras are also capable of complex interactions, including [bold][color=#40648f]surgery[/color][/bold], [bold][color=cyan]flying ships[/color][/bold], and even using [bold][color=orange]gunnery consoles[/color][/bold].
-  - However, you will have severely reduced accuracy with ranged weapons even if you can hold and use them.
-  - Your [color=yellow]bone spike[/color] ability will fire a spread of 7 letoferol-tipped bone spikes. It may not be enough to infect, but it'll still do decent damage to your opponents from the effects of Natural Letoferol in a bloodstream.
-  - Chimeras also have a few slots for storage, and have access to an internal 5x5 storage.
-  - Unarmed slashing will inject 2.5u of Natural Letoferal to someone. You can do a lot of difficult to heal, lasting damage if you can stack enough Letoferal inside someone, and turn them if they fall into critical condition with enough still inside. However, both of the above cures also purge Letoferal from inside the bloodstream.
+  - Для этого доступен роевой разум: префикс [bold]"+"[/bold] перед сообщениями в чате.
+  - Химеры способны к сложным действиям, включая [bold][color=#40648f]хирургию[/color][/bold], [bold][color=cyan]пилотирование кораблей[/color][/bold] и даже использование [bold][color=orange]консолей артиллерии[/color][/bold].
+  - Однако точность стрельбы из дальнобойного оружия сильно снижена, даже если вы можете держать и использовать его.
+  - Способность [color=yellow]костяной шип[/color] выпускает веер из 7 костяных шипов с летоферолом. Этого может не хватить для заражения, но урон по противникам от эффекта натурального летоферола в кровотоке всё равно заметный.
+  - У химер есть несколько слотов для ношения и внутреннее хранилище 5×5.
+  - Безоружный режущий удар вводит 2,5 ед. натурального летоферола. Накопив достаточно летоферола внутри жертвы, можно нанести долгоживущий, плохо лечимый урон и превратить её, если она упадёт в крит, пока вещество ещё внутри. Оба лекарства выше также вычищают летоферол из кровотока.
 
-  [bold][color=red]Chimeras are still affected by [textlink="faction base rules" link="MonolithRuleConflictFourPortStriking"] and [textlink="safezone rules" link="MonolithRuleRoleplaySevenSafeZones"][/color][/bold]
+  [bold][color=red]На химер по-прежнему действуют [textlink="базовые правила фракций" link="MonolithRuleConflictFourPortStriking"] и [textlink="правила сейфзон" link="MonolithRuleRoleplaySevenSafeZones"][/color][/bold]
 
-## Organs
+## Органы
 
-  Most of a Chimera's abilities are in its [color=yellow]organs[/color].
+  Большинство способностей химеры завязано на её [color=yellow]органах[/color].
 
   <Box>
     <GuideEntityEmbed Entity="OrganChimeraHeart"/>
@@ -59,11 +59,11 @@ Both types of Letoferol will not turn people into Chimera outside of critical co
     <GuideEntityEmbed Entity="OrganChimeraLiver"/>
   </Box>
 
-  - The [color=cyan]heart[/color] will give you pressure immunity.
-  - The [color=cyan]pheropod[/color] will give you space immunity, and access to the Chimera Hivemind.
-  - The [color=cyan]stomach[/color] works as an advanced metabolizer, capable of metabolizing any chem, and metabolizing 5 at a time.
-  - The [color=cyan]spike gland[/color] (obviously) lets you fire the same letoferol-tipped spikes as a Chimera.
+  - [color=cyan]Сердце[/color] даёт иммунитет к давлению.
+  - [color=cyan]Феропод[/color] даёт иммунитет к космосу и доступ к роевому разуму химер.
+  - [color=cyan]Желудок[/color] работает как продвинутый метаболизатор: перерабатывает любой химикат и до 5 одновременно.
+  - [color=cyan]Шиповая железа[/color] (очевидно) позволяет стрелять теми же шипами с летоферолом, что и у химеры.
 
-  [italic]Chimeras also need these organs for their abilities! Take away a chimera's pheropod and spike gland, and it'll be just another boring monster![/italic]
+  [italic]Химерам эти органы нужны и для способностей! Заберите феропод и шиповую железу — и останется просто скучный монстр![/italic]
 
 </Document>

@@ -16,6 +16,10 @@
         description: "Последний рубеж цивилизации этого сектора. Ты чувствуешь себя в безопасности... почти." # Ru-Localization
       - type: Zone # Exodus - SafeZone
         text: "zone-safezone"
+      # Exodus start - Territory grid control
+      - type: GridTerritory
+        defaultLabel: territory-marker-colossus
+      # Exodus end
       - type: Tower7G # Exodus-Adminbus
       components:
         - type: StationNameSetup

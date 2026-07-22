@@ -36,7 +36,7 @@
   components:
   - type: Explosive
     explosionType: ShipGunSelfDestruct
-    totalIntensity: 600
+    totalIntensity: 400 # Exodus ship-gun-self-destruct (was 600)
     intensitySlope: 17
     maxIntensity: 60
 

@@ -1,0 +1,10 @@
+- type: radialDamageFieldProfile
+  id: Tower8G
+  range: 512
+  targetProfiles:
+  - Leviathan
+  damage:
+    types:
+      Heat: 1000
+  ignoreResistances: true
+  targetPopup: tower-8g-target-popup

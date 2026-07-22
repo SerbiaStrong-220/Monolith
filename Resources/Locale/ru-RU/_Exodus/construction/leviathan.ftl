@@ -1,0 +1,10 @@
+construction-space-leviathan-chitin-armor-plate = Хитиновая пластина левиафана
+construction-space-leviathan-chitin-armor-plate-desc = Бронепластина для совместимых скафандров.
+construction-space-leviathan-chitin-crown = Хитиновая корона левиафана
+construction-space-leviathan-chitin-crown-desc = Корона, улучшающая управление шаттлом, пока она надета.
+construction-space-leviathan-chitin-gloves = Хитиновые перчатки левиафана
+construction-space-leviathan-chitin-gloves-desc = Усиленные боевые перчатки для сокрушительных ударов.
+construction-graph-tag-speed-armor-plate = скоростная бронепластина
+construction-graph-tag-pierce-armor-plate = бронепластина от пробития
+construction-graph-tag-leviathan-chitin = хитин левиафана
+construction-graph-tag-combat-gloves = боевые перчатки

@@ -1,7 +1,7 @@
 <Document>
-  # Mechs
+  # Мехи
 
-  Industrial Exoskeletons, Powered Armor, and Combat Frames.
+  Промышленные экзоскелеты, силовая броня и боевые рамы.
 
   <Box>
     <GuideEntityEmbed Entity="MechGygax"/>
@@ -9,25 +9,25 @@
 
   <Box>
     <GuideEntityEmbed Entity="MechEquipmentGrabber"/>
-    <GuideEntityEmbed Entity="HeavyMechProjector" Caption="RAVAGER Plasma Cannon"/>
+    <GuideEntityEmbed Entity="HeavyMechProjector" Caption="плазменная пушка RAVAGER"/>
   </Box>
 
 
-  Mechs are giant behemoths of metal designed to carry out a variety of functions respective to their model and equipment. They are piloted by players and require power cells to function.
+  Мехи — огромные металлические махины, созданные для разных задач в зависимости от модели и оборудования. Ими управляют игроки; для работы нужны энергоячейки.
 
-  Each Mech requires its own set of limbs and parts to create. These are fabricated at the [color=lightblue]Exosuit Fabricator[/color], except for the circuit boards which are made at a [color=tan]Circuit Board Imprinter[/color].
+  Каждому меху нужен свой набор конечностей и частей. Их печатают на [color=lightblue]фабрикаторе экзокостюмов[/color], кроме плат, которые делают на [color=tan]принтере плат[/color].
 
-  Mechs within the same Series may share limbs but use a different chassis. For example, an S2 Mech can be constructed with either a Broadsword or Sabre harness, but both use the Broadsword's limbs. The same is true for their circuit boards.
+  Мехи одной серии могут делить конечности, но использовать разное шасси. Например, мех S2 можно собрать на раме Broadsword или Sabre, но в обоих случаях — с конечностями Broadsword. То же верно для плат.
 
-  Once you have printed the harness, begin adding the limbs and follow the instructions by examining the under-construction Mech.
+  Когда рама напечатана, добавляйте конечности и следуйте подсказкам при осмотре строящегося меха.
 
-  Once the Mech has finished construction, add whatever equipment you wish to it. Mechs are restricted by their Mounting slots in both capacity and type of equipment that can be mounted. For example, a Ripley cannot mount a RAVAGER-type Plasma Cannon.
+  После завершения сборки установите нужное оборудование. Мехи ограничены слотами крепления и по ёмкости, и по типу монтируемого оборудования. Например, Ripley не может нести плазменную пушку типа RAVAGER.
 
-  All Mechs operate using their equipped power cell/power cage while in operation. Using equipment and firing weapons induces additional drain. Power cells can be ejected from a mech using a crowbar.
+  Все мехи работают от установленной энергоячейки / энергоклетки. Использование оборудования и стрельба дополнительно расходуют заряд. Энергоячейку из меха можно извлечь монтировкой.
 
-  All Mechs are also easily visible as radar signatures while in space.
+  Все мехи также хорошо видны как радарные сигнатуры в космосе.
 
-  ##Civilian Mechs
+  ## Гражданские мехи
   <Box>
     <GuideEntityEmbed Entity="MechRipley"/>
     <GuideEntityEmbed Entity="MechRipley2"/>
@@ -37,30 +37,30 @@
     <GuideEntityEmbed Entity="MechHonker"/>
   </Box>
 
-  These mechs can mount either Industrial or Clown equipment, or nothing at all.
+  Эти мехи могут нести промышленное или клоунское оборудование — либо ничего.
 
- The Ripley, Ripley Mk2, and Clarke are designed for cargo and salvage applications, as their Hydraulic Clamp allows carrying crates, lockers, and many other heavy objects with ease, while the Exosuit Drill and Exosuit Proto-Kinetic Accelerator allow self-defense against ore creatures and expedition fauna.
+  Ripley, Ripley Mk2 и Clarke рассчитаны на снабжение и утилизацию: гидравлический захват позволяет легко переносить ящики, шкафы и другой тяжёлый груз, а бур экзокостюма и протокинетический ускоритель экзокостюма — обороняться от рудных тварей и фауны экспедиций.
 
- The Ripley Mk2 is insulated against space, and can supply its operator with an endless supply of breathable atmosphere. Note that construction of a Ripley Mk2 requires an Exosuit Upgrade Kit.
+  Ripley Mk2 изолирован от космоса и даёт оператору бесконечный запас дыхательной атмосферы. Для сборки Ripley Mk2 нужен набор улучшения экзокостюма.
   <Box>
     <GuideEntityEmbed Entity="RipleyUpgradeKit" Caption=""/>
   </Box>
 
-The Clarke has its own construction process, but it is equipped with space insulation, breathable atmosphere, and maneuvering jets for ease of use in space.\n
+  Clarke собирается по собственному процессу, но оснащён космической изоляцией, дыхательной атмосферой и маневровыми двигателями для удобства в космосе.
 
 
-  The Hamtr and Vim are made for the use of animals and critters. The Hamtr is only capable of mounting the Small Hydraulic Clamp.
+  Hamtr и Vim созданы для животных и мелких существ. Hamtr может нести только малый гидравлический захват.
 
-  The H.O.N.K mech is capable of mounting its associated Clowning implements, such as the Mech Horn, Banana Mortar, and Mousetrap Mortar.
+  Мех H.O.N.K. способен нести связанное клоунское оборудование: гудок меха, бананомёт и мышеловкомёт.
   <Box>
     <GuideEntityEmbed Entity="MechEquipmentHorn"/>
     <GuideEntityEmbed Entity="WeaponMechSpecialBananaMortar"/>
     <GuideEntityEmbed Entity="WeaponMechSpecialMousetrapMortar"/>
   </Box>
 
-##Camera Controls and Other Tricks
-- Mechs currently lock their rotation to the ship/station you enter them on, which will cause you to uncontrollably rotate in space. Press your Camera Reset keybind (Default: Numpad 8) to both reset your camera to point towards true North and unanchor it from the ship.
-- Camera Zoom controls can be used in S2/S4 Mechs to scale how far you can see down to normal zoom, when needed.
-- Mechs standing on a ship's lattice/tiles will survive an FTL jump even while exposed to space.
-- Power Cages can be inserted into Mechs instead of standard Power Cells. These are printable at a Mercenary Techfab or Military-Multipurpose Assembler with the applicable researched technology.
+## Управление камерой и другие приёмы
+- Мехи сейчас фиксируют вращение к кораблю/станции, на которой вы в них сели, из‑за чего в космосе вы можете бесконтрольно крутиться. Нажмите сброс камеры (по умолчанию: Numpad 8 / 8 на цифровой клавиатуре), чтобы и вернуть камеру на истинный север, и отвязать её от корабля.
+- Масштаб камеры в мехах S2/S4 позволяет при необходимости уменьшить дальность обзора до обычного зума.
+- Мехи, стоящие на решётке/плитках корабля, переживают FTL-прыжок даже в открытом космосе.
+- В мехи вместо обычных энергоячеек можно вставлять энергоклетки. Их печатают на техфабе наёмника или военно-многоцелевом ассемблере при изученной технологии.
 </Document>

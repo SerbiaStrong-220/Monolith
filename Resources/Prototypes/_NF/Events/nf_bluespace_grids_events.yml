@@ -20,8 +20,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-SyndicateWeaponsCache
-        minimumDistance: 1500
-        maximumDistance: 5000 # Mono
+        minimumDistance: 15000 # Exodus Nebula Update
+        maximumDistance: 25000 # Exodus Nebula Update
         addComponents:
         - type: Gravity
           enabled: true
@@ -67,8 +67,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-SecureNTVault
-        minimumDistance: 1500
-        maximumDistance: 5000 # Mono
+        minimumDistance: 15000 # Exodus Nebula Update
+        maximumDistance: 25000 # Exodus Nebula Update
         addComponents:
         - type: Gravity
           enabled: true
@@ -113,8 +113,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-SecureNTVault
-        minimumDistance: 1500
-        maximumDistance: 5000 # Mono
+        minimumDistance: 15000 # Exodus Nebula Update
+        maximumDistance: 25000 # Exodus Nebula Update
         addComponents:
         - type: Gravity
           enabled: true
@@ -157,8 +157,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-UnidentifiedVessel
-        minimumDistance: 1500
-        maximumDistance: 2500
+        minimumDistance: 15000 # Exodus Nebula Update
+        maximumDistance: 25000 # Exodus Nebula Update
         addComponents:
         - type: IFF
           color: "#E10F9B"
@@ -202,8 +202,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-UnidentifiedVessel
-        minimumDistance: 2500
-        maximumDistance: 4000
+        minimumDistance: 15000 # Exodus Nebula Update
+        maximumDistance: 25000 # Exodus Nebula Update
         addComponents:
         - type: IFF
           color: "#E10F9B"

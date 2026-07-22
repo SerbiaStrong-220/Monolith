@@ -1,63 +1,63 @@
 <Document>
-# Monolith Rules
+# Правила Monolith
 
-## Foreword
+## Предисловие
 
-Servers are often a diluted mess of rules and restrictions that hinder players' creative abilities and freedom to craft their own experiences.
+Серверы часто превращаются в размытую кашу правил и ограничений, которые душат креатив игроков и свободу создавать собственный опыт.
 
-We do expect, at the very least, that you [bold]stay in-character, adhere to the setting, and engage in quality roleplay to the best of your abilities[/bold].
+Мы ожидаем как минимум, что вы [bold]остаётесь в образе, придерживаетесь сеттинга и ведёте качественную ролевую игру по мере своих сил[/bold].
 
-This ensures your enjoyment and enhances the experience for the other players around you.
+Это обеспечивает ваше удовольствие и улучшает опыт окружающих игроков.
 
-[bold]Please make sure to also read [textlink="the lore primer" link="BasicLore"] to better understand your character's circumstances and context to the round.[/bold]
+[bold]Также обязательно прочитайте [textlink="краткий лор" link="BasicLore"], чтобы лучше понять обстоятельства персонажа и контекст раунда.[/bold]
 
-# Rule List
+# Список правил
 
-All of the below rules apply at all times, including between rounds, in-game, and elsewhere in our community.
+Все правила ниже действуют всегда: между раундами, в игре и в остальном сообществе.
 
-[color=red][italic]If any of the links do not work, use the guidebook version on the escape or (Numpad 0) menus.[/italic][/color]
-[color=red][italic]These rules are expected to be read in their entirety.[/italic][/color]
+[color=red][italic]Если какие-то ссылки не работают, используйте версию гайдбука в меню Escape или (Numpad 0).[/italic][/color]
+[color=red][italic]Эти правила нужно прочитать целиком.[/italic][/color]
 
-## Core Rules
-These are the core rules of Monolith:
-- 0. [textlink="Players must be, and act, 16 or above to play Monolith." link="MonolithRuleCoreZeroAgeThreshold"]
-- 1. [textlink="Use common sense." link="MonolithRuleCoreOneCommonSense"]
-- 2. [textlink="Respect each other." link="MonolithRuleCoreTwoRespect"]
-- 3. [textlink="Do not engage in cheating or exploits." link="MonolithRuleCoreThreeCheatingExploits"]
-- 4. [textlink="Do not use alternative accounts." link="MonolithRuleCoreFourAlternativeAccounts"]
-- 5. [textlink="All communication must be in English." link="MonolithRuleCoreFiveLanguages"]
-- 6. [textlink="Do not abuse the Admin Help System." link="MonolithRuleCoreSixAhelp"]
-- 7. [textlink="Do not threaten to report a player." link="MonolithRuleCoreSevenThreatenToReport"]
+## Основные правила
+Это основные правила Monolith:
+- 0. [textlink="Игрокам должно быть 16 лет или больше, и они должны вести себя соответственно, чтобы играть на Monolith." link="MonolithRuleCoreZeroAgeThreshold"]
+- 1. [textlink="Используйте здравый смысл." link="MonolithRuleCoreOneCommonSense"]
+- 2. [textlink="Уважайте друг друга." link="MonolithRuleCoreTwoRespect"]
+- 3. [textlink="Не используйте читы и эксплойты." link="MonolithRuleCoreThreeCheatingExploits"]
+- 4. [textlink="Не используйте альтернативные аккаунты." link="MonolithRuleCoreFourAlternativeAccounts"]
+- 5. [textlink="Вся коммуникация должна быть на английском." link="MonolithRuleCoreFiveLanguages"]
+- 6. [textlink="Не злоупотребляйте системой Admin Help." link="MonolithRuleCoreSixAhelp"]
+- 7. [textlink="Не угрожайте пожаловаться на игрока." link="MonolithRuleCoreSevenThreatenToReport"]
 
-## Roleplay Rules
-These are the roleplay rules of Monolith:
-- 1. [textlink="Do not break character." link="MonolithRuleRoleplayOneBreakCharacter"]
-- 2. [textlink="Avoid misusing in-character text chat." link="MonolithRuleRoleplayTwoTextChat"]
-- 3. [textlink="Type with proper grammar in in-character text chat." link="MonolithRuleRoleplayThreeProperGrammar"]
-- 4. [textlink="Do not name yourself well known people or things." link="MonolithRuleRoleplayFourCharacterActions"]
-- 5. [textlink="Erotic roleplay is prohibited." link="MonolithRuleRoleplayFiveEroticRoleplay"]
-- 6. [textlink="Do not metagame." link="MonolithRuleRoleplaySixMetagame"]
-- 7. [textlink="Safe Zones" link="MonolithRuleRoleplaySevenSafeZones"]
-- 8. [textlink="Do not abandon your faction role." link="MonolithRuleRoleplayEightFactionRoles"]
-- 9. [textlink="Commanders have higher standards." link="MonolithRuleRoleplayNineCommandingRoles"]
+## Правила ролевой игры
+Это правила ролевой игры Monolith:
+- 1. [textlink="Не выходите из образа." link="MonolithRuleRoleplayOneBreakCharacter"]
+- 2. [textlink="Не злоупотребляйте внутриигровым текстовым чатом." link="MonolithRuleRoleplayTwoTextChat"]
+- 3. [textlink="Пишите с нормальной грамматикой во внутриигровом текстовом чате." link="MonolithRuleRoleplayThreeProperGrammar"]
+- 4. [textlink="Не называйтесь известными людьми или вещами." link="MonolithRuleRoleplayFourCharacterActions"]
+- 5. [textlink="Эротическая ролевая игра запрещена." link="MonolithRuleRoleplayFiveEroticRoleplay"]
+- 6. [textlink="Не занимайтесь метагеймом." link="MonolithRuleRoleplaySixMetagame"]
+- 7. [textlink="Сейфзоны" link="MonolithRuleRoleplaySevenSafeZones"]
+- 8. [textlink="Не бросайте роль во фракции." link="MonolithRuleRoleplayEightFactionRoles"]
+- 9. [textlink="К командирам предъявляются более высокие стандарты." link="MonolithRuleRoleplayNineCommandingRoles"]
 
-## Conflict Rules
-These are the conflict rules of Monolith:
-- 1. [textlink="Avoid random deathmatch." link="MonolithRuleConflictOneRandomDeathmatch"]
-- 2. [textlink="Adhere to the new life rule." link="MonolithRuleConflictTwoNewLife"]
-- 3. [textlink="Engage in fair play when making demands." link="MonolithRuleConflictThreeFairPlay"]
-- 4. [textlink="Follow the conditions for portstriking." link="MonolithRuleConflictFourPortStriking"]
+## Правила конфликта
+Это правила конфликта Monolith:
+- 1. [textlink="Избегайте случайного deathmatch." link="MonolithRuleConflictOneRandomDeathmatch"]
+- 2. [textlink="Соблюдайте правило новой жизни." link="MonolithRuleConflictTwoNewLife"]
+- 3. [textlink="Играйте честно, выдвигая требования." link="MonolithRuleConflictThreeFairPlay"]
+- 4. [textlink="Соблюдайте условия для ударов по портам." link="MonolithRuleConflictFourPortStriking"]
 
-## Admin Decisions
-- [color=yellow][bold]All admin decisions are final.[/bold][/color]
-- Rules are enforced to the [color=yellow]spirit of the rules[/color] and subject to admin interpretation.
-- Admins may disregard any/all rules if they deem it in the best interest of the current round, the server, and/or the community.
-- Admins are accountable for their actions. Abuse of admin privileges will be dealt with by staff.
+## Решения администрации
+- [color=yellow][bold]Все решения администрации окончательны.[/bold][/color]
+- Правила применяются по [color=yellow]духу правил[/color] и подлежат интерпретации администрацией.
+- Администраторы могут отступить от любых/всех правил, если сочтут это в интересах текущего раунда, сервера и/или сообщества.
+- Администраторы ответственны за свои действия. Злоупотребление правами админа разбирается персоналом.
 
-## General Information
-- Disconnecting from or ignoring/evading admin-helps will result in an [color=red]appeal-only ban[/color].
-- Admins are not obligated to cover player losses, deaths or delays.
--- This includes, but is not limited to: ship deeds, money, respawns and revivals.
--- Any action taken is at the staff's discretion, and depends on the circumstances.
+## Общая информация
+- Отключение от сервера или игнорирование/уклонение от admin-help ведёт к [color=red]бану только по аппеляции[/color].
+- Администраторы не обязаны компенсировать потери игроков, смерти или задержки.
+-- В том числе, но не ограничиваясь: документы на корабли (ship deeds), деньги, респавны и реанимации.
+-- Любые действия — на усмотрение персонала и зависят от обстоятельств.
 
 </Document>

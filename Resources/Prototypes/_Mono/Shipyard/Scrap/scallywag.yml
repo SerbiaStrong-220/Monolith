@@ -13,7 +13,11 @@
   category: medium
   group: Scrap
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/Scrap/scallywag.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/scallywag.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - pursuit
@@ -25,7 +29,7 @@
 - type: gameMap
   id: Scallywag
   mapName: 'Пройдоха' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Scrap/scallywag.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Scrap/scallywag.yml
   minPlayers: 0
   stations:
     Scallywag:

@@ -1,0 +1,15 @@
+- type: latheRecipe
+  id: SmeltPlastitanium
+  result: SheetPlastitanium1
+  completetime: 0.06
+  materials:
+    Coal: 100
+    RawIron: 500
+    RawPlasma: 200
+
+- type: latheRecipe
+  id: ScrapSheetPlastitanium1
+  result: SheetPlastitanium1
+  parent: BaseMaterialsYesDiscountRecipe
+  materials:
+    RawScrap: 1000

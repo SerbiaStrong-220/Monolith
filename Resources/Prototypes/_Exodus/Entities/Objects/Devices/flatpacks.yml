@@ -16,3 +16,103 @@
   components:
   - type: Flatpack
     entity: GeneratorASRGDamaged
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretFlareFlatpack
+  name: GS-002 flare system flatpack
+  description: A flatpack used for constructing a GS-002 Sunny flare system.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretFlare
+
+- type: entity
+  parent: BaseFlatpack
+  id: WeaponTurretTyphonFlatpack
+  name: TYPHON autocannon flatpack
+  description: A flatpack used for constructing a TYPHON 220mm autocannon.
+  components:
+  - type: Flatpack
+    entity: WeaponTurretTyphon
+
+- type: entity
+  parent: ThrusterFlatpack
+  id: NebulaThrusterFlatpack
+  name: phasic thruster flatpack
+  description: A flatpack used for constructing a phasic thruster.
+  components:
+  - type: Flatpack
+    entity: NebulaThruster
+
+- type: entity
+  parent: BaseFlatpack
+  id: GunneryServerSuperFlatpack
+  name: super-high-power gunnery control server flatpack
+  description: A flatpack used for constructing a gunnery control server with 120 processing power.
+  components:
+  - type: Flatpack
+    entity: GunneryServerSuper
+  - type: StaticPrice
+    price: 385000
+
+- type: entity
+  parent: BaseFlatpack
+  id: ShipArmorModuleFlatpack
+  name: dynamic armor module flatpack
+  description: A flatpack used for constructing a dynamic armor module.
+  components:
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: false
+    increment: 90
+  - type: Flatpack
+    entity: ShipArmorModule
+
+- type: entity
+  parent: BaseNFFlatpack
+  id: CloningPodFlatpack
+  name: cloning pod flatpack
+  description: A flatpack used for constructing a cloning pod.
+  components:
+  - type: Flatpack
+    entity: CloningPod
+  - type: Sprite
+    layers:
+    - state: medical_lathe
+
+- type: entity
+  parent: BaseNFFlatpack
+  id: ComputerCloningConsoleFlatpack
+  name: cloning console computer flatpack
+  description: A flatpack used for constructing a cloning console computer.
+  components:
+  - type: Flatpack
+    entity: ComputerCloningConsole
+  - type: Sprite
+    layers:
+    - state: medical_console
+
+- type: entity
+  parent: BaseNFFlatpack
+  id: BiomassReclaimerFlatpack
+  name: biomass reclaimer flatpack
+  description: A flatpack used for constructing a biomass reclaimer.
+  components:
+  - type: Flatpack
+    entity: BiomassReclaimer
+  - type: Sprite
+    layers:
+    - state: medical_lathe
+
+- type: entity
+  parent: BaseNFFlatpack
+  id: MedicalScannerFlatpack
+  name: medical scanner flatpack
+  description: A flatpack used for constructing a medical scanner.
+  components:
+  - type: Flatpack
+    entity: MedicalScanner
+  - type: Sprite
+    layers:
+    - state: medical_lathe

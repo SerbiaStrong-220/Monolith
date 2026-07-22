@@ -145,9 +145,27 @@
         Radiation: 0.4
         Caustic: 0.5
         Poison: 0.8 # Mono
+  # Exodus start - TSFMC colonel hardsuit emergency injection
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    oldMobState:
+    - Alive
+  - type: AddReagentOnTrigger
+    cooldown: 120
+    reagents:
+    - ReagentId: Omnizine
+      Quantity: 25
+    - ReagentId: TranexamicAcid
+      Quantity: 5
+    - ReagentId: Dexalin
+      Quantity: 5
+    - ReagentId: DexalinPlus
+      Quantity: 5
+  # Exodus end
   - type: ClothingSpeedModifier # Mono - Armor Value Changes
-    walkModifier: 0.9
-    sprintModifier: 1
+    walkModifier: 1 # Exodus - no colonel hardsuit slowdown
+    sprintModifier: 1 # Exodus - no colonel hardsuit slowdown
   - type: StaminaDamageResistance # Mono - Stamres
     coefficient: 0.35
   - type: PirateBountyItem # Mono
