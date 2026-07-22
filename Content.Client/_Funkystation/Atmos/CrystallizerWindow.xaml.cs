@@ -142,7 +142,7 @@ namespace Content.Client._Funkystation.Atmos
             RecipesContainer.Children.Clear();
             _buttonToRecipeId.Clear();
 
-            _nothingButton.Text = Loc.GetString("crystallizer-ui-nothing"); // Exodus loc changes
+            _nothingButton.Text = Loc.GetString("crystallizer-ui-nothing"); // Exodus-loc-changes
             _nothingButton.HorizontalExpand = true;
             _nothingButton.Pressed = true;
 
@@ -160,7 +160,7 @@ namespace Content.Client._Funkystation.Atmos
             {
                 var button = new Button
                 {
-                    Text = Loc.GetString(recipe.Name), // Exodus
+                    Text = Loc.GetString(recipe.Name), // Exodus-loc-changes
                     HorizontalExpand = true
                 };
 
@@ -214,13 +214,13 @@ namespace Content.Client._Funkystation.Atmos
                 GasList.Children.Clear();
                 return;
             }
-            // Exodus loc changes begin
+            // Exodus-loc-changes-begin
             RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-temperature") });
             RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-min", ("temp", recipe.MinimumTemperature)) });
             RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-max", ("temp", recipe.MaximumTemperature)) });
 
             RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-gases") });
-            // Exodus loc changes end
+            // Exodus-loc-changes-end
             for (int i = 0; i < recipe.MinimumRequirements.Length && i < Atmospherics.TotalNumberOfGases; i++)
             {
                 if (recipe.MinimumRequirements[i] > 0)
@@ -260,7 +260,7 @@ namespace Content.Client._Funkystation.Atmos
                         var gasLabel = new Label { Text = gasName, Margin = new Thickness(5) };
                         var gasControl = new Control { HorizontalExpand = true };
                         var molesLabel = new Label {
-                            Text = Loc.GetString("crystallizer-ui-moles", ("moles", moles.ToString("F2"))), // Exodus loc changes
+                            Text = Loc.GetString("crystallizer-ui-moles", ("moles", moles.ToString("F2"))), // Exodus-loc-changes
                             Margin = new Thickness(5)
                         };
 
