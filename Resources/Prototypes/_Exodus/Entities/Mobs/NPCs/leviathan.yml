@@ -131,8 +131,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Blunt: 50
-        Slash: 45
+        Blunt: 500
+        Slash: 250
         Structural: 3000
   - type: Speech
     speechVerb: LargeMob
