@@ -8,16 +8,21 @@
 
 # Notes:
 #
-- type: pointOfInterest
+# Exodus-begin territory-nebula-merge
+# Omnichurch is spawned by NebulaPoiOmnichurch, not by the normal pointOfInterest roulette.
+# Keep only the gameMap registration so NebulaPoiSpawnSystem can initialize it as a station
+# and StationSystem can apply GridTerritory from gridComponents.
+- type: gameMap
   id: Omnichurch
-  parent: [BasePOI, BaseRepairablePOI]
-  name: "Маяк ВсеЦеркви" # Ru-Localization
-  minimumDistance: 4200
-  maximumDistance: 6900
-  gridPath: /Maps/_NF/POI/beacon.yml
-  addComponents:
-  - type: SolarPoweredGrid
-    trackOnInit: true
-    doNotCull: true
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
+  mapName: "Маяк ВсеЦеркви" # Ru-Localization
+  mapPath: /Maps/_NF/POI/beacon.yml
+  minPlayers: 0
+  stations:
+    Omnichurch:
+      stationProto: StandardFrontierOutpost
+      gridComponents:
+      - type: GridTerritory
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Маяк ВсеЦеркви" # Ru-Localization
+# Exodus-end

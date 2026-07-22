@@ -11,8 +11,12 @@
   purchasable: false # voucher only
   category: Medium
   group: Security
-  access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/tarantula.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Patrol
@@ -23,7 +27,7 @@
 - type: gameMap
   id: Tarantula
   mapName: 'Тарантула' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/tarantula.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/tarantula.yml
   minPlayers: 0
   stations:
     Tarantula:

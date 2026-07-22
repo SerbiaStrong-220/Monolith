@@ -1,0 +1,115 @@
+# Fixed Asakim/ADS shuttle beacon packs for the summoning-machine gamble crate.
+# Each pack is a cardboard box with a fixed StorageFill — no per-beacon RNG.
+
+- type: entity
+  id: BoxAsakimBeaconKitBase
+  parent: BoxCardboard
+  abstract: true
+  suffix: Filled
+  components:
+  - type: Item
+    size: Normal
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,2,2
+
+# Семейство — full Zenith line
+- type: entity
+  id: BoxAsakimBeaconKitFamily
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Family"
+  description: Three Zenith-line call beacons — baseline, A-variant, and E-variant.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ADSShuttleEmergencyBeaconZenith
+    - id: ADSShuttleEmergencyBeaconZenithA
+    - id: ADSShuttleEmergencyBeaconZenithE
+
+# Близнецы — double Concord
+- type: entity
+  id: BoxAsakimBeaconKitTwins
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Twins"
+  description: A matched pair of Concord-X call beacons.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ADSShuttleEmergencyBeaconConcordX
+      amount: 2
+
+# Крыло — capital + escorts
+- type: entity
+  id: BoxAsakimBeaconKitWing
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Wing"
+  description: One Azimuth capital beacon and two Crow escorts.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ADSShuttleEmergencyBeaconAzimuth
+    - id: ADSShuttleEmergencyBeaconCrow
+      amount: 2
+
+# Дозор — Mantaray + Nebulas
+- type: entity
+  id: BoxAsakimBeaconKitWatch
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Watch"
+  description: A Mantaray command beacon flanked by two Nebula hulls.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ADSShuttleEmergencyBeaconMantaray
+    - id: ADSShuttleEmergencyBeaconNebula
+      amount: 2
+
+# Десант — infantry pair
+- type: entity
+  id: BoxAsakimBeaconKitAssault
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Assault"
+  description: Medium and small Asakim infantry vessel beacons.
+  components:
+  - type: StorageFill
+    contents:
+    - id: AsakimShuttleEmergencyBeaconMedium
+    - id: AsakimShuttleEmergencyBeaconSmall
+
+# Жемчужина — Stratostar capital + infantry
+- type: entity
+  id: BoxAsakimBeaconKitPearl
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Pearl"
+  description: Stratostar capital beacon with a small Asakim infantry escort.
+  components:
+  - type: StorageFill
+    contents:
+    - id: AsakimShuttleEmergencyBeaconStratostar
+    - id: AsakimShuttleEmergencyBeaconSmall
+
+# Довод — Razor + chaff cover
+- type: entity
+  id: BoxAsakimBeaconKitArgument
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Argument"
+  description: Razor-N strategic beacon with two Wyrm hulls as disposable cover.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ADSShuttleEmergencyBeaconRazorN
+    - id: ADSShuttleEmergencyBeaconWyrm
+      amount: 2
+
+# Молитва — triple Omen
+- type: entity
+  id: BoxAsakimBeaconKitPrayer
+  parent: BoxAsakimBeaconKitBase
+  name: beacon pack "Prayer"
+  description: Three Omen call beacons. Light hulls, rapid response.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ADSShuttleEmergencyBeaconOmen
+      amount: 3

@@ -9,3 +9,11 @@
   price: 0
   equipment:
     eyes: ClothingEyesGlassesSunglasses
+
+# Exodus-begin add Meson Tray to loadout
+- type: loadout
+  id: MercenaryClothingEyesGlassesMesonTray
+  price: 4500
+  equipment:
+    eyes: ClothingEyesGlassesMesonTray
+# Exodus-end

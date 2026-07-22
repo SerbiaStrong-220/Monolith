@@ -1,0 +1,134 @@
+# Exodus nebula marker entity prototypes.
+# A marker is spawned at the center of each generated nebula by NebulaGenerationSystem
+# (for inner blob nebulas) or DeathZoneGenerationSystem (for the world-end death zone,
+# which spawns two markers split at the 90k mid radius).
+# Per-effect components on the prototype determine what the nebula does in-game.
+
+- type: entity
+  id: NebulaBaseMarker
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Nebula
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: CleanupImmune
+  - type: RadarBlip
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaBlueMarker
+  name: Blue Nebula Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: BlueNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#61b3ffd9"
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaRedMarker
+  name: Red Nebula Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: RedNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#ff4d42d9"
+  - type: NebulaLightningHazard
+  - type: NebulaSpaceLightningHazard
+    burnDamage:
+      types:
+        Heat: 30
+        Blunt: 30
+  - type: NebulaBlocksDebris
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaGreenMarker
+  name: Green Nebula Marker
+  components:
+  - type: NebulaParallax
+    parallax: GreenNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#52e57ad9"
+  - type: NebulaThrustReduction
+  - type: NebulaEmpHazard
+  # EVA EMP pulses are intentionally disabled in green — the component lives here as a
+  # parameter sheet ready to be enabled if the design changes. Defaults match red-nebula
+  # behaviour; flip enabled to true to apply them.
+  - type: NebulaSpaceEmpHazard
+    enabled: false
+  - type: NebulaRadioBlackoutSource
+
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaPurpleMarker
+  name: Purple Nebula Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: PurpleNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#ba66ffd9"
+  - type: NebulaThrustReduction
+  - type: NebulaWeaponCooldownModifier
+    shotCooldownMultiplier: 4
+    reloadCooldownMultiplier: 4
+
+# Death zone — inner concentric sub-zone (boundary..90k from origin).
+# Grid lightning fires ~3x more often than in a normal red nebula. Personal (EVA)
+# lightning also fires ~3x faster; damage matches the normal red nebula.
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaDeathZoneInnerMarker
+  name: Death Zone Inner Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: RedNebula
+  - type: NebulaRadarVisuals
+    radarColor: "#ff1a00ff"
+  - type: NebulaLightningHazard
+    smallStrikeInterval: 1.666
+    heavyStrikeInterval: 10
+  - type: NebulaSpaceLightningHazard
+    minStrikeDelaySeconds: 1
+    maxStrikeDelaySeconds: 6
+    burnDamage:
+      types:
+        Heat: 40
+        Blunt: 40
+  - type: NebulaBlocksDebris
+
+# Death zone — outer concentric sub-zone (>90k from origin). Boundary is invisible.
+# Only superheavy grid strikes (every 8s), no small/heavy. Personal lightning at default
+# cadence but with much higher damage (100 heat + 100 blunt + 100 shock).
+# No NebulaRadarVisuals — outer marker has no radar blip by design (see DeathZoneGenerationSystem).
+- type: entity
+  parent: NebulaBaseMarker
+  id: NebulaDeathZoneOuterMarker
+  name: Death Zone Outer Marker
+  components:
+  - type: NebulaFTLBlocker
+  - type: NebulaParallax
+    parallax: RedNebula
+  - type: NebulaLightningHazard
+    enableSmall: false
+    enableHeavy: false
+    enableSuperHeavy: true
+    superHeavyStrikeInterval: 8
+    superHeavyShieldLoad: 200000
+    superHeavyExplosionTotalIntensity: 40000
+    superHeavyExplosionMaxTileIntensity: 400
+  - type: NebulaSpaceLightningHazard
+    minStrikeDelaySeconds: 2
+    maxStrikeDelaySeconds: 7
+    shockDamage: 100
+    burnDamage:
+      types:
+        Heat: 100
+        Blunt: 100
+  - type: NebulaBlocksDebris

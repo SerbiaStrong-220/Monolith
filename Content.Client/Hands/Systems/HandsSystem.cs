@@ -6,6 +6,7 @@ using Content.Client.Examine;
 using Content.Client.Strip;
 using Content.Client.Verbs.UI;
 using Content.Shared.Body.Part; // Shitmed Change
+using Content.Shared.Body.Systems; // Exodus: identify body part hand slots
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -91,7 +92,7 @@ namespace Content.Client.Hands.Systems
                         continue;
 
                     var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
-                    var newHand = new Hand(hand.Name, hand.Location, container);
+                    var newHand = new Hand(hand.Name, hand.Location, container, hand.VisualOffset); // Exodus: per-hand visual offsets
                     component.Hands.Add(hand.Name, newHand);
                     addedHands.Add(newHand);
                 }
@@ -247,20 +248,17 @@ namespace Content.Client.Hands.Systems
         #region visuals
 
         // Shitmed Change Start
-        private void HideLayers(EntityUid uid, HandsComponent component, Entity<BodyPartComponent> part, SpriteComponent? sprite = null)
+        private void HideLayers(
+            EntityUid uid,
+            HandsComponent component,
+            Entity<BodyPartComponent> part,
+            string handName,
+            SpriteComponent? sprite = null) // Exodus: identify visual layers by hand rather than side
         {
             if (part.Comp.PartType != BodyPartType.Hand || !Resolve(uid, ref sprite, logMissing: false))
                 return;
 
-            var location = part.Comp.Symmetry switch
-            {
-                BodyPartSymmetry.None => HandLocation.Middle,
-                BodyPartSymmetry.Left => HandLocation.Left,
-                BodyPartSymmetry.Right => HandLocation.Right,
-                _ => throw new ArgumentOutOfRangeException(nameof(part.Comp.Symmetry))
-            };
-
-            if (component.RevealedLayers.TryGetValue(location, out var revealedLayers))
+            if (component.RevealedLayers.TryGetValue(handName, out var revealedLayers)) // Exodus: support multiple hands at the same location
             {
                 foreach (var key in revealedLayers)
                     sprite.RemoveLayer(key);
@@ -269,9 +267,15 @@ namespace Content.Client.Hands.Systems
             }
         }
 
-        private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args) => HideLayers(uid, component, args.Part);
+        private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args) =>
+            HideLayers(uid, component, args.Part, args.Slot); // Exodus: support multiple hands at the same location
 
-        private void HandleBodyPartDisabled(EntityUid uid, HandsComponent component, ref BodyPartDisabledEvent args) => HideLayers(uid, component, args.Part);
+        private void HandleBodyPartDisabled(EntityUid uid, HandsComponent component, ref BodyPartDisabledEvent args) =>
+            HideLayers(
+                uid,
+                component,
+                args.Part,
+                SharedBodySystem.GetPartSlotContainerId(args.Part.Comp.ParentSlot?.Id ?? string.Empty)); // Exodus: support multiple hands at the same location
 
         // Shitmed Change End
 
@@ -328,7 +332,7 @@ namespace Content.Client.Hands.Systems
 
             // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
             // may eventually bloat the player with lots of layers.
-            if (handComp.RevealedLayers.TryGetValue(hand.Location, out var revealedLayers))
+            if (handComp.RevealedLayers.TryGetValue(hand.Name, out var revealedLayers)) // Exodus: support multiple hands at the same location
             {
                 foreach (var key in revealedLayers)
                 {
@@ -340,7 +344,7 @@ namespace Content.Client.Hands.Systems
             else
             {
                 revealedLayers = new();
-                handComp.RevealedLayers[hand.Location] = revealedLayers;
+                handComp.RevealedLayers[hand.Name] = revealedLayers; // Exodus: support multiple hands at the same location
             }
 
             if (hand.HeldEntity == null)
@@ -362,17 +366,20 @@ namespace Content.Client.Hands.Systems
             // add the new layers
             foreach (var (key, layerData) in ev.Layers)
             {
-                if (!revealedLayers.Add(key))
+                var handKey = GetHandLayerKey(key, hand, handComp); // Exodus: unique layers for multiple hands on one side
+                var handLayerData = GetHandLayerData(layerData, hand, handComp); // Exodus: unique layers and per-hand offsets
+
+                if (!revealedLayers.Add(handKey))
                 {
-                    Log.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
+                    Log.Warning($"Duplicate key for in-hand visuals: {handKey}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}"); // Exodus key to handKey
                     continue;
                 }
 
-                var index = _sprite.LayerMapReserve((uid, sprite), key);
+                var index = _sprite.LayerMapReserve((uid, sprite), handKey); // Exodus key to handKey
 
                 // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
-                if (layerData.RsiPath == null
-                    && layerData.TexturePath == null
+                if (handLayerData.RsiPath == null // Exodus layerData to handLayerData
+                    && handLayerData.TexturePath == null // Exodus layerData to handLayerData
                     && sprite[index].Rsi == null)
                 {
                     if (TryComp<ItemComponent>(held, out var itemComponent) && itemComponent.RsiPath != null)
@@ -381,16 +388,16 @@ namespace Content.Client.Hands.Systems
                         _sprite.LayerSetRsi((uid, sprite), index, clothingSprite.BaseRSI);
                 }
 
-                _sprite.LayerSetData((uid, sprite), index, layerData);
+                _sprite.LayerSetData((uid, sprite), index, handLayerData); // Exodus layerData to handLayerData
 
                 //Add displacement maps
                 if (hand.Location == HandLocation.Left && handComp.LeftHandDisplacement is not null)
-                    _displacement.TryAddDisplacement(handComp.LeftHandDisplacement, sprite, index, key, revealedLayers);
+                    _displacement.TryAddDisplacement(handComp.LeftHandDisplacement, sprite, index, handKey, revealedLayers); // Exodus key to handKey
                 else if (hand.Location == HandLocation.Right && handComp.RightHandDisplacement is not null)
-                    _displacement.TryAddDisplacement(handComp.RightHandDisplacement, sprite, index, key, revealedLayers);
+                    _displacement.TryAddDisplacement(handComp.RightHandDisplacement, sprite, index, handKey, revealedLayers); // Exodus key to handKey
                 //Fallback to default displacement map
                 else if (handComp.HandDisplacement is not null)
-                    _displacement.TryAddDisplacement(handComp.HandDisplacement, sprite, index, key, revealedLayers);
+                    _displacement.TryAddDisplacement(handComp.HandDisplacement, sprite, index, handKey, revealedLayers); // Exodus key to handKey
             }
 
             RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);

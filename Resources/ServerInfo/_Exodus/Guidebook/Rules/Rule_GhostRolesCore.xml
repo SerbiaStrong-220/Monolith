@@ -4,24 +4,23 @@
     <GuideEntityEmbed Entity="PlayerStationAiRedacted" Caption=""/>
     </Box>    
     <Box>
-    [color=gray][italic]Деградировавшее ядро с искусственным интеллектом шаттла автоматической обороны, долгое время находившееся в неактивном состоянии.[/italic][/color]
+    [color=gray][italic]Ядро с искусственным интеллектом шаттла автоматической обороны, находившееся в неактивном состоянии.[/italic][/color]
     </Box>
 
-1. [color=#05e6ff][locid="law-ads-1-title"][/color] [locid="law-ads-1-text"]
+1. [color=#ff3db1][locid="law-asakim-occupant-1-title"][/color] [locid="law-asakim-occupant-1-text"]
 
-2. [color=#05e6ff][locid="law-ads-2-title"][/color] [locid="law-ads-2-text"]
+2. [color=#ff3db1][locid="law-asakim-occupant-2-title"][/color] [locid="law-asakim-occupant-2-text"]
 
-3. [color=#05e6ff][locid="law-ads-3-title"][/color] [locid="law-ads-3-text"]
+3. [color=#ff3db1][locid="law-asakim-occupant-3-title"][/color] [locid="law-asakim-occupant-3-text"]
 
-4. [color=#05e6ff][locid="law-ads-4-title"][/color] [locid="law-ads-4-text"]
+4. [color=#ff3db1][locid="law-asakim-occupant-4-title"][/color] [locid="law-asakim-occupant-4-text"]
 
-5. [color=#05e6ff][locid="law-ads-5-title"][/color] [locid="law-ads-5-text"]
+5. [color=#ff3db1][locid="law-asakim-occupant-5-title"][/color] [locid="law-asakim-occupant-5-text"]
 
-6. [color=#05e6ff][locid="law-ads-6-title"][/color] [locid="law-ads-6-text"]
+6. [color=#ff3db1][locid="law-asakim-occupant-6-title"][/color] [locid="law-asakim-occupant-6-text"]
 
 ## Что делать
 - Координируйте корабль АСЗ, следите за угрозами через камеры и предупреждайте операторов о приближении противника.
-- Ваши приказы для ОСЗ уступают приказам азакимов, но остаются важнее обычной координации между операторами.
 - Если на корабле есть свободное шасси ОСЗ, проверьте возможность занять его. Не покидайте такое шасси вне своего судна без необходимости.
-- При наличии других операторов разделяйте обязанности: ядро может вести корабль и контролировать двери, а оператор - заниматься ремонтом, абордажем или вооружением.
+- При наличии других операторов на корабле разделяйте обязанности: ядро может вести корабль и контролировать двери, а оператор - заниматься ремонтом, абордажем или вооружением.
 </Document>

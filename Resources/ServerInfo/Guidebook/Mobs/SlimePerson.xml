@@ -1,25 +1,25 @@
 <Document>
-  # Slime People
+  # Слаймолюды
 
   <Box>
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
   </Box>
 
-  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
-  (and like other species, need to) drink it safely to stay hydrated.
-  They exhale nitrous oxide and are unaffected by it.
-  Their body can process 6 reagents at the same time instead of just 2.
+  Они дышат азотом вместо кислорода: азота в воздухе станции много, но в сжатых баллонах его найти сложнее. От брызг и обливания водой получают серьёзный урон, но
+  (как и другие виды) могут и должны безопасно пить воду, чтобы не обезвоживаться.
+  Выдыхают оксид азота и невосприимчивы к нему.
+  Их тело одновременно обрабатывает 6 реагентов вместо обычных 2.
 
-  Slimepeople have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
-  so be careful.
+  У слаймолюдов есть [bold]внутренний инвентарь 2×3[/bold] в слизистой мембране. Кто угодно может видеть содержимое и забирать вещи без спроса —
+  будьте осторожны.
 
-  Slimepeople have slight accelerated regeneration compared to other humanoids. They're also capable of hardening their fists, and as such have stronger punches,
-  although they punch a little slower.
+  Регенерация слаймолюдов чуть быстрее, чем у других гуманоидов. Они также могут затвердевать кулаки и бьют сильнее,
+  хотя и чуть медленнее.
 
-  Their slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of
-  moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
-  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
+  Их слизистая «кровь» не восстанавливается железом. Кровь слаймов — умеренно сытная еда для других видов,
+  хотя пить кровь коллег обычно осуждается.
+  Они задыхаются на 80% медленнее, но получают урон от давления на 9% быстрее. Из-за этого они лучше всех выживают в жёстком вакууме. Какое-то время.
 
-  They take [color=#1e90ff]80% less Cellular damage, 40% less Blunt damage and 20% less Poison damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
+  Получают на [color=#1e90ff]80% меньше клеточного урона, 40% меньше дробящего и 20% меньше урона от яда[/color], но на [color=#ffa500]50% больше урона от холода, 20% больше режущего и 20% больше колющего[/color].
 
 </Document>

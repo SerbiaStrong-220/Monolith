@@ -1,0 +1,179 @@
+- type: entity
+  id: NpcStationAiFactionAttackerStaticSmart
+  parent: NpcStationAiAttackerSmart
+  abstract: true
+  suffix: DO NOT USE
+  components:
+  - type: HTN
+    rootTask:
+      task: AttackerShuttleSmartStaticCompound
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CleanupImmune # Factional AI cores must not despawn by mob cleanup
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartAsakim
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, Азаким
+  components:
+  - type: FactionNpcAiCore
+    faction: AsakimDefenceForces
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#ff3db1"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#ff3db1"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartAsakimUnanchorable
+  parent: NpcStationAiAttackerStaticSmartAsakim
+  suffix: ИИ, Азаким, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartPirateNF
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, ДФ
+  components:
+  - type: FactionNpcAiCore
+    faction: PirateNF
+    ignoredFactions:
+    - MD
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#D2B48C"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#D2B48C"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartPirateNFUnanchorable
+  parent: NpcStationAiAttackerStaticSmartPirateNF
+  suffix: ИИ, ДФ, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartTSFMC
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, ТСФ
+  components:
+  - type: FactionNpcAiCore
+    faction: TSFMC
+    ignoredFactions:
+    - SecColossus
+    - MD
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#00a1fc"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#00a1fc"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartTSFMCUnanchorable
+  parent: NpcStationAiAttackerStaticSmartTSFMC
+  suffix: ИИ, ТСФ, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartSyndicate
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, Синдикат
+  components:
+  - type: FactionNpcAiCore
+    faction: Syndicate
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#C83737"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#C83737"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartUSSP
+  parent: NpcStationAiFactionAttackerStaticSmart
+  suffix: ИИ, СССП
+  components:
+  - type: FactionNpcAiCore
+    faction: USSP
+    ignoredFactions:
+    - NanoTrasen
+    - MD
+  - type: NpcFactionMember
+    factions:
+    - USSP
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#ff0033"
+    scale: 3
+    shape: diamond
+    gridConfig:
+      color: "#ff0033"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartUSSPUnanchorable
+  parent: NpcStationAiAttackerStaticSmartUSSP
+  suffix: ИИ, СССП, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None
+
+- type: entity
+  id: NpcStationAiAttackerStaticSmartSyndicateUnanchorable
+  parent: NpcStationAiAttackerStaticSmartSyndicate
+  suffix: ИИ, Синдикат, НЕ СКРУЧИВАЕМОЕ
+  components:
+  - type: Anchorable
+    flags: None

@@ -1,8 +1,8 @@
-ent-ChickenCube = chicken cube
+ent-ChickenCube = куриный кубик
     .desc = { ent-MonkeyCube.desc }
-ent-DuckCube = duck cube
+ent-DuckCube = утиный кубик
     .desc = { ent-MonkeyCube.desc }
-ent-PigCube = pig cube
+ent-PigCube = свиной кубик
     .desc = { ent-MonkeyCube.desc }
-ent-DehydratedSharkMinnow = dehydrated sharkminnow
-    .desc = Looks like a plush toy sharkminnow, but just add water and it becomes a real-life sharkminnow!
+ent-DehydratedSharkMinnow = обезвоженный шаркминноу
+    .desc = Выглядит как плюшевая игрушка-шаркминноу, но стоит добавить воды — и она станет настоящей!

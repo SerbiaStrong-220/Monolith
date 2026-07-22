@@ -11,8 +11,8 @@
   id: HammerOfTheUnion
   parent: [BaseMobilePOI, BaseRepairablePOI]
   name: 'Молот Союза' # Ru-Localization
-  minimumDistance: 10000
-  maximumDistance: 15000
+  minimumDistance: 12500 # Exodus-nebula-update
+  maximumDistance: 40000 # Exodus-nebula-update
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/Dungeons/hammeroftheunion.yml
   addComponents:

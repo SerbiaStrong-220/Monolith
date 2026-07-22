@@ -1,3 +1,5 @@
+using System.Collections.Generic; // Exodus multi-carry
+
 namespace Content.Server.Carrying
 {
     /// <summary>
@@ -6,6 +8,11 @@ namespace Content.Server.Carrying
     [RegisterComponent]
     public sealed partial class CarryingComponent : Component
     {
-        public EntityUid Carried = default!;
+        // Exodus-begin: multi-carry
+        /// <summary>
+        /// Every entity currently being carried by this mob.
+        /// </summary>
+        public HashSet<EntityUid> Carried = new();
+        // Exodus-end
     }
 }

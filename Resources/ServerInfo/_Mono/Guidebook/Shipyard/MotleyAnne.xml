@@ -1,62 +1,62 @@
 <Document>
-  # DOCKYARD 'MOTLEY ANNE'
+  # ВЕРФЬ «MOTLEY ANNE»
   <Box>
   <GuideEntityEmbed Entity="ConveyorBelt"/>
   <GuideEntityEmbed Entity="AFInterceptor"/>
   <GuideEntityEmbed Entity="AirlockShuttleSyndicateRogueLocked"/>
   </Box>
-    [color=#a4885c]Ship Size:[/color] Medium
+    [color=#a4885c]Размер корабля:[/color] Средний
 
-	[color=#a4885c]Recommended Crew:[/color] 1-3
+	[color=#a4885c]Рекомендуемый экипаж:[/color] 1–3
 
-	[color=#a4885c]Power Gen Type:[/color] AME
+	[color=#a4885c]Тип генерации:[/color] ДАМ
 
-	[color=#a4885c]Expeditions:[/color] None
+	[color=#a4885c]Экспедиции:[/color] Нет
 
-	[color=#a4885c]IFF Console:[/color] Included
+	[color=#a4885c]Консоль IFF:[/color] Есть
 
-    [color=#a4885c]Voucher:[/color] Required
+    [color=#a4885c]Ваучер:[/color] Требуется
 
 
-  "The Motley Anne is a mobile dockyard manufactured on demand by the House Ikarus's Economic Divisions military production line for Vanguard use. It provides a closer back line for engagements in order to safely and quickly resupply.
+  «Motley Anne — мобильная верфь, выпускаемая по запросу военной производственной линией экономических дивизионов Дома Икаруса для использования Авангардом. Она обеспечивает ближний тыл в боях, чтобы безопасно и быстро пополнять припасы.
 
-IED's expert logistics sector has determined that in order to produce the Motley efficiently, rather than expending military salaries, resource quotas must be met to make up for the dip in labor and supply costs."
+По оценке логистического сектора IED, для эффективного производства Motley вместо военных зарплат нужно выполнять ресурсные квоты — так компенсируется нехватка труда и снабжения.»
 
-  # PREFLIGHT CHECKLIST
+  # ПРЕДПОЛЁТНЫЙ ЧЕКЛИСТ
 
-  ## 1. Power supply
+  ## 1. Электропитание
 
-  ## 1.1. Battery units
+  ## 1.1. Батарейные блоки
   <Box>
   <GuideEntityEmbed Entity="SMESBasic"/>
   <GuideEntityEmbed Entity="SubstationBasic"/>
   <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
 
-  - Check that the dual AME setup is in place.
-  - Check that the SMES unit is anchored to the floor.
-  - Check that the substation unit is anchored to the floor.
-  - Check that the rear APC unit's Main Breaker is toggled on.
-  - Check the APC units current Load* (W).
-  - Check that the front APC unit's Main Breaker is toggled on.
-  - Check the APC units' current Load* (W).
+  - Убедитесь, что установлена двойная схема ДАМ.
+  - Проверьте, что СМЭС закреплён к полу.
+  - Проверьте, что подстанция закреплена к полу.
+  - Проверьте, что главный выключатель заднего APC включён.
+  - Проверьте текущую нагрузку APC* (Вт).
+  - Проверьте, что главный выключатель переднего APC включён.
+  - Проверьте текущую нагрузку APC* (Вт).
 
-  ## 1.2. AME unit.
+  ## 1.2. Блок ДАМ
   <Box>
   <GuideEntityEmbed Entity="AmeController"/>
   <GuideEntityEmbed Entity="AmeJar"/>
   </Box>
 
-  - Check that the AME unit has at least one core.
-  - Make sure the injector is adjacent to the shielding.
-  - Check that the AME unit is connected to the cable terminal of your SMES via HV.
-  - Check the fuel remaining of the AME unit.
-  - Set the AME unit output power to 2 injections.
-  - Enable Injection.
+  - Убедитесь, что у ДАМ есть хотя бы одно ядро.
+  - Убедитесь, что инжектор примыкает к экранированию.
+  - Проверьте, что ДАМ подключён к кабельному терминалу СМЭС через ВВ.
+  - Проверьте остаток топлива в ДАМ.
+  - Установите количество впрыска ДАМ на 2.
+  - Включите впрыск.
 
-  ## 2. Atmospherics
+  ## 2. Атмосфера
 
-  ## 2.1. Distribution Loop
+  ## 2.1. Контур распределения
   <Box>
   <GuideEntityEmbed Entity="OxygenCanister"/>
   <GuideEntityEmbed Entity="NitrogenCanister"/>
@@ -64,38 +64,38 @@ IED's expert logistics sector has determined that in order to produce the Motley
   <GuideEntityEmbed Entity="GasPressurePump"/>
   </Box>
 
-  - Check that the O2 canister is anchored to the BLUE connector port.
-  - Check that the N2 canister is anchored to the RED connector port.
-  - Check that the gas mixer is set to the correct mixing ratio (~22% Oxygen, ~78% Nitrogen).
-  - Check that the gas mixer is set to 101.325kPa.
-  - Enable gas mixer.
+  - Проверьте, что канистра O2 закреплена на СИНЕМ разъёме.
+  - Проверьте, что канистра N2 закреплена на КРАСНОМ разъёме.
+  - Проверьте, что смеситель газов настроен на правильное соотношение (~22% кислорода, ~78% азота).
+  - Проверьте, что смеситель газов настроен на 101.325 кПа.
+  - Включите смеситель газов.
 
-  ## 3. Other checks
+  ## 3. Прочие проверки
   <Box>
   <GuideEntityEmbed Entity="Gyroscope"/>
   <GuideEntityEmbed Entity="GravityGeneratorMini"/>
   <GuideEntityEmbed Entity="MiniStationAnchor"/>
   </Box>
 
-  - Check that the gyroscope is anchored, powered, and enabled.
-  - Check that the mini gravity generator is anchored, powered, and enabled.
-  - Check that the station anchor is not active until needed.
+  - Проверьте, что гироскоп закреплён, запитан и включён.
+  - Проверьте, что мини-генератор гравитации закреплён, запитан и включён.
+  - Проверьте, что станционный якорь не активен, пока не понадобится.
 
-  ## Fighters
+  ## Истребители
 
   <Box>
   <GuideEntityEmbed Entity="PDVMotleyAnneCarrierComputer"/>
   </Box>
 
 
-  - The fighters produced by Motley Anne are controlled using an advanced integrated and semi-automated flight system. The onboard AI servers allow the ships to perform basic commands using the console within Motley Anne's bridge.
-  - Some fighters require manual loading of ammunition to function properly. Read descriptions often!
+  - Истребители, производимые Motley Anne, управляются продвинутой встроенной полуавтоматической системой полёта. Бортовые ИИ-серверы позволяют кораблям выполнять базовые команды с консоли на мостике Motley Anne.
+  - Некоторым истребителям нужна ручная загрузка боеприпасов. Читайте описания!
 
-  ## Sidenotes
+  ## Примечания
 
-   - The Motley Anne comes with gas miners for resupply at any time.
-   - The SMES array located in the engineering section has room for additional batteries to be charged and used elsewhere.
-   - The small compartment in the dockyard can be used for a silo to provide universal materials to the mech stations.
-   - The dockyard is intended to hold artillery for fighters to resupply quickly and redeploy from their respective ports.
-   - The server inside the dockyard compartment comes with universal ammo for producing fighter bomber artillery.
+   - На Motley Anne есть газодобытчики для пополнения запасов в любой момент.
+   - Массив СМЭС в инженерном отсеке имеет место для дополнительных батарей — их можно заряжать и использовать в другом месте.
+   - Небольшой отсек верфи можно использовать под сило для универсальной выдачи материалов меха-станциям.
+   - Верфь рассчитана на хранение артиллерии, чтобы истребители быстро пополнялись и снова выходили из своих портов.
+   - Сервер в отсеке верфи содержит универсальные боеприпасы для производства артиллерии истребителей-бомбардировщиков.
 </Document>

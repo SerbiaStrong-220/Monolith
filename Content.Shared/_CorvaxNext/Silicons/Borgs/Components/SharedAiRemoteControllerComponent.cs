@@ -14,6 +14,7 @@ public sealed partial class AiRemoteControllerComponent : Component
 {
     [DataField] public EntityUid? AiHolder;
     [DataField] public EntityUid? LinkedMind;
+    [DataField] public EntityUid? LastControllerMind; // Exodus remote-ai-reconnection
 
     [DataField] public string[]? PreviouslyTransmitterChannels;
     [DataField] public string[]? PreviouslyActiveRadioChannels;

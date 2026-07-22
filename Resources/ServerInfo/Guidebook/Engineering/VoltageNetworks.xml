@@ -1,9 +1,9 @@
-﻿<Document>
-  # Voltage Networks
-  In Space Station 14, power distribution is divided into three separate voltage networks.
-  These networks are the [color=green]Low Voltage[/color] Network, the [color=Yellow]Medium Voltage[/color] Network, and the [color=orange]High Voltage[/color] Network.
+<Document>
+  # Вольтажность
+  В Space Station 14 распределение энергии разделено на три отдельные сети по напряжению.
+  Это [color=green]низковольтная[/color] сеть, [color=Yellow]средневольтная[/color] сеть и [color=orange]высоковольтная[/color] сеть.
 
-  These networks power different types of machinery on the station.
+  Эти сети питают разные типы оборудования на станции.
 
   <Box>
     <GuideEntityEmbed Entity="CableHVStack"/>
@@ -11,8 +11,8 @@
     <GuideEntityEmbed Entity="CableApcStack"/>
   </Box>
 
-  ## Low Voltage Network
-  The [color=green]Low Voltage[/color] Network is used for powering almost all small machines on the station. This includes things like lights, computers, and other small devices.
+  ## Низковольтная сеть
+  [color=green]Низковольтная[/color] сеть питает почти все мелкие устройства станции: свет, компьютеры и прочую мелкую технику.
 
   <Box>
     <GuideEntityEmbed Entity="PoweredSmallLight" Caption=""/>
@@ -24,18 +24,18 @@
     <GuideEntityEmbed Entity="AlwaysPoweredWallLight" Caption=""/>
   </Box>
 
-  [color=green]Low Voltage[/color] power is provided by APCs, which are wall-mounted devices that convert power from the [color=Yellow]Medium Voltage[/color] Network to [color=green]Low Voltage[/color].
+  [color=green]Низковольтное[/color] питание обеспечивают APC — настенные устройства, преобразующие энергию из [color=Yellow]средневольтной[/color] сети в [color=green]низковольтную[/color].
 
   <Box>
     <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
 
-  [color=green]Low Voltage[/color] wire doesn't have to be directly run to every machine, as it can power multiple machines as long as the wire is close enough to the machine.
-  It can power machines within 2 tiles radially, and 3 tiles in each cardinal direction.
+  [color=green]Низковольтный[/color] кабель не обязательно тянуть к каждой машине: он питает несколько устройств, если кабель достаточно близко.
+  Питание распространяется на 2 тайла радиально и на 3 тайла в каждом кардинальном направлении.
 
-  ## Medium Voltage Network
-  The [color=Yellow]Medium Voltage[/color] Network is used for powering APCs and other power-hungry machinery that can only accept [color=Yellow]Medium Voltage[/color] power.
-  The Particle Accelerator is an example, as it operates on [color=Yellow]Medium Voltage[/color] power.
+  ## Средневольтная сеть
+  [color=Yellow]Средневольтная[/color] сеть питает APC и другое энергоёмкое оборудование, принимающее только [color=Yellow]среднее[/color] напряжение.
+  Пример — ускоритель частиц: он работает на [color=Yellow]среднем[/color] напряжении.
 
   <Box>
     <GuideEntityEmbed Entity="ParticleAcceleratorEndCap" Caption="" Margin="0"/>
@@ -58,12 +58,12 @@
   </Box>
 
   <Box>
-    [color=#999999][italic]The Particle Accelerator[italic][/color]
+    [color=#999999][italic]Ускоритель частиц[/italic][/color]
   </Box>
 
-  [color=Yellow]Medium Voltage[/color] power is provided by Substations, which are large machines that convert power from the [color=Orange]High Voltage[/color] Network to [color=Yellow]Medium Voltage[/color].
+  [color=Yellow]Средневольтное[/color] питание обеспечивают подстанции — крупные машины, преобразующие энергию из [color=Orange]высоковольтной[/color] сети в [color=Yellow]средневольтную[/color].
 
-  There are also wallmount variants of these substations for compact spaces, like shuttles.
+  Есть и настенные варианты подстанций для тесных мест, например шаттлов.
   <Box HorizontalAlignment="Stretch">
     <Box>
       <GuideEntityEmbed Entity="SubstationBasic"/>
@@ -73,10 +73,10 @@
     </Box>
   </Box>
 
-  ## High Voltage Network
-  The [color=Orange]High Voltage[/color] Network is used for moving large amount of power across the station. It is used to power most power handling equipment, such as SMES units and Substations.
+  ## Высоковольтная сеть
+  [color=Orange]Высоковольтная[/color] сеть используется для передачи больших объёмов энергии по станции. Ею питается большинство силового оборудования — СМЭС и подстанции.
 
-  Most high-output generators output power to the [color=Orange]High Voltage[/color] Network.
+  Большинство мощных генераторов отдают энергию в [color=Orange]высоковольтную[/color] сеть.
 
   <Box>
     <GuideEntityEmbed Entity="SMESBasic"/>
@@ -85,11 +85,11 @@
     <GuideEntityEmbed Entity="SubstationBasic"/>
   </Box>
 
-  ## Shock Damage
-  If you are shocked by a cable carrying power, you will take damage. The amount of damage you take is based on the voltage of the cable that shocked you.
+  ## Урон от удара током
+  Если вас ударит током от кабеля под напряжением, вы получите урон. Величина урона зависит от напряжения кабеля.
 
-  [color=green]Low Voltage[/color] cables will deal less damage than [color=Yellow]Medium Voltage[/color] cables, which will deal less damage than [color=Orange]High Voltage[/color] cables.
+  [color=green]Низковольтные[/color] кабели бьют слабее [color=Yellow]средневольтных[/color], а те — слабее [color=Orange]высоковольтных[/color].
 
-  Energized [color=Orange]High Voltage[/color] and [color=Yellow]Medium Voltage[/color] cabling hurts, so be sure to wear insulated gloves when working with it.
+  Под напряжением [color=Orange]высоковольтные[/color] и [color=Yellow]средневольтные[/color] кабели опасны — работайте в изолирующих перчатках.
 
 </Document>

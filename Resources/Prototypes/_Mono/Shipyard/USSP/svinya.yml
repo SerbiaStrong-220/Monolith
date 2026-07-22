@@ -7,14 +7,15 @@
 
 - type: vessel
   id: Svinya
-  parent: BaseVessel
+  parent: BaseVesselUSSP
   name: Свинья # Ru-Localization
   description: Компактный штурмовой шаттл, усеянный малокалиберным вооружением. # Ru-Localization
   price: 39000 # appraised at ~33200
   category: Small
   group: Ussp
-  access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/USSP/svinya.yml
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Mono/Shuttles/USSP/svinya.yml
   guidebookPage: Null
   class:
   - Pursuit
@@ -25,18 +26,20 @@
 - type: gameMap
   id: Svinya
   mapName: 'Свинья' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/USSP/svinya.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/USSP/svinya.yml
   minPlayers: 0
   stations:
     Svinya:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Свинья{1}' # Ru-Localization
+          mapNameTemplate: 'Свинья СССП{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
-        - type: StationJobs
-          availableJobs:
-            Mercenary: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
+        # Exodus-begin disable-ussp-faction
+        # - type: StationJobs
+        #   availableJobs:
+        #    USSPSergeant: [ 0, 0 ]
+        #    USSPRifleman: [ 0, 0 ]
+        # Exodus-end

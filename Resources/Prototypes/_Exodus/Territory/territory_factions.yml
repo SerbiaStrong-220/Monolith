@@ -1,0 +1,92 @@
+# Data-driven configuration of factions that can claim and control territories.
+#
+# The localized text shown on the navigation radar (repeated diagonal label inside the circle)
+# comes from the radarLabel here + the .ftl files.
+#
+# Actual strings:
+#   Resources/Locale/ru-RU/_Exodus/territory/territory-marker.ftl
+#   Resources/Locale/en-US/_Exodus/territory/territory-marker.ftl
+#
+# How a claim appears:
+#   A banner with TerritoryBannerComponent (referencing a territoryFaction) gets anchored.
+#   → GridTerritoryBannerSystem calls SetController with the faction.
+#   → System looks up the prototype → uses its radarLabel for the TerritoryMarker.
+#   → Radar draws Loc.GetString(radarLabel).
+#
+# Initial map state:
+#   - Do NOT use controllingFaction in GridTerritory yaml to give "default" ownership.
+#   - Stations are unclaimed by default.
+#   - If a station must start under a faction: place the banner entity itself in the map
+#     (anchored on the grid). The banner system will detect it on load.
+#
+# To add a new claimable faction:
+#   1. Add entry here.
+#   2. Create banner entity prototype.
+#   3. Give it TerritoryBanner (yaml type) / TerritoryBannerComponent (C# class) pointing to this faction id.
+#   4. (Optional) reference the banner in the 'banner' field here for docs/validation.
+#   5. (Optional) Add 'npcFaction' field to make captured grids friendly to matching factional AI cores.
+#   6. (For territory rings) Add 'color' field - this color is used for influence rings on BSS map and nav radar.
+#   7. (Optional) Add 'discountAlignment' for faction store discounts.
+#      Negative factions penalize every other faction individually, including other negative factions.
+#      TSFMC, PDV and Khsira are main claim factions; Syndicate and USSP are side claim factions.
+#
+# Captured territory scoring (via TerritoryCounterSystem):
+#   - References this YML for the list of factions.
+#   - Integer scoring rule: points = (r + 500) / 1000
+#     This is equivalent to round-half-up for positive kilometer values.
+#   - Scores updated live on claim changes (GridTerritoryControllerChangedEvent).
+#   - Other systems should query TerritoryCounterSystem.GetScore(faction) or subscribe to TerritoryScoreChangedEvent.
+#
+# Claim cooldown:
+#   - claimCooldown is optional and written in seconds.
+#   - If unset, territoryClaimRules.defaultFactionClaimCooldown is used.
+#   - Set claimCooldown: 0 to disable the cooldown for a specific faction.
+
+- type: territoryFaction
+  id: TSFMC
+  radarLabel: territory-faction-tsf
+  banner: BannerNGC
+  npcFaction: TSFMC
+  discountAlignment: Positive
+  color: "#00a1fc"  # TSF company ship blue
+
+- type: territoryFaction
+  id: PDV
+  radarLabel: territory-faction-phaeton
+  banner: BannerPDV
+  npcFaction: PirateNF
+  discountAlignment: Positive
+  color: "#D2B48C"  # PDV ship / equipment tan
+
+- type: territoryFaction
+  id: Khsira
+  radarLabel: territory-faction-khsira
+  banner: BannerKhsira
+  npcFaction: AsakimDefenceForces
+  discountAlignment: Positive
+  color: "#ff3db1"  # Medium violet red / pink-red for Khsira Empire
+
+- type: territoryFaction
+  id: Syndicate
+  radarLabel: territory-faction-syndicate
+  banner: BannerSyndicate
+  npcFaction: Syndicate
+  discountAlignment: Negative
+  color: "#C83737"  # Syndicate red
+
+- type: territoryFaction
+  id: USSP
+  radarLabel: territory-faction-ussp
+  banner: BannerUSSP
+  npcFaction: USSP
+  discountAlignment: Positive
+  color: "#ff0033"  # USSP company red
+
+# Colossus Central is treated as its own faction so it can have a dedicated label
+# even when initially "controlled" without a physical banner, or when claimed.
+- type: territoryFaction
+  id: ColossusCentral
+  radarLabel: territory-marker-colossus
+  discountAlignment: Positive
+  # No dedicated banner yet; can be set as initial controller on the grid or via a banner later.
+  # Not one of the three main POI-claiming factions for color purposes.

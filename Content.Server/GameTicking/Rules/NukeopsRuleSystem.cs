@@ -3,7 +3,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Nuke;
 using Content.Server.NukeOps;
 using Content.Server.Popups;
-using Content.Server.Roles;
+using Content.Server.Roles; // Exodus-syndicate-biocode
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
@@ -16,6 +16,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
+using Content.Shared._Exodus.Roles; // Exodus-syndicate-biocode
 using Content.Shared.Store;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;

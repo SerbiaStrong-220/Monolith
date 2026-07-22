@@ -1,9 +1,9 @@
 <Document>
-#Series 1 Combat Mechs
+# Боевые мехи 1 серии
 
-  The cheapest and most frequently deployed Mechs, most often utilized as a suit of Powered Armor for infantry conflicts and boarding actions.
+  Самые дешёвые и чаще всего развёртываемые мехи: обычно используются как силовая броня для пехотных столкновений и абордажа.
 
-  All S1 Mechs are space insulated, provide breathable atmosphere, and have maneuvering jets.
+  Все мехи S1 изолированы от космоса, обеспечивают пригодную для дыхания атмосферу и имеют маневровые двигатели.
 
   <Box>
     <GuideEntityEmbed Entity="MechGygax"/>
@@ -12,48 +12,48 @@
 
 ##Gygax
 
-The Gygax is a fast, lightly-armored strike platform. It is vulnerable to handheld weaponry, but provides its operator protection from common combat injuries.
+Gygax — быстрая, легкобронированная ударная платформа. Уязвим к ручному оружию, но защищает оператора от обычных боевых травм.
 
 ##Durand
 
-The Durand is a slow, lumbering, heavily armored tank. It is vulnerable to concentrated fire but is durable enough to walk off injuries that would disable or destroy a Gygax.
+Durand — медленный, тяжёлый, хорошо бронированный танк. Уязвим к сосредоточенному огню, но достаточно живуч, чтобы пережить повреждения, которые вывели бы из строя или уничтожили Gygax.
 
-##Weaponry
+##Вооружение
   <Box>
     <GuideEntityEmbed Entity="WeaponMechCombatUltraRifle"/>
     <GuideEntityEmbed Entity="WeaponMechCombatShotgun" Caption="LBX AC-10"/>
     <GuideEntityEmbed Entity="WeaponMechCombatShotgunIncendiary"/>
     <GuideEntityEmbed Entity="WeaponMechCombatMissileRack8"/>
   </Box>
- - The Ultra AC-2 is a highly accurate light machine gun.
- - The LBX AC-10 is a light automatic shotgun that fires standard 12-guage buckshot.
- - The FNX-99 Hades Carbine is a light automatic shotgun that fires 12-gauge incendiary shells.
- - The SRM-8 Light Missile Rack is a self-loading unguided rocket launcher useful for breaching airlock doors.
+ - Ultra AC-2 — высокоточный лёгкий пулемёт.
+ - LBX AC-10 — лёгкий автоматический дробовик, стреляющий стандартной картечью 12-го калибра.
+ - FNX-99 Hades Carbine — лёгкий автоматический дробовик, стреляющий зажигательными патронами 12-го калибра.
+ - SRM-8 Light Missile Rack — самозаряжающаяся неуправляемая ракетная установка, полезная для пролома дверей шлюзов.
   <Box>
     <GuideEntityEmbed Entity="WeaponMechCombatDisabler"/>
     <GuideEntityEmbed Entity="WeaponMechCombatFlashbangLauncher"/>
   </Box>
-  - The CH-PD Disabler is a mech-mounted varient of the standard handheld Disabler.
-  - The SGL-6 Flashbang Launcher does exactly what you would expect, for a surprisingly low cost.
+  - CH-PD Disabler — мех-версия стандартного ручного станнера.
+  - SGL-6 Flashbang Launcher делает ровно то, чего от него ждут, и на удивление дёшево.
   <Box>
     <GuideEntityEmbed Entity="WeaponMechCombatFiredartLaser"/>
     <GuideEntityEmbed Entity="WeaponMechCombatSolarisLaser"/>
     <GuideEntityEmbed Entity="WeaponMechCombatImmolationGun"/>
   </Box>
-  - The CH-PS Firedart is the mech-mounted equivalent to a Makeshift Laser Pistol.
-  - The CH-LC Solaris is equivalent to a standard Laser Rifle.
-  - The ZFI Immolation Beam Gun is equivalent to a Laser Cannon.
+  - CH-PS Firedart — мех-эквивалент самодельного лазерного пистолета.
+  - CH-LC Solaris эквивалентен стандартной лазерной винтовке.
+  - ZFI Immolation Beam Gun эквивалентен лазерной пушке.
 
 
-##Syndicate Mechs
+##Мехи Синдиката
 
-The [color=crimson]Syndicate[/color] created variations of the standard powered armor Mechs which were provided to Nuclear Operatives in their station-destroying operations. These can still rarely be found deployed in the Colossus Sector.
+[color=crimson]Синдикат[/color] создал варианты стандартных силовых мехов, которые выдавались ядерным оперативникам для операций по уничтожению станций. Их всё ещё редко можно встретить в секторе Колосс.
 
   <Box>
     <GuideEntityEmbed Entity="MechGygaxSyndie"/>
     <GuideEntityEmbed Entity="MechMaulerSyndie"/>
   </Box>
 
-  These mechs are invariably better than the standard-issue versions, featuring significant improvements to armor plating and an expanded equipment capacity.
+  Эти мехи неизменно лучше стандартных: заметно улучшенная броня и расширенная вместимость оборудования.
 
 </Document>

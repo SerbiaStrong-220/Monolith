@@ -107,7 +107,7 @@ public partial class SharedBodySystem
 
         if (partEnt.Comp.PartType == BodyPartType.Arm)
         {
-            var hand = GetBodyChildrenOfType(partEnt.Comp.Body.Value, BodyPartType.Hand, symmetry: partEnt.Comp.Symmetry).FirstOrDefault();
+            var hand = GetBodyPartChildren(partEnt).FirstOrDefault(child => child.Component.PartType == BodyPartType.Hand); // Exodus: scope hand lookup to this arm
             if (hand != default)
             {
                 var ev = new BodyPartEnabledEvent(hand);
@@ -149,7 +149,7 @@ public partial class SharedBodySystem
 
         if (partEnt.Comp.PartType == BodyPartType.Arm)
         {
-            var hand = GetBodyChildrenOfType(partEnt.Comp.Body.Value, BodyPartType.Hand, symmetry: partEnt.Comp.Symmetry).FirstOrDefault();
+            var hand = GetBodyPartChildren(partEnt).FirstOrDefault(child => child.Component.PartType == BodyPartType.Hand); // Exodus: scope hand lookup to this arm
             if (hand != default)
             {
                 var ev = new BodyPartDisabledEvent(hand);

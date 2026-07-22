@@ -7,37 +7,32 @@
 # Discord: ???
 
 # Notes:
-# just a little loot n shoot POI. Pretty much the second POI to even exist
-- type: pointOfInterest
-  id: LPBravo
-  parent: BasePOI
-  name: 'Прослушивающий Пункт Браво' # Ru-Localization
-  # Exodus-Change-SP-Bravo-For-"Peace"-Start
-  minimumDistance: 15000
-  maximumDistance: 18000
-  # Exodus-Change-SP-Bravo-For-"Peace"-End
-  spawnGroup: SyndicateFOB
-  gridPath: /Maps/_NF/POI/lpbravo.yml
-  hideWarp: true
-  addComponents:
-  - type: IFF
-    color: "#C83737"
-    flags: [HideLabel]
-    readOnly: false
-  - type: SyndicateFOB # For pinpointer
-  - type: SolarPoweredGrid
-    trackOnInit: true
-    doNotCull: true
+# just a little loot n shoot POI. Pretty much the second POI to even exist.
+#
+# Exodus nebula-poi-migration:
+# The original `pointOfInterest` entry was removed so that this POI no longer participates
+# in the upstream NF round-start POI roulette (NfAdventureRuleSystem → PointOfInterestSystem).
+# It is now spawned exclusively inside green nebulas via NebulaPoiSpawnSystem; see
+# Resources/Prototypes/_Exodus/Nebula/pois.yml for the `NebulaPoiLPBravo` entry that carries
+# the addComponents (IFF, SyndicateFOB, SolarPoweredGrid) and display name.
+# The `gameMap` prototype below is kept so map validation tests / station registration still
+# resolve the LPBravo id.
 
 - type: gameMap
   id: LPBravo
   mapName: 'Прослушивающий Пункт Браво' # Ru-Localization
-  mapPath: /Maps/_NF/POI/lpbravo.yml
+  mapPath: /Maps/_Exodus/POI/lpbravo.yml # Exodus Nebula Update
   minPlayers: 0
   stations:
     LPBravo:
       # FIXME: no records despite shipyard console, could currently be gamed
       stationProto: StandardFrontierOutpost
+      # Exodus start - Syndicate-owned NPC target filtering
+      gridComponents:
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Прослушивающий Пункт Браво' # Ru-Localization

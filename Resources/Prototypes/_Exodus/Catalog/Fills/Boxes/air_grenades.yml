@@ -1,0 +1,14 @@
+- type: entity
+  parent: BoxCardboard
+  id: BoxAirGrenades
+  name: box of air grenades
+  description: A box containing six air grenades.
+  components:
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,3,2
+  - type: StorageFill
+    contents:
+    - id: AirGrenade
+      amount: 6

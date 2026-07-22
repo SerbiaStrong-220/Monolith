@@ -1,0 +1,40 @@
+- type: vessel
+  id: SentinelF
+  parent: BaseVesselAntag
+  name: Центинел-Ф
+  description: Корвет с пушками Cerberus и Dravon, 20-мм L85, RAC-30 и сервером артиллерийского управления High.
+  price: 210200
+  purchasable: false # voucher only
+  category: Medium
+  group: Security
+  access: Command # Exodus-Cadet-No-TSF-Shutles
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Patrol
+  - Corvette
+  engine:
+  - AME
+
+- type: gameMap
+  id: SentinelF
+  mapName: 'Центинел-Ф'
+  mapPath: /SharedMaps/_Exodus/Shuttles/TSFCM/sentinel_f.yml
+  minPlayers: 0
+  stations:
+    SentinelF:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Центинел-Ф{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

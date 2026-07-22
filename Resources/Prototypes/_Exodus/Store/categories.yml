@@ -3,3 +3,32 @@
   id: UplinkSecurityMedical
   name: store-category-secmedical
 
+- type: storeCategory
+  id: SummoningMachinePrefractureRelics
+  name: store-category-summoning-prefracture-relics
+
+- type: storeCategory
+  id: SummoningMachineKasatura
+  name: store-category-summoning-kasatura
+
+- type: storeCategory
+  id: SummoningMachineZeroGVector
+  name: store-category-summoning-zero-g-vector
+
+- type: storeCategory
+  id: SummoningMachineTechnicalContour
+  name: store-category-summoning-technical-contour
+
+- type: storeCategory
+  id: SummoningMachineEmergencyBeacons
+  name: store-category-summoning-emergency-beacons
+
+- type: storeCategory
+  id: SummoningMachineFieldReserve
+  name: store-category-summoning-field-reserve
+
+- type: storeCategory
+  id: UplinkSyndicateShips
+  name: store-category-syndicate-ships
+  priority: 11
+

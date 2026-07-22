@@ -70,6 +70,7 @@ public sealed partial class CryoSleepSystem : SharedCryoSleepSystem
     [Dependency] private StationSystem _station = default!;
 
     private readonly Dictionary<NetUserId, StoredBody?> _storedBodies = new();
+    private readonly Dictionary<EntityUid, CryoSleepEui> _openEuis = new(); // Exodus: body -> its open accept EUI, so it can be closed server-side.
     private EntityUid? _storageMap;
 
     public override void Initialize()
@@ -84,6 +85,7 @@ public sealed partial class CryoSleepSystem : SharedCryoSleepSystem
         SubscribeLocalEvent<CryoSleepComponent, DestructionEventArgs>((e,c,_) => EjectBody(e, c));
         SubscribeLocalEvent<CryoSleepComponent, CryoStoreDoAfterEvent>(OnAutoCryoSleep);
         SubscribeLocalEvent<CryoSleepComponent, DragDropTargetEvent>(OnEntityDragDropped);
+        SubscribeLocalEvent<CryoSleepComponent, EntRemovedFromContainerMessage>(OnBodyRemoved); // Exodus
         SubscribeLocalEvent<RoundEndedEvent>(OnRoundEnded);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleAdded);
@@ -248,7 +250,12 @@ public sealed partial class CryoSleepSystem : SharedCryoSleepSystem
 
         if (success && session != null)
         {
-            _euiManager.OpenEui(new CryoSleepEui(toInsert.Value,  cryopod, this), session);
+            // Exodus-Start
+            //_euiManager.OpenEui(new CryoSleepEui(toInsert.Value,  cryopod, this), session);
+            var eui = new CryoSleepEui(toInsert.Value, cryopod, this);
+            _euiManager.OpenEui(eui, session);
+            _openEuis[toInsert.Value] = eui;
+            // Exodus-End
         }
 
         if (success)
@@ -504,9 +511,30 @@ public sealed partial class CryoSleepSystem : SharedCryoSleepSystem
         return component.BodyContainer.ContainedEntity != null;
     }
 
+    // Exodus-Start
+    public void AcceptCryoSleep(EntityUid body, EntityUid cryopod)
+    {
+        if (TryComp<CryoSleepComponent>(cryopod, out var cryo)
+            && cryo.BodyContainer.ContainedEntity == body)
+        {
+            CryoStoreBody(body, cryopod);
+        }
+    }
+
+    private void OnBodyRemoved(EntityUid uid, CryoSleepComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != "body_container")
+            return;
+
+        if (_openEuis.Remove(args.Entity, out var eui))
+            eui.Close();
+    }
+    // Exodus-End
+
     private void OnRoundEnded(RoundEndedEvent args)
     {
         _storedBodies.Clear();
+        _openEuis.Clear(); // Exodus
     }
 
     private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)

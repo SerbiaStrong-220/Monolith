@@ -16,6 +16,7 @@
   - type: Fixtures
   - type: GasDeposit
   - type: RandomGasDeposit
+  - type: RequiresTile # Exodus: remove deposits when their supporting asteroid tile is destroyed
   - type: Sprite
     drawdepth: FloorTiles
     sprite: _NF/Objects/Specific/Atmospherics/deposit.rsi

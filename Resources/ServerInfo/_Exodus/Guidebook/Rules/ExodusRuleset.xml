@@ -2,18 +2,16 @@
 
 # Основные правила сервера
 
-## Предисловие
-
 Следует понимать, что правила были написаны в пользу более лёгкого понимания, избегая написания полной конституции суверенного государства. В правилах важен их посыл, а не точная формулировка.
 Если вы не уверены в том, являются ли ваши действия нарушением, то спросите об этом в AHelp, прежде чем что-либо делать.
 
-# Список правил
+Это первая редакция правил сервера SS220 Exodus.
 
 [color=red][italic]Если какие-либо ссылки не работают, используйте версию руководства в гайдбуке через меню (ESC) или (Numpad 0).[/italic][/color]
 
 [color=red][italic]Все перечисленные ниже правила действуют постоянно — включая время между раундами, непосредственно в игре и в других частях нашего сообщества. Ожидается, что данные правила будут прочитаны полностью.[/italic][/color]
 
-## Основные правила
+## Список правил
 Вам необходимо следовать следующим правилам Exodus:
 - 0. [textlink="Не быть мудаком" link="EXRule0DontBeAsshole"]
 - 1. [textlink="Гриф" link="EXRule1Grief"]
@@ -23,7 +21,8 @@
 - 3.2. [textlink="Злоупотребление LOOC, OOC и чатом эмоций" link="EXRule3InGameAtmosphere"]
 - 3.3. [textlink="Поддержание уважительной обстановки" link="EXRule3InGameAtmosphere"]
 - 3.4. [textlink="Безграмотность" link="EXRule3InGameAtmosphere"]
-- 4. [textlink="Взаимодействия с фракциями" link="EXRule4FractionInteractions"]
+- 3.5. [textlink="Гост-роли" link="EXRule3InGameAtmosphere"]
+- 4. [textlink="Взаимодействие с фракциями" link="EXRule4FractionInteractions"]
 - 4.1. [textlink="Фракционные столкновения" link="EXRule4FractionInteractions"]
 - 4.2. [textlink="Нападение на пустой аванпост" link="EXRule4FractionInteractions"]
 - 4.3. [textlink="Безопасные зоны" link="EXRule4FractionInteractions"]
@@ -31,8 +30,7 @@
 - 6. [textlink="Память и возрождение" link="EXRule6Respawn"]
 - 7. [textlink="ERP" link="EXRule7ERP"]
 - 8. [textlink="Нечестная игра" link="EXRule8BugAbuse"]
-- 8.1. [textlink="Мультиаккаунтинг" link="EXRule8BugAbuse"]
+- 8.1. [textlink="Мультиаккаунт" link="EXRule8BugAbuse"]
 - [textlink="Правила ролей призраков" link="EXRuleGhostRoles"]
 
-Первая редакция правил 1E.
 </Document>

@@ -273,6 +273,7 @@
     - SmartGun # Goobstation
     # Einstein Engines Packs
     - Translators
+    - RCD # Mono!
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - DynamicAmmoRecipePack
@@ -397,6 +398,9 @@
     dynamicPacks:
     - Robotics
     - BorgModules
+    - ColossusBorgModules # Exodus colossus-borg-modules
+    - ColossusBorgEndoskeletons # Exodus colossus-security-borg-endoskeleton
+    - FactionBorgEndoskeletons # Exodus faction-borg-endoskeletons
     - MechParts
     - MechEquipment
     # Shitmed Change
@@ -512,9 +516,6 @@
     - MonoRogueWeaponsDynamicMelee
     - MonoRogueWeaponsDynamicRanged
     - MonoRogueMiscDynamic
-    - MonoUSSPMiscDynamic
-    - MonoViperGroupDynamic
-    - MonoUSSPWeaponsDynamicRanged
     - UniversalShellAmmo
     - ResearchedExplosives
     - UniversalRailgunAmmo

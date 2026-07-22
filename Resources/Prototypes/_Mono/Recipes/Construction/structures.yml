@@ -112,3 +112,37 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+# Armor add-ons
+- type: construction
+  id: WallArmorAddonSolid
+  graph: WallArmorAddonSolidGraph
+  startNode: start
+  targetNode: finished
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallArmorAddonSolidCornerL
+  graph: WallArmorAddonSolidCornerLGraph
+  startNode: start
+  targetNode: finished
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallArmorAddonSolidCornerR
+  graph: WallArmorAddonSolidCornerRGraph
+  startNode: start
+  targetNode: finished
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true

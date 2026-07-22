@@ -12,10 +12,14 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 1
+              doAfter: 30 # Exodus - territory banner install time
             - material: Cloth
               amount: 2
-              doAfter: 1
+              doAfter: 30 # Exodus - territory banner install time
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
         - to: BannerSHMNode
           completed:
             - !type:SnapToGrid { }
@@ -36,7 +40,54 @@
             - material: Cloth
               amount: 2
               doAfter: 1
-
+        # Exodus start - build edge for PDV banner (Династия Фаэтон)
+        - to: BannerPDVNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 30 # Exodus - territory banner install time
+            - material: Cloth
+              amount: 2
+              doAfter: 30 # Exodus - territory banner install time
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
+        # Exodus end
+        # Exodus start - build edge for Khsira banner (Империя Кхси'Ра)
+        - to: BannerKhsiraNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 30 # Exodus - territory banner install time
+            - material: Cloth
+              amount: 2
+              doAfter: 30 # Exodus - territory banner install time
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
+        # Exodus end
+        # Exodus start - build edge for USSP banner
+        - to: BannerUSSPNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 30 # Exodus - territory banner install time
+            - material: Cloth
+              amount: 2
+              doAfter: 30 # Exodus - territory banner install time
+          # Exodus start - enforce single territory claim banner
+          conditions:
+          - !type:NoActiveTerritoryClaimOnGrid {}
+          # Exodus end
+        # Exodus end
     - node: BannerTSFNode
       entity: BannerNGC
       edges:
@@ -50,7 +101,7 @@
           amount: 2
         steps:
         - tool: Screwing
-          doAfter: 1
+          doAfter: 60 # Exodus - territory banner uninstall time
 
     - node: BannerSHMNode
       entity: BannerSHM
@@ -81,3 +132,54 @@
         steps:
         - tool: Welding
           doAfter: 3
+
+    # Exodus start - node for PDV banner (Династия Фаэтон)
+    - node: BannerPDVNode
+      entity: BannerPDV
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Welding
+          doAfter: 60 # Exodus - territory banner uninstall time
+    # Exodus end
+
+    # Exodus start - node for Khsira banner (Империя Кхси'Ра)
+    - node: BannerKhsiraNode
+      entity: BannerKhsira
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Screwing
+          doAfter: 60 # Exodus - territory banner uninstall time
+    # Exodus end
+
+    # Exodus start - node for USSP banner
+    - node: BannerUSSPNode
+      entity: BannerUSSP
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+        - !type:SpawnPrototype
+          prototype: MaterialCloth1
+          amount: 2
+        steps:
+        - tool: Screwing
+          doAfter: 60 # Exodus - territory banner uninstall time
+    # Exodus end

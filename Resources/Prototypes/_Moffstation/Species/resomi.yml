@@ -1,8 +1,8 @@
 - type: species
   id: Resomi
   name: species-name-resomi
-  roundStart: false # Exodus
-  prototype: MobHuman
+  roundStart: true # Exodus-restore
+  prototype: MobResomi # Exodus-restore: use the Resomi entity with species mechanics
   sprites: MobResomiSprites
   defaultSkinTone: "#faf7f7"
   markingLimits: MobResomiMarkingLimits

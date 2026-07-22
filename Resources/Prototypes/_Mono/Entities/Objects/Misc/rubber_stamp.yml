@@ -42,7 +42,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-tsf-colonel
-    stampedColor: "#047ABD"
+    stampedColor: "#00a1fc" # Exodus territory update
     stampState: "paper_stamp-mono-colonel"
   - type: Sprite
     sprite: _NF/Objects/Misc/stamps.rsi

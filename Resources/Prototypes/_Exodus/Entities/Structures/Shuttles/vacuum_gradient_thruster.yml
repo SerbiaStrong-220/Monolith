@@ -16,7 +16,7 @@
       Steel: 500
       Iridite: 20
       Uranium: 300
-      UraniumFissile: 50
+      UraniumFissile: 25
       Bluespace: 30
 
 - type: entity
@@ -54,6 +54,8 @@
     damage:
       types:
         Heat: 0
+  - type: NebulaThrustResistance
+    resistance: 1
   - type: ApcPowerReceiver
     powerLoad: 250000
   - type: Damageable

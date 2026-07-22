@@ -1,146 +1,146 @@
 <Document>
-<GuideEntityEmbed Entity="RoboticArm" Caption="The factory must grow."/>
+<GuideEntityEmbed Entity="RoboticArm" Caption="Фабрика должна расти."/>
 
-Using the Goobstation's Factorio system many machines and processes can be automated.
+С помощью Factorio-системы Goobstation многие машины и процессы можно автоматизировать.
 
-The first step is Epistemics department unlocking the [bold]Industrial Engineering[/bold] technology, which unlocks everything you need.
+Первый шаг — отдел эпистемики должен разблокировать технологию [bold]Промышленная инженерия[/bold], которая открывает всё необходимое.
 
-If you have played with Factorio or the Create mod you will be familiar with how it works.
+Если вы играли в Factorio или мод Create, принципы будут знакомы.
 
-## Robotic Arm
+## Роботизированная рука
 
 <GuideEntityEmbed Entity="RoboticArm"/>
 
-This is the main workhorse for automation, it moves items from an input tile (or storage) to an output tile (or storage).
+Это основной рабочий инструмент автоматизации: она перемещает предметы с входной клетки (или хранилища) на выходную клетку (или в хранилище).
 
-Without any configuration, it will work with items on the floor infront of it and behind it, moving them from one tile to the other.
+Без настройки она работает с предметами на полу перед собой и за собой, перенося их с одной клетки на другую.
 
-[bold]Use a multitool[/bold] to link its input and output machine to [bold]automated machines[/bold].
-Any signal port that starts with "Item:" is compatible and indicates a linkage of item transfering.
+[bold]Используйте мультитул[/bold], чтобы привязать входную и выходную машину к [bold]автоматизированным машинам[/bold].
+Любой сигнальный порт, начинающийся с «Item:», совместим и означает связь для передачи предметов.
 
-It also has a [italic]Moved Item[/italic] signal port which is activated after an item is moved to the output. This can be quite useful for activating interactors.
+Также есть порт сигнала [italic]Item Moved[/italic], который срабатывает после перемещения предмета на выход. Это удобно для запуска интеракторов.
 
-## Automated Machines
+## Автоматизированные машины
 
-A variety of machines can be automated by installing an [bold]Automation Upgrade[/bold] on them.
+Многие машины можно автоматизировать, установив на них [bold]набор улучшения автоматизации[/bold] (Automation Upgrade).
 
-This can unlock:
-- signal ports to control the machine by linking it to buttons, logic gates, etc.
-- signal ports that get invoked when the machine does something.
-- item automation storage ports for the [bold]robotic arm[/bold] to use.
-- item filter slots
-- and others
+Это может открыть:
+- сигнальные порты для управления машиной через кнопки, логические вентили и т.п.;
+- сигнальные порты, которые срабатывают, когда машина что-то делает;
+- порты хранения предметов для [bold]роботизированной руки[/bold];
+- слоты фильтров предметов;
+- и другое.
 
-Here is every machine that accepts automation upgrades:
+Вот все машины, которые принимают улучшения автоматизации:
 
 <GuideAutomationSlotsEmbed/>
 
-Note that currently, only some machines can be activated with a signal - for example the Flatpacker can be activated to automatically flatpack materials. However the techfabs and lathes still require manual input.
+Учтите: сейчас сигналом можно активировать только часть машин — например, упаковщик (Flatpacker) можно запустить для автоматической упаковки материалов. Техфабы и латы всё ещё требуют ручного ввода.
 
-## Storage Bin
+## Бункер хранения
 
 <GuideEntityEmbed Entity="StorageBin"/>
 
-The Storage Bin is a large storage space that can be accessed by robotic arms by default, without the need for an automation upgrade (unlike a disposals bin, for example).
+Бункер хранения (Storage Bin) — большое хранилище, к которому роботизированные руки имеют доступ по умолчанию, без улучшения автоматизации (в отличие, например, от мусоропровода).
 
-It has a filter slot to control what items can be inserted, similar to a robotic arm.
+У него есть слот фильтра, который ограничивает, какие предметы можно вставить — как у роботизированной руки.
 
-A good use of a storage bin is stacking up items within it and then extracting them in chunks using a stack filter robotic arm.
+Хорошее применение бункера — накапливать предметы внутри, а затем извлекать их порциями с помощью руки с фильтром стека.
 
-## Interactor
+## Интерактор
 
 <GuideEntityEmbed Entity="Interactor"/>
 
-This device simulates left click interactions with its held item on an entity infront of it.
-If no item is held it's like pressing E, such as opening a door/crate, picking up an item, etc.
+Это устройство имитирует ЛКМ предметом в «руке» по сущности перед собой.
+Если предмет не взят, это как нажатие E: открыть дверь/ящик, поднять предмет и т.д.
 
-It stores its tool in an actual hand so you can swap it out with the strip menu by pressing E on it.
+Инструмент хранится в настоящей руке, поэтому его можно менять через меню стрипа, нажав E на интеракторе.
 
-Its filter slot is used to change what entities it will interact with. Using a proper filter is essential as it will only try to interact with 1 item at a time.
-It will search for [bold]any entity[/bold] without a filter, even things like conveyors or puddles! Use filters.
+Слот фильтра задаёт, с какими сущностями он будет взаимодействовать. Правильный фильтр критичен: интерактор пытается взаимодействовать только с 1 предметом за раз.
+Без фильтра он ищет [bold]любую сущность[/bold] — даже конвейеры или лужи! Используйте фильтры.
 
-It has 5 signal ports:
-Input:
-- Start, used to try interacting with something
-- Auto Start, which when enabled will automatically try to interact after a successful interaction. If no interaction happens, it will automatically deactivate.
-Output:
-- Started, invoked if the interaction starts an interaction
-- Completed, invoked on interaction succeeds OR when the interaction ends
-- Failed, invoked if it could not interact with anything
+У него 5 сигнальных портов:
+Входы:
+- Start — попытаться взаимодействовать
+- Auto Start — при включении автоматически пытается взаимодействовать после успешного взаимодействия. Если взаимодействия не было, автоматически выключается.
+Выходы:
+- Started — срабатывает, если взаимодействие началось
+- Completed — срабатывает при успехе ИЛИ когда взаимодействие закончилось
+- Failed — срабатывает, если взаимодействовать было не с чем
 
-## Constructor
+## Конструктор
 
 <GuideEntityEmbed Entity="Constructor"/>
 
-This machine will construct or craft new objects like you would in the construction menu. Click it to open an UI to select which thing to craft.
-The machine will only complete the first step, [bold]use interactors to finish multi-step constructions[/bold].
-Construction ghosts and created items both get placed infront of it. The machine can be rotated, which will change where crafted items and built structures are placed.
+Эта машина строит или крафтит объекты так же, как вы в меню строительства. Нажмите на неё, чтобы открыть интерфейс и выбрать, что крафтить.
+Машина выполняет только первый шаг; [bold]для многошаговых конструкций используйте интеракторы[/bold].
+Призраки строительства и созданные предметы появляются перед ней. Машину можно поворачивать — от этого зависит, куда попадают предметы и постройки.
 
-Input items are taken from the floor nearby as well as its internal storage, which doubles as a storage bin.
+Входные предметы берутся с пола рядом, а также из внутреннего хранилища, которое работает как бункер.
 
-It has the same ports as an Interactor.
+Порты те же, что у интерактора.
 
-## Filters
+## Фильтры
 
-Filters can be inserted into robotic arms and storage bins to restrict what items they can move and store respectively.
+Фильтры можно вставлять в роботизированные руки и бункеры хранения, чтобы ограничивать, какие предметы они переносят и хранят.
 
-You can craft them by hand using the [bold]construction menu[/bold]. Left click them into machines to insert them.
+Их можно скрафтить вручную через [bold]меню строительства[/bold]. ЛКМ по машине вставляет фильтр.
 
 <Box>
 <GuideEntityEmbed Entity="AutomationFilterName"/>
-The name filter searches an item's name in some way.
-For example, if you set it to check that an item [italic]contains[/italic] "sheet", it will match steel sheets, glass sheets, etc.
+Фильтр по имени ищет имя предмета по заданному правилу.
+Например, если задать проверку, что имя [italic]содержит[/italic] «сталь», подойдут стальные листы и другие предметы со «сталь» в имени.
 </Box>
 
 <Box>
 <GuideEntityEmbed Entity="AutomationFilterLabel"/>
-The label filter requires items to have an exact matching label.
-Use a hand labeler on items to have them picked up.
+Фильтр по метке требует точного совпадения метки.
+Нанесите метку ручным этикетировщиком, чтобы предметы подбирались.
 </Box>
 
 <Box>
 <GuideEntityEmbed Entity="AutomationFilterStack"/>
-The stack filter controls how it interacts with stacks.
-The minimum stack size is a simple minimum, if an item doesn't have that much in a stack it won't be used.
-Out chunk size limits how many of a stack can be taken. Only a whole multiple of this size will be taken out.
-[italic]For example, a chunk size of 5 on stacks of 6, 10, 14 and 15 will take 5, 10, 10 and 15 respectively.[/italic]
+Фильтр стека управляет работой со стаками.
+Минимальный размер стека — простой порог: если в стаке меньше, предмет не будет использован.
+Размер выходной порции (chunk size) ограничивает, сколько из стака можно взять. Берётся только целое кратное этого размера.
+[italic]Например, при размере порции 5 из стаков 6, 10, 14 и 15 возьмут 5, 10, 10 и 15 соответственно.[/italic]
 </Box>
 
 <Box>
 <GuideEntityEmbed Entity="AutomationFilterCombined"/>
-The combined filter stores 2 filters inside it and uses a logic gate to control how they function.
-By default it will allow any item that passes either filter (an OR gate).
-It supports all the same operations that logic gate items do.
-These can be nested for arbitrarily complex filters!
+Комбинированный фильтр хранит 2 фильтра и использует логический вентиль, чтобы объединять их.
+По умолчанию пропускает любой предмет, прошедший хотя бы один фильтр (ИЛИ).
+Поддерживаются все те же операции, что и у логических вентилей.
+Фильтры можно вкладывать друг в друга для сколь угодно сложных условий!
 </Box>
 
-## Transport
+## Транспорт
 
-Conveyor belts are an obvious way to transport items around as they allow machines to pick up from them.
+Конвейерные ленты — очевидный способ перевозить предметы: машины могут забирать с них.
 
-In the future, you wil also be able to use automated disposal units to flush items around.
+В будущем также можно будет использовать автоматизированные мусоропроводы для пересылки предметов.
 
-You can also use a chain or robotic arms for transportation, but this is power inefficient.
+Можно выстроить цепочку роботизированных рук, но это неэффективно по энергии.
 
-## Radiation Collector and gas canister ports
+## Порты радиационного коллектора и газовых канистр
 
-Both the radiator collector and gas canisters can be also upgraded with an automation upgrade kit. This will allow to automate insertion and extraction of gas tanks and add a series of signal ports.
+И радиационный коллектор, и газовые канистры тоже можно улучшить набором автоматизации. Это позволит автоматизировать вставку и извлечение газовых баллонов и добавит сигнальные порты.
 
-Upon applying the automation upgrade gas canisters will gain a series of signal ports:
+После улучшения газовые канистры получают порты:
 
-Input:
-- Open - opens the gas release valve
-- Close - closes the release valve
-- Toggle - toggles the state of the release valve
+Входы:
+- Open — открывает выпускной клапан
+- Close — закрывает выпускной клапан
+- Toggle — переключает состояние выпускного клапана
 
 
-With an upgrade, the radiation collector will gain the following signal ports:
+С улучшением радиационный коллектор получает следующие порты:
 
-Output:
-- RadEmpty - sets signal to HIGH if the gas tank is either missing or below 33% pressure. Otherwise, outputs a LOW signal.
-- RadLow - sets signal to HIGH if the gas tank is below 66% pressure. Otherwise, outputs a LOW signal.
-- RadHigh- sets signal to HIGH if the gas tank is above 66% pressure. Otherwise, outputs a LOW signal.
+Выходы:
+- RadEmpty — HIGH, если баллон отсутствует или давление ниже 33%. Иначе LOW.
+- RadLow — HIGH, если давление баллона ниже 66%. Иначе LOW.
+- RadHigh — HIGH, если давление баллона выше 66%. Иначе LOW.
 
-You can use an Edge Detector (crafted in the construction menu) to differentiate between a HIGH and LOW signals.
+Для различения HIGH и LOW можно использовать детектор сигнала (Edge Detector; крафтится в меню строительства).
 
 </Document>

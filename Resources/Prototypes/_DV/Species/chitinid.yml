@@ -1,15 +1,15 @@
 - type: species
   id: Chitinid
   name: species-name-chitinid
-  roundStart: false # Exodus
+  roundStart: true # Exodus-restore
   prototype: MobChitinid
   sprites: MobChitinidSprites
   defaultSkinTone: "#ffda93"
   markingLimits: MobChitinidMarkingLimits
   dollPrototype: MobChitinidDummy
   skinColoration: Hues
-  # maleFirstNames: NamesChitinidFirstMale
-  # femaleFirstNames: NamesChitinidFirstFemale
+  maleFirstNames: NamesChitinidFirstMale # Exodus-chitinid-names
+  femaleFirstNames: NamesChitinidFirstFemale # Exodus-chitinid-names
   naming: First
 
 - type: speciesBaseSprites
@@ -30,6 +30,10 @@
     RLeg: MobChitinidRLeg
     LFoot: MobChitinidLFoot
     RFoot: MobChitinidRFoot
+    LArmExtension: MobChitinidLArm2 # Exodus: chitinid lower arms
+    RArmExtension: MobChitinidRArm2 # Exodus: chitinid lower arms
+    LHandExtension: MobChitinidLHand2 # Exodus: chitinid lower hands
+    RHandExtension: MobChitinidRHand2 # Exodus: chitinid lower hands
 
 - type: humanoidBaseSprite
   id: MobChitinidEyes

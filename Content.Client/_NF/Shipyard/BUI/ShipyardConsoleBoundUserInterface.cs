@@ -1,3 +1,4 @@
+// using Content.Client._Mono.Shipyard; // Exodus disable shipyard-preview
 using Content.Client._NF.Shipyard.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared._NF.Shipyard.BUI;
@@ -10,6 +11,7 @@ public sealed class ShipyardConsoleBoundUserInterface : BoundUserInterface
 {
     private ShipyardConsoleMenu? _menu;
     private ShipyardRulesPopup? _rulesWindow;
+    // [Dependency] private ShipyardPreviewSystem _preview = default!; // Exodus disable shipyard-preview
     public int Balance { get; private set; }
 
     public int? ShipSellValue { get; private set; }
@@ -40,6 +42,7 @@ public sealed class ShipyardConsoleBoundUserInterface : BoundUserInterface
         _menu.OnUnassignDeed += UnassignDeed;
         _menu.OnRenameShip += RenameShip;
         _menu.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent("ShipyardConsole-targetId"));
+        // _menu.OnPreviewShip += PreviewShip; // Exodus disable shipyard-preview
     }
 
     private void Populate(List<string> availablePrototypes, List<string> unavailablePrototypes, bool freeListings, bool validId)
@@ -102,4 +105,18 @@ public sealed class ShipyardConsoleBoundUserInterface : BoundUserInterface
     {
         SendMessage(new ShipyardConsoleRenameMessage(newName));
     }
+
+    // Exodus-begin disable shipyard-preview
+    // private void PreviewShip(ButtonEventArgs args)
+    // {
+    //     if (args.Button.Parent?.Parent?.Parent is not VesselRow row || row.Vessel == null) // Mono - another .parent? - this is really fucking stupid
+    //     {
+    //         return;
+    //     }
+    //
+    //     var vessel = row.Vessel;
+    //     SendMessage(new ShipyardConsolePreviewMessage());
+    //     _preview.TryPreviewGrid(vessel);
+    // }
+    // Exodus-end
 }

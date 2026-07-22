@@ -53,6 +53,7 @@
   languagesUnderstood:
   - Gary
 
+# Exodus restore Neo-Russian character trait removed upstream.
 - type: trait
   id: MonoNovaCygniBasic
   name: trait-language-NovaCygni-name

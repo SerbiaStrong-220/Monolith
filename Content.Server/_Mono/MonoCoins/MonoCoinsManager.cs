@@ -91,11 +91,23 @@ public sealed partial class MonoCoinsManager
     /// <returns>The new balance</returns>
     public async Task<long> AddMonoCoinsAsync(NetUserId userId, long amount)
     {
-        var wasBalance = await GetMonoCoinsBalanceAsync(userId);
-        _cachedBalance[userId] = Math.Max(0L, _cachedBalance[userId] + amount);
+        // Exodus-Start
+        // Write the DB first so a failed write can't leave a phantom cached balance, then mirror
+        // authoritative DB value into cache so cache and DB never diverge
+        // var wasBalance = await GetMonoCoinsBalanceAsync(userId);
+        // _cachedBalance[userId] = Math.Max(0L, _cachedBalance[userId] + amount);
+        // if (_player.TryGetSessionById(userId, out var session)) {
+        //     SendBalance(session.Channel);
+        // }
+        // return await _db.AddMonoCoinsAsync(userId, amount);
+        var newBalance = await _db.AddMonoCoinsAsync(userId, amount);
+        _cachedBalance[userId] = newBalance;
+        // Exodus-End
         if (_player.TryGetSessionById(userId, out var session)) {
             SendBalance(session.Channel);
         }
-        return await _db.AddMonoCoinsAsync(userId, amount);
+        // Exodus-Start
+        return newBalance;
+        // Exodus-End
     }
 }

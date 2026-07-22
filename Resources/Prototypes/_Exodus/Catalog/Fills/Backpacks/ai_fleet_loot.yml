@@ -1,0 +1,57 @@
+- type: entity
+  parent: RogueSiliconGiftBox
+  id: ClothingBackpackFleetLootT1
+  name: fleet container T1
+  description: A cache recovered from an autonomous fleet ship. Contains ship components and technical data.
+  suffix: Boss Loot
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Tools/bundles.rsi
+    state: fleet-base
+  - type: StaticPrice
+    vendPrice: 350000
+  - type: SpawnItemsOnUse
+    items:
+    - id: ScrapOre100
+      amount: 2
+    - id: SheetPlastitanium10
+      amount: 4
+    - id: ShipRepairDevice
+      prob: 0.75
+    - id: ShipRepairDeviceAmmo
+      amount: 2
+      prob: 0.75
+    - id: SuperCapacitorStockPart
+      amount: 2
+      prob: 0.8
+    - id: SuperMatterBinStockPart
+      amount: 2
+      prob: 0.8
+    - id: PicoManipulatorStockPart
+      amount: 2
+      prob: 0.8
+    - id: QuadraticCapacitorStockPart
+      prob: 0.25
+    - id: FemtoManipulatorStockPart
+      prob: 0.2
+    - id: BluespaceMatterBinStockPart
+      prob: 0.3
+    - id: IngotPlutonium1
+      amount: 5
+      prob: 0.75
+    - id: PowerCellAntiqueProto
+      prob: 0.15
+    - id: PowerCellAntiqueProtoEmpProof
+      prob: 0.02
+    - id: GeneratorASRGFlatpack
+      amount: 2
+      prob: 0.25
+    - id: GeneratorRTGFlatpack
+      amount: 2
+      prob: 0.75
+    - id: SpawnLootTechDisksT2Faction
+      prob: 0.4
+    - id: SpawnLootTechDisksT3Fracture
+      prob: 0.1
+    sound:
+      path: /Audio/Machines/windoor_open.ogg

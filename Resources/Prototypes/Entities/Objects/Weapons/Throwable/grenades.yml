@@ -484,6 +484,7 @@
   - type: Tag
     tags:
     - GrenadeLaunchable
+    - FoamGrenadeAluminium # Exodus foam-trap
   - type: CartridgeAmmo
     proto: MetalFoamGrenadeLaunched
     deleteOnSpawn: true

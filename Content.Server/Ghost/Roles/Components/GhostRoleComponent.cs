@@ -120,5 +120,13 @@ public sealed partial class GhostRoleComponent : Component
     [DataField]
     public ProtoId<GhostRolePrototype>? Prototype { get; set; }
     // End Frontier
+
+    // Exodus-begin ghost-role-follow-toggle
+    /// <summary>
+    /// If false, ghosts cannot use the "Follow" button to scout this role's spawn location before taking it.
+    /// </summary>
+    [DataField]
+    public bool AllowFollow = true;
+    // Exodus-end
 }
 

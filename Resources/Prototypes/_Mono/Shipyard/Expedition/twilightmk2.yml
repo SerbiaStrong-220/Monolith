@@ -13,7 +13,11 @@
   category: Medium
   group: Expedition
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/Expedition/twilightmk2.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/twilightmk2.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: null
   class:
   - Expedition
@@ -24,7 +28,7 @@
 - type: gameMap
   id: twilightmk2
   mapName: 'Сумрак М2' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Expedition/twilightmk2.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Expedition/twilightmk2.yml
   minPlayers: 0
   stations:
     twilightmk2:

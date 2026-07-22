@@ -111,10 +111,12 @@ marking-ResomiLShoulderFade-l_shoulder_fade = Left Shoulder Fade
 marking-ResomiLShoulderFade = Left Shoulder Fade
 marking-ResomiRShoulderFade-r_shoulder_fade = Right Shoulder Fade
 marking-ResomiRShoulderFade = Right Shoulder Fade
+# Exodus-begin: fix Resomi arm coat layer localization keys
 marking-ResomiLArmCoat = Left Arm Coat
-marking-ResomiLArmCoat-l_leg_coat = Left Arm Coat
+marking-ResomiLArmCoat-l_arm_coat = Left Arm Coat
 marking-ResomiRArmCoat = Right Arm Coat
-marking-ResomiRArmCoat-r_leg_coat = Right Arm Coat
+marking-ResomiRArmCoat-r_arm_coat = Right Arm Coat
+# Exodus-end
 
 marking-ResomiTail = Resomi Tail
 marking-ResomiTail-tail = Resomi Tail

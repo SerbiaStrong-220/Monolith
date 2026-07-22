@@ -11,6 +11,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Graphics; // Exodus
 using Content.Shared.Exodus.ShipShields; // Exodus
 using Robust.Shared.Timing; // Exodus
+using Content.Client._Exodus.FireControl; // Exodus
+using Content.Shared.Weapons.Ranged.Components; // Exodus
 
 namespace Content.Client._Mono.FireControl.UI;
 
@@ -274,7 +276,7 @@ public sealed partial class FireControlWindow : FancyWindow
             }
             else
             {
-                var button = new Button
+                var button = new ReloadProgressButton // Exodus: reload progress overlay
                 {
                     ToggleMode = true,
                     Text = controllable.Name,
@@ -356,6 +358,27 @@ public sealed partial class FireControlWindow : FancyWindow
         {
             OnServerRefresh?.Invoke(); // a crutch, what can you make me?
             _updateAccumulator = 0;
+        }
+
+        UpdateReloadProgress();
+    }
+
+    private void UpdateReloadProgress()
+    {
+        if (_currentState?.FireControllables == null)
+            return;
+
+        foreach (var controllable in _currentState.FireControllables)
+        {
+            if (!WeaponsList.TryGetValue(controllable.NetEntity, out var button)
+                || button is not ReloadProgressButton reloadButton
+                || !reloadButton.Pressed)
+                continue;
+
+            reloadButton.NextFire =
+                _entityManager.TryGetComponent<GunComponent>(_entityManager.GetEntity(controllable.NetEntity), out var gun)
+                    ? gun.NextFire
+                    : controllable.NextFire;
         }
     }
     // Exodus-End

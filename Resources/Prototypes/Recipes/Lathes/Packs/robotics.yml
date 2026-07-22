@@ -52,6 +52,8 @@
   id: Robotics
   recipes:
   - ProximitySensor
+  - BorgIFFTSF # Exodus faction-borg-endoskeletons
+  - BorgIFFPDV # Exodus faction-borg-endoskeletons
 
 - type: latheRecipePack
   id: BorgModules

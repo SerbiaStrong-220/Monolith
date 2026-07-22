@@ -19,15 +19,22 @@
   minLimit: 1
   loadouts:
   - MonoSecurityGuardWebbing
+  - SecurityCombatWebbingMedical # Exodus add Webbing Medical
   - MonoSecurityGuardAssaultBelt
   - MonoSecurityGuardSecurityCarrier
   - MonoSecurityGuardSecurityCarrierLarge
   fallbacks:
   - MonoSecurityGuardWebbing
 
+# Exodus-begin add Webbing Medical to loadout
 - type: loadout
-  id: MonoSecurityGuardWebbing
-  name: security carrier (filled)
+  id: SecurityCombatWebbingMedical
+  equipment:
+    belt: ClothingBeltMilitaryWebbingMed
+# Exodus-end
+
+- type: loadout
+  id: MonoSecurityGuardWebbing # Exodus delete name field
   equipment:
     belt: ClothingBeltSecurityWebbingFilled
 
@@ -42,8 +49,7 @@
     belt: ClothingBeltWebbingsBigBlack
 
 - type: loadout
-  id: MonoSecurityGuardAssaultBelt
-  name: assault belt
+  id: MonoSecurityGuardAssaultBelt # Exodus delete name field
   equipment:
     belt: ClothingBeltAssault
 

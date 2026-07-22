@@ -100,6 +100,8 @@ public sealed partial class CompanySystem : EntitySystem
 
         // Update the player's ID card with the company information
         UpdateIdCardCompany(args.Mob, companyComp.CompanyName);
+
+        ApplyNpcFaction(args.Mob, companyComp.CompanyName); // Exodus - company NPC faction
     }
 
     /// <summary>

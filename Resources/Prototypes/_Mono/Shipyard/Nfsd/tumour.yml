@@ -8,8 +8,12 @@
   price: 68250
   category: Medium
   group: Security
-  access: Command # Exodus-Cadet-No-TSF-Shutles
-  shuttlePath: /Maps/_Mono/Shuttles/Nfsd/tumour.yml
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/tumour.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Pursuit
@@ -20,7 +24,7 @@
 - type: gameMap
   id: Tumour
   mapName: 'Тумор' # Ru-Localization
-  mapPath: /Maps/_Mono/Shuttles/Nfsd/tumour.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/tumour.yml
   minPlayers: 0
   stations:
     Tumour:

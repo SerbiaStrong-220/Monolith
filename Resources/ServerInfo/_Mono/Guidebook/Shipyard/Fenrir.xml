@@ -1,56 +1,55 @@
 <Document>
-  # FENRIR-CLASS DESTROYER
+  # ЭСМИНЕЦ КЛАССА FENRIR
   <Box>
   <GuideEntityEmbed Entity="WeaponTurretCharonReload"/>
   <GuideEntityEmbed Entity="AFInterceptorPDV"/>
   </Box>
-    [color=#a4885c]Ship Size:[/color] Medium
+    [color=#a4885c]Размер корабля:[/color] Средний
 
-  [color=#a4885c]Recommended Crew:[/color] 3-4
+  [color=#a4885c]Рекомендуемый экипаж:[/color] 3–4
 
-  [color=#a4885c]Power Gen Type:[/color] Antimatter Engine (AME)
+  [color=#a4885c]Тип генерации энергии:[/color] Двигатель антиматерии (ДАМ)
 
-  [color=#a4885c]Expeditions:[/color] None
+  [color=#a4885c]Экспедиции:[/color] Нет
 
-  [color=#a4885c]IFF Console:[/color] Included
+  [color=#a4885c]Консоль IFF:[/color] Есть
 
-  "The BT-Y Fenrir is a medium sized destroyer in use with the Phaethon Dynasty Vanguard. It's main weapon is a [bold][color=#990000]M381 Charon Mass Driver[/bold][/color] and has been outfitted with [color=#0055CC][bold]two medium sized[/color] [color=#00CC55]mech bays[/bold][/color]. Unmodified models can support at best [bold][color=#00CC55]S-2 size classed mechs[/bold][/color]."
+  «BT-Y Fenrir — средний эсминец авангарда династии Фаэтон. Главное оружие — [color=#990000][bold]масс-драйвер M381 Charon[/bold][/color]; также установлены [color=#0055CC][bold]два средних[/bold][/color] [color=#00CC55][bold]ангара для мехов[/bold][/color]. Без модификаций корабль в лучшем случае поддерживает мехов класса [color=#00CC55][bold]S-2[/bold][/color].»
 
 
-  # PREFLIGHT CHECKLIST
+  # ПРЕДПОЛЁТНЫЙ ЧЕКЛИСТ
 
-  ## 1. Power supply
+  ## 1. Электропитание
 
-  ## 1.1. Battery units
+  ## 1.1. Батареи
   <Box>
     <GuideEntityEmbed Entity="SMESBasic"/>
     <GuideEntityEmbed Entity="SubstationBasic"/>
     <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
 
-  - Check that the single core AME setup is in place.
-  - Check that the both ADV-SMES unit are anchored to the floor.
-  - Check that the substation unit is firmly secured to the wall.
-  - Ensure that all APC units' breakers are turned on.
-  - Check the APC units current Load* (W).
-  - Check the APC units' current Load* (W).
+  - Проверьте, что одноядерная сборка ДАМ на месте.
+  - Проверьте, что оба ADV-SMES закреплены к полу.
+  - Проверьте, что подстанция надёжно закреплена на стене.
+  - Убедитесь, что выключатели всех APC включены.
+  - Проверьте текущую нагрузку APC (Вт).
 
-  ## 1.2. AME unit.
+  ## 1.2. ДАМ
   <Box>
     <GuideEntityEmbed Entity="AmeController"/>
     <GuideEntityEmbed Entity="AmeJar"/>
   </Box>
 
-  - Check that the AME unit has at least one core.
-  - Make sure the injector is adjacent to the shielding.
-  - Check that the AME unit is connected to the cable terminal of your SMES via HV.
-  - Check the fuel remaining of the AME unit.
-  - Set the AME unit output power to 2 injections.
-  - Enable Injection.
+  - Проверьте, что у ДАМ есть хотя бы одно ядро.
+  - Убедитесь, что инжектор примыкает к экранированию.
+  - Проверьте, что ДАМ подключён к кабельному терминалу SMES по высоковольтной сети.
+  - Проверьте оставшееся топливо ДАМ.
+  - Установите мощность ДАМ на 2 инжекции.
+  - Включите Injection (подачу).
 
-  ## 2. Atmospherics
+  ## 2. Атмосфера
 
-  ## 2.1. Distribution Loop
+  ## 2.1. Контур Distro (раздача)
   <Box>
     <GuideEntityEmbed Entity="OxygenCanister"/>
     <GuideEntityEmbed Entity="NitrogenCanister"/>
@@ -58,86 +57,86 @@
     <GuideEntityEmbed Entity="GasPressurePump"/>
   </Box>
 
-  - Check that the O2 canister is anchored to the BLUE connector port.
-  - Check that the N2 canister is anchored to the RED connector port.
-  - Check that the gas mixer is set to the correct mixing ratio (~22% Oxygen, ~78% Nitrogen).
-  - Check that the gas mixer is set to 101.325kPa.
-  - Enable gas mixer.
+  - Проверьте, что канистра O2 закреплена на СИНЕМ коннекторе.
+  - Проверьте, что канистра N2 закреплена на КРАСНОМ коннекторе.
+  - Проверьте, что смеситель выставлен на правильное соотношение (~22% кислорода, ~78% азота).
+  - Проверьте, что смеситель выставлен на 101.325 кПа.
+  - Включите смеситель.
 
-  ## 3. Mechbays
+  ## 3. Ангары мехов
 
-  -[bold][color=#FF0000]You need to make your own Mechs at Port.[/color][/bold]
+  - [bold][color=#FF0000]Мехов нужно собрать самостоятельно в порту.[/color][/bold]
   <Box>
     <GuideEntityEmbed Entity="AFInterceptorPDV"/>
     <GuideEntityEmbed Entity="AFInterceptorMPDV"/>
     <GuideEntityEmbed Entity="MechGygaxPDV"/>
     <GuideEntityEmbed Entity="MechDurandPDV"/>
   </Box>
-  - Optionally, bring any mechs for your crew to pilot during combat, S-2 type mechs will need to fly from space and park inside the mechbays, S-1 type small-craft can just enter alongside with passengers.
+  - По желанию возьмите мехов для экипажа в бою: мехи типа S-2 должны подлетать из космоса и парковаться в ангарах, малые S-1 могут заходить вместе с пассажирами.
   <Box>
     <GuideEntityEmbed Entity="LightMechaAutocannon"/>
     <GuideEntityEmbed Entity="MediumMechTOW"/>
     <GuideEntityEmbed Entity="WeaponMechCombatShotgunIncendiary"/>
     <GuideEntityEmbed Entity="WeaponMechCombatUltraRifle"/>
   </Box>
-  - Make sure to arm your Mechs with weapon loadouts based on their role in combat, such as boarding with S-1 and Interceptor or Bomber designs with S-2 types.
+  - Вооружайте мехов под роль в бою: штурм с S-1 и перехватчики/бомбардировщики на S-2.
   <Box>
     <GuideEntityEmbed Entity="PowerCageHigh"/>
     <GuideEntityEmbed Entity="PowerCageMech"/>
     <GuideEntityEmbed Entity="PowerCageRecharger"/>
   </Box>
-  - Prioritize equipping your mechs with Mech Fuel Cells, as these cells are made using fissile uranium, they self recharge and are very performance efficienct for use with mechs, in the lack of fissile uranium, it is recommended to use High Power Cages, order your pilots to not waste shots and remain close to the mothership to recharge.
-  - Keep extra power cages in the cage rechargers to quickly re-deploy mechs that have run out of ammo.
+  - В первую очередь ставьте на мехов топливные ячейки мехов: они из делящегося урана, самозаряжаются и очень эффективны. Если урана нет — используйте высокоёмкую Power Cage; пилотам не стоит тратить выстрелы впустую и нужно держаться ближе к кораблю для подзарядки.
+  - Держите запасные клетки питания в зарядниках, чтобы быстро возвращать в бой мехов без «патронов».
 
-  ## 3.1 Mech Classes
+  ## 3.1 Классы мехов
 
-  - Every S-1 Combat Mech is a [bold][color=#0055FF]Boarder[/bold][/color], which have little to no use in active ship combat and should be used to mop-up survivors post battles or attempt boarding during active combat while main ships are engaging the enemy as well.
-  - AF-28 "Broadsword" is an S-2 [bold][color=#0055FF]Interceptor[/color][/bold], their main purpose in combat is intercepting enemy bombers and boarders. They are not very useful against damaging hull but they can help in a pinch by targeting armor weakpoints. Light Mech weaponry can be used inside ships, however, Interceptor class does not move very fast inside ships and is not very effective for interior combat.
-  - AF-28 M "Halberd" is an S-2 [bold][color=#0055FF]Bomber[/color][/bold], it is a sidegrade of the Broadsword model, sacrificing armor and jetpack speed to mount Medium class mech weaponry that can pose a threat against ships. Medium Mech Weaponry can not be used inside ships, pilots might want to mount a Light Weapon to not be completely defenseless when inside ships.
+  - Каждый боевой мех S-1 — это [color=#0055FF][bold]штурмовик (Boarder)[/bold][/color]: почти бесполезен в активном корабельном бою; используйте для зачистки выживших после боя или попыток абордажа, пока основные корабли сходятся с противником.
+  - AF-28 «Broadsword» — S-2 [color=#0055FF][bold]перехватчик (Interceptor)[/bold][/color]: главная задача — перехватывать вражеские бомбардировщики и штурмовиков. Слабо бьёт по корпусу, но может выручить, целясь в слабые места брони. Лёгкое оружие мехов можно использовать внутри кораблей, но перехватчик внутри медленный и малоэффективен в интерьере.
+  - AF-28 M «Halberd» — S-2 [color=#0055FF][bold]бомбардировщик (Bomber)[/bold][/color]: боковой вариант Broadsword, жертвующий бронёй и скоростью джетпака ради среднего оружия мехов, опасного для кораблей. Среднее оружие мехов нельзя использовать внутри кораблей — имеет смысл повесить лёгкое оружие, чтобы не быть совсем беззащитным в интерьере.
 
-  ## 4. Other checks
+  ## 4. Прочие проверки
   <Box>
     <GuideEntityEmbed Entity="Gyroscope"/>
     <GuideEntityEmbed Entity="GravityGeneratorMini"/>
   </Box>
 
-  - Check that the 3 gyroscopes are anchored, powered, and enabled.
-  - Check that the mini gravity generator is anchored, powered, and enabled.
+  - Проверьте, что 3 гироскопа закреплены, запитаны и включены.
+  - Проверьте, что мини-генератор гравитации закреплён, запитан и включён.
 
-  # MAIN FEATURES AND WEAPONS
+  # ОСНОВНЫЕ ВОЗМОЖНОСТИ И ОРУЖИЕ
   <Box>
     <GuideEntityEmbed Entity="WeaponTurretCharonReload"/>
     <GuideEntityEmbed Entity="WeaponTurretDravon"/>
     <GuideEntityEmbed Entity="WeaponTurretAdderScattercannon"/>
   </Box>
 
-  - The Fenrir is armed with a [bold][color=#990000]M381 Charon Mass Driver[/bold][/color], [bold][color=#0055CC]4 ADBP-7 Dravon autocannons[/bold][/color] and [bold][color=#0055CC]2 Adder scattercannons[/bold][/color].
+  - Fenrir вооружён [color=#990000][bold]масс-драйвером M381 Charon[/bold][/color], [color=#0055CC][bold]4 автопушками ADBP-7 Dravon[/bold][/color] и [color=#0055CC][bold]2 шрапнельными пушками Adder[/bold][/color].
 
   <Box>
     <GuideEntityEmbed Entity="BlastDoor"/>
     <GuideEntityEmbed Entity="ComputerShuttle"/>
   </Box>
 
-  - [color=#992222][bold]Important[/color][/bold]; [bold][color=#990000]the M381 Charon Mass Driver[/bold][/color], can not fire until the blast doors are open, controls are linked to your [color=#00CC55][bold]shuttle console port buttons[/color][/bold]. [color=#00CC55][bold]Port 1 opens[/color][/bold] the blast doors, [color=#00CC55][bold] Port 2 closes[/color][/bold] the blast doors.
+  - [color=#992222][bold]Важно[/bold][/color]: [color=#990000][bold]масс-драйвер M381 Charon[/bold][/color] не стреляет, пока не открыты бластики; управление привязано к [color=#00CC55][bold]кнопкам портов консоли шаттла[/bold][/color]. [color=#00CC55][bold]Порт 1 открывает[/bold][/color] бластики, [color=#00CC55][bold]порт 2 закрывает[/bold][/color] бластики.
 
 
   <Box>
     <GuideEntityEmbed Entity="CharonSlugAmmo"/>
   </Box>
 
-  - You have been supplied with [color=#00CC55][bold]5[/color][/bold] 280mm 26.5kg slugs for your [bold][color=#990000]M381 Mass Driver[/bold][/color].
+  - Вам выдано [color=#00CC55][bold]5[/bold][/color] снарядов 280 мм 26,5 кг для [color=#990000][bold]масс-драйвера M381[/bold][/color].
 
-  ## Sidenotes
-
-
-  * - The mech bays begin [bold][color=#992222]empty[/bold][/color], as it is [bold][color=#00CC55]your responsibility to fill them[/bold][/color] in accordance to your strategy. The bays' blast doors can be toggled on and off using the [bold][color=#00CC55]two buttons placed next to[/bold][/color] your shuttle control terminals.
+  ## Примечания
 
 
-  * - [bold][color=#00CC55]The workshop area[/bold][/color] has been supplied with adequate amount of [bold][color=#FFA500]welding fuel[/color][/bold] and [bold][color=#0055CC]nanites[/color][/bold] to perform repairs on mechs and inorganic crew.
+  * - Ангары мехов изначально [color=#992222][bold]пусты[/bold][/color] — [color=#00CC55][bold]заполнить их ваша задача[/bold][/color] под вашу стратегию. Бластики ангаров переключаются [color=#00CC55][bold]двумя кнопками рядом с[/bold][/color] терминалами управления шаттлом.
 
 
-  * - Both the [bold][color=#992222]armory[/color][/bold] and [color=#90D6FF][bold]medbay[/color][/bold] have been adequately equipped with [bold][color=#00CC55]hardsuits[/bold][/color], [bold][color=#00CC55]weapons[/color][/bold] and [bold][color=#00CC55]medicine[/color][/bold].
+  * - В [color=#00CC55][bold]мастерской[/bold][/color] есть достаточный запас [color=#FFA500][bold]топлива для сварки[/bold][/color] и [color=#0055CC][bold]нанитов[/bold][/color] для ремонта мехов и неорганического экипажа.
 
 
-  * - [bold][color=#00CC55] The fabricator area[/bold][/color] has been outfitted with a [bold][color=#00CC55]material locker[/color][/bold] holding necessary materials to print a small amount of items. The [bold][color=#992222]armory[/color][/bold] has also been outfitted with an [bold][color=#00CC55]ammo techfab[/bold][/color].
+  * - И [color=#992222][bold]оружейная[/bold][/color], и [color=#90D6FF][bold]медблок[/bold][/color] достаточно укомплектованы [color=#00CC55][bold]хардсьютами[/bold][/color], [color=#00CC55][bold]оружием[/bold][/color] и [color=#00CC55][bold]медикаментами[/bold][/color].
+
+
+  * - В [color=#00CC55][bold]зоне фабрикаторов[/bold][/color] стоит [color=#00CC55][bold]шкаф с материалами[/bold][/color] для печати небольшого числа предметов. В [color=#992222][bold]оружейной[/bold][/color] также есть [color=#00CC55][bold]техфаб боеприпасов[/bold][/color].
 </Document>

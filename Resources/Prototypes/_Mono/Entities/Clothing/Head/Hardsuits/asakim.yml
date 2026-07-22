@@ -22,11 +22,12 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 15
-  # Exodus-asakim-thermal-vision-start
+  # Exodus-asakim-pulse-thermal-vision-start
   - type: ThermalVision
+    pulseTime: 3
     isEquipment: true
-    toggleAction: ToggleThermalVision
-  # Exodus-asakim-thermal-vision-end
+    toggleAction: PulseThermalVision
+  # Exodus-asakim-pulse-thermal-vision-end
   - type: RadarConsole
     followEntity: true
     noRotate: true

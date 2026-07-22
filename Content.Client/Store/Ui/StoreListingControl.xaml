@@ -1,9 +1,19 @@
-<Control xmlns="https://spacestation14.io">
+<Control
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <BoxContainer Margin="8,8,8,8" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
             <Label Name="DiscountSubText"
                    HorizontalAlignment="Right"/>
+            <!-- Exodus-begin limited-stock listing badge -->
+            <PanelContainer Name="StoreItemStockContainer" Visible="False" Margin="4,0,4,0">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#2A2A2AFF" BorderColor="#5E5E5EFF" BorderThickness="1,1,1,1" />
+                </PanelContainer.PanelOverride>
+                <Label Name="StoreItemStockText" Margin="6,2,6,2" />
+            </PanelContainer>
+            <!-- Exodus-end -->
             <Button
                 Name="StoreItemBuyButton"
                 MinWidth="64"

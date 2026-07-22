@@ -12,10 +12,10 @@
   id: Bahama
   parent: [BasePOI, BaseRepairablePOI]
   name: 'Багамская Мама' # Ru-Localization
-  minimumDistance: 3400
-  maximumDistance: 5800
+  minimumDistance: 11000 # Exodus-nebula-update
+  maximumDistance: 20000 # Exodus-nebula-update
   spawnGroup: RestStop
-  gridPath: /Maps/_NF/POI/bahama.yml
+  gridPath: /Maps/_Exodus/POI/bahama.yml # Exodus
   addComponents:
   - type: StationTransit
   - type: SolarPoweredGrid
@@ -25,11 +25,15 @@
 - type: gameMap
   id: Bahama
   mapName: 'Багамская Мама' # Ru-Localization
-  mapPath: /Maps/_NF/POI/bahama.yml
+  mapPath: /Maps/_Exodus/POI/bahama.yml # Exodus
   minPlayers: 0
   stations:
     Bahama:
       stationProto: DeadDropFrontierOutpost
+      # Exodus start - Territory for Bahama Mama
+      gridComponents:
+      - type: GridTerritory
+      # Exodus end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Багамская Мама' # Ru-Localization

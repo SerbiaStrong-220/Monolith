@@ -12,8 +12,8 @@
   id: Jupiter
   parent: [BaseMobilePOI, BaseRepairablePOI]
   name: 'ДФ | Авианосец Класса Юпитер' # Ru-Localization
-  minimumDistance: 17000
-  maximumDistance: 19000
+  minimumDistance: 20000 # Exodus-nebula-update
+  maximumDistance: 37500 # Exodus-nebula-update
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/jupiter.yml
@@ -22,6 +22,9 @@
     color: "#d1bf58"
     flags: [HideLabel]
     readOnly: false
+  - type: NpcFactionMember # Exodus faction-owned POI target filtering
+    factions:
+    - PirateNF
 
 - type: gameMap
   id: Jupiter
@@ -31,6 +34,10 @@
   stations:
     Jupiter:
       stationProto: RecordsFrontierOutpostCargo
+      gridComponents:
+      - type: NpcFactionMember # Exodus faction-owned POI target filtering
+        factions:
+        - PirateNF
       components:
         - type: StationNameSetup
           mapNameTemplate: 'ДФ | Авианосец Класса Юпитер' # Ru-Localization

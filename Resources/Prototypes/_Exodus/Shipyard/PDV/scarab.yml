@@ -1,0 +1,41 @@
+- type: vessel
+  id: Scarab
+  parent: BaseVesselAntag
+  name: Скарабей # Ru-Localization
+  description: Тяжеловооружённый эскорт Династии Фаэтон, рассчитанный на длительные боевые вылеты. # Ru-Localization
+  price: 300000
+  purchasable: false # voucher only
+  category: Medium
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/PDV/scarab.yml
+  addComponents: # Exodus faction-owned shuttle target filtering
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Pirate
+  - Pursuit
+  - Corvette
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Scarab
+  mapName: 'Скарабей' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/PDV/scarab.yml
+  minPlayers: 0
+  stations:
+    Scarab:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Скарабей{1}' # Ru-Localization
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Pirate: [ 0, 0 ]
+          PdvBorg: [ 0, 0 ]

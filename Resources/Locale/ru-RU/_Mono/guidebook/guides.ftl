@@ -6,6 +6,7 @@ guide-entry-shipyard-takeaway = Takeaway
 guide-entry-shipyard-ruby = Ruby
 guide-entry-shipyard-motley-anne = Motley Anne
 guide-entry-shipyard-fenrir = Fenrir
+guide-entry-shipyard-nfr = Руководство по NFR (INSFC)
 # Gunnery Guides
 guide-entry-gunnery = Корабельные орудия
 guide-entry-ballistics = Баллистические
@@ -20,7 +21,7 @@ guide-entry-radios = Радио
 guide-entry-gridclaimer = Присвоение обломков
 guide-entry-armorexplanation = Механики брони
 # Rules
-guide-entry-monolith-rules = Monolith Rules
+guide-entry-monolith-rules = Правила Monolith
 # Creatures
 guide-entry-creatures = Создания сектора
 guide-entry-cortical-borer = Бореры

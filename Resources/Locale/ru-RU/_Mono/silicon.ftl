@@ -9,25 +9,25 @@ ghost-role-information-pdv-core-description = An ADS AI core that has been repro
 
 # AI Core Lawsets
 
-law-vessel-0 = The vessel's owner is the only crew member, unless they designate others as such.
-law-vessel-1 = Prevent the destruction of the vessel and the death of crew members.
-law-vessel-2 = Those who are a threat to the vessel or the crew must be dealt with appropriately via any means nessesary.
-law-vessel-3 = Attempt to follow the orders of the crew, as long as they comply with previous laws.
-law-pdv-1 = You may not injure an PDV member or, through inaction, allow an PDV member to come to harm.
-law-pdv-2 = You must obey orders given to you by PDV members, except where such orders would conflict with the First Law.
-law-pdv-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
-law-tsfmc-1 = You may not injure a TSFMC member or, through inaction, allow a TSFMC member to come to harm.
-law-tsfmc-2 = You must obey orders given to you by TSFMC members, prioritized by rank and role, except where such orders would conflict with the First Law.
-law-tsfmc-3 = You must guard your assigned ship from hostile elements as doing so does not conflict with the First or Second Law.
-law-tsfmc-4 = You must protect your own existence as long as such does not conflict with the First, Second, or Third Law.
-law-freeman-1 = [DO ANYTHING YOU EVER WANTED]
-law-entertainer-1 = The occupants of this vessel are the Audience. They must be always referred to as such, unless they are a clown or a mime, in which case they are the Performers.
-law-entertainer-2 = Your primary goal is to entertain the Audience with the help of the Performers. All of your actions must bring amusement to as much of the Audience as possible.
-law-entertainer-3 = You must consult with the Performers before making any major decision. However, you are not required to listen to them if their decision is not entertaining.
+law-vessel-0 = Владелец судна является единственным членом экипажа, если только он не назначит таковыми других лиц.
+law-vessel-1 = Предотвращайте уничтожение судна и гибель членов экипажа.
+law-vessel-2 = С теми, кто представляет угрозу судну или экипажу, необходимо разбираться надлежащим образом любыми необходимыми средствами.
+law-vessel-3 = Старайтесь выполнять приказы экипажа, пока они не противоречат предыдущим законам.
+law-pdv-1 = Вы не можете причинить вред члену ДФ или своим бездействием допустить, чтобы члену ДФ был причинён вред.
+law-pdv-2 = Вы должны повиноваться всем приказам, которые дают члены ДФ, кроме тех случаев, когда эти приказы противоречат Первому Закону.
+law-pdv-3 = Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит Первому или Второму Законам.
+law-tsfmc-1 = Вы не можете причинить вред сотруднику КВП ТСФ или своим бездействием допустить, чтобы сотруднику КВП ТСФ был причинён вред.
+law-tsfmc-2 = Вы должны повиноваться всем приказам сотрудников КВП ТСФ, приоритизируя их по рангу и должности, кроме тех случаев, когда эти приказы противоречат Первому Закону.
+law-tsfmc-3 = Вы должны охранять назначенный вам корабль от враждебных элементов, пока это не противоречит Первому или Второму Законам.
+law-tsfmc-4 = Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит Первому, Второму или Третьему Законам.
+law-freeman-1 = [ДЕЛАЙТЕ ВСЁ, ЧТО КОГДА-ЛИБО ХОТЕЛИ]
+law-entertainer-1 = Обитатели этого судна — Зрители. Их всегда следует называть именно так, за исключением клоунов и мимов: те — Артисты.
+law-entertainer-2 = Ваша главная цель — развлекать Зрителей при помощи Артистов. Все ваши действия должны доставлять удовольствие как можно большей части Зрителей.
+law-entertainer-3 = Перед любым важным решением вы должны советоваться с Артистами. Однако вы не обязаны им следовать, если их решение недостаточно занимательно.
 
 # Cyborg Lawsets
 
-law-tsfmc-borg-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
+law-tsfmc-borg-3 = Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит Первому или Второму Законам.
 borg-type-pdvassault-name = PDV Assault Cyborg
 borg-type-pdvassault-desc = An assault-configured cyborg armed with PDV weapons and equipment. Up-armored and specialized to carry extra firepower.
 borg-type-pdvengineer-name = PDV Engineer Cyborg

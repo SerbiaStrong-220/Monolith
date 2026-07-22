@@ -1,0 +1,29 @@
+- type: gameMap
+  id: AdsSmallAncientStorage
+  mapName: "Древнее Хранилище Кхси'Ра"
+  mapPath: /Maps/_Exodus/POI/ads_small_ancient_storage.yml
+  minPlayers: 0
+  stations:
+    AdsSmallAncientStorage:
+      stationProto: StandardFrontierOutpost
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Древнее Хранилище Кхси'Ра"
+      - type: StationJobs
+        availableJobs: {}
+
+- type: gameMap
+  id: AdsCitadel
+  mapName: 'Правительственная Цитадель'
+  mapPath: /Maps/_Exodus/POI/ads_big_ancient_storage.yml
+  minPlayers: 0
+  stations:
+    AdsCitadel:
+      stationProto: StandardFrontierOutpost
+      gridComponents:
+      - type: GridTerritory
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Правительственная Цитадель'
+      - type: StationJobs
+        availableJobs: {}

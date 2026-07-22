@@ -6,6 +6,26 @@
     SetSize="512 512">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <!-- Exodus-begin summoning status panel -->
+            <BoxContainer Name="SummoningStatusContainer" Margin="4,4,4,0" Orientation="Vertical" Visible="False">
+                <BoxContainer Orientation="Horizontal">
+                    <TextureRect
+                        Name="SummoningStatusIcon"
+                        MinSize="32 32"
+                        SetSize="32 32"
+                        Stretch="KeepAspectCentered" />
+                    <BoxContainer Margin="6,0,0,0" Orientation="Vertical" HorizontalExpand="True">
+                        <Label Name="SummoningStatusTitle" />
+                        <BoxContainer Orientation="Horizontal">
+                            <Label Name="SummoningStatusTimer" />
+                            <Control MinWidth="8" />
+                            <Label Name="SummoningStatusNote" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
+                <ProgressBar Name="SummoningProgressBar" Margin="0,4,0,0" MaxValue="1" Value="0" />
+            </BoxContainer>
+            <!-- Exodus-end -->
             <BoxContainer Margin="4,4,4,4" Orientation="Horizontal">
                 <RichTextLabel
                     Name="BalanceInfo"
@@ -17,13 +37,15 @@
                     MinWidth="64"
                     HorizontalAlignment="Right"
                     Text="{Loc 'store-ui-default-withdraw-text'}" />
+                <!-- Exodus localized refund button text -->
                 <Button
                     Name="RefundButton"
                     MinWidth="64"
                     HorizontalAlignment="Right"
-                    Text="{Loc 'store-ui-default-refund-text'}" /> <!--Exodus Locale-->
+                    Text="{Loc 'store-ui-default-refund-text'}" />
             </BoxContainer>
-            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="{Loc object-tab-object-search}" HorizontalExpand="True"/> <!--Exodus Locale-->
+            <!-- Exodus localized store search placeholder -->
+            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="{Loc object-tab-object-search}" HorizontalExpand="True"/>
                 <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />

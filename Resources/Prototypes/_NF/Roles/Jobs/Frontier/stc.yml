@@ -26,6 +26,11 @@
   - Frontier
   - StationTrafficController
   special:
+  - !type:AddComponentSpecial
+    components:
+    - type: NpcFactionMember # Exodus SecColossus faction
+      factions:
+      - SecColossus
   - !type:GiveItemOnHolidaySpecial
     holiday: FrontierBirthday
     prototype: FrontierBirthdayGift

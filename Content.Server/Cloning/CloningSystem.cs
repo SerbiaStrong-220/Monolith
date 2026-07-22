@@ -44,6 +44,12 @@ using Robust.Shared.Serialization.Manager;
 using Content.Shared._NF.Cloning; // Frontier
 using Content.Shared._NF.Bank.Components; // Frontier
 using Content.Server._NF.Traits.Assorted; // Frontier
+using Content.Server.Traits; // Exodus
+using Content.Shared.Preferences; // Exodus
+using Content.Shared._Mono.Company; // Exodus
+using Content.Shared.Humanoid.Prototypes; // Exodus
+using Robust.Shared.Map; // Exodus
+using Robust.Shared.Utility; // Exodus
 
 namespace Content.Server.Cloning
 {
@@ -73,6 +79,7 @@ namespace Content.Server.Cloning
         [Dependency] private SharedJobSystem _jobs = default!;
         [Dependency] private EmagSystem _emag = default!;
         [Dependency] private ISerializationManager _serialization = default!; // Frontier
+        [Dependency] private TraitSystem _traits = default!; // Exodus
 
         public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -270,32 +277,7 @@ namespace Content.Server.Cloning
             }
             // end of genetic damage checks
 
-            var mob = Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(uid));
-            _humanoidSystem.CloneAppearance(bodyToClone, mob);
-
-            // Frontier: bank account transfer
-            if (HasComp<BankAccountComponent>(bodyToClone))
-            {
-                EnsureComp<BankAccountComponent>(mob);
-            }
-
-            // Frontier
-            // Transfer of special components, e.g. small/big traits
-            foreach (var comp in EntityManager.GetComponents(bodyToClone))
-            {
-                if (comp is ITransferredByCloning)
-                {
-                    var copy = _serialization.CreateCopy(comp, notNullableOverride: true);
-                    copy.Owner = mob;
-                    EntityManager.AddComponent(mob, copy, overwrite: true);
-                }
-            }
-
-            var ev = new CloningEvent(bodyToClone, mob);
-            RaiseLocalEvent(bodyToClone, ref ev);
-
-            if (!ev.NameHandled)
-                _metaSystem.SetEntityName(mob, MetaData(bodyToClone).EntityName);
+            var mob = SpawnClone(Transform(uid).Coordinates, mindEnt, sourceBody: bodyToClone, species: speciesPrototype); // Exodus
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
@@ -307,18 +289,86 @@ namespace Content.Server.Cloning
 
             AddComp<ActiveCloningPodComponent>(uid);
 
+            return true;
+        }
+
+        // Exodus-Start
+        // Universal clone-body creation method
+        public EntityUid SpawnClone(
+            EntityCoordinates coords,
+            EntityUid? mind,
+            EntityUid? sourceBody = null,
+            HumanoidCharacterProfile? profile = null,
+            ProtoId<CompanyPrototype>? company = null,
+            SpeciesPrototype? species = null)
+        {
+            DebugTools.Assert(sourceBody != null ^ profile != null,
+                "SpawnClone requires exactly one of sourceBody/profile.");
+
+            species ??= _prototype.Index<SpeciesPrototype>(profile!.Species);
+
+            var mob = Spawn(species.Prototype, coords);
+
+            if (sourceBody is { } bodyToClone)
+            {
+                // Exodus-End
+                _humanoidSystem.CloneAppearance(bodyToClone, mob);
+
+                // Frontier: bank account transfer
+                if (HasComp<BankAccountComponent>(bodyToClone))
+                {
+                    EnsureComp<BankAccountComponent>(mob);
+                }
+
+                // Frontier
+                // Transfer of special components, e.g. small/big traits
+                foreach (var comp in EntityManager.GetComponents(bodyToClone))
+                {
+                    if (comp is ITransferredByCloning)
+                    {
+                        var copy = _serialization.CreateCopy(comp, notNullableOverride: true);
+                        copy.Owner = mob;
+                        AddComp(mob, copy, overwrite: true); // Exodus
+                    }
+                }
+
+                var ev = new CloningEvent(bodyToClone, mob);
+                RaiseLocalEvent(bodyToClone, ref ev);
+
+                if (!ev.NameHandled)
+                    _metaSystem.SetEntityName(mob, MetaData(bodyToClone).EntityName);
+                // Exodus-Start
+                if (TryComp<CompanyComponent>(bodyToClone, out var sourceCompany))
+                    company ??= sourceCompany.CompanyName;
+            }
+            else if (profile != null)
+            {
+                _humanoidSystem.LoadProfile(mob, profile);
+                _metaSystem.SetEntityName(mob, profile.Name);
+                EnsureComp<BankAccountComponent>(mob);
+                _traits.ApplyTraits(mob, profile);
+            }
+
+            if (company is { } companyName)
+            {
+                var companyComp = EnsureComp<CompanyComponent>(mob);
+                companyComp.CompanyName = companyName;
+                Dirty(mob, companyComp);
+            }
+            // Exodus-End
+
             // TODO: Ideally, components like this should be components on the mind entity so this isn't necessary.
             // Add on special job components to the mob.
-            if (_jobs.MindTryGetJob(mindEnt, out var prototype))
+            if (mind is { } mindId && _jobs.MindTryGetJob(mindId, out var prototype)) // Exodus
             {
                 foreach (var special in prototype.Special)
                 {
-                    if (special is AddComponentSpecial)
+                    if (special is AddComponentSpecial || (profile != null && special is AddLanguageSpecial)) // Exodus
                         special.AfterEquip(mob);
                 }
             }
 
-            return true;
+            return mob; // Exodus
         }
 
         public void UpdateStatus(EntityUid podUid, CloningPodStatus status, CloningPodComponent cloningPod)
