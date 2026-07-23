@@ -9,6 +9,7 @@
     sprite: _Exodus/Objects/Tools/bundles.rsi
     state: fleet-base
   - type: StaticPrice
+    price: 350000
     vendPrice: 350000
   - type: SpawnItemsOnUse
     items:
