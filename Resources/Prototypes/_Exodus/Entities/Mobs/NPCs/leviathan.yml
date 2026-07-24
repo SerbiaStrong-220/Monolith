@@ -290,7 +290,8 @@
     - id: ClothingBackpackDroneLootT22
       amount: 4
     - id: ClothingBackpackFleetLootT1
-      prob: 0.3
+      amount: 1
+      maxAmount: 4
     - id: ClothingHeadHatLeviathanChitinCrown
       prob: 0.2
     - id: ClothingHandsGlovesLeviathanChitin
