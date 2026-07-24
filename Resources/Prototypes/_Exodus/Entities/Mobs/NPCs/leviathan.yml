@@ -18,6 +18,18 @@
         Toxin: -25
       types:
         Bloodloss: -3
+  - type: Bloodstream
+    bloodMaxVolume: 1000
+    bloodRefreshAmount: 100
+  - type: LanguageKnowledge
+    speaks:
+    - Leviathan
+    understands:
+    - Leviathan
+  - type: CollectiveMind
+    channels:
+    - Leviathan
+    defaultChannel: Leviathan
   - type: RadialDamageFieldTarget
     profiles:
     - Leviathan
@@ -136,6 +148,8 @@
         Structural: 3000
   - type: Speech
     speechVerb: LargeMob
+  - type: TTS
+    voice: dragon_knight_dragon_dota_2
   - type: InteractionPopup
     interactSuccessString: petting-success-leviathan
     interactFailureString: petting-failure-leviathan

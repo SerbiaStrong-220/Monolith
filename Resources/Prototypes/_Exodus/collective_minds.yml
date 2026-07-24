@@ -3,3 +3,9 @@
   name: collective-mind-chitine
   keycode: 'х'
   color: "#556b2f"
+
+- type: collectiveMind
+  id: Leviathan
+  name: collective-mind-leviathan
+  keycode: 'й'
+  color: "#ff8227"
