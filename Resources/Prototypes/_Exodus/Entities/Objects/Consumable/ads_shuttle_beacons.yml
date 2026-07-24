@@ -71,6 +71,12 @@
   id: SpaceLeviathanEmergencyBeacon
   parent: BaseADSShuttleEmergencyBeaconTier3
   components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Beacons/leviathan_chitin_beacon.rsi
+    layers:
+    - state: beacon
+    - state: beacon_emission
+      shader: unshaded
   - type: ShuttleEventBeacon
     rule: LeviathanArrival
   - type: StaticPrice
