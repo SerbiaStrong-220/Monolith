@@ -6,8 +6,8 @@
     useDelay: 30
     itemIconStyle: NoItem
     icon:
-      sprite: _Exodus/Mobs/Monolith/leviathan.rsi
-      state: head
+      sprite: _Exodus/Interface/Actions/leviathan_surge.rsi
+      state: icon
     event: !type:TemporarySpeedBoostActionEvent
 
 - type: entity
