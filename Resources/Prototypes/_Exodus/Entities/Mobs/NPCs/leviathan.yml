@@ -100,6 +100,7 @@
         toggleAction: ActionShowBluespaceMap
   - type: RadarConsole
     followEntity: true
+    noRotate: true
     hideCoords: false # Frontier
     maxIffRange: null # Frontier
   - type: MovementIgnoreGravity
