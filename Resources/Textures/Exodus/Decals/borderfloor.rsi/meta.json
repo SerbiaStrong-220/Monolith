@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "license": "Mixed, EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
-    "copyright": "by NightmareStalker(GitHub) for SS220, resprited by Kit0vras (Github/Discord)",
+    "license": "Mixed",
+    "copyright": "by NightmareStalker(GitHub) for SS220, resprited by Kit0vras (Github/Discord), EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
     "size": {
         "x": 32,
         "y": 32
