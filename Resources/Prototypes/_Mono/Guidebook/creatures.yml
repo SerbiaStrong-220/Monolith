@@ -7,6 +7,7 @@
   - CorticalBorerGuide
   - Letoferol
   - Asakim
+  - LeviathanGuide # Exodus leviathan guidebook entry
 
 - type: guideEntry
   id: CorticalBorerGuide
@@ -25,3 +26,9 @@
   name: guide-entry-asakim
   text: "/ServerInfo/_Mono/Guidebook/Creatures/Asakim.xml"
   priority: 1
+
+- type: guideEntry # Exodus leviathan guidebook entry
+  id: LeviathanGuide
+  name: guide-entry-leviathan
+  text: "/ServerInfo/_Exodus/Guidebook/Creatures/Leviathan.xml"
+  priority: 2

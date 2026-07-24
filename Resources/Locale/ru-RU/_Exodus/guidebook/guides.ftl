@@ -31,3 +31,4 @@ guide-entry-exodus-rule-ghost-roles-leviathan = Космический леви�
 guide-entry-faction-cores = Фракционные Ядра
 guide-entry-territory-capture = Захват территории
 guide-entry-summoning-gateway = Межпространственный шлюз
+guide-entry-leviathan = Космический левиафан
