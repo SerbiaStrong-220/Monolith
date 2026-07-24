@@ -47,7 +47,7 @@
 
 - type: crystallizerRecipe
   id: Plastitanium
-  name: crystallizer-recipe-plastitanium
+  name: crystallizer-recipe-plastitanium # Exodus
   minimumTemperature: 7920
   maximumTemperature: 8150
   energyRelease: 1840
