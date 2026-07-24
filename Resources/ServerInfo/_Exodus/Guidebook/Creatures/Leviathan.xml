@@ -1,0 +1,85 @@
+<Document>
+  # Космический левиафан
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceLeviathanHeadGuidebook" Caption="Космический левиафан"/>
+    <GuideEntityEmbed Entity="SpaceLeviathanEmergencyBeacon" Caption="Маячок вызова"/>
+  </Box>
+
+  [color=#ff8227][bold]Космический левиафан[/bold][/color] — не случайный обитатель астероидного поля. Это огромная живая цель с возможностью игры за неё, способная разорвать неподготовленный корабль простым столкновением. Если на БСС-карте появился его сигнал - сначала соберите экипаж и корабль, потом летите за добычей.
+
+  ## Как появляется и где его искать
+
+  В обычной игре левиафан приходит только после активации [bold]одноразового маячка вызова[/bold]. Маячок можно найти на латунных астероидах. Маячок можно использовать из руки или активировать, положив на пол. При успешном срабатывании он исчезает, а всему сектору приходит объявление с последними известными координатами цели.
+
+  Левиафан появляется не рядом с активировавшим: он приходит в [color=#ff8227][bold]дальнее внешнее кольцо сектора[/bold][/color], на расстоянии примерно [bold]60–70 км от центра карты[/bold]. Сразу откройте БСС-карту или радар, отметьте координаты из объявления и планируйте маршрут с путём отхода.
+
+  [color=red][bold]Не летите за ним в одиночку.[/bold][/color] Левиафан не обязан ждать боя. Столкновения или тараны с ним крайне критичны для кораблей, поэтому держитесь дистанций. Учитывайте, что [textlink="Левиафан-игрок" link="EXRuleGhostRoleLeviathan"] может охотиться даже в относительной близи с центром карты.
+
+  ## После смерти: тушка и разделка
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceLeviathanCorpse" Caption="Тушка левиафана"/>
+    <GuideEntityEmbed Entity="SpaceLeviathanChitin" Caption="Хитин левиафана"/>
+    <GuideReagentEmbed Reagent="Ichor"/>
+  </Box>
+
+  После гибели левиафан [bold]не исчезает бесследно[/bold]: на месте остаётся крупная тушка-сегмент, заметная на радаре. Её можно подтянуть и разделать. Разделка занимает [bold]20 секунд[/bold], поэтому сначала обезопасьте место и не бросайте добычу в космосе.
+
+  С тушки гарантированно выходят [bold]1–4 фрагмента хитина[/bold], [bold]4 лужи целебного ихора по 50 ед.[/bold], [bold]4 ящика с сильных дронов[/bold], [bold]1–4 контейнера автономного флота[/bold] и [bold]24 случайные партии руды[/bold]. Остальное - шанс на особенно удачную охоту.
+
+  ## Что сделать из хитина
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceLeviathanChitinArmorPlate" Caption="Хитиновая бронепластина"/>
+    <GuideEntityEmbed Entity="ClothingHeadHatLeviathanChitinCrown" Caption="Хитиновая корона"/>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesLeviathanChitin" Caption="Хитиновые перчатки"/>
+  </Box>
+
+  Хитин — не просто дорогой трофей. В меню строительства из него можно собрать:
+
+  - [bold]хитиновую бронепластину[/bold] — объединяет скоростную и противобронебойную пластины для совместимого скафандра;
+  - [bold]хитиновую корону[/bold] — требует золото, алмазы, блюспейс и 2 фрагмента хитина; надетая корона улучшает управление шаттлом;
+  - [bold]хитиновые перчатки[/bold] — требуют боевые перчатки, дюраткань, алмазы и 2 фрагмента хитина; превращает ваши удары руками в крайне смертоносное оружие.
+
+  ## Возможная добыча
+
+  ### Руда
+
+  <Box>
+    <GuideEntityEmbed Entity="SteelOre" Caption="сталь"/>
+    <GuideEntityEmbed Entity="Coal" Caption="уголь"/>
+    <GuideEntityEmbed Entity="SpaceQuartz" Caption="кварц"/>
+    <GuideEntityEmbed Entity="PlasmaOre" Caption="плазма"/>
+  </Box>
+
+  Обычные варианты случайных рудных партий: сталь, уголь, кварц и плазма.
+
+  <Box>
+    <GuideEntityEmbed Entity="GoldOre" Caption="золото"/>
+    <GuideEntityEmbed Entity="SilverOre" Caption="серебро"/>
+    <GuideEntityEmbed Entity="UraniumOre" Caption="уран"/>
+    <GuideEntityEmbed Entity="BananiumOre" Caption="бананиум"/>
+    <GuideEntityEmbed Entity="DiamondOre" Caption="алмазы"/>
+  </Box>
+
+  [color=#ffd700][bold]Редкая партия[/bold][/color] имеет шанс [bold]25%[/bold] и может заменить обычную руду золотом, серебром, ураном, бананиумом или алмазами.
+
+  ### Технологии и редкие предметы
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingBackpackDroneLootT22" Caption="ящик сильных дронов"/>
+    <GuideEntityEmbed Entity="ClothingBackpackFleetLootT1" Caption="контейнер флота (1–4)"/>
+    <GuideEntityEmbed Entity="GunneryServerSuperFlatpack" Caption="флатпак сервера управления орудиями"/>
+    <GuideEntityEmbed Entity="ClothingHeadHatLeviathanChitinCrown" Caption="хитиновая корона"/>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesLeviathanChitin" Caption="хитиновые перчатки"/>
+  </Box>
+
+  Помимо гарантированных материалов, ящиков дронов и контейнеров флота, разделка может принести:
+
+  - хитиновую корону — [bold]20%[/bold];
+  - хитиновые перчатки — [bold]20%[/bold];
+  - флатпак сверхмощного сервера управления корабельными орудиями — [bold]20%[/bold].
+
+  [italic]Убили левиафана — заберите тушку. Иначе сектор подарит его добычу тому, кто прилетит после вас.[/italic]
+</Document>

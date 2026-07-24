@@ -1,0 +1,25 @@
+- type: language
+  id: Leviathan
+  isVisibleLanguage: true
+  speech:
+    color: '#ff8227'
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 4
+    replacement:
+    - гра
+    - кро
+    - рра
+    - гхор
+    - вур
+    - тхра
+    - жра
+    - ур
+    - кха
+    - дро
+    - мрог
+    - ска
+    - рагх
+    - отх
+    - век

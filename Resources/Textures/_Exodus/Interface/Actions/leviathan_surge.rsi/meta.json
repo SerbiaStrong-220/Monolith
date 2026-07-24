@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "for Exodus by Renascitur (discord: renascitur)",
+  "states": [
+    {
+      "name": "icon"
+    }
+  ],
+  "size": {
+    "x": 32,
+    "y": 32
+  }
+}

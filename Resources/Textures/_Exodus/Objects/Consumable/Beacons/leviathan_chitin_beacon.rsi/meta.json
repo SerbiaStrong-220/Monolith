@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "for Exodus by Renascitur (discord: renascitur)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beacon"
+    },
+    {
+      "name": "beacon_emission"
+    }
+  ]
+}
