@@ -63,6 +63,7 @@
     factions:
     - NanoTrasen
   - type: StandingState
+  - type: DoAfterMovementExempt # Exodus do-after-movement-exemption
   - type: MobState
     allowedStates:
     - Alive

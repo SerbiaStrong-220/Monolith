@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+// Exodus do-after-movement-exemption
+using Content.Shared._Exodus.DoAfter;
 using Content.Shared._Goobstation.DoAfter;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -197,6 +199,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             id = null;
             return false;
         }
+
+        // Exodus-begin do-after-movement-exemption
+        if (args.BreakOnMove)
+        {
+            var movementBreak = new GetDoAfterMovementBreakEvent(args.BreakOnMove);
+            RaiseLocalEvent(args.User, ref movementBreak);
+            args.BreakOnMove = movementBreak.BreakOnMove;
+        }
+        // Exodus-end
 
         // Duplicate blocking & cancellation.
         if (!ProcessDuplicates(args, comp))
