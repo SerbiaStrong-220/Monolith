@@ -29,6 +29,9 @@ slot-machine-popup-collected = Собрано {$amount} кредитов!
 slot-machine-popup-no-power = Автомат обесточен!
 slot-machine-popup-unavailable = Автомат неисправен.
 
+slot-machine-announcement-sender = XenoSlots
+slot-machine-announcement-jackpot = {$winner} сорвал джекпот на слот-машине и выиграл {$amount} кредитов!
+
 ## Entity
 ent-SlotMachine = слот-машина
 ent-SlotMachine-desc = Рискни зарплатой ради мечты.

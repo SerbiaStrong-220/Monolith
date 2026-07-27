@@ -51,6 +51,7 @@ public sealed partial class SlotMachineComponent : Component
     public bool PendingIsWin;
     public string PendingWinText = string.Empty;
     public int PendingPayout;
+    public EntityUid? PendingJackpotWinner;
 
     [AutoPausedField]
     public TimeSpan SpinEndTime;

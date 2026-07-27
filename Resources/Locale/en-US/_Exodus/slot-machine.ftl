@@ -28,6 +28,8 @@ slot-machine-popup-inserted = Inserted {$amount} credits.
 slot-machine-popup-collected = Collected {$amount} credits.
 slot-machine-popup-no-power = The machine has no power!
 slot-machine-popup-unavailable = The machine is unavailable.
+slot-machine-announcement-sender = XenoSlots
+slot-machine-announcement-jackpot = {$winner} hit the slot machine jackpot and won {$amount} credits!
 
 ## Entity
 ent-SlotMachine = slot machine

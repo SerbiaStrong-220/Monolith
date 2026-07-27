@@ -1,14 +1,18 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared._Exodus.Gimmicks.SlotMachine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Power;
 using Content.Shared.Stacks;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Gimmicks.SlotMachine;
@@ -22,6 +26,8 @@ public sealed class SlotMachineSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private static readonly TimeSpan SpinDuration = TimeSpan.FromSeconds(2.5);
 
@@ -62,6 +68,10 @@ public sealed class SlotMachineSystem : EntitySystem
             if (comp.IsWin)
                 _audio.PlayPvs(comp.WinSound, uid);
 
+            if (comp.PendingJackpotWinner is { } winner && !Deleted(winner))
+                AnnounceJackpot(winner, comp.LastPayout);
+
+            comp.PendingJackpotWinner = null;
             UpdateUi((uid, comp));
         }
     }
@@ -139,6 +149,7 @@ public sealed class SlotMachineSystem : EntitySystem
         entity.Comp.PendingIsWin = isWin;
         entity.Comp.PendingWinText = winText;
         entity.Comp.PendingPayout = payout;
+        entity.Comp.PendingJackpotWinner = IsDiamondJackpot(reels) ? args.Actor : null;
         entity.Comp.HasPendingResult = true;
         entity.Comp.SpinEndTime = _timing.CurTime + SpinDuration;
 
@@ -271,6 +282,40 @@ public sealed class SlotMachineSystem : EntitySystem
         }
 
         return true;
+    }
+
+    private static bool IsDiamondJackpot(List<string> reels)
+    {
+        return reels.Count == 3 &&
+               reels[0] == "diamond" &&
+               reels[1] == "diamond" &&
+               reels[2] == "diamond";
+    }
+
+    private void AnnounceJackpot(EntityUid winner, int payout)
+    {
+        var players = GetPlayersOnMap(winner);
+        var message = Loc.GetString("slot-machine-announcement-jackpot",
+            ("winner", Identity.Name(winner, EntityManager)),
+            ("amount", payout));
+
+        _chat.DispatchFilteredAnnouncement(players, message,
+            sender: Loc.GetString("slot-machine-announcement-sender"));
+    }
+
+    private Filter GetPlayersOnMap(EntityUid source)
+    {
+        var players = Filter.Empty();
+        var mapId = Transform(source).MapID;
+        foreach (var session in Filter.GetAllPlayers(_playerManager))
+        {
+            if (session.AttachedEntity is not { } player || Deleted(player) || Transform(player).MapID != mapId)
+                continue;
+
+            players.AddPlayer(session);
+        }
+
+        return players;
     }
 
     private void UpdateUi(Entity<SlotMachineComponent> entity)
