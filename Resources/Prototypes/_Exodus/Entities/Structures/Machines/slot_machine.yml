@@ -141,8 +141,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
+    flags: Anchorable
   - type: ApcPowerReceiver
     powerLoad: 500
+  - type: ShipRepairable
+    repairCost: 50
   - type: Physics
     bodyType: Static
   - type: Fixtures
