@@ -12,7 +12,6 @@
   tileBreakIntensity: [0, 8, 20]
   tileBreakRerollReduction: 10
   intensityPerState: 20
-  maxCombineDistance: 0 # Exodus: each destroyed ship gun remains a separate explosion source
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
