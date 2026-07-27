@@ -27,13 +27,14 @@ public sealed partial class SlotMachineWindow : DefaultWindow
     private static readonly Color QuestionMarkColor = Color.FromHex("#555555");
 
     private const int PayoutSymbolsSeparation = 2;
-    private const int InsertAmountSmall = 10;
-    private const int InsertAmountMedium = 100;
-    private const int InsertAmountLarge = 1000;
-    private const int InsertAmountHuge = 5000;
-    private const int BetAdjustSmall = 100;
-    private const int BetAdjustLarge = 1000;
-    private const int BetAdjustHuge = 5000;
+    private const int InsertAmountSmall = 1000;
+    private const int InsertAmountMedium = 25000;
+    private const int InsertAmountLarge = 100000;
+    private const int InsertAmountHuge = 500000;
+    private const int BetAdjustSmall = 1000;
+    private const int BetAdjustDecreaseLarge = 50000;
+    private const int BetAdjustMedium = 10000;
+    private const int BetAdjustHuge = 100000;
 
     private int _bet = SlotMachineComponent.MinBet;
     private bool _isSpinning;
@@ -48,20 +49,20 @@ public sealed partial class SlotMachineWindow : DefaultWindow
 
         SpinButton.OnPressed += _ => OnSpin?.Invoke(_bet);
         CollectButton.OnPressed += _ => OnCollect?.Invoke();
-        Insert10Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountSmall);
-        Insert100Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountMedium);
-        Insert1000Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountLarge);
-        Insert5000Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountHuge);
-        BetMinus1000Button.OnPressed += _ => SetBet(_bet - BetAdjustLarge);
-        BetMinus100Button.OnPressed += _ => SetBet(_bet - BetAdjustSmall);
-        BetPlus100Button.OnPressed += _ => SetBet(_bet + BetAdjustSmall);
-        BetPlus1000Button.OnPressed += _ => SetBet(_bet + BetAdjustLarge);
-        BetPlus5000Button.OnPressed += _ => SetBet(_bet + BetAdjustHuge);
+        Insert1000Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountSmall);
+        Insert25000Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountMedium);
+        Insert100000Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountLarge);
+        Insert500000Button.OnPressed += _ => OnInsert?.Invoke(InsertAmountHuge);
+        BetMinus50000Button.OnPressed += _ => SetBet(_bet - BetAdjustDecreaseLarge);
+        BetMinus1000Button.OnPressed += _ => SetBet(_bet - BetAdjustSmall);
+        BetPlus1000Button.OnPressed += _ => SetBet(_bet + BetAdjustSmall);
+        BetPlus10000Button.OnPressed += _ => SetBet(_bet + BetAdjustMedium);
+        BetPlus100000Button.OnPressed += _ => SetBet(_bet + BetAdjustHuge);
 
-        Insert10Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountSmall));
-        Insert100Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountMedium));
-        Insert1000Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountLarge));
-        Insert5000Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountHuge));
+        Insert1000Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountSmall));
+        Insert25000Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountMedium));
+        Insert100000Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountLarge));
+        Insert500000Button.Text = Loc.GetString("slot-machine-ui-insert", ("amount", InsertAmountHuge));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -109,15 +110,15 @@ public sealed partial class SlotMachineWindow : DefaultWindow
 
         SpinButton.Disabled = state.IsSpinning || state.StoredCredits < SlotMachineComponent.MinBet;
         CollectButton.Disabled = state.IsSpinning || state.StoredCredits < 1;
+        BetMinus50000Button.Disabled = state.IsSpinning;
         BetMinus1000Button.Disabled = state.IsSpinning;
-        BetMinus100Button.Disabled = state.IsSpinning;
-        BetPlus100Button.Disabled = state.IsSpinning;
         BetPlus1000Button.Disabled = state.IsSpinning;
-        BetPlus5000Button.Disabled = state.IsSpinning;
-        Insert10Button.Disabled = state.IsSpinning;
-        Insert100Button.Disabled = state.IsSpinning;
+        BetPlus10000Button.Disabled = state.IsSpinning;
+        BetPlus100000Button.Disabled = state.IsSpinning;
         Insert1000Button.Disabled = state.IsSpinning;
-        Insert5000Button.Disabled = state.IsSpinning;
+        Insert25000Button.Disabled = state.IsSpinning;
+        Insert100000Button.Disabled = state.IsSpinning;
+        Insert500000Button.Disabled = state.IsSpinning;
     }
 
     private void InitializePayoutTable(List<SlotMachineRule> rules)

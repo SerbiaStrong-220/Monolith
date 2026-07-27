@@ -84,7 +84,7 @@ public sealed class SlotMachineSystem : EntitySystem
         if (!EnsureAvailable(entity, args.Actor))
             return;
 
-        if (args.Amount <= 0)
+        if (args.Amount < SlotMachineComponent.MinInsert)
             return;
 
         if (!_hands.TryGetActiveItem(args.Actor, out var item) ||
@@ -96,7 +96,13 @@ public sealed class SlotMachineSystem : EntitySystem
         }
 
         var amountToTake = Math.Min(args.Amount, stack.Count);
-        if (amountToTake <= 0 || !_stack.Use(item.Value, amountToTake, stack))
+        if (amountToTake < SlotMachineComponent.MinInsert)
+        {
+            _popup.PopupEntity(Loc.GetString("slot-machine-popup-no-credits"), args.Actor, args.Actor);
+            return;
+        }
+
+        if (!_stack.Use(item.Value, amountToTake, stack))
             return;
 
         entity.Comp.StoredCredits = (int) Math.Min(int.MaxValue, (long) entity.Comp.StoredCredits + amountToTake);

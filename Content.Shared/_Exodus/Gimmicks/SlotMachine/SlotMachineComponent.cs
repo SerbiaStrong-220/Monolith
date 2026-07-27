@@ -8,7 +8,8 @@ namespace Content.Shared._Exodus.Gimmicks.SlotMachine;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SlotMachineComponent : Component
 {
-    public const int MinBet = 100;
+    public const int MinBet = 1000;
+    public const int MinInsert = 1000;
     public const string CreditStackId = "Credit";
     public const string CashPrototypeId = "SpaceCash";
 
