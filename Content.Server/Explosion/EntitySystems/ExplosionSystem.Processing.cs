@@ -212,7 +212,8 @@ public sealed partial class ExplosionSystem
         float? fireStacks,
         float? temperature,
         float currentIntensity,
-        EntityUid? cause)
+        EntityUid? cause,
+        ref Dictionary<EntityUid, DamageSpecifier>? groupedDamage) // Exodus: damage groups are scoped to one explosion
     {
         var size = grid.Comp.TileSize;
         var gridBox = new Box2(tile * size, (tile + 1) * size);
@@ -231,7 +232,7 @@ public sealed partial class ExplosionSystem
         // process those entities
         foreach (var (uid, xform) in list)
         {
-            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause, ref groupedDamage); // Exodus: grouped damage
         }
 
         // process anchored entities
@@ -249,7 +250,7 @@ public sealed partial class ExplosionSystem
                 continue;
             }
             // Exodus-End
-            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause, ref groupedDamage); // Exodus: grouped damage
         }
 
         // heat the atmosphere
@@ -276,7 +277,7 @@ public sealed partial class ExplosionSystem
         if (!tileBlocked)
         {
             foreach (var entity in _subFloorDeferred)
-                ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+                ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause, ref groupedDamage); // Exodus: grouped damage
         }
         // Exodus-End
 
@@ -299,7 +300,7 @@ public sealed partial class ExplosionSystem
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(uid, epicenter, null, throwForce, id, xform, null, cause);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform, null, cause, ref groupedDamage); // Exodus: grouped damage
         }
 
         return !tileBlocked;
@@ -336,7 +337,8 @@ public sealed partial class ExplosionSystem
         HashSet<EntityUid> processed,
         string id,
         float? fireStacks,
-        EntityUid? cause)
+        EntityUid? cause,
+        ref Dictionary<EntityUid, DamageSpecifier>? groupedDamage) // Exodus: damage groups are scoped to one explosion
     {
         var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
@@ -352,7 +354,7 @@ public sealed partial class ExplosionSystem
         foreach (var (uid, xform) in state.Item1)
         {
             processed.Add(uid);
-            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause, ref groupedDamage); // Exodus: grouped damage
         }
 
         if (throwForce <= 0)
@@ -366,7 +368,7 @@ public sealed partial class ExplosionSystem
 
         foreach (var (uid, xform) in list)
         {
-            ProcessEntity(uid, epicenter, null, throwForce, id, xform, fireStacks, cause);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform, fireStacks, cause, ref groupedDamage); // Exodus: grouped damage
         }
     }
 
@@ -454,6 +456,14 @@ public sealed partial class ExplosionSystem
         }
     }
 
+    // Exodus-begin: applies damage deferred by an explosion damage group.
+    internal void ApplyGroupedExplosionDamage(EntityUid entity, DamageSpecifier damage)
+    {
+        _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true, ignoreGlobalModifiers: true,
+            originFlag: DamageableSystem.DamageOriginFlag.Explosion);
+    }
+    // Exodus-end
+
     /// <summary>
     ///     This function actually applies the explosion affects to an entity.
     /// </summary>
@@ -465,13 +475,30 @@ public sealed partial class ExplosionSystem
         string id,
         TransformComponent? xform,
         float? fireStacksOnIgnite,
-        EntityUid? cause)
+        EntityUid? cause,
+        ref Dictionary<EntityUid, DamageSpecifier>? groupedDamage)
     {
         if (originalDamage != null)
         {
             GetEntitiesToDamage(uid, originalDamage, id);
             foreach (var (entity, damage) in _toDamage)
             {
+                // Exodus-begin: tail segments forward only their largest hit from this explosion.
+                if (_tailedSegmentQuery.TryGetComponent(entity, out var segment) &&
+                    segment.HeadEntity != EntityUid.Invalid &&
+                    _tailedQuery.TryGetComponent(segment.HeadEntity, out var tail) &&
+                    tail.AggregateSegmentExplosionDamage &&
+                    !TerminatingOrDeleted(segment.HeadEntity) &&
+                    !EntityManager.IsQueuedForDeletion(segment.HeadEntity))
+                {
+                    groupedDamage ??= new Dictionary<EntityUid, DamageSpecifier>();
+                    if (!groupedDamage.TryGetValue(segment.HeadEntity, out var existingDamage) || damage.GetTotal() > existingDamage.GetTotal())
+                        groupedDamage[segment.HeadEntity] = damage;
+
+                    continue;
+                }
+                // Exodus-end
+
                 if (_actorQuery.HasComp(entity))
                 {
                     // Log damage to player entities only, cause this will create a massive amount of log spam otherwise.
@@ -674,6 +701,10 @@ sealed class Explosion
     ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
     /// </summary>
     private readonly Dictionary<Entity<MapGridComponent>, List<(Vector2i, Tile)>> _tileUpdateDict = new();
+
+    // Exodus: redirected damage is accumulated separately for each Explosion instance.
+    private Dictionary<EntityUid, DamageSpecifier>? _groupedDamage;
+    private bool _groupedDamageApplied;
 
     // Entity Queries
     private readonly EntityQuery<TransformComponent> _xformQuery;
@@ -903,7 +934,8 @@ sealed class Explosion
                     ExplosionType.FireStacks,
                     ExplosionType.Temperature,
                     _currentIntensity,
-                    Cause);
+                    Cause,
+                    ref _groupedDamage); // Exodus: grouped damage
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
@@ -922,7 +954,8 @@ sealed class Explosion
                     ProcessedEntities,
                     ExplosionType.ID,
                     ExplosionType.FireStacks,
-                    Cause);
+                    Cause,
+                    ref _groupedDamage); // Exodus: grouped damage
             }
 
             if (!MoveNext())
@@ -931,8 +964,31 @@ sealed class Explosion
 
         // Update damaged/broken tiles on the grid.
         SetTiles();
+
+        // Exodus: apply one maximum redirected hit per target after this source has finished processing.
+        if (FinishedProcessing && !_groupedDamageApplied)
+        {
+            ApplyGroupedDamage();
+            _groupedDamageApplied = true;
+        }
+
         return processed;
     }
+
+    // Exodus-begin: group members do not multiply forwarded explosion damage.
+    private void ApplyGroupedDamage()
+    {
+        if (_groupedDamage is not { Count: > 0 } groupedDamage)
+            return;
+
+        foreach (var (entity, damage) in groupedDamage)
+        {
+            _system.ApplyGroupedExplosionDamage(entity, damage);
+        }
+
+        groupedDamage.Clear();
+    }
+    // Exodus-end
 
     private void SetTiles()
     {
