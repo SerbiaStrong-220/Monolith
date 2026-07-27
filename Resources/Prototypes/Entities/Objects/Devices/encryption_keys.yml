@@ -168,7 +168,7 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Science
-      canSpeak: false
+      canSpeak: true # Exodus: contractor loadout channel
     defaultChannel: Science
   - type: Sprite
     layers:
