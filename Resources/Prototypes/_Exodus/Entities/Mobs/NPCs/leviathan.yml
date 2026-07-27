@@ -49,6 +49,7 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
   - type: CleanupImmune
   - type: PointLight
     color: "#FF8227FF"
