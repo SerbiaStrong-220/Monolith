@@ -7,6 +7,7 @@ slot-machine-ui-bet = Ставка:
 slot-machine-ui-deposit = Депозит: {$amount}
 slot-machine-ui-luck = Рискни зарплатой ради мечты!
 slot-machine-ui-spinning = Крутим...
+slot-machine-ui-collecting = Выводим средства...
 slot-machine-ui-win-jackpot = ДЖЕКПОТ! Выигрыш: {$amount} кредитов!
 slot-machine-ui-win-triple = Тройной {$symbol}! Выигрыш: {$amount} кредитов!
 slot-machine-ui-win-apples = Пара яблок! Выигрыш: {$amount} кредитов!
@@ -28,6 +29,7 @@ slot-machine-popup-inserted = Вставлено {$amount} кредитов!
 slot-machine-popup-collected = Собрано {$amount} кредитов!
 slot-machine-popup-no-power = Автомат обесточен!
 slot-machine-popup-unavailable = Автомат неисправен.
+slot-machine-popup-collecting = Автомат выводит средства.
 
 slot-machine-announcement-sender = XenoSlots
 slot-machine-announcement-jackpot = {$winner} сорвал джекпот на слот-машине и выиграл {$amount} кредитов!

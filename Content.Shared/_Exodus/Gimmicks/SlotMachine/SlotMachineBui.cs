@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.Gimmicks.SlotMachine;
@@ -17,6 +18,7 @@ public sealed class SlotMachineBoundUserInterfaceState(
     int lastBet,
     int lastPayout,
     bool isSpinning,
+    bool isCollecting,
     List<SlotMachineRule> rules,
     List<SlotMachineReelDef> reelPools) : BoundUserInterfaceState
 {
@@ -27,6 +29,7 @@ public sealed class SlotMachineBoundUserInterfaceState(
     public int LastBet { get; } = lastBet;
     public int LastPayout { get; } = lastPayout;
     public bool IsSpinning { get; } = isSpinning;
+    public bool IsCollecting { get; } = isCollecting;
     public List<SlotMachineRule> Rules { get; } = rules;
     public List<SlotMachineReelDef> ReelPools { get; } = reelPools;
 }
@@ -45,5 +48,10 @@ public sealed class SlotMachineInsertMessage(int amount) : BoundUserInterfaceMes
 
 [Serializable, NetSerializable]
 public sealed class SlotMachineCollectMessage : BoundUserInterfaceMessage
+{
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SlotMachineCollectDoAfterEvent : SimpleDoAfterEvent
 {
 }

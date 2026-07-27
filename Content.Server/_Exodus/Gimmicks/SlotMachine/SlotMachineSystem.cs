@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared._Exodus.Gimmicks.SlotMachine;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Power;
@@ -26,10 +27,12 @@ public sealed class SlotMachineSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private static readonly TimeSpan SpinDuration = TimeSpan.FromSeconds(2.5);
+    private static readonly TimeSpan CollectionFailSafeDelay = TimeSpan.FromSeconds(1);
 
     public override void Initialize()
     {
@@ -37,6 +40,7 @@ public sealed class SlotMachineSystem : EntitySystem
 
         SubscribeLocalEvent<SlotMachineComponent, AfterActivatableUIOpenEvent>(OnAfterUiOpen);
         SubscribeLocalEvent<SlotMachineComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<SlotMachineComponent, SlotMachineCollectDoAfterEvent>(OnCollectDoAfter);
 
         Subs.BuiEvents<SlotMachineComponent>(SlotMachineUiKey.Key, subs =>
         {
@@ -54,6 +58,12 @@ public sealed class SlotMachineSystem : EntitySystem
         var query = EntityQueryEnumerator<SlotMachineComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
+            if (comp.HasPendingCollection && now > comp.CollectionEndTime + CollectionFailSafeDelay)
+            {
+                comp.HasPendingCollection = false;
+                comp.CollectionEndTime = TimeSpan.Zero;
+                UpdateUi((uid, comp));
+            }
             if (!comp.HasPendingResult || now < comp.SpinEndTime)
                 continue;
 
@@ -163,23 +173,82 @@ public sealed class SlotMachineSystem : EntitySystem
         if (!EnsureAvailable(entity, args.Actor) || entity.Comp.StoredCredits <= 0)
             return;
 
+        var doAfter = new DoAfterArgs(EntityManager, args.Actor, entity.Comp.CollectDuration,
+            new SlotMachineCollectDoAfterEvent(), entity.Owner, target: entity.Owner, used: entity.Owner)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = false,
+        };
+
+        entity.Comp.HasPendingCollection = true;
+        entity.Comp.CollectionEndTime = _timing.CurTime + entity.Comp.CollectDuration;
+        if (!_doAfter.TryStartDoAfter(doAfter))
+        {
+            entity.Comp.HasPendingCollection = false;
+            entity.Comp.CollectionEndTime = TimeSpan.Zero;
+            return;
+        }
+
+        UpdateUi(entity);
+    }
+
+    private void OnCollectDoAfter(Entity<SlotMachineComponent> entity, ref SlotMachineCollectDoAfterEvent args)
+    {
+        if (!entity.Comp.HasPendingCollection)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        entity.Comp.HasPendingCollection = false;
+        entity.Comp.CollectionEndTime = TimeSpan.Zero;
+        if (args.Cancelled || args.Handled)
+        {
+            UpdateUi(entity);
+            return;
+        }
+
+        if (!IsPowered(entity.Owner))
+        {
+            _popup.PopupEntity(Loc.GetString("slot-machine-popup-no-power"), args.User, args.User);
+            UpdateUi(entity);
+            return;
+        }
+
+        TryCollectCredits(entity, args.User);
+        args.Handled = true;
+        UpdateUi(entity);
+    }
+
+    private bool TryCollectCredits(Entity<SlotMachineComponent> entity, EntityUid actor)
+    {
+        if (entity.Comp.StoredCredits <= 0)
+            return false;
+
         var credits = entity.Comp.StoredCredits;
         var money = Spawn(SlotMachineComponent.CashPrototypeId, Transform(entity.Owner).Coordinates);
         if (!TryComp<StackComponent>(money, out var stack))
         {
             QueueDel(money);
-            return;
+            return false;
         }
 
         _stack.SetCount(money, credits, stack);
         entity.Comp.StoredCredits = 0;
         Dirty(entity);
-        _popup.PopupEntity(Loc.GetString("slot-machine-popup-collected", ("amount", credits)), args.Actor, args.Actor);
-        UpdateUi(entity);
+        _popup.PopupEntity(Loc.GetString("slot-machine-popup-collected", ("amount", credits)), actor, actor);
+        return true;
     }
 
     private bool EnsureAvailable(Entity<SlotMachineComponent> entity, EntityUid actor)
     {
+        if (entity.Comp.HasPendingCollection)
+        {
+            _popup.PopupEntity(Loc.GetString("slot-machine-popup-collecting"), actor, actor);
+            return false;
+        }
+
         if (entity.Comp.HasPendingResult)
         {
             _popup.PopupEntity(Loc.GetString("slot-machine-popup-spinning"), actor, actor);
@@ -330,6 +399,7 @@ public sealed class SlotMachineSystem : EntitySystem
                 entity.Comp.LastBet,
                 entity.Comp.LastPayout,
                 entity.Comp.HasPendingResult,
+                entity.Comp.HasPendingCollection,
                 entity.Comp.Rules,
                 entity.Comp.ReelPools));
     }

@@ -98,7 +98,9 @@ public sealed partial class SlotMachineWindow : DefaultWindow
         var winSymbol = state.Reels.Count > 0 ? GetSymbolName(state.Reels[0]) : string.Empty;
         PayoutLabel.Text = state.IsSpinning
             ? Loc.GetString("slot-machine-ui-spinning")
-            : state.IsWin
+            : state.IsCollecting
+                ? Loc.GetString("slot-machine-ui-collecting")
+                : state.IsWin
                 ? Loc.GetString(state.WinText, ("amount", state.LastPayout), ("symbol", winSymbol))
                 : state.LastBet > 0
                     ? Loc.GetString("slot-machine-ui-lose")
@@ -108,17 +110,19 @@ public sealed partial class SlotMachineWindow : DefaultWindow
             Math.Min(_bet, state.StoredCredits > 0 ? state.StoredCredits : SlotMachineComponent.MinBet));
         BetLabel.Text = _bet.ToString();
 
-        SpinButton.Disabled = state.IsSpinning || state.StoredCredits < SlotMachineComponent.MinBet;
-        CollectButton.Disabled = state.IsSpinning || state.StoredCredits < 1;
-        BetMinus50000Button.Disabled = state.IsSpinning;
-        BetMinus1000Button.Disabled = state.IsSpinning;
-        BetPlus1000Button.Disabled = state.IsSpinning;
-        BetPlus10000Button.Disabled = state.IsSpinning;
-        BetPlus100000Button.Disabled = state.IsSpinning;
-        Insert1000Button.Disabled = state.IsSpinning;
-        Insert25000Button.Disabled = state.IsSpinning;
-        Insert100000Button.Disabled = state.IsSpinning;
-        Insert500000Button.Disabled = state.IsSpinning;
+        var isBusy = state.IsSpinning || state.IsCollecting;
+
+        SpinButton.Disabled = isBusy || state.StoredCredits < SlotMachineComponent.MinBet;
+        CollectButton.Disabled = isBusy || state.StoredCredits < 1;
+        BetMinus50000Button.Disabled = isBusy;
+        BetMinus1000Button.Disabled = isBusy;
+        BetPlus1000Button.Disabled = isBusy;
+        BetPlus10000Button.Disabled = isBusy;
+        BetPlus100000Button.Disabled = isBusy;
+        Insert1000Button.Disabled = isBusy;
+        Insert25000Button.Disabled = isBusy;
+        Insert100000Button.Disabled = isBusy;
+        Insert500000Button.Disabled = isBusy;
     }
 
     private void InitializePayoutTable(List<SlotMachineRule> rules)

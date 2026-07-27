@@ -7,6 +7,7 @@ slot-machine-ui-bet = Bet:
 slot-machine-ui-deposit = Deposit: {$amount}
 slot-machine-ui-luck = Risk your salary for a dream!
 slot-machine-ui-spinning = Spinning...
+slot-machine-ui-collecting = Collecting winnings...
 slot-machine-ui-win-jackpot = JACKPOT! You won {$amount} credits!
 slot-machine-ui-win-triple = Triple {$symbol}! You won {$amount} credits!
 slot-machine-ui-win-apples = Apple pair! You won {$amount} credits!
@@ -28,6 +29,7 @@ slot-machine-popup-inserted = Inserted {$amount} credits.
 slot-machine-popup-collected = Collected {$amount} credits.
 slot-machine-popup-no-power = The machine has no power!
 slot-machine-popup-unavailable = The machine is unavailable.
+slot-machine-popup-collecting = The machine is collecting winnings.
 slot-machine-announcement-sender = XenoSlots
 slot-machine-announcement-jackpot = {$winner} hit the slot machine jackpot and won {$amount} credits!
 

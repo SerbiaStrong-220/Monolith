@@ -46,7 +46,14 @@ public sealed partial class SlotMachineComponent : Component
     [DataField]
     public SoundSpecifier WinSound = new SoundPathSpecifier("/Audio/_Exodus/Gimmicks/SlotMachine/slot_win.ogg");
 
+    [DataField]
+    public TimeSpan CollectDuration = TimeSpan.FromSeconds(10);
+
     public bool HasPendingResult;
+    public bool HasPendingCollection;
+
+    [AutoPausedField]
+    public TimeSpan CollectionEndTime;
     public List<string> PendingReels = new() { "seven", "seven", "seven" };
     public bool PendingIsWin;
     public string PendingWinText = string.Empty;
