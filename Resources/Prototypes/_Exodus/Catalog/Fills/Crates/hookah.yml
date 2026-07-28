@@ -10,16 +10,6 @@
     - id: HookahShaft
     - id: HookahSaucer
     - id: HookahTubePart
-    - id: HookahCoalBox
+    - id: Coal5
     - id: LeavesTobaccoDried
       amount: 10
-
-- type: entity
-  id: CrateServiceHookahCoalBox
-  parent: CrateGenericSteel
-  name: ящик кальянных углей
-  description: Содержит коробки с углём для кальяна.
-  components:
-  - type: StorageFill
-    contents:
-    - id: HookahCoalBox

@@ -1,19 +1,9 @@
-﻿- type: cargoProduct
+- type: cargoProduct
   id: ServiceHookah
   icon:
     sprite: _Exodus/Objects/Specific/Hookah/hookah.rsi
     state: icon
   product: CrateServiceHookah
   cost: 5000
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
-  id: ServiceHookahCoalBox
-  icon:
-    sprite: _Exodus/Objects/Specific/Hookah/hookah.rsi
-    state: icon-coal
-  product: CrateServiceHookahCoalBox
-  cost: 1500
   category: cargoproduct-category-name-service
   group: market

@@ -344,6 +344,10 @@
       Coal: 100
   - type: Item
     heldPrefix: coal
+  - type: Tag # Exodus hookah
+    tags:
+    - HookahCoal
+  - type: HookahCoal # Exodus hookah
 
 - type: entity
   parent: Coal

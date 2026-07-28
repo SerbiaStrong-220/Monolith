@@ -578,6 +578,13 @@ public sealed partial class HookahSystem : EntitySystem
             if (coal.FuelLeft > 0f)
                 continue;
 
+            if (TryComp<StackComponent>(coalUid, out var stack) && stack.Count > 1)
+            {
+                _stack.Use(coalUid, 1, stack);
+                coal.FuelLeft = coal.FuelCapacity;
+                continue;
+            }
+
             SetLit((uid, hookah), coalHolder, false);
             CoalOutPopup((uid, hookah));
 
