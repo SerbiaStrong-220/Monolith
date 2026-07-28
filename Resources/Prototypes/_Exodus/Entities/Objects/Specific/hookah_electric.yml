@@ -5,7 +5,7 @@
   description: Современный кальян с электрическим нагревателем. Без углей, без огня - только табак и батарейка.
   components:
   - type: Sprite
-    sprite: _Exodus/_Exodus/Objects/Specific/HookahElectric/hookah_electric.rsi
+    sprite: _Exodus/Objects/Specific/HookahElectric/hookah_electric.rsi
     drawdepth: SmallObjects
     noRot: true
     layers:
@@ -20,7 +20,7 @@
   - type: Hookah
     hosePrototype: HookahElectricHose
     ropeSprite:
-      sprite: _Exodus/_Exodus/Objects/Specific/HookahElectric/hookah_electric_rope.rsi
+      sprite: _Exodus/Objects/Specific/HookahElectric/hookah_electric_rope.rsi
       state: rope
   - type: HookahElectric
     toggleOnSound:
@@ -34,9 +34,17 @@
     enabled: false
   - type: ContainerContainer
     containers:
+      tobacco_slot: !type:ContainerSlot {} # Exodus hookah
       cell_slot: !type:ContainerSlot {}
   - type: ItemSlots
     slots:
+      tobacco_slot: # Exodus hookah
+        name: hookah-tobacco-slot-name
+        whitelist:
+          tags:
+          - HookahTobacco
+        insertSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         disableEject: true
@@ -62,12 +70,12 @@
   description: Гибкий шланг. Один конец - в кальян, другой - в лёгкие.
   components:
   - type: Sprite
-    sprite: _Exodus/_Exodus/Objects/Specific/HookahElectric/hookah_electric_hose.rsi
+    sprite: _Exodus/Objects/Specific/HookahElectric/hookah_electric_hose.rsi
     drawdepth: Items
     noRot: false
     layers:
     - state: icon
   - type: Item
     size: Ginormous
-    sprite: _Exodus/_Exodus/Objects/Specific/HookahElectric/hookah_electric_hose.rsi
+    sprite: _Exodus/Objects/Specific/HookahElectric/hookah_electric_hose.rsi
   - type: HookahElectricHose

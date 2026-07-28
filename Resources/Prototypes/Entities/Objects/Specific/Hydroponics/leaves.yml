@@ -214,6 +214,9 @@
   - type: Stack
     stackType: LeavesTobaccoDried
     count: 1
+  - type: Tag # Exodus hookah
+    tags:
+    - HookahTobacco
   - type: SolutionContainerManager
     solutions:
       food:
@@ -246,8 +249,9 @@
   - type: Construction
     graph: smokeableGroundTobacco
     node: ground
-  - type: Tag
+  - type: Tag # Exodus hookah
     tags:
-      - Smokable
+    - Smokable
+    - HookahTobacco
   - type: Item
     size: Tiny
