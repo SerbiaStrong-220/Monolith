@@ -4,6 +4,6 @@
     sprite: _Exodus/Objects/Specific/Hookah/hookah.rsi
     state: icon
   product: CrateServiceHookah
-  cost: 5000
+  cost: 10000
   category: cargoproduct-category-name-service
   group: market
