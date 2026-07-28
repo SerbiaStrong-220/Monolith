@@ -73,6 +73,7 @@
   - type: Repairable
     qualities:
     - Applicating
+  - type: GravityAffected # gravrefactor
 
 - type: entity
   id: BallisticArtilleryUnanchorable

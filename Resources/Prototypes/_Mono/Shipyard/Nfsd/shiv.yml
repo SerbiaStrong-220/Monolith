@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Шив # Ru-Localization
   description: Рабочая лошадка флота ТСФ. Оснащена исследовательским отсеком для изучения артефактов и хорошими рудодобывающими возможностями. # Ru-Localization
-  price: 60000
+  price: 65000 # Exodus: prevent shipyard salvage arbitrage.
   category: Small
   group: Security
   access: Security

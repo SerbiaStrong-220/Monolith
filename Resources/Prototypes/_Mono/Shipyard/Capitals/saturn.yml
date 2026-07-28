@@ -13,6 +13,7 @@
   description: Заказан Династией Фаэтон ввиду острой необходимости в тяжёлой огневой мощи против Федерации. Уникальный шаттл, специально разработанный с учётом запросово Династии, расквартированного на Гелиосе. # Ru-Localization
   limit: 1
   hyperwarLimit: 3
+  hyperwarTimelock: 3600
   price: 1540950
   purchasable: false # voucher only
   category: Large

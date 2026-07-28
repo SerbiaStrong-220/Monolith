@@ -23,14 +23,7 @@
       params:
         volume: -2
 
-- type: entity
-  id: PortstrikeAnnounceRuleMinute90
-  parent: PortstrikeAnnounceRuleHour4
-  components:
-  - type: GameRule
-    delay:
-      min: 5400
-      max: 5400
+# Exodus: PortstrikeAnnounceRuleHour2 is maintained in _Exodus/GameRules/timings.yml.
 
 - type: entity
   id: PortstrikeAnnounceRuleHour1

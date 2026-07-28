@@ -178,6 +178,7 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - StaticAmmoRecipePack
+    - StaticGrenades
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -283,6 +284,7 @@
     - SyringeGuns # Delta-V
     emagStaticPacks:
     - StaticAmmoRecipePack
+    - StaticGrenades # Mono
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -498,6 +500,7 @@
     - SecurityEquipmentStatic
     - SecurityPracticeStatic
     - StaticAmmoRecipePack
+    - StaticGrenades
     - SecurityWeaponsStatic
     dynamicPacks:
     - SecurityEquipment
@@ -559,6 +562,7 @@
     runningState: icon
     staticPacks:
     - StaticAmmoRecipePack
+    - StaticGrenades
     - RoundstartShipgunAmmo # Mono
     dynamicPacks:
     - DynamicAmmoRecipePack

@@ -32,6 +32,11 @@ public sealed partial class WorldControllerSystem : EntitySystem
     private Dictionary<EntityUid, Dictionary<Vector2i, List<EntityUid>>> _chunksToLoad = new();
     // </Mono>
 
+    // Exodus-begin: worldgen-loader-exempt
+    private EntityQuery<LoadedChunkComponent> _loadedChunkQuery;
+    private EntityQuery<WorldControllerComponent> _worldControllerQuery;
+    // Exodus-end: worldgen-loader-exempt
+
     private ISawmill _sawmill = default!;
 
     /// <inheritdoc />
@@ -41,6 +46,11 @@ public sealed partial class WorldControllerSystem : EntitySystem
         SubscribeLocalEvent<LoadedChunkComponent, ComponentStartup>(OnChunkLoadedCore);
         SubscribeLocalEvent<LoadedChunkComponent, ComponentShutdown>(OnChunkUnloadedCore);
         SubscribeLocalEvent<WorldChunkComponent, ComponentShutdown>(OnChunkShutdown);
+
+        // Exodus-begin: worldgen-loader-exempt
+        _loadedChunkQuery = GetEntityQuery<LoadedChunkComponent>();
+        _worldControllerQuery = GetEntityQuery<WorldControllerComponent>();
+        // Exodus-end: worldgen-loader-exempt
     }
 
     /// <summary>
@@ -137,8 +147,15 @@ public sealed partial class WorldControllerSystem : EntitySystem
             if (ghostQuery.HasComponent(uid))
                 continue;
 
-            if (worldChunkLoadingExemptQuery.HasComponent(uid)) // Exodus worldgen-loader-exempt
+            // Exodus-begin: worldgen-loader-exempt
+            if (worldChunkLoadingExemptQuery.TryComp(uid, out var loadingExempt))
+            {
+                if (loadingExempt.RetainLoadedChunks)
+                    TryRetainLoadedChunks(uid, xform, PlayerLoadRadius);
+
                 continue;
+            }
+            // Exodus-end: worldgen-loader-exempt
 
             // Mono edit
             TryAddChunkLoader(uid, xform, PlayerLoadRadius);
@@ -297,6 +314,50 @@ public sealed partial class WorldControllerSystem : EntitySystem
 
         return true;
     }
+
+    // Exodus-begin: worldgen-loader-exempt
+    /// <summary>
+    /// Adds already loaded chunks around an entity to the unload protection set without creating new chunks.
+    /// </summary>
+    private bool TryRetainLoadedChunks(
+        EntityUid uid,
+        TransformComponent xform,
+        int radius)
+    {
+        if (xform.MapUid is not { } map ||
+            !_chunksToLoad.TryGetValue(map, out var chunksToLoad) ||
+            !_worldControllerQuery.TryComp(map, out var controller))
+        {
+            return false;
+        }
+
+        var worldPosition = _xformSys.GetWorldPosition(xform);
+        var mapVelocity = _physics.GetMapLinearVelocity(uid, xform: xform);
+        worldPosition += mapVelocity * _updateInterval;
+
+        var chunkCoords = WorldGen.WorldToChunkCoords(worldPosition);
+        var chunks = new GridPointsNearEnumerator(chunkCoords.Floored(), radius);
+
+        while (chunks.MoveNext(out var chunk))
+        {
+            if (!controller.Chunks.TryGetValue(chunk.Value, out var chunkEntity) ||
+                !_loadedChunkQuery.HasComp(chunkEntity))
+            {
+                continue;
+            }
+
+            if (!chunksToLoad.TryGetValue(chunk.Value, out var loaders))
+            {
+                loaders = new List<EntityUid>(1);
+                chunksToLoad[chunk.Value] = loaders;
+            }
+
+            loaders.Add(uid);
+        }
+
+        return true;
+    }
+    // Exodus-end: worldgen-loader-exempt
 }
 
 /// <summary>

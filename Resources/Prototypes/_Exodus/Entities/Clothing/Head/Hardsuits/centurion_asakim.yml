@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingHeadHardsuitBase, ShowMedicalIcons]
+  parent: [ClothingHeadHardsuitBaseNoNightVision, ShowMedicalIcons] # Exodus-asakim-no-helmet-pnv
   id: ClothingHelmetHardsuitCenturionAsakim
   name: centurion kasature-pattern combat harness helmet
   description: Part of an advanced pre-fracture combat harness.

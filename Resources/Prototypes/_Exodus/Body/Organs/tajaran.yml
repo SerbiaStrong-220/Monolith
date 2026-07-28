@@ -10,9 +10,6 @@
     - state: eyeball-l
     - state: eyeball-r
   - type: Organ
-    onAdd:
-    - type: NightVision
-      activateSound: null
-      deactivateSound: null
+    # Exodus: BaseMobTajaran owns the Gen 3 PNV component.
     slotId: eyes
   - type: Eyes

@@ -30,6 +30,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Physics;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Turrets; // Exodus upstream-turret-targeting
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -77,6 +78,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private DestructibleSystem _destructible = default!; // Mono
     [Dependency] private GunSystem _gun = default!; // Mono
     [Dependency] private NPCCombatSystem _npcCombat = default!;
+    [Dependency] private TurretTargetSettingsSystem _turretTargetSettings = default!; // Exodus upstream-turret-targeting
     [Dependency] private SharedStealthSystem _stealth = default!; // Exodus
 
     private EntityQuery<PuddleComponent> _puddleQuery;
@@ -417,6 +419,16 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
                 return 0f;
             }
+            // Exodus-begin upstream turret target settings
+            case TurretTargetingCon:
+            {
+                if (!TryComp<TurretTargetSettingsComponent>(owner, out var turretTargetSettings) ||
+                    _turretTargetSettings.EntityIsTargetForTurret((owner, turretTargetSettings), targetUid))
+                    return 1f;
+
+                return 0f;
+            }
+            // Exodus-end
             case TargetOnFireCon:
                 {
                     if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)

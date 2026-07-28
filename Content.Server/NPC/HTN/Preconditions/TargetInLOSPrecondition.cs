@@ -29,6 +29,11 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
     [DataField]
     public CollisionGroup BulletMask = CollisionGroup.Impassable | CollisionGroup.BulletImpassable;
 
+    // Exodus-begin upstream turret LOS support
+    [DataField("opaqueKey")]
+    public bool UseOpaqueForLOSChecksKey;
+    // Exodus-end
+
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
@@ -47,7 +52,9 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
             return false;
 
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
-        return _interaction.InRangeUnobstructed(owner, target, range, ObstructedMask, predicate: (EntityUid entity) =>
+        // Exodus: opaque-only turret LOS still retains projectile collision and friendly-fire safeguards.
+        var obstructedMask = UseOpaqueForLOSChecksKey ? CollisionGroup.Opaque : ObstructedMask;
+        return _interaction.InRangeUnobstructed(owner, target, range, obstructedMask, predicate: (EntityUid entity) =>
         {
             return _physicsQuery.TryGetComponent(entity, out var physics) && (physics.CollisionLayer & (int)BulletMask) == 0 // ignore if it can't collide with bullets
                 || _requireTargetQuery.HasComponent(entity); // or if it requires targeting

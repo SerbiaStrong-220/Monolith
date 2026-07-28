@@ -18,7 +18,7 @@
       time: 72000 # 20 hours
     # Exodus-Rework-Time-Roles-End
   startingGear: BailiffGear
-  icon: JobIconBailiff
+  icon: JobIconTSFCaptain
   supervisors: job-supervisors-sheriff
   weight: 150
   displayWeight: 60

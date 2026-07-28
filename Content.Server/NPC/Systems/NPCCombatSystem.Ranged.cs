@@ -161,7 +161,9 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
-                comp.TargetInLOS = InRangeGoodTarget((gunUid, gun), uid, comp.Target, distance, comp.ShotsThreshold, comp.ObstructedMask, comp.BulletMask) // Mono
+                // Exodus: upstream opaque LOS cannot bypass bullet collision or friendly-fire checks.
+                var obstructedMask = comp.UseOpaqueForLOSChecks ? CollisionGroup.Opaque : comp.ObstructedMask;
+                comp.TargetInLOS = InRangeGoodTarget((gunUid, gun), uid, comp.Target, distance, comp.ShotsThreshold, obstructedMask, comp.BulletMask) // Mono
                     && IsNoEnemyInLOS(uid, comp.BulletMask, comp.Target, distance); // Exodus
             }
 

@@ -10,6 +10,10 @@
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes
   shuttlePath: /SharedMaps/_Mono/Shuttles/Carrier/zephyr.yml
+  addComponents: # Exodus TSF faction-owned drone target filtering
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
   guidebookPage: Null
   class:
   - Pursuit

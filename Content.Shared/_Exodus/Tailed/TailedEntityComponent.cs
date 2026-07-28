@@ -13,6 +13,12 @@ namespace Content.Shared._Exodus.Tailed;
 public sealed partial class TailedEntityComponent : Component
 {
     /// <summary>
+    ///     Whether explosion damage dealt to tail segments is applied to the head once per explosion.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AggregateSegmentExplosionDamage;
+
+    /// <summary>
     /// amount of entities in between the tail and the head
     /// </summary>
     [DataField, AutoNetworkedField]

@@ -223,7 +223,7 @@
   parent: MaterialBase
   id: SheetUraniumFissile
   name: fissile uranium
-  description: Ingots of pure, unadulterated weapons-grade uranium isotopes. Expect some trouble with this.
+  description: Ingots of pure, unadulterated weapons-grade uranium isotopes. Expect some trouble with this. DEFINITELY don't keep them close together.
   suffix: Full
   components:
   - type: Sprite
@@ -254,14 +254,14 @@
   - type: Material
   - type: RadiationReceiver
   - type: RadiationSource
-    intensity: 0.4
+    intensity: 0.4 # Exodus: restore pre-#4343 fissile criticality balance.
   - type: ChainRadiation
-    baseIntensity: 0.4
-    coefficient: 0.1 # critical mass at 25
-    explosionThreshold: 10 # let it cook a bit
+    baseIntensity: 0.4 # Exodus: restore pre-#4343 fissile criticality balance.
+    coefficient: 0.1 # Exodus: critical mass at 25.
+    explosionThreshold: 10 # Exodus: pre-#4343 value.
     totalIntensity: 15000
-    intensitySlope: 2000
-    maxIntensity: 4000
+    intensitySlope: 2000 # Exodus: pre-#4343 value.
+    maxIntensity: 4000 # Exodus: pre-#4343 value.
   - type: Appearance
   - type: PhysicalComposition
     materialComposition:

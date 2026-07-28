@@ -17,10 +17,15 @@
   components:
   - type: Organ
     onAdd:
-    - type: NightVision
-      isEquipment: false
-      activateSound: null
-      deactivateSound: null
+    - type: NightVision # Gen 4 wide-quadtube # Exodus PNV tint
+      relayOverlay: false
+      goggleEffect: true
+      viewCircleRadius: 450
+      viewCircleCount: 4
+      viewCircleSpacing: 280
+      action: ActionToggleNightVision
+      phosphorColor: "#FF3DB1" # Exodus-asakim-pnv-tint
+      lightingColor: "#FFFFFF32" # Exodus-asakim-pnv-tint
 
 - type: entity
   id: OrganAsakimHeart

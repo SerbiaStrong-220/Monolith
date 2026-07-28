@@ -154,7 +154,12 @@ namespace Content.Client.Viewport
 
             DebugTools.AssertNotNull(_viewport);
 
-            _viewport!.Render();
+            // Exodus-begin disable-z-levels
+            if (Content.Shared._CE.ZLevels.Core.EntitySystems.CESharedZLevelsSystem.ZLevelsEnabled)
+                RenderZLevels(handle, _viewport!); // CrystallEdge Process multi-Z rendering
+            else
+                _viewport!.Render();
+            // Exodus-end
 
             if (_queuedScreenshots.Count != 0)
             {

@@ -159,4 +159,4 @@
   - NFAdventure
   - Hyperwar
   - RoundEndRuleHour3
-  - PortstrikeAnnounceRuleMinute90
+  # - PortstrikeAnnounceRuleMinute90 # Exodus: use only Exodus portstrike configuration.

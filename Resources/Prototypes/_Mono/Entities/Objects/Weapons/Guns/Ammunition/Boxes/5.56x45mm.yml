@@ -19,10 +19,6 @@
       ballistic-ammo: !type:Container
   - type: Sprite
     sprite: _Mono/Objects/Weapons/Guns/Ammunition/Boxes/5.56x45mm.rsi
-  - type: MagazineVisuals
-    magState: mag
-    steps: 4
-    zeroVisible: false
   - type: Tag
     tags:
     - Magazine556x45mmBox
@@ -51,8 +47,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   parent: BaseAmmoBox556x45mm
@@ -65,8 +59,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: practice
 
 - type: entity
@@ -80,8 +72,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: incendiary
 
 - type: entity
@@ -95,8 +85,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: uranium
 
 # Upstream
@@ -111,8 +99,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: rubber
 
 # Mono AP syst
@@ -128,8 +114,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: HP
 
 - type: entity
@@ -143,8 +127,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: RIP
 
 #armor-piercing:
@@ -160,8 +142,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
     - state: plasteelAP
 
 #big ammo boxes
@@ -179,14 +159,8 @@
     proto: Cartridge556x45mmFMJ
   - type: Sprite
     layers:
-    - state: base-b # Frontier: base-big<base-b
+    - state: base-b
       map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1 # Frontier: mag-big-1<magb-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: magb # Frontier: mag-big<magb
-    steps: 4
-    zeroVisible: false
   - type: Appearance
 
 - type: entity
@@ -197,11 +171,3 @@
   - type: BallisticAmmoProvider
     capacity: 210
     proto: Cartridge556x45mmRubber
-  - type: Sprite
-    sprite: _Mono/Objects/Weapons/Guns/Ammunition/Boxes/5.56x45mm.rsi
-    layers:
-    - state: base-b
-      map: ["enum.GunVisualLayers.Base"]
-    - state: magb-3
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: practice-b

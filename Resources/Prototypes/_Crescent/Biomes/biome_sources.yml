@@ -45,6 +45,27 @@
 #   swapDistance: null # infinite
 #   priority: 2500 #should not matter, but big enough to override all the rest
 
+# Exodus-begin: upstream beacon biomes remain unhooked with Exodus world generation.
+# - type: entity
+#   id: BiomeSourceClusterA
+#   parent: BaseBiomeSource
+#   name: INSO-357k biome source
+#   components:
+#   - type: SpaceBiomeSource
+#     id: BiomeClusterA
+#     swapDistance: 1200
+#     priority: 500
+#
+# - type: entity
+#   id: BiomeSourceWilds
+#   parent: BaseBiomeSource
+#   name: wilds biome source
+#   components:
+#   - type: SpaceBiomeSource
+#     id: BiomeWilds
+#     swapDistance: 1200
+#     priority: 500
+# Exodus-end
 
 - type: entity
   id: BiomeSourceFarReachesIV

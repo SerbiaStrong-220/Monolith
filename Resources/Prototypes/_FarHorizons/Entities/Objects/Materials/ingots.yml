@@ -46,12 +46,12 @@
     signature: 150000 # 0.1x fissile uranium - more in bulk due to how its obtained
   - type: RadiationReceiver # Mono
   - type: ChainRadiation # Mono
-    baseIntensity: 0.4
-    coefficient: 0.1
-    explosionThreshold: 10 # The limit is about 20-25, like uranium.
+    baseIntensity: 0.4 # Exodus: restore pre-upstream-merge plutonium criticality balance.
+    coefficient: 0.1 # Exodus: old value.
+    explosionThreshold: 10 # Exodus: old value.
     totalIntensity: 15000
-    intensitySlope: 2000
-    maxIntensity: 4000
+    intensitySlope: 2000 # Exodus: old value.
+    maxIntensity: 4000 # Exodus: old value.
   - type: DamageOnLand # Mono
     damage:
       types:

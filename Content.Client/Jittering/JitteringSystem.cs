@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Shared._CE.ZLevels.Core.Components; // Mono
+using Content.Shared._CE.ZLevels.Core.EntitySystems; // Exodus-disable-z-levels
 using Content.Shared.Jittering;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -30,7 +32,11 @@ namespace Content.Client.Jittering
 
             var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
 
-            jittering.StartOffset = sprite.Offset;
+            // Exodus-begin disable-z-levels
+            jittering.StartOffset = CESharedZLevelsSystem.ZLevelsEnabled && TryComp(uid, out CEZPhysicsComponent? zPhys)
+                ? zPhys.SpriteOffsetDefault
+                : sprite.Offset;
+            // Exodus-end
             _animationPlayer.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
@@ -58,6 +64,7 @@ namespace Content.Client.Jittering
 
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
         {
+            var previousJitter = jittering.LastJitter; // Mono
             var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
             var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude),
                 _random.NextFloat(amplitude / 4f, amplitude / 3f));
@@ -94,7 +101,7 @@ namespace Content.Client.Jittering
                         Property = nameof(SpriteComponent.Offset),
                         KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
+                            new AnimationTrackProperty.KeyFrame(jittering.StartOffset + previousJitter, 0f),
                             new AnimationTrackProperty.KeyFrame(jittering.StartOffset + offset, length),
                         }
                     }

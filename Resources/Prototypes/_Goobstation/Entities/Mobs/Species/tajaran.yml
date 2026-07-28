@@ -43,6 +43,17 @@
   #  activateSound: null
   #  deactivateSound: null
   # Exodus-Change-End 
+  # Exodus-begin upstream PNV Gen 3
+  - type: NightVision
+    relayOverlay: false
+    goggleEffect: true
+    viewCircleRadius: 450
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
+  # Exodus-end
   - type: MeleeWeapon
     soundHit:
       collection: Punch

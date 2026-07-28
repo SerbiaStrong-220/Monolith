@@ -18,6 +18,7 @@
   addComponents:
   - type: IFF
     color: "#ccaa55"
+  # Exodus: WorldGenDistanceCarver remains available in code, but is intentionally not attached to POIs.
 
 - type: gameMap
   id: Mining

@@ -19,6 +19,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.NightVision; // Exodus upstream PNV
 using Content.Shared.Overlays;
 using Content.Shared.Projectiles; // Exodus
 using Content.Shared.Radio;
@@ -68,6 +69,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ExtinguishEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GunShotUserEvent>(RefRelayInventoryEvent); // Exodus
+        SubscribeLocalEvent<InventoryComponent, RefreshNightVisionEvent>(RefRelayInventoryEvent); // Exodus upstream PNV
         SubscribeLocalEvent<InventoryComponent, ProjectileHitTargetEvent>(RefRelayInventoryEvent); // Exodus
 
         // Eye/vision events
@@ -86,7 +88,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSyndicateIconsComponent>>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowCriminalRecordIconsComponent>>(RefRelayInventoryEvent);
 
-        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<NightVisionComponent>>(RefRelayInventoryEvent); // Goobstation
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<WWDPNightVisionComponent>>(RefRelayInventoryEvent); // Goobstation
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ThermalVisionComponent>>(RefRelayInventoryEvent); // Goobstation
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ThermalSightComponent>>(RefRelayInventoryEvent);
 

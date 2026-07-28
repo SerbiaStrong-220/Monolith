@@ -22,7 +22,13 @@ public sealed partial class HitscanBasicDamageSystem : EntitySystem
 
         var dmg = ent.Comp.Damage * _damage.UniversalHitscanDamageModifier;
 
-        var damageDealt = _damage.TryChangeDamage(args.HitEntity, dmg, origin: args.Shooter, tool: args.Gun); // Exodus: bring args meaning into a single way
+        var damageDealt = _damage.TryChangeDamage(
+            args.HitEntity,
+            dmg,
+            origin: args.Shooter,
+            tool: args.Gun,
+            armorPenetration: ent.Comp.ArmorPenetration,
+            ignoreResistances: ent.Comp.IgnoreResistances); // Exodus: preserve shooter/gun attribution with upstream AP.
 
         if (damageDealt == null)
             return;

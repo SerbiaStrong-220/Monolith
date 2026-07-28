@@ -19,6 +19,9 @@
       - ChameleonDisguise # no becoming kleiner
       - MindContainer # no
       - Pda # PDAs currently make you invisible /!\
+      tags:
+      - Wall # Exodus - invisible fix
+      - Window # Exodus - invisible fix
     disguiseProto: ChameleonDisguise
 
 - type: entity

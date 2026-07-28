@@ -31,6 +31,8 @@
     - type: NpcFactionMember # Exodus SecColossus faction
       factions:
       - SecColossus
+    - type: ChatRank # Exodus upstream chat prefix
+      rank: cc-stc
   - !type:GiveItemOnHolidaySpecial
     holiday: FrontierBirthday
     prototype: FrontierBirthdayGift

@@ -267,6 +267,7 @@
     - SentinelF # Exodus tsfcm-sentinel-f
     - Dagger
     - Calypso
+    - Razorback # Exodus voucher-only TSF vessel
 
 # end T1
 
@@ -396,6 +397,32 @@
     companyName: TSF
     vessels:
     - TSFNPolaris
+  - type: StaticPrice
+    vendPrice: 800000
+
+# Exodus: Restore the Fujian voucher required by the TSF catalogue and shipyard.
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherFujian
+  name: TSF Fujian LPC [T3]
+  description: A small card that contains the data for the procurement of an Type-53C Fujian-class escort carrier from the flagship's reserves.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/lpcnew.rsi
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#05ffff"
+    - state: screen3
+      color: "#05ffff"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 3600 # 1 hour
+    consoleType: Security
+    companyName: TSF
+    vessels:
+    - Fujian
   - type: StaticPrice
     vendPrice: 800000
 
@@ -614,6 +641,32 @@
   - type: StaticPrice
     vendPrice: 20000
 
+# Exodus: Restore the Layak voucher required by the PDV catalogue and shipyard.
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherLayak
+  name: PDV Layak LPC [T1]
+  description: A small card that contains the data for the procurement of a Layak-class corvette from the flagship's reserves.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/lpcnew.rsi
+    layers:
+    - state: icon
+    - state: screen
+      color: "#1eff00"
+    - state: screen7
+      color: "#1eff00"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 3600 # one hour
+    consoleType: BlackMarket
+    companyName: PDV
+    vessels:
+    - Layak
+  - type: StaticPrice
+    vendPrice: 20000
+
 - type: entity
   parent: ShipVoucherPdvT0
   id: ShipVoucherPdvT1
@@ -642,6 +695,8 @@
     - Kalisto
     - Metis
     - Enceladus # Exodus enceladus
+    - Prowler # Exodus voucher-only PDV vessel
+    - Layak # Exodus voucher-only PDV vessel
 # end T1
 
 # start T2
@@ -746,6 +801,32 @@
   - type: StaticPrice
     vendPrice: 195000
 
+# Exodus: Restore the Kortik-R voucher required by the PDV catalogue and shipyard.
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherKortikT2
+  name: PDV Kortik-R LPC [T2]
+  description: A small card that contains the data for the procurement of a Kortik-R-class frigate from the flagship's reserves.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/lpcnew.rsi
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#1eff00"
+    - state: screen4
+      color: "#1eff00"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 3600 # one hour
+    consoleType: BlackMarket
+    companyName: PDV
+    vessels:
+    - KortikR
+  - type: StaticPrice
+    vendPrice: 20000
+
 - type: entity
   parent: ShipVoucherPdvT0
   id: ShipVoucherPdvT2
@@ -770,6 +851,7 @@
     - Europa
     - Vulture
     - Ganymede
+    - KortikR # Exodus voucher-only PDV vessel
 # end T2
 
 # start T3
@@ -796,6 +878,32 @@
     companyName: PDV
     vessels:
     - Saintie
+  - type: StaticPrice
+    vendPrice: 325000
+
+# Exodus: Restore the Kortik-EM voucher required by the PDV catalogue and shipyard.
+- type: entity
+  parent: BaseShipLPCRenewable
+  id: ShipVoucherKortik
+  name: PDV Kortik-EM LPC [T3]
+  description: A small card that contains the data for the procurement of a Kortik-EM-class frigate from the flagship's reserves.
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Misc/lpcnew.rsi
+    layers:
+    - state: icon_capital
+    - state: screen
+      color: "#1eff00"
+    - state: screen1
+      color: "#1eff00"
+      shader: unshaded
+  - type: ShipyardVoucher
+    destroyOnEmpty: false
+    cooldown: 5100 # hour and 25 minutes
+    consoleType: BlackMarket
+    companyName: PDV
+    vessels:
+    - Kortik
   - type: StaticPrice
     vendPrice: 325000
 

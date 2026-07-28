@@ -237,7 +237,8 @@ public partial class SharedGunSystem
             return false;
 
         // If it's a speedloader try to get ammo from it.
-        if (EntityManager.HasComponent<SpeedLoaderComponent>(uid))
+        // SS220: use the EntitySystem proxy API.
+        if (HasComp<SpeedLoaderComponent>(uid))
         {
             var freeSlots = 0;
 

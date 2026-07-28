@@ -24,13 +24,7 @@
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
-  - type: WorldGenDistanceCarver
-    distanceThresholds:
-      # Dead zone
-      - maxDistance: 500
-        prob: 0.0
-      - maxDistance: 1000
-        prob: 0.3
+  # Exodus: WorldGenDistanceCarver remains available in code, but is intentionally not attached to POIs.
   # Exodus-nebula-update: cargo depots spawn in the outer sector and should not extend 7G coverage that far.
 
 - type: pointOfInterest

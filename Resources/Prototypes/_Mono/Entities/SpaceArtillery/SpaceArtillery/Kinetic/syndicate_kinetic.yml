@@ -156,9 +156,9 @@
 - type: entity
   id: WeaponTurretHydra
   name: Hydra 220mm battery
-  suffix: Large, T3
+  suffix: Large, T4 # SS220 upstream Hydra tier
   parent:
-  - BallisticArtillery # Exodus turret-anchorable (no RequiresGrid)
+  - BallisticArtilleryUnanchorable # SS220 upstream Hydra mounting
   - ShipGunExplodes5x5 # Exodus self-destruct (blast size only; HP/armor stay unique below)
   description: A main cannonade of syndicate origin, the hydra is a monstrous tri-barreled battery of 220-millimeter pain, designed to shatter corpations' toughest vessels. Loads with a similar mechanism as the anaconda handgun.
   components:
@@ -189,11 +189,11 @@
         layer:
         - MachineLayer
   - type: Gun
-    projectileSpeed: 325
+    projectileSpeed: 410 # SS220 upstream Hydra balance
     recoil: 50 # 2x
     minAngle: 0
     maxAngle: 3
-    fireRate: 0.2
+    fireRate: 0.3 # SS220 upstream Hydra balance
     burstCooldown: 10
     burstFireRate: 2
     shotsPerBurst: 3
@@ -294,7 +294,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    projectileSpeed: 720
+    projectileSpeed: 450 # SS220 upstream Leviathan balance
     recoil: 100 # 4x
     minAngle: 0
     maxAngle: 1

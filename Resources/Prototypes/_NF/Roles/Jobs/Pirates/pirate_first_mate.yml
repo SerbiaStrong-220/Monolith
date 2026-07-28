@@ -39,6 +39,8 @@
       - PirateNF
     - type: SpecialSectorStationRecord # Exodus
       recordGeneration: NoRecord
+    - type: ChatRank # Exodus upstream chat prefix
+      rank: pdv-asvaran
   - !type:AddImplantSpecial
     implants: [ FreelanceTrackingImplant ]
   - !type:AddLanguageSpecial # Monolith - Languages

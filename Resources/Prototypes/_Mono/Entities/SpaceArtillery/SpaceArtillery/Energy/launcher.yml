@@ -613,16 +613,15 @@
     maxCharge: 56250 # 20 seconds of constant fire, 375 rock walls destroyed per full mag. 5 mining pulsers needed to equal its output.
     startingCharge: 56250
   - type: BatterySelfRecharger
-    autoRechargePause: true
-    autoRechargePauseTime: 30
+    # SS220 upstream Apollo balance: continuous lower-rate recharging.
     autoRecharge: true
-    autoRechargeRate: 56250
+    autoRechargeRate: 2500
   - type: FireControlRotate
   - type: ExaminableBattery
   - type: WirelessNetworkConnection
     range: 500
   - type: Gun
-    fireRate: 15 # Exodus-Balance: 20>15
+    fireRate: 25 # SS220 upstream Apollo balance
     recoil: 0
     minAngle: 0
     maxAngle: 0

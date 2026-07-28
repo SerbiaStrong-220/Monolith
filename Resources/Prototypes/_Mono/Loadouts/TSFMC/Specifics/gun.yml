@@ -5,11 +5,21 @@
   loadouts:
   - FactionFrostLoadout
   - FactionDrozdLoadout
-  - FactionLecterLoadout
-  - FactionVulcanLoadout
+  - FactionRiversongLoadout
+  - FactionDragonfangLoadout
   - FactionBanditLoadout
   fallbacks:
   - FactionFrostLoadout
+
+- type: loadoutGroup
+  id: TsfmcFirearmCommand
+  name: loadout-group-weapon
+  minLimit: 0
+  loadouts:
+  - FactionRiversongLoadout
+  - FactionDrozdLoadout
+  - FactionDragonfangLoadout
+  - SecurityGuardEnforcerLoadout
 
 - type: loadoutGroup
   id: TsfmcFirearm

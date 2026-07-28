@@ -5,6 +5,7 @@
   description: Передан вам, КПВ ТСФ, от Флота ТСФ. В этом шаттле - целый флот в одном. # Ru-Localization
   limit: 1
   hyperwarLimit: 3
+  hyperwarTimelock: 3600
   price: 1225950
   purchasable: false # voucher only
   category: Large

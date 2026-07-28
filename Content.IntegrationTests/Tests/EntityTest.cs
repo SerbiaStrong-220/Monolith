@@ -108,6 +108,7 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
                     .Where(p => !p.Components.ContainsKey("GridSpawner")) // Mono - We shouldn't spawn grids.
                     .Where(p => !p.Components.ContainsKey("TailedEntity")) // Exodus | Honestly I don't know what is broking test, call stack doesn't gives anything usefull, the error is outside of any changed code for TailedEntitySystem
+                    .Where(p => !p.Components.ContainsKey("Meteor")) // Exodus: upstream meteor prototype requires map setup.
                     .Where(p => p.Categories.All(x => x.ID != SpawnerCategory)) // mono
                     .Select(p => p.ID)
                     .ToList();
