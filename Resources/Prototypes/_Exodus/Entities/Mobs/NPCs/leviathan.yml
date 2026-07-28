@@ -56,7 +56,7 @@
     radius: 3
     energy: 3
   - type: TailedEntity
-    aggregateSegmentExplosionDamage: true
+    aggregateSegmentExplosionDamage: false
     amount: 65
     spacing: 1
     prototype: SpaceWhaleSegment
