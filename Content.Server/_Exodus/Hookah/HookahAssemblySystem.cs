@@ -1,8 +1,9 @@
-﻿using Content.Shared.Interaction;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared._Exodus.Hookah.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +20,7 @@ public sealed class HookahAssemblySystem : EntitySystem
 
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -61,7 +63,7 @@ public sealed class HookahAssemblySystem : EntitySystem
 
     private void Assemble(EntityUid target, EntityUid used, EntProtoId resultProto, SoundSpecifier sound)
     {
-        var coords = Transform(target).Coordinates;
+        var coords = _transform.GetMapCoordinates(target);
         var result = Spawn(resultProto, coords);
         _audio.PlayPvs(sound, result);
         QueueDel(target);

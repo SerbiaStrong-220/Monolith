@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -69,7 +70,7 @@ public sealed partial class HookahSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HookahComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<HookahComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<HookahComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HookahComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<HookahComponent, InteractUsingEvent>(OnInteractUsing);
@@ -81,8 +82,7 @@ public sealed partial class HookahSystem : EntitySystem
         SubscribeLocalEvent<HookahHoseComponent, DroppedEvent>(OnHoseDropped);
         SubscribeLocalEvent<HookahHoseComponent, EntParentChangedMessage>(OnHoseParentChanged);
 
-        SubscribeLocalEvent<SmokingFuelComponent, ComponentInit>(OnFuelInit);
-        SubscribeLocalEvent<SmokingFuelComponent, ComponentShutdown>(OnFuelShutdown);
+        SubscribeLocalEvent<SmokingFuelComponent, ComponentStartup>(OnFuelStartup);
 
         InitializeElectric();
     }
@@ -93,7 +93,7 @@ public sealed partial class HookahSystem : EntitySystem
         UpdateCoal(frameTime);
     }
 
-    private void OnFuelInit(Entity<SmokingFuelComponent> ent, ref ComponentInit args)
+    private void OnFuelStartup(Entity<SmokingFuelComponent> ent, ref ComponentStartup args)
     {
         if (!HasComp<ItemSlotsComponent>(ent))
             return;
@@ -102,11 +102,7 @@ public sealed partial class HookahSystem : EntitySystem
             ent.Comp.TobaccoSlot = slot;
     }
 
-    private void OnFuelShutdown(Entity<SmokingFuelComponent> ent, ref ComponentShutdown args)
-    {
-    }
-
-    private void OnInit(Entity<HookahComponent> ent, ref ComponentInit args)
+    private void OnStartup(Entity<HookahComponent> ent, ref ComponentStartup args)
     {
         if (!HasComp<ItemSlotsComponent>(ent))
         {
@@ -183,7 +179,7 @@ public sealed partial class HookahSystem : EntitySystem
 
         var visuals = EnsureComp<JointVisualsComponent>(hose);
         visuals.Sprite = ent.Comp.RopeSprite;
-        visuals.Target = ent;
+        visuals.Target = GetNetEntity(ent.Owner);
         visuals.OffsetB = offset;
         Dirty(hose, visuals);
 
@@ -350,7 +346,7 @@ public sealed partial class HookahSystem : EntitySystem
         if (TryComp<BloodstreamComponent>(args.User, out var bloodstream))
         {
             _reactive.DoEntityReaction(args.User, inhaled, ReactionMethod.Ingestion);
-            _bloodstream.TryAddToBloodstream((args.User, bloodstream), inhaled);
+            _bloodstream.TryAddToChemicals(args.User, inhaled, bloodstream);
         }
 
         Exhale(args.User, hookah);
@@ -405,7 +401,7 @@ public sealed partial class HookahSystem : EntitySystem
 
         if (TryComp<StackComponent>(tobacco, out var stack) && stack.Count > 1)
         {
-            _stack.TryUse((tobacco, stack), 1);
+            _stack.Use(tobacco, 1, stack);
             _itemSlots.SetLock(hookah, fuel.TobaccoSlot, true);
         }
         else
@@ -445,7 +441,8 @@ public sealed partial class HookahSystem : EntitySystem
         if (!TryComp<HookahComponent>(ent.Comp.HookahUid, out var hookah))
             return;
 
-        if (TryComp<HookahElectricComponent>(hookah.Owner, out var electric))
+        Entity<HookahComponent> hookahEnt = (ent.Comp.HookahUid, hookah);
+        if (TryComp<HookahElectricComponent>(hookahEnt, out var electric))
         {
             var changed = false;
 
@@ -464,8 +461,8 @@ public sealed partial class HookahSystem : EntitySystem
             if (!changed)
                 return;
 
-            Dirty(hookah.Owner, electric);
-            UpdateElectricAppearance((hookah.Owner, hookah), electric);
+            Dirty(hookahEnt, electric);
+            UpdateElectricAppearance(hookahEnt, electric);
             return;
         }
 
@@ -544,7 +541,7 @@ public sealed partial class HookahSystem : EntitySystem
                 continue;
 
             RemComp<JointVisualsComponent>(uid);
-            _hands.TryDrop((container.Owner, hands), uid);
+            _hands.TryDrop(container.Owner, uid, handsComp: hands);
             _popup.PopupEntity(Loc.GetString(HookahHoseTooFar), container.Owner, container.Owner);
         }
     }
