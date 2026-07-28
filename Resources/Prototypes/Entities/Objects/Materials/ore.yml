@@ -346,6 +346,7 @@
     heldPrefix: coal
   - type: Tag # Exodus hookah
     tags:
+    - Ore
     - HookahCoal
   - type: HookahCoal # Exodus hookah
 
