@@ -50,6 +50,7 @@
   - type: GhostTakeoverAvailable
   - type: WorldChunkLoadingExempt
     retainLoadedChunks: true
+    retainLoadedChunksRadius: 5
   - type: CleanupImmune
   - type: PointLight
     color: "#FF8227FF"

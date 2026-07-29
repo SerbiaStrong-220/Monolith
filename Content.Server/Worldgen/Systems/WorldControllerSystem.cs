@@ -151,7 +151,7 @@ public sealed partial class WorldControllerSystem : EntitySystem
             if (worldChunkLoadingExemptQuery.TryComp(uid, out var loadingExempt))
             {
                 if (loadingExempt.RetainLoadedChunks)
-                    TryRetainLoadedChunks(uid, xform, PlayerLoadRadius);
+                    TryRetainLoadedChunks(uid, xform, Math.Max(0, loadingExempt.RetainLoadedChunksRadius));
 
                 continue;
             }

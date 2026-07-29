@@ -11,4 +11,10 @@ public sealed partial class WorldChunkLoadingExemptComponent : Component
     /// </summary>
     [DataField]
     public bool RetainLoadedChunks;
+
+    /// <summary>
+    /// Radius in worldgen chunks within which loaded chunks are protected from unloading.
+    /// </summary>
+    [DataField]
+    public int RetainLoadedChunksRadius = 2;
 }
