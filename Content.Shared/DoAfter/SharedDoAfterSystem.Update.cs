@@ -142,6 +142,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.StartTime = GameTiming.CurTime;
             doAfter.Completed = false;
         }
+
+        RaiseDoAfterMovementSlowdownChanged(doAfter); // Exodus do-after-movement-slowdown
     }
 
     private bool ShouldCancel(DoAfter doAfter,
