@@ -7,13 +7,13 @@
 - type: vessel
   id: Merchant
   parent: BaseVessel
-  name: MAWC Merchant
-  description: An "Experimental" civilian starliner design, developed with the ability to sell goods in it's rear with a compact storage module! Just don't mind the military IFF. Supposedly manufactured by a certain shady weapons corporation.
+  name: МАВК Мерчант
+  description: «Экспериментальный» проект гражданского звездолета, разработанный с возможностью продажи товаров в его задней части благодаря компактному складскому модулю! Просто не обращайте внимания на военную систему опознавания «свой-чужой». Предположительно изготовлен некой сомнительной оружейной корпорацией.
   price: 290000 # 210K base + 80K markup
   category: Large
   group: Scrap
   access: Mercenary
-  shuttlePath: /Maps/_Mono/Shuttles/Scrap/merchant.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/merchant.yml
   guidebookPage: Null
   class:
   - Capital
@@ -24,7 +24,7 @@
 - type: gameMap
   id: Merchant
   mapName: 'MAWC Merchant'
-  mapPath: /Maps/_Mono/Shuttles/Scrap/merchant.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Scrap/merchant.yml
   minPlayers: 0
   stations:
     Merchant:
