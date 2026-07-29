@@ -23,7 +23,7 @@
 
 - type: gameMap
   id: Мерчант
-  mapName: 'MAWC Merchant'
+  mapName: 'Мавк Мерчант'
   mapPath: /SharedMaps/_Mono/Shuttles/Scrap/merchant.yml
   minPlayers: 0
   stations:
