@@ -22,7 +22,7 @@
   - AME
 
 - type: gameMap
-  id: Мерчант
+  id: Merchant
   mapName: 'Мавк Мерчант'
   mapPath: /SharedMaps/_Mono/Shuttles/Scrap/merchant.yml
   minPlayers: 0
