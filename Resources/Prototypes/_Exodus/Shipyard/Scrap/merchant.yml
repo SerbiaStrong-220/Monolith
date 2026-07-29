@@ -13,7 +13,7 @@
   category: Large
   group: Scrap
   access: Mercenary
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/merchant.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Scrap/merchant.yml
   guidebookPage: Null
   class:
   - Capital
@@ -23,15 +23,15 @@
 
 - type: gameMap
   id: Merchant
-  mapName: 'Мавк Мерчант'
-  mapPath: /SharedMaps/_Mono/Shuttles/Scrap/merchant.yml
+  mapName: 'МАВК Мерчант'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Scrap/merchant.yml
   minPlayers: 0
   stations:
     Merchant:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Merchant MIL{1}'
+          mapNameTemplate: 'Мерчант MIL{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
