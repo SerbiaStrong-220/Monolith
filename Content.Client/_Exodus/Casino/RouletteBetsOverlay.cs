@@ -34,6 +34,7 @@ public sealed class RouletteBetsOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly Font _amountFont;
     private readonly Font _tooltipFont;
+    private readonly Dictionary<EntityUid, RouletteRenderData> _renderData = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities | OverlaySpace.ScreenSpace;
 
@@ -51,8 +52,7 @@ public sealed class RouletteBetsOverlay : Overlay
     {
         if (args.Space == OverlaySpace.ScreenSpace)
         {
-            DrawTotals(args);
-            DrawTooltip(args);
+            DrawScreen(args);
             return;
         }
 
@@ -62,181 +62,174 @@ public sealed class RouletteBetsOverlay : Overlay
     private void DrawChips(in OverlayDrawArgs args)
     {
         var handle = args.WorldHandle;
-        var query = _entity.AllEntityQueryEnumerator<RouletteVisualsComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var roulette, out var transform))
+        foreach (var (uid, data) in _renderData)
         {
-            if (transform.MapID != args.MapId || roulette.WorldBets.Length == 0)
+            if (!_entity.TryGetComponent(uid, out TransformComponent? transform) || transform.MapID != args.MapId)
                 continue;
 
             var worldPosition = _transform.GetWorldPosition(transform);
-            if (!args.WorldBounds.Enlarged(2f).Contains(worldPosition))
+            if (!args.WorldBounds.Enlarged(4f).Contains(worldPosition))
                 continue;
 
             handle.SetTransform(_transform.GetWorldMatrix(uid));
-            for (var i = 0; i < roulette.WorldBets.Length; i++)
-                DrawChip(handle, roulette.WorldBets, i);
+            for (var i = 0; i < data.Chips.Length; i++)
+                DrawChip(handle, data.Chips[i]);
         }
 
         handle.SetTransform(Matrix3x2.Identity);
     }
 
-    private void DrawChip(DrawingHandleWorld handle, RouletteWorldBet[] bets, int index)
+    private void DrawChip(DrawingHandleWorld handle, RouletteRenderChip chip)
     {
-        var bet = bets[index];
-        var center = GetCellCenter(bet.Type, bet.Number);
-        var playerIndex = GetPlayerIndex(bets, index);
-        var playerCount = GetPlayerCount(bets, index);
-        var row = playerIndex / 3;
-        var rowCount = Math.Min(3, playerCount - row * 3);
-        var stackOffset = new Vector2((playerIndex % 3 - (rowCount - 1) / 2f) * 0.07f, row * 0.055f);
-        var age = Math.Clamp((float) ((_timing.CurTime - bet.PlacedAt).TotalSeconds / 0.35), 0f, 1f);
+        var age = Math.Clamp((float) ((_timing.CurTime - chip.PlacedAt).TotalSeconds / 0.35), 0f, 1f);
         var scale = 0.7f + EaseOutBack(age) * 0.3f;
         var radius = 0.075f * scale;
-        var position = center + stackOffset;
-        var color = ChipColors[bet.PlayerSlot % ChipColors.Length];
+        var color = ChipColors[chip.PlayerSlot % ChipColors.Length];
 
-        handle.DrawCircle(position + new Vector2(0.025f, -0.025f), radius, Color.Black.WithAlpha(0.55f), true);
-        handle.DrawCircle(position, radius, color, true);
-        handle.DrawCircle(position, radius * 0.64f, Color.White.WithAlpha(0.72f), false);
-        handle.DrawLine(position + new Vector2(-radius * 0.55f, 0f),
-            position + new Vector2(radius * 0.55f, 0f),
+        handle.DrawCircle(chip.Position + new Vector2(0.025f, -0.025f), radius, Color.Black.WithAlpha(0.55f), true);
+        handle.DrawCircle(chip.Position, radius, color, true);
+        handle.DrawCircle(chip.Position, radius * 0.64f, Color.White.WithAlpha(0.72f), false);
+        handle.DrawLine(chip.Position + new Vector2(-radius * 0.55f, 0f),
+            chip.Position + new Vector2(radius * 0.55f, 0f),
             Color.White.WithAlpha(0.85f));
     }
 
-    private void DrawTooltip(in OverlayDrawArgs args)
-    {
-        var mouse = _input.MouseScreenPosition;
-        if (!mouse.IsValid || _ui.MouseGetControl(mouse) is not IViewportControl viewport)
-            return;
-
-        var mapPosition = viewport.PixelToMap(mouse.Position);
-        var query = _entity.AllEntityQueryEnumerator<RouletteVisualsComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var roulette, out var transform))
-        {
-            if (transform.MapID != mapPosition.MapId || roulette.WorldBets.Length == 0)
-                continue;
-
-            var local = Vector2.Transform(mapPosition.Position, _transform.GetInvWorldMatrix(uid));
-            if (!TryGetHoveredBet(roulette.WorldBets, local, out var hovered, out var total))
-                continue;
-
-            var handle = args.ScreenHandle;
-            var target = GetBetName(hovered.Type, hovered.Number);
-            var lines = new List<string>
-            {
-                Loc.GetString("roulette-world-tooltip-title", ("target", target), ("amount", total))
-            };
-            for (var i = 0; i < roulette.WorldBets.Length; i++)
-            {
-                var bet = roulette.WorldBets[i];
-                if (!SameCell(bet, hovered))
-                    continue;
-
-                lines.Add(Loc.GetString("roulette-world-tooltip-entry",
-                    ("player", bet.PlayerName),
-                    ("amount", bet.Amount)));
-            }
-
-            DrawTooltipBox(handle, mouse.Position + new Vector2(18f, 18f), lines);
-            return;
-        }
-    }
-
-    private void DrawTotals(in OverlayDrawArgs args)
+    private void DrawScreen(in OverlayDrawArgs args)
     {
         if (args.ViewportControl is not { } viewport)
             return;
 
+        var mouse = _input.MouseScreenPosition;
+        var mouseViewport = mouse.IsValid
+            ? _ui.MouseGetControl(mouse) as IViewportControl
+            : null;
+        var mapPosition = ReferenceEquals(mouseViewport, viewport)
+            ? mouseViewport.PixelToMap(mouse.Position)
+            : default;
+        RouletteRenderCell? hovered = null;
         var handle = args.ScreenHandle;
-        var query = _entity.AllEntityQueryEnumerator<RouletteVisualsComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var roulette, out var transform))
+
+        foreach (var (uid, data) in _renderData)
         {
-            if (transform.MapID != args.MapId || roulette.WorldBets.Length == 0)
+            if (!_entity.TryGetComponent(uid, out TransformComponent? transform) || transform.MapID != args.MapId)
+                continue;
+
+            var worldPosition = _transform.GetWorldPosition(transform);
+            if (!args.WorldBounds.Enlarged(4f).Contains(worldPosition))
                 continue;
 
             var worldMatrix = _transform.GetWorldMatrix(uid);
-            for (var i = 0; i < roulette.WorldBets.Length; i++)
+            for (var i = 0; i < data.Cells.Length; i++)
             {
-                var bet = roulette.WorldBets[i];
-                var alreadyDrawn = false;
-                var total = 0;
-                for (var j = 0; j < roulette.WorldBets.Length; j++)
-                {
-                    if (!SameCell(roulette.WorldBets[j], bet))
-                        continue;
-
-                    total += roulette.WorldBets[j].Amount;
-                    if (j < i)
-                        alreadyDrawn = true;
-                }
-
-                if (alreadyDrawn)
-                    continue;
-
-                var local = GetCellCenter(bet.Type, bet.Number);
-                var world = Vector2.Transform(local, worldMatrix);
-                var text = Loc.GetString("roulette-world-bet-total", ("amount", total));
-                var dimensions = handle.GetDimensions(_amountFont, text, 1f);
+                var cell = data.Cells[i];
+                var world = Vector2.Transform(cell.Center, worldMatrix);
+                var dimensions = handle.GetDimensions(_amountFont, cell.TotalText, 1f);
                 var position = viewport.WorldToScreen(world) - dimensions / 2f + new Vector2(0f, -13f);
                 var box = UIBox2.FromDimensions(position - new Vector2(3f, 1f), dimensions + new Vector2(6f, 2f));
                 handle.DrawRect(box, Color.FromHex("#101410C8"));
-                handle.DrawString(_amountFont, position, text, 1f, Color.White);
+                handle.DrawString(_amountFont, position, cell.TotalText, 1f, Color.White);
+            }
+
+            if (!ReferenceEquals(mouseViewport, viewport) || transform.MapID != mapPosition.MapId)
+                continue;
+
+            var local = Vector2.Transform(mapPosition.Position, _transform.GetInvWorldMatrix(uid));
+            var bestDistance = float.MaxValue;
+            for (var i = 0; i < data.Cells.Length; i++)
+            {
+                var cell = data.Cells[i];
+                var offset = Vector2.Abs(local - cell.Center);
+                if (offset.X > cell.HalfSize.X || offset.Y > cell.HalfSize.Y)
+                    continue;
+
+                var distance = Vector2.DistanceSquared(local, cell.Center);
+                if (distance >= bestDistance)
+                    continue;
+
+                bestDistance = distance;
+                hovered = cell;
             }
         }
+
+        if (hovered != null)
+            DrawTooltipBox(handle, mouse.Position + new Vector2(18f, 18f), hovered.TooltipLines);
     }
 
-    private void DrawTooltipBox(DrawingHandleScreen handle, Vector2 position, List<string> lines)
+    private void DrawTooltipBox(DrawingHandleScreen handle, Vector2 position, string[] lines)
     {
         var lineHeight = _tooltipFont.GetLineHeight(1f);
         var width = 0f;
-        for (var i = 0; i < lines.Count; i++)
+        for (var i = 0; i < lines.Length; i++)
             width = MathF.Max(width, handle.GetDimensions(_tooltipFont, lines[i], 1f).X);
 
-        var size = new Vector2(width + 16f, lineHeight * lines.Count + 12f);
+        var size = new Vector2(width + 16f, lineHeight * lines.Length + 12f);
         handle.DrawRect(UIBox2.FromDimensions(position, size), Color.FromHex("#101410E8"));
         handle.DrawRect(UIBox2.FromDimensions(position, size), Color.FromHex("#D9B44A"), false);
-        for (var i = 0; i < lines.Count; i++)
+        for (var i = 0; i < lines.Length; i++)
             handle.DrawString(_tooltipFont, position + new Vector2(8f, 6f + lineHeight * i), lines[i]);
     }
 
-    private static bool TryGetHoveredBet(
-        RouletteWorldBet[] bets,
-        Vector2 local,
-        out RouletteWorldBet hovered,
-        out int total)
+    public void Update(EntityUid uid, RouletteWorldBet[] bets)
     {
-        hovered = default;
-        total = 0;
-        var bestDistance = float.MaxValue;
-        var found = false;
+        if (bets.Length == 0)
+        {
+            _renderData.Remove(uid);
+            return;
+        }
+
+        var groups = new Dictionary<(RouletteBetType Type, int Number), List<RouletteWorldBet>>();
         for (var i = 0; i < bets.Length; i++)
         {
             var bet = bets[i];
-            var center = GetCellCenter(bet.Type, bet.Number);
-            var halfSize = GetCellHalfSize(bet.Type, bet.Number);
-            var offset = Vector2.Abs(local - center);
-            if (offset.X > halfSize.X || offset.Y > halfSize.Y)
-                continue;
+            var number = bet.Type == RouletteBetType.Number ? bet.Number : -1;
+            if (!groups.TryGetValue((bet.Type, number), out var group))
+            {
+                group = new List<RouletteWorldBet>();
+                groups.Add((bet.Type, number), group);
+            }
 
-            var distance = Vector2.DistanceSquared(local, center);
-            if (distance >= bestDistance)
-                continue;
-
-            hovered = bet;
-            bestDistance = distance;
-            found = true;
+            group.Add(bet);
         }
 
-        if (!found)
-            return false;
-
-        for (var i = 0; i < bets.Length; i++)
+        var chips = new RouletteRenderChip[bets.Length];
+        var cells = new RouletteRenderCell[groups.Count];
+        var chipIndex = 0;
+        var cellIndex = 0;
+        foreach (var ((type, number), group) in groups)
         {
-            if (SameCell(bets[i], hovered))
-                total += bets[i].Amount;
+            var center = GetCellCenter(type, number);
+            var total = 0;
+            var tooltipLines = new string[group.Count + 1];
+            for (var i = 0; i < group.Count; i++)
+            {
+                var bet = group[i];
+                total += bet.Amount;
+                tooltipLines[i + 1] = Loc.GetString("roulette-world-tooltip-entry",
+                    ("player", bet.PlayerName),
+                    ("amount", bet.Amount));
+
+                var row = i / 3;
+                var rowCount = Math.Min(3, group.Count - row * 3);
+                var offset = new Vector2((i % 3 - (rowCount - 1) / 2f) * 0.07f, row * 0.055f);
+                chips[chipIndex++] = new RouletteRenderChip(center + offset, bet.PlayerSlot, bet.PlacedAt);
+            }
+
+            tooltipLines[0] = Loc.GetString("roulette-world-tooltip-title",
+                ("target", GetBetName(type, number)),
+                ("amount", total));
+            cells[cellIndex++] = new RouletteRenderCell(
+                center,
+                GetCellHalfSize(type, number),
+                Loc.GetString("roulette-world-bet-total", ("amount", total)),
+                tooltipLines);
         }
 
-        return true;
+        _renderData[uid] = new RouletteRenderData(chips, cells);
+    }
+
+    public void Remove(EntityUid uid)
+    {
+        _renderData.Remove(uid);
     }
 
     private static Vector2 GetCellHalfSize(RouletteBetType type, int number)
@@ -298,36 +291,6 @@ public sealed class RouletteBetsOverlay : Overlay
             });
     }
 
-    private static bool SameCell(RouletteWorldBet left, RouletteWorldBet right)
-    {
-        return left.Type == right.Type &&
-               (left.Type != RouletteBetType.Number || left.Number == right.Number);
-    }
-
-    private static int GetPlayerIndex(RouletteWorldBet[] bets, int index)
-    {
-        var playerIndex = 0;
-        for (var i = 0; i < index; i++)
-        {
-            if (SameCell(bets[i], bets[index]))
-                playerIndex++;
-        }
-
-        return playerIndex;
-    }
-
-    private static int GetPlayerCount(RouletteWorldBet[] bets, int index)
-    {
-        var playerCount = 0;
-        for (var i = 0; i < bets.Length; i++)
-        {
-            if (SameCell(bets[i], bets[index]))
-                playerCount++;
-        }
-
-        return playerCount;
-    }
-
     private static float EaseOutBack(float value)
     {
         const float c1 = 1.70158f;
@@ -335,4 +298,14 @@ public sealed class RouletteBetsOverlay : Overlay
         var shifted = value - 1f;
         return 1f + c3 * shifted * shifted * shifted + c1 * shifted * shifted;
     }
+
+    private sealed record RouletteRenderData(RouletteRenderChip[] Chips, RouletteRenderCell[] Cells);
+
+    private sealed record RouletteRenderCell(
+        Vector2 Center,
+        Vector2 HalfSize,
+        string TotalText,
+        string[] TooltipLines);
+
+    private readonly record struct RouletteRenderChip(Vector2 Position, byte PlayerSlot, TimeSpan PlacedAt);
 }

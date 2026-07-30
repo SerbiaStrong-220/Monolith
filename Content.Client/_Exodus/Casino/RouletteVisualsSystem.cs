@@ -23,10 +23,17 @@ public sealed partial class RouletteVisualsSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IOverlayManager _overlayManager = default!;
 
+    private RouletteBetsOverlay _betsOverlay = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        _overlayManager.AddOverlay(new RouletteBetsOverlay(EntityManager));
+        SubscribeLocalEvent<RouletteVisualsComponent, ComponentStartup>(OnVisualsStartup);
+        SubscribeLocalEvent<RouletteVisualsComponent, AfterAutoHandleStateEvent>(OnVisualsState);
+        SubscribeLocalEvent<RouletteVisualsComponent, ComponentShutdown>(OnVisualsShutdown);
+
+        _betsOverlay = new RouletteBetsOverlay(EntityManager);
+        _overlayManager.AddOverlay(_betsOverlay);
     }
 
     public override void Shutdown()
@@ -42,18 +49,51 @@ public sealed partial class RouletteVisualsSystem : EntitySystem
         var query = EntityQueryEnumerator<RouletteVisualsComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out var visuals, out var sprite))
         {
-            GetAnimation(visuals.Phase, visuals.PhaseStartedAt, visuals.PhaseEndsAt, visuals.WinningNumber,
-                visuals.RoundId, _timing.CurTime, out var wheelAngle, out var ballOffset, out var highlightVisible);
-            var spriteEnt = new Entity<SpriteComponent?>(uid, sprite);
-            _sprite.LayerSetRotation(spriteEnt, RouletteVisualLayers.Wheel, new Angle(-wheelAngle));
-            _sprite.LayerSetOffset(spriteEnt, RouletteVisualLayers.Wheel, WheelOffset);
-            var worldBallOffset = new Vector2(ballOffset.X, -ballOffset.Y) * 2f;
-            _sprite.LayerSetOffset(spriteEnt, RouletteVisualLayers.Ball, WheelOffset + worldBallOffset);
-            _sprite.LayerSetOffset(spriteEnt, RouletteVisualLayers.Highlight, WheelOffset);
-            _sprite.LayerSetRotation(spriteEnt, RouletteVisualLayers.Highlight,
-                new Angle(-GetResultAngle(visuals.WinningNumber) - MathF.PI / 2f));
-            _sprite.LayerSetVisible(spriteEnt, RouletteVisualLayers.Highlight, highlightVisible);
+            if (visuals.Phase == RoulettePhase.Spinning)
+                UpdateSprite((uid, visuals, sprite));
         }
+    }
+
+    private void OnVisualsStartup(Entity<RouletteVisualsComponent> ent, ref ComponentStartup args)
+    {
+        _betsOverlay.Update(ent.Owner, ent.Comp.WorldBets);
+        if (TryComp<SpriteComponent>(ent, out var sprite))
+            UpdateSprite((ent.Owner, ent.Comp, sprite));
+    }
+
+    private void OnVisualsState(Entity<RouletteVisualsComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        _betsOverlay.Update(ent.Owner, ent.Comp.WorldBets);
+        if (TryComp<SpriteComponent>(ent, out var sprite))
+            UpdateSprite((ent.Owner, ent.Comp, sprite));
+    }
+
+    private void OnVisualsShutdown(Entity<RouletteVisualsComponent> ent, ref ComponentShutdown args)
+    {
+        _betsOverlay.Remove(ent.Owner);
+    }
+
+    private void UpdateSprite(Entity<RouletteVisualsComponent, SpriteComponent> ent)
+    {
+        GetAnimation(ent.Comp1.Phase,
+            ent.Comp1.PhaseStartedAt,
+            ent.Comp1.PhaseEndsAt,
+            ent.Comp1.WinningNumber,
+            ent.Comp1.RoundId,
+            _timing.CurTime,
+            out var wheelAngle,
+            out var ballOffset,
+            out var highlightVisible);
+
+        var spriteEnt = new Entity<SpriteComponent?>(ent.Owner, ent.Comp2);
+        _sprite.LayerSetRotation(spriteEnt, RouletteVisualLayers.Wheel, new Angle(-wheelAngle));
+        _sprite.LayerSetOffset(spriteEnt, RouletteVisualLayers.Wheel, WheelOffset);
+        var worldBallOffset = new Vector2(ballOffset.X, -ballOffset.Y) * 2f;
+        _sprite.LayerSetOffset(spriteEnt, RouletteVisualLayers.Ball, WheelOffset + worldBallOffset);
+        _sprite.LayerSetOffset(spriteEnt, RouletteVisualLayers.Highlight, WheelOffset);
+        _sprite.LayerSetRotation(spriteEnt, RouletteVisualLayers.Highlight,
+            new Angle(-GetResultAngle(ent.Comp1.WinningNumber) - MathF.PI / 2f));
+        _sprite.LayerSetVisible(spriteEnt, RouletteVisualLayers.Highlight, highlightVisible);
     }
 
     public static void GetAnimation(
