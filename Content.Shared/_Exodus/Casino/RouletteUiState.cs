@@ -59,6 +59,12 @@ public sealed class RouletteUiState : BoundUserInterfaceState
     public int Balance { get; }
     public int TotalBet { get; }
     public int LastPayout { get; }
+    public int MinimumBet { get; }
+    public int MaximumBet { get; }
+    public int MaximumBetsPerPlayer { get; }
+    public TimeSpan BettingDuration { get; }
+    public TimeSpan SpinDuration { get; }
+    public TimeSpan PayoutDuration { get; }
     public RouletteBet[] Bets { get; }
     public RoulettePlayerBetSummary[] PlayerBets { get; }
 
@@ -71,6 +77,12 @@ public sealed class RouletteUiState : BoundUserInterfaceState
         int balance,
         int totalBet,
         int lastPayout,
+        int minimumBet,
+        int maximumBet,
+        int maximumBetsPerPlayer,
+        TimeSpan bettingDuration,
+        TimeSpan spinDuration,
+        TimeSpan payoutDuration,
         RouletteBet[] bets,
         RoulettePlayerBetSummary[] playerBets)
     {
@@ -82,6 +94,12 @@ public sealed class RouletteUiState : BoundUserInterfaceState
         Balance = balance;
         TotalBet = totalBet;
         LastPayout = lastPayout;
+        MinimumBet = minimumBet;
+        MaximumBet = maximumBet;
+        MaximumBetsPerPlayer = maximumBetsPerPlayer;
+        BettingDuration = bettingDuration;
+        SpinDuration = spinDuration;
+        PayoutDuration = payoutDuration;
         Bets = bets;
         PlayerBets = playerBets;
     }

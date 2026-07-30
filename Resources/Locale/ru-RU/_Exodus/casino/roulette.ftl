@@ -11,9 +11,9 @@ roulette-payout-dozen = Дюжины: x3
 roulette-payout-includes-bet = Выплата включает
     сделанную ставку
 roulette-rules-title = РАУНД
-roulette-rule-betting = Ставки: 15 сек.
-roulette-rule-spinning = Вращение: 8 сек.
-roulette-rule-payout = Результат: 4 сек.
+roulette-rule-betting = Ставки: { $seconds } сек.
+roulette-rule-spinning = Вращение: { $seconds } сек.
+roulette-rule-payout = Результат: { $seconds } сек.
 roulette-rule-zero = Ноль выигрывает
     только как число
 roulette-rule-server = Результат выбирает

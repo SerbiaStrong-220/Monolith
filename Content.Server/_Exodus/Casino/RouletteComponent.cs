@@ -37,6 +37,18 @@ public sealed partial class RouletteComponent : Component
     public readonly Dictionary<NetUserId, uint> LastRequestIds = new();
     public readonly Dictionary<NetUserId, int> LastPayouts = new();
     public readonly Dictionary<NetUserId, byte> PlayerSlots = new();
+    public readonly Dictionary<NetUserId, RoulettePlayerCache> PlayerBets = new();
+    public readonly Dictionary<(NetUserId Player, RouletteBetType Type, int Number), int> WorldBetIndices = new();
+    public RouletteWorldBet[] WorldBets = [];
+    public RoulettePlayerBetSummary[] PlayerBetSummaries = [];
+    public bool Settled;
 }
 
 public readonly record struct RoulettePlayerBet(NetUserId Player, RouletteBet Bet, TimeSpan PlacedAt);
+
+public sealed class RoulettePlayerCache
+{
+    public RouletteBet[] Bets = [];
+    public int Total;
+    public int SummaryIndex;
+}

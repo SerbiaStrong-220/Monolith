@@ -22,6 +22,7 @@ public sealed partial class RouletteSystem : EntitySystem
 {
     private const float SpinVolume = -2f;
     private const float SpinFadeDuration = 3f;
+    private static readonly TimeSpan SettlementRetryDelay = TimeSpan.FromSeconds(5);
 
     private static readonly HashSet<int> RedNumbers =
     [
@@ -39,11 +40,15 @@ public sealed partial class RouletteSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
+    private readonly Dictionary<uint, PendingSettlement> _pendingSettlements = new();
+    private uint _nextSettlementId;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RouletteComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RouletteComponent, EntityTerminatingEvent>(OnTerminating);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         Subs.BuiEvents<RouletteComponent>(RouletteUiKey.Key, subs =>
         {
@@ -57,6 +62,7 @@ public sealed partial class RouletteSystem : EntitySystem
         base.Update(frameTime);
 
         var now = _timing.CurTime;
+        ProcessPendingSettlements(now);
         var query = EntityQueryEnumerator<RouletteComponent, RouletteVisualsComponent>();
         while (query.MoveNext(out var uid, out var roulette, out var visuals))
         {
@@ -171,7 +177,9 @@ public sealed partial class RouletteSystem : EntitySystem
         if (!ent.Comp.PlayerSlots.ContainsKey(session.UserId))
             ent.Comp.PlayerSlots[session.UserId] = (byte) ent.Comp.PlayerSlots.Count;
 
-        ent.Comp.Bets.Add(new RoulettePlayerBet(session.UserId, args.Bet, _timing.CurTime));
+        var placedAt = _timing.CurTime;
+        ent.Comp.Bets.Add(new RoulettePlayerBet(session.UserId, args.Bet, placedAt));
+        AddToCache(ent.Comp, session.UserId, args.Bet, placedAt);
         _audio.PlayPvs(ent.Comp.BetSound,
             ent.Owner,
             AudioParams.Default.WithVolume(-3f).WithMaxDistance(6f).WithVariation(0.08f));
@@ -180,6 +188,35 @@ public sealed partial class RouletteSystem : EntitySystem
         UpdateOpenUis(ent.Owner, ent.Comp);
         _adminLog.Add(LogType.ATMUsage, LogImpact.Low,
             $"{ToPrettyString(actor):actor} placed a roulette bet of {args.Bet.Amount} at {ToPrettyString(ent.Owner):entity}");
+    }
+
+    private void OnTerminating(Entity<RouletteComponent> ent, ref EntityTerminatingEvent args)
+    {
+        if (ent.Comp.Settled || ent.Comp.Bets.Count == 0 || !TryComp<RouletteVisualsComponent>(ent, out var visuals))
+            return;
+
+        ent.Comp.Settled = true;
+        var settlements = new Dictionary<NetUserId, int>();
+        for (var i = 0; i < ent.Comp.Bets.Count; i++)
+        {
+            var playerBet = ent.Comp.Bets[i];
+            var amount = 0;
+            if (visuals.Phase == RoulettePhase.Betting)
+                amount = playerBet.Bet.Amount;
+            else if (visuals.Phase == RoulettePhase.Spinning &&
+                     TryGetPayout(playerBet.Bet, visuals.WinningNumber, out var payout))
+                amount = payout;
+
+            if (amount > 0 && !settlements.TryAdd(playerBet.Player, amount))
+                settlements[playerBet.Player] += amount;
+        }
+
+        ent.Comp.Bets.Clear();
+        ClearBetCaches(ent.Comp);
+        ent.Comp.SpinAudioStream = _audio.Stop(ent.Comp.SpinAudioStream);
+        var table = ToPrettyString(ent.Owner);
+        foreach (var (playerId, amount) in settlements)
+            QueueSettlement(playerId, amount, table);
     }
 
     private void OnPlayerDetached(PlayerDetachedEvent args)
@@ -207,6 +244,7 @@ public sealed partial class RouletteSystem : EntitySystem
             }
 
             roulette.LastRequestIds.Remove(playerId);
+            RebuildBetCaches(roulette);
             UpdateWorldBets(uid, roulette, visuals);
             UpdateOpenUis(uid, roulette);
             if (amount == 0)
@@ -216,7 +254,7 @@ public sealed partial class RouletteSystem : EntitySystem
                 prefs.SelectedCharacter is not HumanoidCharacterProfile profile ||
                 !_bank.TryBankDeposit(args.Player, prefs, profile, amount, out _))
             {
-                Logger.Error($"Unable to settle roulette balance of {amount} for detached player {playerId} at {ToPrettyString(uid)}");
+                QueueSettlement(playerId, amount, ToPrettyString(uid));
                 continue;
             }
 
@@ -232,6 +270,8 @@ public sealed partial class RouletteSystem : EntitySystem
         ent.Comp1.LastRequestIds.Clear();
         ent.Comp1.LastPayouts.Clear();
         ent.Comp1.PlayerSlots.Clear();
+        ent.Comp1.Settled = false;
+        ClearBetCaches(ent.Comp1);
         ent.Comp2.Phase = RoulettePhase.Betting;
         ent.Comp2.PhaseStartedAt = now;
         ent.Comp2.PhaseEndsAt = now + ent.Comp1.BettingDuration;
@@ -260,6 +300,7 @@ public sealed partial class RouletteSystem : EntitySystem
     private void FinishSpin(Entity<RouletteComponent, RouletteVisualsComponent> ent, TimeSpan now)
     {
         ent.Comp1.SpinAudioStream = _audio.Stop(ent.Comp1.SpinAudioStream);
+        ent.Comp1.Settled = true;
         CalculatePayouts(ent.Owner, ent.Comp1, ent.Comp2.WinningNumber);
         AnnounceResult(ent.Owner, ent.Comp2.WinningNumber);
         ent.Comp2.Phase = RoulettePhase.Payout;
@@ -302,20 +343,7 @@ public sealed partial class RouletteSystem : EntitySystem
 
         foreach (var (playerId, payout) in roulette.LastPayouts)
         {
-            if (!_players.TryGetSessionById(playerId, out var session) || session.AttachedEntity is not { } player)
-            {
-                Logger.Error($"Unable to pay roulette winnings of {payout} to disconnected player {playerId} at {ToPrettyString(uid)}");
-                continue;
-            }
-
-            if (!_bank.TryBankDeposit(player, payout))
-            {
-                Logger.Error($"Unable to deposit roulette winnings of {payout} to {ToPrettyString(player)} at {ToPrettyString(uid)}");
-                continue;
-            }
-
-            _adminLog.Add(LogType.ATMUsage, LogImpact.Low,
-                $"{ToPrettyString(player):actor} received {payout} from roulette at {ToPrettyString(uid):entity}");
+            QueueSettlement(playerId, payout, ToPrettyString(uid));
         }
     }
 
@@ -336,25 +364,9 @@ public sealed partial class RouletteSystem : EntitySystem
             return;
         }
 
-        var count = 0;
-        for (var i = 0; i < ent.Comp.Bets.Count; i++)
-        {
-            if (ent.Comp.Bets[i].Player == session.UserId)
-                count++;
-        }
-
-        var bets = new RouletteBet[count];
-        var index = 0;
-        var total = 0;
-        for (var i = 0; i < ent.Comp.Bets.Count; i++)
-        {
-            var playerBet = ent.Comp.Bets[i];
-            if (playerBet.Player != session.UserId)
-                continue;
-
-            bets[index++] = playerBet.Bet;
-            total += playerBet.Bet.Amount;
-        }
+        var playerBets = ent.Comp.PlayerBets.GetValueOrDefault(session.UserId);
+        var bets = playerBets?.Bets ?? [];
+        var total = playerBets?.Total ?? 0;
 
         _bank.TryGetBalance(actor, out var balance);
         ent.Comp.LastPayouts.TryGetValue(session.UserId, out var lastPayout);
@@ -367,8 +379,14 @@ public sealed partial class RouletteSystem : EntitySystem
             balance,
             total,
             lastPayout,
+            ent.Comp.MinimumBet,
+            ent.Comp.MaximumBet,
+            ent.Comp.MaximumBetsPerPlayer,
+            ent.Comp.BettingDuration,
+            ent.Comp.SpinDuration,
+            ent.Comp.PayoutDuration,
             bets,
-            GetPlayerBetSummaries(ent.Comp));
+            ent.Comp.PlayerBetSummaries);
         _ui.ServerSendUiMessage(ent.Owner, RouletteUiKey.Key, new RouletteStateMessage(state), actor);
     }
 
@@ -393,77 +411,141 @@ public sealed partial class RouletteSystem : EntitySystem
 
     private static int GetTotalBet(RouletteComponent roulette, NetUserId player)
     {
-        var total = 0;
-        for (var i = 0; i < roulette.Bets.Count; i++)
-        {
-            if (roulette.Bets[i].Player == player)
-                total += roulette.Bets[i].Bet.Amount;
-        }
-
-        return total;
+        return roulette.PlayerBets.TryGetValue(player, out var cache) ? cache.Total : 0;
     }
 
     private static int GetBetCount(RouletteComponent roulette, NetUserId player)
     {
-        var count = 0;
-        for (var i = 0; i < roulette.Bets.Count; i++)
-        {
-            if (roulette.Bets[i].Player == player)
-                count++;
-        }
-
-        return count;
-    }
-
-    private RoulettePlayerBetSummary[] GetPlayerBetSummaries(RouletteComponent roulette)
-    {
-        var totals = new Dictionary<NetUserId, int>();
-        for (var i = 0; i < roulette.Bets.Count; i++)
-        {
-            var playerBet = roulette.Bets[i];
-            if (!totals.TryAdd(playerBet.Player, playerBet.Bet.Amount))
-                totals[playerBet.Player] += playerBet.Bet.Amount;
-        }
-
-        var summaries = new RoulettePlayerBetSummary[totals.Count];
-        var index = 0;
-        foreach (var (playerId, total) in totals)
-        {
-            summaries[index++] = new RoulettePlayerBetSummary(GetPlayerName(playerId), total);
-        }
-
-        return summaries;
+        return roulette.PlayerBets.TryGetValue(player, out var cache) ? cache.Bets.Length : 0;
     }
 
     private void UpdateWorldBets(EntityUid uid, RouletteComponent roulette, RouletteVisualsComponent visuals)
     {
-        var totals = new Dictionary<(NetUserId Player, RouletteBetType Type, int Number), (int Amount, TimeSpan PlacedAt)>();
+        visuals.WorldBets = roulette.WorldBets;
+        Dirty(uid, visuals);
+    }
+
+    private void AddToCache(RouletteComponent roulette, NetUserId player, RouletteBet bet, TimeSpan placedAt)
+    {
+        if (!roulette.PlayerBets.TryGetValue(player, out var playerCache))
+        {
+            playerCache = new RoulettePlayerCache
+            {
+                SummaryIndex = roulette.PlayerBetSummaries.Length
+            };
+            roulette.PlayerBets.Add(player, playerCache);
+            Array.Resize(ref roulette.PlayerBetSummaries, roulette.PlayerBetSummaries.Length + 1);
+        }
+
+        Array.Resize(ref playerCache.Bets, playerCache.Bets.Length + 1);
+        playerCache.Bets[^1] = bet;
+        playerCache.Total += bet.Amount;
+        roulette.PlayerBetSummaries[playerCache.SummaryIndex] = new RoulettePlayerBetSummary(
+            GetPlayerName(player),
+            playerCache.Total);
+
+        var number = bet.Type == RouletteBetType.Number ? bet.Number : -1;
+        var key = (player, bet.Type, number);
+        if (roulette.WorldBetIndices.TryGetValue(key, out var worldBetIndex))
+        {
+            var worldBet = roulette.WorldBets[worldBetIndex];
+            roulette.WorldBets[worldBetIndex] = worldBet with
+            {
+                Amount = worldBet.Amount + bet.Amount,
+                PlacedAt = placedAt
+            };
+            return;
+        }
+
+        var index = roulette.WorldBets.Length;
+        roulette.WorldBetIndices.Add(key, index);
+        Array.Resize(ref roulette.WorldBets, index + 1);
+        roulette.WorldBets[index] = new RouletteWorldBet(
+            GetPlayerName(player),
+            bet.Type,
+            number,
+            bet.Amount,
+            roulette.PlayerSlots[player],
+            placedAt);
+    }
+
+    private void RebuildBetCaches(RouletteComponent roulette)
+    {
+        ClearBetCaches(roulette);
         for (var i = 0; i < roulette.Bets.Count; i++)
         {
             var playerBet = roulette.Bets[i];
-            var number = playerBet.Bet.Type == RouletteBetType.Number ? playerBet.Bet.Number : -1;
-            var key = (playerBet.Player, playerBet.Bet.Type, number);
-            if (!totals.TryGetValue(key, out var total))
-                totals[key] = (playerBet.Bet.Amount, playerBet.PlacedAt);
-            else
-                totals[key] = (total.Amount + playerBet.Bet.Amount, playerBet.PlacedAt);
+            AddToCache(roulette, playerBet.Player, playerBet.Bet, playerBet.PlacedAt);
         }
+    }
 
-        var worldBets = new RouletteWorldBet[totals.Count];
-        var index = 0;
-        foreach (var ((playerId, type, number), total) in totals)
+    private static void ClearBetCaches(RouletteComponent roulette)
+    {
+        roulette.PlayerBets.Clear();
+        roulette.WorldBetIndices.Clear();
+        roulette.WorldBets = [];
+        roulette.PlayerBetSummaries = [];
+    }
+
+    private void QueueSettlement(NetUserId playerId, int amount, string table)
+    {
+        var id = ++_nextSettlementId;
+        var settlement = new PendingSettlement(playerId, amount, table, _timing.CurTime);
+        _pendingSettlements.Add(id, settlement);
+        TrySettle(id, settlement);
+    }
+
+    private void ProcessPendingSettlements(TimeSpan now)
+    {
+        if (_pendingSettlements.Count == 0)
+            return;
+
+        var due = new List<(uint Id, PendingSettlement Settlement)>();
+        foreach (var (id, settlement) in _pendingSettlements)
         {
-            worldBets[index++] = new RouletteWorldBet(
-                GetPlayerName(playerId),
-                type,
-                number,
-                total.Amount,
-                roulette.PlayerSlots[playerId],
-                total.PlacedAt);
+            if (!settlement.Processing && settlement.NextAttempt <= now)
+                due.Add((id, settlement));
         }
 
-        visuals.WorldBets = worldBets;
-        Dirty(uid, visuals);
+        for (var i = 0; i < due.Count; i++)
+            TrySettle(due[i].Id, due[i].Settlement);
+    }
+
+    private async void TrySettle(uint id, PendingSettlement settlement)
+    {
+        settlement.Processing = true;
+        try
+        {
+            if (_players.TryGetSessionById(settlement.Player, out var session) &&
+                session.AttachedEntity is { } player &&
+                _bank.TryBankDeposit(player, settlement.Amount))
+            {
+                CompleteSettlement(id, settlement);
+                return;
+            }
+
+            if (_preferences.TryGetCachedPreferences(settlement.Player, out var prefs) &&
+                prefs.SelectedCharacter is HumanoidCharacterProfile profile &&
+                await _bank.TryBankDepositOffline(settlement.Player, prefs, profile, settlement.Amount))
+            {
+                CompleteSettlement(id, settlement);
+                return;
+            }
+        }
+        catch (Exception exception)
+        {
+            Logger.Error($"Failed roulette settlement for {settlement.Player}: {exception}");
+        }
+
+        settlement.Processing = false;
+        settlement.NextAttempt = _timing.CurTime + SettlementRetryDelay;
+    }
+
+    private void CompleteSettlement(uint id, PendingSettlement settlement)
+    {
+        _pendingSettlements.Remove(id);
+        _adminLog.Add(LogType.ATMUsage, LogImpact.Low,
+            $"Roulette at {settlement.Table} settled {settlement.Amount} to player {settlement.Player}");
     }
 
     private string GetPlayerName(NetUserId playerId)
@@ -521,5 +603,18 @@ public sealed partial class RouletteSystem : EntitySystem
             RouletteBetError.TooManyBets => "roulette-error-too-many-bets",
             _ => "roulette-error-invalid-bet"
         };
+    }
+
+    private sealed class PendingSettlement(
+        NetUserId player,
+        int amount,
+        string table,
+        TimeSpan nextAttempt)
+    {
+        public readonly NetUserId Player = player;
+        public readonly int Amount = amount;
+        public readonly string Table = table;
+        public TimeSpan NextAttempt = nextAttempt;
+        public bool Processing;
     }
 }

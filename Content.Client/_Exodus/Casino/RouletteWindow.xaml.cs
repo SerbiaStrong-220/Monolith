@@ -25,7 +25,7 @@ public sealed partial class RouletteWindow : FancyWindow
         PopulateBetTypes();
         NumberInput.IsValid = value => value is >= 0 and <= 36;
         NumberInput.InitDefaultButtons();
-        AmountInput.IsValid = value => value > 0;
+        AmountInput.IsValid = IsAmountValid;
         AmountInput.InitDefaultButtons();
         BetTypeSelector.OnItemSelected += args =>
         {
@@ -47,6 +47,14 @@ public sealed partial class RouletteWindow : FancyWindow
         ErrorLabel.Text = state.LastPayout > 0
             ? Loc.GetString("roulette-payout", ("amount", state.LastPayout))
             : string.Empty;
+        BettingDurationLabel.Text = Loc.GetString("roulette-rule-betting",
+            ("seconds", (int) Math.Ceiling(state.BettingDuration.TotalSeconds)));
+        SpinDurationLabel.Text = Loc.GetString("roulette-rule-spinning",
+            ("seconds", (int) Math.Ceiling(state.SpinDuration.TotalSeconds)));
+        PayoutDurationLabel.Text = Loc.GetString("roulette-rule-payout",
+            ("seconds", (int) Math.Ceiling(state.PayoutDuration.TotalSeconds)));
+        if (!IsAmountValid(AmountInput.Value))
+            AmountInput.Value = state.MinimumBet;
         RebuildBets(state.Bets);
         RebuildPlayerBets(state.PlayerBets);
         UpdateControls();
@@ -129,12 +137,20 @@ public sealed partial class RouletteWindow : FancyWindow
     private void UpdateControls()
     {
         var bettingOpen = _state?.Phase == RoulettePhase.Betting && _timing.CurTime < _state.PhaseEndsAt;
-        PlaceBetButton.Disabled = !bettingOpen || _requestPending;
+        PlaceBetButton.Disabled = !bettingOpen || _requestPending || !IsAmountValid(AmountInput.Value);
         BetTypeSelector.Disabled = !bettingOpen || _requestPending;
         NumberInput.LineEditDisabled = !bettingOpen || _requestPending;
         NumberInput.SetButtonDisabled(!bettingOpen || _requestPending);
         AmountInput.LineEditDisabled = !bettingOpen || _requestPending;
         AmountInput.SetButtonDisabled(!bettingOpen || _requestPending);
+    }
+
+    private bool IsAmountValid(int amount)
+    {
+        return _state != null &&
+               amount >= _state.MinimumBet &&
+               amount <= Math.Min(_state.Balance, _state.MaximumBet - _state.TotalBet) &&
+               _state.Bets.Length < _state.MaximumBetsPerPlayer;
     }
 
     private void RebuildPlayerBets(RoulettePlayerBetSummary[] playerBets)

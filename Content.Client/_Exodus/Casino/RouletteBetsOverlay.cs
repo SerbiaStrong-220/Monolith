@@ -13,6 +13,12 @@ namespace Content.Client._Exodus.Casino;
 
 public sealed class RouletteBetsOverlay : Overlay
 {
+    private const int MaxVisibleChipsPerCell = 6;
+    private const int MaxVisibleChipsPerTable = 64;
+    private const int MaxTooltipEntries = 12;
+
+    private static readonly Vector2 TableOffset = new(0.5f, 0.5f);
+
     private static readonly Color[] ChipColors =
     [
         Color.FromHex("#E63946"),
@@ -191,27 +197,34 @@ public sealed class RouletteBetsOverlay : Overlay
             group.Add(bet);
         }
 
-        var chips = new RouletteRenderChip[bets.Length];
+        var chips = new List<RouletteRenderChip>(Math.Min(bets.Length, groups.Count * MaxVisibleChipsPerCell));
         var cells = new RouletteRenderCell[groups.Count];
-        var chipIndex = 0;
         var cellIndex = 0;
         foreach (var ((type, number), group) in groups)
         {
-            var center = GetCellCenter(type, number);
+            var center = GetCellCenter(type, number) + TableOffset;
             var total = 0;
-            var tooltipLines = new string[group.Count + 1];
+            var tooltipEntries = Math.Min(group.Count, MaxTooltipEntries);
+            var tooltipLines = new string[tooltipEntries + 1];
             for (var i = 0; i < group.Count; i++)
             {
                 var bet = group[i];
                 total += bet.Amount;
-                tooltipLines[i + 1] = Loc.GetString("roulette-world-tooltip-entry",
-                    ("player", bet.PlayerName),
-                    ("amount", bet.Amount));
+                if (i < tooltipEntries)
+                {
+                    tooltipLines[i + 1] = Loc.GetString("roulette-world-tooltip-entry",
+                        ("player", bet.PlayerName),
+                        ("amount", bet.Amount));
+                }
 
+                if (i >= MaxVisibleChipsPerCell || chips.Count >= MaxVisibleChipsPerTable)
+                    continue;
+
+                var visibleCount = Math.Min(group.Count, MaxVisibleChipsPerCell);
                 var row = i / 3;
-                var rowCount = Math.Min(3, group.Count - row * 3);
+                var rowCount = Math.Min(3, visibleCount - row * 3);
                 var offset = new Vector2((i % 3 - (rowCount - 1) / 2f) * 0.07f, row * 0.055f);
-                chips[chipIndex++] = new RouletteRenderChip(center + offset, bet.PlayerSlot, bet.PlacedAt);
+                chips.Add(new RouletteRenderChip(center + offset, bet.PlayerSlot, bet.PlacedAt));
             }
 
             tooltipLines[0] = Loc.GetString("roulette-world-tooltip-title",
@@ -224,7 +237,7 @@ public sealed class RouletteBetsOverlay : Overlay
                 tooltipLines);
         }
 
-        _renderData[uid] = new RouletteRenderData(chips, cells);
+        _renderData[uid] = new RouletteRenderData(chips.ToArray(), cells);
     }
 
     public void Remove(EntityUid uid)

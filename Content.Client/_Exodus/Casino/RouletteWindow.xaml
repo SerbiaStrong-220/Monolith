@@ -32,9 +32,9 @@
                     </PanelContainer.PanelOverride>
                     <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="12" VerticalAlignment="Center">
                         <Label Text="{Loc 'roulette-rules-title'}" Align="Center" FontColorOverride="#E7C86A" />
-                        <Label Text="{Loc 'roulette-rule-betting'}" Align="Center" />
-                        <Label Text="{Loc 'roulette-rule-spinning'}" Align="Center" />
-                        <Label Text="{Loc 'roulette-rule-payout'}" Align="Center" />
+                        <Label Name="BettingDurationLabel" Align="Center" />
+                        <Label Name="SpinDurationLabel" Align="Center" />
+                        <Label Name="PayoutDurationLabel" Align="Center" />
                         <Label Text="{Loc 'roulette-rule-zero'}" Align="Center" FontColorOverride="#8FD39B" />
                         <Label Text="{Loc 'roulette-rule-server'}" Align="Center" FontColorOverride="#8FA899" />
                     </BoxContainer>

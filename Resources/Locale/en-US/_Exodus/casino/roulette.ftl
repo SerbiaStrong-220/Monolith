@@ -11,9 +11,9 @@ roulette-payout-dozen = Dozens: x3
 roulette-payout-includes-bet = Payout includes
     your bet
 roulette-rules-title = ROUND
-roulette-rule-betting = Betting: 15 sec.
-roulette-rule-spinning = Spin: 8 sec.
-roulette-rule-payout = Result: 4 sec.
+roulette-rule-betting = Betting: { $seconds } sec.
+roulette-rule-spinning = Spin: { $seconds } sec.
+roulette-rule-payout = Result: { $seconds } sec.
 roulette-rule-zero = Zero only wins
     as a number
 roulette-rule-server = Result is chosen

@@ -11,7 +11,7 @@ namespace Content.Client._Exodus.Casino;
 
 public sealed partial class RouletteVisualsSystem : EntitySystem
 {
-    private static readonly Vector2 WheelOffset = new(-2f, 0f);
+    private static readonly Vector2 WheelOffset = new(-1.5f, 0.5f);
 
     private static readonly int[] EuropeanOrder =
     [
