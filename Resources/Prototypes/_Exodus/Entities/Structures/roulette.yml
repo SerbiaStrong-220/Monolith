@@ -1,0 +1,60 @@
+- type: entity
+  id: RouletteTable
+  parent: BaseStructure
+  name: XenoRoulette table
+  description: A casino roulette table connected to the station banking network.
+  placement:
+    mode: SnapgridBorder
+  components:
+  - type: Sprite
+    layers:
+    - sprite: _Exodus/Structures/Casino/roulette_table_wide.rsi
+      state: roulette_table_wide
+      map: ["enum.RouletteVisualLayers.Table"]
+      scale: 0.25, 0.25
+    - sprite: _Exodus/Structures/Casino/roulette.rsi
+      state: roulette_wheel
+      map: ["enum.RouletteVisualLayers.Wheel"]
+      scale: 0.25, 0.25
+      offset: -2, 0
+    - sprite: _Exodus/Structures/Casino/roulette.rsi
+      state: roulette_highlight
+      map: ["enum.RouletteVisualLayers.Highlight"]
+      scale: 0.25, 0.25
+      offset: -2, 0
+      visible: false
+    - sprite: _Exodus/Structures/Casino/roulette.rsi
+      state: roulette_ball
+      map: ["enum.RouletteVisualLayers.Ball"]
+      scale: 0.025, 0.025
+      offset: -2, 0
+  - type: Icon
+    sprite: _Exodus/Structures/Casino/roulette.rsi
+    state: roulette_icon
+  - type: Roulette
+  - type: RouletteVisuals
+  - type: ActivatableUI
+    key: enum.RouletteUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.RouletteUiKey.Key:
+        type: RouletteBoundUserInterface
+        interactionRange: 4
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-2.95,-0.95,2.95,0.95"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: StaticPrice
+    price: 2500
