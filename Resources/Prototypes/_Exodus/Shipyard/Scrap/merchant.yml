@@ -20,6 +20,10 @@
   - Scrapyard
   engine:
   - AME
+    addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
 
 - type: gameMap
   id: Merchant
