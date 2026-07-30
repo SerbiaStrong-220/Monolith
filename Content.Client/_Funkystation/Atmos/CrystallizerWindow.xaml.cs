@@ -142,7 +142,7 @@ namespace Content.Client._Funkystation.Atmos
             RecipesContainer.Children.Clear();
             _buttonToRecipeId.Clear();
 
-            _nothingButton.Text = "Nothing";
+            _nothingButton.Text = Loc.GetString("crystallizer-ui-nothing"); // Exodus-loc-changes
             _nothingButton.HorizontalExpand = true;
             _nothingButton.Pressed = true;
 
@@ -160,7 +160,7 @@ namespace Content.Client._Funkystation.Atmos
             {
                 var button = new Button
                 {
-                    Text = recipe.Name,
+                    Text = Loc.GetString(recipe.Name), // Exodus-loc-changes
                     HorizontalExpand = true
                 };
 
@@ -201,6 +201,7 @@ namespace Content.Client._Funkystation.Atmos
             {
                 _selectedButton.Pressed = false;
             }
+
             _selectedButton = button;
             _selectedButton.Pressed = true;
             _selectedButtonId = _buttonToRecipeId[button];
@@ -209,21 +210,17 @@ namespace Content.Client._Funkystation.Atmos
 
             if (recipe == null)
             {
-                var selectMessage = new Label { Text = "Please select a recipe." };
-                RequirementsContainer.AddChild(selectMessage);
+                RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-select-recipe") }); // Exodus loc changes
                 GasList.Children.Clear();
                 return;
             }
+            // Exodus-loc-changes-begin
+            RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-temperature") });
+            RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-min", ("temp", recipe.MinimumTemperature)) });
+            RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-max", ("temp", recipe.MaximumTemperature)) });
 
-            var label = new Label { Text = $"Temperature:" };
-            RequirementsContainer.AddChild(label);
-            label = new Label { Text = $" - Minimum: {recipe.MinimumTemperature}K" };
-            RequirementsContainer.AddChild(label);
-            label = new Label { Text = $" - Maximum: {recipe.MaximumTemperature}K" };
-            RequirementsContainer.AddChild(label);
-
-            label = new Label { Text = $"Gases:" };
-            RequirementsContainer.AddChild(label);
+            RequirementsContainer.AddChild(new Label { Text = Loc.GetString("crystallizer-ui-gases") });
+            // Exodus-loc-changes-end
             for (int i = 0; i < recipe.MinimumRequirements.Length && i < Atmospherics.TotalNumberOfGases; i++)
             {
                 if (recipe.MinimumRequirements[i] > 0)
@@ -231,16 +228,17 @@ namespace Content.Client._Funkystation.Atmos
                     var gas = (Gas) i;
                     if (Atmospherics.GasNames.TryGetValue(gas, out var gasName))
                     {
-                        var gasLabel = new Label { Text = $" - {gasName}: {recipe.MinimumRequirements[i]} moles" };
-                        RequirementsContainer.AddChild(gasLabel);
+                        RequirementsContainer.AddChild(new Label {
+                            Text = Loc.GetString("crystallizer-ui-gas-amount", ("gas", gasName), ("amount", recipe.MinimumRequirements[i])) // Exodus loc changes
+                        });
                     }
                 }
             }
 
-            label = new Label { Text = $" " };
-            RequirementsContainer.AddChild(label);
-            label = new Label { Text = recipe.EnergyRelease > 0 ? "This reaction will be exothermic." : "This reaction will be endothermic." };
-            RequirementsContainer.AddChild(label);
+            RequirementsContainer.AddChild(new Label { Text = " " });
+            RequirementsContainer.AddChild(new Label {
+                Text = Loc.GetString(recipe.EnergyRelease > 0 ? "crystallizer-ui-exothermic" : "crystallizer-ui-endothermic") // Exodus loc changes
+            });
 
             // Update GasList
             GasList.Children.Clear();
@@ -255,7 +253,6 @@ namespace Content.Client._Funkystation.Atmos
                     var gas = (Gas) i;
                     if (Atmospherics.GasNames.TryGetValue(gas, out var gasName))
                     {
-
                         var gasContainer = new BoxContainer
                         {
                             Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -265,7 +262,10 @@ namespace Content.Client._Funkystation.Atmos
                         var moles = _gasMixture != null ? _gasMixture.GetMoles(i) : 0f;
                         var gasLabel = new Label { Text = gasName, Margin = new Thickness(5) };
                         var gasControl = new Control { HorizontalExpand = true };
-                        var molesLabel = new Label { Text = $"{moles:F2} moles", Margin = new Thickness(5) };
+                        var molesLabel = new Label {
+                            Text = Loc.GetString("crystallizer-ui-moles", ("moles", moles.ToString("F2"))), // Exodus-loc-changes
+                            Margin = new Thickness(5)
+                        };
 
                         gasContainer.AddChild(gasLabel);
                         gasContainer.AddChild(gasControl);

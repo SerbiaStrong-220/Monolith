@@ -1,0 +1,7 @@
+crystallizer-recipe-plastic = Plastic (10)
+crystallizer-recipe-iridite = Iridite (1)
+crystallizer-recipe-plastitanium = Plastitanium (10)
+crystallizer-recipe-plasteel = Plasteel (10)
+crystallizer-recipe-plasma = Plasma (1)
+crystallizer-recipe-telecrystal = Telecrystal (1)
+crystallizer-recipe-diamond = Diamond (1)

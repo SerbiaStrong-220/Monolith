@@ -40,7 +40,7 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Supply # Exodus
-      canSpeak: false
+      canSpeak: true # Exodus: contractor loadout channel
     defaultChannel: Supply
   - type: Sprite
     layers:
@@ -116,7 +116,7 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Engineering
-      canSpeak: false
+      canSpeak: true # Exodus: contractor loadout channel
     defaultChannel: Engineering
   - type: Sprite
     layers:
@@ -132,7 +132,7 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Medical
-      canSpeak: false
+      canSpeak: true # Exodus: contractor loadout channel
     defaultChannel: Medical
   - type: Sprite
     layers:
@@ -168,7 +168,7 @@
   - type: EncryptionKey
     channels: # Exodus
     - channel: Science
-      canSpeak: false
+      canSpeak: true # Exodus: contractor loadout channel
     defaultChannel: Science
   - type: Sprite
     layers:
