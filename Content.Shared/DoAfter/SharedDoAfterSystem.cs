@@ -216,7 +216,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             var interruptionBreak = new GetDoAfterInterruptionBreakEvent(
                 args.BreakOnMove,
                 args.BreakOnHandChange,
-                args.BreakOnDropItem);
+                args.BreakOnDropItem,
+                args.ApplyMovementSlowdown);
             RaiseLocalEvent(args.User, ref interruptionBreak);
             args.BreakOnMove = interruptionBreak.BreakOnMove;
             args.BreakOnHandChange = interruptionBreak.BreakOnHandChange;
