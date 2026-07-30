@@ -17,7 +17,6 @@
   guidebookPage: Null
   class:
   - Capital
-  - Scrapyard
   engine:
   - AME
     addComponents:
