@@ -19,7 +19,7 @@
   - Capital
   engine:
   - AME
-    addComponents:
+  addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
     - NanoTrasen
