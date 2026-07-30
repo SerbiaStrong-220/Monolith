@@ -13,7 +13,7 @@
   category: Large
   group: Scrap
   access: Mercenary
-  shuttlePath: /SharedMaps/_Exodus/Shuttles/Scrap/merchant.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/merchant.yml
   guidebookPage: Null
   class:
   - Capital
@@ -27,7 +27,7 @@
 - type: gameMap
   id: Merchant
   mapName: 'МАВК Мерчант'
-  mapPath: /SharedMaps/_Exodus/Shuttles/Scrap/merchant.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/merchant.yml
   minPlayers: 0
   stations:
     Merchant:
