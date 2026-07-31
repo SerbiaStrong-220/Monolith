@@ -1,8 +1,9 @@
 - type: entity
   id: RouletteTable
-  parent: BaseStructure
+  parent: [BaseStructure, BaseStructureIndestructible]
   name: XenoRoulette table
   description: A casino roulette table connected to the station banking network.
+  suffix: ADMIN ONLY
   placement:
     mode: SnapgridBorder
   components:
