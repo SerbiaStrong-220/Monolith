@@ -65,6 +65,8 @@
   - type: StandingState
   - type: DoAfterInterruptionExempt # Exodus do-after-interruption-exemption
     exemptions: [Movement, HandChange]
+    walkSpeedModifier: 0.5 # Exodus do-after-movement-slowdown
+    sprintSpeedModifier: 0.5 # Exodus do-after-movement-slowdown
   - type: MobState
     allowedStates:
     - Alive

@@ -1,0 +1,114 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                        xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                       xmlns:casino="clr-namespace:Content.Client._Exodus.Casino"
+                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                       Title="{Loc 'roulette-window-title'}"
+                       MinSize="900 720"
+                       SetSize="900 720">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
+        <PanelContainer HorizontalExpand="True" MinSize="0 350">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#101713" BorderColor="#B89B58" BorderThickness="2" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Horizontal" Margin="8" SeparationOverride="8">
+                <PanelContainer MinSize="220 0" VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#142019" BorderColor="#725D2E" BorderThickness="1" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="12" VerticalAlignment="Center">
+                        <Label Text="{Loc 'roulette-payouts-title'}" Align="Center" FontColorOverride="#E7C86A" />
+                        <Label Text="{Loc 'roulette-payout-number'}" Align="Center" />
+                        <Label Text="{Loc 'roulette-payout-color'}" Align="Center" />
+                        <Label Text="{Loc 'roulette-payout-parity'}" Align="Center" />
+                        <Label Text="{Loc 'roulette-payout-range'}" Align="Center" />
+                        <Label Text="{Loc 'roulette-payout-dozen'}" Align="Center" />
+                        <Label Text="{Loc 'roulette-payout-includes-bet'}" Align="Center" FontColorOverride="#8FA899" />
+                    </BoxContainer>
+                </PanelContainer>
+                <casino:RouletteWheelControl Name="Wheel" HorizontalExpand="True" VerticalExpand="True" MinSize="330 330" />
+                <PanelContainer MinSize="220 0" VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#142019" BorderColor="#725D2E" BorderThickness="1" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="12" VerticalAlignment="Center">
+                        <Label Text="{Loc 'roulette-rules-title'}" Align="Center" FontColorOverride="#E7C86A" />
+                        <Label Name="BettingDurationLabel" Align="Center" />
+                        <Label Name="SpinDurationLabel" Align="Center" />
+                        <Label Name="PayoutDurationLabel" Align="Center" />
+                        <Label Text="{Loc 'roulette-rule-zero'}" Align="Center" FontColorOverride="#8FD39B" />
+                        <Label Text="{Loc 'roulette-rule-server'}" Align="Center" FontColorOverride="#8FA899" />
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+        </PanelContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Name="PhaseLabel" HorizontalExpand="True" />
+            <Label Name="TimerLabel" Align="Right" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Name="BalanceLabel" HorizontalExpand="True" />
+            <Label Name="TotalBetLabel" Align="Right" />
+        </BoxContainer>
+        <Label Name="ResultLabel" Align="Center" />
+        <PanelContainer HorizontalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#18241D" BorderColor="#4A6856" BorderThickness="1" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'roulette-bet-type-label'}" MinWidth="130" />
+                    <OptionButton Name="BetTypeSelector" HorizontalExpand="True" />
+                </BoxContainer>
+                <BoxContainer Name="NumberRow" Orientation="Horizontal">
+                    <Label Text="{Loc 'roulette-number-label'}" MinWidth="130" />
+                    <SpinBox Name="NumberInput" HorizontalExpand="True" Value="0" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'roulette-amount-label'}" MinWidth="130" />
+                    <SpinBox Name="AmountInput" HorizontalExpand="True" Value="100" />
+                </BoxContainer>
+                <Button Name="PlaceBetButton" Text="{Loc 'roulette-place-bet'}" HorizontalExpand="True" />
+            </BoxContainer>
+        </PanelContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" MinSize="0 100" SeparationOverride="8">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#111B16" BorderColor="#725D2E" BorderThickness="1" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6">
+                    <Label Text="{Loc 'roulette-your-bets'}" Align="Center" FontColorOverride="#E7C86A" />
+                    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#0C130F" BorderColor="#314A3B" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="6">
+                            <BoxContainer Name="BetsList" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="3" />
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </PanelContainer>
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#111B16" BorderColor="#725D2E" BorderThickness="1" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6">
+                    <Label Text="{Loc 'roulette-players-bets'}" Align="Center" FontColorOverride="#E7C86A" />
+                    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#0C130F" BorderColor="#314A3B" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="6">
+                            <BoxContainer Name="PlayerBetsList" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="3" />
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <PanelContainer HorizontalExpand="True" MinSize="0 28">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#17120F" BorderColor="#59352E" BorderThickness="1" />
+            </PanelContainer.PanelOverride>
+            <Label Name="ErrorLabel" Align="Center" Margin="6 3" FontColorOverride="#FF7770" />
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

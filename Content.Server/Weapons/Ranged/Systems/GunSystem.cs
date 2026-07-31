@@ -85,6 +85,12 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         userImpulse = true;
 
+        // Exodus-begin fire control weapon audio
+        // Fire-control shots are only initiated on the server, so their operator has not predicted the sound locally.
+        // Do not exclude them from the PVS audio broadcast.
+        var audioUser = HasComp<FireControllableComponent>(gunUid) ? null : user;
+        // Exodus-end
+
         if (user != null && gun.UseUserPosition) // Exodus
         {
             var selfEvent = new SelfBeforeGunShotEvent(user.Value, (gunUid, gun), ammo);
@@ -153,7 +159,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     else
                     {
                         userImpulse = false;
-                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
+                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, audioUser); // Exodus fire control weapon audio
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -184,7 +190,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     };
                     RaiseLocalEvent(ent.Value, ref hitscanEv);
 
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, audioUser); // Exodus fire control weapon audio
                     // Mono start
                     if (hitscanammo.CasingPrototype != null)
                         Spawn(hitscanammo.CasingPrototype, fromEnt);
@@ -229,7 +235,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
 
             MuzzleFlash(gunUid, ammoComp, mapDirection.ToAngle(), user);
-            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, audioUser); // Exodus fire control weapon audio
         }
     }
 
