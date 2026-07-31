@@ -1,0 +1,7 @@
+crystallizer-recipe-plastic = Пластик (10)
+crystallizer-recipe-iridite = Иридит (1)
+crystallizer-recipe-plastitanium = Пластитан (50)
+crystallizer-recipe-plasteel = Пласталь (10)
+crystallizer-recipe-plasma = Плазма (1)
+crystallizer-recipe-telecrystal = Телекристалл (1)
+crystallizer-recipe-diamond = Алмаз (1)

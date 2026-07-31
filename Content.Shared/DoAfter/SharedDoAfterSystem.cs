@@ -100,6 +100,17 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             tcs.SetResult(doAfter.Cancelled ? DoAfterStatus.Cancelled : DoAfterStatus.Finished);
     }
 
+    // Exodus-begin do-after-movement-slowdown
+    private void RaiseDoAfterMovementSlowdownChanged(DoAfter doAfter)
+    {
+        if (!doAfter.Args.ApplyMovementSlowdown || !Exists(doAfter.Args.User))
+            return;
+
+        var ev = new DoAfterMovementSlowdownChangedEvent();
+        RaiseLocalEvent(doAfter.Args.User, ref ev);
+    }
+    // Exodus-end
+
     private void OnDoAfterGetState(EntityUid uid, DoAfterComponent comp, ref ComponentGetState args)
     {
         args.State = new DoAfterComponentState(EntityManager, comp);
@@ -205,11 +216,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             var interruptionBreak = new GetDoAfterInterruptionBreakEvent(
                 args.BreakOnMove,
                 args.BreakOnHandChange,
-                args.BreakOnDropItem);
+                args.BreakOnDropItem,
+                args.ApplyMovementSlowdown);
             RaiseLocalEvent(args.User, ref interruptionBreak);
             args.BreakOnMove = interruptionBreak.BreakOnMove;
             args.BreakOnHandChange = interruptionBreak.BreakOnHandChange;
             args.BreakOnDropItem = interruptionBreak.BreakOnDropItem;
+            args.ApplyMovementSlowdown = interruptionBreak.ApplyMovementSlowdown; // Exodus do-after-movement-slowdown
         }
         // Exodus-end
 
@@ -281,6 +294,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Add(doAfter.Index, doAfter);
         EnsureComp<ActiveDoAfterComponent>(args.User);
         Dirty(args.User, comp);
+        RaiseDoAfterMovementSlowdownChanged(doAfter); // Exodus do-after-movement-slowdown
         args.Event.DoAfter = doAfter;
         return true;
     }
@@ -380,6 +394,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // Caller is responsible for dirtying the component.
         doAfter.CancelledTime = GameTiming.CurTime;
         RaiseDoAfterEvents(doAfter, component);
+        RaiseDoAfterMovementSlowdownChanged(doAfter); // Exodus do-after-movement-slowdown
     }
     #endregion
 

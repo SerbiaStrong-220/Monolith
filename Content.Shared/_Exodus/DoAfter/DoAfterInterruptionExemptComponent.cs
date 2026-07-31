@@ -19,4 +19,10 @@ public sealed partial class DoAfterInterruptionExemptComponent : Component
 {
     [DataField]
     public DoAfterInterruptionExemptions Exemptions = DoAfterInterruptionExemptions.Movement;
+
+    [DataField]
+    public float WalkSpeedModifier = 0.5f;
+
+    [DataField]
+    public float SprintSpeedModifier = 0.5f;
 }

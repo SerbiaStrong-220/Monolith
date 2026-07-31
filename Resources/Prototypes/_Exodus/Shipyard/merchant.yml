@@ -1,0 +1,46 @@
+# Author Info
+# GitHub: Corrupt142
+# Discord: Corrupt
+
+# Shuttle Notes: Made on behalf of synthetic_086
+
+- type: vessel
+  id: Merchant
+  parent: BaseVessel
+  name: МАВК Мерчант
+  description: «Экспериментальный» проект гражданского звездолета, разработанный с возможностью продажи товаров в его задней части благодаря компактному складскому модулю! Просто не обращайте внимания на военную систему опознавания «свой-чужой». Предположительно изготовлен некой сомнительной оружейной корпорацией.
+  price: 290000 # 210K base + 80K markup
+  category: Large
+  group: Shipyard
+  access: Mercenary
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/merchant.yml
+  guidebookPage: Null
+  class:
+  - Capital
+  engine:
+  - AME
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+
+- type: gameMap
+  id: Merchant
+  mapName: 'МАВК Мерчант'
+  mapPath: /SharedMaps/_Exodus/Shuttles/merchant.yml
+  minPlayers: 0
+  stations:
+    Merchant:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Мерчант MIL{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
+            
