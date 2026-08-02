@@ -2468,7 +2468,7 @@ entities:
       pos: 21.5,-10.5
       parent: 4270
     - type: AmeController
-      injectionAmount: 4
+      injectionAmount: 6
       injecting: True
     - type: ContainerContainer
       containers:

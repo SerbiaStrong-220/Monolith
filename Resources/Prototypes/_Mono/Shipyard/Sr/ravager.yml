@@ -21,6 +21,7 @@
   guidebookPage: Null
   class:
   - Science
+  - Capital # Exodus
   engine:
   - AME
 
