@@ -73,6 +73,8 @@ public sealed partial class ShipShieldsSystem
         if (_apcPowerReceiverQuery.TryGetComponent(source, out var receiver))
             AdjustEmitterLoad(source, emitter, receiver);
 
+        RaiseShieldStateChanged(Transform(source).GridUid); // Exodus fire-control event-driven UI updates
+
         return true;
     }
 

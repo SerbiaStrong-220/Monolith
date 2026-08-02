@@ -35,11 +35,6 @@ public sealed partial class FireControlWindow : FancyWindow
 
     private FireControlConsoleBoundInterfaceState? _currentState;
 
-    // Exodus-Start
-    private const float UpdateTimer = 1f;
-    private float _updateAccumulator;
-    // Exodus-End
-
     public FireControlWindow()
     {
         RobustXamlLoader.Load(this);
@@ -374,14 +369,7 @@ public sealed partial class FireControlWindow : FancyWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-        _updateAccumulator += args.DeltaSeconds;
-
-        if (_updateAccumulator > UpdateTimer)
-        {
-            OnServerRefresh?.Invoke(); // a crutch, what can you make me?
-            _updateAccumulator = 0;
-        }
-
+        // Exodus: Full states are server-event-driven; only local progress needs per-frame updates.
         UpdateReloadProgress();
     }
 

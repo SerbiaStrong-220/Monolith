@@ -1,0 +1,13 @@
+- type: technology
+  id: BluespaceRapidPartExchange
+  name: research-technology-bluespace-rped
+  entityIcon: BluespaceRPED
+  discipline: Industrial
+  tier: 3
+  cost: 25000
+  recipeUnlocks:
+  - BluespaceRPED
+  - BorgModuleBluespaceRPED
+  technologyPrerequisites:
+  - ConstructionBags
+  position: -3, 18

@@ -13,7 +13,7 @@
   category: medium
   group: Scrap
   access: Mercenary
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/serkesh.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Scrap/serkesh.yml
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -29,7 +29,7 @@
 - type: gameMap
   id: Serkesh
   mapName: 'Серкеш' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Scrap/serkesh.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/Scrap/serkesh.yml
   minPlayers: 0
   stations:
     Serkesh:
