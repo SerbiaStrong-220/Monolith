@@ -16,6 +16,8 @@
     ignorePanel: true
     exchangeVisualStyle: BluespaceRpedBeam
     exchangeVisualDuration: 1
+    exchangeSound:
+      collection: BluespaceRPEDUpgrade
   - type: Storage
     grid:
     - 0,0,7,7
