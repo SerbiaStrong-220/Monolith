@@ -7,7 +7,7 @@
   parent: BaseVessel
   name: Пасем # Ru-Localization
   description: Патрульный артиллерийский корвет для обороны внутреннего кольца и его патрулирования. Рекомендуемый экипаж - 2 человека. # Ru-Localization
-  price: 180000
+  price: 220000
   category: Medium
   group: Sr
   access: Brig
