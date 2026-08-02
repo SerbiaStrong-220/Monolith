@@ -367,7 +367,9 @@ public sealed partial class PartExchangerSystem : EntitySystem
         if (!CanReachExchangeTarget(ent, args.User, target))
             return;
 
-        if (TryComp<WiresPanelComponent>(target, out var panel) && !panel.Open)
+        if (!component.IgnorePanel &&
+            TryComp<WiresPanelComponent>(target, out var panel) &&
+            !panel.Open)
         {
             _popup.PopupEntity(Loc.GetString("construction-step-condition-wire-panel-open"),
                 target);
@@ -408,7 +410,9 @@ public sealed partial class PartExchangerSystem : EntitySystem
     private bool CanExchange(Entity<PartExchangerComponent> ent, EntityUid user, EntityUid target)
     {
         return CanReachExchangeTarget(ent, user, target) &&
-               (!TryComp<WiresPanelComponent>(target, out var panel) || panel.Open);
+               (ent.Comp.IgnorePanel ||
+                !TryComp<WiresPanelComponent>(target, out var panel) ||
+                panel.Open);
     }
 
     private bool CanReachExchangeTarget(Entity<PartExchangerComponent> ent, EntityUid user, EntityUid target)

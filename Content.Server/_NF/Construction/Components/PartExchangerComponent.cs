@@ -43,6 +43,12 @@ public sealed partial class PartExchangerComponent : Component
     public bool InstantExchange;
 
     /// <summary>
+    /// Whether the exchanger can access machine parts through a closed maintenance panel.
+    /// </summary>
+    [DataField]
+    public bool IgnorePanel;
+
+    /// <summary>
     /// Visual link style shown after a successful exchange. Null disables the effect.
     /// </summary>
     [DataField]

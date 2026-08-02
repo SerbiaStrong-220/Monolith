@@ -13,6 +13,7 @@
     exchangeRange: 8
     useLineOfSight: true
     instantExchange: true
+    ignorePanel: true
     exchangeVisualStyle: BluespaceRpedBeam
     exchangeVisualDuration: 1
   - type: Storage
