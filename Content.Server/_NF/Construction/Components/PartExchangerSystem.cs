@@ -77,14 +77,16 @@ public sealed partial class PartExchangerSystem : EntitySystem
             return;
         }
 
-        ExchangeParts(ent, args.User, target);
+        if (TryExchangeParts(ent, target))
+            ShowExchangeVisual(ent, args.User, target);
+
         args.Handled = true;
     }
 
-    private void ExchangeParts(Entity<PartExchangerComponent> ent, EntityUid user, EntityUid target)
+    private bool TryExchangeParts(Entity<PartExchangerComponent> ent, EntityUid target)
     {
         if (!TryComp<StorageComponent>(ent, out var storage) || storage.Container == null)
-            return;
+            return false;
 
         var partsByType = new Dictionary<ProtoId<MachinePartPrototype>, List<(EntityUid, UpgradePartState)>>();
 
@@ -113,7 +115,12 @@ public sealed partial class PartExchangerSystem : EntitySystem
         else if (TryComp<MachineFrameComponent>(target, out var machineFrame))
             exchanged = TryConstructMachineParts(machineFrame, target, ent, partsByType);
 
-        if (exchanged && ent.Comp.ExchangeVisualStyle is { } style)
+        return exchanged;
+    }
+
+    private void ShowExchangeVisual(Entity<PartExchangerComponent> ent, EntityUid user, EntityUid target)
+    {
+        if (ent.Comp.ExchangeVisualStyle is { } style)
             _linkVisual.TryShowTemporaryLink(user, target, style, ent.Comp.ExchangeVisualDuration);
     }
     // Exodus-end
@@ -369,7 +376,8 @@ public sealed partial class PartExchangerSystem : EntitySystem
 
         if (component.InstantExchange)
         {
-            ExchangeParts(ent, args.User, target);
+            ShowExchangeVisual(ent, args.User, target);
+            TryExchangeParts(ent, target);
             _audio.PlayPvs(component.ExchangeSound, uid);
             args.Handled = true;
             return;
