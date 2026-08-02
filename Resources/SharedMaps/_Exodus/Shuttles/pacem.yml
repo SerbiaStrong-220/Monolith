@@ -3391,6 +3391,8 @@ entities:
     - type: Transform
       pos: -2.5,6.5
       parent: 1
+    - type: FuelGenerator
+      targetPower: 100000
 - proto: PosterLegitSafetyReport
   entities:
   - uid: 421
