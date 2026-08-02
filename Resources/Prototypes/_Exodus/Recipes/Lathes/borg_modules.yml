@@ -25,3 +25,16 @@
     Glass: 5000
     Plastic: 5000
     Bluespace: 200
+
+- type: latheRecipe
+  id: BorgModuleBluespaceRPED
+  parent: BaseRoboticsRecipe
+  result: BorgModuleBluespaceRPED
+  completetime: 10
+  materials:
+    Steel: 5000
+    Plasteel: 2000
+    Plastitanium: 2000
+    Bluespace: 500
+    Diamond: 100
+    Plutonium: 100
