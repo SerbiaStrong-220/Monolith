@@ -12,6 +12,7 @@
   - type: PartExchanger
     exchangeRange: 8
     useLineOfSight: true
+    instantExchange: true
     exchangeBeamColor: DeepSkyBlue
   - type: Storage
     grid:

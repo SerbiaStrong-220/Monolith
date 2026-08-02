@@ -35,6 +35,12 @@ public sealed partial class PartExchangerComponent : Component
     public bool UseLineOfSight;
 
     /// <summary>
+    /// Whether the exchange is applied immediately without starting a do-after.
+    /// </summary>
+    [DataField]
+    public bool InstantExchange;
+
+    /// <summary>
     /// Color of the beam shown after a successful exchange. Null disables the beam.
     /// </summary>
     [DataField]

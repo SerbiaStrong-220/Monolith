@@ -77,6 +77,12 @@ public sealed partial class PartExchangerSystem : EntitySystem
             return;
         }
 
+        ExchangeParts(ent, args.User, target);
+        args.Handled = true;
+    }
+
+    private void ExchangeParts(Entity<PartExchangerComponent> ent, EntityUid user, EntityUid target)
+    {
         if (!TryComp<StorageComponent>(ent, out var storage) || storage.Container == null)
             return;
 
@@ -110,11 +116,9 @@ public sealed partial class PartExchangerSystem : EntitySystem
         if (exchanged && ent.Comp.ExchangeBeamColor is { } color && ent.Comp.ExchangeBeamDuration > TimeSpan.Zero)
         {
             RaiseNetworkEvent(
-                new PartExchangeVisualEvent(GetNetEntity(args.User), GetNetEntity(target), color, ent.Comp.ExchangeBeamDuration),
+                new PartExchangeVisualEvent(GetNetEntity(user), GetNetEntity(target), color, ent.Comp.ExchangeBeamDuration),
                 Filter.Pvs(target, entityManager: EntityManager));
         }
-
-        args.Handled = true;
     }
     // Exodus-end
 
@@ -364,6 +368,14 @@ public sealed partial class PartExchangerSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("construction-step-condition-wire-panel-open"),
                 target);
+            return;
+        }
+
+        if (component.InstantExchange)
+        {
+            ExchangeParts(ent, args.User, target);
+            _audio.PlayPvs(component.ExchangeSound, uid);
+            args.Handled = true;
             return;
         }
 
