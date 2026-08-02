@@ -10,7 +10,7 @@
   - type: Item
     sprite: _Exodus/Objects/Specific/Research/bluespace_rped.rsi
   - type: PartExchanger
-    exchangeRange: 8
+    exchangeRange: 14
     useLineOfSight: true
     instantExchange: true
     ignorePanel: true
