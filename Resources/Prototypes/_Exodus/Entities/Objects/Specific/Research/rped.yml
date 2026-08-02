@@ -13,7 +13,7 @@
     exchangeRange: 8
     useLineOfSight: true
     instantExchange: true
-    exchangeBeamColor: DeepSkyBlue
+    exchangeVisualStyle: BluespaceRpedBeam
   - type: Storage
     grid:
     - 0,0,7,7

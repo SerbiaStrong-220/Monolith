@@ -1,9 +1,9 @@
 using Content.Server._NF.Construction.Components;
+using Content.Server._Exodus.Visuals; // Exodus - generic entity link visuals
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared._Exodus.Construction; // Exodus - bluespace RPED
 using Content.Shared.DoAfter;
 using Content.Shared.Construction.Components;
 using Content.Shared.Exchanger;
@@ -19,7 +19,6 @@ using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Construction.Prototypes;
-using Robust.Shared.Player; // Exodus - bluespace RPED
 
 namespace Content.Server._NF.Construction;
 
@@ -33,6 +32,7 @@ public sealed partial class PartExchangerSystem : EntitySystem
     [Dependency] private StorageSystem _storage = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private EntityManager _entity = default!;
+    [Dependency] private EntityLinkVisualSystem _linkVisual = default!; // Exodus - generic entity link visuals
     [Dependency] private SharedInteractionSystem _interaction = default!; // Exodus - bluespace RPED
     [Dependency] private ExamineSystemShared _examine = default!; // Exodus - bluespace RPED
 
@@ -113,12 +113,8 @@ public sealed partial class PartExchangerSystem : EntitySystem
         else if (TryComp<MachineFrameComponent>(target, out var machineFrame))
             exchanged = TryConstructMachineParts(machineFrame, target, ent, partsByType);
 
-        if (exchanged && ent.Comp.ExchangeBeamColor is { } color && ent.Comp.ExchangeBeamDuration > TimeSpan.Zero)
-        {
-            RaiseNetworkEvent(
-                new PartExchangeVisualEvent(GetNetEntity(user), GetNetEntity(target), color, ent.Comp.ExchangeBeamDuration),
-                Filter.Pvs(target, entityManager: EntityManager));
-        }
+        if (exchanged && ent.Comp.ExchangeVisualStyle is { } style)
+            _linkVisual.TryShowTemporaryLink(user, target, style, ent.Comp.ExchangeVisualDuration);
     }
     // Exodus-end
 

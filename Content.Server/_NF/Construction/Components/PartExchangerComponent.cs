@@ -1,5 +1,7 @@
+using Content.Shared._Exodus.Visuals; // Exodus - generic entity link visuals
 using Content.Shared.Interaction; // Exodus - bluespace RPED
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes; // Exodus - generic entity link visuals
 
 namespace Content.Server._NF.Construction.Components;
 
@@ -41,16 +43,16 @@ public sealed partial class PartExchangerComponent : Component
     public bool InstantExchange;
 
     /// <summary>
-    /// Color of the beam shown after a successful exchange. Null disables the beam.
+    /// Visual link style shown after a successful exchange. Null disables the effect.
     /// </summary>
     [DataField]
-    public Color? ExchangeBeamColor;
+    public ProtoId<EntityLinkVisualPrototype>? ExchangeVisualStyle;
 
     /// <summary>
-    /// How long the successful exchange beam remains visible.
+    /// How long the successful exchange visual link remains visible.
     /// </summary>
     [DataField]
-    public TimeSpan ExchangeBeamDuration = TimeSpan.FromSeconds(1);
+    public TimeSpan ExchangeVisualDuration = TimeSpan.FromSeconds(1);
     // Exodus-end
 
     [DataField("exchangeSound")]
