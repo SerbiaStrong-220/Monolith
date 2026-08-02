@@ -16,7 +16,7 @@
   shuttlePath: /SharedMaps/_Exodus/Shuttles/merchant.yml
   guidebookPage: Null
   class:
-  - Capital
+  - Frigate
   engine:
   - AME
   addComponents:
