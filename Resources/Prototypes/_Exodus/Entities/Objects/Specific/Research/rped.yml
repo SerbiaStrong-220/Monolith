@@ -5,10 +5,10 @@
   description: A bluespace rapid part exchange device capable of upgrading machines at range.
   components:
   - type: Sprite
-    sprite: _NF/Objects/Specific/Research/rped.rsi
-    layers:
-    - state: icon
-      color: DeepSkyBlue
+    sprite: _Exodus/Objects/Specific/Research/bluespace_rped.rsi
+    state: icon
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Research/bluespace_rped.rsi
   - type: PartExchanger
     exchangeRange: 8
     useLineOfSight: true
