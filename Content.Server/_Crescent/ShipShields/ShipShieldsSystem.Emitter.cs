@@ -28,9 +28,16 @@ public partial class ShipShieldsSystem
     {
         SubscribeLocalEvent<ShipShieldEmitterComponent, ShieldDeflectedEvent>(OnShieldDeflected);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentStartup>(OnEmitterStartup); // Exodus fire-control event-driven UI updates
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentRemove>(OnRemoved);
     }
 
+    // Exodus-begin fire-control event-driven UI updates
+    private void OnEmitterStartup(Entity<ShipShieldEmitterComponent> owner, ref ComponentStartup args)
+    {
+        RaiseShieldStateChanged(Transform(owner).GridUid);
+    }
+    // Exodus-end
 
     private void OnRemoved(Entity<ShipShieldEmitterComponent> owner, ref ComponentRemove remove)
     {
@@ -38,6 +45,7 @@ public partial class ShipShieldsSystem
         if (parent is null)
             return;
         UnshieldEntity(parent.Value, null);
+        RaiseShieldStateChanged(parent); // Exodus fire-control event-driven UI updates
     }
 
     private void OnShieldDeflected(EntityUid uid, ShipShieldEmitterComponent component, ShieldDeflectedEvent args)
@@ -55,6 +63,8 @@ public partial class ShipShieldsSystem
 
         component.Damage += (float)args.Projectile.Damage.GetTotal();
         args.Projectile.ProjectileSpent = true;
+
+        RaiseShieldStateChanged(Transform(uid).GridUid); // Exodus fire-control event-driven UI updates
 
         QueueDel(args.Deflected);
     }

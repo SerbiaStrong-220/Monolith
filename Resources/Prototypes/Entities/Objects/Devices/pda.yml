@@ -122,6 +122,8 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
+  - type: TTS # Exodus PDA sentience TTS
+    voice: adventure_core
   - type: LanguageSpeaker # Einstein Engines - Language
   - type: LanguageKnowledge # Einstein Engines - Language
     speaks:
@@ -136,6 +138,7 @@
   - type: PirateBountyItem
     id: Pda
   - type: ToggleableGhostRole # Frontier: Literally only for the wipe verb and nothing else.
+    canActivate: false # Exodus PDA sentience ghost role
     wipeVerbText: pda-wipe-device-verb-text # Frontier
     wipeVerbPopup: pda-wiped-device # Frontier
     mindRoles: [] # Frontier: no default value here

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server._Mono.Projectiles.TargetGuided;
+using Content.Shared._Exodus.FireControl; // Exodus fire-control cursor optimization
 using Content.Shared._Mono.FireControl;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
@@ -23,6 +24,11 @@ public sealed partial class FireControlSystem
     /// </summary>
     private readonly Dictionary<EntityUid, EntityCoordinates> _consoleMousePositions = new();
 
+    // Exodus-begin fire-control cursor optimization
+    private readonly HashSet<EntityUid> _consoleFiringWeapons = new();
+    private readonly List<EntityUid> _finishedConsoleFiringWeapons = new();
+    // Exodus-end
+
     /// <summary>
     /// Registers handlers for events related to target guided projectiles.
     /// </summary>
@@ -30,17 +36,18 @@ public sealed partial class FireControlSystem
     {
         SubscribeLocalEvent<GunComponent, AmmoShotEvent>(OnTargetGuidedShot);
         SubscribeLocalEvent<TargetGuidedComponent, ComponentShutdown>(OnGuidedMissileShutdown);
-        // Track fire messages to update cursor positions
-        SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleFireEvent>(OnConsoleFireEvent);
+        SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleCursorPositionEvent>(OnConsoleCursorPosition); // Exodus fire-control cursor optimization
     }
 
     /// <summary>
-    /// Track console fire events to update cursor positions
+    /// Track console cursor events to update guided projectile targets.
     /// </summary>
-    private void OnConsoleFireEvent(EntityUid uid, FireControlConsoleComponent component, FireControlConsoleFireEvent args)
+    private void OnConsoleCursorPosition(Entity<FireControlConsoleComponent> ent, ref FireControlConsoleCursorPositionEvent args) // Exodus fire-control cursor optimization
     {
-        // Store the current mouse position for this console
-        _consoleMousePositions[uid] = GetCoordinates(args.Coordinates);
+        if (!_consoleMousePositions.ContainsKey(ent))
+            return;
+
+        _consoleMousePositions[ent] = args.Coordinates;
     }
 
     /// <summary>
@@ -66,25 +73,27 @@ public sealed partial class FireControlSystem
         // Find the controlling console for position updates if this is a fire controllable
         EntityUid? controllingConsole = null;
         if (TryComp<FireControllableComponent>(uid, out var fireControllable) &&
-            fireControllable.ControllingServer != null)
+            fireControllable.ControllingServer is { } controllingServer)
         {
-            // Find the active console that fired this
-            var query = EntityQueryEnumerator<FireControlConsoleComponent>();
-            while (query.MoveNext(out var consoleUid, out var console))
+            // Exodus-begin fire-control cursor optimization
+            if (fireControllable.ActiveFiringConsole is { } firingConsole
+                && fireControllable.ActiveFiringUser == shooter
+                && TryComp<FireControlConsoleComponent>(firingConsole, out var firingConsoleComponent)
+                && firingConsoleComponent.ConnectedServer == controllingServer
+                && TryComp<FireControlServerComponent>(controllingServer, out var server)
+                && server.Consoles.Contains(firingConsole))
             {
-                if (console.ConnectedServer == fireControllable.ControllingServer)
-                {
-                    controllingConsole = consoleUid;
+                controllingConsole = firingConsole;
 
-                    // Store initial cursor position if we're seeing it for the first time
-                    if (!_consoleMousePositions.ContainsKey(consoleUid))
-                    {
-                        _consoleMousePositions[consoleUid] = targetCoords.Value;
-                    }
-
-                    break;
-                }
+                if (!_consoleMousePositions.ContainsKey(firingConsole))
+                    _consoleMousePositions[firingConsole] = targetCoords.Value;
             }
+            else if (fireControllable.ActiveFiringConsole != null)
+            {
+                // A shot from another source must not inherit an earlier console's cursor.
+                ClearConsoleFireSource(uid, fireControllable);
+            }
+            // Exodus-end
         }
 
         foreach (var projectileUid in args.FiredProjectiles)
@@ -196,7 +205,38 @@ public sealed partial class FireControlSystem
 
         // Clean up any console positions for consoles that no longer exist or have no active missiles
         CleanupConsolePositions();
+        CleanupConsoleFireSources(); // Exodus fire-control cursor optimization
+        ProcessPendingUiUpdates(); // Exodus fire-control event-driven UI updates
     }
+
+    // Exodus-begin fire-control cursor optimization
+    private void CleanupConsoleFireSources()
+    {
+        if (_consoleFiringWeapons.Count == 0)
+            return;
+
+        _finishedConsoleFiringWeapons.Clear();
+        foreach (var weapon in _consoleFiringWeapons)
+        {
+            if (!TryComp<FireControllableComponent>(weapon, out var controllable))
+            {
+                _finishedConsoleFiringWeapons.Add(weapon);
+                continue;
+            }
+
+            if (!_gunQuery.TryComp(weapon, out var gun)
+                || !_autoShootQuery.TryComp(weapon, out var autoShoot)
+                || autoShoot.RemainingTime <= TimeSpan.Zero && !gun.BurstActivated)
+            {
+                ResetConsoleFireSource(controllable);
+                _finishedConsoleFiringWeapons.Add(weapon);
+            }
+        }
+
+        foreach (var weapon in _finishedConsoleFiringWeapons)
+            _consoleFiringWeapons.Remove(weapon);
+    }
+    // Exodus-end
 
     /// <summary>
     /// Remove any console positions that no longer have active missiles

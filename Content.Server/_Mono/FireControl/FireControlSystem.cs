@@ -26,6 +26,8 @@ namespace Content.Server._Mono.FireControl;
 
 public sealed partial class FireControlSystem : EntitySystem
 {
+    private static readonly TimeSpan ConsoleFireDuration = TimeSpan.FromSeconds(0.2); // Exodus fire-control cursor optimization
+
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private GunSystem _gun = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
@@ -39,6 +41,7 @@ public sealed partial class FireControlSystem : EntitySystem
     private readonly HashSet<EntityUid> _visualizedEntities = new();
 
     private EntityQuery<SpaceArtilleryComponent> _artilleryQuery;
+    private EntityQuery<AutoShootGunComponent> _autoShootQuery; // Exodus fire-control cursor optimization
     private EntityQuery<FireControlRotateComponent> _fireRotateQuery;
     private EntityQuery<GunComponent> _gunQuery;
 
@@ -59,8 +62,10 @@ public sealed partial class FireControlSystem : EntitySystem
 
         InitializeConsole();
         InitializeTargetGuided();
+        InitializeUiUpdates(); // Exodus fire-control event-driven UI updates
 
         _artilleryQuery = GetEntityQuery<SpaceArtilleryComponent>();
+        _autoShootQuery = GetEntityQuery<AutoShootGunComponent>(); // Exodus fire-control cursor optimization
         _fireRotateQuery = GetEntityQuery<FireControlRotateComponent>();
         _gunQuery = GetEntityQuery<GunComponent>();
     }
@@ -100,59 +105,62 @@ public sealed partial class FireControlSystem : EntitySystem
 
     private void OnControllablePowerChanged(EntityUid uid, FireControllableComponent component, PowerChangedEvent args)
     {
-        if (args.Powered)
-            TryRegister(uid, component);
+        var previousServer = component.ControllingServer; // Exodus fire-control event-driven UI updates
+
+        if (args.Powered && Transform(uid).Anchored) // Exodus fire-control event-driven UI updates
+        {
+            if (TryRegister(uid, component))
+                QueueServerUiUpdate(component.ControllingServer); // Exodus fire-control event-driven UI updates
+        }
         else
+        {
             Unregister(uid, component);
+            QueueServerUiUpdate(previousServer); // Exodus fire-control event-driven UI updates
+        }
     }
 
     private void OnControllableShutdown(EntityUid uid, FireControllableComponent component, ComponentShutdown args)
     {
-        if (component.ControllingServer != null && TryComp<FireControlServerComponent>(component.ControllingServer, out var server))
-        {
-            Unregister(uid, component);
-
-            foreach (var console in server.Consoles)
-            {
-                if (TryComp<FireControlConsoleComponent>(console, out var consoleComp))
-                {
-                    UpdateUi(console, consoleComp);
-                }
-            }
-        }
+        // Exodus-begin fire-control event-driven UI updates
+        var previousServer = component.ControllingServer;
+        ClearConsoleFireSource(uid, component); // Exodus fire-control cursor optimization
+        Unregister(uid, component);
+        QueueServerUiUpdate(previousServer);
+        // Exodus-end
     }
 
     private void OnControllableParentChanged(EntityUid uid, FireControllableComponent component, ref EntParentChangedMessage args)
     {
-        if (component.ControllingServer == null)
-            return;
-
-        // Check if the weapon is still on the same grid as its controlling server
-        if (!TryComp<FireControlServerComponent>(component.ControllingServer, out var server) ||
-            server.ConnectedGrid == null)
-            return;
-
+        // Exodus-begin fire-control event-driven UI updates
+        var previousServer = component.ControllingServer;
         var currentGrid = _xform.GetGrid(uid);
-        if (currentGrid != server.ConnectedGrid)
-        {
-            // Weapon is no longer on the same grid - unregister it
-            Unregister(uid, component);
 
-            // Update UI for any connected consoles
-            foreach (var console in server.Consoles)
-            {
-                if (TryComp<FireControlConsoleComponent>(console, out var consoleComp))
-                {
-                    UpdateUi(console, consoleComp);
-                }
-            }
+        if (previousServer is { } serverUid)
+        {
+            if (!TryComp<FireControlServerComponent>(serverUid, out var server))
+                component.ControllingServer = null;
+            else if (server.ConnectedGrid == null || currentGrid != server.ConnectedGrid)
+                Unregister(uid, component);
         }
+
+        if (component.ControllingServer == null
+            && Transform(uid).Anchored
+            && _power.IsPowered(uid))
+        {
+            TryRegister(uid, component);
+        }
+
+        QueueServerUiUpdate(previousServer);
+        QueueServerUiUpdate(component.ControllingServer);
+        // Exodus-end
     }
 
     private void Disconnect(EntityUid server, FireControlServerComponent? component = null)
     {
         if (!Resolve(server, ref component))
             return;
+
+        var previousGrid = component.ConnectedGrid; // Exodus fire-control event-driven UI updates
 
         // Clean up grid connection if it exists
         if (component.ConnectedGrid != null && Exists(component.ConnectedGrid) && TryComp<FireControlGridComponent>(component.ConnectedGrid, out var controlGrid))
@@ -177,7 +185,10 @@ public sealed partial class FireControlSystem : EntitySystem
         foreach (var console in consolesCopy)
         {
             if (Exists(console))
+            {
                 UnregisterConsole(console);
+                QueueConsoleUiUpdate(console); // Exodus fire-control event-driven UI updates
+            }
         }
 
         // Clear the server's state
@@ -185,9 +196,15 @@ public sealed partial class FireControlSystem : EntitySystem
         component.Consoles.Clear();
         component.ConnectedGrid = null;
         component.UsedProcessingPower = 0;
+
+        if (previousGrid is { } grid && !TerminatingOrDeleted(grid))
+            ForceServerReconnectionOnGrid(grid, server); // Exodus fire-control event-driven UI updates
     }
 
-    public void RefreshControllables(EntityUid grid, FireControlGridComponent? component = null)
+    public void RefreshControllables(
+        EntityUid grid,
+        FireControlGridComponent? component = null,
+        EntityUid? immediateConsole = null) // Exodus fire-control event-driven UI updates
     {
         if (!Resolve(grid, ref component))
             return;
@@ -210,18 +227,27 @@ public sealed partial class FireControlSystem : EntitySystem
 
         while (query.MoveNext(out var controllable, out var controlComp))
         {
-            if (_xform.GetGrid(controllable) == grid && EntityManager.GetComponent<TransformComponent>(controllable).Anchored)
+            if (_xform.GetGrid(controllable) == grid
+                && EntityManager.GetComponent<TransformComponent>(controllable).Anchored
+                && _power.IsPowered(controllable)) // Exodus fire-control event-driven UI updates
                 TryRegister(controllable, controlComp);
         }
 
         foreach (var console in server.Consoles)
-            UpdateUi(console);
+        {
+            if (console != immediateConsole)
+                QueueConsoleUiUpdate(console); // Exodus fire-control event-driven UI updates
+        }
     }
 
     private bool TryConnect(EntityUid server, FireControlServerComponent? component = null)
     {
-        if (!Resolve(server, ref component))
+        if (!Resolve(server, ref component)
+            || !Transform(server).Anchored
+            || !_power.IsPowered(server)) // Exodus fire-control event-driven UI updates
+        {
             return false;
+        }
 
         var grid = _xform.GetGrid(server);
 
@@ -238,6 +264,14 @@ public sealed partial class FireControlSystem : EntitySystem
             {
                 controlGrid.ControllingServer = null;
             }
+            // Exodus-begin fire-control event-driven UI updates
+            else if (controlGrid.ControllingServer == server)
+            {
+                component.ConnectedGrid = grid;
+                RegisterPoweredConsolesOnGrid(grid.Value);
+                return true;
+            }
+            // Exodus-end
             else
             {
                 // Valid server already exists, cannot connect
@@ -249,6 +283,7 @@ public sealed partial class FireControlSystem : EntitySystem
         component.ConnectedGrid = grid;
 
         RefreshControllables((EntityUid)grid, controlGrid);
+        RegisterPoweredConsolesOnGrid(grid.Value); // Exodus fire-control event-driven UI updates
 
         return true;
     }
@@ -268,8 +303,12 @@ public sealed partial class FireControlSystem : EntitySystem
 
     private bool TryRegister(EntityUid controllable, FireControllableComponent? component = null)
     {
-        if (!Resolve(controllable, ref component))
+        if (!Resolve(controllable, ref component)
+            || !Transform(controllable).Anchored
+            || !_power.IsPowered(controllable)) // Exodus fire-control event-driven UI updates
+        {
             return false;
+        }
 
         var gridServer = TryGetGridServer(controllable);
 
@@ -370,17 +409,19 @@ public sealed partial class FireControlSystem : EntitySystem
     /// <summary>
     /// Forces all powered servers on a specific grid to attempt reconnection
     /// </summary>
-    public void ForceServerReconnectionOnGrid(EntityUid gridUid)
+    public void ForceServerReconnectionOnGrid(EntityUid gridUid, EntityUid? excludedServer = null) // Exodus fire-control event-driven UI updates
     {
         var serverQuery = EntityQueryEnumerator<FireControlServerComponent>();
 
         while (serverQuery.MoveNext(out var serverUid, out var serverComponent))
         {
+            if (serverUid == excludedServer || TerminatingOrDeleted(serverUid)) // Exodus fire-control event-driven UI updates
+                continue;
+
             var serverGrid = _xform.GetGrid(serverUid);
-            if (serverGrid == gridUid && _power.IsPowered(serverUid))
+            if (serverGrid == gridUid && TryConnect(serverUid, serverComponent)) // Exodus fire-control event-driven UI updates
             {
-                // Force reconnection attempt
-                TryConnect(serverUid, serverComponent);
+                break; // Exodus fire-control event-driven UI updates
             }
         }
     }
@@ -401,7 +442,13 @@ public sealed partial class FireControlSystem : EntitySystem
         return true;
     }
 
-    public void FireWeapons(EntityUid server, List<NetEntity> weapons, NetCoordinates coordinates, EntityUid user, FireControlServerComponent? component = null) // Exodus-AdminQoL: Provide user triggered auto-shooting
+    public void FireWeapons(
+        EntityUid server,
+        List<NetEntity> weapons,
+        NetCoordinates coordinates,
+        EntityUid user,
+        FireControlServerComponent? component = null,
+        EntityUid? firingConsole = null) // Exodus fire-control cursor optimization
     {
         if (!Resolve(server, ref component))
             return;
@@ -416,10 +463,19 @@ public sealed partial class FireControlSystem : EntitySystem
         foreach (var weapon in weapons)
         {
             var localWeapon = GetEntity(weapon);
-            if (!Exists(localWeapon) || !component.Controlled.Contains(localWeapon))
+            if (!Exists(localWeapon)
+                || !component.Controlled.Contains(localWeapon)
+                || !TryComp<FireControllableComponent>(localWeapon, out var controllable))
+            {
                 continue;
+            }
 
-            var fired = AttemptFire(localWeapon, user, targetCoords); // Exodus-AdminQoL
+            var fired = AttemptFire(
+                localWeapon,
+                user,
+                targetCoords,
+                controllable,
+                firingConsole: firingConsole); // Exodus fire-control cursor optimization
 
             artilleryFired |= _artilleryQuery.HasComp(localWeapon) && fired;
         }
@@ -450,14 +506,7 @@ public sealed partial class FireControlSystem : EntitySystem
             }
         }
 
-        // Update UI for all consoles
-        foreach (var console in component.Consoles)
-        {
-            if (TryComp<FireControlConsoleComponent>(console, out var consoleComp))
-            {
-                UpdateUi(console, consoleComp);
-            }
-        }
+        QueueServerUiUpdate(server); // Exodus fire-control event-driven UI updates
     }
 
     private void OnGridSplit(ref GridSplitEvent ev)
@@ -478,7 +527,13 @@ public sealed partial class FireControlSystem : EntitySystem
     /// <summary>
     /// Attempts to fire a weapon, handling aiming and firing logic.
     /// </summary>
-    public bool AttemptFire(EntityUid weapon, EntityUid user, EntityCoordinates coords, FireControllableComponent? comp = null, bool noServer = false)
+    public bool AttemptFire(
+        EntityUid weapon,
+        EntityUid user,
+        EntityCoordinates coords,
+        FireControllableComponent? comp = null,
+        bool noServer = false,
+        EntityUid? firingConsole = null) // Exodus fire-control cursor optimization
     {
         if (!Resolve(weapon, ref comp))
             return false;
@@ -519,12 +574,39 @@ public sealed partial class FireControlSystem : EntitySystem
         // Try to get a gun component and fire the weapon
         if (_gunQuery.TryComp(weapon, out var gun))
         {
-            _gun.AttemptShots(user, weapon, gun, coords, TimeSpan.FromSeconds(0.2));
+            // Exodus-begin fire-control cursor optimization
+            if (firingConsole is { } console)
+            {
+                comp.ActiveFiringConsole = console;
+                comp.ActiveFiringUser = user;
+                _consoleFiringWeapons.Add(weapon);
+            }
+            else
+            {
+                ClearConsoleFireSource(weapon, comp);
+            }
+
+            _gun.AttemptShots(user, weapon, gun, coords, ConsoleFireDuration);
+            // Exodus-end
             return true;
         }
 
         return false;
     }
+
+    // Exodus-begin fire-control cursor optimization
+    private void ClearConsoleFireSource(EntityUid weapon, FireControllableComponent component)
+    {
+        ResetConsoleFireSource(component);
+        _consoleFiringWeapons.Remove(weapon);
+    }
+
+    private static void ResetConsoleFireSource(FireControllableComponent component)
+    {
+        component.ActiveFiringConsole = null;
+        component.ActiveFiringUser = null;
+    }
+    // Exodus-end
 
     /// <summary>
     /// Checks if a weapon is ready to fire.

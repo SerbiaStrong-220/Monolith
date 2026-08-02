@@ -70,6 +70,7 @@
   - BorgModuleJetpack # Frontier
   - BorgModuleAdvancedParamedic # Frontier
   - BorgModuleAdvancedMining # Frontier
+  - BorgModuleBluespaceRPED # Exodus bluespace-rped
 
 # Mono/Goob changes start
 - type: latheRecipePack
