@@ -1,6 +1,6 @@
 - type: entity
   id: BaseRdServerFaction
-  parent: BaseMachinePowered
+  parent: [BaseMachinePowered, BaseResearchServerDiskMagnet] # Exodus
   name: BaseRdServerFaction
   categories: [ HideSpawnMenu ]
   description: Contains the collective knowledge of the faction.
