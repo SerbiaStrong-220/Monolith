@@ -1,7 +1,7 @@
 using Content.Server._Crescent.ShipShields;
 using Content.Server._Exodus.Nebula;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Exodus.ShipShields;
 using Content.Shared.Shuttles.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -18,6 +18,7 @@ public sealed partial class ShuttleConsoleSystem
     [Dependency] private IGameTiming _timing = default!;
 
     private readonly HashSet<EntityUid> _pendingShieldUiGrids = [];
+    private readonly Dictionary<EntityUid, ShipShieldState?> _shieldUiStateCache = [];
     private TimeSpan _nextShieldUiUpdate;
 
     private void InitializeShieldUi()
@@ -33,8 +34,18 @@ public sealed partial class ShuttleConsoleSystem
 
     private void OnShuttleConsoleUiOpened(Entity<ShuttleConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
-        DockingInterfaceState? dockState = null;
-        UpdateState(ent.Owner, ref dockState);
+        if (!args.UiKey.Equals(ShuttleConsoleUiKey.Key))
+            return;
+
+        var grid = Transform(ent.Owner).GridUid;
+        var state = grid is { } gridUid
+            ? _shields.GetShieldState(gridUid)
+            : null;
+        _ui.ServerSendUiMessage(
+            ent.Owner,
+            ShuttleConsoleUiKey.Key,
+            new ShuttleShieldStateMessage(state),
+            args.Actor);
     }
 
     private void ProcessShieldUiUpdates()
@@ -42,7 +53,7 @@ public sealed partial class ShuttleConsoleSystem
         if (_pendingShieldUiGrids.Count == 0 || _timing.CurTime < _nextShieldUiUpdate)
             return;
 
-        DockingInterfaceState? dockState = null;
+        _shieldUiStateCache.Clear();
         var query = EntityQueryEnumerator<ShuttleConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out _, out var xform))
         {
@@ -53,9 +64,19 @@ public sealed partial class ShuttleConsoleSystem
                 continue;
             }
 
-            UpdateState(uid, ref dockState);
+            if (!_shieldUiStateCache.TryGetValue(grid, out var state))
+            {
+                state = _shields.GetShieldState(grid);
+                _shieldUiStateCache.Add(grid, state);
+            }
+
+            _ui.ServerSendUiMessage(
+                uid,
+                ShuttleConsoleUiKey.Key,
+                new ShuttleShieldStateMessage(state));
         }
 
+        _shieldUiStateCache.Clear();
         _pendingShieldUiGrids.Clear();
         _nextShieldUiUpdate = _timing.CurTime + ShieldUiUpdateInterval;
     }

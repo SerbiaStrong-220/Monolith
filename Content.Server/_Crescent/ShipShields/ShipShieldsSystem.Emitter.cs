@@ -137,8 +137,10 @@ public partial class ShipShieldsSystem
 
     public ShipShieldState? GetShieldState(EntityUid ship)
     {
-        if (!TryGetShieldEmitter(ship, out _, out var emitter))
+        if (!TryGetShieldEmitter(ship, out var emitterUid, out var emitter))
             return null;
+
+        var powered = TryComp<ApcPowerReceiverComponent>(emitterUid.Value, out var power) && power.Powered;
 
         return new(
             emitter.BaseDraw,
@@ -147,7 +149,8 @@ public partial class ShipShieldsSystem
             emitter.Recharging,
             emitter.OverloadAccumulator,
             CalculateShieldHealth(emitter),
-            emitter.Shield is not null);
+            emitter.Shield is not null,
+            powered);
     }
 
     /// <summary>

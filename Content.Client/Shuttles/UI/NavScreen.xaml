@@ -91,7 +91,7 @@
                                 <controls:Label Name="ShieldHealthCaption"
                                        Text="{controls:Loc 'shuttle-console-shield-health-label'}"
                                        FontColorOverride="#00ff2a"/>
-                                <controls:Label Name="ShieldOverloadStatus"
+                                <controls:Label Name="ShieldStatus"
                                        Text="{controls:Loc 'shuttle-console-shield-overload'}"
                                        FontColorOverride="#ff0000"
                                        Margin="4 0 0 0"

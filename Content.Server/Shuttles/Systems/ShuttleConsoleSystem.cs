@@ -440,10 +440,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         if (_ui.HasUi(consoleUid, ShuttleConsoleUiKey.Key))
         {
-            var shieldState = shuttleGridUid is { } grid
-                ? _shields.GetShieldState(grid)
-                : null; // Exodus - shield health
-            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState, shieldState)); // Exodus - shield health
+            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState)); // Exodus - shield health delta
         }
     }
 

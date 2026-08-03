@@ -136,14 +136,40 @@ public sealed partial class NavScreen : BoxContainer
         if (state is not { } shieldState)
             return;
 
-        var healthPercent = ShipShieldUiHelpers.GetHealthPercent(shieldState.HealthFraction);
-        var healthColor = ShipShieldUiHelpers.GetHealthColor(shieldState.HealthFraction);
-        ShieldOverloadStatus.Visible = !shieldState.Active
-                                       && (shieldState.OverloadAccumulator > 0f
-                                           || shieldState.Recharging && healthPercent < 100);
+        var powered = shieldState.Powered;
+        var healthPercent = powered
+            ? ShipShieldUiHelpers.GetHealthPercent(shieldState.HealthFraction)
+            : 0;
+        var healthColor = powered
+            ? ShipShieldUiHelpers.GetHealthColor(shieldState.HealthFraction)
+            : Color.Gray;
+
+        if (shieldState.OverloadAccumulator > 0f)
+        {
+            ShieldStatus.Text = Loc.GetString("shuttle-console-shield-overload");
+            ShieldStatus.FontColorOverride = Color.Red;
+            ShieldStatus.Visible = true;
+        }
+        else if (!powered)
+        {
+            ShieldStatus.Text = Loc.GetString("shuttle-console-shield-no-power");
+            ShieldStatus.FontColorOverride = Color.Gray;
+            ShieldStatus.Visible = true;
+        }
+        else if (shieldState.Recharging || shieldState.Draw > 0f)
+        {
+            ShieldStatus.Text = Loc.GetString("shuttle-console-shield-under-load");
+            ShieldStatus.FontColorOverride = healthColor;
+            ShieldStatus.Visible = true;
+        }
+        else
+        {
+            ShieldStatus.Visible = false;
+        }
 
         ShieldHealthCaption.FontColorOverride = healthColor;
         ShieldHealth.FontColorOverride = healthColor;
+        ShieldHealthBar.Visible = powered;
         ShieldHealthBar.Value = healthPercent;
         _shieldHealthBarStyle.BackgroundColor = healthColor;
         ShieldHealth.Text = Loc.GetString(

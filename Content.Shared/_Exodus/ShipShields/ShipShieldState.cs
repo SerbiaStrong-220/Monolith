@@ -10,7 +10,8 @@ public struct ShipShieldState(
     bool recharging = false,
     float overloadAccumulator = 30f,
     float healthFraction = 1f,
-    bool active = false)
+    bool active = false,
+    bool powered = false)
 {
     public float BaseDraw = baseDraw;
     public float Draw = draw;
@@ -19,4 +20,5 @@ public struct ShipShieldState(
     public float OverloadAccumulator = overloadAccumulator;
     public float HealthFraction = healthFraction;
     public bool Active = active;
+    public bool Powered = powered;
 }
