@@ -138,6 +138,9 @@ public sealed partial class NavScreen : BoxContainer
 
         var healthPercent = ShipShieldUiHelpers.GetHealthPercent(shieldState.HealthFraction);
         var healthColor = ShipShieldUiHelpers.GetHealthColor(shieldState.HealthFraction);
+        ShieldOverloadStatus.Visible = !shieldState.Active
+                                       && (shieldState.OverloadAccumulator > 0f
+                                           || shieldState.Recharging && healthPercent < 100);
 
         ShieldHealthCaption.FontColorOverride = healthColor;
         ShieldHealth.FontColorOverride = healthColor;
