@@ -25,11 +25,14 @@ public sealed partial class NavScreen : BoxContainer
     private EntityUid? _consoleEntity; // Entity of controlling console
     private EntityUid? _shuttleEntity;
 
+    private readonly StyleBoxFlat _shieldHealthBarStyle = new(); // Exodus - shield health
+
     public NavScreen()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _xformSystem = _entManager.System<SharedTransformSystem>();
+        ShieldHealthBar.ForegroundStyleBoxOverride = _shieldHealthBarStyle; // Exodus - shield health
 
         IFFToggle.OnToggled += OnIFFTogglePressed;
         IFFToggle.Pressed = NavRadar.ShowIFF;
@@ -128,19 +131,18 @@ public sealed partial class NavScreen : BoxContainer
     public void UpdateShieldState(ShipShieldState? state)
     {
         var visible = state is not null;
-        ShieldHealthCaption.Visible = visible;
-        ShieldHealth.Visible = visible;
+        ShieldHealthDisplay.Visible = visible;
 
         if (state is not { } shieldState)
             return;
 
         var healthPercent = ShipShieldUiHelpers.GetHealthPercent(shieldState.HealthFraction);
         var healthColor = ShipShieldUiHelpers.GetHealthColor(shieldState.HealthFraction);
-        if (!shieldState.Active && healthPercent > 0)
-            healthColor = Color.Gray;
 
         ShieldHealthCaption.FontColorOverride = healthColor;
         ShieldHealth.FontColorOverride = healthColor;
+        ShieldHealthBar.Value = healthPercent;
+        _shieldHealthBarStyle.BackgroundColor = healthColor;
         ShieldHealth.Text = Loc.GetString(
             "shuttle-console-shield-health",
             ("health", healthPercent));
