@@ -156,7 +156,19 @@ public sealed partial class NavScreen : BoxContainer
             ShieldStatus.FontColorOverride = Color.Gray;
             ShieldStatus.Visible = true;
         }
-        else if (shieldState.Recharging || shieldState.Draw > 0f)
+        else if (shieldState.Recharging)
+        {
+            ShieldStatus.Text = Loc.GetString("shuttle-console-shield-under-load");
+            ShieldStatus.FontColorOverride = healthColor;
+            ShieldStatus.Visible = true;
+        }
+        else if (!shieldState.Active)
+        {
+            ShieldStatus.Text = Loc.GetString("shuttle-console-shield-unavailable");
+            ShieldStatus.FontColorOverride = Color.Gray;
+            ShieldStatus.Visible = true;
+        }
+        else if (shieldState.Draw > 0f)
         {
             ShieldStatus.Text = Loc.GetString("shuttle-console-shield-under-load");
             ShieldStatus.FontColorOverride = healthColor;
