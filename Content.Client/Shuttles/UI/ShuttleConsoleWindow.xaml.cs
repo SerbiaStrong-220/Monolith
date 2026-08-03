@@ -174,6 +174,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         MapContainer.SetConsole(owner);
 
         NavContainer.UpdateState(cState.NavState);
+        NavContainer.UpdateShieldState(cState.ShieldState); // Exodus - shield health
         MapContainer.UpdateState(cState.MapState);
         DockContainer.UpdateState(coordinates?.EntityId, cState.DockState);
     }

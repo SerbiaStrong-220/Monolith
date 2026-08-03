@@ -12,6 +12,7 @@ using Robust.Client.Graphics; // Exodus
 using Content.Shared.Exodus.ShipShields; // Exodus
 using Robust.Shared.Timing; // Exodus
 using Content.Client._Exodus.FireControl; // Exodus
+using Content.Client._Exodus.ShipShields; // Exodus
 using Content.Shared.Weapons.Ranged.Components; // Exodus
 
 namespace Content.Client._Mono.FireControl.UI;
@@ -35,6 +36,8 @@ public sealed partial class FireControlWindow : FancyWindow
 
     private FireControlConsoleBoundInterfaceState? _currentState;
 
+    private readonly StyleBoxFlat _shieldHealthBarStyle = new(); // Exodus: Shield health
+
     public FireControlWindow()
     {
         RobustXamlLoader.Load(this);
@@ -55,10 +58,7 @@ public sealed partial class FireControlWindow : FancyWindow
         // Exodus-end
 
         // Exodus: Shield status
-        ShieldLoadBar.ForegroundStyleBoxOverride = new StyleBoxFlat()
-        {
-            BackgroundColor = Color.Red
-        };
+        ShieldHealthBar.ForegroundStyleBoxOverride = _shieldHealthBarStyle;
     }
 
     private void SelectAllWeapons(BaseButton.ButtonEventArgs args)
@@ -337,13 +337,25 @@ public sealed partial class FireControlWindow : FancyWindow
             return;
         }
 
+        ShieldContainer.Visible = true;
+
         // update status
         if (shieldState.OverloadAccumulator > 0) // overloaded
         {
             ShieldStatus.Text = Loc.GetString("gunnery-shield-overload");
             ShieldStatus.FontColorOverride = Color.Red;
         }
-        else if (shieldState.Draw == 0) // normal
+        else if (shieldState.Recharging && shieldState.HealthFraction < 1f)
+        {
+            ShieldStatus.Text = Loc.GetString("gunnery-shield-recharging");
+            ShieldStatus.FontColorOverride = Color.Orange;
+        }
+        else if (!shieldState.Active)
+        {
+            ShieldStatus.Text = Loc.GetString("gunnery-shield-offline");
+            ShieldStatus.FontColorOverride = Color.Gray;
+        }
+        else if (shieldState.Draw <= 0f) // normal
         {
             ShieldStatus.Text = Loc.GetString("gunnery-shield-normal");
             ShieldStatus.FontColorOverride = Color.Green;
@@ -354,16 +366,27 @@ public sealed partial class FireControlWindow : FancyWindow
             ShieldStatus.FontColorOverride = Color.Orange;
         }
 
+        // health
+        var healthPercent = ShipShieldUiHelpers.GetHealthPercent(shieldState.HealthFraction);
+        var healthColor = ShipShieldUiHelpers.GetHealthColor(shieldState.HealthFraction);
+        ShieldHealth.Text = Loc.GetString("gunnery-shield-health", ("health", healthPercent));
+        ShieldHealth.FontColorOverride = healthColor;
+        ShieldHealthBar.Value = healthPercent;
+        _shieldHealthBarStyle.BackgroundColor = healthColor;
+
         // load
-        ShieldLoad.Text = Loc.GetString("gunnery-shield-load", ("draw", Math.Round(shieldState.BaseDraw + shieldState.Draw / 1000f, 1)));
+        var currentDraw = Math.Round((shieldState.BaseDraw + shieldState.Draw) / 1000f, 1);
+        var maximumDraw = Math.Round((shieldState.BaseDraw + shieldState.MaxDraw) / 1000f, 1);
+        ShieldLoad.Text = Loc.GetString(
+            "gunnery-shield-load",
+            ("draw", currentDraw),
+            ("maxDraw", maximumDraw));
 
         // recovery label
         ShieldRecoveryLabel.Visible = shieldState.OverloadAccumulator > 0;
-        ShieldRecoveryLabel.Text = Loc.GetString("gunnery-shield-recovery-label", ("time", shieldState.OverloadAccumulator));
-
-        // load bar
-        ShieldLoadBar.Value = shieldState.BaseDraw + shieldState.Draw;
-        ShieldLoadBar.MaxValue = shieldState.MaxDraw;
+        ShieldRecoveryLabel.Text = Loc.GetString(
+            "gunnery-shield-recovery-label",
+            ("time", Math.Ceiling(shieldState.OverloadAccumulator)));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

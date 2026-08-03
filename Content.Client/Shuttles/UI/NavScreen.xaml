@@ -79,6 +79,18 @@
                                HorizontalExpand="True"
                                Align="Right"
                                FontColorOverride="#00ff2a"/>
+                        <!-- Exodus-begin shield health -->
+                        <controls:Label Name="ShieldHealthCaption"
+                               Text="{controls:Loc 'shuttle-console-shield-health-label'}"
+                               FontColorOverride="#00ff2a"
+                               Visible="False"/>
+                        <controls:Label Name="ShieldHealth"
+                               Text="-"
+                               HorizontalExpand="True"
+                               Align="Right"
+                               FontColorOverride="#00ff2a"
+                               Visible="False"/>
+                        <!-- Exodus-end -->
                         <!-- Mono: z-level altimeter -->
                         <controls:Label Name="GridAltitudeCaption"
                                Text="{controls:Loc 'shuttle-console-altitude'}"

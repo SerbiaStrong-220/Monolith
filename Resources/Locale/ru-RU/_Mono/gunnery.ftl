@@ -11,10 +11,16 @@ gunnery-select-ballistic = Баллистические
 gunnery-select-energy = Энергетические
 gunnery-select-missiles = Ракетные
 
+# Exodus-begin shield health
 gunnery-shield-status-label = Статус щита:
-gunnery-shield-load-label = Нагрузка щита:
-gunnery-shield-load = { $draw } кВт
+gunnery-shield-health-label = Прочность щита:
+gunnery-shield-health = { $health }%
+gunnery-shield-load-label = Потребление щита:
+gunnery-shield-load = { $draw } / { $maxDraw } кВт
 gunnery-shield-normal = Щит поднят
 gunnery-shield-under-load = Под нагрузкой
-gunnery-shield-overload = Получение повреждений
+gunnery-shield-recharging = Восстановление
+gunnery-shield-offline = Отключён
+gunnery-shield-overload = Перегрузка
 gunnery-shield-recovery-label = Осталось { $time } сек.
+# Exodus-end

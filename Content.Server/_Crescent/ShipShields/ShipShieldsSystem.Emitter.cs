@@ -140,7 +140,33 @@ public partial class ShipShieldsSystem
         if (!TryGetShieldEmitter(ship, out _, out var emitter))
             return null;
 
-        return new(emitter.BaseDraw, CalculateLoadDamage(emitter), emitter.MaxDraw, emitter.Recharging, emitter.OverloadAccumulator);
+        return new(
+            emitter.BaseDraw,
+            CalculateLoadDamage(emitter),
+            emitter.MaxDraw,
+            emitter.Recharging,
+            emitter.OverloadAccumulator,
+            CalculateShieldHealth(emitter),
+            emitter.Shield is not null);
+    }
+
+    /// <summary>
+    /// Returns the remaining operational health of the shield. The effective capacity is the first
+    /// damage-induced shutdown threshold: either the hard damage limit or the maximum extra draw.
+    /// </summary>
+    private static float CalculateShieldHealth(ShipShieldEmitterComponent emitter)
+    {
+        if (emitter.DamageLimit <= 0f || emitter.MaxDraw <= 0f)
+            return 0f;
+
+        var effectiveDamageLimit = emitter.DamageLimit;
+        if (emitter.PowerModifier > 0f && emitter.DamageExp > 0f)
+        {
+            var maxDrawDamage = MathF.Pow(emitter.MaxDraw / emitter.PowerModifier, 1f / emitter.DamageExp);
+            effectiveDamageLimit = MathF.Min(effectiveDamageLimit, maxDrawDamage);
+        }
+
+        return Math.Clamp(1f - emitter.Damage / effectiveDamageLimit, 0f, 1f);
     }
     // Exodus-End
 }
