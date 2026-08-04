@@ -49,5 +49,11 @@ ent-AsakimShuttleEmergencyBeaconMedium = medium Asakim vessel summoning beacon
 ent-AsakimShuttleEmergencyBeaconStratostar = Asakim Stratostar summoning beacon
     .desc = A single-use emergency beacon keyed to call the Asakim ship Stratostar.
 
+ent-MarsocArcturusArrivalBeacon = MARSOC Arcturus arrival beacon
+    .desc = A single-use beacon that calls in a Trans-Solar Federation special operations ship.
+
+ent-TarkhanJupiterArrivalBeacon = Tarkhan Jupiter arrival beacon
+    .desc = A single-use beacon that calls in a Phaethon Dynasty special operations ship.
+
 ent-SpaceLeviathanEmergencyBeacon = space leviathan summoning beacon
     .desc = A single-use bluespace beacon that lures a space leviathan to the outer sector and broadcasts its coordinates to the sector.

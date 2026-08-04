@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/17/2026 12:39:31
-  entityCount: 7667
+  entityCount: 7657
 maps: []
 grids:
 - 1
@@ -99,6 +99,12 @@ entities:
     - type: Transform
       pos: -0.5703125,-0.4296875
       parent: invalid
+    - type: IFF
+      color: '#d1bf58'
+      flags: HideLabel, IsPlayerShuttle
+    - type: NpcFactionMember
+      factions:
+      - PirateNF
     - type: MapGrid
       chunks:
         0,0:
@@ -40355,61 +40361,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,59.5
       parent: 1
-- proto: SpawnPointLatejoin
+- proto: SpawnPdvTarkhanGhostOperative
   entities:
   - uid: 3219
     components:
     - type: Transform
-      pos: -4.5,47.5
+      pos: -8.5,47.5
       parent: 1
-- proto: SpawnPointPDVBorg
-  entities:
-  - uid: 7493
-    components:
-    - type: Transform
-      pos: -9.5,73.5
-      parent: 1
-  - uid: 7494
-    components:
-    - type: Transform
-      pos: -9.5,74.5
-      parent: 1
-  - uid: 7495
-    components:
-    - type: Transform
-      pos: -8.5,73.5
-      parent: 1
-  - uid: 7496
-    components:
-    - type: Transform
-      pos: -8.5,74.5
-      parent: 1
-- proto: SpawnPointPDVDenasvar
-  entities:
-  - uid: 7485
-    components:
-    - type: Transform
-      pos: -25.5,29.5
-      parent: 1
-  - uid: 7492
-    components:
-    - type: Transform
-      pos: -25.5,30.5
-      parent: 1
-- proto: SpawnPointPDVInfiltrator
-  entities:
-  - uid: 7486
-    components:
-    - type: Transform
-      pos: -12.5,52.5
-      parent: 1
-  - uid: 7487
-    components:
-    - type: Transform
-      pos: -12.5,48.5
-      parent: 1
-- proto: SpawnPointPirate
-  entities:
   - uid: 7488
     components:
     - type: Transform
@@ -40429,20 +40387,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,47.5
-      parent: 1
-- proto: SpawnPointPirateCaptain
-  entities:
-  - uid: 7483
-    components:
-    - type: Transform
-      pos: -12.5,21.5
-      parent: 1
-- proto: SpawnPointPirateFirstMate
-  entities:
-  - uid: 7484
-    components:
-    - type: Transform
-      pos: -22.5,25.5
       parent: 1
 - proto: StairDark
   entities:

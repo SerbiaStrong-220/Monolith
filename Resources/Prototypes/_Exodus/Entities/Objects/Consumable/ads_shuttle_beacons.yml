@@ -172,3 +172,19 @@
   components:
   - type: ShuttleEventBeacon
     rule: UnknownShuttleStratostar
+
+- type: entity
+  id: MarsocArcturusArrivalBeacon
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  suffix: ADMIN ONLY
+  components:
+  - type: ShuttleEventBeacon
+    rule: MarsocArcturusArrival
+
+- type: entity
+  id: TarkhanJupiterArrivalBeacon
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  suffix: ADMIN ONLY
+  components:
+  - type: ShuttleEventBeacon
+    rule: TarkhanJupiterArrival
