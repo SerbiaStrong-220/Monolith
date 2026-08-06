@@ -52,9 +52,10 @@ public sealed partial class HolosignSystem : EntitySystem
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
         var holoUid = EntityManager.SpawnEntity(component.SignProto, args.ClickLocation.SnapToGrid(EntityManager));
         var xform = Transform(holoUid);
-        // if (!xform.Anchored)
-        if (component.IsAnchoredOnSpawn && !xform.Anchored) // Exodus
-            _transform.AnchorEntity(holoUid, xform); // anchor to prevent any tempering with (don't know what could even interact with it)
+
+        if (!xform.Anchored)
+            if (component.IsAnchoredOnSpawn) // Exodus is-anchored-on-spawn
+                _transform.AnchorEntity(holoUid, xform); // anchor to prevent any tempering with (don't know what could even interact with it)
 
         args.Handled = true;
     }
