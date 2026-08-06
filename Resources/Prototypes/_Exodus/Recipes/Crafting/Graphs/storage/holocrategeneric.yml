@@ -1,0 +1,11 @@
+﻿- type: constructionGraph
+  id: HoloCrateGeneric
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: crategenericsteel
+      steps:
+      - material: Steel
+        amount: 0
+        doAfter: 0

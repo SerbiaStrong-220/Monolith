@@ -1,0 +1,50 @@
+﻿- type: entity
+  parent: HoloGraffitiProjector
+  id: HoloGeneric
+  name: holo projector
+  description: Stop suicidal passengers from killing everyone during atmos emergencies.
+  components:
+  - type: Sprite
+    sprite: _Exodus\Objects\Devices\Holoprojectors\holocrater.rsi
+  - type: HolosignProjector
+    signProto: CrateGenericHolo
+    chargeUse: 720
+    isAnchoredOnSpawn: false
+  - type: Tag
+    tags:
+    - HolofanProjector
+  - type: StaticPrice
+    price: 20
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateGenericHolo
+  name: hologeneric
+  categories: [ DoNotMap ]
+  description:
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Storage/Crates/holocrate.rsi
+  - type: Reflect
+    reflects:
+    - Energy
+    reflectProb: 0.2
+    spread: 90
+  - type: RadiationBlockingContainer
+    resistance: 2.5
+  - type: Transform
+    anchored: false
+  - type: StaticPrice
+    price: 0
+  - type: Construction
+    graph: HoloCrateGeneric
+
+- type: entity
+  parent: HoloGeneric
+  id: HoloGenericEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
