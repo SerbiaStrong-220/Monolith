@@ -5,7 +5,7 @@
   description: Stop suicidal passengers from killing everyone during atmos emergencies.
   components:
   - type: Sprite
-    sprite: _Exodus\Objects\Devices\Holoprojectors\holocrater.rsi
+    sprite: _Exodus/Objects/Devices/Holoprojectors/holocrater.rsi
   - type: HolosignProjector
     signProto: CrateGenericHolo
     chargeUse: 720
