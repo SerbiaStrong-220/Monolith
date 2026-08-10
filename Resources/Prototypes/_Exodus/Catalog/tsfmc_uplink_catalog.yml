@@ -50,6 +50,25 @@
     stock: 1
     shared: true
 
+# Exodus: TSF engineer exclusive equipment
+- type: listing
+  id: UplinkSecurityBluespaceRped
+  name: uplink-security-bluespace-rped-name
+  description: uplink-security-bluespace-rped-desc
+  productEntity: BluespaceRPED
+  cost:
+    FederationMilitaryCredit: 125
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - TsfEngineerUplink
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true
+
 # Exodus-territory-banner
 - type: listing
   id: UplinkSecurityBannerTSF

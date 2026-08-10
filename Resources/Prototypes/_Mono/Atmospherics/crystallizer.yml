@@ -1,6 +1,6 @@
 - type: crystallizerRecipe
   id: PlasticRecipe
-  name: Plastic (10)
+  name: crystallizer-recipe-plastic # Exodus
   minimumTemperature: 500
   maximumTemperature: 800
   energyRelease: -200
@@ -23,7 +23,7 @@
 
 - type: crystallizerRecipe
   id: Iridite
-  name: Iridite (1)
+  name: crystallizer-recipe-iridite # Exodus
   minimumTemperature: 4900
   maximumTemperature: 14000
   energyRelease: -1290
@@ -47,7 +47,7 @@
 
 - type: crystallizerRecipe
   id: Plastitanium
-  name: Plastitanium (50) # Exodus plastitanium crystallizing
+  name: crystallizer-recipe-plastitanium # Exodus
   minimumTemperature: 7920
   maximumTemperature: 8150
   energyRelease: 1840
@@ -70,7 +70,7 @@
 
 - type: crystallizerRecipe
   id: Plasteel
-  name: Plasteel (10)
+  name: crystallizer-recipe-plasteel # Exodus
   minimumTemperature: 1750
   maximumTemperature: 2500
   energyRelease: -2040
@@ -93,7 +93,7 @@
 
 - type: crystallizerRecipe
   id: Plasma
-  name: Plasma (1)
+  name: crystallizer-recipe-plasma # Exodus
   minimumTemperature: 40
   maximumTemperature: 60
   energyRelease: 60
@@ -116,9 +116,9 @@
 
 - type: crystallizerRecipe
   id: Telecrystal
-  name: Telecrystal (1)
-  minimumTemperature: 0
-  maximumTemperature: 10
+  name: crystallizer-recipe-telecrystal # Exodus
+  minimumTemperature: 10 # Exodus
+  maximumTemperature: 25 # Exodus
   energyRelease: 1040
   products:
     Telecrystal1: 1
@@ -139,7 +139,7 @@
 
 - type: crystallizerRecipe
   id: Diamond
-  name: Diamond (1)
+  name: crystallizer-recipe-diamond # Exodus
   minimumTemperature: 34800
   maximumTemperature: 37200
   energyRelease: -4250

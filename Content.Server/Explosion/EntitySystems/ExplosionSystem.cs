@@ -15,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
+using Content.Shared._Exodus.Tailed; // Exodus: aggregate explosion damage from linked tail segments
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Projectiles;
@@ -78,6 +79,8 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     private EntityQuery<DamageableComponent> _damageableQuery;
     private EntityQuery<AirtightComponent> _airtightQuery;
     private EntityQuery<SubFloorHideComponent> _subFloorQuery; // Exodus
+    private EntityQuery<TailedEntityComponent> _tailedQuery; // Exodus
+    private EntityQuery<TailedEntitySegmentComponent> _tailedSegmentQuery; // Exodus
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -135,6 +138,8 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         _damageableQuery = GetEntityQuery<DamageableComponent>();
         _airtightQuery = GetEntityQuery<AirtightComponent>();
         _subFloorQuery = GetEntityQuery<SubFloorHideComponent>(); // Exodus
+        _tailedQuery = GetEntityQuery<TailedEntityComponent>(); // Exodus
+        _tailedSegmentQuery = GetEntityQuery<TailedEntitySegmentComponent>(); // Exodus
 
         _prototypeManager.PrototypesReloaded += ReloadExplosionPrototypes;
     }

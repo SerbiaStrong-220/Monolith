@@ -1,0 +1,15 @@
+- type: entity
+  id: CrateServiceHookah
+  parent: CrateGenericSteel
+  name: ящик для кальяна
+  description: "Полный набор для сборки кальяна: колба, шахта, блюдце, трубка, угли и табак."
+  components:
+  - type: StorageFill
+    contents:
+    - id: HookahFlask
+    - id: HookahShaft
+    - id: HookahSaucer
+    - id: HookahTubePart
+    - id: Coal5
+    - id: LeavesTobaccoDried
+      amount: 10

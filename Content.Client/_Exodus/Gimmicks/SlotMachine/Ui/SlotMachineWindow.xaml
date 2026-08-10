@@ -1,0 +1,44 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'slot-machine-ui-title'}"
+               MinWidth="520"
+               MinHeight="620">
+    <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="8">
+        <Label Text="{Loc 'slot-machine-ui-heading'}" HorizontalAlignment="Center"
+               FontColorOverride="Gold" StyleClasses="LabelHeadingBigger"/>
+        <Label Text="{Loc 'slot-machine-ui-subheading'}" HorizontalAlignment="Center"
+               FontColorOverride="#aaaaaa"/>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center"
+                      SeparationOverride="8" Margin="0 6">
+            <TextureRect Name="Reel0Rect" MinSize="72 72" Stretch="KeepAspectCentered"/>
+            <Label Text="|" VerticalAlignment="Center" FontColorOverride="#444444"/>
+            <TextureRect Name="Reel1Rect" MinSize="72 72" Stretch="KeepAspectCentered"/>
+            <Label Text="|" VerticalAlignment="Center" FontColorOverride="#444444"/>
+            <TextureRect Name="Reel2Rect" MinSize="72 72" Stretch="KeepAspectCentered"/>
+        </BoxContainer>
+        <Label Name="CreditsLabel" HorizontalAlignment="Center"
+               FontColorOverride="Gold" StyleClasses="LabelBig"/>
+        <Label Name="PayoutLabel" Text="{Loc 'slot-machine-ui-luck'}" HorizontalAlignment="Center"
+               FontColorOverride="#cccccc"/>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
+            <Button Name="Insert1000Button" MinWidth="90"/>
+            <Button Name="Insert25000Button" MinWidth="100"/>
+            <Button Name="Insert100000Button" MinWidth="110"/>
+            <Button Name="Insert500000Button" MinWidth="110"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
+            <Label Text="{Loc 'slot-machine-ui-bet'}" VerticalAlignment="Center" FontColorOverride="#aaaaaa"/>
+            <Button Name="BetMinus50000Button" Text="-50000" MinWidth="64"/>
+            <Button Name="BetMinus1000Button" Text="-1000" MinWidth="54"/>
+            <Label Name="BetLabel" Text="1000" MinWidth="60" Align="Center"
+                   VerticalAlignment="Center" FontColorOverride="Gold"/>
+            <Button Name="BetPlus1000Button" Text="+1000" MinWidth="54"/>
+            <Button Name="BetPlus10000Button" Text="+10000" MinWidth="64"/>
+            <Button Name="BetPlus100000Button" Text="+100000" MinWidth="70"/>
+        </BoxContainer>
+        <Button Name="SpinButton" Text="{Loc 'slot-machine-ui-spin'}" MinHeight="52" StyleClasses="ButtonCaution"/>
+        <Button Name="CollectButton" Text="{Loc 'slot-machine-ui-collect'}" MinHeight="36"/>
+        <Label Text="{Loc 'slot-machine-ui-payout-table'}" HorizontalAlignment="Center"
+               FontColorOverride="#888888" Margin="0 4 0 0"/>
+        <GridContainer Name="PayoutTableContainer" Columns="2" HorizontalAlignment="Center"/>
+    </BoxContainer>
+</DefaultWindow>

@@ -32,7 +32,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
 
     private void OnUseInHand(EntityUid uid, ToggleableGhostRoleComponent component, UseInHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.CanActivate) // Exodus PDA sentience ghost role
             return;
 
         args.Handled = true;
@@ -44,7 +44,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
     // Goobstation
     private void OnActivateInWorld(EntityUid uid, ToggleableGhostRoleComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.CanActivate) // Exodus PDA sentience ghost role
             return;
 
         args.Handled = true;
@@ -54,7 +54,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!args.IsInDetailsRange || !component.CanActivate) // Exodus PDA sentience ghost role
             return;
 
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
@@ -112,7 +112,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
-        else if (HasComp<GhostTakeoverAvailableComponent>(uid))
+        else if (component.CanActivate && HasComp<GhostTakeoverAvailableComponent>(uid)) // Exodus PDA sentience ghost role
         {
             ActivationVerb verb = new()
             {
@@ -135,6 +135,9 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
     // Goobstation
     public void TryActivate(EntityUid uid, ToggleableGhostRoleComponent component, EntityUid user)
     {
+        if (!component.CanActivate) // Exodus PDA sentience ghost role
+            return;
+
         // check if a mind is present
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
         {

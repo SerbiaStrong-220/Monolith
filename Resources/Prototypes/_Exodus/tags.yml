@@ -31,3 +31,11 @@
 - type: Tag
   id: FoamGrenadeIron
 
+- type: Tag
+  id: HookahCoal
+
+- type: Tag
+  id: HookahTobacco
+
+- type: Tag
+  id: TsfEngineerUplink

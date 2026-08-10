@@ -3,6 +3,8 @@ using Content.Server._Exodus.Worldgen.Components; // Exodus worldgen-loader-exem
 using Content.Server._Mono.Worldgen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Worldgen.Components;
+using Content.Server.Worldgen.Components.Debris; // Exodus: retain the chunk owning protected debris
+using Content.Shared._Exodus.Tailed; // Exodus: retain debris beneath protected tail segments
 using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
 using JetBrains.Annotations;
@@ -32,6 +34,15 @@ public sealed partial class WorldControllerSystem : EntitySystem
     private Dictionary<EntityUid, Dictionary<Vector2i, List<EntityUid>>> _chunksToLoad = new();
     // </Mono>
 
+    // Exodus-begin: worldgen-loader-exempt
+    private EntityQuery<LoadedChunkComponent> _loadedChunkQuery;
+    private EntityQuery<WorldControllerComponent> _worldControllerQuery;
+    private EntityQuery<OwnedDebrisComponent> _ownedDebrisQuery;
+    private EntityQuery<TailedEntityComponent> _tailedEntityQuery;
+    private EntityQuery<TransformComponent> _transformQuery;
+    private EntityQuery<WorldChunkComponent> _worldChunkQuery;
+    // Exodus-end: worldgen-loader-exempt
+
     private ISawmill _sawmill = default!;
 
     /// <inheritdoc />
@@ -41,6 +52,15 @@ public sealed partial class WorldControllerSystem : EntitySystem
         SubscribeLocalEvent<LoadedChunkComponent, ComponentStartup>(OnChunkLoadedCore);
         SubscribeLocalEvent<LoadedChunkComponent, ComponentShutdown>(OnChunkUnloadedCore);
         SubscribeLocalEvent<WorldChunkComponent, ComponentShutdown>(OnChunkShutdown);
+
+        // Exodus-begin: worldgen-loader-exempt
+        _loadedChunkQuery = GetEntityQuery<LoadedChunkComponent>();
+        _worldControllerQuery = GetEntityQuery<WorldControllerComponent>();
+        _ownedDebrisQuery = GetEntityQuery<OwnedDebrisComponent>();
+        _tailedEntityQuery = GetEntityQuery<TailedEntityComponent>();
+        _transformQuery = GetEntityQuery<TransformComponent>();
+        _worldChunkQuery = GetEntityQuery<WorldChunkComponent>();
+        // Exodus-end: worldgen-loader-exempt
     }
 
     /// <summary>
@@ -137,8 +157,24 @@ public sealed partial class WorldControllerSystem : EntitySystem
             if (ghostQuery.HasComponent(uid))
                 continue;
 
-            if (worldChunkLoadingExemptQuery.HasComponent(uid)) // Exodus worldgen-loader-exempt
+            // Exodus-begin: worldgen-loader-exempt
+            if (worldChunkLoadingExemptQuery.TryComp(uid, out var loadingExempt))
+            {
+                if (loadingExempt.RetainLoadedChunks)
+                    TryRetainLoadedChunks(uid, xform, Math.Max(0, loadingExempt.RetainLoadedChunksRadius));
+
+                if (loadingExempt.EnsureParentDebrisChunkLoaded)
+                    TryAddParentDebrisChunkLoader(uid, xform);
+
+                if (loadingExempt.EnsureTailDebrisChunksLoaded &&
+                    _tailedEntityQuery.TryComp(uid, out var tail))
+                {
+                    TryAddTailDebrisChunkLoaders((uid, tail));
+                }
+
                 continue;
+            }
+            // Exodus-end: worldgen-loader-exempt
 
             // Mono edit
             TryAddChunkLoader(uid, xform, PlayerLoadRadius);
@@ -297,6 +333,93 @@ public sealed partial class WorldControllerSystem : EntitySystem
 
         return true;
     }
+
+    // Exodus-begin: worldgen-loader-exempt
+    /// <summary>
+    /// Adds already loaded chunks around an entity to the unload protection set without creating new chunks.
+    /// </summary>
+    private bool TryRetainLoadedChunks(
+        EntityUid uid,
+        TransformComponent xform,
+        int radius)
+    {
+        if (xform.MapUid is not { } map ||
+            !_chunksToLoad.TryGetValue(map, out var chunksToLoad) ||
+            !_worldControllerQuery.TryComp(map, out var controller))
+        {
+            return false;
+        }
+
+        var worldPosition = _xformSys.GetWorldPosition(xform);
+        var mapVelocity = _physics.GetMapLinearVelocity(uid, xform: xform);
+        worldPosition += mapVelocity * _updateInterval;
+
+        var chunkCoords = WorldGen.WorldToChunkCoords(worldPosition);
+        var chunks = new GridPointsNearEnumerator(chunkCoords.Floored(), radius);
+
+        while (chunks.MoveNext(out var chunk))
+        {
+            if (!controller.Chunks.TryGetValue(chunk.Value, out var chunkEntity) ||
+                !_loadedChunkQuery.HasComp(chunkEntity))
+            {
+                continue;
+            }
+
+            if (!chunksToLoad.TryGetValue(chunk.Value, out var loaders))
+            {
+                loaders = new List<EntityUid>(1);
+                chunksToLoad[chunk.Value] = loaders;
+            }
+
+            loaders.Add(uid);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Adds the existing worldgen chunk which owns the grid under an entity to the load set.
+    /// </summary>
+    private bool TryAddParentDebrisChunkLoader(EntityUid uid, TransformComponent xform)
+    {
+        if (xform.GridUid is not { } grid ||
+            !_ownedDebrisQuery.TryComp(grid, out var debris) ||
+            !_worldChunkQuery.TryComp(debris.OwningController, out var chunk) ||
+            !_chunksToLoad.TryGetValue(chunk.Map, out var chunksToLoad))
+        {
+            return false;
+        }
+
+        if (!chunksToLoad.TryGetValue(chunk.Coordinates, out var loaders))
+        {
+            loaders = new List<EntityUid>(1);
+            chunksToLoad[chunk.Coordinates] = loaders;
+        }
+
+        if (!loaders.Contains(uid))
+            loaders.Add(uid);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Adds the chunks owning grids beneath valid tail segments to the load set.
+    /// </summary>
+    private void TryAddTailDebrisChunkLoaders(Entity<TailedEntityComponent> head)
+    {
+        for (var i = 0; i < head.Comp.TailSegments.Count; i++)
+        {
+            var segment = head.Comp.TailSegments[i];
+
+            if (segment == EntityUid.Invalid ||
+                TerminatingOrDeleted(segment) ||
+                !_transformQuery.TryComp(segment, out var xform))
+                continue;
+
+            TryAddParentDebrisChunkLoader(head.Owner, xform);
+        }
+    }
+    // Exodus-end: worldgen-loader-exempt
 }
 
 /// <summary>

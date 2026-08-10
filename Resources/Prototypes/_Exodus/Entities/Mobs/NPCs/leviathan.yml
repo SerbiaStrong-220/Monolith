@@ -49,12 +49,17 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    ensureParentDebrisChunkLoaded: true
+    ensureTailDebrisChunksLoaded: true
+    retainLoadedChunksRadius: 2
   - type: CleanupImmune
   - type: PointLight
     color: "#FF8227FF"
     radius: 3
     energy: 3
   - type: TailedEntity
+    aggregateSegmentExplosionDamage: false
     amount: 65
     spacing: 1
     prototype: SpaceWhaleSegment

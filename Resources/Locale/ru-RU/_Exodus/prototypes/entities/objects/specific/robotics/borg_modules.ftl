@@ -15,3 +15,6 @@ ent-BorgModuleColossusBreaching = пробивающий модуль борга
 
 ent-BorgModuleColossusCombat = боевой модуль борга Колосса
     .desc = Тяжёлый боевой модуль с самозарядной Анаконда и высокочастотной катаной.
+
+ent-BorgModuleBluespaceRPED = модуль блюспейс РПЕД борга
+    .desc = Инженерный модуль борга, предоставляющий блюспейс РПЕД.

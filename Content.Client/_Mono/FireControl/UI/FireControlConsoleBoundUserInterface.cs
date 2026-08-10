@@ -1,6 +1,7 @@
 // Copyright Rane (elijahrane@gmail.com) 2025
 // All rights reserved. Relicensed under AGPL with permission
 
+using Content.Shared._Exodus.FireControl; // Exodus fire-control cursor optimization
 using Content.Shared._Mono.FireControl;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -29,8 +30,7 @@ public sealed class FireControlConsoleBoundUserInterface : BoundUserInterface
         {
             var netCoords = EntMan.GetNetCoordinates(coords);
 
-            // Send empty list of weapons for cursor tracking only when not clicking
-            // This allows guided missiles to follow the cursor without firing weapons
+            // Exodus: Cursor movement uses a dedicated lightweight message for guided projectiles.
             if (!_window.Radar.IsMouseDown())
             {
                 SendCursorUpdateMessage(netCoords);
@@ -86,8 +86,7 @@ public sealed class FireControlConsoleBoundUserInterface : BoundUserInterface
 
     private void SendCursorUpdateMessage(NetCoordinates coordinates)
     {
-        // Send an empty weapon list to indicate this is just a cursor update, not a firing action
-        SendMessage(new FireControlConsoleFireMessage(new List<NetEntity>(), coordinates));
+        SendMessage(new FireControlConsoleCursorPositionMessage(coordinates)); // Exodus fire-control cursor optimization
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

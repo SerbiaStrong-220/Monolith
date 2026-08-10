@@ -15,3 +15,6 @@ ent-BorgModuleColossusBreaching = colossus breaching cyborg module
 
 ent-BorgModuleColossusCombat = colossus combat cyborg module
     .desc = A heavy combat module with a self-loading Anaconda and a high-frequency katana.
+
+ent-BorgModuleBluespaceRPED = bluespace RPED cyborg module
+    .desc = An engineering cyborg module that provides a bluespace RPED.

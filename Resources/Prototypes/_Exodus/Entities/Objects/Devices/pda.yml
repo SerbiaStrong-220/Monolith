@@ -1,0 +1,13 @@
+- type: entity
+  id: PDAExodusGhostRoleTest
+  parent: BasePDA
+  name: sentient PDA test
+  description: A PDA with a pre-activated ghost role for administrative testing.
+  suffix: Admin, Ghost Role Test
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-pda-test-name
+    description: ghost-role-information-pda-test-description
+    rules: ghost-role-component-default-rules
+  - type: GhostTakeoverAvailable

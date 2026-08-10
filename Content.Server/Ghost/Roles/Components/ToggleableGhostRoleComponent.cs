@@ -9,6 +9,14 @@ namespace Content.Server.Ghost.Roles.Components;
 [RegisterComponent, Access(typeof(ToggleableGhostRoleSystem))]
 public sealed partial class ToggleableGhostRoleComponent : Component
 {
+    // Exodus-begin PDA sentience ghost role
+    /// <summary>
+    /// Whether interacting with the entity can start searching for a ghost.
+    /// </summary>
+    [DataField]
+    public bool CanActivate = true;
+    // Exodus-end
+
     /// <summary>
     /// The text shown on the entity's Examine when it is controlled by a player
     /// </summary>

@@ -11,7 +11,7 @@
 - type: pointOfInterest
   id: CaseysCasino
   parent: [BasePOI, BaseRepairablePOI]
-  name: 'Казино Крейзи Кейси' # Ru-Localization
+  name: 'Казино Ксено' # Exodus: renamed casino POI
   minimumDistance: 10000 # Exodus-nebula-update
   maximumDistance: 15000 # Exodus-nebula-update
   gridPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: CaseysCasino
-  mapName: 'Казино Крейзи Кейси' # Ru-Localization
+  mapName: 'Казино Ксено' # Exodus: renamed casino POI
   mapPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
   minPlayers: 0
   stations:
@@ -33,4 +33,4 @@
       # Exodus end
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Казино Крейзи Кейси' # Ru-Localization
+          mapNameTemplate: 'Казино Ксено' # Exodus: renamed casino POI
