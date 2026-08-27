@@ -28,8 +28,10 @@
   - type: LanguageKnowledge
     speaks:
     - SolCommon
+    - TauCetiBasic
     understands:
     - SolCommon
+    - TauCetiBasic
   - type: NpcFactionMember
     factions:
     - TSFMC
@@ -66,8 +68,10 @@
   - type: LanguageKnowledge
     speaks:
     - Freespeak
+    - TauCetiBasic
     understands:
     - Freespeak
+    - TauCetiBasic
   - type: NpcFactionMember
     factions:
     - PirateNF
