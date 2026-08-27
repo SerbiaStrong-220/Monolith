@@ -1,9 +1,10 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            SetSize="300 350"
-            MinSize="300 350"
+            SetSize="380 460"
+            MinSize="380 460"
             Resizable="False">
+    <!-- Exodus: extra space for the server-authoritative ATM fee breakdown. -->
     <BoxContainer Margin="10 2 10 2" Orientation="Vertical">
         <PanelContainer VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer.PanelOverride>
@@ -91,6 +92,34 @@
                         </PanelContainer>
                     </BoxContainer>
                 </PanelContainer>
+                <!-- Exodus-begin corporate ATM commission display -->
+                <PanelContainer VerticalExpand="False" HorizontalExpand="True" Margin="2 2">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#303030" BackgroundColor="#0f0f0f"/>
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'bank-atm-menu-atm-fee-label'}"
+                            StyleClasses="LabelKeyText"
+                            Margin="4 4 4 4"/>
+                        <Label Name="AtmFeeLabel"
+                            Text="{Loc 'bank-atm-menu-no-deposit'}"
+                            Margin="4 4 4 4"/>
+                    </BoxContainer>
+                </PanelContainer>
+                <PanelContainer VerticalExpand="False" HorizontalExpand="True" Margin="2 2">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#303030" BackgroundColor="#0f0f0f"/>
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'bank-atm-menu-company-commission-label'}"
+                            StyleClasses="LabelKeyText"
+                            Margin="4 4 4 4"/>
+                        <Label Name="CompanyCommissionLabel"
+                            Text="{Loc 'bank-atm-menu-no-deposit'}"
+                            Margin="4 4 4 4"/>
+                    </BoxContainer>
+                </PanelContainer>
+                <!-- Exodus-end -->
                 <PanelContainer VerticalExpand="False" HorizontalExpand="True" Margin="2 2">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#3d3d3d" BackgroundColor="#111111" />

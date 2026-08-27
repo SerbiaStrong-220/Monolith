@@ -1,6 +1,8 @@
-ent-WallNanolaminateDiagonal = nanolaminate wall
-    .desc = A dense wall made of a strange material, the texture is smooth yet rough.
-    .suffix = ADS ONLY, Diagonal
-ent-WallNanolaminate = nanolaminate wall
-    .desc = A dense wall made of a strange material, the texture is smooth yet rough.
-    .suffix = ADS ONLY
+# Exodus-begin nanolaminate-localization
+ent-WallNanolaminateDiagonal = наноламинатная стена
+    .desc = Плотная стена из странного материала. Её текстура одновременно гладкая и шероховатая.
+    .suffix = Только ADS, диагональная
+ent-WallNanolaminate = наноламинатная стена
+    .desc = Плотная стена из странного материала. Её текстура одновременно гладкая и шероховатая.
+    .suffix = Только ADS
+# Exodus-end nanolaminate-localization

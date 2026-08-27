@@ -5,3 +5,9 @@ ent-ShipArmorModule = dynamic armor module
 
 ent-ShipArmorModuleFlatpack = dynamic armor module flatpack
     .desc = A flatpack used for constructing a dynamic armor module.
+
+ent-ShipArmorModuleBlackhawk = Blackhawk compact dynamic armor module
+    .desc = A compact Blackhawk corporate armor matrix. It covers a smaller area and has less capacity than fleet modules, but regenerates its charge after impacts.
+
+ent-ShipArmorModuleBlackhawkFlatpack = Blackhawk compact dynamic armor flatpack
+    .desc = A flatpack used for constructing the Blackhawk compact dynamic armor module.

@@ -49,3 +49,11 @@ life-insurance-original-alive = Ваше оригинальное тело ещ�
 life-insurance-wakeup-title = Страхование жизни Носке-Эйен
 life-insurance-wakeup-ok = Прийти в себя
 life-insurance-wakeup-text = Вы приходите в себя внутри склизкого инкубатора, сквозь прозрачную капсулу вы узнаёте окружение - это система страхования жизни Носке-Эйен. Но вы же только-что зашли в другую капсулу... Она сработала? [color=#FF3B3B]Последнее что вы помните - то как зашли в капсулу сканирования[/color]
+
+# Платы
+life-insurance-console-board-name = плата консоли страхования жизни
+life-insurance-console-board-description = Печатная плата консоли страхования жизни НИОКР «Носке-Эйен».
+life-insurance-scanner-board-name = плата капсулы сканирования страхования жизни
+life-insurance-scanner-board-description = Плата машины для капсулы сканирования страхования жизни НИОКР «Носке-Эйен».
+life-insurance-cloner-board-name = плата капсулы клонирования страхования жизни
+life-insurance-cloner-board-description = Плата машины для капсулы клонирования страхования жизни НИОКР «Носке-Эйен».

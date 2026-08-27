@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseItem
+  id: NebulaGasSiphonFilter
+  name: nebula-gas-siphon-filter-name
+  description: nebula-gas-siphon-filter-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/nebula_gas_siphon_filter.rsi
+    layers:
+    - state: intact
+      map: [ "base" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NebulaGasSiphonFilterVisuals.State:
+        base:
+          Intact: { state: intact }
+          Depleted: { state: depleted }
+  - type: NebulaGasSiphonFilter
+    capacity: 2500
+    remaining: 2500
+    consumptionPerMole: 0.25
+  - type: StaticPrice
+    price: 350

@@ -37,17 +37,20 @@ ent-ADSShuttleEmergencyBeaconConcordX = маячок вызова АСЗ "Кон
 ent-ADSShuttleEmergencyBeaconMantaray = маячок вызова АСЗ "Мантарей"
     .desc = Одноразовый аварийный маячок вызова АСЗ Мантарея.
 
-ent-ADSShuttleEmergencyBeaconAzimuth = маячок вызова азакимов "Азимут"
-    .desc = Одноразовый аварийный маячок вызова корабля азакимов Азимута.
+ent-ADSShuttleEmergencyBeaconAzimuth = маячок АСЗ "Азимут"
+    .desc = Одноразовый аварийный маячок вызова АСЗ Азимут.
 
-ent-AsakimShuttleEmergencyBeaconSmall = маячок вызова азакимов "Малое судно"
+ent-AsakimShuttleEmergencyBeaconHorizont = маячок ВЭФ "Горизонт"
+    .desc = Одноразовый аварийный маячок вызова ВЭФ Горизонт.
+
+ent-AsakimShuttleEmergencyBeaconSmall = маячок ВЭФ "Малое судно"
     .desc = Одноразовый аварийный маячок вызова малого корабля азакимов.
 
-ent-AsakimShuttleEmergencyBeaconMedium = маячок вызова азакимов "Среднее судно"
+ent-AsakimShuttleEmergencyBeaconMedium = маячок ВЭФ "Среднее судно"
     .desc = Одноразовый аварийный маячок вызова среднего корабля азакимов.
 
-ent-AsakimShuttleEmergencyBeaconStratostar = маячок вызова азакимов "Стратостар"
-    .desc = Одноразовый аварийный маячок вызова корабля азакимов Стратостар.
+ent-AsakimShuttleEmergencyBeaconStratostar = маячок ВЭФ "Стратостар"
+    .desc = Одноразовый аварийный маячок вызова ВЭФ Стратостар.
 
 ent-MarsocArcturusArrivalBeacon = маячок прибытия MARSOC «Арктур»
     .desc = Одноразовый маячок прибытия корабля сил особого назначения Транс-Солнечной Федерации.

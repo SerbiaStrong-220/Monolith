@@ -1,0 +1,279 @@
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskBlackhawkArmor
+  name: tech-disk-blackhawk-armor-name
+  description: tech-disk-blackhawk-armor-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#419E23"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - ShipArmorModuleBlackhawkFlatpack
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskHmeAdvancedOrgans
+  name: tech-disk-hme-organs-name
+  description: tech-disk-hme-organs-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#FC7303"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - HmeSynthHeart
+    - HmeSynthHeartFortified
+    - HmeSynthLungs
+    - HmeSynthLiver
+    - HmeSynthEyes
+    - HmeSynthLeftLeg
+    - HmeSynthRightLeg
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskMacoSmallArms
+  name: tech-disk-maco-small-arms-name
+  description: tech-disk-maco-small-arms-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#FF2E2E"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - WeaponPistolMaco
+    - MagazinePistolMaco
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskHorizonSiphon
+  name: tech-disk-horizon-siphon-name
+  description: tech-disk-horizon-siphon-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#69E37F"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - NebulaGasSiphonMachineCircuitboard
+    - NebulaGasSiphonFilter
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskShmHull
+  name: tech-disk-shm-hull-name
+  description: tech-disk-shm-hull-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#92a2a1"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - SheetPlasteelShm
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskDrakeOrdnance
+  name: tech-disk-drake-ordnance-name
+  description: tech-disk-drake-ordnance-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#C97D7D"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - SyndicateBombCerberus
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskNosskeTeleporter
+  name: tech-disk-nosske-teleporter-name
+  description: tech-disk-nosske-teleporter-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#9573AF"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - LifeInsuranceConsoleComputerCircuitboard
+    - LifeInsuranceScannerMachineCircuitboard
+    - LifeInsuranceClonerMachineCircuitboard
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskUllmanArmaments
+  name: tech-disk-ullman-armaments-name
+  description: tech-disk-ullman-armaments-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#52326A"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - WeaponTurretDravonFlatpackUllman
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskCdmShield
+  name: tech-disk-cdm-shield-name
+  description: tech-disk-cdm-shield-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#48C96B"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - ShieldGeneratorCdmMachineCircuitboard
+    - CdmShieldReserveCartridge
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskHiveSyntheticOrgans
+  name: tech-disk-hive-organs-name
+  description: tech-disk-hive-organs-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#5918A8"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - HiveSynthHeart
+    - HiveSynthLungs
+    - HiveSynthLiver
+    - HiveSynthEyes
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskBratvaSuit
+  name: tech-disk-bratva-suit-name
+  description: tech-disk-bratva-suit-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#7a0303"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - ClothingOuterHardsuitBratva
+    - NearestShuttleTeleporterMachineCircuitboard
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskAetherionGunnery
+  name: tech-disk-aetherion-gunnery-name
+  description: tech-disk-aetherion-gunnery-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#7E72B2"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - AetherionGunneryServerUltraCircuitboard
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskDmePlutonium
+  name: tech-disk-dme-plutonium-name
+  description: tech-disk-dme-plutonium-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#BF00B9"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - UraniumCentrifugePlutoniumRecoveryMini
+    - UraniumCentrifugeAmericiumSynthesisMini
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskUnsaShield
+  name: tech-disk-unsa-shield-name
+  description: tech-disk-unsa-shield-description
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#0A3161"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - ShieldGeneratorUnsaMachineCircuitboard

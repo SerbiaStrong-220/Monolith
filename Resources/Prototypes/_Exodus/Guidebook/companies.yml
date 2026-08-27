@@ -1,0 +1,89 @@
+- type: guideEntry
+  id: Corporations
+  name: guide-entry-corporations
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/Corporations.xml"
+  children:
+  - CorporationDrakeIndustries
+  - CorporationSteelHammerManufacturing
+  - CorporationHarmonyMedicalEnterprises
+  - CorporationMidnightArmsCo
+  - CorporationDarkMatterEnterprises
+  - CorporationAetherionDynamics
+  - CorporationHorizonEnergy
+  - CorporationUniversalStatesOfAmerica
+  - CorporationCivilDefenseMilitia
+  - CorporationUllmanIndustries
+  - CorporationNosskeEienResearchAndDevelopment
+  - CorporationBlackhawkPmc
+  - CorporationTheHive
+  - CorporationPaycheckBratva
+
+- type: guideEntry
+  id: CorporationDrakeIndustries
+  name: drake-industries-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/DrakeIndustries.xml"
+
+- type: guideEntry
+  id: CorporationSteelHammerManufacturing
+  name: steel-hammer-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/SteelHammerManufacturing.xml"
+
+- type: guideEntry
+  id: CorporationHarmonyMedicalEnterprises
+  name: harmony-medical-enterprises-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/HarmonyMedicalEnterprises.xml"
+
+- type: guideEntry
+  id: CorporationMidnightArmsCo
+  name: midnight-arms-co-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/MidnightArmsCo.xml"
+
+- type: guideEntry
+  id: CorporationDarkMatterEnterprises
+  name: dark-matter-enterprises-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/DarkMatterEnterprises.xml"
+
+- type: guideEntry
+  id: CorporationAetherionDynamics
+  name: aetherion-dynamics-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/AetherionDynamics.xml"
+
+- type: guideEntry
+  id: CorporationHorizonEnergy
+  name: horizon-energy-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/HorizonEnergy.xml"
+
+- type: guideEntry
+  id: CorporationUniversalStatesOfAmerica
+  name: universal-states-of-america-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/UniversalStatesOfAmerica.xml"
+
+- type: guideEntry
+  id: CorporationCivilDefenseMilitia
+  name: civil-defense-milita-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/CivilDefenseMilitia.xml"
+
+- type: guideEntry
+  id: CorporationUllmanIndustries
+  name: ullman-industries-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/UllmanIndustries.xml"
+
+- type: guideEntry
+  id: CorporationNosskeEienResearchAndDevelopment
+  name: nosske-eien-rnd-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/NosskeEienResearchAndDevelopment.xml"
+
+- type: guideEntry
+  id: CorporationBlackhawkPmc
+  name: blackhawkpmc-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/BlackhawkPmc.xml"
+
+- type: guideEntry
+  id: CorporationTheHive
+  name: The-Hive-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/TheHive.xml"
+
+- type: guideEntry
+  id: CorporationPaycheckBratva
+  name: paycheck-bratva-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/PaycheckBratva.xml"

@@ -29,3 +29,7 @@ ent-AiRemoteBorgSyndicateSaboteurBattery = syndicate saboteur cyborg
 ent-AiRemoteBorgDerelict = derelict cyborg
     .desc = A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
     .suffix = AI Remote
+
+ent-AiRemoteBorgAsakimFighter = { ent-BorgChassisAsakimFighter }
+    .desc = { ent-BorgChassisAsakimFighter.desc }
+    .suffix = AI Remote

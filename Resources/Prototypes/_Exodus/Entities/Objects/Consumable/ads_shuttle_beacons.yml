@@ -153,6 +153,13 @@
     rule: UnknownShuttleAzimuth
 
 - type: entity
+  id: AsakimShuttleEmergencyBeaconHorizont
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleHorizont
+
+- type: entity
   id: AsakimShuttleEmergencyBeaconSmall
   parent: BaseADSShuttleEmergencyBeaconTier1
   components:

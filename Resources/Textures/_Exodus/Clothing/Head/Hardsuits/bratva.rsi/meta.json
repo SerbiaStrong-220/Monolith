@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Bratva hardsuit helmet pixels derived from the basic hardsuit helmet alpha masks by tgstation; materials and palette based on generated concept art; composed for Exodus.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    { "name": "icon" },
+    { "name": "equipped-HELMET", "directions": 4 },
+    { "name": "equipped-HELMET-hydrakin", "directions": 4 },
+    { "name": "inhand-left", "directions": 4 },
+    { "name": "inhand-right", "directions": 4 },
+    { "name": "equipped-HELMET-vulpkanin", "directions": 4 }
+  ]
+}

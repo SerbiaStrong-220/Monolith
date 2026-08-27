@@ -1,0 +1,18 @@
+- type: entity
+  parent: WeaponPistolMk58
+  id: WeaponPistolMaco
+  name: maco-licensed-pistol-name
+  description: maco-licensed-pistol-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Pistols/maco.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+    - map: ["gripAttachment"]
+    - map: ["barrelAttachment"]
+      offset: 0.5620, 0
+  - type: Clothing
+    sprite: _Exodus/Objects/Weapons/Guns/Pistols/maco.rsi

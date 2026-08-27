@@ -49,3 +49,11 @@ life-insurance-original-alive = Your original body is still alive.
 life-insurance-wakeup-title = Nosske-Eien Life Insurance
 life-insurance-wakeup-ok = Come to your senses
 life-insurance-wakeup-text = You come to your senses inside a slimy incubator. Through the transparent capsule you recognize your surroundings - this is the Nosske-Eien life insurance system. But you only just stepped into another capsule... Did it work? [color=#FF3B3B]The last thing you remember is stepping into the scanning capsule.[/color]
+
+# Boards
+life-insurance-console-board-name = life insurance console computer board
+life-insurance-console-board-description = A computer printed circuit board for a Nosske-Eien life insurance console.
+life-insurance-scanner-board-name = life insurance scanning capsule machine board
+life-insurance-scanner-board-description = A machine board for a Nosske-Eien life insurance scanning capsule.
+life-insurance-cloner-board-name = life insurance cloning capsule machine board
+life-insurance-cloner-board-description = A machine board for a Nosske-Eien life insurance cloning capsule.

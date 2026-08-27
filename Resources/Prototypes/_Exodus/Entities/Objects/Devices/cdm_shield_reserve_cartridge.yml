@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseItem
+  id: CdmShieldReserveCartridge
+  name: cdm-shield-reserve-cartridge-name
+  description: cdm-shield-reserve-cartridge-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/cdm_shield_reserve_cartridge.rsi
+    state: icon
+  - type: CdmShieldReserveCartridge
+  - type: StaticPrice
+    price: 400

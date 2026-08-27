@@ -111,6 +111,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         InitializeFTL();
 
         InitializeNFDrone(); // Frontier: add our drone subscriptions
+        InitializeShieldUi(); // Exodus - shield health
     }
 
     private void OnFtlDestStartup(EntityUid uid, FTLDestinationComponent component, ComponentStartup args)
@@ -439,13 +440,15 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         if (_ui.HasUi(consoleUid, ShuttleConsoleUiKey.Key))
         {
-            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState));
+            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState)); // Exodus - shield health delta
         }
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        ProcessShieldUiUpdates(); // Exodus - shield health
 
         var toRemove = new ValueList<(EntityUid, PilotComponent)>();
         var query = EntityQueryEnumerator<PilotComponent>();

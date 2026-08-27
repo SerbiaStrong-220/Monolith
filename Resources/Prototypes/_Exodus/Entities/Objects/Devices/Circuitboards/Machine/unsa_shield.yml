@@ -1,0 +1,22 @@
+- type: entity
+  id: ShieldGeneratorUnsaMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: unsa-directional-shield-board-name
+  description: unsa-directional-shield-board-description
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShieldGeneratorUnsa
+    componentRequirements:
+      AmeFuelContainer:
+        amount: 5
+        defaultPrototype: AmeJar
+    stackRequirements:
+      Glass: 10
+      Steel: 15
+      Plasma: 40
+      Plasteel: 20
+      Gold: 10
+      Silver: 10
+      UraniumFissile: 2

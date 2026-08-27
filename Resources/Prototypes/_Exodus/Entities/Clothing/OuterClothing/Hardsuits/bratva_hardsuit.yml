@@ -1,0 +1,44 @@
+# Paycheck Bratva — civilian-tier crit auto-inject hardsuit (asakim-style triggers, no biocode / teleport).
+
+- type: entity
+  parent: ClothingOuterHardsuitBasic
+  id: ClothingOuterHardsuitBratva
+  name: paycheck-bratva-combat-suit-name
+  description: paycheck-bratva-combat-suit-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/OuterClothing/Hardsuits/bratva.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/OuterClothing/Hardsuits/bratva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.65
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    oldMobState:
+    - Alive
+  - type: AddReagentOnTrigger
+    cooldown: 150
+    reagents:
+    - ReagentId: Omnizine
+      Quantity: 12
+    - ReagentId: TranexamicAcid
+      Quantity: 5
+    - ReagentId: DexalinPlus
+      Quantity: 5
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitBratva

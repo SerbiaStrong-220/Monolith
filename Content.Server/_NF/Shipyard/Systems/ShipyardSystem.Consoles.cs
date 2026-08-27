@@ -136,7 +136,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        var name = vessel.Name;
+        var name = Loc.TryGetString(vessel.Name, out var localizedVesselName) ? localizedVesselName : vessel.Name; // Exodus company-fleet
 
         if (vessel.Price <= 0)
             return;
@@ -187,21 +187,21 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         bool voucherUsed = false;
         if (voucher is not null)
         {
-			// Mono: Check if voucher has a purchase cooldown, and if it is still in cooldown cancel purchase
-			var remainingTime = voucher.NextBuyAt - _timing.CurTime; // Mono
+            // Mono: Check if voucher has a purchase cooldown, and if it is still in cooldown cancel purchase
+            var remainingTime = voucher.NextBuyAt - _timing.CurTime; // Mono
 
-			if (_timing.CurTime >= voucher.NextBuyAt)
-			{
-				voucher.NextBuyAt = _timing.CurTime + voucher.Cooldown;
-			}
-			else
-			{
-				ConsolePopup(player, Loc.GetString("ship-voucher-cooldown-active", ("remainingTime", Math.Round(remainingTime.TotalMinutes))));
-            	PlayDenySound(player, shipyardConsoleUid, component);
+            if (_timing.CurTime >= voucher.NextBuyAt)
+            {
+                voucher.NextBuyAt = _timing.CurTime + voucher.Cooldown;
+            }
+            else
+            {
+                ConsolePopup(player, Loc.GetString("ship-voucher-cooldown-active", ("remainingTime", Math.Round(remainingTime.TotalMinutes))));
+                PlayDenySound(player, shipyardConsoleUid, component);
                 Del(shuttleUid);
-				return;
-			}
-			// End mono
+                return;
+            }
+            // End mono
 
             if (voucher!.RedemptionsLeft <= 0)
             {
@@ -891,8 +891,45 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             accesses.Groups = new HashSet<ProtoId<AccessGroupPrototype>>();
         }
 
+        // Exodus-begin company-fleet
+        // Company on inserted ID / voucher — same source as ship CompanyComponent on purchase.
+        ProtoId<CompanyPrototype>? buyerCompany = null;
+        if (TryComp<IdCardComponent>(targetId, out var idCardCompany)
+            && idCardCompany.CompanyName != "None")
+        {
+            buyerCompany = idCardCompany.CompanyName;
+        }
+        else if (TryComp<ShipyardVoucherComponent>(targetId, out var voucherCompany)
+                 && !string.IsNullOrEmpty(voucherCompany.CompanyName)
+                 && voucherCompany.CompanyName != "None")
+        {
+            buyerCompany = voucherCompany.CompanyName;
+        }
+        // Exodus-end
+
         foreach (var vessel in _prototypeManager.EnumeratePrototypes<VesselPrototype>())
         {
+            // Exodus-begin company-fleet
+            if (vessel.RequiredCompanies.Count > 0)
+            {
+                if (buyerCompany is not { } company)
+                    continue;
+
+                var companyAllowed = false;
+                foreach (var required in vessel.RequiredCompanies)
+                {
+                    if (required != company)
+                        continue;
+
+                    companyAllowed = true;
+                    break;
+                }
+
+                if (!companyAllowed)
+                    continue;
+            }
+            // Exodus-end
+
             bool hasAccess = initialHasAccess;
             // If the vessel needs access to be bought, check the user's access.
             if (!string.IsNullOrEmpty(vessel.Access))
@@ -935,6 +972,21 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
     private void RefreshState(EntityUid uid, int balance, bool access, string? shipDeed, int shipSellValue, EntityUid? targetId, ShipyardConsoleUiKey uiKey, bool freeListings)
     {
+        // Exodus-begin company-fleet
+        string? buyerCompanyId = null;
+        if (TryComp<IdCardComponent>(targetId, out var idCard)
+            && idCard.CompanyName != "None")
+        {
+            buyerCompanyId = idCard.CompanyName;
+        }
+        else if (TryComp<ShipyardVoucherComponent>(targetId, out var voucher)
+                 && !string.IsNullOrEmpty(voucher.CompanyName)
+                 && voucher.CompanyName != "None")
+        {
+            buyerCompanyId = voucher.CompanyName;
+        }
+        // Exodus-end
+
         var newState = new ShipyardConsoleInterfaceState(
             balance,
             access,
@@ -945,7 +997,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             GetAvailableShuttles(uid, uiKey, targetId: targetId),
             uiKey.ToString(),
             freeListings,
-            CalculateSellRate(uid));
+            CalculateSellRate(uid),
+            buyerCompanyId); // Exodus company-fleet
 
         _ui.SetUiState(uid, uiKey, newState);
     }

@@ -1,0 +1,29 @@
+- type: entity
+  parent: WallNanolaminate
+  id: WallNanolaminateShielded
+  name: shielded nanolaminate wall
+  suffix: ADS ONLY
+  description: A dense wall made of a strange material with additional radiation shielding.
+  components:
+  - type: RadiationBlocker
+    resistance: 8
+  - type: Sprite
+    sprite: _Exodus/Structures/Walls/abductor_shielded.rsi
+  - type: Icon
+    sprite: _Exodus/Structures/Walls/abductor_shielded.rsi
+    state: full
+
+- type: entity
+  parent: WallNanolaminateDiagonal
+  id: WallNanolaminateShieldedDiagonal
+  name: shielded nanolaminate wall
+  suffix: ADS ONLY, Diagonal
+  description: A dense wall made of a strange material with additional radiation shielding.
+  components:
+  - type: RadiationBlocker
+    resistance: 8
+  - type: Sprite
+    sprite: _Exodus/Structures/Walls/abductor_shielded_diagonal.rsi
+  - type: Icon
+    sprite: _Exodus/Structures/Walls/abductor_shielded_diagonal.rsi
+    state: state0

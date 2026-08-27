@@ -1,0 +1,8 @@
+- type: entity
+  id: ShieldGeneratorCdmMachineCircuitboard
+  parent: MachineShieldMS100Circuitboard
+  name: cdm-shield-generator-board-name
+  description: cdm-shield-generator-board-description
+  components:
+  - type: MachineBoard
+    prototype: ShieldGeneratorCdm

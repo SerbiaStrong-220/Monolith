@@ -1,0 +1,36 @@
+- type: vessel
+  id: HorizonSiphon
+  parent: BaseVessel
+  name: company-vessel-horizon-siphon-name
+  description: company-vessel-horizon-siphon-description
+  price: 72000
+  category: Small
+  group: Shipyard
+  requiredCompanies:
+  - HorizonEnergy
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/horizont/siphon.yml
+  class:
+  - Mercenary
+  engine:
+  - Uranium
+  limit: 3
+
+- type: gameMap
+  id: HorizonSiphon
+  mapName: 'Горизонт Сифон'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/horizont/siphon.yml
+  minPlayers: 0
+  stations:
+    HorizonSiphon:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Сифон{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

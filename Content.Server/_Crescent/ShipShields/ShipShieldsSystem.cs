@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Shared._Crescent.ShipShields;
+using Content.Shared._Exodus.ShipShields; // Exodus CDM shield reserve
 using Content.Shared._Mono.SpaceArtillery;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -14,6 +15,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using System.Numerics;
 using Content.Server._Crescent.ShipShields.Components;
+using Content.Server._Exodus.ShipShields; // Exodus layered ship shields
 
 
 namespace Content.Server._Crescent.ShipShields;
@@ -39,6 +41,8 @@ public sealed partial class ShipShieldsSystem : EntitySystem
     private EntityQuery<ShipShieldEmitterComponent> _shieldEmitterQuery;
     private EntityQuery<ShipShieldVisualsComponent> _shieldVisualsQuery;
     private EntityQuery<TransformComponent> _transformQuery;
+    private EntityQuery<DirectionalShipShieldFieldComponent> _directionalShieldFieldQuery; // Exodus directional shields
+    private EntityQuery<LayeredShipShieldComponent> _layeredShieldQuery; // Exodus layered ship shields
     // Exodus-end
     // Exodus-begin shield deflection queue
     private readonly List<QueuedShieldDeflection> _queuedShieldDeflections = new();
@@ -60,6 +64,9 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             if (emitter.Accumulator < EmitterUpdateRate)
                 continue;
 
+            // Exodus-begin shield damage-overload update handling
+            // Capture this before a new shield load can change the receiver state.
+            var poweredBeforeLoad = power.Powered;
             // Exodus-begin fire-control event-driven UI updates
             var previousDamage = emitter.Damage;
             var previousRecharging = emitter.Recharging;
@@ -69,13 +76,17 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
             if (CalculateLoadDamage(emitter) >= emitter.MaxDraw)
                 emitter.Recharging = true;
-            if (!power.Powered)
+            if (!poweredBeforeLoad)
                 emitter.Recharging = true;
 
             emitter.Accumulator -= EmitterUpdateRate;
             if (emitter.OverloadAccumulator > 0)
             {
-                emitter.OverloadAccumulator -= EmitterUpdateRate;
+                if (emitter.DamageOverloadStartedTick != _timing.CurTick)
+                    emitter.OverloadAccumulator -= EmitterUpdateRate;
+
+                if (emitter.OverloadAccumulator <= 0)
+                    emitter.DamageOverloadStartedTick = null;
             }
 
             float healed = emitter.HealPerSecond * EmitterUpdateRate;
@@ -88,22 +99,24 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             if (emitter.Damage < 0)
             {
                 emitter.Damage = 0;
-                if (power.Powered)
+                if (poweredBeforeLoad)
                     emitter.Recharging = false;
             }
-
-            AdjustEmitterLoad(uid, emitter, power);
 
             var parent = Transform(uid).GridUid;
 
             if (parent == null)
+            {
+                AdjustEmitterLoad(uid, emitter, power);
                 continue;
+            }
 
             var filter = _station.GetInOwningStation(uid);
-
-            if (emitter.Damage > emitter.DamageLimit)
-                emitter.OverloadAccumulator = emitter.DamageOverloadTimePunishment;
-
+            // Exodus-begin shield overload event handling
+            HandleDamageOverload((uid, emitter), poweredBeforeLoad, IsDamageOverloaded(emitter));
+            // Exodus-end
+            AdjustEmitterLoad(uid, emitter, power);
+            // Exodus-end
             // Exodus-shield-swap-fix-start: a ship's shield downtime is grid-wide. Don't raise a shield
             // if the grid is already shielded (prevents a second generator shadowing the active shield),
             // or if any other emitter on the grid is still serving its overload lockout. The lockout is
@@ -142,6 +155,38 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         }
     }
 
+    // Exodus-begin shield damage-overload handling
+    private void HandleDamageOverload(
+        Entity<ShipShieldEmitterComponent> ent,
+        bool poweredBeforeLoad,
+        bool overloadTriggered)
+    {
+        if (!overloadTriggered ||
+            ent.Comp.OverloadAccumulator > 0f ||
+            ent.Comp.DamageOverloadStartedTick == _timing.CurTick)
+        {
+            return;
+        }
+
+        var overloadAttempt = new ShipShieldOverloadAttemptEvent(
+            ShipShieldOverloadCause.Damage,
+            poweredBeforeLoad);
+        RaiseLocalEvent(ent.Owner, ref overloadAttempt);
+
+        if (overloadAttempt.Cancelled)
+            return;
+
+        ent.Comp.OverloadAccumulator = ent.Comp.DamageOverloadTimePunishment;
+        ent.Comp.DamageOverloadStartedTick = _timing.CurTick;
+    }
+
+    internal static bool IsDamageOverloaded(ShipShieldEmitterComponent emitter)
+    {
+        return CalculateLoadDamage(emitter) >= emitter.MaxDraw ||
+               emitter.Damage > emitter.DamageLimit;
+    }
+    // Exodus-end
+
     // Exodus-shield-swap-fix-start
     /// <summary>
     /// A ship's shield downtime belongs to the ship, not the individual generator. Returns true if any
@@ -179,6 +224,8 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         _shieldEmitterQuery = GetEntityQuery<ShipShieldEmitterComponent>();
         _shieldVisualsQuery = GetEntityQuery<ShipShieldVisualsComponent>();
         _transformQuery = GetEntityQuery<TransformComponent>();
+        _directionalShieldFieldQuery = GetEntityQuery<DirectionalShipShieldFieldComponent>(); // Exodus directional shields
+        _layeredShieldQuery = GetEntityQuery<LayeredShipShieldComponent>(); // Exodus layered ship shields
         // Exodus-end
 
         SubscribeLocalEvent<ShipShieldComponent, PreventCollideEvent>(OnPreventCollide);
@@ -194,12 +241,21 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         // only handle ship weapons for now. engine update introduced physics regressions. Let's polish everything else and circle back yeah?
         // Ensuring projectiles coming froms same grid don't hit shield is handled by ProjectileGridPhaseComponent
         if (!_shipWeaponProjectileQuery.HasComponent(args.OtherEntity) ||
-        !_projectileQuery.TryGetComponent(args.OtherEntity, out var projectile) ||
-        projectile.ProjectileSpent)
+            !_projectileQuery.TryGetComponent(args.OtherEntity, out var projectile) ||
+            projectile.ProjectileSpent)
         {
             args.Cancelled = true;
             return;
         }
+
+        // Exodus-begin directional shield interception
+        if (_directionalShieldFieldQuery.TryGetComponent(uid, out var directional) &&
+            !IsProjectileInsideDirectionalShieldArc(uid, directional, args))
+        {
+            args.Cancelled = true;
+            return;
+        }
+        // Exodus-end
 
         //if (TryComp<TimedDespawnComponent>(args.OtherEntity, out var despawn))
         //    despawn.Lifetime += despawn.Lifetime;
@@ -247,6 +303,17 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
             var ev = new ShieldDeflectedEvent(queued.Deflected, projectile);
             RaiseLocalEvent(queued.Source, ref ev);
+
+            if (TerminatingOrDeleted(queued.Source) ||
+                EntityManager.IsQueuedForDeletion(queued.Source) ||
+                !_shieldEmitterQuery.TryGetComponent(queued.Source, out var emitter) ||
+                !IsDamageOverloaded(emitter))
+            {
+                continue;
+            }
+
+            var poweredBeforeLoad = _apcPowerReceiverQuery.TryGetComponent(queued.Source, out var power) && power.Powered;
+            HandleDamageOverload((queued.Source, emitter), poweredBeforeLoad, true);
         }
 
         if (_queuedShieldDeflections.Count == count)
@@ -297,6 +364,15 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         if (source != null && TryComp<ShipShieldEmitterComponent>(source.Value, out var emitter))
         {
             shieldVisuals.ShieldColor = emitter.ShieldColor;
+            // Exodus-begin layered ship shield visuals
+            if (_layeredShieldQuery.TryGetComponent(source.Value, out var layered))
+            {
+                var maximumLayers = Math.Max(1, layered.LayerCount);
+                shieldVisuals.LayerCount = Math.Clamp(layered.ActiveLayerCount, 1, maximumLayers);
+                shieldVisuals.LayerThickness = layered.LayerThickness;
+                shieldVisuals.LayerGap = layered.LayerGap;
+            }
+            // Exodus-end
             Dirty(shield, shieldVisuals);
         }
 
@@ -304,27 +380,43 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         _transformSystem.SetCoordinates(shield, gridCenter);
         _transformSystem.SetWorldRotation(shield, _transformSystem.GetWorldRotation(entity));
 
-        var chain = GenerateOvalFixture(shield, "shield", shieldPhysics, mapGrid, shieldVisuals.Padding);
-
-        List<Vector2> roughPoly = new();
-
-        var interval = chain.Count / PhysicsConstants.MaxPolygonVertices;
-
-        int i = 0;
-
-        while (i < PhysicsConstants.MaxPolygonVertices)
+        // Exodus-begin directional shield geometry
+        if (source is { } shieldSource &&
+            TryComp<DirectionalShipShieldEmitterComponent>(shieldSource, out var directional))
         {
-            roughPoly.Add(chain.Vertices[i * interval]);
-            i++;
+            GenerateDirectionalShieldFixtures(
+                shield,
+                shieldPhysics,
+                mapGrid,
+                shieldVisuals.Padding,
+                directional,
+                Transform(shieldSource).LocalRotation);
         }
+        else
+        // Exodus-end
+        {
+            var chain = GenerateOvalFixture(shield, "shield", shieldPhysics, mapGrid, shieldVisuals.Padding);
 
-        var internalPoly = new PolygonShape();
-        internalPoly.Set(roughPoly);
+            List<Vector2> roughPoly = new();
 
-        _fixtureSystem.TryCreateFixture(shield, internalPoly, "internalShield",
-            hard: true,
-            collisionLayer: (int)CollisionGroup.BulletImpassable, // Mono - Only try to block bullets
-            body: shieldPhysics);
+            var interval = chain.Count / PhysicsConstants.MaxPolygonVertices;
+
+            int i = 0;
+
+            while (i < PhysicsConstants.MaxPolygonVertices)
+            {
+                roughPoly.Add(chain.Vertices[i * interval]);
+                i++;
+            }
+
+            var internalPoly = new PolygonShape();
+            internalPoly.Set(roughPoly);
+
+            _fixtureSystem.TryCreateFixture(shield, internalPoly, "internalShield",
+                hard: true,
+                collisionLayer: (int)CollisionGroup.BulletImpassable, // Mono - Only try to block bullets
+                body: shieldPhysics);
+        }
 
         _physicsSystem.WakeBody(shield, body: shieldPhysics);
         _physicsSystem.SetSleepingAllowed(shield, shieldPhysics, false);

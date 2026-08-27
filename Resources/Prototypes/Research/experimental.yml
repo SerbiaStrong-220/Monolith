@@ -144,10 +144,11 @@
   entityIcon: HoloprojectorField
   discipline: Experimental
   tier: 2
-  cost: 10000
+  cost: 20000
   recipeUnlocks:
   # - WeaponParticleDecelerator # Frontier - Cancer gun that skip walls
   - HoloprojectorField
+  - HoloGenericEmpty # Exodus
   technologyPrerequisites:
   - BasicParts
   position: 2, -1

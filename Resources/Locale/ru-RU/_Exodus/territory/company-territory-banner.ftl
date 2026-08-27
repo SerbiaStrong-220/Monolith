@@ -1,0 +1,49 @@
+ent-CompanyTerritoryBannerBase =
+    .desc = { company-territory-banner-description }
+
+ent-CompanyTerritoryBannerDrake = Знамя «{ drake-industries-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerSteelHammer = Знамя «{ steel-hammer-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerHme = Знамя «{ harmony-medical-enterprises-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerMaco = Знамя «{ midnight-arms-co-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerDme = Знамя «{ dark-matter-enterprises-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerAetherion = Знамя «{ aetherion-dynamics-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerHorizon = Знамя «{ horizon-energy-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerUnsa = Знамя «{ universal-states-of-america-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerCdm = Знамя «{ civil-defense-milita-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerUllman = Знамя «{ ullman-industries-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerNosske = Знамя «{ nosske-eien-rnd-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerBlackhawk = Знамя «{ blackhawkpmc-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerHive = Знамя «{ The-Hive-name }»
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerBratva = Знамя «{ paycheck-bratva-name }»
+    .desc = { company-territory-banner-description }
+
+company-territory-banner-description = Знамя корпорации, закрепляющее её присутствие на территории выбранной фракции.
+
+company-territory-banner-no-territory = Знамя можно устанавливать только на территории станции.
+company-territory-banner-disabled = На этой территории нельзя устанавливать корпоративное знамя.
+company-territory-banner-neutral = Сначала территория должна принадлежать одной из фракций.
+company-territory-banner-no-card = Для установки знамени нужна карта с корпорацией.
+company-territory-banner-company-mismatch = Это знамя принадлежит другой корпорации.
+company-territory-banner-already-claimed = На этой территории уже установлено корпоративное знамя.
+company-territory-banner-wrong-faction = Корпорация уже привязана к территории фракции «{ $faction }».
+company-territory-banner-claimed = Корпоративное присутствие закреплено.
+company-territory-banner-unclaimed = Корпоративное присутствие на территории снято.
+company-territory-banner-examine-unassigned = Знамя ещё не принадлежит корпорации.
+company-territory-banner-examine-company = Корпорация: { $company }
+company-territory-banner-examine-faction = Территориальная привязка: { $faction }
+
+construction-examine-condition-company-territory-banner-exists = На этой территории уже установлено корпоративное знамя.
+construction-step-condition-company-territory-no-banner = Убедитесь, что на территории нет другого корпоративного знамени.

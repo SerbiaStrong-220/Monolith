@@ -70,6 +70,20 @@
     entity: ShipArmorModule
 
 - type: entity
+  parent: BaseFlatpack
+  id: ShipArmorModuleBlackhawkFlatpack
+  name: ship-armor-module-blackhawk-flatpack-name
+  description: ship-armor-module-blackhawk-flatpack-description
+  components:
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: false
+    increment: 90
+  - type: Flatpack
+    entity: ShipArmorModuleBlackhawk
+
+- type: entity
   parent: BaseNFFlatpack
   id: CloningPodFlatpack
   name: cloning pod flatpack

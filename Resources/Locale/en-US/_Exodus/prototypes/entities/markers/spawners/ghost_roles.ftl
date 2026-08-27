@@ -65,3 +65,7 @@ ent-SpawnAiRemoteBorgSyndicateSaboteur = AI remote borg spawner
 ent-SpawnAiRemoteBorgDerelict = AI remote borg spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = Derelict
+
+ent-SpawnAiRemoteBorgAsakimFighter = AI remote borg spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Assault System Operator

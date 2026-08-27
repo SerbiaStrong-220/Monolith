@@ -1,0 +1,36 @@
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: LifeInsuranceScannerMachineCircuitboard
+  name: life-insurance-scanner-board-name
+  description: life-insurance-scanner-board-description
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: LifeInsuranceScanner
+    requirements:
+      Capacitor: 2
+    stackRequirements:
+      Glass: 8
+      Steel: 10
+      Plasma: 12
+      Americium: 6
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: LifeInsuranceClonerMachineCircuitboard
+  name: life-insurance-cloner-board-name
+  description: life-insurance-cloner-board-description
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: LifeInsuranceCloner
+    requirements:
+      MatterBin: 2
+      Manipulator: 2
+    stackRequirements:
+      Glass: 12
+      Steel: 15
+      Plasma: 20
+      Americium: 6

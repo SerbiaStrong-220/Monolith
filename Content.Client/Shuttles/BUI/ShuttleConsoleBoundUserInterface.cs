@@ -1,4 +1,5 @@
 using Content.Client.Shuttles.UI;
+using Content.Shared.Exodus.ShipShields; // Exodus - shield health
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
@@ -16,6 +17,8 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
 {
     [ViewVariables]
     private ShuttleConsoleWindow? _window;
+    private ShipShieldState? _shieldState; // Exodus - shield health
+    private bool _hasShieldState; // Exodus - shield health
 
     public ShuttleConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -25,6 +28,9 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
     {
         base.Open();
         _window = this.CreateWindow<ShuttleConsoleWindow>();
+
+        if (_hasShieldState)
+            _window.UpdateShieldState(_shieldState); // Exodus - shield health
 
         _window.RequestFTL += OnFTLRequest;
         _window.RequestBeaconFTL += OnFTLBeaconRequest;
@@ -110,4 +116,16 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
 
         _window?.UpdateState(Owner, cState);
     }
+
+    // Exodus-begin shield health
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        if (message is not ShuttleShieldStateMessage shieldMessage)
+            return;
+
+        _shieldState = shieldMessage.State;
+        _hasShieldState = true;
+        _window?.UpdateShieldState(_shieldState);
+    }
+    // Exodus-end
 }

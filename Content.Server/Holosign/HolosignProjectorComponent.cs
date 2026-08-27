@@ -15,5 +15,16 @@ namespace Content.Server.Holosign
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("chargeUse")]
         public float ChargeUse = 50f;
+
+        //Exodus is-anchored-on-spawn
+
+        /// <summary>
+        /// Is proto anchored on spawn?
+        /// <summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("isAnchoredOnSpawn")]
+        public bool IsAnchoredOnSpawn = true;
+
+        //Exodus-end
     }
 }

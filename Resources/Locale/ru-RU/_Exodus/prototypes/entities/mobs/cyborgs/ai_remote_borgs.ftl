@@ -29,3 +29,7 @@ ent-AiRemoteBorgSyndicateSaboteurBattery = саботажный борг Син�
 ent-AiRemoteBorgDerelict = брошенный борг
     .desc = Гибрид человека и машины, помогающий в работе станции. Этот находится в очень запущенном состоянии.
     .suffix = под управлением ИИ
+
+ent-AiRemoteBorgAsakimFighter = { ent-BorgChassisAsakimFighter }
+    .desc = { ent-BorgChassisAsakimFighter.desc }
+    .suffix = под управлением ИИ

@@ -1,0 +1,54 @@
+- type: entity
+  parent: MaterialBase
+  id: MaterialAmericium
+  name: americium cube
+  description: A dense, highly valuable golden metal cube.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Materials/americium.rsi
+    state: americium_3
+    layers:
+    - state: americium_3
+      map: ["base"]
+  - type: Item
+    sprite: _Exodus/Objects/Materials/americium.rsi
+    size: Normal
+  - type: Stack
+    stackType: Americium
+    count: 100
+    baseLayer: base
+    layerStates:
+    - americium
+    - americium_2
+    - americium_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Americium: 1
+
+- type: entity
+  parent: MaterialAmericium
+  id: MaterialAmericium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: americium
+    layers:
+    - state: americium
+      map: ["base"]
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialAmericium
+  id: MaterialAmericium10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: americium_2
+    layers:
+    - state: americium_2
+      map: ["base"]
+  - type: Stack
+    count: 10

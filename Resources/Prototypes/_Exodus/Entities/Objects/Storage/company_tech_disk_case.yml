@@ -1,0 +1,186 @@
+- type: entity
+  parent: WeaponCaseShortAmmo
+  id: CompanyTechDiskCase
+  abstract: true
+  name: company-tech-disk-case-name
+  description: company-tech-disk-case-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Storage/Cases/company_tech_disk_case.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Storage/Cases/company_tech_disk_case.rsi
+  - type: Storage
+    whitelist:
+      components:
+      - TechnologyDisk
+  - type: CompanyAccessReader
+    requireCompanyCard: true
+    popupMessage: company-tech-disk-case-access-denied
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseSteelHammer
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - SteelHammerManufacturing
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskShmHull
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseHme
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - HarmonyMedicalEnterprises
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskHmeAdvancedOrgans
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseMaco
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - MidnightArmsCo
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskMacoSmallArms
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseHorizon
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - HorizonEnergy
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskHorizonSiphon
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseBlackhawk
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - blackhawkpmc
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskBlackhawkArmor
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseBratva
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - paycheckbratva
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskBratvaSuit
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseDrake
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - DrakeIndustries
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskDrakeOrdnance
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseNosske
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - NosskeEienResearchandDevelopment
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskNosskeTeleporter
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseUllman
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - UllmanIndustries
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskUllmanArmaments
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseCdm
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - CivilDefenseMilita
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskCdmShield
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseHive
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - TheHive
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskHiveSyntheticOrgans
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseAetherion
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - AetherionDynamics
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskAetherionGunnery
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseDme
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - DarkMatterEnterprises
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskDmePlutonium
+
+- type: entity
+  parent: CompanyTechDiskCase
+  id: CompanyTechDiskCaseUnsa
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies:
+    - UniversalStatesOfAmerica
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - TechDiskUnsaShield
