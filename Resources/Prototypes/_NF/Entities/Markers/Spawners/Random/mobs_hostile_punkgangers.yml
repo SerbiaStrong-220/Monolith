@@ -12,9 +12,14 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobPunkGangerMeleeT1
-    - MobPunkGangerMeleeT1
-    - MobPunkGangerPistol
+    # Exodus-Start
+    #- MobPunkGangerMeleeT1
+    #- MobPunkGangerMeleeT1
+    #- MobPunkGangerPistol
+    - MobPunkGangerMeleeT1Smart
+    - MobPunkGangerMeleeT1Smart
+    - MobPunkGangerPistolSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
@@ -35,9 +40,14 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobPunkGangerMeleeT2
-    - MobPunkGangerMeleeT2
-    - MobPunkGangerShotgun
+    # Exodus-Start
+    #- MobPunkGangerMeleeT2
+    #- MobPunkGangerMeleeT2
+    #- MobPunkGangerShotgun
+    - MobPunkGangerMeleeT2Smart
+    - MobPunkGangerMeleeT2Smart
+    - MobPunkGangerShotgunSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
@@ -58,9 +68,14 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobPunkGangerMeleeT3
-    - MobPunkGangerMeleeT3
-    - MobPunkGangerSmg
+    # Exodus-Start
+    #- MobPunkGangerMeleeT3
+    #- MobPunkGangerMeleeT3
+    #- MobPunkGangerSmg
+    - MobPunkGangerMeleeT3Smart
+    - MobPunkGangerMeleeT3Smart
+    - MobPunkGangerSmgSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     #rarePrototypes:
@@ -81,6 +96,9 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobPunkGangerLeader
+    # Exodus-Start
+    #- MobPunkGangerLeader
+    - MobPunkGangerLeaderSmart
+    # Exodus-End
     chance: 1
     offset: 0.0

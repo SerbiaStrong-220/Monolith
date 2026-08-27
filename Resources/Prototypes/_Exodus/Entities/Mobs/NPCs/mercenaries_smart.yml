@@ -1,0 +1,54 @@
+# Commander
+- type: entity
+  parent: [ BaseExodusSmartCommander, MobMercenaryCaptain ]
+  id: MobMercenaryCaptainSmart
+  suffix: Smart
+
+# Medic
+- type: entity
+  parent: [ BaseExodusSmartMedic, MobMercenarySpecialistMedic ]
+  id: MobMercenarySpecialistMedicSmart
+  suffix: Smart
+
+# Grunts (ranged)
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobMercenarySpecialistAssault ]
+  id: MobMercenarySpecialistAssaultSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobMercenarySoldierPistol ]
+  id: MobMercenarySoldierPistolSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobMercenarySoldierNovalite ]
+  id: MobMercenarySoldierNovaliteSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobMercenarySoldierRevolver ]
+  id: MobMercenarySoldierRevolverSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobMercenaryBreacherShotgun ]
+  id: MobMercenaryBreacherShotgunSmart
+  suffix: Smart
+
+# Grunts (melee)
+- type: entity
+  parent: [ BaseExodusSmartMeleeGruntThrower, MobMercenarySoldierKnife ]
+  id: MobMercenarySoldierKnifeSmart
+  suffix: Smart
+  components:
+  - type: NpcThrownWeapon
+    proto: CombatKnife
+
+- type: entity
+  parent: [ BaseExodusSmartMeleeGruntThrower, MobMercenaryBreacherMachete ]
+  id: MobMercenaryBreacherMacheteSmart
+  suffix: Smart
+  components:
+  - type: NpcThrownWeapon
+    proto: CombatKnife

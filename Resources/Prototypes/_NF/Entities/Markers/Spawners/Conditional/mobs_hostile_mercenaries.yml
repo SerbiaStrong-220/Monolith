@@ -31,4 +31,7 @@
       shader: unshaded
   - type: ConditionalSpawner
     prototypes:
-    - MobMercenaryCaptain
+    # Exodus-Start
+    #- MobMercenaryCaptain
+    - MobMercenaryCaptainSmart
+    # Exodus-End

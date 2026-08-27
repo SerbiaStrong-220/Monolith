@@ -1,0 +1,75 @@
+# Pet behaviour. Traits are composed from components pet proto (pet_base.yml).
+# this tree is the movement/follow backbone. Combat compounds for warrior pets is in squad.yml.
+
+# Heal trait - approach master and inject when wounded. Self-activating — the branch only plans if
+# pet actually got NpcHealInjection ability, so adding NpcHealInjection to a pet auto-enables this.
+- type: htnCompound
+  id: ExodusPetHealCompound
+  branches:
+    - preconditions:
+        - !type:KeyExistsPrecondition
+          key: PetMaster
+        - !type:AbilityReadyPrecondition
+          actionId: ActionHealInjectionNPC
+        - !type:HealthPrecondition
+          key: PetMaster
+          maxPercent: 0.9
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            targetKey: PetMasterCoordinates
+            rangeKey: MedibotInjectRange
+            removeKeyOnFinish: false
+            pathfindInPlanning: false
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: PetMaster
+              rangeKey: MedibotInjectRange
+          operator: !type:UseActionOperator
+            actionId: ActionHealInjectionNPC
+            targetMode: Entity
+            targetKey: PetMaster
+
+# Movement backbone shared by every pet, follow/idle nearby.
+- type: htnCompound
+  id: ExodusPetMoveCompound
+  branches:
+    # Master on another grid - run onto it.
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:OwnerOnDifferentGridPrecondition
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            targetKey: FollowTarget
+            rangeKey: FollowCloseRange
+            removeKeyOnFinish: false
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+
+# Follow-only.
+- type: htnCompound
+  id: ExodusPetFollowCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusPetHealCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusPetMoveCompound
+
+# Warrior pet, heal first, then fights enemies (faction hostiles + aggroed targets).
+- type: htnCompound
+  id: ExodusPetWarriorCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusPetHealCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusFightCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ExodusPetMoveCompound

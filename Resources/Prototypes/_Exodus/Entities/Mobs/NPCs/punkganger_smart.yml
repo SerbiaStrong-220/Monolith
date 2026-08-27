@@ -1,0 +1,46 @@
+# Commander
+- type: entity
+  parent: [ BaseExodusSmartCommander, MobPunkGangerLeader ]
+  id: MobPunkGangerLeaderSmart
+  suffix: Smart
+
+# Grunts (ranged)
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobPunkGangerPistol ]
+  id: MobPunkGangerPistolSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobPunkGangerShotgun ]
+  id: MobPunkGangerShotgunSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobPunkGangerSmg ]
+  id: MobPunkGangerSmgSmart
+  suffix: Smart
+
+# Grunts (melee)
+- type: entity
+  parent: [ BaseExodusSmartMeleeGruntThrower, MobPunkGangerMeleeT1 ]
+  id: MobPunkGangerMeleeT1Smart
+  suffix: Smart
+  components:
+  - type: NpcThrownWeapon
+    proto: ThrownSyringeHarmfulChems
+
+- type: entity
+  parent: [ BaseExodusSmartMeleeGruntThrower, MobPunkGangerMeleeT2 ]
+  id: MobPunkGangerMeleeT2Smart
+  suffix: Smart
+  components:
+  - type: NpcThrownWeapon
+    proto: ThrownSyringeHarmfulChems
+
+- type: entity
+  parent: [ BaseExodusSmartMeleeGruntThrower, MobPunkGangerMeleeT3 ]
+  id: MobPunkGangerMeleeT3Smart
+  suffix: Smart
+  components:
+  - type: NpcThrownWeapon
+    proto: ThrownSyringeHarmfulChems

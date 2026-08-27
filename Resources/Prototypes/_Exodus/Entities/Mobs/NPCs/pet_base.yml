@@ -1,0 +1,82 @@
+# How to make ur own favorite pet?
+# 1.
+# Make a pet by parenting your mob to a base example, base FIRST so correct HTN root wins
+#
+#   - type: entity
+#     id: MobMyCritterPet
+#     parent: [ BaseExodusPet, MobMyCritter ]
+#     ...
+# 2.
+# Slap abilities on top:
+#     cargo  -> add a Storage component, configure grid:
+#     healer -> add NpcHealInjection (heal HTN branch will self-activate) cool right?
+#     warrior-> parent BaseExodusPetWarrior instead, u can give the pet a weapon btw, pets use natural melee by default
+# 3. 
+# Dont forget pokeball (capsule) (BaseExodusPetCapsule). pet_capsules.yml
+#   - type: entity
+#     id: PetCapsuleMyFavoritePet
+#     parent: BaseExodusPetCapsule
+#     components:
+#     - type: PetCapsule
+#       pet: MobMyFavoritePet
+
+
+# Follow-only pet base. Stays near its master.
+- type: entity
+  abstract: true
+  id: BaseExodusPet
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusPetFollowCompound
+  - type: Pet
+  - type: PetFollower
+  - type: NoBloodlossStutter
+
+# Warrior pet base: follows + fights enemies.
+- type: entity
+  abstract: true
+  id: BaseExodusPetWarrior
+  components:
+  - type: HTN
+    rootTask:
+      task: ExodusPetWarriorCompound
+  - type: Pet
+  - type: PetFollower
+  - type: PetWarrior
+  - type: NoBloodlossStutter
+
+# Base pet capsule.
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseExodusPetCapsule
+  name: pet capsule
+  description: A containment orb. Bonds to its first user, who can deploy, recall and reconstruct the creature within.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi   # PLACEHOLDER sprite — replace with good capsule sprite.
+    state: orb
+  - type: Item
+    size: Tiny
+    heldPrefix: orb
+  - type: PetCapsule
+  - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
+    storageLimit: 50
+
+# Robo-pet capsule: uses scrap instead of biomass.
+- type: entity
+  abstract: true
+  parent: BaseExodusPetCapsule
+  id: BaseExodusPetCapsuleRobot
+  components:
+  - type: PetCapsule
+    material: RawScrap
+    reconstructCost: 200
+    reviveCost: 100
+  - type: MaterialStorage
+    materialWhiteList:
+    - RawScrap
+    storageLimit: 200

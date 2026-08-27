@@ -1,0 +1,68 @@
+- type: entity
+  id: MobCatBloodCultCompanion
+  parent: [ BaseExodusPet, MobCatBloodCult ]
+  suffix: Companion
+  components:
+  - type: NpcHealInjection
+    healPerSecond: 20
+    duration: 2
+    cooldown: 30
+    sound:
+      path: /Audio/_NF/Effects/bloodcult/whispers.ogg
+  - type: GhostRole
+    prob: 0
+
+- type: entity
+  id: MobMedibotCompanion
+  parent: [ BaseExodusPet, MobMedibot ]
+  suffix: Companion
+  components:
+  - type: NpcHealInjection
+    healPerSecond: 10
+    duration: 2
+    cooldown: 20
+
+# Warriors
+
+- type: entity
+  id: MobDragonPetCompanion
+  parent: [ BaseExodusPetWarrior, MobDragonPet ]
+  suffix: Companion
+
+- type: entity
+  id: MobRatKingBuffCompanion
+  parent: [ BaseExodusPetWarrior, MobRatKingBuff ]
+  suffix: Companion
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 25
+  - type: GhostRole
+    prob: 0
+
+- type: entity
+  id: MobArcIndHoloparasiteGuardianCompanion
+  parent: [ BaseExodusPetWarrior, MobArcIndHoloparasiteGuardian ]
+  suffix: Companion
+  components:
+  - type: Repairable
+    doAfterDelay: 8
+    fuelCost: 15
+
+# Follower only
+
+- type: entity
+  id: MobRosyMothroachCompanion
+  parent: [ BaseExodusPet, MobRosyMothroach ]
+  suffix: Companion
+
+# Cargo
+
+- type: entity
+  id: MobSupplyBotCompanion
+  parent: [ BaseExodusPet, MobSupplyBot ]
+  suffix: Companion
+  components:
+  - type: GhostRole
+    prob: 0
