@@ -91,6 +91,8 @@ entities:
     - type: NpcFactionMember
       factions:
       - TSFMC
+    - type: Company
+      companyName: TSF
     - type: MapGrid
       chunks:
         0,0:
