@@ -21,6 +21,8 @@
   id: NebulaBlueMarker
   name: Blue Nebula Marker
   components:
+  - type: NebulaGasSiphonProfile
+    composition: AirLike
   - type: NebulaFTLBlocker
   - type: NebulaParallax
     parallax: BlueNebula
@@ -32,6 +34,9 @@
   id: NebulaRedMarker
   name: Red Nebula Marker
   components:
+  - type: NebulaGasSiphonProfile
+    composition: MostlyPlasma
+    temperature: 350
   - type: NebulaFTLBlocker
   - type: NebulaParallax
     parallax: RedNebula
@@ -50,6 +55,9 @@
   id: NebulaGreenMarker
   name: Green Nebula Marker
   components:
+  - type: NebulaGasSiphonProfile
+    composition: MostlyAmmonia
+    temperature: 280
   - type: NebulaParallax
     parallax: GreenNebula
   - type: NebulaRadarVisuals
@@ -68,6 +76,9 @@
   id: NebulaPurpleMarker
   name: Purple Nebula Marker
   components:
+  - type: NebulaGasSiphonProfile
+    composition: MostlyNitrousOxide
+    temperature: 260
   - type: NebulaFTLBlocker
   - type: NebulaParallax
     parallax: PurpleNebula
@@ -86,6 +97,10 @@
   id: NebulaDeathZoneInnerMarker
   name: Death Zone Inner Marker
   components:
+  - type: NebulaGasSiphonProfile
+    composition: MuddlePlasma
+    temperature: 320
+    extractionMultiplier: 1.5
   - type: NebulaFTLBlocker
   - type: NebulaParallax
     parallax: RedNebula
@@ -112,6 +127,10 @@
   id: NebulaDeathZoneOuterMarker
   name: Death Zone Outer Marker
   components:
+  - type: NebulaGasSiphonProfile
+    composition: MostlyPlasma
+    temperature: 400
+    extractionMultiplier: 2
   - type: NebulaFTLBlocker
   - type: NebulaParallax
     parallax: RedNebula

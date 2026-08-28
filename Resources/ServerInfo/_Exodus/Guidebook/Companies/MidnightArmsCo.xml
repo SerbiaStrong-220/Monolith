@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="midnight-arms-co-name"][/head]
+
+  [locid="midnight-arms-co-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskMacoSmallArms"/>
+  </Box>
+
+  [locid="tech-disk-maco-small-arms-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

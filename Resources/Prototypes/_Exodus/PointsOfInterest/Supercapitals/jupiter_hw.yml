@@ -13,7 +13,7 @@
 #   maximumDistance: 15000
 #   spawnGamePreset: [ MonoRogueTSFHyperwar ]
 #   spawnGroup: Required
-#   gridPath: /Maps/_Mono/Supercapitals/jupiter_hw.yml
+#   gridPath: /Maps/_Exodus/Supercapitals/jupiter_hw.yml
 #   addComponents:
 #   - type: IFF
 #     color: "#d1bf58"
@@ -25,7 +25,7 @@
 # - type: gameMap
 #   id: Jupiter_HW
 #   mapName: 'PDV Jupiter'
-#   mapPath: /Maps/_Mono/Supercapitals/jupiter_hw.yml
+#   mapPath: /Maps/_Exodus/Supercapitals/jupiter_hw.yml
 #   minPlayers: 0
 #   stations:
 #     Jupiter_HW:

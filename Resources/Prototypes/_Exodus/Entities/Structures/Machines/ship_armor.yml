@@ -4,8 +4,8 @@
 - type: entity
   id: ShipArmorModule
   parent: BaseMachine
-  name: dynamic armor module
-  description: A passive local armor matrix. Absorbs damage to nearby hull, equipment and floor tiles, then slowly regenerates its charge.
+  name: ship-armor-module-name
+  description: ship-armor-module-description
   components:
   - type: Transform
     noRot: false
@@ -61,3 +61,26 @@
           collection: MetalBreak
   - type: Repairable
     doAfterDelay: 8
+  - type: ShipRepairable
+    repairTime: 10
+    repairCost: 60
+
+# Compact Blackhawk PMC dynamic armor — weaker / smaller than PDV module.
+- type: entity
+  id: ShipArmorModuleBlackhawk
+  parent: ShipArmorModule
+  name: ship-armor-module-blackhawk-name
+  description: ship-armor-module-blackhawk-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/ship_armor_blackhawk.rsi
+    layers:
+    - state: armor_stage_0
+  - type: ShipArmor
+    maxCharge: 4200
+    currentCharge: 4200
+    radius: 3
+    regenRate: 14
+    regenDelay: 10
+    regenInterval: 2
+    chargeCostMultiplier: 1.25

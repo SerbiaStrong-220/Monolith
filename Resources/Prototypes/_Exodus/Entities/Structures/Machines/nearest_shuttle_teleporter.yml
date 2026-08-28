@@ -1,0 +1,61 @@
+- type: entity
+  id: NearestShuttleTeleporterPad
+  parent: [ BaseStructure, ConstructibleMachine ]
+  name: nearest-shuttle-teleporter-pad-name
+  description: nearest-shuttle-teleporter-pad-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/nearest_shuttle_teleporter.rsi
+    state: base
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+        - MachineMask
+  - type: InteractionOutline
+  - type: Clickable
+  - type: NearestShuttleTeleporter
+    maxRange: 512
+    cooldown: 60
+    failureCooldown: 2
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: NearestShuttleTeleporterMachineCircuitboard
+  - type: StaticPrice
+    price: 4000
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: NearestShuttleTeleporterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: nearest-shuttle-teleporter-board-name
+  description: nearest-shuttle-teleporter-board-description
+  components:
+  - type: MachineBoard
+    prototype: NearestShuttleTeleporterPad
+    stackRequirements:
+      Steel: 15
+      Plasma: 10
+      Gold: 3
+      Silver: 3
+      Plutonium: 1

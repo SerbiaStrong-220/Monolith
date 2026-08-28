@@ -1,0 +1,145 @@
+- type: entity
+  id: NebulaGasSiphon
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: nebula-gas-siphon-name
+  description: nebula-gas-siphon-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Shuttles/nebula_gas_siphon.rsi
+    layers:
+    - state: base_empty
+      map: [ "enum.NebulaGasSiphonVisualLayers.Base" ]
+    - state: Emission_0
+      map: [ "enum.NebulaGasSiphonVisualLayers.Emission" ]
+      shader: unshaded
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NebulaGasSiphonVisuals.FilterState:
+        enum.NebulaGasSiphonVisualLayers.Base:
+          Empty: { state: base_empty }
+          Full: { state: base_full }
+        enum.NebulaGasSiphonVisualLayers.Emission:
+          Empty: { visible: false }
+          Full: { visible: true }
+      enum.NebulaGasSiphonVisuals.EmissionState:
+        enum.NebulaGasSiphonVisualLayers.Emission:
+          Full: { state: Emission_0 }
+          Level1: { state: Emission_1 }
+          Level2: { state: Emission_2 }
+          Level3: { state: Emission_3 }
+          Empty: { state: Emission_4 }
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: ExtensionCableReceiver
+  - type: ItemSlots
+    slots:
+      filter:
+        name: nebula-gas-siphon-filter-slot
+        whitelist:
+          components:
+          - NebulaGasSiphonFilter
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      filter: !type:ContainerSlot
+  - type: NebulaGasSiphon
+    range: 3
+    footprintLength: 3
+    spaceAxisRotation: 0
+    minDensity: 0.75
+    minSpeed: 1.5
+    fullSpeed: 300
+    molesPerSecond: 8
+    targetPressure: 101.325
+    pipePosition: 0, 0
+    pipeArrowPosition: 0.5, 0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-1.45,0.45,1.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Electronic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Machine
+    board: NebulaGasSiphonMachineCircuitboard
+  - type: StaticPrice
+    price: 2500
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: NebulaGasSiphonMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: nebula-gas-siphon-board-name
+  description: nebula-gas-siphon-board-description
+  components:
+  - type: MachineBoard
+    prototype: NebulaGasSiphon
+    requirements:
+      Capacitor: 8
+      MatterBin: 4
+    stackRequirements:
+      Steel: 20
+      Plasma: 8
+      Plutonium: 1
+- # Spawned by the client when the siphon is examined to show its output port.
+  type: entity
+  id: NebulaGasSiphonArrow
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Markers/teg_arrow.rsi
+    color: "#FFFFFFBB"
+    layers:
+    - state: arrow
+      rotation: 90
+      offset: 0.5, 0
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  id: NebulaGasSiphonGasPipe
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: East
+        volume: 1000
+  - type: PipeRestrictOverlap
+  - type: Tag
+    tags:
+    - HideContextMenu

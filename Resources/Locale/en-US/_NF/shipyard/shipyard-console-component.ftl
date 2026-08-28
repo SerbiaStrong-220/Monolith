@@ -66,6 +66,9 @@ shipyard-console-class-Medical = Medical
 shipyard-console-class-Civilian = Civilian
 shipyard-console-class-Kitchen = Kitchen
 # Antag
+# Exodus ship class
+shipyard-console-class-Mercenary = Mercenary
+
 shipyard-console-class-Syndicate = Syndicate
 shipyard-console-class-Pirate = PDV
 # NFSD

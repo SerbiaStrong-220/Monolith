@@ -23,6 +23,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     private const float ActiveBannerRadarEdgeVisibilityPadding = 10_000f;
 
     [Dependency] private GridTerritorySystem _territory = default!;
+    [Dependency] private CompanyTerritoryBannerSystem _companyBanners = default!;
     [Dependency] private TerritoryClaimRulesSystem _claimRules = default!;
     [Dependency] private TerritoryClaimIntegritySystem _claimIntegrity = default!;
     [Dependency] private PopupSystem _popup = default!;
@@ -56,28 +57,23 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     // Exodus start - one-shot scan when territory appears on a loaded POI/station grid.
     private void OnGridTerritoryMapInit(Entity<GridTerritoryComponent> ent, ref MapInitEvent args)
     {
-        TryClaimFromAnchoredBannersOnGrid(ent);
-    }
-
-    private void TryClaimFromAnchoredBannersOnGrid(Entity<GridTerritoryComponent> territory)
-    {
-        if (!territory.Comp.Claimable)
-            return;
-
-        if (!TryComp<MapGridComponent>(territory.Owner, out var gridComp))
-            return;
-
-        foreach (var uid in _map.GetLocalAnchoredEntities(territory.Owner, gridComp, gridComp.LocalAABB))
+        if (ent.Comp.Claimable && TryComp<MapGridComponent>(ent.Owner, out var gridComp))
         {
-            if (!TryComp<TerritoryBannerComponent>(uid, out var banner))
-                continue;
+            foreach (var uid in _map.GetLocalAnchoredEntities(ent.Owner, gridComp, gridComp.LocalAABB))
+            {
+                if (!TryComp<TerritoryBannerComponent>(uid, out var banner))
+                    continue;
 
-            TryClaim((uid, banner), false);
+                TryClaim((uid, banner), false);
 
-            if (territory.Comp.ActiveClaimBanner is { } active && Exists(active))
-                return;
+                if (ent.Comp.ActiveClaimBanner is { } active && Exists(active))
+                    break;
+            }
         }
+
+        _companyBanners.TryClaimFromAnchoredBannersOnGrid(ent);
     }
+
     // Exodus end
 
     private void OnAnchorAttempt(Entity<TerritoryBannerComponent> ent, ref AnchorAttemptEvent args)

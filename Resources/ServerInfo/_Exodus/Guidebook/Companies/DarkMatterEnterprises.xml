@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="dark-matter-enterprises-name"][/head]
+
+  [locid="dark-matter-enterprises-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskDmePlutonium"/>
+  </Box>
+
+  [locid="tech-disk-dme-plutonium-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

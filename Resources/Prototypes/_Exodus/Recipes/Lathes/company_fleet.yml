@@ -1,0 +1,394 @@
+# Company fleet / unique craft recipes (unlocked via tech disks).
+
+# --- Blackhawk ---
+- type: latheRecipe
+  id: ShipArmorModuleBlackhawkFlatpack
+  result: ShipArmorModuleBlackhawkFlatpack
+  completetime: 10
+  materials:
+    Steel: 2500
+    Plasma: 1200
+    Silver: 400
+
+# --- Horizon ---
+- type: latheRecipe
+  id: NebulaGasSiphonMachineCircuitboard
+  parent: BaseCircuitboardRecipe
+  result: NebulaGasSiphonMachineCircuitboard
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: NebulaGasSiphonFilter
+  result: NebulaGasSiphonFilter
+  completetime: 6
+  materials:
+    Steel: 300
+    Plastic: 250
+    Glass: 150
+    Cloth: 100
+
+# --- Nosske-Eien R&D ---
+- type: latheRecipe
+  id: NearestShuttleTeleporterMachineCircuitboard
+  parent: BaseCircuitboardRecipe
+  result: NearestShuttleTeleporterMachineCircuitboard
+
+- type: latheRecipe
+  id: LifeInsuranceConsoleComputerCircuitboard
+  parent: BaseGoldCircuitboardRecipe
+  result: LifeInsuranceConsoleComputerCircuitboard
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    Silver: 100
+    Plutonium: 500
+    Americium: 1
+
+- type: latheRecipe
+  id: LifeInsuranceScannerMachineCircuitboard
+  parent: BaseGoldCircuitboardRecipe
+  result: LifeInsuranceScannerMachineCircuitboard
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    Silver: 100
+    Plasma: 150
+    Plutonium: 500
+    Americium: 1
+
+- type: latheRecipe
+  id: LifeInsuranceClonerMachineCircuitboard
+  parent: BaseGoldCircuitboardRecipe
+  result: LifeInsuranceClonerMachineCircuitboard
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+    Silver: 150
+    Plasma: 250
+    Plutonium: 500
+    Americium: 2
+
+# --- HME organs ---
+- type: latheRecipe
+  id: HmeSynthHeart
+  result: HmeSynthHeart
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+    Iridite: 25
+
+- type: latheRecipe
+  id: HmeSynthHeartFortified
+  result: HmeSynthHeartFortified
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+    Iridite: 50
+
+- type: latheRecipe
+  id: HmeSynthLungs
+  result: HmeSynthLungs
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+
+- type: latheRecipe
+  id: HmeSynthLiver
+  result: HmeSynthLiver
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+
+- type: latheRecipe
+  id: HmeSynthEyes
+  result: HmeSynthEyes
+  completetime: 12
+  materials:
+    Biomass: 10
+    Glass: 200
+    Plasma: 100
+
+- type: latheRecipe
+  id: HmeSynthLeftLeg
+  result: HmeSynthLeftLeg
+  completetime: 12
+  materials:
+    Biomass: 12
+    Steel: 100
+
+- type: latheRecipe
+  id: HmeSynthRightLeg
+  result: HmeSynthRightLeg
+  completetime: 12
+  materials:
+    Biomass: 12
+    Steel: 100
+
+# --- Midnight Arms ---
+- type: latheRecipe
+  id: WeaponPistolMaco
+  result: WeaponPistolMaco
+  completetime: 6
+  materials:
+    Steel: 800
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazinePistolMaco
+  result: Magazine45_ACPPistolFMJ
+  completetime: 3
+  materials:
+    Steel: 150
+
+# --- Ullman Industries ---
+- type: latheRecipe
+  id: WeaponTurretDravonFlatpackUllman
+  result: WeaponTurretDravonFlatpack
+  completetime: 30
+  materials:
+    Steel: 3000
+    Plasma: 1500
+    Uranium: 500
+    Silver: 400
+
+# --- Civil Defense Militia ---
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ShieldGeneratorCdmMachineCircuitboard
+  result: ShieldGeneratorCdmMachineCircuitboard
+
+- type: latheRecipe
+  id: CdmShieldReserveCartridge
+  result: CdmShieldReserveCartridge
+  completetime: 5
+  materials:
+    Steel: 250
+    Glass: 100
+    Plasma: 100
+    Silver: 25
+    Plutonium: 25
+
+# --- Universal States of America ---
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ShieldGeneratorUnsaMachineCircuitboard
+  result: ShieldGeneratorUnsaMachineCircuitboard
+
+# --- The Hive ---
+- type: latheRecipe
+  id: HiveSynthHeart
+  result: HiveSynthHeart
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+    Silver: 100
+
+- type: latheRecipe
+  id: HiveSynthLungs
+  result: HiveSynthLungs
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+    Silver: 100
+
+- type: latheRecipe
+  id: HiveSynthLiver
+  result: HiveSynthLiver
+  completetime: 15
+  materials:
+    Biomass: 14
+    Plasma: 200
+    Silver: 100
+
+- type: latheRecipe
+  id: HiveSynthEyes
+  result: HiveSynthEyes
+  completetime: 12
+  materials:
+    Biomass: 10
+    Glass: 200
+    Silver: 100
+# --- Steel Hammer ---
+- type: latheRecipe
+  id: SheetPlasteelShm
+  result: SheetPlasteel1
+  completetime: 2
+  materials:
+    Steel: 100
+    Plasma: 100
+    Plutonium: 5
+
+# --- Drake Industries ---
+- type: latheRecipe
+  id: SyndicateBombCerberus
+  result: SyndicateBomb
+  completetime: 30
+  materials:
+    Steel: 5000
+    Plasma: 3000
+    Uranium: 1000
+    Plutonium: 100
+    Plastic: 1000
+
+# --- Bratva ---
+- type: latheRecipe
+  id: ClothingOuterHardsuitBratva
+  result: ClothingOuterHardsuitBratva
+  completetime: 12
+  materials:
+    Steel: 2000
+    Plastic: 1000
+    Cloth: 500
+    Plasma: 300
+
+# --- Aetherion Dynamics ---
+- type: latheRecipe
+  id: AetherionGunneryServerUltraCircuitboard
+  name: aetherion-gunnery-board-recipe-name
+  description: aetherion-gunnery-board-recipe-description
+  result: MachineGCSUltraCircuitboard
+  completetime: 15
+  materials:
+    Steel: 1000
+    Glass: 500
+    Gold: 250
+    Silver: 250
+    UraniumFissile: 50
+
+# --- Dark Matter Enterprises ---
+- type: latheRecipe
+  id: UraniumCentrifugePlutoniumRecoveryMini
+  name: recipe-dme-plutonium-recovery-name
+  description: recipe-dme-plutonium-recovery-description
+  categories:
+  - Explosive
+  materialResult:
+    Plutonium: 5
+  completetime: 30
+  materials:
+    UraniumFissile: 100
+  icon:
+    sprite: _Mono/Effects/processing.rsi
+    state: processing_3
+  materialDiscountScale: 0
+
+- type: latheRecipe
+  id: UraniumCentrifugeAmericiumSynthesisMini
+  name: recipe-dme-americium-synthesis-name
+  description: recipe-dme-americium-synthesis-description
+  categories:
+  - Explosive
+  materialResult:
+    Americium: 1
+  completetime: 180
+  materials:
+    Plutonium: 250
+    UraniumFissile: 1000
+    Gold: 1000
+    Silver: 1000
+    Plasma: 500
+  icon:
+    sprite: _Mono/Effects/processing.rsi
+    state: processing_3
+  materialDiscountScale: 0
+
+# --- Packs (dynamic unlock via tech disk) ---
+- type: latheRecipePack
+  id: CompanyBlackhawkDynamic
+  recipes:
+  - ShipArmorModuleBlackhawkFlatpack
+
+- type: latheRecipePack
+  id: CompanyHorizonDynamic
+  recipes:
+  - NebulaGasSiphonFilter
+
+- type: latheRecipePack
+  id: CompanyHorizonBoardsDynamic
+  recipes:
+  - NebulaGasSiphonMachineCircuitboard
+
+- type: latheRecipePack
+  id: CompanyNosskeDynamic
+  recipes:
+  - NearestShuttleTeleporterMachineCircuitboard
+  - LifeInsuranceConsoleComputerCircuitboard
+  - LifeInsuranceScannerMachineCircuitboard
+  - LifeInsuranceClonerMachineCircuitboard
+
+- type: latheRecipePack
+  id: CompanyHmeOrgansDynamic
+  recipes:
+  - HmeSynthHeart
+  - HmeSynthHeartFortified
+  - HmeSynthLungs
+  - HmeSynthLiver
+  - HmeSynthEyes
+  - HmeSynthLeftLeg
+  - HmeSynthRightLeg
+
+- type: latheRecipePack
+  id: CompanyMacoDynamic
+  recipes:
+  - WeaponPistolMaco
+  - MagazinePistolMaco
+
+- type: latheRecipePack
+  id: CompanyUllmanDynamic
+  recipes:
+  - WeaponTurretDravonFlatpackUllman
+
+
+- type: latheRecipePack
+  id: CompanyCdmDynamic
+  recipes:
+  - ShieldGeneratorCdmMachineCircuitboard
+  - CdmShieldReserveCartridge
+
+- type: latheRecipePack
+  id: CompanyHiveDynamic
+  recipes:
+  - HiveSynthHeart
+  - HiveSynthLungs
+  - HiveSynthLiver
+  - HiveSynthEyes
+- type: latheRecipePack
+  id: CompanyShmDynamic
+  recipes:
+  - SheetPlasteelShm
+
+- type: latheRecipePack
+  id: CompanyDrakeDynamic
+  recipes:
+  - SyndicateBombCerberus
+
+- type: latheRecipePack
+  id: CompanyBratvaDynamic
+  recipes:
+  - ClothingOuterHardsuitBratva
+
+- type: latheRecipePack
+  id: CompanyAetherionDynamic
+  recipes:
+  - AetherionGunneryServerUltraCircuitboard
+
+- type: latheRecipePack
+  id: CompanyDmeDynamic
+  recipes:
+  - UraniumCentrifugePlutoniumRecoveryMini
+  - UraniumCentrifugeAmericiumSynthesisMini
+
+- type: latheRecipePack
+  id: CompanyUnsaDynamic
+  recipes:
+  - ShieldGeneratorUnsaMachineCircuitboard

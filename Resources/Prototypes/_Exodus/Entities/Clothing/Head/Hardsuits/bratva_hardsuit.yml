@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadHelmetHardsuitBasic
+  id: ClothingHeadHelmetHardsuitBratva
+  name: paycheck-bratva-combat-suit-helmet-name
+  description: paycheck-bratva-combat-suit-helmet-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Clothing/Head/Hardsuits/bratva.rsi
+  - type: Clothing
+    sprite: _Exodus/Clothing/Head/Hardsuits/bratva.rsi

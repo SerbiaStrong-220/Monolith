@@ -62,6 +62,8 @@ shipyard-console-class-Medical = Медицинский
 shipyard-console-class-Civilian = Гражданский
 shipyard-console-class-Kitchen = ОбщеПит
 # Antag
+# Exodus ship class
+shipyard-console-class-Mercenary = Корпоративный
 shipyard-console-class-Syndicate = Синдикат
 shipyard-console-class-Pirate = Династия Фаэтон
 # NFSD

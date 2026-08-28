@@ -1,0 +1,49 @@
+ent-CompanyTerritoryBannerBase =
+    .desc = { company-territory-banner-description }
+
+ent-CompanyTerritoryBannerDrake = { drake-industries-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerSteelHammer = { steel-hammer-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerHme = { harmony-medical-enterprises-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerMaco = { midnight-arms-co-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerDme = { dark-matter-enterprises-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerAetherion = { aetherion-dynamics-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerHorizon = { horizon-energy-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerUnsa = { universal-states-of-america-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerCdm = { civil-defense-milita-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerUllman = { ullman-industries-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerNosske = { nosske-eien-rnd-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerBlackhawk = { blackhawkpmc-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerHive = { The-Hive-name } Banner
+    .desc = { company-territory-banner-description }
+ent-CompanyTerritoryBannerBratva = { paycheck-bratva-name } Banner
+    .desc = { company-territory-banner-description }
+
+company-territory-banner-description = A corporate banner that establishes the company's presence inside a faction's territory.
+
+company-territory-banner-no-territory = A corporate banner can only be installed on a station territory.
+company-territory-banner-disabled = A corporate banner cannot be installed on this territory.
+company-territory-banner-neutral = The territory must belong to a faction first.
+company-territory-banner-no-card = A corporation ID card is required to install this banner.
+company-territory-banner-company-mismatch = This banner belongs to another corporation.
+company-territory-banner-already-claimed = This territory already has a corporate banner.
+company-territory-banner-wrong-faction = The corporation is already tied to the territory of { $faction }.
+company-territory-banner-claimed = Corporate presence established.
+company-territory-banner-unclaimed = Corporate presence on the territory released.
+company-territory-banner-examine-unassigned = This banner has not been assigned to a corporation yet.
+company-territory-banner-examine-company = Corporation: { $company }
+company-territory-banner-examine-faction = Territorial alignment: { $faction }
+
+construction-examine-condition-company-territory-banner-exists = This territory already has a corporate banner.
+construction-step-condition-company-territory-no-banner = Make sure there is no other corporate banner on the territory.

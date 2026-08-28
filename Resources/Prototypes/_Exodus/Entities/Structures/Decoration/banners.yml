@@ -48,3 +48,210 @@
     delay: 60
   - type: TerritoryBanner
     faction: USSP
+
+- type: entity
+  id: CompanyTerritoryBannerBase
+  parent: BannerBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _NF/Structures/Decoration/banner.rsi
+    state: banner
+  - type: Anchorable
+    delay: 30 # Exodus - corporate banners anchor in half the faction time
+
+- type: entity
+  id: CompanyTerritoryBannerDrake
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-drake-name
+  components:
+  - type: Sprite
+    sprite: _Mono/Structures/Decoration/banner.rsi
+    state: di-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerDrakeNode
+  - type: CompanyTerritoryBanner
+    company: DrakeIndustries
+
+- type: entity
+  id: CompanyTerritoryBannerSteelHammer
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-steel-hammer-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: steel-hammer-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerSteelHammerNode
+  - type: CompanyTerritoryBanner
+    company: SteelHammerManufacturing
+
+- type: entity
+  id: CompanyTerritoryBannerHme
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-hme-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: hme-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerHmeNode
+  - type: CompanyTerritoryBanner
+    company: HarmonyMedicalEnterprises
+
+- type: entity
+  id: CompanyTerritoryBannerMaco
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-maco-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: maco-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerMacoNode
+  - type: CompanyTerritoryBanner
+    company: MidnightArmsCo
+
+- type: entity
+  id: CompanyTerritoryBannerDme
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-dme-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: dme-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerDmeNode
+  - type: CompanyTerritoryBanner
+    company: DarkMatterEnterprises
+
+- type: entity
+  id: CompanyTerritoryBannerAetherion
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-aetherion-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: aetherion-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerAetherionNode
+  - type: CompanyTerritoryBanner
+    company: AetherionDynamics
+
+- type: entity
+  id: CompanyTerritoryBannerHorizon
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-horizon-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: horizon-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerHorizonNode
+  - type: CompanyTerritoryBanner
+    company: HorizonEnergy
+
+- type: entity
+  id: CompanyTerritoryBannerUnsa
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-unsa-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: unsa-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerUnsaNode
+  - type: CompanyTerritoryBanner
+    company: UniversalStatesOfAmerica
+
+- type: entity
+  id: CompanyTerritoryBannerCdm
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-cdm-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: cdm-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerCdmNode
+  - type: CompanyTerritoryBanner
+    company: CivilDefenseMilita
+
+- type: entity
+  id: CompanyTerritoryBannerUllman
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-ullman-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: ullman-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerUllmanNode
+  - type: CompanyTerritoryBanner
+    company: UllmanIndustries
+
+- type: entity
+  id: CompanyTerritoryBannerNosske
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-nosske-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: nosske-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerNosskeNode
+  - type: CompanyTerritoryBanner
+    company: NosskeEienResearchandDevelopment
+
+- type: entity
+  id: CompanyTerritoryBannerBlackhawk
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-blackhawk-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: blackhawk-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerBlackhawkNode
+  - type: CompanyTerritoryBanner
+    company: blackhawkpmc
+
+- type: entity
+  id: CompanyTerritoryBannerHive
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-hive-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: hive-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerHiveNode
+  - type: CompanyTerritoryBanner
+    company: TheHive
+
+- type: entity
+  id: CompanyTerritoryBannerBratva
+  parent: CompanyTerritoryBannerBase
+  name: company-territory-banner-bratva-name
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/company-banner.rsi
+    state: bratva-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerBratvaNode
+  - type: CompanyTerritoryBanner
+    company: paycheckbratva

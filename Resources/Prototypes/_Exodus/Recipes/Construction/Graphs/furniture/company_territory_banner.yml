@@ -1,0 +1,358 @@
+- type: constructionGraph
+  id: CompanyTerritoryBannersGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: CompanyTerritoryBannerDrakeNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerSteelHammerNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerHmeNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerMacoNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerDmeNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerAetherionNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerHorizonNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerUnsaNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerCdmNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerUllmanNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerNosskeNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerBlackhawkNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerHiveNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerBratvaNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+
+  - node: CompanyTerritoryBannerDrakeNode
+    entity: CompanyTerritoryBannerDrake
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerSteelHammerNode
+    entity: CompanyTerritoryBannerSteelHammer
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerHmeNode
+    entity: CompanyTerritoryBannerHme
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerMacoNode
+    entity: CompanyTerritoryBannerMaco
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerDmeNode
+    entity: CompanyTerritoryBannerDme
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerAetherionNode
+    entity: CompanyTerritoryBannerAetherion
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerHorizonNode
+    entity: CompanyTerritoryBannerHorizon
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerUnsaNode
+    entity: CompanyTerritoryBannerUnsa
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerCdmNode
+    entity: CompanyTerritoryBannerCdm
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerUllmanNode
+    entity: CompanyTerritoryBannerUllman
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerNosskeNode
+    entity: CompanyTerritoryBannerNosske
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerBlackhawkNode
+    entity: CompanyTerritoryBannerBlackhawk
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerHiveNode
+    entity: CompanyTerritoryBannerHive
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerBratvaNode
+    entity: CompanyTerritoryBannerBratva
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30

@@ -163,8 +163,10 @@ public sealed partial class AlertLevelSystem : EntitySystem
     /// <param name="announce">Say the alert level's announcement.</param>
     /// <param name="force">Force the alert change. This applies if the alert level is not selectable or not.</param>
     /// <param name="locked">Will it be possible to change level by crew.</param>
+    /// <param name="announcementSender">Optional sender override for the alert-level announcement.</param> // Exodus alert-level-announcement-sender
     public void SetLevel(EntityUid station, string level, bool playSound, bool announce, bool force = false,
-        bool locked = false, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
+        bool locked = false, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null,
+        string? announcementSender = null) // Exodus alert-level-announcement-sender
     {
         // Frontier: sector-wide alerts
         EntityUid sectorEnt = _sectorService.GetServiceEntity();
@@ -233,7 +235,7 @@ public sealed partial class AlertLevelSystem : EntitySystem
 
         if (announce && Resolve(station, ref dataComponent)) // Frontier: add Resolve for dataComponent
         {
-            var stationName = dataComponent.EntityName; // Frontier: moved down
+            var stationName = announcementSender ?? dataComponent.EntityName; // Frontier: moved down, Exodus alert-level-announcement-sender
             _chatSystem.DispatchGlobalAnnouncement(
                 announcementFull,
                 sender: stationName,
@@ -246,10 +248,10 @@ public sealed partial class AlertLevelSystem : EntitySystem
 }
 
 public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
-{}
+{ }
 
 public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
-{}
+{ }
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs
 {

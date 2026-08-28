@@ -28,7 +28,7 @@
     - JetpackMiniFilled
     - EnergyShieldNfsd
     - EnergySwordNfsd
-    - BluespaceLifelineImplanter
+    # Exodus: The bluespace lifeline is installed by the MARSOC ghost role.
     - PinpointerUniversal
     belt:
     - Magazine8x65mmSKR

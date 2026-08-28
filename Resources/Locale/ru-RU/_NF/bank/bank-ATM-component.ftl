@@ -2,9 +2,16 @@
 
 bank-atm-menu-title = ЦентроБанк ТСФ
 bank-atm-menu-balance-label = Баланс:{ " " }
+# Exodus corporate ATM commission display
+bank-atm-menu-savings-label = Накопления:{ " " }
 bank-atm-menu-no-bank = Нет аккаунта в банке!
 bank-atm-menu-withdraw-button = Вывести
-bank-atm-menu-deposit-label = Внести сумму:{ " " }
+# Exodus-begin corporate ATM commission display
+bank-atm-menu-deposit-label = На основной счёт:{ " " }
+bank-atm-menu-deposit-label-ut = В накопления:{ " " }
+bank-atm-menu-atm-fee-label = Комиссия банкомата:{ " " }
+bank-atm-menu-company-commission-label = Комиссия корпорации:{ " " }
+# Exodus-end
 bank-atm-menu-amount-label = Вывести сумму:{ " " }
 bank-atm-menu-no-deposit = Пусто
 bank-atm-menu-deposit-button = Внести

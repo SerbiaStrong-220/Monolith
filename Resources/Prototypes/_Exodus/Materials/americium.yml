@@ -1,0 +1,19 @@
+- type: material
+  id: Americium
+  stackEntity: MaterialAmericium1
+  name: materials-americium
+  unit: materials-unit-cube
+  icon:
+    sprite: /Textures/_Exodus/Objects/Materials/americium.rsi
+    state: americium
+  color: "#F5BF28"
+  price: 44000
+
+- type: stack
+  id: Americium
+  name: stack-americium
+  icon:
+    sprite: /Textures/_Exodus/Objects/Materials/americium.rsi
+    state: americium
+  spawn: MaterialAmericium1
+  maxCount: 100

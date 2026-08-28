@@ -130,6 +130,18 @@
   suffix: AI Remote
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/ai_remote_borg_redacted.rsi
+    layers:
+    - state: synd_engi
+    - state: synd_engi_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: synd_engi_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
   - type: ContainerFill
     containers:
       borg_brain:
@@ -176,6 +188,43 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
+
+# Assault System Operator borg
+- type: entity
+  id: AiRemoteBorgAsakimFighter
+  parent: BorgChassisAsakimFighter
+  suffix: AI Remote
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/ai_remote_borg_asakim_fighter.rsi
+    layers:
+    - state: azakim_fighter
+    - state: azakim_fighter_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleAsakimFighterWeapon
+      - BorgModuleAsakimEsword
+      - BorgModuleJetpackADM
+      - BorgModuleAdvancedTool
+      - BorgModuleRedactedRCD
+      - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProtoEmpProof
+  - type: RandomMetadata
+    nameSegments:
+    - MonoRemnantAdjective
+    - MonoRemnantNoun
 
 # Syndicate saboteur borg
 - type: entity

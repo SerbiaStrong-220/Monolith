@@ -16,6 +16,7 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
     public readonly string ShipyardName;
     public readonly bool FreeListings;
     public readonly float SellRate;
+    public readonly string? BuyerCompanyId; // Exodus company-fleet
 
     public ShipyardConsoleInterfaceState(
         int balance,
@@ -27,7 +28,8 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
         (List<string> available, List<string> unavailable) shipyardPrototypes,
         string shipyardName,
         bool freeListings,
-        float sellRate)
+        float sellRate,
+        string? buyerCompanyId = null) // Exodus company-fleet
     {
         Balance = balance;
         AccessGranted = accessGranted;
@@ -39,5 +41,6 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
         ShipyardName = shipyardName;
         FreeListings = freeListings;
         SellRate = sellRate;
+        BuyerCompanyId = buyerCompanyId; // Exodus company-fleet
     }
 }

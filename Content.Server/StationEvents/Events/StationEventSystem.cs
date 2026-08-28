@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server._Exodus.StationEvents.Components; // Exodus-station-event-announcement-guard
 using Content.Server.Radio.EntitySystems; // Frontier
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
@@ -43,6 +44,13 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
+
+        // Exodus-begin station-event-announcement-guard
+        if (HasComp<StationEventAnnouncementSentComponent>(uid))
+            return;
+
+        EnsureComp<StationEventAnnouncementSentComponent>(uid);
+        // Exodus-end station-event-announcement-guard
 
         AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 

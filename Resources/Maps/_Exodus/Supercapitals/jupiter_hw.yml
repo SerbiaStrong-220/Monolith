@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 277.0.0
+  engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 07/17/2026 12:39:31
-  entityCount: 7667
+  time: 08/27/2026 21:24:14
+  entityCount: 7656
 maps: []
 grids:
 - 1
@@ -95,10 +95,18 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: Юпитер
     - type: Transform
       pos: -0.5703125,-0.4296875
       parent: invalid
+    - type: IFF
+      color: '#D1BF58FF'
+      flags: HideLabel, IsPlayerShuttle
+    - type: NpcFactionMember
+      factions:
+      - PirateNF
+    - type: Company
+      companyName: PDV
     - type: MapGrid
       chunks:
         0,0:
@@ -240,10 +248,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
-        MetalFoam: []
-        Kudzu: []
         Puddle: []
+        MetalFoam: []
         Smoke: []
+        Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -17579,49 +17587,6 @@ entities:
       powerLoad: 5
     - type: Battery
       startingCharge: 0
-- proto: ComputerTabletopPirateBounty
-  entities:
-  - uid: 1806
-    components:
-    - type: Transform
-      pos: -4.5,18.5
-      parent: 1
-    - type: ApcPowerReceiver
-      powerLoad: 5
-    - type: Battery
-      startingCharge: 0
-  - uid: 3449
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 16.5,29.5
-      parent: 1
-    - type: ApcPowerReceiver
-      powerLoad: 5
-    - type: Battery
-      startingCharge: 0
-- proto: ComputerTabletopPirateBountyRedemption
-  entities:
-  - uid: 1804
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -5.5,16.5
-      parent: 1
-    - type: ApcPowerReceiver
-      powerLoad: 5
-    - type: Battery
-      startingCharge: 0
-  - uid: 3448
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 17.5,29.5
-      parent: 1
-    - type: ApcPowerReceiver
-      powerLoad: 5
-    - type: Battery
-      startingCharge: 0
 - proto: ComputerTabletopPowerMonitoring
   entities:
   - uid: 3050
@@ -18469,20 +18434,6 @@ entities:
     components:
     - type: Transform
       pos: 7.5,49.5
-      parent: 1
-- proto: ThrusterRogue
-  entities:
-  - uid: 688
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -27.5,25.5
-      parent: 1
-  - uid: 965
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -27.5,24.5
       parent: 1
 - proto: DecalSpawnerBloodSplatters
   entities:
@@ -23367,6 +23318,20 @@ entities:
       parent: 2439
     - type: Physics
       canCollide: False
+- proto: FuelBananium
+  entities:
+  - uid: 1804
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.4828036,51.040108
+      parent: 1
+  - uid: 3448
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5609286,50.540108
+      parent: 1
 - proto: GasFilterNitrogenOn
   entities:
   - uid: 2512
@@ -36342,11 +36307,6 @@ entities:
       anchored: True
       pos: 6.5,45.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        2435:
-        - - Output
-          - DecreaseStatorLoad
     - type: Physics
       canCollide: False
       bodyType: Static
@@ -36356,11 +36316,6 @@ entities:
       anchored: True
       pos: 6.5,44.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        2435:
-        - - Output
-          - IncreaseStatorLoad
     - type: Physics
       canCollide: False
       bodyType: Static
@@ -36463,6 +36418,23 @@ entities:
     components:
     - type: Transform
       pos: 3.5,58.5
+      parent: 1
+- proto: MachineOutpostCore
+  entities:
+  - uid: 1806
+    components:
+    - type: Transform
+      pos: 5.5,45.5
+      parent: 1
+  - uid: 2434
+    components:
+    - type: Transform
+      pos: 4.5,45.5
+      parent: 1
+  - uid: 2435
+    components:
+    - type: Transform
+      pos: 3.5,45.5
       parent: 1
 - proto: Magazine635x40mmCaseless
   entities:
@@ -36732,20 +36704,6 @@ entities:
       powerLoad: 5
     - type: Battery
       startingCharge: 0
-- proto: NuclearReactorSmall
-  entities:
-  - uid: 2434
-    components:
-    - type: Transform
-      pos: 4.5,41.5
-      parent: 1
-    - type: Lock
-      locked: False
-    - type: DeviceLinkSource
-      linkedPorts:
-        2746:
-        - - NuclearReactorDataSender
-          - NuclearReactorDataReceiver
 - proto: Ointment
   entities:
   - uid: 2630
@@ -38762,17 +38720,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,42.5
       parent: 1
-  - uid: 2779
-    components:
-    - type: Transform
-      pos: 3.5,44.5
-      parent: 1
-  - uid: 2780
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 5.5,45.5
-      parent: 1
   - uid: 2824
     components:
     - type: Transform
@@ -39045,11 +38992,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,40.5
       parent: 1
-  - uid: 2777
-    components:
-    - type: Transform
-      pos: 5.5,44.5
-      parent: 1
   - uid: 2825
     components:
     - type: Transform
@@ -39183,12 +39125,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,16.5
-      parent: 1
-  - uid: 2768
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 4.5,44.5
       parent: 1
   - uid: 2778
     components:
@@ -40355,61 +40291,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,59.5
       parent: 1
-- proto: SpawnPointLatejoin
+- proto: SpawnPdvTarkhanGhostOperative
   entities:
   - uid: 3219
     components:
     - type: Transform
-      pos: -4.5,47.5
+      pos: -9.5,47.5
       parent: 1
-- proto: SpawnPointPDVBorg
-  entities:
-  - uid: 7493
-    components:
-    - type: Transform
-      pos: -9.5,73.5
-      parent: 1
-  - uid: 7494
-    components:
-    - type: Transform
-      pos: -9.5,74.5
-      parent: 1
-  - uid: 7495
-    components:
-    - type: Transform
-      pos: -8.5,73.5
-      parent: 1
-  - uid: 7496
-    components:
-    - type: Transform
-      pos: -8.5,74.5
-      parent: 1
-- proto: SpawnPointPDVDenasvar
-  entities:
-  - uid: 7485
-    components:
-    - type: Transform
-      pos: -25.5,29.5
-      parent: 1
-  - uid: 7492
-    components:
-    - type: Transform
-      pos: -25.5,30.5
-      parent: 1
-- proto: SpawnPointPDVInfiltrator
-  entities:
-  - uid: 7486
-    components:
-    - type: Transform
-      pos: -12.5,52.5
-      parent: 1
-  - uid: 7487
-    components:
-    - type: Transform
-      pos: -12.5,48.5
-      parent: 1
-- proto: SpawnPointPirate
-  entities:
   - uid: 7488
     components:
     - type: Transform
@@ -40429,20 +40317,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,47.5
-      parent: 1
-- proto: SpawnPointPirateCaptain
-  entities:
-  - uid: 7483
-    components:
-    - type: Transform
-      pos: -12.5,21.5
-      parent: 1
-- proto: SpawnPointPirateFirstMate
-  entities:
-  - uid: 7484
-    components:
-    - type: Transform
-      pos: -22.5,25.5
       parent: 1
 - proto: StairDark
   entities:
@@ -41026,7 +40900,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,61.5
       parent: 1
-    - type: DeviceNetwork
   - uid: 3678
     components:
     - type: Transform
@@ -42296,6 +42169,18 @@ entities:
     - type: Transform
       pos: -0.5,62.5
       parent: 1
+  - uid: 688
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -27.5,25.5
+      parent: 1
+  - uid: 965
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -27.5,24.5
+      parent: 1
 - proto: TintedWindow
   entities:
   - uid: 1845
@@ -42345,33 +42230,6 @@ entities:
       parent: 2439
     - type: Physics
       canCollide: False
-- proto: TurbineSmall
-  entities:
-  - uid: 2435
-    components:
-    - type: Transform
-      pos: 4.5,45.5
-      parent: 1
-    - type: Turbine
-      flowRate: 1000
-    - type: Lock
-      locked: False
-    - type: DeviceLinkSource
-      linkedPorts:
-        2747:
-        - - GasTurbineDataSender
-          - GasTurbineDataReceiver
-        7192:
-        - - TurbineSpeedHigh
-          - InputB
-        7191:
-        - - TurbineSpeedLow
-          - InputB
-        2712:
-        - - GasTurbineDataSender
-          - GasTurbineDataReceiver
-    - type: DeviceLinkSink
-      invokeCounter: 1
 - proto: TwoWayLever
   entities:
   - uid: 7664
@@ -42671,6 +42529,14 @@ entities:
       canCollide: False
 - proto: UraniumReinforcedWindowDirectional
   entities:
+  - uid: 2779
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,45.5
+      parent: 1
+    - type: DeltaPressure
+      gridUid: 1
   - uid: 3045
     components:
     - type: Transform
@@ -52638,6 +52504,30 @@ entities:
       gridUid: 1
 - proto: WindoorSecureUranium
   entities:
+  - uid: 2768
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,44.5
+      parent: 1
+    - type: DeltaPressure
+      gridUid: 1
+  - uid: 2777
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,44.5
+      parent: 1
+    - type: DeltaPressure
+      gridUid: 1
+  - uid: 2780
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,44.5
+      parent: 1
+    - type: DeltaPressure
+      gridUid: 1
   - uid: 3046
     components:
     - type: Transform

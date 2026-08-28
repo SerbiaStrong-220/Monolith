@@ -43,11 +43,12 @@
                         <controls:PanelContainer.PanelOverride>
                             <graphics:StyleBoxFlat BorderThickness="2" BorderColor="#151515" BackgroundColor="#050505"/>
                         </controls:PanelContainer.PanelOverride>
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <controls:GridContainer Columns="2"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
                                    HorizontalExpand="True"
-                                   Margin="3 3 3 3"
+                                   Margin="3 3 3 0"
                                    Name="ReadonlyDisplay">
                         <controls:Label Text="{controls:Loc 'shuttle-console-designation'}" FontColorOverride="#00ff2a"/>
                         <controls:Label Name="ShuttleDesignation"
@@ -79,6 +80,41 @@
                                HorizontalExpand="True"
                                Align="Right"
                                FontColorOverride="#00ff2a"/>
+                    </controls:GridContainer>
+                        <!-- Exodus-begin shield health -->
+                        <controls:BoxContainer Name="ShieldHealthDisplay"
+                               Orientation="Vertical"
+                               HorizontalExpand="True"
+                               Margin="3 0 3 3"
+                               Visible="False">
+                            <controls:BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <controls:Label Name="ShieldHealthCaption"
+                                       Text="{controls:Loc 'shuttle-console-shield-health-label'}"
+                                       FontColorOverride="#00ff2a"/>
+                                <controls:Label Name="ShieldStatus"
+                                       Text="{controls:Loc 'shuttle-console-shield-overload'}"
+                                       FontColorOverride="#ff0000"
+                                       Margin="4 0 0 0"
+                                       Visible="False"/>
+                                <controls:Label Name="ShieldHealth"
+                                       Text="-"
+                                       HorizontalExpand="True"
+                                       Align="Right"
+                                       FontColorOverride="#00ff2a"/>
+                            </controls:BoxContainer>
+                            <controls:ProgressBar Name="ShieldHealthBar"
+                                   MaxValue="100"
+                                   Value="100"
+                                   HorizontalExpand="True"
+                                   SetHeight="8"
+                                   Margin="0 1 0 0"/>
+                        </controls:BoxContainer>
+                        <!-- Exodus-end -->
+                    <controls:GridContainer Columns="2"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Top"
+                                   HorizontalExpand="True"
+                                   Margin="3 0 3 3">
                         <!-- Mono: z-level altimeter -->
                         <controls:Label Name="GridAltitudeCaption"
                                Text="{controls:Loc 'shuttle-console-altitude'}"
@@ -111,6 +147,7 @@
                                FontColorOverride="#00ff2a"
                                Visible="False"/>
                     </controls:GridContainer>
+                    </controls:BoxContainer>
                     </controls:PanelContainer>
                     </controls:PanelContainer>
                     <controls1:StripeBack

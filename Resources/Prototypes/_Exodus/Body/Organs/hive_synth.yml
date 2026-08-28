@@ -1,0 +1,56 @@
+# The Hive synthetic organs provide resistances only.
+
+- type: entity
+  parent: BioSynthHeart
+  id: HiveSynthHeart
+  name: hive-synth-heart-name
+  description: hive-synth-heart-description
+  components:
+  - type: OrganDamageProtection
+    modifiers:
+      thermal:
+        id: HiveThermalResistance
+        coefficients:
+          Heat: 0.75
+          Cold: 0.75
+
+- type: entity
+  parent: BioSynthLungs
+  id: HiveSynthLungs
+  name: hive-synth-lungs-name
+  description: hive-synth-lungs-description
+  components:
+  - type: OrganDamageProtection
+    modifiers:
+      electrical:
+        id: HiveElectricalResistance
+        coefficients:
+          Shock: 0.65
+
+- type: entity
+  parent: BioSynthLiver
+  id: HiveSynthLiver
+  name: hive-synth-liver-name
+  description: hive-synth-liver-description
+  components:
+  - type: OrganDamageProtection
+    modifiers:
+      dermal:
+        id: HiveIronSkinResistance
+        coefficients:
+          Blunt: 0.75
+          Slash: 0.75
+          Piercing: 0.85
+
+- type: entity
+  parent: BioSynthEyes
+  id: HiveSynthEyes
+  name: hive-synth-eyes-name
+  description: hive-synth-eyes-description
+  components:
+  - type: OrganDamageProtection
+    modifiers:
+      radiation:
+        id: HiveRadiationResistance
+        coefficients:
+          Radiation: 0.7

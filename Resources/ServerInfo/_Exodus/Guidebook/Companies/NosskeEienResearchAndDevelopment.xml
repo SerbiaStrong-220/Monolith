@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="nosske-eien-rnd-name"][/head]
+
+  [locid="nosske-eien-rnd-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskNosskeTeleporter"/>
+  </Box>
+
+  [locid="tech-disk-nosske-teleporter-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

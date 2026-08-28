@@ -1,0 +1,27 @@
+- type: entity
+  id: MarsocArcturusArrival
+  parent: BaseRandomShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-marsoc-arrival
+    startAnnouncementColor: '#1d8bad'
+    announceSender: comms-console-announcement-title-centcom
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    maxOccurrences: 1
+  - type: LoadMapRule
+    gridPath: /SharedMaps/_Exodus/Shuttles/TSFCM/arcturus.yml
+
+- type: entity
+  id: TarkhanJupiterArrival
+  parent: BaseRandomShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-tarkhan-arrival
+    startAnnouncementColor: '#D2B48C'
+    announceSender: comms-console-announcement-title-rogue
+    startAudio:
+      path: /Audio/Misc/notice1.ogg
+    maxOccurrences: 1
+  - type: LoadMapRule
+    gridPath: /Maps/_Exodus/Supercapitals/jupiter_hw.yml

@@ -21,3 +21,185 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+- type: construction
+  id: CompanyTerritoryBannerDrake
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerDrakeNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerSteelHammer
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerSteelHammerNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerHme
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerHmeNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerMaco
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerMacoNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerDme
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerDmeNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerAetherion
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerAetherionNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerHorizon
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerHorizonNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerUnsa
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerUnsaNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerCdm
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerCdmNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerUllman
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerUllmanNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerNosske
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerNosskeNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerBlackhawk
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerBlackhawkNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerHive
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerHiveNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerBratva
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerBratvaNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid

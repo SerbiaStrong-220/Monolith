@@ -1,48 +1,44 @@
-using Content.Server._Crescent.ShipShields;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Power.Components;
-using Content.Shared._Crescent.ShipShields;
+using Content.Shared._Exodus.ShipShields;
 
 namespace Content.Server._Exodus.ShipShields;
 
 /// <summary>
-/// Triggers an explosion on shield emitters that are forced into overload by damage.
-/// Overload from damage means either the power-draw cap (LoadDamage &gt;= MaxDraw)
-/// or the hard damage cap (Damage &gt; DamageLimit) was crossed while the emitter was powered.
-/// Skips overloads caused by pure power loss.
+/// Queues an explosion when a damage overload remains unresolved by the shield's safety systems.
+/// The overload context distinguishes damage from a genuine power loss before the receiver load changes.
 /// </summary>
 public sealed partial class ExplodeOnShieldOverloadSystem : EntitySystem
 {
     [Dependency] private ExplosionSystem _explosion = default!;
 
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        base.Update(frameTime);
+        base.Initialize();
 
-        var query = EntityQueryEnumerator<ExplodeOnShieldOverloadComponent, ShipShieldEmitterComponent, ApcPowerReceiverComponent>();
-        while (query.MoveNext(out var uid, out var explode, out var emitter, out var power))
-        {
-            if (explode.Triggered)
-                continue;
-
-            var overloadedByDamage = power.Powered
-                                     && (ShipShieldsSystem.CalculateLoadDamage(emitter) >= emitter.MaxDraw
-                                         || emitter.Damage > emitter.DamageLimit);
-
-            if (overloadedByDamage && !explode.WasOverloadedByDamage)
-            {
-                explode.Triggered = true;
-
-                _explosion.QueueExplosion(
-                    uid,
-                    explode.ExplosionType,
-                    explode.TotalIntensity,
-                    explode.IntensitySlope,
-                    explode.MaxTileIntensity);
-            }
-
-            explode.WasOverloadedByDamage = overloadedByDamage;
-        }
+        SubscribeLocalEvent<ExplodeOnShieldOverloadComponent, ShipShieldOverloadAttemptEvent>(
+            OnOverloadAttempt,
+            after: new[] { typeof(CdmShieldReserveSystem), typeof(LayeredShipShieldSystem) });
     }
 
+    private void OnOverloadAttempt(
+        Entity<ExplodeOnShieldOverloadComponent> ent,
+        ref ShipShieldOverloadAttemptEvent args)
+    {
+        if (args.Cancelled ||
+            args.Cause != ShipShieldOverloadCause.Damage ||
+            !args.PoweredBeforeLoad ||
+            ent.Comp.Triggered)
+        {
+            return;
+        }
+
+        ent.Comp.Triggered = true;
+
+        _explosion.QueueExplosion(
+            ent.Owner,
+            ent.Comp.ExplosionType,
+            ent.Comp.TotalIntensity,
+            ent.Comp.IntensitySlope,
+            ent.Comp.MaxTileIntensity);
+    }
 }

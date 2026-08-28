@@ -110,6 +110,21 @@
       state: synd_sec
 
 - type: entity
+  name: AI remote borg spawner (Assault System Operator)
+  id: SpawnAiRemoteBorgAsakimFighter
+  parent: MarkerBase
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgAsakimFighter
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/ai_remote_borg_asakim_fighter.rsi
+      state: azakim_fighter
+
+- type: entity
   name: AI remote borg spawner (Syndicate Saboteur)
   id: SpawnAiRemoteBorgSyndicateSaboteur
   parent: MarkerBase

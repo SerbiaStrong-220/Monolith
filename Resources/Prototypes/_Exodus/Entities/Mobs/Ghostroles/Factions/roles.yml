@@ -1,0 +1,81 @@
+- type: randomHumanoidSettings
+  id: MarsocGhostOperative
+  parent: EventHumanoid
+  speciesBlacklist:
+  - Vox
+  - Hydrakin
+  components:
+  - type: GhostRole
+    name: ghost-role-information-marsoc-operative-name
+    description: ghost-role-information-marsoc-description
+    rules: ghost-role-information-marsoc-rules
+    job: TsfMarsoc
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 54000 # 15 hours
+  - type: Loadout
+    prototypes: [ MarsocOperativeGear ]
+    roleLoadout: [ RoleSurvivalTankOnly ]
+  - type: AutoImplant
+    implants:
+    - MindShieldImplant
+    - TrackingImplant
+    - BluespaceLifelineImplant
+  - type: LanguageKnowledge
+    speaks:
+    - SolCommon
+    - TauCetiBasic
+    understands:
+    - SolCommon
+    - TauCetiBasic
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  - type: Company
+    companyName: TSF
+  - type: ChatRank
+    rank: tsf-marsoc
+
+- type: randomHumanoidSettings
+  id: PdvTarkhanGhostOperative
+  parent: EventHumanoid
+  speciesBlacklist:
+  - Vox
+  - Hydrakin
+  components:
+  - type: GhostRole
+    name: ghost-role-information-tarkhan-operative-name
+    description: ghost-role-information-tarkhan-description
+    rules: ghost-role-information-tarkhan-rules
+    job: PDVTarkhan
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 54000 # 15 hours
+  - type: Loadout
+    prototypes: [ PDVTarkhanGear ]
+    roleLoadout: [ RoleSurvivalTankOnly ]
+  - type: AutoImplant
+    implants:
+    - FreelanceTrackingImplant
+  - type: LanguageKnowledge
+    speaks:
+    - Freespeak
+    - TauCetiBasic
+    understands:
+    - Freespeak
+    - TauCetiBasic
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  - type: Company
+    companyName: PDV
+  - type: ChatRank
+    rank: pdv-tarkhan

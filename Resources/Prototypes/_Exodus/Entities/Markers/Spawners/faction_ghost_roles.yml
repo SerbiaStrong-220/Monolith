@@ -1,0 +1,21 @@
+- type: entity
+  name: MARSOC operative spawner
+  id: SpawnMarsocGhostOperative
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: _NF/Structures/Decoration/banner.rsi
+    state: nfsd-banner
+  - type: RandomHumanoidSpawner
+    settings: MarsocGhostOperative
+
+- type: entity
+  name: PDV Tarkhan spawner
+  id: SpawnPdvTarkhanGhostOperative
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/banner.rsi
+    state: pdv-banner
+  - type: RandomHumanoidSpawner
+    settings: PdvTarkhanGhostOperative

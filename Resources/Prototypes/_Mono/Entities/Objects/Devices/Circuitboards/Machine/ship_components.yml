@@ -114,8 +114,8 @@
 - type: entity
   id: MachineGCSUltraCircuitboard
   parent: BaseMachineCircuitboard
-  name: ultra-high-power gunnery control server board
-  description: A machine board for a GCS.
+  name: aetherion-gunnery-board-name # Exodus company-fleet
+  description: aetherion-gunnery-board-description # Exodus company-fleet
   components:
   - type: Sprite
     state: security

@@ -122,10 +122,14 @@
                     </BoxContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
-                    <Label Text="{ Loc 'gunnery-shield-load-label' }" Margin="0 0 5 0" />
-                    <Label Name="ShieldLoad" Text="" FontColorOverride="Red" />
+                    <Label Text="{ Loc 'gunnery-shield-health-label' }" Margin="0 0 5 0" />
+                    <Label Name="ShieldHealth" Text="" />
                 </BoxContainer>
-                <ProgressBar Name="ShieldLoadBar" MaxValue="100" Value="100" SetHeight="35" HorizontalExpand="True" />
+                <ProgressBar Name="ShieldHealthBar" MaxValue="100" Value="100" SetHeight="35" HorizontalExpand="True" />
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{ Loc 'gunnery-shield-load-label' }" Margin="0 0 5 0" />
+                    <Label Name="ShieldLoad" Text="" />
+                </BoxContainer>
             </BoxContainer>
             <!-- Radar itself -->
             <LayoutContainer>

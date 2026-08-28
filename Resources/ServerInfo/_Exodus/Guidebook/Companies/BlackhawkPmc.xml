@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="blackhawkpmc-name"][/head]
+
+  [locid="blackhawkpmc-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskBlackhawkArmor"/>
+  </Box>
+
+  [locid="tech-disk-blackhawk-armor-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>
