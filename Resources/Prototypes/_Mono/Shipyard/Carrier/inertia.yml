@@ -11,7 +11,7 @@
   name: Инерция # Ru-Localization
   description: Шаттл с высокой манёвренностью и двумя Драупнирами для отвлечениря огня врага. # Ru-Localization
   limit: 6
-  price: 15000
+  price: 28897
   purchasable: false #voucher only
   category: Small
   group: Custom

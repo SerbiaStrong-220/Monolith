@@ -26,7 +26,7 @@
     - category: Thirst
     - alertType: Magboots
     - alertType: Pacified
-    - alertType: Offer # CorvaxGoob-Offer
+    - alertType: Offer # SS220 / CorvaxGoob-Offer
 
 - type: entity
   id: AlertSpriteView
@@ -96,7 +96,7 @@
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
 
-# CorvaxGoob-Offer-Start
+# SS220-begin CorvaxGoob-Offer
 - type: alert
   id: Offer
   clickEvent: !type:AcceptOfferAlertEvent
@@ -105,18 +105,18 @@
     state: offer_item
   name: alerts-offer-name
   description: alerts-offer-desc
-# CorvaxGoob-Offer-End
+# SS220-end
 
 
 - type: alert
   id: Cold
   category: Temperature
   icons:
-  - sprite: /Textures/Interface/Alerts/temperature.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
     state: cold1
-  - sprite: /Textures/Interface/Alerts/temperature.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
     state: cold2
-  - sprite: /Textures/Interface/Alerts/temperature.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
     state: cold3
   maxSeverity: 3
   name: alerts-too-cold-name
@@ -126,11 +126,11 @@
   id: Hot
   category: Temperature
   icons:
-  - sprite: /Textures/Interface/Alerts/temperature.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
     state: hot1
-  - sprite: /Textures/Interface/Alerts/temperature.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
     state: hot2
-  - sprite: /Textures/Interface/Alerts/temperature.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
     state: hot3
   maxSeverity: 3
   name: alerts-too-hot-name
@@ -432,27 +432,27 @@
 - type: alert
   id: Bleed
   icons:
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed0
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed1
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed2
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed3
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed4
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed5
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed6
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed7
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed8
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed9
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
+  - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
     state: bleed10
   name: alerts-bleed-name
   description: alerts-bleed-desc

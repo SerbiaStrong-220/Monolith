@@ -170,6 +170,17 @@ public abstract partial class SharedNebulaSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// True when a point is inside either a generated inner nebula or the world-end nebula.
+    /// </summary>
+    public bool IsInsideNebulaOrWorldEnd(MapId mapId, Vector2 worldPosition)
+    {
+        if (TryGetNebulaAt(mapId, worldPosition, out _))
+            return true;
+
+        return TryGetWorldEnd(mapId, out var worldEnd) && worldEnd.Contains(worldPosition);
+    }
+
     private static bool IsFTLBlockerAt(Vector2 worldPosition, IReadOnlyList<NebulaSummary> summaries)
     {
         for (var i = 0; i < summaries.Count; i++)

@@ -63,6 +63,7 @@
   storage:
     back:
     - RadioHandheldNF # mono
-    - PhoneInstrumentHigh
     - ShipVoucherFerz # Exodus
+    - PDVHandheldOverwatchConsole
     - RubberStampPDVVizier # mono
+    - PhoneInstrumentHigh

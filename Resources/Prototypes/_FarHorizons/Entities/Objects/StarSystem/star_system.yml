@@ -1,0 +1,31 @@
+# Physical representations for stellar objects in world
+
+- type: entity
+  id: StarEntity
+  name: Star # Renamed at spawn
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: WarpPoint
+    - type: FTLSmashImmune
+    - type: FTLBeacon
+    - type: IFF
+      color: '#FFD27F'
+
+- type: entity
+  id: PlanetEntity
+  name: Planet # Renamed at spawn
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: WarpPoint
+    - type: FTLSmashImmune
+    - type: FTLBeacon
+    - type: IFF
+      color: '#7FB2FF'
+    # Exodus-begin keep generated debris clear of planet FTL approaches
+    - type: WorldGenDistanceCarver
+      distanceThresholds:
+      - maxDistance: 750
+        prob: 0.0
+      - maxDistance: 1500
+        prob: 0.3
+    # Exodus-end

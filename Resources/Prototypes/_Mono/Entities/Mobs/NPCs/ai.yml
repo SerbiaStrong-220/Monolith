@@ -54,7 +54,7 @@
       task: RammerShuttleCompound
   - type: NebulaNpcGridPresenceSource # Exodus nebula NPC grid presence
   - type: StaticPrice
-    price: 10000 # Exodus-Price-Rebalance
+    price: 40000
   - type: ApcPowerReceiver
     powerLoad: 1000 # suspiciously low power-using AI
   - type: ExtensionCableReceiver
@@ -65,9 +65,9 @@
   - type: ShipNpcTarget # Exodus faction-aware NPC core targeting
     priority: 1
     needPower: true # Exodus powered NPC core targeting
-  - type: PassiveThermalSignature # Mono
+  - type: PassiveThermalSignature # SS220: retain main-build thermal signature.
     signature: 500000 # vibe number
-  - type: ThermalSignature # Mono
+  - type: ThermalSignature
 
 - type: entity
   id: NpcStationAiApproacher
@@ -262,6 +262,29 @@
     rootTask:
       task: DroneCompoundQuake
 
+- type: entity
+  id: NpcDroneAiDander
+  name: orbiter core
+  parent: NpcStationAiRammer
+  description: Orbits harmlessly and evades. Less valuable due to unremarkable subroutine.
+  suffix: AI, Dodging, Orbiting
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_t1
+      shader: unshaded
+  - type: HTN
+    rootTask:
+      task: DroneCompoundDander
+  - type: Contraband #Retains some value despite no threat because it's still a risk to salvage where it spawns
+    severity: OtherFactionGear1
+    turnInValues:
+      FederationMilitaryCredit: 5
+      Doubloon: 5
+  - type: StaticPrice
+    price: 20000
+
 #region Spawners
 
 - type: entity
@@ -432,3 +455,13 @@
   - type: ConditionalSpawner
     prototypes:
     - NpcDroneAiQuake
+
+- type: entity
+  name: orbiter core spawner
+  id: SpawnMobDroneAiDander
+  parent: SpawnMobAttackerCore
+  suffix: Drone-Dander
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NpcDroneAiDander

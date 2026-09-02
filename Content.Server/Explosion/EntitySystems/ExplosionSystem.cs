@@ -8,6 +8,12 @@ using Content.Server.Destructible;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Atmos.Components;
+using Content.Server.GameTicking; // Mono
+using Content.Server.AlertLevel; // Mono
+using Content.Server.Station.Systems; // Mono
+using Content.Server._Mono.NuclearWar.Components; // Mono
+using Content.Server.Station.Systems; // Mono
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -31,6 +37,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Shared.Maps;
+using Content.Shared.GameTicking; // Mono
 using Robust.Shared.Map.Components;
 using Content.Shared.Tiles; // Frontier: safe zone
 using Content.Shared.SubFloor; // Exodus
@@ -40,6 +47,7 @@ using Robust.Shared.Timing; // Mono
 using Content.Shared.Stacks;
 using Content.Server.Stack;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -52,7 +60,8 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
-
+    [Dependency] private SharedGameTicker _gameTicker = default!; // Mono
+    [Dependency] private AlertLevelSystem _alertLevel = default!; // Mono
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private NodeGroupSystem _nodeGroupSystem = default!;
@@ -65,6 +74,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private StackSystem _stack = default!; // Mono
+    [Dependency] private StationSystem _station = default!; // Mono
     [Dependency] private IGameTiming _gameTiming = default!; // Mono
     [Dependency] private FlammableSystem _flammableSystem = default!;
     [Dependency] private DestructibleSystem _destructibleSystem = default!;
@@ -180,7 +190,9 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     /// <inheritdoc/>
     public override void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)
     {
-        // log missing: false, because some entities (e.g. liquid tanks) attempt to trigger explosions when damaged,
+        var roundTime = (float) _gameTicker.RoundDuration().TotalSeconds;
+
+		// log missing: false, because some entities (e.g. liquid tanks) attempt to trigger explosions when damaged,
         // but may not actually be explosive.
         if (!Resolve(uid, ref explosive, logMissing: false))
             return;
@@ -188,6 +200,24 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         // No reusable explosions here.
         if (explosive.Exploded)
             return;
+
+        // Mono edit: Unable to explode unless roundtime is past # determined in component
+        if (explosive.TimeUntilExplodable != null)
+            if (explosive.TimeUntilExplodable > roundTime)
+                return;
+        // End mono
+
+        // Mono edit: Set station alert when exploded
+        var query = EntityQueryEnumerator<AnnouncerComponent>();
+        if (explosive.DetonationAlert != null)
+            while (query.MoveNext(out var ent, out var component))
+            {
+                if (ent != null)
+                {
+                    _alertLevel.SetLevel(ent, explosive.DetonationAlert, true, true, true, true);
+                }
+            }
+        // End mono
 
         // Mono
         var mult = 1f;

@@ -1,4 +1,5 @@
 <Document>
+  <!-- Exodus: retained localized species captions and localized the upstream Feroxi entry. -->
   # Расы
 
   Nanotrasen нанимает множество разумных видов.
@@ -29,6 +30,7 @@
     <GuideEntityEmbed Entity="MobHarpy" Caption="Гарпия"/>
     <GuideEntityEmbed Entity="MobOni" Caption="Они"/>
     <GuideEntityEmbed Entity="MobChitinid" Caption="Хитинид"/>
+    <GuideEntityEmbed Entity="MobFeroxi" Caption="Ферокси"/>
   </Box>
 
   # Расы Monolith

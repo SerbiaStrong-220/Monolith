@@ -63,6 +63,7 @@
   conditions:
     - !type:TileNotBlocked
 
+# SS220: retain localized construction display metadata.
 - type: construction
   id: WallClock
   graph: ClockworkGirder
@@ -219,7 +220,7 @@
   placementMode: SnapgridCenter
   canRotate: false
 
-- type: construction
+- type: construction # SS220: keep clockwork grille construction enabled.
   id: ClockGrille
   graph: ClockGrille
   startNode: start
@@ -244,7 +245,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
 
-- type: construction
+- type: construction # SS220: keep diagonal clockwork grille construction enabled.
   id: ClockworkGrilleDiagonal
   graph: GrilleDiagonal
   startNode: start
@@ -324,7 +325,7 @@
   placementMode: SnapgridCenter
   canRotate: false
 
-- type: construction
+- type: construction # SS220: keep clockwork window construction enabled.
   id: ClockworkWindow
   graph: Window
   startNode: start
@@ -338,7 +339,7 @@
   placementMode: SnapgridCenter
   canRotate: false
 
-- type: construction
+- type: construction # SS220: keep diagonal clockwork window construction enabled.
   id: ClockworkWindowDiagonal
   graph: WindowDiagonal
   startNode: start
@@ -445,7 +446,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
 
-- type: construction
+- type: construction # SS220: keep directional clockwork window construction enabled.
   id: WindowClockworkDirectional
   graph: WindowDirectional
   startNode: start
@@ -917,7 +918,7 @@
   conditions:
     - !type:TileNotBlocked
 
-- type: construction
+- type: construction # SS220: keep pinion airlock construction enabled.
   id: PinionAirlock
   graph: PinionAirlock
   startNode: start
@@ -929,7 +930,7 @@
   conditions:
     - !type:TileNotBlocked
 
-- type: construction
+- type: construction # SS220: keep glass pinion airlock construction enabled.
   id: PinionAirlockGlass
   graph: PinionAirlock
   startNode: start

@@ -114,11 +114,14 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     ];
 
     public bool ShowIFF { get; set; } = true;
+    // Exodus-begin: preserve the fork's shuttle filter and coordinate privacy state.
     public bool ShowIFFShuttles { get; set; } = true;
+    public bool ShowIFFDetailed { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
 
     public float MaximumIFFDistance { get; set; } = 3000f; // Frontier // Mono - 3000 by default to not gigaclutter
-    public bool HideCoords { get; set; } = false; // Frontier
+    public bool HideCoords { get; set; }
+    // Exodus-end
 
     private static Color _dockLabelColor = Color.White; // Frontier
 
@@ -612,7 +615,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Frontier
         if (state.MaxIffRange != null)
             MaximumIFFDistance = state.MaxIffRange.Value;
-        HideCoords = state.HideCoords;
         // End Frontier
 
         _docks = state.Docks;
@@ -627,7 +629,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         base.Draw(handle);
 
         DrawBacking(handle);
-        DrawCircles(handle);
 
         // No data
         if (_coordinates == null || _rotation == null)
@@ -661,6 +662,39 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         Matrix3x2.Invert(worldToShuttle, out var shuttleToWorld);
         var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
         var worldToView = worldToShuttle * shuttleToView;
+        // Exodus-begin: share the upstream pre-pass bounds with our detailed radar pass.
+        var viewBounds = new Box2Rotated(
+            new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(mapPos.Position),
+            worldRot,
+            mapPos.Position);
+        var viewAABB = viewBounds.CalcBoundingBox();
+        // Exodus-end
+
+        DrawStarSystem(handle, worldToShuttle, shuttleToView, xform.MapUid); // Far Horizons
+
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
+
+        // Draw our grid's fill.
+        var ourGridId = xform.GridUid;
+        MapGridComponent? ourGrid = null; // Exodus: keep the cached-query result available to both radar passes.
+        if (ourGridId.HasValue &&
+            _gridQuery.TryGetComponent(ourGridId.Value, out ourGrid) && // Exodus: reuse the SafeZone query cache.
+            _fixturesQuery.HasComponent(ourGridId.Value)) // Exodus: reuse the SafeZone query cache.
+        {
+            var ourGridToWorld = _transform.GetWorldMatrix(ourGridId.Value);
+            var ourGridToShuttle = Matrix3x2.Multiply(ourGridToWorld, worldToShuttle);
+            var ourGridToView = ourGridToShuttle * shuttleToView;
+            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
+
+            DrawGrid(handle, ourGridToView, (ourGridId.Value, ourGrid), color, 0.01f, true);
+        }
+
+        DrawGridFills(_grids, handle, (ourGrid != null && ourGridId.HasValue) ? (ourGridId.Value, ourGrid) : null);
+
+        DrawCircles(handle);
+
+        DrawIFFBeacons(handle, worldToView, mapPos, xform.MapUid); // Far Horizons
 
         // Draw shields
         DrawShields(handle, xform, worldToShuttle);
@@ -685,15 +719,12 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         // Draw our grid in detail
-        var ourGridId = xform.GridUid;
-
-        if (_gridQuery.TryGetComponent(ourGridId, out var ourGrid) && ourGridId != null &&
-            _fixturesQuery.HasComponent(ourGridId.Value)) // Exodus - SafeZone
+        if (ourGridId.HasValue && ourGrid != null && _fixturesQuery.HasComponent(ourGridId.Value)) // Exodus - SafeZone
         {
             var ourGridToWorld = _transform.GetWorldMatrix(ourGridId.Value);
             var ourGridToShuttle = Matrix3x2.Multiply(ourGridToWorld, worldToShuttle);
             var ourGridToView = ourGridToShuttle * shuttleToView;
-            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
+            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true); // This is such a waste running all of these again...
 
             DrawGrid(handle, ourGridToView, (ourGridId.Value, ourGrid), color);
             DrawDocks(handle, ourGridId.Value, ourGridToView);
@@ -707,12 +738,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _radarPosVerts, Color.Lime);
-
-        var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(mapPos.Position), worldRot, mapPos.Position);
-        var viewAABB = viewBounds.CalcBoundingBox();
-
-        _grids.Clear();
-        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
         // Mono edited: Frontier - collect blip location data outside foreach - more changes ahead
         _tempBlipDataList.Clear();
@@ -1123,6 +1148,44 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         DrawSafeZones(handle, worldToView, ourGridId); // Exodus - SafeZone
     }
 
+    // Exodus-begin: integrate the upstream filled-grid pre-pass with our detailed radar renderer.
+    private void DrawGridFills(
+        List<Entity<MapGridComponent>> grids,
+        DrawingHandleScreen handle,
+        Entity<MapGridComponent>? ourGrid)
+    {
+        var worldRot = _rotation!.Value;
+        var mapPos = _transform.ToMapCoordinates(_coordinates!.Value).Offset(worldRot.RotateVec(Offset));
+        var mapCoord = _transform.ToCoordinates(mapPos);
+        var worldToShuttle = Matrix3Helpers.CreateTranslation(-mapCoord.Position) * Matrix3Helpers.CreateRotation(-worldRot);
+        var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
+        var worldToView = worldToShuttle * shuttleToView;
+
+        foreach (var grid in grids)
+        {
+            if (ourGrid != null && grid.Owner == ourGrid.Value.Owner)
+                continue;
+
+            var detectionLevel = _consoleEntity == null ? DetectionLevel.Detected : GetGridDetected(grid.Owner);
+            if (detectionLevel != DetectionLevel.Detected)
+                continue;
+
+            if (!_bodyQuery.TryGetComponent(grid.Owner, out var gridBody))
+                continue;
+
+            _IFFQuery.TryGetComponent(grid.Owner, out var iff);
+            if (!_shuttles.CanDraw(grid.Owner, gridBody, iff))
+                continue;
+
+            var hideLabel = iff != null && (iff.Flags & IFFFlags.HideLabel) != 0x0;
+            var hideColor = hideLabel && iff != null && (iff.Flags & IFFFlags.AlwaysShowColor) == 0x0;
+            var labelColor = hideColor ? Color.White : _shuttles.GetIFFColor(grid, self: false, iff);
+            var curGridToView = _transform.GetWorldMatrix(grid.Owner) * worldToView;
+
+            DrawGrid(handle, curGridToView, grid, labelColor, 0.01f, true);
+        }
+    }
+    // Exodus-end
     protected DetectionLevel GetGridDetected(EntityUid grid)
     {
         if (Detectors != null)

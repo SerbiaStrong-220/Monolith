@@ -1,3 +1,4 @@
+# SS220: retained existing ammo-loader strings; upstream-only failure and entity keys follow.
 # Ammo Loader
 ammo-loader-flush-verb = Flush
 ammo-loader-eject-verb = Eject contents
@@ -17,3 +18,14 @@ signal-port-name-ammo-loader-load = Load Ammo
 signal-port-description-ammo-loader-load = Transfers loaded ammunition to linked ship artillery.
 signal-port-name-space-artillery-load = Receive Ammo
 signal-port-description-space-artillery-load = Receives ammunition from a linked loader.
+
+ammo-loader-turret-locked = Боеприпасы этой турели нельзя заменить.
+ammo-loader-incompatible-ammo = Эти боеприпасы несовместимы с выбранной турелью.
+ammo-loader-load-failed = Не удалось зарядить турель.
+ammo-loader-unload-failed = Не удалось выгрузить боеприпасы из турели.
+
+ent-AmmoLoader = загрузчик боеприпасов
+    .desc = Пневматическая система подачи боеприпасов производства Erebus HI. Свяжите её с корабельной артиллерией мультитулом для передачи боеприпасов. Вмещает до 30 предметов и поддерживает 8 орудий.
+
+ent-AmmoLoaderSmall = малый загрузчик боеприпасов
+    .desc = Пневматическая система подачи боеприпасов производства Erebus HI. Свяжите её с корабельной артиллерией мультитулом для передачи боеприпасов. Вмещает до 15 предметов и поддерживает только 2 орудия, но более живуча.

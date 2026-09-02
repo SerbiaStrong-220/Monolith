@@ -1,14 +1,12 @@
-# Author Info
-# GitHub: starch70
-# Discord: _starch_
-
 # Shuttle Notes:
 - type: vessel
   id: Betelgeuse
   parent: BaseVessel
+  # SS220-begin: preserve main-build localization and price.
   name: Бетельгейзе # Ru-Localization
   description: Тесный утилизаторский шаттл, работающий на надеждах и мечтах, но оснащённый одним из самых мощных шахтёрских орудий в этом секторе. # Ru-Localization
   price: 43500
+  # SS220-end
   category: Small
   group: Scrap
   shuttlePath: /SharedMaps/_Mono/Shuttles/betelgeuse.yml
@@ -24,7 +22,7 @@
 
 - type: gameMap
   id: Betelgeuse
-  mapName: 'Бетельгейзе' # Ru-Localization
+  mapName: 'Бетельгейзе' # SS220: preserve main-build localization.
   mapPath: /SharedMaps/_Mono/Shuttles/betelgeuse.yml
   minPlayers: 0
   stations:
@@ -32,12 +30,14 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Бетельгейзе{1}' # Ru-Localization
+          mapNameTemplate: 'Бетельгейзе{1}' # SS220: preserve main-build naming.
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
             Contractor: [ 0, 0 ]
+            # SS220-begin: preserve main-build pilot and mercenary access.
             Pilot: [ 0, 0 ]
             Mercenary: [ 0, 0 ]
+            # SS220-end

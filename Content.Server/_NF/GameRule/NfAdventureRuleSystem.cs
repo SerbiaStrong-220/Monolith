@@ -323,6 +323,7 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
         List<PointOfInterestPrototype> depotProtos = [];
         List<PointOfInterestPrototype> marketProtos = [];
         List<PointOfInterestPrototype> pairedFactionProtos = []; // Exodus paired faction POI spawn
+        List<PointOfInterestPrototype> fixedRequiredProtos = []; // Exodus fixed resource clusters
         List<PointOfInterestPrototype> requiredProtos = [];
         List<PointOfInterestPrototype> optionalProtos = [];
         Dictionary<string, List<PointOfInterestPrototype>> remainingUniqueProtosBySpawnGroup = new();
@@ -348,7 +349,12 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
                     pairedFactionProtos.Add(location);
                     break;
                 case "Required":
-                    requiredProtos.Add(location);
+                    // Exodus-begin fixed resource clusters spawn first and reserve their actual coordinates
+                    if (location.PlacementClearance > 0f)
+                        fixedRequiredProtos.Add(location);
+                    else
+                        requiredProtos.Add(location);
+                    // Exodus-end
                     break;
                 case "Optional":
                     optionalProtos.Add(location);
@@ -363,10 +369,14 @@ public sealed partial class NFAdventureRuleSystem : GameRuleSystem<NFAdventureRu
                 }
             }
         }
+        // Exodus-begin fixed resource cluster placement order
+        _poi.GenerateRequireds(mapUid, fixedRequiredProtos, out component.RequiredPois);
+        // Exodus-end
         _poi.GenerateDepots(mapUid, depotProtos, out component.CargoDepots);
         _poi.GenerateMarkets(mapUid, marketProtos, out component.MarketStations);
         _poi.GeneratePairedFactionPois(mapUid, pairedFactionProtos, out _); // Exodus paired faction POI spawn
-        _poi.GenerateRequireds(mapUid, requiredProtos, out component.RequiredPois);
+        _poi.GenerateRequireds(mapUid, requiredProtos, out var randomRequiredPois);
+        component.RequiredPois.AddRange(randomRequiredPois); // Exodus fixed resource cluster placement order
         _poi.GenerateOptionals(mapUid, optionalProtos, out component.OptionalPois);
         _poi.GenerateUniques(mapUid, remainingUniqueProtosBySpawnGroup, out component.UniquePois);
 

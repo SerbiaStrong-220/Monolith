@@ -53,6 +53,26 @@ public sealed partial class PointOfInterestPrototype : IPrototype, IInheritingPr
     public int MaximumDistance { get; private set; } = 10000;
 
     /// <summary>
+    ///     Offset X axis of the spawning range in meters.
+    /// </summary>
+    [DataField("posX")]
+    public int PositionX { get; private set; }
+
+    /// <summary>
+    ///     Offset Y axis of the spawning range in meters.
+    /// </summary>
+    [DataField("posY")]
+    public int PositionY { get; private set; }
+
+    // Exodus-begin fixed cluster placement reservation
+    /// <summary>
+    ///     Radius kept clear of other POI origins when this POI is placed.
+    /// </summary>
+    [DataField]
+    public float PlacementClearance { get; private set; }
+    // Exodus-end
+
+    /// <summary>
     ///     Components to be added to any spawned grids.
     /// </summary>
     [DataField]

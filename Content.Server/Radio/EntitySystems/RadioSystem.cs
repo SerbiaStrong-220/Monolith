@@ -202,9 +202,16 @@ public sealed partial class RadioSystem : EntitySystem
         var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource, new());
         // Einstein Engines - Language end
 
-        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
+        var transmitFrequency = frequency ?? GetFrequency(messageSource, channel);
+
+        var sendAttemptEv = new RadioSendAttemptEvent(
+            channel,
+            radioSource,
+            transmitFrequency);
+
         RaiseLocalEvent(ref sendAttemptEv);
         RaiseLocalEvent(radioSource, ref sendAttemptEv);
+
         var canSend = !sendAttemptEv.Cancelled;
 
         var sourceMapId = Transform(radioSource).MapID;

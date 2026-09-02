@@ -1,3 +1,4 @@
+# SS220-begin keep-clockwork-airlock-construction
 - type: constructionGraph
   id: PinionAirlock
   start: start
@@ -87,7 +88,6 @@
       steps:
       - tool: Prying
         doAfter: 5
-
   - node: glassElectronics
     entity: PinionAirlockAssemblyGlass
     edges:
@@ -161,3 +161,4 @@
       steps:
       - tool: Prying
         doAfter: 5
+# SS220-end

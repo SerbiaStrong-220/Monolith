@@ -1,19 +1,28 @@
 - type: gameMap
   id: Frontier
-  mapName: 'Колосс-Централ' # Ru-Localization
+  mapName: 'Колосс-Централ' # Exodus Ru-Localization
   mapPath: /Maps/_Exodus/Outpost/colossus_central.yml # Exodus
   minPlayers: 0
   maxPlayers: 100
-  randomRotation: false
+  randomRotation: false # SS220 keep Central orientation
   maxRandomOffset: 0
   stations:
     Frontier:
       stationProto: StandardFrontierStation
       gridComponents:
+      - type: IFF
+        color: "#37946e"
+        readOnly: true
+      - type: StationDeadDrop
+        maxDeadDrops: 2
+      - type: StationCargoOrderDatabase
+        capacity: 240
+      - type: TradeCrateDestination
+        destinationProto: Trade
       - type: VesselMusic
         ambientMusicPrototype: ColossusCentralMusic
       - type: VesselInfo
-        description: "Последний рубеж цивилизации этого сектора. Ты чувствуешь себя в безопасности... почти." # Ru-Localization
+        description: "Последний рубеж цивилизации этого сектора. Ты чувствуешь себя в безопасности... почти." # Exodus Ru-Localization
       - type: Zone # Exodus - SafeZone
         text: "zone-safezone"
       # Exodus start - Territory grid control
@@ -23,7 +32,7 @@
       - type: Tower7G # Exodus-Adminbus
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Колосс-Централ' # Ru-Localization
+          mapNameTemplate: 'Колосс-Централ' # Exodus Ru-Localization
 #          nameGenerator:
 #            !type:NanotrasenNameGenerator
 #            prefixCreator: '14'
@@ -38,8 +47,8 @@
         - type: StationJobs
           availableJobs:
             Contractor: [ -1, -1 ]
-            Pilot: [ -1, -1 ]
-            Mercenary: [ -1, -1 ]
+            Pilot: [ -1, -1 ] # SS220 keep Central pilot spawn
+            Mercenary: [ -1, -1 ] # SS220 keep Central mercenary spawn
             Borg: [ -1, -1 ]
             ColossusSecurityBorg: [ 1, 1 ] # Exodus colossus-security-borg
             StationRepresentative: [ 1, 1 ]
@@ -48,6 +57,24 @@
             CCServiceWorker: [ 2, 2 ]
             NFJanitor: [ 2, 2 ]
             MailCarrier: [ 2, 2 ]
+            DirectorOfCare: [ 1, 1 ]
+            MdMedic: [ -1, -1 ]
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity
+        - type: Announcer
+
+- type: gameMap
+  id: EmptyFrontier
+  mapName: Empty
+  mapPath: /Maps/Test/empty.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardFrontierStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Empty"
+        # - type: StationJobs # Mono edit
+        #   availableJobs:
+        #     Passenger: [ -1, -1 ]

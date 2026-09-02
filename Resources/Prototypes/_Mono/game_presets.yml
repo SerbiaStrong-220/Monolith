@@ -9,6 +9,7 @@
   description: mono-standard-description
   showInVote: false # For admin usage really. Not that boring, but I'd rather just let players choose their main threat instead of choosing no threat.
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -26,6 +27,7 @@
   description: mono-roguetsf-description
   showInVote: false # For admin usage really. General player opinion is that this was pretty boring.
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -43,6 +45,7 @@
   description: mono-rogueussp-description
   showInVote: false # For admin usage really. General player opinion is that this was pretty boring.
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -60,6 +63,7 @@
   description: mono-tsfussp-description
   showInVote: false # For admin usage really. General player opinion is that this was pretty boring.
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -77,6 +81,7 @@
   description: mono-ads-description
   showInVote: false # Exodus
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -95,6 +100,7 @@
   description: mono-chimera-description
   showInVote: true
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -113,6 +119,7 @@
   description: mono-mixed-description
   showInVote: true
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -137,6 +144,7 @@
   showInVote: false # Exodus
   weight: 0.25 # requires 80% votes
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - BasicStationEventScheduler
   - BluespaceEventScheduler
@@ -156,6 +164,7 @@
   description: mono-roguetsf-hyperwar-description
   showInVote: false # AO
   rules:
+  - StarSystemKyphrus # Exodus star entities and carvers must exist before NFAdventure generation
   - NFAdventure
   - Hyperwar
   - RoundEndRuleHour3

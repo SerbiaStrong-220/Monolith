@@ -22,6 +22,7 @@ public enum ShipyardConsoleUiKey : byte
     // Mono start
     Ussp,
     SHM,
+    Mieyo,
     DrakeIndustries,
     Viper,
     Citadel, // Exodus

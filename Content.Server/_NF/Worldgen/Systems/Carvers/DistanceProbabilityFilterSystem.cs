@@ -45,7 +45,13 @@ public sealed partial class PointSetDistanceCarverSystem : EntitySystem
         var query = EntityQueryEnumerator<WorldGenDistanceCarverComponent, TransformComponent>();
         while (query.MoveNext(out _, out var carver, out var xform))
         {
-            var distanceSquared = Vector2.DistanceSquared(_transform.ToMapCoordinates(xform.Coordinates).Position, coords.Position);
+            // Exodus-begin: carvers only affect debris on their own map.
+            var carverCoords = _transform.ToMapCoordinates(xform.Coordinates);
+            if (carverCoords.MapId != coords.MapId)
+                continue;
+
+            var distanceSquared = Vector2.DistanceSquared(carverCoords.Position, coords.Position);
+            // Exodus-end
             float? newProb = null;
             foreach (var threshold in carver.SquaredDistanceThresholds)
             {

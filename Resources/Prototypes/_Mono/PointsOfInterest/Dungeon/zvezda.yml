@@ -9,12 +9,12 @@
 # Notes:
 - type: pointOfInterest
   id: Zvezda
-  parent: BasePOI
+  parent: [BasePOI, BaseRepairablePOI] # Exodus repair snapshot is inherited exactly once
   name: 'Среда Обитания "Звезда"' # Exodus
   minimumDistance: 20000 # Exodus-nebula-update
   maximumDistance: 30000 # Exodus-nebula-update
-  spawnGroup: Optional
-  gridPath: /Maps/_Mono/POI/Dungeons/zvezda.yml
+  spawnGroup: Optional # SS220 keep normal POI distribution
+  gridPath: /Maps/_Exodus/POI/Dungeons/zvezda.yml # Exodus upstream map at owned path
   addComponents:
   - type: IFF
     color: "#17bf65"
@@ -23,17 +23,36 @@
 - type: gameMap
   id: Zvezda
   mapName: 'Среда Обитания "Звезда"' # Exodus
-  mapPath: /Maps/_Mono/POI/Dungeons/zvezda.yml
+  mapPath: /Maps/_Exodus/POI/Dungeons/zvezda.yml # Exodus upstream map at owned path
   minPlayers: 0
   stations:
     Zvezda:
       stationProto: RecordsFrontierOutpostCargo
-      # Exodus-begin territory-grid
       gridComponents:
-      - type: InitRepairSnapshot # Exodus zvezda-srd-snapshot
+      - type: StationCargoOrderDatabase
+        capacity: 240
+      - type: TradeCrateDestination
+        destinationProto: Trade
+      - type: StationDeadDrop
+        maxDeadDrops: 12
+      - type: VesselInfo
+        description: "A half-abandoned decaying station. Sometimes you can hear the hull bend."
+      - type: VesselMusic
+        ambientMusicPrototype: CamelotMusic
+      # Exodus-begin territory-grid
       - type: GridTerritory
       # Exodus-end
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Среда Обитания "Звезда"' # Exodus
+        - type: ExtraStationInformation
+          icon:
+            sprite: _NF/Structures/Storage/Crates/secure_ammo.rsi
+            state: icon
+          stationSubtext: 'frontier-lobby-zvezda-subtext'
+          stationDescription: 'frontier-lobby-zvezda-description'
+          lobbySortOrder: 5
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ -1, -1 ]
         - type: StationDeadDropHintExempt

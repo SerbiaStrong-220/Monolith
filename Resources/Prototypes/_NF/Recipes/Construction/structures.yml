@@ -1,11 +1,12 @@
+# SS220-begin keep secret-door construction enabled
 - type: construction
-  name: recipes-reinforced-secret-door-name 
+  name: recipes-reinforced-secret-door-name
   id: SolidReinforcedSecretDoorConstruction
   graph: ReinforcedSecretDoorGraph
   startNode: start
   targetNode: ReinforcedSecretDoorNode
   category: construction-category-structures
-  description: recipes-reinforced-secret-door-desc 
+  description: recipes-reinforced-secret-door-desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -53,3 +54,4 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+# SS220-end

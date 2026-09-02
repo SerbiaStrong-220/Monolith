@@ -1,3 +1,4 @@
+# SS220: retained localized inventory slot display names marked Ru-Localization below.
 - type: inventoryTemplate
   id: ipc
   slots:
@@ -55,7 +56,21 @@
       slotFlags: NECK
       uiWindowPos: 0,2
       strippingWindowPos: 0,1
+      displayName: inventory-slot-neck # SS220: localized slot
+    # Exodus-begin localized upstream extra neck slots
+    - name: neck2
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 3,4
+      strippingWindowPos: 3,4
       displayName: inventory-slot-neck # Ru-Localization
+    - name: neck3
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 3,5
+      strippingWindowPos: 3,5
+      displayName: inventory-slot-neck # Ru-Localization
+    # Exodus-end
     - name: mask
       uiWindowPos: 1,2
       slotTexture: mask

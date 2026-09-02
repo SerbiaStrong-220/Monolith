@@ -18,6 +18,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
 
+# SS220: retain localized construction metadata.
 - type: construction
   id: StationMap
   graph: StationMap

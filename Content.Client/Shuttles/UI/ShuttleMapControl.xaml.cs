@@ -318,6 +318,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         DrawBluespaceMapBlips(handle, matty); // Exodus bluespace-map-blips
 
+        DrawStarSystem(handle, matty);
+
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.
         if ((FtlMode || ShowFTLRangeOnly) && ShowFTLRange) // Mono

@@ -30,8 +30,8 @@
         - type: StationJobs
           availableJobs:
             Contractor: [ -1, -1 ]
-            Pilot: [ -1, -1 ]
-            Mercenary: [ -1, -1 ]
+            # Pilot: [ -1, -1 ]
+            # Mercenary: [ -1, -1 ]
             Borg: [ -1, -1]
             StationRepresentative: [ -1, -1 ]
             StationTrafficController: [ -1, -1 ]
@@ -66,5 +66,8 @@
             # VGCommander: [ -1, -1 ]
             # Exodus-end
             TsfEngineer: [ -1, -1 ]
+            MMCEmployee: [ -1, -1 ]
+            MMCSecurity: [ -1, -1 ]
+            MMCLiason: [ -1, -1 ]
         - type: StationDeadDrop
           maxDeadDrops: 20 # Testing

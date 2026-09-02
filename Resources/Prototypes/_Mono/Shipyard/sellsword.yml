@@ -8,9 +8,11 @@
 - type: vessel
   id: Sellsword
   parent: BaseVessel
+  # SS220-begin: preserve main-build localization and price.
   name: Селлсворд # Ru-Localization
   description: Шаттл сопровождения, представляющий собой клаустрофобический гроб из литого пластитана, внутри которого размещены 255-мм орудие и Вспеоа. Ожидаемая продолжительность жизни шаттла в бою - 4 минуты.  # Ru-Localization
   price: 56000 # markup 15% from 48600.
+  # SS220-end
   category: Small
   group: Shipyard
   access: Mercenary
@@ -23,11 +25,11 @@
   class:
   - Pursuit
   engine:
-  - Plasma
+  - Uranium
 
 - type: gameMap
   id: Sellsword
-  mapName: 'Селлсворд' # Ru-Localization
+  mapName: 'Селлсворд' # SS220: preserve main-build localization.
   mapPath: /SharedMaps/_Mono/Shuttles/sellsword.yml
   minPlayers: 0
   stations:
@@ -35,12 +37,14 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Селлсворд{1}' # Ru-Localization
+          mapNameTemplate: 'Селлсворд{1}' # SS220: preserve main-build naming.
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
             Contractor: [ 0, 0 ]
+            # SS220-begin: preserve main-build pilot and mercenary access.
             Pilot: [ 0, 0 ]
             Mercenary: [ 0, 0 ]
+            # SS220-end

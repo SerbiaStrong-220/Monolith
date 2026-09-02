@@ -1,0 +1,33 @@
+# Fixed resource fields for NFDefault. The parent prototypes keep Monolith's debris,
+# wreck and drone tables unchanged; Exodus only relocates their chunk bounds.
+- type: spaceBiome
+  id: ExodusClusterA
+  parent: MonoClusterA
+  minX: -52
+  maxX: -41
+  minY: 191
+  maxY: 205
+
+- type: spaceBiome
+  id: ExodusWildsCore
+  parent: MonoWildsCore
+  minX: 73
+  maxX: 77
+  minY: -262
+  maxY: -254
+
+- type: spaceBiome
+  id: ExodusWilds
+  parent: MonoWilds
+  minX: 69
+  maxX: 81
+  minY: -266
+  maxY: -250
+
+- type: spaceBiome
+  id: ExodusWildsOutskirts
+  parent: MonoWildsOutskirts
+  minX: 61
+  maxX: 89
+  minY: -274
+  maxY: -242

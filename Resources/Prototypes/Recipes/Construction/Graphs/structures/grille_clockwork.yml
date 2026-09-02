@@ -1,3 +1,4 @@
+# SS220-begin keep clockwork grille construction graph enabled
 - type: constructionGraph
   id: ClockGrille
   start: start
@@ -44,3 +45,4 @@
             - material: MetalRod
               amount: 1
               doAfter: 0.5
+# SS220-end

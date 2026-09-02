@@ -1,3 +1,4 @@
+# SS220-begin keep clockwork entity prototypes enabled
 - type: entity
   id: ClockworkWindow
   name: clockwork window
@@ -157,3 +158,4 @@
   - type: Construction
     graph: WindowDiagonal
     node: clockworkWindowDiagonal
+# SS220-end

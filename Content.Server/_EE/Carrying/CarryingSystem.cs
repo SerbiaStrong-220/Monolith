@@ -31,6 +31,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nyanotrasen.Item.PseudoItem;
 using Content.Shared.Resist; // Exodus
 using Content.Shared.Storage;
+using Content.Shared.Traits.Assorted; //Mono: Wheelchair user check
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Server.GameObjects;
@@ -384,7 +385,10 @@ namespace Content.Server.Carrying
 
             _actionBlockerSystem.UpdateCanMove(carried);
             _transform.AttachToGridOrMap(carried);
-            _standingState.Stand(carried);
+            // Exodus-begin: integrate upstream wheelchair handling with multi-carry cleanup.
+            if (!HasComp<LegsParalyzedComponent>(carried))
+                _standingState.Stand(carried);
+            // Exodus-end
 
             if (TryComp<CanEscapeInventoryComponent>(carried, out var escape) && escape.DoAfter != null)
                 _doAfterSystem.Cancel(escape.DoAfter);

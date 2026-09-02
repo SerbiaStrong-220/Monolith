@@ -6,8 +6,9 @@
   children:
   - CorticalBorerGuide
   - Letoferol
-  - Asakim
+  - Asakim # SS220: keep guide entry enabled.
   - LeviathanGuide # Exodus leviathan guidebook entry
+  - Xenoborgs
 
 - type: guideEntry
   id: CorticalBorerGuide
@@ -21,7 +22,13 @@
   text: "/ServerInfo/_Mono/Guidebook/Creatures/Chimera.xml"
   priority: 1
 
-- type: guideEntry
+#- type: guideEntry
+#  id: Asakim
+#  name: guide-entry-asakim
+#  text: "/ServerInfo/_Mono/Guidebook/Creatures/Asakim.xml"
+#  priority: 1
+
+- type: guideEntry # SS220: keep Asakim guide entry enabled.
   id: Asakim
   name: guide-entry-asakim
   text: "/ServerInfo/_Mono/Guidebook/Creatures/Asakim.xml"
@@ -32,3 +39,8 @@
   name: guide-entry-leviathan
   text: "/ServerInfo/_Exodus/Guidebook/Creatures/Leviathan.xml"
   priority: 2
+
+- type: guideEntry
+  id: Xenoborgs
+  name: guide-entry-xenoborgs
+  text: "/ServerInfo/_Mono/Guidebook/Creatures/Xenoborgs.xml"

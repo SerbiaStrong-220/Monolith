@@ -1,0 +1,6 @@
+# Exodus: SpeciesPrototype references localized datasets.
+- type: localizedDataset
+  id: NamesFeroxiFirstFemale
+  values:
+    prefix: names-feroxi-first-female-dataset-
+    count: 41

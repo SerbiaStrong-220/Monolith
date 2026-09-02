@@ -1,3 +1,4 @@
+# SS220: retained localized company display names marked Ru-Localization below.
 # "None" - DO NOT REMOVE!
 - type: company
   id: None
@@ -10,11 +11,18 @@
 
 - type: company
   id: TSF
-  name: tsf-name # Ru-Localization
+  name: tsf-name # SS220: localized display name
   color: "#00a1fc" # Exodus territory update
   disabled: true
   companyUplinkCurrency: FederationMilitaryCredit
   npcFaction: TSFMC # Exodus - company NPC faction
+
+- type: company
+  id: TSFCivilian
+  name: Trans-Solarian Federation
+  color: "#047ABD"
+  disabled: true
+  companyUplinkCurrency: FederationMilitaryCredit
 
 - type: company
   id: PDV
@@ -23,6 +31,13 @@
   disabled: true
   companyUplinkCurrency: Doubloon
   npcFaction: PirateNF # Exodus - company NPC faction (PDV)
+
+- type: company
+  id: PDVCivilian
+  name: Phaethon Dynasty
+  color: "#D2B48C"
+  disabled: true
+  companyUplinkCurrency: Doubloon
 
 - type: company
   id: MD
@@ -50,6 +65,14 @@
   name: winter-solstice-name # Ru-Localization
   description: winter-solstice-description
   color: "#008CE3"
+  disabled: true
+  whitelisted: true
+
+- type: company
+  id: PDVHighComm
+  name: Dynasty High Command
+  description: pdv-highcomm-description
+  color: "#D2B48C"
   disabled: true
   whitelisted: true
 # DO NOT TOUCH
@@ -107,6 +130,12 @@
   image: /Textures/_Mono/Companies/USSP.png
   npcFaction: USSP # Exodus - company NPC faction
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
+
+- type: company
+  id: MMC
+  name: Mieyo Manufacturing Concern
+  color: "#EEEEEE"
+  disabled: true
 
 # Major companies
 

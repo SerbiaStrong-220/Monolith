@@ -171,3 +171,12 @@
     possibleSpawns:
     - MobArachnidRandom
 # Exodus add arachnid cube end
+
+- type: entity
+  parent: MonkeyCube
+  id: FeroxiCube
+  name: feroxi cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobFeroxiRandom

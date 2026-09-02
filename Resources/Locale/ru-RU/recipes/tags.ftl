@@ -149,6 +149,8 @@ construction-graph-tag-welder-industrial = промышленный свароч
 construction-graph-tag-welder-experimental = экспериментальный сварочный аппарат
 construction-graph-tag-manipulator = манипулятор
 construction-graph-tag-capacitor = конденсатор
+# Exodus: upstream medsec HUD construction requirement
+construction-graph-tag-microprocessor = микропроцессор
 construction-graph-tag-matter-bin = хранилище материи
 construction-graph-tag-rock-material = камень
 construction-graph-tag-sand-material = песок

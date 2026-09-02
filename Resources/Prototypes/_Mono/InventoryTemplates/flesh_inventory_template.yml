@@ -1,3 +1,4 @@
+# SS220-begin localized extended chimera inventory
 - type: inventoryTemplate
   id: chimera
   slots:
@@ -89,3 +90,4 @@
       uiWindowPos: 2,1
       strippingWindowPos: 2,0
       displayName: inventory-slot-gloves # Ru-Localization
+# SS220-end

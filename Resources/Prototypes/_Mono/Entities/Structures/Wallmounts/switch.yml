@@ -15,3 +15,11 @@
   - type: AccessReader
     # access: [["Viper"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
     access: [["Mercenary"]]
+
+- type: entity
+  id: LockableButtonMieyo
+  suffix: Mieyo
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Mieyo"]]
