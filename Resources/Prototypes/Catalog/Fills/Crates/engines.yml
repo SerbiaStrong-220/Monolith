@@ -14,8 +14,8 @@
 - type: entity
   id: CrateEngineeringAMEJar
   parent: CrateEngineeringSecure
-  name: isotope canisters crate
-  description: 3 isotopes canisters, for fuelling an isotopes reactor.
+  name: antimatter containment jar crate # Exodus: preserve main-build AME terminology.
+  description: 3 antimatter jars, for fuelling an antimatter reactor.
   components:
   - type: StorageFill
     contents:
@@ -25,8 +25,8 @@
 - type: entity
   id: CrateEngineeringAMEControl
   parent: CrateEngineeringSecure
-  name: isotopes reaction engine (IRE) control unit crate
-  description: The control unit of an isotopes reaction engine.
+  name: antimatter control unit crate # Exodus: preserve main-build AME terminology.
+  description: The control unit of an antimatter reactor.
   components:
   - type: StorageFill
     contents:

@@ -68,6 +68,15 @@
   id: BaseEconomyGoodTier1
   abstract: true
   suffix: T1
+  # Exodus-begin: retain economy-item radar tracking.
+  components:
+  - type: RadarBlip
+    visibleFromOtherGrids: true
+    radarColor: "#999999"
+    scale: 0.6
+    shape: circle
+    requireNoGrid: false
+  # Exodus-end
 
 - type: entity
   name: base economy item
@@ -76,6 +85,12 @@
   id: BaseEconomyGoodTier2
   abstract: true
   suffix: T2
+  # Exodus-begin: retain economy-item radar tracking.
+  components:
+  - type: RadarBlip
+    radarColor: "#83a37f"
+    scale: 0.7
+  # Exodus-end
 
 - type: entity
   name: base economy item
@@ -84,6 +99,12 @@
   id: BaseEconomyGoodTier3
   abstract: true
   suffix: T3
+  # Exodus-begin: retain economy-item radar tracking.
+  components:
+  - type: RadarBlip
+    radarColor: "#8bbac9"
+    scale: 0.8
+  # Exodus-end
 
 - type: entity
   name: base economy item
@@ -92,3 +113,9 @@
   id: BaseEconomyGoodTier4
   abstract: true
   suffix: T4
+  # Exodus-begin: retain economy-item radar tracking.
+  components:
+  - type: RadarBlip
+    radarColor: "#FFFF00"
+    scale: 1
+  # Exodus-end

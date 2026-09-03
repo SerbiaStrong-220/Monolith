@@ -13,8 +13,7 @@
   parent: LockableButton
   components:
   - type: AccessReader
-    # access: [["Viper"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
-    access: [["Mercenary"]]
+    access: [["Viper"]] # Exodus restore-viper-group
 
 - type: entity
   id: LockableButtonMieyo

@@ -8,7 +8,7 @@
   limit: 2
   hyperwarLimit: 3
   hyperwarTimelock: 3600
-  price: 386987
+  price: 283000 # Exodus: retain main-build ship price.
   purchasable: false # voucher only
   category: Large
   group: Security

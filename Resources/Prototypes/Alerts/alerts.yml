@@ -26,7 +26,7 @@
     - category: Thirst
     - alertType: Magboots
     - alertType: Pacified
-    - alertType: Offer # SS220 / CorvaxGoob-Offer
+    - alertType: Offer # CorvaxGoob-Offer
 
 - type: entity
   id: AlertSpriteView
@@ -96,7 +96,7 @@
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
 
-# SS220-begin CorvaxGoob-Offer
+# CorvaxGoob-Offer-Start
 - type: alert
   id: Offer
   clickEvent: !type:AcceptOfferAlertEvent
@@ -105,7 +105,7 @@
     state: offer_item
   name: alerts-offer-name
   description: alerts-offer-desc
-# SS220-end
+# CorvaxGoob-Offer-End
 
 
 - type: alert

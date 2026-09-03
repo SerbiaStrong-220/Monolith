@@ -54,7 +54,7 @@
       task: RammerShuttleCompound
   - type: NebulaNpcGridPresenceSource # Exodus nebula NPC grid presence
   - type: StaticPrice
-    price: 40000
+    price: 40000 # Exodus: retain the agreed main-build AI price.
   - type: ApcPowerReceiver
     powerLoad: 1000 # suspiciously low power-using AI
   - type: ExtensionCableReceiver
@@ -65,7 +65,7 @@
   - type: ShipNpcTarget # Exodus faction-aware NPC core targeting
     priority: 1
     needPower: true # Exodus powered NPC core targeting
-  - type: PassiveThermalSignature # SS220: retain main-build thermal signature.
+  - type: PassiveThermalSignature # Exodus: retain main-build thermal signature.
     signature: 500000 # vibe number
   - type: ThermalSignature
 

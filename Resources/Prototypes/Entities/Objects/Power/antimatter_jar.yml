@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseItem
   id: AmeJar
-  name: IRE isotopes canister
-  description: A hermetically sealed jar containing volatile isotopes for use in an isotopes reaction engine. Do not trigger its release mechanism.
+  name: AME fuel jar # Exodus: preserve main-build AME terminology.
+  description: A hermetically sealed jar containing antimatter for use in an antimatter reactor. Do not trigger its release mechanism.
   components:
   - type: Item
     size: Normal

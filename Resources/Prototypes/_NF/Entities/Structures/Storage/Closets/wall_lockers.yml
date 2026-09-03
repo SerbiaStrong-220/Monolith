@@ -109,7 +109,7 @@
   categories: [ HideSpawnMenu ] # debloat spawn menu
   id: LockerWallColorAme
   parent: LockerWallColorBase
-  name: IRE fuel wall locker
+  name: AME fuel wall locker # Exodus: preserve main-build AME terminology.
   components:
   - type: Sprite
     layers:

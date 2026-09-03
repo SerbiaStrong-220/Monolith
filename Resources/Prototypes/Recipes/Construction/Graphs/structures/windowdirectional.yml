@@ -40,11 +40,13 @@
               amount: 1
               doAfter: 3
 
-#        - to: windowClockworkDirectional
-#          steps:
-#            - material: ClockworkGlass
-#              amount: 1
-#              doAfter: 3
+        # Exodus-begin keep directional clockwork window construction enabled
+        - to: windowClockworkDirectional
+          steps:
+            - material: ClockworkGlass
+              amount: 1
+              doAfter: 3
+        # Exodus-end
 
     - node: windowDirectional
       entity: WindowDirectional
@@ -99,24 +101,26 @@
             - tool: Anchoring
               doAfter: 3
 
-#    - node: windowClockworkDirectional
-#      entity: WindowClockworkDirectional
-#      edges:
-#        - to: start
-#          completed:
-#            - !type:SpawnPrototype
-#              prototype: SheetClockworkGlass1
-#              amount: 1
-#            - !type:DeleteEntity {}
-#          steps:
-#            - tool: Screwing
-#              doAfter: 2
-#            - tool: Prying
-#              doAfter: 3
-#            - tool: Screwing
-#              doAfter: 2
-#            - tool: Anchoring
-#              doAfter: 3
+    # Exodus-begin keep directional clockwork window graph node enabled
+    - node: windowClockworkDirectional
+      entity: WindowClockworkDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetClockworkGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+    # Exodus-end
 
     - node: plasmaReinforcedWindowDirectional
       entity: PlasmaReinforcedWindowDirectional

@@ -1,27 +1,5 @@
-# Exodus-begin fixed resource clusters
-- type: pointOfInterest
-  id: BeaconClusterA
-  parent: [BasePOI, BaseRepairablePOI]
-  name: 'INSO-357k Asteroid Cluster'
-  minimumDistance: 0
-  maximumDistance: 0
-  posX: -5952
-  posY: 25344
-  placementClearance: 2500
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
-  spawnGroup: Required
-  gridPath: /Maps/_Exodus/POI/beaconstation_a.yml
-  addComponents:
-  - type: IFF
-    color: "#ccaa55"
-  - type: SolarPoweredGrid
-    doNotCull: true
-  - type: WorldGenDistanceCarver
-    distanceThresholds:
-    - maxDistance: 300
-      prob: 0.0
-    - maxDistance: 600
-      prob: 0.3
+# Exodus: resource clusters are generated only by worldgen, not as automatic POIs.
+# Their beacon maps remain registered for manual loading.
 
 - type: gameMap
   id: BeaconClusterA
@@ -35,30 +13,6 @@
       - type: StationNameSetup
         mapNameTemplate: 'INSO-357k Asteroid Cluster'
 
-- type: pointOfInterest
-  id: BeaconWilds
-  parent: [BasePOI, BaseRepairablePOI]
-  name: 'LINEAR-21 Asteroid Cluster'
-  minimumDistance: 0
-  maximumDistance: 0
-  posX: 9728
-  posY: -33024
-  placementClearance: 4200
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
-  spawnGroup: Required
-  gridPath: /Maps/_Exodus/POI/beaconstation_wilds.yml
-  addComponents:
-  - type: IFF
-    color: "#ccaa55"
-  - type: SolarPoweredGrid
-    doNotCull: true
-  - type: WorldGenDistanceCarver
-    distanceThresholds:
-    - maxDistance: 400
-      prob: 0.0
-    - maxDistance: 800
-      prob: 0.3
-
 - type: gameMap
   id: BeaconWilds
   mapName: 'LINEAR-21 Asteroid Cluster'
@@ -70,8 +24,6 @@
       components:
       - type: StationNameSetup
         mapNameTemplate: 'LINEAR-21 Asteroid Cluster'
-# Exodus-end
-
 - type: gameMap
   id: EmptyFrontierBeacon
   mapName: Beacon

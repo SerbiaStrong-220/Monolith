@@ -1,6 +1,7 @@
+# Exodus: preserve main-build .45 Magnum display names; upstream .357 prototype IDs and mechanics remain.
 - type: entity
   id: Bullet357_magnumFMJ
-  name: bullet (.357 magnum)
+  name: bullet (.45 magnum)
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -12,7 +13,7 @@
 
 - type: entity
   id: Bullet357_magnumPractice
-  name: bullet (.357 magnum practice)
+  name: bullet (.45 magnum practice)
   parent: BaseBulletPractice
   categories: [ HideSpawnMenu ]
   components:
@@ -23,7 +24,7 @@
 
 - type: entity
   id: Bullet357_magnumRubber
-  name: bullet (.357 magnum rubber)
+  name: bullet (.45 magnum rubber)
   parent: BaseBulletRubber
   categories: [ HideSpawnMenu ]
   components:
@@ -37,7 +38,7 @@
 - type: entity
   id: Bullet357_magnumIncendiary
   parent: BaseBulletIncendiary
-  name: bullet (.357 magnum incendiary)
+  name: bullet (.45 magnum incendiary)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -48,7 +49,7 @@
 
 - type: entity
   id: Bullet357_magnumAP
-  name: bullet (.357 magnum armor-piercing)
+  name: bullet (.45 magnum armor-piercing)
   parent: BaseBulletAP
   categories: [ HideSpawnMenu ]
   components:
@@ -60,7 +61,7 @@
 
 - type: entity
   id: Bullet357_magnumUranium
-  name: bullet (.357 magnum uranium)
+  name: bullet (.45 magnum uranium)
   parent: BaseBulletUranium
   categories: [ HideSpawnMenu ]
   components:
@@ -76,7 +77,7 @@
 - type: entity
   id: Bullet357_magnumHP
   parent: BaseBullet
-  name: bullet (.357 magnum hollow-point)
+  name: bullet (.45 magnum hollow-point)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -89,7 +90,7 @@
 - type: entity
   id: Bullet357_magnumRIP
   parent: BaseBullet
-  name: bullet (.357 magnum RIP)
+  name: bullet (.45 magnum RIP)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -103,7 +104,7 @@
 - type: entity
   id: Bullet357_magnumPlasteelAP
   parent: BaseBullet
-  name: bullet (.357 magnum AP)
+  name: bullet (.45 magnum AP)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile

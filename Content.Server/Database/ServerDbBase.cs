@@ -1957,7 +1957,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         }
 
-        // SS220-begin - Unified ban model helper.
+        // Exodus-begin - Unified ban model helper.
         private static async Task<IEnumerable<TResult>> AsyncSelect<T, TResult>(
             IEnumerable<T>? enumerable,
             Func<T, Task<TResult>> selector)
@@ -1971,7 +1971,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             return [..results];
         }
-        // SS220-end
+        // Exodus-end
 
         #region Wayfarer Safety Deposit Box
 

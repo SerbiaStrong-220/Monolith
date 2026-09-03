@@ -37,7 +37,7 @@
   - HeadOfSecurity
   - Bailiff
   - Sergeant
-  - Armory
+  - Armory # Exodus: restore accepted upstream Colonel armory access.
   - Frontier #Mono End
   special:
   - !type:AddComponentSpecial

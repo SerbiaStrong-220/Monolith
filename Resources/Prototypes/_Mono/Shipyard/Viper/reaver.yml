@@ -9,11 +9,10 @@
   parent: BaseVessel
   name: VG Reaver
   description: A small assualt and escort craft outsourced by the Viper Group. It was designed recently, opting for more modern forms of weaponry off the black market.
-  price: 79534
+  price: 61440 # Exodus keep ship price
   category: Small
   group: Viper
-  access: Mercenary # Exodus temp-viper-mercenary-access
-  # access: Viper # Exodus temp-viper-mercenary-access
+  access: Viper # Exodus restore-viper-group
   shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/reaver.yml
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction

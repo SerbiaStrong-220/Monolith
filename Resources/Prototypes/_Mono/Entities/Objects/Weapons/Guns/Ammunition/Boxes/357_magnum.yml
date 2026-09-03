@@ -1,8 +1,9 @@
+# Exodus: preserve main-build .45 Magnum display names; upstream .357 prototype IDs and mechanics remain.
 - type: entity
   abstract: true
   parent: [BaseItem, RecyclableItemCardboard] # Frontier: added RecyclableItemCardboard
   id: BaseAmmoBox357_magnum
-  name: ammunition box (.357 magnum FMJ)
+  name: ammunition box (.45 magnum FMJ)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -35,7 +36,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumFMJ
-  name: ammunition box (.357 magnum FMJ)
+  name: ammunition box (.45 magnum FMJ)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumFMJ
@@ -47,7 +48,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumPractice
-  name: ammunition box (.357 magnum practice)
+  name: ammunition box (.45 magnum practice)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumPractice
@@ -60,7 +61,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumIncendiary
-  name: ammunition box (.357 magnum incendiary)
+  name: ammunition box (.45 magnum incendiary)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumIncendiary
@@ -73,7 +74,7 @@
 - type: entity
   id: AmmoBox357_magnumUranium
   parent: BaseAmmoBox357_magnum
-  name: ammunition box (.357 magnum uranium)
+  name: ammunition box (.45 magnum uranium)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumUranium
@@ -87,7 +88,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumRubber
-  name: ammunition box (.357 magnum rubber)
+  name: ammunition box (.45 magnum rubber)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumRubber
@@ -101,7 +102,7 @@
 - type: entity
   id: AmmoBox357_magnumAP
   parent: BaseAmmoBox357_magnum
-  name: ammunition box (.357 magnum extreme armor-piercing)
+  name: ammunition box (.45 magnum extreme armor-piercing)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumAP
@@ -116,7 +117,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumHP
-  name: ammunition box (.357 magnum hollow-point)
+  name: ammunition box (.45 magnum hollow-point)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumHP
@@ -129,7 +130,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumRIP
-  name: ammunition box (.357 magnum RIP)
+  name: ammunition box (.45 magnum RIP)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumRIP
@@ -144,7 +145,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumPlasteelAP
-  name: ammunition box (.357 magnum AP)
+  name: ammunition box (.45 magnum AP)
   components:
   - type: BallisticAmmoProvider
     proto: Cartridge357_magnumPlasteelAP
@@ -158,7 +159,7 @@
 - type: entity
   parent: BaseAmmoBox357_magnum
   id: AmmoBox357_magnumBigFMJ
-  name: big ammunition box (.357 magnum FMJ)
+  name: big ammunition box (.45 magnum FMJ)
   suffix: Big
   components:
   - type: Item

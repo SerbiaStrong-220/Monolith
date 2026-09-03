@@ -287,7 +287,7 @@
     requiredCompanies:
     - TSF
   - type: AccessReader
-    access: [["Bailiff"]]
+    access: [["Bailiff"]] # Exodus: allow both the TSF captain and colonel to manage TSF funds.
 
 - type: entity
   parent: BaseStationAdminBankATM
@@ -328,7 +328,7 @@
   - type: StationBankATM
     account: BlackMarket
   - type: AccessReader
-    access: [["PDVCommand"]]
+    access: [["Pirate"]] # Exodus: retain main-build black-market ATM access.
   - type: CompanyAccessReader
     requiredCompanies:
     - PDV

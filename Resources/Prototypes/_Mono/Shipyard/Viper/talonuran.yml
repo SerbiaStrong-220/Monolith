@@ -9,11 +9,10 @@
   parent: BaseVessel
   name: VG Talonuran
   description: A small heavy support craft, comissioned by the Viper Group for fleet support. Magboots suggested.
-  price: 68714
+  price: 47500 # Exodus keep ship price
   category: Small
   group: Viper
-  access: Mercenary # Exodus temp-viper-mercenary-access
-  # access: Viper # Exodus temp-viper-mercenary-access
+  access: Viper # Exodus restore-viper-group
   shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/talonuran.yml
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction

@@ -299,4 +299,4 @@
     laws: XenoborgLawset
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
-      path: /Audio/_Mono/Effects/Footsteps/borgwalk3.ogg # SS220: retain xenoborg flight footsteps.
+      path: /Audio/_Mono/Effects/Footsteps/borgwalk3.ogg # Exodus: retain xenoborg flight footsteps.

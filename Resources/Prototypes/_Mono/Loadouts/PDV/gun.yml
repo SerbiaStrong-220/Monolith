@@ -17,8 +17,10 @@
   loadouts:
   - FactionC20RLoadout
   - FactionVympelLoadout
+  - FactionWt550Loadout # Exodus preserve existing PDV role loadout
   - FactionAkmLoadout
   - FactionEnergyGunLoadout
+  - FactionM90Loadout # Exodus preserve existing PDV role loadout
   - FactionWSPRLoadout
   fallbacks:
   - FactionC20RLoadout
@@ -39,8 +41,10 @@
   loadouts:
   - Faction9x19SMGAmmoLoadout #C20r
   - Faction556x45mmAmmoLoadout # Vympel
+  - Faction46x30mmTopAmmo # Exodus preserve existing PDV role loadout
   - Faction762x39mmAmmoLoadout #AKM
   - FactionRechargerLoadout #Energy
+  - Faction762x51mmAmmoLoadout # Exodus preserve existing PDV role loadout
   - Faction762x39mmSubsonicAmmoLoadout #WESPR
   fallbacks:
   - Faction9x19SMGAmmoLoadout #C20r

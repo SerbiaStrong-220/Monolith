@@ -1,6 +1,7 @@
+# Exodus: preserve main-build .45 Magnum display names; upstream .357 prototype IDs and mechanics remain.
 - type: entity
   id: BaseSpeedLoader357_magnum
-  name: "speed loader (.357 magnum)"
+  name: "speed loader (.45 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -21,7 +22,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumFMJ
-  name: "speed loader (.357 magnum FMJ)"
+  name: "speed loader (.45 magnum FMJ)"
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -41,7 +42,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumEmpty
-  name: "speed loader (.357 magnum any)"
+  name: "speed loader (.45 magnum any)"
   parent: SpeedLoader357_magnumFMJ
   components:
   - type: BallisticAmmoProvider
@@ -59,7 +60,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumIncendiary
-  name: "speed loader (.357 magnum incendiary)"
+  name: "speed loader (.45 magnum incendiary)"
   parent: SpeedLoader357_magnumFMJ
   components:
   - type: BallisticAmmoProvider
@@ -67,7 +68,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumPractice
-  name: "speed loader (.357 magnum practice)"
+  name: "speed loader (.45 magnum practice)"
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -87,7 +88,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumAP
-  name: "speed loader (.357 magnum extreme armor-piercing)"
+  name: "speed loader (.45 magnum extreme armor-piercing)"
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -107,7 +108,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumUranium
-  name: "speed loader (.357 magnum uranium)"
+  name: "speed loader (.45 magnum uranium)"
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -127,7 +128,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumRubber
-  name: "speed loader (.357 magnum rubber)"
+  name: "speed loader (.45 magnum rubber)"
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -149,7 +150,7 @@
 #anti-flesh ammo
 - type: entity
   id: SpeedLoader357_magnumHP
-  name: speed loader (.357 magnum hollow-point)
+  name: speed loader (.45 magnum hollow-point)
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -169,7 +170,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumRIP
-  name: speed loader (.357 magnum RIP)
+  name: speed loader (.45 magnum RIP)
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider
@@ -191,7 +192,7 @@
 
 - type: entity
   id: SpeedLoader357_magnumPlasteelAP
-  name: speed loader (.357 magnum AP)
+  name: speed loader (.45 magnum AP)
   parent: BaseSpeedLoader357_magnum
   components:
   - type: BallisticAmmoProvider

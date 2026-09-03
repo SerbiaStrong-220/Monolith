@@ -15,8 +15,7 @@ station-event-chimera-shuttle-detected = Unidentified vessel detected near local
 # asakim ship spawns
 station-event-asakim-shuttle-detected = Unidentified Pre-Fracture vessel detected near local space. Caution is advised.
 
-# general ship spawns - prevent metagaming
-station-event-unknown-shuttle-detected = Unidentified vessel detected near local space. Caution is advised.
+# Exodus: retain faction-specific shuttle announcements; the generic announcement remains disabled.
 
 # redacted AI ship borg stuff
 

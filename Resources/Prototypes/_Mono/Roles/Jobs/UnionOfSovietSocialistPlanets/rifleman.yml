@@ -27,6 +27,10 @@
     - type: NpcFactionMember
       factions:
       - USSP
+    # Exodus-begin preserve existing role settings
+    - type: ChatRank
+      rank: ussp-rifleman
+    # Exodus-end
   - !type:AddLanguageSpecial
     languagesSpoken:
     - NovaCygniBasic

@@ -20,8 +20,7 @@
     range: 500
   - type: GunSignalControl
   - type: Gun
-    damageModifier: 0.8
-    selectedMode: Burst
+    selectedMode: Burst # Exodus: retain main-build damage outside M25/Scylla.
     availableModes: Burst
     burstCooldown: 5
     burstFireRate: 3

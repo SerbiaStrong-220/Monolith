@@ -94,7 +94,7 @@
 - type: entity
   id: PaperDeadDropHint
   parent: Paper
-  name: wayward note
+  name: suspicious note # Exodus: preserve main-build dead-drop name.
   description: A crinkled sheet with scribbles on it. Seems to have been written in a hurry.
   categories: [ HideSpawnMenu ]
   components:
@@ -109,7 +109,7 @@
 - type: entity
   id: PaperDeadDropFax
   parent: PaperDeadDropHint
-  name: wayward fax
+  name: suspicious fax # Exodus: preserve main-build dead-drop name.
   description: A sheet with blurry, crooked text on it. Seems to have been copied in a hurry.
   components:
   - type: Paper

@@ -11,7 +11,7 @@
   name: Инерция # Ru-Localization
   description: Шаттл с высокой манёвренностью и двумя Драупнирами для отвлечениря огня врага. # Ru-Localization
   limit: 6
-  price: 28897
+  price: 15000 # Exodus: retain main-build ship price.
   purchasable: false #voucher only
   category: Small
   group: Custom

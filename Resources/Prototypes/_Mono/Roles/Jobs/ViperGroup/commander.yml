@@ -3,7 +3,12 @@
   name: job-name-vg-commander
   description: job-description-vg-commander
   playTimeTracker: JobVGCommander
-  whitelisted: true # I'm not certain who gets this.
+  # Exodus-begin enable-viper-group
+  whitelisted: false
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 144000 # 40 hrs
+  # Exodus-end
   startingGear: ViperCommanderGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

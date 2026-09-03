@@ -18,7 +18,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1300
+        damage: 2000 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -27,7 +27,7 @@
           collection: MetalSlam
     - trigger:
         !type:DamageTrigger
-        damage: 1800
+        damage: 2500 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -68,7 +68,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 2750
+        damage: 3500 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -77,7 +77,7 @@
           collection: MetalSlam
     - trigger:
         !type:DamageTrigger
-        damage: 3250
+        damage: 3000 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -118,7 +118,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 3000
+        damage: 4000 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -127,7 +127,7 @@
           collection: MetalSlam
     - trigger:
         !type:DamageTrigger
-        damage: 3300
+        damage: 3500 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -168,7 +168,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 3500
+        damage: 4500 # Exodus: retain main-build wall durability.
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

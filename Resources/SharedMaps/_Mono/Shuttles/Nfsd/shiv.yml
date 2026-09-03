@@ -1,3 +1,4 @@
+# Exodus: preserve the pre-upstream Shiv layout and industrial ore processor.
 meta:
   format: 7
   category: Grid
@@ -2627,7 +2628,7 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Static
-- proto: OreProcessor
+- proto: OreProcessorIndustrial
   entities:
   - uid: 334
     components:

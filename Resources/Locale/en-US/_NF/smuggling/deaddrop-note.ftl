@@ -1,16 +1,12 @@
-dead-drop-hint-note =
-    I...SOMETHING
-    NEED...
-    COLLECT FOR #&^@...
-    INTERCEPT SOON...
-    THERE...FEW CHANCE...
-    GO... QUICK...
-    IT...VALUABLE
+# Exodus: preserve the main-build Syndicate dead-drop presentation.
+dead-drop-hint-note = Not much time.
+    Spinward Syndicate needs help.
+    Known drops:
 
     {$drops}
 
-    GOOD... FOR YOU
-    COME PLAY..?
+    Check these to lend a hand.
+    For a better tomorrow.
 
 dead-drop-time-known = next drop around {$time}
 dead-drop-time-unknown = next drop placed when we can

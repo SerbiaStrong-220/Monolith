@@ -11,7 +11,7 @@
   supervisors: job-supervisors-hire
   weight: 3 # Prioritize station & department jobs
   displayWeight: 20 # Second from the bottom
-  setPreference: false # Mono: unselectable
+  setPreference: true # Exodus keep Mercenary selectable
   access:
   - Mercenary
   accessGroups: # Frontier

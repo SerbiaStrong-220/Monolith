@@ -2123,7 +2123,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
-            // SS220-begin - Unified ban model relationship.
+            // Exodus-begin - Unified ban model relationship.
             modelBuilder.Entity("Content.Server.Database.Unban", b =>
                 {
                     b.HasOne("Content.Server.Database.Ban", "Ban")
@@ -2135,7 +2135,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("Ban");
                 });
-            // SS220-end
+            // Exodus-end
 
             modelBuilder.Entity("Content.Server.Database.WayfarerSafetyDepositBoxItem", b =>
                 {

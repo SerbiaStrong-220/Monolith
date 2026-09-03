@@ -13,7 +13,7 @@
   name: 'Среда Обитания "Звезда"' # Exodus
   minimumDistance: 20000 # Exodus-nebula-update
   maximumDistance: 30000 # Exodus-nebula-update
-  spawnGroup: Optional # SS220 keep normal POI distribution
+  spawnGroup: Optional # Exodus keep normal POI distribution
   gridPath: /Maps/_Exodus/POI/Dungeons/zvezda.yml # Exodus upstream map at owned path
   addComponents:
   - type: IFF
@@ -36,7 +36,7 @@
       - type: StationDeadDrop
         maxDeadDrops: 12
       - type: VesselInfo
-        description: "A half-abandoned decaying station. Sometimes you can hear the hull bend."
+        description: "Полузаброшенная разрушающаяся станция. Иногда слышно, как изгибается её корпус. ЭТО НЕ БЕЗОПАСНАЯ ЗОНА, НА СТАНЦИИ МОГУТ БЫТЬ ОПАСНОСТИ." # Exodus
       - type: VesselMusic
         ambientMusicPrototype: CamelotMusic
       # Exodus-begin territory-grid
@@ -54,5 +54,6 @@
           lobbySortOrder: 5
         - type: StationJobs
           availableJobs:
-            Contractor: [ -1, -1 ]
+            # Exodus: only mercenaries spawn on Zvezda.
+            Mercenary: [ -1, -1 ] # Exodus round-start and latejoin spawn
         - type: StationDeadDropHintExempt

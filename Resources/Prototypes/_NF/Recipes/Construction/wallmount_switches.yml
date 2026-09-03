@@ -1,4 +1,4 @@
-# SS220: retain localized construction metadata.
+# Exodus: retain localized construction metadata.
 - type: construction
   id: ButtonFrameGreyConstruction
   graph: ButtonFrameGraph

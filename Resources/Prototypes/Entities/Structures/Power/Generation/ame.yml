@@ -1,7 +1,7 @@
 - type: entity
   id: AmeController
-  name: IRE controller
-  description: It's a controller for the isotopes reaction engine.
+  name: AME controller # Exodus: preserve main-build AME terminology.
+  description: It's a controller for the antimatter engine.
   placement:
     mode: SnapgridCenter
   components:
@@ -140,8 +140,8 @@
 
 - type: entity
   id: AmeShielding
-  name: IRE shielding
-  description: Keeps the isotopes in and extra radiation out.
+  name: AME shielding # Exodus: preserve main-build AME terminology.
+  description: Keeps the antimatter in and the matter out.
   placement:
     mode: SnapgridCenter
   components:

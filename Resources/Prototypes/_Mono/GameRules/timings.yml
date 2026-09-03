@@ -13,17 +13,15 @@
     delay:
       min: 14400
       max: 14400
-  - type: WarLevelRule
-    warLevel: true
-
-- type: entity
-  id: PortstrikeAnnounceRuleRandom35To45
-  parent: PortstrikeAnnounceRuleHour4
-  components:
-  - type: GameRule
-    delay:
-      min: 12600 # 3.5hr
-      max: 16200 # 4.5hr
+  - type: BlankRule # Exodus: retain main-build portstrike rule.
+  - type: StationEvent
+    earliestStart: 0
+    endAnnouncement: gamerule-portstrike-announce-announcement
+    announceSender: gamerule-portstrike-announce-sender
+    endAudio:
+      path: /Audio/Misc/gamma.ogg
+      params:
+        volume: -2
 
 # Exodus: PortstrikeAnnounceRuleHour2 is maintained in _Exodus/GameRules/timings.yml.
 
@@ -45,10 +43,10 @@
     endAt: 120
 
 - type: entity
-  id: PortstrikeAnnounceRuleSeconds5
+  id: PortstrikeAnnounceRuleSeconds20 # Exodus: retain main-build debug timing.
   parent: PortstrikeAnnounceRuleHour4
   components:
   - type: GameRule
     delay:
-      min: 5
-      max: 5
+      min: 20
+      max: 20

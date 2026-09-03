@@ -7,6 +7,7 @@
   - FactionDrozdLoadout
   - FactionRiversongLoadout
   - FactionDragonfangLoadout
+  - FactionBanditLoadout # Exodus preserve existing TSF role loadout
   fallbacks:
   - FactionFrostLoadout
 
@@ -17,6 +18,7 @@
   loadouts:
   - FactionRiversongLoadout
   - FactionDrozdLoadout
+  - FactionDragonfangLoadout # Exodus preserve existing TSF role loadout
   - SecurityGuardEnforcerLoadout
 
 - type: loadoutGroup
@@ -26,6 +28,7 @@
   loadouts:
   - FactionLecterLoadout
   - FactionDrozdLoadout
+  - FactionVulcanLoadout # Exodus preserve existing TSF role loadout
   - SecurityGuardEnforcerLoadout # Shotgun, since mikus asked about it and technically we can pick it anyway
 
 - type: loadoutGroup

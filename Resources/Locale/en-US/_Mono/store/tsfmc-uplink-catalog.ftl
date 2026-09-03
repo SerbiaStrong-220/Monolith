@@ -96,10 +96,10 @@ uplink-security-t1-tarantula-voucher-desc = A small card that contains the data 
 
 uplink-security-t1-sentinel-voucher-name = TSFMC Sentinel LPC [T1]
 uplink-security-t1-sentinel-voucher-desc = A small card that contains the data for the procurement of a Sentinel-class escort from the flagship's reserves.
-# SS220-begin retained ship vouchers
+# Exodus-begin retained ship vouchers
 uplink-security-t1-sentinel-f-voucher-name = TSFMC Sentinel-F LPC [T1]
 uplink-security-t1-sentinel-f-voucher-desc = A small card that contains the data for the procurement of a Sentinel-F-class escort from the flagship's reserves.
-# SS220-end
+# Exodus-end
 
 uplink-security-t1-mercury-voucher-name = TSFMC Mercury LPC [T1]
 uplink-security-t1-mercury-voucher-desc = A small card that contains the data for the procurement of a Mercury-class corvette from the flagship's reserves.
@@ -124,10 +124,10 @@ uplink-security-t3-fujian-voucher-desc = A small card that contains the data for
 
 uplink-security-flyssa-voucher-name = TSFMC Flyssa LPC [T4]
 uplink-security-flyssa-voucher-desc = A small card that contains the data for the procurement of a Flyssa-class destroyer from the flagship's reserves.
-# SS220-begin retained ship vouchers
+# Exodus-begin retained ship vouchers
 uplink-security-antares-voucher-name = TSFMC Antares LPC [T4]
 uplink-security-antares-voucher-desc = A small card that contains the data for the procurement of an Antares-class destroyer from the flagship's reserves.
-# SS220-end
+# Exodus-end
 
 uplink-security-sentry-mk290-name = MK-290 Deployable Sentry System
 uplink-security-sentry-mk290-desc = A multipurpose portable sentry, capable of feeding from 5.56x45mm, 6.8x52mm, and 7.62x39mm magazines. Requires a screwdriver to disassemble once placed. DOES NOT come with ammo, and empty before packing.

@@ -1,6 +1,7 @@
 # Author Info
 # GitHub: kasature90
 # Discord: _starch_
+# Exodus-begin: enable Hokkaido in the automatic POI rotation.
 - type: pointOfInterest
   id: Hokkaido
   parent: [BasePOI, BaseRepairablePOI]
@@ -20,6 +21,7 @@
       prob: 0.0
     - maxDistance: 1500
       prob: 0.3
+# Exodus-end
 
 - type: gameMap
   id: Hokkaido

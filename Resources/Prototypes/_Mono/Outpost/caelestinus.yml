@@ -4,7 +4,7 @@
   mapPath: /Maps/_Exodus/Outpost/colossus_central.yml # Exodus
   minPlayers: 0
   maxPlayers: 100
-  randomRotation: false # SS220 keep Central orientation
+  randomRotation: false # Exodus keep Central orientation
   maxRandomOffset: 0
   stations:
     Frontier:
@@ -47,8 +47,8 @@
         - type: StationJobs
           availableJobs:
             Contractor: [ -1, -1 ]
-            Pilot: [ -1, -1 ] # SS220 keep Central pilot spawn
-            Mercenary: [ -1, -1 ] # SS220 keep Central mercenary spawn
+            Pilot: [ -1, -1 ] # Exodus keep Central pilot spawn
+            Mercenary: [ -1, -1 ] # Exodus keep Central mercenary spawn
             Borg: [ -1, -1 ]
             ColossusSecurityBorg: [ 1, 1 ] # Exodus colossus-security-borg
             StationRepresentative: [ 1, 1 ]

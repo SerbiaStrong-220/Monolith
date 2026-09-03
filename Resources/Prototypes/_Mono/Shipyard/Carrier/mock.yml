@@ -11,7 +11,7 @@
   name: Мак # Ru-Localization
   description: Легкобронированный дрон, оснащённый двумя 90-мм автопушками для подавления целей и уничтожения вражеских истребителей. # Ru-Localization
   limit: 4
-  price: 22618
+  price: 13500 # Exodus: retain main-build ship price.
   purchasable: false #voucher only
   category: Small
   group: Custom

@@ -52,5 +52,5 @@
     - NanolaminateFoamGrenade
     - RCDRecharging
     - NFPouchUtility
-    - BaseSecurityUplinkRadioDeputy
+    # Exodus: keep the TSF engineer's dedicated uplink instead of adding the Deputy uplink.
     - BookTSFSOP

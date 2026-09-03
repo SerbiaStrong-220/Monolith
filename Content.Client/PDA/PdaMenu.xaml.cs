@@ -243,7 +243,7 @@ namespace Content.Client.PDA
             // Exodus-begin: only update the label when the PDA state contains a date.
             if (state.PdaOwnerInfo.CurrentDate is { } curDate)
             {
-                _currentDate = curDate.ToString("dd/MM/yyyy"); // SS220: keep the compact numeric date format.
+                _currentDate = curDate.ToString("dd/MM/yyyy"); // Exodus: keep the compact numeric date format.
                 CurrentDateLabel.SetMarkup(Loc.GetString(
                     "comp-pda-ui-current-date",
                     ("date", _currentDate)

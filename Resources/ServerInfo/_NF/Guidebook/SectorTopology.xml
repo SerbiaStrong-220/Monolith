@@ -1,7 +1,7 @@
 <Document>
 # Топология сектора
 
-<!-- SS220: retained the main-build Russian sector topology. -->
+<!-- Exodus: retained the main-build Russian sector topology. -->
 <!-- Exodus-begin nebula-sector-topology -->
 <!-- Note: range values are world distances from Colossus-Central and do not scale with the world size cvar. -->
 

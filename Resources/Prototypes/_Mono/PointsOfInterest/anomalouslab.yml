@@ -13,7 +13,7 @@
 - type: gameMap
   id: AnomalousLab
   mapName: 'Лаборатория Аномалий' # Ru-Localization
-  mapPath: /Maps/_Mono/POI/anomalouslab.yml
+  mapPath: /Maps/_Exodus/POI/anomalouslab.yml # Exodus upstream map at owned path
   minPlayers: 0
   stations:
     AnomalousLab:

@@ -36,8 +36,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    damageModifier: 2
-    projectileSpeed: 380
+    projectileSpeed: 380 # Exodus: retain main-build balance outside M25/Scylla.
     minAngle: 0
     maxAngle: 1
     fireRate: 0.2

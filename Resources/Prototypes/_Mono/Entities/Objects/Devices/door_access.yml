@@ -58,8 +58,7 @@
   suffix: Viper Group, Locked
   components:
   - type: AccessReader
-    # access: [["Viper"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
-    access: [["Mercenary"]]
+    access: [["Viper"]] # Exodus restore-viper-group
 
 - type: entity
   parent: DoorElectronics
@@ -67,8 +66,7 @@
   suffix: Viper Group Command, Locked
   components:
   - type: AccessReader
-    # access: [["ViperCommand"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
-    access: [["Mercenary"]]
+    access: [["ViperCommand"]] # Exodus restore-viper-group
 
 - type: entity
   parent: DoorElectronics

@@ -321,7 +321,7 @@
 
 - type: nebulaPoi
   id: NebulaPoiAnomalousLab
-  path: /Maps/_Mono/POI/anomalouslab.yml
+  path: /Maps/_Exodus/POI/anomalouslab.yml
   spawnIn:
   - NebulaPurpleMarker
   minDensity: 0.1

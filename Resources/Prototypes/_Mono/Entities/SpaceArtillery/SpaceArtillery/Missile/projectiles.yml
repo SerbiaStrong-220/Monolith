@@ -180,11 +180,7 @@
     scanArc: 0
     launchSpeed: 90
     maxSpeed: 300
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 30
-    intensitySlope: 5
-    maxIntensity: 15
+  # Exodus: retain main-build payload without a direct Explosive component.
 
 # TOVEK
 
@@ -219,7 +215,7 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 130
+    totalIntensity: 300 # Exodus: retain main-build balance outside M25/Scylla.
     intensitySlope: 6
     maxIntensity: 25
   - type: GatheringProjectile

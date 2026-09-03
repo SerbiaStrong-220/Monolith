@@ -78,7 +78,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
-  description: "Go loud and proud with a fully loaded 357_magnum Python, bundled with two speed loaders."
+  description: "Go loud and proud with a fully loaded 45_magnum Python, bundled with two speed loaders." # Exodus: preserve main-build terminology.
   components:
   - type: StorageFill
     contents:

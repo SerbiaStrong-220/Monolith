@@ -33,6 +33,10 @@
     - type: NpcFactionMember
       factions:
       - USSP
+    # Exodus-begin preserve existing role settings
+    - type: ChatRank
+      rank: ussp-commissar
+    # Exodus-end
   - !type:AddLanguageSpecial
     languagesSpoken:
     - NovaCygniBasic

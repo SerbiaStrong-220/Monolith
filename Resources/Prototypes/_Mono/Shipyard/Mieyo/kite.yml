@@ -9,6 +9,10 @@
   group: Mieyo
   access: MieyoSecurity
   shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/kite.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Patrol

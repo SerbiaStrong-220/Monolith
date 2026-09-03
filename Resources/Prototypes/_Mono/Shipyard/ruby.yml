@@ -37,4 +37,4 @@
 #          availableJobs:
 #            Contractor: [ 0, 0 ]
 #            # Pilot: [ 0, 0 ]
-#            # Mercenary: [ 0, 0 ]
+#            Mercenary: [ 0, 0 ] # Exodus keep Mercenary vessel role if this map is re-enabled

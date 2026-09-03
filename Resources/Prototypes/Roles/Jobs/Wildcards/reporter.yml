@@ -4,9 +4,12 @@
   description: job-description-reporter
   playTimeTracker: JobReporter
   setPreference: false # Frontier
+  requirements: # Exodus preserve existing role settings
+    - !type:OverallPlaytimeRequirement
+      time: 10800
   startingGear: ReporterGear
   icon: "JobIconReporter"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-hire # Exodus preserve existing role settings
 #  access: # Frontier
 #  - Service # Frontier
 #  - Maintenance # Frontier

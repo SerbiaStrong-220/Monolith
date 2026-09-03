@@ -156,7 +156,7 @@
   # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   - RoundEndRuleHour3
-  - PortstrikeAnnounceRuleHour1
+  # - PortstrikeAnnounceRuleHour1 # Exodus-NoPortstrikeAnnounce
 
 - type: gamePreset
   id: MonoRogueTSFHyperwar

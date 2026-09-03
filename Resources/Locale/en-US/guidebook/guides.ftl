@@ -50,7 +50,8 @@ guide-entry-ramping = Ramping
 guide-entry-voltagenetworks = Voltage Networks
 guide-entry-generators = Generators
 guide-entry-portable-generator = Portable Generators
-guide-entry-ame = Isotope Reaction Engine (IRE)
+# Exodus: preserve main-build terminology.
+guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularityteslaengine = Singularity / Tesla
 guide-entry-singularityengine = Singularity Engine
 guide-entry-teslaengine = Tesla Engine

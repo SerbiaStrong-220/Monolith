@@ -10,12 +10,10 @@ CircularShieldBase: ShieldGeneratorSmall
 MachineOreMagnet: null # Exodus: keep the disabled ore magnet out of imported upstream ship maps.
 BiomeSourceMiddleRing: null # Exodus: territory biomes are now supplied dynamically by GridTerritorySystem.
 BiomeSourceOuterRing: BiomeSourceExternalSpace # Exodus: preserve the outer-space layer on imported Central maps.
-SpawnPointUSSPCommissar: null # Exodus: USSP/VG jobs remain disabled.
-SpawnPointUSSPRifleman: null # Exodus: USSP/VG jobs remain disabled.
-SpawnPointUSSPSergeant: null # Exodus: USSP/VG jobs remain disabled.
-SpawnPointVGCommander: null # Exodus: USSP/VG jobs remain disabled.
-SpawnPointVGInfanteer: null # Exodus: USSP/VG jobs remain disabled.
-SpawnPointVGLieutenant: null # Exodus: USSP/VG jobs remain disabled.
+SpawnPointUSSPCommissar: null # Exodus: USSP jobs remain disabled.
+SpawnPointUSSPRifleman: null # Exodus: USSP jobs remain disabled.
+SpawnPointUSSPSergeant: null # Exodus: USSP jobs remain disabled.
+# Exodus: VG spawn points remain valid because Viper Group is enabled.
 
 # rogue->PDV AI core
 PlayerStationAiRogue: PlayerStationAiPDV
@@ -71,18 +69,9 @@ HyperlinkBookNfsdSop: null
 # base planet water replaced by CE water (z-level safe landing + distortion)
 FloorWaterEntity: CEWater
 
+# Exodus: Clockwork and Pinion entities remain active; do not migrate them away.
+
 # Entities removed for wizden wall-ening, such as ones that didn't have sprites available and weren't worth the effort for me to go out of my way to do so.
-ClockworkGrille: Grille
-ClockworkGrilleBroken: GrilleBroken
-ClockworkGrilleDiagonal: GrilleDiagonal
-
-ClockworkWindow: Window
-WindowClockworkDirectional: WindowDirectional
-ClockworkWindowDiagonal: WindowDiagonal
-
-PinionAirlockGlass: null
-PinionAirlock: null
-
 WallShuttleInterior: WallShuttle
 # Annoying, but it was the closest stat-wise.
 MiningWindow: Window

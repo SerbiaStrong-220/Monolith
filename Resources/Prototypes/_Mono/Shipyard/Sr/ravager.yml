@@ -41,6 +41,6 @@
       - type: StationJobs
         availableJobs:
           Contractor: [ 0, 0 ]
-          # Mercenary: [ 0, 0 ]
+          Mercenary: [ 0, 0 ] # Exodus keep Mercenary vessel role
           Borg: [ 0, 0 ]
           SecurityGuard: [ 0, 0 ]

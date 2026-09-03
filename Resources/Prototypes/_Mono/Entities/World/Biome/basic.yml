@@ -236,9 +236,17 @@
     - id: NFWreckDebrisBrassMedium
       prob: 0.006
       orGroup: wreck
+    # Exodus-begin: retain existing drones and add upstream T0 drones independently.
+    - id: MonoDroneSpawnerT1
+      prob: 0.05
+      orGroup: wreck
+    - id: MonoDroneSpawnerT2Inner
+      prob: 0.025
+      orGroup: wreck
     - id: MonoDroneSpawnerT0
       prob: 0.075
       orGroup: wreck
+    # Exodus-end
 
 - type: spaceBiome
   id: MonoWilds

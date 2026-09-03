@@ -1,5 +1,5 @@
 <Document>
-  <!-- SS220: retained Russian ship guide terminology. -->
+  <!-- Exodus: retained Russian ship guide terminology. -->
   # E.R.V. КЛАССА JUDICIARY
   <Box>
   <GuideEntityEmbed Entity="MercenaryTechFab"/>

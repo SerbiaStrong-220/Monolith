@@ -1,4 +1,4 @@
-# SS220: retained existing ammo-loader strings; upstream-only failure and entity keys follow.
+# Exodus: retained existing ammo-loader strings; upstream-only failure and entity keys follow.
 # Ammo Loader
 ammo-loader-flush-verb = Flush
 ammo-loader-eject-verb = Eject contents

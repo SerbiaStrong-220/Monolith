@@ -189,8 +189,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    damageModifier: 1.3
-    projectileSpeed: 410 # SS220 upstream Hydra balance
+    projectileSpeed: 410 # Exodus: retain main-build damage outside M25/Scylla and speed balance.
     recoil: 50 # 2x
     minAngle: 0
     maxAngle: 3

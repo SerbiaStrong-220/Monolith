@@ -28,7 +28,7 @@
   id: UnknownShuttleZenith
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-detected #station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-shuttle-detected # Exodus: retain main-build event announcement.
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
@@ -48,7 +48,7 @@
   id: UnknownShuttleZenithE
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-detected #station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-shuttle-detected # Exodus: retain main-build event announcement.
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 3
@@ -68,7 +68,7 @@
   id: UnknownShuttleNebula
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-detected #station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-shuttle-detected # Exodus: retain main-build event announcement.
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
@@ -88,7 +88,7 @@
   id: UnknownShuttleWyrm
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-detected #station-event-ai-shuttle-detected
+    startAnnouncement: station-event-ai-shuttle-detected # Exodus: retain main-build event announcement.
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 3

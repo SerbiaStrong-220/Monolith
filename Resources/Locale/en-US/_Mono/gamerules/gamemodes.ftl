@@ -25,5 +25,4 @@ mono-chimera-description = Native PDV imperials threaten TSF colonial expansion 
 mono-allatonce-title = Apocalypse (ALL, 3hr)
 mono-allatonce-description = A battleground between PDV, and TSF forces alike, with ancient ADS systems and Chimera bioweapons seeping in.
 
-mono-secret-title = Secret (?)
-mono-secret-description = The main threat of the round is unknown. You'll have to figure that out later.
+# Exodus: retain the main-build preset set; MonoSecret remains disabled.

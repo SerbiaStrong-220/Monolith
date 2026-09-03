@@ -36,7 +36,7 @@
     sprite: Structures/Doors/Airlocks/Glass/cargo-base.rsi
     state: "assembly"
 
-# SS220-begin keep clockwork airlock assemblies enabled
+# Exodus-begin keep clockwork airlock assemblies enabled
 - type: entity
   id: PinionAirlockAssembly
   name: airlock assembly
@@ -60,7 +60,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
     state: "assembly"
-# SS220-end
+# Exodus-end
 
 #Command
 - type: entity

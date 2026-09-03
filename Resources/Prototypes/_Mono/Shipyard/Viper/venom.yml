@@ -8,11 +8,15 @@
   parent: BaseVessel
   name: VG Venom
   description: A medium sized destroyer with detainment capabilities. Armed with a Cyrex as its main cannon, 4 Dravon 90mm autocannons and 2 AK57 for maximum destruction
-  price: 149335
+  price: 120000 # Exodus keep ship price
   category: Medium
   group: Viper
   access: Viper
   shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/venom.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Destroyer

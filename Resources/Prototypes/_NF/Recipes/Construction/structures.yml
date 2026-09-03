@@ -1,4 +1,4 @@
-# SS220-begin keep secret-door construction enabled
+# Exodus-begin keep secret-door construction enabled
 - type: construction
   name: recipes-reinforced-secret-door-name
   id: SolidReinforcedSecretDoorConstruction
@@ -54,4 +54,4 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-# SS220-end
+# Exodus-end

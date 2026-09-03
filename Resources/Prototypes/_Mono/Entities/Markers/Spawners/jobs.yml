@@ -164,41 +164,41 @@
     - sprite: Mobs/Silicon/chassis.rsi
       state: robot_e
 
-# Exodus-begin disable-viper-group
+# Exodus-begin enable-viper-group
 # Viper Group
-#
-#- type: entity
-#  id: SpawnPointVGInfanteer
-#  parent: SpawnPointJobBase
-#  name: VG Infanteer
-#  components:
-#  - type: SpawnPoint
-#    job_id: VGInfanteer
-#  - type: Sprite
-#    sprite: Structures/Decoration/banner.rsi
-#    state: banner-red
-#
-#- type: entity
-#  id: SpawnPointVGLieutenant
-#  parent: SpawnPointJobBase
-#  name: VG Lieutenant
-#  components:
-#  - type: SpawnPoint
-#    job_id: VGLieutenant
-#  - type: Sprite
-#    sprite: Structures/Decoration/banner.rsi
-#    state: banner-red
-#
-#- type: entity
-#  id: SpawnPointVGCommander
-#  parent: SpawnPointJobBase
-#  name: VG Commander
-#  components:
-#  - type: SpawnPoint
-#    job_id: VGCommander
-#  - type: Sprite
-#    sprite: Structures/Decoration/banner.rsi
-#    state: banner-red
+
+- type: entity
+  id: SpawnPointVGInfanteer
+  parent: SpawnPointJobBase
+  name: VG Infanteer
+  components:
+  - type: SpawnPoint
+    job_id: VGInfanteer
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-red
+
+- type: entity
+  id: SpawnPointVGLieutenant
+  parent: SpawnPointJobBase
+  name: VG Lieutenant
+  components:
+  - type: SpawnPoint
+    job_id: VGLieutenant
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-red
+
+- type: entity
+  id: SpawnPointVGCommander
+  parent: SpawnPointJobBase
+  name: VG Commander
+  components:
+  - type: SpawnPoint
+    job_id: VGCommander
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-red
 # Exodus-end
 
 # Mieyo

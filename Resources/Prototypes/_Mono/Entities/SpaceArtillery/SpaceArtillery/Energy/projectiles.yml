@@ -10,7 +10,7 @@
     damage:
       types:
         Radiation: 25
-        Structural: 3000
+        Structural: 1500 # Exodus: retain main-build balance outside M25/Scylla.
         Heat: 50
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/plasmashot.rsi
@@ -30,8 +30,8 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 90
-    intensitySlope: 9
+    totalIntensity: 60 # Exodus: retain main-build balance outside M25/Scylla.
+    intensitySlope: 8
     maxIntensity: 12
     maxTileBreak: 3
 
@@ -149,7 +149,7 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 32
+    totalIntensity: 32 # Exodus: adopt upstream Scylla balance.
     intensitySlope: 4
     maxIntensity: 4
 

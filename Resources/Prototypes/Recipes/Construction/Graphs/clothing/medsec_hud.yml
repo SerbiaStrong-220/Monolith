@@ -1,4 +1,4 @@
-# SS220: retained localized construction tag names; upstream graph changes integrated.
+# Exodus: retained localized construction tag names; upstream graph changes integrated.
 - type: constructionGraph
   id: HudMedSec
   start: start
@@ -22,14 +22,14 @@
             - material: Cable
               amount: 5
               doAfter: 5
-            # SS220-begin keep radio construction requirement
+            # Exodus-begin keep radio construction requirement
             - tag: Radio
               name: construction-graph-tag-radio
               icon:
                 sprite: _NF/Objects/Devices/communication.rsi # Frontier
                 state: base # Frontier
               doAfter: 5
-            # SS220-end
+            # Exodus-end
             - material: Capacitor
               amount: 1
               doAfter: 5

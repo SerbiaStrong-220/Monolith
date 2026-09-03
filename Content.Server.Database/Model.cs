@@ -306,7 +306,7 @@ namespace Content.Server.Database
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // SS220 - Keep the unified ban model configuration alongside safety deposit boxes.
+            // Exodus - Keep the unified ban model configuration alongside safety deposit boxes.
             ModelBan.OnModelCreating(modelBuilder);
 
             // Wayfarer Safety Deposit Box configuration

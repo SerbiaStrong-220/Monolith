@@ -45,4 +45,4 @@
   - VGLieutenant
   - VGCommander
   primary: false
-  editorHidden: true # Exodus disable-viper-group
+  editorHidden: false # Exodus enable-viper-group

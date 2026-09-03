@@ -8,21 +8,7 @@
 
 # Notes:
 # Medical ship garage, medical manager base and medical bounty staging area.
-- type: pointOfInterest
-  id: Medical
-  parent: [BasePOI, BaseRepairablePOI]
-  name: 'Госпиталь' # Ru-Localization
-  minimumDistance: 6000 # Exodus-nebula-update
-  maximumDistance: 8000 # Exodus-nebula-update
-  spawnGroup: Required
-  gridPath: /Maps/_Exodus/POI/hospital.yml # Exodus-Change
-  addComponents:
-  - type: IFF
-    color: "#00b7eb"
-  - type: StationTransit
-  - type: Zone # Exodus - SafeZone
-    text: "zone-safezone"
-  - type: Tower7G
+# Exodus: the Medical Center is superseded by Colossus Central and remains only as a manual gameMap.
 
 - type: gameMap
   id: Medical

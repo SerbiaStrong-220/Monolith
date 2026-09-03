@@ -5,6 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server._Mono.AlertLevel.Commands
 {
+    // Exodus: restore the upstream manual war-level control without enabling automatic portstrikes.
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
     public sealed partial class SetWarLevelCommand : LocalizedCommands
@@ -31,21 +32,19 @@ namespace Content.Server._Mono.AlertLevel.Commands
                 return;
             }
 
-            var postwar = false;
-            if (args.Length > 0 && !bool.TryParse(args[0], out postwar))
+            if (!bool.TryParse(args[0], out var postWar))
             {
                 shell.WriteLine(LocalizationManager.GetString("shell-argument-must-be-boolean"));
                 return;
             }
 
-            var player = shell.Player;
-            if (player?.AttachedEntity == null)
+            if (shell.Player?.AttachedEntity == null)
             {
                 shell.WriteLine(LocalizationManager.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
-            _entitySystems.GetEntitySystem<WarLevelSystem>().SetLevel(postwar);
+            _entitySystems.GetEntitySystem<WarLevelSystem>().SetLevel(postWar);
         }
     }
 }

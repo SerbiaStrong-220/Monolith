@@ -1,4 +1,4 @@
-# SS220: retained localized company display names marked Ru-Localization below.
+# Exodus: retained localized company display names marked Ru-Localization below.
 # "None" - DO NOT REMOVE!
 - type: company
   id: None
@@ -11,7 +11,7 @@
 
 - type: company
   id: TSF
-  name: tsf-name # SS220: localized display name
+  name: tsf-name # Exodus: localized display name
   color: "#00a1fc" # Exodus territory update
   disabled: true
   companyUplinkCurrency: FederationMilitaryCredit
@@ -265,16 +265,15 @@
   whitelisted: true
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
 
-# Exodus disable-viper-group — prototype kept for job refs; hidden from lobby
+# Exodus: Viper Group is available for public job selection.
 - type: company
   id: TheViperGroup
   name: viper-group-name # Ru-Localization
   description: viper-group-description
   color: "#B82121"
   image: /Textures/_Mono/Companies/thevipergroup.png
-  disabled: true
+  disabled: false # Exodus enable-viper-group
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  # whitelisted: true
 
 - type: company
   id: RedSailCorsairs

@@ -10,7 +10,7 @@
   id: UnknownShuttleAsakimSmall
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-detected #station-event-asakim-shuttle-detected
+    startAnnouncement: station-event-asakim-shuttle-detected # Exodus: retain main-build event announcement.
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2
@@ -30,7 +30,7 @@
   id: UnknownShuttleAsakimMedium
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-detected #station-event-asakim-shuttle-detected
+    startAnnouncement: station-event-asakim-shuttle-detected # Exodus: retain main-build event announcement.
     startAudio:
       path: /Audio/Misc/notice1.ogg
     weight: 2

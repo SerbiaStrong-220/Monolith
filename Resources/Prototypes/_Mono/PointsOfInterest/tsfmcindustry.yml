@@ -5,6 +5,7 @@
 # Notes: Wow.
 
 
+# Exodus-begin: enable Stellar Blessing as the TSF civilian automatic POI.
 - type: pointOfInterest
   id: TSFMCIndustry
   parent: [BasePOI, BaseRepairablePOI]
@@ -29,6 +30,7 @@
       prob: 0.0
     - maxDistance: 1500
       prob: 0.3
+# Exodus-end
 
 - type: gameMap
   id: TSFMCIndustry

@@ -96,7 +96,7 @@
       repairTime: 2
       repairCost: 2
 
-# SS220-begin clockwork grille entities
+# Exodus-begin clockwork grille entities
 - type: entity
   id: ClockworkGrille
   parent: Grille
@@ -116,7 +116,7 @@
     graph: ClockGrille
     node: clockGrille
     deconstructionTarget: start
-# SS220-end
+# Exodus-end
 
 - type: entity
   id: GrilleBroken
@@ -160,7 +160,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
-# SS220-begin broken clockwork grille entity
+# Exodus-begin broken clockwork grille entity
 - type: entity
   id: ClockworkGrilleBroken
   parent: GrilleBroken
@@ -177,7 +177,7 @@
   - type: Construction
     graph: ClockGrille
     node: clockGrilleBroken
-# SS220-end
+# Exodus-end
 
 - type: entity
   id: GrilleDiagonal
@@ -222,7 +222,7 @@
     graph: GrilleDiagonal
     node: grilleDiagonal
 
-# SS220-begin diagonal clockwork grille entity
+# Exodus-begin diagonal clockwork grille entity
 - type: entity
   id: ClockworkGrilleDiagonal
   parent: ClockworkGrille
@@ -264,4 +264,4 @@
   - type: Construction
     graph: GrilleDiagonal
     node: clockworkGrilleDiagonal
-# SS220-end
+# Exodus-end
