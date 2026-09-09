@@ -84,6 +84,7 @@
   abstract: true
   name: lathe
   components:
+  - type: OreSiloClient # Exodus: allow all assembler variants to connect to a resource silo.
   - type: ItemSlots
     slots:
       beaker_slot:
