@@ -1,0 +1,10 @@
+# Alien vocalizations a non-speaking xeno commander
+
+- type: soundCollection
+  id: ExodusXenoCommand
+  files:
+  - /Audio/Animals/space_dragon_roar.ogg
+  - /Audio/Voice/Misc/lowHiss1.ogg
+  - /Audio/Voice/Misc/lowHiss2.ogg
+  - /Audio/Voice/Misc/lowHiss3.ogg
+  - /Audio/Voice/Misc/lowHiss4.ogg

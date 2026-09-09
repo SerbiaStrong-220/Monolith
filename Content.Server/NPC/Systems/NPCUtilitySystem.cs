@@ -7,6 +7,7 @@ using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
+using Content.Server._Exodus.NPC.Queries; // Exodus
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Power.EntitySystems; // Mono
@@ -575,6 +576,24 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 }
                 break;
             }
+            // Exodus-Start
+            case NearbyFriendlyQuery:
+            {
+                var friendlyPos = _transform.GetMapCoordinates(owner);
+                foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(friendlyPos, vision))
+                {
+                    if (ent.Owner == owner)
+                        continue;
+
+                    // probably better to include self-faction in FriendlyFactions? but im lazy clearing factions protos after that
+                    if (!_npcFaction.IsEntityFriendly(owner, (ent.Owner, ent.Comp)))
+                        continue;
+
+                    entities.Add(ent.Owner);
+                }
+                break;
+            }
+            // Exodus-End
             // Mono - TODO: consider factions
             case NearbyNpcTargetsQuery shuttlesQuery:
             {

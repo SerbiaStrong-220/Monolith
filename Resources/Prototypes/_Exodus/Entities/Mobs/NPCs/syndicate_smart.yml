@@ -1,0 +1,254 @@
+# Commanders
+- type: entity
+  parent: [ BaseExodusSmartCommander, MobSyndicateNavalCommanderA ]
+  id: MobSyndicateNavalCommanderASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartCommander, MobSyndicateNavalCommanderB ]
+  id: MobSyndicateNavalCommanderBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartCommander, MobSyndicateNavalCommanderC ]
+  id: MobSyndicateNavalCommanderCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartCommander, MobSyndicateNavalCommanderD ]
+  id: MobSyndicateNavalCommanderDSmart
+  suffix: Smart
+
+# Grenadiers
+- type: entity
+  parent: [ BaseExodusSmartGrenadier, MobSyndicateNavalGrenadierA ]
+  id: MobSyndicateNavalGrenadierASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrenadier, MobSyndicateNavalGrenadierB ]
+  id: MobSyndicateNavalGrenadierBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrenadier, MobSyndicateNavalGrenadierC ]
+  id: MobSyndicateNavalGrenadierCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrenadier, MobSyndicateNavalGrenadierD ]
+  id: MobSyndicateNavalGrenadierDSmart
+  suffix: Smart
+
+# Medics
+- type: entity
+  parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicA ]
+  id: MobSyndicateNavalMedicASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicB ]
+  id: MobSyndicateNavalMedicBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicC ]
+  id: MobSyndicateNavalMedicCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicD ]
+  id: MobSyndicateNavalMedicDSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartMedic, MobSyndicateNavalMedicVoid ]
+  id: MobSyndicateNavalMedicVoidSmart
+  suffix: Smart
+
+# Grunts (ranged)
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorA ]
+  id: MobSyndicateNavalOperatorASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorB ]
+  id: MobSyndicateNavalOperatorBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorC ]
+  id: MobSyndicateNavalOperatorCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorD ]
+  id: MobSyndicateNavalOperatorDSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalOperatorVoid ]
+  id: MobSyndicateNavalOperatorVoidSmart
+  suffix: Smart
+
+# Grunts (ranged) for now. Will add something to them
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalCaptainA ]
+  id: MobSyndicateNavalCaptainASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalCaptainB ]
+  id: MobSyndicateNavalCaptainBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalCaptainC ]
+  id: MobSyndicateNavalCaptainCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalCaptainD ]
+  id: MobSyndicateNavalCaptainDSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalCaptainVoid ]
+  id: MobSyndicateNavalCaptainVoidSmart
+  suffix: Smart
+
+# Engineers — can deploy a syndicate laser turret (limit 1).
+- type: entity
+  abstract: true
+  parent: BaseExodusSmartBuilder
+  id: BaseExodusSmartSyndieEngineer
+  components:
+  - type: NpcBuilder
+    build: WeaponTurretLaserSyndicateNF
+    limit: 1
+
+- type: entity
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerA ]
+  id: MobSyndicateNavalEngineerASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerB ]
+  id: MobSyndicateNavalEngineerBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerC ]
+  id: MobSyndicateNavalEngineerCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerD ]
+  id: MobSyndicateNavalEngineerDSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartSyndieEngineer, MobSyndicateNavalEngineerVoid ]
+  id: MobSyndicateNavalEngineerVoidSmart
+  suffix: Smart
+
+# Second Officers - for now just grunts
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSecondOfficerA ]
+  id: MobSyndicateNavalSecondOfficerASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSecondOfficerB ]
+  id: MobSyndicateNavalSecondOfficerBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSecondOfficerC ]
+  id: MobSyndicateNavalSecondOfficerCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSecondOfficerD ]
+  id: MobSyndicateNavalSecondOfficerDSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSecondOfficerVoid ]
+  id: MobSyndicateNavalSecondOfficerVoidSmart
+  suffix: Smart
+
+# Saboteurs - for now just grunts
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSaboteurA ]
+  id: MobSyndicateNavalSaboteurASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSaboteurB ]
+  id: MobSyndicateNavalSaboteurBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSaboteurC ]
+  id: MobSyndicateNavalSaboteurCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalSaboteurD ]
+  id: MobSyndicateNavalSaboteurDSmart
+  suffix: Smart
+
+# Deckhands - for now just grunts 
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalDeckhandA ]
+  id: MobSyndicateNavalDeckhandASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalDeckhandB ]
+  id: MobSyndicateNavalDeckhandBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalDeckhandC ]
+  id: MobSyndicateNavalDeckhandCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalDeckhandD ]
+  id: MobSyndicateNavalDeckhandDSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalDeckhandVoid ]
+  id: MobSyndicateNavalDeckhandVoidSmart
+  suffix: Smart
+
+# Chemwarriors - for now just grunts
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalChemwarriorA ]
+  id: MobSyndicateNavalChemwarriorASmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalChemwarriorB ]
+  id: MobSyndicateNavalChemwarriorBSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalChemwarriorC ]
+  id: MobSyndicateNavalChemwarriorCSmart
+  suffix: Smart
+
+- type: entity
+  parent: [ BaseExodusSmartGrunt, MobSyndicateNavalChemwarriorD ]
+  id: MobSyndicateNavalChemwarriorDSmart
+  suffix: Smart
+
+# Mime - for now just melee grunt, need something funny for him.
+- type: entity
+  parent: [ BaseExodusSmartMeleeGruntThrower, MobSyndicateNavalMime ]
+  id: MobSyndicateNavalMimeSmart
+  suffix: Smart

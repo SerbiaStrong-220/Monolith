@@ -339,6 +339,11 @@
     spawned:
     - id: ClothingNeckAmuletBloodCult
       amount: 1
+    # Exodus-Start
+    - id: PetCapsuleCatBloodCult
+      amount: 1
+      prob: 0.3
+    # Exodus-End
   - type: MovementSpeedModifier
     baseWalkSpeed : 4.5
     baseSprintSpeed : 4.5

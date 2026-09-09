@@ -1,0 +1,19 @@
+# Random voice lines the squad commander barks when issuing each order.
+# To add phrases use commander-orders.ftl and up `count` here to match.
+- type: localizedDataset
+  id: NpcOrderAttackLines
+  values:
+    prefix: npc-order-attack-
+    count: 9
+
+- type: localizedDataset
+  id: NpcOrderHoldLines
+  values:
+    prefix: npc-order-hold-
+    count: 9
+
+- type: localizedDataset
+  id: NpcOrderRetreatLines
+  values:
+    prefix: npc-order-retreat-
+    count: 9

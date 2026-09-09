@@ -376,6 +376,8 @@
       prob: 1
     - id: LaserDrillFlatpack
       prob: 0.5
+    - id: PetCapsuleSupplyBot
+      prob: 0.3
     - id: SpawnDungeonLootOresSingle
       amount: 5
       prob: 1

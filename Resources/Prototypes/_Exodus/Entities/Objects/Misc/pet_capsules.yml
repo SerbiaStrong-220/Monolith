@@ -1,0 +1,74 @@
+# Biomass pokeballs
+
+- type: entity
+  id: PetCapsuleCatBloodCult
+  parent: BaseExodusPetCapsule
+  name: blood-cult cat capsule
+  suffix: Pet
+  components:
+  - type: PetCapsule
+    pet: MobCatBloodCultCompanion
+
+- type: entity
+  id: PetCapsuleRatKingBuff
+  parent: BaseExodusPetCapsule
+  name: rat king capsule
+  suffix: Pet
+  components:
+  - type: PetCapsule
+    pet: MobRatKingBuffCompanion
+
+- type: entity
+  id: PetCapsuleRosyMothroach
+  parent: BaseExodusPetCapsule
+  name: rosy mothroach capsule
+  suffix: Pet
+  components:
+  - type: PetCapsule
+    pet: MobRosyMothroachCompanion
+
+# Dragon-egg pokeball - reused existing asset.
+- type: entity
+  id: DragonEggPet
+  parent: BaseExodusPetCapsule
+  name: dragon egg
+  description: It stirs with a bound hatchling. Crack it to call your dragon forth.
+  components:
+  - type: PetCapsule
+    pet: MobDragonPetCompanion
+  - type: Sprite
+    sprite: _NF/Objects/Consumable/Food/dragon_egg.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: _NF/Objects/Consumable/Food/dragon_egg.rsi
+    heldPrefix: null
+
+# Scrap pokeballs
+
+- type: entity
+  id: PetCapsuleMedibot
+  parent: BaseExodusPetCapsuleRobot
+  name: medibot capsule
+  suffix: Pet
+  components:
+  - type: PetCapsule
+    pet: MobMedibotCompanion
+
+- type: entity
+  id: PetCapsuleHoloparasiteGuardian
+  parent: BaseExodusPetCapsuleRobot
+  name: holoparasite guardian capsule
+  suffix: Pet
+  components:
+  - type: PetCapsule
+    pet: MobArcIndHoloparasiteGuardianCompanion
+
+- type: entity
+  id: PetCapsuleSupplyBot
+  parent: BaseExodusPetCapsuleRobot
+  name: supply bot capsule
+  suffix: Pet
+  components:
+  - type: PetCapsule
+    pet: MobSupplyBotCompanion

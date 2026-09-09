@@ -14,4 +14,7 @@
       color: red
   - type: ConditionalSpawner
     prototypes:
-    - MobArgocyteLeviathingExpeditions
+    # Exodus-Start
+    #- MobArgocyteLeviathingExpeditions
+    - MobArgocyteLeviathingExpeditionsSmart
+    # Exodus-End

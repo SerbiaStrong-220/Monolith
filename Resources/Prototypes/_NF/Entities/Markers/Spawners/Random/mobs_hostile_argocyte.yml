@@ -13,10 +13,16 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobArgocyteSlurvaExpeditions
-    - MobArgocyteBarrierExpeditions
-    - MobArgocyteSkitterExpeditions
-    - MobArgocyteSwiperExpeditions
+    # Exodus-Start
+    #- MobArgocyteSlurvaExpeditions
+    #- MobArgocyteBarrierExpeditions
+    #- MobArgocyteSkitterExpeditions
+    #- MobArgocyteSwiperExpeditions
+    - MobArgocyteSlurvaExpeditionsSmart
+    - MobArgocyteBarrierExpeditionsSmart
+    - MobArgocyteSkitterExpeditionsSmart
+    - MobArgocyteSwiperExpeditionsSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
 
@@ -34,9 +40,14 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobArgocyteMolderExpeditions
-    - MobArgocytePouncerExpeditions
-    - MobArgocyteGliderExpeditions
+    # Exodus-Start
+    #- MobArgocyteMolderExpeditions
+    #- MobArgocytePouncerExpeditions
+    #- MobArgocyteGliderExpeditions
+    - MobArgocyteMolderExpeditionsSmart
+    - MobArgocytePouncerExpeditionsSmart
+    - MobArgocyteGliderExpeditionsSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
 
@@ -54,8 +65,12 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobArgocyteHarvesterExpeditions
-    - MobArgocyteCrawlerExpeditions
+    # Exodus-Start
+    #- MobArgocyteHarvesterExpeditions
+    #- MobArgocyteCrawlerExpeditions
+    - MobArgocyteHarvesterExpeditionsSmart
+    - MobArgocyteCrawlerExpeditionsSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
 
@@ -73,11 +88,17 @@
     - state: ai
   - type: RandomSpawner
     prototypes:
-    - MobArgocyteEnforcerExpeditions
+    # Exodus-Start
+    #- MobArgocyteEnforcerExpeditions
+    - MobArgocyteEnforcerExpeditionsSmart
+    # Exodus-End
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - MobArgocyteFounderExpeditions
+    # Exodus-Start
+    #- MobArgocyteFounderExpeditions
+    - MobArgocyteFounderExpeditionsSmart
+    # Exodus-End
     rareChance: 0.05
 
 # Full random
@@ -97,17 +118,33 @@
       color: red
   - type: RandomSpawner
     prototypes:
-    - MobArgocyteSlurvaExpeditions
-    - MobArgocyteBarrierExpeditions
-    - MobArgocyteSkitterExpeditions
-    - MobArgocyteSwiperExpeditions
-    - MobArgocyteMolderExpeditions
-    - MobArgocytePouncerExpeditions
-    - MobArgocyteGliderExpeditions
-    - MobArgocyteHarvesterExpeditions
-    - MobArgocyteCrawlerExpeditions
-    - MobArgocyteEnforcerExpeditions
-    - MobArgocyteFounderExpeditions
+    # Exodus-Start
+    #- MobArgocyteSlurvaExpeditions
+    #- MobArgocyteBarrierExpeditions
+    #- MobArgocyteSkitterExpeditions
+    #- MobArgocyteSwiperExpeditions
+    #- MobArgocyteMolderExpeditions
+    #- MobArgocytePouncerExpeditions
+    #- MobArgocyteGliderExpeditions
+    #- MobArgocyteHarvesterExpeditions
+    #- MobArgocyteCrawlerExpeditions
+    #- MobArgocyteEnforcerExpeditions
+    #- MobArgocyteFounderExpeditions
+    - MobArgocyteSlurvaExpeditionsSmart
+    - MobArgocyteBarrierExpeditionsSmart
+    - MobArgocyteSkitterExpeditionsSmart
+    - MobArgocyteSwiperExpeditionsSmart
+    - MobArgocyteMolderExpeditionsSmart
+    - MobArgocytePouncerExpeditionsSmart
+    - MobArgocyteGliderExpeditionsSmart
+    - MobArgocyteHarvesterExpeditionsSmart
+    - MobArgocyteCrawlerExpeditionsSmart
+    - MobArgocyteEnforcerExpeditionsSmart
+    - MobArgocyteFounderExpeditionsSmart
+    # Exodus-End
     rarePrototypes:
-    - MobArgocyteLeviathingExpeditions
+    # Exodus-Start
+    #- MobArgocyteLeviathingExpeditions
+    - MobArgocyteLeviathingExpeditionsSmart
+    # Exodus-End
     rareChance: 0.10

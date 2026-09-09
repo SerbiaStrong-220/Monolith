@@ -1,0 +1,12 @@
+# This is "Visual" for the healing aura ability. Spawned parented to the caster (follows it) and removed when the aura ends.
+# Some day hopefully will be swapped to a circular sprite/shader.
+
+- type: entity
+  id: EffectHealAuraNPC
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    radius: 5
+    energy: 3
+    color: "#3cdd6e"
+    castShadows: false
