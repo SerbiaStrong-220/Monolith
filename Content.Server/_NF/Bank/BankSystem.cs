@@ -101,7 +101,7 @@ public sealed partial class BankSystem : SharedBankSystem
             return false;
         }
 
-        if (TryBankWithdraw(session, prefs, profile, amount, out var newBalance, dry)) // Exodus: dry withdrawal
+        if (TryBankWithdraw(session, prefs, profile, amount, out var newBalance, dry: dry)) // Exodus: do not pass dry as spendLongTerm.
         {
             if (dry) // Exodus: dry withdrawal
                 return true;
@@ -341,6 +341,7 @@ public sealed partial class BankSystem : SharedBankSystem
         return true;
     }
 
+    // Exodus-begin: offline deposits support compensating refunds for persistent purchases.
     /// <summary>
     /// Attempts to add money to an offline character's bank account.
     /// This method works with offline players by directly modifying their preferences and saving to the database.
@@ -382,6 +383,7 @@ public sealed partial class BankSystem : SharedBankSystem
         _log.Info($"Offline player {userId} deposited {amount}");
         return true;
     }
+    // Exodus-end
 
     /// <summary>
     /// Retrieves a character's balance via its in-game entity, if it has one.

@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: Стабби # Ru-Localization
   description: Бронированный лёгкий шаттл с минимальным медицинским оборудованием. Тесноват, но юркий и живучий, как пёс. # Ru-Localization
-  price: 31000 # appraised at ~25000
+  price: 32800 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/stubby.yml

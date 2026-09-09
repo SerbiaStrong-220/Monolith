@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Скорпион # Ru-Localization
   description: Необычный вариант шаттла, использующий комбинацию ракетных пусковых установок и двух крупнокалиберных пушек. # Ru-Localization
-  price: 113200
+  price: 121400 # Exodus: appraised minimum + 5%, rounded up to 100.
   purchasable: false # voucher only
   category: Medium
   group: BlackMarket

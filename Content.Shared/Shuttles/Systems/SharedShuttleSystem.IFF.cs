@@ -20,6 +20,11 @@ public abstract partial class SharedShuttleSystem
             return IFFComponent.SelfColor;
         }
 
+        // Exodus-begin faction colors are independent of corporate affiliation.
+        if (_iffAffiliation.TryGetColor(gridUid, out var affiliationColor))
+            return affiliationColor;
+        // Exodus-end
+
         if (!Resolve(gridUid, ref component, false))
         {
             return IFFComponent.IFFColor;
@@ -30,7 +35,7 @@ public abstract partial class SharedShuttleSystem
 
     public string? GetIFFLabel(EntityUid gridUid, bool self = false, IFFComponent? component = null)
     {
-        var entName = MetaData(gridUid).EntityName;
+        var entName = _iffAffiliation.GetGridName(gridUid, MetaData(gridUid).EntityName); // Exodus - transient territory status.
 
         if (self)
         {
@@ -42,9 +47,20 @@ public abstract partial class SharedShuttleSystem
             return null;
         }
 
+        // Exodus-begin configured POIs and military grids use explicit affiliation sources.
+        if (_iffAffiliation.TryGetLabel(gridUid, out var affiliation))
+        {
+            var name = string.IsNullOrEmpty(entName) ? Loc.GetString("shuttle-console-unknown") : entName;
+            if (string.IsNullOrEmpty(affiliation))
+                return name;
+
+            return Loc.GetString("exodus-iff-affiliation-label", ("name", name), ("affiliation", affiliation));
+        }
+        // Exodus-end
+
         // Get the company information if available
-        Color? companyColor = null;
-        string? companyName = null;
+        Color? companyColor = Color.White;
+        string? companyName = "shuttle-console-company-unknown"; // Exodus resolve the fallback key once, not its translated text.
 
         if (TryComp<_Mono.Company.CompanyComponent>(gridUid, out var companyComp) && !string.IsNullOrEmpty(companyComp.CompanyName))
         {

@@ -5,7 +5,7 @@
   parent: BaseVesselUSSPAntag
   name: Секунда # Ru-Localization
   description: Корабль медицинской и огневой поддержки СССП. Оснащён модулем БСС, небольшим медицинским и химическим отсеками, лёгким вооружением и тесным интерьером. Произведён народным производственным союзом. # Ru-Localization
-  price: 60000
+  price: 63700 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Ussp
   access: Mercenary # Exodus temp-ussp-mercenary-access

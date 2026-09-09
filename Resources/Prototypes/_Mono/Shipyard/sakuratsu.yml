@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Сакуратсу # Ru-Localization
   description: Ксеноархеологический шаттл с отдельным усиленным для этого отсеком. Также оснащён шахтёрским оборудованием. # Ru-Localization
-  price: 58250
+  price: 63300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/sakuratsu.yml

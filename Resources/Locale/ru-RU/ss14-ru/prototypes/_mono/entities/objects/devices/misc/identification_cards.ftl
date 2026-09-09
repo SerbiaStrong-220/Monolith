@@ -14,7 +14,8 @@ ent-TsfEngiIDCard = TSFMC engineer ID card
     .desc = { ent-IDCardStandard.desc }
 ent-TsfMarsocFTLIDCard = TSFMC MARSOC fire team leader ID card
     .desc = { ent-IDCardStandard.desc }
-ent-TsfMarsocIDCard = TSFMC MARSOC operative ID card
+# Exodus: localize the operative's ID card.
+ent-TsfMarsocIDCard = ID-карта оперативника МАРСОК
     .desc = { ent-IDCardStandard.desc }
 ent-PDVRakhshanIDCard = ID-карта рахкшакана
     .desc = { ent-PirateIDCard.desc }

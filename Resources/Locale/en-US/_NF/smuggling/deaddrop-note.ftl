@@ -1,3 +1,4 @@
+# Exodus: preserve the main-build Syndicate dead-drop presentation.
 dead-drop-hint-note = Not much time.
     Spinward Syndicate needs help.
     Known drops:

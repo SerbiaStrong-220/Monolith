@@ -1,6 +1,13 @@
+<!-- Exodus: retained Russian text and localized the new upstream guide links. -->
 <Document>
 
   # Экономика
 
   Всё, что связано с экономикой.
+
+  ## Ссылки в руководстве
+
+  - [textlink="Введение" link="Basics"]
+
+  - [textlink="Рецепты" link="EconomyRecipes"]
 </Document>

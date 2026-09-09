@@ -1,0 +1,34 @@
+ent-PDVTarkhanPDA = КПК Тархана
+    .desc = Персональный компьютер элитного воина Династии Фаэтон.
+ent-PDVTarkhanIDCard = ID-карта Тархана
+    .desc = Идентификационная карта элитного воина Династии Фаэтон.
+ent-ClothingBackpackPDVTarkhan = улучшенный тактический рюкзак Тархана
+    .desc = Вместительный рюкзак, используемый Тарханами.
+ent-ClothingBeltWebbingsPDVTarkhan = разгрузка Тархана
+    .desc = Тактическая разгрузочная система, используемая Тарханами.
+ent-ClothingOuterHardsuitTarkhan = боевой скафандр CV-280 «Василиск»
+    .desc = Боевой скафандр Династии Фаэтон для Тарханов. Облегчённая наноламинатная броня и гидравлический каркас обеспечивают подвижность. Окрашен в характерный для Тарханов белый цвет. Редкое зрелище.
+
+ent-UndeterminedTSFMarsocKit = селектор снаряжения МАРСОК
+    .desc = Компактный пульт, доставляющий выбранный комплект снаряжения спецназа ТСФ с помощью блюспейс-технологий.
+ent-UndeterminedPDVTarkhanKit = селектор снаряжения Тархана
+    .desc = Компактный пульт, доставляющий выбранный комплект снаряжения Тархана с помощью блюспейс-технологий.
+ent-SpawnPointTsfMarsoc = Оперативник МАРСОК
+    .desc = Точка появления оперативника МАРСОК.
+ent-SpawnPointPDVTarkhan = Тархан
+    .desc = Точка появления Тархана.
+
+selectable-set-pdvtarkhan-breacher-kit-name = Комплект «Знаменосец»
+selectable-set-pdvtarkhan-breacher-kit-desc = Дробовик «Знаменосец», четыре коробки картечи, револьвер «Анаконда», взломщик доступа, челюсти жизни и боевая аптечка.
+selectable-set-pdvtarkhan-molot-kit-name = Комплект «Молот»
+selectable-set-pdvtarkhan-molot-kit-desc = Винтовка «Молот», четыре магазина 7,62×51 мм, высокочастотный клинок VT-7, взломщик доступа и боевая аптечка.
+selectable-set-pdvtarkhan-wspr-kit-name = Комплект «Корд»
+selectable-set-pdvtarkhan-wspr-kit-desc = Пулемёт LA/22 «Корд», четыре коробки патронов 7,62×51 мм, взломщик доступа и боевая аптечка.
+selectable-set-tsfmarsoc-fenghuang-kit-name = Комплект «АВР-556 ИСВ»
+selectable-set-tsfmarsoc-fenghuang-kit-desc = Винтовка АВР-556 ИСВ, четыре снаряжённых магазина по 30 патронов 5,56×45 мм FMJ, коробка на 70 патронов того же калибра, челюсти жизни и боевая аптечка.
+selectable-set-tsfmarsoc-shenzhen-kit-name = Комплект «Шэньчжэнь»
+selectable-set-tsfmarsoc-shenzhen-kit-desc = Противоматериальная электромагнитная винтовка «Шэньчжэнь», четыре магазина и коробка на 30 патронов 13,4×92 мм, челюсти жизни и боевая аптечка.
+selectable-set-tsfmarsoc-pulse-kit-name = Комплект с импульсным карабином
+selectable-set-tsfmarsoc-pulse-kit-desc = Импульсный карабин NT-WS, переносное зарядное устройство, энергетический револьвер EG-4, челюсти жизни и боевая аптечка.
+selectable-set-tsfmarsoc-hailstorm-kit-name = Комплект «Град»
+selectable-set-tsfmarsoc-hailstorm-kit-desc = NT-WS Mk.348 «Град», четыре коробки патронов 9×19 мм, энергетический револьвер EG-4, челюсти жизни и боевая аптечка.

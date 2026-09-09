@@ -36,6 +36,7 @@ internal sealed partial class ChatManager : IChatManager
         { "revolutionary", "" }
     };
 
+    [Dependency] private Content.Server.Administration.Managers.IBanManager _chatBans = default!; // SS220 chat bans
     [Dependency] private IReplayRecordingManager _replay = default!;
     [Dependency] private IServerNetManager _netManager = default!;
     [Dependency] private IAdminManager _adminManager = default!;
@@ -284,6 +285,11 @@ internal sealed partial class ChatManager : IChatManager
 
     private void SendOOC(ICommonSession player, string message)
     {
+        // Exodus-begin: account punishments also apply to lobby OOC.
+        if (!_chatBans.CanSendChat(player, ChatChannel.OOC))
+            return;
+        // Exodus-end
+
         if (_adminManager.IsAdmin(player))
         {
             if (!_adminOocEnabled)

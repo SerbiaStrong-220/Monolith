@@ -53,6 +53,17 @@ public sealed partial class GridTerritorySystem : EntitySystem
 
     private void OnGridTerritoryShutdown(Entity<GridTerritoryComponent> ent, ref ComponentShutdown args)
     {
+        // Release the score and notify claim dependents even if the grid shuts down before its physical claim source.
+        // Do not call SetController here: it applies profiles and may add visual components to a terminating grid.
+        if (ent.Comp.ControllingFaction != null || ent.Comp.ActiveClaimBanner != null)
+        {
+            var ev = new GridTerritoryControllerChangedEvent(
+                ent.Owner, ent.Comp.ControllingFaction, null, ent.Comp.ActiveClaimBanner, null, null);
+            ent.Comp.ControllingFaction = null;
+            ent.Comp.ActiveClaimBanner = null;
+            RaiseLocalEvent(ent.Owner, ref ev, true);
+        }
+
         RemCompDeferred<RadialDamageFieldComponent>(ent);
         DeleteTerritoryBiomeSource(ent);
     }

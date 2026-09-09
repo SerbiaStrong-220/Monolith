@@ -1,0 +1,38 @@
+# High alpha/burst damage but low sustained damage, more for hit & run (poor armor)
+- type: vessel
+  id: Kite
+  parent: BaseVessel
+  name: ММС-CSC «Кайт» # Exodus MMC localization
+  description: Легкобронированный эскортный корабль. Вооружён четырьмя автопульсарами и двумя TOVEK для преследования быстрых целей. # Exodus MMC localization
+  price: 120055
+  category: Small
+  group: Mieyo
+  access: MieyoSecurity
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/kite.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Patrol
+  engine:
+  - AME
+
+- type: gameMap
+  id: Kite
+  mapName: 'ММС-CSC «Кайт»' # Exodus MMC localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/kite.yml
+  minPlayers: 0
+  stations:
+    Kite:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Кайт MCSC{1}' # Exodus MMC localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            MMCEmployee: [ 0, 0 ]

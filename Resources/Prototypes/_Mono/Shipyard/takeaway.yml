@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: Вынос # Ru-Localization
   description: Средний ботаническо-кухонный шаттл с гостевой галереей для заказов на вынос. Также есть места для питания прямо на нём. # Ru-Localization
-  price: 64000
+  price: 71000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/takeaway.yml

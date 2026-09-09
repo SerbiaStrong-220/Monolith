@@ -139,7 +139,7 @@ public sealed partial class AiRemoteControlSystem : SharedAiRemoteControlSystem
 
     public void AiTakeControl(EntityUid ai, EntityUid entity)
     {
-        if (!_mind.TryGetMind(ai, out var mindId, out var mind))
+        if (!HasComp<ActorComponent>(ai) || !_mind.TryGetMind(ai, out var mindId, out var mind)) // Exodus: remote control requires an attached player.
             return;
 
         if (_mind.TryGetMind(entity, out _, out _))
@@ -183,12 +183,15 @@ public sealed partial class AiRemoteControlSystem : SharedAiRemoteControlSystem
                 activeRadio.Channels = [.. stationAiActiveRadio.Channels];
         }
 
-        _mind.ControlMob(ai, entity);
+        // Exodus-begin: reserve the AI before transferring its mind to the remote body.
         aiRemoteComp.AiHolder = ai;
         aiRemoteComp.LinkedMind = mindId;
         aiRemoteComp.LastControllerMind = mindId; // Exodus remote-ai-reconnection
 
         stationAiHeldComp.CurrentConnectedEntity = entity;
+
+        _mind.ControlMob(ai, entity);
+        // Exodus-end
 
         if (!_stationAiSystem.TryGetCore(ai, out var stationAiCore))
             return;

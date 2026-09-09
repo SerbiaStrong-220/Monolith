@@ -13,7 +13,7 @@
   parent: BaseVessel
   name: Остов # Ru-Localization
   description: Самая дешёвая груда металлолома в этом секторе. Не создана для долгой жизни, но может стать кем угодно. # Ru-Localization
-  price: 10000
+  price: 11000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/framework.yml

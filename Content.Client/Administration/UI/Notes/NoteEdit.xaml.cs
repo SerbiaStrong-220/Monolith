@@ -39,6 +39,7 @@ public sealed partial class NoteEdit : FancyWindow
         IsCreating = note is null;
         CanCreate = canCreate;
         CanEdit = canEdit;
+        InitializeChatBanEdit(note); // Exodus chat ban permissions and validation
 
         ResetSubmitButton();
 
@@ -89,6 +90,7 @@ public sealed partial class NoteEdit : FancyWindow
             NoteType = note.NoteType;
             TypeOption.AddItem(Loc.GetString("admin-note-editor-type-server-ban"), (int) NoteType.ServerBan);
             TypeOption.AddItem(Loc.GetString("admin-note-editor-type-role-ban"), (int) NoteType.RoleBan);
+            TypeOption.AddItem(Loc.GetString("chat-ban-panel-chats"), (int)NoteType.ChatBan); // SS220 chat bans
             TypeOption.SelectId((int)NoteType);
             TypeOption.Disabled = true;
 
@@ -96,7 +98,7 @@ public sealed partial class NoteEdit : FancyWindow
 
             NoteSeverity = note.NoteSeverity ?? Shared.Database.NoteSeverity.Minor;
             SeverityOption.SelectId((int)NoteSeverity);
-            SeverityOption.Disabled = note.NoteType is not (NoteType.Note or NoteType.ServerBan or NoteType.RoleBan);
+            SeverityOption.Disabled = note.NoteType is not (NoteType.Note or NoteType.ServerBan or NoteType.RoleBan or NoteType.ChatBan); // SS220 chat bans
 
             IsSecret = note.Secret;
             SecretCheckBox.Pressed = note.Secret;
@@ -226,7 +228,7 @@ public sealed partial class NoteEdit : FancyWindow
 
     private void OnSubmitButtonPressed(BaseButton.ButtonEventArgs args)
     {
-        if (!ParseExpiryTime())
+        if (!ParseExpiryTime() || !ValidateChatBanEdit()) // Exodus chat ban validation
             return;
         if (DeleteResetOn is null)
         {
@@ -300,6 +302,14 @@ public sealed partial class NoteEdit : FancyWindow
             return true;
         }
 
+        // Exodus-begin the existing editor displays an absolute date when opening a chat ban.
+        if (_chatBanCreatedAt != null && !uint.TryParse(ExpiryLineEdit.Text, out _) &&
+            DateTime.TryParse(ExpiryLineEdit.Text, out var absoluteExpiry))
+        {
+            ExpiryTime = absoluteExpiry.ToUniversalTime();
+            return ValidateChatBanEdit();
+        }
+        // Exodus-end
         if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !uint.TryParse(ExpiryLineEdit.Text, out var inputInt))
         {
             ExpiryLineEdit.ModulateSelfOverride = Color.Red;
@@ -317,7 +327,15 @@ public sealed partial class NoteEdit : FancyWindow
             (int) Multipliers.Centuries => TimeSpan.FromDays(36525).TotalMinutes,
             _ => throw new ArgumentOutOfRangeException(nameof(ExpiryLengthDropdown.SelectedId), "Multiplier out of range :(")
         };
-        ExpiryTime = DateTime.UtcNow.AddMinutes(inputInt * mult);
+        // Exodus-begin avoid date overflow from malformed or excessively long durations.
+        var minutes = inputInt * mult;
+        if (minutes >= (DateTime.MaxValue - DateTime.UtcNow).TotalMinutes)
+        {
+            ExpiryLineEdit.ModulateSelfOverride = Color.Red;
+            return false;
+        }
+        ExpiryTime = DateTime.UtcNow.AddMinutes(minutes);
+        // Exodus-end
         ExpiryLineEdit.ModulateSelfOverride = null;
         return true;
     }

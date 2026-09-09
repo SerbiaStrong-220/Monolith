@@ -128,10 +128,11 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             var matProto = _prototypeManager.Index<MaterialPrototype>(mat);
 
             var sheetVolume = _materialStorage.GetSheetVolume(matProto);
-            var sheets = (float) -amount / sheetVolume;
+            var sheets = (float)-amount / sheetVolume;
+            // Exodus - Inflect material units by amount.
             var amountText = Loc.GetString("lathe-menu-material-amount",
                 ("amount", sheets),
-                ("unit", Loc.GetString(matProto.Unit)));
+                ("unit", Loc.GetString(matProto.Unit, ("amount", sheets))));
             var text = Loc.GetString("lathe-menu-tooltip-display",
                 ("amount", amountText),
                 ("material", Loc.GetString(matProto.Name)));

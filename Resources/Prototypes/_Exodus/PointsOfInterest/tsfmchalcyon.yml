@@ -20,6 +20,8 @@
   spawnGroup: PairedFactionPoi # Exodus paired faction POI spawn
   gridPath: /Maps/_Exodus/POI/tsfmchalcyon.yml # Exodus ai-remote-borgs
   addComponents:
+  - type: IffAffiliation
+    mode: CorporateControl
   - type: IFF
     color: "#00a1fc"
     readOnly: true
@@ -68,6 +70,7 @@
             Cadet: [ 6, 6 ] # Exodus-Cadet-Return
             TsfEngineer: [ 2, 2 ]
             TsfBorg: [ 2, 2 ]
+            TsfMarsoc: [ 1, 1 ] # One base operative, available at round start and for late joins.
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity
@@ -87,6 +90,9 @@
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/tsfmchalcyon_hw.yml
   addComponents:
+  - type: IffAffiliation
+    mode: Faction
+    faction: TSFMC
   - type: IFF
     color: "#047abd"
     readOnly: true

@@ -4,6 +4,7 @@ ame-controller-component-fuel-slot-success-insert = You insert the jar into the 
 
 ## UI
 
+# Exodus: preserve the main-build AME terminology.
 ame-window-title = Antimatter Control Unit
 ame-window-engine-status-label = Engine Status:
 ame-window-engine-injection-status-not-injecting-label = Not Injecting

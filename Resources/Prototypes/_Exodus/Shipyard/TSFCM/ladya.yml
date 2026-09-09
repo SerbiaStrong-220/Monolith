@@ -3,7 +3,7 @@
   parent: BaseVesselAntag
   name: Ладья
   description: Пока нет описания, но оно обязательно скоро появится!
-  price: 210200 # Appraises around 100k, but marked up since appraisegrid is too stupid to realize the true value of my creations (plastitanium walls probably has their value set really low)
+  price: 323300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Security
   access: Security

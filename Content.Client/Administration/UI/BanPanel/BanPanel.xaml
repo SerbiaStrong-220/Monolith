@@ -44,7 +44,13 @@
             <ScrollContainer>
                 <BoxContainer Name="RolesContainer"  Orientation="Vertical" />
             </ScrollContainer>
+            <!-- SS220 chat bans -->
+            <ScrollContainer>
+                <BoxContainer Name="ChatsContainer" Orientation="Vertical" />
+            </ScrollContainer>
         </TabContainer>
+        <!-- Exodus chat ban feedback -->
+        <RichTextLabel Name="ChatBanStatus" Visible="False" Margin="4" MaxWidth="550" />
         <Button Name="SubmitButton" Text="{Loc ban-panel-submit}" HorizontalExpand="True" />
     </BoxContainer>
 </DefaultWindow>

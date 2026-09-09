@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: КараКара # Ru-Localization
   description: Утилизаторский фрегат, оснащённый Аполлоном. Носовая рубка обеспечивает отличный обзор места раскопок. Включает сверхэффективный z-пинч реактор, базовый модуль БСС и компактный камбуз для долгих смен в поясе астероидов. В паре с Аполлоном три 20-мм орудия обеспечивают адекватную оборонительную мощь. # Ru-Localization
-  price: 71000
+  price: 84300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Exodus/Shuttles/caracara.yml # Exodus

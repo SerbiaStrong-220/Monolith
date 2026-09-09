@@ -4,8 +4,9 @@ ent-WeaponCaseShortMk58Expedition = { ent-WeaponCaseShort }
 ent-WeaponCaseShortN1984Expedition = { ent-WeaponCaseShort }
     .suffix = Dungeon, N1984
     .desc = { ent-WeaponCaseShort.desc }
+# Exodus: Viper localization
 ent-WeaponCaseShortViper = { ent-WeaponCaseShort }
-    .suffix = Dungeon, Viper
+    .suffix = Подземелье, «Гадюка»
     .desc = { ent-WeaponCaseShort.desc }
 ent-WeaponCaseShortCobra = { ent-WeaponCaseShort }
     .suffix = Dungeon, Cobra

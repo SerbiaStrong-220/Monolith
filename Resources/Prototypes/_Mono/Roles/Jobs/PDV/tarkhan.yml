@@ -4,15 +4,17 @@
   description: job-description-pdv-tarkhan
   playTimeTracker: JobPDVTarkhan
   requirements:
-  - !type:DepartmentTimeRequirement # Requires time in both factions
-    department: Security
-    time: 14400 # 4 hours # mono
-  - !type:DepartmentTimeRequirement # Requires time in both factions
-    department: Antag
-    time: 108000 # 30 hours # mono
+  # Exodus-begin: faction veteran requirements use existing job playtime.
+  - !type:DepartmentTimeRequirement
+    department: ExodusPDVPlaytime
+    time: 360000 # 100 hours in PDV roles
+  - !type:OverallPlaytimeRequirement
+    time: 720000 # 200 hours overall, including faction playtime
+  # Exodus-end
   startingGear: PDVTarkhanGear
   icon: JobIconPDVTarkhan
-  supervisors: job-supervisors-nobody
+  supervisors: job-supervisors-exodus-tarkhan # Exodus dynasty hierarchy
+  alwaysUseSpawner: true # Exodus use the base's dedicated marker for late joins too.
   weight: 45
   displayWeight: 45
   assignedCompany: PDV
@@ -32,7 +34,7 @@
       factions:
       - PirateNF
     - type: ChatRank
-      rank: pdv-tarkhan
+      rank: exodus-tarkhan-rank # Exodus localized base role; reinforcement ranks are unchanged.
   - !type:AddImplantSpecial
     implants: [ FreelanceTrackingImplant ]
   - !type:AddLanguageSpecial

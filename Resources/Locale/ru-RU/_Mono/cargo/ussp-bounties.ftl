@@ -18,7 +18,8 @@ ussp-bounty-desc-nova = Nova Cygni command needs this!
 ussp-bounty-desc-artifact = Sell in a artifact container.
 ussp-bounty-desc-bread = Cannot be sliced!
 ussp-bounty-desc-food-warm = Soldiers are hungry for warm food.
-ussp-bounty-desc-rogue-hardsuit = Viper Group hardsuits and PDV SCAF suits count to this.
+# Exodus: Viper localization
+ussp-bounty-desc-rogue-hardsuit = Учитываются скафандры «Вайперов» и скафандры SCAF Династии Фаэтон.
 ussp-bounty-desc-cyborg-endoskeleton = Only the exoskeleton will count. Completed cyborgs do not count.
 ussp-bounty-desc-kevlar = Hardsuits do not count. Nova Cygni wants easy kevlar.
 ussp-bounty-desc-vt7 = Only the PDV one counts. Don't want a war starting now! An energy sword will do nicely as well

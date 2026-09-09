@@ -11,6 +11,7 @@
   icon: JobIconAsakimWarrior
   supervisors: job-supervisors-asakim-centurion-and-prefect
   jobEntity: MobAsakimWarrior
+  assignedCompany: AsakimDefenceForces
   applyTraits: false
   weight: 60
   displayWeight: 60
@@ -28,6 +29,7 @@
   icon: JobIconAsakimCenturion
   supervisors: job-supervisors-asakim-prefect
   jobEntity: MobCenturionAsakim
+  assignedCompany: AsakimDefenceForces
   applyTraits: false
   weight: 40
   displayWeight: 40
@@ -45,6 +47,7 @@
   icon: JobIconAsakimPrefect
   supervisors: job-supervisors-nobody
   jobEntity: MobPrefectAsakim
+  assignedCompany: AsakimDefenceForces
   applyTraits: false
   weight: 20
   displayWeight: 20

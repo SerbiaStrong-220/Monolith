@@ -1,4 +1,6 @@
-ent-ClothingHeadHelmetHardsuitViperGroupStandard = JACKAL mk.II viper hardsuit helmet
-    .desc = A hardsuit helmet with signature markings of the Viper Group. Has a built-in nightvision system.
-ent-ClothingHeadHelmetHardsuitViperGroupMedic = IMP mk.III viper hardsuit helmet
-    .desc = A hardsuit helmet with signature markings of the Viper Group. Has a built-in medical HUD complemented by thermal pulse systems.
+# Exodus-begin: Viper equipment localization
+ent-ClothingHeadHelmetHardsuitViperGroupStandard = шлем скафандра «Вайперов» JACKAL mk.II
+    .desc = Шлем со знаками «Вайперов» и встроенной системой ночного видения.
+ent-ClothingHeadHelmetHardsuitViperGroupMedic = шлем медицинского скафандра «Вайперов» RIPPER mk.III
+    .desc = Шлем со знаками «Вайперов», медицинским визором и системой тепловых импульсов.
+# Exodus-end

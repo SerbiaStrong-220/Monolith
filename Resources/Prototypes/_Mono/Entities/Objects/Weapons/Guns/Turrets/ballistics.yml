@@ -146,7 +146,7 @@
 - type: entity
   parent: BallisticTurretHeavyBase
   id: WeaponTurretHeavyViper
-  suffix: Viper #I'm not sure where we'd actually need a gun this big, but hey.
+  suffix: Вайперы # Exodus Viper localization
   components:
   - type: NpcFactionMember
     factions:
@@ -285,7 +285,7 @@
 - type: entity
   parent: WeaponTurretHeavyRIPBase
   id: WeaponTurretHeavyRIPViper # ... Also not sure why we wouldn't just use the basic CC one for spawncamp purposes but hey.
-  suffix: Viper
+  suffix: Вайперы # Exodus Viper localization
   components:
   - type: NpcFactionMember
     factions:

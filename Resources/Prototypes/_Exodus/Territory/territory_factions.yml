@@ -45,6 +45,7 @@
 - type: territoryFaction
   id: TSFMC
   radarLabel: territory-faction-tsf
+  displayName: territory-faction-tsf-name
   banner: BannerNGC
   npcFaction: TSFMC
   discountAlignment: Positive
@@ -53,6 +54,7 @@
 - type: territoryFaction
   id: PDV
   radarLabel: territory-faction-phaeton
+  displayName: territory-faction-phaeton-name
   banner: BannerPDV
   npcFaction: PirateNF
   discountAlignment: Positive
@@ -61,6 +63,7 @@
 - type: territoryFaction
   id: Khsira
   radarLabel: territory-faction-khsira
+  displayName: territory-faction-khsira-name
   banner: BannerKhsira
   npcFaction: AsakimDefenceForces
   discountAlignment: Positive
@@ -90,3 +93,18 @@
   discountAlignment: Positive
   # No dedicated banner yet; can be set as initial controller on the grid or via a banner later.
   # Not one of the three main POI-claiming factions for color purposes.
+
+# Hive cores use the same single-source claim, score and IFF paths as faction banners.
+# Only opted-in creatures on the controlled grid receive the natural-healing bonus.
+- type: territoryFaction
+  id: Chimera
+  radarLabel: territory-faction-infestation
+  displayName: territory-faction-infestation
+  banner: ExodusChimeraCore
+  npcFaction: Chimera
+  discountAlignment: Negative
+  allowCorporateControl: false
+  passiveHealingMultiplier: 1.25
+  controlLabel: territory-faction-infestation
+  iffStatus: exodus-iff-infested
+  color: "#FF6A00"

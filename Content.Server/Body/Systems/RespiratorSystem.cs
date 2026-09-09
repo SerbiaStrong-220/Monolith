@@ -19,6 +19,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
+using Content.Shared.FixedPoint; // Exodus - configurable automatic gasp threshold.
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -43,9 +44,13 @@ public sealed partial class RespiratorSystem : EntitySystem
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
+    private EntityQuery<DamageableComponent> _damageableQuery; // Exodus - cached lookup for the gasp threshold.
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _damageableQuery = GetEntityQuery<DamageableComponent>(); // Exodus - cached lookup for the gasp threshold.
 
         // We want to process lung reagents before we inhale new reagents.
         UpdatesAfter.Add(typeof(MetabolizerSystem));
@@ -98,7 +103,9 @@ public sealed partial class RespiratorSystem : EntitySystem
 
             if (respirator.Saturation < respirator.SuffocationThreshold)
             {
-                if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
+                // Exodus - only gate the emote; suffocation damage and alerts must still be processed.
+                if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown &&
+                    HasGaspEmoteDamage((uid, respirator)))
                 {
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;
                     _chat.TryEmoteWithChat(uid, respirator.GaspEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
@@ -113,6 +120,18 @@ public sealed partial class RespiratorSystem : EntitySystem
             respirator.SuffocationCycles = 0;
         }
     }
+
+    // Exodus-begin - damage threshold for automatic gasping.
+    private bool HasGaspEmoteDamage(Entity<RespiratorComponent> ent)
+    {
+        if (ent.Comp.GaspEmoteDamageThreshold <= FixedPoint2.Zero)
+            return true;
+
+        return _damageableQuery.TryComp(ent.Owner, out var damageable) &&
+               damageable.Damage.DamageDict.TryGetValue(ent.Comp.GaspEmoteDamageType, out var damage) &&
+               damage >= ent.Comp.GaspEmoteDamageThreshold;
+    }
+    // Exodus-end
 
     public void Inhale(EntityUid uid, BodyComponent? body = null)
     {

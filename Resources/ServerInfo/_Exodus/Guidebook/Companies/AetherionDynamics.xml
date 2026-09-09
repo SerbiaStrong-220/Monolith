@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="aetherion-dynamics-name"][/head]
+
+  [locid="aetherion-dynamics-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskAetherionGunnery"/>
+  </Box>
+
+  [locid="tech-disk-aetherion-gunnery-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

@@ -9,6 +9,9 @@
       components: [ AsakimTrustedUser ]
     mindWhitelist:
       mindRoles: [ AsakimRole ]
+  - type: WarDeclarationConsole
+    faction: Khsira
+    requireBiocode: true
   - type: IdentitySenderFallback
     fallback: asakim-communications-console-sender-fallback
   - type: Sprite

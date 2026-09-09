@@ -3,7 +3,7 @@
   parent: BaseVesselAntag
   name: Коготь # Ru-Localization
   description: Тяжёлый перехватчик синдиката с четырьмя носовыми Клыками и двумя боковыми Гадюками. # Ru-Localization
-  price: 45000
+  price: 64200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Syndicate
   purchasable: false # Exodus syndicate voucher only

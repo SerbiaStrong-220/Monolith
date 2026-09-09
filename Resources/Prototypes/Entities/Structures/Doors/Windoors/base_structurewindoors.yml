@@ -10,6 +10,7 @@
     flags:
     - Anchorable
   - type: Rotatable
+  - type: DoorAutoRotateDisabled # Exodus: preserve mapped rotations for every windoor variant.
   - type: MeleeSound
     soundGroups:
       Brute:

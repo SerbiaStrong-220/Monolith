@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="The-Hive-name"][/head]
+
+  [locid="The-Hive-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskHiveSyntheticOrgans"/>
+  </Box>
+
+  [locid="tech-disk-hive-organs-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

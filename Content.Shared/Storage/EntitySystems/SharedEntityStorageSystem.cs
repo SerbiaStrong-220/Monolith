@@ -69,7 +69,8 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             component.IsCollidableWhenOpen,
             component.OpenOnMove,
             component.EnteringRange,
-            component.NextInternalOpenAttempt);
+            component.NextInternalOpenAttempt,
+            component.OpenOnActivate); // Exodus: synchronize activation behavior.
     }
 
     protected void OnHandleState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentHandleState args)
@@ -82,6 +83,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         component.OpenOnMove = state.OpenOnMove;
         component.EnteringRange = state.EnteringRange;
         component.NextInternalOpenAttempt = state.NextInternalOpenAttempt;
+        component.OpenOnActivate = state.OpenOnActivate; // Exodus: match server activation behavior.
     }
 
     protected virtual void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
@@ -98,7 +100,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
 
     protected void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
+        if (args.Handled || !args.Complex || !component.OpenOnActivate) // Exodus: leave activation available for machine UIs.
             return;
 
         args.Handled = true;

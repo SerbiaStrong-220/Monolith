@@ -18,6 +18,11 @@
       state: generic_panel_open
   - type: AccessReader
     access: [["HeadOfPersonnel"], ["HeadOfSecurity"]]
+  # Exodus-begin: pairwise faction war declarations
+  - type: WarDeclarationConsole
+    faction: TSFMC
+    requiredAccess: [Bailiff]
+  # Exodus-end
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
     # canShuttle: false # Exodus
@@ -34,7 +39,7 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
-    board: CommsComputerCircuitboard
+    board: TSFCommsComputerCircuitboard # Exodus: preserve the faction console when rebuilt.
   - type: PointLight
     radius: 1.5
     energy: 1.6

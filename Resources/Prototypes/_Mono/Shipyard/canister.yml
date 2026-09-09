@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: Канистра # Ru-Localization
   description: Газодобывающий шаттл, произведённый и введённый в эксплуатацию Горизонт Энерджи для первых шагов новых газодобытчиков в этой отрасли. # Ru-Localization
-  price: 33000
+  price: 36700 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/canister.yml

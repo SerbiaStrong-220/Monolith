@@ -1,0 +1,38 @@
+- type: vessel
+  id: MieyoSakuratsu
+  parent: BaseVessel
+  name: ММС-SKR «Мэйё-Сакуратсу» # Exodus MMC localization
+  description: Лицензионная версия «Сакуратсу» со скафандрами ММС и улучшенным рудопереработчиком. # Exodus MMC localization
+  price: 99721
+  category: Medium
+  group: Mieyo
+  access: Mieyo
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/sakuratsu_mieyo.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Science
+  - Salvage
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: MieyoSakuratsu
+  mapName: 'ММС-SKR «Мэйё-Сакуратсу»' # Exodus MMC localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/sakuratsu_mieyo.yml
+  minPlayers: 0
+  stations:
+    MieyoSakuratsu:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Мэйё-Сакуратсу ММС{1}' # Exodus MMC localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            MMCEmployee: [ 0, 0 ]

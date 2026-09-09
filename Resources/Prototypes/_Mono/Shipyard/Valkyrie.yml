@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Валькирия # Ru-Localization
   description: Древний перехватчик династии Фаэтона. Его приборы устарели, а корпус проржавел. Тем не менее, Валькирия всё ещё может соперничать с шаттлами своего класса. # Ru-Localization
-  price: 93950
+  price: 100600 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
   access: Mercenary

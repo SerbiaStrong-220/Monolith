@@ -1,3 +1,4 @@
+using Content.Shared._Mono.Company;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -101,4 +102,17 @@ public sealed partial class GridTerritoryComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, NonSerialized]
     public EntityUid? ActiveClaimBanner = null;
+
+    /// <summary>
+    /// Corporation currently controlling the commercial presence on this territory.
+    /// Independent from the faction controlling the territory.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<CompanyPrototype>? CorporateController = null;
+
+    /// <summary>
+    /// The anchored corporate banner providing the current corporate control.
+    /// </summary>
+    [DataField, AutoNetworkedField, NonSerialized]
+    public EntityUid? ActiveCorporateBanner = null;
 }

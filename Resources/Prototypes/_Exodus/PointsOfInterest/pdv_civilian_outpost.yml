@@ -1,0 +1,50 @@
+- type: pointOfInterest
+  id: PDVCivilianOutpost
+  parent: [BasePOI, BaseRepairablePOI]
+  name: 'ДФ-ГРАЖД | Аванпост гражданских ДФ'
+  # Placement is controlled by PDVCivilianOutpostNearHelios in relative_placement.yml.
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
+  spawnGroup: Required
+  gridPath: /Maps/_Exodus/POI/tsfmcoutpost.yml
+  addComponents:
+  - type: IffAffiliation
+    mode: CorporateControl
+  - type: IFF
+    color: "#D2B48C"
+    readOnly: true
+  - type: SolarPoweredGrid
+    doNotCull: true
+  - type: WorldGenDistanceCarver
+    distanceThresholds:
+    - maxDistance: 800
+      prob: 0.0
+    - maxDistance: 1500
+      prob: 0.3
+
+- type: gameMap
+  id: PDVCivilianOutpost
+  mapName: 'ДФ-ГРАЖД | Аванпост гражданских ДФ'
+  mapPath: /Maps/_Exodus/POI/tsfmcoutpost.yml
+  minPlayers: 0
+  randomRotation: false
+  stations:
+    PDVCivilianOutpost:
+      stationProto: StandardFrontierOutpost
+      # Ownership comes from the faction and civilian banners placed on the map.
+      gridComponents:
+      - type: VesselInfo
+        description: "Захваченный аванпост Транс-Солнечной Федерации, переоборудованный для гражданских нужд Династии Фаэтон. Здесь базируются гражданские наёмники ДФ."
+      - type: GridTerritory
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'ДФ-ГРАЖД | Аванпост гражданских ДФ'
+      - type: ExtraStationInformation
+        icon: /Textures/_NF/Interface/Pirate/piratelogo.png
+        stationSubtext: exodus-lobby-pdv-civilian-outpost-subtext
+        stationDescription: exodus-lobby-pdv-civilian-outpost-description
+        lobbySortOrder: 2
+      - type: StationJobs
+        availableJobs:
+          PdvCivilian: [ -1, -1 ]
+        tags:
+        - GrandVizier

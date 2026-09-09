@@ -60,3 +60,9 @@ comp-pda-ui-unassigned = Unassigned
 
 pda-notification-message = [font size=12][bold]PDA[/bold] { $header }: [/font]
     "{ $message }"
+
+# Exodus-begin: pairwise faction wars
+comp-pda-ui-station-war-level-pre = FACTION WARS: [color=cornflowerblue]NONE DECLARED[/color]
+comp-pda-ui-station-war-level-post = FACTION WARS: [color=crimson]ACTIVE[/color]
+comp-pda-ui-station-war-level-unknown = FACTION WARS: [color=white]UNKNOWN[/color]
+# Exodus-end

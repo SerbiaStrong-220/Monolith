@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: Скаут
   description: Компактный разведывательный шаттл, спроектированный для исследования туманностей. Четыре 30-мм турели RAC, модуль БСС, генератор щита. Оснащён медицинским отсеком и плазменным z-пинч реактором для автономного исследования.
-  price: 89500
+  price: 95400 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Exodus/Shuttles/scout.yml

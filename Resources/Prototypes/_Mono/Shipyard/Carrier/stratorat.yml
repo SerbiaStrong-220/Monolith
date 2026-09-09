@@ -1,9 +1,10 @@
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: StratoRat
   parent: BaseVessel
   name: Страто-Рат # Ru-Localization
   description: Крайне простой газодобывающий шаттл. Оснащён газовой камерой на 120 КМоль и одним М25. # Ru-Localization
-  price: 15000
+  price: 19900 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Micro
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

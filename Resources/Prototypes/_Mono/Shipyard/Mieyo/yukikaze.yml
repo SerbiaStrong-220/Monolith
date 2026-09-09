@@ -1,0 +1,38 @@
+# Sustained-firepower alternative to Kite
+- type: vessel
+  id: Yukikaze
+  parent: BaseVessel
+  name: ММС-CSC «Юкикадзэ» # Exodus MMC localization
+  description: 'Корабль с более серьёзной бронёй, чем у «Кайта»: слои пластали и пластитана дополнены щитом. Вооружён двумя АК-820 и 20-мм орудиями, но внутри очень тесно.' # Exodus MMC localization; quote the colon in the description.
+  price: 123288
+  category: Small
+  group: Mieyo
+  access: MieyoSecurity
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/yukikaze.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Patrol
+  engine:
+  - AME
+
+- type: gameMap
+  id: Yukikaze
+  mapName: 'ММС-CSC «Юкикадзэ»' # Exodus MMC localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/yukikaze.yml
+  minPlayers: 0
+  stations:
+    Yukikaze:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Юкикадзэ MCSC{1}' # Exodus MMC localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            MMCEmployee: [ 0, 0 ]

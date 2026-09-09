@@ -1,4 +1,5 @@
 using Content.Server._Crescent.ShipShields.Components;
+using Content.Server._Exodus.ShipShields; // Exodus layered ship shields
 using Content.Shared._Crescent.ShipShields;
 using Content.Server.Power.Components;
 using Content.Shared.Projectiles;
@@ -28,12 +29,12 @@ public partial class ShipShieldsSystem
     {
         SubscribeLocalEvent<ShipShieldEmitterComponent, ShieldDeflectedEvent>(OnShieldDeflected);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentStartup>(OnEmitterStartup); // Exodus fire-control event-driven UI updates
+        SubscribeLocalEvent<ShipShieldEmitterComponent, MapInitEvent>(OnEmitterMapInit); // Exodus fire-control event-driven UI updates
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentRemove>(OnRemoved);
     }
 
     // Exodus-begin fire-control event-driven UI updates
-    private void OnEmitterStartup(Entity<ShipShieldEmitterComponent> owner, ref ComponentStartup args)
+    private void OnEmitterMapInit(Entity<ShipShieldEmitterComponent> owner, ref MapInitEvent args)
     {
         RaiseShieldStateChanged(Transform(owner).GridUid);
     }
@@ -48,26 +49,40 @@ public partial class ShipShieldsSystem
         RaiseShieldStateChanged(parent); // Exodus fire-control event-driven UI updates
     }
 
-    private void OnShieldDeflected(EntityUid uid, ShipShieldEmitterComponent component, ShieldDeflectedEvent args)
+    // Exodus-begin shield deflection damage handling
+    private void OnShieldDeflected(Entity<ShipShieldEmitterComponent> ent, ref ShieldDeflectedEvent args)
     {
+        // Exodus-begin layered shield recovery
+        _layeredShieldQuery.TryGetComponent(ent, out var layered);
+        if (layered is not null && layered.ActiveLayerCount < Math.Max(1, layered.LayerCount))
+            layered.RecoveryAccumulator = TimeSpan.Zero;
+        // Exodus-end
+
+        var addedDamage = 0f;
+
         if (TryComp<EmpOnTriggerComponent>(args.Deflected, out var emp))
         {
-            component.Damage += Math.Clamp(emp.EnergyConsumption, 0f, MAX_EMP_DAMAGE);
+            addedDamage += Math.Clamp(emp.EnergyConsumption, 0f, MAX_EMP_DAMAGE);
             _trigger.Trigger(args.Deflected);
         }
 
         if (TryComp<ExplosiveComponent>(args.Deflected, out var exp) && _prototypeManager.TryIndex(exp.ExplosionType, out var type))
         {
-            component.Damage += exp.TotalIntensity * (float)type.DamagePerIntensity.GetTotal();
+            addedDamage += exp.TotalIntensity * (float)type.DamagePerIntensity.GetTotal();
         }
 
-        component.Damage += (float)args.Projectile.Damage.GetTotal();
+        addedDamage += (float)args.Projectile.Damage.GetTotal();
+        // Exodus-begin layered shield deflection tuning
+        var deflectionModifier = GetDeflectionDamageModifier(ent, layered);
+        ent.Comp.Damage += addedDamage * deflectionModifier;
+        // Exodus-end
         args.Projectile.ProjectileSpent = true;
 
-        RaiseShieldStateChanged(Transform(uid).GridUid); // Exodus fire-control event-driven UI updates
+        RaiseShieldStateChanged(Transform(ent).GridUid); // Exodus fire-control event-driven UI updates
 
         QueueDel(args.Deflected);
     }
+    // Exodus-end
 
     private void OnExamined(EntityUid uid, ShipShieldEmitterComponent component, ExaminedEvent args)
     {
@@ -137,10 +152,39 @@ public partial class ShipShieldsSystem
 
     public ShipShieldState? GetShieldState(EntityUid ship)
     {
-        if (!TryGetShieldEmitter(ship, out _, out var emitter))
+        if (!TryGetShieldEmitter(ship, out var emitterUid, out var emitter))
             return null;
 
-        return new(emitter.BaseDraw, CalculateLoadDamage(emitter), emitter.MaxDraw, emitter.Recharging, emitter.OverloadAccumulator);
+        var powered = TryComp<ApcPowerReceiverComponent>(emitterUid.Value, out var power) && power.Powered;
+
+        return new(
+            emitter.BaseDraw,
+            CalculateLoadDamage(emitter),
+            emitter.MaxDraw,
+            emitter.Recharging,
+            emitter.OverloadAccumulator,
+            CalculateShieldHealth(emitter),
+            emitter.Shield is not null,
+            powered);
+    }
+
+    /// <summary>
+    /// Returns the remaining operational health of the shield. The effective capacity is the first
+    /// damage-induced shutdown threshold: either the hard damage limit or the maximum extra draw.
+    /// </summary>
+    private static float CalculateShieldHealth(ShipShieldEmitterComponent emitter)
+    {
+        if (emitter.DamageLimit <= 0f || emitter.MaxDraw <= 0f)
+            return 0f;
+
+        var effectiveDamageLimit = emitter.DamageLimit;
+        if (emitter.PowerModifier > 0f && emitter.DamageExp > 0f)
+        {
+            var maxDrawDamage = MathF.Pow(emitter.MaxDraw / emitter.PowerModifier, 1f / emitter.DamageExp);
+            effectiveDamageLimit = MathF.Min(effectiveDamageLimit, maxDrawDamage);
+        }
+
+        return Math.Clamp(1f - emitter.Damage / effectiveDamageLimit, 0f, 1f);
     }
     // Exodus-End
 }

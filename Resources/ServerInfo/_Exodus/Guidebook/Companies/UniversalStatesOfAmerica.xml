@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="universal-states-of-america-name"][/head]
+
+  [locid="universal-states-of-america-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskUnsaShield"/>
+  </Box>
+
+  [locid="tech-disk-unsa-shield-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

@@ -8,7 +8,7 @@
   limit: 2
   hyperwarLimit: 3
   hyperwarTimelock: 3600
-  price: 283000
+  price: 381900 # Exodus: appraised minimum + 5%, rounded up to 100.
   purchasable: false # voucher only
   category: Large
   group: Security

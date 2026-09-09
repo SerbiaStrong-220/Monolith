@@ -37,7 +37,7 @@
 - type: entity
   parent: AirlockSyndicateGlass
   id: AirlockViperGlass
-  suffix: Viper Group, Locked
+  suffix: Вайперы, Закрыто # Exodus Viper localization
   components:
   - type: ContainerFill
     containers:
@@ -46,8 +46,49 @@
 - type: entity
   parent: AirlockSyndicateGlass
   id: AirlockViperCommandGlass
-  suffix: Viper Group Command, Locked
+  suffix: Командование Вайперов, Закрыто # Exodus Viper localization
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsViperCommand ]
+
+# Mieyo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMieyoGlass
+  suffix: ММС # Exodus MMC localization
+  components:
+  - type: Sprite
+    sprite: _Mono/Structures/Doors/Airlocks/Glass/mieyo.rsi
+  - type: PaintableAirlock
+    department: MieyoManufacturingConcern
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockMieyoGlass
+  id: AirlockMieyoGlassLocked
+  suffix: ММС, Закрыто # Exodus MMC localization
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMieyo ]
+
+- type: entity
+  parent: AirlockMieyoGlass
+  id: AirlockMieyoGlassLockedSecurity
+  suffix: Безопасность ММС, Закрыто # Exodus MMC localization
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMieyoSecurity ]
+
+- type: entity
+  parent: AirlockMieyoGlass
+  id: AirlockMieyoGlassLockedLiason
+  suffix: Руководство ММС, Закрыто # Exodus MMC localization
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMieyoLiason ]

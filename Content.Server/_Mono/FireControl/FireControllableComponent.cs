@@ -40,9 +40,17 @@ public sealed partial class FireControllableComponent : Component
     [DataField]
     public float FireCooldown = 0.2f;
 
+    // Exodus-begin: configurable gunnery-server processing load.
     /// <summary>
     /// Optional explicit gunnery server processing power cost.
     /// </summary>
-    [DataField("processingPowerCost")]
+    [DataField]
     public int? ProcessingPowerCost;
+    // Exodus-end
+
+    /// <summary>
+    /// Skip LOS check for this weapon.
+    /// </summary>
+    [DataField]
+    public bool IgnoreLos = false;
 }

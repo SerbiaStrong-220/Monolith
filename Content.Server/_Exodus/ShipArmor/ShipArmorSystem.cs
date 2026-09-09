@@ -3,6 +3,7 @@ using Content.Shared._Exodus.ShipArmor;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 using Robust.Shared.Maths;
 using Robust.Shared.Map.Components;
 using System.Numerics;
@@ -19,6 +20,7 @@ public sealed class ShipArmorSystem : SharedShipArmorSystem
 
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     private EntityQuery<ShipArmorComponent> _armorQuery;
     private EntityQuery<ShipArmorGridComponent> _gridArmorQuery;
@@ -240,6 +242,10 @@ public sealed class ShipArmorSystem : SharedShipArmorSystem
                         if (delta.LengthSquared() > radius * radius)
                             continue;
                     }
+
+                    // Evaluate per module after the range check, before consuming charge on either damage path.
+                    if (_whitelist.IsBlacklistPass(armor.TargetBlacklist, uid))
+                        continue;
 
                     TryAbsorb((armorUid, armor), damage, armorPenetration);
                 }

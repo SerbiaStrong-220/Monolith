@@ -1,0 +1,73 @@
+- type: entity
+  id: AsakimMedicinalKudzu
+  parent: BaseKudzu
+  name: synthetic vine
+  description: A self-expanding network of synthetic filaments and medical nodes that treats oxygen deprivation on contact.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Misc/medicinal_kudzu.rsi
+    state: kudzu_11
+    drawdepth: FloorObjects
+  - type: KudzuVisuals
+  - type: Clickable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Kudzu
+    growthTickChance: 0.05
+    spreadChance: 0.03
+    # KudzuSystem uses an exclusive upper bound when choosing a sprite variant.
+    spriteVariants: 4
+  - type: DamageContacts
+    damage:
+      types:
+        Asphyxiation: -1
+    whitelist:
+      components:
+      - MobState
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Weapons/slash.ogg
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ Destruction ]
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 3
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ WeedKiller, PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Heat: 0.5
+  - type: AtmosExposed

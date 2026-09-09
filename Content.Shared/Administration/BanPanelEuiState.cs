@@ -1,3 +1,4 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
 using System.Net;
 using Content.Shared.Database;
 using Content.Shared.Eui;
@@ -12,6 +13,8 @@ public sealed class BanPanelEuiState : EuiStateBase
 {
     public string PlayerName { get; set; }
     public bool HasBan { get; set; }
+    public bool Busy { get; set; } // Exodus chat ban feedback
+    public string? Error { get; set; } // Exodus chat ban feedback
 
     public BanPanelEuiState(string playerName, bool hasBan)
     {
@@ -57,7 +60,9 @@ public sealed record Ban
         NoteSeverity severity,
         ProtoId<JobPrototype>[]? bannedJobs,
         ProtoId<AntagPrototype>[]? bannedAntags,
-        bool erase)
+        bool erase,
+        BannableChats[]? bannedChats = null, // SS220 chat bans
+        BanType? type = null) // SS220 chat bans
     {
         Target = target;
         IpAddress = ipAddressTuple?.Item1.ToString();
@@ -71,6 +76,8 @@ public sealed record Ban
         BannedJobs = bannedJobs;
         BannedAntags = bannedAntags;
         Erase = erase;
+        BannedChats = bannedChats; // SS220 chat bans
+        Type = type ?? (bannedJobs?.Length > 0 || bannedAntags?.Length > 0 ? BanType.Role : BanType.Server); // SS220 chat bans
     }
 
     public readonly string? Target;
@@ -85,4 +92,6 @@ public sealed record Ban
     public readonly ProtoId<JobPrototype>[]? BannedJobs;
     public readonly ProtoId<AntagPrototype>[]? BannedAntags;
     public readonly bool Erase;
+    public readonly BannableChats[]? BannedChats; // SS220 chat bans
+    public readonly BanType Type; // SS220 chat bans
 }

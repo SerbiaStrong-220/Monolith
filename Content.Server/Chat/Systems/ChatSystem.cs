@@ -55,6 +55,7 @@ namespace Content.Server.Chat.Systems;
 /// </summary>
 public sealed partial class ChatSystem : SharedChatSystem
 {
+    [Dependency] private Content.Server.Administration.Managers.IBanManager _chatBans = default!; // SS220 chat bans
     [Dependency] private IReplayRecordingManager _replay = default!;
     [Dependency] private IConfigurationManager _configurationManager = default!;
     [Dependency] private IChatManager _chatManager = default!;
@@ -346,6 +347,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         // If crit player LOOC is disabled, don't send the message at all.
         if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
             return;
+
+        // Exodus-begin: check the final channel after dead-player LOOC routing.
+        var channel = sendType == InGameOOCChatType.Dead ? ChatChannel.Dead : ChatChannel.LOOC;
+        if (!_chatBans.CanSendChat(player, channel))
+            return;
+        // Exodus-end
 
         switch (sendType)
         {

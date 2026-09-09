@@ -55,7 +55,7 @@
     - KitSelectorTSFMarsocFenghuang
     - KitSelectorTSFMarsocShenzhen
     - KitSelectorTSFMarsocPulseCarbine
-    - KitSelectorTSFMarsocHailstorm
+    # Exodus: Hailstorm is excluded from the lobby operative's equipment selector.
     maxSelectedSets: 1
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key

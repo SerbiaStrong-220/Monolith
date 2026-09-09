@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 
@@ -19,22 +19,25 @@ public sealed partial class GunSystem
 
     private void OnCartridgeDamageExamine(EntityUid uid, CartridgeAmmoComponent component, ref DamageExamineEvent args)
     {
-        var damageSpec = GetProjectileDamage(component.Prototype);
+        var damageSpec = GetProjectileDamage(component.Prototype, out var isHitscan); // mono
 
         if (damageSpec == null)
             return;
 
-        //Exodus ArmorPiercingExamine Start
+        // Exodus-begin: retain armor penetration while supporting upstream hitscan cartridges.
         _damageExamine.AddDamageExamine(
             args.Message,
-            Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Item1),
-            armorPenetration: damageSpec.Value.Item2,
-            type: Loc.GetString("damage-projectile"));
-        //Exodus ArmorPiercingExamine End
+            Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Damage),
+            armorPenetration: damageSpec.Value.ArmorPenetration,
+            type: Loc.GetString(isHitscan ? "damage-hitscan" : "damage-projectile"));
+        // Exodus-end
     }
 
-    private (DamageSpecifier, float)? GetProjectileDamage(string proto)     //Exodus ArmorPiercingExamine
+    // Exodus: retain armor-penetration examination data for both projectile and upstream hitscan cartridges.
+    private (DamageSpecifier Damage, float ArmorPenetration)? GetProjectileDamage(string proto, out bool isHitscan)
     {
+        isHitscan = false; // mono
+
         if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
             return null;
 
@@ -45,8 +48,20 @@ public sealed partial class GunSystem
 
             if (!p.Damage.Empty)
             {
-                return (p.Damage * Damageable.UniversalProjectileDamageModifier, p.ArmorPenetration);   //Exodus ArmorPiercingExamine
+                return (p.Damage * Damageable.UniversalProjectileDamageModifier, p.ArmorPenetration);
             }
+        }
+        // mono
+        else if (entityProto.Components.TryGetValue(Factory.GetComponentName<HitscanBasicDamageComponent>(), out var hitscan))
+        {
+            var h = (HitscanBasicDamageComponent) hitscan.Component;
+
+            if (h.Damage.Empty)
+                return null;
+
+            isHitscan = true;
+            // Exodus: expose the same effective hitscan damage and armor penetration used when firing.
+            return (h.Damage * Damageable.UniversalHitscanDamageModifier, h.ArmorPenetration);
         }
 
         return null;

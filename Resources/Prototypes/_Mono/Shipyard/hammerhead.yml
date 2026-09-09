@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Молотоглав # Ru-Localization
   description: Многоцелевой наёмнический шаттл с вооружением из четырёх 225-мм пушек, четырёх 20-мм орудий и шести 57-мм. Немного уступает в защите полноценным военным шаттлам такого же размера. # Ru-Localization
-  price: 200000 # Its a ~10k markup, it really is that expensive.
+  price: 322000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
   access: Mercenary

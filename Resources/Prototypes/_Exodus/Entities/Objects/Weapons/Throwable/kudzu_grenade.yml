@@ -1,0 +1,25 @@
+- type: entity
+  id: AsakimKudzuGrenade
+  parent: GrenadeBase
+  name: synthetic vine grenade
+  description: A VEF field medical grenade that deploys a slowly expanding network of synthetic filaments. Treats oxygen deprivation on contact without hindering movement.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Grenades/kudzu.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Weapons/Grenades/kudzu.rsi
+  - type: Clothing
+    sprite: _Exodus/Objects/Weapons/Grenades/kudzu.rsi
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/smoke_grenade_prime.ogg
+  - type: SoundOnTrigger
+    sound:
+      path: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: SpawnOnTrigger
+    proto: AsakimMedicinalKudzu
+  - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 150

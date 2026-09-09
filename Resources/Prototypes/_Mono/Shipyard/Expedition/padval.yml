@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Падвал # Ru-Localization
   description: Падвал - это и фабрика, и магазин в одном флаконе. Шаттл предназначен для производства товаров на продажу всему сектору Колосс. # Ru-Localization
-  price: 79000 # i think this price is fair because its only really good for making stuff in techfabs and being a mobile store
+  price: 87400 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/padval.yml

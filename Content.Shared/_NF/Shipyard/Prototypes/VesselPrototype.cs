@@ -1,5 +1,6 @@
 using Content.Shared.Guidebook;
 using Content.Shared.Tag;
+using Content.Shared._Mono.Company; // Exodus company-fleet
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -146,6 +147,15 @@ public sealed partial class VesselPrototype : IPrototype, IInheritingPrototype
     /// </summary>
     [DataField]
     public List<string> Company = new();
+
+    // Exodus-begin company-fleet
+    /// <summary>
+    /// If non-empty, this vessel is only listed/purchasable when the buyer's ID (or voucher)
+    /// company is in this list. Empty = no company restriction.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<CompanyPrototype>> RequiredCompanies = new();
+    // Exodus-end
 }
 
 public enum VesselSize : byte

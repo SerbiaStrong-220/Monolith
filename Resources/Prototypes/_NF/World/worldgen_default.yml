@@ -4,6 +4,12 @@
     - type: WorldController
     - type: BiomeSelection
       biomes:
+        # Exodus-begin fixed INSO-357k and LINEAR-21 resource fields
+        - ExodusClusterA
+        - ExodusWildsCore
+        - ExodusWilds
+        - ExodusWildsOutskirts
+        # Exodus-end
         - NFAsteroidsNear
         - NFAsteroidsMid
         - NFAsteroidsFar

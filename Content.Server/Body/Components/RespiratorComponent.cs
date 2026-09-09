@@ -1,6 +1,8 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes; // Exodus - configurable automatic gasp threshold.
+using Content.Shared.FixedPoint; // Exodus - configurable automatic gasp threshold.
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -53,6 +55,21 @@ namespace Content.Server.Body.Components
 
         [DataField]
         public TimeSpan GaspEmoteCooldown = TimeSpan.FromSeconds(8);
+
+        // Exodus-begin - gate automatic gasping by accumulated damage, independently of suffocation.
+        /// <summary>
+        ///     Damage type whose accumulated amount is checked before an automatic gasp.
+        /// </summary>
+        [DataField]
+        public ProtoId<DamageTypePrototype> GaspEmoteDamageType = "Asphyxiation";
+
+        /// <summary>
+        ///     Minimum accumulated damage required for an automatic gasp while under-saturated.
+        ///     Zero or a negative value disables the damage threshold.
+        /// </summary>
+        [DataField]
+        public FixedPoint2 GaspEmoteDamageThreshold = 10;
+        // Exodus-end
 
         [ViewVariables]
         public TimeSpan LastGaspEmoteTime;

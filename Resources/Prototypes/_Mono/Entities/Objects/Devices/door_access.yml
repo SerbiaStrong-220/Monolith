@@ -55,17 +55,39 @@
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsViper
-  suffix: Viper Group, Locked
+  suffix: Вайперы, Закрыто # Exodus Viper localization
   components:
   - type: AccessReader
-    # access: [["Viper"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
-    access: [["Mercenary"]]
+    access: [["Viper"]] # Exodus restore-viper-group
 
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsViperCommand
-  suffix: Viper Group Command, Locked
+  suffix: Командование Вайперов, Закрыто # Exodus Viper localization
   components:
   - type: AccessReader
-    # access: [["ViperCommand"]] # Exodus temp-viper-mercenary-access: Mercenary access until VG faction returns.
-    access: [["Mercenary"]]
+    access: [["ViperCommand"]] # Exodus restore-viper-group
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMieyo
+  suffix: ММС, Закрыто # Exodus MMC localization
+  components:
+  - type: AccessReader
+    access: [["Mieyo"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMieyoSecurity
+  suffix: Безопасность ММС, Закрыто # Exodus MMC localization
+  components:
+  - type: AccessReader
+    access: [["MieyoSecurity"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMieyoLiason
+  suffix: Руководство ММС, Закрыто # Exodus MMC localization
+  components:
+  - type: AccessReader
+    access: [["MieyoLiason"]]

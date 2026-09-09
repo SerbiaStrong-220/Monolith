@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/19/2026 17:24:42
-  entityCount: 1938
+  entityCount: 1908
 maps: []
 grids:
 - 1
@@ -5039,6 +5039,188 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.1867986,7.6629496
       parent: 1
+- proto: FoamTrapNanolaminate
+  entities:
+  - uid: 1125
+    components:
+    - type: Transform
+      anchored: True
+      pos: -2.5,21.5
+      parent: 1
+  - uid: 1127
+    components:
+    - type: Transform
+      anchored: True
+      pos: -3.5,17.5
+      parent: 1
+  - uid: 1129
+    components:
+    - type: Transform
+      anchored: True
+      pos: -4.5,15.5
+      parent: 1
+  - uid: 1131
+    components:
+    - type: Transform
+      anchored: True
+      pos: -7.5,5.5
+      parent: 1
+  - uid: 1133
+    components:
+    - type: Transform
+      anchored: True
+      pos: -5.5,11.5
+      parent: 1
+  - uid: 1135
+    components:
+    - type: Transform
+      anchored: True
+      pos: 3.5,21.5
+      parent: 1
+  - uid: 1137
+    components:
+    - type: Transform
+      anchored: True
+      pos: -4.5,13.5
+      parent: 1
+  - uid: 1139
+    components:
+    - type: Transform
+      anchored: True
+      pos: 8.5,5.5
+      parent: 1
+  - uid: 1141
+    components:
+    - type: Transform
+      anchored: True
+      pos: 4.5,17.5
+      parent: 1
+  - uid: 1143
+    components:
+    - type: Transform
+      anchored: True
+      pos: 3.5,-13.5
+      parent: 1
+  - uid: 1145
+    components:
+    - type: Transform
+      anchored: True
+      pos: 5.5,-13.5
+      parent: 1
+  - uid: 1147
+    components:
+    - type: Transform
+      anchored: True
+      pos: 5.5,13.5
+      parent: 1
+  - uid: 1149
+    components:
+    - type: Transform
+      anchored: True
+      pos: 5.5,15.5
+      parent: 1
+  - uid: 1151
+    components:
+    - type: Transform
+      anchored: True
+      pos: 2.5,23.5
+      parent: 1
+  - uid: 1153
+    components:
+    - type: Transform
+      anchored: True
+      pos: 6.5,11.5
+      parent: 1
+  - uid: 1155
+    components:
+    - type: Transform
+      anchored: True
+      pos: -1.5,23.5
+      parent: 1
+  - uid: 1157
+    components:
+    - type: Transform
+      anchored: True
+      pos: 16.5,-4.5
+      parent: 1
+  - uid: 1159
+    components:
+    - type: Transform
+      anchored: True
+      pos: -7.5,7.5
+      parent: 1
+  - uid: 1161
+    components:
+    - type: Transform
+      anchored: True
+      pos: 8.5,7.5
+      parent: 1
+  - uid: 1163
+    components:
+    - type: Transform
+      anchored: True
+      pos: -4.5,-13.5
+      parent: 1
+  - uid: 1165
+    components:
+    - type: Transform
+      anchored: True
+      pos: -2.5,-13.5
+      parent: 1
+  - uid: 1167
+    components:
+    - type: Transform
+      anchored: True
+      pos: -15.5,-4.5
+      parent: 1
+  - uid: 1169
+    components:
+    - type: Transform
+      anchored: True
+      pos: -1.5,13.5
+      parent: 1
+  - uid: 1171
+    components:
+    - type: Transform
+      anchored: True
+      pos: 2.5,13.5
+      parent: 1
+  - uid: 1173
+    components:
+    - type: Transform
+      anchored: True
+      pos: -11.5,-17.5
+      parent: 1
+  - uid: 1175
+    components:
+    - type: Transform
+      anchored: True
+      pos: 11.5,1.5
+      parent: 1
+  - uid: 1177
+    components:
+    - type: Transform
+      anchored: True
+      pos: -10.5,1.5
+      parent: 1
+  - uid: 1179
+    components:
+    - type: Transform
+      anchored: True
+      pos: 14.5,-16.5
+      parent: 1
+  - uid: 1181
+    components:
+    - type: Transform
+      anchored: True
+      pos: -13.5,-16.5
+      parent: 1
+  - uid: 1183
+    components:
+    - type: Transform
+      anchored: True
+      pos: 12.5,-17.5
+      parent: 1
 - proto: GasMixer
   entities:
   - uid: 838
@@ -6695,576 +6877,6 @@ entities:
     - type: Transform
       pos: -2.5,3.5
       parent: 1
-- proto: LockerSyndicate
-  entities:
-  - uid: 1125
-    components:
-    - type: Transform
-      anchored: True
-      pos: -2.5,21.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1126
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1127
-    components:
-    - type: Transform
-      anchored: True
-      pos: -3.5,17.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1128
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1129
-    components:
-    - type: Transform
-      anchored: True
-      pos: -4.5,15.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1130
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1131
-    components:
-    - type: Transform
-      anchored: True
-      pos: -7.5,5.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1132
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1133
-    components:
-    - type: Transform
-      anchored: True
-      pos: -5.5,11.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1134
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1135
-    components:
-    - type: Transform
-      anchored: True
-      pos: 3.5,21.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1136
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1137
-    components:
-    - type: Transform
-      anchored: True
-      pos: -4.5,13.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1138
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1139
-    components:
-    - type: Transform
-      anchored: True
-      pos: 8.5,5.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1140
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1141
-    components:
-    - type: Transform
-      anchored: True
-      pos: 4.5,17.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1142
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1143
-    components:
-    - type: Transform
-      anchored: True
-      pos: 3.5,-13.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1144
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1145
-    components:
-    - type: Transform
-      anchored: True
-      pos: 5.5,-13.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1146
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1147
-    components:
-    - type: Transform
-      anchored: True
-      pos: 5.5,13.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1148
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1149
-    components:
-    - type: Transform
-      anchored: True
-      pos: 5.5,15.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1150
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1151
-    components:
-    - type: Transform
-      anchored: True
-      pos: 2.5,23.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1152
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1153
-    components:
-    - type: Transform
-      anchored: True
-      pos: 6.5,11.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1154
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1155
-    components:
-    - type: Transform
-      anchored: True
-      pos: -1.5,23.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1156
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1157
-    components:
-    - type: Transform
-      anchored: True
-      pos: 16.5,-4.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1158
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1159
-    components:
-    - type: Transform
-      anchored: True
-      pos: -7.5,7.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 75.31249
-        moles: {}
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1160
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1161
-    components:
-    - type: Transform
-      anchored: True
-      pos: 8.5,7.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 75.31249
-        moles: {}
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1162
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1163
-    components:
-    - type: Transform
-      anchored: True
-      pos: -4.5,-13.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1164
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1165
-    components:
-    - type: Transform
-      anchored: True
-      pos: -2.5,-13.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1166
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1167
-    components:
-    - type: Transform
-      anchored: True
-      pos: -15.5,-4.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1168
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1169
-    components:
-    - type: Transform
-      anchored: True
-      pos: -1.5,13.5
-      parent: 1
-    - type: Pullable
-      prevFixedRotation: True
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1170
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1171
-    components:
-    - type: Transform
-      anchored: True
-      pos: 2.5,13.5
-      parent: 1
-    - type: Pullable
-      prevFixedRotation: True
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1172
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1173
-    components:
-    - type: Transform
-      pos: -11.5,-17.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1174
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1175
-    components:
-    - type: Transform
-      pos: 11.5,1.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1176
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1177
-    components:
-    - type: Transform
-      pos: -10.5,1.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1178
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1179
-    components:
-    - type: Transform
-      pos: 14.5,-16.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1180
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1181
-    components:
-    - type: Transform
-      pos: -13.5,-16.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1182
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1183
-    components:
-    - type: Transform
-      pos: 12.5,-17.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1184
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: MachineFTLDrive50
   entities:
   - uid: 1185
@@ -7272,218 +6884,6 @@ entities:
     - type: Transform
       pos: 0.5,-4.5
       parent: 1
-- proto: NanolaminateFoamGrenade
-  entities:
-  - uid: 1126
-    components:
-    - type: Transform
-      parent: 1125
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1128
-    components:
-    - type: Transform
-      parent: 1127
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1130
-    components:
-    - type: Transform
-      parent: 1129
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1132
-    components:
-    - type: Transform
-      parent: 1131
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1134
-    components:
-    - type: Transform
-      parent: 1133
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1136
-    components:
-    - type: Transform
-      parent: 1135
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1138
-    components:
-    - type: Transform
-      parent: 1137
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1140
-    components:
-    - type: Transform
-      parent: 1139
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1142
-    components:
-    - type: Transform
-      parent: 1141
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1144
-    components:
-    - type: Transform
-      parent: 1143
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1146
-    components:
-    - type: Transform
-      parent: 1145
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1148
-    components:
-    - type: Transform
-      parent: 1147
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1150
-    components:
-    - type: Transform
-      parent: 1149
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1152
-    components:
-    - type: Transform
-      parent: 1151
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1154
-    components:
-    - type: Transform
-      parent: 1153
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1156
-    components:
-    - type: Transform
-      parent: 1155
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1158
-    components:
-    - type: Transform
-      parent: 1157
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1160
-    components:
-    - type: Transform
-      parent: 1159
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1162
-    components:
-    - type: Transform
-      parent: 1161
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1164
-    components:
-    - type: Transform
-      parent: 1163
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1166
-    components:
-    - type: Transform
-      parent: 1165
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1168
-    components:
-    - type: Transform
-      parent: 1167
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1170
-    components:
-    - type: Transform
-      parent: 1169
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1172
-    components:
-    - type: Transform
-      parent: 1171
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1174
-    components:
-    - type: Transform
-      parent: 1173
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1176
-    components:
-    - type: Transform
-      parent: 1175
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1178
-    components:
-    - type: Transform
-      parent: 1177
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1180
-    components:
-    - type: Transform
-      parent: 1179
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1182
-    components:
-    - type: Transform
-      parent: 1181
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 1184
-    components:
-    - type: Transform
-      parent: 1183
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: NitrogenCanister
   entities:
   - uid: 1186

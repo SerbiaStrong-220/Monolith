@@ -18,6 +18,7 @@ namespace Content.Server.Administration.Notes;
 public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 {
     [Dependency] private IAdminManager _admins = default!;
+    [Dependency] private IBanManager _chatBans = default!; // SS220 chat bans
     [Dependency] private IServerDbManager _db = default!;
     [Dependency] private ILogManager _logManager = default!;
     [Dependency] private EuiManager _euis = default!;
@@ -102,6 +103,7 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
                 break;
             case NoteType.ServerBan:
             case NoteType.RoleBan:
+            case NoteType.ChatBan: // SS220 chat bans
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
@@ -138,6 +140,7 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
                 break;
             case NoteType.ServerBan: // Add bans using the ban panel, not note edit
             case NoteType.RoleBan:
+            case NoteType.ChatBan: // SS220 chat bans
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
@@ -167,14 +170,15 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
 
     private async Task<SharedAdminNote?> GetAdminRemark(int id, NoteType type)
     {
-        return type switch
+        var note = type switch // Exodus validate note type after database lookup
         {
             NoteType.Note => (await _db.GetAdminNote(id))?.ToShared(),
             NoteType.Watchlist => (await _db.GetAdminWatchlist(id))?.ToShared(),
             NoteType.Message => (await _db.GetAdminMessage(id))?.ToShared(),
-            NoteType.ServerBan or NoteType.RoleBan => (await _db.GetBanAsNoteAsync(id))?.ToShared(),
+            NoteType.ServerBan or NoteType.RoleBan or NoteType.ChatBan => (await _db.GetBanAsNoteAsync(id))?.ToShared(), // SS220 chat bans
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type")
         };
+        return note?.NoteType == type ? note : null; // Exodus prevent forged note types from bypassing chat ban permissions
     }
 
     public async Task DeleteAdminRemark(int noteId, NoteType type, ICommonSession deletedBy)
@@ -199,7 +203,7 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
             case NoteType.Message:
                 await _db.DeleteAdminMessage(noteId, deletedBy.UserId, deletedAt);
                 break;
-            case NoteType.ServerBan or NoteType.RoleBan:
+            case NoteType.ServerBan or NoteType.RoleBan or NoteType.ChatBan: // SS220 chat bans
                 await _db.HideBanFromNotes(noteId, deletedBy.UserId, deletedAt);
                 break;
             default:
@@ -212,6 +216,12 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
 
     public async Task ModifyAdminRemark(int noteId, NoteType type, ICommonSession editedBy, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
     {
+        // Exodus-begin chat ban edits require moderation permission as well as note editing permission.
+        if (type == NoteType.ChatBan && (!_admins.HasAdminFlag(editedBy, AdminFlags.Ban) ||
+            string.IsNullOrWhiteSpace(message) || message.Length > Content.Shared.Database._Exodus.Chat.ChatBanLimits.MaxReasonLength ||
+            severity is null || !Enum.IsDefined(severity.Value)))
+            return;
+        // Exodus-end
         message = message.Trim();
 
         var note = await GetAdminRemark(noteId, type);
@@ -276,10 +286,17 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
             case NoteType.Message:
                 await _db.EditAdminMessage(noteId, message, editedBy.UserId, editedAt, expiryTime);
                 break;
-            case NoteType.ServerBan or NoteType.RoleBan:
+            case NoteType.ServerBan or NoteType.RoleBan or NoteType.ChatBan: // SS220 chat bans
                 if (severity is null)
                     throw new ArgumentException("Severity cannot be null for a ban", nameof(severity));
+                // Exodus-begin recheck after asynchronous lookup and reject invalid chat ban dates.
+                if (type == NoteType.ChatBan && (!_admins.HasAdminFlag(editedBy, AdminFlags.Ban) ||
+                    expiryTime <= note.CreatedAt || expiryTime - note.CreatedAt > TimeSpan.FromMinutes(Content.Shared.Database._Exodus.Chat.ChatBanLimits.MaxDurationMinutes)))
+                    return;
+                // Exodus-end
                 await _db.EditBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
+                if (type == NoteType.ChatBan) // Exodus apply edits to connected players immediately
+                    await _chatBans.RefreshChatBanAsync(noteId);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
@@ -330,5 +347,6 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
     public void PostInject()
     {
         _sawmill = _logManager.GetSawmill(SawmillId);
+        _chatBans.ChatBanChanged += OnChatBanChanged; // SS220 chat bans
     }
 }

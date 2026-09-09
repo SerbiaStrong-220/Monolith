@@ -4,14 +4,19 @@ bank-atm-menu-balance-label = Balance:{" "}
 bank-atm-menu-savings-label = Savings:{" "}
 bank-atm-menu-no-bank = No Bank Account!
 bank-atm-menu-withdraw-button = Withdraw
-bank-atm-menu-deposit-label = Deposit (Sector):{" "}
-bank-atm-menu-deposit-label-ut = Deposit (Savings):{" "}
+# Exodus-begin corporate ATM commission display
+bank-atm-menu-deposit-label = To sector account:{" "}
+bank-atm-menu-deposit-label-ut = To savings:{" "}
+bank-atm-menu-atm-fee-label = ATM fee:{" "}
+bank-atm-menu-company-commission-label = Corporate commission:{" "}
+# Exodus-end
 bank-atm-menu-amount-label = Withdraw:{" "}
 bank-atm-menu-no-deposit = Empty
 bank-atm-menu-deposit-button = Deposit
 bank-atm-reason-label = For:{" "}
 bank-atm-description-label = Description:{" "}
 bank-atm-menu-withdraw-amount = Withdraw Amount
+bank-atm-menu-untaxed = Untaxed!
 
 vending-machine-menu-cash-slot-label = Cash Slot:{" "}
 

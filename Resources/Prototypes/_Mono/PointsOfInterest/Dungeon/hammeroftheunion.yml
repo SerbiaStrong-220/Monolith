@@ -9,15 +9,21 @@
 # Notes: upgraded zenith as a ruin w/ tech disks
 - type: pointOfInterest
   id: HammerOfTheUnion
-  parent: [BaseMobilePOI, BaseRepairablePOI]
+  parent: [BaseMobilePOI, BaseRepairablePOI] # Exodus SRD snapshot is inherited from BaseRepairablePOI.
   name: 'Молот Союза' # Ru-Localization
-  minimumDistance: 12500 # Exodus-nebula-update
-  maximumDistance: 40000 # Exodus-nebula-update
+  # Exodus placement is controlled by HammerNearFervidus instead of the ordinary sector annulus.
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/Dungeons/hammeroftheunion.yml
   addComponents:
+  # Exodus-begin USSP affiliation; preserve the ruin's existing hidden-label behavior.
+  - type: NpcFactionMember
+    factions: [USSP]
+  - type: IffAffiliation
+    mode: Faction
+    faction: USSP
+  # Exodus-end
   - type: IFF
-    color: "#44bfe3"
+    color: "#ff0033" # Exodus USSP
     flags: [HideLabel]
 
 - type: gameMap

@@ -10,6 +10,7 @@
   supervisors: job-supervisors-hire
   weight: 2 # Prioritize station & department jobs
   displayWeight: 30 # Second from the top
+  # Exodus: retain the existing selectable role (setPreference defaults to true).
   accessGroups: # Frontier
   - GeneralAccess
   special:

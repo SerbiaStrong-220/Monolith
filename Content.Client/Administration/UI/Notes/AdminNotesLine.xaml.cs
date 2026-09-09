@@ -1,3 +1,4 @@
+using System.Linq; // SS220 chat bans
 using System.Text;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Database;
@@ -113,6 +114,15 @@ public sealed partial class AdminNotesLine : BoxContainer
             case NoteType.ServerBan:
                 NoteLabel.SetMessage(FormatBanMessage());
                 break;
+            // SS220-begin chat bans
+            case NoteType.ChatBan:
+                var chats = Note.BannedChats is { } bannedChats
+                    ? string.Join(", ", bannedChats.Select(Content.Shared._Exodus.Chat.ChatBanNames.Get))
+                    : string.Empty;
+                var message = Loc.GetString("chat-ban-note", ("chats", chats), ("reason", Note.Message));
+                NoteLabel.SetMessage(FormattedMessage.FromUnformatted(message));
+                break;
+            // SS220-end
             case NoteType.RoleBan:
                 NoteLabel.SetMessage(FormatRoleBanMessage());
                 break;

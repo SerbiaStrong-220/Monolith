@@ -1,3 +1,4 @@
+# Exodus: retain the main-build ambient biome names and layout.
 #fallback, don't remove
 - type: ambientSpaceBiome
   id: BiomeDefault

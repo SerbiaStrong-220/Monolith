@@ -175,6 +175,11 @@
     - NFServiceStatic # Frontier
     - MonoRestraintsStatic # Mono
     - DeviceCalculatorStatic # Exodus
+    - ReportingStatic # DeltaV
+    # Exodus-begin company-fleet
+    dynamicPacks:
+    - CompanyShmDynamic
+    # Exodus-end
   - type: EmagLatheRecipes
     emagStaticPacks:
     - StaticAmmoRecipePack
@@ -268,6 +273,13 @@
     - UpgradeKits # Mono
     - UpgradeKits_Goob # Mono
     - SMSurgery # Shitmed Change
+    # Exodus-begin company-fleet
+    - CompanyBlackhawkDynamic
+    - CompanyHorizonDynamic
+    - CompanyBratvaDynamic
+    - CompanyUllmanDynamic
+    - CompanyCdmDynamic
+    # Exodus-end
     # WD EDIT START
     - VisionGoggles
     # WD EDIT END
@@ -351,6 +363,14 @@
     - S2MechBoards
     - EngineeringBoardsGoob #Goob Factorio port
     - ReactorCircuitboards # FH edit
+    # Exodus-begin company-fleet
+    - CompanyHorizonBoardsDynamic
+    - CompanyNosskeDynamic
+    - CompanyBratvaBoardsDynamic
+    - CompanyCdmBoardsDynamic
+    - CompanyAetherionDynamic
+    - CompanyUnsaDynamic
+    # Exodus-end
   - type: MaterialStorage
     whitelist:
       tags:
@@ -527,6 +547,10 @@
     - SmartGun #Smart SMG
     - NFMercenaryTechfabDeprecated
     # Mono end
+    # Exodus-begin company-fleet
+    - CompanyMacoDynamic
+    - CompanyDrakeDynamic
+    # Exodus-end
   - type: MaterialStorage
     whitelist:
       tags:
@@ -573,6 +597,9 @@
     - UniversalShellAmmo
     - UniversalOrdinance
     # Mono end
+    # Exodus-begin company-fleet
+    - CompanyMacoAmmoDynamic
+    # Exodus-end
   - type: MaterialStorage
     whitelist:
       tags:
@@ -759,6 +786,7 @@
       tags:
       - Ore
   - type: Lathe
+    partRatingMaterialUseMultiplier: 0.9 # Mono
     idleState: icon
     runningState: building
     defaultProductionAmount: 10
@@ -781,7 +809,8 @@
   - type: Machine
     board: OreProcessorIndustrialMachineCircuitboard
   - type: Lathe
-    materialUseMultiplier: 0.75
+    partRatingMaterialUseMultiplier: 0.92 # Mono
+    materialUseMultiplier: 0.6 # Mono
     timeMultiplier: 0.5
     staticPacks:
     - OreSmelting
@@ -892,12 +921,16 @@
       tags:
       - Sheet
       - RawMaterial
+      - Ingot # Exodus company-fleet
   - type: Lathe
     idleState: limbgrower_idleoff
     runningState: limbgrower_idleon
     productValueModifier: 0.05
     staticPacks:
     - MedicalSynthLimbsStatic
+    dynamicPacks: # Exodus company-fleet
+    - CompanyHmeOrgansDynamic # Exodus company-fleet
+    - CompanyHiveDynamic # Exodus company-fleet
   - type: EmagLatheRecipes
     emagStaticPacks:
     - MedicalPizzaLimbsStatic

@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="ullman-industries-name"][/head]
+
+  [locid="ullman-industries-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskUllmanArmaments"/>
+  </Box>
+
+  [locid="tech-disk-ullman-armaments-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

@@ -1,0 +1,52 @@
+# Only changes placement of an already selected POI; groups, presets, chance, map and roles remain unchanged.
+# poi / anchorPoi reference pointOfInterest prototype IDs; nebulaPoi / anchorNebulaPoi reference nebulaPoi IDs.
+# anchorPlanet references a planetType ID; distance is measured from the generated planet's position.
+# Specify exactly one target and one anchor. Mixed types and dependency chains are supported.
+# minDistance / maxDistance are meters between grid bounding-box centers, without the sector distance multiplier.
+# Relative placement ignores the ordinary target's minimumDistance, maximumDistance, posX and posY.
+# Ordinary targets may land in nebulas; nebula targets retain spawnIn, density and distance-from-center limits.
+# The rule does not add anchors to the spawn pool or increase target copies, even if multiple anchors exist.
+# Other POIs retain the global minimum separation; grid intersection checks also apply to the anchor.
+# Dependency chains are processed before nebula generation and again after nebula POIs spawn.
+# Cycles, duplicate rules, invalid distances and missing anchors cause the target to be skipped with a logged error.
+# If nf14.worldgen.poi_placement_retries attempts find no space, there is no fallback spawn outside the annulus.
+# Placement applies only during round generation; the target does not follow its anchor during gameplay.
+# Nebula protection is configured separately through nebulaProtectedStation.
+- type: relativePoiPlacement
+  id: TSFIndustryNearFlagship
+  poi: TSFMCIndustry
+  anchorPoi: TSFMCHalcyon
+  minDistance: 5500
+  maxDistance: 6000
+
+# Place the existing round-start Jupiter POI near Helios; arrival-beacon ships are unaffected.
+- type: relativePoiPlacement
+  id: JupiterNearHelios
+  poi: Jupiter
+  anchorPoi: HeliosFortress
+  minDistance: 1200
+  maxDistance: 3900
+
+# The TSF carrier starts near Falcon with the same distance range as Jupiter near Helios.
+- type: relativePoiPlacement
+  id: ChengduNearFalcon
+  poi: Chengdu
+  anchorPoi: TSFMCHalcyon
+  minDistance: 1200
+  maxDistance: 3900
+
+# The required Hammer replaces its ordinary placement; no second copy or fallback spawn is added.
+- type: relativePoiPlacement
+  id: HammerNearFervidus
+  poi: HammerOfTheUnion
+  anchorPlanet: PlanetFervidus
+  minDistance: 4000
+  maxDistance: 6000
+
+# Civilian outpost replaces the old TSF peripheral outpost in the automatic spawn pool.
+- type: relativePoiPlacement
+  id: PDVCivilianOutpostNearHelios
+  poi: PDVCivilianOutpost
+  anchorPoi: HeliosFortress
+  minDistance: 5500
+  maxDistance: 6000

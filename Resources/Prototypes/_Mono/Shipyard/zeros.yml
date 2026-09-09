@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: Зерос # Ru-Localization
   description: Шаттл-закусочная, стилизованный под тягач с полуприцепом. Имеет обеденный зал с доступом из открытого космоса и небольшой грузовой отсек. # Ru-Localization
-  price: 112500
+  price: 134000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/zeros.yml

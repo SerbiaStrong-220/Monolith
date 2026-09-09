@@ -3,7 +3,12 @@
   name: job-name-vg-infanteer
   description: job-description-vg-infanteer
   playTimeTracker: JobVGInfanteer
-  whitelisted: true # Everyone who has the company whitelist, I'd assume.
+  # Exodus-begin enable-viper-group
+  whitelisted: false
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 108000 # 30 hrs
+  # Exodus-end
   startingGear: ViperRadioGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

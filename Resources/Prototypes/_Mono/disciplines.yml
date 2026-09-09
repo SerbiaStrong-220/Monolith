@@ -152,4 +152,17 @@
     1: 0
     2: 0.5
     3: 0.5
-  uiName: VG
+  uiName: Вайперы # Exodus Viper localization
+
+- type: techDiscipline
+  id: Mieyo
+  name: research-discipline-mieyo
+  color: "#ff9500"
+  icon:
+    sprite: _Mono/Interface/Misc/research_disciplines_mieyo.rsi
+    state: tech_tree
+  tierPrerequisites:
+    1: 0
+    2: 0.5
+    3: 0.5
+  uiName: ММС # Exodus MMC localization

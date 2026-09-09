@@ -1,0 +1,37 @@
+- type: vessel
+  id: MieyoAutumn
+  parent: BaseVessel
+  name: ММС-SKR «Мэйё-Аутум» # Exodus MMC localization
+  description: Лицензионная версия «Аутум». В ней заменили напольное покрытие и скафандры на продукцию ММС. # Exodus MMC localization
+  price: 224831
+  category: Large
+  group: Mieyo
+  access: Mieyo
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/autumn_mieyo.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Cargo
+  engine:
+  - AME
+
+- type: gameMap
+  id: MieyoAutumn
+  mapName: 'ММС-SKR «Мэйё-Аутум»' # Exodus MMC localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/autumn_mieyo.yml
+  minPlayers: 0
+  stations:
+    MieyoAutumn:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Мэйё-Аутум ММС{1}' # Exodus MMC localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            MMCEmployee: [ 0, 0 ]

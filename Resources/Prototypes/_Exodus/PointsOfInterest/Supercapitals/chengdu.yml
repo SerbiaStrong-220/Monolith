@@ -1,0 +1,58 @@
+# Author Info
+# GitHub: kasature90
+# Discord: _starch_
+
+- type: pointOfInterest
+  id: Chengdu
+  parent: [BaseMobilePOI, BaseRepairablePOI]
+  name: 'ТСФ | Авианосец Ченджу'
+  # Placement is controlled by ChengduNearFalcon in relative_placement.yml.
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
+  spawnGroup: Required
+  gridPath: /Maps/_Exodus/Supercapitals/chengdu.yml
+  addComponents:
+  - type: IffAffiliation
+    mode: Faction
+    faction: TSFMC
+  - type: IFF
+    color: "#00a1fc"
+    flags: [HideLabel]
+    readOnly: false
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+
+- type: gameMap
+  id: Chengdu
+  mapName: 'ТСФ | Авианосец Ченджу'
+  mapPath: /Maps/_Exodus/Supercapitals/chengdu.yml
+  minPlayers: 0
+  stations:
+    Chengdu:
+      stationProto: RecordsFrontierOutpostCargo
+      # Mobile carrier affiliation does not create a capturable territory.
+      gridComponents:
+      - type: NpcFactionMember
+        factions:
+        - TSFMC
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'ТСФ | Авианосец Ченджу'
+      - type: ExtraStationInformation
+        icon:
+          sprite: _NF/Structures/Decoration/banner.rsi
+          state: nfsd-banner
+        stationSubtext: exodus-lobby-chengdu-subtext
+        stationDescription: exodus-lobby-chengdu-description
+        lobbySortOrder: 2
+      - type: StationJobs
+        availableJobs:
+          Bailiff: [ 1, 1 ]
+          SeniorOfficer: [ 2, 2 ]
+          Deputy: [ 8, 8 ]
+        tags:
+        - HeadOfPersonnel
+        - HeadOfSecurity
+      - type: StationDeadDropReporting
+        messageSet: Nfsd
+      - type: StationDeadDropHintExempt

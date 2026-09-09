@@ -1,6 +1,6 @@
 - type: entity
-  name: 45_magnum bolt
-  id: BulletEnergyGun45_magnum
+  name: 45_magnum bolt # Exodus: preserve main-build terminology; upstream ID remains .357.
+  id: BulletEnergyGun357_magnum
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:

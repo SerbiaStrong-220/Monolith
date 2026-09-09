@@ -29,6 +29,7 @@
   recipes:
   - OreProcessorIndustrialMachineCircuitboard
   # - OreMagnetMachineCircuitboard # Exodus disable ore-magnet
+  - MaterialSiloMachineCircuitboard
   # - CargoTelepadMachineCircuitboard # Frontier
   - ShuttleGunKineticCircuitboard
   - WeaponTurretM25Circuitboard # Mono

@@ -1,0 +1,74 @@
+# Claiming requires a neutral capturable POI; growing the core anchors it through the normal banner path.
+- type: entity
+  id: ExodusChimeraCore
+  parent: BaseStructure
+  name: hive heart
+  description: A crimson heart heaves between plates of bone. Thick veins burrow beneath the plating, and the surrounding flesh shudders with every beat. The air reeks of warm blood and raw meat.
+  components:
+  - type: Transform
+    anchored: false
+    noRot: true
+  - type: Physics
+    bodyType: Dynamic
+  - type: Sprite
+    sprite: _Exodus/Structures/Chimera/hive.rsi
+    state: core
+    noRot: true
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        hard: true
+        layer:
+        - MachineLayer
+        mask:
+        - MachineMask
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 10
+  - type: Appearance
+  - type: FireVisuals
+  - type: AtmosExposed
+  - type: Tag
+    tags:
+    - Structure
+    - ShipArmorExcluded
+  - type: TerritoryBanner
+    faction: Chimera
+    blipColor: "#FF6A00"
+  - type: NpcFactionMember
+    factions:
+    - Chimera
+  - type: TerritoryCore
+    spawnPrototype: MobLetoferolHorrorGhostrole # Uses the existing AI, raffle and ghost-role requirements.
+    substrateTag: ChimeraFloor
+    spawnInterval: 420 # Seven minutes after activation and after each successful spawn, without population caps.
+    retryInterval: 10 # Retry a blocked grid without accumulating missed spawns.
+
+- type: entity
+  id: ActionGrowChimeraCore
+  name: Grow hive heart
+  description: "Root a living heart in a station free of another's banner. Remain still while the flesh binds to the chosen patch of floor: a sudden movement or wound will interrupt its growth."
+  components:
+  - type: ActionTargetingCursor
+  - type: WorldTargetAction
+    checkCanAccess: true
+    range: 1.5
+    useDelay: 1
+    icon: { sprite: _Exodus/Structures/Chimera/hive.rsi, state: core }
+    event: !type:GrowTerritoryCoreActionEvent {}

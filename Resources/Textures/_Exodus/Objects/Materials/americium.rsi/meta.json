@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by Codex",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "americium"
+    },
+    {
+      "name": "americium_2"
+    },
+    {
+      "name": "americium_3"
+    }
+  ]
+}

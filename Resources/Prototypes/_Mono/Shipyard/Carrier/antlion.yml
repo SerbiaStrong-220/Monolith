@@ -1,9 +1,10 @@
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: Antlion
   parent: BaseVessel
   name: Муравьиный лев # Ru-Localization
   description: Добывающий дрон. По сути — кусок металла с приделанным шахтёрским орудием. Скафандр и кислород в комплект не входят. # Ru-Localization
-  price: 7250
+  price: 13000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Micro
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

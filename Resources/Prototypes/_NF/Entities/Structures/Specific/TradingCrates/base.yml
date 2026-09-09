@@ -101,7 +101,7 @@
   parent:
   - CrateTradeBaseSecure
   id: CrateTradeBaseSecureContraband
-  name: Syndicate contraband crate
+  name: Syndicate contraband crate # Exodus: preserve main-build dead-drop names.
   description: Contains goods made in the Spinward sector, ready to be smuggled to a cargo depot for profit. MAKE SURE THE CRATE IS INTACT.
   abstract: true
   components:

@@ -8,7 +8,7 @@
   limit: 3
   hyperwarLimit: 4
   hyperwarTimelock: 1800
-  price: 278000
+  price: 303200 # Exodus: appraised minimum + 5%, rounded up to 100.
   purchasable: false # Voucher only
   category: Large
   group: BlackMarket

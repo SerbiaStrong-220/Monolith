@@ -15,7 +15,14 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task PardonTest()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            // Exodus-begin: ban IDs require a fresh database; pardoned bans remain stored after this test.
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Connected = true,
+                Fresh = true,
+                Destructive = true,
+            });
+            // Exodus-end
             var server = pair.Server;
             var client = pair.Client;
 
@@ -142,7 +149,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(await sDatabase.GetBansAsync(null, clientId, null, null), Has.Count.EqualTo(1));
             });
 
-            // Reconnect client. Slightly faster than dirtying the pair.
+            // Exodus: verify that the pardoned client can reconnect.
             Assert.That(sPlayerManager.Sessions, Is.Empty);
             client.SetConnectTarget(server);
             await client.WaitPost(() => netMan.ClientConnect(null!, 0, null!));

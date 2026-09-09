@@ -1,0 +1,113 @@
+# One tile-wide sensor per pellet. Standard projectile collisions handle damage and obstacles.
+- type: entity
+  id: GravityPulseMech
+  name: gravitational pulse
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Projectiles/gravity_pulse.rsi
+    drawdepth: Effects
+    scale: 0.5, 0.5
+    layers:
+    - state: pulse
+      shader: unshaded
+      color: "#DAD6EA70"
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 1
+        hard: false
+        layer: []
+        mask:
+        - BulletImpassable
+  - type: Ammo
+    muzzleFlash: MuzzleFlashGravityPulse
+  - type: Projectile
+    impactEffect: GravityPulseImpact
+    damage:
+      types:
+        Blunt: 160
+        Structural: 300
+    deleteOnCollide: true
+    onlyCollideWhenShot: true
+  - type: GravityPulse
+  - type: ProjectileKnockback
+    knockback: 2160
+    rotateMultiplier: 0
+    affectGrids: false
+  - type: DistanceFalloff
+    range: 8
+    fullStrengthDistance: 2
+    exponent: 1
+  - type: ProjectileSpread
+    proto: GravityPulseMech
+    count: 5
+    spread: 30
+  - type: WaveDistortionVisuals
+    shader: ExodusGravityWave
+    size: 1, 1
+    intensity: 6
+    opacity: 0.85
+    frontWidth: 0.4
+    curvature: 0.6
+  - type: TimedDespawn
+    lifetime: 2
+
+- type: entity
+  id: GravityPulseHandheld
+  parent: GravityPulseMech
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 160
+        Structural: 200
+  - type: ProjectileKnockback
+    knockback: 2160
+  - type: DistanceFalloff
+    range: 6
+    fullStrengthDistance: 1.5
+  - type: ProjectileSpread
+    proto: GravityPulseHandheld
+    count: 3
+    spread: 20
+  - type: WaveDistortionVisuals
+    intensity: 4
+
+- type: entity
+  id: MuzzleFlashGravityPulse
+  parent: MuzzleFlashEffect
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    scale: 0.25, 0.25
+    layers:
+    - sprite: _Exodus/Objects/Weapons/Projectiles/gravity_pulse.rsi
+      state: muzzle
+      shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+  - type: PointLight
+    color: "#DB91D5"
+    radius: 1.5
+    energy: 2
+
+- type: entity
+  id: GravityPulseImpact
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Projectiles/gravity_pulse.rsi
+    drawdepth: Effects
+    scale: 0.5, 0.5
+    layers:
+    - state: impact
+      shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+  - type: TimedDespawn
+    lifetime: 0.2

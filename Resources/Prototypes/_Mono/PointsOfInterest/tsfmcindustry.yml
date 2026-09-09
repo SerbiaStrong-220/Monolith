@@ -1,0 +1,66 @@
+# Author Info
+# GitHub: onezerooo0
+# Discord: onezero00
+
+# Notes: Wow.
+
+
+# Exodus-begin: enable Stellar Blessing as the TSF civilian automatic POI.
+- type: pointOfInterest
+  id: TSFMCIndustry
+  parent: [BasePOI, BaseRepairablePOI]
+  name: 'ТСФ-ГРАЖД «Звёздное благословение»' # Exodus Stellar Blessing localization
+  # Exodus: placement around TSFMCHalcyon is configured by TSFIndustryNearFlagship in _Exodus/PointsOfInterest/relative_placement.yml.
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
+  spawnGroup: Required
+  gridPath: /Maps/_Mono/POI/tsfmc_industry.yml
+  addComponents:
+  - type: IffAffiliation # Exodus civilian ownership is established by the mapped banners.
+    mode: CorporateControl
+  - type: IFF
+    color: "#047abd"
+    readOnly: true
+  - type: SolarPoweredGrid
+    doNotCull: true
+  # Exodus: the territory controller supplies the grid's NPC faction.
+  - type: WorldGenDistanceCarver
+    distanceThresholds:
+    # Dead zone
+    - maxDistance: 800
+      prob: 0.0
+    - maxDistance: 1500
+      prob: 0.3
+# Exodus-end
+
+- type: gameMap
+  id: TSFMCIndustry
+  mapName: 'ТСФ-ГРАЖД «Звёздное благословение»' # Exodus Stellar Blessing localization
+  mapPath: /Maps/_Mono/POI/tsfmc_industry.yml
+  minPlayers: 0
+  randomRotation: false
+  stations:
+    TSFMCIndustry:
+      stationProto: StandardFrontierOutpost
+      gridComponents:
+      - type: VesselInfo
+        description: "Колониальный корабль Федерации, направленный в радиус Колосса для промышленного освоения. Здесь живут гражданские ТСФ." # Exodus Stellar Blessing localization
+      - type: GridTerritory # Exodus civilian territory uses the PoiSmall profile and mapped banners.
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'ТСФ-ГРАЖД «Звёздное благословение»' # Exodus Stellar Blessing localization
+        - type: ExtraStationInformation
+          icon:
+            sprite: _NF/Structures/Decoration/banner.rsi
+            state: nfsd-banner
+          stationSubtext: 'monolith-lobby-tsf-industry-subtext'
+          stationDescription: 'monolith-lobby-tsf-industry-description'
+          lobbySortOrder: 2
+        - type: StationJobs
+          availableJobs:
+            TsfCivilian: [ -1, -1 ]
+          tags:
+          - HeadOfPersonnel
+          - HeadOfSecurity
+#        - type: StationDeadDropReporting
+#          messageSet: Nfsd
+#        - type: StationDeadDropHintExempt

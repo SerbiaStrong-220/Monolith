@@ -70,12 +70,24 @@ public sealed partial class GameTicker
     /// </summary>
     public EntityUid ForceAddGameRule(string ruleId)
     {
-        if (!TryAddGameRule(ruleId, out var ruleEnt, true))
+        if (!TryForceAddGameRule(ruleId, out var ruleEnt))
         {
             DebugTools.Assert($"Failed to force add game rule {ruleId}");
             return EntityUid.Invalid;
         }
         return ruleEnt.Value;
+    }
+
+    /// <summary>
+    /// Adds a game rule while allowing its runtime state to be initialized before
+    /// <see cref="GameRuleAddedEvent"/> is raised.
+    /// </summary>
+    public bool TryForceAddGameRule(
+        string ruleId,
+        [NotNullWhen(true)] out EntityUid? rule,
+        Func<EntityUid, bool>? initialize = null)
+    {
+        return TryAddGameRule(ruleId, out rule, true, initialize);
     }
 
     /// <summary>
@@ -91,12 +103,30 @@ public sealed partial class GameTicker
     /// Adds a game rule to the list, but does not
     /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
     /// </summary>
-    public bool TryAddGameRule(string ruleId, [NotNullWhen(true)] out EntityUid? rule, bool force = false)
+    public bool TryAddGameRule(
+        string ruleId,
+        [NotNullWhen(true)] out EntityUid? rule,
+        bool force = false)
+    {
+        return TryAddGameRule(ruleId, out rule, force, null);
+    }
+
+    private bool TryAddGameRule(
+        string ruleId,
+        [NotNullWhen(true)] out EntityUid? rule,
+        bool force,
+        Func<EntityUid, bool>? initialize)
     {
         rule = null;
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
 
         if (!force && !_ruleRequirements.CheckRule(ruleEntity)) // Exodus
+        {
+            QueueDel(ruleEntity);
+            return false;
+        }
+
+        if (initialize is not null && !initialize(ruleEntity))
         {
             QueueDel(ruleEntity);
             return false;
@@ -399,7 +429,7 @@ public sealed partial class GameTicker
             var ent = ForceAddGameRule(rule); // Exodus
 
             // Start rule if we're already in the middle of a round
-            if(RunLevel == GameRunLevel.InRound)
+            if (RunLevel == GameRunLevel.InRound)
                 StartGameRule(ent);
 
         }

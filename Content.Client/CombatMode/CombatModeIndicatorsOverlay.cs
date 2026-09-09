@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client._Exodus.Actions; // Exodus - action targeting cursor
 using Content.Client.Hands.Systems;
 using Content.Shared._RMC14.CombatMode; // Mono
 using Content.Shared.Weapons.Ranged.Components;
@@ -29,6 +30,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     private readonly HandsSystem _hands = default!;
     private readonly RMCCombatModeSystem _rmcCombatMode; // Mono
     private readonly SpriteSystem _sprite; // Mono
+    private readonly ActionTargetingCursorSystem _actionTargeting; // Exodus - action targeting cursor
 
     private readonly Texture _gunSight;
     private readonly Texture _gunBoltSight;
@@ -59,11 +61,16 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
 
         _rmcCombatMode = entMan.System<RMCCombatModeSystem>(); // Mono
         _sprite = entMan.System<SpriteSystem>(); // Mono
+        _actionTargeting = entMan.System<ActionTargetingCursorSystem>(); // Exodus - action targeting cursor
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (!_combat.IsInCombatMode())
+            return false;
+
+        // Exodus - avoid drawing a combat reticle over the action targeting cursor.
+        if (_actionTargeting.IsTargetingViewport())
             return false;
 
         return base.BeforeDraw(in args);

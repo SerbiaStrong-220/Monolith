@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="steel-hammer-name"][/head]
+
+  [locid="steel-hammer-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskShmHull"/>
+  </Box>
+
+  [locid="tech-disk-shm-hull-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

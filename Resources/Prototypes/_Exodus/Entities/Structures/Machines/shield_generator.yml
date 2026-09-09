@@ -86,6 +86,51 @@
       tags:
       - ADSRepairTool
 
+- type: entity
+  id: ShieldGeneratorMS1000
+  parent: ShieldGeneratorMS750
+  name: MS-1000 "Triptych" Shield Generator
+  description: A white resonant shield generator that projects three nested field layers. A critical overload collapses one layer and vents part of the stored load before the core is exposed.
+  suffix: ADS ONLY
+  components:
+  - type: ShipShieldEmitter
+    damageLimit: 1250000
+    healPerSecond: 1300
+    baseDraw: 110000
+    maxDraw: 240000
+    damageOverloadTimePunishment: 35
+    shieldColor: "#FFFFFF"
+    deflectionDamageModifier: 0.65
+  - type: LayeredShipShield
+    layerCount: 3
+    layerThickness: 0.35
+    layerGap: 0.9
+    collapseDamageFraction: 0.55
+    recoveryDamageThreshold: 0.55
+    recoveryInterval: 15 # seconds
+    deflectionDamageModifierStep: 0.2
+  - type: RadarBlip
+    radarColor: "#FFFFFF"
+    gridConfig:
+      color: "#FFFFFF"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+  - type: Sprite
+    sprite: _Mono/Structures/ShuttleComponents/shield.rsi
+    snapCardinals: true
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#FFFFFF"
+  - type: PointLight
+    color: "#FFFFFF"
+  - type: ApcPowerReceiver
+    powerLoad: 110000
 # POI Low-End — mechanically a Sentinel (MS-100) but ram-immune and POI-only.
 # Lives only on hand-built POI stations; cannot be constructed or deconstructed.
 - type: entity
@@ -164,3 +209,154 @@
   - type: Anchorable
     flags:
     - None
+
+# Civil Defense Militia corporate shield. Uses the reliable small shield platform with a green field.
+- type: entity
+  id: ShieldGeneratorCdm
+  parent: ShieldGeneratorSmall
+  name: cdm-shield-generator-name
+  description: cdm-shield-generator-description
+  components:
+  - type: Machine
+    board: ShieldGeneratorCdmMachineCircuitboard
+  - type: ShipShieldEmitter
+    shieldColor: "#48C96B"
+  - type: Sprite
+    sprite: _Exodus/Structures/ShuttleComponents/cdm_shield_generator.rsi
+    snapCardinals: true
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#48C96B"
+    - sprite: _Exodus/Structures/ShuttleComponents/cdm_shield_generator.rsi
+      state: reserve_0
+      map: ["enum.CdmShieldReserveVisualLayers.Cartridges"]
+  - type: GenericVisualizer
+    snapCardinals: true
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.CdmShieldReserveVisuals.CartridgeCount:
+        enum.CdmShieldReserveVisualLayers.Cartridges:
+          0: { state: reserve_0 }
+          1: { state: reserve_1 }
+          2: { state: reserve_2 }
+          3: { state: reserve_3 }
+          4: { state: reserve_4 }
+  - type: ItemSlots
+    slots:
+      cdm-shield-reserve-0:
+        name: cdm-shield-reserve-slot-name
+        insertVerbText: cdm-shield-reserve-insert-verb
+        ejectVerbText: cdm-shield-reserve-eject-verb
+        swap: false
+        whitelist:
+          components:
+          - CdmShieldReserveCartridge
+      cdm-shield-reserve-1:
+        name: cdm-shield-reserve-slot-name
+        insertVerbText: cdm-shield-reserve-insert-verb
+        ejectVerbText: cdm-shield-reserve-eject-verb
+        swap: false
+        whitelist:
+          components:
+          - CdmShieldReserveCartridge
+      cdm-shield-reserve-2:
+        name: cdm-shield-reserve-slot-name
+        insertVerbText: cdm-shield-reserve-insert-verb
+        ejectVerbText: cdm-shield-reserve-eject-verb
+        swap: false
+        whitelist:
+          components:
+          - CdmShieldReserveCartridge
+      cdm-shield-reserve-3:
+        name: cdm-shield-reserve-slot-name
+        insertVerbText: cdm-shield-reserve-insert-verb
+        ejectVerbText: cdm-shield-reserve-eject-verb
+        swap: false
+        whitelist:
+          components:
+          - CdmShieldReserveCartridge
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      cdm-shield-reserve-0: !type:ContainerSlot
+      cdm-shield-reserve-1: !type:ContainerSlot
+      cdm-shield-reserve-2: !type:ContainerSlot
+      cdm-shield-reserve-3: !type:ContainerSlot
+  - type: CdmShieldReserve
+    maxCartridges: 4
+    emergencyShieldFraction: 0.25
+  - type: PointLight
+    color: "#48C96B"
+# Universal States of America corporate shield. It protects only the forward arc selected by generator rotation.
+- type: entity
+  id: ShieldGeneratorUnsa
+  parent: ShieldGeneratorSmall
+  name: unsa-directional-shield-generator-name
+  description: unsa-directional-shield-generator-description
+  components:
+  - type: DirectionalShipShieldEmitter
+    arcDegrees: 120
+  - type: ShipShieldEmitter
+    damageLimit: 110000
+    healPerSecond: 700
+    baseDraw: 30000
+    maxDraw: 80000
+    shieldColor: "#0A5DFF"
+    collisionResistanceMultiplier: 1.0
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    sprite: _Exodus/Structures/ShuttleComponents/liberty_shield_generator.rsi
+    snapCardinals: true
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#48C96B"
+    - sprite: _Exodus/Structures/ShuttleComponents/liberty_shield_generator.rsi
+      state: reserve_0
+      map: ["enum.CdmShieldReserveVisualLayers.Cartridges"]
+  - type: GenericVisualizer
+    snapCardinals: true
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.CdmShieldReserveVisuals.CartridgeCount:
+        enum.CdmShieldReserveVisualLayers.Cartridges:
+          0: { state: reserve_0 }
+          1: { state: reserve_1 }
+  - type: PointLight
+    color: "#0A5DFF"
+  - type: ItemSlots
+    slots:
+      cdm-shield-reserve-0:
+        name: liberty-shield-reserve-slot-name
+        insertVerbText: liberty-shield-reserve-insert-verb
+        ejectVerbText: liberty-shield-reserve-eject-verb
+        swap: false
+        whitelist:
+          components:
+          - CdmShieldReserveCartridge
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      cdm-shield-reserve-0: !type:ContainerSlot
+  - type: CdmShieldReserve
+    maxCartridges: 1
+  - type: Machine
+    board: ShieldGeneratorUnsaMachineCircuitboard

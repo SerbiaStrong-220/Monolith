@@ -120,7 +120,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperShipyard
-  suffix: Viper Group Shipyard
+  suffix: Верфь Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-shipyard
@@ -129,7 +129,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperDockAlpha
-  suffix: Viper Group Docks, Alpha
+  suffix: Доки Вайперов, Альфа # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-dock-alpha
@@ -138,7 +138,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperDockBeta
-  suffix: Viper Group Docks, Beta
+  suffix: Доки Вайперов, Бета # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-dock-beta
@@ -147,7 +147,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperControl
-  suffix: Viper Group Control Room
+  suffix: Диспетчерская Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-control
@@ -156,7 +156,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperReception
-  suffix: Viper Group Reception
+  suffix: Приёмная Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-reception
@@ -165,7 +165,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperDorms
-  suffix: Viper Group Dorms
+  suffix: Общежития Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-dorms
@@ -174,7 +174,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperCommander
-  suffix: Viper Group Commander
+  suffix: Командир Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-commander
@@ -183,7 +183,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperArmory
-  suffix: Viper Group Armory
+  suffix: Арсенал Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-armory
@@ -192,7 +192,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperCargo
-  suffix: Viper Group Cargo
+  suffix: Грузовой отдел Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-cargo
@@ -201,7 +201,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperBrig
-  suffix: Viper Group Brig
+  suffix: Бриг Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-brig
@@ -210,7 +210,7 @@
 - type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconViperServers
-  suffix: Viper Group Servers
+  suffix: Серверная Вайперов # Exodus Viper localization
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-viper-servers

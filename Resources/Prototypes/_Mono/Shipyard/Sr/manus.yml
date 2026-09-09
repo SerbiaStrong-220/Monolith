@@ -7,7 +7,7 @@
   parent: BaseVessel
   name: Манус # Ru-Localization
   description: Корабль в форме когтя с внушительным вооружением. Имеет четыре АОЭД-7 Дравона, два АСМ-302 Ванека и один ЭМИ ОАД-31 Тарникс. # Ru-Localization
-  price: 62125
+  price: 75200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Sr
   access: Brig # Oddball, matches guard ID, specific enough to exclude cadets

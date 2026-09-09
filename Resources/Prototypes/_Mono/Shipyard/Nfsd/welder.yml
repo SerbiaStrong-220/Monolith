@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Велдер # Ru-Localization
   description: Многоцелевой, утилитарный, но тесный шаттл, задуманный как универсальный инструмент для ремонта шаттлов и добычи ресурсов. Способен обнаруживать замаскированные шаттлы. # Ru-Localization
-  price: 78200
+  price: 86900 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Security
   access: Security

@@ -68,17 +68,42 @@ public sealed class ShipShieldOverlay : Overlay
             if (!args.WorldAABB.Intersects(worldBounds))
                 continue;
 
-            DrawShield(handle, chain, transform, _shieldTexture, visuals.ShieldColor, _verts);
-            _verts.Clear(); // Clear for next shield - Mono
+            DrawShield(handle, chain, transform, _shieldTexture, visuals, _verts); // Exodus layered ship shield visuals
         }
     }
 
+    // Exodus-begin layered ship shield visuals
     private void DrawShield(
         DrawingHandleWorld handle,
         ChainShape chain,
         Transform transform,
         Texture tex,
+        ShipShieldVisualsComponent visuals,
+        List<DrawVertexUV2D> verts)
+    {
+        var layerCount = Math.Max(1, visuals.LayerCount);
+        var layerThickness = Math.Max(0.05f, visuals.LayerThickness);
+        var layerGap = Math.Max(0f, visuals.LayerGap);
+
+        for (var layer = 0; layer < layerCount; layer++)
+        {
+            var outerOffset = layer * (layerThickness + layerGap);
+            var innerOffset = outerOffset + layerThickness;
+            var layerColor = GetLayerColor(visuals.ShieldColor, layer, layerCount);
+
+            DrawShieldLayer(handle, chain, transform, tex, layerColor, outerOffset, innerOffset, verts);
+            verts.Clear();
+        }
+    }
+
+    private void DrawShieldLayer(
+        DrawingHandleWorld handle,
+        ChainShape chain,
+        Transform transform,
+        Texture tex,
         Color color,
+        float outerOffset,
+        float innerOffset,
         List<DrawVertexUV2D> verts)
     {
         // The vertices of this fixture are defined relative to local position,
@@ -89,26 +114,18 @@ public sealed class ShipShieldOverlay : Overlay
 
         for (int i = 1; i < chain.Count; i++)
         {
-            // top left corner
-            var leftVertex = VertexToWorldPos(chain.Vertices[i - 1], transform);
+            var leftBaseVertex = VertexToWorldPos(chain.Vertices[i - 1], transform);
+            var rightBaseVertex = VertexToWorldPos(chain.Vertices[i], transform);
 
-            // top right corner
-            var rightVertex = VertexToWorldPos(chain.Vertices[i], transform);
+            var leftVertex = OffsetVertex(leftBaseVertex, transform, outerOffset);
+            var rightVertex = OffsetVertex(rightBaseVertex, transform, outerOffset);
+            var leftCorner = OffsetVertex(leftBaseVertex, transform, innerOffset);
+            var rightCorner = OffsetVertex(rightBaseVertex, transform, innerOffset);
 
-            // bottom left corner
-            var leftCorner = Corner(leftVertex, transform);
-
-            // bottom right corner
-            var rightCorner = Corner(rightVertex, transform);
-
-            // Assemble 2 triangles.
-
-            // Triangle one: top left, top right, bottom left
             verts.Add(new DrawVertexUV2D(leftVertex, new Vector2(0, 1)));
             verts.Add(new DrawVertexUV2D(rightVertex, new Vector2(1, 1)));
             verts.Add(new DrawVertexUV2D(leftCorner, Vector2.Zero));
 
-            // Triangle two: top right, bottom left, bottom right
             verts.Add(new DrawVertexUV2D(rightVertex, new Vector2(1, 1)));
             verts.Add(new DrawVertexUV2D(leftCorner, Vector2.Zero));
             verts.Add(new DrawVertexUV2D(rightCorner, new Vector2(1, 0)));
@@ -117,17 +134,32 @@ public sealed class ShipShieldOverlay : Overlay
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, texture: tex, CollectionsMarshal.AsSpan(verts), color);
     }
 
+    private static Color GetLayerColor(Color color, int layer, int layerCount)
+    {
+        if (layerCount == 1)
+            return color;
+
+        var progress = (float)layer / Math.Max(1, layerCount - 1);
+        var alpha = 0.85f - progress * 0.35f;
+        return color.WithAlpha(color.A * alpha);
+    }
+
     private static Vector2 VertexToWorldPos(Vector2 vertexPos, Transform transform)
     {
         return Transform.Mul(transform, vertexPos);
     }
 
-    private static Vector2 Corner(Vector2 vertexPos, Transform transform, float radius = 1.3f)
+    private static Vector2 OffsetVertex(Vector2 vertexPos, Transform transform, float offset)
     {
-        var cornerPos = Vector2.Subtract(vertexPos, transform.Position);
-        cornerPos.Normalize();
-        cornerPos *= radius;
+        if (offset <= 0f)
+            return vertexPos;
 
+        var cornerPos = Vector2.Subtract(vertexPos, transform.Position);
+        if (cornerPos.LengthSquared() <= float.Epsilon)
+            return vertexPos;
+
+        cornerPos = Vector2.Normalize(cornerPos) * offset;
         return Vector2.Subtract(vertexPos, cornerPos);
     }
+    // Exodus-end layered ship shield visuals
 }

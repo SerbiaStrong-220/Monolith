@@ -48,6 +48,7 @@ public sealed partial class ChatUIController : UIController
 {
     [Dependency] private IClientAdminManager _admin = default!;
     [Dependency] private IChatManager _manager = default!;
+    [Dependency] private Content.Client._Exodus.Chat.ChatRequirementsManager _chatRequirements = default!; // SS220 chat bans
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private IEyeManager _eye = default!;
     [Dependency] private IEntityManager _ent = default!;
@@ -775,6 +776,17 @@ public sealed partial class ChatUIController : UIController
 
     public void SendMessage(ChatBox box, ChatSelectChannel channel)
     {
+        // SS220-begin chat bans; Exodus keeps drafts and explains why sending is blocked.
+        var (requested, _, _, _) = SplitInputContents(box.ChatInput.Input.Text);
+        var effectiveChannel = MapLocalIfGhost(requested == ChatSelectChannel.None ? channel : requested);
+        if (effectiveChannel == ChatSelectChannel.LOOC && _ghost is { IsGhost: true } && !_admin.HasFlag(AdminFlags.Admin))
+            effectiveChannel = ChatSelectChannel.Dead;
+        if (_chatRequirements.IsBanned(effectiveChannel))
+        {
+            box.AddLine(Loc.GetString("chat-ban-client-blocked"), Color.Orange);
+            return;
+        }
+        // SS220-end
         _typingIndicator?.ClientSubmittedChatText();
 
         var text = box.ChatInput.Input.Text;

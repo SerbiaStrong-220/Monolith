@@ -60,6 +60,7 @@ namespace Content.Client.IoC
             collection.Register<GhostKickManager>();
             collection.Register<ExtendedDisconnectInformationManager>();
             collection.Register<JobRequirementsManager>();
+            collection.Register<Content.Client._Exodus.Chat.ChatRequirementsManager>(); // SS220 chat bans
             collection.Register<DocumentParsingManager>();
             collection.Register<ContentReplayPlaybackManager>();
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();

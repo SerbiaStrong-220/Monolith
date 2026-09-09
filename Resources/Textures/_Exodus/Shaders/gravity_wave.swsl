@@ -1,0 +1,33 @@
+// For Exodus. A directional lens across the wave footprint, independent of sprite alpha.
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec2 renderScale;
+uniform highp vec2 axisX;
+uniform highp vec2 axisY;
+uniform highp float strength;
+uniform highp float intensity;
+uniform highp float opacity;
+uniform highp float frontWidth;
+uniform highp float curvature;
+
+void fragment() {
+    // At zero entity rotation the wave travels south (negative local Y).
+    highp vec2 p = vec2(UV.x * 2.0 - 1.0, 1.0 - UV.y * 2.0);
+    highp float distance = p.y + 0.4 - curvature * p.x * p.x;
+    highp float width = max(frontWidth, 0.001);
+    highp float band = exp(-distance * distance / (width * width));
+    highp float edges = (1.0 - smoothstep(0.75, 1.0, abs(p.x)))
+        * (1.0 - smoothstep(0.75, 1.0, abs(p.y)));
+    highp float mask = band * edges;
+    if (mask < 0.001 || strength <= 0.0) {
+        discard;
+    }
+
+    highp vec2 normal = normalize(vec2(-2.0 * curvature * p.x, 1.0));
+    highp vec2 screenNormal = axisX * normal.x + axisY * normal.y;
+    highp vec2 offset = screenNormal * intensity * strength * mask * renderScale;
+    highp vec2 coords = clamp((FRAGCOORD.xy + offset) * SCREEN_PIXEL_SIZE, vec2(0.0), vec2(1.0));
+    COLOR = zTextureSpec(SCREEN_TEXTURE, coords);
+    COLOR.a = clamp(opacity * mask * strength, 0.0, 1.0);
+}

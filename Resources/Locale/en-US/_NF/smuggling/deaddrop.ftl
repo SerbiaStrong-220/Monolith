@@ -1,3 +1,4 @@
+# Exodus: preserve the main-build Syndicate dead-drop presentation.
 deaddrop-shuttle-name = Syndicate Supply Drop
 deaddrop-search-text = Search closer
 deaddrop-hint-pretext = A Syndicate drop pod will be dispatched to the following coordinates:

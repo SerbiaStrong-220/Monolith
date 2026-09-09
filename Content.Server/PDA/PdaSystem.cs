@@ -1,3 +1,5 @@
+using Content.Server._Mono.AlertLevel;
+using Content.Server._Exodus.War; // Exodus: directional faction war status.
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
@@ -7,6 +9,7 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
+using Content.Shared._DV.CCVars; // DeltaV - PDA date
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
@@ -15,6 +18,7 @@ using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration; // DeltaV - PDA date
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -42,6 +46,10 @@ namespace Content.Server.PDA
         [Dependency] private IdCardSystem _idCard = default!;
         [Dependency] private SectorServiceSystem _sectorService = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _config = default!; // DeltaV
+        [Dependency] private FactionWarSystem _factionWar = default!; // Exodus: directional faction war status.
+
+        private static DateTime ServerDate; // DeltaV - PDA
 
         public override void Initialize()
         {
@@ -63,6 +71,29 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
             SubscribeLocalEvent<EntityRenamedEvent>(OnEntityRenamed, after: new[] { typeof(IdCardSystem) });
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
+            SubscribeLocalEvent<WarLevelChangedEvent>(OnWarLevelChanged);
+
+            // Begin DeltaV additions
+            Subs.CVar(_config,
+                DCCVars.YearOffset,
+                value => ServerDate = DateTime.Today.AddYears(value),
+                true);
+            // End DeltaV additions
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+        }
+
+        private void OnPlayerAttached(PlayerAttachedEvent args)
+        {
+            // When a player reconnects, update all PDAs that have open UIs for this player.
+            // This ensures the shift remaining timer and other dynamic data are refreshed.
+            var query = EntityQueryEnumerator<PdaComponent>();
+            while (query.MoveNext(out var uid, out var pda))
+            {
+                if (_ui.IsUiOpen(uid, PdaUiKey.Key, args.Entity))
+                {
+                    UpdatePdaUi(uid, pda, args.Entity);
+                }
+            }
         }
 
         private void OnEntityRenamed(ref EntityRenamedEvent ev)
@@ -91,6 +122,7 @@ namespace Content.Server.PDA
             if (!HasComp<UserInterfaceComponent>(uid))
                 return;
 
+            UpdateWarLevel(uid, pda); // Mono
             UpdateAlertLevel(uid, pda);
             UpdateStationName(uid, pda);
         }
@@ -136,6 +168,11 @@ namespace Content.Server.PDA
         }
 
         private void OnAlertLevelChanged(AlertLevelChangedEvent args)
+        {
+            UpdateAllPdaUisOnStation();
+        }
+
+        private void OnWarLevelChanged(WarLevelChangedEvent args)
         {
             UpdateAllPdaUisOnStation();
         }
@@ -186,8 +223,10 @@ namespace Content.Server.PDA
             var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<UplinkComponent>(uid) && IsUnlocked(uid);
 
+            pda.CurrentDate = pda.DateOverride ?? ServerDate; // DeltaV - PDA date
             UpdateStationName(uid, pda);
             UpdateAlertLevel(uid, pda);
+            UpdateWarLevel(uid, pda); // Mono
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
@@ -234,8 +273,10 @@ namespace Content.Server.PDA
                     JobTitle = id?.LocalizedJobTitle,
                     CompanyName = companyName,
                     CompanyColor = companyColor,
+                    CurrentDate = pda.CurrentDate, // DeltaV - PDA date
                     StationAlertLevel = pda.StationAlertLevel,
-                    StationAlertColor = pda.StationAlertColor
+                    StationAlertColor = pda.StationAlertColor,
+                    WarLevel = pda.WarLevel
                 },
                 balance, // Frontier
                 ownedShipName, // Frontier
@@ -334,6 +375,37 @@ namespace Content.Server.PDA
             pda.StationAlertLevel = alertComp.CurrentLevel;
             if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
                 pda.StationAlertColor = details.Color;
+        }
+
+        // Mono
+        private void UpdateWarLevel(EntityUid uid, PdaComponent pda)
+        {
+            // Exodus-begin: show every active pair while retaining the legacy aggregate COLD/HOT heading.
+            if (!_factionWar.TryGetState(out var state))
+            {
+                pda.WarLevel = null;
+                return;
+            }
+
+            if (!state.Comp.PostWar)
+            {
+                pda.WarLevel = Loc.GetString("comp-pda-ui-station-war-level-pre");
+                return;
+            }
+
+            var entries = new List<string>(state.Comp.Declarations.Count);
+            foreach (var declaration in state.Comp.Declarations)
+            {
+                entries.Add(Loc.GetString("war-declaration-pda-entry",
+                    ("declarer", _factionWar.GetFactionName(declaration.DeclaringFaction)),
+                    ("target", _factionWar.GetFactionName(declaration.TargetFaction))));
+            }
+
+            var heading = Loc.GetString("comp-pda-ui-station-war-level-post");
+            pda.WarLevel = entries.Count == 0
+                ? heading
+                : $"{heading}\n{string.Join("\n", entries)}";
+            // Exodus-end
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)

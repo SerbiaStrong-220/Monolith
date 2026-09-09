@@ -2,6 +2,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared._Exodus.Territory; // Exodus - opt-in territory regeneration.
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage;
@@ -47,7 +48,13 @@ public sealed partial class PassiveDamageSystem : EntitySystem
             foreach (var allowedState in comp.AllowedStates)
             {
                 if(allowedState == mobState.CurrentState)
-                    _damageable.TryChangeDamage(uid, comp.Damage, true, false, damage);
+                {
+                    // Exodus-begin allow modifiers without changing the stored passive damage.
+                    var ev = new ModifyPassiveDamageEvent(comp.Damage);
+                    RaiseLocalEvent(uid, ref ev);
+                    _damageable.TryChangeDamage(uid, ev.Damage, true, false, damage);
+                    // Exodus-end
+                }
             }
         }
     }

@@ -1,3 +1,5 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
+using Content.Server.Database._Exodus.Chat; // SS220 chat bans
 using System.Collections.Immutable;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
@@ -241,7 +243,8 @@ namespace Content.Server.Database
                 aUid,
                 unbanDef,
                 ban.ExemptFlags,
-                roles);
+                roles,
+                ban.Type == BanType.Chat ? [..ban.Chats!.Select(b => b.Chat)] : null); // SS220 chat bans
         }
 
         private static UnbanDef? ConvertUnban(Unban? unban)
@@ -281,6 +284,7 @@ namespace Content.Server.Database
                 PlaytimeAtNote = ban.PlaytimeAtNote,
                 Players = [..ban.UserIds.Select(bp => new BanPlayer { UserId = bp.UserId })],
                 ExemptFlags = ban.ExemptFlags,
+                Chats = ban.Chats?.Select(chat => new BanChat { Chat = chat }).ToList() ?? [], // SS220 chat bans
                 Roles = ban.Roles == null
                     ? []
                     : ban.Roles.Value.Select(brd => new BanRole

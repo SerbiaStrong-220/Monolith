@@ -1,3 +1,4 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
 using System.Collections.Immutable;
 using System.Linq;
 using Content.Server.Database;
@@ -17,6 +18,7 @@ public static class AdminNotesExtensions
         string? unbannedByName = null;
         DateTime? unbannedTime = null;
         bool? seen = null;
+        ImmutableArray<BannableChats>? bannedChats = null; // SS220 chat bans
         switch (note)
         {
             case AdminNoteRecord adminNote:
@@ -45,6 +47,15 @@ public static class AdminNotesExtensions
                 unbannedTime = roleBan.UnbanTime;
                 unbannedByName = roleBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
                 break;
+            // SS220-begin chat bans
+            case BanNoteRecord { Type: BanType.Chat } chatBan:
+                type = NoteType.ChatBan;
+                severity = chatBan.Severity;
+                bannedChats = chatBan.Chats;
+                unbannedTime = chatBan.UnbanTime;
+                unbannedByName = chatBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
+                break;
+            // SS220-end
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), note.GetType(), "Unknown note type");
         }
@@ -71,7 +82,8 @@ public static class AdminNotesExtensions
             bannedRoles,
             unbannedTime,
             unbannedByName,
-            seen
+            seen,
+            bannedChats // SS220 chat bans
         );
     }
 }

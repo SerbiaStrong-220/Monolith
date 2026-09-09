@@ -8,6 +8,9 @@
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/whale.yml
   addComponents:
+  - type: IffAffiliation
+    mode: Faction
+    faction: Khsira
   - type: IFF
     color: "#ff3db1"
     readOnly: false

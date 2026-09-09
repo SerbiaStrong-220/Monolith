@@ -147,6 +147,9 @@
     ignoredFactions:
     - NanoTrasen
     - MD
+    - MMC
+    - VG
+    - VGTurret
   - type: NpcFactionMember
     factions:
     - USSP

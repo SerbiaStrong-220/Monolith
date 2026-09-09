@@ -15,9 +15,7 @@
   minimumDistance: 10000 # Exodus-nebula-update
   maximumDistance: 15000 # Exodus-nebula-update
   gridPath: /Maps/_Exodus/POI/caseyscasino.yml # Exodus
-  addComponents:
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
+  # Exodus: anti-chimera towers are reserved for Colossus Central.
 
 - type: gameMap
   id: CaseysCasino

@@ -39,3 +39,7 @@
 
 - type: Tag
   id: TsfEngineerUplink
+
+# Entities excluded by the standard dynamic ship armor modules.
+- type: Tag
+  id: ShipArmorExcluded

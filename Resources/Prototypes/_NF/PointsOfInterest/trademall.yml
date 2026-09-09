@@ -26,8 +26,7 @@
     trackOnInit: true
     doNotCull: true
   # Exodus: WorldGenDistanceCarver remains available in code, but is intentionally not attached to POIs.
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
+  # Exodus: anti-chimera towers are reserved for Colossus Central.
 
 - type: gameMap
   id: TradeMall

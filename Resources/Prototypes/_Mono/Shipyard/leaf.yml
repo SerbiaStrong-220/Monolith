@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Лист # Ru-Localization
   description: Списанный военный шаттл, большая часть обшивки которого убрана, чтобы он доживал свои дни в качестве ботанического и химического судна. # Ru-Localization
-  price: 69500
+  price: 92300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/leaf.yml

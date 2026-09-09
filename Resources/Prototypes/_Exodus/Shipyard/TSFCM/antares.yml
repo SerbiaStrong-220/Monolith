@@ -4,7 +4,7 @@
   name: Антарес
   description: Капитальный эсминец с ракетами Rain и Sliver, 20-мм орудиями L85, лазерными турелями и сервером артиллерийского управления Омега.
   limit: 1
-  price: 1225950
+  price: 1311300 # Exodus: appraised minimum + 5%, rounded up to 100.
   purchasable: false # voucher only
   category: Large
   group: Security

@@ -19,6 +19,16 @@
   - SummoningMachineFieldReserve
 
 - type: listing
+  id: SummoningMachineAsakimKudzuGrenade
+  name: summoning-machine-kudzu-grenade-name
+  description: summoning-machine-kudzu-grenade-desc
+  productEntity: AsakimKudzuGrenade
+  cost:
+    Telecrystal: 2400 # 40 minutes of summoning time.
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
   id: SummoningMachineCloningKit
   name: summoning-machine-cloning-kit-name
   description: summoning-machine-cloning-kit-desc

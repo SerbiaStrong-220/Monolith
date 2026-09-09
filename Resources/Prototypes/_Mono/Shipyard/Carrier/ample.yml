@@ -1,3 +1,4 @@
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: Ample
   parent: BaseVessel

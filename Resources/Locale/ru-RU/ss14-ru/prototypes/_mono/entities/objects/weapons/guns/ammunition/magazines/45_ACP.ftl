@@ -1,7 +1,9 @@
 ent-BaseMagazine45_ACP = pistol magazine (.45 ACP FMJ)
     .desc = { ent-BaseItem.desc }
-ent-Magazine45_ACPPistolFMJ = pistol magazine (.45 ACP FMJ)
+# Exodus-begin company-fleet
+ent-Magazine45_ACPPistolFMJ = пистолетный магазин (.45 ACP, оболочечные)
     .desc = { ent-BaseMagazine45_ACP.desc }
+# Exodus-end
 ent-Magazine45_ACPPistolEmpty = pistol magazine (.45 ACP any)
     .suffix = empty
     .desc = { ent-Magazine45_ACPPistolFMJ.desc }

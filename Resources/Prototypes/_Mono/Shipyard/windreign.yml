@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: Виндрейн # Ru-Localization
   description: Огромный высококлассный корабль Горизонт Энерджи, созданный для длительных атмосферных работ и добычи газа. Является носителем с небольшим флотом газодобывающих и утилизаторских шаттлов. Оснащён большой роскошной зоной отдыха для экипажа. Рекомендуемый экипаж - 2–6 человек. # Ru-Localization
-  price: 250000
+  price: 298400 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/windreign.yml

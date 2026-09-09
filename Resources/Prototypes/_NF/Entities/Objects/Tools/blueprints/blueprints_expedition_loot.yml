@@ -34,13 +34,13 @@
 
 - type: entity
   parent: BaseBlueprintExpedition
-  id: NFBlueprintAmmoBox45_magnumUranium
-  name: uranium .45 magnum ammo blueprint
+  id: NFBlueprintAmmoBox357_magnumUranium
+  name: uranium .45 magnum ammo blueprint # Exodus: preserve main-build terminology; upstream IDs remain .357.
   description: A blueprint with a schematic of an uranium .45 magnum ammo. It can be inserted into an autolathe or a techfab.
   components:
   - type: Blueprint
     providedRecipes:
-    - AmmoBox45_magnumUranium
+    - AmmoBox357_magnumUranium
 
 - type: entity
   parent: BaseBlueprintExpedition
@@ -86,13 +86,13 @@
 
 - type: entity
   parent: BaseBlueprintExpedition
-  id: NFBlueprintAmmoBox45_magnumIncendiary
-  name: incendiary .45 magnum ammo blueprint
+  id: NFBlueprintAmmoBox357_magnumIncendiary
+  name: incendiary .45 magnum ammo blueprint # Exodus: preserve main-build terminology; upstream IDs remain .357.
   description: A blueprint with a schematic of an incendiary .45 magnum ammo. It can be inserted into an autolathe or a techfab.
   components:
   - type: Blueprint
     providedRecipes:
-    - AmmoBox45_magnumIncendiary
+    - AmmoBox357_magnumIncendiary
 
 - type: entity
   parent: BaseBlueprintExpedition

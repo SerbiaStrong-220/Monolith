@@ -1,0 +1,67 @@
+- type: entity
+  parent: [BaseWeaponLauncher, BaseGunWieldable]
+  id: WeaponLightPhaserMaco
+  name: MACo light phaser
+  description: A bulky handheld phaser manufactured by Midnight Arms Co. Holds two disposable plutonium cartridges. Requires both hands to fire a broad pulse capable of severing a limb. Can be carried on the back.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Launchers/maco_light_phaser.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-2
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Huge
+    sprite: _Exodus/Objects/Weapons/Guns/Launchers/maco_light_phaser_inhands.rsi
+    shape:
+    - 0,0,4,1
+  - type: Clothing
+    sprite: _Exodus/Objects/Weapons/Guns/Launchers/maco_light_phaser_inhands.rsi
+  - type: AmmoCounter
+  - type: WieldedCrosshair
+    rsi:
+      sprite: _RMC14/Interface/MousePointer/rifle_mouse.rsi
+      state: all
+  - type: GunRequiresWield
+  - type: Gun
+    projectileSpeed: 45
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Exodus/Weapons/Guns/Gunshots/light_phaser.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeLightPhaserMaco
+    proto: CartridgeLightPhaserMaco
+    capacity: 2
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
+  - type: Appearance
+  - type: StaticPrice
+    price: 18000
+  - type: EmitSoundOnPickup
+    sound:
+      collection: RiflesPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: RiflesDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: RiflesDrop
+
+- type: entity
+  parent: WeaponLightPhaserMaco
+  id: WeaponLightPhaserMacoEmpty
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

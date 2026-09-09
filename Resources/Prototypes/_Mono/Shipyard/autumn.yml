@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Аутум # Ru-Localization
   description: Грузовой шаттл дальнего следования. Грузовой отсек тяжелобронирован внутренним слоем из пластитана, а шаттл оснащён тяжёлым модулем БСС. Вооружение 4×57-мм орудия. # Ru-Localization
-  price: 115320
+  price: 227200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/autumn.yml

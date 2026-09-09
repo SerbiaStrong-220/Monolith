@@ -1,0 +1,9 @@
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: HoloGenericEmpty
+  result: HoloGenericEmpty
+  completetime: 3
+  materials:
+    Steel: 5000
+    Plasma: 1000
+    Glass: 5000

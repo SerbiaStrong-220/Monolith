@@ -7,6 +7,7 @@
   - type: AccessReader
     access: [["Security"]]
   - type: DeployableTurret
+    enabled: true # Exodus - base defenses start armed.
     retractedDamageModifierSetId: Metallic
     deployedDamageModifierSetId: Metallic
     deploymentSound:
@@ -19,7 +20,7 @@
     - Borg
     - BasicSilicon
   - type: ProjectileBatteryAmmoProvider
-    proto: Bullet762x51mmRubber
+    proto: Bullet762x51mmAntiMaterial # Exodus - match the initial lethal fire mode.
     fireCost: 100
   - type: DeviceNetworkRequiresPower
   - type: WiredNetworkConnection
@@ -37,6 +38,7 @@
     unlockOnClick: false
   - type: LockedWiresPanel
   - type: BatteryWeaponFireModes
+    currentFireMode: 1 # Exodus - lethal by default, still switchable from the panel.
     fireModes:
     - proto: Bullet762x51mmRubber
       fireCost: 100
@@ -50,14 +52,14 @@
     receiveFrequencyId: TurretControlAI
     transmitFrequencyId: TurretAI
   - type: HTN
-    enabled: false
+    enabled: true # Exodus - target acquisition must match DeployableTurret.enabled.
   - type: StationAiWhitelist
   - type: NpcFactionMember
     factions:
     - AllHostile
 
 - type: entity
-  parent: WeaponEnergyTurretStationControlPanel
+  parent: BaseExodusHeavyTurretControlPanel # Exodus - match the turrets' initial lethal mode.
   id: WeaponEnergyTurretTSFControlPanel
   name: TSF sentry turret control panel
   suffix: TSF Engineer access
@@ -108,7 +110,7 @@
   frequency: 1682
 
 - type: entity
-  parent: WeaponEnergyTurretStationControlPanel
+  parent: BaseExodusHeavyTurretControlPanel # Exodus - match the turrets' initial lethal mode.
   id: WeaponEnergyTurretPDVControlPanel
   name: PDV sentry turret control panel
   suffix: PDV Command access
@@ -153,7 +155,7 @@
   frequency: 1684
 
 - type: entity
-  parent: WeaponEnergyTurretStationControlPanel
+  parent: BaseExodusHeavyTurretControlPanel # Exodus - match the turrets' initial lethal mode.
   id: WeaponEnergyTurretUSSPControlPanel
   name: USSP sentry turret control panel
   suffix: USSP Secure access
@@ -198,7 +200,7 @@
   frequency: 1686
 
 - type: entity
-  parent: WeaponEnergyTurretStationControlPanel
+  parent: BaseExodusHeavyTurretControlPanel # Exodus - match the turrets' initial lethal mode.
   id: WeaponEnergyTurretFreeportControlPanel
   name: freeport sentry turret control panel
   suffix: USSP Commissar access
@@ -251,10 +253,10 @@
   frequency: 1688
 
 - type: entity
-  parent: WeaponEnergyTurretStationControlPanel
+  parent: BaseExodusHeavyTurretControlPanel # Exodus - match the turrets' initial lethal mode.
   id: WeaponEnergyTurretViperControlPanel
   name: VG sentry turret control panel
-  suffix: VG Command access
+  suffix: Доступ командования Вайперов # Exodus Viper localization
   description: A wall-mounted interface that allows a local artifical intelligence to adjust the operational parameters of linked sentry turrets.
   components:
   - type: AccessReader
@@ -271,7 +273,7 @@
   parent: BallisticTurretHeavyAIBase
   id: BallisticTurretHeavyAIVG
   name: VG heavy remote sentry turret
-  suffix: VG
+  suffix: Вайперы # Exodus Viper localization
   components:
   - type: AccessReader
     access: [["ViperCommand"]]
@@ -292,3 +294,48 @@
   id: TurretAIVG
   name: device-frequency-prototype-name-turret
   frequency: 1690
+
+- type: entity
+  parent: BaseExodusHeavyTurretControlPanel # Exodus - match the turrets' initial lethal mode.
+  id: WeaponEnergyTurretMieyoControlPanel
+  name: mieyo sentry turret control panel
+  suffix: Доступ безопасности ММС # Exodus MMC localization
+  description: A wall-mounted interface that allows a local artifical intelligence to adjust the operational parameters of linked sentry turrets.
+  components:
+  - type: AccessReader
+    access: [["MieyoSecurity"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - MieyoLiason
+    - MieyoSecurity
+    - Mieyo
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretAIMieyo
+    transmitFrequencyId: TurretControlAIMieyo
+
+- type: entity
+  parent: BallisticTurretHeavyAIBase
+  id: BallisticTurretHeavyAIMieyo
+  name: mieyo heavy remote sentry turret
+  suffix: ММС # Exodus MMC localization
+  components:
+  - type: AccessReader
+    access: [["MieyoSecurity"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - MieyoLiason
+    - MieyoSecurity
+    - Mieyo
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControlAIMieyo
+    transmitFrequencyId: TurretAIMieyo
+
+- type: deviceFrequency
+  id: TurretControlAIMieyo
+  name: device-frequency-prototype-name-turret-control
+  frequency: 1691
+
+- type: deviceFrequency
+  id: TurretAIMieyo
+  name: device-frequency-prototype-name-turret
+  frequency: 1692
