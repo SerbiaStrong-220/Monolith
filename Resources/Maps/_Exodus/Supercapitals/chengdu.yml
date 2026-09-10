@@ -10955,7 +10955,7 @@ entities:
     - type: Transform
       pos: -3.5,-23.5
       parent: 1
-- proto: ClothingOuterHardsuitM86
+- proto: ClothingOuterHardsuitM82c
   entities:
   - uid: 1750
     components:
@@ -21730,8 +21730,6 @@ entities:
     - type: Transform
       pos: -1.5,-13.5
       parent: 1
-- proto: SuitStorageM86
-  entities:
   - uid: 3297
     components:
     - type: Transform
