@@ -15,6 +15,8 @@
   spawnGroup: PairedFactionPoi # Exodus paired faction POI spawn
   gridPath: /Maps/_Exodus/POI/pdvhelios.yml # Exodus ai-remote-borgs
   addComponents:
+  - type: IffAffiliation
+    mode: CorporateControl
   - type: IFF
     color: "#DE9E59"
     readOnly: true # mono
@@ -48,12 +50,14 @@
           stationDescription: 'frontier-lobby-pirate-description'
         - type: StationJobs
           availableJobs:
+            # Civilian round-start and late-join slots moved to PDVCivilianOutpost.
             PirateCaptain: [ 1, 1 ]
             PirateFirstMate: [ 1, 1 ]
             PDVDenasvar: [ 3, 3 ]
             PDVInfiltrator: [ 2, 2 ]
             Pirate: [ -1, -1 ]
             PdvBorg: [ 2, 2 ]
+            PDVTarkhan: [ 1, 1 ] # One base operative, available at round start and for late joins.
           tags:
           - GrandVizier
         - type: StationDeadDropReporting
@@ -72,6 +76,9 @@
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/pdvhelios_hw.yml
   addComponents:
+  - type: IffAffiliation
+    mode: Faction
+    faction: PDV
   - type: IFF
     color: "#DE9E59"
     readOnly: true # mono

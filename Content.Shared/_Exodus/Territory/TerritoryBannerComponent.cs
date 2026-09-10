@@ -21,4 +21,10 @@ public sealed partial class TerritoryBannerComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ProtoId<TerritoryFactionPrototype> Faction = default!;
+
+    /// <summary>
+    /// Color of the physical claim source's radar marker. Existing banners keep their white marker.
+    /// </summary>
+    [DataField]
+    public Color BlipColor = Color.White;
 }

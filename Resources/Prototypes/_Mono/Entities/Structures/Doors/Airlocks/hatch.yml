@@ -46,7 +46,7 @@
 - type: entity
   parent: AirlockHatchSyndicate
   id: AirlockHatchViper
-  suffix: Viper Group, Locked
+  suffix: Вайперы, Закрыто # Exodus Viper localization
   components:
   - type: ContainerFill
     containers:
@@ -55,7 +55,7 @@
 - type: entity
   parent: AirlockHatchSyndicate
   id: AirlockHatchViperCommand
-  suffix: Viper Group Command, Locked
+  suffix: Командование Вайперов, Закрыто # Exodus Viper localization
   components:
   - type: ContainerFill
     containers:

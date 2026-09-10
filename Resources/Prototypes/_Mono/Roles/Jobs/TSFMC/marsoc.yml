@@ -4,15 +4,17 @@
   description: job-description-tsf-marsoc
   playTimeTracker: JobTsfMarsoc
   requirements:
-  - !type:DepartmentTimeRequirement # Requires time in both factions
-    department: Antag
-    time: 14400 # 4 hours # mono
-  - !type:DepartmentTimeRequirement # Requires time in both factions
-    department: Security
-    time: 108000 # 30 hours # mono
+  # Exodus-begin: faction veteran requirements use existing job playtime.
+  - !type:DepartmentTimeRequirement
+    department: ExodusTSFPlaytime
+    time: 360000 # 100 hours in TSF roles
+  - !type:OverallPlaytimeRequirement
+    time: 720000 # 200 hours overall, including faction playtime
+  # Exodus-end
   startingGear: MarsocOperativeGearHyperwarRole
   icon: JobIconTSFMarsoc
-  supervisors: job-supervisors-ws
+  supervisors: job-supervisors-exodus-marsoc # Exodus local and high command hierarchy
+  alwaysUseSpawner: true # Exodus use the base's dedicated marker for late joins too.
   weight: 45
   displayWeight: 45
   assignedCompany: TSF
@@ -29,9 +31,9 @@
       factions:
       - TSFMC
     - type: ChatRank
-      rank: tsf-marsoc
+      rank: exodus-marsoc-rank # Exodus localized base role; reinforcement ranks are unchanged.
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, BluespaceLifelineImplant ] # Exodus match reinforcement implants for the lobby operative.
   - !type:AddLanguageSpecial
     languagesSpoken:
     - SolCommon
@@ -44,7 +46,7 @@
     jumpsuit: ClothingUniformTsfmcMopp
     back: ClothingBackpackERTLeader
     eyes: ClothingEyesHudNfsd
-    ears: ClothingHeadsetAltTsfmcMarsoc
+    ears: ClothingHeadsetAltTsfmcCommander # Exodus Colonel's headset without the CentCom channel; reinforcement gear is unchanged.
     gloves: ClothingHandsGlovesTacticalCombatBlack
     outerClothing: ClothingOuterHardsuitM86Mk4
     shoes: ClothingShoesBootsMagAdv

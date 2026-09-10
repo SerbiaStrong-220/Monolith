@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Даггер # Ru-Localization
   description: Прямо с верфей Транс-Солнечной Федерации, этот шаттл оснащён рельсотроном в качестве основного орудия для дальней огневой поддержки. # Ru-Localization
-  price: 120000
+  price: 152900 # Exodus: appraised minimum + 5%, rounded up to 100.
   purchasable: false # voucher only
   category: Medium
   group: Security

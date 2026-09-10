@@ -1,0 +1,10 @@
+- type: entity
+  id: MechKunisaProjectile
+  parent: HandheldAutopulserProjectile
+  categories: [HideSpawnMenu]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 11
+        Radiation: 2

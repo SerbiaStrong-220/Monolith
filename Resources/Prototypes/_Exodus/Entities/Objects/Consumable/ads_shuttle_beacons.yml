@@ -16,6 +16,7 @@
       right:
       - state: inhand-right
   - type: ShuttleEventBeacon
+    shuttleFaction: Khsira
   - type: Tag
     tags:
     - Payload
@@ -153,6 +154,13 @@
     rule: UnknownShuttleAzimuth
 
 - type: entity
+  id: AsakimShuttleEmergencyBeaconHorizont
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  components:
+  - type: ShuttleEventBeacon
+    rule: UnknownShuttleHorizont
+
+- type: entity
   id: AsakimShuttleEmergencyBeaconSmall
   parent: BaseADSShuttleEmergencyBeaconTier1
   components:
@@ -172,3 +180,21 @@
   components:
   - type: ShuttleEventBeacon
     rule: UnknownShuttleStratostar
+
+- type: entity
+  id: MarsocArcturusArrivalBeacon
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  suffix: ADMIN ONLY
+  components:
+  - type: ShuttleEventBeacon
+    rule: MarsocArcturusArrival
+    shuttleFaction: TSFMC
+
+- type: entity
+  id: TarkhanJupiterArrivalBeacon
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  suffix: ADMIN ONLY
+  components:
+  - type: ShuttleEventBeacon
+    rule: TarkhanJupiterArrival
+    shuttleFaction: PDV

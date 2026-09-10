@@ -166,6 +166,10 @@ public static class ServerPackaging
         var inputPassCore = graph.InputCore;
         var inputPassResources = graph.InputResources;
 
+        // Exodus-begin: шуточные изменения. При откате удалить этот добавленный блок.
+        inputPassCore.InjectFileFromDisk("admin_title_pranks.yml", Path.Combine(contentDir, "Config", "_Exodus", "admin_title_pranks.yml"));
+        // Exodus-end
+
         // Additional assemblies that need to be copied such as EFCore.
         var sourcePath = Path.Combine(contentDir, "bin", "Content.Server");
 

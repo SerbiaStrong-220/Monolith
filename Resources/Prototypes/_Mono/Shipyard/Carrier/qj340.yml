@@ -1,5 +1,6 @@
 #Author: Mrrpip on Github, Skye on Discord
 
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: QJ340
   parent: BaseVesselAntag

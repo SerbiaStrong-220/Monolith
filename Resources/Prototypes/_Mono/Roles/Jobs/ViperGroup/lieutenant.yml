@@ -3,7 +3,12 @@
   name: job-name-vg-lieutenant
   description: job-description-vg-lieutenant
   playTimeTracker: JobVGLieutenant
-  whitelisted: true # For Lieutenants and such.
+  # Exodus-begin enable-viper-group
+  whitelisted: false
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 126000 # 35 hrs
+  # Exodus-end
   startingGear: ViperRadioGear
   alwaysUseSpawner: true
   hideConsoleVisibility: true

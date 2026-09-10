@@ -1,5 +1,16 @@
 - type: entity
   parent: BaseComputerCircuitboard
+  id: TSFCommsComputerCircuitboard
+  name: tsf-comms-computer-circuitboard-name
+  description: tsf-comms-computer-circuitboard-description
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: TSFComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: AsakimCommsComputerCircuitboard
   name: asakim communications computer board
   description: A computer printed circuit board for an Asakim communications console.
@@ -9,3 +20,14 @@
   - type: ComputerBoard
     prototype: ComputerAsakimComms
 
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: LifeInsuranceConsoleComputerCircuitboard
+  name: life-insurance-console-board-name
+  description: life-insurance-console-board-description
+  components:
+  - type: SafetyDepositRestricted
+  - type: Sprite
+    state: cpu_medical
+  - type: ComputerBoard
+    prototype: LifeInsuranceConsole

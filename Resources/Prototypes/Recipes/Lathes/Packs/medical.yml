@@ -82,7 +82,7 @@
   # - ChemDispenserMachineCircuitboard # Frontier: dynamic
   # - ChemMasterMachineCircuitboard # Frontier: dynamic
   - CondenserMachineCircuitBoard
-  # - HotplateMachineCircuitboard # Frontier: dynamic
+  - ThermobathMachineCircuitboard
   - OperatingTableCircuitboard # Shitmed Change
   - OrganHarvesterMachineCircuitboard # :)
 
@@ -126,6 +126,7 @@
 - type: latheRecipePack
   id: MedicalBoards
   recipes:
+  - MedicalBiofabMachineBoard # Exodus medical biofabrication research
   - StasisBedMachineCircuitboard
   - CryoPodMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard

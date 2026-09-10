@@ -18,3 +18,16 @@
 - type: nebulaProtectedPoint
   id: MapOrigin
   position: 0,0
+
+# Fixed resource clusters are kept entirely clear of generated nebulas.
+- type: nebulaProtectedPoint
+  id: ClusterINSO357k
+  position: -5952,25344
+  radius: 2500
+
+- type: nebulaProtectedPoint
+  id: ClusterLINEAR21
+  position: 9728,-33024
+  radius: 4200
+
+# Planet positions are intentionally not protected: nebulas may overlap them.

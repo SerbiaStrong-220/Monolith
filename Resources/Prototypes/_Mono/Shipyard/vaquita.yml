@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Вакита # Ru-Localization
   description: Небольшой шаттл, оснащённый всем необходимым для оптимальной утилизации в одиночку, включая шахтёрские пульсаторы и мощные двигатели для быстрого отхода. «Добывай руду прямо из кабины, не напрягая ничего кроме пальца!» - по крайней мере, так его рекламирует Дрейк Индастрис. # Ru-Localization
-  price: 37900
+  price: 49200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/vaquita.yml

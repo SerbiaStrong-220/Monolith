@@ -28,7 +28,7 @@
 - type: entity
   parent: HighSecDoor
   id: HighSecViperLocked
-  suffix: Viper Group, Locked
+  suffix: Вайперы, Закрыто # Exodus Viper localization
   components:
   - type: ContainerFill
     containers:
@@ -37,7 +37,7 @@
 - type: entity
   parent: HighSecDoor
   id: HighSecViperCommandLocked
-  suffix: Viper Group Command, Locked
+  suffix: Командование Вайперов, Закрыто # Exodus Viper localization
   components:
   - type: ContainerFill
     containers:

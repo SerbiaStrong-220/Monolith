@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Литтора # Ru-Localization
   description: Экспедиционный шаттл среднего-крупного размера с утилизаторским оборудованием. # Ru-Localization
-  price: 76000
+  price: 81200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/littora.yml

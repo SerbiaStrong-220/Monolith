@@ -50,14 +50,16 @@ selectable-set-pdvtarkhan-wspr-kit-desc =
     - an access breaker
     - and a combat medkit.
 
-selectable-set-tsfmarsoc-fenghuang-kit-name = Fenghuang kit
+# Exodus-begin: XLR-556 replaces the MARSOC Fenghuang kit.
+selectable-set-tsfmarsoc-fenghuang-kit-name = XLR-556 kit
 selectable-set-tsfmarsoc-fenghuang-kit-desc =
     A kit with:
-    - a Fenghuang rifle
-    - 4 mags of 8x65mm
-    - a vertical foregrip
+    - an XLR-556 rifle
+    - 4 loaded 30-round magazines of 5.56x45mm FMJ
+    - a 70-round box of 5.56x45mm FMJ
     - a jaws of life
     - and a combat medkit.
+# Exodus-end
 
 selectable-set-tsfmarsoc-shenzhen-kit-name = Shenzhen kit
 selectable-set-tsfmarsoc-shenzhen-kit-desc =

@@ -1,3 +1,4 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
 using System.Collections.Immutable;
 using Content.Shared.Database;
 using Robust.Shared.Network;
@@ -24,5 +25,6 @@ public sealed record SharedAdminNote(
     ImmutableArray<BanRoleDef>? BannedRoles, // Only valid for role bans. List of banned roles
     DateTime? UnbannedTime, // Only valid for bans. Set if unbanned
     string? UnbannedByName, // Only valid for bans. Set if unbanned
-    bool? Seen // Only valid for messages, otherwise should be null. Has the user seen this message?
+    bool? Seen, // Only valid for messages, otherwise should be null. Has the user seen this message?
+    ImmutableArray<BannableChats>? BannedChats = null // SS220 chat bans
     );

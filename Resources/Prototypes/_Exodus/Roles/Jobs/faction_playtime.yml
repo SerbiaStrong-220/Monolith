@@ -1,0 +1,42 @@
+# Hidden requirement groups sum existing job trackers; no new playtime counters are needed.
+# Include faction personnel, cyborgs and citizens, but not unrelated jobs from Security / Antag.
+# Keep trackers unique within each group so the same recorded hours are not counted twice.
+- type: department
+  id: ExodusTSFPlaytime
+  name: department-exodus-tsf-playtime
+  description: department-exodus-tsf-playtime-description
+  color: "#326DA8"
+  primary: false
+  editorHidden: true
+  roles:
+  - Sheriff
+  - Bailiff
+  - SeniorOfficer
+  - Brigmedic
+  - Deputy
+  - Cadet
+  - NFDetective
+  - PublicAffairsLiaison
+  - TsfEngineer
+  - TsfMarsoc
+  - TsfBorg
+  - TsfCivilian
+
+- type: department
+  id: ExodusPDVPlaytime
+  name: department-exodus-pdv-playtime
+  description: department-exodus-pdv-playtime-description
+  color: "#DE9E59"
+  primary: false
+  editorHidden: true
+  roles:
+  - PDVAmbassador
+  - PDVPrince
+  - PirateCaptain
+  - PirateFirstMate
+  - PDVDenasvar
+  - PDVInfiltrator
+  - Pirate
+  - PdvBorg
+  - PDVTarkhan
+  - PdvCivilian

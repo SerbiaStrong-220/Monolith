@@ -34,6 +34,8 @@ public sealed partial class SharedMagbootsSystem : EntitySystem
 
     private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
     {
+        _gravity.RefreshWeightless(ent.Owner); // Exodus intrinsic-magboots-gravity-refresh
+
         if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
             UpdateMagbootEffects(container.Owner, ent, args.Activated);
 

@@ -100,6 +100,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private const float TerritoryTextFadeOutViewDiagMultiplier = 0.9f;
     private const float TerritoryTextHiddenViewDiagMultiplier = 1.35f;
     private readonly Dictionary<string, string> _territoryLabelCache = new(); // Exodus mass-scanner-perf
+    private readonly CorporateTerritoryRingRenderer _corporateTerritoryRings = new(); // Exodus corporate territory rings
     // Exodus-end
     // Exodus-begin dock-label-fade
     private const float DockLabelFadeOutWorldRange = 250f;
@@ -114,11 +115,14 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     ];
 
     public bool ShowIFF { get; set; } = true;
+    // Exodus-begin: preserve the fork's shuttle filter and coordinate privacy state.
     public bool ShowIFFShuttles { get; set; } = true;
+    public bool ShowIFFDetailed { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
 
     public float MaximumIFFDistance { get; set; } = 3000f; // Frontier // Mono - 3000 by default to not gigaclutter
-    public bool HideCoords { get; set; } = false; // Frontier
+    public bool HideCoords { get; set; }
+    // Exodus-end
 
     private static Color _dockLabelColor = Color.White; // Frontier
 
@@ -427,65 +431,66 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             var left = center + leftOffs;
             var right = center + rightOffs;
 
-            switch (_icon) {
+            switch (_icon)
+            {
                 case RadarModeButtonIcon.Azimuth:
-                {
-                    var iconColor = Color.Black.WithAlpha(0.95f);
-                    var topLeft = center + (up + leftOffs) / MathF.Sqrt(2f);
-                    var topRight = center + (up + rightOffs) / MathF.Sqrt(2f);
-                    var bottomLeft = center + (down + leftOffs) / MathF.Sqrt(2f);
-                    var bottomRight = center + (down + rightOffs) / MathF.Sqrt(2f);
-
-                    handle.DrawLine(topLeft, bottomRight, iconColor);
-                    handle.DrawLine(bottomLeft, topRight, iconColor);
-                    handle.DrawLine(left, right, iconColor);
-                    handle.DrawLine(bottom, top, iconColor);
-                    break;
-                }
-                case RadarModeButtonIcon.Rotation:
-                {
-                    var iconColor = Color.Yellow.WithAlpha(0.95f);
-                    var innerRatio = 0.8f;
-                    var segCount = 3;
-                    var prevOffs = up * innerRatio;
-                    for (var i = 0; i < segCount; i++)
                     {
-                        var angle = Angle.FromDegrees(120f * i / (float)segCount - 15f);
-                        var thisOffs = angle.RotateVec(up * innerRatio);
-                        var thisPointUp = center + thisOffs;
-                        var thisPointDown = center - thisOffs;
-                        var oldPointUp = center + prevOffs;
-                        var oldPointDown = center - prevOffs;
-                        handle.DrawLine(oldPointUp, thisPointUp, iconColor);
-                        handle.DrawLine(oldPointDown, thisPointDown, iconColor);
-                        prevOffs = thisOffs;
-                    }
-                    break;
-                }
-                case RadarModeButtonIcon.Anchor:
-                {
-                    var iconColor = Color.Blue.WithAlpha(0.95f);
-                    var stemTop = center + up * 0.5f;
-                    var crossLeft = center + leftOffs * 0.3f + up * 0.7f;
-                    var crossRight = center + rightOffs * 0.3f + up * 0.7f;;
-                    var leftFluke = center + leftOffs * 0.6f + down * 0.6f;
-                    var rightFluke = center + rightOffs * 0.6f + down * 0.6f;
-                    var innerRadius = radius * 0.4f;
-                    var innerTop = center + up * 0.6f;
+                        var iconColor = Color.Black.WithAlpha(0.95f);
+                        var topLeft = center + (up + leftOffs) / MathF.Sqrt(2f);
+                        var topRight = center + (up + rightOffs) / MathF.Sqrt(2f);
+                        var bottomLeft = center + (down + leftOffs) / MathF.Sqrt(2f);
+                        var bottomRight = center + (down + rightOffs) / MathF.Sqrt(2f);
 
-                    handle.DrawCircle(innerTop, innerRadius, iconColor, false);
-                    handle.DrawLine(stemTop, bottom, iconColor);
-                    handle.DrawLine(crossLeft, crossRight, iconColor);
-                    handle.DrawLine(bottom, leftFluke, iconColor);
-                    handle.DrawLine(bottom, rightFluke, iconColor);
-                    break;
-                }
+                        handle.DrawLine(topLeft, bottomRight, iconColor);
+                        handle.DrawLine(bottomLeft, topRight, iconColor);
+                        handle.DrawLine(left, right, iconColor);
+                        handle.DrawLine(bottom, top, iconColor);
+                        break;
+                    }
+                case RadarModeButtonIcon.Rotation:
+                    {
+                        var iconColor = Color.Yellow.WithAlpha(0.95f);
+                        var innerRatio = 0.8f;
+                        var segCount = 3;
+                        var prevOffs = up * innerRatio;
+                        for (var i = 0; i < segCount; i++)
+                        {
+                            var angle = Angle.FromDegrees(120f * i / (float)segCount - 15f);
+                            var thisOffs = angle.RotateVec(up * innerRatio);
+                            var thisPointUp = center + thisOffs;
+                            var thisPointDown = center - thisOffs;
+                            var oldPointUp = center + prevOffs;
+                            var oldPointDown = center - prevOffs;
+                            handle.DrawLine(oldPointUp, thisPointUp, iconColor);
+                            handle.DrawLine(oldPointDown, thisPointDown, iconColor);
+                            prevOffs = thisOffs;
+                        }
+                        break;
+                    }
+                case RadarModeButtonIcon.Anchor:
+                    {
+                        var iconColor = Color.Blue.WithAlpha(0.95f);
+                        var stemTop = center + up * 0.5f;
+                        var crossLeft = center + leftOffs * 0.3f + up * 0.7f;
+                        var crossRight = center + rightOffs * 0.3f + up * 0.7f; ;
+                        var leftFluke = center + leftOffs * 0.6f + down * 0.6f;
+                        var rightFluke = center + rightOffs * 0.6f + down * 0.6f;
+                        var innerRadius = radius * 0.4f;
+                        var innerTop = center + up * 0.6f;
+
+                        handle.DrawCircle(innerTop, innerRadius, iconColor, false);
+                        handle.DrawLine(stemTop, bottom, iconColor);
+                        handle.DrawLine(crossLeft, crossRight, iconColor);
+                        handle.DrawLine(bottom, leftFluke, iconColor);
+                        handle.DrawLine(bottom, rightFluke, iconColor);
+                        break;
+                    }
                 case RadarModeButtonIcon.Reset:
-                {
-                    var iconColor = Color.Red.WithAlpha(0.95f);
-                    handle.DrawLine(left, right, iconColor);
-                    break;
-                }
+                    {
+                        var iconColor = Color.Red.WithAlpha(0.95f);
+                        handle.DrawLine(left, right, iconColor);
+                        break;
+                    }
                 default:
                     break;
             }
@@ -611,7 +616,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Frontier
         if (state.MaxIffRange != null)
             MaximumIFFDistance = state.MaxIffRange.Value;
-        HideCoords = state.HideCoords;
         // End Frontier
 
         _docks = state.Docks;
@@ -626,7 +630,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         base.Draw(handle);
 
         DrawBacking(handle);
-        DrawCircles(handle);
 
         // No data
         if (_coordinates == null || _rotation == null)
@@ -660,6 +663,39 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         Matrix3x2.Invert(worldToShuttle, out var shuttleToWorld);
         var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
         var worldToView = worldToShuttle * shuttleToView;
+        // Exodus-begin: share the upstream pre-pass bounds with our detailed radar pass.
+        var viewBounds = new Box2Rotated(
+            new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(mapPos.Position),
+            worldRot,
+            mapPos.Position);
+        var viewAABB = viewBounds.CalcBoundingBox();
+        // Exodus-end
+
+        DrawStarSystem(handle, worldToShuttle, shuttleToView, xform.MapUid); // Far Horizons
+
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
+
+        // Draw our grid's fill.
+        var ourGridId = xform.GridUid;
+        MapGridComponent? ourGrid = null; // Exodus: keep the cached-query result available to both radar passes.
+        if (ourGridId.HasValue &&
+            _gridQuery.TryGetComponent(ourGridId.Value, out ourGrid) && // Exodus: reuse the SafeZone query cache.
+            _fixturesQuery.HasComponent(ourGridId.Value)) // Exodus: reuse the SafeZone query cache.
+        {
+            var ourGridToWorld = _transform.GetWorldMatrix(ourGridId.Value);
+            var ourGridToShuttle = Matrix3x2.Multiply(ourGridToWorld, worldToShuttle);
+            var ourGridToView = ourGridToShuttle * shuttleToView;
+            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
+
+            DrawGrid(handle, ourGridToView, (ourGridId.Value, ourGrid), color, 0.01f, true);
+        }
+
+        DrawGridFills(_grids, handle, (ourGrid != null && ourGridId.HasValue) ? (ourGridId.Value, ourGrid) : null);
+
+        DrawCircles(handle);
+
+        DrawIFFBeacons(handle, worldToView, mapPos, xform.MapUid); // Far Horizons
 
         // Draw shields
         DrawShields(handle, xform, worldToShuttle);
@@ -684,15 +720,12 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         // Draw our grid in detail
-        var ourGridId = xform.GridUid;
-
-        if (_gridQuery.TryGetComponent(ourGridId, out var ourGrid) && ourGridId != null &&
-            _fixturesQuery.HasComponent(ourGridId.Value)) // Exodus - SafeZone
+        if (ourGridId.HasValue && ourGrid != null && _fixturesQuery.HasComponent(ourGridId.Value)) // Exodus - SafeZone
         {
             var ourGridToWorld = _transform.GetWorldMatrix(ourGridId.Value);
             var ourGridToShuttle = Matrix3x2.Multiply(ourGridToWorld, worldToShuttle);
             var ourGridToView = ourGridToShuttle * shuttleToView;
-            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
+            var color = _shuttles.GetIFFColor(ourGridId.Value, self: true); // This is such a waste running all of these again...
 
             DrawGrid(handle, ourGridToView, (ourGridId.Value, ourGrid), color);
             DrawDocks(handle, ourGridId.Value, ourGridToView);
@@ -706,12 +739,6 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         }
 
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, _radarPosVerts, Color.Lime);
-
-        var viewBounds = new Box2Rotated(new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(mapPos.Position), worldRot, mapPos.Position);
-        var viewAABB = viewBounds.CalcBoundingBox();
-
-        _grids.Clear();
-        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
         // Mono edited: Frontier - collect blip location data outside foreach - more changes ahead
         _tempBlipDataList.Clear();
@@ -871,7 +898,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
                     // Get company color if entity has CompanyComponent
                     var displayColor = labelColor;
-                    if (!hideLabel && _companyQuery.TryGetComponent(gUid, out CompanyComponent? companyComp) && // Exodus - SafeZone
+                    if (!hideLabel && !_shuttles.UsesFactionIffColor(gUid) && // Exodus keep managed labels faction-colored.
+                        _companyQuery.TryGetComponent(gUid, out CompanyComponent? companyComp) && // Exodus - SafeZone
                         !string.IsNullOrEmpty(companyComp.CompanyName))
                     {
                         CompanyPrototype? prototype = null;
@@ -934,11 +962,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
             var uiPosition = Vector2.Transform(Vector2.Zero, curGridToView) / UIScale;
 
-            var uiXCentre = (int) Width / 2;
-            var uiYCentre = (int) Height / 2;
+            var uiXCentre = (int)Width / 2;
+            var uiYCentre = (int)Height / 2;
             var uiXOffset = uiPosition.X - uiXCentre;
             var uiYOffset = uiPosition.Y - uiYCentre;
-            var uiDistance = (int) Math.Sqrt(Math.Pow(uiXOffset, 2) + Math.Pow(uiYOffset, 2));
+            var uiDistance = (int)Math.Sqrt(Math.Pow(uiXOffset, 2) + Math.Pow(uiYOffset, 2));
             if (uiDistance == 0)
                 uiDistance = 1;
             var uiX = uiXCentre * uiXOffset / uiDistance;
@@ -1122,6 +1150,44 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         DrawSafeZones(handle, worldToView, ourGridId); // Exodus - SafeZone
     }
 
+    // Exodus-begin: integrate the upstream filled-grid pre-pass with our detailed radar renderer.
+    private void DrawGridFills(
+        List<Entity<MapGridComponent>> grids,
+        DrawingHandleScreen handle,
+        Entity<MapGridComponent>? ourGrid)
+    {
+        var worldRot = _rotation!.Value;
+        var mapPos = _transform.ToMapCoordinates(_coordinates!.Value).Offset(worldRot.RotateVec(Offset));
+        var mapCoord = _transform.ToCoordinates(mapPos);
+        var worldToShuttle = Matrix3Helpers.CreateTranslation(-mapCoord.Position) * Matrix3Helpers.CreateRotation(-worldRot);
+        var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
+        var worldToView = worldToShuttle * shuttleToView;
+
+        foreach (var grid in grids)
+        {
+            if (ourGrid != null && grid.Owner == ourGrid.Value.Owner)
+                continue;
+
+            var detectionLevel = _consoleEntity == null ? DetectionLevel.Detected : GetGridDetected(grid.Owner);
+            if (detectionLevel != DetectionLevel.Detected)
+                continue;
+
+            if (!_bodyQuery.TryGetComponent(grid.Owner, out var gridBody))
+                continue;
+
+            _IFFQuery.TryGetComponent(grid.Owner, out var iff);
+            if (!_shuttles.CanDraw(grid.Owner, gridBody, iff))
+                continue;
+
+            var hideLabel = iff != null && (iff.Flags & IFFFlags.HideLabel) != 0x0;
+            var hideColor = hideLabel && iff != null && (iff.Flags & IFFFlags.AlwaysShowColor) == 0x0;
+            var labelColor = hideColor ? Color.White : _shuttles.GetIFFColor(grid, self: false, iff);
+            var curGridToView = _transform.GetWorldMatrix(grid.Owner) * worldToView;
+
+            DrawGrid(handle, curGridToView, grid, labelColor, 0.01f, true);
+        }
+    }
+    // Exodus-end
     protected DetectionLevel GetGridDetected(EntityUid grid)
     {
         if (Detectors != null)
@@ -1332,7 +1398,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (config.Points == null || config.Points.Count < 3)
             return;
 
-        var rotation = (float) -worldRotation.Theta;
+        var rotation = (float)-worldRotation.Theta;
         var cos = MathF.Cos(rotation);
         var sin = MathF.Sin(rotation);
 
@@ -1619,10 +1685,13 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             if (shieldFixture == null || shieldFixture.Shape is not ChainShape)
                 continue;
 
-            ChainShape chain = (ChainShape) shieldFixture.Shape;
+            ChainShape chain = (ChainShape)shieldFixture.Shape;
 
             var count = chain.Count;
             var verticies = chain.Vertices;
+            // Exodus-begin layered ship shield scanner visuals
+            var layerCount = Math.Max(1, visuals.LayerCount);
+            var layerSpacing = MathF.Max(2.5f, (visuals.LayerThickness + visuals.LayerGap) * 6f);
 
             var center = _transform.WithEntityId(xform.Coordinates, xform.GridUid.Value).Position;
 
@@ -1638,15 +1707,37 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                 v2 = Vector2.Transform(v2, matrix);
                 v2.Y = -v2.Y;
                 v2 = ScalePosition(v2);
-                handle.DrawLine(v1, v2, visuals.ShieldColor);
+
+                var line = v2 - v1;
+                if (line.LengthSquared() <= float.Epsilon)
+                    continue;
+
+                var normal = Vector2.Normalize(new Vector2(-line.Y, line.X));
+                var centerOffset = (layerCount - 1) * 0.5f;
+
+                for (var layer = 0; layer < layerCount; layer++)
+                {
+                    var offset = normal * ((layer - centerOffset) * layerSpacing);
+                    handle.DrawLine(v1 + offset, v2 + offset, GetShieldLayerColor(visuals.ShieldColor, layer, layerCount));
+                }
             }
         }
     }
 
+    private static Color GetShieldLayerColor(Color color, int layer, int layerCount)
+    {
+        if (layerCount == 1)
+            return color;
+
+        var progress = (float)layer / Math.Max(1, layerCount - 1);
+        var alpha = 0.85f - progress * 0.35f;
+        return color.WithAlpha(color.A * alpha);
+    }
+    // Exodus-end
     // Exodus - ShuttleHooks - Start
     private void DrawGrapLinks(DrawingHandleScreen handle, Matrix3x2 worldToView, Box2 monoViewBounds)
     {
-        foreach ( var link in _grapLinks)
+        foreach (var link in _grapLinks)
         {
             if (!_xformQuery.TryGetComponent(EntManager.GetEntity(link.Gun), out var gunXform)
                 || !_xformQuery.TryGetComponent(EntManager.GetEntity(link.Target), out var targetXform))
@@ -1670,6 +1761,15 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (screenRadius <= 0f)
             return;
 
+        // Exodus-begin corporate territory rings
+        // Thin the decoration at maximum range; restore it within the first 25% of zooming in.
+        var zoomProgress = WorldMaxRange > 0f
+            ? Math.Clamp((1f - WorldRange / WorldMaxRange) / 0.25f, 0f, 1f)
+            : 1f;
+        var ringScale = 0.75f + 0.25f * zoomProgress;
+        _corporateTerritoryRings.Draw(handle, Font, position, screenRadius,
+            config.CorporateController, _prototype, UIScale, viewBounds, ringScale);
+        // Exodus-end
         if (!CircleIntersectsBox(position, screenRadius, viewBounds))
             return;
 
@@ -1740,7 +1840,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var edgeFadeRange = fadeEnd - fadeStart;
 
         // SetTransform uses screen coordinates, not control-local coordinates.
-        var screenOffset = (Vector2) GlobalPixelPosition;
+        var screenOffset = (Vector2)GlobalPixelPosition;
         var prevTransform = handle.GetTransform();
 
         // Fixed world-space repeat for the diagonal pattern.

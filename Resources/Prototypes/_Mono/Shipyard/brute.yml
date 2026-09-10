@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Брут # Ru-Localization
   description: То, что по сути является большегрузом, отдел маркетинга Дрейк Индастрис рекламирует как новое чудо грузоперевозок. Имеет четыре слоя стен для защиты вашего драгоценного груза во время пьяного вождения. # Ru-Localization
-  price: 77850
+  price: 84000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/brute.yml

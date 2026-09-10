@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'comms-console-menu-title'}"
-    MinSize="400 300">
+    MinSize="440 400">
 
     <!-- Main Container -->
     <BoxContainer Orientation="Vertical"
@@ -15,6 +15,39 @@
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch"
             MinHeight="100"/>
+
+        <PanelContainer Name="WarSection"
+            Access="Public"
+            StyleClasses="BackgroundDark"
+            HorizontalExpand="True"
+            Margin="0 4"
+            Visible="False">
+
+            <Collapsible BodyVisible="False"
+                HorizontalExpand="True"
+                Margin="6">
+
+                <CollapsibleHeading Name="WarHeading"
+                    Access="Public"
+                    Title="{Loc 'war-declaration-console-title'}"
+                    HorizontalExpand="True"/>
+
+                <CollapsibleBody>
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <Label Name="WarUnlockLabel"
+                            Access="Public"
+                            HorizontalExpand="True"
+                            Margin="0 2"/>
+
+                        <BoxContainer Name="WarRows"
+                            Access="Public"
+                            Orientation="Vertical"
+                            HorizontalExpand="True"
+                            SeparationOverride="4"/>
+                    </BoxContainer>
+                </CollapsibleBody>
+            </Collapsible>
+        </PanelContainer>
 
         <!-- ButtonsPart -->
         <BoxContainer Orientation="Vertical"

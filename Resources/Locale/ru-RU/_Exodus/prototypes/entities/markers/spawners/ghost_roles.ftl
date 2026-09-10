@@ -65,3 +65,7 @@ ent-SpawnAiRemoteBorgSyndicateSaboteur = спавнер борга под упр
 ent-SpawnAiRemoteBorgDerelict = спавнер борга под управлением ИИ
     .desc = { ent-MarkerBase.desc }
     .suffix = заброшенный
+
+ent-SpawnAiRemoteBorgAsakimFighter = спавнер борга под управлением ИИ
+    .desc = { ent-MarkerBase.desc }
+    .suffix = Оператор Штурмовой Системы

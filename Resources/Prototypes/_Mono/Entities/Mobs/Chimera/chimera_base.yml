@@ -83,7 +83,7 @@
         Quantity: 90
   - type: MeleeChemicalInjector
     solution: melee
-    transferAmount: 1.5
+    transferAmount: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 4.25
@@ -117,13 +117,15 @@
         Brute: -1.2
         Burn: -1.2
         Genetic: -0.1
+  - type: TerritoryRegeneration # Exodus - opt into healing on the hive's controlled grid.
+    faction: Chimera # Exodus - no bonus for biomass or unrelated creatures.
   - type: Targeting
   - type: Flammable
     fireSpread: true
     canResistFire: true
     damage: #per second, scales with number of fire 'stacks'
       types:
-        Heat: 8
+        Heat: 20
   - type: Clickable
   - type: ZombieImmune
   - type: Reactive
@@ -158,10 +160,23 @@
     requiredLegs: 0
   - type: PlayerToolModifier
     pryTimeMultiplier: 0.4
+  # Exodus-begin restore permanent toggleable thermal vision.
   - type: ThermalVision
+    toggleAction: ToggleThermalVision
+    pulseTime: 0
     lightRadius: 15
     activateSound: null
     deactivateSound: null
+  # Exodus-end
+  - type: NightVision
+    relayOverlay: false
+    goggleEffect: true
+    viewCircleRadius: 550
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#BF430A"
+    lightingColor: "#FFFFFF32"
   - type: GuideHelp
     guides:
     - Letoferol
@@ -198,14 +213,6 @@
     critThreshold: 150
   - type: Inventory
     templateId: chimera
-    relayBlockedSlots:
-    - outerClothing
-    - neck
-    - mask
-    - head
-    - jumpsuit
-    - shoes
-    - gloves
   - type: Appearance
   - type: SurgeryTarget
   - type: ContainerContainer
@@ -220,6 +227,22 @@
         type: StrippableBoundUserInterface
       enum.SurgeryUIKey.Key:
         type: SurgeryBui
+      # Exodus-begin built-in mass scanner.
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      # Exodus-end
+  # Exodus-begin built-in mass scanner with handheld detection ranges.
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionObserverShowRadar
+  - type: RadarConsole
+    followEntity: true
+    noRotate: true
+  - type: DetectionRangeMultiplier
+    infraredMultiplier: 0.5
+    visualMultiplier: 0.75
+  # Exodus-end
   - type: Hands
   - type: ComplexInteraction
   - type: Ensnareable
@@ -251,8 +274,8 @@
   - type: BonusMeleeDamage
     damageModifierSet:
       coefficients:
-        Blunt: 1.4
-        Slash: 1.2
+        Blunt: 0.5
+        Slash: 1
         Piercing: 0.65 # spear is clunky
         Heat: 0.5 # fire is scary (esword is op)
   #- type: CollectiveMind  # Part of the organ instead.

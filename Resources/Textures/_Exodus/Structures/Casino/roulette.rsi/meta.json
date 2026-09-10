@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "for Exodus by OperatorXeno {Discord: xenoeffect}",
+  "size": {
+    "x": 256,
+    "y": 256
+  },
+  "states": [
+    {
+      "name": "roulette_wheel"
+    },
+    {
+      "name": "roulette_ball"
+    },
+    {
+      "name": "roulette_table"
+    },
+    {
+      "name": "roulette_highlight"
+    },
+    {
+      "name": "roulette_icon"
+    }
+  ]
+}

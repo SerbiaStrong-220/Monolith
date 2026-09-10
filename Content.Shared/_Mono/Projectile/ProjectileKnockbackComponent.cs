@@ -14,4 +14,10 @@ public sealed partial class ProjectileKnockbackComponent : Component
 
     [DataField]
     public float RotateMultiplier = 1f; // evil
+
+    // Exodus-begin: allow personnel weapons to leave the grid's momentum unchanged.
+    /// <summary>Whether a hit may push a grid, including through one of its static structures.</summary>
+    [DataField]
+    public bool AffectGrids = true;
+    // Exodus-end
 }

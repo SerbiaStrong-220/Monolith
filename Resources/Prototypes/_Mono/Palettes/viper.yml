@@ -1,6 +1,6 @@
 - type: palette
   id: ViperGroup
-  name: Viper Group
+  name: Вайперы # Exodus Viper localization
   colors:
     ViperStandard: "#8C191EFF"
     ViperAlternative: "#B42328FF"

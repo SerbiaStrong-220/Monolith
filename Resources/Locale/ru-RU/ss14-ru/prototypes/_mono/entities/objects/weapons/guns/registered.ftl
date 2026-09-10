@@ -1,5 +1,6 @@
+# Exodus: Viper localization
 ent-WeaponPistolViperPMC = { ent-WeaponPistolViper }
-    .suffix = Registered
+    .suffix = Зарегистрирован
     .desc = { ent-WeaponPistolViper.desc }
 ent-WeaponSubMachineGunWt550PMC = { ent-WeaponSubMachineGunWt550 }
     .suffix = Registered

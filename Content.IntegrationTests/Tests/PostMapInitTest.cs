@@ -36,6 +36,7 @@ namespace Content.IntegrationTests.Tests
     {
         private const bool SkipTestMaps = true;
         private const string TestMapsPath = "/Maps/_Mono/Test/"; // Mono: _Mono
+        private const string SupercapitalMapsPath = "/Maps/_Exodus/Supercapitals/"; // Exodus: mobile POI grids.
 
         // Frontier: TODO - define this to our set of maps of interest
         private static readonly string[] NoSpawnMaps =
@@ -113,12 +114,19 @@ namespace Content.IntegrationTests.Tests
         private static readonly ResPath[] AllMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps/_Mono", "*.yml");
         private static readonly ResPath[] ShuttleMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/SharedMaps/_Mono/Shuttles", "*.yml");
 
+        // Exodus-begin: discover all supercapital grids for the grid loading test.
+        private static readonly string[] SupercapitalGrids = GameDataScrounger.FilesInDirectoryInVfs(SupercapitalMapsPath, "*.yml")
+            .Select(path => path.ToString())
+            .ToArray();
+        // Exodus-end
+
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
 
         /// <summary>
         /// Asserts that specific files have been saved as grids and not maps.
         /// </summary>
         [Test, TestCaseSource(nameof(Grids))]
+        [TestCaseSource(nameof(SupercapitalGrids))] // Exodus: supercapitals are saved as grids.
         public async Task GridsLoadableTest(string mapFile)
         {
             await using var pair = await PoolManager.GetServerClient();
@@ -519,6 +527,7 @@ namespace Content.IntegrationTests.Tests
                     !x.MapPath.ToString().StartsWith("/Maps/_Exodus/Shuttles") && // Exodus: skip shuttles (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Exodus/Deprecated") && // Exodus: skip deprecated (not loaded as maps)
                     !x.MapPath.ToString().StartsWith("/Maps/_Exodus/ShuttleEvent") && // Exodus: skip shuttleevents (not loaded as maps)
+                    !x.MapPath.ToString().StartsWith(SupercapitalMapsPath, StringComparison.Ordinal) && // Exodus: covered by GridsLoadableTest.
                     !x.MapPath.ToString().StartsWith("/Maps/_Exodus/POI") // Exodus: skip POIs (not loaded as maps)
                     )
                 // End Frontier

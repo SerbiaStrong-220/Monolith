@@ -20,7 +20,7 @@
     range: 500
   - type: GunSignalControl
   - type: Gun
-    selectedMode: Burst
+    selectedMode: Burst # Exodus: retain main-build damage outside M25/Scylla.
     availableModes: Burst
     burstCooldown: 15
     burstFireRate: 14
@@ -31,7 +31,7 @@
     maxAngle: 6
     shootThermalSignature: 8000000
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
+      collection: ShipGunGenericMissile
     soundEmpty:
       path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
   - type: Actions

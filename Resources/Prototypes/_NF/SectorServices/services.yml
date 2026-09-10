@@ -32,6 +32,10 @@
         !type:SectorBankAccountInfo
         balance: 8000
         increasePerSecond: 18 # ~65K per hour, a bit over for the DOC MOM's wage.
+      Mieyo:
+        !type:SectorBankAccountInfo
+        balance: 150000
+        increasePerSecond: 30
       BlackMarket:
         !type:SectorBankAccountInfo
         balance: 8000
@@ -49,6 +53,18 @@
   components:
   - type: AlertLevel
     alertLevelPrototype: stationAlerts
+
+# Mono
+- type: sectorService
+  id: WarAlerts
+  components:
+  - type: WarLevel
+    # Exodus-begin: faction wars, declaration lockouts and peace negotiations.
+    factions: [TSFMC, PDV, Khsira]
+    declarationDelay: 7200
+    postWarCooldown: 600
+    peaceOfferCooldown: 30
+    # Exodus-end
 
 - type: sectorService
   id: BountyContracts

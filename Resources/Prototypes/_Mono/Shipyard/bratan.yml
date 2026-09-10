@@ -14,7 +14,7 @@
   parent: BaseVessel
   name: Братан # Ru-Localization
   description: Передвижной ночной клуб, кафетерий, гидропоника, секретная лаборатория по производству наркотиков и контрабандный шаттл - всё в одном флаконе! Предоставлено вам Бухгалтерией. # Ru-Localization
-  price: 142000
+  price: 154500 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/bratan.yml

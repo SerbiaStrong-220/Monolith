@@ -119,7 +119,7 @@
   # Einstein Engines - Language end
 
 - type: entity
-  parent: PersonalAI
+  parent: [PersonalAI, BaseFactionGearOtherFactionT1]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!

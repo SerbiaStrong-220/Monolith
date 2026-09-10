@@ -33,8 +33,10 @@
     - type: NpcFactionMember
       factions:
       - USSP
+    # Exodus-begin preserve existing role settings
     - type: ChatRank
       rank: ussp-commissar
+    # Exodus-end
   - !type:AddLanguageSpecial
     languagesSpoken:
     - NovaCygniBasic
@@ -48,10 +50,11 @@
   id: USSPCommissarGear
   equipment:
     pocket1: WeaponRevolverMatebaAP
-    pocket2: SpeedLoader45_magnumAP
+    pocket2: SpeedLoader357_magnumAP
   storage:
     back:
     - RadioHandheldNF
     - RubberStampUSSPTaccomm
     - BookUSSPLaw
     - BookTheCommonCauseFirstEdition
+    - USSPHandheldOverwatchConsole

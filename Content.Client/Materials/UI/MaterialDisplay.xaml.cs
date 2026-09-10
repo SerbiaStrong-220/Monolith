@@ -53,10 +53,11 @@ public sealed partial class MaterialDisplay : PanelContainer
         var matProto = _prototypeManager.Index<MaterialPrototype>(Material);
 
         var sheetVolume = _materialStorage.GetSheetVolume(matProto);
-        var sheets = (float) volume / sheetVolume;
-        var maxEjectableSheets = (int) MathF.Floor(sheets);
+        var sheets = (float)volume / sheetVolume;
+        var maxEjectableSheets = (int)MathF.Floor(sheets);
 
-        var unit = Loc.GetString(matProto.Unit);
+        // Exodus - Inflect material units by amount.
+        var unit = Loc.GetString(matProto.Unit, ("amount", sheets));
         var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
         var name = Loc.GetString(matProto.Name);
         var mat = Loc.GetString("lathe-menu-material-display", ("material", name), ("amount", amountText));

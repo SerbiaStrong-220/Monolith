@@ -29,7 +29,7 @@
   displayWeight: 60 # Top
   canBeAntag: false
   accessGroups:
-  - AllAccessMono #Mono
+  - AllAccess # Exodus: full station access, shared with the Colossus AI and its remote shells.
   access:
   - HeadOfPersonnel #Mono
   special:
@@ -68,3 +68,4 @@
     - EncryptionKeyDiplomacy
     - ShipVoucherFrontierGuard
     - PhoneInstrumentHigh
+    - CCHandheldOverwatchConsole

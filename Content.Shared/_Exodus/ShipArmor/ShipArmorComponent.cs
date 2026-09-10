@@ -1,5 +1,6 @@
 // (c) Space Exodus Team
 using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -67,6 +68,13 @@ public sealed partial class ShipArmorComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, float> AbsorbRatios = new();
+
+    /// <summary>
+    /// Entities this module must not protect or spend charge on. Null allows all targets.
+    /// Checked server-side for both normal and explosion damage; floor tile protection is unaffected.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? TargetBlacklist;
 
     /// <summary>
     /// Manual enable flag. Still requires anchoring on a grid to function.

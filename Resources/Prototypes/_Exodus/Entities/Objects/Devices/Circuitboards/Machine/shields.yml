@@ -4,6 +4,7 @@
   name: MS-750 shield generator board
   description: A machine board for a vintage Prometheus shield generator. Lost technology.
   components:
+  - type: SafetyDepositRestricted
   - type: Sprite
     state: security
   - type: MachineBoard

@@ -25,10 +25,4 @@ public sealed partial class ExplodeOnShieldOverloadComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Triggered;
-
-    /// <summary>
-    /// Tracked across ticks to detect the rising edge of "overloaded by damage, while powered".
-    /// </summary>
-    [ViewVariables]
-    public bool WasOverloadedByDamage;
 }

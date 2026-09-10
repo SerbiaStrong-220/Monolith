@@ -1,0 +1,12 @@
+- type: latheRecipe
+  id: BluespaceRPED
+  parent: NFBaseToolsRecipe
+  result: BluespaceRPED
+  completetime: 10
+  materials:
+    Steel: 5000
+    Plasteel: 2000
+    Plastitanium: 2000
+    Bluespace: 500
+    Diamond: 100
+    Plutonium: 100

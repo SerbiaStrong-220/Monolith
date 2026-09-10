@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "base_empty"
+    },
+    {
+      "name": "base_full"
+    },
+    {
+      "name": "Emission_0"
+    },
+    {
+      "name": "Emission_1"
+    },
+    {
+      "name": "Emission_2"
+    },
+    {
+      "name": "Emission_3"
+    },
+    {
+      "name": "Emission_4"
+    }
+  ]
+}

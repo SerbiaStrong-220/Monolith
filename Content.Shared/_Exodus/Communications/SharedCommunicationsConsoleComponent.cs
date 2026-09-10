@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.War;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.Communications;
@@ -15,13 +16,20 @@ public sealed class CommunicationsConsoleInterfaceState : BoundUserInterfaceStat
     public List<string>? AlertLevels;
     public string CurrentAlert;
     public float CurrentAlertDelay;
+    public readonly WarDeclarationConsoleState? WarState;
 
-    public CommunicationsConsoleInterfaceState(bool canAnnounce, List<string>? alertLevels, string currentAlert, float currentAlertDelay)
+    public CommunicationsConsoleInterfaceState(
+        bool canAnnounce,
+        List<string>? alertLevels,
+        string currentAlert,
+        float currentAlertDelay,
+        WarDeclarationConsoleState? warState = null)
     {
         CanAnnounce = canAnnounce;
         AlertLevels = alertLevels;
         CurrentAlert = currentAlert;
         CurrentAlertDelay = currentAlertDelay;
+        WarState = warState;
     }
 }
 

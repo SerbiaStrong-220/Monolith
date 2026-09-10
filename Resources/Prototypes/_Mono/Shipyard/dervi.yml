@@ -7,7 +7,7 @@
   parent: BaseVessel
   name: Дерви # Ru-Localization
   description: Медицинский шаттл необычной формы с двумя защитными элементами. Оснащён базовым медотсеком, химической лабораторией и установкой для клонирования. # Ru-Localization
-  price: 64300
+  price: 89800 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/dervi.yml

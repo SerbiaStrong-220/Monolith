@@ -24,6 +24,13 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     public LocId RadarLabel { get; private set; } = default!;
 
     /// <summary>
+    /// Optional normally-cased faction name for interfaces and announcements.
+    /// Falls back to <see cref="RadarLabel"/> when omitted.
+    /// </summary>
+    [DataField]
+    public LocId? DisplayName { get; private set; }
+
+    /// <summary>
     /// Optional: the entity prototype that acts as the claim banner for this faction.
     /// Used for validation or future admin tools.
     /// </summary>
@@ -43,6 +50,32 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     /// </summary>
     [DataField]
     public TerritoryDiscountAlignment DiscountAlignment { get; private set; } = TerritoryDiscountAlignment.Positive;
+
+    /// <summary>
+    /// Whether corporations may establish a secondary claim inside this faction's territory.
+    /// </summary>
+    [DataField]
+    public bool AllowCorporateControl { get; private set; } = true;
+
+    /// <summary>
+    /// Multiplier for natural healing of matching TerritoryRegeneration recipients on a controlled grid.
+    /// Does not affect positive passive damage, medical healing or entities without that component.
+    /// </summary>
+    [DataField]
+    public float PassiveHealingMultiplier { get; private set; } = 1f;
+
+    /// <summary>
+    /// Optional status appended to the grid name on both navigation and FTL maps.
+    /// Does not rename the actual grid or replace an existing name suffix.
+    /// </summary>
+    [DataField]
+    public LocId? IffStatus;
+
+    /// <summary>
+    /// Optional replacement for the corporate-control placeholder on the navigation radar.
+    /// </summary>
+    [DataField]
+    public LocId? ControlLabel;
 
     /// <summary>
     /// Optional cooldown before this faction can claim another territory.

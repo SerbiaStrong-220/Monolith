@@ -85,5 +85,6 @@
     - state: blue
     - state: voucherstationguard
   - type: ShipyardVoucher
+    companyName: Colonial # Exodus - Colossus-Central IFF affiliation
     access:
     - Brig # odd, but potentially restricts cadets in lieu of a security guard-only access level

@@ -1,2 +1,8 @@
 # crystals of bluespace
-materials-unit-crystal = crystal
+# Exodus-begin - Material units own their pluralization.
+materials-unit-crystal =
+    { $amount ->
+        [one] crystal
+       *[other] crystals
+    }
+# Exodus-end

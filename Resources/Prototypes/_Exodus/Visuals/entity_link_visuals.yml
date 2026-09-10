@@ -1,0 +1,8 @@
+- type: entityLinkVisual
+  id: BluespaceRpedBeam
+  color: DeepSkyBlue
+  outerHalfWidth: 0.12
+  innerHalfWidth: 0.035
+  outerAlpha: 0.25
+  innerAlpha: 0.9
+  fadeDuration: 0.25

@@ -1,0 +1,32 @@
+# Author Info
+# GitHub: kasature90
+# Discord: _starch_
+# Exodus: Hokkaido is spawned exclusively by NebulaPoiHokkaido.
+
+- type: gameMap
+  id: Hokkaido
+  mapName: 'ММС «Хоккайдо»' # Exodus MMC localization
+  mapPath: /Maps/_Mono/POI/hokkaido.yml
+  minPlayers: 0
+  stations:
+    Hokkaido:
+      stationProto: RecordsFrontierOutpostCargo
+      # Exodus-begin: capturable territory configured by a shared territory profile.
+      gridComponents:
+      - type: GridTerritory
+      # Exodus-end
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'ММС «Хоккайдо»' # Exodus MMC localization
+        - type: ExtraStationInformation
+          icon: /Textures/_Mono/Interface/Misc/LateJoin/lathe.png
+          stationSubtext: 'frontier-lobby-hokkaido-subtext'
+          stationDescription: 'frontier-lobby-hokkaido-description'
+        - type: StationJobs
+          availableJobs:
+            MMCLiason: [ 1, 1 ]
+            MMCSecurity: [ 5, 5 ]
+            MMCEmployee: [ -1, -1 ]
+          tags:
+          - MieyoLiason
+        - type: StationDeadDropHintExempt

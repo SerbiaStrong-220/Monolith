@@ -1,0 +1,101 @@
+- type: entity
+  id: WeaponGravityProjector
+  parent: [BaseItem, BaseGunWieldable]
+  name: gravitational projector
+  description: A gravitational projector that fires a spreading wave, pushing back personnel and damaging structures. Its force diminishes with distance.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/gravity_projector.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/gravity_projector_inhands.rsi
+    size: Huge
+  - type: Clothing
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/gravity_projector_inhands.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+    zeroNoAmmo: true
+  - type: GravityPulseLauncher
+    shareHits: true
+  - type: Gun
+    projectileSpeed: 7
+    fireRate: 0.5
+    minAngle: 10
+    maxAngle: 15
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: GunWieldBonus
+    minAngle: -10
+    maxAngle: -15
+  - type: Battery
+    maxCharge: 1800
+    startingCharge: 1800
+  - type: ProjectileBatteryAmmoProvider
+    proto: GravityPulseHandheld
+    fireCost: 300
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: StaticPrice
+    price: 2500
+
+- type: entity
+  id: WeaponKunisaMachineGun
+  parent: WeaponRifleAsakimAutopulser
+  name: Kunisa plasma machine gun
+  description: A heavy infantry variant of the Kunisa autopulser with an enlarged capacitor and reinforced emitter cooling.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/kunisa_lmg.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/kunisa_lmg_inhands.rsi
+    size: Huge
+  - type: Clothing
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/kunisa_lmg_inhands.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+    zeroNoAmmo: true
+  - type: Gun
+    fireRate: 9
+    minAngle: 22
+    maxAngle: 32
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -18
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: Battery
+    maxCharge: 4500
+    startingCharge: 4500
+  - type: BatterySelfRecharger
+    autoRechargeRate: 90
+  - type: StaticPrice
+    price: 3000

@@ -33,6 +33,8 @@ construction-graph-tag-security-helmet = security helmet
 
 # materials
 construction-graph-tag-capacitor = capacitor
+# Exodus: upstream medsec HUD construction requirement
+construction-graph-tag-microprocessor = microprocessor
 construction-graph-tag-voice-trigger = a voice trigger
 construction-graph-tag-signal-trigger = a signal trigger
 construction-graph-tag-proximity-sensor = proximity sensor

@@ -785,6 +785,7 @@
   - ContractorBucket
   - ContractorGeigerCounter
   - ContractorBinoculars
+  - ContractorTapeRecorder # Mono - Moved from ContractorTrinkets.
   - ContractorWeaponProtoKineticAccelerator
   - ContractorPinpointerUniversal
   - ContractorShipyardRCD
@@ -866,6 +867,7 @@
   - ContractorCigPackGreen
   - ContractorCigarCase
   - ContractorNFAshtray
+  #- ContractorTapeRecorder # Mono - Moved to ContractorUtility.
   - ContractorSmokingPipeFilledTobacco
   - ContractorTobaccoPouchBrownFilled
   - ContractorTobaccoPouchBlueFilled
@@ -918,9 +920,11 @@
   loadouts:
   - ContractorBoxSurvivalNFOxygenExtended
   - ContractorBoxSurvivalNFNitrogenExtended
+  - ContractorBoxSurvivalNFVaporExtended
   fallbacks:
   - ContractorBoxSurvivalNFOxygenExtended
   - ContractorBoxSurvivalNFNitrogenExtended
+  - ContractorBoxSurvivalNFVaporExtended
 
 - type: loadoutGroup
   id: ContractorEncryptionKey

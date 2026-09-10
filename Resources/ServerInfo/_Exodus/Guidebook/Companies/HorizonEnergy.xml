@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="horizon-energy-name"][/head]
+
+  [locid="horizon-energy-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskHorizonSiphon"/>
+  </Box>
+
+  [locid="tech-disk-horizon-siphon-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

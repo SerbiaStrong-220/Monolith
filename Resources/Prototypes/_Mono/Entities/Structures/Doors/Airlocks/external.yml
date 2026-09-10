@@ -19,3 +19,20 @@
       board: [ DoorElectronicsUSSP ]
   - type: Wires
     layoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassMieyo
+  suffix: ММС, Стеклянный, Внешний # Exodus MMC localization
+  components:
+  - type: Sprite
+    sprite: _Mono/Structures/Doors/Airlocks/Glass/externalmieyo.rsi
+
+- type: entity
+  parent: AirlockExternalGlassMieyo
+  id: AirlockExternalGlassMieyoLocked
+  suffix: Закрыто, ММС, Стеклянный, Внешний # Exodus MMC localization
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMieyo ]

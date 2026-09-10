@@ -110,12 +110,24 @@ public struct FireControllableEntry
     public TimeSpan NextFire;
     // Exodus-End
 
-    public FireControllableEntry(NetEntity entity, NetCoordinates coordinates, string name, int? ammoCount = null, bool hasManualReload = false)
+    /// <summary>
+    /// Whether this weapon ignores line-of-sight restrictions.
+    /// </summary>
+    public bool IgnoresLos;
+
+    public FireControllableEntry(
+        NetEntity entity,
+        NetCoordinates coordinates,
+        string name,
+        int? ammoCount = null,
+        bool hasManualReload = false,
+        bool ignoresLos = false)
     {
         NetEntity = entity;
         Coordinates = coordinates;
         Name = name;
         AmmoCount = ammoCount;
         HasManualReload = hasManualReload;
+        IgnoresLos = ignoresLos;
     }
 }

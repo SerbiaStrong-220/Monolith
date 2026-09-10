@@ -1,0 +1,23 @@
+- type: entity
+  parent: RPED
+  id: BluespaceRPED
+  name: bluespace RPED
+  description: A bluespace rapid part exchange device capable of upgrading machines at range.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Research/bluespace_rped.rsi
+    state: icon
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Research/bluespace_rped.rsi
+  - type: PartExchanger
+    exchangeRange: 14
+    useLineOfSight: true
+    instantExchange: true
+    ignorePanel: true
+    exchangeVisualStyle: BluespaceRpedBeam
+    exchangeVisualDuration: 1
+    exchangeSound:
+      collection: BluespaceRPEDUpgrade
+  - type: Storage
+    grid:
+    - 0,0,7,7

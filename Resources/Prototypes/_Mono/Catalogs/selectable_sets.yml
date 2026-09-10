@@ -153,19 +153,21 @@
 # TSF MARSOC
 
 - type: thiefBackpackSet # rifle set
-  id: KitSelectorTSFMarsocFenghuang
+  id: KitSelectorTSFMarsocFenghuang # Exodus: retain the selector ID while replacing the rifle kit with XLR-556.
   name: selectable-set-tsfmarsoc-fenghuang-kit-name
   description: selectable-set-tsfmarsoc-fenghuang-kit-desc
   sprite:
-    sprite: _Mono/Objects/Weapons/Guns/LMGs/fenghuang.rsi
+    sprite: _Mono/Objects/Weapons/Guns/Rifles/xlr556.rsi # Exodus XLR-556 kit icon
     state: icon
   content:
-  - WeaponLMGMR8B
-  - Magazine8x65mmSKR
-  - Magazine8x65mmSKR
-  - Magazine8x65mmSKR
-  - Magazine8x65mmSKR
-  - GunAttachmentGripErebusVFG
+  # Exodus-begin: compatible 5.56x45mm ammunition; XLR-556 has no foregrip slot.
+  - WeaponRifleXlr556
+  - Magazine556x45mmFMJ
+  - Magazine556x45mmFMJ
+  - Magazine556x45mmFMJ
+  - Magazine556x45mmFMJ
+  - AmmoBox556x45mmFMJ
+  # Exodus-end
   - JawsOfLife
   - MedkitCombatFilled
 

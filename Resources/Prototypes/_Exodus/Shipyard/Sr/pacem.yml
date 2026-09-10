@@ -1,0 +1,38 @@
+# Author Info
+# Github: TheScienceOfKSP
+# Discord: sweepergiles
+
+- type: vessel
+  id: Pacem
+  parent: BaseVessel
+  name: Пасем # Ru-Localization
+  description: Патрульный артиллерийский корвет для обороны внутреннего кольца и его патрулирования. Рекомендуемый экипаж - 2 человека. # Ru-Localization
+  price: 267700 # Exodus: appraised minimum + 5%, rounded up to 100.
+  category: Medium
+  group: Sr
+  access: Brig
+  mapchecker_group_override: Security
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/pacem.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus SecColossus faction
+    factions:
+    - SecColossus
+  guidebookPage: Null
+  class:
+  - Patrol
+  engine:
+  - Bananium
+
+- type: gameMap
+  id: Pacem
+  mapName: 'Пасем' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/pacem.yml
+  minPlayers: 0
+  stations:
+    Pacem:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Пасем{1}' # Ru-Localization
+        nameGenerator: !type:NanotrasenNameGenerator
+          prefixCreator: '14'

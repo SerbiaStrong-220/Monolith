@@ -48,6 +48,9 @@
 #   inherit from BasePOI / BaseRepairablePOI. If you migrate a POI from the upstream
 #   pointOfInterest pipeline, copy here the components those base prototypes used to add
 #   (ForceAnchor, Tag {POI}, IFF, InitRepairSnapshot, etc.) — see existing entries for examples.
+# - IffAffiliation defaults to CorporateControl. Use mode: Faction with a territoryFaction
+#   id in faction, or mode: FixedCompany with a company id in company. Company colors are ignored.
+#   CorporateControl omits the line on non-capturable grids; mode: None always omits it.
 
 # ───────────────────────────────────────────────────────────────────────────
 # Hidden POI — listening post inside blue nebulas.
@@ -63,6 +66,8 @@
   stationGameMap: LPBravo
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
+    mode: None
   - type: IFF
     color: "#C83737"
     flags: [HideLabel]
@@ -96,6 +101,8 @@
   stationGameMap: SmallMeteostation
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
+    mode: None
   - type: IFF
     color: "#C83737"
     flags: [HideLabel]
@@ -123,6 +130,7 @@
   protectedRadius: 150
   name: "Погибшая спасательная капсула"
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     flags: [HideLabel]
@@ -142,6 +150,7 @@
   protectedRadius: 150
   name: "Обломок тюремного корабля"
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     flags: [HideLabel]
@@ -162,9 +171,34 @@
   protectedRadius: 150
   name: "Покинутый круизный корабль"
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     flags: [HideLabel]
+    readOnly: true
+  - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+# MMC Hokkaido: a station POI restricted to blue and purple nebulas.
+- type: nebulaPoi
+  id: NebulaPoiHokkaido
+  path: /Maps/_Mono/POI/hokkaido.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0.1
+  maxDensity: 1
+  maxSpawnDistanceFromCenter: 35000
+  protectedRadius: 1000
+  name: 'ММС «Хоккайдо»'
+  stationGameMap: Hokkaido
+  hideWarp: true
+  addComponents:
+  - type: IffAffiliation
+  - type: IFF
+    color: "#EEEEEE"
     readOnly: true
   - type: ForceAnchor
   - type: Tag
@@ -185,6 +219,7 @@
   stationGameMap: AdsSmallAncientStorage
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ff3db1"
     flags: [HideLabel]
@@ -214,6 +249,8 @@
   stationGameMap: AdsCitadel
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
+    mode: CorporateControl
   - type: IFF
     color: "#ff3db1"
     flags: [HideLabel]
@@ -240,6 +277,7 @@
   stationGameMap: Lancelot
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ccaa55"
     flags: [HideLabel]
@@ -269,13 +307,12 @@
   stationGameMap: Edison
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#3737F8"
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
   - type: ForceAnchor
   - type: Tag
     tags: [ POI ]
@@ -293,6 +330,7 @@
   stationGameMap: Polaris
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#C83737"
     flags: [HideLabel]
@@ -313,6 +351,7 @@
   stationGameMap: AutomatedTanker
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#44bfe3"
     flags: [HideLabel]
@@ -321,7 +360,7 @@
 
 - type: nebulaPoi
   id: NebulaPoiAnomalousLab
-  path: /Maps/_Mono/POI/anomalouslab.yml
+  path: /Maps/_Exodus/POI/anomalouslab.yml
   spawnIn:
   - NebulaPurpleMarker
   minDensity: 0.1
@@ -332,6 +371,7 @@
   stationGameMap: AnomalousLab
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"  # inherited default from BaseMobilePOI
     readOnly: true
@@ -356,6 +396,7 @@
   stationGameMap: Tinnia
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     readOnly: true
@@ -363,8 +404,6 @@
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
   - type: ForceAnchor
   - type: Tag
     tags: [ POI ]
@@ -384,6 +423,7 @@
   stationGameMap: Grifty
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     readOnly: true
@@ -391,8 +431,6 @@
     trackOnInit: true
     doNotCull: true
   - type: StationTransit
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
   - type: ForceAnchor
   - type: Tag
     tags: [ POI ]
@@ -410,6 +448,7 @@
   stationGameMap: McHobo
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     readOnly: true
@@ -419,6 +458,7 @@
 
 - type: nebulaPoi
   id: NebulaPoiTSFMCOutpost
+  maxCount: 0 # Replaced by PDVCivilianOutpost near Helios; retain the old map for manual use.
   path: /Maps/_Mono/POI/tsfmcoutpost.yml
   spawnIn:
   - NebulaBlueMarker
@@ -431,6 +471,8 @@
   stationGameMap: TSFMCOutpost
   hideWarp: true
   addComponents:
+  - type: IffAffiliation
+    mode: CorporateControl
   - type: IFF
     color: "#00a1fc"
     flags: [HideLabel]
@@ -461,14 +503,13 @@
   protectedRadius: 1000
   name: "Маяк ВсеЦеркви"
   addComponents:
+  - type: IffAffiliation
   - type: IFF
     color: "#ffa600"
     readOnly: true
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
-  - type: Tower7G # Exodus-Adminbus
-    range: 256
   - type: ForceAnchor
   - type: Tag
     tags: [ POI ]

@@ -14,6 +14,20 @@ public sealed partial class FireControllableComponent : Component
     [ViewVariables]
     public EntityUid? ControllingServer = null;
 
+    // Exodus-begin fire-control cursor optimization
+    /// <summary>
+    /// Console responsible for the current short auto-fire request.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? ActiveFiringConsole;
+
+    /// <summary>
+    /// User whose shots belong to the active firing console.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? ActiveFiringUser;
+    // Exodus-end
+
     /// <summary>
     /// When the weapon can next be fired
     /// </summary>
@@ -26,9 +40,17 @@ public sealed partial class FireControllableComponent : Component
     [DataField]
     public float FireCooldown = 0.2f;
 
+    // Exodus-begin: configurable gunnery-server processing load.
     /// <summary>
     /// Optional explicit gunnery server processing power cost.
     /// </summary>
-    [DataField("processingPowerCost")]
+    [DataField]
     public int? ProcessingPowerCost;
+    // Exodus-end
+
+    /// <summary>
+    /// Skip LOS check for this weapon.
+    /// </summary>
+    [DataField]
+    public bool IgnoreLos = false;
 }

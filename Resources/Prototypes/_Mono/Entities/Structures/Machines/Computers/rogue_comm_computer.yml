@@ -19,6 +19,11 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "Pirate" ]]
+  # Exodus-begin: pairwise faction war declarations
+  - type: WarDeclarationConsole
+    faction: PDV
+    requiredAccess: [PDVCommand]
+  # Exodus-end
   - type: CommunicationsConsole
     title: comms-console-announcement-title-rogue
     color: "#D2B48C"

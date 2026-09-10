@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.Numerics;
+using Content.Shared._Exodus.StarSystem; // Exodus planet beacon labels and colors
 using Content.Client._Exodus.Nebula; // Exodus nebula-ftl-map
 using Content.Shared._Exodus.NPC.Components; // Exodus faction AI FTL map label
 using Content.Client._Mono.Radar; // Exodus nebula-ftl-map
@@ -318,6 +319,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         DrawBluespaceMapBlips(handle, matty); // Exodus bluespace-map-blips
 
+        DrawStarSystem(handle, matty);
+
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.
         if ((FtlMode || ShowFTLRangeOnly) && ShowFTLRange) // Mono
@@ -377,6 +380,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var beaconsOnly = _shuttles.IsBeaconMap(viewedMapUid);
         var controlLocalBounds = PixelRect;
         _beacons.Clear();
+        var planetQuery = EntManager.GetEntityQuery<PlanetMarkerComponent>(); // Exodus cache outside beacon/label loops.
 
         if (ShowBeacons)
         {
@@ -387,10 +391,21 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 var localPos = Vector2.Transform(coords.Position, matty);
                 localPos = localPos with { Y = -localPos.Y };
                 var beaconUiPos = ScalePosition(localPos);
-                var mapObject = GetMapObject(localPos, Angle.Zero, scale: 0.75f, scalePosition: true);
 
                 // Get company color if the beacon has it
                 var displayColor = beaconColor;
+                // Exodus-begin planet beacons share the ordinary radar's classification and IFF color.
+                var displayName = beaconName;
+                EntityUid? planetUid = null;
+                if (mapO is ShuttleBeaconObject beacon &&
+                    EntManager.TryGetEntity(beacon.Entity, out var beaconUid) &&
+                    planetQuery.HasComponent(beaconUid.Value))
+                {
+                    planetUid = beaconUid.Value;
+                    displayColor = _shuttles.GetIFFColor(beaconUid.Value);
+                    displayName = _shuttles.GetIFFLabel(beaconUid.Value) ?? beaconName;
+                }
+                // Exodus-end
                 if (mapO is GridMapObject gridObj &&
                     _companyQuery.TryGetComponent(gridObj.Entity, out var companyComp) &&
                     !string.IsNullOrEmpty(companyComp.CompanyName) &&
@@ -399,14 +414,24 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                     displayColor = Color.FromSrgb(beaconCompanyProto.Color);
                 }
 
-                var existingVerts = _verts.GetOrNew(displayColor);
-                var existingEdges = _edges.GetOrNew(displayColor);
-
-                AddMapObject(existingEdges, existingVerts, mapObject);
+                // Exodus-begin planetary beacon icons use a hollow ring.
+                if (planetUid != null)
+                {
+                    var radius = GetMapObjectRadius(0.75f) * MinimapScale;
+                    handle.DrawCircle(beaconUiPos, radius, displayColor, filled: false);
+                }
+                else
+                {
+                    var mapObject = GetMapObject(localPos, Angle.Zero, scale: 0.75f, scalePosition: true);
+                    var existingVerts = _verts.GetOrNew(displayColor);
+                    var existingEdges = _edges.GetOrNew(displayColor);
+                    AddMapObject(existingEdges, existingVerts, mapObject);
+                }
+                // Exodus-end
                 _beacons.Add(mapO);
 
                 var existingStrings = _strings.GetOrNew(displayColor);
-                existingStrings.Add((beaconUiPos, beaconName, true, null)); // Exodus territory POI colors
+                existingStrings.Add((beaconUiPos, displayName, true, planetUid)); // Exodus preserve planetary labels and color identity.
             }
         }
 
@@ -476,7 +501,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 detectionLevel == DetectionLevel.PartialDetected ?
                     Loc.GetString($"shuttle-console-signature-infrared")
                     : _detection.HandleUnknownMassLabel(grid.Owner)
-                : _shuttles.GetIFFLabel(grid, self: true, component: iffComp);
+                // Exodus only actual corporate control adds an affiliation line on the FTL map.
+                : _shuttles.GetFtlIFFLabel(grid, self: _shuttleEntity == grid.Owner, component: iffComp);
 
             if (string.IsNullOrEmpty(iffText))
                 continue;
@@ -509,9 +535,11 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             foreach (var (gridUiPos, iffText, hasLabel, gridUid) in sendStrings)
             {
                 // Get company color if entity has CompanyComponent
-                var displayColor = adjustedColor;
+                // Exodus: ordinary radar uses the planet IFF color directly, without an extra sRGB conversion.
+                var displayColor = gridUid is { } markerUid && planetQuery.HasComponent(markerUid) ? color : adjustedColor;
                 if (hasLabel &&
                     gridUid is { } labelGrid &&
+                    !_shuttles.UsesFactionIffColor(labelGrid) && // Exodus company control changes text, never faction color.
                     _companyQuery.TryGetComponent(labelGrid, out var companyComp) &&
                     !string.IsNullOrEmpty(companyComp.CompanyName) &&
                     PrototypeManager.TryIndex<CompanyPrototype>(companyComp.CompanyName, out var gridCompanyProto))

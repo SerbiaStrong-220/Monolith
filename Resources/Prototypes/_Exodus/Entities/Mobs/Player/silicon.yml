@@ -40,6 +40,11 @@
   parent: StationAiBrain
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  # Keep station access aligned with the commandant; retain silicon-specific permissions.
+  - type: Access
+    groups:
+    - AllAccess
+    - Silicon
   - type: Sprite
   - type: SiliconLawProvider
     laws: ColossusLawset

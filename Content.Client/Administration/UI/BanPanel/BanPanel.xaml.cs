@@ -22,12 +22,11 @@ namespace Content.Client.Administration.UI.BanPanel;
 [GenerateTypedNameReferences]
 public sealed partial class BanPanel : DefaultWindow
 {
-    public event Action<string?, (IPAddress, int)?, bool, ImmutableTypedHwid?, bool, uint, string, NoteSeverity, ProtoId<JobPrototype>[]?, ProtoId<AntagPrototype>[]?, bool>? BanSubmitted;
+    public event Action<Ban>? BanSubmitted; // SS220 structured ban request
     public event Action<string>? PlayerChanged;
     private string? PlayerUsername { get; set; }
     private (IPAddress, int)? IpAddress { get; set; }
     private ImmutableTypedHwid? Hwid { get; set; }
-    private double TimeEntered { get; set; }
     private uint Multiplier { get; set; }
     private bool HasBanFlag { get; set; }
     private TimeSpan? ButtonResetOn { get; set; }
@@ -45,7 +44,8 @@ public sealed partial class BanPanel : DefaultWindow
         BasicInfo,
         //Text,
         Players,
-        Roles
+        Roles,
+        Chats, // SS220 chat bans
     }
 
     private enum Multipliers
@@ -63,7 +63,8 @@ public sealed partial class BanPanel : DefaultWindow
     {
         None,
         Server,
-        Role
+        Role,
+        Chats, // SS220 chat bans
     }
 
     public BanPanel()
@@ -141,6 +142,8 @@ public sealed partial class BanPanel : DefaultWindow
         TypeOption.AddItem(Loc.GetString("ban-panel-select"), (int) Types.None);
         TypeOption.AddItem(Loc.GetString("ban-panel-server"), (int) Types.Server);
         TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int) Types.Role);
+
+        InitializeChatBans(); // SS220 chat bans
 
         ReasonTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("ban-panel-reason"));
 
@@ -258,7 +261,8 @@ public sealed partial class BanPanel : DefaultWindow
     {
         HasBanFlag = newFlag;
         SubmitButton.Visible = HasBanFlag;
-        ModulateSelfOverride = HasBanFlag ? Color.Red : null;
+        ModulateSelfOverride = HasBanFlag ? null : Color.Red; // Exodus correct permission feedback
+        UpdateSubmitEnabled(); // Exodus
     }
 
     public void UpdatePlayerData(string playerName)
@@ -292,9 +296,9 @@ public sealed partial class BanPanel : DefaultWindow
     private void OnMinutesChanged(LineEdit.LineEditEventArgs args)
     {
         TimeLine.Text = args.Text;
-        if (!double.TryParse(args.Text, out var result))
+        if (!double.TryParse(args.Text, out var result) || !double.IsFinite(result) || result < 0) // Exodus validate chat ban duration
         {
-            ExpiresLabel.Text = "err";
+            ExpiresLabel.Text = Loc.GetString("chat-ban-invalid-duration"); // Exodus
             ErrorLevel |= ErrorLevelEnum.Minutes;
             TimeLine.ModulateSelfOverride = Color.Red;
             UpdateSubmitEnabled();
@@ -303,7 +307,6 @@ public sealed partial class BanPanel : DefaultWindow
 
         ErrorLevel &= ~ErrorLevelEnum.Minutes;
         TimeLine.ModulateSelfOverride = null;
-        TimeEntered = result;
         UpdateSubmitEnabled();
         UpdateExpiresLabel();
     }
@@ -327,7 +330,17 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void UpdateExpiresLabel()
     {
-        var minutes = (uint) (TimeEntered * Multiplier);
+        // Exodus-begin reject overflow and fractions that would silently become permanent.
+        var valid = TryGetBanMinutes(out var minutes);
+        ErrorLevel = valid ? ErrorLevel & ~ErrorLevelEnum.Minutes : ErrorLevel | ErrorLevelEnum.Minutes;
+        TimeLine.ModulateSelfOverride = valid ? null : Color.Red;
+        UpdateSubmitEnabled();
+        if (!valid)
+        {
+            ExpiresLabel.Text = Loc.GetString("chat-ban-invalid-duration");
+            return;
+        }
+        // Exodus-end
         ExpiresLabel.Text = minutes == 0
             ? $"{Loc.GetString("admin-note-editor-expiry-label")} {Loc.GetString("server-ban-string-never")}"
             : $"{Loc.GetString("admin-note-editor-expiry-label")} {DateTime.Now + TimeSpan.FromMinutes(minutes):yyyy/MM/dd HH:mm:ss}";
@@ -394,6 +407,7 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void OnTypeChanged()
     {
+        UpdateChatBanType(); // SS220 chat bans
         TypeOption.ModulateSelfOverride = null;
         Tabs.SetTabVisible((int) TabNumbers.Roles, TypeOption.SelectedId == (int) Types.Role);
             NoteSeverity? newSeverity = null;
@@ -429,7 +443,7 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void UpdateSubmitEnabled()
     {
-        SubmitButton.Disabled = ErrorLevel != ErrorLevelEnum.None;
+        SubmitButton.Disabled = ErrorLevel != ErrorLevelEnum.None || _chatBanBusy || !HasBanFlag; // Exodus chat ban submission guard
     }
 
     private void OnPlayerNameChanged()
@@ -462,6 +476,16 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
     {
+        // Exodus-begin prevent repeated requests while a chat ban is being committed.
+        if (_chatBanBusy || !HasBanFlag)
+            return;
+        if (!TryGetBanMinutes(out _) || TypeOption.SelectedId == (int)Types.Chats && GetSelectedChats().Length == 0)
+        {
+            if (TypeOption.SelectedId == (int)Types.Chats)
+                Tabs.CurrentTab = (int)TabNumbers.Chats;
+            return;
+        }
+        // Exodus-end
         ProtoId<JobPrototype>[]? jobRoles = null;
         ProtoId<AntagPrototype>[]? antagRoles = null;
         if (TypeOption.SelectedId == (int) Types.Role)
@@ -525,7 +549,22 @@ public sealed partial class BanPanel : DefaultWindow
         var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
         var severity = (NoteSeverity) SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
-        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, severity, jobRoles, antagRoles, erase);
+        // SS220-begin chat bans; Exodus validates duration before converting to uint.
+        if (!TryGetBanMinutes(out var minutes))
+            return;
+        var chats = GetSelectedChats();
+        if (TypeOption.SelectedId == (int)Types.Chats && chats.Length == 0)
+        {
+            Tabs.CurrentTab = (int)TabNumbers.Chats;
+            return;
+        }
+        var type = TypeOption.SelectedId == (int)Types.Chats ? BanType.Chat :
+            TypeOption.SelectedId == (int)Types.Role ? BanType.Role : BanType.Server;
+        if (type == BanType.Chat)
+            UpdateChatBanStatus(true, null);
+        BanSubmitted?.Invoke(new Ban(player, IpAddress, useLastIp, Hwid, useLastHwid, minutes,
+            reason, severity, jobRoles, antagRoles, erase, chats, type));
+        // SS220-end
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

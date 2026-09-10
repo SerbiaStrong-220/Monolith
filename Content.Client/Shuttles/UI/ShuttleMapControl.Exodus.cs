@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client._Exodus.Nebula;
 using Content.Client._Exodus.NPC;
+using Content.Client._Exodus.Territory; // Exodus corporate territory rings
 using Content.Client._Mono.Radar;
 using Content.Shared._Exodus.Territory;
 using Content.Shared._Mono.Detection;
@@ -30,6 +31,7 @@ public sealed partial class ShuttleMapControl
     private Vector2[] _nebulaLineBuffer = [];
     private readonly Vector2[] _bluespaceMapBlipVertices = new Vector2[6];
     private readonly Vector2[] _bluespaceMapBlipEdges = new Vector2[8];
+    private readonly CorporateTerritoryRingRenderer _corporateTerritoryRings = new(); // Exodus corporate territory rings
 
     private bool CanFTLToNebulaPreview(EntityUid shuttleUid, EntityCoordinates targetCoordinates, Angle targetAngle)
     {
@@ -84,6 +86,10 @@ public sealed partial class ShuttleMapControl
                 continue;
 
             var ringRadius = terrRing.Radius * MinimapScale;
+            // Exodus-begin corporate territory rings
+            _corporateTerritoryRings.Draw(handle, _font, gridUiPos, ringRadius,
+                terrRing.CorporateController, PrototypeManager, UIScale, viewBounds);
+            // Exodus-end
             if (!CircleIntersectsBox(gridUiPos, ringRadius, viewBounds))
                 continue;
 

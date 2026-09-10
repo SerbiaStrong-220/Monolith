@@ -1,11 +1,12 @@
 #Author: Starch(!)
 
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: QJ270
   parent: BaseVesselAntag
   name: КД-270 # Ru-Localization
   description: Оснащён двумя 57-мм орудиями и двумя малыми малыми боевыми отсеками вооружения. В отличие от других шаттлов, его корпус выполнен из пластитана вместо пластали, что обеспечивает гораздо большую защиту. # Ru-Localization
-  price: 30300
+  price: 32600 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

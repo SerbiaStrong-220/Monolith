@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Оцелот # Ru-Localization
   description: "Высокоманевренный корвет, предназначенный для работы в паре с \"Ягуаром\". Способен обнаруживать полностью замаскированные корабли. Вооружение: 2 плазменные рассеивающие пушки \"Цербер\", 2 плазменных автопульсатора и 2 20-мм зенитных орудия." # Ru-Localization
-  price: 68500
+  price: 77200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Security
   access: Security

@@ -28,6 +28,13 @@ namespace Content.Server.Administration.Managers
         /// </summary>
         IEnumerable<ICommonSession> AllAdmins { get; }
 
+        // Exodus-begin: шуточные изменения. При откате удалить этот добавленный метод.
+        /// <summary>
+        /// Gets the displayed title, applying the server's immutable file configuration.
+        /// </summary>
+        string? GetAdminTitle(ICommonSession session);
+        // Exodus-end
+
         /// <summary>
         ///     De-admins an admin temporarily so they are effectively a normal player.
         /// </summary>

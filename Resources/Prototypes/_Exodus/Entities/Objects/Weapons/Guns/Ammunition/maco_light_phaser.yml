@@ -1,0 +1,72 @@
+- type: Tag
+  id: CartridgeLightPhaserMaco
+
+- type: entity
+  parent: BaseItem
+  id: CartridgeLightPhaserMaco
+  name: MACo light phaser cartridge
+  description: A disposable plutonium cartridge for one shot from a Midnight Arms Co. light phaser. The weapon holds two cartridges. This is not a rechargeable battery.
+  components:
+  - type: Tag
+    tags:
+    - CartridgeLightPhaserMaco
+  - type: Item
+    size: Small
+  - type: CartridgeAmmo
+    proto: BulletLightPhaserMaco
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Ammunition/maco_light_phaser.rsi
+    state: cartridge
+  - type: StaticPrice
+    price: 600
+
+- type: entity
+  parent: BulletLaser
+  id: BulletLightPhaserMaco
+  name: phaser pulse
+  description: A fast, broad energy pulse fired by a phaser.
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Projectiles/phaser_pulse.rsi
+    layers:
+    - state: pulse
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.6,-0.15,0.6,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: false
+  - type: Projectile
+    damage:
+      types:
+        Heat: 60
+        Structural: 120
+        Radiation: 20
+        Piercing: 20
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+  - type: SeveringProjectile
+    chance: 0.4
+    parts:
+    - Arm
+    - Leg
+  - type: Tracer
+    color: "#FF4040FF"
+    length: 1.5
+  - type: TimedDespawn
+    lifetime: 2

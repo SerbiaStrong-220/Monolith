@@ -9,6 +9,11 @@ territory-faction-khsira = KHSIRA EMPIRE
 territory-faction-syndicate = SYNDICATE
 territory-faction-ussp = USSP
 
+# Normally-cased names for interfaces and announcements
+territory-faction-tsf-name = Trans-Solar Federation
+territory-faction-phaeton-name = Phaeton Dynasty
+territory-faction-khsira-name = Khsira Empire
+
 # Neutral / unclaimed state (used when no banner is actively claiming the grid)
 territory-unclaimed = UNCLAIMED
 

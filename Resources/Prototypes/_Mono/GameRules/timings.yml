@@ -13,7 +13,7 @@
     delay:
       min: 14400
       max: 14400
-  - type: BlankRule
+  - type: BlankRule # Exodus: retain main-build portstrike rule.
   - type: StationEvent
     earliestStart: 0
     endAnnouncement: gamerule-portstrike-announce-announcement
@@ -43,7 +43,7 @@
     endAt: 120
 
 - type: entity
-  id: PortstrikeAnnounceRuleSeconds20
+  id: PortstrikeAnnounceRuleSeconds20 # Exodus: retain main-build debug timing.
   parent: PortstrikeAnnounceRuleHour4
   components:
   - type: GameRule

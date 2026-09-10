@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: Небесный Бур
   description: Крупный многоцелевой корабль для добычи, утилизации. Оснащён промышленным оборудованием, научным блоком, ядром ИИ. Снабжен тремя курсовыми Л-20 Аполлон.
-  price: 220000
+  price: 257500 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Exodus/Shuttles/heavensdrill.yml

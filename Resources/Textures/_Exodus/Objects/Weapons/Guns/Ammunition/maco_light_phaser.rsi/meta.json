@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    { "name": "cartridge" },
+    { "name": "inhand-left", "directions": 4 },
+    { "name": "inhand-right", "directions": 4 }
+  ]
+}

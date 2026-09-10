@@ -53,12 +53,14 @@
             - material: ReinforcedGlass
               amount: 2
               doAfter: 4
-        
+
+        # Exodus-begin keep clockwork window construction enabled
         - to: clockworkWindow
           steps:
             - material: ClockworkGlass
               amount: 2
               doAfter: 3
+        # Exodus-end
 
     - node: window
       entity: Window
@@ -201,6 +203,7 @@
             - tool: Anchoring
               doAfter: 3
 
+    # Exodus-begin keep clockwork window graph node enabled
     - node: clockworkWindow
       entity: ClockworkWindow
       edges:
@@ -223,7 +226,8 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
-    
+    # Exodus-end
+
     - node: shuttleWindow
       entity: ShuttleWindow
       edges:

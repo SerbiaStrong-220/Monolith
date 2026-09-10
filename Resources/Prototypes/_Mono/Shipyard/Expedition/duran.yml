@@ -7,7 +7,7 @@
   parent: BaseVessel
   name: Дюран # Ru-Localization
   description: Экспедиционный шаттл общего назначения с дополнительным камбузом. Дешёвый, медленный, а по прочности корпуса — как хрустящий осенний лист. Но, боже, он шикарен. # Ru-Localization
-  price: 40600
+  price: 49000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/duran.yml

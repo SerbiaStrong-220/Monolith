@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: Комета # Ru-Localization
   description: Демилитаризованный универсальный вспомогательный шаттл с экспедиционным функционалом. # Ru-Localization
-  price: 120000
+  price: 139400 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/comet.yml

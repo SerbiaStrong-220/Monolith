@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": { "x": 32, "y": 32 },
+  "states": [
+    { "name": "control" },
+    { "name": "control_on" },
+    { "name": "reserve_0" },
+    { "name": "reserve_1" },
+    { "name": "reserve_2" },
+    { "name": "reserve_3" },
+    { "name": "reserve_4" }
+  ]
+}

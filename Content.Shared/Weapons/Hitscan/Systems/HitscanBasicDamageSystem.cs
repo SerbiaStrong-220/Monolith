@@ -17,28 +17,30 @@ public sealed partial class HitscanBasicDamageSystem : EntitySystem
 
     private void OnHitscanHit(Entity<HitscanBasicDamageComponent> ent, ref HitscanRaycastFiredEvent args)
     {
-        if (args.Canceled || args.HitEntity == null)
+        if (args.Canceled) // Mono
             return;
 
         var dmg = ent.Comp.Damage * _damage.UniversalHitscanDamageModifier;
 
-        var damageDealt = _damage.TryChangeDamage(
-            args.HitEntity,
-            dmg,
-            origin: args.Shooter,
-            tool: args.Gun,
-            armorPenetration: ent.Comp.ArmorPenetration,
-            ignoreResistances: ent.Comp.IgnoreResistances); // Exodus: preserve shooter/gun attribution with upstream AP.
-
-        if (damageDealt == null)
-            return;
-
-        var damageEvent = new HitscanDamageDealtEvent
+        foreach (var hitEntity in args.HitEntities) // Mono edit
         {
-            Target = args.HitEntity.Value,
-            DamageDealt = damageDealt,
-        };
+            var damageDealt = _damage.TryChangeDamage(hitEntity,
+                dmg,
+                origin: args.Shooter, // Exodus: preserve shooter attribution for every upstream multi-hit target.
+                tool: args.Gun, // Exodus: preserve the firing weapon as the damage tool.
+                armorPenetration: ent.Comp.ArmorPenetration,
+                ignoreResistances: ent.Comp.IgnoreResistances); // Mono - AP
 
-        RaiseLocalEvent(ent, ref damageEvent);
+            if (damageDealt == null)
+                continue; // Exodus: one invalid multi-hit target must not suppress later hits.
+
+            var damageEvent = new HitscanDamageDealtEvent
+            {
+                Target = hitEntity, // Mono
+                DamageDealt = damageDealt,
+            };
+
+            RaiseLocalEvent(ent, ref damageEvent);
+        }
     }
 }

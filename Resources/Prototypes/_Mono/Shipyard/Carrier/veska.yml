@@ -1,5 +1,6 @@
 #Author: Starch(!)
 
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: Veska
   parent: BaseVesselAntag

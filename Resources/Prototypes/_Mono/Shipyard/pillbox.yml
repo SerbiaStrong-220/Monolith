@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: Пилюля # Ru-Localization
   description: Модифицированная версия шаттла Вынос, превращённый из уютного ресторанчика в передвижную аптеку и бар, со всем необходимым для химика, желающего сбывать свои товары. Солнечные панели сняты, а генератор заменён на термоядерный реактор. # Ru-Localization
-  price: 91000
+  price: 97100 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/pillbox.yml

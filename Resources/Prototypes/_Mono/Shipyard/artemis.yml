@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Артемида # Ru-Localization
   description: Артемида - компактный шаттл-амбулатория, предназначенный для быстрой эвакуации пациентов и выхода из зоны так же быстро, как и прибыл. # Ru-Localization
-  price: 34000 # Its a barebones med ship, basically acting as a paramedic ship.
+  price: 48800 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/artemis.yml

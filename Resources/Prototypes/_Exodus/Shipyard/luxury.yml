@@ -9,6 +9,9 @@
   group: Citadel
   shuttlePath: /SharedMaps/_Exodus/Shuttles/luxury.yml
   addComponents:
+  - type: IffAffiliation
+    mode: Faction
+    faction: Khsira
   - type: IFF
     color: '#ff3db1'
     flags: [IsPlayerShuttle]

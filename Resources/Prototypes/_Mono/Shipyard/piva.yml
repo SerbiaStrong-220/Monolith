@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Пива # Ru-Localization
   description: Небольшой, но манёвренный грузовой шаттл с боковым выходом в космос для обмена грузами в космосе без стыковки. # Ru-Localization
-  price: 18500 # its got no ftl, barely any cargo space, its THE cheapest cargo ship you can buy.
+  price: 20900 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/piva.yml

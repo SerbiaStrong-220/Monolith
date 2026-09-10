@@ -14,7 +14,7 @@
 - type: entity
   id: CrateEngineeringAMEJar
   parent: CrateEngineeringSecure
-  name: antimatter containment jar crate
+  name: antimatter containment jar crate # Exodus: preserve main-build AME terminology.
   description: 3 antimatter jars, for fuelling an antimatter reactor.
   components:
   - type: StorageFill
@@ -25,7 +25,7 @@
 - type: entity
   id: CrateEngineeringAMEControl
   parent: CrateEngineeringSecure
-  name: antimatter control unit crate
+  name: antimatter control unit crate # Exodus: preserve main-build AME terminology.
   description: The control unit of an antimatter reactor.
   components:
   - type: StorageFill

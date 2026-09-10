@@ -9,3 +9,6 @@ ComputerPirateBounty: null
 ComputerPirateBountyRedemption: null
 ComputerTabletopPirateBounty: null
 ComputerTabletopPirateBountyRedemption: null
+
+# 02.08.2026 - Replace the CDM shield flatpack with its machine board
+ShieldGeneratorCdmFlatpack: ShieldGeneratorCdmMachineCircuitboard # Exodus CDM shield migration

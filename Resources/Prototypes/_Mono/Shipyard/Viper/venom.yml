@@ -6,13 +6,17 @@
 - type: vessel
   id: Venom
   parent: BaseVessel
-  name: VG Venom
-  description: A medium sized destroyer with detainment capabilities. Armed with a Cyrex as its main cannon, 4 Dravon 90mm autocannons and 2 AK57 for maximum destruction
-  price: 120000
+  name: Вайперы «Веном» # Exodus Viper localization
+  description: Средний эсминец с возможностями задержания. Вооружён главным орудием CYREXA, четырьмя 90-мм автопушками DRAVON и двумя АК-570. # Exodus Viper localization
+  price: 138300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Viper
   access: Viper
   shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/venom.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
   guidebookPage: Null
   class:
   - Destroyer
@@ -22,7 +26,7 @@
 
 - type: gameMap
   id: Venom
-  mapName: 'VG Venom'
+  mapName: 'Вайперы «Веном»' # Exodus Viper localization
   mapPath: /SharedMaps/_Mono/Shuttles/Viper/venom.yml
   minPlayers: 0
   stations:
@@ -30,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Venom MIL{1}'
+          mapNameTemplate: 'Веном MIL{1}' # Exodus Viper localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

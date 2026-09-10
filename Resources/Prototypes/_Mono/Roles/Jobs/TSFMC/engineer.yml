@@ -46,8 +46,11 @@
 #    pocket2: Magazine45_ACPPistolFMJ
   storage:
     back:
+    - BaseSecurityUplinkRadioTsfEngineer # Exodus: TSF engineer uplink
     - RadioHandheldNF
     - NanolaminateFoamGrenade
     - NanolaminateFoamGrenade
     - RCDRecharging
     - NFPouchUtility
+    # Exodus: keep the TSF engineer's dedicated uplink instead of adding the Deputy uplink.
+    - BookTSFSOP

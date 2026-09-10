@@ -1,0 +1,17 @@
+<Document>
+  [head=1][locid="paycheck-bratva-name"][/head]
+
+  [locid="paycheck-bratva-description"]
+
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskBratvaSuit"/>
+  </Box>
+
+  [locid="tech-disk-bratva-suit-description"]
+
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

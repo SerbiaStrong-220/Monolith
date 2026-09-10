@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server._Exodus.StarSystem; // Exodus preset-independent sector generation
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
@@ -14,6 +15,7 @@ namespace Content.Server.GameTicking;
 public sealed partial class GameTicker
 {
     [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly DefaultStarSystemSystem _defaultStarSystem = default!; // Exodus
 
     public const float PresetFailedCooldownIncrease = 30f;
 
@@ -222,6 +224,8 @@ public sealed partial class GameTicker
 
     public void StartGamePresetRules()
     {
+        _defaultStarSystem.EnsureDefaultSystem(DefaultMap); // Exodus generate planet anchors before any preset worldgen.
+
         // May be touched by the preset during init.
         var rules = new List<EntityUid>(GetAddedGameRules());
         foreach (var rule in rules)

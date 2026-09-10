@@ -16,8 +16,9 @@ ent-TsfEngiPDA = КПК инженера КВП ТСФ
     .desc = { ent-SheriffPDA.desc }
 ent-MarsocFTLPDA = TSFMC MARSOC fire team leader PDA
     .desc = A standard TSFMC personal computer.
-ent-MarsocPDA = TSFMC MARSOC operative PDA
-    .desc = A standard TSFMC personal computer.
+# Exodus: localize the operative's PDA.
+ent-MarsocPDA = КПК оперативника МАРСОК
+    .desc = Персональный компьютер оперативника спецназа Транс-Солнечной Федерации.
 ent-BasePDVPDA = { ent-BasePDA }
     .desc = Ассистент по персональным данным. Этот вариант КПК произведен по особому заказу Династии Фаэтона.
 ent-PDVRakhshanPDA = КПК рахкшакана

@@ -1,11 +1,12 @@
 #Author: Starch(!)
 
+# Exodus: retain main-build ship configuration during upstream merge
 - type: vessel
   id: QJ490
   parent: BaseVesselAntag
   name: КД-490 # Ru-Localization
   description: Оснащён четырьмя орудиями Тип-54С и малым малым боевым отсеком вооружения. # Ru-Localization
-  price: 36500
+  price: 40100 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

@@ -122,6 +122,9 @@
     implants:
     - UplinkImplant
     - FreedomImplant
+  - type: StartingOrgans
+    organs:
+      heart: OrganHeartSandevistan
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic

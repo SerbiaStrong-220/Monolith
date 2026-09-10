@@ -82,17 +82,17 @@ namespace Content.Client.Shuttles.UI
             });
         }
 
-        private static void NfAddBlipToList(List<BlipData> blipDataList, bool isOutsideRadarCircle, Vector2 uiPosition, int uiXCentre, int uiYCentre, Color color, EntityUid gridUid = default)
+        private void NfAddBlipToList(List<BlipData> blipDataList, bool isOutsideRadarCircle, Vector2 uiPosition, int uiXCentre, int uiYCentre, Color color, EntityUid gridUid = default) // Exodus use cached radar dependencies.
         {
             // Check if the entity has a company component and use that color if available
             Color blipColor = color;
 
             if (gridUid != default &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(gridUid, out Shared._Mono.Company.CompanyComponent? companyComp) &&
+                !_shuttles.UsesFactionIffColor(gridUid) && // Exodus preserve faction and hidden-contact colors.
+                _companyQuery.TryGetComponent(gridUid, out var companyComp) && // Exodus cached query.
                 !string.IsNullOrEmpty(companyComp.CompanyName))
             {
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                if (prototypeManager.TryIndex<CompanyPrototype>(companyComp.CompanyName, out var prototype) && prototype != null)
+                if (_prototype.TryIndex<CompanyPrototype>(companyComp.CompanyName, out var prototype) && prototype != null) // Exodus cached dependency.
                 {
                     blipColor = prototype.Color;
                 }

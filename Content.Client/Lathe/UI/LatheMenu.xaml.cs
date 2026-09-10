@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text;
 using Content.Client.Materials;
+using Content.Client.Storage.Components;
 using Content.Client.Stylesheets; // Mono
 using Content.Shared.Lathe;
 using Content.Shared.Lathe.Prototypes;
@@ -13,6 +14,12 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Content.Shared.Stacks;
+using Content.Shared.Storage.EntitySystems;
+using Robust.Shared.Containers;
 
 namespace Content.Client.Lathe.UI;
 
@@ -25,6 +32,9 @@ public sealed partial class LatheMenu : FancyWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
     private readonly MaterialStorageSystem _materialStorage;
+    private readonly SharedContainerSystem _container; // mono
+    private readonly SharedSolutionContainerSystem _solution; // mono
+
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
@@ -50,6 +60,8 @@ public sealed partial class LatheMenu : FancyWindow
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _lathe = _entityManager.System<LatheSystem>();
         _materialStorage = _entityManager.System<MaterialStorageSystem>();
+        _container = _entityManager.System<SharedContainerSystem>(); // mono
+        _solution = _entityManager.System<SharedSolutionContainerSystem>(); // mono
 
         SearchBar.OnTextChanged += _ =>
         {
@@ -164,19 +176,28 @@ public sealed partial class LatheMenu : FancyWindow
             var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.MaterialDiscountScale, multiplier);
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
-            var unit = Loc.GetString(proto.Unit);
-            var sheets = adjustedAmount / (float) sheetVolume;
+            var sheets = adjustedAmount / (float)sheetVolume;
+            // Exodus - Inflect material units by amount.
+            var unit = Loc.GetString(proto.Unit, ("amount", sheets));
 
             var availableAmount = _materialStorage.GetMaterialAmount(Entity, id);
             var missingAmount = Math.Max(0, adjustedAmount - availableAmount);
-            var missingSheets = missingAmount / (float) sheetVolume;
+            var missingSheets = missingAmount / (float)sheetVolume;
 
             var name = Loc.GetString(proto.Name);
 
             string tooltipText;
             if (missingSheets > 0)
             {
-                tooltipText = Loc.GetString("lathe-menu-material-amount-missing", ("amount", sheets), ("missingAmount", missingSheets), ("unit", unit), ("material", name));
+                // Exodus-begin - Inflect the missing amount independently.
+                var missingUnit = Loc.GetString(proto.Unit, ("amount", missingSheets));
+                tooltipText = Loc.GetString("lathe-menu-material-amount-missing",
+                    ("amount", sheets),
+                    ("missingAmount", missingSheets),
+                    ("unit", unit),
+                    ("missingUnit", missingUnit),
+                    ("material", name));
+                // Exodus-end
             }
             else
             {
@@ -186,6 +207,48 @@ public sealed partial class LatheMenu : FancyWindow
 
             sb.AppendLine(tooltipText);
         }
+
+        //mono start
+        foreach (var (id, amount) in prototype.Entities)
+        {
+            if (!_prototypeManager.TryIndex(id, out var proto))
+                continue;
+
+            var name = Loc.GetString(proto.Name);
+            var currentAmount = GetEntityCount(id);
+
+            var missingAmount = amount - currentAmount;
+
+            string tooltipText;
+
+            if (missingAmount > 0)
+                tooltipText = Loc.GetString("lathe-menu-entity-amount-missing", ("amount", amount), ("missingAmount", missingAmount), ("unit", ""), ("material", name));
+            else
+                tooltipText = Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amount));
+
+            sb.AppendLine(tooltipText);
+        }
+
+        foreach (var (id, amount) in prototype.Reagents)
+        {
+            if (!_prototypeManager.TryIndex(id, out var proto))
+                continue;
+
+            var name = Loc.GetString(proto.LocalizedName);
+            var currentAmount = GetReagentAmount(id);
+
+            var missingAmount = amount - currentAmount;
+
+            string tooltipText;
+
+            if (missingAmount > 0)
+                tooltipText = Loc.GetString("lathe-menu-reagent-amount-missing", ("amount", amount), ("missingAmount", missingAmount), ("unit", "u"), ("material", name));
+            else
+                tooltipText = Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amount));
+
+            sb.AppendLine(tooltipText);
+        }
+        // mono end
 
         var desc = _lathe.GetRecipeDescription(prototype);
         if (!string.IsNullOrWhiteSpace(desc))
@@ -328,5 +391,45 @@ public sealed partial class LatheMenu : FancyWindow
             CurrentCategory = Categories?[obj.Id];
         }
         PopulateRecipes();
+    }
+
+    // mono
+    private int GetEntityCount(EntProtoId recipeEnt)
+    {
+        var count = 0;
+
+        if (!_entityManager.TryGetComponent<EntityStorageComponent>(Entity, out var storage))
+            return count;
+
+        foreach (var containedEnt in storage.Contents.ContainedEntities)
+        {
+            if ( _entityManager.GetComponent<MetaDataComponent>(containedEnt).EntityPrototype is not { } proto
+                || proto.ID != recipeEnt)
+                continue;
+
+            if (_entityManager.TryGetComponent<StackComponent>(containedEnt, out var stack))
+                count += stack.Count;
+            else
+                count += 1;
+        }
+
+        return count;
+    }
+
+    // mono
+    private FixedPoint2 GetReagentAmount(ProtoId<ReagentPrototype> recipeReag)
+    {
+        if (!_entityManager.TryGetComponent<LatheComponent>(Entity, out var lathe) ||
+            lathe.ReagentOutputSlotId is not { } slotId)
+            return 0;
+
+        if (!_container.TryGetContainer(Entity, slotId, out var container) ||
+            container.ContainedEntities.Count == 0)
+            return 0;
+
+        if (!_solution.TryGetDrainableSolution(container.ContainedEntities[0], out _, out var solution))
+            return 0;
+
+        return solution.GetReagentQuantity(new ReagentId(recipeReag, []));
     }
 }

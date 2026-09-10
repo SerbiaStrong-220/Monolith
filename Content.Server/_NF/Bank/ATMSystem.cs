@@ -19,7 +19,6 @@ using Content.Server.Administration.Logs;
 using Content.Shared._Mono.CCVar; // Mono
 using Content.Shared.Database;
 using Robust.Shared.Audio.Systems;
-using Content.Shared._NF.Bank.BUI;
 using Robust.Shared.Configuration; // Mono
 
 namespace Content.Server._NF.Bank;
@@ -46,7 +45,7 @@ public sealed partial class BankSystem
 
     private void OnWithdraw(EntityUid uid, BankATMComponent component, BankWithdrawMessage args)
     {
-        if (args.Actor is not { Valid : true } player)
+        if (args.Actor is not { Valid: true } player)
             return;
 
         // to keep the window stateful
@@ -66,6 +65,7 @@ public sealed partial class BankSystem
 
         state.Balance = bank.Balance;
         state.Savings = GetEntSavings(player);
+        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
 
         // check for sufficient funds
         if (bank.Balance < args.Amount)
@@ -88,6 +88,7 @@ public sealed partial class BankSystem
         }
 
         state.Balance = bank.Balance;
+        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
 
         ConsolePopup(args.Actor, Loc.GetString("bank-atm-menu-withdraw-successful"));
         PlayConfirmSound(uid, component);
@@ -124,6 +125,7 @@ public sealed partial class BankSystem
         state.Balance = bank.Balance;
         if (_playerManager.TryGetSessionByEntity(player, out var session))
             state.Savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
+        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
 
         // validating the cash slot was setup correctly in the yaml
         if (component.CashSlot.ContainerSlot is not BaseContainer cashSlot)
@@ -157,19 +159,16 @@ public sealed partial class BankSystem
         }
 
         var originalDeposit = deposit;
-        foreach (var (account, taxCoeff) in component.TaxAccounts)
-        {
-            if (!float.IsFinite(taxCoeff) || taxCoeff <= 0.0f)
-                continue;
-            var tax = (int)Math.Floor(originalDeposit * taxCoeff);
-            TrySectorDeposit(account, tax, LedgerEntryType.AtmTax); // Mono BlackMarketAtmTax->AtmTax
-            deposit -= tax; // Charge the user whether or not the deposit went through.
-        }
+        var depositAfterFees = GetDepositAfterFees(player,
+            component,
+            originalDeposit,
+            out var companyCommission,
+            out var atmFee); // Exodus corporate ATM commission
 
         state.Enabled = true;
 
         // try to deposit the inserted cash into a player's bank acount. Validation happens on the banking system but we still indicate error.
-        if (!TryBankDeposit(player, deposit))
+        if (!TryBankDeposit(player, depositAfterFees))
         {
             ConsolePopup(args.Actor, Loc.GetString("bank-atm-menu-transaction-denied"));
             PlayDenySound(uid, component);
@@ -177,14 +176,29 @@ public sealed partial class BankSystem
             return;
         }
 
+        // Exodus-begin corporate ATM commission
+        foreach (var (account, taxCoeff) in component.TaxAccounts)
+        {
+            var tax = GetAtmDepositFee(originalDeposit, taxCoeff);
+            if (tax > 0)
+                TrySectorDeposit(account, tax, LedgerEntryType.AtmTax); // Mono BlackMarketAtmTax->AtmTax
+        }
+        // Exodus-end
+
         ConsolePopup(args.Actor, Loc.GetString("bank-atm-menu-deposit-successful"));
         PlayConfirmSound(uid, component);
-        _adminLogger.Add(LogType.ATMUsage, LogImpact.Low, $"{ToPrettyString(player):actor} deposited {deposit} into {ToPrettyString(component.Owner)}");
+        // Exodus-begin corporate ATM commission
+        _adminLogger.Add(LogType.ATMUsage,
+            LogImpact.Low,
+            $"{ToPrettyString(player):actor} deposited {depositAfterFees} into {ToPrettyString(component.Owner)} " +
+            $"(gross: {originalDeposit}, ATM fee: {atmFee}, company commission: {companyCommission})");
+        // Exodus-end
 
         state.Deposit = 0;
         state.Balance = bank.Balance;
         if (session != null)
             state.Savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
+        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
 
         // yeet and delete the stack in the cash slot after success
         _containerSystem.CleanContainer(cashSlot);
@@ -211,11 +225,12 @@ public sealed partial class BankSystem
             var state = new BankATMMenuInterfaceState(bank.Balance, 0, true, deposit);
             state.Savings = GetEntSavings(player);
 
-            if (component.CashSlot.ContainerSlot?.ContainedEntity is not { Valid : true } cash)
+            if (component.CashSlot.ContainerSlot?.ContainedEntity is not { Valid: true } cash)
                 state.Deposit = 0;
             else
                 state.Deposit = deposit;
 
+            UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
             _uiSystem.SetUiState(uid, uiComp.Key, state);
         }
     }
@@ -242,6 +257,7 @@ public sealed partial class BankSystem
         state.Savings = GetEntSavings(player);
 
         state.Enabled = true;
+        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
         _uiSystem.SetUiState(uid, args.UiKey, state);
     }
 

@@ -2,7 +2,7 @@
   id: names_pitbull
   values:
   - Zeus
-  - 45_magnum
+  - 45_magnum # Exodus: preserve the main-build visible name.
   - Diesel
   - Satan
   - Dante

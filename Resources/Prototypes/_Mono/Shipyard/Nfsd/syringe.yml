@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Сиренж # Ru-Localization
   description: Небольшой шаттл, предназначенный для сопровождения и оказания помощи другим шаттлам ТСФ. Имеет тесный интерьер и лёгкое вооружение. # Ru-Localization
-  price: 58500
+  price: 68100 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Security
   access: Security

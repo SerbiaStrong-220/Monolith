@@ -34,11 +34,13 @@
               amount: 2
               doAfter: 3
 
+        # Exodus-begin keep diagonal clockwork window construction enabled
         - to: clockworkWindowDiagonal
           steps:
             - material: ClockworkGlass
               amount: 2
               doAfter: 3
+        # Exodus-end
 
         - to: windowDiagonal
           steps:
@@ -84,6 +86,7 @@
             - tool: Anchoring
               doAfter: 2
 
+    # Exodus-begin keep diagonal clockwork window graph node enabled
     - node: clockworkWindowDiagonal
       entity: ClockworkWindowDiagonal
       edges:
@@ -106,6 +109,7 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
+    # Exodus-end
 
     - node: plasmaWindowDiagonal
       entity: PlasmaWindowDiagonal

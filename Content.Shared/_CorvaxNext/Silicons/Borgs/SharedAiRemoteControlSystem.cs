@@ -49,7 +49,10 @@ public abstract partial class SharedAiRemoteControlSystem : EntitySystem
         remoteComp.AiHolder = null;
         remoteComp.LinkedMind = null;
 
-        _xformSystem.SetCoordinates(stationAiCore.Comp.RemoteEntity.Value, Transform(entity).Coordinates);
+        // Exodus-begin: a terminating remote no longer has a safe parent for the AI eye.
+        if (MetaData(entity).EntityLifeStage < EntityLifeStage.Terminating)
+            _xformSystem.SetCoordinates(stationAiCore.Comp.RemoteEntity.Value, Transform(entity).Coordinates);
+        // Exodus-end
     }
 }
 

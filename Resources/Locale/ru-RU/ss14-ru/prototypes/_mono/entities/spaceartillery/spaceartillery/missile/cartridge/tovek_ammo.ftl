@@ -1,2 +1,1 @@
-ent-TovekCartridge = 250mm EMPHE missile
-    .desc = An individual ASM-557 EMPHE missile for a Tovek launcher.
+# Exodus: item translations and ammo-loader attributes are defined in _Lua/prototypes/shipgun-ammo-loader.ftl.

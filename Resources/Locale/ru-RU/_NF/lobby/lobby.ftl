@@ -36,9 +36,11 @@ frontier-lobby-nfsd-description =
     - Сообщить о преступлениях
     - Сдать контрабанду
 frontier-lobby-pirate-subtext = Передовая оперативная база Авангарда Династии Фаэтон.
+# Exodus: civilian contractor option in the PDV lobby description.
 frontier-lobby-pirate-description =
     Это главная база, где собираются силы Династии Фаэтон. Здесь ты можешь:
     - Вступить в ряды Династии Фаэтон
+    - Начать работу гражданским наёмником Династии Фаэтон
     - Сдать контрабанду
 # Crew Menu
 frontier-lobby-crew-vessel = [bold][color=#A88B5E]Судно:[/color][/bold] { $name }

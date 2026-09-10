@@ -1,3 +1,4 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
 using System.Collections.Immutable;
 using System.Net;
 using Content.Shared.Database;
@@ -48,7 +49,8 @@ public sealed record BanNoteRecord(
     bool Deleted,
     PlayerRecord? UnbanningAdmin,
     DateTime? UnbanTime,
-    ImmutableArray<BanRoleDef> Roles) : IAdminRemarksRecord;
+    ImmutableArray<BanRoleDef> Roles,
+    ImmutableArray<BannableChats> Chats = default) : IAdminRemarksRecord; // SS220 chat bans
 
 public sealed record AdminNoteRecord(
     int Id,

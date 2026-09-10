@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Обещание # Ru-Localization
   description: Старая вариация медицинского корабля, относящаяся ещё к эпохе Раскола. Оснащён всем, что только можно пожелать от медицинского судна, а также просторными жилыми помещениями для экипажа на время долгих смен. # Ru-Localization
-  price: 106500
+  price: 136200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/promise.yml

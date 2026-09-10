@@ -1,4 +1,5 @@
-﻿using System;
+using Content.Server.Database._Exodus.Chat; // SS220 chat bans
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Content.Shared.Database;
@@ -44,6 +45,14 @@ internal static class ModelBan
             .HasIndex(bp => new { bp.RoleType, bp.RoleId, bp.BanId })
             .IsUnique();
 
+        // SS220-begin chat bans, adapted for Exodus
+        modelBuilder.Entity<BanChat>()
+            .HasIndex(b => new { b.Chat, b.BanId })
+            .IsUnique();
+        modelBuilder.Entity<BanChat>()
+            .ToTable(t => t.HasCheckConstraint("ValidChatBanChannel", "chat IN (1, 2, 3)"));
+        // SS220-end
+
         modelBuilder.Entity<BanRound>()
             .HasIndex(bp => new { bp.RoundId, bp.BanId })
             .IsUnique();
@@ -75,7 +84,7 @@ internal static class ModelBan
 /// </summary>
 /// <remarks>
 /// <para>
-/// Bans come in two types: <see cref="BanType.Server"/> and <see cref="BanType.Role"/>,
+/// SS220: bans can restrict server access, roles, or chat channels,
 /// distinguished with <see cref="Type"/>.
 /// </para>
 /// <para>
@@ -93,7 +102,7 @@ public sealed class Ban
     public int Id { get; set; }
 
     /// <summary>
-    /// Whether this is a role or server ban.
+    /// SS220: whether this restricts server access, roles, or chat channels.
     /// </summary>
     public required BanType Type { get; set; }
 
@@ -167,6 +176,7 @@ public sealed class Ban
     public List<BanAddress>? Addresses { get; set; }
     public List<BanHwid>? Hwids { get; set; }
     public List<BanRole>? Roles { get; set; }
+    public List<BanChat>? Chats { get; set; } // SS220 chat bans
     public List<ServerBanHit>? BanHits { get; set; }
 }
 

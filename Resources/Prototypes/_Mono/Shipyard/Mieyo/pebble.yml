@@ -1,0 +1,37 @@
+- type: vessel
+  id: Pebble
+  parent: BaseVessel
+  name: ММС «Пеббл» # Exodus MMC localization
+  description: Предельно дешёвый шахтёрский корабль, в котором есть только самое необходимое. Ни оружия, ни буров или пульсаров, ни магнита. # Exodus MMC localization
+  price: 70000
+  category: Small
+  group: Mieyo
+  access: Mieyo
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/pebble.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Salvage
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Pebble
+  mapName: 'ММС «Пеббл»' # Exodus MMC localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/pebble.yml
+  minPlayers: 0
+  stations:
+    Pebble:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Пеббл ММС{1}' # Exodus MMC localization
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          MMCEmployee: [ 0, 0 ]

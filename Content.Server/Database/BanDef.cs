@@ -1,3 +1,4 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
@@ -28,6 +29,7 @@ namespace Content.Server.Database
         public ServerBanExemptFlags ExemptFlags { get; }
 
         public ImmutableArray<BanRoleDef>? Roles { get; }
+        public ImmutableArray<BannableChats>? Chats { get; } // SS220 chat bans
 
         public BanDef(
             int? id,
@@ -44,7 +46,8 @@ namespace Content.Server.Database
             NetUserId? banningAdmin,
             UnbanDef? unban,
             ServerBanExemptFlags exemptFlags = default,
-            ImmutableArray<BanRoleDef>? roles = null)
+            ImmutableArray<BanRoleDef>? roles = null,
+            ImmutableArray<BannableChats>? chats = null) // SS220 chat bans
         {
             if (userIds.Length == 0 && addresses.Length == 0 && hwIds.Length == 0)
             {
@@ -79,12 +82,27 @@ namespace Content.Server.Database
             Unban = unban;
             ExemptFlags = exemptFlags;
 
+            // Exodus-begin validate the SS220 port at the persistence boundary too.
+            if (type != BanType.Chat && chats != null)
+                throw new ArgumentException("Only chat bans can specify chats", nameof(chats));
+            if (type == BanType.Chat &&
+                (chats is not { } selected || !ChatBanLimits.ValidChats(selected) || roles != null ||
+                 exemptFlags != 0 || string.IsNullOrWhiteSpace(reason) || reason.Length > ChatBanLimits.MaxReasonLength ||
+                 !Enum.IsDefined(severity) || expirationTime <= banTime ||
+                 expirationTime - banTime > TimeSpan.FromMinutes(ChatBanLimits.MaxDurationMinutes)))
+                throw new ArgumentException("Invalid chat ban");
+            Chats = chats;
+            // Exodus-end
+
             switch (Type)
             {
                 case BanType.Server:
                     if (roles != null)
                         throw new ArgumentException("Cannot specify roles for server ban types", nameof(roles));
                     break;
+
+                case BanType.Chat: // SS220 chat bans
+                    break; // SS220 chat bans
 
                 case BanType.Role:
                     if (roles is not { Length: > 0 })

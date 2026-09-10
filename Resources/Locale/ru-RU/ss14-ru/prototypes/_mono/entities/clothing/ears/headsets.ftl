@@ -4,7 +4,8 @@ ent-ClothingHeadsetAltTsfmcCommander = полноразмерная гарнит
     .desc = { ent-ClothingHeadsetAlt.desc }
 ent-ClothingHeadsetTsfmc = гарнитура КВП ТСФ
     .desc = { ent-ClothingHeadset.desc }
-ent-ClothingHeadsetAltTsfmcMarsoc = TSFMC MARSOC over-ear headset
+# Exodus: localize the operative's headset.
+ent-ClothingHeadsetAltTsfmcMarsoc = полноразмерная гарнитура МАРСОК
     .desc = { ent-ClothingHeadsetAlt.desc }
 ent-ClothingHeadsetAltTsfmcMarsocFtl = TSFMC MARSOC command over-ear headset
     .desc = { ent-ClothingHeadsetAlt.desc }

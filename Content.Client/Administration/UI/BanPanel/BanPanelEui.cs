@@ -14,8 +14,7 @@ public sealed class BanPanelEui : BaseEui
     {
         BanPanel = new BanPanel();
         BanPanel.OnClose += () => SendMessage(new CloseEuiMessage());
-        BanPanel.BanSubmitted += (player, ip, useLastIp, hwid, useLastHwid, minutes, reason, severity, jobs, antags, erase)
-            => SendMessage(new BanPanelEuiStateMsg.CreateBanRequest(new Ban(player, ip, useLastIp, hwid, useLastHwid, minutes, reason, severity, jobs, antags, erase)));
+        BanPanel.BanSubmitted += ban => SendMessage(new BanPanelEuiStateMsg.CreateBanRequest(ban)); // SS220 chat bans
         BanPanel.PlayerChanged += player => SendMessage(new BanPanelEuiStateMsg.GetPlayerInfoRequest(player));
     }
 
@@ -26,6 +25,7 @@ public sealed class BanPanelEui : BaseEui
             return;
         }
 
+        BanPanel.UpdateChatBanStatus(s.Busy, s.Error); // Exodus chat ban feedback
         BanPanel.UpdateBanFlag(s.HasBan);
         BanPanel.UpdatePlayerData(s.PlayerName);
     }

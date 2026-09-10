@@ -161,7 +161,8 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
             CanAnnounce(comp),
             levels,
             currentLevel,
-            currentDelay
+            currentDelay,
+            BuildWarDeclarationState(uid)
         ));
     }
 

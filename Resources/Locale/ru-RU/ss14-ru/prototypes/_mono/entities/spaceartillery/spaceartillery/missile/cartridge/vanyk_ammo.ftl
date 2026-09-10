@@ -1,2 +1,1 @@
-ent-VanykCartridge = 150mm HEAT missile
-    .desc = An individual ASM-302 HEAT missile used in the Vanyk.
+# Exodus: item translations and ammo-loader attributes are defined in _Lua/prototypes/shipgun-ammo-loader.ftl.

@@ -1,0 +1,49 @@
+- type: listing
+  id: SummoningMachineKhar
+  name: summoning-machine-khar-name
+  description: summoning-machine-khar-desc
+  productEntity: MechKharLoaded
+  cost:
+    Telecrystal: 3600 # 60 minutes, including a battery and all four modules.
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineMechGravityCannon
+  name: summoning-machine-mech-gravity-name
+  description: summoning-machine-mech-gravity-desc
+  productEntity: WeaponMechGravityCannon
+  cost:
+    Telecrystal: 1200 # 20 minutes.
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineMechKunisaMachineGun
+  name: summoning-machine-mech-kunisa-name
+  description: summoning-machine-mech-kunisa-desc
+  productEntity: WeaponMechKunisaMachineGun
+  cost:
+    Telecrystal: 1200 # 20 minutes.
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineGravityProjector
+  name: summoning-machine-gravity-projector-name
+  description: summoning-machine-gravity-projector-desc
+  productEntity: WeaponGravityProjector
+  cost:
+    Telecrystal: 1200 # 20 minutes.
+  categories:
+  - SummoningMachinePrefractureRelics
+
+- type: listing
+  id: SummoningMachineKunisaMachineGun
+  name: summoning-machine-kunisa-machine-gun-name
+  description: summoning-machine-kunisa-machine-gun-desc
+  productEntity: WeaponKunisaMachineGun
+  cost:
+    Telecrystal: 900 # 15 minutes.
+  categories:
+  - SummoningMachinePrefractureRelics

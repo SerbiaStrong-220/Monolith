@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Database;
+namespace Content.Shared.Database;
 
 /// <summary>
 /// Types of bans that can be stored in the database.
@@ -14,6 +14,8 @@ public enum BanType : byte
     /// A ban from playing one or more roles.
     /// </summary>
     Role,
+
+    Chat = 16, // SS220 chat bans; preserve the main build's database value.
 }
 
 /// <summary>

@@ -544,6 +544,20 @@
     shared: true
 
 - type: listing
+  id: SummoningMachineBeaconHorizont
+  name: summoning-machine-beacon-horizont-name
+  description: summoning-machine-beacon-horizont-desc
+  productEntity: AsakimShuttleEmergencyBeaconHorizont
+  cost:
+    Telecrystal: 21600
+  categories:
+  - SummoningMachineEmergencyBeacons
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+    shared: true
+
+- type: listing
   id: SummoningMachineBeaconKitSurplus
   name: summoning-machine-beacon-kit-surplus-name
   description: summoning-machine-beacon-kit-surplus-desc

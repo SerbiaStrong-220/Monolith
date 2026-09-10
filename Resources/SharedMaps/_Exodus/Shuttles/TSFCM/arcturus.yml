@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/11/2026 20:54:19
-  entityCount: 1662
+  entityCount: 1661
 maps: []
 grids:
 - 1
@@ -85,9 +85,14 @@ entities:
     - type: Transform
       pos: -1.0273438,0.010117531
       parent: invalid
+    - type: IFF
+      color: '#00a1fc'
+      flags: HideLabel, IsPlayerShuttle
     - type: NpcFactionMember
       factions:
       - TSFMC
+    - type: Company
+      companyName: TSF
     - type: MapGrid
       chunks:
         0,0:
@@ -7412,7 +7417,7 @@ entities:
     - type: Transform
       pos: -4.5,0.5
       parent: 1
-- proto: SpawnPointDeputy
+- proto: SpawnMarsocGhostOperative
   entities:
   - uid: 1142
     components:
@@ -7429,25 +7434,15 @@ entities:
     - type: Transform
       pos: 1.5,-1.5
       parent: 1
-- proto: SpawnPointLatejoin
-  entities:
   - uid: 1145
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,-1.5
+      pos: -0.5,-0.5
       parent: 1
   - uid: 1146
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,-0.5
-      parent: 1
-  - uid: 1147
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -0.5,-1.5
+      pos: 1.5,-0.5
       parent: 1
 - proto: StasisBed
   entities:

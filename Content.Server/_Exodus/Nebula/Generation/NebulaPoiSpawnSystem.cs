@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Exodus.Worldgen;
 using Content.Server._Exodus.Nebula.Components;
 using Content.Server._NF.Station.Systems;
 using Content.Server.Maps;
@@ -46,6 +47,12 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
 
     private List<Entity<MapGridComponent>> _gridBuffer = new();
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<RelativePoiSpawnEvent>(OnSpawnRelativePoi);
+    }
+
     public bool TrySpawnAllPois(MapId mapId)
     {
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
@@ -81,6 +88,9 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
         foreach (var poi in _prototype.EnumeratePrototypes<NebulaPoiPrototype>())
         {
             if (poi.MaxCount <= 0 || poi.SpawnIn.Count == 0)
+                continue;
+
+            if (_relativePoi.QueueIfRelative(mapId, new(true, poi.ID)))
                 continue;
 
             SpawnOnePoi(mapId, mapComponent, poi, candidates, poiCountByCandidate, poiIdsByCandidate, placedPoiPositions);
@@ -211,7 +221,7 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
             if (HasNearbyPlacedPoi(point, poi.ProtectedRadius, placedPoiPositions))
                 continue;
 
-            if (!TryLoadPoiGrid(mapId, poi, point))
+            if (!TryLoadPoiGrid(mapId, poi, point, candidate.NebulaIndex))
                 return false;
 
             placedPoiPositions.Add((point, poi.ProtectedRadius));
@@ -274,9 +284,14 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
         return false;
     }
 
-    private bool TryLoadPoiGrid(MapId mapId, NebulaPoiPrototype poi, Vector2 point)
+    private bool TryLoadPoiGrid(MapId mapId, NebulaPoiPrototype poi, Vector2 point, int? nebulaCandidate = null,
+        RelativePoiPlacementPrototype? relative = null, Func<Vector2, bool>? positionFilter = null)
     {
-        if (!_map.TryLoadGrid(mapId, poi.Path, out var grid, offset: point, rot: _random.NextAngle()) || grid is not { } loaded)
+        Entity<MapGridComponent>? grid;
+        var success = relative == null
+            ? _map.TryLoadGrid(mapId, poi.Path, out grid, offset: point, rot: _random.NextAngle())
+            : _relativePoi.TryLoadRelativeGrid(mapId, poi.Path, relative, poi.ProtectedRadius, positionFilter, out grid);
+        if (!success || grid is not { } loaded)
         {
             _sawmill.Warning($"POI {poi.ID}: failed to load grid {poi.Path}.");
             return false;
@@ -294,6 +309,22 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
 
         if (stationUid is { } station && poi.HideWarp)
             _renameWarps.SyncWarpPointsToStation(station, forceAdminOnly: true);
+
+        // Relative placement resolves the candidate from the final grid center.
+        if (relative != null && _mapSystem.TryGetMap(mapId, out var mapUid) &&
+            TryComp<NebulaMapComponent>(mapUid, out var nebulaMap))
+        {
+            var center = _relativeTransform.GetWorldMatrix(gridUid).TransformBox(loaded.Comp.LocalAABB).Center;
+            foreach (var candidate in BuildCandidateList(nebulaMap))
+            {
+                if (IsRelativeCandidateAllowed(mapId, nebulaMap, poi, candidate, center))
+                {
+                    nebulaCandidate = candidate.NebulaIndex;
+                    break;
+                }
+            }
+        }
+        _relativePoi.Register(gridUid, new(true, poi.ID), poi.ProtectedRadius, nebulaCandidate);
 
         return true;
     }

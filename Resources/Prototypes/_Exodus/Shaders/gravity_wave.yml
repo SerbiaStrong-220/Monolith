@@ -1,0 +1,13 @@
+- type: shader
+  id: ExodusGravityWave
+  kind: source
+  path: /Textures/_Exodus/Shaders/gravity_wave.swsl
+  params:
+    strength: 1
+    intensity: 4
+    opacity: 0.85
+    frontWidth: 0.4
+    curvature: 0.6
+    renderScale: 1, 1
+    axisX: 1, 0
+    axisY: 0, 1

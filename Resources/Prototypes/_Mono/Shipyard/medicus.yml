@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: Медикус #medisus # Ru-Localization
   description: Надёжный медицинский шаттл, оснащённый криокапсулой, ботаническим отсеком, химической лабораторией и рабочим местом для парамедиков. # Ru-Localization
-  price: 76500 #appraises at 70000
+  price: 104200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/medicus.yml

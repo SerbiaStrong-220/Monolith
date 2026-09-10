@@ -39,7 +39,7 @@ public sealed partial class BanPanelEui : BaseEui
     public override EuiStateBase GetNewState()
     {
         var hasBan = _admins.HasAdminFlag(Player, AdminFlags.Ban);
-        return new BanPanelEuiState(PlayerName, hasBan);
+        return new BanPanelEuiState(PlayerName, hasBan) { Busy = _chatBanBusy, Error = _chatBanError }; // Exodus chat ban feedback
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -59,6 +59,21 @@ public sealed partial class BanPanelEui : BaseEui
 
     private async void BanPlayer(Ban ban)
     {
+        // SS220-begin chat bans, isolated from existing server/role ban handling.
+        if (ban.Type == BanType.Chat)
+        {
+            await BanChatPlayer(ban);
+            return;
+        }
+        // SS220-end
+        // Exodus-begin validate the explicit ban type introduced by the SS220 port.
+        var hasRoles = ban.BannedJobs?.Length > 0 || ban.BannedAntags?.Length > 0;
+        if (ban.Type != (hasRoles ? BanType.Role : BanType.Server) || ban.BannedChats?.Length > 0)
+        {
+            _chat.DispatchServerMessage(Player, Loc.GetString("chat-ban-invalid-input"));
+            return;
+        }
+        // Exodus-end
         if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
             _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to create a ban with no ban flag");
@@ -192,6 +207,7 @@ public sealed partial class BanPanelEui : BaseEui
 
     public override void Closed()
     {
+        _chatBanClosed = true; // Exodus cancel pending chat ban before commit
         base.Closed();
         _admins.OnPermsChanged -= OnPermsChanged;
     }

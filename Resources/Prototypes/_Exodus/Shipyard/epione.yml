@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Эпиона
   description: Современный военно-медицинский шаттл, предназначенный для спасательных операций и оказания медицинской помощи в самых тяжёлых условиях. Имеет на борту генератор щита MS-100 и весьма неплохое корабельное вооружение. Его задача — вытащить вас из любой беды, невзирая на угрозы.
-  price: 195000 # ~135k base price.
+  price: 230300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Medical
   access: Medical
@@ -24,7 +24,7 @@
   - Medical
   - Chemistry
   engine:
-  - Bananium
+  - Plasma
 
 - type: gameMap
   id: Epione

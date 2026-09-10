@@ -1,3 +1,4 @@
+using Content.Shared.Database._Exodus.Chat; // SS220 chat bans
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     public void Initialize()
     {
         _netManager.RegisterNetMessage<MsgRoleBans>();
+        InitializeChatBans(); // SS220 chat bans
 
         _db.SubscribeToJsonNotification<BanNotificationData>(
             _taskManager,
@@ -186,6 +188,10 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     private void KickMatchingConnectedPlayers(BanDef def, string source)
     {
+        // Exodus-begin chat and role bans must never disconnect matching players.
+        if (def.Type != BanType.Server)
+            return;
+        // Exodus-end
         foreach (var player in _playerManager.Sessions)
         {
             if (BanMatchesPlayer(player, def))
@@ -263,7 +269,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     private async Task<(BanDef Ban, DateTimeOffset? Expires)> CreateBanDef(
         CreateBanInfo banInfo,
         BanType type,
-        ImmutableArray<BanRoleDef>? roleBans)
+        ImmutableArray<BanRoleDef>? roleBans,
+        ImmutableArray<BannableChats>? chats = null) // SS220 chat bans
     {
         if (banInfo.Users.Count == 0 && banInfo.HWIds.Count == 0 && banInfo.AddressRanges.Count == 0)
             throw new ArgumentException("Must specify at least one user, HWID, or address range");
@@ -300,7 +307,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             GetSeverityForServerBan(banInfo, CCVars.ServerBanDefaultSeverity),
             banInfo.BanningAdmin,
             null,
-            roles: roleBans), expires);
+            roles: roleBans, chats: chats), expires); // SS220 chat bans
     }
 
     private async Task<TimeSpan> GetPlayTime(CreateBanInfo banInfo)

@@ -1,0 +1,56 @@
+- type: entity
+  id: ActionSpawnBiomassTile
+  name: Plant Biomass
+  description: Spawns a growth of biomass that can expand outwards.
+  components:
+  - type: ActionTargetingCursor # Exodus - opt in to the action targeting cursor.
+  - type: WorldTargetAction
+    checkCanAccess: true
+    useDelay: 5
+    icon: { sprite: _Mono/Objects/Misc/fleshkudzu.rsi, state: kudzu_33 }
+    event: !type:PlaceTileEntityEvent
+      entity: ChimeraFleshKudzu
+      length: 3
+      blockedCollisionMask:
+      - MidImpassable
+      blockedCollisionLayer:
+      - MidImpassable
+      audio: /Audio/Effects/Fluids/splat.ogg
+
+- type: entity
+  id: ActionSpawnBiomassWall
+  name: Plant Flesh Wall
+  description: Spawns a thick wall of biomass.
+  components:
+  - type: ActionTargetingCursor # Exodus - opt in to the action targeting cursor.
+  - type: WorldTargetAction
+    checkCanAccess: true
+    # Exodus - creation time replaces the cooldown.
+    icon: { sprite: Structures/Walls/meat.rsi, state: full }
+    event: !type:PlaceTileEntityEvent
+      entity: WallMeat
+      length: 10 # Exodus - flesh wall creation time.
+      blockedCollisionMask:
+      - FullTileMask
+      blockedCollisionLayer:
+      - WallLayer
+      audio: /Audio/Effects/Fluids/splat.ogg
+
+- type: entity
+  id: ActionSpawnLetoferolBeast
+  name: Letoferol Beast
+  description: Create another lower letoferol beast.
+  components:
+  - type: ActionTargetingCursor # Exodus - opt in to the action targeting cursor.
+  - type: WorldTargetAction
+    checkCanAccess: true
+    # Exodus - creation time replaces the cooldown.
+    icon: { sprite: Mobs/Aliens/flesh.rsi, state: jared }
+    event: !type:PlaceTileEntityEvent
+      entity: MobLetoferolBeast
+      length: 40 # Exodus - fleshbeast creation time.
+      blockedCollisionMask:
+      - MobMask
+      blockedCollisionLayer:
+      - MobLayer
+      audio: /Audio/Effects/Fluids/splat.ogg

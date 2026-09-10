@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: МакЧилли # Ru-Localization
   description: Небольшой шаттл для продажи мороженого. На случай, когда припекает, лучше всего взять... Кто это писал? # Ru-Localization
-  price: 17500
+  price: 20500 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/mcchilly.yml

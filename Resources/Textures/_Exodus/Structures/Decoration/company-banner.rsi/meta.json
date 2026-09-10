@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Corporate variants derived from di-banner created by UnicornOnLSD for Monolith. mmc-banner and viper-banner manually pixel-drawn for Exodus on the same banner base. MMC insignia adapted from research_disciplines_mieyo by kasature90 (CC0-1.0); Viper emblem adapted from the Viper Group logo courtesy of blitz7211, Discord (CC-BY-3.0).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "steel-hammer-banner"
+    },
+    {
+      "name": "hme-banner"
+    },
+    {
+      "name": "maco-banner"
+    },
+    {
+      "name": "dme-banner"
+    },
+    {
+      "name": "aetherion-banner"
+    },
+    {
+      "name": "horizon-banner"
+    },
+    {
+      "name": "unsa-banner"
+    },
+    {
+      "name": "cdm-banner"
+    },
+    {
+      "name": "ullman-banner"
+    },
+    {
+      "name": "nosske-banner"
+    },
+    {
+      "name": "blackhawk-banner"
+    },
+    {
+      "name": "hive-banner"
+    },
+    {
+      "name": "bratva-banner"
+    },
+    {
+      "name": "mmc-banner"
+    },
+    {
+      "name": "viper-banner"
+    }
+  ]
+}

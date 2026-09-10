@@ -1,5 +1,6 @@
 <Popup xmlns="https://spacestation14.io"
-       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <PanelContainer>
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#18181B" BackgroundColor="#25252a"/>
@@ -16,6 +17,8 @@
             <Label Name="EditedAtLabel"/>
             <Label Name="ExpiryTimeLabel"/>
             <TextEdit Name="NoteTextEdit" Editable="False" MinHeight="24" />
+            <!-- Exodus chat ban revocation -->
+            <controls:ConfirmButton Name="ChatUnbanButton" Text="{Loc chat-ban-revoke}" Visible="False" />
             <BoxContainer Orientation="Horizontal">
                 <Button Name="EditButton" Text="{Loc admin-notes-edit}"/>
                 <Control HorizontalExpand="True"/>

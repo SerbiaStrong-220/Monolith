@@ -9,11 +9,22 @@ job-description-md-medic = Traverse the space to provide life-saving care aboard
 # MARK: TSF
 job-description-tsf-engineer = Maintain the integrity of the flagship, get laughed at for not being a real soldier.
 job-description-tsf-borg = Half-human, Half-machine. Follow your laws, serve the TSF, and beg engineers for upgrades.
+# Exodus civilian contractor localization
+job-description-tsf-civilian = You are a mercenary holding citizenship of the Trans-Solarian Federation. You do not participate in your faction's wars unless you accept a direct contract. You must comply with all lawful demands of your government.
 
 # MARK: PDV
 job-description-pdv-borg = Half-human, Half-machine. Follow your laws, serve the PDV, and beg dynasty troops for upgrades.
+# Exodus civilian contractor localization
+job-description-pdv-civilian = You are a mercenary holding citizenship of the Phaethon Dynasty. You do not participate in your faction's wars unless you accept a direct contract. You must comply with all lawful demands of your government.
+job-description-pdv-ambassador = A high ranking official of the Dynasty.
+job-description-pdv-prince = The son of the Sultan. Holds high authority.
 
 # MARK: Viper Group
 job-description-vg-infanteer = Follow the orders from above. Complete contracts. Get paid.
 job-description-vg-lieutenant = Direct the infanteer detachments. Ensure standards are maintained. Attain prosperity and wealth.
 job-description-vg-commander = Lead the Vipers to glory and wealth. Forge new business relations. Show the sector that your fangs have not dulled.
+
+# MARK: MMC
+job-description-mmc-liason = Ensure profits for your corporate managers, keep your employees in line, and ensure the protection MMC assets in the sector.
+job-description-mmc-security = Protect MMC assets and employees in the area from any threats.
+job-description-mmc-employee = Work under your liason for the sake of the MMC company board. Make money, give it to the company, and repeat.

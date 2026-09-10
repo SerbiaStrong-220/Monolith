@@ -1,0 +1,2 @@
+exodus-lobby-pdv-civilian-outpost-subtext = The center of Phaethon Dynasty civilian operations.
+exodus-lobby-pdv-civilian-outpost-description = A captured Trans-Solar Federation outpost repurposed for the civilian needs of the Phaethon Dynasty. It houses civilian PDV mercenaries seeking work in the Colossus sector. You do not participate in your faction's wars unless you accept a direct contract. You must comply with all lawful demands of your government.

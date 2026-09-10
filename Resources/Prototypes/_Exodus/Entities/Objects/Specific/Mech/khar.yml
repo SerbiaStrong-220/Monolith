@@ -1,0 +1,195 @@
+- type: entity
+  id: MechKhar
+  parent: [BaseMech, CombatMech]
+  name: Khar
+  description: A heavy assault exosuit of the Eighth Expeditionary Fleet, equipped with a sealed cockpit and five interchangeable weapon mounts.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: _Exodus/Objects/Specific/Mech/khar.rsi
+    layers:
+    - state: khar
+      map: ["enum.MechVisualLayers.Base"]
+    - state: khar-unshaded
+      map: ["glow"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.MechVisuals.Open:
+        glow:
+          True: { state: khar-open-unshaded }
+          False: { state: khar-unshaded }
+      enum.MechVisuals.Broken:
+        glow:
+          True: { visible: false }
+          False: { visible: true }
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+  - type: Mech
+    baseState: khar
+    openState: khar-open
+    brokenState: khar-broken
+    airtight: true
+    maxIntegrity: 1400
+    maxEquipmentAmount: 5
+    mechToPilotDamageMultiplier: 0.1
+    pilotWhitelist:
+      components:
+      - HumanoidAppearance
+      - BorgChassis
+  - type: Damageable
+    damageModifierSet: MechArmorHeavy
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1900
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1.5
+  - type: CanMoveInAir
+  - type: MovementAlwaysTouching
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 60
+        Structural: 400
+  - type: Repairable
+    fuelCost: 50
+    doAfterDelay: 25
+  - type: Prying
+    pryPowered: true
+    speedModifier: 3
+    useSound:
+      path: /Audio/Items/jaws_pry.ogg
+  - type: RadarBlip
+    radarColor: "#C94D9A"
+    scale: 1.5
+    requireNoGrid: true
+    shape: square
+  - type: StaticPrice
+    price: 30000
+
+- type: entity
+  id: MechKharBattery
+  parent: MechKhar
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellAntiqueProto
+
+- type: entity
+  id: MechKharLoaded
+  parent: MechKharBattery
+  suffix: Fully equipped
+  components:
+  - type: Mech
+    startingEquipment:
+    - WeaponMechGravityCannon
+    - WeaponMechKunisaMachineGun
+    - WeaponMechCombatTeslaCannon
+    - WeaponMechChainSword
+
+- type: entity
+  id: WeaponMechGravityCannon
+  parent: [BaseMechWeaponRange, CombatMechEquipment]
+  name: mech gravitational cannon
+  description: A mounted gravitational projector that fires a broad wave, pushing back personnel and damaging structures. Its force diminishes with distance.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/gravity_projector.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/gravity_projector_inhands.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+    zeroNoAmmo: true
+  - type: GravityPulseLauncher
+    shareHits: true
+  - type: Gun
+    projectileSpeed: 8
+    fireRate: 0.5
+    minAngle: 0
+    maxAngle: 0
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 600
+  - type: ProjectileBatteryAmmoProvider
+    proto: GravityPulseMech
+    fireCost: 150
+  - type: AmmoCounter
+
+- type: entity
+  id: WeaponMechKunisaMachineGun
+  parent: [BaseMechWeaponRange, CombatMechEquipment]
+  name: mech Kunisa plasma machine gun
+  description: A mounted Kunisa-pattern plasma weapon, powered by the exosuit's battery and built for sustained automatic fire.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/kunisa_lmg.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    sprite: _Exodus/Objects/Weapons/Guns/Battery/kunisa_lmg_inhands.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+    zeroNoAmmo: true
+  - type: Gun
+    projectileSpeed: 60
+    fireRate: 18
+    minAngle: 2
+    maxAngle: 12
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/ship_svalinn.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: MechKunisaProjectile
+    fireCost: 12.5
+  - type: AmmoCounter

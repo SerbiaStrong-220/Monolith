@@ -1,0 +1,5 @@
+- type: entity
+  parent: SyndicateBomb
+  id: DrakeBomb
+  name: Drake Industries bomb
+  description: A heavy timed bomb manufactured by Drake Industries.

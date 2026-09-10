@@ -1,0 +1,9 @@
+- type: entity
+  parent: BaseSecurityUplinkRadioDeputy
+  id: BaseSecurityUplinkRadioTsfEngineer
+  suffix: Engineer 75
+  components:
+  - type: Tag
+    tags:
+    - SecurityUplink
+    - TsfEngineerUplink

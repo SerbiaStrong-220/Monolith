@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/19/2026 17:26:20
-  entityCount: 638
+  entityCount: 634
 maps: []
 grids:
 - 1
@@ -2133,6 +2133,32 @@ entities:
     - type: Transform
       pos: -2.5,0.5
       parent: 1
+- proto: FoamTrapNanolaminate
+  entities:
+  - uid: 406
+    components:
+    - type: Transform
+      anchored: True
+      pos: -2.5,-11.5
+      parent: 1
+  - uid: 408
+    components:
+    - type: Transform
+      anchored: True
+      pos: -2.5,4.5
+      parent: 1
+  - uid: 410
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,4.5
+      parent: 1
+  - uid: 412
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,-11.5
+      parent: 1
 - proto: GasMixer
   entities:
   - uid: 341
@@ -2548,84 +2574,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,-0.5
       parent: 1
-- proto: LockerSyndicate
-  entities:
-  - uid: 406
-    components:
-    - type: Transform
-      anchored: True
-      pos: -2.5,-11.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 407
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 408
-    components:
-    - type: Transform
-      anchored: True
-      pos: -2.5,4.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 409
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 410
-    components:
-    - type: Transform
-      anchored: True
-      pos: 1.5,4.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 411
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 412
-    components:
-    - type: Transform
-      anchored: True
-      pos: 1.5,-11.5
-      parent: 1
-    - type: Physics
-      bodyType: Static
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 413
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: MachineFTLDrive25S
   entities:
   - uid: 414
@@ -2637,36 +2585,6 @@ entities:
       currentDelay: 2
     - type: Pullable
       prevFixedRotation: True
-- proto: NanolaminateFoamGrenade
-  entities:
-  - uid: 407
-    components:
-    - type: Transform
-      parent: 406
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 409
-    components:
-    - type: Transform
-      parent: 408
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 411
-    components:
-    - type: Transform
-      parent: 410
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 413
-    components:
-    - type: Transform
-      parent: 412
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: NitrogenCanister
   entities:
   - uid: 415

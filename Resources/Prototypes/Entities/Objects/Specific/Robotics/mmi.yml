@@ -79,7 +79,10 @@
 
 - type: entity
   parent: BaseItem
-  id: PositronicBrain
+  # Exodus-begin: share the brain without the manually toggled ghost role.
+  id: BasePositronicBrain
+  abstract: true
+  # Exodus-end
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
   components:
@@ -90,21 +93,7 @@
         map: ["base"]
     - type: Input
       context: human
-    - type: ToggleableGhostRole
-      examineTextMindPresent: positronic-brain-installed
-      examineTextMindSearching: positronic-brain-still-searching
-      examineTextNoMind: positronic-brain-off
-      beginSearchingText: positronic-brain-searching
-      roleName: positronic-brain-role-name
-      roleDescription: positronic-brain-role-description
-      roleRules: ghost-role-information-silicon-rules
-      mindRoles:
-      - MindRoleGhostRoleSilicon
-      wipeVerbText: positronic-brain-wipe-device-verb-text
-      wipeVerbPopup: positronic-brain-wiped-device
-      stopSearchVerbText: positronic-brain-stop-searching-verb-text
-      stopSearchVerbPopup: positronic-brain-stopped-searching
-      job: Borg
+    # Exodus: ToggleableGhostRole belongs to PositronicBrain below, not the shared base.
     - type: Organ
       slotId: posbrain
     - type: Brain
@@ -159,3 +148,25 @@
       - TauCetiBasic # Added since posi brains should be able to understand TauCetiBasic (they can in a chassis)
       - RobotTalk
     - type: RetroMonitorView # Mono
+
+# Exodus-begin: ordinary positronic brains still require manual activation.
+- type: entity
+  parent: BasePositronicBrain
+  id: PositronicBrain
+  components:
+  - type: ToggleableGhostRole
+    examineTextMindPresent: positronic-brain-installed
+    examineTextMindSearching: positronic-brain-still-searching
+    examineTextNoMind: positronic-brain-off
+    beginSearchingText: positronic-brain-searching
+    roleName: positronic-brain-role-name
+    roleDescription: positronic-brain-role-description
+    roleRules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
+    wipeVerbText: positronic-brain-wipe-device-verb-text
+    wipeVerbPopup: positronic-brain-wiped-device
+    stopSearchVerbText: positronic-brain-stop-searching-verb-text
+    stopSearchVerbPopup: positronic-brain-stopped-searching
+    job: Borg
+# Exodus-end

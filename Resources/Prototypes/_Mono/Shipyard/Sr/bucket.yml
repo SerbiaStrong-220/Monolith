@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: Бакет # Ru-Localization
   description: Шаттл, используемый уборщиками для выполнения их работы. # Ru-Localization
-  price: 18000
+  price: 21500 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Micro
   group: Sr
   access: Janitor

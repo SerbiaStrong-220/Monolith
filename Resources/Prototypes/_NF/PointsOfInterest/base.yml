@@ -17,6 +17,7 @@
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Behold my list of gamerules
   spawnGroup: Optional
   addComponents:
+  - type: IffAffiliation # Exodus POIs display corporate control unless explicitly configured otherwise.
   - type: IFF
     color: "#ffa600"
     readOnly: true

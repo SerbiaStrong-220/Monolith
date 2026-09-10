@@ -7,15 +7,14 @@
 - type: vessel
   id: Wolfsnake
   parent: BaseVessel
-  name: VG Wolfsnake
-  description: A heavy duty artillery platform outsourced to GS. Comes with a massive cannon from the corporate wars.
+  name: Вайперы «Вульфснейк» # Exodus Viper localization
+  description: Тяжёлая артиллерийская платформа, заказанная у GS. Оснащена массивным орудием времён корпоративных войн. # Exodus Viper localization
 #  limit: 3 --- Not sure. Will await review.
-  price: 161093
+  price: 195900 # Exodus: appraised minimum + 5%, rounded up to 100.
   purchasable: false # Voucher only
   category: Large
   group: Viper
-  access: Mercenary # Exodus temp-viper-mercenary-access
-  # access: Viper # Exodus temp-viper-mercenary-access
+  access: Viper # Exodus restore-viper-group
   shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/wolfsnake.yml
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
@@ -30,7 +29,7 @@
 
 - type: gameMap
   id: Wolfsnake
-  mapName: 'VG Wolfsnake'
+  mapName: 'Вайперы «Вульфснейк»' # Exodus Viper localization
   mapPath: /SharedMaps/_Mono/Shuttles/Viper/wolfsnake.yml
   minPlayers: 0
   stations:
@@ -38,7 +37,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Wolfsnake MIL{1}'
+          mapNameTemplate: 'Вульфснейк MIL{1}' # Exodus Viper localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

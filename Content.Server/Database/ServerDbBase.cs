@@ -28,7 +28,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbBase
+    public abstract partial class ServerDbBase // Exodus chat ban persistence
     {
         private readonly ISawmill _opsLog;
 
@@ -568,6 +568,10 @@ namespace Content.Server.Database
             if (type != BanType.Server)
                 list.Add(b => b.Roles!);
 
+            // SS220-begin chat bans
+            if (type is null or BanType.Chat)
+                list.Add(b => b.Chats!);
+            // SS220-end
             return list;
         }
 
@@ -1562,6 +1566,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Include(ban => ban.Addresses)
                 .Include(ban => ban.Players)
                 .Include(ban => ban.Roles)
+                .Include(ban => ban.Chats) // SS220 chat bans
                 .Include(ban => ban.Hwids)
                 .Include(ban => ban.CreatedBy)
                 .Include(ban => ban.LastEditedBy)
@@ -1594,7 +1599,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                         ban.Unban.UnbanningAdmin.Value,
                         await dbContext.Player.SingleOrDefaultAsync(p => p.UserId == ban.Unban.UnbanningAdmin.Value)),
                 NormalizeDatabaseTime(ban.Unban?.UnbanTime),
-                [..ban.Roles!.Select(br => new BanRoleDef(br.RoleType, br.RoleId))]);
+                [..ban.Roles!.Select(br => new BanRoleDef(br.RoleType, br.RoleId))],
+                [..ban.Chats!.Select(b => b.Chat)]); // SS220 chat bans
         }
 
         // These two are here because they get converted into notes later
@@ -1957,6 +1963,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         }
 
+        // Exodus-begin - Unified ban model helper.
         private static async Task<IEnumerable<TResult>> AsyncSelect<T, TResult>(
             IEnumerable<T>? enumerable,
             Func<T, Task<TResult>> selector)
@@ -1970,5 +1977,174 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             return [..results];
         }
+        // Exodus-end
+
+        #region Wayfarer Safety Deposit Box
+
+        public async Task<WayfarerSafetyDepositBox> PurchaseSafetyDepositBox(
+            Guid ownerUserId,
+            int characterIndex,
+            string ownerName,
+            EntProtoId protoId,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var box = new WayfarerSafetyDepositBox
+            {
+                BoxId = Guid.NewGuid(),
+                OwnerUserId = ownerUserId,
+                CharacterIndex = characterIndex,
+                OwnerName = ownerName,
+                ProtoId = protoId,
+                PurchaseDate = DateTime.UtcNow
+            };
+
+            db.DbContext.WayfarerSafetyDepositBox.Add(box);
+            await db.DbContext.SaveChangesAsync(cancel);
+
+            return box;
+        }
+
+        public async Task<List<WayfarerSafetyDepositBox>> GetPlayerSafetyDepositBoxes(
+            Guid ownerUserId,
+            int characterIndex,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.WayfarerSafetyDepositBox
+                .Include(b => b.Items)
+                .Where(b => b.OwnerUserId == ownerUserId && b.CharacterIndex == characterIndex)
+                .ToListAsync(cancel);
+        }
+
+        public async Task<WayfarerSafetyDepositBox?> GetSafetyDepositBox(
+            Guid boxId,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.WayfarerSafetyDepositBox
+                .Include(b => b.Items)
+                .FirstOrDefaultAsync(b => b.BoxId == boxId, cancel);
+        }
+
+        public async Task DepositSafetyDepositBoxItems(
+            Guid boxId,
+            List<string> entityDataList,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var box = await db.DbContext.WayfarerSafetyDepositBox
+                .Include(b => b.Items)
+                .FirstOrDefaultAsync(b => b.BoxId == boxId, cancel);
+
+            if (box == null)
+                return;
+
+            // Clear existing items
+            db.DbContext.WayfarerSafetyDepositBoxItem.RemoveRange(box.Items);
+
+            // Add new items
+            foreach (var entityData in entityDataList)
+            {
+                box.Items.Add(new WayfarerSafetyDepositBoxItem
+                {
+                    BoxId = box.Id,
+                    EntityData = entityData,
+                    DepositDate = DateTime.UtcNow
+                });
+            }
+
+            // Clear LastWithdrawn since the box is now safely stored
+            box.LastWithdrawn = null;
+            box.LastWithdrawnRoundId = null;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateSafetyDepositBoxNickname(
+            Guid boxId,
+            string? nickname,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var box = await db.DbContext.WayfarerSafetyDepositBox
+                .FirstOrDefaultAsync(b => b.BoxId == boxId, cancel);
+
+            if (box == null)
+                return;
+
+            box.Nickname = nickname;
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task ClearSafetyDepositBoxItems(
+            Guid boxId,
+            int roundId,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var box = await db.DbContext.WayfarerSafetyDepositBox
+                .Include(b => b.Items)
+                .FirstOrDefaultAsync(b => b.BoxId == boxId, cancel);
+
+            if (box == null)
+                return;
+
+            db.DbContext.WayfarerSafetyDepositBoxItem.RemoveRange(box.Items);
+
+            // Set LastWithdrawn to indicate the box is now in the world
+            box.LastWithdrawn = DateTime.UtcNow;
+            box.LastWithdrawnRoundId = roundId;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task<int> DeleteStaleSafetyDepositBoxes(
+            int daysStale,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var cutoffDate = DateTime.UtcNow.AddDays(-daysStale);
+
+            // Find boxes that have been withdrawn and have no items for longer than the cutoff period
+            var staleBoxes = await db.DbContext.WayfarerSafetyDepositBox
+                .Include(b => b.Items)
+                .Where(b => b.LastWithdrawn != null &&
+                            b.LastWithdrawn < cutoffDate &&
+                            b.Items.Count == 0)
+                .ToListAsync(cancel);
+
+            var count = staleBoxes.Count;
+            db.DbContext.WayfarerSafetyDepositBox.RemoveRange(staleBoxes);
+            await db.DbContext.SaveChangesAsync(cancel);
+
+            return count;
+        }
+
+        public async Task DeleteSafetyDepositBox(
+            Guid boxId,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var box = await db.DbContext.WayfarerSafetyDepositBox
+                .Include(b => b.Items)
+                .FirstOrDefaultAsync(b => b.BoxId == boxId, cancel);
+
+            if (box == null)
+                return;
+
+            db.DbContext.WayfarerSafetyDepositBox.Remove(box);
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        #endregion
     }
 }

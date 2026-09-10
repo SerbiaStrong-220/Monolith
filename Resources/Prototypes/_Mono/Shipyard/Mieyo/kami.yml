@@ -1,0 +1,37 @@
+- type: vessel
+  id: Kami
+  parent: BaseVessel
+  name: ММС «Ками» # Exodus MMC localization
+  description: Лёгкий шахтёрский корабль. Оснащён двумя 20-мм орудиями, двумя шахтёрскими пульсарами и магнитом. # Exodus MMC localization
+  price: 92015
+  category: Small
+  group: Mieyo
+  access: Mieyo
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/kami.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Salvage
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Kami
+  mapName: 'ММС «Ками»' # Exodus MMC localization
+  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/kami.yml
+  minPlayers: 0
+  stations:
+    Kami:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Ками ММС{1}' # Exodus MMC localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            MMCEmployee: [ 0, 0 ]

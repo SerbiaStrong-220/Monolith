@@ -77,7 +77,7 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: Bullet45_magnumAP
+      proto: Bullet357_magnumAP
       capacity: 1
       count: 1
     - type: Gun
@@ -97,7 +97,7 @@
       prototypes:
         - SyndicateNavalCaptainGearB
     - type: BasicEntityAmmoProvider
-      proto: Bullet45_magnumFMJ
+      proto: Bullet357_magnumFMJ
       capacity: 1
       count: 1
 
@@ -110,7 +110,7 @@
       prototypes:
         - SyndicateNavalCaptainGearC
     - type: BasicEntityAmmoProvider
-      proto: Bullet45_magnumFMJ
+      proto: Bullet357_magnumFMJ
       capacity: 1
       count: 1
 
@@ -123,7 +123,7 @@
       prototypes:
         - SyndicateNavalCaptainGearD
     - type: BasicEntityAmmoProvider
-      proto: Bullet45_magnumFMJ
+      proto: Bullet357_magnumFMJ
       capacity: 1
       count: 1
 
@@ -770,7 +770,7 @@
       prototypes:
         - SyndicateNavalCaptainVoidGear
     - type: BasicEntityAmmoProvider
-      proto: Bullet45_magnumFMJ
+      proto: Bullet357_magnumFMJ
       capacity: 1
       count: 1
 

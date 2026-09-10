@@ -18,7 +18,6 @@ ent-ClothingHeadsetAltCargo = полноразмерная гарнитура К
     .desc = { ent-ClothingHeadsetAlt.desc }
 ent-ClothingHeadsetAltSyndicate = полноразмерная кроваво-красная гарнитура
     .desc = Модифицированный модульный интерком Синдиката, надеваемый на голову, и содержащий ключ шифрования. Имеет 5 ячеек для ключей шифрования.
-ent-ClothingHeadsetAltFreelancer = полноразмерная гарнитура фрилансера
-    .desc = { ent-ClothingHeadsetAlt.desc }
+# Exodus: Freelancer headset localization is defined in _Exodus/entities/civilian-contractors.ftl.
 ent-ClothingHeadsetAltWizard = полноразмерная гарнитура мага
     .desc = { ent-ClothingHeadsetAlt.desc }

@@ -51,7 +51,7 @@
     viewCircleCount: 4
     viewCircleSpacing: 280
     action: ActionToggleNightVision
-    phosphorColor: "#00FF00"
+    phosphorColor: "#E6E6E6" # Exodus: colorless Tajaran PNV
     lightingColor: "#FFFFFF32"
   # Exodus-end
   - type: MeleeWeapon

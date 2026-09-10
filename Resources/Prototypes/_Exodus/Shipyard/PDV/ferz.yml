@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Ферзь
   description: Пока нет описания, но оно обязательно скоро появится!
-  price: 267000
+  price: 355800 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: BlackMarket
   access: Pirate

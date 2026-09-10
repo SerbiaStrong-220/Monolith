@@ -1,3 +1,4 @@
+# Exodus-begin keep clockwork entity prototypes enabled
 - type: entity
   parent: Airlock
   id: PinionAirlock
@@ -25,3 +26,4 @@
     - board
   # - type: StaticPrice # Frontier - TODO: material value rework
   #   price: 165 # Frontier
+# Exodus-end

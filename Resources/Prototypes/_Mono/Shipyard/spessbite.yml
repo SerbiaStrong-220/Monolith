@@ -11,7 +11,7 @@
   parent: BaseVessel
   name: Спексбит # Ru-Localization
   description: Фудтрак, оснащённый всевозможными удобствами, втиснутыми в почти клаустрофобический интерьер. Зато очень уютно. # Ru-Localization
-  price: 35000
+  price: 42000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/spessbite.yml

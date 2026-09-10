@@ -11,7 +11,7 @@
   parent: BaseVessel
   name: Джиттербаг # Ru-Localization
   description: Ботанический шаттл с десятью лотками и некоторым количеством материалов для старта. Имеет уникальную форму жука - как мило. # Ru-Localization
-  price: 36050
+  price: 39200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/jitterbug.yml

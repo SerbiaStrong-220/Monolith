@@ -77,8 +77,10 @@ uplink-pirate-energy-sword-name = Energy Sword
 uplink-pirate-energy-sword-desc = Courtesy of the Gorlex Marauders. Make your mark, leave no witnesses.
 uplink-pirate-python-name = Python
 uplink-pirate-python-desc = A brutally simple, effective, and loud revolver. Comes loaded with .45 magnum rounds.
-uplink-pirate-viper-name = Viper
-uplink-pirate-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (9x19mm FMJ).
+# Exodus-begin: Viper equipment localization
+uplink-pirate-viper-name = «Гадюка»
+uplink-pirate-viper-desc = Небольшой и легко скрываемый, но сравнительно слабый пистолет с автоматическим режимом огня. Использует пистолетные магазины с патронами 9×19 мм FMJ.
+# Exodus-end
 uplink-pirate-kanabou-name = Kanabou
 uplink-pirate-kanabou-desc = A weapon for those who wish to forgo subtlety. Particularly suited to oni.
 uplink-pirate-ak-name = AKM
@@ -147,10 +149,12 @@ uplink-pirate-blast-grenade-desc = A highly lethal 40mm thermobaric grenade for 
 
 uplink-pirate-combat-hardsuit-name = SCAF Tacsuit
 uplink-pirate-combat-hardsuit-desc = Basic protective gear of PDV military groups.
-uplink-pirate-viper-group-standard-hardsuit-name = Viper Group JACKAL Hardsuit
-uplink-pirate-viper-group-standard-hardsuit-desc = A heavy hardsuit adorned with signature markings of the Viper Group. The armor is remarkably flexible for its protection and has a built-in nightvision system.
-uplink-pirate-viper-group-medic-hardsuit-name = Viper Group IMP Hardsuit
-uplink-pirate-viper-group-medic-hardsuit-desc = A light hardsuit adorned with signature markings of the Viper Group. The armor features various reinforced plating in vital areas and a medical HUD complemented by thermal pulse systems.
+# Exodus-begin: Viper equipment localization
+uplink-pirate-viper-group-standard-hardsuit-name = скафандр «Вайперов» JACKAL
+uplink-pirate-viper-group-standard-hardsuit-desc = Тяжёлый скафандр со знаками «Вайперов», гибкой бронёй и встроенной системой ночного видения.
+uplink-pirate-viper-group-medic-hardsuit-name = медицинский скафандр «Вайперов» RIPPER
+uplink-pirate-viper-group-medic-hardsuit-desc = Лёгкий скафандр со знаками «Вайперов», усиленными жизненно важными областями, медицинским визором и тепловым сканером.
+# Exodus-end
 uplink-pirate-webvest-name = Webvest
 uplink-pirate-webvest-desc = A webvest smuggled into the sector that hasn't been downgraded like ones utilized by civilian contractors. Great pierce resist, poor heat resist.
 uplink-pirate-syndie-mask-name = Syndicate Gas Mask

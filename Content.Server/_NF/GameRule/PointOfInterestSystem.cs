@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server._Exodus.Worldgen; // Exodus relative POI placement
 using Content.Server._NF.Trade;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
@@ -8,6 +9,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components; // Exodus relative POI grid loading
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server._NF.Station.Systems;
@@ -36,24 +38,32 @@ public sealed partial class PointOfInterestSystem : EntitySystem
     [Dependency] private StationRenameWarpsSystems _renameWarps = default!;
     [Dependency] private StationSystem _station = default!;
 
-    private List<Vector2> _stationCoords = new();
+    // Exodus-begin fixed cluster placement reservation
+    private readonly List<PoiPlacement> _stationPlacements = new();
+
+    private readonly record struct PoiPlacement(Vector2 Coordinates, float Clearance);
+    // Exodus-end
 
     public override void Initialize()
     {
         base.Initialize();
+
+        InitializeRelativePlacement(); // Exodus relative POI placement
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
-        _stationCoords.Clear();
+        _stationPlacements.Clear(); // Exodus fixed cluster placement reservation
     }
 
-    private void AddStationCoordsToSet(Vector2 coords)
+    // Exodus-begin fixed cluster placement reservation
+    private void AddStationPlacement(Vector2 coords, PointOfInterestPrototype prototype)
     {
-        _stationCoords.Add(coords);
+        _stationPlacements.Add(new PoiPlacement(coords, MathF.Max(0f, prototype.PlacementClearance)));
     }
+    // Exodus-end
 
     // Exodus-begin paired faction POI spawn
     public void GeneratePairedFactionPois(MapId mapUid, List<PointOfInterestPrototype> pairedPrototypes, out List<EntityUid> pairedStations)
@@ -69,20 +79,55 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             return;
         }
 
-        var rotation = _random.NextAngle();
+        var modifier = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
+        var minimumSeparation = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance) * modifier, 0f);
+        var retries = int.Max(_cfg.GetCVar(NFCCVars.POIPlacementRetries), 1);
+        var offsets = new Vector2[pairedPrototypes.Count];
+
+        for (var attempt = 0; attempt < retries; attempt++)
+        {
+            var rotation = _random.NextAngle();
+            var valid = true;
+
+            for (var i = 0; i < pairedPrototypes.Count; i++)
+            {
+                var proto = pairedPrototypes[i];
+                var minDistance = (int) (proto.MinimumDistance * modifier);
+                var maxDistance = int.Max((int) (proto.MaximumDistance * modifier), minDistance);
+                var distance = maxDistance > minDistance
+                    ? _random.Next(minDistance, maxDistance)
+                    : minDistance;
+                var radialOffset = new Vector2i(distance, 0).Rotate(rotation + Angle.FromDegrees(180 * i));
+                offsets[i] = radialOffset + new Vector2(proto.PositionX, proto.PositionY);
+
+                if (!IsPlacementValid(offsets[i], proto.PlacementClearance, minimumSeparation))
+                    valid = false;
+
+                for (var j = 0; j < i; j++)
+                {
+                    var pairedClearance = proto.PlacementClearance + pairedPrototypes[j].PlacementClearance;
+                    var requiredSeparation = MathF.Max(minimumSeparation, pairedClearance);
+                    if (Vector2.DistanceSquared(offsets[i], offsets[j]) < requiredSeparation * requiredSeparation)
+                        valid = false;
+                }
+            }
+
+            if (valid)
+                break;
+        }
+
         for (var i = 0; i < pairedPrototypes.Count; i++)
         {
             var proto = pairedPrototypes[i];
-            float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
-            int minD = (int)(proto.MinimumDistance * mod);
-            int maxD = (int)(proto.MaximumDistance * mod);
-            Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
-            offset = offset.Rotate(rotation + Angle.FromDegrees(180 * i));
+            var offset = offsets[i];
+
+            if (QueueRelativePoi(mapUid, proto, pairedStations)) // Exodus relative POI placement
+                continue;
 
             if (TrySpawnPoiGrid(mapUid, proto, offset, out var pairedUid) && pairedUid is { Valid: true } paired)
             {
                 pairedStations.Add(paired);
-                AddStationCoordsToSet(offset);
+                AddStationPlacement(offset, proto);
                 continue;
             }
 
@@ -118,10 +163,15 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             // Exodus-begin territory-poi-spread
             float mod = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
             int minD = (int)(proto.MinimumDistance * mod);
-            int maxD = (int)(proto.MaximumDistance * mod);
-            Vector2i offset = new Vector2i(_random.Next(minD, maxD), 0);
+            int maxD = int.Max((int)(proto.MaximumDistance * mod), minD);
+            var distance = maxD > minD ? _random.Next(minD, maxD) : minD;
+            Vector2 offset = new Vector2i(distance, 0).Rotate(rotationOffset);
+            offset += new Vector2(proto.PositionX, proto.PositionY);
+
+            var minimumSeparation = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance) * mod, 0f);
+            if (!IsPlacementValid(offset, proto.PlacementClearance, minimumSeparation))
+                offset = GetRandomPOICoord(proto);
             // Exodus-end
-            offset = offset.Rotate(rotationOffset);
             rotationOffset += rotation;
             // Append letter to depot name.
 
@@ -130,6 +180,8 @@ public sealed partial class PointOfInterestSystem : EntitySystem
                 overrideName += $" {(char)('A' + i)}"; // " A" ... " Z"
             else
                 overrideName += $" {i + 1}"; // " 27", " 28"...
+            if (QueueRelativePoi(mapUid, proto, depotStations, overrideName, i)) // Exodus relative POI placement
+                continue;
             if (TrySpawnPoiGrid(mapUid, proto, offset, out var depotUid, overrideName: overrideName) && depotUid is { Valid: true } depot)
             {
                 // Nasty jank: set up destination in the station.
@@ -142,7 +194,7 @@ public sealed partial class PointOfInterestSystem : EntitySystem
                         destComp.DestinationProto = "CargoOther";
                 }
                 depotStations.Add(depot);
-                AddStationCoordsToSet(offset); // adjust list of actual station coords
+                AddStationPlacement(offset, proto); // Exodus fixed cluster placement reservation
             }
         }
     }
@@ -171,13 +223,21 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             if (marketsAdded >= marketCount)
                 break;
 
-            var offset = GetRandomPOICoord(proto.MinimumDistance, proto.MaximumDistance);
+            // Exodus-begin relative POI placement: selected copies still count towards the pool limit.
+            if (QueueRelativePoi(mapUid, proto, marketStations))
+            {
+                marketsAdded++;
+                continue;
+            }
+            // Exodus-end
+
+            var offset = GetRandomPOICoord(proto); // Exodus fixed offsets and placement collision
 
             if (TrySpawnPoiGrid(mapUid, proto, offset, out var marketUid) && marketUid is { Valid: true } market)
             {
                 marketStations.Add(market);
                 marketsAdded++;
-                AddStationCoordsToSet(offset);
+                AddStationPlacement(offset, proto); // Exodus fixed cluster placement reservation
             }
         }
     }
@@ -206,24 +266,30 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             if (optionalsAdded >= optionalCount)
                 break;
 
-            var offset = GetRandomPOICoord(proto.MinimumDistance, proto.MaximumDistance);
+            // Exodus-begin relative POI placement
+            if (QueueRelativePoi(mapUid, proto, optionalStations))
+                continue;
+            // Exodus-end
+
+            var offset = GetRandomPOICoord(proto); // Exodus fixed offsets and placement collision
 
             if (TrySpawnPoiGrid(mapUid, proto, offset, out var optionalUid) && optionalUid is { Valid: true } uid)
             {
                 optionalStations.Add(uid);
-                AddStationCoordsToSet(offset);
+                AddStationPlacement(offset, proto); // Exodus fixed cluster placement reservation
             }
         }
     }
 
-    public void GenerateRequireds(MapId mapUid, List<PointOfInterestPrototype> requiredPrototypes, out List<EntityUid> requiredStations)
+    public void GenerateRequireds(MapId mapUid, List<PointOfInterestPrototype> requiredPrototypes, out List<EntityUid> requiredStations,
+        List<EntityUid>? output = null) // Exodus keep deferred results in the owning rule's list.
     {
         //Stations are required are ones that are vital to function but otherwise still follow a generic random spawn logic
         //Traditionally these would be stations like Expedition Lodge, NFSD station, Prison/Courthouse POI, etc.
         //There are no limit to these, and any prototype marked alwaysSpawn = true will get pulled out of any list that isnt Markets/Depots
         //And will always appear every time, and also will not be included in other optional/dynamic lists
 
-        requiredStations = new List<EntityUid>();
+        requiredStations = output ?? new List<EntityUid>(); // Exodus deferred POI output
 
         if (_ticker.CurrentPreset is null)
             return;
@@ -235,12 +301,18 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             if (proto.SpawnGamePreset.Length > 0 && !proto.SpawnGamePreset.Contains(currentPreset))
                 continue;
 
-            var offset = GetRandomPOICoord(proto.MinimumDistance, proto.MaximumDistance);
+            if (QueueRelativePoi(mapUid, proto, requiredStations)) // Exodus relative POI placement
+                continue;
+            var offset = GetRandomPOICoord(proto); // Exodus fixed offsets and placement collision
+            var reservedBeforeLoad = proto.PlacementClearance > 0f;
+            if (reservedBeforeLoad)
+                AddStationPlacement(offset, proto); // Exodus fixed worldgen field remains reserved if its map fails to load
 
             if (TrySpawnPoiGrid(mapUid, proto, offset, out var requiredUid) && requiredUid is { Valid: true } uid)
             {
                 requiredStations.Add(uid);
-                AddStationCoordsToSet(offset);
+                if (!reservedBeforeLoad)
+                    AddStationPlacement(offset, proto); // Exodus fixed cluster placement reservation
             }
         }
     }
@@ -273,12 +345,14 @@ public sealed partial class PointOfInterestSystem : EntitySystem
                 var chance = _random.NextFloat(0, 1);
                 if (chance <= proto.SpawnChance)
                 {
-                    var offset = GetRandomPOICoord(proto.MinimumDistance, proto.MaximumDistance);
+                    if (QueueRelativePoi(mapUid, proto, uniqueStations)) // Exodus relative POI placement
+                        break;
+                    var offset = GetRandomPOICoord(proto); // Exodus fixed offsets and placement collision
 
                     if (TrySpawnPoiGrid(mapUid, proto, offset, out var optionalUid) && optionalUid is { Valid: true } uid)
                     {
                         uniqueStations.Add(uid);
-                        AddStationCoordsToSet(offset);
+                        AddStationPlacement(offset, proto); // Exodus fixed cluster placement reservation
                         break;
                     }
                 }
@@ -286,11 +360,19 @@ public sealed partial class PointOfInterestSystem : EntitySystem
         }
     }
 
-    private bool TrySpawnPoiGrid(MapId mapUid, PointOfInterestPrototype proto, Vector2 offset, out EntityUid? gridUid, string? overrideName = null)
+    // Exodus: relative placement shares station/component/warp setup with ordinary POIs.
+    private bool TrySpawnPoiGrid(MapId mapUid, PointOfInterestPrototype proto, Vector2 offset, out EntityUid? gridUid, string? overrideName = null,
+        RelativePoiPlacementPrototype? relative = null)
     {
         gridUid = null;
-        if (!_map.TryLoadGrid(mapUid, proto.GridPath, out var loadedGrid, offset: offset, rot: _random.NextAngle()))
+        // Exodus-begin relative POI placement
+        Entity<MapGridComponent>? loadedGrid;
+        var success = relative == null
+            ? _map.TryLoadGrid(mapUid, proto.GridPath, out loadedGrid, offset: offset, rot: _random.NextAngle())
+            : _relativePoi.TryLoadRelativeGrid(mapUid, proto.GridPath, relative, proto.PlacementClearance, null, out loadedGrid);
+        if (!success || loadedGrid == null)
             return false;
+        // Exodus-end
         gridUid = loadedGrid.Value;
         List<EntityUid> gridList = [loadedGrid.Value];
 
@@ -315,40 +397,57 @@ public sealed partial class PointOfInterestSystem : EntitySystem
                 _renameWarps.SyncWarpPointsToGrids(gridList, forceAdminOnly: hideWarp);
         }
 
+        _relativePoi.Register(loadedGrid.Value.Owner, new(false, proto.ID), proto.PlacementClearance); // Exodus relative POI anchor
         return true;
     }
 
-    private Vector2 GetRandomPOICoord(float unscaledMinRange, float unscaledMaxRange)
+    private Vector2 GetRandomPOICoord(PointOfInterestPrototype prototype)
     {
-        int numRetries = int.Max(_cfg.GetCVar(NFCCVars.POIPlacementRetries), 0);
-        // Exodus-begin territory-poi-spread
+        int numRetries = int.Max(_cfg.GetCVar(NFCCVars.POIPlacementRetries), 1);
+        // Exodus-begin territory-poi-spread and fixed-placement collision
         float modifier = float.Max(_cfg.GetCVar(NFCCVars.POIDistanceModifier), 0.1f);
-        float minRange = unscaledMinRange * modifier;
-        float maxRange = unscaledMaxRange * modifier;
+        float minRange = prototype.MinimumDistance * modifier;
+        float maxRange = float.Max(prototype.MaximumDistance * modifier, minRange);
         float minDistance = float.Max(_cfg.GetCVar(NFCCVars.MinPOIDistance) * modifier, 0);
-        // Exodus-end
+        var center = new Vector2(prototype.PositionX, prototype.PositionY);
 
-        Vector2 coords = _random.NextVector2(minRange, maxRange);
+        var coords = center + GetRandomRadialOffset(minRange, maxRange);
         for (int i = 0; i < numRetries; i++)
         {
-            bool positionIsValid = true;
-            foreach (var station in _stationCoords)
-            {
-                if (Vector2.Distance(station, coords) < minDistance)
-                {
-                    positionIsValid = false;
-                    break;
-                }
-            }
-
-            // We have a valid position
-            if (positionIsValid)
+            if (IsPlacementValid(coords, prototype.PlacementClearance, minDistance))
                 break;
 
-            // No vector yet, get next value.
-            coords = _random.NextVector2(minRange, maxRange);
+            coords = center + GetRandomRadialOffset(minRange, maxRange);
         }
 
         return coords;
     }
+
+    private Vector2 GetRandomRadialOffset(float minRange, float maxRange)
+    {
+        if (maxRange <= 0f)
+            return Vector2.Zero;
+
+        if (maxRange <= minRange)
+            return _random.NextAngle().RotateVec(new Vector2(minRange, 0f));
+
+        return _random.NextVector2(minRange, maxRange);
+    }
+
+    private bool IsPlacementValid(Vector2 coordinates, float clearance, float minimumSeparation, Vector2? anchorOrigin = null) // Exodus relative anchor exemption
+    {
+        clearance = MathF.Max(0f, clearance);
+
+        foreach (var placement in _stationPlacements)
+        {
+            if (anchorOrigin is { } anchor && Vector2.DistanceSquared(placement.Coordinates, anchor) < 0.01f) // Exodus anchor clearance is checked against the actual grid separately.
+                continue;
+            var requiredSeparation = MathF.Max(minimumSeparation, clearance + placement.Clearance);
+            if (Vector2.DistanceSquared(placement.Coordinates, coordinates) < requiredSeparation * requiredSeparation)
+                return false;
+        }
+
+        return true;
+    }
+    // Exodus-end
 }

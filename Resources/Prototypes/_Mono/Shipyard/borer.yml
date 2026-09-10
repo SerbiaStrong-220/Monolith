@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Борер # Ru-Localization
   description: Разработанный мануфактурным комплекс Стальной молот и произведённый в сотрудничестве с Дрэйк Индастрис, Борер - экономичный шаттл для утилизации брошенных шаттлов. # Ru-Localization
-  price: 20525
+  price: 22800 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/borer.yml
