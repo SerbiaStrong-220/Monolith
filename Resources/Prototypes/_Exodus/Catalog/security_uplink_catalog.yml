@@ -4,7 +4,7 @@
   description: uplink-stimulants-implant-desc
   productEntity: StimulantsImplanter
   cost:
-    FederationMilitaryCredit: 30
+    FederationMilitaryCredit: 33
   categories:
     - UplinkSecurityMedical
   conditions:
@@ -19,7 +19,7 @@
   description: uplink-combat-implant-desc
   productEntity: CombatImplanter
   cost:
-    FederationMilitaryCredit: 30
+    FederationMilitaryCredit: 33
   categories:
     - UplinkSecurityMedical
   conditions:

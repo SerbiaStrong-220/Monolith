@@ -13,7 +13,7 @@
   description: uplink-pdv-idcard-rakhshan-desc
   productEntity: PDVRakhshanIDCard
   cost:
-    Doubloon: 1
+    Doubloon: 2
   categories:
   - UplinkPdvIdCards
   conditions:
@@ -28,7 +28,7 @@
   description: uplink-pdv-idcard-denasvar-desc
   productEntity: PDVDenasvarIDCard
   cost:
-    Doubloon: 3
+    Doubloon: 4
   categories:
   - UplinkPdvIdCards
   conditions:
@@ -43,7 +43,7 @@
   description: uplink-pdv-idcard-asvaran-desc
   productEntity: PDVAsvaranIDCard
   cost:
-    Doubloon: 5
+    Doubloon: 6
   categories:
   - UplinkPdvIdCards
   conditions:
@@ -58,7 +58,7 @@
   description: uplink-pdv-idcard-spasaka-desc
   productEntity: PDVSpasakaIDCard
   cost:
-    Doubloon: 10
+    Doubloon: 11
   categories:
   - UplinkPdvIdCards
   conditions:

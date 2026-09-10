@@ -4,7 +4,7 @@
   description: uplink-faction-development-materials-desc
   productEntity: CrateFactionDevelopmentMaterials
   cost:
-    FederationMilitaryCredit: 50
+    FederationMilitaryCredit: 55
   categories:
   - UplinkSecurityUtility
   conditions:
@@ -25,7 +25,7 @@
   description: uplink-faction-development-materials-desc
   productEntity: CrateFactionDevelopmentMaterials
   cost:
-    Doubloon: 50
+    Doubloon: 55
   categories:
   - UplinkPirateUtility
   conditions:

@@ -4,7 +4,7 @@
   description: uplink-security-wearable-cameratsf-desc
   productEntity: ClothingNeckWearableCameraTSF
   cost:
-    FederationMilitaryCredit: 2 # premium quality trust
+    FederationMilitaryCredit: 3 # premium quality trust; Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -19,7 +19,7 @@
   description: uplink-security-annie-desc
   productEntity: WeaponRifleAnnie
   cost:
-    FederationMilitaryCredit: 75
+    FederationMilitaryCredit: 83 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -34,7 +34,7 @@
   description: uplink-security-eg4-desc
   productEntity: WeaponEnergyRevolver
   cost:
-    FederationMilitaryCredit: 35
+    FederationMilitaryCredit: 39 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityWeapons
   conditions:
@@ -49,7 +49,7 @@
   description: uplink-security-sentry-mk290-desc
   productEntity: WeaponTurretMk290Packed
   cost:
-    FederationMilitaryCredit: 100
+    FederationMilitaryCredit: 110 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityWeapons
   conditions:
@@ -67,7 +67,7 @@
   description: uplink-security-mr8c-desc
   productEntity: WeaponRifleMR8C
   cost:
-    FederationMilitaryCredit: 125
+    FederationMilitaryCredit: 138 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityWeapons
   conditions:
@@ -82,7 +82,7 @@
   description: uplink-security-smilodon-desc
   productEntity: ClothingBackpackDuffelSmilodonBundle
   cost:
-    FederationMilitaryCredit: 250
+    FederationMilitaryCredit: 275 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -98,7 +98,7 @@
   productEntity: ClothingBackpackDuffelSurgeryAdvancedFilled
   icon: { sprite: Objects/Specific/Medical/Surgery/scalpel.rsi, state: laser }
   cost:
-    FederationMilitaryCredit: 20
+    FederationMilitaryCredit: 22 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -119,7 +119,7 @@
   description: uplink-security-portable-recharger-desc
   productEntity: PortableRecharger
   cost:
-    FederationMilitaryCredit: 35
+    FederationMilitaryCredit: 39 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityUtility
   conditions:
@@ -135,7 +135,7 @@
   productEntity: SpaceCash75000
   icon: { sprite: _NF/Objects/Economy/cash.rsi, state: cash_100000 }
   cost:
-    FederationMilitaryCredit: 50
+    FederationMilitaryCredit: 55 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -180,7 +180,7 @@
   description: uplink-security-8x65mm-magazine-desc
   productEntity: Magazine8x65mmSKR
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityAmmo
   conditions:
@@ -195,7 +195,7 @@
   description: uplink-security-8x65mm-box-desc
   productEntity: AmmoBox8x65mmSKR
   cost:
-    FederationMilitaryCredit: 12
+    FederationMilitaryCredit: 14 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityAmmo
   conditions:
@@ -210,7 +210,7 @@
   description: uplink-security-68x52mm-magazine-desc
   productEntity: Magazine68x52mmCaseless
   cost:
-    FederationMilitaryCredit: 2
+    FederationMilitaryCredit: 3 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityAmmo
   conditions:
@@ -225,7 +225,7 @@
   description: uplink-security-68x52mm-box-desc
   productEntity: AmmoBox68x52mmCaselessBig
   cost:
-    FederationMilitaryCredit: 8
+    FederationMilitaryCredit: 9 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityAmmo
   conditions:
@@ -241,7 +241,7 @@
   productEntity: ClothingBeltSheathFilledNavy
   icon: { sprite: _Mono/Objects/Weapons/Melee/ccsabre.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -258,7 +258,7 @@
   description: uplink-security-t0-voucher-desc
   productEntity: ShipVoucherTsfT0
   cost:
-    FederationMilitaryCredit: 25
+    FederationMilitaryCredit: 28 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -275,7 +275,7 @@
   description: uplink-security-t1-spica-voucher-desc
   productEntity: ShipVoucherSpica
   cost:
-    FederationMilitaryCredit: 55
+    FederationMilitaryCredit: 61 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -290,7 +290,7 @@
   description: uplink-security-t1-dagger-voucher-desc
   productEntity: ShipVoucherDagger
   cost:
-    FederationMilitaryCredit: 75
+    FederationMilitaryCredit: 83 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -305,7 +305,7 @@
   description: uplink-security-t1-tarantula-voucher-desc
   productEntity: ShipVoucherTarantula
   cost:
-    FederationMilitaryCredit: 85
+    FederationMilitaryCredit: 94 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -320,7 +320,7 @@
   description: uplink-security-t1-sentinel-voucher-desc
   productEntity: ShipVoucherSentinel
   cost:
-    FederationMilitaryCredit: 85
+    FederationMilitaryCredit: 94 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -335,7 +335,7 @@
   description: uplink-security-t1-mercury-voucher-desc
   productEntity: ShipVoucherMercury
   cost:
-    FederationMilitaryCredit: 65 # Needs 2 man crew for GCS so its discounted
+    FederationMilitaryCredit: 72 # Needs 2 man crew for GCS so its discounted; Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -350,7 +350,7 @@
   description: uplink-security-t1-aldebaran-voucher-desc
   productEntity: ShipVoucherAldebaran
   cost:
-    FederationMilitaryCredit: 80
+    FederationMilitaryCredit: 88 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -369,7 +369,7 @@
   description: uplink-security-t2-andromeda-voucher-desc
   productEntity: ShipVoucherAndromeda
   cost:
-    FederationMilitaryCredit: 165
+    FederationMilitaryCredit: 182 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -384,7 +384,7 @@
   description: uplink-security-t2-spekter-voucher-desc
   productEntity: ShipVoucherSpekter
   cost:
-    FederationMilitaryCredit: 240
+    FederationMilitaryCredit: 264 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -403,7 +403,7 @@
   description: uplink-security-t3-altair-voucher-desc
   productEntity: ShipVoucherAltair
   cost:
-    FederationMilitaryCredit: 345
+    FederationMilitaryCredit: 380 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -418,7 +418,7 @@
   description: uplink-security-t3-fujian-voucher-desc
   productEntity: ShipVoucherFujian
   cost:
-    FederationMilitaryCredit: 320
+    FederationMilitaryCredit: 352 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -433,7 +433,7 @@
   description: uplink-security-t3-polaris-voucher-desc
   productEntity: ShipVoucherPolaris
   cost:
-    FederationMilitaryCredit: 400
+    FederationMilitaryCredit: 440 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -452,7 +452,7 @@
   description: uplink-security-flyssa-voucher-desc
   productEntity: ShipVoucherFlyssa
   cost:
-    FederationMilitaryCredit: 750
+    FederationMilitaryCredit: 825 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityVouchers
   conditions:
@@ -471,7 +471,7 @@
   description: uplink-faction-server-desc
   productEntity: RDServerTSFFlatpack
   cost:
-    FederationMilitaryCredit: 100
+    FederationMilitaryCredit: 110 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityUtility
   conditions:
@@ -486,7 +486,7 @@
   description: uplink-faction-lathe-desc
   productEntity: FactionLatheFlatpack
   cost:
-    FederationMilitaryCredit: 50
+    FederationMilitaryCredit: 55 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityUtility
   conditions:
@@ -517,7 +517,7 @@
   productEntity: WeaponPulseRifle
   icon: { sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 100
+    FederationMilitaryCredit: 110 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
