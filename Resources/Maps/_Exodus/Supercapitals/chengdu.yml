@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/07/2026 19:46:51
-  entityCount: 4477
+  entityCount: 4476
 maps: []
 grids:
 - 1
@@ -18751,27 +18751,6 @@ entities:
     - type: Transform
       pos: 3.5,-36.5
       parent: 1
-- proto: LockerNfsdBailiff
-  entities:
-  - uid: 2780
-    components:
-    - type: Transform
-      pos: -0.5,-16.5
-      parent: 1
-    - type: StorageFill
-      contents:
-      - id: BailiffIDCard
-      - id: BoxHandcuff
-      - id: TSFCommsComputerCircuitboard
-      - id: MedalCaseNfsd
-      - id: Demag
-      - id: RubberStampBailiff
-      - id: WeaponRevolverMateba
-      - id: SpeedLoader357_magnumFMJ
-      - id: RadioHandheldNF
-      - id: NfsdTechFabFlatpack
-      - id: ClothingEyesTSFOfficerGlasses
-      - id: PhoneInstrumentHigh
 - proto: LockerSteel
   entities:
   - uid: 2781
