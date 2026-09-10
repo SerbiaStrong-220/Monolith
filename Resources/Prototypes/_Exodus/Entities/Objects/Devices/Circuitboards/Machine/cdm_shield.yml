@@ -7,3 +7,4 @@
   - type: SafetyDepositRestricted
   - type: MachineBoard
     prototype: ShieldGeneratorCdm
+    flatpackable: false # Preserve the corporate shield's existing packing restriction.

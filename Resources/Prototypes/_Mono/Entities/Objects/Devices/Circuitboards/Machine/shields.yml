@@ -8,7 +8,7 @@
       state: security
     - type: MachineBoard
       prototype: ShieldGeneratorSmall
-      flatpackable: false
+      flatpackable: true # Exodus restore MS-100 flatpacking
       stackRequirements:
         Glass: 10
         Steel: 10
