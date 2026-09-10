@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/07/2026 19:46:51
-  entityCount: 4479
+  entityCount: 4477
 maps: []
 grids:
 - 1
@@ -28007,25 +28007,13 @@ entities:
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 6.5,-8.5
-      parent: 1
-  - uid: 4396
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-6.5
+      pos: 6.5,-7.5
       parent: 1
   - uid: 4397
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: -5.5,-8.5
-      parent: 1
-  - uid: 4398
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -4.5,-6.5
+      pos: -5.5,-7.5
       parent: 1
 - proto: WeaponTurretRainMissile
   entities:
