@@ -162,4 +162,4 @@
     entity: ShieldGeneratorSmall
   - type: StaticPrice
     price: 2000
-    vendPrice: 50000
+    vendPrice: 150000
