@@ -305,7 +305,7 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
         if (profile != null)
         {
             // Frontier: allow pseudonyms
-            var name = loadout != null && !string.IsNullOrEmpty(loadout.EntityName) ? loadout.EntityName : profile.Name;
+            var name = GetRoleCharacterName(profile, loadout, roleProto); // Exodus role codenames and dataset fallback.
             // Janky hack for borgs
             if (TryComp<NameIdentifierComponent>(entity.Value, out var identifier))
             {
@@ -325,6 +325,7 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
         }
 
         DoJobSpecials(job, entity.Value);
+        UpdatePrefixedJobIdentity(entity.Value, prototype, station); // Exodus keep the PDA and ID consistent with the rank prefix.
         _identity.QueueIdentityUpdate(entity.Value);
         return entity.Value;
     }

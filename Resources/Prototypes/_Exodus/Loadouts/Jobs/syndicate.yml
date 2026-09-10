@@ -1,0 +1,6 @@
+# The fixed starting gear comes from the job; survival supplies are added afterwards.
+- type: roleLoadout
+  id: JobSyndicateOperative
+  canCustomizeName: true
+  nameDataset: SyndicateNamesNormal
+  groups: []

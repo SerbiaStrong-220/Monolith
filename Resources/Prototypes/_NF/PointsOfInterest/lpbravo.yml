@@ -12,7 +12,7 @@
 # Exodus nebula-poi-migration:
 # The original `pointOfInterest` entry was removed so that this POI no longer participates
 # in the upstream NF round-start POI roulette (NfAdventureRuleSystem → PointOfInterestSystem).
-# It is now spawned exclusively inside green nebulas via NebulaPoiSpawnSystem; see
+# Exodus: it is now spawned exclusively inside blue nebulas via NebulaPoiSpawnSystem; see
 # Resources/Prototypes/_Exodus/Nebula/pois.yml for the `NebulaPoiLPBravo` entry that carries
 # the addComponents (IFF, SyndicateFOB, SolarPoweredGrid) and display name.
 # The `gameMap` prototype below is kept so map validation tests / station registration still
@@ -37,5 +37,16 @@
         - type: StationNameSetup
           mapNameTemplate: 'Прослушивающий Пункт Браво' # Ru-Localization
         - type: StationJobs
-          availableJobs: {}
+          # Exodus-begin three paid operatives shared between round start and late join.
+          availableJobs:
+            SyndicateOperative: [3, 3]
+          # Exodus-end
         - type: StationDeadDropHintExempt
+        # Exodus-begin Syndicate lobby presentation.
+        - type: ExtraStationInformation
+          icon:
+            sprite: Structures/Wallmounts/flags.rsi
+            state: syndie_flag
+          stationSubtext: frontier-lobby-bravo-subtext
+          stationDescription: frontier-lobby-bravo-description
+        # Exodus-end

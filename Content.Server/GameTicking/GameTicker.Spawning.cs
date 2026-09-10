@@ -199,6 +199,8 @@ namespace Content.Server.GameTicking
             if (jobBans != null)
                 restrictedRoles.UnionWith(jobBans);
 
+            var explicitlySelectedJob = lateJoin && jobId != null; // Exodus distinguish manual entry from automatic paid job assignment.
+
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station,
                 character.JobPriorities,
@@ -217,16 +219,20 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            // Exodus-begin paid lobby roles: prepare and pay before leaving the lobby.
+            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
+            if (!TrySpawnPaidJob(player, station, jobPrototype, explicitlySelectedJob, ref character, out var paidMob))
+                return;
+            // Exodus-end
+
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
 
             DebugTools.AssertNotNull(data);
 
-            var newMind = _mind.CreateMind(data!.UserId, character.Name);
+            var newMind = _mind.CreateMind(data!.UserId, paidMob is { } namedMob ? Name(namedMob) : character.Name); // Exodus paid role codenames.
             _mind.SetUserId(newMind, data.UserId);
-
-            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
@@ -238,7 +244,7 @@ namespace Content.Server.GameTicking
                 spawnPointType = SpawnPointType.Job;
             }
 
-            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character, spawnPointType: spawnPointType, session: player); // Frontier: add session
+            var mobMaybe = paidMob ?? _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character, spawnPointType: spawnPointType, session: player); // Exodus reuse paid spawn; Frontier: add session
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
@@ -279,7 +285,10 @@ namespace Content.Server.GameTicking
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
 
-            _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
+            // Exodus-begin paid jobs already consumed their slot before leaving the lobby.
+            if (paidMob == null)
+                _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
+            // Exodus-end
 
             if (lateJoin)
             {

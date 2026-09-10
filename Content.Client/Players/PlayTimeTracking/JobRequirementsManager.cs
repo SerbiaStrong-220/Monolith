@@ -97,11 +97,12 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
-    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason, bool checkEntryPrice = true) // Exodus allow editing priorities without paying yet.
     {
         reason = null;
 
-        if (_jobBans.Contains(job.ID))
+        // Exodus: paid jobs also respect their antagonist role ban.
+        if (_jobBans.Contains(job.ID) || job.RequiredAntag is { } antag && _antagBans.Contains(antag))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
@@ -109,6 +110,14 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
 
         if (!CheckWhitelist(job, out reason))
             return false;
+
+        // Exodus-begin paid lobby roles
+        if (checkEntryPrice && job.EntryPrice > 0 && (profile == null || profile.BankBalance < job.EntryPrice))
+        {
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("paid-job-insufficient-funds"));
+            return false;
+        }
+        // Exodus-end
 
         var player = _playerManager.LocalSession;
         if (player == null)

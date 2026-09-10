@@ -1,0 +1,70 @@
+- type: job
+  id: SyndicateOperative
+  name: job-name-syndicate-operative
+  description: job-description-syndicate-operative
+  playTimeTracker: JobSyndicateOperative
+  setPreference: true
+  weight: 200 # High-priority paid entry is assigned before free fallback jobs.
+  entryPrice: 2500000
+  requiredAntag: Nukeops
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 72000 # 20 hours
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Vox
+    - Asakim
+    - IPC
+    - Arachnid
+  startingGear: SyndicateGhostOperativeGear
+  icon: JobIconSyndicate
+  supervisors: job-supervisors-syndicate-operative
+  canBeAntag: false
+  alwaysUseSpawner: true
+  applyTraits: false
+  assignedCompany: Syndicate
+  access:
+  - NuclearOperative
+  - SyndicateAgent
+  guides:
+  - EXRuleGhostRoleSyndicateOperative
+  special:
+  - !type:AddImplantSpecial
+    implants:
+    - UplinkImplant
+    - FreedomImplant
+  - !type:AddComponentSpecial
+    components:
+    - type: EntityNamePrefix
+      prefix: random-metadata-name-syndicate-operative
+    - type: Loadout
+      roleLoadout: [RoleSurvivalNukie]
+    - type: StartingOrgans
+      organs:
+        heart: OrganHeartSandevistan
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: LanguageKnowledge
+      speaks:
+      - TauCetiBasic
+      - Sign
+      understands:
+      - TauCetiBasic
+      - Sign
+    - type: NukeOperative
+    - type: StartingMindRole
+      mindRole: MindRoleNukeops
+
+- type: playTimeTracker
+  id: JobSyndicateOperative
+
+- type: department
+  id: Syndicate
+  name: department-Syndicate
+  description: department-Syndicate-description
+  color: "#C94242"
+  weight: 45
+  roles:
+  - SyndicateOperative

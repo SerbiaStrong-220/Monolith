@@ -1352,7 +1352,7 @@ namespace Content.Client.Lobby.UI
                     icon.Texture = jobIcon.Icon.Frame0();
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason, checkEntryPrice: false)) // Exodus check funds at entry, allow editing priorities now.
                     {
                         selector.LockRequirements(reason);
                     }
@@ -1431,6 +1431,7 @@ namespace Content.Client.Lobby.UI
                     jobContainer.AddChild(selector);
                     jobContainer.AddChild(loadoutWindowBtn);
                     category.AddChild(jobContainer);
+                    AddPaidJobPriorityNotice(category, job); // Exodus show the price and automatic charge conditions beside role priorities.
                 }
             }
 

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client._Exodus.LateJoin; // Exodus paid lobby roles
 using Content.Client._NF.LateJoin.Interfaces;
 using Content.Client._NF.LateJoin.ListItems;
 using Content.Client.Lobby;
@@ -83,7 +84,7 @@ public sealed partial class StationPickerControl : PickerControl
             }
 
             var prototype = _prototypeManager.Index(jobPrototype);
-            var jobName = prototype.LocalizedName + jobCount.WrapJobCountInParentheses();
+            var jobName = PaidJobUi.GetName(prototype, jobCount.WrapJobCountInParentheses()); // Exodus paid lobby roles
             Texture? texture = null;
 
             if (_prototypeManager.TryIndex(prototype.Icon, out var jobIcon))
@@ -101,7 +102,7 @@ public sealed partial class StationPickerControl : PickerControl
             var viewState = new JobListItem.ViewState(
                 jobId: jobPrototype,
                 jobName: jobName,
-                toolTip: buttonTooltip,
+                toolTip: PaidJobUi.GetTooltip(prototype, buttonTooltip), // Exodus paid lobby roles
                 disabled: isButtonDisabled,
                 jobIcon: texture
             );

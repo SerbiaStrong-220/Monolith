@@ -1,0 +1,12 @@
+- type: entity
+  id: SpawnPointSyndicateOperative
+  parent: SpawnPointJobBase
+  name: syndicate operative
+  components:
+  - type: SpawnPoint
+    job_id: SyndicateOperative
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Interface/Misc/job_icons.rsi
+      state: Syndicate
