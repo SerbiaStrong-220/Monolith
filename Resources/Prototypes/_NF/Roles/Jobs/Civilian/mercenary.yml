@@ -4,8 +4,8 @@
   description: job-description-mercenary
   playTimeTracker: JobMercenary
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 54000 # mono - change to 15 hr
+  - !type:OverallPlaytimeRequirement
+    time: 36000 # Exodus 10 hours
   canBeAntag: true
   icon: "JobIconMercenary"
   supervisors: job-supervisors-hire
