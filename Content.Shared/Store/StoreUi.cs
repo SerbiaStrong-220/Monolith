@@ -36,6 +36,9 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
     // Exodus
     public readonly StoreSummoningUiData? ActiveSummoning;
 
+    // Exodus: reserve is visible even when no summon is active.
+    public readonly TimeSpan StoredSummoningTime;
+
     public StoreUpdateState(
         HashSet<ListingDataWithCostModifiers> listings,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance,
@@ -45,7 +48,8 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
         bool hasPriceModifier = false,
         float priceMultiplier = 0f,
         float summoningPriceMultiplier = 1f,
-        StoreSummoningUiData? activeSummoning = null)
+        StoreSummoningUiData? activeSummoning = null,
+        TimeSpan storedSummoningTime = default) // Exodus summoning time reserve
     {
         Listings = listings;
         Balance = balance;
@@ -56,6 +60,7 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
         PriceMultiplier = priceMultiplier;
         SummoningPriceMultiplier = summoningPriceMultiplier;
         ActiveSummoning = activeSummoning;
+        StoredSummoningTime = storedSummoningTime; // Exodus summoning time reserve
     }
 }
 

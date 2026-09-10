@@ -125,7 +125,8 @@ public sealed partial class StoreSystem
             uiData.HasPriceModifier,
             uiData.PriceMultiplier,
             uiData.SummoningPriceMultiplier,
-            uiData.ActiveSummoning);
+            uiData.ActiveSummoning,
+            uiData.StoredSummoningTime); // Exodus summoning time reserve
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
@@ -458,6 +459,7 @@ public record struct GetStoreUiDataEvent
     public float PriceMultiplier { get; set; }
     public float SummoningPriceMultiplier { get; set; }
     public StoreSummoningUiData? ActiveSummoning { get; set; }
+    public TimeSpan StoredSummoningTime { get; set; } // Exodus summoning time reserve
 
     public GetStoreUiDataEvent()
     {
@@ -466,5 +468,6 @@ public record struct GetStoreUiDataEvent
         PriceMultiplier = 0f;
         SummoningPriceMultiplier = 1f;
         ActiveSummoning = null;
+        StoredSummoningTime = TimeSpan.Zero; // Exodus summoning time reserve
     }
 }

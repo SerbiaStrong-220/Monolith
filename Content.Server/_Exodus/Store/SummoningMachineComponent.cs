@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Store;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(SummoningMachineSystem))]
 public sealed partial class SummoningMachineComponent : Component
 {
@@ -20,10 +20,22 @@ public sealed partial class SummoningMachineComponent : Component
     [DataField("uiUpdateInterval")]
     public TimeSpan UiUpdateInterval = TimeSpan.FromSeconds(0.25);
 
+    /// <summary>
+    /// Powered idle time available to pay for future summons. Preserved while the machine is unpowered.
+    /// </summary>
+    [DataField]
+    public TimeSpan StoredTime = TimeSpan.Zero;
+
     public ProtoId<ListingPrototype>? ActiveListingId;
     public EntProtoId? ActiveProductEntity;
     public TimeSpan ActiveDuration = TimeSpan.Zero;
     public TimeSpan RemainingDuration = TimeSpan.Zero;
-    public TimeSpan UiAccumulator = TimeSpan.Zero;
+
+    /// <summary>
+    /// Next update of the open store's summoning timers.
+    /// </summary>
+    [ViewVariables, AutoPausedField]
+    public TimeSpan NextUiUpdate;
+
     public SummoningMachineVisualState VisualState = SummoningMachineVisualState.Inactive;
 }

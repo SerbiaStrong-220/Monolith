@@ -42,6 +42,7 @@ public sealed partial class StoreMenu : DefaultWindow
     private float _territoryPriceEffect;
     private float _summoningPriceMultiplier = 1f;
     private StoreSummoningUiData? _activeSummoning;
+    private TimeSpan _storedSummoningTime; // Exodus summoning time reserve
     // Exodus-end
 
     public StoreMenu()
@@ -113,9 +114,10 @@ public sealed partial class StoreMenu : DefaultWindow
         UpdateSummoningStatus();
     }
 
-    public void SetSummoning(StoreSummoningUiData? summoning)
+    public void SetSummoning(StoreSummoningUiData? summoning, TimeSpan storedTime) // Exodus summoning time reserve
     {
         _activeSummoning = summoning;
+        _storedSummoningTime = storedTime; // Exodus summoning time reserve
         UpdateSummoningStatus();
     }
     // Exodus-end
@@ -366,6 +368,14 @@ public sealed partial class StoreMenu : DefaultWindow
     // Exodus-begin summoning status panel
     private void UpdateSummoningStatus()
     {
+        // Exodus: show the reserve even while the gateway is idle.
+        SummoningStoredTimeLabel.Visible = _mode == StoreUiMode.Summoning;
+        if (SummoningStoredTimeLabel.Visible)
+        {
+            SummoningStoredTimeLabel.Text = Loc.GetString("store-ui-summoning-stored-time",
+                ("time", FormatDuration(_storedSummoningTime)));
+        }
+
         if (_mode != StoreUiMode.Summoning || _activeSummoning == null)
         {
             SummoningStatusContainer.Visible = false;
@@ -393,7 +403,8 @@ public sealed partial class StoreMenu : DefaultWindow
         }
         // Exodus-end
 
-        SummoningStatusTimer.Text = FormatDuration(_activeSummoning.Remaining);
+        SummoningStatusTimer.Text = Loc.GetString("store-ui-summoning-remaining-time",
+            ("time", FormatDuration(_activeSummoning.Remaining))); // Exodus: this is the wait after using the reserve.
         SummoningStatusNote.Text = _activeSummoning.Paused
             ? Loc.GetString("store-ui-summoning-paused")
             : Loc.GetString("store-ui-summoning-active");
@@ -407,8 +418,9 @@ public sealed partial class StoreMenu : DefaultWindow
     // Exodus-begin summoning status time formatting
     private static string FormatDuration(TimeSpan duration)
     {
+        // Exodus: accumulated time can exceed a day; keep the total hour count.
         if (duration.TotalHours >= 1)
-            return duration.ToString(@"h\:mm\:ss");
+            return $"{(long) duration.TotalHours}:{duration.Minutes:00}:{duration.Seconds:00}";
 
         return duration.ToString(@"mm\:ss");
     }
