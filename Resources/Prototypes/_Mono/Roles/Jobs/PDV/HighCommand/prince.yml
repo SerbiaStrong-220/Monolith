@@ -10,7 +10,7 @@
   displayWeight: 0
   assignedCompany: PDV
   canBeAntag: false
-  setPreference: true
+  setPreference: false # Exodus hide from lobby job selection
   access:
   - Pirate
   - GrandVizier
