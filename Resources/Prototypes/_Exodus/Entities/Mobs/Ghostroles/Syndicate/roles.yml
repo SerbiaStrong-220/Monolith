@@ -36,6 +36,7 @@
     - EncryptionKeyCommon
     - EncryptionKeyTraffic
     belt:
+    - SyndicateTerritorySmartphone
     - HandHeldMassScannerBorg
     - SyndicateJawsOfLife
     - Magazine762x39mmSubsonic
@@ -84,6 +85,7 @@
     - EncryptionKeyCommon
     - EncryptionKeyTraffic
     belt:
+    - SyndicateTerritorySmartphone
     - HandHeldMassScannerBorg
     - SyndicateJawsOfLife
     - Magazine762x39mmBox
