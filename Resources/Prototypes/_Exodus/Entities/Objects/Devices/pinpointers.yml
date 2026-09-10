@@ -4,6 +4,7 @@
   name: asakim pinpointer
   description: A compact tracker tuned to the closest Asakim neural signature.
   components:
+  - type: SafetyDepositRestricted
   - type: Sprite
     layers:
     - state: pinpointer-syndicate
