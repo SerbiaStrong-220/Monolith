@@ -1,9 +1,9 @@
-# Exodus: шуточные изменения — персональные подписи администрации в Adminwho.
-# Для отключения задайте enabled: false и перезапустите сервер.
-# Исходный файл копируется при сборке; рабочий файл лежит рядом с серверной программой.
-# Редактируется только через файловую систему. Это НЕ CVar и НЕ игровой ресурс.
-enabled: true
+# Exodus: prank overrides — custom admin titles in Adminwho.
+# To disable, set enabled: false and restart the server.
+# The source file is copied during the build; the live file is stored alongside the server executable.
+# Edit this file directly on disk. This is NOT a CVar or a game resource.
+enabled: false
 titles:
   OperatorXeno: "Симплмоб младший"
-  # Добавляйте аккаунты отдельными строками с таким же отступом:
-  # AnotherAdmin: "Другая шуточная подпись"
+  # Add accounts on separate lines using the same indentation:
+  # AnotherAdmin: "Another joke title"

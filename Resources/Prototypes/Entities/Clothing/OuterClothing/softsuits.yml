@@ -98,6 +98,11 @@
   name: paramedic voidsuit # Goob edit
   description: A voidsuit made for paramedics. # Goob edit
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact, Proximity, Splash
+    blockChance: 1
+  # SS220-End
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
     layers:

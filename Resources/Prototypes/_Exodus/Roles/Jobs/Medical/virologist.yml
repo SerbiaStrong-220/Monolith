@@ -1,0 +1,93 @@
+- type: job
+  id: Virologist
+  name: job-name-virologist
+  description: job-description-virologist
+  playTimeTracker: JobVirologist
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 36000 # 10h
+  startingGear: VirologistGear
+  icon: "JobIconVirologist"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+
+- type: startingGear
+  id: VirologistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitVirology
+    back: ClothingBackpackVirology
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLab
+    id: VirologistPDA
+    ears: ClothingHeadsetMedical
+
+- type: playTimeTracker
+  id: JobVirologist
+
+- type: entity
+  parent: MedicalIDCard
+  id: VirologistIDCard
+  name: virologist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idvirologist
+  - type: PresetIdCard
+    job: Virologist
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: VirologistPDA
+  name: virology PDA
+  description: Smells faintly of bleach and quarantine tape.
+  components:
+  - type: Pda
+    id: VirologistIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-virology
+  - type: PdaBorderColor
+    borderColor: "#cbcdd1"
+    accentHColor: "#4977a6"
+    accentVColor: "#bf5319"
+  - type: Icon
+    state: pda-virology
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonPDA
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: SpawnPointVirologist
+  name: virologist
+  components:
+  - type: SpawnPoint
+    job_id: Virologist
+  - type: Sprite
+    layers:
+    - state: green
+    - state: virologist
+
+- type: roleLoadout
+  id: JobVirologist
+  groups:
+  - GroupTankHarness
+  - MedicalDoctorHead
+  - MedicalMask
+  - VirologistJumpsuit
+  - MedicalGloves
+  - VirologistBackpack
+  - VirologistOuterClothing
+  - MedicalShoes
+  - Glasses
+  - SurvivalMedical
+  - Trinkets
+  - GroupSpeciesBreathToolMedical

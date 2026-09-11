@@ -1,0 +1,113 @@
+# Broad antivirals
+# Ganoderma
+- type: reagent
+  id: GanodermaExtract
+  name: reagent-name-ganoderma-extract
+  group: Medicine
+  desc: reagent-desc-ganoderma-extract
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: bitter
+  color: "#6b3410"
+  metabolisms:
+    Medicine:
+      effects: []
+
+# Birfungin
+- type: reagent
+  id: Birfungin
+  name: reagent-name-birfungin
+  group: Medicine
+  desc: reagent-desc-birfungin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: bitter
+  color: "#8fae6b"
+  metabolisms:
+    Medicine:
+      effects: []
+
+# Stable mutagen
+- type: reagent
+  id: StableMutagen
+  name: reagent-name-stable-mutagen
+  group: Toxins
+  desc: reagent-desc-stable-mutagen
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: bitter
+  color: "#3aa856"
+
+- type: reaction
+  id: StableMutagen
+  reactants:
+    TranexamicAcid:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+    RobustHarvest:
+      amount: 1
+  products:
+    StableMutagen: 4
+
+# Vaccine
+- type: reagent
+  id: Vaccine
+  name: reagent-name-vaccine
+  group: Medicine
+  desc: reagent-desc-vaccine
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: bitter
+  color: "#dfe9f2"
+
+# Diagnostic reagents. Exodus uses its existing neuroprotective reagent in the synthesis chain.
+- type: reagent
+  id: Nicergoline
+  name: reagent-name-nicergoline
+  group: Medicine
+  desc: reagent-desc-nicergoline
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#e4a010"
+  metabolisms:
+    Medicine:
+      effects: []
+
+- type: reaction
+  id: Nicergoline
+  reactants:
+    Desoxyephedrine:
+      amount: 1
+    Mannitol:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Nicergoline: 3
+
+- type: reagent
+  id: Heparin
+  name: reagent-name-heparin
+  group: Medicine
+  desc: reagent-desc-heparin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#d0e21b"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleedAmount
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Heparin
+          min: 15
+        amount: 0.25
+
+- type: reaction
+  id: Heparin
+  reactants:
+    SulfuricAcid:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Sodium:
+      amount: 1
+  products:
+    Heparin: 2

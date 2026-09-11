@@ -23,6 +23,10 @@ public sealed partial class StaminaComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float Decay = 5f; // goob edit
 
+    // SS220 / Exodus: modifiers are separate from the base recovery rate.
+    [DataField, AutoNetworkedField]
+    public float DecayModifier = 1f;
+
     /// <summary>
     /// How much time after receiving damage until stamina starts decreasing.
     /// </summary>

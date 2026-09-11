@@ -184,13 +184,23 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Alerts
 
-            var showAlerts = msg.Unrevivable == true || msg.Uncloneable == true || msg.Bleeding == true; // Frontier: add Uncloneable
+            var showAlerts = msg.Unrevivable == true || msg.Uncloneable == true || msg.Bleeding == true || msg.HasViruses; // SS220 / Exodus: virus alert.
 
             AlertsDivider.Visible = showAlerts;
             AlertsContainer.Visible = showAlerts;
 
             if (showAlerts)
                 AlertsContainer.DisposeAllChildren();
+
+            // SS220 / Exodus-begin
+            if (msg.HasViruses)
+                AlertsContainer.AddChild(new RichTextLabel
+                {
+                    Text = Loc.GetString("health-analyzer-report-virus-detected"),
+                    Margin = new Thickness(0, 4),
+                    MaxWidth = 300,
+                });
+            // SS220 / Exodus-end
 
             if (msg.Unrevivable == true)
                 AlertsContainer.AddChild(new RichTextLabel
@@ -350,7 +360,7 @@ namespace Content.Client.HealthAnalyzer.UI
             {
                 // TODO: PartStatusUIController and make it use layers instead of TextureRects when EE refactors alerts.
                 string enumName = Enum.GetName(typeof(TargetBodyPart), bodyPart) ?? "Unknown";
-                int enumValue = (int) integrity;
+                int enumValue = (int)integrity; // Exodus formatting
                 var rsi = new SpriteSpecifier.Rsi(new ResPath($"/Textures/_Shitmed/Interface/Targeting/Status/{enumName.ToLowerInvariant()}.rsi"), $"{enumName.ToLowerInvariant()}_{enumValue}");
                 // Shitcode with love from Russia :)
                 if (!sprite.TryGetLayer(layer, out _))

@@ -1,0 +1,11 @@
+- type: entity
+  parent: Paper
+  id: PaperVirusReport
+  name: virus analysis report
+  description: A laboratory report printed by a disease diagnoser.
+
+- type: entity
+  parent: Paper
+  id: PaperVaccineReport
+  name: vaccine analysis report
+  description: A laboratory report printed by a vaccinator.

@@ -225,6 +225,11 @@
   name: plague doctor suit
   description: A bad omen.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 0.9
+  # SS220-End
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi
   - type: Clothing

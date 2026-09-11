@@ -94,6 +94,10 @@ namespace Content.Server.Medical
                 solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), vomitAmount); // TODO: Dehardcode vomit prototype
             }
 
+            // Exodus-begin: allow symptoms to contribute actual bodily fluids to vomit.
+            var ev = new Content.Shared._Exodus.Nutrition.VomitEvent(solution);
+            RaiseLocalEvent(uid, ref ev);
+            // Exodus-end
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
             {
                 _forensics.TransferDna(puddle, uid, false);

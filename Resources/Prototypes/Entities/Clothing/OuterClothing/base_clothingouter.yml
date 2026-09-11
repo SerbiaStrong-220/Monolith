@@ -134,6 +134,11 @@
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact, Proximity, Splash
+    blockChance: 0.9
+  # SS220-End
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -207,6 +212,11 @@
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact, Proximity, Splash
+    blockChance: 0.9
+  # SS220-End
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000

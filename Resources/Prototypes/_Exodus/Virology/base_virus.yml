@@ -1,0 +1,9 @@
+# The generic virus entity. Every strain — pristine or mutant — spawns from this and is populated from its
+# descriptor/prototype, then is kept in server nullspace and tracked by the host's VirusHolder.
+# It carries no visuals; per-stage symptom components are applied to the host.
+- type: entity
+  id: BaseVirus
+  name: virus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Virus

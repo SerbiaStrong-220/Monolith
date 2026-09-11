@@ -331,7 +331,12 @@ public sealed partial class DrinkSystem : SharedDrinkSystem
         _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
-        _stomach.TryTransferSolution(firstStomach.Value.Owner, drained, firstStomach.Value.Comp1);
+        // SS220 / Exodus: successful drinking can transmit contamination from the container.
+        if (_stomach.TryTransferSolution(firstStomach.Value.Owner, drained, firstStomach.Value.Comp1))
+        {
+            var drank = new Content.Shared._Exodus.Nutrition.AfterDrinkEvent(entity.Owner);
+            RaiseLocalEvent(args.Target.Value, ref drank);
+        }
 
         _forensics.TransferDna(entity, args.Target.Value);
 

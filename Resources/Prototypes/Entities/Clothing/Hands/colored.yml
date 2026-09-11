@@ -327,6 +327,13 @@
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 0.9
+  # SS220-End
+
+# Budget Insulated Gloves
   - type: FingerprintMask
   - type: Sprite
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi

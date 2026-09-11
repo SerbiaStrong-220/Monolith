@@ -1,0 +1,28 @@
+- type: listing
+  id: UplinkVirusImmunityImplanter
+  name: uplink-virus-immunity-implanter-name
+  description: uplink-virus-immunity-implanter-desc
+  icon: { sprite: /Textures/Objects/Specific/Medical/implanter.rsi, state: implanter1 }
+  productEntity: VirusImmunityImplanter
+  cost:
+    Telecrystal: 0
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+#Guns
+
+- type: listing
+  id: UplinkRedDeathVirusSample
+  name: uplink-red-death-name
+  description: uplink-red-death-desc
+  icon: { sprite: Objects/Specific/Chemistry/vial.rsi, state: vial-1 }
+  productEntity: RedDeathVirusSample
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkChemicals

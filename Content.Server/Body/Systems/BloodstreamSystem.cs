@@ -152,7 +152,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
-                    (float) bloodstream.UpdateInterval.TotalSeconds * 2,
+                    (float)bloodstream.UpdateInterval.TotalSeconds * 2, // Exodus formatting
                     applySlur: false);
                 _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
@@ -415,7 +415,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
             _alertsSystem.ClearAlert(uid, component.BleedingAlert);
         else
         {
-            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            var severity = (short)Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10); // Exodus formatting
             _alertsSystem.ShowAlert(uid, component.BleedingAlert, severity);
         }
 
@@ -483,15 +483,32 @@ public sealed partial class BloodstreamSystem : EntitySystem
 
     private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
     {
+        // Exodus-begin: replace shared metadata so saved samples keep their DNA and virus state.
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
-            foreach (var reagent in bloodSolution.Contents)
+            var bloodData = GetEntityBloodData(entity.Owner);
+            for (var i = 0; i < bloodSolution.Contents.Count; i++)
             {
-                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
-                reagentData.RemoveAll(x => x is DnaData);
-                reagentData.AddRange(GetEntityBloodData(entity.Owner));
+                var reagent = bloodSolution.Contents[i];
+                var reagentData = new List<ReagentData>();
+                if (reagent.Reagent.Data is { } previous)
+                {
+                    foreach (var data in previous)
+                    {
+                        if (data is not DnaData and not Content.Shared._Exodus.Virology.VirusData)
+                            reagentData.Add(data.Clone());
+                    }
+                }
+
+                foreach (var data in bloodData)
+                    reagentData.Add(data.Clone());
+
+                bloodSolution.Contents[i] = new ReagentQuantity(
+                    new ReagentId(reagent.Reagent.Prototype, reagentData), reagent.Quantity);
             }
+            _solutionContainerSystem.UpdateChemicals(entity.Comp.BloodSolution.Value);
         }
+        // Exodus-end
     }
 
     /// <summary>
@@ -505,12 +522,17 @@ public sealed partial class BloodstreamSystem : EntitySystem
         if (TryComp<DnaComponent>(uid, out var donorComp))
         {
             dnaData.DNA = donorComp.DNA;
-        } else
+        }
+        else // Exodus formatting
         {
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
         }
 
         bloodData.Add(dnaData);
+
+        // SS220 / Exodus: newly regenerated blood carries the host's current strains.
+        var ev = new Content.Shared._Exodus.Virology.GetBloodDataEvent(bloodData);
+        RaiseLocalEvent(uid, ref ev);
 
         return bloodData;
     }

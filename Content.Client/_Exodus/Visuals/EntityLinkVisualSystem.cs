@@ -137,7 +137,7 @@ internal sealed class EntityLinkVisualOverlay : Overlay
             var remaining = link.EndTime - curTime;
             var fade = style.FadeDuration <= TimeSpan.Zero
                 ? 1f
-                : Math.Clamp((float) (remaining / style.FadeDuration), 0f, 1f);
+                : Math.Clamp((float)(remaining / style.FadeDuration), 0f, 1f);
 
             DrawLink(
                 args,

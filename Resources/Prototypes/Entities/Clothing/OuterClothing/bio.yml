@@ -5,6 +5,10 @@
   suffix: Generic
   description: A suit that protects against biological contamination.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact, Splash
+  # SS220-End
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
@@ -75,6 +79,10 @@
   suffix: Virology
   description: A suit that protects against biological contamination, in Virology colors.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact, Splash
+  # SS220-End
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing

@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseFlatpack
+  id: DiseaseDiagnoserFlatpack
+  name: disease diagnoser flatpack
+  components:
+  - type: Flatpack
+    entity: DiseaseDiagnoser
+
+- type: entity
+  parent: BaseFlatpack
+  id: VaccinatorFlatpack
+  name: vaccinator flatpack
+  components:
+  - type: Flatpack
+    entity: Vaccinator
+
+- type: entity
+  parent: ChemistryEmptyVial
+  id: VirologyNicergolineVial
+  name: nicergoline vial
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nicergoline
+          Quantity: 30
+
+- type: entity
+  parent: CrateMedical
+  id: CrateVirologyResponse
+  name: virology response crate
+  description: Packed virology machines, sampling supplies and DNA decoding reagent. The machines require power.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DiseaseDiagnoserFlatpack
+        - id: VaccinatorFlatpack
+        - id: VirologyNicergolineVial
+        - id: ChemistryEmptyVial
+          amount: !type:ConstantNumberSelector
+            value: 3
+        - id: Syringe
+          amount: !type:ConstantNumberSelector
+            value: 3
+        - id: Beaker
+          amount: !type:ConstantNumberSelector
+            value: 2
+        - id: HandLabeler
+
+- type: cargoProduct
+  id: VirologyResponse
+  icon:
+    sprite: _Exodus/Structures/Machines/diagnoser.rsi
+    state: icon
+  product: CrateVirologyResponse
+  cost: 9000
+  category: cargoproduct-category-name-medical
+  group: market

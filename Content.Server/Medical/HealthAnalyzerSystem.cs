@@ -65,7 +65,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
             if (component.NextUpdate > _timing.CurTime)
                 continue;
 
-            if (component.ScannedEntity is not {} patient)
+            if (component.ScannedEntity is not { } patient) // Exodus formatting
                 continue;
 
             if (Deleted(patient))
@@ -281,9 +281,12 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
             bleeding,
             unrevivable,
             uncloneable, // Frontier
-            // Shitmed Change
-            body,
+            body, // Shitmed Change; Exodus formatting
             part != null ? GetNetEntity(part) : null
-        ));
+        )
+        {
+            HasViruses = TryComp<Content.Shared._Exodus.Virology.VirusHolderComponent>(target, out var viruses)
+                && viruses.Viruses.Count > 0, // SS220 / Exodus
+        });
     }
 }

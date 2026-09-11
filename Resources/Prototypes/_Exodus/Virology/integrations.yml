@@ -1,0 +1,49 @@
+- type: entity
+  id: VirusImmunityImplanter
+  name: virus immunity implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: VirusImmunityImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: VirusImmunityImplant
+  name: virus immunity implant
+  description: A microscopic chip that renders the bearer immune to every virus.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: VirusImmunity
+
+- type: entity
+  id: VirusOutbreak
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    weight: 7
+    earliestStart: 60
+    minimumPlayers: 15
+    reoccurrenceDelay: 38
+  - type: VirusOutbreakRule
+    minVictims: 1
+    maxVictims: 2
+
+- type: guideEntry
+  id: Virology
+  name: guide-name-virology
+  text: "/ServerInfo/_Exodus/Guidebook/Medical/virology.xml"
+  children:
+  - VirologyKnownViruses
+
+- type: guideEntry
+  id: VirologyKnownViruses
+  name: guide-name-virology-known-viruses
+  text: "/ServerInfo/_Exodus/Guidebook/Medical/known_viruses.xml"
+
+- type: trait
+  id: SkillSuppressed
+  name: trait-skill-suppressed-name
+  description: trait-skill-suppressed-desc
+  category: Disabilities
+  components:
+  - type: SkillSuppression

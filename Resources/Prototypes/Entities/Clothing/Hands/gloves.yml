@@ -137,6 +137,11 @@
   name: latex gloves
   description: Thin sterile latex gloves. Basic PPE for any doctor.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 1
+  # SS220-End
   - type: Sprite
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: Clothing
@@ -151,6 +156,11 @@
   name: nitrile gloves
   description: High-quality nitrile gloves. Expensive medical PPE.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 1
+  # SS220-End
   - type: Sprite
     sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Clothing
@@ -434,6 +444,13 @@
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 1
+  # SS220-End
+
+# TODO Make lubed items not slip in hands
   - type: Sprite
     sprite: Clothing/Hands/Gloves/forensic.rsi
   - type: Clothing
@@ -447,6 +464,13 @@
   name: rubber gloves
   description: High-quality rubber gloves, squeaky to do some cleaning!
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 1
+  # SS220-End
+
+#Knuckledusters
   - type: Sprite
     sprite: Clothing/Hands/Gloves/janitor.rsi
   - type: Clothing

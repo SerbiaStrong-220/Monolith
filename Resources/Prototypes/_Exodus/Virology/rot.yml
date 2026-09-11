@@ -1,0 +1,333 @@
+- type: entity
+  parent: BaseVirus
+  id: VirusRot
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Virus
+    nameLoc: virus-rot-name
+    randomOutbreakEligible: false
+    transmission:
+      contactChance: 0.15
+      proximityChance: 0.015
+      proximityRange: 2
+    symptoms:
+    - RotSyndrome
+
+- type: virusSymptom
+  id: RotSyndrome
+  name: pathology-rot-name
+  genome: Dna
+  resetProgressOnInfection: true
+  stages:
+  - detection:
+      description: pathology-rot-detection-1
+    progressConditions:
+    - !type:VirusTimeProgressCondition
+      delay: 8m
+  - components:
+    - type: VirusDogVitality
+      threshold: 40
+      deathThresholdOffset: -40
+    effects:
+    - !type:VirusDamageEffect
+      damage:
+        types:
+          Cellular: 0.015
+    detection:
+      description: pathology-rot-detection-2
+    manifestation:
+      visible: true
+      examineText: pathology-rot-examine-2
+    progressMessage: pathology-rot-progress-2
+    progressConditions:
+    - !type:VirusAnyProgressCondition
+      conditions:
+      - !type:VirusTimeProgressCondition
+        delay: 10m
+      - !type:VirusDamageProgressCondition
+        deathThresholdFraction: 0.25
+  - components:
+    - type: VirusDogVitality
+      threshold: 40
+      deathThresholdOffset: -40
+    - type: BloodVomit
+      interval: 90
+      bloodAmount: 15
+    - type: VirusMovementModifier
+      walk: 0.9
+      sprint: 0.85
+    effects:
+    - !type:VirusDamageEffect
+      damage:
+        types:
+          Cellular: 0.04
+    detection:
+      description: pathology-rot-detection-3
+    manifestation:
+      visible: true
+      examineText: pathology-rot-examine-3
+    progressMessage: pathology-rot-progress-3
+    progressConditions:
+    - !type:VirusAnyProgressCondition
+      conditions:
+      - !type:VirusTimeProgressCondition
+        delay: 10m
+      - !type:VirusDamageProgressCondition
+        deathThresholdFraction: 0.25
+  - components:
+    - type: VirusDogVitality
+      threshold: 40
+      deathThresholdOffset: -40
+    - type: BloodVomit
+      interval: 45
+      bloodAmount: 25
+    - type: VirusMovementModifier
+      walk: 0.75
+      sprint: 0.65
+    - type: VirusBrood
+      symptom: RotSyndrome
+      offspring: MobRotSpawn
+      burstEffect: RotHatchEffect
+      incubatingMessage: rot-corpse-examine
+      minDelay: 60
+      maxDelay: 120
+      healthPerOffspring: 75
+    effects:
+    - !type:VirusDamageEffect
+      damage:
+        types:
+          Cellular: 0.75
+    detection:
+      description: pathology-rot-detection-4
+    manifestation:
+      visible: true
+      examineText: pathology-rot-examine-4
+    progressMessage: pathology-rot-progress-4
+
+- type: entity
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobRotSpawn
+  name: rot spawn
+  description: A short-lived carrier grown inside a terminal victim. Destroy it before it takes root.
+  components:
+  - type: VirusImmunity
+  - type: VirusOffspring
+    initialVirus: VirusRot
+    remains: RotGrowth
+    decayEffect: RotDecayEffect
+    lifetime: 300
+    infectionChance: 0.65
+    searchRange: 10
+  - type: HTN
+    sleepWithoutPlayers: false
+    rootTask:
+      task: VirusCarrierCompound
+    blackboard:
+      NavClimb: !type:Bool true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_spawn.rsi
+    layers:
+    - state: alive
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: CreatureAnimationVisuals
+    idleState: alive
+    movingState: running
+    attackState: attack
+    attackDuration: 0.6
+    spawnState: emerge
+    spawnDuration: 0.72
+    dyingState: dying
+    deathDuration: 0.96
+    deadState: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 3
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 75
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcClaw
+    attackRate: 0.8
+    damage:
+      types:
+        Slash: 3
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: htnCompound
+  id: VirusCarrierCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:VirusTargetOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        shutdownState: PlanFinished
+        pathfindInPlanning: true
+        removeKeyOnFinish: false
+        brakeMaxVelocity: null
+        targetKey: TargetCoordinates
+        pathfindKey: TargetPathfind
+        rangeKey: MeleeRange
+    - !type:HTNPrimitiveTask
+      operator: !type:MeleeOperator
+        targetKey: Target
+        targetState: Critical
+      preconditions:
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: MeleeRange
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: entity
+  id: RotGrowth
+  name: rot growth
+  description: A rooted colony spreading rot through the surrounding air. Cut or burn it away.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_growth.rsi
+    state: alive
+    drawdepth: SmallObjects
+    noRot: true
+  - type: CreatureAnimationVisuals
+    idleState: alive
+    spawnState: growing
+    spawnDuration: 1.2
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - LowImpassable
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 330
+    coldDamageThreshold: 0
+    heatDamage:
+      types:
+        Heat: 2
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 3
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [ Touch ]
+  - type: Appearance
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+  - type: VirusReservoir
+    initialVirus: VirusRot
+    range: 2
+    infectionChance: 0.3
+
+- type: entity
+  id: RotHatchEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_burst.rsi
+    state: burst
+    drawdepth: Effects
+    noRot: true
+  - type: TimedDespawn
+    lifetime: 0.8
+
+- type: entity
+  id: RotDecayEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_decay.rsi
+    state: decay
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 1.2
+
+- type: entity
+  parent: ChemistryEmptyVial
+  id: RotVirusSample
+  suffix: Rot
+  components:
+  - type: VirusSample
+    virus: VirusRot
+
+- type: entity
+  parent: BaseGameRule
+  id: ExodusRotRule
+  components:
+  - type: VirusEpidemicRule
+    virus: VirusRot
+    symptom: RotSyndrome
+    preparationMessage: rot-mode-preparation
+    warningMessages:
+    - rot-mode-warning-1
+    - rot-mode-warning-2
+    - rot-mode-warning-3
+    resurgenceMessage: rot-mode-resurgence
+    controlledMessage: rot-mode-controlled
+    roundEndMessage: rot-mode-round-end
+    preparation: 1800
+    quietPeriod: 600
+    playersPerCarrier: 25
+    maxCarriers: 4
+
+- type: gamePreset
+  id: ExodusRot
+  alias: [ rot ]
+  name: rot-mode-title
+  description: rot-mode-description
+  showInVote: true
+  minPlayers: 1 # Requested solo test; normal minimum is 5 players.
+  rules:
+  # Keep the standard sector rules, then add the epidemic.
+  - NFAdventure
+  - BasicStationEventScheduler
+  - BluespaceEventScheduler
+  - BluespaceDungeonEventScheduler
+  - BluespaceSalvageEventScheduler
+  - SmugglingEventScheduler
+  - FrontierRoundstartVariation
+  - MonoMonolithicEventsScheduler
+  - RoundEndRuleHour8
+  - ExodusRotRule

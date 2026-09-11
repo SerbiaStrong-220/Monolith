@@ -1,0 +1,15 @@
+- type: technology
+  id: DiseaseMachinesTech
+  name: research-technology-disease-machines
+  icon:
+    sprite: _Exodus/Structures/Machines/diagnoser.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  technologyPrerequisites:
+  - IndustrialMedicine
+  position: -3, 10
+  recipeUnlocks:
+  - DiagnoserMachineCircuitboard
+  - VaccinatorMachineCircuitboard

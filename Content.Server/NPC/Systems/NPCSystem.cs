@@ -187,6 +187,15 @@ namespace Content.Server.NPC.Systems
                 if (_mobState.IsIncapacitated(npcUid))
                     continue;
 
+                // Exodus-begin: some NPCs must interact with unattended animals.
+                if (!htn.SleepWithoutPlayers)
+                {
+                    if (!IsAwake(npcUid, htn))
+                        WakeNPC(npcUid, htn);
+                    continue;
+                }
+                // Exodus-end
+
                 var npcCoords = npcTransform.Coordinates;
                 var hasNearbyPlayer = false;
 

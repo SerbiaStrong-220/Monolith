@@ -52,6 +52,7 @@
       # Exodus-Implants-Start
       - StimulantsImplant
       - CombatImplant
+      - VirusImmunityImplant # SS220 / Exodus: immunity ends when the implant is extracted.
       # Exodus-Implants-End
       deimplantFailureDamage:
         types:
