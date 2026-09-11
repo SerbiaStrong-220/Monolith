@@ -35,6 +35,9 @@ public sealed partial class InjectorSystem : SharedInjectorSystem
 
     private bool TryUseInjector(Entity<InjectorComponent> injector, EntityUid target, EntityUid user)
     {
+        if (!CanUseNeedle(target, user)) // SS220 / Exodus: recheck after the DoAfter.
+            return false;
+
         var isOpenOrIgnored = injector.Comp.IgnoreClosed || !_openable.IsClosed(target);
         // Handle injecting/drawing for solutions
         if (injector.Comp.ToggleState == InjectorToggleMode.Inject)
@@ -110,6 +113,9 @@ public sealed partial class InjectorSystem : SharedInjectorSystem
     /// </summary>
     private void InjectDoAfter(Entity<InjectorComponent> injector, EntityUid target, EntityUid user)
     {
+        if (!CanUseNeedle(target, user)) // SS220 / Exodus: avoid starting an impossible injection.
+            return;
+
         if (HasComp<BlockInjectionComponent>(target)) // DeltaV
         {
             Popup.PopupEntity(Loc.GetString("injector-component-deny-user"), target, user);
@@ -415,14 +421,14 @@ public sealed partial class InjectorSystem : SharedInjectorSystem
     private void DrawFromBlood(Entity<InjectorComponent> injector, Entity<BloodstreamComponent> target,
         Entity<SolutionComponent> injectorSolution, FixedPoint2 transferAmount, EntityUid user)
     {
-        var drawAmount = (float) transferAmount;
+        var drawAmount = (float)transferAmount; // Exodus formatting
 
         if (SolutionContainers.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
                 ref target.Comp.ChemicalSolution))
         {
             var chemTemp = SolutionContainers.SplitSolution(target.Comp.ChemicalSolution.Value, drawAmount * 0.15f);
             SolutionContainers.TryAddSolution(injectorSolution, chemTemp);
-            drawAmount -= (float) chemTemp.Volume;
+            drawAmount -= (float)chemTemp.Volume; // Exodus formatting
         }
 
         if (SolutionContainers.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,

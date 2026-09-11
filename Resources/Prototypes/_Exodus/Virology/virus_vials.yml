@@ -1,0 +1,48 @@
+- type: entity
+  parent: BaseChemistryEmptyVial
+  id: ChemistryEmptyVial
+  name: vial
+  description: A small vial for virology samples.
+
+- type: entity
+  parent: ChemistryEmptyVial
+  id: ColdVirusSample
+  suffix: Cold
+  components:
+  - type: VirusSample
+    virus: VirusCold
+- type: entity
+  parent: ChemistryEmptyVial
+  id: QuvotVirusSample
+  suffix: Quvot
+  components:
+  - type: VirusSample
+    virus: VirusQuvot
+- type: entity
+  parent: ChemistryEmptyVial
+  id: RedDeathVirusSample
+  suffix: Red Death
+  components:
+  - type: VirusSample
+    virus: VirusRedDeath
+    amount: 15
+- type: entity
+  parent: ChemistryEmptyVial
+  id: CrimsonFeverVirusSample
+  suffix: Crimson fever
+  components:
+  - type: VirusSample
+    virus: VirusCrimsonFever
+
+- type: entity
+  parent: CrateMedical
+  id: CrateVirusSamples
+  name: virus sample crate
+  description: A pair of sealed virus strain samples, one RNA and one DNA.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ColdVirusSample
+        - id: QuvotVirusSample

@@ -3,6 +3,8 @@
   id: BaseBeaker
   abstract: true
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusReactive # SS220 Virology
   - type: Tag
     tags:
     - GlassBeaker
@@ -102,6 +104,8 @@
   id: BaseBeakerMetallic
   abstract: true
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusReactive # SS220 Virology
   - type: Tag
     tags:
     - GlassBeaker

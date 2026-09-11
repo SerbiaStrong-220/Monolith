@@ -1,0 +1,49 @@
+# Action prototypes granted to a carrier by virus symptoms. Each id is referenced by the symptom's
+# behavior component (VirusLaserEyesComponent / FireBreathingComponent).
+
+# "Laser eyes": fire a laser at a clicked tile on a cooldown. Damage scales with the symptom's stage
+# and every shot burns the caster's own eyes. Granted by the laser-eyes symptom.
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: VirusActionLaserEyes
+  name: laser eyes
+  description: Fire a laser from your eyes at a chosen spot. Every shot scorches your own eyes.
+  components:
+  - type: WorldTargetAction
+    useDelay: 4
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    checkCanAccess: false
+    range: 20
+    event: !type:VirusLaserEyesActionEvent
+
+# Terminal "burning blood": hurl a fireball at a clicked tile on a cooldown, catching fire yourself.
+# Granted by the burning-blood symptom's terminal stage.
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: ActionVirusFireBreathing
+  name: fire breathing
+  description: Hurl a fireball at a chosen spot. It burns the target, and you catch fire too.
+  components:
+  - type: WorldTargetAction
+    useDelay: 20
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    checkCanAccess: false
+    range: 20
+    event: !type:FireBreathingActionEvent
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: ActionToggleKeenHearing
+  name: keen hearing
+  description: Listen for nearby heartbeats, even through walls.
+  components:
+  - type: InstantAction
+    useDelay: 2
+    icon: Interface/Actions/ghostHearingToggled.png
+    event: !type:UseKeenHearingEvent

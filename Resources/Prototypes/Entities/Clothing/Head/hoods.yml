@@ -5,6 +5,10 @@
   suffix: Generic
   description: A hood that protects the head and face from biological contaminants.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+  # SS220-End
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: Clothing
@@ -93,6 +97,10 @@
   suffix: Virology
   description: A hood that protects the head and face from biological contaminants.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+  # SS220-End
   - type: IdentityBlocker
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/virology.rsi

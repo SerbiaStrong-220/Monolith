@@ -4,6 +4,11 @@
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+    blockChance: 0.9
+  # SS220-End
   - type: Sprite
     sprite: Clothing/Mask/gas.rsi
   - type: Clothing
@@ -143,6 +148,11 @@
   name: medical mask
   description: A close-fitting sterile mask that can be connected to an air supply.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+    blockChance: 0.6
+  # SS220-End
   - type: Item
     size: Tiny
   - type: Sprite
@@ -185,6 +195,11 @@
   name: breath mask
   description: Might as well keep this on 24/7.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+    blockChance: 0.6
+  # SS220-End
   - type: Item
     size: Tiny
   - type: Sprite
@@ -326,6 +341,10 @@
   name: sterile mask
   description: A sterile mask designed to help prevent the spread of diseases.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+  # SS220-End
   - type: Sprite
     sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
@@ -372,6 +391,11 @@
   name: plague doctor mask
   description: A bad omen.
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Proximity
+    blockChance: 0.9
+  # SS220-End
   - type: Sprite
     sprite: Clothing/Mask/plaguedoctormask.rsi
   - type: Clothing

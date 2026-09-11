@@ -502,5 +502,6 @@ public enum LogType
     /// A lobby transfer between a character's main bank account and savings.
     /// </summary>
     SavingsTransfer = 106,
+    Virology = 107, // SS220 / Exodus: infection, mutation, suppression and vaccination.
     // Exodus-End
 }

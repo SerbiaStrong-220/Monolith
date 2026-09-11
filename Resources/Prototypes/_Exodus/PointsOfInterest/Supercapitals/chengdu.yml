@@ -7,7 +7,7 @@
   parent: [BaseMobilePOI, BaseRepairablePOI]
   name: 'ТСФ | Авианосец Ченджу'
   # Placement is controlled by ChengduNearFalcon in relative_placement.yml.
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, ExodusRot, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Exodus/Supercapitals/chengdu.yml
   addComponents:

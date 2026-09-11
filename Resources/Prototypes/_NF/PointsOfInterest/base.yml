@@ -14,7 +14,7 @@
   abstract: true
   minimumDistance: 4000 # Exodus
   maximumDistance: 8000 # Exodus
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ] # Behold my list of gamerules
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, ExodusRot, MonoAllAtOnce ] # Behold my list of gamerules; Exodus: include Rot in normal sector generation.
   spawnGroup: Optional
   addComponents:
   - type: IffAffiliation # Exodus POIs display corporate control unless explicitly configured otherwise.

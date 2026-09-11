@@ -249,6 +249,7 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
+  - type: VirusSusceptible # SS220 / Exodus: organic species can carry viruses.
   - type: Barotrauma
     damage:
       types:

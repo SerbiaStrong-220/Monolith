@@ -146,6 +146,8 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  # SS220 / Exodus: virology.
+  - type: FireBreathSeal # SS220
   - type: BreathMask
   - type: Sprite
     state: icon # default state used by most inheritors

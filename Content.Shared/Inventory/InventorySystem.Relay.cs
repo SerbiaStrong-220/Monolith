@@ -72,6 +72,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GunShotUserEvent>(RefRelayInventoryEvent); // Exodus
         SubscribeLocalEvent<InventoryComponent, RefreshNightVisionEvent>(RefRelayInventoryEvent); // Exodus upstream PNV
         SubscribeLocalEvent<InventoryComponent, ProjectileHitTargetEvent>(RefRelayInventoryEvent); // Exodus
+        SubscribeLocalEvent<InventoryComponent, Content.Shared._Exodus.Virology.VirusAddAttempt>(RefRelayInventoryEvent); // SS220 / Exodus
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);

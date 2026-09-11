@@ -11,7 +11,7 @@
   parent: [BasePOI, BaseRepairablePOI]
   name: 'ТСФ-ГРАЖД «Звёздное благословение»' # Exodus Stellar Blessing localization
   # Exodus: placement around TSFMCHalcyon is configured by TSFIndustryNearFlagship in _Exodus/PointsOfInterest/relative_placement.yml.
-  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, MonoAllAtOnce ]
+  spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, ExodusRot, MonoAllAtOnce ] # Exodus: include Rot in normal sector generation.
   spawnGroup: Required
   gridPath: /Maps/_Mono/POI/tsfmc_industry.yml
   addComponents:

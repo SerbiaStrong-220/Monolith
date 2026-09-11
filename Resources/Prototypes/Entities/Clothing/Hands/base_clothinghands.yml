@@ -3,6 +3,11 @@
   parent: [Clothing, RecyclableItemClothSmall] # Frontier: added RecyclableItemClothSmall
   id: ClothingHandsBase
   components:
+  # SS220 / Exodus: virology.
+  - type: VirusProtection
+    vectors: Contact
+    blockChance: 0.3
+  # SS220-End
   - type: Sprite
     state: icon
   - type: Clothing

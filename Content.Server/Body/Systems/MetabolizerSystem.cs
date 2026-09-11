@@ -98,7 +98,10 @@ namespace Content.Server.Body.Systems
                 if (_gameTiming.CurTime < metab.NextUpdate)
                     continue;
 
-                metab.NextUpdate += metab.UpdateInterval;
+                // Exodus: query temporary metabolic modifiers without accumulating changes to the base interval.
+                var modifier = new Content.Shared._Exodus.Virology.GetMetabolicMultiplierEvent();
+                RaiseLocalEvent(_organQuery.CompOrNull(uid)?.Body ?? uid, ref modifier);
+                metab.NextUpdate += metab.UpdateInterval * Math.Clamp(modifier.Multiplier, 0.05f, 20f);
                 TryMetabolize((uid, metab));
             }
         }
@@ -149,6 +152,12 @@ namespace Content.Server.Body.Systems
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
+                // SS220 / Exodus: match the reagent prototype independently of blood and vaccine metadata.
+                var attempt = new Content.Shared._Exodus.Virology.ReagentMetabolismAttemptEvent(reagent.Prototype);
+                RaiseLocalEvent(ent.Comp2?.Body ?? solutionEntityUid.Value, ref attempt);
+                if (attempt.Cancelled)
+                    continue;
+
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
 
@@ -183,7 +192,7 @@ namespace Content.Server.Body.Systems
                     // Remove $rate, as long as there's enough reagent there to actually remove that much
                     mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
 
-                    float scale = (float) mostToRemove / (float) rate;
+                    float scale = (float)mostToRemove / (float)rate; // Exodus formatting
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably

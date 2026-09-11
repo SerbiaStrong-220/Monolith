@@ -17,7 +17,7 @@
     - Asakim
     - IPC
     - Arachnid
-  startingGear: SyndicateGhostOperativeGear
+  startingGear: SyndicateRoundstartOperativeGear
   icon: JobIconSyndicate
   supervisors: job-supervisors-syndicate-operative
   canBeAntag: false
@@ -56,6 +56,29 @@
     - type: NukeOperative
     - type: StartingMindRole
       mindRole: MindRoleNukeops
+
+- type: startingGear
+  parent: SyndicateGhostOperativeGear
+  id: SyndicateRoundstartOperativeGear
+  storage:
+    # Replace the backpack contents; equipment, weapon and belt inherit from the shared kit.
+    back:
+    - Telecrystal50
+    - Telecrystal50
+    - PinpointerSyndicatePOI
+    - MicroBombImplanter
+    - DoubleEmergencyOxygenTankFilled
+    - MedkitCombatFilled
+    - SyringeCaseAltFilled
+    - JetpackMiniFilled
+    - C4
+    - C4
+    - C4
+    - AccessBreaker
+    - AmmoBox762x39mmSubsonic
+    - AmmoBox762x39mmSubsonic
+    - EncryptionKeyCommon
+    - EncryptionKeyTraffic
 
 - type: playTimeTracker
   id: JobSyndicateOperative

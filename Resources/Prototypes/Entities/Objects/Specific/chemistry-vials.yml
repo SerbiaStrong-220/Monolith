@@ -6,6 +6,7 @@
   id: BaseChemistryEmptyVial
   description: A small vial.
   components:
+  - type: VirusReactive # SS220 / Exodus: virology reactions in sample vials.
   - type: Tag
     tags:
     - Trash
