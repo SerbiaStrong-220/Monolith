@@ -3,6 +3,8 @@
 
   [locid="The-Hive-description"]
 
+  [locid="guidebook-hive-recognition"]
+
   [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
 
   [locid="guidebook-corporation-tech-disk-acquisition"]
@@ -14,4 +16,6 @@
   [locid="tech-disk-hive-organs-description"]
 
   [locid="guidebook-corporation-tech-disk-usage"]
+
+  [locid="guidebook-medical-biofabrication"]
 </Document>

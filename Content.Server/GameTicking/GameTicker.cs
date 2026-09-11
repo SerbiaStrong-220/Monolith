@@ -88,6 +88,7 @@ namespace Content.Server.GameTicking
             InitializeStatusShell();
             InitializeCVars();
             InitializePlayer();
+            InitializePaidJobs(); // Exodus paid lobby roles
             InitializeLobbyBackground();
             InitializeGamePreset();
             DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/07/2026 19:46:51
-  entityCount: 4479
+  entityCount: 4476
 maps: []
 grids:
 - 1
@@ -10955,7 +10955,7 @@ entities:
     - type: Transform
       pos: -3.5,-23.5
       parent: 1
-- proto: ClothingOuterHardsuitM86
+- proto: ClothingOuterHardsuitM82c
   entities:
   - uid: 1750
     components:
@@ -18751,27 +18751,6 @@ entities:
     - type: Transform
       pos: 3.5,-36.5
       parent: 1
-- proto: LockerNfsdBailiff
-  entities:
-  - uid: 2780
-    components:
-    - type: Transform
-      pos: -0.5,-16.5
-      parent: 1
-    - type: StorageFill
-      contents:
-      - id: BailiffIDCard
-      - id: BoxHandcuff
-      - id: TSFCommsComputerCircuitboard
-      - id: MedalCaseNfsd
-      - id: Demag
-      - id: RubberStampBailiff
-      - id: WeaponRevolverMateba
-      - id: SpeedLoader357_magnumFMJ
-      - id: RadioHandheldNF
-      - id: NfsdTechFabFlatpack
-      - id: ClothingEyesTSFOfficerGlasses
-      - id: PhoneInstrumentHigh
 - proto: LockerSteel
   entities:
   - uid: 2781
@@ -21751,8 +21730,6 @@ entities:
     - type: Transform
       pos: -1.5,-13.5
       parent: 1
-- proto: SuitStorageM86
-  entities:
   - uid: 3297
     components:
     - type: Transform
@@ -28007,25 +27984,13 @@ entities:
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 6.5,-8.5
-      parent: 1
-  - uid: 4396
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-6.5
+      pos: 6.5,-7.5
       parent: 1
   - uid: 4397
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: -5.5,-8.5
-      parent: 1
-  - uid: 4398
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -4.5,-6.5
+      pos: -5.5,-7.5
       parent: 1
 - proto: WeaponTurretRainMissile
   entities:

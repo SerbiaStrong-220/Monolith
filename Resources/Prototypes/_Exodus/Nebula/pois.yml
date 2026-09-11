@@ -59,7 +59,6 @@
   path: /Maps/_Exodus/POI/lpbravo.yml
   spawnIn:
   - NebulaBlueMarker
-  - NebulaGreenMarker
   minDensity: 0.7
   protectedRadius: 3000
   name: "Прослушивающий Пункт Браво"

@@ -13,10 +13,19 @@ public sealed partial class TerritoryMarkerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<TerritoryMarkerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<TerritoryMarkerComponent, GridTerritoryCorporateControllerChangedEvent>(OnCorporateControllerChanged);
     }
 
     private void OnStartup(Entity<TerritoryMarkerComponent> ent, ref ComponentStartup args)
     {
+        SyncBlip(ent);
+    }
+
+    private void OnCorporateControllerChanged(Entity<TerritoryMarkerComponent> ent, ref GridTerritoryCorporateControllerChangedEvent args)
+    {
+        if (TerminatingOrDeleted(ent))
+            return;
+
         SyncBlip(ent);
     }
 
@@ -35,6 +44,8 @@ public sealed partial class TerritoryMarkerSystem : EntitySystem
         blip.RequireNoGrid = false;
         blip.VisibleFromOtherGrids = true;
 
+        TryComp<GridTerritoryComponent>(ent, out var territory);
+
         // Assign a fresh BlipConfig so the radar palette (value equality) picks up label/radius changes on next request.
         blip.Config = new BlipConfig
         {
@@ -45,6 +56,7 @@ public sealed partial class TerritoryMarkerSystem : EntitySystem
             RespectZoom = true,
             Rotate = false,
             Label = ent.Comp.Text,
+            CorporateController = territory?.CorporateController,
         };
     }
 }

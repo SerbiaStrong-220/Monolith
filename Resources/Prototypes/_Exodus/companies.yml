@@ -1,0 +1,6 @@
+- type: company
+  id: Syndicate
+  name: company-name-syndicate
+  color: "#C94242"
+  disabled: true
+  npcFaction: Syndicate

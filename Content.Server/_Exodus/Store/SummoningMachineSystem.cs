@@ -13,6 +13,7 @@ using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Store;
 
@@ -25,13 +26,20 @@ public sealed partial class SummoningMachineSystem : EntitySystem
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SummoningMachineComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SummoningMachineComponent, BeforeStoreBuyAttemptEvent>(OnBeforeStoreBuyAttempt);
         SubscribeLocalEvent<SummoningMachineComponent, GetStoreUiDataEvent>(OnGetStoreUiData);
+    }
+
+    private void OnStartup(Entity<SummoningMachineComponent> ent, ref ComponentStartup args)
+    {
+        ent.Comp.NextUiUpdate = _timing.CurTime + ent.Comp.UiUpdateInterval;
     }
 
     public override void Update(float frameTime)
@@ -39,30 +47,46 @@ public sealed partial class SummoningMachineSystem : EntitySystem
         base.Update(frameTime);
 
         var elapsed = TimeSpan.FromSeconds(frameTime);
+        var now = _timing.CurTime;
         var query = EntityQueryEnumerator<SummoningMachineComponent, StoreComponent, ApcPowerReceiverComponent, PowerChargeComponent>();
         while (query.MoveNext(out var uid, out var summoner, out var store, out var receiver, out var charge))
         {
             var ready = CanOperate(receiver, charge);
-            UpdateVisual(uid, summoner, ready);
+            UpdateVisual((uid, summoner), ready);
 
-            if (summoner.ActiveListingId == null)
-                continue;
-
+            // Each powered second pays for either the current summon or a future one, never both.
             if (ready)
-                summoner.RemainingDuration -= elapsed;
-
-            if (summoner.RemainingDuration <= TimeSpan.Zero)
             {
-                CompleteSummon(uid, summoner, store);
+                var idleTime = elapsed;
+                if (summoner.ActiveListingId != null)
+                {
+                    var spent = TimeSpan.FromTicks(Math.Clamp(summoner.RemainingDuration.Ticks, 0L, elapsed.Ticks));
+                    summoner.RemainingDuration -= spent;
+                    idleTime -= spent;
+                }
+
+                summoner.StoredTime += idleTime;
+            }
+
+            if (ready && summoner.ActiveListingId != null && summoner.RemainingDuration <= TimeSpan.Zero)
+            {
+                CompleteSummon((uid, summoner, store));
                 continue;
             }
 
-            summoner.UiAccumulator += elapsed;
-            if (summoner.UiAccumulator >= summoner.UiUpdateInterval && _ui.IsUiOpen(uid, StoreUiKey.Key))
+            if (!_ui.IsUiOpen(uid, StoreUiKey.Key))
             {
-                summoner.UiAccumulator = TimeSpan.Zero;
-                _store.UpdateUserInterface(null, uid, store);
+                summoner.NextUiUpdate = now + summoner.UiUpdateInterval;
+                continue;
             }
+
+            if (now < summoner.NextUiUpdate)
+                continue;
+
+            summoner.NextUiUpdate += summoner.UiUpdateInterval;
+            // Timers update independently of the full catalog, including while the gateway is idle.
+            _ui.ServerSendUiMessage(uid, StoreUiKey.Key,
+                new SummoningMachineUpdateMessage(summoner.StoredTime, GetActiveSummoning((uid, summoner), ready)));
         }
     }
 
@@ -100,12 +124,21 @@ public sealed partial class SummoningMachineSystem : EntitySystem
         _store.MarkListingPurchased(args.Listing); // Exodus
 
         var duration = GetSummonDuration(args.Listing, ent.Comp);
+        var storedTimeUsed = TimeSpan.FromTicks(Math.Min(duration.Ticks, ent.Comp.StoredTime.Ticks));
+        ent.Comp.StoredTime -= storedTimeUsed;
         ent.Comp.ActiveListingId = args.Listing.ID;
         ent.Comp.ActiveProductEntity = args.Listing.ProductEntity;
         ent.Comp.ActiveDuration = duration;
-        ent.Comp.RemainingDuration = duration;
-        ent.Comp.UiAccumulator = ent.Comp.UiUpdateInterval;
+        ent.Comp.RemainingDuration = duration - storedTimeUsed;
+        ent.Comp.NextUiUpdate = _timing.CurTime;
 
+        if (ent.Comp.RemainingDuration <= TimeSpan.Zero)
+        {
+            CompleteSummon((ent.Owner, ent.Comp, args.Store));
+            return;
+        }
+
+        UpdateVisual(ent, true);
         _store.UpdateUserInterface(args.Buyer, args.StoreUid, args.Store);
     }
 
@@ -113,22 +146,23 @@ public sealed partial class SummoningMachineSystem : EntitySystem
     {
         args.Mode = StoreUiMode.Summoning;
         args.SummoningPriceMultiplier = ent.Comp.DurationMultiplier * ent.Comp.SecondsPerCostUnit;
+        args.StoredSummoningTime = ent.Comp.StoredTime;
 
+        var ready = TryComp(ent.Owner, out ApcPowerReceiverComponent? receiver) &&
+                    TryComp(ent.Owner, out PowerChargeComponent? charge) && CanOperate(receiver, charge);
+        args.ActiveSummoning = GetActiveSummoning(ent, ready);
+    }
+
+    private static StoreSummoningUiData? GetActiveSummoning(Entity<SummoningMachineComponent> ent, bool ready)
+    {
         if (ent.Comp.ActiveListingId == null)
-            return;
+            return null;
 
-        var paused = true;
-        if (TryComp(ent.Owner, out ApcPowerReceiverComponent? receiver) &&
-            TryComp(ent.Owner, out PowerChargeComponent? charge))
-        {
-            paused = !CanOperate(receiver, charge);
-        }
-
-        args.ActiveSummoning = new StoreSummoningUiData(
+        return new StoreSummoningUiData(
             ent.Comp.ActiveListingId.Value,
             ent.Comp.ActiveDuration,
             ent.Comp.RemainingDuration,
-            paused);
+            !ready);
     }
 
     public void RefreshActiveSummon(Entity<SummoningMachineComponent, StoreComponent> ent)
@@ -165,13 +199,14 @@ public sealed partial class SummoningMachineSystem : EntitySystem
 
         summoning.ActiveDuration = newDuration;
         summoning.RemainingDuration = TimeSpan.FromTicks(newRemainingTicks);
-        summoning.UiAccumulator = summoning.UiUpdateInterval;
+        summoning.NextUiUpdate = _timing.CurTime;
 
         _store.UpdateUserInterface(null, uid, store);
     }
 
-    private void CompleteSummon(EntityUid uid, SummoningMachineComponent component, StoreComponent store)
+    private void CompleteSummon(Entity<SummoningMachineComponent, StoreComponent> ent)
     {
+        var (uid, component, store) = ent;
         if (component.ActiveProductEntity != null)
         {
             var direction = _random.NextAngle().ToVec();
@@ -190,7 +225,7 @@ public sealed partial class SummoningMachineSystem : EntitySystem
             ready = CanOperate(receiver, charge);
         }
 
-        UpdateVisual(uid, component, ready);
+        UpdateVisual((uid, component), ready);
     }
 
     private void ClearSummon(SummoningMachineComponent component)
@@ -199,7 +234,7 @@ public sealed partial class SummoningMachineSystem : EntitySystem
         component.ActiveProductEntity = null;
         component.ActiveDuration = TimeSpan.Zero;
         component.RemainingDuration = TimeSpan.Zero;
-        component.UiAccumulator = TimeSpan.Zero;
+        component.NextUiUpdate = _timing.CurTime + component.UiUpdateInterval;
     }
 
     private TimeSpan GetSummonDuration(ListingDataWithCostModifiers listing, SummoningMachineComponent component)
@@ -211,11 +246,12 @@ public sealed partial class SummoningMachineSystem : EntitySystem
 
     private static bool CanOperate(ApcPowerReceiverComponent receiver, PowerChargeComponent charge)
     {
-        return receiver.Powered && charge.Active;
+        return receiver.Powered && charge.Active && charge.SwitchedOn && charge.Intact;
     }
 
-    private void UpdateVisual(EntityUid uid, SummoningMachineComponent component, bool ready)
+    private void UpdateVisual(Entity<SummoningMachineComponent> ent, bool ready)
     {
+        var (uid, component) = ent;
         var newState = ready
             ? component.ActiveListingId != null
                 ? SummoningMachineVisualState.Working

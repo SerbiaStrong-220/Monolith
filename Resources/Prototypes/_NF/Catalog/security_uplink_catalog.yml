@@ -7,7 +7,7 @@
   productEntity: ClothingOuterHardsuitM82c
   icon: { sprite: _Mono/Clothing/OuterClothing/Hardsuits/m82c.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityHardsuits
   conditions:
@@ -23,7 +23,7 @@
   productEntity: ClothingOuterHardsuitM82b
   icon: { sprite: _Mono/Clothing/OuterClothing/Hardsuits/m82b.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityHardsuits
   conditions:
@@ -39,7 +39,7 @@
   productEntity: WeaponPistolMk58
   icon: { sprite: Objects/Weapons/Guns/Pistols/mk58.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -55,7 +55,7 @@
   productEntity: WeaponDisabler
   icon: { sprite: Objects/Weapons/Guns/Battery/disabler.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -71,7 +71,7 @@
   productEntity: Stunbaton
   icon: { sprite: Objects/Weapons/Melee/stunbaton.rsi, state: stunbaton_off }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -87,7 +87,7 @@
   productEntity: WeaponEmpEmitter
   icon: { sprite: _NF/Objects/Weapons/Guns/Projectiles/emp.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 15 #Mono Emmiter price: From 1 to 3
+    FederationMilitaryCredit: 17 #Mono Emmiter price: From 1 to 3; Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -103,7 +103,7 @@
   productEntity: WeaponShotgunEnforcer
   icon: { sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -119,7 +119,7 @@
   productEntity: WeaponRifleLecter
   icon: { sprite: _Mono/Objects/Weapons/Guns/Rifles/lecter.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -151,7 +151,7 @@
   productEntity: WeaponDisablerSMG
   icon: { sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 25 # STUNMETA!!!
+    FederationMilitaryCredit: 28 # STUNMETA!!!; Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -167,7 +167,7 @@
   productEntity: EnergySwordNfsd
   icon: { sprite: Objects/Weapons/Melee/e_sword.rsi, state: e_sword }
   cost:
-    FederationMilitaryCredit: 30
+    FederationMilitaryCredit: 33 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -183,7 +183,7 @@
   productEntity: WeaponEnergyGun
   icon: { sprite: _DV/Objects/Weapons/Guns/Battery/energygun.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -199,7 +199,7 @@
   productEntity: WeaponLauncherRocketEmp
   icon: { sprite: Objects/Weapons/Guns/Launchers/rocket.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 100 # Cost increased pending removal or rebalancing
+    FederationMilitaryCredit: 110 # Cost increased pending removal or rebalancing; Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -216,7 +216,7 @@
   productEntity: HoloprojectorNfsd
   icon: { sprite: _NF/Objects/Devices/Holoprojectors/nfsd.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -232,7 +232,7 @@
   productEntity: HoloprojectorFieldTSF
   icon: { sprite: _NF/Objects/Devices/Holoprojectors/nfsd.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 55
+    FederationMilitaryCredit: 61 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -248,7 +248,7 @@
   productEntity: JetpackNfsdFilled
   icon: { sprite: _NF/Objects/Tanks/Jetpacks/nfsd.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -264,7 +264,7 @@
   productEntity: ClothingShoesBootsMagSecurityFilled # Mono
   icon: { sprite: _NF/Clothing/Shoes/Boots/magboots-security.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -280,7 +280,7 @@
   productEntity: NfsdTechFabCircuitboard
   icon: { sprite: _NF/Objects/Misc/module.rsi, state: nfsd }
   cost:
-    FederationMilitaryCredit: 25
+    FederationMilitaryCredit: 28 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -296,7 +296,7 @@
   productEntity: BoxEncryptionKeyNfsd
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -386,7 +386,7 @@
   description: uplink-security-medical-assembler-desc
   productEntity: MedicalAssemblerFlatpack
   cost:
-    FederationMilitaryCredit: 8
+    FederationMilitaryCredit: 9 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -405,7 +405,7 @@
   description: uplink-security-compact-defibrillator-desc
   productEntity: DefibrillatorCompact
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -424,7 +424,7 @@
   description: uplink-security-syringe-case-desc
   productEntity: SyringeCaseAltFilled
   cost:
-    FederationMilitaryCredit: 50
+    FederationMilitaryCredit: 55 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -441,7 +441,7 @@
   productEntity: CombatMedipen
   icon: { sprite: Objects/Specific/Medical/medipen.rsi, state: morphen }
   cost:
-    FederationMilitaryCredit: 12
+    FederationMilitaryCredit: 14 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -458,7 +458,7 @@
   productEntity: BorgModuleSecurity
   icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
   cost:
-    FederationMilitaryCredit: 50
+    FederationMilitaryCredit: 55 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -474,7 +474,7 @@
   productEntity: WeaponMechCombatPulseRifleTSF
   icon: { sprite: Objects/Specific/Mech/mecha_equipment.rsi, state: mecha_pulse }
   cost:
-    FederationMilitaryCredit: 100
+    FederationMilitaryCredit: 110 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -497,7 +497,7 @@
   productEntity: CartridgeRocketEmp
   icon: { sprite: _Mono/Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi, state: rpg-emp }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -513,7 +513,7 @@
   productEntity: BoxT3SuperCapacitor
   icon: { sprite: Objects/Storage/boxes.rsi, state: box}
   cost:
-    FederationMilitaryCredit: 20
+    FederationMilitaryCredit: 22 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityBundles
   conditions:
@@ -529,7 +529,7 @@
   productEntity: BoxMagazine9x19mmFMJ
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -545,7 +545,7 @@
   productEntity: BoxMagazine556x45mmFMJ
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -561,7 +561,7 @@
   productEntity: BoxMagazine762x51mmFMJ
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -577,7 +577,7 @@
   productEntity: BoxMagazine762x51mmRubber
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -593,7 +593,7 @@
   productEntity: BoxMagazine762x39mmFMJ
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -609,7 +609,7 @@
   productEntity: BoxMagazine46x30mmSubMachineGunTopMountedFMJ
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -625,7 +625,7 @@
   productEntity: BoxMagazine9x19mmRubber
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -641,7 +641,7 @@
   productEntity: BoxMagazine556x45mmRubber
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -657,7 +657,7 @@
   productEntity: BoxMagazine762x39mmRubber
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -673,7 +673,7 @@
   productEntity: HypoBrigmedic
   icon: { sprite: _NF/Objects/Specific/Medical/hypobrigmedic.rsi, state: hypo }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -693,7 +693,7 @@
   productEntity: SyringeAmbuzol
   icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -709,7 +709,7 @@
   productEntity: MedkitCombatFilled
   icon: { sprite: _NF/Objects/Specific/Medical/firstaidkits.rsi, state: blackkit } # Frontier: _NF prefix
   cost:
-    FederationMilitaryCredit: 20
+    FederationMilitaryCredit: 22 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
   conditions:
@@ -730,7 +730,7 @@
   productEntity: WeaponRevolverInspector
   icon: { sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -746,7 +746,7 @@
   productEntity: WeaponRevolverMateba
   icon: { sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -767,7 +767,7 @@
   productEntity: Truncheon
   icon: { sprite: Objects/Weapons/Melee/truncheon.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -783,7 +783,7 @@
   productEntity: PlasteelArmingSword
   icon: { sprite: _NF/Objects/Weapons/Melee/armingsword.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -815,7 +815,7 @@
   productEntity: WeaponPulsePistol
   icon: { sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 85
+    FederationMilitaryCredit: 94 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -836,7 +836,7 @@
   productEntity: WeaponPulseCarbine
   icon: { sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 250
+    FederationMilitaryCredit: 275 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -857,7 +857,7 @@
   productEntity: SecBreachingHammer
   icon: { sprite: Nyanotrasen/Objects/Weapons/Melee/breaching_hammer.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityWeapons
   conditions:
@@ -873,7 +873,7 @@
   productEntity: TelescopicShield
   icon: { sprite: Objects/Weapons/Melee/teleriot_shield.rsi, state: teleriot-on }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -889,7 +889,7 @@
   icon: { sprite: _NF/Objects/Devices/encryption_keys.rsi, state: nfsd_label }
   productEntity: RadioImplanterTsf
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
   - UplinkSecurityUtility
   conditions:
@@ -905,7 +905,7 @@
   productEntity: EnergyShieldNfsd
   icon: { sprite: _NF/Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
   cost:
-    FederationMilitaryCredit: 40
+    FederationMilitaryCredit: 44 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -921,7 +921,7 @@
   productEntity: ClothingMaskGasSheriff
   icon: { sprite: _NF/Clothing/Mask/nfsd_sheriff.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 5 #Mono: From 3 to 1
+    FederationMilitaryCredit: 6 #Mono: From 3 to 1; Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -942,7 +942,7 @@
   productEntity: SpeedLoader357_magnumFMJ
   icon: { sprite: _Mono/Objects/Weapons/Guns/Ammunition/SpeedLoaders/357_magnum/357_magnum_speed_loader.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -958,7 +958,7 @@
   productEntity: SpeedLoader357_magnumRubber
   icon: { sprite: _Mono/Objects/Weapons/Guns/Ammunition/SpeedLoaders/357_magnum/357_magnum_speed_loader.rsi, state: base }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -974,7 +974,7 @@
   productEntity: AmmoBox12_gaugeBuckshot
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -990,7 +990,7 @@
   productEntity: AmmoBox12_gaugeBeanbag
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -1006,7 +1006,7 @@
   productEntity: AmmoBox12_gaugeIncendiary
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 10
+    FederationMilitaryCredit: 11 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -1022,7 +1022,7 @@
   productEntity: AmmoBox12_gaugeSlug
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -1038,7 +1038,7 @@
   productEntity: SpaceCash7500 # Mono: Changed the exchange rate from 1000 to 5000 to 7500
   icon: { sprite: Objects/Economy/cash.rsi, state: cash_1000000 }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -1054,7 +1054,7 @@
   productEntity: SmokeGrenade
   icon: { sprite: Objects/Weapons/Grenades/smoke.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 2
+    FederationMilitaryCredit: 3 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives # Moved to Explosives - Mono
   conditions:
@@ -1070,7 +1070,7 @@
   productEntity: TearGasGrenade
   icon: { sprite: Objects/Weapons/Grenades/tear_gas.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 2
+    FederationMilitaryCredit: 3 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives # Moved to Explosives - Mono
   conditions:
@@ -1086,7 +1086,7 @@
   productEntity: GrenadeFlashBang
   icon: { sprite: Objects/Weapons/Grenades/flashbang.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 2
+    FederationMilitaryCredit: 3 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives # Moved to Explosives - Mono
   conditions:
@@ -1102,7 +1102,7 @@
   productEntity: GrenadeStinger
   icon: { sprite: Objects/Weapons/Grenades/stingergrenade.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 3
+    FederationMilitaryCredit: 4 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives # Moved to Explosives - Mono
   conditions:
@@ -1118,7 +1118,7 @@
   productEntity: EmpGrenadeNfsd
   icon: { sprite: Objects/Weapons/Grenades/empgrenade.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 3
+    FederationMilitaryCredit: 4 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives
   conditions:
@@ -1134,7 +1134,7 @@
   productEntity: ExGrenadeNfsd
   icon: { sprite: Objects/Weapons/Grenades/grenade.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives
   conditions:
@@ -1150,7 +1150,7 @@
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-boomroach }
   productEntity: ReinforcementRadioTSFBoomRoach
   cost:
-    FederationMilitaryCredit: 30
+    FederationMilitaryCredit: 33 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives
   conditions:
@@ -1166,7 +1166,7 @@
   productEntity: GrenadeIncendiaryNfsd
   icon: { sprite: Objects/Weapons/Grenades/pyrogrenade.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 4 # Mono 3->2->10->4
+    FederationMilitaryCredit: 5 # Mono 3->2->10->4; Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives
   conditions:
@@ -1182,7 +1182,7 @@
   productEntity: GrenadeShrapnelNfsd
   icon: { sprite: Objects/Weapons/Grenades/shrapnelgrenade.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 4
+    FederationMilitaryCredit: 5 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives
   conditions:
@@ -1198,7 +1198,7 @@
   productEntity: BreachingCharge
   icon: { sprite: _DV/Objects/Weapons/Bombs/breaching.rsi, state: icon}
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityExplosives
   conditions:
@@ -1214,7 +1214,7 @@
   productEntity: HoverbikeNfsdFlatpack
   icon: { sprite: _NF/Objects/Vehicles/hoverbike.rsi, state: vehicle }
   cost:
-    FederationMilitaryCredit: 15
+    FederationMilitaryCredit: 17 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -1230,7 +1230,7 @@
   productEntity: CrateArmoryLethalNfsd
   icon: { sprite: _NF/Structures/Storage/Crates/nfsd_secure2.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 75
+    FederationMilitaryCredit: 83 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityBundles
   conditions:
@@ -1246,7 +1246,7 @@
   productEntity: ClothingBackpackDuffelNfsdTrackingBundle
   icon: { sprite: _NF/Clothing/Back/Duffels/nfsd_brown.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 20
+    FederationMilitaryCredit: 22 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityBundles
   conditions:
@@ -1262,7 +1262,7 @@
   productEntity: ClothingBackpackDuffelNfsdEmpBundle
   icon: { sprite: _NF/Clothing/Back/Duffels/nfsd_brown.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 20
+    FederationMilitaryCredit: 22 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityBundles
   conditions:
@@ -1278,7 +1278,7 @@
   productEntity: CrateArmoryNonLethalNfsd
   icon: { sprite: _NF/Structures/Storage/Crates/nfsd_secure1.rsi, state: icon }
   cost:
-    FederationMilitaryCredit: 50
+    FederationMilitaryCredit: 55 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityBundles
   conditions:
@@ -1294,7 +1294,7 @@
   productEntity: BoxEmpGrenadesAmmo
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -1310,7 +1310,7 @@
   productEntity: NFBoxDartsTracking
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityAmmo
   conditions:
@@ -1326,7 +1326,7 @@
   productEntity: SpaceBladeSec
   icon: { sprite: _NF/Objects/Fun/spaceblade.rsi, state: secblade }
   cost:
-    FederationMilitaryCredit: 5
+    FederationMilitaryCredit: 6 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:
@@ -1342,7 +1342,7 @@
   productEntity: ContrabandForensicsModule
   icon: { sprite: _NF/Objects/Devices/cartridge.rsi, state: contraband_forensics }
   cost:
-    FederationMilitaryCredit: 20
+    FederationMilitaryCredit: 22 # Exodus: +10%, rounded up.
   categories:
     - UplinkSecurityUtility
   conditions:

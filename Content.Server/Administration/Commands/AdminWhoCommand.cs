@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Shared.Administration;
@@ -44,8 +44,12 @@ public sealed class AdminWhoCommand : IConsoleCommand
             first = false;
 
             sb.Append(admin.Name);
-            if (adminData.Title is { } title)
+            // Exodus-begin: шуточные изменения. Для отката заменить блок следующими исходными строками:
+            // if (adminData.Title is { } title)
+            //     sb.Append($": [{title}]");
+            if (adminMgr.GetAdminTitle(admin) is { } title)
                 sb.Append($": [{title}]");
+            // Exodus-end
 
             if (adminData.Stealth)
                 sb.Append(" (S)");

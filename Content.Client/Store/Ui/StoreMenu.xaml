@@ -7,6 +7,7 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
             <!-- Exodus-begin summoning status panel -->
+            <Label Name="SummoningStoredTimeLabel" Margin="4,4,4,0" Visible="False" />
             <BoxContainer Name="SummoningStatusContainer" Margin="4,4,4,0" Orientation="Vertical" Visible="False">
                 <BoxContainer Orientation="Horizontal">
                     <TextureRect

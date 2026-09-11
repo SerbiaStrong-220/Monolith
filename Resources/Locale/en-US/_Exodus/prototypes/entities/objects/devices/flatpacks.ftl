@@ -19,3 +19,5 @@ ent-BiomassReclaimerFlatpack = biomass reclaimer flatpack
     .desc = A flatpack used for constructing a biomass reclaimer.
 ent-MedicalScannerFlatpack = medical scanner flatpack
     .desc = A flatpack used for constructing a medical scanner.
+ent-ShieldGeneratorSmallFlatpack = MS-100 "Sentinel" shield generator flatpack
+    .desc = A flatpack used for constructing an MS-100 "Sentinel" shield generator.

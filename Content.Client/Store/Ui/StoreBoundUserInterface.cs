@@ -1,4 +1,5 @@
 using Content.Shared.Store;
+using Content.Shared._Exodus.Store; // Exodus summoning time updates
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Store.Components;
@@ -105,7 +106,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
                 _menu?.SetMode(msg.Mode, msg.HasPriceModifier, msg.PriceMultiplier, msg.SummoningPriceMultiplier);
                 _menu?.UpdateBalance(msg.Balance);
-                _menu?.SetSummoning(msg.ActiveSummoning);
+                _menu?.SetSummoning(msg.ActiveSummoning, msg.StoredSummoningTime); // Exodus summoning time reserve
 
                 if (listingsChanged || modeChanged || busyChanged)
                     UpdateListingsWithSearchFilter();
@@ -114,6 +115,25 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 break;
         }
     }
+
+    // Exodus-begin summoning timers update without rebuilding the catalog
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (message is not SummoningMachineUpdateMessage update)
+            return;
+
+        _menu?.SetSummoning(update.ActiveSummoning, update.StoredTime);
+
+        var busy = update.ActiveSummoning != null;
+        if (_summoningBusy == busy)
+            return;
+
+        _summoningBusy = busy;
+        UpdateListingsWithSearchFilter();
+    }
+    // Exodus-end
 
     private void UpdateListingsWithSearchFilter()
     {

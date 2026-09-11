@@ -1,0 +1,11 @@
+- type: territoryIncome
+  id: SyndicateTerritoryIncome
+  name: territory-income-syndicate-title
+  faction: Syndicate
+  accessFaction: Syndicate
+  currencyStack: Telecrystal
+  currencyName: territory-income-currency-tc
+  currencyPerPoint: 5
+  payoutInterval: 300
+  maxWithdrawal: 1000
+  excludeInitialClaims: true

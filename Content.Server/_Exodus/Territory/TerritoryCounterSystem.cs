@@ -118,7 +118,8 @@ public sealed partial class TerritoryCounterSystem : EntitySystem
             _scores[faction] = 0;
     }
 
-    private static int GetPoints(float radius)
+    /// <summary>Influence points contributed by a territory of the given radius.</summary>
+    public static int GetPoints(float radius)
     {
         // Equivalent to round-half-up for positive kilometer values.
         if (radius <= 0)

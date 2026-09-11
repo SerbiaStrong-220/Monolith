@@ -1,0 +1,12 @@
+- type: technology
+  id: ExodusMedicalBiofabrication
+  name: research-technology-exodus-medical-biofabrication
+  entityIcon: MedicalBiofabricator
+  discipline: CivilianServices
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - MedicalBiofabMachineBoard
+  technologyPrerequisites:
+  - IndustrialMedicine
+  position: -3, 11

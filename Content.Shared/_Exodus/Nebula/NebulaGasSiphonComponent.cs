@@ -38,10 +38,10 @@ public sealed partial class NebulaGasSiphonComponent : Component
     public Angle SpaceAxisRotation = Angle.Zero;
 
     /// <summary>
-    /// Minimum nebula density on the parent grid.
+    /// Minimum nebula density (inclusive) on the parent grid.
     /// </summary>
     [DataField]
-    public float MinDensity = 0.75f;
+    public float MinDensity = 0.25f;
 
     /// <summary>
     /// Minimum linear speed (m/s) of the parent grid to operate.

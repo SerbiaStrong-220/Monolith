@@ -149,7 +149,7 @@ public sealed class NebulaGasSiphonSystem : EntitySystem
         siphon.NextUpdate = nextUpdate;
         _siphonQueue.Enqueue(uid, siphon.NextUpdate);
 
-        if (presence.Density <= siphon.MinDensity)
+        if (presence.Density < siphon.MinDensity)
             return;
 
         if (!_powerReceiver.IsPowered(uid))
@@ -861,7 +861,7 @@ public sealed class NebulaGasSiphonSystem : EntitySystem
 
             var hasWorkingFilter = TryGetWorkingFilter(ent.Owner, out _, out _);
             _presenceQuery.TryGetComponent(gridUid, out var presence);
-            var hasSufficientDensity = presence is not null && presence.Density > ent.Comp.MinDensity;
+            var hasSufficientDensity = presence is not null && presence.Density >= ent.Comp.MinDensity;
             var hasProfile = presence is not null && TryGetProfile(presence.Marker, out _);
             var powered = _powerReceiver.IsPowered(ent.Owner);
             _physicsQuery.TryGetComponent(gridUid, out var physics);

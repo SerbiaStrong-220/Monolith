@@ -100,6 +100,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private const float TerritoryTextFadeOutViewDiagMultiplier = 0.9f;
     private const float TerritoryTextHiddenViewDiagMultiplier = 1.35f;
     private readonly Dictionary<string, string> _territoryLabelCache = new(); // Exodus mass-scanner-perf
+    private readonly CorporateTerritoryRingRenderer _corporateTerritoryRings = new(); // Exodus corporate territory rings
     // Exodus-end
     // Exodus-begin dock-label-fade
     private const float DockLabelFadeOutWorldRange = 250f;
@@ -1760,6 +1761,15 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         if (screenRadius <= 0f)
             return;
 
+        // Exodus-begin corporate territory rings
+        // Thin the decoration at maximum range; restore it within the first 25% of zooming in.
+        var zoomProgress = WorldMaxRange > 0f
+            ? Math.Clamp((1f - WorldRange / WorldMaxRange) / 0.25f, 0f, 1f)
+            : 1f;
+        var ringScale = 0.75f + 0.25f * zoomProgress;
+        _corporateTerritoryRings.Draw(handle, Font, position, screenRadius,
+            config.CorporateController, _prototype, UIScale, viewBounds, ringScale);
+        // Exodus-end
         if (!CircleIntersectsBox(position, screenRadius, viewBounds))
             return;
 

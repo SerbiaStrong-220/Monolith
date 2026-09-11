@@ -1,0 +1,10 @@
+- type: factionIcon
+  id: ExodusHiveMember
+  priority: 11
+  visibleToGhosts: false
+  showTo:
+    tags:
+    - Chimera
+  icon:
+    sprite: /Textures/_Exodus/Interface/Misc/company_icons.rsi
+    state: hive

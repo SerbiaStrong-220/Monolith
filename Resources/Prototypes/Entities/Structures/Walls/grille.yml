@@ -108,10 +108,17 @@
     sprite: Structures/Walls/clockwork_grille.rsi
     state: ratvargrille
     layers:
-      - state: ratvargrille
+    - state: ratvargrille
+    - state: electrified # Exodus: restore the layer used by the inherited electrification visualizer.
+      sprite: Effects/electricity.rsi
+      map: ["enum.ElectrifiedLayers.Sparks"]
+      shader: unshaded
+      visible: false
   - type: Icon
     sprite: Structures/Walls/clockwork_grille.rsi
     state: ratvargrille
+  - type: IconSmooth # Exodus: legacy clockwork sprites have no corner states; also inherited by the diagonal grille.
+    mode: NoSprite
   - type: Construction
     graph: ClockGrille
     node: clockGrille

@@ -54,7 +54,7 @@
     range: 3
     footprintLength: 3
     spaceAxisRotation: 0
-    minDensity: 0.75
+    minDensity: 0.25
     minSpeed: 1.5
     fullSpeed: 300
     molesPerSecond: 8

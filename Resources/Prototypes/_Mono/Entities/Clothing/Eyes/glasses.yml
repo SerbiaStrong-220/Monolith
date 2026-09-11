@@ -181,6 +181,7 @@
   name: TSF commander shades
   description: A high tech heads up display purpose built for Federation officers. Usually issued to the commanding officer of a company.
   components:
+  - type: SafetyDepositRestricted # Exodus prevent persistent safety deposit storage
   - type: Sprite
     sprite: _Goobstation/Clothing/Eyes/Glasses/deathsquad.rsi
   - type: Clothing

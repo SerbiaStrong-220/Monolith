@@ -1,7 +1,9 @@
 using System.Numerics;
+using Content.Shared._Mono.Company; // Exodus corporate territory rings
 using Robust.Shared.Map;
 using Robust.Shared.Localization; // Exodus bluespace-map-blips
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes; // Exodus corporate territory rings
 
 namespace Content.Shared._Mono.Radar;
 
@@ -156,6 +158,15 @@ public partial record struct BlipConfig
     /// </summary>
     [DataField]
     public string? Label = null;
+    // Exodus-end
+
+    // Exodus-begin corporate territory rings
+    /// <summary>
+    /// Corporation whose name and color decorate the outside of a territory circle.
+    /// Included in the radar palette so distant territories do not depend on grid PVS.
+    /// </summary>
+    [DataField]
+    public ProtoId<CompanyPrototype>? CorporateController = null;
     // Exodus-end
 
     [DataField]

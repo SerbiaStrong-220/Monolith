@@ -25,6 +25,7 @@
   description: A small remote utilizing bluespace technology to drop in an imperial Tarkhan kit of your choosing.
   parent: BaseItem
   components:
+  - type: SafetyDepositRestricted # Exodus prevent persistent safety deposit storage
   - type: Sprite
     sprite: _Goobstation/Objects/Devices/unique_teleporters.rsi
     state: standard
@@ -47,6 +48,7 @@
   description: A small remote utilizing bluespace technology to drop in a TSF MARSOC kit of your choosing.
   parent: BaseItem
   components:
+  - type: SafetyDepositRestricted # Exodus prevent persistent safety deposit storage
   - type: Sprite
     sprite: _Goobstation/Objects/Devices/unique_teleporters.rsi
     state: standard

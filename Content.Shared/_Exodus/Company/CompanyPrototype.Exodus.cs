@@ -1,10 +1,17 @@
 using Content.Shared.NPC.Prototypes;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Mono.Company;
 
 public sealed partial class CompanyPrototype
 {
+    /// <summary>
+    /// Optional membership icon. Its visibility whitelist defines who can recognize company members.
+    /// </summary>
+    [DataField]
+    public ProtoId<FactionIconPrototype>? StatusIcon { get; private set; }
+
     /// <summary>
     /// Fraction of cash withheld when a company member deposits it through an ATM.
     /// </summary>

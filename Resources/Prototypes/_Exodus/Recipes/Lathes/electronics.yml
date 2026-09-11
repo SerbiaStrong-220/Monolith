@@ -7,3 +7,14 @@
   id: ExodusMiningBoards
   recipes:
   - OreCatcherMachineCircuitboard
+
+- type: latheRecipe
+  id: MedicalBiofabMachineBoard
+  parent: BaseGoldCircuitboardRecipe
+  result: MedicalBiofabMachineBoard
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 2000
+    Gold: 1000
+    Silver: 1000

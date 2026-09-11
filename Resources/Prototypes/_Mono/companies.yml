@@ -244,6 +244,7 @@
   name: The-Hive-name # Ru-Localization
   description: The-Hive-description
   color: "#5918a8"
+  statusIcon: ExodusHiveMember # Exodus company recognition for chimeras
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
   startingItems: # Exodus company-fleet
   - CompanyTechDiskCaseHive # Exodus company-fleet

@@ -126,6 +126,7 @@
 - type: latheRecipePack
   id: MedicalBoards
   recipes:
+  - MedicalBiofabMachineBoard # Exodus medical biofabrication research
   - StasisBedMachineCircuitboard
   - CryoPodMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard

@@ -251,6 +251,10 @@ namespace Content.Server.Administration.Managers
         {
             _sawmill = _logManager.GetSawmill("admin");
 
+            // Exodus-begin: шуточные изменения. При откате удалить этот блок; исходного кода здесь не было.
+            InitializeFixedAdminTitles();
+            // Exodus-end
+
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
@@ -355,7 +359,7 @@ namespace Content.Server.Administration.Managers
             }
             else if (e.NewStatus == SessionStatus.Disconnected)
             {
-                if (_admins.Remove(e.Session, out var reg ) && _cfg.GetCVar(CCVars.AdminAnnounceLogout))
+                if (_admins.Remove(e.Session, out var reg) && _cfg.GetCVar(CCVars.AdminAnnounceLogout)) // Exodus: formatting.
                 {
                     if (reg.Data.Stealth)
                     {
@@ -425,6 +429,11 @@ namespace Content.Server.Administration.Managers
             if (session.Status != SessionStatus.InGame)
                 return null;
 
+            // Exodus-begin: шуточные изменения. При откате удалить этот блок; исходного кода здесь не было.
+            if (result is { } admin)
+                admin.dat.Title = _fixedAdminTitles.GetTitle(session, admin.dat);
+            // Exodus-end
+
             return result;
         }
 
@@ -487,7 +496,7 @@ namespace Content.Server.Administration.Managers
                     Active = !dbData.Deadminned,
                 };
 
-                if (dbData.Title != null  && _cfg.GetCVar(CCVars.AdminUseCustomNamesAdminRank))
+                if (dbData.Title != null && _cfg.GetCVar(CCVars.AdminUseCustomNamesAdminRank)) // Exodus: formatting.
                 {
                     data.Title = dbData.Title;
                 }

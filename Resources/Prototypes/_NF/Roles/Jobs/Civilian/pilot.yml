@@ -4,8 +4,8 @@
   description: job-description-pilot
   playTimeTracker: JobPilot
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 28800 # mono - change to 8hrs
+  - !type:OverallPlaytimeRequirement
+    time: 14400 # Exodus 4 hours
   icon: "JobIconPilot"
   supervisors: job-supervisors-hire
   weight: 2 # Prioritize station & department jobs

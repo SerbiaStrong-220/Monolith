@@ -36,6 +36,7 @@
     - EncryptionKeyCommon
     - EncryptionKeyTraffic
     belt:
+    - SyndicateTerritorySmartphone
     - HandHeldMassScannerBorg
     - SyndicateJawsOfLife
     - Magazine762x39mmSubsonic
@@ -84,6 +85,7 @@
     - EncryptionKeyCommon
     - EncryptionKeyTraffic
     belt:
+    - SyndicateTerritorySmartphone
     - HandHeldMassScannerBorg
     - SyndicateJawsOfLife
     - Magazine762x39mmBox
@@ -134,8 +136,9 @@
     - Sign
   - type: RandomMetadata
     nameSegments:
-    - random-metadata-name-syndicate-operative
     - SyndicateNamesNormal
+  - type: EntityNamePrefix
+    prefix: random-metadata-name-syndicate-operative
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -179,8 +182,9 @@
     roleLoadout: [ RoleSurvivalNukie ]
   - type: RandomMetadata
     nameSegments:
-    - random-metadata-name-syndicate-leader
     - SyndicateNamesNormal
+  - type: EntityNamePrefix
+    prefix: random-metadata-name-syndicate-leader
   - type: TTS
     voice: outworld_destroyer_dota_2
 

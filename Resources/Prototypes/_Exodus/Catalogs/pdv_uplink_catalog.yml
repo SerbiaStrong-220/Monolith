@@ -7,7 +7,7 @@
   icon: { sprite: _Mono/Objects/ShuttleWeapons/flare.rsi, state: space_artillery }
   productEntity: WeaponTurretFlareFlatpack
   cost:
-    Doubloon: 15
+    Doubloon: 17
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -23,7 +23,7 @@
   icon: { sprite: _Exodus/Structures/Machines/ship_armor_placeholder.rsi, state: armor_stage_0 }
   productEntity: ShipArmorModuleFlatpack
   cost:
-    Doubloon: 4
+    Doubloon: 5
   categories:
   - UplinkPirateEquipment
   conditions:
@@ -39,7 +39,7 @@
   icon: { sprite: _Exodus/Objects/ShuttleWeapons/typhon.rsi, state: space_artillery }
   productEntity: WeaponTurretTyphonFlatpack
   cost:
-    Doubloon: 35
+    Doubloon: 39
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -57,7 +57,7 @@
   description: uplink-pdv-banner-desc
   productEntity: BannerPDV
   cost:
-    Doubloon: 2
+    Doubloon: 3
   categories:
   - UplinkPirateUtility
   conditions:
@@ -74,7 +74,7 @@
   description: uplink-pdv-enceladus-prime-voucher-desc
   productEntity: ShipVoucherEnceladusPrime
   cost:
-    Doubloon: 400
+    Doubloon: 440
   categories:
   - UplinkPdvVouchers
   conditions:

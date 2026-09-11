@@ -158,7 +158,7 @@
   - MercenaryJumpsuit
   - MercenaryGloves
   - MercenaryBackpack
-  - ContractorOuterClothing
+  - MercenaryOuterClothing # Exodus civilian mercenary armor and hardsuits
   - MercenaryShoes
   - MercenaryFace
   - MercenaryGlasses
@@ -176,7 +176,7 @@
   - ContractorBureaucracy
   - NFSpeciesSpecific
   - MercenaryBalaclava # Mono
-  # - CivGunCaseSpecial # Mono
+  - CivGunCaseSpecial # Exodus civilian mercenary special weapons
   - ContractorArmorPlates # Mono
   # Exodus-begin: ordinary mercenary weapon selection.
   - MercenaryFirearm

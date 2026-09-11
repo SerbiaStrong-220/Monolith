@@ -1,0 +1,29 @@
+- type: entity
+  parent: BaseItem
+  id: SyndicateTerritorySmartphone
+  name: Syndicate smartphone
+  description: A secure terminal for the Syndicate's shared territory fund.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/syndicate_smartphone.rsi
+    layers:
+    - state: icon
+    - state: screen
+      shader: unshaded
+  - type: Item
+    size: Small
+    sprite: _Exodus/Objects/Devices/syndicate_smartphone.rsi
+  - type: TerritoryIncomeTerminal
+    account: SyndicateTerritoryIncome
+  - type: ActivatableUI
+    key: enum.TerritoryIncomeUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.TerritoryIncomeUiKey.Key:
+        type: TerritoryIncomeBoundUserInterface
+        interactionRange: 0.5
+  - type: StaticPrice
+    price: 0
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/multitool_drop.ogg

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/17/2026 05:26:53
-  entityCount: 6318
+  entityCount: 6319
 maps: []
 grids:
 - 1
@@ -36973,4 +36973,11 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
+- proto: SpawnPointSyndicateOperative
+  entities:
+  - uid: 6326
+    components:
+    - type: Transform
+      pos: 16.5,-16.5
+      parent: 1
 ...
