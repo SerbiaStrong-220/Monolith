@@ -239,6 +239,11 @@
     - id: ClothingBeltMilitaryWebbingCMOFilled
     - id: Multitool
     - id: MedTekCartridge
+    # Exodus-med-alert-begin
+    - id: MedAlertCartridge
+    - id: MedAlertCartridge
+    - id: MedAlertCartridge
+    # Exodus-med-alert-end
 #   - id: ClothingBeltMedicalFilled # Frontier - add more bloat # Mono: replaced with webbing
     - id: RubberStampDoctor # Frontier
     # Shitmed
