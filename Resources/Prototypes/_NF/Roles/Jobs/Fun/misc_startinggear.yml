@@ -6,24 +6,28 @@
     id: NFAdminPDA
   storage:
     back:
+    - JawsOfLife # Exodus-add
+    - PowerDrill # Exodus-add
+    - Multitool
+    - RCDExperimental # Exodus-add
+    - ShipRepairDeviceAdmin # Exodus-add
     - GasAnalyzer
     - trayScanner
     - AccessConfiguratorUniversal
-    - Multitool
-    #- PowerDrill
-    #- JawsOfLife
-    #- WelderIndustrialAdvanced
-    # Mono
+    - WelderExperimental
+    - NaniteApplicatorSyndicate # Exodus-add
+    - HolofanProjector
     - WeaponForceGunAdmin
     - WeaponTetherGunAdmin
     - DoorRemoteAll
-    - WelderExperimental
-    - HolofanProjector
     - EmagUnlimited
     - DemagUnlimited
+    - GeigerCounter # Exodus-add
     - BluespaceBeaker
-    - Omnitool
     - SyringeBluespace
+    - Hypospray  # Exodus-add
+    - OmnimedTool  # Exodus-add
+    - WeaponLauncherAdmemeMeteorLarge  # Exodus-add
 
 - type: startingGear
   id: MobClippyGear

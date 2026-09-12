@@ -123,6 +123,8 @@
     - Biological
     - Inorganic
   - type: ShowSyndicateIcons # Monolith
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 42  # Exodus-Better-Aghost
 
 - type: entity
   id: ActionAGhostShowSolar
