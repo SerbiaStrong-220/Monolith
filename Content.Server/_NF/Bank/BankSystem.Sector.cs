@@ -143,7 +143,14 @@ public sealed partial class BankSystem : SharedBankSystem
         if (seconds <= 0)
             return;
 
+        // Exodus-begin: disabled passive income must not generate zero-value deposit attempts and log spam.
         foreach (var (accountId, accountInfo) in bank.Accounts)
+        {
+            if (accountInfo.IncreasePerSecond == 0)
+                continue;
+
             TrySectorDeposit(accountId, seconds * accountInfo.IncreasePerSecond, LedgerEntryType.TickingIncome, bank);
+        }
+        // Exodus-end
     }
 }
