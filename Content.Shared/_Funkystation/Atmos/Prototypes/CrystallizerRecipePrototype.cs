@@ -25,6 +25,12 @@ namespace Content.Shared._Funkystation.Atmos.Prototypes
         [DataField("energyRelease")]
         public float EnergyRelease { get; private set; }
 
+        // Exodus-begin: optional duration for recipes that need a fixed production time.
+        /// <summary>Required processing time under valid conditions. Zero uses the legacy gas-volume-based progress.</summary>
+        [DataField]
+        public TimeSpan CraftDuration { get; private set; } = TimeSpan.Zero;
+        // Exodus-end
+
         [DataField("products")]
         public Dictionary<string, int> Products { get; private set; } = new();
 

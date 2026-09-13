@@ -66,6 +66,7 @@ namespace Content.Server._Funkystation.Atmos.Systems
             }
             crystallizer.SelectedRecipeId = args.RecipeId;
             crystallizer.ProgressBar = 0f;
+            crystallizer.CraftingTime = TimeSpan.Zero; // Exodus: changing recipes resets the timed cycle.
             crystallizer.QualityLoss = 0f;
             crystallizer.TotalRecipeMoles = CalculateTotalRecipeMoles(crystallizer);
             UpdateProgressBarUI(uid, crystallizer);
@@ -84,7 +85,7 @@ namespace Content.Server._Funkystation.Atmos.Systems
                 return;
 
             ProcessGasInput(uid, crystallizer);
-            ProcessRecipe(uid, crystallizer);
+            ProcessRecipe((uid, crystallizer), TimeSpan.FromSeconds(args.dt)); // Exodus: use the atmos device interval.
             ProcessTemperatureRegulator(uid, crystallizer, args.dt);
             UpdateGasMixtureUI(uid, crystallizer);
         }
@@ -183,8 +184,9 @@ namespace Content.Server._Funkystation.Atmos.Systems
             }
         }
 
-        private void ProcessRecipe(EntityUid uid, CrystallizerComponent crystallizer)
+        private void ProcessRecipe(Entity<CrystallizerComponent> ent, TimeSpan elapsed) // Exodus timed recipes
         {
+            var (uid, crystallizer) = ent; // Exodus timed recipes
             var crystalMix = crystallizer.CrystallizerGasMixture;
             if (string.IsNullOrEmpty(crystallizer.SelectedRecipeId) ||
                 !_prototypeManager.TryIndex<CrystallizerRecipePrototype>(crystallizer.SelectedRecipeId, out var recipe) ||
@@ -193,20 +195,48 @@ namespace Content.Server._Funkystation.Atmos.Systems
 
             bool gasCheck = CheckGasRequirements(crystalMix, recipe);
             bool tempCheck = CheckTempRequirements(crystalMix, recipe);
+            var timedRecipe = recipe.CraftDuration > TimeSpan.Zero; // Exodus timed recipes
 
             if (gasCheck && tempCheck)
             {
                 HeatCalculations(crystalMix, recipe, crystallizer);
-                float progressFactor = 5f / MathF.Max(MathF.Log10(crystallizer.TotalRecipeMoles * 0.1f), 0.01f);
-                crystallizer.ProgressBar = Math.Min(crystallizer.ProgressBar + MinProgressAmount * progressFactor, 100f);
+                // Exodus-begin: retain the original calculation for recipes without an explicit duration.
+                if (timedRecipe)
+                {
+                    crystallizer.CraftingTime += elapsed;
+                }
+                else
+                {
+                    float progressFactor = 5f / MathF.Max(MathF.Log10(crystallizer.TotalRecipeMoles * 0.1f), 0.01f);
+                    crystallizer.ProgressBar = Math.Min(crystallizer.ProgressBar + MinProgressAmount * progressFactor, 100f);
+                }
+                // Exodus-end
             }
             else
             {
                 crystallizer.QualityLoss = Math.Min(crystallizer.QualityLoss + 0.5f, 100f);
                 crystallizer.ProgressBar = Math.Max(crystallizer.ProgressBar - 1f, 0f);
+                // Exodus-begin: apply the existing one-percentage-point setback to the timed progress too.
+                if (timedRecipe)
+                {
+                    crystallizer.CraftingTime = TimeSpan.FromTicks(Math.Max(
+                        crystallizer.CraftingTime.Ticks - recipe.CraftDuration.Ticks / 100, 0));
+                }
+                // Exodus-end
             }
 
-            if (crystallizer.ProgressBar >= 100f)
+            // Exodus-begin: the UI displays a percentage, but completion uses TimeSpan to avoid float drift.
+            if (timedRecipe)
+            {
+                crystallizer.ProgressBar = (float) Math.Clamp(
+                    100d * crystallizer.CraftingTime.Ticks / recipe.CraftDuration.Ticks, 0d, 100d);
+            }
+
+            var completed = timedRecipe
+                ? crystallizer.CraftingTime >= recipe.CraftDuration
+                : crystallizer.ProgressBar >= 100f;
+            // Exodus-end
+            if (completed) // Exodus timed recipes
             {
                 CompleteRecipe(uid, crystallizer, recipe);
             }
@@ -299,6 +329,7 @@ namespace Content.Server._Funkystation.Atmos.Systems
 
             // Reset
             crystallizer.ProgressBar = 0f;
+            crystallizer.CraftingTime = TimeSpan.Zero; // Exodus: the next product requires a full timed cycle.
             crystallizer.QualityLoss = 0f;
         }
 

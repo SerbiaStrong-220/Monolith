@@ -28,6 +28,12 @@ namespace Content.Server._Funkystation.Atmos.Components
         [DataField("progressBar")]
         public float ProgressBar { get; set; } = 0f;
 
+        // Exodus-begin: elapsed processing time, not a timestamp; unpowered and paused devices do not advance it.
+        /// <summary>Accumulated processing time for the selected recipe, reduced when its conditions fail.</summary>
+        [ViewVariables]
+        public TimeSpan CraftingTime;
+        // Exodus-end
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("qualityLoss")]
         public float QualityLoss { get; set; } = 0f;
