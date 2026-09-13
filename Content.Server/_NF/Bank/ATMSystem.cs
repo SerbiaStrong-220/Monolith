@@ -65,7 +65,7 @@ public sealed partial class BankSystem
 
         state.Balance = bank.Balance;
         state.Savings = GetEntSavings(player);
-        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
+        UpdateDepositBreakdown(player, (uid, component), state); // Exodus corporate ATM commission display
 
         // check for sufficient funds
         if (bank.Balance < args.Amount)
@@ -88,7 +88,7 @@ public sealed partial class BankSystem
         }
 
         state.Balance = bank.Balance;
-        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
+        UpdateDepositBreakdown(player, (uid, component), state); // Exodus corporate ATM commission display
 
         ConsolePopup(args.Actor, Loc.GetString("bank-atm-menu-withdraw-successful"));
         PlayConfirmSound(uid, component);
@@ -125,7 +125,7 @@ public sealed partial class BankSystem
         state.Balance = bank.Balance;
         if (_playerManager.TryGetSessionByEntity(player, out var session))
             state.Savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
-        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
+        UpdateDepositBreakdown(player, (uid, component), state); // Exodus corporate ATM commission display
 
         // validating the cash slot was setup correctly in the yaml
         if (component.CashSlot.ContainerSlot is not BaseContainer cashSlot)
@@ -160,10 +160,11 @@ public sealed partial class BankSystem
 
         var originalDeposit = deposit;
         var depositAfterFees = GetDepositAfterFees(player,
-            component,
+            (uid, component),
             originalDeposit,
             out var companyCommission,
-            out var atmFee); // Exodus corporate ATM commission
+            out var atmFee,
+            out var corporateTax); // Exodus: snapshot corporate territory tax recipients.
 
         state.Enabled = true;
 
@@ -176,14 +177,7 @@ public sealed partial class BankSystem
             return;
         }
 
-        // Exodus-begin corporate ATM commission
-        foreach (var (account, taxCoeff) in component.TaxAccounts)
-        {
-            var tax = GetAtmDepositFee(originalDeposit, taxCoeff);
-            if (tax > 0)
-                TrySectorDeposit(account, tax, LedgerEntryType.AtmTax); // Mono BlackMarketAtmTax->AtmTax
-        }
-        // Exodus-end
+        DepositAtmTaxes((uid, component), originalDeposit, corporateTax); // Exodus: pay the quoted recipients after success.
 
         ConsolePopup(args.Actor, Loc.GetString("bank-atm-menu-deposit-successful"));
         PlayConfirmSound(uid, component);
@@ -198,7 +192,7 @@ public sealed partial class BankSystem
         state.Balance = bank.Balance;
         if (session != null)
             state.Savings = _coins.GetMonoCoinsBalance(session.UserId) ?? 0;
-        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
+        UpdateDepositBreakdown(player, (uid, component), state); // Exodus corporate ATM commission display
 
         // yeet and delete the stack in the cash slot after success
         _containerSystem.CleanContainer(cashSlot);
@@ -230,7 +224,7 @@ public sealed partial class BankSystem
             else
                 state.Deposit = deposit;
 
-            UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
+            UpdateDepositBreakdown(player, (uid, component), state); // Exodus corporate ATM commission display
             _uiSystem.SetUiState(uid, uiComp.Key, state);
         }
     }
@@ -257,7 +251,7 @@ public sealed partial class BankSystem
         state.Savings = GetEntSavings(player);
 
         state.Enabled = true;
-        UpdateDepositBreakdown(player, component, state); // Exodus corporate ATM commission display
+        UpdateDepositBreakdown(player, (uid, component), state); // Exodus corporate ATM commission display
         _uiSystem.SetUiState(uid, args.UiKey, state);
     }
 

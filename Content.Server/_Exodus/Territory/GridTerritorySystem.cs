@@ -64,6 +64,16 @@ public sealed partial class GridTerritorySystem : EntitySystem
             RaiseLocalEvent(ent.Owner, ref ev, true);
         }
 
+        // Faction listeners may have already released corporate control. Also handle claims without a faction or banner.
+        if (ent.Comp.CorporateController != null || ent.Comp.ActiveCorporateBanner != null)
+        {
+            var ev = new GridTerritoryCorporateControllerChangedEvent(
+                ent.Owner, ent.Comp.CorporateController, null, ent.Comp.ActiveCorporateBanner, null, null);
+            ent.Comp.CorporateController = null;
+            ent.Comp.ActiveCorporateBanner = null;
+            RaiseLocalEvent(ent.Owner, ref ev, true);
+        }
+
         RemCompDeferred<RadialDamageFieldComponent>(ent);
         DeleteTerritoryBiomeSource(ent);
     }

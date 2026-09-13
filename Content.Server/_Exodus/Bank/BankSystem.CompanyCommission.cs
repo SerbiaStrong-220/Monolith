@@ -1,3 +1,4 @@
+using Content.Server._Exodus.CorporateIncome;
 using Content.Shared._Mono.Company;
 using Content.Shared._NF.Bank.BUI;
 using Content.Shared._NF.Bank.Components;
@@ -25,7 +26,7 @@ public sealed partial class BankSystem
 
     private void UpdateDepositBreakdown(
         EntityUid player,
-        BankATMComponent component,
+        Entity<BankATMComponent> atm,
         BankATMMenuInterfaceState state)
     {
         state.SectorDeposit = 0;
@@ -37,7 +38,7 @@ public sealed partial class BankSystem
             return;
 
         var depositAfterFees = GetDepositAfterFees(player,
-            component,
+            atm,
             state.Deposit,
             out state.CompanyCommission,
             out state.AtmFee);
@@ -49,27 +50,66 @@ public sealed partial class BankSystem
 
     internal int GetDepositAfterFees(
         EntityUid player,
-        BankATMComponent component,
+        Entity<BankATMComponent> atm,
         int deposit,
         out int companyCommission,
         out int atmFee)
     {
+        return GetDepositAfterFees(player, atm, deposit, out companyCommission, out atmFee, out _);
+    }
+
+    internal int GetDepositAfterFees(
+        EntityUid player,
+        Entity<BankATMComponent> atm,
+        int deposit,
+        out int companyCommission,
+        out int atmFee,
+        out CorporateAtmTaxQuote? corporateTax)
+    {
         companyCommission = GetCompanyDepositCommission(player, deposit);
-        var totalAtmFee = 0L;
+        var taxEvent = new GetCorporateAtmTaxEvent(deposit);
+        RaiseLocalEvent(atm.Owner, ref taxEvent);
+        corporateTax = taxEvent.Quote;
 
-        foreach (var taxCoeff in component.TaxAccounts.Values)
-            totalAtmFee += GetAtmDepositFee(deposit, taxCoeff);
+        if (corporateTax is { } quote)
+        {
+            atmFee = quote.Total;
+        }
+        else
+        {
+            var totalAtmFee = 0L;
+            foreach (var taxCoeff in atm.Comp.TaxAccounts.Values)
+                totalAtmFee += GetAtmDepositFee(deposit, taxCoeff);
 
-        atmFee = (int)Math.Min(totalAtmFee, int.MaxValue);
+            atmFee = (int)Math.Min(totalAtmFee, int.MaxValue);
+        }
+
         return (int)Math.Max((long)deposit - companyCommission - atmFee, 0);
     }
 
-    private static int GetAtmDepositFee(int deposit, float taxCoeff)
+    internal static int GetAtmDepositFee(int deposit, float taxCoeff)
     {
         if (deposit <= 0 || !float.IsFinite(taxCoeff) || taxCoeff <= 0f)
             return 0;
 
         var fee = Math.Floor(deposit * taxCoeff);
         return (int)Math.Min(fee, int.MaxValue);
+    }
+
+    private void DepositAtmTaxes(Entity<BankATMComponent> atm, int deposit, CorporateAtmTaxQuote? corporateTax)
+    {
+        if (corporateTax is { } quote)
+        {
+            var paidEvent = new CorporateAtmTaxPaidEvent(quote);
+            RaiseLocalEvent(ref paidEvent);
+            return;
+        }
+
+        foreach (var (account, taxCoeff) in atm.Comp.TaxAccounts)
+        {
+            var amount = GetAtmDepositFee(deposit, taxCoeff);
+            if (amount > 0)
+                TrySectorDeposit(account, amount, LedgerEntryType.AtmTax);
+        }
     }
 }
