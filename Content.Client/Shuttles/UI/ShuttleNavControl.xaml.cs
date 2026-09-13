@@ -44,6 +44,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private readonly SharedTransformSystem _transform;
     private readonly RadarBlipsSystem _blips;
     private readonly TerritoryPoiColorSystem _territoryPoiColors; // Exodus - territory POI colors
+    private readonly TerritoryCaptureDisplaySystem _territoryCapture; // Exodus contested territory countdown
     private readonly IPrototypeManager _prototype; // Exodus - faction AI radar label
 
     // Exodus - SafeZone - Start
@@ -187,6 +188,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _station = EntManager.System<StationSystem>(); // Frontier
         _blips = EntManager.System<RadarBlipsSystem>();
         _territoryPoiColors = EntManager.System<TerritoryPoiColorSystem>(); // Exodus - territory POI colors
+        _territoryCapture = EntManager.System<TerritoryCaptureDisplaySystem>(); // Exodus contested territory countdown
         _prototype = IoCManager.Resolve<IPrototypeManager>(); // Exodus - faction AI radar label
 
         // Exodus - SafeZone - Start
@@ -1796,7 +1798,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             return;
 
         // Exodus mass-scanner-perf: cache localized territory labels across frames.
-        if (!_territoryLabelCache.TryGetValue(config.Label, out var text))
+        // Exodus: the server sends a deadline; the client formats and caches the remaining seconds.
+        string? text; // Exodus: TryGetValue may assign null when the label is not cached.
+        if (config.CaptureEndsAt is { } captureEndsAt) // Exodus contested territory countdown
+            text = _territoryCapture.GetCountdown(captureEndsAt); // Exodus contested territory countdown
+        else if (!_territoryLabelCache.TryGetValue(config.Label, out text)) // Exodus contested territory countdown
         {
             text = Loc.GetString(config.Label);
             _territoryLabelCache[config.Label] = text;
@@ -1822,6 +1828,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         var textScale = UIScale * 1.2f;
         var baseAlpha = 0.35f;
         var textColor = new Color(0.65f, 0.65f, 0.65f);
+        if (config.CaptureEndsAt != null) // Exodus contested territory color
+            textColor = config.BorderColor.WithAlpha(1f); // Exodus contested territory color
         var textDims = handle.GetDimensions(Font, text, textScale);
         var textDrawOffset = new Vector2(
             -textDims.X * 0.5f,

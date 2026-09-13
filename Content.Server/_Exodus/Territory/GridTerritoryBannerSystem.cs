@@ -12,8 +12,8 @@ namespace Content.Server._Exodus.Territory;
 /// <summary>
 /// Handles banners as a claim source for GridTerritory.
 /// Enforces "only one active claim banner per grid" at runtime (construction condition handles build time).
-/// When a qualifying banner is anchored on a grid with GridTerritoryComponent, it claims control
-/// and the radar label updates to the faction name, or the neutral label when removed.
+/// Runtime anchoring begins a timed claim; mapped banners and factions with zero duration claim immediately.
+/// Removing the source clears either the pending capture or the completed claim.
 ///
 /// Factions without final art can use temporary placeholder banner entities.
 /// </summary>
@@ -40,6 +40,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
         SubscribeLocalEvent<TerritoryBannerComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<TerritoryBannerComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<GridTerritoryControllerChangedEvent>(OnControllerChanged);
         // Exodus start - claim mapped banners after GridTerritory is added to an already map-initialized grid (POI spawn).
         SubscribeLocalEvent<GridTerritoryComponent, MapInitEvent>(OnGridTerritoryMapInit);
         // Exodus end
@@ -51,7 +52,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     private void OnStartup(Entity<TerritoryBannerComponent> ent, ref ComponentStartup args)
     {
         if (Transform(ent).Anchored)
-            TryClaim(ent, false);
+            TryClaim(ent, false, initializing: true);
     }
 
     // Exodus start - one-shot scan when territory appears on a loaded POI/station grid.
@@ -64,7 +65,7 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
                 if (!TryComp<TerritoryBannerComponent>(uid, out var banner))
                     continue;
 
-                TryClaim((uid, banner), false);
+                TryClaim((uid, banner), false, initializing: true);
 
                 if (ent.Comp.ActiveClaimBanner is { } active && Exists(active))
                     break;
@@ -87,6 +88,20 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
 
         if (!TryComp<GridTerritoryComponent>(grid, out var territory))
             return;
+
+        if (!territory.Claimable)
+        {
+            _popup.PopupEntity(Loc.GetString("grid-territory-claim-disabled"), ent, args.User);
+            args.Cancel();
+            return;
+        }
+
+        if (territory.ActiveClaimBanner is { } active && active != ent.Owner && !TerminatingOrDeleted(active))
+        {
+            _popup.PopupEntity(Loc.GetString("grid-territory-already-claimed"), ent, args.User);
+            args.Cancel();
+            return;
+        }
 
         if (!_claimRules.CanStartClaim(ent.Comp.Faction, out var popup))
         {
@@ -152,10 +167,13 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     // OnConstructionChanged removed (event type may differ; anchor/parent/shutdown suffice for now).
     // # Exodus
 
-    private void TryClaim(Entity<TerritoryBannerComponent> banner, bool showPopup = true, EntityUid? actor = null)
+    private void TryClaim(Entity<TerritoryBannerComponent> banner, bool showPopup = true, EntityUid? actor = null, bool initializing = false)
     {
+        if (TerminatingOrDeleted(banner) || !MetaData(banner).EntityInitialized)
+            return;
+
         var xform = Transform(banner);
-        if (!TryResolveBannerGrid(xform, out var grid))
+        if (!xform.Anchored || !TryResolveBannerGrid(xform, out var grid) || TerminatingOrDeleted(grid))
             return;
 
         if (!TryComp<GridTerritoryComponent>(grid, out var terr))
@@ -192,13 +210,37 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
             _territory.ClearController(grid);
         }
 
+        // Initial map anchoring can raise transform events before ComponentStartup/MapInit.
+        // Runtime claims must not bypass the delay merely because an actor wasn't provided.
+        initializing |= actor == null && MetaData(banner).EntityLifeStage < EntityLifeStage.MapInitialized;
+        if (!initializing)
+        {
+            if (!_claimRules.CanStartClaim(banner.Comp.Faction, out var denied))
+            {
+                if (showPopup)
+                    _popup.PopupEntity(denied, banner);
+                return;
+            }
+
+            if (_claimRules.GetClaimDuration(banner.Comp.Faction) > TimeSpan.Zero)
+            {
+                if (_territory.TryStartCapture((grid, terr), banner, actor))
+                {
+                    ConfigureActiveBannerBlip(banner, (grid, terr));
+                    if (showPopup)
+                        _popup.PopupEntity(Loc.GetString("grid-territory-capture-started"), banner);
+                }
+                return;
+            }
+        }
+
         // Perform the claim. Label is resolved from the TerritoryFactionPrototype.
         _territory.SetController(grid, banner.Comp.Faction, banner.Owner, actor);
         ConfigureActiveBannerBlip(banner, (grid, terr));
 
         if (showPopup)
         {
-            if (terr.ActiveClaimBanner == banner.Owner &&
+            if (!initializing && terr.ActiveClaimBanner == banner.Owner &&
                 terr.ControllingFaction is { } controllingFaction &&
                 controllingFaction.Equals(banner.Comp.Faction))
             {
@@ -220,17 +262,24 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
 
     private void TryUnclaimFromGrid(Entity<TerritoryBannerComponent> banner, EntityUid grid)
     {
-        if (!TryComp<GridTerritoryComponent>(grid, out var terr))
+        if (TerminatingOrDeleted(grid) || !TryComp<GridTerritoryComponent>(grid, out var terr))
             return;
 
         if (terr.ActiveClaimBanner != banner.Owner)
             return;
 
+        var wasCapturing = TryComp<TerritoryCaptureComponent>(grid, out var capture) && capture.Faction != null;
         // Clear to neutral.
         ClearActiveBannerBlip(banner.Owner);
         _territory.ClearController(grid);
 
-        _popup.PopupEntity(Loc.GetString("grid-territory-unclaimed"), banner);
+        _popup.PopupEntity(Loc.GetString(wasCapturing ? "grid-territory-capture-cancelled" : "grid-territory-unclaimed"), banner);
+    }
+
+    private void OnControllerChanged(ref GridTerritoryControllerChangedEvent args)
+    {
+        if (args.OldSourceBanner is { } oldBanner && oldBanner != args.SourceBanner && !TerminatingOrDeleted(oldBanner))
+            ClearActiveBannerBlip(oldBanner);
     }
 
     private void ConfigureActiveBannerBlip(

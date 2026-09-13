@@ -32,6 +32,7 @@ public sealed partial class ShuttleMapControl
     private readonly Vector2[] _bluespaceMapBlipVertices = new Vector2[6];
     private readonly Vector2[] _bluespaceMapBlipEdges = new Vector2[8];
     private readonly CorporateTerritoryRingRenderer _corporateTerritoryRings = new(); // Exodus corporate territory rings
+    private readonly TerritoryCaptureDisplaySystem _territoryCapture; // Exodus contested territories
 
     private bool CanFTLToNebulaPreview(EntityUid shuttleUid, EntityCoordinates targetCoordinates, Angle targetAngle)
     {
@@ -93,9 +94,14 @@ public sealed partial class ShuttleMapControl
             if (!CircleIntersectsBox(gridUiPos, ringRadius, viewBounds))
                 continue;
 
-            var ringBase = GetTerritoryRingColor(terrRing);
-            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.035f));
-            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(0.28f), filled: false);
+            // Exodus-begin contested territories
+            var contested = _territoryCapture.TryGetCapture(gridObj.Entity, out var endsAt, out var captureColor);
+            var ringBase = contested ? captureColor : GetTerritoryRingColor(terrRing);
+            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(contested ? 0.06f : 0.035f));
+            handle.DrawCircle(gridUiPos, ringRadius, ringBase.WithAlpha(contested ? 0.5f : 0.28f), filled: false);
+            if (contested)
+                DrawMapObjectLabel(handle, gridUiPos - new Vector2(0f, 30f * UIScale), _territoryCapture.GetCountdown(endsAt), captureColor);
+            // Exodus-end
         }
     }
 

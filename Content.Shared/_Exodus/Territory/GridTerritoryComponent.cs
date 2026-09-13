@@ -17,7 +17,8 @@ namespace Content.Shared._Exodus.Territory;
 /// - controllingFaction: current runtime owner (updated when banners are placed/removed).
 ///   Do not set this field in map yaml to establish "default" ownership.
 /// 
-/// - Radar claim text always comes from the active TerritoryFactionPrototype's radarLabel LocId.
+/// - Completed claims use the active TerritoryFactionPrototype's radarLabel LocId.
+///   TerritoryCaptureComponent supplies the contested state and countdown before a claim completes.
 /// 
 /// - defaultLabel: text shown when unclaimed (ControllingFaction is null).
 ///   Defaults to "territory-unclaimed".
@@ -71,7 +72,7 @@ public sealed partial class GridTerritoryComponent : Component
     /// <summary>
     /// The faction currently controlling this territory.
     /// Defined in TerritoryFactionPrototype (data-driven config under _Exodus).
-    /// Null / unset = neutral.
+    /// Null / unset = neutral, including while TerritoryCaptureComponent holds a pending claim.
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<TerritoryFactionPrototype>? ControllingFaction = null;
@@ -97,7 +98,8 @@ public sealed partial class GridTerritoryComponent : Component
     public EntityUid? ActiveBiomeSource = null;
 
     /// <summary>
-    /// The entity currently providing the active claim (the anchored banner).
+    /// The entity currently providing the active or pending claim (the anchored banner).
+    /// A pending claim reserves this slot before ControllingFaction is assigned.
     /// Server-authoritative. Used to know which banner to "remove" to clear the claim.
     /// </summary>
     [DataField, AutoNetworkedField, NonSerialized]

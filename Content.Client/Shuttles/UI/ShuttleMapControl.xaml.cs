@@ -118,6 +118,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         _shuttles = EntManager.System<ShuttleSystem>();
         _xformSystem = EntManager.System<SharedTransformSystem>();
         _territoryPoiColors = EntManager.System<TerritoryPoiColorSystem>(); // Exodus territory POI colors
+        _territoryCapture = EntManager.System<TerritoryCaptureDisplaySystem>(); // Exodus contested territory countdown
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _physicsQuery = EntManager.GetEntityQuery<PhysicsComponent>();

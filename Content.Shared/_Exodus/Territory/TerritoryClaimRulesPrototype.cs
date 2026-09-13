@@ -25,6 +25,14 @@ public sealed partial class TerritoryClaimRulesPrototype : IPrototype
     [DataField]
     public TimeSpan DefaultFactionClaimCooldown { get; private set; } = TimeSpan.Zero;
 
+    /// <summary>Time a newly anchored faction banner must survive before ownership changes. Zero is immediate.</summary>
+    [DataField]
+    public TimeSpan DefaultClaimDuration { get; private set; } = TimeSpan.FromMinutes(5);
+
+    /// <summary>Base color used for the territory and its marker during capture.</summary>
+    [DataField]
+    public Color ContestedColor { get; private set; } = Color.FromHex("#E6A23C");
+
     /// <summary>
     /// Fallback SRD repair integrity required for profiles that do not override it.
     /// Zero disables the integrity gate and avoids scanning the SRD snapshot.

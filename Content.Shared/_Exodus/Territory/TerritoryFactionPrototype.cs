@@ -85,6 +85,10 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     [DataField]
     public TimeSpan? ClaimCooldown { get; private set; }
 
+    /// <summary>Overrides the global claim duration. Zero grants immediate control, including for hive cores.</summary>
+    [DataField]
+    public TimeSpan? ClaimDuration { get; private set; }
+
     // # Exodus start - faction color for territory rings on BSS map and nav radar
     /// <summary>
     /// Base color used for the territory influence rings (BSS jump map and navigation radar)

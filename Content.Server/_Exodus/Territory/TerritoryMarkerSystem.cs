@@ -45,6 +45,7 @@ public sealed partial class TerritoryMarkerSystem : EntitySystem
         blip.VisibleFromOtherGrids = true;
 
         TryComp<GridTerritoryComponent>(ent, out var territory);
+        TryComp<TerritoryCaptureComponent>(ent, out var capture);
 
         // Assign a fresh BlipConfig so the radar palette (value equality) picks up label/radius changes on next request.
         blip.Config = new BlipConfig
@@ -57,6 +58,7 @@ public sealed partial class TerritoryMarkerSystem : EntitySystem
             Rotate = false,
             Label = ent.Comp.Text,
             CorporateController = territory?.CorporateController,
+            CaptureEndsAt = capture is { Faction: not null } ? capture.EndsAt : null,
         };
     }
 }

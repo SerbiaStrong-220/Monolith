@@ -16,6 +16,12 @@ territory-faction-khsira-name = Khsira Empire
 
 # Neutral / unclaimed state (used when no banner is actively claiming the grid)
 territory-unclaimed = UNCLAIMED
+territory-contested = CONTESTED
+territory-contested-countdown = CONTESTED · { $minutes }:{ $seconds }
+grid-territory-capture-started = Territory capture started. Keep the banner anchored until the countdown finishes.
+grid-territory-capture-cancelled = Territory capture interrupted.
+grid-territory-claim-faction-capturing = This faction is already contesting another territory.
+company-territory-banner-contested = Corporate control cannot be established while this territory is contested.
 
 # Claim system messages (popups, construction)
 grid-territory-already-claimed = This station already has an active control banner. Remove the old one before installing a new one.
