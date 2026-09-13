@@ -318,6 +318,7 @@
   name: OwOroach
   parent: MobMothroach
   id: MobOwORoach
+  suffix: ADMIN # Exodus: admin-only mob.
   description: Genetic Experimentionation between mothroaches and cats, too far or not far enough?
   components:
   - type: GhostRole

@@ -20,7 +20,7 @@
   - AbominationCube
   - SpaceCarpCube
   - SpaceTickCube
-  - OwOroachCube
+  # Exodus: removed OwOroachCube from the emagged fabrication pack; admin-only mob.
 
 - type: latheRecipePack
   id: SpeciesCubesStatic

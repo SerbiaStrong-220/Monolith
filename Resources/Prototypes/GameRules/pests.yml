@@ -100,8 +100,7 @@
       prob: 0.001 # Mono
     - id: MobMoproach
       prob: 0.0005
-    - id: MobOwORoach
-      prob: 0.00005
+    # Exodus: admin-only MobOwORoach is excluded from migration.
 
 - type: entity
   id: SnailMigrationLowPop

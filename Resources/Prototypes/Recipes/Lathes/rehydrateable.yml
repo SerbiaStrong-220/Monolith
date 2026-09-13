@@ -45,14 +45,7 @@
   materials:
     Biomass: 20
 
-- type: latheRecipe
-  id: OwOroachCube
-  result: OwOroachCube
-  categories: # Mono
-  - DangerousAnimals
-  completetime: 45
-  materials:
-    Biomass: 20
+# Exodus: removed OwOroachCube fabrication recipe; MobOwORoach is admin-only.
 
 - type: latheRecipe
   id: MothroachMustardCube
