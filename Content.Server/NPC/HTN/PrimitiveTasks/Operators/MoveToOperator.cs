@@ -121,7 +121,8 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
 
-        if (_doNearbyPlayerCheck) // don't do the check at all if it's false, save More performance
+        if (_doNearbyPlayerCheck
+            && (!_entManager.TryGetComponent<HTNComponent>(owner, out var htn) || htn.SleepWithoutPlayers)) // Exodus: persistent NPCs also pathfind without observers.
         {
             var pos = _transform.GetWorldPosition(owner);
             var nearest = _steering.GetNearestPlayerEntity(pos);

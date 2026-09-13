@@ -6,6 +6,12 @@
   placement:
     mode: SnapgridCenter
   components:
+  # Exodus-begin: open the virology guide from the machine's context menu.
+  - type: GuideHelp
+    guides:
+    - Virology
+    - Medical
+  # Exodus-end
   # SS220 / Exodus-begin
   - type: Sprite
     sprite: _Exodus/Structures/Machines/diagnoser.rsi

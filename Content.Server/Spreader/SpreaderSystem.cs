@@ -108,6 +108,10 @@ public sealed partial class SpreaderSystem : EntitySystem
 
     private void OnActiveInit(Entity<ActiveEdgeSpreaderComponent> entity, ref MapInitEvent args)
     {
+        // Exodus: the first spread observes the same delay as subsequent growth.
+        if (TryComp<EdgeSpreaderComponent>(entity, out var spreader) && spreader.NextSpread == TimeSpan.Zero
+            && (spreader.MinSpreadDelay > TimeSpan.Zero || spreader.MaxSpreadDelay > TimeSpan.Zero))
+            ScheduleSpread((entity.Owner, spreader));
         InitSpreader(entity);
     }
 
@@ -191,6 +195,8 @@ public sealed partial class SpreaderSystem : EntitySystem
 
     private void Spread(Entity<EdgeSpreaderComponent> ent, Entity<MapGridComponent> grid, TransformComponent xform, bool spreadSpaced, ref int updates)
     {
+        if (!IsSpreadReady(ent)) // Exodus: avoid neighbor allocations between slow growth cycles.
+            return;
         GetNeighbors(ent, grid, xform, spreadSpaced, out var freeTiles, out var neighbors);
 
         var ev = new SpreadNeighborsEvent()

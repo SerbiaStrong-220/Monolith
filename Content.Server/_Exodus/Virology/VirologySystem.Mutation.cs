@@ -46,6 +46,7 @@ public sealed partial class VirologySystem
         descriptor.Symptoms.Add(new VirusSymptomSnapshot { Symptom = picked.Value, Accelerant = RollAccelerant(used) });
         descriptor.Cure = ResolveCure(descriptor)?.Clone();
         descriptor.Transmission = ResolveTransmission(descriptor)?.Clone();
+        CaptureTiming(descriptor);
         descriptor.Source = null;
         descriptor.Name = GenerateName();
         return true;
@@ -103,6 +104,7 @@ public sealed partial class VirologySystem
         descriptor.Symptoms.RemoveAt(_random.Next(descriptor.Symptoms.Count));
         descriptor.Cure = ResolveCure(descriptor)?.Clone();
         descriptor.Transmission = ResolveTransmission(descriptor)?.Clone();
+        CaptureTiming(descriptor);
         descriptor.Source = null;
         descriptor.Name = GenerateName();
         return true;
@@ -192,6 +194,15 @@ public sealed partial class VirologySystem
 
         picked = _random.Pick(candidates);
         return true;
+    }
+
+    private void CaptureTiming(VirusDescriptor descriptor)
+    {
+        if (descriptor.Source is not { } source || GetStrainConfig(source) is not { } config)
+            return;
+
+        descriptor.Incubation = config.Incubation?.Clone();
+        descriptor.SymptomTimeMultiplier = config.SymptomTimeMultiplier;
     }
 
     private string GenerateName()

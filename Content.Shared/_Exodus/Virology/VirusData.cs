@@ -81,7 +81,17 @@ public sealed partial class VirusData : ReagentData
         return a.Source == b.Source && a.Name == b.Name && a.Genome == b.Genome
             && a.IsSupervirus == b.IsSupervirus && a.SuppressedRemaining == b.SuppressedRemaining
             && CureEquals(a.Cure, b.Cure) && TransmissionEquals(a.Transmission, b.Transmission)
+            && a.SymptomTimeMultiplier == b.SymptomTimeMultiplier && IncubationEquals(a.Incubation, b.Incubation)
             && SymptomsEqual(a.Symptoms, b.Symptoms);
+    }
+
+    private static bool IncubationEquals(VirusIncubation? a, VirusIncubation? b)
+    {
+        if (a == null || b == null)
+            return a == b;
+
+        return a.Hidden == b.Hidden && a.HiddenMax == b.HiddenMax
+            && a.Visible == b.Visible && a.VisibleMax == b.VisibleMax;
     }
 
     private static bool CureEquals(VirusCure? a, VirusCure? b)

@@ -189,6 +189,8 @@ public sealed partial class VirologySystem : EntitySystem
         foreach (var virus in EnumerateStrains(ent.Comp))
         {
             virus.Comp.SuppressedUntil += args.PausedTime;
+            DelayIncubation(virus.Comp, args.PausedTime);
+            virus.Comp.NextEffect += args.PausedTime;
             foreach (var state in virus.Comp.SymptomStates.Values)
             {
                 state.StageStartTime += args.PausedTime;
@@ -351,6 +353,7 @@ public sealed partial class VirologySystem : EntitySystem
         {
             var virus = strain.Comp;
             var advancedHere = 0;
+            FinishIncubation(strain);
             foreach (var (symptomId, state) in virus.SymptomStates)
             {
                 if (!_proto.Resolve(symptomId, out var symptom) || state.Stage + 1 >= symptom.Stages.Length)

@@ -1,3 +1,6 @@
+guide-name-virology = Virology
+guide-name-virology-known-viruses = Viruses and symptoms
+
 virology-no-pathogens = No pathogens detected.
 virology-virus-report =
     Laboratory virus analysis

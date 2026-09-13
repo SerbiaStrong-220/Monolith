@@ -19,7 +19,8 @@
   genome: Dna
   resetProgressOnInfection: true
   stages:
-  - detection:
+  - hiddenOnHealthAnalyzer: true
+    detection:
       description: pathology-rot-detection-1
     progressConditions:
     - !type:VirusTimeProgressCondition
@@ -87,6 +88,8 @@
     - type: VirusBrood
       symptom: RotSyndrome
       offspring: MobRotSpawn
+      offspringTable: !type:NestedSelector
+        tableId: RotOffspring
       burstEffect: RotHatchEffect
       incubatingMessage: rot-corpse-examine
       minDelay: 60
@@ -110,10 +113,13 @@
   name: rot spawn
   description: A short-lived carrier grown inside a terminal victim. Destroy it before it takes root.
   components:
+  - type: RotCreature
   - type: VirusImmunity
   - type: VirusOffspring
     initialVirus: VirusRot
     remains: RotGrowth
+    remainsTable: !type:NestedSelector
+      tableId: RotRemains
     decayEffect: RotDecayEffect
     lifetime: 300
     infectionChance: 0.65
@@ -260,6 +266,7 @@
     initialVirus: VirusRot
     range: 2
     infectionChance: 0.3
+  - type: RotColonySite
 
 - type: entity
   id: RotHatchEffect
@@ -309,8 +316,12 @@
     roundEndMessage: rot-mode-round-end
     preparation: 1800
     quietPeriod: 600
-    playersPerCarrier: 25
-    maxCarriers: 4
+    carrierThresholds:
+      1: 1
+      10: 2
+      26: 4
+      51: 5
+      76: 7
 
 - type: gamePreset
   id: ExodusRot

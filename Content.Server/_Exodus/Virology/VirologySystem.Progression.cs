@@ -50,6 +50,7 @@ public sealed partial class VirologySystem
 
         if (comp.SuppressedUntil is { } until)
         {
+            DelayIncubation(comp, UpdateInterval);
             foreach (var state in comp.SymptomStates.Values)
             {
                 state.StageStartTime += UpdateInterval;
@@ -85,6 +86,7 @@ public sealed partial class VirologySystem
 
         if (banked > TimeSpan.Zero)
         {
+            DelayIncubation(comp, banked);
             foreach (var state in comp.SymptomStates.Values)
             {
                 state.StageStartTime += banked;
@@ -92,8 +94,17 @@ public sealed partial class VirologySystem
             }
         }
 
-        if (dead)
+        if (dead || TickIncubation(virus, curTime))
             return;
+
+        var applyEffects = curTime >= comp.NextEffect;
+        if (applyEffects)
+        {
+            var interval = UpdateInterval * comp.SymptomTimeMultiplier;
+            // Do not accumulate missed effect ticks during incubation or a server hitch.
+            var intervals = (curTime - comp.NextEffect).Ticks / interval.Ticks + 1;
+            comp.NextEffect += interval * intervals;
+        }
 
         foreach (var (symptomId, state) in comp.SymptomStates)
         {
@@ -101,7 +112,8 @@ public sealed partial class VirologySystem
                 continue;
 
             TryAdvance(virus, symptomId, symptom, state, curTime);
-            ApplyEffects(virus, symptom, state, curTime);
+            if (applyEffects)
+                ApplyEffects(virus, symptom, state, curTime);
             TryManifest(virus, symptom, state, curTime);
         }
     }
@@ -115,7 +127,8 @@ public sealed partial class VirologySystem
         if (conditions.Length == 0 || state.Stage + 1 >= symptom.Stages.Length)
             return;
 
-        var args = new VirusProgressArgs(virus.Owner, virus.Comp.Carrier, state, EntityManager, curTime, false);
+        var args = new VirusProgressArgs(virus.Owner, virus.Comp.Carrier, state, EntityManager, curTime, false,
+            virus.Comp.SymptomTimeMultiplier);
         foreach (var condition in conditions)
         {
             if (!condition.CheckCondition(in args))
@@ -144,7 +157,8 @@ public sealed partial class VirologySystem
         if (effects.Length == 0)
             return;
 
-        var args = new VirusProgressArgs(virus.Owner, virus.Comp.Carrier, state, EntityManager, curTime, false);
+        var args = new VirusProgressArgs(virus.Owner, virus.Comp.Carrier, state, EntityManager, curTime, false,
+            virus.Comp.SymptomTimeMultiplier);
         foreach (var effect in effects)
             effect.ApplyEffect(in args);
     }
@@ -160,6 +174,7 @@ public sealed partial class VirologySystem
             state.EmoteDelay = manifest.EmoteIntervalMax is { } max && max > manifest.EmoteInterval
                 ? manifest.EmoteInterval + (max - manifest.EmoteInterval) * _random.NextDouble()
                 : manifest.EmoteInterval;
+            state.EmoteDelay *= virus.Comp.SymptomTimeMultiplier;
         }
 
         if (curTime < state.LastEmote + state.EmoteDelay)
@@ -188,7 +203,7 @@ public sealed partial class VirologySystem
         foreach (var strain in EnumerateStrains(ent.Comp))
         {
             var virus = strain.Comp;
-            if (virus.SuppressedUntil != null)
+            if (virus.SuppressedUntil != null || virus.IncubationEndsAt != null)
                 continue;
 
             foreach (var (symptomId, state) in virus.SymptomStates)

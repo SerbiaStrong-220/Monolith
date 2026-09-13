@@ -20,6 +20,12 @@ public sealed partial class CreatureAnimationVisualsComponent : Component
     public TimeSpan AttackDuration;
 
     [DataField]
+    public string? HeavyAttackState;
+
+    [DataField]
+    public TimeSpan HeavyAttackDuration;
+
+    [DataField]
     public string? SpawnState;
 
     [DataField]
@@ -51,6 +57,9 @@ public sealed partial class CreatureAnimationVisualsComponent : Component
 
     [DataField, AutoPausedField]
     public TimeSpan AttackUntil;
+
+    [DataField, AutoPausedField]
+    public TimeSpan HeavyAttackUntil;
 
     [DataField, AutoPausedField]
     public TimeSpan DeathUntil;

@@ -6,6 +6,11 @@
   components:
   - type: Virus
     nameLoc: virus-crimson-fever-name
+    incubation:
+      hidden: 1m
+      hiddenMax: 2m
+      visible: 1m
+      visibleMax: 2m
     transmission:
       contactChance: 0.25
     symptoms:
@@ -46,6 +51,9 @@
   components:
   - type: Virus
     nameLoc: virus-hemolacria-name
+    incubation:
+      visible: 2m
+      visibleMax: 4m
     transmission:
       contactChance: 0.5
     symptoms:
@@ -120,6 +128,10 @@
   components:
   - type: Virus
     nameLoc: virus-sacrilia-name
+    incubation:
+      hidden: 1m
+      hiddenMax: 210
+      visible: 1m
     transmission:
       contactChance: 0.5
     symptoms:
@@ -136,6 +148,8 @@
   components:
   - type: Virus
     nameLoc: virus-ghoulification-name
+    incubation:
+      visible: 6m
     transmission:
       contactChance: 0.5
     symptoms:
@@ -152,6 +166,7 @@
   components:
   - type: Virus
     nameLoc: virus-kenuraya-name
+    symptomTimeMultiplier: 2
     transmission:
       contactChance: 0.5
     symptoms:
@@ -205,6 +220,7 @@
   components:
   - type: Virus
     nameLoc: virus-dragon-blood-name
+    symptomTimeMultiplier: 1.5
     transmission:
       contactChance: 0.5
     symptoms:

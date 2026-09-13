@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "states": [
+    {
+      "name": "kudzu_11",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_12",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_13",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_21",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_22",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_23",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_31",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_32",
+      "directions": 1
+    },
+    {
+      "name": "kudzu_33",
+      "directions": 1
+    }
+  ]
+}

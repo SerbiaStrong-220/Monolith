@@ -1,0 +1,117 @@
+- type: damageModifierSet
+  id: RotSated
+  coefficients:
+    Blunt: 0.25
+    Slash: 0.25
+    Piercing: 0.25
+    Heat: 1
+    Cold: 0.25
+    Shock: 0.25
+    Caustic: 0.25
+    Poison: 0.25
+    Radiation: 0.25
+    Cellular: 0.25
+    Bloodloss: 0.25
+    Asphyxiation: 0.25
+    Structural: 0.25
+
+- type: entity
+  id: MobRotSated
+  parent: [ SimpleSpaceMobBase, MobCombat ]
+  name: sated
+  description: A towering, emaciated silhouette. Something shifts beneath its loose, waxy skin.
+  components:
+  - type: RotCreature
+  - type: VirusImmunity
+  - type: RotSated
+    consumeDuration: 60
+    larvaePerCorpse: 4
+    larva: MobRotLarva
+    slurryReagent: Vomit
+    slurryAmount: 10
+    consumeSound:
+      path: /Audio/Effects/demon_consume.ogg
+  - type: Damageable
+    damageModifierSet: RotSated
+  - type: VirusOffspring
+    initialVirus: VirusRot
+    lifetime: null
+    remains: RotGrowth
+    remainsOnDeath: true
+    retargetAfterInfection: false
+    decayEffect: RotSatedDeathEffect
+    infectionChance: 0.65
+  - type: HTN
+    sleepWithoutPlayers: false
+    rootTask:
+      task: RotSatedCompound
+    blackboard:
+      NavSmash: !type:Bool true
+      NavInteract: !type:Bool true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_sated.rsi
+    offset: 0, 0.375
+    layers:
+    - state: alive
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Appearance
+  - type: CreatureAnimationVisuals
+    idleState: alive
+    movingState: running
+    attackState: attack
+    attackDuration: 0.7
+    spawnState: emerge
+    spawnDuration: 1.2
+    dyingState: dying
+    deathDuration: 1
+    deadState: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
+  - type: SlowOnDamage
+    speedModifierThresholds: {}
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: MobState
+    allowedStates: [ Alive, Dead ]
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      600: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 400
+    bloodRefreshAmount: 3
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcClaw
+    attackRate: 0.8
+    damage:
+      types:
+        Poison: 40
+        Piercing: 20
+        Cellular: 5
+        Radiation: 5
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+
+- type: htnCompound
+  id: RotSatedCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:RotSatedOperator
+
+- type: entity
+  id: RotSatedDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_sated.rsi
+    state: dying
+    offset: 0, 0.375
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 1

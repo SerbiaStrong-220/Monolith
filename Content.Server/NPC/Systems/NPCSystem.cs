@@ -187,7 +187,7 @@ namespace Content.Server.NPC.Systems
                 if (_mobState.IsIncapacitated(npcUid))
                     continue;
 
-                // Exodus-begin: some NPCs must interact with unattended animals.
+                // Exodus-begin: unattended colonies must keep hunting, feeding and transporting corpses.
                 if (!htn.SleepWithoutPlayers)
                 {
                     if (!IsAwake(npcUid, htn))

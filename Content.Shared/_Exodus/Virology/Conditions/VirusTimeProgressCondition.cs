@@ -9,6 +9,6 @@ public sealed partial class VirusTimeProgressCondition : VirusProgressCondition
 
     protected override bool Condition(in VirusProgressArgs args)
     {
-        return args.CurTime > args.Symptom.StageStartTime + Delay;
+        return args.CurTime > args.Symptom.StageStartTime + Delay * args.TimeMultiplier;
     }
 }

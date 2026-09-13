@@ -24,8 +24,9 @@ public sealed partial class VirologySystem
         var count = 0;
         foreach (var carried in holder.Viruses)
         {
-            // we don't count suppressed strain for overload
-            if (TryComp<VirusComponent>(carried, out var comp) && comp.SuppressedUntil == null)
+            // Suppressed and incubating strains do not produce overload symptoms.
+            if (TryComp<VirusComponent>(carried, out var comp)
+                && comp.SuppressedUntil == null && comp.IncubationEndsAt == null)
                 count++;
         }
 

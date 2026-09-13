@@ -1,3 +1,6 @@
+guide-name-virology = Вирусология
+guide-name-virology-known-viruses = Вирусы и симптомы
+
 virology-no-pathogens = Патогены не обнаружены.
 virology-virus-report =
     Лабораторный анализ вируса

@@ -3,13 +3,8 @@
   id: BloodVomiting
   name: pathology-blood-vomiting-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
-  - detection:
-      description: pathology-blood-vomiting-detection-1
-    progressMessage: pathology-blood-vomiting-progress-1
-    progressConditions:
-    - !type:VirusTimeProgressCondition
-      delay: 1m
   - components:
     - type: BloodVomit
       interval: 45
@@ -39,6 +34,7 @@
   id: Sneezing
   name: pathology-sneezing-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - detection:
       description: pathology-sneezing-detection
@@ -64,6 +60,7 @@
   id: Cough
   name: pathology-cough-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   - detection:
       description: pathology-cough-detection
@@ -97,6 +94,7 @@
   id: Drowsiness
   name: pathology-drowsiness-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - detection:
       description: pathology-drowsiness-detection
@@ -113,6 +111,7 @@
   id: SkinBurst
   name: pathology-skin-burst-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -169,6 +168,7 @@
   id: Necrosis
   name: pathology-necrosis-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -231,6 +231,7 @@
   id: EyeBleeding
   name: pathology-eye-bleeding-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -284,6 +285,7 @@
   id: Muteness
   name: pathology-muteness-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - detection:
@@ -316,6 +318,7 @@
   id: Stupefaction
   name: pathology-stupefaction-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: SkillSuppression
@@ -327,6 +330,7 @@
   id: Hyperabsorption
   name: pathology-hyperabsorption-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -375,6 +379,7 @@
   id: Autorespiration
   name: pathology-autorespiration-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - effects:
     - !type:VirusInjectReagentEffect
@@ -388,6 +393,7 @@
   id: BurningBlood
   name: pathology-burning-blood-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -441,6 +447,7 @@
   id: TricordTolerance
   name: pathology-tricord-tolerance-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: ReagentMetabolismBlock
@@ -454,6 +461,7 @@
   id: Dementia
   name: pathology-dementia-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -508,6 +516,7 @@
   id: Synthification
   name: pathology-synthification-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -549,6 +558,7 @@
   id: Alcosia
   name: pathology-alcosia-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - effects:
     - !type:VirusInjectReagentEffect
@@ -562,6 +572,7 @@
   id: Radiophasia
   name: pathology-radiophasia-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -646,6 +657,7 @@
   id: Hypersomnia
   name: pathology-hypersomnia-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -703,6 +715,7 @@
   id: DogVitality
   name: pathology-dog-vitality-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -745,6 +758,7 @@
   id: Narcophasia
   name: pathology-narcophasia-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   - effects:
     - !type:VirusInjectReagentEffect
@@ -761,6 +775,7 @@
   id: StuffyNose
   name: pathology-stuffy-nose-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -818,6 +833,7 @@
   id: Bulimia
   name: pathology-bulimia-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: Bulimia
@@ -832,6 +848,7 @@
   id: BreathInversion
   name: pathology-breath-inversion-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: BreathInversion
@@ -846,6 +863,7 @@
   id: NoodleArms
   name: pathology-noodle-arms-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -876,6 +894,7 @@
   id: SharpHearing
   name: pathology-sharp-hearing-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -917,6 +936,7 @@
   id: Lethalgy
   name: pathology-lethalgy-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -974,6 +994,7 @@
   id: ChronicFatigue
   name: pathology-chronic-fatigue-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -1022,6 +1043,7 @@
   id: RecoilWeakness
   name: pathology-recoil-weakness-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: RecoilWeakness
@@ -1036,6 +1058,7 @@
   id: StoneSkin
   name: pathology-stone-skin-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: VirusInjectionBlock
@@ -1056,6 +1079,7 @@
   id: Electrophilia
   name: pathology-electrophilia-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -1105,6 +1129,7 @@
   id: Schizophrenia
   name: pathology-schizophrenia-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -1165,6 +1190,7 @@
   id: ToxicConversion
   name: pathology-toxic-conversion-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -1204,6 +1230,7 @@
   id: ToxinFiltration
   name: pathology-toxin-filtration-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -1258,6 +1285,7 @@
   id: Strongman
   name: pathology-strongman-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: Prying
@@ -1272,6 +1300,7 @@
   id: ViralAggressionRna
   name: pathology-viral-aggression-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - effects:
     - !type:VirusAggressionEffect
@@ -1286,6 +1315,7 @@
   id: ViralAggressionDna
   name: pathology-viral-aggression-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   - effects:
     - !type:VirusAggressionEffect
@@ -1300,6 +1330,7 @@
   id: ViralFragilityRna
   name: pathology-viral-fragility-name
   genome: Rna
+  resetProgressOnInfection: true
   bloodBorneOnly: true
   stages:
   - detection:
@@ -1313,6 +1344,7 @@
   id: ViralFragilityDna
   name: pathology-viral-fragility-name
   genome: Dna
+  resetProgressOnInfection: true
   bloodBorneOnly: true
   stages:
   - detection:
@@ -1326,6 +1358,7 @@
   id: Dehydration
   name: pathology-dehydration-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -1380,6 +1413,7 @@
   id: SteelStomach
   name: pathology-steel-stomach-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - effects:
@@ -1442,6 +1476,7 @@
   id: Clumsiness
   name: pathology-clumsiness-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - components:
     - type: Clumsy
@@ -1457,6 +1492,7 @@
   id: LaserEyes
   name: pathology-laser-eyes-name
   genome: Dna
+  resetProgressOnInfection: true
   stages:
   # Stage 1
   - components:
@@ -1523,6 +1559,7 @@
   id: Paracusia
   name: trait-paracusia-name
   genome: Rna
+  resetProgressOnInfection: true
   stages:
   - detection:
       description: pathology-paracusia-detection

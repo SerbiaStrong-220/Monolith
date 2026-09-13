@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.Virology.Lifecycle;
@@ -12,6 +13,10 @@ public sealed partial class VirusBroodComponent : Component
 
     [DataField(required: true)]
     public EntProtoId Offspring;
+
+    /// <summary>Optional replacement for the fixed offspring prototype; rolled separately for each child.</summary>
+    [DataField]
+    public EntityTableSelector? OffspringTable;
 
     [DataField]
     public EntProtoId? BurstEffect;

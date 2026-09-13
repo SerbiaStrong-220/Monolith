@@ -1,0 +1,326 @@
+- type: damageModifierSet
+  id: RotHungry
+  coefficients:
+    Piercing: 0.4
+    Heat: 0.4
+    Shock: 0.4
+    Blunt: 1.5
+    Slash: 1.5
+
+- type: entityTable
+  id: RotOffspring
+  table: !type:GroupSelector
+    children:
+    - id: MobRotHungry
+      weight: 30
+    - id: MobRotSpawn
+      weight: 50
+    - id: MobRotSated
+      weight: 20
+
+- type: entityTable
+  id: RotLarvaOffspring
+  table: !type:GroupSelector
+    children:
+    - id: MobRotHungry
+      weight: 30
+    - id: MobRotSpawn
+      weight: 60
+    - id: MobRotSated
+      weight: 10
+
+- type: entityTable
+  id: RotRemains
+  table: !type:GroupSelector
+    children:
+    - id: RotGrowth
+      weight: 65
+    - id: RotNodule
+      weight: 35
+
+- type: entity
+  id: MobRotHungry
+  parent: [ SimpleSpaceMobBase, MobCombat ]
+  name: hungry
+  description: A swollen carcass with sinewy fists and a sunken, festering face.
+  components:
+  - type: RotCreature
+  - type: VirusImmunity
+  - type: RotHungry
+    retreatDuration: 5
+    retreatDamageFraction: 0.5
+    returnDamageFraction: 0.5
+    frenzySpeedMultiplier: 1.2
+    frenzyAttackRateMultiplier: 1.25
+    obstacleRange: 0.8
+    stuckDelay: 2
+    stuckAttackInterval: 1.5
+    detourDelay: 10
+    stuckTileRadius: 1
+    stuckDamage:
+      types:
+        Structural: 120
+    stuckSound:
+      collection: MetalSlam
+    weapons:
+      components:
+      - MeleeWeapon
+      - Gun
+      - Explosive
+  - type: Damageable
+    damageModifierSet: RotHungry
+  - type: VirusOffspring
+    initialVirus: VirusRot
+    lifetime: null
+    remains: RotGrowth
+    remainsOnDeath: true
+    retargetAfterInfection: false
+    decayEffect: RotHungryDeathEffect
+    infectionChance: 0.65
+  - type: HTN
+    sleepWithoutPlayers: false
+    rootTask:
+      task: RotHungryCompound
+    blackboard:
+      NavSmash: !type:Bool true
+      NavPry: !type:Bool false
+      NavInteract: !type:Bool false
+      NavClimb: !type:Bool false
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_hungry.rsi
+    layers:
+    - state: alive
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: CreatureAnimationVisuals
+    idleState: alive
+    movingState: running
+    attackState: attack
+    attackDuration: 0.65
+    heavyAttackState: smash
+    heavyAttackDuration: 1.12
+    spawnState: emerge
+    spawnDuration: 1.1
+    dyingState: dying
+    deathDuration: 0.8
+    deadState: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 5.5
+  - type: SlowOnDamage
+    speedModifierThresholds: {}
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: MobState
+    allowedStates: [ Alive, Dead ]
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      600: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 400
+    bloodRefreshAmount: 3
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcSmash
+    attackRate: 0.8
+    damage:
+      types:
+        Poison: 25
+        Slash: 15
+        Radiation: 5
+        Cellular: 5
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: Puller
+    needsHands: false
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-rot-hungry-name
+    description: ghost-role-rot-hungry-description
+    rules: ghost-role-rot-hungry-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+  - type: GhostTakeoverAvailable
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: htnCompound
+  id: RotHungryCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:RotHungryOperator
+
+- type: entity
+  id: RotHungryDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_hungry.rsi
+    state: dying
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.8
+
+- type: entity
+  id: RotNodule
+  parent: RotGrowth
+  name: rot nodule
+  description: A living nursery of rot, nursing hungry larvae among its vines.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nodule.rsi
+    state: alive
+  - type: RotNest
+    larva: MobRotLarva
+    spawnInterval: 120
+    capacity: 2
+    vines: !type:GroupSelector
+      children:
+      - id: RotInfectedVine
+        weight: 50
+      - id: RotMoldVine
+        weight: 50
+    replaceableVines:
+      tags:
+      - RotVine
+
+- type: entity
+  id: MobRotLarva
+  parent: SimpleSpaceMobBase
+  name: rot larva
+  description: A pale scavenger looking for a body to devour. Do not let it finish its meal.
+  components:
+  - type: RotCreature
+  - type: VirusImmunity
+  - type: RotLarva
+    initialVirus: VirusRot
+    offspring: MobRotSpawn
+    offspringTable: !type:NestedSelector
+      tableId: RotLarvaOffspring
+    maxSatiety: 4
+    mealsPerCorpse: 4
+    biteInterval: 3
+    hatchDelay: 60
+    pupaName: rot-pupa-name
+  - type: HTN
+    sleepWithoutPlayers: false
+    rootTask:
+      task: RotLarvaCompound
+    blackboard:
+      IdleRange: !type:Single 5
+      InteractRange: !type:Single 0.8
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_larva.rsi
+    layers:
+    - state: alive
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.RotLarvaVisuals.Sated:
+        enum.DamageStateVisualLayers.Base:
+          True: { state: pupa }
+          False: { state: alive }
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.2
+    baseSprintSpeed: 1.8
+  - type: SlowOnDamage
+    speedModifierThresholds: {}
+  - type: MobState
+    allowedStates: [ Alive, Dead ]
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 15
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+
+- type: htnCompound
+  id: RotLarvaCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:RotLarvaTargetOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        targetKey: TargetCoordinates
+        rangeKey: InteractRange
+    - !type:HTNPrimitiveTask
+      operator: !type:RotLarvaFeedOperator
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: Tag
+  id: RotVine
+
+- type: entity
+  id: RotInfectedVine
+  parent: Kudzu
+  name: infected vine
+  description: Thick strands of rot that catch the legs of passing creatures.
+  components:
+  - type: Tag
+    tags:
+    - RotVine
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_vine.rsi
+    state: kudzu_11
+    drawdepth: Overdoors
+  - type: Kudzu
+    growthTickChance: 1
+    spreadChance: 1
+    spriteVariants: 4
+  - type: EdgeSpreader
+    id: Kudzu
+    minSpreadDelay: 30
+    maxSpreadDelay: 70
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.7
+    sprintSpeedModifier: 0.7
+    ignoreWhitelist:
+      components:
+      - RotCreature
+
+- type: entity
+  id: RotMoldVine
+  parent: RotInfectedVine
+  name: moldy vine
+  description: A damp carpet that nourishes creatures born of the rot.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_mold.rsi
+    state: kudzu_11
+    drawdepth: FloorObjects
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.9
+    sprintSpeedModifier: 0.9
+  - type: DamageContacts
+    whitelist:
+      components:
+      - RotCreature
+    damage:
+      groups:
+        Brute: -2
+        Burn: -1
+      types:
+        Poison: -2
+        Radiation: -1
+        Cellular: -1
+        Bloodloss: -1
+        Asphyxiation: -1

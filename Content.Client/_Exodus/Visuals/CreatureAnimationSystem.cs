@@ -1,6 +1,8 @@
+using Content.Shared._Exodus.Visuals;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -13,6 +15,7 @@ public sealed class CreatureAnimationSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     private EntityQuery<MobStateComponent> _mobs;
     private EntityQuery<MeleeWeaponComponent> _melee;
@@ -24,6 +27,22 @@ public sealed class CreatureAnimationSystem : EntitySystem
         _mobs = GetEntityQuery<MobStateComponent>();
         _melee = GetEntityQuery<MeleeWeaponComponent>();
         _physics = GetEntityQuery<PhysicsComponent>();
+        SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
+    }
+
+    private void OnMeleeLunge(MeleeLungeEvent args)
+    {
+        if (args.Entity != args.Weapon || args.Animation == null)
+            return;
+
+        var uid = GetEntity(args.Entity);
+        if (!TryComp<CreatureAnimationVisualsComponent>(uid, out var animation) || animation.HeavyAttackState == null
+            || !_melee.TryComp(uid, out var weapon) || args.Animation != weapon.WideAnimation)
+            return;
+
+        animation.HeavyAttackUntil = _timing.CurTime + animation.HeavyAttackDuration;
+        animation.AttackUntil = TimeSpan.Zero;
+        animation.CurrentState = null;
     }
 
     public override void FrameUpdate(float frameTime)
@@ -59,7 +78,7 @@ public sealed class CreatureAnimationSystem : EntitySystem
             if (_melee.TryGetComponent(uid, out var melee) && melee.NextAttack != animation.LastAttack)
             {
                 animation.LastAttack = melee.NextAttack;
-                if (melee.NextAttack > now)
+                if (melee.NextAttack > now && now >= animation.HeavyAttackUntil)
                     animation.AttackUntil = now + animation.AttackDuration;
             }
 
@@ -68,6 +87,11 @@ public sealed class CreatureAnimationSystem : EntitySystem
                 state = now < animation.DeathUntil
                     ? animation.DyingState ?? animation.DeadState ?? state
                     : animation.DeadState ?? state;
+            else if (now < animation.HeavyAttackUntil && animation.HeavyAttackState is { } heavyAttack)
+                state = heavyAttack;
+            else if (_appearance.TryGetData<string>(uid, CreatureActivityVisuals.State, out var activity)
+                && !string.IsNullOrEmpty(activity))
+                state = activity;
             else if (now < animation.AttackUntil && animation.AttackState is { } attack)
                 state = attack;
             else if (now < animation.SpawnUntil && animation.SpawnState is { } spawn)

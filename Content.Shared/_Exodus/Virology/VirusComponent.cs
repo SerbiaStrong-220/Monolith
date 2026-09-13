@@ -25,6 +25,23 @@ public sealed partial class VirusComponent : Component
     [DataField]
     public VirusTransmission? Transmission;
 
+    /// <summary>Optional incubation before any of the strain's symptoms become active.</summary>
+    [DataField]
+    public VirusIncubation? Incubation;
+
+    /// <summary>Multiplier for stage durations, manifestation delays and periodic symptom effect intervals.</summary>
+    [DataField]
+    public float SymptomTimeMultiplier = 1f;
+
+    [ViewVariables]
+    public TimeSpan? IncubationEndsAt;
+
+    [ViewVariables]
+    public TimeSpan? HiddenUntil;
+
+    [ViewVariables]
+    public TimeSpan NextEffect;
+
     /// <summary>The infected host this strain sits in.</summary>
     [ViewVariables]
     public EntityUid Carrier;

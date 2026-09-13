@@ -5,12 +5,16 @@ using Content.Shared._Exodus.Virology.Lifecycle;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Virology.Lifecycle;
 
@@ -29,6 +33,7 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityTableSystem _tables = default!;
 
     private TimeSpan _nextUpdate;
     private TimeSpan _nextExposure;
@@ -132,6 +137,7 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
         var coordinates = Transform(ent).Coordinates;
         var count = GetOffspringCount(ent);
         var offspring = ent.Comp.Offspring;
+        var offspringTable = ent.Comp.OffspringTable;
         var burst = ent.Comp.BurstEffect;
         ent.Comp.Hatched = true;
         _body.GibBody(ent.Owner);
@@ -146,11 +152,30 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
 
         for (var i = 0; i < count; i++)
         {
-            var child = Spawn(offspring, coordinates);
-            var vector = EnsureComp<VirusOffspringComponent>(child);
-            vector.Strain = descriptor.Clone();
-            vector.ExpiresAt = _timing.CurTime + vector.Lifetime;
+            SpawnOffspring(coordinates, descriptor, offspring, offspringTable);
         }
+    }
+
+    public void SpawnOffspring(EntityCoordinates coordinates, VirusDescriptor strain, EntProtoId fallback,
+        EntityTableSelector? table = null)
+    {
+        if (table == null)
+        {
+            SpawnVector(fallback, coordinates, strain);
+            return;
+        }
+
+        foreach (var prototype in _tables.GetSpawns(table))
+            SpawnVector(prototype, coordinates, strain);
+    }
+
+    private void SpawnVector(EntProtoId prototype, EntityCoordinates coordinates, VirusDescriptor strain)
+    {
+        var child = Spawn(prototype, coordinates);
+        var vector = EnsureComp<VirusOffspringComponent>(child);
+        vector.Strain = FreshInfection(strain);
+        if (vector.Lifetime is { } lifetime)
+            vector.ExpiresAt = _timing.CurTime + lifetime;
     }
 
     private int GetOffspringCount(Entity<VirusBroodComponent> ent)

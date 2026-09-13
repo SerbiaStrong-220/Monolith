@@ -19,6 +19,8 @@ public sealed partial class VirologySystem
         {
             Source = protoId,
             Genome = GetGenome(config.Symptoms),
+            Incubation = config.Incubation?.Clone(),
+            SymptomTimeMultiplier = config.SymptomTimeMultiplier,
         };
 
         var used = new HashSet<ProtoId<ReagentPrototype>>();
@@ -67,6 +69,8 @@ public sealed partial class VirologySystem
             Source = virus.Comp.Source,
             Genome = virus.Comp.Genome,
             SuppressedRemaining = virus.Comp.SuppressedUntil is { } until ? until - _timing.CurTime : null,
+            Incubation = virus.Comp.Incubation?.Clone(),
+            SymptomTimeMultiplier = virus.Comp.SymptomTimeMultiplier,
         };
 
         if (virus.Comp.Source == null)
@@ -115,6 +119,8 @@ public sealed partial class VirologySystem
             comp.Cure = descriptor.Cure?.Clone();
             comp.Transmission = descriptor.Transmission?.Clone();
             comp.IsSupervirus = descriptor.IsSupervirus;
+            comp.Incubation = descriptor.Incubation?.Clone();
+            comp.SymptomTimeMultiplier = descriptor.SymptomTimeMultiplier;
         }
 
         foreach (var snapshot in descriptor.Symptoms)
@@ -128,6 +134,8 @@ public sealed partial class VirologySystem
                 Accelerant = snapshot.Accelerant,
             };
         }
+
+        InitializeIncubation(comp);
 
         // if infected with suppressed strain - spawns suppressed and keeps timer
         if (descriptor.SuppressedRemaining is { } remaining && remaining > TimeSpan.Zero)

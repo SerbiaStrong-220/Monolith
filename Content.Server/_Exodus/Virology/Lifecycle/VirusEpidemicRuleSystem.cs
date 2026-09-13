@@ -84,9 +84,7 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
                 candidates.Add(uid);
         }
 
-        var wanted = Math.Min(candidates.Count,
-            Math.Clamp((int)Math.Ceiling(candidates.Count / (double)Math.Max(1, ent.Comp.PlayersPerCarrier)),
-                1, Math.Max(1, ent.Comp.MaxCarriers)));
+        var wanted = GetSeedCount(ent, candidates.Count);
         var grids = new HashSet<EntityUid?>();
         RobustRandom.Shuffle(candidates);
         for (var pass = 0; pass < 2 && ent.Comp.SeededCount < wanted; pass++)
@@ -107,6 +105,22 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
         }
 
         Log.Info($"Epidemic seeded {ent.Comp.SeededCount} carriers of {ent.Comp.Virus}.");
+    }
+
+    public int GetSeedCount(Entity<VirusEpidemicRuleComponent> ent, int candidateCount)
+    {
+        if (candidateCount <= 0)
+            return 0;
+
+        var count = 0;
+        foreach (var (minimumPlayers, carriers) in ent.Comp.CarrierThresholds)
+        {
+            if (candidateCount < minimumPlayers)
+                break;
+            count = carriers;
+        }
+
+        return Math.Clamp(count, 0, candidateCount);
     }
 
     public (int Carriers, int Broods, int Offspring, int Reservoirs) CountThreats(ProtoId<VirusSymptomPrototype> symptom)
@@ -145,6 +159,13 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
         }
 
         var sources = EntityQueryEnumerator<VirusReservoirComponent>();
+        var larvae = EntityQueryEnumerator<RotLarvaComponent>();
+        while (larvae.MoveNext(out var larvaUid, out var larva))
+        {
+            if (!_mobState.IsDead(larvaUid) && ContainsSymptom(larva.Strain, symptom))
+                offspring++;
+        }
+
         while (sources.MoveNext(out _, out var source))
         {
             if (ContainsSymptom(source.Strain, symptom))

@@ -19,13 +19,18 @@ public sealed partial class VirusLifecycleSystem
     {
         if (ent.Comp.Strain == null && ent.Comp.InitialVirus is { } virus)
             ent.Comp.Strain = _virology.BuildDescriptor(virus);
-        ent.Comp.ExpiresAt = _timing.CurTime + ent.Comp.Lifetime;
+        if (ent.Comp.Lifetime is { } lifetime)
+            ent.Comp.ExpiresAt = _timing.CurTime + lifetime;
     }
 
     private void OnOffspringDeath(Entity<VirusOffspringComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
+        if (args.NewMobState == MobState.Dead && !ent.Comp.Finished)
+        {
+            if (ent.Comp.RemainsOnDeath)
+                SpawnRemains(ent);
             ent.Comp.Finished = true;
+        }
     }
 
     private void OnMeleeHit(Entity<VirusOffspringComponent> ent, ref MeleeHitEvent args)
@@ -42,7 +47,7 @@ public sealed partial class VirusLifecycleSystem
         }
 
         // The native melee operator will fail and let HTN choose a fresh susceptible host.
-        if (TryComp<NPCMeleeCombatComponent>(ent, out var combat)
+        if (ent.Comp.RetargetAfterInfection && TryComp<NPCMeleeCombatComponent>(ent, out var combat)
             && !_virology.CanAcquireVirus(combat.Target, strain))
             RemCompDeferred<NPCMeleeCombatComponent>(ent);
     }
@@ -52,32 +57,54 @@ public sealed partial class VirusLifecycleSystem
         var query = EntityQueryEnumerator<VirusOffspringComponent>();
         while (query.MoveNext(out var uid, out var offspring))
         {
-            if (offspring.Finished || now < offspring.ExpiresAt || _mobState.IsDead(uid)
+            if (offspring.Finished || offspring.Lifetime == null || now < offspring.ExpiresAt || _mobState.IsDead(uid)
                 || offspring.Strain == null || TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid))
                 continue;
 
-            offspring.Finished = true;
-            if (offspring.DecayEffect is { } effect && !_containers.IsEntityInContainer(uid))
-            {
-                var visual = Spawn(effect, Transform(uid).Coordinates);
-                _transform.SetLocalRotation(visual, Transform(uid).LocalRotation);
-            }
-            var remains = Spawn(offspring.Remains, Transform(uid).Coordinates);
-            // Replace the occupant even in a full slot; decomposition must not spill through a sealed container.
-            if (_containers.TryGetContainingContainer(uid, out var container)
-                && (!_containers.Remove(uid, container, reparent: false, force: true)
-                    || !_containers.Insert(remains, container, force: true)))
-            {
-                QueueDel(remains);
-                QueueDel(uid);
-                continue;
-            }
-
-            var reservoir = EnsureComp<VirusReservoirComponent>(remains);
-            reservoir.Strain = offspring.Strain.Clone();
-            reservoir.Identity = _virology.GetIdentity(reservoir.Strain);
-            QueueDel(uid);
+            SpawnRemains((uid, offspring));
         }
+    }
+
+    private void SpawnRemains(Entity<VirusOffspringComponent> ent)
+    {
+        var (uid, offspring) = ent;
+        if (offspring.Finished || TerminatingOrDeleted(uid))
+            return;
+
+        offspring.Finished = true;
+        if (offspring.DecayEffect is { } effect && !_containers.IsEntityInContainer(uid))
+        {
+            var visual = Spawn(effect, Transform(uid).Coordinates);
+            _transform.SetLocalRotation(visual, Transform(uid).LocalRotation);
+        }
+        var prototype = offspring.Remains;
+        if (offspring.RemainsTable != null)
+        {
+            // Remains occupy a single container slot, so a table selects a single replacement.
+            foreach (var selected in _tables.GetSpawns(offspring.RemainsTable))
+            {
+                prototype = selected;
+                break;
+            }
+        }
+        var remains = Spawn(prototype, Transform(uid).Coordinates);
+        // Replace the occupant even in a full slot; decomposition must not spill through a sealed container.
+        if (_containers.TryGetContainingContainer(uid, out var container)
+            && (!_containers.Remove(uid, container, reparent: false, force: true)
+                || !_containers.Insert(remains, container, force: true)))
+        {
+            QueueDel(remains);
+            QueueDel(uid);
+            return;
+        }
+
+        var reservoir = EnsureComp<VirusReservoirComponent>(remains);
+        if (offspring.Strain is { } strain)
+        {
+            reservoir.Strain = strain.Clone();
+            reservoir.Identity = _virology.GetIdentity(reservoir.Strain);
+        }
+        QueueDel(uid);
     }
 
     public bool TryFindTarget(Entity<VirusOffspringComponent> ent, out EntityUid target)
@@ -92,13 +119,14 @@ public sealed partial class VirusLifecycleSystem
         _lookup.GetEntitiesInRange(origin, ent.Comp.SearchRange, _nearby);
         foreach (var (candidate, _) in _nearby)
         {
-            if (candidate == ent.Owner || _mobState.IsDead(candidate)
-                || _containers.IsEntityInContainer(candidate) || !_virology.CanAcquireVirus(candidate, strain))
+            if (candidate == ent.Owner)
                 continue;
 
             var position = _transform.GetMapCoordinates(candidate);
             var current = (position.Position - origin.Position).LengthSquared();
-            if (current >= distance || !_interaction.InRangeUnobstructed(ent.Owner, candidate, ent.Comp.SearchRange))
+            if (current >= distance || _mobState.IsDead(candidate)
+                || _containers.IsEntityInContainer(candidate) || !_virology.CanAcquireVirus(candidate, strain)
+                || !_interaction.InRangeUnobstructed(ent.Owner, candidate, ent.Comp.SearchRange))
                 continue;
 
             target = candidate;

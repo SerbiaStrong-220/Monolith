@@ -33,11 +33,9 @@ public sealed partial class VirusEpidemicRuleComponent : Component
     [DataField]
     public TimeSpan QuietPeriod = TimeSpan.FromMinutes(10);
 
-    [DataField]
-    public int PlayersPerCarrier = 25;
-
-    [DataField]
-    public int MaxCarriers = 4;
+    /// <summary>Minimum number of eligible players mapped to the initial carrier count.</summary>
+    [DataField(required: true)]
+    public SortedDictionary<int, int> CarrierThresholds = new();
 
     [DataField, AutoPausedField]
     public TimeSpan SeedAt;

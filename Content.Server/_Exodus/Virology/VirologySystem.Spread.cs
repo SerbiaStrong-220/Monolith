@@ -90,7 +90,8 @@ public sealed partial class VirologySystem
             if (!TryGetActiveTransmission(strain.Comp, out var transmission) || transmission.ProximityChance <= 0f)
                 continue;
 
-            var descriptor = ToDescriptor(strain);
+            // Snapshot only when an exposure succeeds; most airborne rolls never need a descriptor.
+            VirusDescriptor? descriptor = null;
 
             _nearbyHosts.Clear();
             _lookup.GetEntitiesInRange(coords, transmission.ProximityRange, _nearbyHosts);
@@ -108,7 +109,7 @@ public sealed partial class VirologySystem
                 if (IsVectorBlocked(target, VirusTransmissionVector.Proximity, inhaling: true))
                     continue;
 
-                AddVirus(target, descriptor);
+                AddVirus(target, descriptor ??= ToDescriptor(strain));
             }
 
             // airborne strains settle on nearby food/drink
@@ -118,7 +119,7 @@ public sealed partial class VirologySystem
             {
                 if (_random.Prob(transmission.ProximityChance)
                     && _interaction.InRangeUnobstructed(source, food, transmission.ProximityRange))
-                    Contaminate(food, descriptor);
+                    Contaminate(food, descriptor ??= ToDescriptor(strain));
             }
 
             _nearbyDrinks.Clear();
@@ -127,7 +128,7 @@ public sealed partial class VirologySystem
             {
                 if (!HasComp<FoodComponent>(drink) && _random.Prob(transmission.ProximityChance)
                     && _interaction.InRangeUnobstructed(source, drink, transmission.ProximityRange))
-                    Contaminate(drink, descriptor);
+                    Contaminate(drink, descriptor ??= ToDescriptor(strain));
             }
         }
     }

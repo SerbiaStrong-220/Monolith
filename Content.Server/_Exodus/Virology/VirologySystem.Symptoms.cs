@@ -12,7 +12,7 @@ public sealed partial class VirologySystem
         var species = GetSpecies(ent.Owner);
         foreach (var virus in EnumerateStrains(ent.Comp))
         {
-            if (virus.Comp.SuppressedUntil != null)
+            if (virus.Comp.SuppressedUntil != null || virus.Comp.IncubationEndsAt != null)
                 continue;
 
             foreach (var (id, state) in virus.Comp.SymptomStates)

@@ -40,6 +40,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private Content.Server._Exodus.Virology.VirologySystem _virology = default!; // Exodus: incubation-aware detection.
 
     public override void Initialize()
     {
@@ -285,8 +286,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
             part != null ? GetNetEntity(part) : null
         )
         {
-            HasViruses = TryComp<Content.Shared._Exodus.Virology.VirusHolderComponent>(target, out var viruses)
-                && viruses.Viruses.Count > 0, // SS220 / Exodus
+            HasViruses = _virology.HasDetectableVirus(target), // Exodus: hidden incubation is not detectable here.
         });
     }
 }

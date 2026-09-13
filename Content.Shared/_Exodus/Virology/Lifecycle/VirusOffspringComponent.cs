@@ -1,8 +1,9 @@
 using Robust.Shared.Prototypes;
+using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Shared._Exodus.Virology.Lifecycle;
 
-/// <summary>A short-lived vector which spreads its parent's strain through melee attacks.</summary>
+/// <summary>A vector which spreads its parent's strain through melee attacks.</summary>
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class VirusOffspringComponent : Component
 {
@@ -17,10 +18,20 @@ public sealed partial class VirusOffspringComponent : Component
     public EntProtoId Remains;
 
     [DataField]
+    public EntityTableSelector? RemainsTable;
+
+    [DataField]
+    public bool RemainsOnDeath;
+
+    /// <summary>Whether an NPC stops attacking a host that can no longer acquire its strain.</summary>
+    [DataField]
+    public bool RetargetAfterInfection = true;
+
+    [DataField]
     public EntProtoId? DecayEffect;
 
     [DataField]
-    public TimeSpan Lifetime = TimeSpan.FromMinutes(5);
+    public TimeSpan? Lifetime = TimeSpan.FromMinutes(5);
 
     [DataField, AutoPausedField]
     public TimeSpan ExpiresAt;

@@ -98,6 +98,12 @@ public sealed partial class NPCSteeringComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public float Range = 0.2f;
 
+    // Exodus-begin
+    /// <summary>Optional approach distance for path obstacles instead of the usual interaction range.</summary>
+    [DataField]
+    public float? ObstacleRange;
+    // Exodus-end
+
     // <Monolith> - early port of wizden#38846
     /// <summary>
     /// Whether to ignore pathing and just move directly to target.

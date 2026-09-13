@@ -19,7 +19,7 @@ public sealed partial class VirusEyeDamageEffect : IVirusEffect
         // <= 0 would divide by zero
         var fraction = TimeToFull <= TimeSpan.Zero
             ? 1d
-            : Math.Clamp((args.CurTime - args.Symptom.StageStartTime) / TimeToFull, 0d, 1d);
+            : Math.Clamp((args.CurTime - args.Symptom.StageStartTime) / (TimeToFull * args.TimeMultiplier), 0d, 1d);
         var target = (int)(blindable.MaxDamage * fraction);
 
         if (target > blindable.EyeDamage)

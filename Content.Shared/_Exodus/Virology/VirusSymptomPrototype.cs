@@ -37,6 +37,10 @@ public sealed partial class VirusSymptomPrototype : IPrototype
 [DataDefinition]
 public sealed partial class VirusSymptomStage
 {
+    /// <summary>Hides this stage from handheld health analyzers; laboratory detection is independent.</summary>
+    [DataField]
+    public bool HiddenOnHealthAnalyzer;
+
     /// <summary>Host components put while "X" stage is active.</summary>
     [DataField]
     public ComponentRegistry Components = [];

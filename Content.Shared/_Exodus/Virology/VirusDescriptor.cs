@@ -28,6 +28,12 @@ public sealed partial class VirusDescriptor
     [DataField]
     public VirusTransmission? Transmission;
 
+    [DataField]
+    public VirusIncubation? Incubation;
+
+    [DataField]
+    public float SymptomTimeMultiplier = 1f;
+
     /// <summary>strain's symptoms and their per-symptom snapshot.</summary>
     [DataField]
     public List<VirusSymptomSnapshot> Symptoms = [];
@@ -50,6 +56,8 @@ public sealed partial class VirusDescriptor
             IsSupervirus = IsSupervirus,
             Cure = Cure?.Clone(),
             Transmission = Transmission?.Clone(),
+            Incubation = Incubation?.Clone(),
+            SymptomTimeMultiplier = SymptomTimeMultiplier,
             Symptoms = symptoms,
             SuppressedRemaining = SuppressedRemaining,
         };

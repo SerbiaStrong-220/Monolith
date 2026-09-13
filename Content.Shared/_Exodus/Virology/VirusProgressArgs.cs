@@ -9,4 +9,5 @@ public readonly record struct VirusProgressArgs(
     VirusSymptomState Symptom,
     IEntityManager EntityManager,
     TimeSpan CurTime,
-    bool IsClient);
+    bool IsClient,
+    float TimeMultiplier = 1f);
