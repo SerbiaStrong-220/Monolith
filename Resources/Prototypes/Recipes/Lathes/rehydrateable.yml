@@ -45,7 +45,16 @@
   materials:
     Biomass: 20
 
-# Exodus: removed OwOroachCube fabrication recipe; MobOwORoach is admin-only.
+# Exodus-begin: restore fabrication of the cube without a microbomb.
+- type: latheRecipe
+  id: OwOroachCube
+  result: OwOroachCube
+  categories:
+  - Animals
+  completetime: 45
+  materials:
+    Biomass: 20
+# Exodus-end
 
 - type: latheRecipe
   id: MothroachMustardCube

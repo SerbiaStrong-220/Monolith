@@ -105,7 +105,7 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-    MobOwORoach: 1
+    MobOwORoachNoBomb: 1 # Exodus: use the mothroach available to players.
   recipeType: Microwave # Mono: Deviating to match the item description and restore the humor
 #Breads & Sandwiches
 
