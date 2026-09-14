@@ -20,7 +20,7 @@
   - AbominationCube
   - SpaceCarpCube
   - SpaceTickCube
-  - OwOroachCube
+  - OwOroachCube # Exodus: restored for the variant without a microbomb.
 
 - type: latheRecipePack
   id: SpeciesCubesStatic

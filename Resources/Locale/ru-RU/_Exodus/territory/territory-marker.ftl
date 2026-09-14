@@ -16,6 +16,12 @@ territory-faction-khsira-name = Империя Кхси'Ра
 
 # Neutral / unclaimed state (used when no banner is actively claiming the grid)
 territory-unclaimed = НЕЗАНЯТО
+territory-contested = ОСПАРИВАЕТСЯ
+territory-contested-countdown = ОСПАРИВАЕТСЯ · { $minutes }:{ $seconds }
+grid-territory-capture-started = Начато оспаривание территории. Сохраняйте знамя закреплённым до завершения отсчёта.
+grid-territory-capture-cancelled = Оспаривание территории прервано.
+grid-territory-claim-faction-capturing = Эта фракция уже оспаривает другую территорию.
+company-territory-banner-contested = Корпоративный захват невозможен, пока территория оспаривается.
 
 # Claim system messages (popups, construction)
 grid-territory-already-claimed = Эта станция уже имеет установленный баннер контроля. Снимите старый перед установкой нового.

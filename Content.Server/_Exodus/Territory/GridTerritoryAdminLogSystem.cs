@@ -20,6 +20,7 @@ public sealed partial class GridTerritoryAdminLogSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GridTerritoryControllerChangedEvent>(OnControllerChanged);
+        SubscribeLocalEvent<GridTerritoryCaptureStartedEvent>(OnCaptureStarted);
         SubscribeLocalEvent<RoundStartedEvent>(OnRoundStarted);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
@@ -40,6 +41,28 @@ public sealed partial class GridTerritoryAdminLogSystem : EntitySystem
 
         if (args.OldFaction is { } oldFaction)
             LogUnclaim(args.Grid, oldFaction, args.OldSourceBanner);
+    }
+
+    private void OnCaptureStarted(ref GridTerritoryCaptureStartedEvent args)
+    {
+        if (_suppressLogs || args.Actor is not { } actor || TerminatingOrDeleted(actor))
+            return;
+
+        if (TryComp<TransformComponent>(args.Banner, out var bannerXform))
+        {
+            var bannerCoordinates = _transform.GetMapCoordinates(bannerXform);
+
+            _adminLog.Add(LogType.Action, LogImpact.High,
+                $"{ToPrettyString(actor):user} anchored {ToPrettyString(args.Banner):entity} to start contesting territory {ToPrettyString(args.Grid):entity} for {args.Faction.Id} at {bannerCoordinates:coordinates}; capture duration: {args.Duration.TotalSeconds} seconds");
+            _chat.SendAdminAlert(actor,
+                $"anchored {ToPrettyString(args.Banner)} to start contesting territory {ToPrettyString(args.Grid)} for {args.Faction.Id} at {bannerCoordinates:coordinates}; capture duration: {args.Duration.TotalSeconds} seconds");
+            return;
+        }
+
+        _adminLog.Add(LogType.Action, LogImpact.High,
+            $"{ToPrettyString(actor):user} anchored {ToPrettyString(args.Banner):entity} to start contesting territory {ToPrettyString(args.Grid):entity} for {args.Faction.Id}; capture duration: {args.Duration.TotalSeconds} seconds");
+        _chat.SendAdminAlert(actor,
+            $"anchored {ToPrettyString(args.Banner)} to start contesting territory {ToPrettyString(args.Grid)} for {args.Faction.Id}; capture duration: {args.Duration.TotalSeconds} seconds");
     }
 
     private void OnRoundStarted(RoundStartedEvent ev)

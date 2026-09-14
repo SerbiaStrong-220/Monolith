@@ -13,12 +13,14 @@ public sealed partial class IffAffiliationSystem : EntitySystem
 
     private EntityQuery<IffAffiliationComponent> _affiliationQuery;
     private EntityQuery<GridTerritoryComponent> _territoryQuery;
+    private EntityQuery<TerritoryCaptureComponent> _captureQuery;
 
     public override void Initialize()
     {
         base.Initialize();
         _affiliationQuery = GetEntityQuery<IffAffiliationComponent>();
         _territoryQuery = GetEntityQuery<GridTerritoryComponent>();
+        _captureQuery = GetEntityQuery<TerritoryCaptureComponent>();
     }
 
     /// <summary>
@@ -60,6 +62,13 @@ public sealed partial class IffAffiliationSystem : EntitySystem
 
         if (affiliation == null && territory == null)
             return false;
+
+        if (affiliation?.Mode != IffAffiliationMode.None &&
+            _captureQuery.TryGetComponent(grid, out var capture) && capture.Faction != null)
+        {
+            label = Loc.GetString("territory-contested");
+            return true;
+        }
 
         if (affiliation?.Mode != IffAffiliationMode.None &&
             territory is { Claimable: true, ControllingFaction: { } controller } &&
@@ -141,6 +150,12 @@ public sealed partial class IffAffiliationSystem : EntitySystem
         if (_territoryQuery.TryGetComponent(grid, out var territory) &&
             territory.Radius > 0f && territory.ColorPoiByFaction)
         {
+            if (_captureQuery.TryGetComponent(grid, out var capture) && capture.Faction != null)
+            {
+                color = capture.Color;
+                return true;
+            }
+
             color = territory.ControllingFaction is { } id && _prototype.TryIndex(id, out var faction)
                 ? faction.Color
                 : territory.NeutralPoiColor;

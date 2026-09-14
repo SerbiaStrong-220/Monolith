@@ -118,7 +118,7 @@
   components:
   - type: Rehydratable
     possibleSpawns:
-    - MobOwORoach
+    - MobOwORoachNoBomb # Exodus: player-created mothroaches have no microbomb.
 
 - type: entity
   parent: MonkeyCube

@@ -47,7 +47,7 @@ public sealed class BankDepositCommissionTest
             var bankSystem = entMan.System<BankSystem>();
 
             var deposit = bankSystem.GetDepositAfterFees(player,
-                atmComponent,
+                (atm, atmComponent),
                 100,
                 out var companyCommission,
                 out var atmFee);
@@ -81,7 +81,7 @@ public sealed class BankDepositCommissionTest
             var bankSystem = entMan.System<BankSystem>();
 
             var deposit = bankSystem.GetDepositAfterFees(player,
-                atmComponent,
+                (atm, atmComponent),
                 int.MaxValue,
                 out var companyCommission,
                 out var atmFee);

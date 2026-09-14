@@ -40,7 +40,9 @@ public sealed partial class TerritoryClaimRulesSystem : EntitySystem
             return false;
         }
 
-        if (_nextClaimByFaction.TryGetValue(faction, out var factionUnlockAt) &&
+        var factionCooldown = GetFactionClaimCooldown(faction);
+        if (factionCooldown > TimeSpan.Zero &&
+            _nextClaimByFaction.TryGetValue(faction, out var factionUnlockAt) &&
             curTime < factionUnlockAt)
         {
             popup = Loc.GetString(
@@ -49,7 +51,34 @@ public sealed partial class TerritoryClaimRulesSystem : EntitySystem
             return false;
         }
 
+        if (factionCooldown > TimeSpan.Zero)
+        {
+            // Paused captures still reserve this faction's claim slot. Only checked on capture attempts.
+            var query = AllEntityQuery<TerritoryCaptureComponent>();
+            while (query.MoveNext(out var grid, out var capture))
+            {
+                if (capture.Faction != faction || TerminatingOrDeleted(grid) || EntityManager.IsQueuedForDeletion(grid))
+                    continue;
+
+                popup = Loc.GetString("grid-territory-claim-faction-capturing");
+                return false;
+            }
+        }
+
         return true;
+    }
+
+    public TimeSpan GetClaimDuration(ProtoId<TerritoryFactionPrototype> faction)
+    {
+        var duration = _prototype.TryIndex(faction, out var prototype) && prototype.ClaimDuration is { } overridden
+            ? overridden
+            : ResolveRules().DefaultClaimDuration;
+        return duration > TimeSpan.Zero ? duration : TimeSpan.Zero;
+    }
+
+    public Color GetContestedColor()
+    {
+        return ResolveRules().ContestedColor;
     }
 
     public void RecordSuccessfulClaim(ProtoId<TerritoryFactionPrototype> faction)

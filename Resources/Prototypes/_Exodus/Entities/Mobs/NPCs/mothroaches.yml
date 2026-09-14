@@ -1,0 +1,10 @@
+- type: entity
+  parent: MobOwORoach
+  id: MobOwORoachNoBomb
+  suffix: ""
+  components:
+  - type: AutoImplant
+    implants:
+    - RadioImplantCivilian
+  - type: GhostRole
+    description: ghost-role-information-oworoach-no-bomb-description

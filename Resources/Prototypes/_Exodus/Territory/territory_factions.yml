@@ -41,6 +41,10 @@
 #   - claimCooldown is optional and written in seconds.
 #   - If unset, territoryClaimRules.defaultFactionClaimCooldown is used.
 #   - Set claimCooldown: 0 to disable the cooldown for a specific faction.
+#   - Nonzero cooldowns also prevent this faction from contesting several grids at once.
+# Claim duration:
+#   - claimDuration overrides territoryClaimRules.defaultClaimDuration, in seconds.
+#   - Set claimDuration: 0 to claim immediately; mapped anchored banners always claim immediately.
 
 - type: territoryFaction
   id: TSFMC
@@ -98,6 +102,7 @@
 # Only opted-in creatures on the controlled grid receive the natural-healing bonus.
 - type: territoryFaction
   id: Chimera
+  claimDuration: 0 # Hive cores claim immediately.
   radarLabel: territory-faction-infestation
   displayName: territory-faction-infestation
   banner: ExodusChimeraCore

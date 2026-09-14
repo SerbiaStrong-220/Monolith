@@ -24,6 +24,7 @@
 - type: crystallizerRecipe
   id: Iridite
   name: crystallizer-recipe-iridite # Exodus
+  craftDuration: 180 # Exodus: seconds of processing per sheet.
   minimumTemperature: 4900
   maximumTemperature: 14000
   energyRelease: -1290

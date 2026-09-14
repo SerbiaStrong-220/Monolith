@@ -60,6 +60,7 @@ public sealed partial class GridTerritorySystem
     public bool AllowsCorporateControl(EntityUid grid)
     {
         return TryComp<GridTerritoryComponent>(grid, out var territory) &&
+               (!TryComp<TerritoryCaptureComponent>(grid, out var capture) || capture.Faction == null) &&
                territory.ControllingFaction is { } faction &&
                _proto.TryIndex(faction, out var prototype) && prototype.AllowCorporateControl;
     }

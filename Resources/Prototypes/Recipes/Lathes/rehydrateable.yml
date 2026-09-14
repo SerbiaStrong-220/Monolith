@@ -45,14 +45,16 @@
   materials:
     Biomass: 20
 
+# Exodus-begin: restore fabrication of the cube without a microbomb.
 - type: latheRecipe
   id: OwOroachCube
   result: OwOroachCube
-  categories: # Mono
-  - DangerousAnimals
+  categories:
+  - Animals
   completetime: 45
   materials:
     Biomass: 20
+# Exodus-end
 
 - type: latheRecipe
   id: MothroachMustardCube

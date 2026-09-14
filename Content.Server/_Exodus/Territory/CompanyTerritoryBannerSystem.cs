@@ -149,6 +149,12 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
             return;
         }
 
+        if (TryComp<TerritoryCaptureComponent>(grid, out var capture) && capture.Faction != null)
+        {
+            DenyAnchor(ent.Owner, args.User, "company-territory-banner-contested", args);
+            return;
+        }
+
         if (territory.ControllingFaction is not { } faction)
         {
             DenyAnchor(ent.Owner, args.User, "company-territory-banner-neutral", args);

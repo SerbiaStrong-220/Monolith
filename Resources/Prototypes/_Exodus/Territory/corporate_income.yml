@@ -1,0 +1,20 @@
+- type: corporateIncome
+  id: Default
+  incomePerPoint: 67000
+  incomeInterval: 3600
+  treasuryInterval: 60
+  salaryInterval: 1500 # 25 minutes.
+  atmCompanyRate: 0.04
+  atmTaxAccounts:
+    Medical: 0.01
+  bankAccounts:
+    MMC: Mieyo
+    TSF: Nfsd
+    TSFHighComm: Nfsd
+    PDV: BlackMarket
+    PDVHighComm: BlackMarket
+    Colonial: Frontier
+    MD: Medical
+  # Medical income comes from its subsidy and the fixed 1% ATM tax, not corporate expansion.
+  excludedCompanies:
+  - MD
