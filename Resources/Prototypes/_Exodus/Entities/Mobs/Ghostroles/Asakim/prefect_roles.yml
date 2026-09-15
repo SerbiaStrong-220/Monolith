@@ -8,6 +8,7 @@
     name: ghost-role-information-prefect-asakim-name
     description: ghost-role-information-prefect-asakim-description
     rules: ghost-role-information-prefect-asakim-rules
+    job: AsakimPrefect
     mindRoles:
     - MindRoleGhostRoleNeutral
     - MindRoleAsakim

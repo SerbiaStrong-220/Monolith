@@ -122,6 +122,10 @@
   - Sheriff
   - SeniorOfficer
   - TsfMarsoc # Exodus: count the lobby operative as a combatant.
+  - Brigmedic # Exodus: count faction support personnel as combatants.
+  - TsfEngineer # Exodus: count faction support personnel as combatants.
+  - TsfBorg # Exodus: count faction cyborg jobs as combatants.
+  - PdvBorg # Exodus: count faction cyborg jobs as combatants.
   - Pirate
   - PirateFirstMate
   - PirateCaptain

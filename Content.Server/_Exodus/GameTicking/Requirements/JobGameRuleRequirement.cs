@@ -27,13 +27,12 @@ public sealed partial class JobGameRuleRequirement : GameRuleRequirement
         var jobCounter = 0;
         var departmentCounter = 0;
 
-        var query = entity.EntityQueryEnumerator<PlayerJobComponent, ActorComponent>();
+        var jobQuery = entity.GetEntityQuery<PlayerJobComponent>();
+        var departmentQuery = entity.GetEntityQuery<GameRuleDepartmentMemberComponent>();
+        var query = entity.EntityQueryEnumerator<ActorComponent>();
 
-        while (query.MoveNext(out var uid, out var player, out var actor))
+        while (query.MoveNext(out var uid, out _))
         {
-            if (player.JobPrototype == null)
-                continue;
-
             if (entity.IsPaused(uid))
                 continue;
 
@@ -41,11 +40,15 @@ public sealed partial class JobGameRuleRequirement : GameRuleRequirement
             if (mobSystem.IsIncapacitated(uid))
                 continue;
 
-            // update counters
-            if (player.JobPrototype == Job)
+            var job = jobQuery.TryGetComponent(uid, out var player) ? player.JobPrototype : null;
+
+            if (job != null && job == Job)
                 jobCounter++;
 
-            if (department.Roles.Contains(player.JobPrototype.Value))
+            // A job and explicit membership must not count the same player twice.
+            if (job != null && department.Roles.Contains(job.Value)
+                || departmentQuery.TryGetComponent(uid, out var membership)
+                && membership.Departments.Contains(department.ID))
                 departmentCounter++;
         }
 
