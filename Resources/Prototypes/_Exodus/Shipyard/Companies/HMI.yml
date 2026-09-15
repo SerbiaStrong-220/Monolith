@@ -1,0 +1,43 @@
+- type: vessel
+  id: regenerator
+  parent: BaseVessel
+  name: company-vessel-regenerator-name
+  description: company-vessel-regenerator-description
+  price: 444444
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - HarmonyMedicalEnterprises
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/HMI/regenerator.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Mercenary
+  - Medical
+  - Chemistry
+  engine:
+  - Plasma
+  limit: 3
+
+- type: gameMap
+  id: regenerator
+  mapName: 'Регенератор'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/HMI/regenerator.yml
+  minPlayers: 0
+  stations:
+    regenerator:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Регенератор{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]
