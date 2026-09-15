@@ -104,6 +104,8 @@
   - Asakim
   - IPC
   - Arachnid
+  - Kidan
+  - Hydrakin
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-operative-name

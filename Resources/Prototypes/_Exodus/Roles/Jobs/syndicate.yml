@@ -17,6 +17,8 @@
     - Asakim
     - IPC
     - Arachnid
+    - Kidan
+    - Hydrakin
   startingGear: SyndicateRoundstartOperativeGear
   icon: JobIconSyndicate
   supervisors: job-supervisors-syndicate-operative
