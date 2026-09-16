@@ -1,3 +1,4 @@
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Shared._Exodus.Virology;
@@ -12,6 +13,7 @@ namespace Content.Server._Exodus.Virology.Lifecycle;
 
 public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidemicRuleComponent>
 {
+    [Dependency] private ChatSystem _chat = default!;
     [Dependency] private VirologySystem _virology = default!;
     [Dependency] private MobStateSystem _mobState = default!;
 
@@ -20,7 +22,7 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
     {
         component.SeedAt = Timing.CurTime + component.Preparation;
         component.NextCheck = Timing.CurTime;
-        ChatManager.DispatchServerAnnouncement(Loc.GetString(component.PreparationMessage));
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(component.PreparationMessage));
     }
 
     protected override void ActiveTick(EntityUid uid, VirusEpidemicRuleComponent component,
@@ -45,13 +47,13 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
         {
             component.WarningStage = stage;
             if (stage <= component.WarningMessages.Length)
-                ChatManager.DispatchServerAnnouncement(Loc.GetString(component.WarningMessages[stage - 1]));
+                _chat.DispatchGlobalAnnouncement(Loc.GetString(component.WarningMessages[stage - 1]));
         }
 
         if (stage > 0)
         {
             if (component.Controlled)
-                ChatManager.DispatchServerAnnouncement(Loc.GetString(component.ResurgenceMessage));
+                _chat.DispatchGlobalAnnouncement(Loc.GetString(component.ResurgenceMessage));
             component.Controlled = false;
             component.QuietSince = null;
         }
@@ -61,7 +63,7 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
             if (!component.Controlled && now - component.QuietSince >= component.QuietPeriod)
             {
                 component.Controlled = true;
-                ChatManager.DispatchServerAnnouncement(Loc.GetString(component.ControlledMessage));
+                _chat.DispatchGlobalAnnouncement(Loc.GetString(component.ControlledMessage));
             }
         }
     }
