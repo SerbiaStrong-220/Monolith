@@ -42,3 +42,7 @@
           AsakimPrefect: [ 1, 1 ]
           AsakimCenturion: [ 1, 1 ]
           AsakimWarrior: [ 3, 3 ]
+        jobLimits:
+          AsakimPrefect: { min: 1 }
+          AsakimCenturion: { min: 1 }
+          AsakimWarrior: { min: 3 }

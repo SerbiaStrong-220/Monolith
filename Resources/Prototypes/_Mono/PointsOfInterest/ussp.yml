@@ -63,6 +63,11 @@
             Contractor: [-1, -1]
             Pilot: [-1, -1] # Exodus keep round-start and latejoin spawn
             Mercenary: [-1, -1] # Exodus keep round-start and latejoin spawn
+          # Exodus-begin: preserve the existing Viper staffing through records consoles.
+          jobLimits:
+            VGCommander: { min: 1 }
+            VGLieutenant: { min: 2 }
+          # Exodus-end
           # tags: # Exodus disable-ussp-faction
           # - USSPCommand
         - type: StationDeadDrop

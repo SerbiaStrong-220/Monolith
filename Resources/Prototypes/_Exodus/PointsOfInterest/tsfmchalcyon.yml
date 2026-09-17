@@ -71,6 +71,15 @@
             TsfEngineer: [ 2, 2 ]
             TsfBorg: [ 2, 2 ]
             TsfMarsoc: [ 1, 1 ] # One base operative, available at round start and for late joins.
+          jobLimits:
+            Sheriff: { min: 1, max: 1 }
+            Bailiff: { min: 1 }
+            SeniorOfficer: { min: 3 }
+            Brigmedic: { min: 2 }
+            Cadet: { min: 6 }
+            TsfEngineer: { min: 2 }
+            TsfBorg: { min: 2 }
+            TsfMarsoc: { min: 1, max: 1 }
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity
@@ -131,13 +140,21 @@
         - type: StationJobs
           availableJobs:
             Sheriff: [ 1, 1 ]
-            TsfMarsoc: [ 3, 3 ]
+            TsfMarsoc: [ 1, 1 ]
             Bailiff: [ 3, 3 ]
             SeniorOfficer: [ 6, 6 ] # Mono
             Brigmedic: [ 4, 4 ] # Mono
             Deputy: [ -1, -1 ] # Mono
             TsfEngineer: [ 4, 4 ]
             TsfBorg: [ 2, 2 ]
+          jobLimits:
+            Sheriff: { min: 1, max: 1 }
+            TsfMarsoc: { min: 1, max: 1 }
+            Bailiff: { min: 3 }
+            SeniorOfficer: { min: 6 }
+            Brigmedic: { min: 4 }
+            TsfEngineer: { min: 4 }
+            TsfBorg: { min: 2 }
           tags:
           - CentralCommand
         - type: StationDeadDropReporting

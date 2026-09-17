@@ -41,6 +41,11 @@
             SeniorOfficer: [ 0, 3 ]
             Brigmedic: [ 0, 1 ]
             Deputy: [ -1, -1 ]
+          # Exodus-begin: preserve the existing late-join staffing through records consoles.
+          jobLimits:
+            SeniorOfficer: { min: 3 }
+            Brigmedic: { min: 1 }
+          # Exodus-end
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity

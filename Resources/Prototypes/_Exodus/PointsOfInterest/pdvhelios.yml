@@ -58,6 +58,13 @@
             Pirate: [ -1, -1 ]
             PdvBorg: [ 2, 2 ]
             PDVTarkhan: [ 1, 1 ] # One base operative, available at round start and for late joins.
+          jobLimits:
+            PirateCaptain: { min: 1, max: 1 }
+            PirateFirstMate: { min: 1 }
+            PDVDenasvar: { min: 3 }
+            PDVInfiltrator: { min: 2 }
+            PdvBorg: { min: 2 }
+            PDVTarkhan: { min: 1, max: 1 }
           tags:
           - GrandVizier
         - type: StationDeadDropReporting
@@ -109,6 +116,12 @@
             PDVInfiltrator: [ 2, 2 ]
             Pirate: [ -1, -1 ]
             PdvBorg: [ 2, 2 ]
+          jobLimits:
+            PirateCaptain: { min: 1, max: 1 }
+            PirateFirstMate: { min: 3 }
+            PDVDenasvar: { min: 5 }
+            PDVInfiltrator: { min: 2 }
+            PdvBorg: { min: 2 }
           tags:
           - GrandVizier
         - type: StationDeadDropReporting
