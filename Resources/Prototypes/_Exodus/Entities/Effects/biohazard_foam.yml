@@ -1,0 +1,14 @@
+- type: edgeSpreader
+  id: ExodusBiohazardFoam
+  updatesPerSecond: 16
+
+- type: entity
+  id: ExodusBiohazardFoam
+  parent: Foam
+  name: decontamination foam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EdgeSpreader
+    id: ExodusBiohazardFoam
+  - type: StepTrigger
+    active: false

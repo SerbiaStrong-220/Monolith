@@ -10,3 +10,14 @@
     Bluespace: 500
     Diamond: 100
     Plutonium: 100
+
+- type: latheRecipe
+  id: ExodusBiohazardSprayer
+  parent: NFBaseToolsRecipe
+  result: ExodusBiohazardSprayer
+  completetime: 10
+  materials:
+    Bluespace: 200
+    Diamond: 300
+    Plastitanium: 1000
+    Plastic: 1000

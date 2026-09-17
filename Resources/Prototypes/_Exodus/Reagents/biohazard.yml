@@ -1,0 +1,15 @@
+- type: reagent
+  id: ExodusBiohazardNeutralizer
+  name: reagent-name-exodus-biohazard-neutralizer
+  group: Special
+  desc: reagent-desc-exodus-biohazard-neutralizer
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
+  color: "#80d8c8"
+  tileReactions:
+  - !type:RemoveAnchoredEntitiesTileReaction
+    whitelist:
+      components:
+      - ChimeraCleanable
+      tags:
+      - RotVine

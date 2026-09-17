@@ -1,0 +1,30 @@
+- type: entity
+  id: ExodusBiohazardSprayer
+  parent: BaseItem
+  name: biohazard foam sprayer
+  description: A self-replenishing foam sprayer for clearing chimera biomass and rot vines. Activate it in hand and remain still while it prepares a discharge.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+    state: nolabelspray
+    color: "#80d8c8"
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+    size: Normal
+  - type: FoamSprayer
+    delay: 20
+    foamPrototype: ExodusBiohazardFoam
+    foamDuration: 15
+    spreadAmount: 100
+    solution:
+      reagents:
+      - ReagentId: ExodusBiohazardNeutralizer
+        Quantity: 1
+  - type: LimitedCharges
+    maxCharges: 1
+    charges: 1
+  - type: AutoRecharge
+    rechargeDuration: 60
+  - type: Tag
+    tags:
+    - Spray

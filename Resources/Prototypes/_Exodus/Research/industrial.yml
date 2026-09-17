@@ -11,3 +11,16 @@
   technologyPrerequisites:
   - ConstructionBags
   position: -3, 18
+
+- type: technology
+  id: ExodusBiohazardControl
+  name: research-technology-exodus-biohazard-control
+  entityIcon: ExodusBiohazardSprayer
+  discipline: Industrial
+  tier: 3
+  cost: 100000
+  recipeUnlocks:
+  - ExodusBiohazardSprayer
+  technologyPrerequisites:
+  - BluespaceRapidPartExchange
+  position: -3, 19
