@@ -129,7 +129,7 @@
   parent: BaseDataFarmIndestructible
   name: bolted data farm (Research)
   suffix: 35 PPS
-  description: A power-hungry server dedicated towards scraping data from... somewhere. This one generates research points at a rate of 200 per second. It seems to be bolted to the floor.
+  description: A power-hungry server dedicated towards scraping data from... somewhere. This one generates research points at a rate of 35 per second. It seems to be bolted to the floor. # Exodus: match the actual production rate.
   components:
   - type: ResearchClient
   - type: ResearchPointSource
