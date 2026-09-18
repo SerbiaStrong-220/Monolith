@@ -1,5 +1,5 @@
 - type: guideEntry
   id: MedicalRecipes
   name: guide-entry-medicalrecipes
-  text: "/ServerInfo/_NF/Guidebook/Medical/MedicalRecipes.xml"
-  filterEnabled: True
+  text: "/ServerInfo/_Exodus/Guidebook/Medical/MedicalRecipes.xml" # Exodus: current lathe recipes and loading instructions.
+  filterEnabled: false # Exodus: this reference is a written guide, without searchable recipe controls.
