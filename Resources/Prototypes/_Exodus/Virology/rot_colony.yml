@@ -180,6 +180,9 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
   - type: GhostTakeoverAvailable
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleRot
   - type: ReplacementAccent
     accent: genericAggressive
 
