@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 09/18/2026 04:48:01
-  entityCount: 1729
+  time: 09/18/2026 07:51:24
+  entityCount: 1730
 maps: []
 grids:
 - 1
@@ -254,11 +254,11 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
       spreadQueues:
-        Kudzu: []
         Puddle: []
-        ExodusBiohazardFoam: []
+        Kudzu: []
         MetalFoam: []
         Smoke: []
+        ExodusBiohazardFoam: []
     - type: ThermalSignature
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
@@ -9397,6 +9397,11 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -18.5,3.5
+      parent: 1
+  - uid: 1730
+    components:
+    - type: Transform
+      pos: -12.5,11.5
       parent: 1
 - proto: WarpPointAdmin
   entities:
