@@ -63,6 +63,7 @@ public sealed partial class TTSSystem : EntitySystem
         SubscribeLocalEvent<TelepathySpokeEvent>(OnTelepathySpoke);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         SubscribeLocalEvent<TTSComponent, MapInitEvent>(OnInit);
+        InitializeVoicePools(); // Exodus: keep humanoid voice pools consistent with profiles and sex.
 
         SubscribeNetworkEvent<RequestGlobalTTSEvent>(OnRequestGlobalTTS);
 
@@ -97,25 +98,7 @@ public sealed partial class TTSSystem : EntitySystem
 
     private void OnInit(Entity<TTSComponent> ent, ref MapInitEvent _)
     {
-
-        SetRandomVoice(ent.AsNullable());
-    }
-
-    /// <summary>
-    /// Set random voice from RandomVoicesList
-    /// If RandomVoicesList is null - doesn`t set new voice
-    /// </summary>
-    private void SetRandomVoice(Entity<TTSComponent?> entity)
-    {
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return;
-
-        var protoId = entity.Comp.RandomVoicesList;
-
-        if (protoId is null)
-            return;
-
-        entity.Comp.VoicePrototypeId = _random.Pick(_prototypeManager.Index<RandomVoicesListPrototype>(protoId).VoicesList);
+        SetRandomVoice(ent); // Exodus: implementation in TTSSystem.VoicePools.Exodus.cs.
     }
 
     private void OnRadioReceiveEvent(ref RadioSpokeEvent args)
