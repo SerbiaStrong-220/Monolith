@@ -2,8 +2,7 @@
   id: ADSKashalot
   parent: [BaseMobilePOI, BaseRepairablePOI]
   name: "ВЭФ | Кашалот"
-  minimumDistance: 20000
-  maximumDistance: 30000
+  # Placement is controlled by ADSKashalotNearDefensivePlatform in relative_placement.yml.
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, ExodusRot, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/whale.yml

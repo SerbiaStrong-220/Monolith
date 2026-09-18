@@ -11,6 +11,7 @@
   colorPoiByFaction: true
   neutralPoiColor: "#A6A6A6"
   gameMapPrototypes:
+  - AdsDefensivePlatform
   - AnomalousLab
   - Bahama
   - CaseysCasino
