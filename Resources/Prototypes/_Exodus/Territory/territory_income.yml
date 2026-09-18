@@ -5,7 +5,7 @@
   accessFaction: Syndicate
   currencyStack: Telecrystal
   currencyName: territory-income-currency-tc
-  currencyPerPoint: 5
+  currencyPerPoint: 3
   payoutInterval: 300
   maxWithdrawal: 1000
   excludeInitialClaims: true
