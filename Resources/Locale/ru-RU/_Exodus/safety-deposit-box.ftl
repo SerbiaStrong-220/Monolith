@@ -51,4 +51,6 @@ safety-deposit-error-not-lost = Этот сейф не утрачен, поэт�
 safety-deposit-purchase-success = Сейф банковской ячейки куплен. ID сейфа: {$id}...
 safety-deposit-deposit-success = Содержимое сейфа сохранено. Сейф принят на хранение.
 safety-deposit-withdraw-success = Сейф банковской ячейки получен.
+safety-deposit-withdraw-partial = Сейф выдан. Не удалось восстановить предметов: {$count}. Их данные сохранены; обратитесь к администрации для восстановления.
+safety-deposit-withdraw-overflow = Предметы, которые не поместились в сейф или больше не допускаются к хранению, выданы рядом с вами. Количество: {$count}.
 safety-deposit-reclaim-success = Утраченный сейф восстановлен. Выдана пустая замена.
