@@ -472,7 +472,7 @@
   id: WeaponTurretLongbow
   name: L/65 "Longbow" 140mm autocannon
   parent:
-  - BallisticArtilleryUnanchorableMagazine
+  - BallisticArtilleryMagazine # Exodus: allow unanchoring and pulling the Longbow again.
   - ShipGunTier5HpExploding # Exodus self-destruct (HP, was BallisticArtilleryTier5HP)
   - ShipGunExplodes5x5 # Exodus self-destruct (blast size)
   suffix: Capital/Station, T4
