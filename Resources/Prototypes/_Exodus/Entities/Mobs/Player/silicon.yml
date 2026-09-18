@@ -17,6 +17,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, Colossus
   components:
+  - type: PlaytimeSalary
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldColossus
     container: station_ai_mind_slot

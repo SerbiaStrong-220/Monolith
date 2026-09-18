@@ -54,6 +54,8 @@
   parent: BaseFactionBorgChassis
   abstract: true
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for faction cyborg players.
+    salary: Silicon
   - type: GameRuleDepartmentMember # Exodus: include player-controlled faction borgs in event requirements.
     departments: [Combatant]
   - type: NpcFactionMember
@@ -122,6 +124,8 @@
   parent: BaseFactionBorgChassis
   abstract: true
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for faction cyborg players.
+    salary: Silicon
   - type: GameRuleDepartmentMember # Exodus: include player-controlled faction borgs in event requirements.
     departments: [Combatant]
   - type: NpcFactionMember

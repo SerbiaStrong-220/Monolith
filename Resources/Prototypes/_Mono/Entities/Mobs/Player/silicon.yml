@@ -504,6 +504,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, Vessel
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for vessel AI players.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldVessel
     container: station_ai_mind_slot
@@ -582,6 +584,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, TSFMC
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for faction AI players.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldTSFMC
     container: station_ai_mind_slot
@@ -675,6 +679,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, PDV
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for faction AI players.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldPDV
     container: station_ai_mind_slot
