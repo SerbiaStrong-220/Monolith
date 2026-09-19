@@ -1,0 +1,142 @@
+- type: entity
+  abstract: true
+  parent: BaseMob
+  id: BaseMobShipRepairDrone
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone.rsi
+    layers:
+    - state: off
+      map: ["enum.ShipRepairDroneVisuals.State"]
+  - type: GenericVisualizer
+    visuals:
+      enum.ShipRepairDroneVisuals.State:
+        enum.ShipRepairDroneVisuals.State:
+          "Off": { state: off }
+          Idle: { state: idle }
+          Repairing: { state: work }
+          Dead: { state: dead }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MovementIgnoreGravity
+    weightless: false
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Silicon
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+    showOverlays: false
+  - type: Repairable
+    allowSelfRepair: false
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: ShipRepairDrone
+  - type: ShipRepairTool
+  - type: Tag
+    tags:
+    - ShipRepairTool
+    - DoorBumpOpener
+  - type: Prying
+    pryPowered: true
+    speedModifier: 1.5
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 600
+  - type: RadarBlip
+    config:
+      color: "#00FF00"
+      shape: Square
+      bounds: "-0.5,-0.5,0.5,0.5"
+  - type: CleanupImmune
+
+- type: entity
+  parent: BaseMobShipRepairDrone
+  id: MobShipRepairDrone
+  name: ship repair drone
+  description: A compact drone that repairs its assigned ship using an SRD snapshot. Link it to a button or signaller with a multitool.
+  components:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+
+- type: entity
+  parent: BaseMobShipRepairDrone
+  id: MobShipRepairDroneFleetTSF
+  name: TSF fleet repair drone
+  description: A fleet drone that repairs accessible damage in a 3x3 area using an SRD snapshot.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_tsf.rsi
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  - type: ShipRepairDrone
+    repairRadius: 1
+    repairThroughput: 1.2
+
+- type: entity
+  parent: MobShipRepairDroneFleetTSF
+  id: MobShipRepairDroneFleetPDV
+  name: PDV fleet repair drone
+  description: A fleet drone that repairs accessible damage in a 3x3 area using an SRD snapshot.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_pdv.rsi
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+
+- type: entity
+  parent: BaseMobShipRepairDrone
+  id: MobShipRepairDroneAsakim
+  name: Asakim repair drone
+  description: A phase-capable repair drone compatible with ordinary and Asakim ship snapshots.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_asakim.rsi
+  - type: NpcFactionMember
+    factions:
+    - AsakimDefenceForces
+  - type: ShipRepairDrone
+    canPhase: true
+  - type: GenericVisualizer
+    visuals:
+      enum.ShipRepairDroneVisuals.State:
+        enum.ShipRepairDroneVisuals.State:
+          "Off": { state: off }
+          Idle: { state: idle }
+          Repairing: { state: work }
+          Phased: { state: phase }
+          Dead: { state: dead }
+  - type: Tag
+    tags:
+    - ShipRepairTool
+    - ADSRepairTool

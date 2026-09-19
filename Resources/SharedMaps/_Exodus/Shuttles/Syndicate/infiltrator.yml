@@ -36,6 +36,10 @@ entities:
   entities:
   - uid: 1
     components:
+    - type: ShipRepairRestrict
+      toolWhitelist:
+        tags:
+        - SyndicateRepairTool
     - type: MetaData
       name: Infiltrator
     - type: Transform

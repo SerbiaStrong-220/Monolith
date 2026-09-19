@@ -242,16 +242,8 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
                     return;
             }
 
-            var protoId = repairData.EntityPalette[spec.ProtoIndex];
-            var coords = new EntityCoordinates(targetGrid, spec.LocalPosition);
-
-            var spawned = Spawn(protoId, coords);
-            _transform.SetLocalRotation(spawned, spec.Rotation);
-
-            spec.OriginalEntity = GetNetEntity(spawned);
-
-            var dirtMsg = new RepairEntityMessage(GetNetEntity(targetGrid), args.TargetGridIndices, args.RepairId.Value, spec, repairData.Revision); // Exodus
-            RaiseNetworkEvent(dirtMsg);
+            // Exodus: handheld and autonomous repairs share snapshot reference/publication handling.
+            RestoreSnapshotEntity((targetGrid, repairData), args.TargetGridIndices, args.RepairId.Value, spec);
         }
         else
         {

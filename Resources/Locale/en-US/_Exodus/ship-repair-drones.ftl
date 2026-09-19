@@ -1,0 +1,16 @@
+ent-MobShipRepairDrone = ship repair drone
+    .desc = A compact drone that repairs a ship using an SRD snapshot. Link it to a button or signaller with a multitool.
+ent-MobShipRepairDroneFleetTSF = TSF fleet repair drone
+    .desc = Repairs accessible structures in a 3x3 area using an SRD snapshot. Repair time depends on the amount of work.
+ent-MobShipRepairDroneFleetPDV = PDV fleet repair drone
+    .desc = Repairs accessible structures in a 3x3 area using an SRD snapshot. Repair time depends on the amount of work.
+ent-MobShipRepairDroneAsakim = Asakim repair drone
+    .desc = Phases through obstacles. Repairs ordinary and Asakim ships using an SRD snapshot.
+ship-repair-drone-no-snapshot = The drone must be on a ship with an SRD snapshot to start.
+ship-repair-drone-incompatible = The drone is incompatible with this ship's repair scheme.
+ship-repair-drone-status-off = The drone is switched off.
+ship-repair-drone-status-active = The drone is servicing its assigned ship.
+ship-repair-drone-status-repairing = The drone is repairing damage.
+ship-repair-drone-status-waiting = The drone is waiting for its assigned ship to return.
+ship-repair-drone-status-destroyed = The drone is inoperable.
+ship-repair-drone-link-hint = Use a multitool to link a button or signaller to Toggle. On and Off ports are also available for separate control.

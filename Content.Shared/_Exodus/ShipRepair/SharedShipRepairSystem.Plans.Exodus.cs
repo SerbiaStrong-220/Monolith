@@ -1,0 +1,333 @@
+using System.Numerics;
+using Content.Shared._Exodus.ShipRepair;
+using Content.Shared._Mono.ShipRepair.Components;
+using Content.Shared.Damage;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Repairable;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Mono.ShipRepair;
+
+public abstract partial class SharedShipRepairSystem
+{
+    [Dependency] private DamageableSystem _repairDamage = default!;
+
+    private EntityQuery<MapGridComponent> _repairGridQuery;
+    private EntityQuery<DamageableComponent> _repairDamageQuery;
+    private EntityQuery<MobStateComponent> _repairMobQuery;
+    private EntityQuery<TransformComponent> _repairTransformQuery;
+    private readonly HashSet<EntityUid> _repairObstructions = new();
+
+    private void InitRepairPlans()
+    {
+        _repairGridQuery = GetEntityQuery<MapGridComponent>();
+        _repairDamageQuery = GetEntityQuery<DamageableComponent>();
+        _repairMobQuery = GetEntityQuery<MobStateComponent>();
+        _repairTransformQuery = GetEntityQuery<TransformComponent>();
+    }
+
+    /// <summary>Both whole-grid and individual prototype restrictions apply to every operation.</summary>
+    public bool CanRepairGrid(EntityUid tool, EntityUid grid)
+    {
+        return !TerminatingOrDeleted(tool) && !TerminatingOrDeleted(grid) && _repairGridQuery.HasComponent(grid) &&
+               TryComp<ShipRepairDataComponent>(grid, out var data) && data.ChunkSize > 0 &&
+               (!TryComp<ShipRepairRestrictComponent>(grid, out var restriction) ||
+                !_whitelist.IsWhitelistFail(restriction.ToolWhitelist, tool));
+    }
+
+    /// <summary>Cheap discovery without spatial queries or a copy of the target's damage.</summary>
+    public bool NeedsSnapshotRepair(Entity<ShipRepairDataComponent> grid, ShipRepairTarget target)
+    {
+        if (grid.Comp.ChunkSize <= 0 || !TryGetChunk(grid.Comp, target.Tile, out var chunk))
+            return false;
+
+        if (target.EntityId is not { } id)
+        {
+            var relative = GetRelativeIndices(target.Tile, grid.Comp.ChunkSize);
+            var stored = chunk.Tiles[relative.X + relative.Y * grid.Comp.ChunkSize];
+            return stored != Tile.Empty.TypeId && _repairGridQuery.TryGetComponent(grid, out var mapGrid) &&
+                   _map.GetTileRef(grid, mapGrid, target.Tile).Tile.TypeId != stored;
+        }
+
+        if (!chunk.Entities.TryGetValue(id, out var spec))
+            return false;
+
+        if (spec.OriginalEntity is not { } netOriginal || !TryGetEntity(netOriginal, out var original) ||
+            TerminatingOrDeleted(original))
+            return true;
+
+        if (!_repairTransformQuery.TryGetComponent(original.Value, out var xform))
+            return false;
+        if (xform.ParentUid == grid.Owner && xform.Anchored &&
+            Vector2.DistanceSquared(xform.LocalPosition, spec.LocalPosition) < 0.01f &&
+            !_repairMobQuery.HasComponent(original.Value) &&
+            _repairDamageQuery.TryGetComponent(original.Value, out var damage) && damage.TotalDamage > 0)
+            return true;
+
+        var ev = new ShipRepairReinstateQueryEvent(true);
+        RaiseLocalEvent(original.Value, ref ev);
+        return ev.Handled && ev.Repairable;
+    }
+
+    /// <summary>Quotes one operation using the same times and restrictions as a normal SRD.</summary>
+    public bool TryPlanRepair(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
+        ShipRepairTarget target, bool healDamage, out ShipRepairWork work)
+    {
+        work = default!;
+        if (!CanRepairGrid(tool, grid) || !_repairGridQuery.TryGetComponent(grid, out var mapGrid) ||
+            !NeedsSnapshotRepair(grid, target) ||
+            !TryGetChunk(grid.Comp, target.Tile, out var chunk))
+            return false;
+
+        if (target.EntityId is not { } id)
+        {
+            if (!tool.Comp.EnableTileRepair)
+                return false;
+
+            work = new ShipRepairWork
+            {
+                Target = target,
+                Operation = ShipRepairOperation.Tile,
+                Position = _map.TileCenterToVector(grid, mapGrid, target.Tile),
+                Duration = TimeSpan.FromSeconds(tool.Comp.TileRepairTime * tool.Comp.RepairTimeMultiplier),
+                Cost = tool.Comp.TileRepairCost,
+            };
+            return true;
+        }
+
+        if (!tool.Comp.EnableEntityRepair || !chunk.Entities.TryGetValue(id, out var spec) ||
+            !TryGetRepairPrototype(tool, grid.Comp, spec, out var prototype, out var repairable))
+            return false;
+
+        var operation = ShipRepairOperation.Restore;
+        EntityUid? original = null;
+        DamageSpecifier? damage = null;
+        if (spec.OriginalEntity is { } netOriginal && TryGetEntity(netOriginal, out original) &&
+            !TerminatingOrDeleted(original))
+        {
+            var xform = Transform(original.Value);
+            if (healDamage && xform.ParentUid == grid.Owner && xform.Anchored &&
+                Vector2.DistanceSquared(xform.LocalPosition, spec.LocalPosition) < 0.01f &&
+                !HasComp<MobStateComponent>(original) &&
+                TryComp<DamageableComponent>(original, out var damageable) && damageable.TotalDamage > 0)
+            {
+                if (TryComp<ShipRepairableRestrictComponent>(original, out var restrict) &&
+                    _whitelist.IsWhitelistFail(restrict.ToolWhitelist, tool))
+                    return false;
+
+                operation = ShipRepairOperation.Heal;
+                damage = new DamageSpecifier(damageable.Damage);
+            }
+            else
+            {
+                var ev = new ShipRepairReinstateQueryEvent(true);
+                RaiseLocalEvent(original.Value, ref ev);
+                if (!ev.Handled || !ev.Repairable)
+                    return false;
+            }
+        }
+
+        if (original != null && TerminatingOrDeleted(original))
+            original = null;
+
+        if (operation == ShipRepairOperation.Restore && IsRepairPositionOccupied(grid.Owner, spec, prototype))
+            return false;
+
+        work = new ShipRepairWork
+        {
+            Target = target,
+            Operation = operation,
+            Position = spec.LocalPosition,
+            Duration = TimeSpan.FromSeconds(repairable.RepairTime * tool.Comp.RepairTimeMultiplier),
+            Cost = repairable.RepairCost,
+            Original = original,
+            Damage = damage,
+        };
+        return true;
+    }
+
+    /// <summary>
+    /// Adds all actual work in a square aligned to the grid, independently of snapshot chunk boundaries.
+    /// A radius of one is 3x3. Callers may filter accessibility and reservations before starting their DoAfter.
+    /// </summary>
+    public void PlanRepairArea(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
+        Vector2i center, int radius, bool healDamage, ShipRepairPlan plan)
+    {
+        if (plan.Grid != grid.Owner || plan.Revision != grid.Comp.Revision || radius < 0 ||
+            !TryComp<MapGridComponent>(grid, out var mapGrid))
+            return;
+
+        for (var y = center.Y - radius; y <= center.Y + radius; y++)
+        for (var x = center.X - radius; x <= center.X + radius; x++)
+        {
+            var tile = new Vector2i(x, y);
+            if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile), healDamage, out var floor))
+                plan.Work.Add(floor);
+
+            if (!TryGetChunk(grid.Comp, tile, out var chunk))
+                continue;
+
+            foreach (var (id, spec) in chunk.Entities)
+            {
+                if (_map.LocalToTile(grid.Owner, mapGrid,
+                        new EntityCoordinates(grid, spec.LocalPosition)) != tile)
+                    continue;
+
+                if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile, id), healDamage, out var entity))
+                    plan.Work.Add(entity);
+            }
+        }
+    }
+
+    public TimeSpan GetRepairDuration(ShipRepairPlan plan, float throughput = 1f)
+    {
+        var duration = TimeSpan.Zero;
+        foreach (var work in plan.Work)
+            duration += work.Duration;
+        return duration / Math.Max(0.01f, throughput);
+    }
+
+    /// <summary>
+    /// Commits only the quoted operation. Rechecks snapshot, restrictions, original and occupied space.
+    /// Charge consumption belongs here, so partially invalidated batches never charge for skipped work.
+    /// </summary>
+    public bool TryCompleteRepair(Entity<ShipRepairToolComponent> tool, EntityUid user,
+        ShipRepairPlan plan, ShipRepairWork work)
+    {
+        if (!_net.IsServer || !TryComp<ShipRepairDataComponent>(plan.Grid, out var data) ||
+            data.Revision != plan.Revision || !CanRepairGrid(tool, plan.Grid) ||
+            _charges.HasInsufficientCharges(tool, work.Cost) ||
+            !TryPlanRepair(tool, (plan.Grid, data), work.Target, work.Operation == ShipRepairOperation.Heal, out var current) ||
+            current.Operation != work.Operation || current.Original != work.Original)
+            return false;
+
+        switch (work.Operation)
+        {
+            case ShipRepairOperation.Tile:
+                if (!TryRepairTileTile((plan.Grid, data), work.Target.Tile))
+                    return false;
+                break;
+            case ShipRepairOperation.Restore:
+                if (!TryGetChunk(data, work.Target.Tile, out var chunk) || work.Target.EntityId is not { } id ||
+                    !chunk.Entities.TryGetValue(id, out var spec) ||
+                    NeedsSnapshotRepair((plan.Grid, data), new ShipRepairTarget(work.Target.Tile)))
+                    return false;
+                RestoreSnapshotEntity((plan.Grid, data), work.Target.Tile, id, spec);
+                break;
+            case ShipRepairOperation.Heal:
+                if (work.Original is not { } original || work.Damage == null ||
+                    !TryComp<DamageableComponent>(original, out var damageable))
+                    return false;
+
+                var healing = new DamageSpecifier();
+                foreach (var (type, amount) in work.Damage.DamageDict)
+                {
+                    if (amount > 0 && damageable.Damage.DamageDict.TryGetValue(type, out var remaining) && remaining > 0)
+                        healing.DamageDict[type] = -(amount < remaining ? amount : remaining);
+                }
+
+                if (healing.Empty || _repairDamage.TryChangeDamage(original, healing, true, false, origin: user) == null)
+                    return false;
+
+                if (TryComp<RepairableComponent>(original, out var repairable))
+                {
+                    var ev = new RepairedEvent((original, repairable), user);
+                    RaiseLocalEvent(original, ref ev);
+                }
+                break;
+        }
+
+        _charges.UseCharges(tool, work.Cost);
+        return true;
+    }
+
+    private bool TryGetRepairPrototype(EntityUid tool, ShipRepairDataComponent data, ShipRepairEntitySpecifier spec,
+        out EntityPrototype prototype, out ShipRepairableComponent repairable)
+    {
+        prototype = default!;
+        repairable = default!;
+        if (spec.ProtoIndex < 0 || spec.ProtoIndex >= data.EntityPalette.Count ||
+            !_proto.TryIndex(data.EntityPalette[spec.ProtoIndex], out var resolved) ||
+            !resolved.TryGetComponent<ShipRepairableComponent>(out var repair, Factory) ||
+            resolved.TryGetComponent<ShipRepairableRestrictComponent>(out var restrict, Factory) &&
+            _whitelist.IsWhitelistFail(restrict.ToolWhitelist, tool))
+            return false;
+
+        prototype = resolved;
+        repairable = repair;
+        return true;
+    }
+
+    private bool IsRepairPositionOccupied(EntityUid grid, ShipRepairEntitySpecifier spec, EntityPrototype prototype)
+    {
+        if (!TryComp<MapGridComponent>(grid, out var mapGrid))
+            return true;
+
+        var tile = _map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, spec.LocalPosition));
+        prototype.TryGetComponent<FixturesComponent>(out var fixtures, Factory);
+        foreach (var uid in _map.GetAnchoredEntities(grid, mapGrid, tile))
+        {
+            if (TerminatingOrDeleted(uid))
+                continue;
+
+            // Do not duplicate a manually replaced wall, cable or machine.
+            if (MetaData(uid).EntityPrototype?.ID == prototype.ID &&
+                Vector2.DistanceSquared(Transform(uid).LocalPosition, spec.LocalPosition) < 0.01f)
+                return true;
+
+            if (fixtures == null || !TryComp<PhysicsComponent>(uid, out var body) || !body.CanCollide ||
+                !TryComp<FixturesComponent>(uid, out var other))
+                continue;
+
+            foreach (var fixture in fixtures.Fixtures.Values)
+            foreach (var occupied in other.Fixtures.Values)
+            {
+                if (fixture.Hard && occupied.Hard &&
+                    ((fixture.CollisionMask & occupied.CollisionLayer) != 0 ||
+                     (fixture.CollisionLayer & occupied.CollisionMask) != 0))
+                    return true;
+            }
+        }
+
+        if (fixtures == null)
+            return false;
+
+        var coordinates = _transform.ToMapCoordinates(new EntityCoordinates(grid, spec.LocalPosition));
+        var rotation = _transform.GetWorldRotation(grid) + spec.Rotation;
+        var placement = new Robust.Shared.Physics.Transform(coordinates.Position, rotation);
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            if (!fixture.Hard)
+                continue;
+
+            // Do not rebuild a solid object around mobile occupants. Static neighbors are checked by tile
+            // above: full-tile wall shapes touch each other and an overlap query would reject those contacts.
+            _repairObstructions.Clear();
+            _lookup.GetEntitiesIntersecting(coordinates.MapId, fixture.Shape, placement, _repairObstructions,
+                LookupFlags.Dynamic);
+            foreach (var uid in _repairObstructions)
+            {
+                if (!TerminatingOrDeleted(uid) && TryComp<PhysicsComponent>(uid, out var body) &&
+                    body.CanCollide && body.Hard &&
+                    ((fixture.CollisionMask & body.CollisionLayer) != 0 ||
+                     (fixture.CollisionLayer & body.CollisionMask) != 0))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>Shared publication path for both handheld and automated reconstruction.</summary>
+    private void RestoreSnapshotEntity(Entity<ShipRepairDataComponent> grid, Vector2i tile, int id,
+        ShipRepairEntitySpecifier spec)
+    {
+        var spawned = Spawn(grid.Comp.EntityPalette[spec.ProtoIndex], new EntityCoordinates(grid, spec.LocalPosition));
+        _transform.SetLocalRotation(spawned, spec.Rotation);
+        spec.OriginalEntity = GetNetEntity(spawned);
+        RaiseNetworkEvent(new RepairEntityMessage(GetNetEntity(grid), tile, id, spec, grid.Comp.Revision));
+    }
+}

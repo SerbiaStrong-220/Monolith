@@ -35,6 +35,7 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         base.Initialize();
 
         InitTool();
+        InitRepairPlans(); // Exodus: shared snapshot work planning for autonomous and area repair.
     }
 
     /// <summary>
