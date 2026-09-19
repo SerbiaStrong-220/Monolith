@@ -30,6 +30,12 @@ public sealed partial class ShipRepairDroneSystem
             if (queue.Drones.Count == 0)
                 continue;
 
+            if (_timing.CurTime >= queue.NextNavigationRetry)
+            {
+                queue.Unreachable.Clear();
+                queue.NextNavigationRetry = _timing.CurTime + TimeSpan.FromSeconds(60);
+            }
+
             if (queue.Revision != data.Revision)
             {
                 queue.Revision = data.Revision;
@@ -38,6 +44,7 @@ public sealed partial class ShipRepairDroneSystem
                 queue.PendingSet.Clear();
                 queue.Reservations.Clear();
                 queue.WorkPositions.Clear();
+                InvalidateNavigation(uid);
                 queue.Chunks = data.Chunks.GetEnumerator();
                 queue.Chunk = null;
                 queue.Indexed = false;
@@ -127,7 +134,9 @@ public sealed partial class ShipRepairDroneSystem
         Entity<ShipRepairDataComponent> grid, ShipRepairWorkQueueComponent queue)
     {
         var position = _transform.ToCoordinates(grid.Owner, _transform.GetMapCoordinates(ent)).Position;
+        RefreshNavigationFailures(ent, queue, position);
         ShipRepairWork? selected = null;
+        var selectedDeferred = true;
         var bestDistance = float.PositiveInfinity;
         var attempts = Math.Min(24, queue.Pending.Count);
         for (var i = 0; i < attempts; i++)
@@ -146,7 +155,8 @@ public sealed partial class ShipRepairDroneSystem
                 continue;
             }
 
-            if (work.Operation == ShipRepairOperation.Restore &&
+            if (IsKnownUnreachable(ent, grid, queue, work, position) ||
+                work.Operation == ShipRepairOperation.Restore &&
                 queue.WorkPositions.TryGetValue(target.Tile, out var worker) && worker != ent.Owner)
             {
                 EnqueueWork(queue, target);
@@ -154,7 +164,8 @@ public sealed partial class ShipRepairDroneSystem
             }
 
             var distance = Vector2.DistanceSquared(position, work.Position);
-            if (distance >= bestDistance)
+            var deferred = ent.Comp.DeferredSearches.Contains(target);
+            if (selected != null && (deferred && !selectedDeferred || deferred == selectedDeferred && distance >= bestDistance))
             {
                 EnqueueWork(queue, target);
                 continue;
@@ -162,6 +173,7 @@ public sealed partial class ShipRepairDroneSystem
             if (selected != null)
                 EnqueueWork(queue, selected.Target);
             selected = work;
+            selectedDeferred = deferred;
             bestDistance = distance;
         }
 
@@ -176,11 +188,10 @@ public sealed partial class ShipRepairDroneSystem
         else
             plan.Work.Add(selected);
 
-        var includesSelected = false;
         for (var i = plan.Work.Count - 1; i >= 0; i--)
         {
             var item = plan.Work[i];
-            if (queue.Reservations.ContainsKey(item.Target) ||
+            if (queue.Reservations.ContainsKey(item.Target) || IsKnownUnreachable(ent, grid, queue, item, position) ||
                 ent.Comp.FailedTargets.TryGetValue(item.Target, out var retry) && _timing.CurTime < retry ||
                 item.Operation == ShipRepairOperation.Restore &&
                 queue.WorkPositions.TryGetValue(item.Target.Tile, out var worker) && worker != ent.Owner ||
@@ -188,10 +199,12 @@ public sealed partial class ShipRepairDroneSystem
                 _repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(item.Target.Tile)) &&
                 queue.Reservations.ContainsKey(new ShipRepairTarget(item.Target.Tile)))
                 plan.Work.RemoveAt(i);
-            else if (item.Target == selected.Target)
-                includesSelected = true;
         }
 
+        _repair.PrepareConnectedRepairPlan(grid, plan);
+        var includesSelected = false;
+        foreach (var work in plan.Work)
+            includesSelected |= work.Target == selected.Target;
         if (plan.Work.Count == 0)
         {
             EnqueueWork(queue, selected.Target);
@@ -225,7 +238,7 @@ public sealed partial class ShipRepairDroneSystem
         foreach (var item in claimed.Work)
         {
             if (queue.Reservations.TryGetValue(item.Target, out var owner) && owner == ent.Owner &&
-                _repair.TryPlanRepair(tool, grid, item.Target, true, out var current) &&
+                _repair.TryPlanRepair(tool, grid, item.Target, true, out var current, checkTileSupport: false) &&
                 CanReachWork(ent, grid, current))
                 _readyWork.Add(current);
         }
@@ -261,13 +274,17 @@ public sealed partial class ShipRepairDroneSystem
 
         var plan = new ShipRepairPlan { Grid = grid.Owner, Revision = grid.Comp.Revision };
         plan.Work.AddRange(_readyWork);
+        _repair.PrepareConnectedRepairPlan(grid, plan);
+        if (plan.Work.Count == 0)
+            return;
         StopMoving(ent);
         ReleaseWorkReservations(ent, queue);
         ent.Comp.Plan = plan;
         foreach (var item in plan.Work)
             queue.Reservations[item.Target] = ent;
 
-        var args = new DoAfterArgs(EntityManager, ent, _repair.GetRepairDuration(plan, ent.Comp.RepairThroughput),
+        var duration = _repair.GetRepairDuration(plan, ent.Comp.RepairThroughput);
+        var args = new DoAfterArgs(EntityManager, ent, duration,
             new ShipRepairDroneDoAfterEvent(), ent)
         {
             NeedHand = false,
@@ -283,6 +300,7 @@ public sealed partial class ShipRepairDroneSystem
         }
 
         ent.Comp.RepairDoAfter = id;
+        StartConstructionEffects(ent, tool, plan, duration);
         _audio.PlayPvs(tool.Comp.RepairSound, ent);
         SetVisual(ent);
     }
@@ -334,7 +352,7 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private bool CanReachWork(Entity<ShipRepairDroneComponent> ent, EntityUid grid, ShipRepairWork work,
-        Vector2? localOrigin = null)
+        Vector2? localOrigin = null, ShipRepairPathSearch? search = null)
     {
         var origin = localOrigin is { } point
             ? _transform.ToMapCoordinates(new EntityCoordinates(grid, point))
@@ -355,7 +373,10 @@ public sealed partial class ShipRepairDroneSystem
         foreach (var hit in _physics.IntersectRay(origin.MapId, ray, delta.Length(), ent, returnOnFirstHit: false))
         {
             if (hit.HitEntity != work.Original)
+            {
+                TrackSearchObstruction(search, grid, hit.HitEntity);
                 return false;
+            }
         }
         return true;
     }
@@ -378,6 +399,7 @@ public sealed partial class ShipRepairDroneSystem
 
     private void CancelJob(Entity<ShipRepairDroneComponent> ent)
     {
+        ClearConstructionEffects(ent);
         // Clear IDs before cancellation, which can synchronously deliver completion events.
         var repair = ent.Comp.RepairDoAfter;
         var pry = ent.Comp.PryDoAfter;

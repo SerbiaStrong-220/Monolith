@@ -78,7 +78,8 @@ public abstract partial class SharedShipRepairSystem
     /// checks until arrival; completion always checks them, including the repairer's own body.
     /// </summary>
     public bool TryPlanRepair(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
-        ShipRepairTarget target, bool healDamage, out ShipRepairWork work, bool checkMobileObstructions = true)
+        ShipRepairTarget target, bool healDamage, out ShipRepairWork work, bool checkMobileObstructions = true,
+        bool checkTileSupport = true)
     {
         work = default!;
         if (!CanRepairGrid(tool, grid) || !_repairGridQuery.TryGetComponent(grid, out var mapGrid) ||
@@ -88,9 +89,10 @@ public abstract partial class SharedShipRepairSystem
 
         if (target.EntityId is not { } id)
         {
-            if (!tool.Comp.EnableTileRepair)
+            if (!tool.Comp.EnableTileRepair || checkTileSupport && !CanRestoreRepairTile((grid, mapGrid), target.Tile))
                 return false;
 
+            var relative = GetRelativeIndices(target.Tile, grid.Comp.ChunkSize);
             work = new ShipRepairWork
             {
                 Target = target,
@@ -98,6 +100,7 @@ public abstract partial class SharedShipRepairSystem
                 Position = _map.TileCenterToVector(grid, mapGrid, target.Tile),
                 Duration = TimeSpan.FromSeconds(tool.Comp.TileRepairTime * tool.Comp.RepairTimeMultiplier),
                 Cost = tool.Comp.TileRepairCost,
+                TileType = chunk.Tiles[relative.X + relative.Y * grid.Comp.ChunkSize],
             };
             return true;
         }
@@ -150,6 +153,8 @@ public abstract partial class SharedShipRepairSystem
             Cost = repairable.RepairCost,
             Original = original,
             Damage = damage,
+            Prototype = prototype.ID,
+            Rotation = spec.Rotation,
         };
         return true;
     }
@@ -169,7 +174,8 @@ public abstract partial class SharedShipRepairSystem
         for (var x = center.X - radius; x <= center.X + radius; x++)
         {
             var tile = new Vector2i(x, y);
-            if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile), healDamage, out var floor, checkMobileObstructions))
+            if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile), healDamage, out var floor,
+                    checkMobileObstructions, checkTileSupport: false))
                 plan.Work.Add(floor);
 
             if (!TryGetChunk(grid.Comp, tile, out var chunk))
@@ -185,6 +191,7 @@ public abstract partial class SharedShipRepairSystem
                     plan.Work.Add(entity);
             }
         }
+        PrepareConnectedRepairPlan(grid, plan);
     }
 
     public TimeSpan GetRepairDuration(ShipRepairPlan plan, float throughput = 1f)

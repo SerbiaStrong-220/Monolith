@@ -8,6 +8,7 @@ using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Content.Shared.Prying.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using PhysicsTransform = Robust.Shared.Physics.Transform;
 
@@ -64,6 +65,7 @@ public sealed partial class ShipRepairDroneSystem
         var search = new ShipRepairPathSearch
         {
             Bounds = queue.Bounds.Enlarged(ent.Comp.ExteriorMargin),
+            Revision = queue.NavigationRevision,
         };
         var center = work.Target.Tile;
         var approachRadius = Math.Max(1, ent.Comp.RepairRadius + 1);
@@ -75,10 +77,17 @@ public sealed partial class ShipRepairDroneSystem
                 continue;
             var tile = center + new Vector2i(x, y);
             var point = _map.TileCenterToVector(grid, mapGrid, tile);
-            if (!search.Bounds.Contains(point) || !IsWorkPositionAvailable(ent, queue, tile, point) ||
-                !IsClear(ent, grid, point) || !CanReachWork(ent, grid, work, point))
+            if (!IsWorkPositionAvailable(ent, queue, tile, point))
+            {
+                search.TransientObstruction = true;
+                continue;
+            }
+            if (!search.Bounds.Contains(point) || !IsClear(ent, grid, point, search) ||
+                !CanReachWork(ent, grid, work, point, search))
                 continue;
             search.Goals.Add(tile);
+            search.Reverse.Costs[tile] = 0f;
+            search.Reverse.Open.Enqueue(tile, 0f);
         }
         if (search.Goals.Count == 0 || !search.Bounds.Contains(position))
             return false;
@@ -105,10 +114,11 @@ public sealed partial class ShipRepairDroneSystem
         }
 
         var startCenter = _map.TileCenterToVector(grid, mapGrid, start);
-        if (IsSegmentClear(ent, grid, position, startCenter, true, out _))
+        if (IsSegmentClear(ent, grid, position, startCenter, true, out _, search))
         {
-            search.Costs[start] = 0f;
-            search.Open.Enqueue(start, 0f);
+            search.Starts.Add(start);
+            search.Forward.Costs[start] = 0f;
+            search.Forward.Open.Enqueue(start, 0f);
         }
         else
         {
@@ -120,15 +130,18 @@ public sealed partial class ShipRepairDroneSystem
                     continue;
                 var tile = start + new Vector2i(x, y);
                 var point = _map.TileCenterToVector(grid, mapGrid, tile);
-                if (!search.Bounds.Contains(point) || !IsSegmentClear(ent, grid, position, point, true, out _))
+                if (!search.Bounds.Contains(point) || !IsSegmentClear(ent, grid, position, point, true, out _, search))
                     continue;
                 var cost = Vector2.Distance(position, point);
-                search.Costs[tile] = cost;
-                search.Open.Enqueue(tile, cost);
+                search.Starts.Add(tile);
+                search.Forward.Costs[tile] = cost;
+                search.Forward.Open.Enqueue(tile, cost);
             }
-            if (search.Open.Count == 0)
+            if (search.Forward.Open.Count == 0)
                 return false;
         }
+        ent.Comp.SearchDeadline = _timing.CurTime +
+            (ent.Comp.DeferredSearches.Contains(work.Target) ? ent.Comp.ExtendedSearchTimeout : ent.Comp.SearchTimeout);
         ent.Comp.Search = search;
         return true;
     }
@@ -330,51 +343,102 @@ public sealed partial class ShipRepairDroneSystem
             FailJob(ent);
             return;
         }
+        // Keep a bounded search running when another drone repairs the ship. Each movement segment is
+        // checked again before travel, and a search across geometry revisions cannot prove unreachability.
+        if (_timing.CurTime >= ent.Comp.SearchDeadline)
+        {
+            DeferSearch(ent);
+            return;
+        }
         for (var i = 0; i < budget; i++)
         {
-            if (search.Closed.Count >= ent.Comp.PathNodeLimit || !search.Open.TryDequeue(out var current, out _))
+            if (search.Forward.Closed.Count + search.Reverse.Closed.Count >= ent.Comp.PathNodeLimit)
             {
+                DeferSearch(ent);
+                return;
+            }
+
+            search.ReverseTurn = !search.ReverseTurn;
+            var frontier = search.ReverseTurn ? search.Reverse : search.Forward;
+            var other = search.ReverseTurn ? search.Forward : search.Reverse;
+            if (!frontier.Open.TryDequeue(out var current, out _))
+            {
+                if (search.Revision != queue.NavigationRevision)
+                {
+                    CancelJob(ent);
+                    ent.Comp.NextSearch = _timing.CurTime;
+                    return;
+                }
+                RememberUnreachable(ent, queue, search, frontier.Closed, search.ReverseTurn);
                 FailJob(ent);
                 return;
             }
-            if (!search.Closed.Add(current))
+            if (!frontier.Closed.Add(current))
                 continue;
-
-            var position = _map.TileCenterToVector(grid, mapGrid, current);
-            if (search.Goals.Contains(current) && TryClaimWorkPosition(ent, queue, current, position))
+            if (other.Costs.ContainsKey(current))
             {
-                ent.Comp.Path.Add(_map.TileCenterToVector(grid, mapGrid, current));
-                while (search.Previous.TryGetValue(current, out var previous))
-                {
-                    ent.Comp.Path.Add(_map.TileCenterToVector(grid, mapGrid, previous));
-                    current = previous;
-                }
-                ent.Comp.Path.Reverse();
-                ent.Comp.Search = null;
-                ent.Comp.ProgressDeadline = _timing.CurTime + ent.Comp.StuckTimeout;
+                FinishPath(ent, grid, queue, mapGrid, search, current);
                 return;
             }
 
+            var position = _map.TileCenterToVector(grid, mapGrid, current);
             foreach (var offset in Neighbours)
             {
                 var next = current + offset;
                 var point = _map.TileCenterToVector(grid, mapGrid, next);
-                if (search.Closed.Contains(next) || !search.Bounds.Contains(point) ||
-                    !IsSegmentClear(ent, grid, position, point, true, out var door))
+                // Reverse expansion validates the direction the drone will actually travel.
+                if (frontier.Closed.Contains(next) || !search.Bounds.Contains(point) ||
+                    !IsSegmentClear(ent, grid, search.ReverseTurn ? point : position,
+                        search.ReverseTurn ? position : point, true, out var door, search))
                     continue;
 
-                var cost = search.Costs[current] + (door == null ? 1f : 6f);
-                if (search.Costs.TryGetValue(next, out var old) && cost >= old)
+                var cost = frontier.Costs[current] + (door == null ? 1f : 6f);
+                if (frontier.Costs.TryGetValue(next, out var old) && cost >= old)
                     continue;
 
-                search.Costs[next] = cost;
-                search.Previous[next] = current;
+                frontier.Costs[next] = cost;
+                frontier.Previous[next] = current;
                 var heuristic = float.MaxValue;
-                foreach (var goal in search.Goals)
+                foreach (var goal in search.ReverseTurn ? search.Starts : search.Goals)
                     heuristic = Math.Min(heuristic, Math.Abs(next.X - goal.X) + Math.Abs(next.Y - goal.Y));
-                search.Open.Enqueue(next, cost + heuristic);
+                frontier.Open.Enqueue(next, cost + heuristic);
             }
         }
+    }
+
+    private void FinishPath(Entity<ShipRepairDroneComponent> ent, EntityUid grid, ShipRepairWorkQueueComponent queue,
+        Robust.Shared.Map.Components.MapGridComponent mapGrid, ShipRepairPathSearch search, Vector2i meeting)
+    {
+        var current = meeting;
+        ent.Comp.Path.Add(_map.TileCenterToVector(grid, mapGrid, current));
+        while (search.Forward.Previous.TryGetValue(current, out var previous))
+        {
+            current = previous;
+            ent.Comp.Path.Add(_map.TileCenterToVector(grid, mapGrid, current));
+        }
+        ent.Comp.Path.Reverse();
+        current = meeting;
+        while (search.Reverse.Previous.TryGetValue(current, out var next))
+        {
+            current = next;
+            ent.Comp.Path.Add(_map.TileCenterToVector(grid, mapGrid, current));
+        }
+        if (!TryClaimWorkPosition(ent, queue, current, _map.TileCenterToVector(grid, mapGrid, current)))
+        {
+            FailJob(ent);
+            return;
+        }
+        ent.Comp.Search = null;
+        if (ent.Comp.Target is { } target)
+            ent.Comp.DeferredSearches.Remove(target);
+        ent.Comp.ProgressDeadline = _timing.CurTime + ent.Comp.StuckTimeout;
+    }
+
+    private void DeferSearch(Entity<ShipRepairDroneComponent> ent)
+    {
+        if (ent.Comp.Target is { } target)
+            ent.Comp.DeferredSearches.Add(target);
+        FailJob(ent);
     }
 
     private bool HandleDoor(Entity<ShipRepairDroneComponent> ent, EntityUid uid)
@@ -392,13 +456,15 @@ public sealed partial class ShipRepairDroneSystem
         return id != null;
     }
 
-    private bool IsClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 position)
+    private bool IsClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 position,
+        ShipRepairPathSearch? search = null)
     {
         var map = _transform.ToMapCoordinates(new EntityCoordinates(grid, position));
-        return IsWorldClear(ent, map);
+        return IsWorldClear(ent, map, search, grid);
     }
 
-    private bool IsWorldClear(Entity<ShipRepairDroneComponent> ent, MapCoordinates position)
+    private bool IsWorldClear(Entity<ShipRepairDroneComponent> ent, MapCoordinates position,
+        ShipRepairPathSearch? search = null, EntityUid? grid = null)
     {
         var clearance = ent.Comp.ClearanceShape ??= new PhysShapeCircle(ent.Comp.Clearance);
         _intersections.Clear();
@@ -407,13 +473,16 @@ public sealed partial class ShipRepairDroneSystem
         foreach (var uid in _intersections)
         {
             if (BlocksDrone(ent, uid))
+            {
+                TrackSearchObstruction(search, grid, uid);
                 return false;
+            }
         }
         return true;
     }
 
     private bool IsSegmentClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 start, Vector2 end,
-        bool allowDoors, out EntityUid? door)
+        bool allowDoors, out EntityUid? door, ShipRepairPathSearch? search = null)
     {
         door = null;
         var from = _transform.ToMapCoordinates(new EntityCoordinates(grid, start));
@@ -429,6 +498,7 @@ public sealed partial class ShipRepairDroneSystem
         {
             if (!BlocksDrone(ent, uid))
                 continue;
+            TrackSearchObstruction(search, grid, uid);
             if (!allowDoors || ent.Comp.BlockedDoors.Contains(uid) || !HasComp<DoorComponent>(uid))
                 return false;
 
@@ -442,6 +512,13 @@ public sealed partial class ShipRepairDroneSystem
             door ??= uid;
         }
         return true;
+    }
+
+    private void TrackSearchObstruction(ShipRepairPathSearch? search, EntityUid? grid, EntityUid obstacle)
+    {
+        if (search != null && (_bodyQuery.TryGetComponent(obstacle, out var body) && body.BodyType != BodyType.Static ||
+            HasComp<DoorComponent>(obstacle) || Transform(obstacle).GridUid != grid))
+            search.TransientObstruction = true;
     }
 
     private bool BlocksDrone(EntityUid drone, EntityUid other)

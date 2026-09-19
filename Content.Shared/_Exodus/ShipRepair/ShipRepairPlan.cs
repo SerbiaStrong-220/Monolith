@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.ShipRepair;
 
@@ -26,6 +27,9 @@ public sealed class ShipRepairWork
     public required int Cost;
     public EntityUid? Original;
     public DamageSpecifier? Damage;
+    public EntProtoId? Prototype;
+    public Angle Rotation;
+    public int? TileType;
 }
 
 /// <summary>

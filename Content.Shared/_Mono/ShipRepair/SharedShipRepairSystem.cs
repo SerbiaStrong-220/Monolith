@@ -51,16 +51,7 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
 
     public bool TryRepairTileTile(Entity<ShipRepairDataComponent> grid, Vector2i indices)
     {
-        if (!TryGetChunk(grid.Comp, indices, out var chunk) || !TryComp<MapGridComponent>(grid, out var gridComp))
-            return false;
-
-        var relative = GetRelativeIndices(indices, grid.Comp.ChunkSize);
-        var idx = relative.X + relative.Y * grid.Comp.ChunkSize;
-
-        var tileToPlace = chunk.Tiles[idx];
-        if (tileToPlace != Tile.Empty.TypeId)
-            _map.SetTile(grid, gridComp, indices, new Tile(tileToPlace));
-        return true;
+        return TryRestoreConnectedTile(grid, indices); // Exodus: prevent isolated tiles from repeatedly splitting off.
     }
 
     protected Vector2i GetRepairChunkIndices(Vector2i gridIndices, int chunkSize)

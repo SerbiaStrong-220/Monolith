@@ -171,6 +171,10 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         if (!TryComp<ShipRepairDataComponent>(grid, out var repairData))
             return;
 
+        // Exodus: an isolated missing tile would split off immediately instead of repairing the ship.
+        if (repairId == null && !CanRestoreRepairTile(grid, tileIndices))
+            return;
+
         var ev = new ShipRepairDoAfterEvent
         {
             TargetGridIndices = tileIndices,
@@ -247,7 +251,9 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         }
         else
         {
-            TryRepairTileTile((targetGrid, repairData), args.TargetGridIndices);
+            // Exodus: do not charge for a lost support or a tile repaired by someone else during the delay.
+            if (!TryRepairTileTile((targetGrid, repairData), args.TargetGridIndices))
+                return;
         }
 
         _charges.UseCharges(ent, args.Cost);

@@ -59,6 +59,17 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField]
     public TimeSpan NavigationTimeout = TimeSpan.FromMinutes(2);
 
+    /// <summary>Initial path search budget; an unfinished search is deferred, not declared impossible.</summary>
+    [DataField]
+    public TimeSpan SearchTimeout = TimeSpan.FromSeconds(2);
+
+    /// <summary>Budget for a deferred search, after giving fresh work priority.</summary>
+    [DataField]
+    public TimeSpan ExtendedSearchTimeout = TimeSpan.FromSeconds(8);
+
+    [DataField, AutoPausedField]
+    public TimeSpan SearchDeadline;
+
     /// <summary>Maximum number of alternate approaches before releasing the job.</summary>
     [DataField]
     public int RepathLimit = 2;
@@ -121,6 +132,10 @@ public sealed partial class ShipRepairDroneComponent : Component
     public int Repaths;
     public Vector2i? WorkTile;
     public bool Yielding;
+    public int NavigationRevision = -1;
+    public Vector2? FailureOrigin;
+    public readonly HashSet<ShipRepairTarget> DeferredSearches = new();
+    public readonly List<EntityUid> ConstructionEffects = new();
     public EntityCoordinates? LastSafePosition;
     public DoAfterId? RepairDoAfter;
     public DoAfterId? PryDoAfter;
@@ -150,7 +165,17 @@ public sealed partial class ShipRepairDroneComponent : Component
 public sealed class ShipRepairPathSearch
 {
     public required Box2 Bounds;
+    public int Revision;
+    public bool ReverseTurn;
+    public bool TransientObstruction;
     public readonly HashSet<Vector2i> Goals = new();
+    public readonly HashSet<Vector2i> Starts = new();
+    public readonly ShipRepairPathFrontier Forward = new();
+    public readonly ShipRepairPathFrontier Reverse = new();
+}
+
+public sealed class ShipRepairPathFrontier
+{
     public readonly PriorityQueue<Vector2i, float> Open = new();
     public readonly Dictionary<Vector2i, float> Costs = new();
     public readonly Dictionary<Vector2i, Vector2i> Previous = new();

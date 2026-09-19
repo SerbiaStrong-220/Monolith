@@ -69,6 +69,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         _mapGridQuery = GetEntityQuery<MapGridComponent>();
         _droneQuery = GetEntityQuery<ShipRepairDroneComponent>();
         _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
+        InitializeReachability();
 
         SubscribeLocalEvent<ShipRepairDroneComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ShipRepairDroneComponent, ComponentShutdown>(OnShutdown);
@@ -142,6 +143,8 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         ent.Comp.NextSearch = _timing.CurTime;
         ent.Comp.FailedTargets.Clear();
         ent.Comp.FailedPositions.Clear();
+        ent.Comp.DeferredSearches.Clear();
+        ent.Comp.FailureOrigin = null;
         EnsureComp<ShipRepairWorkQueueComponent>(grid).Drones.Add(ent);
         SetVisual(ent);
         return true;
@@ -159,6 +162,8 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         ent.Comp.WaitingForShip = false;
         ent.Comp.FailedTargets.Clear();
         ent.Comp.FailedPositions.Clear();
+        ent.Comp.DeferredSearches.Clear();
+        ent.Comp.FailureOrigin = null;
         if (!TerminatingOrDeleted(ent))
         {
             TryLeavePhase(ent, eject: true);
