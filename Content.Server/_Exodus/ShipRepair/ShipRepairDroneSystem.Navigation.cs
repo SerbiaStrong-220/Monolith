@@ -73,7 +73,7 @@ public sealed partial class ShipRepairDroneSystem
         for (var x = -approachRadius; x <= approachRadius; x++)
         {
             // Stay beside the target: never reconstruct a wall around our own body.
-            if (x == 0 && y == 0)
+            if (x == 0 && y == 0 && !work.Underfloor)
                 continue;
             var tile = center + new Vector2i(x, y);
             var point = _map.TileCenterToVector(grid, mapGrid, tile);
@@ -297,10 +297,10 @@ public sealed partial class ShipRepairDroneSystem
             return false;
         foreach (var work in plan.Work)
         {
-            if (!CanReachWork(ent, grid, work, position))
-                return false;
+            if (CanReachWork(ent, grid, work, position))
+                return IsClear(ent, grid, position);
         }
-        return IsClear(ent, grid, position);
+        return false;
     }
 
     private void BeginSettling(Entity<ShipRepairDroneComponent> ent, Vector2 position)

@@ -14,6 +14,14 @@ public enum ShipRepairOperation : byte
     Heal,
 }
 
+public enum ShipRepairStage : byte
+{
+    Floor,
+    Underfloor,
+    Power,
+    Structure,
+}
+
 /// <summary>
 /// One quoted operation. Healing records the original entity and damage, so a delayed repair
 /// cannot heal a replacement or damage received after the work started.
@@ -30,6 +38,10 @@ public sealed class ShipRepairWork
     public EntProtoId? Prototype;
     public Angle Rotation;
     public int? TileType;
+    public ShipRepairStage Stage;
+    public bool Underfloor;
+    public Angle? WallMountArc;
+    public Angle WallMountDirection;
 }
 
 /// <summary>

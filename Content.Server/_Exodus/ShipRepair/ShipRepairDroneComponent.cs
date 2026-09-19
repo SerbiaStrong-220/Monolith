@@ -174,6 +174,8 @@ public sealed partial class ShipRepairDroneComponent : Component
     public DoAfterId? RepairDoAfter;
     public DoAfterId? PryDoAfter;
     public ShipRepairTarget? Target;
+    /// <summary>Continue available work on the selected tile/area between successful repair cycles.</summary>
+    public Vector2i? FocusTile;
     public ShipRepairPlan? Plan;
     public ShipRepairPathSearch? Search;
     public readonly List<Vector2> Path = new();

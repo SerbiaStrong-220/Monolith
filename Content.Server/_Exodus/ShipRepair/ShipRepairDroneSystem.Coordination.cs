@@ -50,7 +50,7 @@ public sealed partial class ShipRepairDroneSystem
                 continue;
             foreach (var work in drone.Plan.Work)
             {
-                if (work.Operation == ShipRepairOperation.Restore &&
+                if (work.Operation == ShipRepairOperation.Restore && !work.Underfloor &&
                     queue.Reservations.TryGetValue(work.Target, out var worker) && worker == uid &&
                     Vector2.DistanceSquared(position, work.Position) < clearance * clearance)
                     return false;

@@ -90,5 +90,6 @@ public abstract partial class SharedShipRepairSystem
                 plan.Work.RemoveAt(i);
         }
         plan.Work.InsertRange(0, _orderedRepairTiles);
+        SortRepairStages(plan);
     }
 }

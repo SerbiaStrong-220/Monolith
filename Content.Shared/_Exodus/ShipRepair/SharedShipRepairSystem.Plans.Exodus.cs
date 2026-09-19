@@ -2,8 +2,12 @@ using System.Numerics;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.Damage;
+using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Prototypes;
 using Content.Shared.Repairable;
+using Content.Shared.SubFloor;
+using Content.Shared.Wall;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -20,6 +24,13 @@ public abstract partial class SharedShipRepairSystem
     private EntityQuery<DamageableComponent> _repairDamageQuery;
     private EntityQuery<MobStateComponent> _repairMobQuery;
     private EntityQuery<TransformComponent> _repairTransformQuery;
+    private EntityQuery<PhysicsComponent> _repairBodyQuery;
+    private EntityQuery<FixturesComponent> _repairFixturesQuery;
+    private EntityQuery<ItemComponent> _repairItemQuery;
+    private EntityQuery<ShipRepairDebrisComponent> _repairDebrisQuery;
+    private EntityQuery<ShipRepairableComponent> _repairableQuery;
+    private EntityQuery<MetaDataComponent> _repairMetadataQuery;
+    private EntityQuery<WallMountComponent> _repairWallMountQuery;
     private readonly HashSet<EntityUid> _repairObstructions = new();
 
     private void InitRepairPlans()
@@ -28,6 +39,13 @@ public abstract partial class SharedShipRepairSystem
         _repairDamageQuery = GetEntityQuery<DamageableComponent>();
         _repairMobQuery = GetEntityQuery<MobStateComponent>();
         _repairTransformQuery = GetEntityQuery<TransformComponent>();
+        _repairBodyQuery = GetEntityQuery<PhysicsComponent>();
+        _repairFixturesQuery = GetEntityQuery<FixturesComponent>();
+        _repairItemQuery = GetEntityQuery<ItemComponent>();
+        _repairDebrisQuery = GetEntityQuery<ShipRepairDebrisComponent>();
+        _repairableQuery = GetEntityQuery<ShipRepairableComponent>();
+        _repairMetadataQuery = GetEntityQuery<MetaDataComponent>();
+        _repairWallMountQuery = GetEntityQuery<WallMountComponent>();
     }
 
     /// <summary>Both whole-grid and individual prototype restrictions apply to every operation.</summary>
@@ -97,6 +115,7 @@ public abstract partial class SharedShipRepairSystem
             {
                 Target = target,
                 Operation = ShipRepairOperation.Tile,
+                Stage = ShipRepairStage.Floor,
                 Position = _map.TileCenterToVector(grid, mapGrid, target.Tile),
                 Duration = TimeSpan.FromSeconds(tool.Comp.TileRepairTime * tool.Comp.RepairTimeMultiplier),
                 Cost = tool.Comp.TileRepairCost,
@@ -141,9 +160,10 @@ public abstract partial class SharedShipRepairSystem
             original = null;
 
         if (operation == ShipRepairOperation.Restore &&
-            IsRepairPositionOccupied(grid.Owner, spec, prototype, checkMobileObstructions))
+            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, checkMobileObstructions))
             return false;
 
+        prototype.TryGetComponent<WallMountComponent>(out var wallMount, Factory);
         work = new ShipRepairWork
         {
             Target = target,
@@ -155,6 +175,10 @@ public abstract partial class SharedShipRepairSystem
             Damage = damage,
             Prototype = prototype.ID,
             Rotation = spec.Rotation,
+            Stage = GetRepairStage(prototype),
+            Underfloor = prototype.HasComponent<SubFloorHideComponent>(Factory),
+            WallMountArc = wallMount?.Arc,
+            WallMountDirection = wallMount?.Direction ?? Angle.Zero,
         };
         return true;
     }
@@ -227,7 +251,8 @@ public abstract partial class SharedShipRepairSystem
                     !chunk.Entities.TryGetValue(id, out var spec) ||
                     NeedsSnapshotRepair((plan.Grid, data), new ShipRepairTarget(work.Target.Tile)))
                     return false;
-                RestoreSnapshotEntity((plan.Grid, data), work.Target.Tile, id, spec);
+                if (!TryRestoreSnapshotEntity(tool, (plan.Grid, data), work.Target.Tile, id, spec))
+                    return false;
                 break;
             case ShipRepairOperation.Heal:
                 if (work.Original is not { } original || work.Damage == null ||
@@ -268,39 +293,68 @@ public abstract partial class SharedShipRepairSystem
             _whitelist.IsWhitelistFail(restrict.ToolWhitelist, tool))
             return false;
 
+        // Also honor repair replacements for snapshots captured before a prototype was corrected.
+        if (repair.RepairTo is { } replacement && replacement.Id != resolved.ID)
+        {
+            if (!_proto.TryIndex(replacement, out resolved) ||
+                !resolved.TryGetComponent<ShipRepairableComponent>(out repair, Factory) ||
+                resolved.TryGetComponent<ShipRepairableRestrictComponent>(out var replacementRestriction, Factory) &&
+                _whitelist.IsWhitelistFail(replacementRestriction.ToolWhitelist, tool))
+                return false;
+        }
+
         prototype = resolved;
         repairable = repair;
         return true;
     }
 
-    private bool IsRepairPositionOccupied(EntityUid grid, ShipRepairEntitySpecifier spec, EntityPrototype prototype,
-        bool checkMobileObstructions)
+    private FixturesComponent? GetRepairCollisionFixtures(EntityPrototype prototype)
+    {
+        if (!prototype.TryGetComponent<PhysicsComponent>(out var body, Factory) ||
+            !prototype.TryGetComponent<FixturesComponent>(out var fixtures, Factory))
+            return null;
+
+        var canCollide = body.CanCollide;
+        // Pipes keep their loose-item fixtures, but disable collision when anchored.
+        // Match CollideOnAnchorSystem's startup state instead of treating these fixtures as solid.
+        if (prototype.TryGetComponent<CollideOnAnchorComponent>(out var onAnchor, Factory))
+        {
+            var anchored = prototype.TryGetComponent<TransformComponent>(out var xform, Factory) && xform.Anchored;
+            canCollide = anchored ? onAnchor.Enable : !onAnchor.Enable;
+        }
+
+        return canCollide ? fixtures : null;
+    }
+
+    private bool IsRepairPositionOccupied(Entity<ShipRepairDataComponent> grid, ShipRepairChunk chunk, int id,
+        ShipRepairEntitySpecifier spec, EntityPrototype prototype, bool checkMobileObstructions)
     {
         if (!TryComp<MapGridComponent>(grid, out var mapGrid))
             return true;
 
         var tile = _map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, spec.LocalPosition));
-        prototype.TryGetComponent<FixturesComponent>(out var fixtures, Factory);
-        foreach (var uid in _map.GetAnchoredEntities(grid, mapGrid, tile))
+        CollectRepairSnapshotOccupants(grid, mapGrid, tile, chunk);
+        if (_repairOccupiedSlots.Contains(id))
+            return true;
+
+        var fixtures = GetRepairCollisionFixtures(prototype);
+        var wallMounted = prototype.HasComponent<WallMountComponent>(Factory);
+        var origin = _transform.ToMapCoordinates(new EntityCoordinates(grid, spec.LocalPosition));
+        var placement = new Robust.Shared.Physics.Transform(origin.Position, _transform.GetWorldRotation(grid) + spec.Rotation);
+        foreach (var uid in _repairTileOccupants)
         {
-            if (TerminatingOrDeleted(uid))
+            // The snapshot can deliberately contain multiple overlapping structures. Wall-mounted devices
+            // can also coexist with their support even when that support was manually replaced.
+            if (!_repairMobQuery.HasComponent(uid) && (_repairSnapshotOccupants.ContainsKey(uid) ||
+                wallMounted || _repairWallMountQuery.HasComponent(uid) || IsMovableRepairDebris(uid)))
                 continue;
 
-            // Do not duplicate a manually replaced wall, cable or machine.
-            if (MetaData(uid).EntityPrototype?.ID == prototype.ID &&
-                Vector2.DistanceSquared(Transform(uid).LocalPosition, spec.LocalPosition) < 0.01f)
-                return true;
-
-            if (fixtures == null || !TryComp<PhysicsComponent>(uid, out var body) || !body.CanCollide ||
-                !TryComp<FixturesComponent>(uid, out var other))
+            if (fixtures == null || !_repairBodyQuery.TryGetComponent(uid, out var body) || !body.CanCollide ||
+                !_repairFixturesQuery.TryGetComponent(uid, out var other))
                 continue;
-
             foreach (var fixture in fixtures.Fixtures.Values)
-            foreach (var occupied in other.Fixtures.Values)
             {
-                if (fixture.Hard && occupied.Hard &&
-                    ((fixture.CollisionMask & occupied.CollisionLayer) != 0 ||
-                     (fixture.CollisionLayer & occupied.CollisionMask) != 0))
+                if (RepairFixtureIntersectsBody(fixture, placement, uid, other))
                     return true;
             }
         }
@@ -320,14 +374,14 @@ public abstract partial class SharedShipRepairSystem
             !chunk.Entities.TryGetValue(id, out var spec) || spec.ProtoIndex < 0 ||
             spec.ProtoIndex >= grid.Comp.EntityPalette.Count ||
             !_proto.TryIndex(grid.Comp.EntityPalette[spec.ProtoIndex], out var prototype) ||
-            !prototype.TryGetComponent<FixturesComponent>(out var fixtures, Factory))
+            GetRepairCollisionFixtures(prototype) is not { } fixtures)
             return;
 
         FindMobileRepairObstructions(grid, spec, fixtures, obstructions);
     }
 
     private bool FindMobileRepairObstructions(EntityUid grid, ShipRepairEntitySpecifier spec,
-        FixturesComponent fixtures, HashSet<EntityUid>? obstructions)
+        FixturesComponent fixtures, HashSet<EntityUid>? obstructions, HashSet<EntityUid>? debris = null)
     {
         var blocked = false;
         var coordinates = _transform.ToMapCoordinates(new EntityCoordinates(grid, spec.LocalPosition));
@@ -345,28 +399,47 @@ public abstract partial class SharedShipRepairSystem
                 LookupFlags.Dynamic);
             foreach (var uid in _repairObstructions)
             {
-                if (!TerminatingOrDeleted(uid) && TryComp<PhysicsComponent>(uid, out var body) &&
-                    body.CanCollide && body.Hard &&
-                    ((fixture.CollisionMask & body.CollisionLayer) != 0 ||
-                     (fixture.CollisionLayer & body.CollisionMask) != 0))
+                if (TerminatingOrDeleted(uid) || !_repairBodyQuery.TryGetComponent(uid, out var body) ||
+                    !body.CanCollide || !_repairFixturesQuery.TryGetComponent(uid, out var other) ||
+                    !RepairFixtureIntersectsBody(fixture, placement, uid, other))
+                    continue;
+
+                if (IsMovableRepairDebris(uid))
                 {
-                    if (obstructions == null)
-                        return true;
-                    obstructions.Add(uid);
-                    blocked = true;
+                    debris?.Add(uid);
+                    continue;
                 }
+                if (obstructions == null)
+                    return true;
+                obstructions.Add(uid);
+                blocked = true;
             }
         }
         return blocked;
     }
 
     /// <summary>Shared publication path for both handheld and automated reconstruction.</summary>
-    private void RestoreSnapshotEntity(Entity<ShipRepairDataComponent> grid, Vector2i tile, int id,
+    private bool TryRestoreSnapshotEntity(EntityUid tool, Entity<ShipRepairDataComponent> grid, Vector2i tile, int id,
         ShipRepairEntitySpecifier spec)
     {
-        var spawned = Spawn(grid.Comp.EntityPalette[spec.ProtoIndex], new EntityCoordinates(grid, spec.LocalPosition));
+        var revision = grid.Comp.Revision;
+        if (!CanRepairGrid(tool, grid) || !TryGetChunk(grid.Comp, tile, out var chunk) ||
+            !chunk.Entities.TryGetValue(id, out var current) || !ReferenceEquals(current, spec) ||
+            !TryGetRepairPrototype(tool, grid.Comp, spec, out var prototype, out _) ||
+            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true) ||
+            !TryMoveRepairDebris(grid, tile, chunk, spec, prototype))
+            return false;
+
+        // Unanchoring and moving a remnant raises events; recheck before publishing a new entity.
+        if (!CanRepairGrid(tool, grid) || grid.Comp.Revision != revision ||
+            !TryGetChunk(grid.Comp, tile, out chunk) || !chunk.Entities.TryGetValue(id, out current) ||
+            !ReferenceEquals(current, spec) || IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true))
+            return false;
+
+        var spawned = Spawn(prototype.ID, new EntityCoordinates(grid, spec.LocalPosition));
         _transform.SetLocalRotation(spawned, spec.Rotation);
         spec.OriginalEntity = GetNetEntity(spawned);
         RaiseNetworkEvent(new RepairEntityMessage(GetNetEntity(grid), tile, id, spec, grid.Comp.Revision));
+        return true;
     }
 }

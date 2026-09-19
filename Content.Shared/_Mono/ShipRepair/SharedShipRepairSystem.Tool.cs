@@ -246,8 +246,9 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
                     return;
             }
 
-            // Exodus: handheld and autonomous repairs share snapshot reference/publication handling.
-            RestoreSnapshotEntity((targetGrid, repairData), args.TargetGridIndices, args.RepairId.Value, spec);
+            // Exodus: shared reconstruction moves loose debris and uses the current empty repair variant.
+            if (!TryRestoreSnapshotEntity(ent, (targetGrid, repairData), args.TargetGridIndices, args.RepairId.Value, spec))
+                return;
         }
         else
         {
