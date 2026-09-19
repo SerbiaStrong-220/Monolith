@@ -1,0 +1,111 @@
+# Visual preview bodies only. Repair AI, device links and production are not configured.
+- type: entity
+  abstract: true
+  parent: BaseMob
+  id: BaseMobRepairDronePreview
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone.rsi
+    layers:
+    - state: idle
+      map: ["enum.DamageStateVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MovementIgnoreGravity
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Silicon
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+    showOverlays: false
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: idle
+      Dead:
+        Base: dead
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: RadarBlip
+    config:
+      color: "#00FF00"
+      shape: Square
+      bounds: "-0.5,-0.5,0.5,0.5"
+  - type: CleanupImmune
+
+- type: entity
+  parent: BaseMobRepairDronePreview
+  id: MobRepairDronePreview
+  name: repair drone mockup
+  description: A compact spherical repair drone display model.
+  suffix: Sprite preview
+
+- type: entity
+  parent: BaseMobRepairDronePreview
+  id: MobRepairDroneFleetTSFPreview
+  name: TSF fleet repair drone mockup
+  description: A fleet repair drone display model with blue-grey armor and blue optics.
+  suffix: Sprite preview
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_tsf.rsi
+
+- type: entity
+  parent: BaseMobRepairDronePreview
+  id: MobRepairDroneFleetPDVPreview
+  name: PDV fleet repair drone mockup
+  description: A fleet repair drone display model with bronze armor and green optics.
+  suffix: Sprite preview
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_pdv.rsi
+
+- type: entity
+  parent: BaseMobRepairDronePreview
+  id: MobRepairDroneAsakimPreview
+  name: Asakim repair drone mockup
+  description: A repair drone display model with segmented graphite armor and crimson optics.
+  suffix: Sprite preview
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_asakim.rsi
+
+# Displays the phase animation only; movement and collisions remain those of the preview body.
+- type: entity
+  parent: MobRepairDroneAsakimPreview
+  id: MobRepairDroneAsakimPhasePreview
+  name: phased Asakim repair drone mockup
+  description: An Asakim repair drone display model with a translucent, pulsating phase shell.
+  suffix: Sprite preview, Phase
+  components:
+  - type: Sprite
+    layers:
+    - state: phase
+      map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: phase
+      Dead:
+        Base: dead
