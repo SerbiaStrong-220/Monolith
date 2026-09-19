@@ -3,6 +3,7 @@ using Content.Client._NF.Shipyard.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared._NF.Shipyard.BUI;
 using Content.Shared._NF.Shipyard.Events;
+using Content.Shared._Exodus.Shipyard; // Exodus: paid SRD snapshots.
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client._NF.Shipyard.BUI;
@@ -41,6 +42,7 @@ public sealed class ShipyardConsoleBoundUserInterface : BoundUserInterface
         _menu.OnSellShip += SellShip;
         _menu.OnUnassignDeed += UnassignDeed;
         _menu.OnRenameShip += RenameShip;
+        _menu.OnRepairSnapshot += quote => SendMessage(new ShipyardRepairSnapshotMessage(quote)); // Exodus
         _menu.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent("ShipyardConsole-targetId"));
         // _menu.OnPreviewShip += PreviewShip; // Exodus disable shipyard-preview
     }

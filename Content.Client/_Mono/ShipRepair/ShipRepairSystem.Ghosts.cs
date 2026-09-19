@@ -107,7 +107,7 @@ public sealed partial class ShipRepairSystem : SharedShipRepairSystem
                         )
                             continue;
 
-                        _visibleGhosts.Add(new((grid, data, grid.Comp), chunkIndices, specId, false));
+                        _visibleGhosts.Add(new((grid, data, grid.Comp), chunkIndices, specId, false, data.Revision)); // Exodus: refresh cached ghosts on snapshot changes.
                     }
 
                     // process tile ghosts
@@ -136,7 +136,7 @@ public sealed partial class ShipRepairSystem : SharedShipRepairSystem
                         )
                             continue;
 
-                        _visibleGhosts.Add(new((grid, data, grid.Comp), chunkIndices, i, true));
+                        _visibleGhosts.Add(new((grid, data, grid.Comp), chunkIndices, i, true, data.Revision)); // Exodus
                     }
                 }
             }
@@ -159,7 +159,7 @@ public sealed partial class ShipRepairSystem : SharedShipRepairSystem
             if (_activeGhosts.ContainsKey(key))
                 continue;
 
-            var (grid, chunkIdx, id, isTile) = key;
+            var (grid, chunkIdx, id, isTile, _) = key; // Exodus
 
             if (grid.Comp1.Chunks.TryGetValue(chunkIdx, out var chunk))
             {
@@ -262,5 +262,5 @@ public sealed partial class ShipRepairSystem : SharedShipRepairSystem
         }
     }
 
-    private record struct GhostPosData(Entity<ShipRepairDataComponent, MapGridComponent> Grid, Vector2i ChunkIndices, int Id, bool IsTile);
+    private record struct GhostPosData(Entity<ShipRepairDataComponent, MapGridComponent> Grid, Vector2i ChunkIndices, int Id, bool IsTile, int SnapshotRevision); // Exodus
 }

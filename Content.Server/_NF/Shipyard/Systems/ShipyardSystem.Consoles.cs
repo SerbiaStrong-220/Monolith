@@ -1011,7 +1011,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             uiKey.ToString(),
             freeListings,
             CalculateSellRate(uid),
-            buyerCompanyId); // Exodus company-fleet
+            buyerCompanyId, // Exodus company-fleet
+            GetRepairSnapshotQuote(targetId)); // Exodus: quote the registered model's full price.
 
         _ui.SetUiState(uid, uiKey, newState);
     }

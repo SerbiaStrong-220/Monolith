@@ -8,6 +8,14 @@ namespace Content.Shared._Mono.ShipRepair.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShipRepairDataComponent : Component
 {
+    // Exodus-begin: distinguish snapshots whose chunk-local entity IDs can overlap.
+    /// <summary>
+    /// Incremented whenever the grid's complete repair snapshot is replaced.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int Revision;
+    // Exodus-end
+
     /// <summary>
     /// N to use for the NxN chunks.
     /// </summary>

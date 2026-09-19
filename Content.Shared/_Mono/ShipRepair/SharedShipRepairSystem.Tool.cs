@@ -132,7 +132,9 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
                             continue;
                         }
 
-                        if (repairEv.TargetGridIndices == gridIndices && repairEv.RepairId == id)
+                        // Exodus: a repair against the previous snapshot cannot block a new one.
+                        if (repairEv.TargetGrid == targetGrid.Owner && repairEv.SnapshotRevision == repairData.Revision &&
+                            repairEv.TargetGridIndices == gridIndices && repairEv.RepairId == id)
                         {
                             hasIdentical = true;
                             break;
@@ -165,12 +167,17 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
 
     private void StartRepair(Entity<ShipRepairToolComponent> tool, EntityUid user, Entity<MapGridComponent> grid, Vector2i tileIndices, float delay, int cost, int? repairId = null)
     {
+        // Exodus: bind tile and entity repairs to the exact snapshot used to calculate their cost.
+        if (!TryComp<ShipRepairDataComponent>(grid, out var repairData))
+            return;
+
         var ev = new ShipRepairDoAfterEvent
         {
             TargetGridIndices = tileIndices,
             RepairId = repairId,
             Cost = cost,
-            TargetGrid = grid
+            TargetGrid = grid,
+            SnapshotRevision = repairData.Revision, // Exodus
         };
 
         var args = new DoAfterArgs(EntityManager, user, delay, ev, tool)
@@ -206,6 +213,10 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         if (args.TargetGrid is not { } targetGrid || !TryComp<ShipRepairDataComponent>(targetGrid, out var repairData))
             return;
 
+        // Exodus: do not charge or restore an unrelated entity after a snapshot refresh.
+        if (TerminatingOrDeleted(targetGrid) || args.SnapshotRevision != repairData.Revision)
+            return;
+
         if (!TryGetChunk(repairData, args.TargetGridIndices, out var chunk))
             return;
 
@@ -239,7 +250,7 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
 
             spec.OriginalEntity = GetNetEntity(spawned);
 
-            var dirtMsg = new RepairEntityMessage(GetNetEntity(targetGrid), args.TargetGridIndices, args.RepairId.Value, spec);
+            var dirtMsg = new RepairEntityMessage(GetNetEntity(targetGrid), args.TargetGridIndices, args.RepairId.Value, spec, repairData.Revision); // Exodus
             RaiseNetworkEvent(dirtMsg);
         }
         else

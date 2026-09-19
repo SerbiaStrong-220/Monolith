@@ -54,6 +54,7 @@ public sealed partial class ShipRepairSystem : SharedShipRepairSystem
         var grid = GetEntity(args.Grid);
         if (TerminatingOrDeleted(grid)
             || !TryComp<ShipRepairDataComponent>(grid, out var data)
+            || args.SnapshotRevision != data.Revision // Exodus: discard updates from replaced snapshots.
             || !TryGetChunk(data, args.Indices, out var chunk)
         )
             return;

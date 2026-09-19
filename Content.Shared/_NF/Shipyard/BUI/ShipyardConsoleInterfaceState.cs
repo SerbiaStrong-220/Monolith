@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared._Exodus.Shipyard; // Exodus: paid repair snapshot offer.
 
 namespace Content.Shared._NF.Shipyard.BUI;
 
@@ -17,6 +18,7 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
     public readonly bool FreeListings;
     public readonly float SellRate;
     public readonly string? BuyerCompanyId; // Exodus company-fleet
+    public readonly RepairSnapshotQuote? RepairSnapshot; // Exodus: server-authoritative price and snapshot version.
 
     public ShipyardConsoleInterfaceState(
         int balance,
@@ -29,7 +31,8 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
         string shipyardName,
         bool freeListings,
         float sellRate,
-        string? buyerCompanyId = null) // Exodus company-fleet
+        string? buyerCompanyId = null, // Exodus company-fleet
+        RepairSnapshotQuote? repairSnapshot = null) // Exodus: paid repair snapshots.
     {
         Balance = balance;
         AccessGranted = accessGranted;
@@ -42,5 +45,6 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
         FreeListings = freeListings;
         SellRate = sellRate;
         BuyerCompanyId = buyerCompanyId; // Exodus company-fleet
+        RepairSnapshot = repairSnapshot; // Exodus
     }
 }
