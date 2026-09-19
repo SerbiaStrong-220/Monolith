@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 09/18/2026 07:51:24
-  entityCount: 1730
+  time: 09/19/2026 00:28:35
+  entityCount: 1734
 maps: []
 grids:
 - 1
@@ -254,11 +254,11 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
       spreadQueues:
-        Puddle: []
-        Kudzu: []
         MetalFoam: []
-        Smoke: []
         ExodusBiohazardFoam: []
+        Kudzu: []
+        Smoke: []
+        Puddle: []
     - type: ThermalSignature
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
@@ -5103,6 +5103,26 @@ entities:
     components:
     - type: Transform
       pos: -15.5,-5.5
+      parent: 1
+  - uid: 1731
+    components:
+    - type: Transform
+      pos: 13.5,-13.5
+      parent: 1
+  - uid: 1732
+    components:
+    - type: Transform
+      pos: 14.5,-11.5
+      parent: 1
+  - uid: 1733
+    components:
+    - type: Transform
+      pos: 15.5,-8.5
+      parent: 1
+  - uid: 1734
+    components:
+    - type: Transform
+      pos: 16.5,-5.5
       parent: 1
 - proto: ComputerGunneryConsole
   entities:
