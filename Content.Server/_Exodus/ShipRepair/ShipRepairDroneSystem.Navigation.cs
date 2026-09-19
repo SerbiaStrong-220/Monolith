@@ -166,7 +166,7 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private void UpdateNavigation(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairToolComponent> tool,
-        Entity<ShipRepairDataComponent> grid, ShipRepairWorkQueueComponent queue, int budget)
+        EntityUid grid, ShipRepairWorkQueueComponent queue, int budget)
     {
         if (_timing.CurTime > ent.Comp.NavigationDeadline)
         {
@@ -181,13 +181,19 @@ public sealed partial class ShipRepairDroneSystem
 
         if (ent.Comp.PryDoAfter is { } pry)
         {
-            if (_doAfter.GetStatus(pry) == DoAfterStatus.Running)
+            var running = _doAfter.GetStatus(pry) == DoAfterStatus.Running;
+            if (running && ent.Comp.PryTarget is { } pryTarget &&
+                !TerminatingOrDeleted(pryTarget) && TryComp<DoorComponent>(pryTarget, out var priedDoor) &&
+                priedDoor.State is not (DoorState.Open or DoorState.Opening))
                 return;
             ent.Comp.PryDoAfter = null;
+            ent.Comp.PryTarget = null;
+            if (running)
+                _doAfter.Cancel(pry);
             ent.Comp.ProgressDeadline = _timing.CurTime + ent.Comp.StuckTimeout;
         }
 
-        var position = _transform.ToCoordinates(grid.Owner, _transform.GetMapCoordinates(ent)).Position;
+        var position = _transform.ToCoordinates(grid, _transform.GetMapCoordinates(ent)).Position;
         if (ent.Comp.Settling)
         {
             if (_timing.CurTime > ent.Comp.ProgressDeadline)
@@ -222,13 +228,18 @@ public sealed partial class ShipRepairDroneSystem
                 CancelJob(ent);
                 ent.Comp.NextSearch = _timing.CurTime + ent.Comp.IdleInterval;
             }
-            else
-                StartRepair(ent, tool, grid, queue);
+            else if (ent.Comp.Command == ShipRepairDroneCommand.Return)
+            {
+                if (!TryDockReturnedDrone(ent))
+                    FailJob(ent);
+            }
+            else if (_snapshotQuery.TryGetComponent(grid, out var data))
+                StartRepair(ent, tool, (grid, data), queue);
             return;
         }
 
         // An already reachable job does not require hitting the exact center of the final waypoint.
-        if (!ent.Comp.Yielding && _mapGridQuery.TryGetComponent(grid, out var mapGrid) &&
+        if (ent.Comp.Command == ShipRepairDroneCommand.Repair && !ent.Comp.Yielding && _mapGridQuery.TryGetComponent(grid, out var mapGrid) &&
             CanWorkHere(ent, grid, position) &&
             TryClaimWorkPosition(ent, queue, _map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, position)), position))
         {
@@ -326,17 +337,23 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private void Repath(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairToolComponent> tool,
-        Entity<ShipRepairDataComponent> grid, ShipRepairWorkQueueComponent queue)
+        EntityUid grid, ShipRepairWorkQueueComponent queue)
     {
+        if (ent.Comp.Command == ShipRepairDroneCommand.Return)
+        {
+            FailJob(ent);
+            return;
+        }
         if (ent.Comp.WorkTile is { } tile)
             ent.Comp.FailedPositions[tile] = _timing.CurTime + ent.Comp.RetryInterval;
         if (ent.Comp.Yielding || ++ent.Comp.Repaths > ent.Comp.RepathLimit || ent.Comp.Target is not { } target ||
-            !_repair.TryPlanRepair(tool, grid, target, true, out var work, checkMobileObstructions: false) ||
-            !StartNavigation(ent, grid, queue, work))
+            !_snapshotQuery.TryGetComponent(grid, out var data) ||
+            !_repair.TryPlanRepair(tool, (grid, data), target, true, out var work, checkMobileObstructions: false) ||
+            !StartNavigation(ent, (grid, data), queue, work))
             FailJob(ent);
     }
 
-    private void ExpandPath(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairDataComponent> grid,
+    private void ExpandPath(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
         ShipRepairWorkQueueComponent queue, ShipRepairPathSearch search, int budget)
     {
         if (!_mapGridQuery.TryGetComponent(grid, out var mapGrid))
@@ -370,7 +387,8 @@ public sealed partial class ShipRepairDroneSystem
                     ent.Comp.NextSearch = _timing.CurTime;
                     return;
                 }
-                RememberUnreachable(ent, queue, search, frontier.Closed, search.ReverseTurn);
+                if (ent.Comp.Command == ShipRepairDroneCommand.Repair)
+                    RememberUnreachable(ent, queue, search, frontier.Closed, search.ReverseTurn);
                 FailJob(ent);
                 return;
             }
@@ -452,8 +470,10 @@ public sealed partial class ShipRepairDroneSystem
             return true;
 
         // TryPry's boolean also means "interaction handled" on rejection; the DoAfter ID is authoritative.
+        EnsureComp<ShipRepairDronePryTargetComponent>(uid);
         _prying.TryPry(uid, ent, out var id, ent);
         ent.Comp.PryDoAfter = id;
+        ent.Comp.PryTarget = id != null ? uid : null;
         return id != null;
     }
 
@@ -511,10 +531,14 @@ public sealed partial class ShipRepairDroneSystem
             if (!BlocksDrone(ent, uid))
                 continue;
             TrackSearchObstruction(search, grid, uid);
-            if (!allowDoors || ent.Comp.BlockedDoors.Contains(uid) || !HasComp<DoorComponent>(uid))
+            if (!allowDoors || !TryComp<DoorComponent>(uid, out var blockedDoor))
                 return false;
 
-            if (!_doors.CanOpen(uid, user: ent))
+            // Opening doors can still collide during the first animation phase. Wait for the
+            // collision to disappear, without rechecking access or blacklisting that passage.
+            if (blockedDoor.State != DoorState.Opening && ent.Comp.BlockedDoors.Contains(uid))
+                return false;
+            if (blockedDoor.State != DoorState.Opening && !_doors.CanOpen(uid, blockedDoor, ent))
             {
                 var canPry = new BeforePryEvent(ent, true, false, true);
                 RaiseLocalEvent(uid, ref canPry);
@@ -535,10 +559,17 @@ public sealed partial class ShipRepairDroneSystem
 
     private bool BlocksDrone(EntityUid drone, EntityUid other)
     {
-        if (other == drone || !_bodyQuery.TryGetComponent(other, out var body) || !body.CanCollide || !body.Hard)
+        if (other == drone || !_bodyQuery.TryGetComponent(other, out var body) || !body.CanCollide || !body.Hard ||
+            !_fixturesQuery.TryGetComponent(other, out var fixtures))
             return false;
-        return (body.CollisionLayer & (int) CollisionGroup.FlyingMobMask) != 0 ||
-               (body.CollisionMask & (int) CollisionGroup.FlyingMobLayer) != 0;
+        // Body-wide masks also include sensors. Only solid fixtures can obstruct a flying drone.
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            if (fixture.Hard && ((fixture.CollisionLayer & (int) CollisionGroup.FlyingMobMask) != 0 ||
+                                 (fixture.CollisionMask & (int) CollisionGroup.FlyingMobLayer) != 0))
+                return true;
+        }
+        return false;
     }
 
     private void EnterPhase(Entity<ShipRepairDroneComponent> ent)

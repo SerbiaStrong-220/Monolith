@@ -1,0 +1,45 @@
+- type: entity
+  parent: BaseMachine
+  id: ShipRepairDroneStation
+  name: repair drone station
+  description: A self-powered base with five reserved berths for ship repair drones.
+  components:
+  - type: Sprite
+    # Temporary art, reused without modifying the original RSI.
+    sprite: Structures/Power/borg_charger.rsi
+    layers:
+    - state: borgcharger-u1
+    - state: borgcharger0
+      shader: unshaded
+      map: ["powered"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ShipRepairStationVisuals.Active:
+        powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ShipRepairStation
+  - type: ContainerContainer
+    containers:
+      repair_drones: !type:Container
+  - type: ActivatableUI
+    key: enum.ShipRepairStationUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ShipRepairStationUiKey.Key:
+        type: ShipRepairStationBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [Destruction]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: ShipRepairable
+    repairTime: 8
+    repairCost: 20

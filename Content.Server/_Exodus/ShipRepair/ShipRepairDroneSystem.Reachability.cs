@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
+using Content.Shared.Prying.Components;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -23,6 +24,7 @@ public sealed partial class ShipRepairDroneSystem
         SubscribeLocalEvent<PhysicsComponent, MoveEvent>(OnRepairObstacleMoved);
         SubscribeLocalEvent<PhysicsComponent, PhysicsBodyTypeChangedEvent>(OnRepairObstacleTypeChanged);
         SubscribeLocalEvent<DoorComponent, DoorStateChangedEvent>(OnRepairDoorChanged);
+        SubscribeLocalEvent<ShipRepairDronePryTargetComponent, BeforePryEvent>(OnBeforeDronePry);
         SubscribeLocalEvent<DoorBoltComponent, DoorBoltsChangedEvent>(OnRepairDoorBoltsChanged);
     }
 
@@ -71,6 +73,15 @@ public sealed partial class ShipRepairDroneSystem
     private void OnRepairDoorChanged(Entity<DoorComponent> ent, ref DoorStateChangedEvent args)
     {
         InvalidateObstacle(ent);
+    }
+
+    private void OnBeforeDronePry(Entity<ShipRepairDronePryTargetComponent> ent, ref BeforePryEvent args)
+    {
+        // Prying toggles doors. This event is also checked when the DoAfter completes, so a second
+        // drone must not close a door already opened by another drone or a player.
+        if (_droneQuery.HasComponent(args.User) && TryComp<DoorComponent>(ent, out var door) &&
+            door.State is DoorState.Open or DoorState.Opening)
+            args.Cancelled = true;
     }
 
     private void OnRepairDoorBoltsChanged(Entity<DoorBoltComponent> ent, ref DoorBoltsChangedEvent args)

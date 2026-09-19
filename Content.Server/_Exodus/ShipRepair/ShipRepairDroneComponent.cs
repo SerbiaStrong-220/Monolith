@@ -1,10 +1,8 @@
 using System.Numerics;
 using Content.Shared._Exodus.ShipRepair;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.ShipRepair;
 
@@ -116,14 +114,25 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField]
     public float RepairSpeedLimit = 0.1f;
 
+    /// <summary>The station that owns this drone's reserved berth.</summary>
     [DataField]
-    public ProtoId<SinkPortPrototype> OnPort = "On";
+    public EntityUid? Station;
 
     [DataField]
-    public ProtoId<SinkPortPrototype> OffPort = "Off";
+    public bool HasWorkingName;
 
+    /// <summary>Per-drone manual recall cooldown, retained across docking, power-off and transfers.</summary>
     [DataField]
-    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
+    public TimeSpan RecallCooldown = TimeSpan.FromMinutes(5);
+
+    [DataField, AutoPausedField]
+    public TimeSpan NextRecall;
+
+    [ViewVariables]
+    public ShipRepairDroneCommand Command;
+
+    public bool ReturnBlocked;
+    public bool ExitBlocked;
 
     [ViewVariables]
     public bool Enabled;
@@ -173,6 +182,8 @@ public sealed partial class ShipRepairDroneComponent : Component
     public EntityCoordinates? LastSafePosition;
     public DoAfterId? RepairDoAfter;
     public DoAfterId? PryDoAfter;
+    /// <summary>The door being opened, so another drone opening it can interrupt our pry.</summary>
+    public EntityUid? PryTarget;
     public ShipRepairTarget? Target;
     /// <summary>Continue available work on the selected tile/area between successful repair cycles.</summary>
     public Vector2i? FocusTile;

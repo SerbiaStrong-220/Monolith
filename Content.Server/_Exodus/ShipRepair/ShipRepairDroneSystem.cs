@@ -1,12 +1,8 @@
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair;
 using Content.Shared._Mono.ShipRepair.Components;
-using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Examine;
@@ -25,7 +21,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.ShipRepair;
 
-/// <summary>Signal-controlled, bounded autonomous repair of an assigned ship snapshot.</summary>
+/// <summary>Station-controlled, bounded autonomous repair of an assigned ship snapshot.</summary>
 public sealed partial class ShipRepairDroneSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -38,7 +34,6 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     [Dependency] private SharedDoorSystem _doors = default!;
     [Dependency] private PryingSystem _prying = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private DeviceLinkSystem _links = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -49,11 +44,11 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     private EntityQuery<PhysicsComponent> _bodyQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<MobStateComponent> _mobQuery;
-    private EntityQuery<DeviceLinkSinkComponent> _sinkQuery;
     private EntityQuery<ShipRepairDataComponent> _snapshotQuery;
     private EntityQuery<MapGridComponent> _mapGridQuery;
     private EntityQuery<ShipRepairDroneComponent> _droneQuery;
     private EntityQuery<NPCSteeringComponent> _steeringQuery;
+    private EntityQuery<ShipRepairStationComponent> _stationQuery;
 
     public override void Initialize()
     {
@@ -64,16 +59,16 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         _bodyQuery = GetEntityQuery<PhysicsComponent>();
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _mobQuery = GetEntityQuery<MobStateComponent>();
-        _sinkQuery = GetEntityQuery<DeviceLinkSinkComponent>();
         _snapshotQuery = GetEntityQuery<ShipRepairDataComponent>();
         _mapGridQuery = GetEntityQuery<MapGridComponent>();
         _droneQuery = GetEntityQuery<ShipRepairDroneComponent>();
         _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
+        _stationQuery = GetEntityQuery<ShipRepairStationComponent>();
         InitializeReachability();
+        InitializeStations();
 
         SubscribeLocalEvent<ShipRepairDroneComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ShipRepairDroneComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ShipRepairDroneComponent, SignalReceivedEvent>(OnSignal);
         SubscribeLocalEvent<ShipRepairDroneComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<ShipRepairDroneComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ShipRepairDroneComponent, ShipRepairDroneDoAfterEvent>(OnRepairFinished);
@@ -81,38 +76,8 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
 
     private void OnMapInit(Entity<ShipRepairDroneComponent> ent, ref MapInitEvent args)
     {
-        _links.EnsureSinkPorts(ent, ent.Comp.OnPort, ent.Comp.OffPort, ent.Comp.TogglePort);
         ent.Comp.NextUpdate = _timing.CurTime;
         SetVisual(ent);
-    }
-
-    private void OnSignal(Entity<ShipRepairDroneComponent> ent, ref SignalReceivedEvent args)
-    {
-        if (args.Trigger is not { } source ||
-            !TryComp<DeviceLinkSourceComponent>(source, out var links))
-            return;
-
-        var linked = false;
-        foreach (var (_, sink) in _links.GetLinks(source, ent, links))
-        {
-            if (sink == args.Port)
-            {
-                linked = true;
-                break;
-            }
-        }
-        if (!linked)
-            return;
-
-        // Pulses and the rising edge of logic devices are commands; low is not another toggle.
-        if (args.Data != null && args.Data.TryGetValue(DeviceNetworkConstants.LogicState, out SignalState state) &&
-            state == SignalState.Low)
-            return;
-
-        if (args.Port == ent.Comp.OffPort || args.Port == ent.Comp.TogglePort && ent.Comp.Enabled)
-            Disable(ent);
-        else if (args.Port == ent.Comp.OnPort || args.Port == ent.Comp.TogglePort)
-            TryEnable(ent);
     }
 
     private bool TryEnable(Entity<ShipRepairDroneComponent> ent)
@@ -120,32 +85,21 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         if (ent.Comp.Enabled)
             return true;
 
-        if (IsDisabledBody(ent) || _containers.IsEntityInContainer(ent) || ent.Comp.Phased)
+        if (IsDisabledBody(ent) || ent.Comp.Phased || !TryGetStation(ent, out var station) || !IsStationActive(station) ||
+            _containers.IsEntityInContainer(ent) && !IsDocked(ent, station))
             return false;
-
-        if (Transform(ent).GridUid is not { } grid || !TryComp<ShipRepairDataComponent>(grid, out var data))
+        if (Transform(station).GridUid is not { } grid || !_snapshotQuery.HasComponent(grid))
         {
-            _popup.PopupEntity(Loc.GetString("ship-repair-drone-no-snapshot"), ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("ship-repair-drone-no-snapshot"), station);
             return false;
         }
-
         if (!_repair.CanRepairGrid(ent, grid))
         {
-            _popup.PopupEntity(Loc.GetString("ship-repair-drone-incompatible"), ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("ship-repair-drone-incompatible"), station);
             return false;
         }
-
+        ClearAssignment(ent);
         ent.Comp.Enabled = true;
-        ent.Comp.Grid = grid;
-        ent.Comp.Revision = data.Revision;
-        ent.Comp.WaitingForShip = false;
-        ent.Comp.NextUpdate = _timing.CurTime;
-        ent.Comp.NextSearch = _timing.CurTime;
-        ent.Comp.FailedTargets.Clear();
-        ent.Comp.FailedPositions.Clear();
-        ent.Comp.DeferredSearches.Clear();
-        ent.Comp.FailureOrigin = null;
-        EnsureComp<ShipRepairWorkQueueComponent>(grid).Drones.Add(ent);
         SetVisual(ent);
         return true;
     }
@@ -153,17 +107,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     private void Disable(Entity<ShipRepairDroneComponent> ent)
     {
         ent.Comp.Enabled = false;
-        CancelJob(ent);
-        if (ent.Comp.Grid is { } grid && _queueQuery.TryGetComponent(grid, out var queue))
-        {
-            queue.Drones.Remove(ent);
-        }
-        ent.Comp.Grid = null;
-        ent.Comp.WaitingForShip = false;
-        ent.Comp.FailedTargets.Clear();
-        ent.Comp.FailedPositions.Clear();
-        ent.Comp.DeferredSearches.Clear();
-        ent.Comp.FailureOrigin = null;
+        ClearAssignment(ent);
         if (!TerminatingOrDeleted(ent))
         {
             TryLeavePhase(ent, eject: true);
@@ -174,6 +118,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     private void OnShutdown(Entity<ShipRepairDroneComponent> ent, ref ComponentShutdown args)
     {
         Disable(ent);
+        UnregisterDrone(ent);
     }
 
     private void OnMobStateChanged(Entity<ShipRepairDroneComponent> ent, ref MobStateChangedEvent args)
@@ -188,11 +133,6 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         return !_mobQuery.TryGetComponent(uid, out var mob) || mob.CurrentState != MobState.Alive;
     }
 
-    private bool HasLinks(EntityUid uid)
-    {
-        return _sinkQuery.TryGetComponent(uid, out var sink) && sink.LinkedSources.Count > 0;
-    }
-
     private void OnExamined(Entity<ShipRepairDroneComponent> ent, ref ExaminedEvent args)
     {
         var key = IsDisabledBody(ent) ? "ship-repair-drone-status-destroyed" :
@@ -201,7 +141,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             ent.Comp.RepairDoAfter != null ? "ship-repair-drone-status-repairing" : "ship-repair-drone-status-active";
         args.PushMarkup(Loc.GetString(key));
         if (!ent.Comp.Enabled && !IsDisabledBody(ent))
-            args.PushMarkup(Loc.GetString("ship-repair-drone-link-hint"));
+            args.PushMarkup(Loc.GetString("ship-repair-drone-station-hint"));
     }
 
     private void SetVisual(Entity<ShipRepairDroneComponent> ent)
@@ -216,6 +156,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        UpdateStations();
         UpdateQueues();
 
         // Split expensive path expansion across drones and ticks instead of a synchronous full-ship search.
@@ -252,11 +193,34 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
                 continue;
             }
 
-            if (IsDisabledBody(uid) || _containers.IsEntityInContainer(uid) || !HasLinks(uid) ||
-                drone.Grid is not { } grid || TerminatingOrDeleted(grid) ||
-                !_snapshotQuery.TryGetComponent(grid, out var data) || !_repair.CanRepairGrid(uid, grid))
+            if (IsDisabledBody(uid) || !TryGetStation(ent, out var station) || !IsStationActive(station))
             {
                 Disable(ent);
+                continue;
+            }
+            if (IsDocked(ent, station))
+                continue;
+            if (_containers.IsEntityInContainer(uid))
+            {
+                Disable(ent);
+                continue;
+            }
+            if (drone.Command == ShipRepairDroneCommand.Idle)
+            {
+                if (drone.Phased)
+                    TryLeavePhase(ent, eject: true);
+                continue;
+            }
+            if (drone.Command == ShipRepairDroneCommand.Return)
+            {
+                UpdateReturn(ent, (uid, tool), station, xform, pathQuota);
+                continue;
+            }
+            if (drone.Grid is not { } grid || Transform(station).GridUid != grid || TerminatingOrDeleted(grid) ||
+                !_snapshotQuery.TryGetComponent(grid, out var data) || !_repair.CanRepairGrid(uid, grid))
+            {
+                // Losing the repair snapshot stops work, but must not disable the return controls.
+                ClearAssignment(ent);
                 continue;
             }
 
@@ -286,7 +250,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             if (drone.RepairDoAfter != null)
                 continue;
 
-            if (drone.PryDoAfter == null && UpdateClearanceRecovery(ent, (grid, data), queue, xform))
+            if (drone.PryDoAfter == null && UpdateClearanceRecovery(ent, grid, queue, xform))
                 continue;
 
             if (drone.Target == null && !drone.Yielding)
@@ -301,7 +265,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
                 continue;
             }
 
-            UpdateNavigation(ent, (uid, tool), (grid, data), queue, pathQuota);
+            UpdateNavigation(ent, (uid, tool), grid, queue, pathQuota);
         }
     }
 

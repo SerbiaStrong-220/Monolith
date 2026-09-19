@@ -325,7 +325,8 @@ public sealed partial class ShipRepairDroneSystem
             return;
 
         ent.Comp.RepairDoAfter = null;
-        if (args.Cancelled || args.Handled || !ent.Comp.Enabled || IsDisabledBody(ent) || !HasLinks(ent) ||
+        if (args.Cancelled || args.Handled || !ent.Comp.Enabled || IsDisabledBody(ent) || !TryGetStation(ent, out var station) || !IsStationActive(station) ||
+            ent.Comp.Command != ShipRepairDroneCommand.Repair || Transform(station).GridUid != ent.Comp.Grid ||
             ent.Comp.Plan is not { } plan || ent.Comp.Grid != plan.Grid || ent.Comp.Phased ||
             !TryComp<ShipRepairToolComponent>(ent, out var tool) ||
             !TryComp<ShipRepairDataComponent>(plan.Grid, out var data) || data.Revision != plan.Revision ||
@@ -419,6 +420,13 @@ public sealed partial class ShipRepairDroneSystem
 
     private void FailJob(Entity<ShipRepairDroneComponent> ent)
     {
+        if (ent.Comp.Command == ShipRepairDroneCommand.Return)
+        {
+            CancelJob(ent);
+            ent.Comp.ReturnBlocked = true;
+            ent.Comp.NextSearch = _timing.CurTime + ent.Comp.RetryInterval;
+            return;
+        }
         // Do not immediately reacquire the same failed batch through a different center tile.
         if (ent.Comp.Plan is { } plan)
         {
@@ -441,6 +449,7 @@ public sealed partial class ShipRepairDroneSystem
         var pry = ent.Comp.PryDoAfter;
         ent.Comp.RepairDoAfter = null;
         ent.Comp.PryDoAfter = null;
+        ent.Comp.PryTarget = null;
         if (_doAfter.IsRunning(repair))
             _doAfter.Cancel(repair);
         if (_doAfter.IsRunning(pry))

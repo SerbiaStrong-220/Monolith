@@ -60,16 +60,6 @@
     pryPowered: true
     speedModifier: 1.5
     useSound: /Audio/Items/jaws_pry.ogg
-  - type: DeviceLinkSink
-    ports:
-    - On
-    - Off
-    - Toggle
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
-    range: 600
   - type: RadarBlip
     config:
       color: "#00FF00"
@@ -81,7 +71,7 @@
   parent: BaseMobShipRepairDrone
   id: MobShipRepairDrone
   name: ship repair drone
-  description: A compact drone that repairs its assigned ship using an SRD snapshot. Link it to a button or signaller with a multitool.
+  description: A compact drone that repairs its assigned ship using an SRD snapshot. Load it into a repair drone station to control it.
   components:
   - type: NpcFactionMember
     factions:
@@ -101,6 +91,8 @@
   - type: ShipRepairDrone
     repairRadius: 1
     repairThroughput: 1.8
+  - type: Access
+    groups: [GeneralNfsdAccess]
 
 - type: entity
   parent: MobShipRepairDroneFleetTSF
@@ -113,6 +105,9 @@
   - type: NpcFactionMember
     factions:
     - PirateNF
+  - type: Access
+    groups: [GeneralAccess]
+    tags: [Pirate, Mercenary]
 
 - type: entity
   parent: BaseMobShipRepairDrone

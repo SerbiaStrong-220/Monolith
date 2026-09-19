@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -82,13 +81,13 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     /// <summary>Returns true while local recovery owns movement, independently of any repair job.</summary>
-    private bool UpdateClearanceRecovery(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairDataComponent> grid,
+    private bool UpdateClearanceRecovery(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
         ShipRepairWorkQueueComponent queue, TransformComponent xform)
     {
         if (ent.Comp.CanPhase || ent.Comp.Phased)
             return false;
 
-        var position = _transform.ToCoordinates(grid.Owner, _transform.GetMapCoordinates(xform)).Position;
+        var position = _transform.ToCoordinates(grid, _transform.GetMapCoordinates(xform)).Position;
         if (ent.Comp.ClearanceState == ShipRepairClearanceState.Moving)
         {
             if (HasReachedClearanceDestination(ent, xform) && IsClear(ent, grid, position) &&
@@ -123,7 +122,7 @@ public sealed partial class ShipRepairDroneSystem
         return true;
     }
 
-    private void BeginClearanceRecovery(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairDataComponent> grid,
+    private void BeginClearanceRecovery(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
         ShipRepairWorkQueueComponent queue, Vector2 position, ShipRepairNavigationIssue issue)
     {
         // Release the whole job without blacklisting it: only our current position was rejected.
@@ -135,7 +134,7 @@ public sealed partial class ShipRepairDroneSystem
             TryStartClearanceRecovery(ent, grid, queue, position);
     }
 
-    private bool TryStartClearanceRecovery(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairDataComponent> grid,
+    private bool TryStartClearanceRecovery(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
         ShipRepairWorkQueueComponent queue, Vector2 position)
     {
         ent.Comp.NextClearanceRecovery = _timing.CurTime + ent.Comp.ClearanceRecoveryRetry;
