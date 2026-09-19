@@ -235,7 +235,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             {
                 // Hand off a reached waypoint before steering brakes or turns back towards it.
                 // Keep periodic work on its existing schedule; only this distance check runs every tick.
-                if (!HasReachedWaypoint(ent, xform))
+                if (!HasReachedWaypoint(ent, xform) && !HasReachedClearanceDestination(ent, xform))
                     continue;
             }
             else
@@ -284,6 +284,9 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
 
             drone.WaitingForShip = false;
             if (drone.RepairDoAfter != null)
+                continue;
+
+            if (drone.PryDoAfter == null && UpdateClearanceRecovery(ent, (grid, data), queue, xform))
                 continue;
 
             if (drone.Target == null && !drone.Yielding)

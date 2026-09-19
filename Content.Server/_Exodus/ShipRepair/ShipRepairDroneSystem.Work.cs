@@ -423,6 +423,7 @@ public sealed partial class ShipRepairDroneSystem
         ent.Comp.PathIndex = 0;
         ent.Comp.Settling = false;
         ent.Comp.Yielding = false;
+        ent.Comp.ClearanceState = ShipRepairClearanceState.None;
         ent.Comp.WorkTile = null;
         ent.Comp.BestWaypointDistance = float.PositiveInfinity;
         if (!TerminatingOrDeleted(ent))

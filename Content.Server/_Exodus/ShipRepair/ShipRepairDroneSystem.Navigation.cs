@@ -4,7 +4,6 @@ using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
-using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Content.Shared.Prying.Components;
 using Robust.Shared.Map;
@@ -19,7 +18,8 @@ public sealed partial class ShipRepairDroneSystem
     private static readonly Vector2i[] Neighbours = { new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
     // Scratch buffers, never retained as world state or shared with an asynchronous pathfinder.
     private readonly HashSet<EntityUid> _intersections = new();
-    private readonly PolygonShape _sweep = new();
+    // The middle of a swept circle has no extra polygon skin. Its ends are queried as circles.
+    private readonly PolygonShape _sweep = new(0f);
 
     private bool CanServiceShip(Entity<ShipRepairDroneComponent> ent, TransformComponent xform,
         EntityUid grid, ShipRepairWorkQueueComponent queue)
@@ -138,11 +138,16 @@ public sealed partial class ShipRepairDroneSystem
                 search.Forward.Open.Enqueue(tile, cost);
             }
             if (search.Forward.Open.Count == 0)
-                return false;
+            {
+                // Failure to join the navigation graph says nothing about the repair target itself.
+                BeginClearanceRecovery(ent, grid, queue, position, ShipRepairNavigationIssue.StartBlocked);
+                return true;
+            }
         }
         ent.Comp.SearchDeadline = _timing.CurTime +
             (ent.Comp.DeferredSearches.Contains(work.Target) ? ent.Comp.ExtendedSearchTimeout : ent.Comp.SearchTimeout);
         ent.Comp.Search = search;
+        ent.Comp.NavigationIssue = ShipRepairNavigationIssue.None;
         return true;
     }
 
@@ -281,13 +286,9 @@ public sealed partial class ShipRepairDroneSystem
             return;
         }
 
-        EnsureComp<ActiveNPCComponent>(ent);
-        var steering = _steering.Register(ent, new EntityCoordinates(grid, next));
-        steering.DirectMove = true;
-        steering.Range = ent.Comp.ArrivalRange;
         // Intermediate points are fly-through waypoints, not separate stopping destinations.
-        steering.InRangeMaxSpeed = ent.Comp.PathIndex == ent.Comp.Path.Count - 1 ? ent.Comp.RepairSpeedLimit : null;
-        steering.Radius = 0.25f;
+        SetMovementTarget(ent, grid, next, ent.Comp.ArrivalRange,
+            ent.Comp.PathIndex == ent.Comp.Path.Count - 1 ? ent.Comp.RepairSpeedLimit : null);
     }
 
     private bool CanWorkHere(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 position)
@@ -464,9 +465,9 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private bool IsWorldClear(Entity<ShipRepairDroneComponent> ent, MapCoordinates position,
-        ShipRepairPathSearch? search = null, EntityUid? grid = null)
+        ShipRepairPathSearch? search = null, EntityUid? grid = null, PhysShapeCircle? shape = null)
     {
-        var clearance = ent.Comp.ClearanceShape ??= new PhysShapeCircle(ent.Comp.Clearance);
+        var clearance = shape ?? GetNavigationShape(ent);
         _intersections.Clear();
         _lookup.GetEntitiesIntersecting(position.MapId, clearance, new PhysicsTransform(position.Position, Angle.Zero),
             _intersections, LookupFlags.Static | LookupFlags.Dynamic);
@@ -482,18 +483,29 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private bool IsSegmentClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 start, Vector2 end,
-        bool allowDoors, out EntityUid? door, ShipRepairPathSearch? search = null)
+        bool allowDoors, out EntityUid? door, ShipRepairPathSearch? search = null, bool recovering = false)
     {
         door = null;
         var from = _transform.ToMapCoordinates(new EntityCoordinates(grid, start));
         var to = _transform.ToMapCoordinates(new EntityCoordinates(grid, end));
         var delta = to.Position - from.Position;
-        // Conservative swept body, including edges/diagonal fixtures between tile centers.
-        _sweep.SetAsBox(delta.Length() * 0.5f + ent.Comp.Clearance, ent.Comp.Clearance);
+        var circle = GetNavigationShape(ent, recovering);
+        // Exact swept disk: a central rectangle plus circular end caps. The old extended rectangle
+        // falsely intersected walls beside the starting point, especially when moving diagonally away.
         _intersections.Clear();
-        _lookup.GetEntitiesIntersecting(from.MapId, _sweep,
-            new PhysicsTransform((from.Position + to.Position) * 0.5f, delta.ToAngle()), _intersections,
+        _lookup.GetEntitiesIntersecting(from.MapId, circle,
+            new PhysicsTransform(from.Position, Angle.Zero), _intersections,
             LookupFlags.Static | LookupFlags.Dynamic);
+        if (delta.LengthSquared() > 0.000001f)
+        {
+            _sweep.SetAsBox(delta.Length() * 0.5f, circle.Radius);
+            _lookup.GetEntitiesIntersecting(from.MapId, _sweep,
+                new PhysicsTransform((from.Position + to.Position) * 0.5f, delta.ToAngle()), _intersections,
+                LookupFlags.Static | LookupFlags.Dynamic);
+            _lookup.GetEntitiesIntersecting(to.MapId, circle,
+                new PhysicsTransform(to.Position, Angle.Zero), _intersections,
+                LookupFlags.Static | LookupFlags.Dynamic);
+        }
         foreach (var uid in _intersections)
         {
             if (!BlocksDrone(ent, uid))

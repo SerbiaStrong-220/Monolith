@@ -81,6 +81,7 @@ public sealed partial class ShipRepairDroneSystem
         {
             if (uid == ent.Owner || TerminatingOrDeleted(uid) || !_droneQuery.TryGetComponent(uid, out var drone) ||
                 !drone.Enabled || drone.Grid != grid.Owner || drone.Target != null || drone.Yielding ||
+                drone.ClearanceState != ShipRepairClearanceState.None ||
                 drone.RepairDoAfter != null || _timing.CurTime < drone.NextYield ||
                 IsDisabledBody(uid) || _containers.IsEntityInContainer(uid))
                 continue;

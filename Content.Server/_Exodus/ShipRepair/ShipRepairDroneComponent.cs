@@ -36,9 +36,43 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField]
     public float MaximumShipSpeed = 3f;
 
-    /// <summary>Navigation clearance, slightly larger than the 0.25 tile body radius.</summary>
+    /// <summary>Preferred navigation radius, never smaller than the actual collision body.</summary>
     [DataField]
     public float Clearance = 0.28f;
+
+    /// <summary>Maximum distance of a local move to regain navigation clearance.</summary>
+    [DataField]
+    public float ClearanceRecoveryDistance = 1f;
+
+    /// <summary>Spacing of candidate rings for a short, collision-checked escape.</summary>
+    [DataField]
+    public float ClearanceRecoveryStep = 0.25f;
+
+    /// <summary>Arrival tolerance for the local escape, independent of normal route waypoints.</summary>
+    [DataField]
+    public float ClearanceRecoveryRange = 0.05f;
+
+    /// <summary>Time allowed for one short recovery movement before releasing its destination.</summary>
+    [DataField]
+    public TimeSpan ClearanceRecoveryTimeout = TimeSpan.FromSeconds(3);
+
+    /// <summary>Delay between bounded local probes when there is no safe escape.</summary>
+    [DataField]
+    public TimeSpan ClearanceRecoveryRetry = TimeSpan.FromSeconds(1);
+
+    [DataField, AutoPausedField]
+    public TimeSpan NextClearanceRecovery;
+
+    [DataField, AutoPausedField]
+    public TimeSpan ClearanceRecoveryDeadline;
+
+    [ViewVariables]
+    public ShipRepairClearanceState ClearanceState;
+
+    [ViewVariables]
+    public ShipRepairNavigationIssue NavigationIssue;
+
+    public Vector2 ClearanceDestination;
 
     [DataField]
     public int PathNodeLimit = 8192;
@@ -159,6 +193,24 @@ public sealed partial class ShipRepairDroneComponent : Component
     public readonly HashSet<EntityUid> BlockedDoors = new();
     public int EjectRing = 1;
     public PhysShapeCircle? ClearanceShape;
+    public PhysShapeCircle? RecoveryShape;
+    public PhysShapeCircle? RecoveryDestinationShape;
+}
+
+public enum ShipRepairClearanceState : byte
+{
+    None,
+    Moving,
+    WaitingForSpace,
+}
+
+public enum ShipRepairNavigationIssue : byte
+{
+    None,
+    InsufficientClearance,
+    StartBlocked,
+    RecoveryBlocked,
+    RecoveryTimedOut,
 }
 
 /// <summary>Incremental grid-relative A* state; no work is performed in the component.</summary>

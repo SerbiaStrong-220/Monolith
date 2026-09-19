@@ -120,6 +120,7 @@ public sealed partial class ShipRepairDroneSystem
             Tiles = region,
             FromTarget = fromTarget,
             Clearance = ent.Comp.Clearance,
+            BodyRadius = GetDroneBodyRadius(ent),
             RepairRange = ent.Comp.RepairRange,
             RepairRadius = ent.Comp.RepairRadius,
             ExteriorMargin = ent.Comp.ExteriorMargin,
@@ -132,9 +133,11 @@ public sealed partial class ShipRepairDroneSystem
         if (ent.Comp.CanPhase || queue.Unreachable.Count == 0 || !_mapGridQuery.TryGetComponent(grid, out var mapGrid))
             return false;
         var tile = _map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, position));
+        var bodyRadius = GetDroneBodyRadius(ent);
         foreach (var region in queue.Unreachable)
         {
             if (region.Target != work.Target || region.Clearance != ent.Comp.Clearance ||
+                region.BodyRadius != bodyRadius ||
                 region.RepairRange != ent.Comp.RepairRange || region.RepairRadius != ent.Comp.RepairRadius ||
                 region.ExteriorMargin != ent.Comp.ExteriorMargin ||
                 region.Tiles.Contains(tile) == region.FromTarget)

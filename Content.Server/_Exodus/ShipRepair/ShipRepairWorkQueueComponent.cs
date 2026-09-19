@@ -47,6 +47,7 @@ public sealed class ShipRepairUnreachableRegion
     public required HashSet<Vector2i> Tiles;
     public bool FromTarget;
     public float Clearance;
+    public float BodyRadius;
     public float RepairRange;
     public int RepairRadius;
     public float ExteriorMargin;
