@@ -61,6 +61,11 @@ entities:
       name: ВЭФ | Оборонительная платформа
     - type: Transform
       parent: invalid
+    - type: InitRepairSnapshot
+    - type: ShipRepairRestrict
+      toolWhitelist:
+        tags:
+        - ADSRepairTool
     - type: NpcFactionMember
       factions:
       - AsakimDefenceForces
