@@ -54,6 +54,7 @@ public sealed partial class ShipRepairDroneSystem
         ent.Comp.Path.Clear();
         ent.Comp.PathIndex = 0;
         ent.Comp.Search = null;
+        ent.Comp.ClearingRoute = false;
         ent.Comp.Settling = false;
         ent.Comp.BestWaypointDistance = float.PositiveInfinity;
         ent.Comp.ProgressDeadline = _timing.CurTime + ent.Comp.StuckTimeout;
@@ -69,30 +70,36 @@ public sealed partial class ShipRepairDroneSystem
         };
         var center = work.Target.Tile;
         var approachRadius = Math.Max(1, ent.Comp.RepairRadius + 1);
-        for (var y = -approachRadius; y <= approachRadius; y++)
-        for (var x = -approachRadius; x <= approachRadius; x++)
+        // Prefer existing free positions. A foam-covered room may require clearing a work position
+        // first; even a phase drone must approach that position physically to dismantle the foam.
+        for (var pass = 0; pass < 2 && search.Goals.Count == 0; pass++)
         {
-            // Stay beside the target: never reconstruct a wall around our own body.
-            if (x == 0 && y == 0 && !work.Underfloor)
-                continue;
-            var tile = center + new Vector2i(x, y);
-            var point = _map.TileCenterToVector(grid, mapGrid, tile);
-            if (!IsWorkPositionAvailable(ent, queue, tile, point))
+            for (var y = -approachRadius; y <= approachRadius; y++)
+            for (var x = -approachRadius; x <= approachRadius; x++)
             {
-                search.TransientObstruction = true;
-                continue;
+                // Stay beside the target: never reconstruct a wall around our own body.
+                if (x == 0 && y == 0 && !work.Underfloor)
+                    continue;
+                var tile = center + new Vector2i(x, y);
+                var point = _map.TileCenterToVector(grid, mapGrid, tile);
+                if (!IsWorkPositionAvailable(ent, queue, tile, point))
+                {
+                    search.TransientObstruction = true;
+                    continue;
+                }
+                if (!search.Bounds.Contains(point) || !IsClear(ent, grid, point, search, allowClearables: pass > 0) ||
+                    !CanReachWork(ent, grid, work, point, search))
+                    continue;
+                search.Goals.Add(tile);
+                search.Reverse.Costs[tile] = 0f;
+                search.Reverse.Open.Enqueue(tile, 0f);
             }
-            if (!search.Bounds.Contains(point) || !IsClear(ent, grid, point, search) ||
-                !CanReachWork(ent, grid, work, point, search))
-                continue;
-            search.Goals.Add(tile);
-            search.Reverse.Costs[tile] = 0f;
-            search.Reverse.Open.Enqueue(tile, 0f);
+            ent.Comp.ClearingRoute = pass > 0 && search.Goals.Count > 0;
         }
         if (search.Goals.Count == 0 || !search.Bounds.Contains(position))
             return false;
 
-        if (ent.Comp.CanPhase)
+        if (ent.Comp.CanPhase && !ent.Comp.ClearingRoute)
         {
             var best = start;
             var distance = float.MaxValue;
@@ -154,7 +161,7 @@ public sealed partial class ShipRepairDroneSystem
     private bool HasReachedWaypoint(Entity<ShipRepairDroneComponent> ent, TransformComponent xform)
     {
         if (!ent.Comp.Enabled || ent.Comp.WaitingForShip || ent.Comp.Settling || ent.Comp.Search != null ||
-            ent.Comp.RepairDoAfter != null || ent.Comp.PryDoAfter != null ||
+            ent.Comp.RepairDoAfter != null || ent.Comp.PryDoAfter != null || ent.Comp.ClearDoAfter != null ||
             ent.Comp.PathIndex >= ent.Comp.Path.Count || ent.Comp.Grid is not { } grid ||
             TerminatingOrDeleted(grid) || !_xformQuery.TryGetComponent(grid, out var gridXform) ||
             xform.MapID != gridXform.MapID)
@@ -274,7 +281,7 @@ public sealed partial class ShipRepairDroneSystem
             Repath(ent, tool, grid, queue);
             return;
         }
-        if (ent.Comp.CanPhase)
+        if (ent.Comp.CanPhase && !ent.Comp.ClearingRoute)
         {
             if (!IsSegmentClear(ent, grid, position, next, false, out _))
                 EnterPhase(ent);
@@ -289,6 +296,12 @@ public sealed partial class ShipRepairDroneSystem
         else if (door is { } doorUid)
         {
             StopMoving(ent);
+            if (CanDroneClear(ent, grid, doorUid))
+            {
+                if (!TryStartClearance(ent, grid, queue, doorUid, forReplacement: false))
+                    Repath(ent, tool, grid, queue);
+                return;
+            }
             if (!HandleDoor(ent, doorUid))
             {
                 ent.Comp.BlockedDoors.Add(doorUid);
@@ -348,7 +361,8 @@ public sealed partial class ShipRepairDroneSystem
             ent.Comp.FailedPositions[tile] = _timing.CurTime + ent.Comp.RetryInterval;
         if (ent.Comp.Yielding || ++ent.Comp.Repaths > ent.Comp.RepathLimit || ent.Comp.Target is not { } target ||
             !_snapshotQuery.TryGetComponent(grid, out var data) ||
-            !_repair.TryPlanRepair(tool, (grid, data), target, true, out var work, checkMobileObstructions: false) ||
+            !_repair.TryPlanRepair(tool, (grid, data), target, true, out var work, checkMobileObstructions: false,
+                allowClearables: true) ||
             !StartNavigation(ent, (grid, data), queue, work))
             FailJob(ent);
     }
@@ -478,14 +492,15 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private bool IsClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 position,
-        ShipRepairPathSearch? search = null)
+        ShipRepairPathSearch? search = null, bool allowClearables = false)
     {
         var map = _transform.ToMapCoordinates(new EntityCoordinates(grid, position));
-        return IsWorldClear(ent, map, search, grid);
+        return IsWorldClear(ent, map, search, grid, allowClearables: allowClearables);
     }
 
     private bool IsWorldClear(Entity<ShipRepairDroneComponent> ent, MapCoordinates position,
-        ShipRepairPathSearch? search = null, EntityUid? grid = null, PhysShapeCircle? shape = null)
+        ShipRepairPathSearch? search = null, EntityUid? grid = null, PhysShapeCircle? shape = null,
+        bool allowClearables = false)
     {
         var clearance = shape ?? GetNavigationShape(ent);
         _intersections.Clear();
@@ -493,6 +508,8 @@ public sealed partial class ShipRepairDroneSystem
             _intersections, LookupFlags.Static | LookupFlags.Dynamic);
         foreach (var uid in _intersections)
         {
+            if (allowClearables && grid is { } owner && CanDroneClear(ent, owner, uid))
+                continue;
             if (BlocksDrone(ent, uid))
             {
                 TrackSearchObstruction(search, grid, uid);
@@ -506,6 +523,7 @@ public sealed partial class ShipRepairDroneSystem
         bool allowDoors, out EntityUid? door, ShipRepairPathSearch? search = null, bool recovering = false)
     {
         door = null;
+        var obstacleDistance = float.PositiveInfinity;
         var from = _transform.ToMapCoordinates(new EntityCoordinates(grid, start));
         var to = _transform.ToMapCoordinates(new EntityCoordinates(grid, end));
         var delta = to.Position - from.Position;
@@ -531,6 +549,18 @@ public sealed partial class ShipRepairDroneSystem
             if (!BlocksDrone(ent, uid))
                 continue;
             TrackSearchObstruction(search, grid, uid);
+            if (allowDoors && CanDroneClear(ent, grid, uid))
+            {
+                if (search != null)
+                    search.TransientObstruction = true;
+                var foamDistance = Vector2.DistanceSquared(from.Position, _transform.GetWorldPosition(uid));
+                if (foamDistance < obstacleDistance)
+                {
+                    obstacleDistance = foamDistance;
+                    door = uid;
+                }
+                continue;
+            }
             if (!allowDoors || !TryComp<DoorComponent>(uid, out var blockedDoor))
                 return false;
 
@@ -545,7 +575,12 @@ public sealed partial class ShipRepairDroneSystem
                 if (canPry.Cancelled)
                     return false;
             }
-            door ??= uid;
+            var distance = Vector2.DistanceSquared(from.Position, _transform.GetWorldPosition(uid));
+            if (distance < obstacleDistance)
+            {
+                obstacleDistance = distance;
+                door = uid;
+            }
         }
         return true;
     }

@@ -22,6 +22,7 @@ ship-repair-station-status-docked = At base, awaiting orders
 ship-repair-station-status-idle = Awaiting orders
 ship-repair-station-status-searching = Looking for accessible work
 ship-repair-station-status-pathfinding = Finding a path
+ship-repair-station-status-clearing = Clearing an obstruction
 ship-repair-station-status-moving = Moving to repair
 ship-repair-station-status-repairing = Repairing
 ship-repair-station-status-prying = Prying a door

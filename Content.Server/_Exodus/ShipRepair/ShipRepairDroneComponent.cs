@@ -182,6 +182,18 @@ public sealed partial class ShipRepairDroneComponent : Component
     public EntityCoordinates? LastSafePosition;
     public DoAfterId? RepairDoAfter;
     public DoAfterId? PryDoAfter;
+    public DoAfterId? ClearDoAfter;
+    public EntityUid? ClearTarget;
+    public bool ClearForReplacement;
+    public Vector2 ClearSettlePosition;
+    [AutoPausedField]
+    public TimeSpan ClearSettleTime;
+    /// <summary>Temporary obstructions reserved until the current job ends.</summary>
+    public readonly HashSet<EntityUid> ClearableReservations = new();
+    /// <summary>Dismantling is finished, but a hull patch remains until its replacement is ready.</summary>
+    public readonly HashSet<EntityUid> PreparedClearables = new();
+    /// <summary>Use a walking route when every work position must first be cleared of foam.</summary>
+    public bool ClearingRoute;
     /// <summary>The door being opened, so another drone opening it can interrupt our pry.</summary>
     public EntityUid? PryTarget;
     public ShipRepairTarget? Target;

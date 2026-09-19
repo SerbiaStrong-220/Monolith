@@ -31,6 +31,8 @@ public sealed partial class ShipRepairDroneSystem
         }
         if (TryDockReturnedDrone(ent))
             return;
+        if (ent.Comp.ClearDoAfter != null)
+            return;
         if (ent.Comp.PryDoAfter == null && UpdateClearanceRecovery(ent, grid, queue, xform))
             return;
         if (ent.Comp.Search == null && ent.Comp.Path.Count == 0)

@@ -6,6 +6,7 @@ using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Repairable;
+using Content.Shared.RCD.Components;
 using Content.Shared.SubFloor;
 using Content.Shared.Wall;
 using Robust.Shared.Map;
@@ -32,6 +33,9 @@ public abstract partial class SharedShipRepairSystem
     private EntityQuery<MetaDataComponent> _repairMetadataQuery;
     private EntityQuery<WallMountComponent> _repairWallMountQuery;
     private readonly HashSet<EntityUid> _repairObstructions = new();
+    private readonly HashSet<EntityUid> _quotedClearables = new();
+    private EntityQuery<ShipRepairClearableComponent> _repairClearableQuery;
+    private EntityQuery<RCDDeconstructableComponent> _repairDeconstructableQuery;
 
     private void InitRepairPlans()
     {
@@ -46,6 +50,8 @@ public abstract partial class SharedShipRepairSystem
         _repairableQuery = GetEntityQuery<ShipRepairableComponent>();
         _repairMetadataQuery = GetEntityQuery<MetaDataComponent>();
         _repairWallMountQuery = GetEntityQuery<WallMountComponent>();
+        _repairClearableQuery = GetEntityQuery<ShipRepairClearableComponent>();
+        _repairDeconstructableQuery = GetEntityQuery<RCDDeconstructableComponent>();
     }
 
     /// <summary>Both whole-grid and individual prototype restrictions apply to every operation.</summary>
@@ -97,7 +103,7 @@ public abstract partial class SharedShipRepairSystem
     /// </summary>
     public bool TryPlanRepair(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
         ShipRepairTarget target, bool healDamage, out ShipRepairWork work, bool checkMobileObstructions = true,
-        bool checkTileSupport = true)
+        bool checkTileSupport = true, bool allowClearables = false)
     {
         work = default!;
         if (!CanRepairGrid(tool, grid) || !_repairGridQuery.TryGetComponent(grid, out var mapGrid) ||
@@ -159,8 +165,10 @@ public abstract partial class SharedShipRepairSystem
         if (original != null && TerminatingOrDeleted(original))
             original = null;
 
+        _quotedClearables.Clear();
         if (operation == ShipRepairOperation.Restore &&
-            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, checkMobileObstructions))
+            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, checkMobileObstructions,
+                allowClearables ? _quotedClearables : null, collectClearables: allowClearables))
             return false;
 
         prototype.TryGetComponent<WallMountComponent>(out var wallMount, Factory);
@@ -179,6 +187,7 @@ public abstract partial class SharedShipRepairSystem
             Underfloor = prototype.HasComponent<SubFloorHideComponent>(Factory),
             WallMountArc = wallMount?.Arc,
             WallMountDirection = wallMount?.Direction ?? Angle.Zero,
+            Clearables = _quotedClearables.Count > 0 ? new HashSet<EntityUid>(_quotedClearables) : null,
         };
         return true;
     }
@@ -188,7 +197,8 @@ public abstract partial class SharedShipRepairSystem
     /// A radius of one is 3x3. Callers may filter accessibility and reservations before starting their DoAfter.
     /// </summary>
     public void PlanRepairArea(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
-        Vector2i center, int radius, bool healDamage, ShipRepairPlan plan, bool checkMobileObstructions = true)
+        Vector2i center, int radius, bool healDamage, ShipRepairPlan plan, bool checkMobileObstructions = true,
+        bool allowClearables = false)
     {
         if (plan.Grid != grid.Owner || plan.Revision != grid.Comp.Revision || radius < 0 ||
             !TryComp<MapGridComponent>(grid, out var mapGrid))
@@ -211,7 +221,8 @@ public abstract partial class SharedShipRepairSystem
                         new EntityCoordinates(grid, spec.LocalPosition)) != tile)
                     continue;
 
-                if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile, id), healDamage, out var entity, checkMobileObstructions))
+                if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile, id), healDamage, out var entity,
+                        checkMobileObstructions, allowClearables: allowClearables))
                     plan.Work.Add(entity);
             }
         }
@@ -231,13 +242,19 @@ public abstract partial class SharedShipRepairSystem
     /// Charge consumption belongs here, so partially invalidated batches never charge for skipped work.
     /// </summary>
     public bool TryCompleteRepair(Entity<ShipRepairToolComponent> tool, EntityUid user,
-        ShipRepairPlan plan, ShipRepairWork work)
+        ShipRepairPlan plan, ShipRepairWork work, bool clearObstructions = false)
     {
         if (!_net.IsServer || !TryComp<ShipRepairDataComponent>(plan.Grid, out var data) ||
             data.Revision != plan.Revision || !CanRepairGrid(tool, plan.Grid) ||
             _charges.HasInsufficientCharges(tool, work.Cost) ||
-            !TryPlanRepair(tool, (plan.Grid, data), work.Target, work.Operation == ShipRepairOperation.Heal, out var current) ||
+            !TryPlanRepair(tool, (plan.Grid, data), work.Target, work.Operation == ShipRepairOperation.Heal, out var current,
+                allowClearables: clearObstructions) ||
             current.Operation != work.Operation || current.Original != work.Original)
+            return false;
+
+        // Never remove an obstruction which appeared after the dismantling work was quoted.
+        if (current.Clearables is { } remainingClearables &&
+            (work.Clearables == null || !remainingClearables.IsSubsetOf(work.Clearables)))
             return false;
 
         switch (work.Operation)
@@ -251,7 +268,7 @@ public abstract partial class SharedShipRepairSystem
                     !chunk.Entities.TryGetValue(id, out var spec) ||
                     NeedsSnapshotRepair((plan.Grid, data), new ShipRepairTarget(work.Target.Tile)))
                     return false;
-                if (!TryRestoreSnapshotEntity(tool, (plan.Grid, data), work.Target.Tile, id, spec))
+                if (!TryRestoreSnapshotEntity(tool, (plan.Grid, data), work.Target.Tile, id, spec, current.Clearables))
                     return false;
                 break;
             case ShipRepairOperation.Heal:
@@ -327,7 +344,8 @@ public abstract partial class SharedShipRepairSystem
     }
 
     private bool IsRepairPositionOccupied(Entity<ShipRepairDataComponent> grid, ShipRepairChunk chunk, int id,
-        ShipRepairEntitySpecifier spec, EntityPrototype prototype, bool checkMobileObstructions)
+        ShipRepairEntitySpecifier spec, EntityPrototype prototype, bool checkMobileObstructions,
+        HashSet<EntityUid>? clearables = null, bool collectClearables = false)
     {
         if (!TryComp<MapGridComponent>(grid, out var mapGrid))
             return true;
@@ -354,8 +372,16 @@ public abstract partial class SharedShipRepairSystem
                 continue;
             foreach (var fixture in fixtures.Fixtures.Values)
             {
-                if (RepairFixtureIntersectsBody(fixture, placement, uid, other))
-                    return true;
+                if (!RepairFixtureIntersectsBody(fixture, placement, uid, other))
+                    continue;
+                if (clearables != null && IsClearableRepairObject(grid, uid) && !_repairSnapshotOccupants.ContainsKey(uid))
+                {
+                    if (collectClearables)
+                        clearables.Add(uid);
+                    if (clearables.Contains(uid))
+                        break;
+                }
+                return true;
             }
         }
 
@@ -420,25 +446,32 @@ public abstract partial class SharedShipRepairSystem
 
     /// <summary>Shared publication path for both handheld and automated reconstruction.</summary>
     private bool TryRestoreSnapshotEntity(EntityUid tool, Entity<ShipRepairDataComponent> grid, Vector2i tile, int id,
-        ShipRepairEntitySpecifier spec)
+        ShipRepairEntitySpecifier spec, HashSet<EntityUid>? clearables = null)
     {
         var revision = grid.Comp.Revision;
         if (!CanRepairGrid(tool, grid) || !TryGetChunk(grid.Comp, tile, out var chunk) ||
             !chunk.Entities.TryGetValue(id, out var current) || !ReferenceEquals(current, spec) ||
             !TryGetRepairPrototype(tool, grid.Comp, spec, out var prototype, out _) ||
-            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true) ||
+            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true, clearables) ||
             !TryMoveRepairDebris(grid, tile, chunk, spec, prototype))
             return false;
 
         // Unanchoring and moving a remnant raises events; recheck before publishing a new entity.
         if (!CanRepairGrid(tool, grid) || grid.Comp.Revision != revision ||
             !TryGetChunk(grid.Comp, tile, out chunk) || !chunk.Entities.TryGetValue(id, out current) ||
-            !ReferenceEquals(current, spec) || IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true))
+            !ReferenceEquals(current, spec) || IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true, clearables))
             return false;
 
         var spawned = Spawn(prototype.ID, new EntityCoordinates(grid, spec.LocalPosition));
         _transform.SetLocalRotation(spawned, spec.Rotation);
         spec.OriginalEntity = GetNetEntity(spawned);
+        // Publish the replacement before removing the temporary airtight patch. A failed preflight
+        // above leaves the patch intact; no demolition/repair gap is introduced between ticks.
+        if (clearables != null)
+        {
+            foreach (var uid in clearables)
+                TryQueueDel(uid);
+        }
         RaiseNetworkEvent(new RepairEntityMessage(GetNetEntity(grid), tile, id, spec, grid.Comp.Revision));
         return true;
     }

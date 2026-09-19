@@ -16,6 +16,7 @@ public sealed partial class ShipRepairWorkQueueComponent : Component
     public readonly Queue<ShipRepairTarget> Pending = new();
     public readonly HashSet<ShipRepairTarget> PendingSet = new();
     public readonly Dictionary<ShipRepairTarget, EntityUid> Reservations = new();
+    public readonly Dictionary<EntityUid, EntityUid> ClearableReservations = new();
 
     /// <summary>Destination cells reserved for repair or temporarily giving way.</summary>
     public readonly Dictionary<Vector2i, EntityUid> WorkPositions = new();

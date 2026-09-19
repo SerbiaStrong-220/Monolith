@@ -51,6 +51,7 @@ public enum ShipRepairDroneStatus : byte
     NoReturnPath,
     ExitBlocked,
     Pathfinding,
+    Clearing,
 }
 
 [Serializable, NetSerializable]

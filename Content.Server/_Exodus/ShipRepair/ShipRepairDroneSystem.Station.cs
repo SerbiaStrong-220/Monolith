@@ -338,6 +338,8 @@ public sealed partial class ShipRepairDroneSystem
             return ShipRepairDroneStatus.Docked;
         if (comp.WaitingForShip)
             return ShipRepairDroneStatus.WaitingForShip;
+        if (comp.ClearDoAfter != null)
+            return ShipRepairDroneStatus.Clearing;
         if (comp.RepairDoAfter != null)
             return ShipRepairDroneStatus.Repairing;
         if (comp.PryDoAfter != null)

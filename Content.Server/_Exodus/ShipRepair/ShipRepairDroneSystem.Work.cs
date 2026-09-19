@@ -43,6 +43,7 @@ public sealed partial class ShipRepairDroneSystem
                 queue.Pending.Clear();
                 queue.PendingSet.Clear();
                 queue.Reservations.Clear();
+                queue.ClearableReservations.Clear();
                 queue.WorkPositions.Clear();
                 InvalidateNavigation(uid);
                 queue.Chunks = data.Chunks.GetEnumerator();
@@ -156,7 +157,8 @@ public sealed partial class ShipRepairDroneSystem
             if (target.EntityId != null && ent.Comp.RepairRadius == 0 &&
                 _repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(target.Tile)) ||
                 ent.Comp.FailedTargets.TryGetValue(target, out var retry) && _timing.CurTime < retry ||
-                !_repair.TryPlanRepair(tool, grid, target, true, out var work, checkMobileObstructions: false))
+                !_repair.TryPlanRepair(tool, grid, target, true, out var work, checkMobileObstructions: false,
+                    allowClearables: true))
             {
                 EnqueueWork(queue, target);
                 continue;
@@ -199,7 +201,7 @@ public sealed partial class ShipRepairDroneSystem
     {
         plan = new ShipRepairPlan { Grid = grid.Owner, Revision = grid.Comp.Revision };
         _repair.PlanRepairArea(tool, grid, center, ent.Comp.RepairRadius, true, plan,
-            checkMobileObstructions: false);
+            checkMobileObstructions: false, allowClearables: true);
 
         for (var i = plan.Work.Count - 1; i >= 0; i--)
         {
@@ -252,7 +254,8 @@ public sealed partial class ShipRepairDroneSystem
         foreach (var item in claimed.Work)
         {
             if (queue.Reservations.TryGetValue(item.Target, out var owner) && owner == ent.Owner &&
-                _repair.TryPlanRepair(tool, grid, item.Target, true, out var current, checkTileSupport: false) &&
+                _repair.TryPlanRepair(tool, grid, item.Target, true, out var current, checkTileSupport: false,
+                    allowClearables: true) &&
                 CanReachWork(ent, grid, current))
                 _readyWork.Add(current);
         }
@@ -296,6 +299,9 @@ public sealed partial class ShipRepairDroneSystem
         ent.Comp.Plan = plan;
         foreach (var item in plan.Work)
             queue.Reservations[item.Target] = ent;
+
+        if (PrepareWorkClearance(ent, grid, queue, plan))
+            return;
 
         var duration = _repair.GetRepairDuration(plan, ent.Comp.RepairThroughput);
         var args = new DoAfterArgs(EntityManager, ent, duration,
@@ -343,10 +349,11 @@ public sealed partial class ShipRepairDroneSystem
         foreach (var work in plan.Work)
         {
             if (!queue.Reservations.TryGetValue(work.Target, out var owner) || owner != ent.Owner ||
-                !CanReachWork(ent, plan.Grid, work))
+                !CanReachWork(ent, plan.Grid, work, allowClearables: false) ||
+                !AreClearablesPrepared(ent, queue, work))
                 continue;
 
-            if (_repair.TryCompleteRepair((ent.Owner, tool), ent, plan, work))
+            if (_repair.TryCompleteRepair((ent.Owner, tool), ent, plan, work, clearObstructions: true))
             {
                 completed++;
                 ent.Comp.FailedTargets.Remove(work.Target);
@@ -367,7 +374,8 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private bool CanReachWork(Entity<ShipRepairDroneComponent> ent, EntityUid grid, ShipRepairWork work,
-        Vector2? localOrigin = null, ShipRepairPathSearch? search = null)
+        Vector2? localOrigin = null, ShipRepairPathSearch? search = null,
+        bool allowClearables = true, HashSet<EntityUid>? clearables = null)
     {
         var origin = localOrigin is { } point
             ? _transform.ToMapCoordinates(new EntityCoordinates(grid, point))
@@ -409,6 +417,12 @@ public sealed partial class ShipRepairDroneSystem
             (int) (CollisionGroup.Impassable | CollisionGroup.InteractImpassable));
         foreach (var hit in _physics.IntersectRay(origin.MapId, ray, rayLength, ent, returnOnFirstHit: false))
         {
+            if (CanDroneClear(ent, grid, hit.HitEntity) &&
+                (allowClearables || ent.Comp.PreparedClearables.Contains(hit.HitEntity)))
+            {
+                clearables?.Add(hit.HitEntity);
+                continue;
+            }
             if (hit.HitEntity == work.Original || work.WallMountArc == null &&
                 _repair.IsRepairSnapshotNeighbour(grid, work.Target, hit.HitEntity))
                 continue;
@@ -443,6 +457,7 @@ public sealed partial class ShipRepairDroneSystem
 
     private void CancelJob(Entity<ShipRepairDroneComponent> ent)
     {
+        CancelClearance(ent);
         ClearConstructionEffects(ent);
         // Clear IDs before cancellation, which can synchronously deliver completion events.
         var repair = ent.Comp.RepairDoAfter;

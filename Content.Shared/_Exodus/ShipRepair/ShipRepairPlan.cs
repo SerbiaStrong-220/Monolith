@@ -42,6 +42,9 @@ public sealed class ShipRepairWork
     public bool Underfloor;
     public Angle? WallMountArc;
     public Angle WallMountDirection;
+
+    /// <summary>Explicitly quoted temporary obstructions; kept until a replacement is published.</summary>
+    public HashSet<EntityUid>? Clearables;
 }
 
 /// <summary>

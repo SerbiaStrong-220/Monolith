@@ -175,6 +175,7 @@ public sealed class ShipRepairStationWindow : DefaultWindow
                 ShipRepairDroneStatus.Idle => "ship-repair-station-status-idle",
                 ShipRepairDroneStatus.Searching => "ship-repair-station-status-searching",
                 ShipRepairDroneStatus.Pathfinding => "ship-repair-station-status-pathfinding",
+                ShipRepairDroneStatus.Clearing => "ship-repair-station-status-clearing",
                 ShipRepairDroneStatus.Moving => "ship-repair-station-status-moving",
                 ShipRepairDroneStatus.Repairing => "ship-repair-station-status-repairing",
                 ShipRepairDroneStatus.Prying => "ship-repair-station-status-prying",

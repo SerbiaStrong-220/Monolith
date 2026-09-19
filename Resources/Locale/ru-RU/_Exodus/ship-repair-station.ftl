@@ -22,6 +22,7 @@ ship-repair-station-status-docked = На базе, ожидает приказа
 ship-repair-station-status-idle = Ожидает приказа
 ship-repair-station-status-searching = Ищет доступные работы
 ship-repair-station-status-pathfinding = Ищет путь
+ship-repair-station-status-clearing = Расчищает место
 ship-repair-station-status-moving = Идёт чинить
 ship-repair-station-status-repairing = Чинит
 ship-repair-station-status-prying = Вскрывает шлюз

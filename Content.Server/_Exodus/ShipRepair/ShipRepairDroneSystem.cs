@@ -66,6 +66,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         _stationQuery = GetEntityQuery<ShipRepairStationComponent>();
         InitializeReachability();
         InitializeStations();
+        InitializeClearing();
 
         SubscribeLocalEvent<ShipRepairDroneComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ShipRepairDroneComponent, ComponentShutdown>(OnShutdown);
@@ -138,6 +139,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         var key = IsDisabledBody(ent) ? "ship-repair-drone-status-destroyed" :
             !ent.Comp.Enabled ? "ship-repair-drone-status-off" :
             ent.Comp.WaitingForShip ? "ship-repair-drone-status-waiting" :
+            ent.Comp.ClearDoAfter != null ? "ship-repair-station-status-clearing" :
             ent.Comp.RepairDoAfter != null ? "ship-repair-drone-status-repairing" : "ship-repair-drone-status-active";
         args.PushMarkup(Loc.GetString(key));
         if (!ent.Comp.Enabled && !IsDisabledBody(ent))
@@ -149,7 +151,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         var state = IsDisabledBody(ent) ? ShipRepairDroneState.Dead :
             ent.Comp.Phased ? ShipRepairDroneState.Phased :
             !ent.Comp.Enabled ? ShipRepairDroneState.Off :
-            ent.Comp.RepairDoAfter != null ? ShipRepairDroneState.Repairing : ShipRepairDroneState.Idle;
+            ent.Comp.RepairDoAfter != null || ent.Comp.ClearDoAfter != null ? ShipRepairDroneState.Repairing : ShipRepairDroneState.Idle;
         _appearance.SetData(ent, ShipRepairDroneVisuals.State, state);
     }
 
@@ -247,7 +249,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             }
 
             drone.WaitingForShip = false;
-            if (drone.RepairDoAfter != null)
+            if (drone.RepairDoAfter != null || drone.ClearDoAfter != null)
                 continue;
 
             if (drone.PryDoAfter == null && UpdateClearanceRecovery(ent, grid, queue, xform))
