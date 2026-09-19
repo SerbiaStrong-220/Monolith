@@ -100,7 +100,7 @@
     - TSFMC
   - type: ShipRepairDrone
     repairRadius: 1
-    repairThroughput: 1.2
+    repairThroughput: 1.8
 
 - type: entity
   parent: MobShipRepairDroneFleetTSF

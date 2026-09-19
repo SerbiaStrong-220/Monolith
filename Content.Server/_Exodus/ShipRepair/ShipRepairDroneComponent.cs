@@ -16,7 +16,7 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField]
     public int RepairRadius;
 
-    /// <summary>Actual work time is divided by this value. Fleet drones use 1.2.</summary>
+    /// <summary>Actual work time is divided by this value.</summary>
     [DataField]
     public float RepairThroughput = 1f;
 
@@ -55,6 +55,22 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField]
     public TimeSpan StuckTimeout = TimeSpan.FromSeconds(5);
 
+    /// <summary>Hard limit on travel/search for one job, independent of route retries.</summary>
+    [DataField]
+    public TimeSpan NavigationTimeout = TimeSpan.FromMinutes(2);
+
+    /// <summary>Maximum number of alternate approaches before releasing the job.</summary>
+    [DataField]
+    public int RepathLimit = 2;
+
+    /// <summary>Shared waypoint arrival tolerance for navigation and steering.</summary>
+    [DataField]
+    public float ArrivalRange = 0.2f;
+
+    /// <summary>Maximum motion relative to the serviced grid before starting repair.</summary>
+    [DataField]
+    public float RepairSpeedLimit = 0.1f;
+
     [DataField]
     public ProtoId<SinkPortPrototype> OnPort = "On";
 
@@ -89,7 +105,22 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField, AutoPausedField]
     public TimeSpan ProgressDeadline;
 
-    public Vector2 LastPosition;
+    [DataField, AutoPausedField]
+    public TimeSpan NavigationDeadline;
+
+    [DataField, AutoPausedField]
+    public TimeSpan SettleTime;
+
+    /// <summary>Limits repeated attempts to find a free place when asked to yield.</summary>
+    [DataField, AutoPausedField]
+    public TimeSpan NextYield;
+
+    public Vector2 SettlePosition;
+    public bool Settling;
+    public float BestWaypointDistance = float.PositiveInfinity;
+    public int Repaths;
+    public Vector2i? WorkTile;
+    public bool Yielding;
     public EntityCoordinates? LastSafePosition;
     public DoAfterId? RepairDoAfter;
     public DoAfterId? PryDoAfter;
@@ -106,6 +137,10 @@ public sealed partial class ShipRepairDroneComponent : Component
     /// <summary>Transient retry deadlines; pause handling preserves the remaining delay.</summary>
     [AutoPausedField]
     public readonly Dictionary<ShipRepairTarget, TimeSpan> FailedTargets = new();
+
+    /// <summary>Recently failed approaches are not immediately selected again.</summary>
+    [AutoPausedField]
+    public readonly Dictionary<Vector2i, TimeSpan> FailedPositions = new();
     public readonly HashSet<EntityUid> BlockedDoors = new();
     public int EjectRing = 1;
     public PhysShapeCircle? ClearanceShape;

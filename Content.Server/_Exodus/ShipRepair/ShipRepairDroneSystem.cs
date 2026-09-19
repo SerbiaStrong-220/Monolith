@@ -1,4 +1,5 @@
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair;
@@ -51,6 +52,8 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     private EntityQuery<DeviceLinkSinkComponent> _sinkQuery;
     private EntityQuery<ShipRepairDataComponent> _snapshotQuery;
     private EntityQuery<MapGridComponent> _mapGridQuery;
+    private EntityQuery<ShipRepairDroneComponent> _droneQuery;
+    private EntityQuery<NPCSteeringComponent> _steeringQuery;
 
     public override void Initialize()
     {
@@ -64,6 +67,8 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         _sinkQuery = GetEntityQuery<DeviceLinkSinkComponent>();
         _snapshotQuery = GetEntityQuery<ShipRepairDataComponent>();
         _mapGridQuery = GetEntityQuery<MapGridComponent>();
+        _droneQuery = GetEntityQuery<ShipRepairDroneComponent>();
+        _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
 
         SubscribeLocalEvent<ShipRepairDroneComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ShipRepairDroneComponent, ComponentShutdown>(OnShutdown);
@@ -136,6 +141,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         ent.Comp.NextUpdate = _timing.CurTime;
         ent.Comp.NextSearch = _timing.CurTime;
         ent.Comp.FailedTargets.Clear();
+        ent.Comp.FailedPositions.Clear();
         EnsureComp<ShipRepairWorkQueueComponent>(grid).Drones.Add(ent);
         SetVisual(ent);
         return true;
@@ -152,6 +158,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         ent.Comp.Grid = null;
         ent.Comp.WaitingForShip = false;
         ent.Comp.FailedTargets.Clear();
+        ent.Comp.FailedPositions.Clear();
         if (!TerminatingOrDeleted(ent))
         {
             TryLeavePhase(ent, eject: true);
@@ -218,13 +225,21 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         var query = EntityQueryEnumerator<ShipRepairDroneComponent, ShipRepairToolComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var drone, out var tool, out var xform))
         {
-            if (_timing.CurTime < drone.NextUpdate)
-                continue;
-            drone.NextUpdate += drone.UpdateInterval;
-            if (drone.NextUpdate < _timing.CurTime)
-                drone.NextUpdate = _timing.CurTime + drone.UpdateInterval;
-
             var ent = new Entity<ShipRepairDroneComponent>(uid, drone);
+            if (_timing.CurTime < drone.NextUpdate)
+            {
+                // Hand off a reached waypoint before steering brakes or turns back towards it.
+                // Keep periodic work on its existing schedule; only this distance check runs every tick.
+                if (!HasReachedWaypoint(ent, xform))
+                    continue;
+            }
+            else
+            {
+                drone.NextUpdate += drone.UpdateInterval;
+                if (drone.NextUpdate < _timing.CurTime)
+                    drone.NextUpdate = _timing.CurTime + drone.UpdateInterval;
+            }
+
             if (!drone.Enabled)
             {
                 if (drone.Phased)
@@ -245,6 +260,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
                 CancelJob(ent);
                 drone.Revision = data.Revision;
                 drone.FailedTargets.Clear();
+                drone.FailedPositions.Clear();
             }
 
             if (!_queueQuery.TryGetComponent(grid, out var queue) || !queue.Indexed)
@@ -265,7 +281,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             if (drone.RepairDoAfter != null)
                 continue;
 
-            if (drone.Target == null)
+            if (drone.Target == null && !drone.Yielding)
             {
                 if (!TryLeavePhase(ent, eject: true))
                     continue;

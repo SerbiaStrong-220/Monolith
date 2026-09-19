@@ -11,6 +11,9 @@ namespace Content.Server._Exodus.ShipRepair;
 
 public sealed partial class ShipRepairDroneSystem
 {
+    // Scratch space for rechecking a batch while a mobile obstruction is leaving.
+    private readonly List<ShipRepairWork> _readyWork = new();
+
     private void UpdateQueues()
     {
         var activeQueues = 0;
@@ -34,6 +37,7 @@ public sealed partial class ShipRepairDroneSystem
                 queue.Pending.Clear();
                 queue.PendingSet.Clear();
                 queue.Reservations.Clear();
+                queue.WorkPositions.Clear();
                 queue.Chunks = data.Chunks.GetEnumerator();
                 queue.Chunk = null;
                 queue.Indexed = false;
@@ -122,6 +126,9 @@ public sealed partial class ShipRepairDroneSystem
     private void TryChooseJob(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairToolComponent> tool,
         Entity<ShipRepairDataComponent> grid, ShipRepairWorkQueueComponent queue)
     {
+        var position = _transform.ToCoordinates(grid.Owner, _transform.GetMapCoordinates(ent)).Position;
+        ShipRepairWork? selected = null;
+        var bestDistance = float.PositiveInfinity;
         var attempts = Math.Min(24, queue.Pending.Count);
         for (var i = 0; i < attempts; i++)
         {
@@ -133,50 +140,129 @@ public sealed partial class ShipRepairDroneSystem
             if (target.EntityId != null && ent.Comp.RepairRadius == 0 &&
                 _repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(target.Tile)) ||
                 ent.Comp.FailedTargets.TryGetValue(target, out var retry) && _timing.CurTime < retry ||
-                !_repair.TryPlanRepair(tool, grid, target, true, out var work))
+                !_repair.TryPlanRepair(tool, grid, target, true, out var work, checkMobileObstructions: false))
             {
-                queue.Pending.Enqueue(target);
-                queue.PendingSet.Add(target);
+                EnqueueWork(queue, target);
                 continue;
             }
 
-            ent.Comp.Target = target;
-            queue.Reservations[target] = ent;
-            ent.Comp.BlockedDoors.Clear();
-            if (!StartNavigation(ent, grid, queue, work))
-                FailJob(ent);
+            if (work.Operation == ShipRepairOperation.Restore &&
+                queue.WorkPositions.TryGetValue(target.Tile, out var worker) && worker != ent.Owner)
+            {
+                EnqueueWork(queue, target);
+                continue;
+            }
+
+            var distance = Vector2.DistanceSquared(position, work.Position);
+            if (distance >= bestDistance)
+            {
+                EnqueueWork(queue, target);
+                continue;
+            }
+            if (selected != null)
+                EnqueueWork(queue, selected.Target);
+            selected = work;
+            bestDistance = distance;
+        }
+
+        if (selected == null)
+            return;
+
+        CancelJob(ent);
+        var plan = new ShipRepairPlan { Grid = grid.Owner, Revision = grid.Comp.Revision };
+        if (ent.Comp.RepairRadius > 0)
+            _repair.PlanRepairArea(tool, grid, selected.Target.Tile, ent.Comp.RepairRadius, true, plan,
+                checkMobileObstructions: false);
+        else
+            plan.Work.Add(selected);
+
+        var includesSelected = false;
+        for (var i = plan.Work.Count - 1; i >= 0; i--)
+        {
+            var item = plan.Work[i];
+            if (queue.Reservations.ContainsKey(item.Target) ||
+                ent.Comp.FailedTargets.TryGetValue(item.Target, out var retry) && _timing.CurTime < retry ||
+                item.Operation == ShipRepairOperation.Restore &&
+                queue.WorkPositions.TryGetValue(item.Target.Tile, out var worker) && worker != ent.Owner ||
+                item.Operation == ShipRepairOperation.Restore &&
+                _repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(item.Target.Tile)) &&
+                queue.Reservations.ContainsKey(new ShipRepairTarget(item.Target.Tile)))
+                plan.Work.RemoveAt(i);
+            else if (item.Target == selected.Target)
+                includesSelected = true;
+        }
+
+        if (plan.Work.Count == 0)
+        {
+            EnqueueWork(queue, selected.Target);
             return;
         }
+
+        if (!includesSelected)
+        {
+            EnqueueWork(queue, selected.Target);
+            selected = plan.Work[0];
+        }
+        ent.Comp.Target = selected.Target;
+        ent.Comp.Plan = plan;
+        ent.Comp.NavigationDeadline = _timing.CurTime + ent.Comp.NavigationTimeout;
+        ent.Comp.Repaths = 0;
+        ent.Comp.BlockedDoors.Clear();
+        // Reserve the actual batch before travelling, not after another drone has started approaching it.
+        foreach (var item in plan.Work)
+            queue.Reservations[item.Target] = ent;
+        if (!StartNavigation(ent, grid, queue, selected))
+            FailJob(ent);
     }
 
     private void StartRepair(Entity<ShipRepairDroneComponent> ent, Entity<ShipRepairToolComponent> tool,
         Entity<ShipRepairDataComponent> grid, ShipRepairWorkQueueComponent queue)
     {
-        if (ent.Comp.Target is not { } target || ent.Comp.Phased)
+        if (ent.Comp.Plan is not { } claimed || ent.Comp.Phased)
+            return;
+
+        _readyWork.Clear();
+        foreach (var item in claimed.Work)
+        {
+            if (queue.Reservations.TryGetValue(item.Target, out var owner) && owner == ent.Owner &&
+                _repair.TryPlanRepair(tool, grid, item.Target, true, out var current) &&
+                CanReachWork(ent, grid, current))
+                _readyWork.Add(current);
+        }
+
+        if (_readyWork.Count < claimed.Work.Count)
+            AskObstructingDronesToYield(ent, grid, queue, claimed);
+
+        // Let a yielding drone leave before giving up. The navigation watchdog bounds this wait.
+        if (_readyWork.Count == 0)
+            return;
+
+        // Do not spend a cycle rebuilding a machine whose prerequisite floor belongs to another cycle.
+        for (var i = _readyWork.Count - 1; i >= 0; i--)
+        {
+            var item = _readyWork[i];
+            if (item.Operation != ShipRepairOperation.Restore ||
+                !_repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(item.Target.Tile)))
+                continue;
+            var hasFloor = false;
+            foreach (var floor in _readyWork)
+            {
+                if (floor.Operation == ShipRepairOperation.Tile && floor.Target.Tile == item.Target.Tile)
+                {
+                    hasFloor = true;
+                    break;
+                }
+            }
+            if (!hasFloor)
+                _readyWork.RemoveAt(i);
+        }
+        if (_readyWork.Count == 0)
             return;
 
         var plan = new ShipRepairPlan { Grid = grid.Owner, Revision = grid.Comp.Revision };
-        if (ent.Comp.RepairRadius > 0)
-            _repair.PlanRepairArea(tool, grid, target.Tile, ent.Comp.RepairRadius, true, plan);
-        else if (_repair.TryPlanRepair(tool, grid, target, true, out var work))
-            plan.Work.Add(work);
-
-        // A fleet batch includes only accessible and unreserved work at the moment it starts.
-        for (var i = plan.Work.Count - 1; i >= 0; i--)
-        {
-            var item = plan.Work[i];
-            if (queue.Reservations.TryGetValue(item.Target, out var owner) && owner != ent.Owner ||
-                !CanReachWork(ent, grid, item))
-                plan.Work.RemoveAt(i);
-        }
-
-        if (plan.Work.Count == 0)
-        {
-            FailJob(ent);
-            return;
-        }
-
+        plan.Work.AddRange(_readyWork);
         StopMoving(ent);
+        ReleaseWorkReservations(ent, queue);
         ent.Comp.Plan = plan;
         foreach (var item in plan.Work)
             queue.Reservations[item.Target] = ent;
@@ -215,9 +301,11 @@ public sealed partial class ShipRepairDroneSystem
             !CanServiceShip(ent, Transform(ent), plan.Grid, queue) || _containers.IsEntityInContainer(ent))
         {
             CancelJob(ent);
+            ent.Comp.NextSearch = _timing.CurTime + ent.Comp.IdleInterval;
             return;
         }
 
+        var completed = 0;
         // Complete floors first, then rebuild objects, then heal surviving structures.
         for (var operation = ShipRepairOperation.Tile; operation <= ShipRepairOperation.Heal; operation++)
         foreach (var work in plan.Work)
@@ -227,11 +315,22 @@ public sealed partial class ShipRepairDroneSystem
                 !CanReachWork(ent, plan.Grid, work))
                 continue;
 
-            _repair.TryCompleteRepair((ent.Owner, tool), ent, plan, work);
+            if (_repair.TryCompleteRepair((ent.Owner, tool), ent, plan, work))
+            {
+                completed++;
+                ent.Comp.FailedTargets.Remove(work.Target);
+            }
+            else
+                ent.Comp.FailedTargets[work.Target] = _timing.CurTime + ent.Comp.RetryInterval;
         }
         args.Handled = true;
-        CancelJob(ent);
-        ent.Comp.NextSearch = _timing.CurTime;
+        if (completed == 0)
+            FailJob(ent);
+        else
+        {
+            CancelJob(ent);
+            ent.Comp.NextSearch = _timing.CurTime;
+        }
     }
 
     private bool CanReachWork(Entity<ShipRepairDroneComponent> ent, EntityUid grid, ShipRepairWork work,
@@ -263,9 +362,18 @@ public sealed partial class ShipRepairDroneSystem
 
     private void FailJob(Entity<ShipRepairDroneComponent> ent)
     {
+        // Do not immediately reacquire the same failed batch through a different center tile.
+        if (ent.Comp.Plan is { } plan)
+        {
+            foreach (var work in plan.Work)
+                ent.Comp.FailedTargets[work.Target] = _timing.CurTime + ent.Comp.RetryInterval;
+        }
         if (ent.Comp.Target is { } target)
             ent.Comp.FailedTargets[target] = _timing.CurTime + ent.Comp.RetryInterval;
+        if (ent.Comp.WorkTile is { } tile)
+            ent.Comp.FailedPositions[tile] = _timing.CurTime + ent.Comp.RetryInterval;
         CancelJob(ent);
+        ent.Comp.NextSearch = _timing.CurTime + ent.Comp.IdleInterval;
     }
 
     private void CancelJob(Entity<ShipRepairDroneComponent> ent)
@@ -283,22 +391,18 @@ public sealed partial class ShipRepairDroneSystem
 
         if (ent.Comp.Grid is { } grid && _queueQuery.TryGetComponent(grid, out var queue))
         {
-            if (ent.Comp.Target is { } target && queue.Reservations.GetValueOrDefault(target) == ent.Owner)
-                queue.Reservations.Remove(target);
-            if (ent.Comp.Plan != null)
-            {
-                foreach (var work in ent.Comp.Plan.Work)
-                {
-                    if (queue.Reservations.GetValueOrDefault(work.Target) == ent.Owner)
-                        queue.Reservations.Remove(work.Target);
-                }
-            }
+            ReleaseWorkReservations(ent, queue);
+            ReleaseWorkPosition(ent, queue);
         }
         ent.Comp.Target = null;
         ent.Comp.Plan = null;
         ent.Comp.Search = null;
         ent.Comp.Path.Clear();
         ent.Comp.PathIndex = 0;
+        ent.Comp.Settling = false;
+        ent.Comp.Yielding = false;
+        ent.Comp.WorkTile = null;
+        ent.Comp.BestWaypointDistance = float.PositiveInfinity;
         if (!TerminatingOrDeleted(ent))
             SetVisual(ent);
     }

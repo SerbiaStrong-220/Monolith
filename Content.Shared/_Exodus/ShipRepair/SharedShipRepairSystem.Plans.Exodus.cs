@@ -73,9 +73,12 @@ public abstract partial class SharedShipRepairSystem
         return ev.Handled && ev.Repairable;
     }
 
-    /// <summary>Quotes one operation using the same times and restrictions as a normal SRD.</summary>
+    /// <summary>
+    /// Quotes one operation using normal SRD times and restrictions. Navigation may defer mobile occupancy
+    /// checks until arrival; completion always checks them, including the repairer's own body.
+    /// </summary>
     public bool TryPlanRepair(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
-        ShipRepairTarget target, bool healDamage, out ShipRepairWork work)
+        ShipRepairTarget target, bool healDamage, out ShipRepairWork work, bool checkMobileObstructions = true)
     {
         work = default!;
         if (!CanRepairGrid(tool, grid) || !_repairGridQuery.TryGetComponent(grid, out var mapGrid) ||
@@ -134,7 +137,8 @@ public abstract partial class SharedShipRepairSystem
         if (original != null && TerminatingOrDeleted(original))
             original = null;
 
-        if (operation == ShipRepairOperation.Restore && IsRepairPositionOccupied(grid.Owner, spec, prototype))
+        if (operation == ShipRepairOperation.Restore &&
+            IsRepairPositionOccupied(grid.Owner, spec, prototype, checkMobileObstructions))
             return false;
 
         work = new ShipRepairWork
@@ -155,7 +159,7 @@ public abstract partial class SharedShipRepairSystem
     /// A radius of one is 3x3. Callers may filter accessibility and reservations before starting their DoAfter.
     /// </summary>
     public void PlanRepairArea(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
-        Vector2i center, int radius, bool healDamage, ShipRepairPlan plan)
+        Vector2i center, int radius, bool healDamage, ShipRepairPlan plan, bool checkMobileObstructions = true)
     {
         if (plan.Grid != grid.Owner || plan.Revision != grid.Comp.Revision || radius < 0 ||
             !TryComp<MapGridComponent>(grid, out var mapGrid))
@@ -165,7 +169,7 @@ public abstract partial class SharedShipRepairSystem
         for (var x = center.X - radius; x <= center.X + radius; x++)
         {
             var tile = new Vector2i(x, y);
-            if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile), healDamage, out var floor))
+            if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile), healDamage, out var floor, checkMobileObstructions))
                 plan.Work.Add(floor);
 
             if (!TryGetChunk(grid.Comp, tile, out var chunk))
@@ -177,7 +181,7 @@ public abstract partial class SharedShipRepairSystem
                         new EntityCoordinates(grid, spec.LocalPosition)) != tile)
                     continue;
 
-                if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile, id), healDamage, out var entity))
+                if (TryPlanRepair(tool, grid, new ShipRepairTarget(tile, id), healDamage, out var entity, checkMobileObstructions))
                     plan.Work.Add(entity);
             }
         }
@@ -262,7 +266,8 @@ public abstract partial class SharedShipRepairSystem
         return true;
     }
 
-    private bool IsRepairPositionOccupied(EntityUid grid, ShipRepairEntitySpecifier spec, EntityPrototype prototype)
+    private bool IsRepairPositionOccupied(EntityUid grid, ShipRepairEntitySpecifier spec, EntityPrototype prototype,
+        bool checkMobileObstructions)
     {
         if (!TryComp<MapGridComponent>(grid, out var mapGrid))
             return true;
@@ -293,9 +298,31 @@ public abstract partial class SharedShipRepairSystem
             }
         }
 
-        if (fixtures == null)
+        if (!checkMobileObstructions || fixtures == null)
             return false;
 
+        return FindMobileRepairObstructions(grid, spec, fixtures, null);
+    }
+
+    /// <summary>Adds mobile occupants of a proposed reconstruction, allowing a caller to ask them to move.</summary>
+    public void GetRepairObstructions(Entity<ShipRepairDataComponent> grid, ShipRepairWork work,
+        HashSet<EntityUid> obstructions)
+    {
+        if (TerminatingOrDeleted(grid) || grid.Comp.ChunkSize <= 0 || work.Operation != ShipRepairOperation.Restore ||
+            work.Target.EntityId is not { } id || !TryGetChunk(grid.Comp, work.Target.Tile, out var chunk) ||
+            !chunk.Entities.TryGetValue(id, out var spec) || spec.ProtoIndex < 0 ||
+            spec.ProtoIndex >= grid.Comp.EntityPalette.Count ||
+            !_proto.TryIndex(grid.Comp.EntityPalette[spec.ProtoIndex], out var prototype) ||
+            !prototype.TryGetComponent<FixturesComponent>(out var fixtures, Factory))
+            return;
+
+        FindMobileRepairObstructions(grid, spec, fixtures, obstructions);
+    }
+
+    private bool FindMobileRepairObstructions(EntityUid grid, ShipRepairEntitySpecifier spec,
+        FixturesComponent fixtures, HashSet<EntityUid>? obstructions)
+    {
+        var blocked = false;
         var coordinates = _transform.ToMapCoordinates(new EntityCoordinates(grid, spec.LocalPosition));
         var rotation = _transform.GetWorldRotation(grid) + spec.Rotation;
         var placement = new Robust.Shared.Physics.Transform(coordinates.Position, rotation);
@@ -315,10 +342,15 @@ public abstract partial class SharedShipRepairSystem
                     body.CanCollide && body.Hard &&
                     ((fixture.CollisionMask & body.CollisionLayer) != 0 ||
                      (fixture.CollisionLayer & body.CollisionMask) != 0))
-                    return true;
+                {
+                    if (obstructions == null)
+                        return true;
+                    obstructions.Add(uid);
+                    blocked = true;
+                }
             }
         }
-        return false;
+        return blocked;
     }
 
     /// <summary>Shared publication path for both handheld and automated reconstruction.</summary>
