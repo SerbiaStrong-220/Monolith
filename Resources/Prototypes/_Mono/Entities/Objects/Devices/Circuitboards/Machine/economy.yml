@@ -40,9 +40,9 @@
     stackRequirements:
       CableHV: 5
     tagRequirements:
-      ArmorPlateEconomy3:
+      ArmorPlateEconomy1: # Exodus: use the entry-level plate to build the arc furnace.
         amount: 1
-        defaultPrototype: ArmorPlateEconomy3
+        defaultPrototype: ArmorPlateEconomy1
       ElectromagnetEconomy1:
         amount: 2
         defaultPrototype: ElectromagnetEconomy1
