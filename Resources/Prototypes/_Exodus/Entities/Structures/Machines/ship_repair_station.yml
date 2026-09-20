@@ -21,6 +21,8 @@
   - type: ShipRepairStation
   - type: Machine
     board: ShipRepairDroneStationMachineCircuitboard
+  - type: StaticPrice
+    price: 75
   - type: WiresPanel
   - type: ApcPowerReceiver
     powerLoad: 50
