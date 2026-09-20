@@ -57,11 +57,12 @@ public sealed partial class ShipRepairDroneSystem
         ChangeWorkTileCount(pending, target.Tile, -1);
     }
 
-    private static void ReserveWork(ShipRepairWorkQueueComponent queue, ShipRepairTarget target, EntityUid drone)
+    private static bool ReserveWork(ShipRepairWorkQueueComponent queue, ShipRepairTarget target, EntityUid drone)
     {
         if (!queue.Reservations.TryAdd(target, drone))
-            return;
+            return false;
         EnqueueWork(queue, target);
+        return true;
     }
 
     private static ShipRepairStageProbe GetStageProbe(ShipRepairDroneComponent drone, ShipRepairWorkQueueComponent queue,

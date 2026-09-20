@@ -86,10 +86,17 @@ public sealed partial class ShipRepairDroneSystem
             if (!TryConsumeWorkSelectionBudget())
                 return false;
 
-            if (!CanReachWork(ent, grid, best.Work[i], bestPosition))
+            if (!IsCurrentRepairWork(tool, grid, best.Work[i]) ||
+                !CanReachWork(ent, grid, best.Work[i], bestPosition))
                 best.Work.RemoveAt(i);
         }
         _repair.PrepareConnectedRepairPlan(grid, best);
+        for (var i = best.Work.Count - 1; i >= 0; i--)
+        {
+            if (!IsCurrentRepairWork(tool, grid, best.Work[i]) ||
+                !CanReachWork(ent, grid, best.Work[i], bestPosition))
+                best.Work.RemoveAt(i);
+        }
         if (best.Work.Count == 0)
             return false;
         AssignDroneWork(ent, grid, queue, bestCenter, best, bestPosition);
@@ -113,8 +120,10 @@ public sealed partial class ShipRepairDroneSystem
             if (!queue.Bounds.Enlarged(ent.Comp.ExteriorMargin).Contains(point) ||
                 !IsWorkPositionAvailable(ent, queue, tile, point))
                 continue;
-            if (!TryConsumeWorkSelectionBudget() || !IsClear(ent, grid, point, allowClearables: true))
+            if (!TryConsumeWorkSelectionBudget())
                 return false;
+            if (!IsClear(ent, grid, point, allowClearables: true))
+                continue;
             var useful = 0d;
             var occupied = false;
             foreach (var work in plan.Work)

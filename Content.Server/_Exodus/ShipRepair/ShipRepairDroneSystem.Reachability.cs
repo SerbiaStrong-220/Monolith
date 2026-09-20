@@ -15,6 +15,9 @@ namespace Content.Server._Exodus.ShipRepair;
 
 public sealed partial class ShipRepairDroneSystem
 {
+    private const int MaxUnreachableRegions = 16;
+    private const int MaxUnreachableTiles = 32768;
+
     private void InitializeReachability()
     {
         _droneDoorQuery = GetEntityQuery<DoorComponent>();
@@ -132,7 +135,13 @@ public sealed partial class ShipRepairDroneSystem
             return;
         queue.NavigationRevision++;
         queue.StageRetryRevision++;
+        ClearUnreachable(queue);
+    }
+
+    private static void ClearUnreachable(ShipRepairWorkQueueComponent queue)
+    {
         queue.Unreachable.Clear();
+        queue.UnreachableTileCount = 0;
     }
 
     private void RefreshNavigationFailures(Entity<ShipRepairDroneComponent> ent, ShipRepairWorkQueueComponent queue,
@@ -155,9 +164,17 @@ public sealed partial class ShipRepairDroneSystem
             ent.Comp.Target is not { } target || region.Count == 0)
             return;
         // Retain only the fully explored side, not the two search trees. Memory is bounded per serviced ship.
-        if (queue.Unreachable.Count >= 16)
+        if (region.Count > MaxUnreachableTiles)
+            return;
+        while (queue.Unreachable.Count >= MaxUnreachableRegions ||
+               queue.UnreachableTileCount + region.Count > MaxUnreachableTiles)
+        {
+            var removed = queue.Unreachable[0];
             queue.Unreachable.RemoveAt(0);
-        queue.Unreachable.Add(new ShipRepairUnreachableRegion
+            queue.UnreachableTileCount -= removed.Tiles.Count;
+        }
+
+        var stored = new ShipRepairUnreachableRegion
         {
             Target = target,
             Tiles = region,
@@ -168,7 +185,9 @@ public sealed partial class ShipRepairDroneSystem
             RepairRadius = ent.Comp.RepairRadius,
             StructuralRepairTileRange = ent.Comp.StructuralRepairTileRange,
             ExteriorMargin = ent.Comp.ExteriorMargin,
-        });
+        };
+        queue.Unreachable.Add(stored);
+        queue.UnreachableTileCount += stored.Tiles.Count;
     }
 
     private bool IsKnownUnreachable(Entity<ShipRepairDroneComponent> ent, EntityUid grid,

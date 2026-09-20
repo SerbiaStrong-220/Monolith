@@ -33,6 +33,7 @@ public sealed partial class ShipRepairWorkQueueComponent : Component
 
     public int NavigationRevision;
     public readonly List<ShipRepairUnreachableRegion> Unreachable = new();
+    public int UnreachableTileCount;
 
     /// <summary>Snapshot targets whose live damage changed since the last queue update.</summary>
     public readonly HashSet<ShipRepairTarget> DirtyTargets = new();

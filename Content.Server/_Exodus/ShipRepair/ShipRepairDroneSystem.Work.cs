@@ -28,16 +28,20 @@ public sealed partial class ShipRepairDroneSystem
             if (active.Drones.Count > 0)
                 activeQueues++;
         }
-        var quota = Math.Max(1, 256 / Math.Max(1, activeQueues));
+        var activeQueueIndex = 0;
         var query = EntityQueryEnumerator<ShipRepairWorkQueueComponent, ShipRepairDataComponent, MapGridComponent>();
         while (query.MoveNext(out var uid, out var queue, out var data, out var grid))
         {
             if (queue.Drones.Count == 0)
                 continue;
 
+            var quota = GetQueueIndexBudget(activeQueues, activeQueueIndex++);
+            if (quota == 0)
+                continue;
+
             if (_timing.CurTime >= queue.NextNavigationRetry)
             {
-                queue.Unreachable.Clear();
+                ClearUnreachable(queue);
                 queue.NextNavigationRetry = _timing.CurTime + TimeSpan.FromSeconds(60);
             }
 
@@ -105,6 +109,7 @@ public sealed partial class ShipRepairDroneSystem
                 break;
             }
         }
+        AdvanceQueueIndexBudget(activeQueues);
     }
 
     private void IndexSnapshot(Entity<ShipRepairDataComponent> ent, MapGridComponent grid,
@@ -252,7 +257,8 @@ public sealed partial class ShipRepairDroneSystem
         for (var i = plan.Work.Count - 1; i >= 0; i--)
         {
             var item = plan.Work[i];
-            if (GetRepairGroup(item.Stage) != stage || queue.Reservations.ContainsKey(item.Target) || IsKnownUnreachable(ent, grid, queue, item, position) ||
+            if (GetRepairGroup(item.Stage) != stage || !_repair.NeedsSnapshotRepair(grid, item.Target) ||
+                queue.Reservations.ContainsKey(item.Target) || IsKnownUnreachable(ent, grid, queue, item, position) ||
                 ent.Comp.FailedTargets.TryGetValue(item.Target, out var retry) && _timing.CurTime < retry ||
                 item.Operation == ShipRepairOperation.Restore && !item.Underfloor &&
                 queue.WorkPositions.TryGetValue(item.Target.Tile, out var worker) && worker != ent.Owner ||
@@ -276,6 +282,18 @@ public sealed partial class ShipRepairDroneSystem
         ShipRepairWorkQueueComponent queue, Vector2i center, ShipRepairPlan plan, Vector2? workPosition = null)
     {
         CancelJob(ent);
+        for (var i = plan.Work.Count - 1; i >= 0; i--)
+        {
+            if (!_repair.NeedsSnapshotRepair(grid, plan.Work[i].Target) ||
+                !ReserveWork(queue, plan.Work[i].Target, ent))
+                plan.Work.RemoveAt(i);
+        }
+        if (plan.Work.Count == 0)
+        {
+            ent.Comp.NextSearch = _timing.CurTime;
+            return;
+        }
+
         var selected = plan.Work[0];
         ent.Comp.FocusTile = center;
         ent.Comp.Target = selected.Target;
@@ -284,8 +302,6 @@ public sealed partial class ShipRepairDroneSystem
         ent.Comp.NavigationDeadline = _timing.CurTime + ent.Comp.NavigationTimeout;
         ent.Comp.Repaths = 0;
         // Reserve the actual batch before travelling, not after another drone has started approaching it.
-        foreach (var item in plan.Work)
-            ReserveWork(queue, item.Target, ent);
         ent.Comp.AssignmentWorkRevision = queue.WorkRevision;
         if (!StartNavigation(ent, grid, queue, selected) && !HandleBatchApproachFailure(ent, grid, queue))
             FailJob(ent);
@@ -365,13 +381,27 @@ public sealed partial class ShipRepairDroneSystem
         var plan = new ShipRepairPlan { Grid = grid.Owner, Revision = grid.Comp.Revision };
         plan.Work.AddRange(_readyWork);
         _repair.PrepareConnectedRepairPlan(grid, plan);
+        for (var i = plan.Work.Count - 1; i >= 0; i--)
+        {
+            if (!IsCurrentRepairWork(tool, grid, plan.Work[i]))
+                plan.Work.RemoveAt(i);
+        }
         if (plan.Work.Count == 0)
             return;
         StopMoving(ent);
         ReleaseWorkReservations(ent, queue);
+        for (var i = plan.Work.Count - 1; i >= 0; i--)
+        {
+            if (!ReserveWork(queue, plan.Work[i].Target, ent))
+                plan.Work.RemoveAt(i);
+        }
+        if (plan.Work.Count == 0)
+        {
+            CancelJob(ent);
+            ent.Comp.NextSearch = _timing.CurTime;
+            return;
+        }
         ent.Comp.Plan = plan;
-        foreach (var item in plan.Work)
-            ReserveWork(queue, item.Target, ent);
 
         if (PrepareWorkClearance(ent, grid, queue, plan))
             return;
@@ -475,6 +505,18 @@ public sealed partial class ShipRepairDroneSystem
             return false;
         }
         return true;
+    }
+
+    private bool IsCurrentRepairWork(Entity<ShipRepairToolComponent> tool,
+        Entity<ShipRepairDataComponent> grid, ShipRepairWork work)
+    {
+        if (!_repair.NeedsSnapshotRepair(grid, work.Target) ||
+            !_repair.TryPlanRepair(tool, grid, work.Target, work.Operation == ShipRepairOperation.Heal,
+                out var current, checkMobileObstructions: false, checkTileSupport: false,
+                allowClearables: true))
+            return false;
+
+        return current.Operation == work.Operation && current.Original == work.Original;
     }
 
     private bool CanReachStructuralWorkThroughObstruction(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
