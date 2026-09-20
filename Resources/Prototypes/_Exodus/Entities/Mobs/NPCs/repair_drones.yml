@@ -42,11 +42,15 @@
     - Alive
     - Dead
   - type: MobThresholds
+    allowRevives: true
     thresholds:
       0: Alive
       100: Dead
     showOverlays: false
   - type: Repairable
+    qualities:
+    - Welding
+    - Applicating
     allowSelfRepair: false
   - type: NpcFactionMember
     factions:
