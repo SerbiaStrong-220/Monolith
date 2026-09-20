@@ -138,7 +138,7 @@ summoning-machine-kunisa-machine-gun-desc = Пехотный пулемёт с �
 # Ship repair drone equipment
 summoning-machine-ship-repair-drone-station-name = Станция ремонтных дронов (флэтпак)
 summoning-machine-ship-repair-drone-station-desc = Упакованная станция с пятью ячейками для ремонтных дронов.
-summoning-machine-asakim-repair-drone-name = Азакимский ремонтный дрон
+summoning-machine-asakim-repair-drone-name = Ремонтный дрон ВЭФ
 summoning-machine-asakim-repair-drone-desc = Фазовый ремонтный дрон для восстановления кораблей по снимку СРД.
 summoning-machine-asakim-repair-drone-kit-name = Комплект ремонтных дронов
-summoning-machine-asakim-repair-drone-kit-desc = Ящик с тремя азакимскими дронами и флэтпаком станции ремонтных дронов.
+summoning-machine-asakim-repair-drone-kit-desc = Ящик с тремя дронами ВЭФ и флэтпаком станции ремонтных дронов.

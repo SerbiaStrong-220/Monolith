@@ -11,7 +11,7 @@ ent-ShipRepairDroneStationFleetPDV =
     .suffix = ДФ, заполненная
 
 ent-ShipRepairDroneStationAsakim =
-    .suffix = Азаким, заполненная
+    .suffix = ВЭФ, заполненная
 
 ship-repair-station-title = Станция ремонтных дронов
 ship-repair-station-all = Команды всем дронам

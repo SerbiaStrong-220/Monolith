@@ -138,7 +138,7 @@ summoning-machine-kunisa-machine-gun-desc = An infantry machine gun with an enla
 # Ship repair drone equipment
 summoning-machine-ship-repair-drone-station-name = Repair drone station flatpack
 summoning-machine-ship-repair-drone-station-desc = A flatpack containing a station with five repair drone berths.
-summoning-machine-asakim-repair-drone-name = Asakim repair drone
+summoning-machine-asakim-repair-drone-name = VEF repair drone
 summoning-machine-asakim-repair-drone-desc = A phasing repair drone for restoring ships from an SRD snapshot.
 summoning-machine-asakim-repair-drone-kit-name = Repair drone kit
-summoning-machine-asakim-repair-drone-kit-desc = A crate containing three Asakim drones and a repair drone station flatpack.
+summoning-machine-asakim-repair-drone-kit-desc = A crate containing three VEF drones and a repair drone station flatpack.

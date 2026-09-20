@@ -116,8 +116,8 @@
 - type: entity
   parent: BaseMobShipRepairDrone
   id: MobShipRepairDroneAsakim
-  name: Asakim repair drone
-  description: A phase-capable repair drone compatible with ordinary and Asakim ship snapshots.
+  name: VEF repair drone
+  description: A phase-capable VEF repair drone compatible with ordinary ship repair systems.
   components:
   - type: Sprite
     sprite: _Exodus/Mobs/Silicon/repair_drone_asakim.rsi
