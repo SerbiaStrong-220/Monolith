@@ -1,0 +1,27 @@
+﻿- type: technology
+  id: TsfShipRepairDrones
+  name: research-technology-tsfmc-ship-repair-drones
+  entityIcon: MobShipRepairDroneFleetTSF
+  discipline: TsfmcGear
+  tier: 3
+  cost: 250000
+  recipeUnlocks:
+  - ShipRepairDroneFleetTSF
+  - ShipRepairDroneStationMachineCircuitboard
+  technologyPrerequisites:
+  - UniversalMaterialResearchT3
+  position: 3, -28
+
+- type: technology
+  id: PdvShipRepairDrones
+  name: research-technology-pdv-ship-repair-drones
+  entityIcon: MobShipRepairDroneFleetPDV
+  discipline: RogueGear
+  tier: 3
+  cost: 250000
+  recipeUnlocks:
+  - ShipRepairDroneFleetPDV
+  - ShipRepairDroneStationMachineCircuitboard
+  technologyPrerequisites:
+  - UniversalMaterialResearchT3
+  position: -3, -28

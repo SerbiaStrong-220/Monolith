@@ -135,3 +135,10 @@ summoning-machine-gravity-projector-name = Gravitational projector
 summoning-machine-gravity-projector-desc = A short-range infantry weapon with a forward grip and convex gravitational emitter.
 summoning-machine-kunisa-machine-gun-name = Kunisa plasma machine gun
 summoning-machine-kunisa-machine-gun-desc = An infantry machine gun with an enlarged capacitor. Fires faster than the standard autopulser.
+# Ship repair drone equipment
+summoning-machine-ship-repair-drone-station-name = Repair drone station flatpack
+summoning-machine-ship-repair-drone-station-desc = A flatpack containing a station with five repair drone berths.
+summoning-machine-asakim-repair-drone-name = Asakim repair drone
+summoning-machine-asakim-repair-drone-desc = A phasing repair drone for restoring ships from an SRD snapshot.
+summoning-machine-asakim-repair-drone-kit-name = Repair drone kit
+summoning-machine-asakim-repair-drone-kit-desc = A crate containing three Asakim drones and a repair drone station flatpack.

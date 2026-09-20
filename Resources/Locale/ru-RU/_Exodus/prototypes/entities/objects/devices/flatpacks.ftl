@@ -17,3 +17,8 @@ ent-MedicalScannerFlatpack = упакованный медицинский ск�
     .desc = Упаковка, при помощи которой можно создать медицинский сканер.
 ent-ShieldGeneratorSmallFlatpack = упакованный генератор щита МС-100 «Сентинел»
     .desc = Универсально-сборная упаковка для сборки генератора щита МС-100 «Сентинел».
+# Ship repair drone station
+ent-ShipRepairDroneStationFlatpack = упакованная станция ремонтных дронов
+    .desc = Универсально-сборная упаковка для станции с пятью ячейками ремонтных дронов.
+ship-repair-drone-station-flatpack-name = упакованная станция ремонтных дронов
+ship-repair-drone-station-flatpack-description = Универсально-сборная упаковка для станции с пятью ячейками ремонтных дронов.

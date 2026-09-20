@@ -5,3 +5,4 @@ guide-entry-leviathan = Space Leviathan
 guide-entry-exodus-rule-ghost-roles-leviathan = Space Leviathan
 guide-entry-exodus-rule-ghost-roles-rot = Rot
 guide-entry-exodus-rule-ghost-roles-rot-hungry = Hungry
+guide-entry-ship-repair-drones = Repair drones

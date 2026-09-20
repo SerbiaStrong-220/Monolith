@@ -1,0 +1,5 @@
+﻿- type: guideEntry
+  id: ShipRepairDrones
+  name: guide-entry-ship-repair-drones
+  text: "/ServerInfo/_Exodus/Guidebook/ShipRepairDrones.xml"
+  priority: 4

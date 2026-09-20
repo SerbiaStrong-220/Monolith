@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [BaseMachinePowered, ConstructibleMachine]
   id: ShipRepairDroneStation
   name: repair drone station
   description: A base with five reserved berths for ship repair drones and a rechargeable backup battery.
@@ -19,6 +19,9 @@
           True: { visible: true }
           False: { visible: false }
   - type: ShipRepairStation
+  - type: Machine
+    board: ShipRepairDroneStationMachineCircuitboard
+  - type: WiresPanel
   - type: ApcPowerReceiver
     powerLoad: 50
   - type: ApcPowerReceiverBattery
@@ -29,6 +32,8 @@
     startingCharge: 45000
   - type: ContainerContainer
     containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
       repair_drones: !type:Container
   - type: ActivatableUI
     key: enum.ShipRepairStationUiKey.Key
@@ -50,6 +55,9 @@
   - type: ShipRepairable
     repairTime: 8
     repairCost: 20
+  - type: GuideHelp
+    guides:
+    - ShipRepairDrones
 
 - type: entity
   parent: ShipRepairDroneStation

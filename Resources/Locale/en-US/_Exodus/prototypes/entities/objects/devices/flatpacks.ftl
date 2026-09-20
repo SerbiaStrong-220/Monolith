@@ -21,3 +21,8 @@ ent-MedicalScannerFlatpack = medical scanner flatpack
     .desc = A flatpack used for constructing a medical scanner.
 ent-ShieldGeneratorSmallFlatpack = MS-100 "Sentinel" shield generator flatpack
     .desc = A flatpack used for constructing an MS-100 "Sentinel" shield generator.
+# Ship repair drone station
+ent-ShipRepairDroneStationFlatpack = repair drone station flatpack
+    .desc = A flatpack used for constructing a station with five repair drone berths.
+ship-repair-drone-station-flatpack-name = repair drone station flatpack
+ship-repair-drone-station-flatpack-description = A flatpack used for constructing a station with five repair drone berths.

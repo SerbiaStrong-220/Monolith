@@ -1,0 +1,61 @@
+﻿- type: latheRecipe
+  id: ShipRepairDroneStationMachineCircuitboard
+  categories:
+  - Circuitry
+  completetime: 4
+  result: ShipRepairDroneStationMachineCircuitboard
+  materials:
+    Diamond: 100
+    Bluespace: 200
+    Plastitanium: 5000
+    Plasteel: 5000
+
+- type: latheRecipe
+  id: ShipRepairDrone
+  parent: BaseRoboticsRecipe
+  result: MobShipRepairDrone
+  completetime: 12
+  materials:
+    Americium: 20
+    Plutonium: 20
+    Diamond: 500
+    Bluespace: 1000
+    Plasteel: 5000
+
+- type: latheRecipe
+  id: ShipRepairDroneFleetTSF
+  parent: BaseRoboticsRecipe
+  result: MobShipRepairDroneFleetTSF
+  completetime: 15
+  materials:
+    Americium: 40
+    Plutonium: 40
+    Diamond: 500
+    Bluespace: 1000
+    Plasteel: 5000
+
+- type: latheRecipe
+  id: ShipRepairDroneFleetPDV
+  parent: BaseRoboticsRecipe
+  result: MobShipRepairDroneFleetPDV
+  completetime: 15
+  materials:
+    Americium: 40
+    Plutonium: 40
+    Diamond: 500
+    Bluespace: 1000
+    Plasteel: 5000
+
+- type: latheRecipePack
+  id: ShipRepairDronesDynamic
+  recipes:
+  - ShipRepairDrone
+  - ShipRepairDroneFleetTSF
+  - ShipRepairDroneFleetPDV
+
+- type: latheRecipePack
+  id: ShipRepairDronesBoardsDynamic
+  recipes:
+  - ShipRepairDroneStationMachineCircuitboard
+
+
