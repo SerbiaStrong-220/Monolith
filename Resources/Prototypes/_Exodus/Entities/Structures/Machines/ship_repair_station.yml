@@ -5,11 +5,10 @@
   description: A self-powered base with five reserved berths for ship repair drones.
   components:
   - type: Sprite
-    # Temporary art, reused without modifying the original RSI.
-    sprite: Structures/Power/borg_charger.rsi
+    sprite: _Exodus/Structures/Machines/ship_repair_station.rsi
     layers:
-    - state: borgcharger-u1
-    - state: borgcharger0
+    - state: base
+    - state: powered
       shader: unshaded
       map: ["powered"]
   - type: Appearance
