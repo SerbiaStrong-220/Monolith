@@ -34,6 +34,9 @@ public sealed partial class ShipRepairWorkQueueComponent : Component
     public int NavigationRevision;
     public readonly List<ShipRepairUnreachableRegion> Unreachable = new();
 
+    /// <summary>Snapshot targets whose live damage changed since the last queue update.</summary>
+    public readonly HashSet<ShipRepairTarget> DirtyTargets = new();
+
     /// <summary>Fallback invalidation for environmental changes without a geometry event.</summary>
     [DataField, AutoPausedField]
     public TimeSpan NextNavigationRetry;

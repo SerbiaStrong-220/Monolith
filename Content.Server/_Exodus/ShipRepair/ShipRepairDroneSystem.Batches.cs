@@ -67,6 +67,9 @@ public sealed partial class ShipRepairDroneSystem
         var bestCenter = Vector2i.Zero;
         foreach (var (center, _) in _batchCandidates)
         {
+            if (!TryConsumeWorkSelectionBudget())
+                return false;
+
             if (!TryPlanDroneWork(ent, tool, grid, queue, center, origin, stage, out var plan) ||
                 !TryFindBatchPosition(ent, grid, queue, plan, center, origin, out var position, out var score) ||
                 score <= bestScore)
@@ -80,6 +83,9 @@ public sealed partial class ShipRepairDroneSystem
             return false;
         for (var i = best.Work.Count - 1; i >= 0; i--)
         {
+            if (!TryConsumeWorkSelectionBudget())
+                return false;
+
             if (!CanReachWork(ent, grid, best.Work[i], bestPosition))
                 best.Work.RemoveAt(i);
         }
@@ -105,13 +111,17 @@ public sealed partial class ShipRepairDroneSystem
             var tile = center + new Vector2i(x, y);
             var point = _map.TileCenterToVector(grid, mapGrid, tile);
             if (!queue.Bounds.Enlarged(ent.Comp.ExteriorMargin).Contains(point) ||
-                !IsWorkPositionAvailable(ent, queue, tile, point) || !IsClear(ent, grid, point, allowClearables: true))
+                !IsWorkPositionAvailable(ent, queue, tile, point))
                 continue;
+            if (!TryConsumeWorkSelectionBudget() || !IsClear(ent, grid, point, allowClearables: true))
+                return false;
             var useful = 0d;
             var occupied = false;
             foreach (var work in plan.Work)
             {
                 occupied |= WorkOverlapsDrone(ent, work, point);
+                if (!TryConsumeWorkSelectionBudget())
+                    return false;
                 if (CanReachWork(ent, grid, work, point))
                     useful += work.Duration.TotalSeconds;
             }

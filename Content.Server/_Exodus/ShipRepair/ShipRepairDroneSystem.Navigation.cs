@@ -674,6 +674,8 @@ public sealed partial class ShipRepairDroneSystem
             {
                 var offset = new Angle(i * Math.Tau / 16).ToVec() * radius;
                 var point = new MapCoordinates(origin.Position + offset, origin.MapId);
+                if (!TryConsumePhaseEjectBudget())
+                    return false;
                 if (!IsWorldClear(ent, point))
                     continue;
                 _transform.SetCoordinates(ent, _transform.ToCoordinates(point));
@@ -686,7 +688,7 @@ public sealed partial class ShipRepairDroneSystem
         {
             var point = _transform.ToMapCoordinates(safe);
             if (point.MapId == origin.MapId && Vector2.DistanceSquared(point.Position, origin.Position) <= 64 &&
-                IsWorldClear(ent, point))
+                TryConsumePhaseEjectBudget() && IsWorldClear(ent, point))
             {
                 _transform.SetCoordinates(ent, _transform.ToCoordinates(point));
                 _transform.AttachToGridOrMap(ent);

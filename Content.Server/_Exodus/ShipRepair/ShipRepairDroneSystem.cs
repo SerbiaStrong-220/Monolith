@@ -176,12 +176,17 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
                 closures++;
         }
         var pathQuota = Math.Max(1, 256 / Math.Max(1, searches));
+        // Above 256 simultaneous searches, rotate the one-node slots instead of
+        // allowing Math.Max(1, ...) to grow the total expansion budget.
+        _pathOverflowOffset = searches > 256 ? (_pathOverflowOffset + 256) % searches : 0;
         _closureQuota = Math.Max(1, 128 / Math.Max(1, closures));
         _closureBudget = 256;
+        ResetWorkSelectionBudget();
         var query = EntityQueryEnumerator<ShipRepairDroneComponent, ShipRepairToolComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var drone, out var tool, out var xform))
         {
             var ent = new Entity<ShipRepairDroneComponent>(uid, drone);
+            var pathDue = _timing.CurTime >= drone.NextUpdate;
             if (_timing.CurTime < drone.NextUpdate)
             {
                 // Hand off a reached waypoint before steering brakes or turns back towards it.
@@ -195,6 +200,8 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
                 if (drone.NextUpdate < _timing.CurTime)
                     drone.NextUpdate = _timing.CurTime + drone.UpdateInterval;
             }
+
+            var dronePathQuota = GetPathQuota(uid, searches, pathQuota, pathDue);
 
             if (!drone.Enabled)
             {
@@ -223,7 +230,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             }
             if (drone.Command == ShipRepairDroneCommand.Return)
             {
-                UpdateReturn(ent, (uid, tool), station, xform, pathQuota);
+                UpdateReturn(ent, (uid, tool), station, xform, dronePathQuota);
                 continue;
             }
             if (drone.Grid is not { } grid || Transform(station).GridUid != grid || TerminatingOrDeleted(grid) ||
@@ -295,7 +302,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
                 continue;
             }
 
-            UpdateNavigation(ent, (uid, tool), grid, queue, pathQuota);
+            UpdateNavigation(ent, (uid, tool), grid, queue, dronePathQuota);
         }
     }
 

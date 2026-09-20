@@ -1,5 +1,7 @@
 using System.Numerics;
 using Content.Shared._Exodus.ShipRepair;
+using Content.Shared._Mono.ShipRepair.Components;
+using Content.Shared.Damage;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Prying.Components;
@@ -19,6 +21,7 @@ public sealed partial class ShipRepairDroneSystem
         _droneFirelockQuery = GetEntityQuery<FirelockComponent>();
         _dronePryingQuery = GetEntityQuery<PryingComponent>();
         SubscribeLocalEvent<TileChangedEvent>(OnRepairTilesChanged);
+        SubscribeLocalEvent<ShipRepairableComponent, DamageChangedEvent>(OnRepairDamageChanged);
         SubscribeLocalEvent<GridSplitEvent>(OnRepairGridSplit);
         // Physics shutdown already raises this event when removing a collidable obstacle.
         // PhysicsComponent's lifecycle subscriptions belong to SharedPhysicsSystem.
@@ -45,6 +48,26 @@ public sealed partial class ShipRepairDroneSystem
         }
         if (geometryChanged)
             InvalidateNavigation(args.Entity.Owner);
+    }
+
+    private void OnRepairDamageChanged(Entity<ShipRepairableComponent> ent, ref DamageChangedEvent args)
+    {
+        if (!_xformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
+            return;
+
+        var grid = xform.ParentUid;
+        if (!_queueQuery.TryGetComponent(grid, out var queue) || !queue.Indexed ||
+            !_mapGridQuery.TryGetComponent(grid, out var mapGrid))
+            return;
+
+        var tile = _map.LocalToTile(grid, mapGrid, xform.Coordinates);
+        if (!queue.EntriesByTile.TryGetValue(tile, out var entries))
+            return;
+
+        // Several snapshot entities may share one tile. Refresh all of them; the set
+        // removes duplicates and keeps damage events free of planning or physics work.
+        foreach (var target in entries)
+            queue.DirtyTargets.Add(target);
     }
 
     private void OnRepairGridSplit(ref GridSplitEvent args)

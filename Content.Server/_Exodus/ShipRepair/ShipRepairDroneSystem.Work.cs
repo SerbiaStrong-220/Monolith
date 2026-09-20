@@ -47,6 +47,7 @@ public sealed partial class ShipRepairDroneSystem
                 queue.Reservations.Clear();
                 queue.ClearableReservations.Clear();
                 queue.WorkPositions.Clear();
+                queue.DirtyTargets.Clear();
                 InvalidateNavigation(uid);
                 queue.Chunks = data.Chunks.GetEnumerator();
                 queue.Chunk = null;
@@ -68,10 +69,25 @@ public sealed partial class ShipRepairDroneSystem
                 continue;
             }
 
-            if (_timing.CurTime < queue.NextScan || queue.Entries.Count == 0)
+            var remainingQuota = quota;
+            while (remainingQuota > 0 && queue.DirtyTargets.Count > 0)
+            {
+                ShipRepairTarget dirtyTarget = default;
+                foreach (var target in queue.DirtyTargets)
+                {
+                    dirtyTarget = target;
+                    break;
+                }
+
+                queue.DirtyTargets.Remove(dirtyTarget);
+                RefreshQueuedWork((uid, data), queue, dirtyTarget);
+                remainingQuota--;
+            }
+
+            if (remainingQuota == 0 || _timing.CurTime < queue.NextScan || queue.Entries.Count == 0)
                 continue;
 
-            for (var i = 0; i < quota; i++)
+            for (var i = 0; i < remainingQuota; i++)
             {
                 var target = queue.Entries[queue.ScanIndex++];
                 RefreshQueuedWork((uid, data), queue, target);
@@ -159,6 +175,7 @@ public sealed partial class ShipRepairDroneSystem
         ShipRepairStage stage, ref int budget)
     {
         if (ent.Comp.RepairRadius == 0 && ent.Comp.FocusTile is { } focus &&
+            TryConsumeWorkSelectionBudget() &&
             TryPlanDroneWork(ent, tool, grid, queue, focus, position, stage, out var continuation))
         {
             AssignDroneWork(ent, grid, queue, focus, continuation);
@@ -175,6 +192,9 @@ public sealed partial class ShipRepairDroneSystem
         var probe = GetStageProbe(ent.Comp, queue, stage);
         while (budget > 0 && probe.Remaining > 0 && pending.Targets.Count > 0)
         {
+            if (!TryConsumeWorkSelectionBudget())
+                return false;
+
             budget--;
             probe.Cursor %= pending.Targets.Count;
             var target = pending.Targets[probe.Cursor++];
@@ -209,7 +229,8 @@ public sealed partial class ShipRepairDroneSystem
         }
         if (ent.Comp.RepairRadius > 0 && TryAssignBatch(ent, tool, grid, queue, position, stage))
             return true;
-        if (selected == null || !TryPlanDroneWork(ent, tool, grid, queue, selected.Target.Tile, position, stage, out var plan))
+        if (selected == null || !TryConsumeWorkSelectionBudget() ||
+            !TryPlanDroneWork(ent, tool, grid, queue, selected.Target.Tile, position, stage, out var plan))
             return false;
         AssignDroneWork(ent, grid, queue, selected.Target.Tile, plan);
         return true;
