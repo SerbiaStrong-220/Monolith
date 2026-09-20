@@ -2,7 +2,7 @@ shipyard-snapshot-button = Update SRD blueprint
 shipyard-snapshot-button-price = Update SRD blueprint - {$price}
 shipyard-snapshot-confirm = Replace the SRD blueprint?
 shipyard-snapshot-confirm-price = Replace the blueprint for {$price}?
-shipyard-snapshot-warning = Saves the ship's current layout for SRD repairs. The ship must be docked at this station. The cost equals the ship's full price and is charged to your sector account.
+shipyard-snapshot-warning = Saves the ship's current layout for SRD repairs. The ship must be docked at this station.
 
     The new blueprint replaces the previous one. Structures that are currently missing will no longer be restored. Equipment contents and settings are not saved.
 shipyard-snapshot-access-denied = This service is unavailable or you do not have access to this shipyard.

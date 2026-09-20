@@ -35,7 +35,8 @@ public sealed partial class ShipyardSystem
             return null;
         }
 
-        return new RepairSnapshotQuote(GetNetEntity(grid), prototype.Price, repairData.Revision);
+        var snapshotPrice = Math.Max(1, prototype.Price / 2);
+        return new RepairSnapshotQuote(GetNetEntity(grid), snapshotPrice, repairData.Revision);
     }
 
     private void OnRepairSnapshot(Entity<ShipyardConsoleComponent> ent, ref ShipyardRepairSnapshotMessage args)
