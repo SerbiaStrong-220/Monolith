@@ -1,5 +1,6 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
+using Content.Server.Shuttles.Components;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair;
 using Content.Shared._Mono.ShipRepair.Components;
@@ -49,6 +50,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     private EntityQuery<ShipRepairDroneComponent> _droneQuery;
     private EntityQuery<NPCSteeringComponent> _steeringQuery;
     private EntityQuery<ShipRepairStationComponent> _stationQuery;
+    private EntityQuery<ThrusterComponent> _thrusterQuery;
 
     public override void Initialize()
     {
@@ -64,6 +66,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
         _droneQuery = GetEntityQuery<ShipRepairDroneComponent>();
         _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
         _stationQuery = GetEntityQuery<ShipRepairStationComponent>();
+        _thrusterQuery = GetEntityQuery<ThrusterComponent>();
         InitializeReachability();
         InitializeStations();
         InitializeClearing();

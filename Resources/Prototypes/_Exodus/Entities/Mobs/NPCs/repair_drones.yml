@@ -36,6 +36,7 @@
   - type: Pullable
   - type: Damageable
     damageContainer: Silicon
+    damageModifierSet: ShipRepairDroneHeatResistant
   - type: MobState
     allowedStates:
     - Alive

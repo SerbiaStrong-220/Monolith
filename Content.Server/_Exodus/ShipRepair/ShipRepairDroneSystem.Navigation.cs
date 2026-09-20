@@ -600,7 +600,9 @@ public sealed partial class ShipRepairDroneSystem
 
     private bool BlocksDrone(EntityUid drone, EntityUid other)
     {
-        if (other == drone || !_bodyQuery.TryGetComponent(other, out var body) || !body.CanCollide || !body.Hard ||
+        // Thrusters occupy a tile for shuttle physics, but repair drones can pass through them.
+        if (other == drone || _thrusterQuery.HasComponent(other) ||
+            !_bodyQuery.TryGetComponent(other, out var body) || !body.CanCollide || !body.Hard ||
             !_fixturesQuery.TryGetComponent(other, out var fixtures))
             return false;
         // Body-wide masks also include sensors. Only solid fixtures can obstruct a flying drone.
