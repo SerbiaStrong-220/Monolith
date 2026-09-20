@@ -15,6 +15,9 @@ public sealed partial class ShipRepairDroneSystem
 {
     private void InitializeReachability()
     {
+        _droneDoorQuery = GetEntityQuery<DoorComponent>();
+        _droneFirelockQuery = GetEntityQuery<FirelockComponent>();
+        _dronePryingQuery = GetEntityQuery<PryingComponent>();
         SubscribeLocalEvent<TileChangedEvent>(OnRepairTilesChanged);
         SubscribeLocalEvent<GridSplitEvent>(OnRepairGridSplit);
         // Physics shutdown already raises this event when removing a collidable obstacle.
@@ -30,13 +33,18 @@ public sealed partial class ShipRepairDroneSystem
 
     private void OnRepairTilesChanged(ref TileChangedEvent args)
     {
+        if (!_queueQuery.TryGetComponent(args.Entity.Owner, out var queue))
+            return;
+        _snapshotQuery.TryGetComponent(args.Entity.Owner, out var data);
+        var geometryChanged = false;
         foreach (var change in args.Changes)
         {
-            if (change.NewTile.IsEmpty == change.OldTile.IsEmpty)
-                continue;
-            InvalidateNavigation(args.Entity.Owner);
-            return;
+            if (data != null)
+                RefreshQueuedWork((args.Entity.Owner, data), queue, new ShipRepairTarget(change.GridIndices));
+            geometryChanged |= change.NewTile.IsEmpty != change.OldTile.IsEmpty;
         }
+        if (geometryChanged)
+            InvalidateNavigation(args.Entity.Owner);
     }
 
     private void OnRepairGridSplit(ref GridSplitEvent args)
@@ -100,6 +108,7 @@ public sealed partial class ShipRepairDroneSystem
         if (!_queueQuery.TryGetComponent(grid, out var queue))
             return;
         queue.NavigationRevision++;
+        queue.StageRetryRevision++;
         queue.Unreachable.Clear();
     }
 
@@ -119,7 +128,7 @@ public sealed partial class ShipRepairDroneSystem
     private void RememberUnreachable(Entity<ShipRepairDroneComponent> ent, ShipRepairWorkQueueComponent queue,
         ShipRepairPathSearch search, HashSet<Vector2i> region, bool fromTarget)
     {
-        if (search.TransientObstruction || search.Revision != queue.NavigationRevision ||
+        if (search.TransientObstruction || search.Revision != queue.NavigationRevision || ent.Comp.BatchWorkPosition != null ||
             ent.Comp.Target is not { } target || region.Count == 0)
             return;
         // Retain only the fully explored side, not the two search trees. Memory is bounded per serviced ship.

@@ -178,6 +178,9 @@ public sealed partial class ShipRepairDroneComponent : Component
     public int NavigationRevision = -1;
     public Vector2? FailureOrigin;
     public readonly HashSet<ShipRepairTarget> DeferredSearches = new();
+    /// <summary>Eligibility passes for the shared grid stages; reset when changing assignments/grids.</summary>
+    public readonly Dictionary<ShipRepairStage, ShipRepairStageProbe> StageProbes = new();
+    public int AssignmentWorkRevision;
     public readonly List<EntityUid> ConstructionEffects = new();
     public EntityCoordinates? LastSafePosition;
     public DoAfterId? RepairDoAfter;
@@ -196,9 +199,37 @@ public sealed partial class ShipRepairDroneComponent : Component
     public bool ClearingRoute;
     /// <summary>The door being opened, so another drone opening it can interrupt our pry.</summary>
     public EntityUid? PryTarget;
+    public bool RecoveringDoor;
+    [AutoPausedField]
+    public TimeSpan DoorRecoveryDeadline;
+    [AutoPausedField]
+    public TimeSpan NextDoorRecovery;
     public ShipRepairTarget? Target;
     /// <summary>Continue available work on the selected tile/area between successful repair cycles.</summary>
     public Vector2i? FocusTile;
+    /// <summary>Chosen fleet work position, rather than stopping within reach of a single batch member.</summary>
+    public Vector2? BatchWorkPosition;
+    public ShipRepairClosureCheck? ClosureCheck;
+    /// <summary>The timed repair has finished; its closure check may still be running.</summary>
+    public bool RepairReady;
+    /// <summary>Elapsed tool time belongs only to the current, immutable quoted batch.</summary>
+    public TimeSpan RepairElapsed;
+    [AutoPausedField]
+    public TimeSpan RepairStartedAt;
+    public TimeSpan RepairTimerDuration;
+    /// <summary>Ready work is retained while waiting for a short move or a temporary obstruction.</summary>
+    [AutoPausedField]
+    public TimeSpan RepairPublishDeadline;
+    public ShipRepairPlan? PublicationPlan;
+    public bool PublishIndividually;
+    public Vector2? RepairReposition;
+    [AutoPausedField]
+    public TimeSpan RepairRepositionDeadline;
+    [AutoPausedField]
+    public TimeSpan NextRepairReposition;
+    /// <summary>Bounded access audit; an inconclusive closing job yields to other repairs.</summary>
+    [AutoPausedField]
+    public TimeSpan ClosureDeadline;
     public ShipRepairPlan? Plan;
     public ShipRepairPathSearch? Search;
     public readonly List<Vector2> Path = new();
@@ -215,7 +246,6 @@ public sealed partial class ShipRepairDroneComponent : Component
     /// <summary>Recently failed approaches are not immediately selected again.</summary>
     [AutoPausedField]
     public readonly Dictionary<Vector2i, TimeSpan> FailedPositions = new();
-    public readonly HashSet<EntityUid> BlockedDoors = new();
     public int EjectRing = 1;
     public PhysShapeCircle? ClearanceShape;
     public PhysShapeCircle? RecoveryShape;

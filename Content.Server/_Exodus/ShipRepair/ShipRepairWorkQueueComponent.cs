@@ -13,8 +13,18 @@ public sealed partial class ShipRepairWorkQueueComponent : Component
     public int Revision = -1;
     public readonly HashSet<EntityUid> Drones = new();
     public readonly List<ShipRepairTarget> Entries = new();
-    public readonly Queue<ShipRepairTarget> Pending = new();
-    public readonly HashSet<ShipRepairTarget> PendingSet = new();
+    public readonly Dictionary<Vector2i, List<ShipRepairTarget>> EntriesByTile = new();
+    public readonly Dictionary<ShipRepairTarget, ShipRepairStage> TargetStages = new();
+    public readonly Dictionary<int, ShipRepairStage> PaletteStages = new();
+    public readonly Dictionary<ShipRepairStage, ShipRepairStageQueue> Stages = new();
+    public int StageRetryRevision;
+    /// <summary>Only newly discovered damage can preempt travel to an already assigned later stage.</summary>
+    public int WorkRevision;
+
+    /// <summary>Retry deferred stages even without a geometry change. Runtime only.</summary>
+    [AutoPausedField]
+    public TimeSpan NextStageRetry;
+
     public readonly Dictionary<ShipRepairTarget, EntityUid> Reservations = new();
     public readonly Dictionary<EntityUid, EntityUid> ClearableReservations = new();
 
@@ -39,6 +49,28 @@ public sealed partial class ShipRepairWorkQueueComponent : Component
 
     [DataField, AutoPausedField]
     public TimeSpan NextScan;
+}
+
+/// <summary>Only damaged/missing entries; swap removal keeps a bounded candidate scan cheap.</summary>
+public sealed class ShipRepairStageQueue
+{
+    public readonly List<ShipRepairTarget> Targets = new();
+    public readonly Dictionary<ShipRepairTarget, int> Indices = new();
+    public readonly Dictionary<Vector2i, int> TileCounts = new();
+    public readonly HashSet<ShipRepairTarget> Reserved = new();
+    public int Revision;
+    /// <summary>Grid work revision when a new damaged entry was last added to this stage.</summary>
+    public int DiscoveryRevision;
+}
+
+/// <summary>A drone's incremental eligibility pass. Exhaustion defers work, never declares it repaired.</summary>
+public sealed class ShipRepairStageProbe
+{
+    public int Revision = -1;
+    public int SnapshotRevision = -1;
+    public int RetryRevision = -1;
+    public int Cursor;
+    public int Remaining;
 }
 
 /// <summary>A fully explored side of a failed search, not a timeout. Bounded and discarded on geometry changes.</summary>

@@ -132,7 +132,7 @@ public sealed partial class ShipRepairDroneSystem
                 continue;
             if (queue.Reservations.TryGetValue(work.Target, out var owner) && owner == ent.Owner)
             {
-                queue.Reservations.Remove(work.Target);
+                ReleaseWorkReservation(ent, queue, work.Target);
                 EnqueueWork(queue, work.Target);
             }
             plan.Work.RemoveAt(i);

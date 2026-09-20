@@ -50,3 +50,59 @@
   - type: ShipRepairable
     repairTime: 8
     repairCost: 20
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationStandard
+  suffix: Standard, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationFleetTSF
+  suffix: TSF, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationFleetPDV
+  suffix: PDV, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationAsakim
+  suffix: Asakim, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim

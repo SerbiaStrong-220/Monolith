@@ -163,13 +163,18 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
 
         // Split expensive path expansion across drones and ticks instead of a synchronous full-ship search.
         var searches = 0;
+        var closures = 0;
         var searchQuery = EntityQueryEnumerator<ShipRepairDroneComponent>();
         while (searchQuery.MoveNext(out _, out var searching))
         {
             if (searching.Enabled && searching.Search != null && _timing.CurTime >= searching.NextUpdate)
                 searches++;
+            if (searching.Enabled && searching.ClosureCheck != null && _timing.CurTime >= searching.NextUpdate)
+                closures++;
         }
         var pathQuota = Math.Max(1, 256 / Math.Max(1, searches));
+        _closureQuota = Math.Max(1, 128 / Math.Max(1, closures));
+        _closureBudget = 256;
         var query = EntityQueryEnumerator<ShipRepairDroneComponent, ShipRepairToolComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var drone, out var tool, out var xform))
         {
@@ -249,10 +254,30 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
             }
 
             drone.WaitingForShip = false;
-            if (drone.RepairDoAfter != null || drone.ClearDoAfter != null)
+            if (drone.ClearDoAfter != null)
                 continue;
+            if (drone.RepairDoAfter != null)
+            {
+                UpdateRepairTimer(ent, (uid, tool), (grid, data), queue);
+                if (drone.RepairDoAfter != null && drone.ClosureCheck != null && drone.Plan is { } runningPlan)
+                    CheckRepairClosure(ent, (uid, tool), (grid, data), queue, runningPlan, cancelOnFailure: false);
+                continue;
+            }
 
-            if (drone.PryDoAfter == null && UpdateClearanceRecovery(ent, grid, queue, xform))
+            if (drone.RepairReady && drone.Plan is { } completedPlan)
+            {
+                FinishRepair(ent, (uid, tool), (grid, data), queue, completedPlan);
+                continue;
+            }
+
+            // Finish a running repair, but redirect travel/preparation after earlier damage appears.
+            if (ShouldYieldRepairStage(ent, (grid, queue)))
+            {
+                CancelJob(ent);
+                drone.NextSearch = _timing.CurTime;
+            }
+
+            if (UpdateNearbyDoors(ent, grid, queue) || UpdateClearanceRecovery(ent, grid, queue, xform))
                 continue;
 
             if (drone.Target == null && !drone.Yielding)

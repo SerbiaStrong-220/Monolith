@@ -5,7 +5,6 @@ using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Physics;
-using Content.Shared.Prying.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -70,6 +69,11 @@ public sealed partial class ShipRepairDroneSystem
         };
         var center = work.Target.Tile;
         var approachRadius = Math.Max(1, ent.Comp.RepairRadius + 1);
+        if (ent.Comp.BatchWorkPosition is { } batchPosition)
+        {
+            center = _map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, batchPosition));
+            approachRadius = 0;
+        }
         // Prefer existing free positions. A foam-covered room may require clearing a work position
         // first; even a phase drone must approach that position physically to dismantle the foam.
         for (var pass = 0; pass < 2 && search.Goals.Count == 0; pass++)
@@ -78,7 +82,7 @@ public sealed partial class ShipRepairDroneSystem
             for (var x = -approachRadius; x <= approachRadius; x++)
             {
                 // Stay beside the target: never reconstruct a wall around our own body.
-                if (x == 0 && y == 0 && !work.Underfloor)
+                if (ent.Comp.BatchWorkPosition == null && x == 0 && y == 0 && !work.Underfloor)
                     continue;
                 var tile = center + new Vector2i(x, y);
                 var point = _map.TileCenterToVector(grid, mapGrid, tile);
@@ -288,25 +292,15 @@ public sealed partial class ShipRepairDroneSystem
             else
                 TryLeavePhase(ent, eject: false);
         }
-        else if (!IsSegmentClear(ent, grid, position, next, true, out var door))
+        else if (!IsSegmentClear(ent, grid, position, next, true, out var door, obstacles: _passageObstacles))
         {
             Repath(ent, tool, grid, queue);
             return;
         }
-        else if (door is { } doorUid)
+        else if (door != null)
         {
             StopMoving(ent);
-            if (CanDroneClear(ent, grid, doorUid))
-            {
-                if (!TryStartClearance(ent, grid, queue, doorUid, forReplacement: false))
-                    Repath(ent, tool, grid, queue);
-                return;
-            }
-            if (!HandleDoor(ent, doorUid))
-            {
-                ent.Comp.BlockedDoors.Add(doorUid);
-                Repath(ent, tool, grid, queue);
-            }
+            OpenDronePassage(ent, grid, queue);
             return;
         }
 
@@ -318,6 +312,9 @@ public sealed partial class ShipRepairDroneSystem
     private bool CanWorkHere(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 position)
     {
         if (ent.Comp.Plan is not { } plan || plan.Work.Count == 0 || ent.Comp.Phased)
+            return false;
+        if (ent.Comp.BatchWorkPosition is { } destination &&
+            Vector2.DistanceSquared(position, destination) > ent.Comp.ArrivalRange * ent.Comp.ArrivalRange)
             return false;
         foreach (var work in plan.Work)
         {
@@ -357,6 +354,8 @@ public sealed partial class ShipRepairDroneSystem
             FailJob(ent);
             return;
         }
+        if (HandleBatchApproachFailure(ent, grid, queue))
+            return;
         if (ent.Comp.WorkTile is { } tile)
             ent.Comp.FailedPositions[tile] = _timing.CurTime + ent.Comp.RetryInterval;
         if (ent.Comp.Yielding || ++ent.Comp.Repaths > ent.Comp.RepathLimit || ent.Comp.Target is not { } target ||
@@ -379,6 +378,8 @@ public sealed partial class ShipRepairDroneSystem
         // checked again before travel, and a search across geometry revisions cannot prove unreachability.
         if (_timing.CurTime >= ent.Comp.SearchDeadline)
         {
+            if (HandleBatchApproachFailure(ent, grid, queue))
+                return;
             DeferSearch(ent);
             return;
         }
@@ -386,6 +387,8 @@ public sealed partial class ShipRepairDroneSystem
         {
             if (search.Forward.Closed.Count + search.Reverse.Closed.Count >= ent.Comp.PathNodeLimit)
             {
+                if (HandleBatchApproachFailure(ent, grid, queue))
+                    return;
                 DeferSearch(ent);
                 return;
             }
@@ -402,7 +405,12 @@ public sealed partial class ShipRepairDroneSystem
                     return;
                 }
                 if (ent.Comp.Command == ShipRepairDroneCommand.Repair)
+                {
+                    // One preferred fleet position failing does not prove the repair target unreachable.
+                    if (HandleBatchApproachFailure(ent, grid, queue))
+                        return;
                     RememberUnreachable(ent, queue, search, frontier.Closed, search.ReverseTurn);
+                }
                 FailJob(ent);
                 return;
             }
@@ -437,6 +445,23 @@ public sealed partial class ShipRepairDroneSystem
                 frontier.Open.Enqueue(next, cost + heuristic);
             }
         }
+    }
+
+    /// <summary>Returns true when this was a preferred fleet approach and its failure was handled.</summary>
+    private bool HandleBatchApproachFailure(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
+        ShipRepairWorkQueueComponent queue)
+    {
+        if (ent.Comp.BatchWorkPosition is not { } position || ent.Comp.Plan is not { Work.Count: > 0 } plan ||
+            !_snapshotQuery.TryGetComponent(grid, out var data) || !_mapGridQuery.TryGetComponent(grid, out var mapGrid))
+            return false;
+        ent.Comp.FailedPositions[_map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, position))] =
+            _timing.CurTime + ent.Comp.RetryInterval;
+        ent.Comp.BatchWorkPosition = null;
+        // Retain the reserved work but permit a smaller reachable packet from another approach.
+        if (++ent.Comp.Repaths <= ent.Comp.RepathLimit && StartNavigation(ent, (grid, data), queue, plan.Work[0]))
+            return true;
+        FailJob(ent);
+        return true;
     }
 
     private void FinishPath(Entity<ShipRepairDroneComponent> ent, EntityUid grid, ShipRepairWorkQueueComponent queue,
@@ -474,23 +499,6 @@ public sealed partial class ShipRepairDroneSystem
         FailJob(ent);
     }
 
-    private bool HandleDoor(Entity<ShipRepairDroneComponent> ent, EntityUid uid)
-    {
-        if (!TryComp<DoorComponent>(uid, out var door))
-            return false;
-        if (door.State is DoorState.Open or DoorState.Opening)
-            return true;
-        if (_doors.TryOpen(uid, door, ent, quiet: true))
-            return true;
-
-        // TryPry's boolean also means "interaction handled" on rejection; the DoAfter ID is authoritative.
-        EnsureComp<ShipRepairDronePryTargetComponent>(uid);
-        _prying.TryPry(uid, ent, out var id, ent);
-        ent.Comp.PryDoAfter = id;
-        ent.Comp.PryTarget = id != null ? uid : null;
-        return id != null;
-    }
-
     private bool IsClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 position,
         ShipRepairPathSearch? search = null, bool allowClearables = false)
     {
@@ -520,9 +528,11 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private bool IsSegmentClear(Entity<ShipRepairDroneComponent> ent, EntityUid grid, Vector2 start, Vector2 end,
-        bool allowDoors, out EntityUid? door, ShipRepairPathSearch? search = null, bool recovering = false)
+        bool allowDoors, out EntityUid? door, ShipRepairPathSearch? search = null, bool recovering = false,
+        List<EntityUid>? obstacles = null, bool staticOnly = false)
     {
         door = null;
+        obstacles?.Clear();
         var obstacleDistance = float.PositiveInfinity;
         var from = _transform.ToMapCoordinates(new EntityCoordinates(grid, start));
         var to = _transform.ToMapCoordinates(new EntityCoordinates(grid, end));
@@ -546,11 +556,14 @@ public sealed partial class ShipRepairDroneSystem
         }
         foreach (var uid in _intersections)
         {
+            if (staticOnly && (!_bodyQuery.TryGetComponent(uid, out var body) || body.BodyType != BodyType.Static))
+                continue;
             if (!BlocksDrone(ent, uid))
                 continue;
             TrackSearchObstruction(search, grid, uid);
             if (allowDoors && CanDroneClear(ent, grid, uid))
             {
+                obstacles?.Add(uid);
                 if (search != null)
                     search.TransientObstruction = true;
                 var foamDistance = Vector2.DistanceSquared(from.Position, _transform.GetWorldPosition(uid));
@@ -561,20 +574,13 @@ public sealed partial class ShipRepairDroneSystem
                 }
                 continue;
             }
-            if (!allowDoors || !TryComp<DoorComponent>(uid, out var blockedDoor))
+            if (!allowDoors || !_droneDoorQuery.TryGetComponent(uid, out var blockedDoor))
                 return false;
 
-            // Opening doors can still collide during the first animation phase. Wait for the
-            // collision to disappear, without rechecking access or blacklisting that passage.
-            if (blockedDoor.State != DoorState.Opening && ent.Comp.BlockedDoors.Contains(uid))
+            // Capability belongs in pathfinding; interaction reach is checked for each door on arrival.
+            if (!CanDroneOpenDoor(ent, (uid, blockedDoor)))
                 return false;
-            if (blockedDoor.State != DoorState.Opening && !_doors.CanOpen(uid, blockedDoor, ent))
-            {
-                var canPry = new BeforePryEvent(ent, true, false, true);
-                RaiseLocalEvent(uid, ref canPry);
-                if (canPry.Cancelled)
-                    return false;
-            }
+            obstacles?.Add(uid);
             var distance = Vector2.DistanceSquared(from.Position, _transform.GetWorldPosition(uid));
             if (distance < obstacleDistance)
             {

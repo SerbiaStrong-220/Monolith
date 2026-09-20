@@ -33,7 +33,7 @@ public sealed partial class ShipRepairDroneSystem
             return;
         if (ent.Comp.ClearDoAfter != null)
             return;
-        if (ent.Comp.PryDoAfter == null && UpdateClearanceRecovery(ent, grid, queue, xform))
+        if (UpdateNearbyDoors(ent, grid, queue) || UpdateClearanceRecovery(ent, grid, queue, xform))
             return;
         if (ent.Comp.Search == null && ent.Comp.Path.Count == 0)
         {
@@ -66,7 +66,6 @@ public sealed partial class ShipRepairDroneSystem
         if (!_mapGridQuery.TryGetComponent(grid, out var mapGrid))
             return false;
         CancelJob(ent);
-        ent.Comp.BlockedDoors.Clear();
         ent.Comp.ReturnBlocked = false;
         ent.Comp.NavigationDeadline = _timing.CurTime + ent.Comp.NavigationTimeout;
         ent.Comp.SearchDeadline = _timing.CurTime + ent.Comp.ExtendedSearchTimeout;

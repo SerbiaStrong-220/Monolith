@@ -11,21 +11,45 @@ public sealed partial class ShipRepairDroneSystem
 
     private static void EnqueueWork(ShipRepairWorkQueueComponent queue, ShipRepairTarget target)
     {
-        if (queue.PendingSet.Add(target))
-            queue.Pending.Enqueue(target);
+        if (!queue.TargetStages.TryGetValue(target, out var stage))
+            return;
+        var pending = queue.Stages[stage];
+        if (pending.Indices.TryAdd(target, pending.Targets.Count))
+        {
+            pending.Targets.Add(target);
+            ChangeWorkTileCount(pending, target.Tile, 1);
+            pending.Revision++;
+            pending.DiscoveryRevision = ++queue.WorkRevision;
+        }
+        if (queue.Reservations.ContainsKey(target))
+            pending.Reserved.Add(target);
     }
 
     private void ReleaseWorkReservations(Entity<ShipRepairDroneComponent> ent, ShipRepairWorkQueueComponent queue)
     {
-        if (ent.Comp.Plan == null)
+        if (ent.Comp.Plan is not { } plan)
             return;
-        foreach (var work in ent.Comp.Plan.Work)
+        _snapshotQuery.TryGetComponent(plan.Grid, out var data);
+        foreach (var work in plan.Work)
         {
             if (!queue.Reservations.TryGetValue(work.Target, out var owner) || owner != ent.Owner)
                 continue;
             queue.Reservations.Remove(work.Target);
-            EnqueueWork(queue, work.Target);
+            if (queue.TargetStages.TryGetValue(work.Target, out var stage) && queue.Stages[stage].Reserved.Remove(work.Target))
+                queue.Stages[stage].Revision++;
+            if (plan.Revision == queue.Revision && data != null)
+                RefreshQueuedWork((plan.Grid, data), queue, work.Target);
         }
+    }
+
+    private void ReleaseWorkReservation(Entity<ShipRepairDroneComponent> ent, ShipRepairWorkQueueComponent queue,
+        ShipRepairTarget target)
+    {
+        if (!queue.Reservations.TryGetValue(target, out var owner) || owner != ent.Owner)
+            return;
+        queue.Reservations.Remove(target);
+        if (queue.TargetStages.TryGetValue(target, out var stage) && queue.Stages[stage].Reserved.Remove(target))
+            queue.Stages[stage].Revision++;
     }
 
     private static void ReleaseWorkPosition(Entity<ShipRepairDroneComponent> ent, ShipRepairWorkQueueComponent queue)
@@ -43,16 +67,14 @@ public sealed partial class ShipRepairDroneSystem
             return false;
 
         // A work position must not occupy another construction site (including this drone's own batch).
-        var clearance = 0.5f + ent.Comp.Clearance;
         foreach (var uid in queue.Drones)
         {
             if (!_droneQuery.TryGetComponent(uid, out var drone) || drone.Plan == null)
                 continue;
             foreach (var work in drone.Plan.Work)
             {
-                if (work.Operation == ShipRepairOperation.Restore && !work.Underfloor &&
-                    queue.Reservations.TryGetValue(work.Target, out var worker) && worker == uid &&
-                    Vector2.DistanceSquared(position, work.Position) < clearance * clearance)
+                if (queue.Reservations.TryGetValue(work.Target, out var worker) && worker == uid &&
+                    WorkOverlapsDrone(ent, work, position))
                     return false;
             }
         }

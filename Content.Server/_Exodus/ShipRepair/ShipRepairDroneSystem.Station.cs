@@ -322,8 +322,9 @@ public sealed partial class ShipRepairDroneSystem
         drone.Comp.ExitBlocked = false;
         drone.Comp.FailedTargets.Clear();
         drone.Comp.FailedPositions.Clear();
-        drone.Comp.BlockedDoors.Clear();
         drone.Comp.DeferredSearches.Clear();
+        drone.Comp.StageProbes.Clear();
+        drone.Comp.RecoveringDoor = false;
         drone.Comp.NavigationIssue = ShipRepairNavigationIssue.None;
         drone.Comp.FailureOrigin = null;
         drone.Comp.NextSearch = _timing.CurTime;
@@ -361,7 +362,9 @@ public sealed partial class ShipRepairDroneSystem
             return ShipRepairDroneStatus.WaitingForShip;
         if (comp.ClearDoAfter != null)
             return ShipRepairDroneStatus.Clearing;
-        if (comp.RepairDoAfter != null)
+        if (comp.RepairReposition != null)
+            return ShipRepairDroneStatus.Moving;
+        if (comp.RepairDoAfter != null || comp.RepairReady)
             return ShipRepairDroneStatus.Repairing;
         if (comp.PryDoAfter != null)
             return ShipRepairDroneStatus.Prying;

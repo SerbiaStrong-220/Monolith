@@ -100,10 +100,11 @@ public abstract partial class SharedShipRepairSystem
     /// <summary>
     /// Quotes one operation using normal SRD times and restrictions. Navigation may defer mobile occupancy
     /// checks until arrival; completion always checks them, including the repairer's own body.
+    /// Access audits may disable occupancy checks to protect work temporarily blocked by unrelated objects.
     /// </summary>
     public bool TryPlanRepair(Entity<ShipRepairToolComponent> tool, Entity<ShipRepairDataComponent> grid,
         ShipRepairTarget target, bool healDamage, out ShipRepairWork work, bool checkMobileObstructions = true,
-        bool checkTileSupport = true, bool allowClearables = false)
+        bool checkTileSupport = true, bool allowClearables = false, bool checkObstructions = true)
     {
         work = default!;
         if (!CanRepairGrid(tool, grid) || !_repairGridQuery.TryGetComponent(grid, out var mapGrid) ||
@@ -166,7 +167,7 @@ public abstract partial class SharedShipRepairSystem
             original = null;
 
         _quotedClearables.Clear();
-        if (operation == ShipRepairOperation.Restore &&
+        if (operation == ShipRepairOperation.Restore && checkObstructions &&
             IsRepairPositionOccupied(grid, chunk, id, spec, prototype, checkMobileObstructions,
                 allowClearables ? _quotedClearables : null, collectClearables: allowClearables))
             return false;
@@ -180,8 +181,10 @@ public abstract partial class SharedShipRepairSystem
             Duration = TimeSpan.FromSeconds(repairable.RepairTime * tool.Comp.RepairTimeMultiplier),
             Cost = repairable.RepairCost,
             Original = original,
+            SnapshotOriginal = spec.OriginalEntity,
             Damage = damage,
             Prototype = prototype.ID,
+            CollisionFixtures = operation == ShipRepairOperation.Restore ? GetRepairCollisionFixtures(prototype) : null,
             Rotation = spec.Rotation,
             Stage = GetRepairStage(prototype),
             Underfloor = prototype.HasComponent<SubFloorHideComponent>(Factory),
@@ -237,6 +240,29 @@ public abstract partial class SharedShipRepairSystem
         return duration / Math.Max(0.01f, throughput);
     }
 
+    /// <summary>Whether the original quoted work remains, without charging time for a replacement or new damage.</summary>
+    public bool IsQuotedRepairPending(Entity<ShipRepairDataComponent> grid, ShipRepairWork work)
+    {
+        if (!NeedsSnapshotRepair(grid, work.Target))
+            return false;
+        if (work.Target.EntityId is not { } id)
+            return true;
+        if (!TryGetChunk(grid.Comp, work.Target.Tile, out var chunk) ||
+            !chunk.Entities.TryGetValue(id, out var spec) || spec.OriginalEntity != work.SnapshotOriginal)
+            return false;
+        if (work.Operation != ShipRepairOperation.Heal)
+            return true;
+        if (work.Original is not { } original || TerminatingOrDeleted(original) || work.Damage == null ||
+            !_repairDamageQuery.TryGetComponent(original, out var damage))
+            return false;
+        foreach (var (type, amount) in work.Damage.DamageDict)
+        {
+            if (amount > 0 && damage.Damage.DamageDict.TryGetValue(type, out var remaining) && remaining > 0)
+                return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// Commits only the quoted operation. Rechecks snapshot, restrictions, original and occupied space.
     /// Charge consumption belongs here, so partially invalidated batches never charge for skipped work.
@@ -246,6 +272,7 @@ public abstract partial class SharedShipRepairSystem
     {
         if (!_net.IsServer || !TryComp<ShipRepairDataComponent>(plan.Grid, out var data) ||
             data.Revision != plan.Revision || !CanRepairGrid(tool, plan.Grid) ||
+            !IsQuotedRepairPending((plan.Grid, data), work) ||
             _charges.HasInsufficientCharges(tool, work.Cost) ||
             !TryPlanRepair(tool, (plan.Grid, data), work.Target, work.Operation == ShipRepairOperation.Heal, out var current,
                 allowClearables: clearObstructions) ||
@@ -323,6 +350,12 @@ public abstract partial class SharedShipRepairSystem
         prototype = resolved;
         repairable = repair;
         return true;
+    }
+
+    /// <summary>Read-only collision geometry of the quoted reconstruction, including repair replacements.</summary>
+    public FixturesComponent? GetRepairCollisionFixtures(ShipRepairWork work)
+    {
+        return work.CollisionFixtures;
     }
 
     private FixturesComponent? GetRepairCollisionFixtures(EntityPrototype prototype)

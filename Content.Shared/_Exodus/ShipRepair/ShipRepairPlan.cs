@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Damage;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.ShipRepair;
@@ -20,6 +21,7 @@ public enum ShipRepairStage : byte
     Underfloor,
     Power,
     Structure,
+    Enclosure,
 }
 
 /// <summary>
@@ -34,8 +36,12 @@ public sealed class ShipRepairWork
     public required TimeSpan Duration;
     public required int Cost;
     public EntityUid? Original;
+    /// <summary>Identity of the snapshot entry when quoted, including a deleted original.</summary>
+    public NetEntity? SnapshotOriginal;
     public DamageSpecifier? Damage;
     public EntProtoId? Prototype;
+    /// <summary>Read-only prototype geometry resolved once for navigation and closure checks.</summary>
+    public FixturesComponent? CollisionFixtures;
     public Angle Rotation;
     public int? TileType;
     public ShipRepairStage Stage;
