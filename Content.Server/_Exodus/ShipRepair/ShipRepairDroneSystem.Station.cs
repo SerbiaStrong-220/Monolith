@@ -1,8 +1,12 @@
+using Content.Server.Power.Components;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Construction;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -17,12 +21,18 @@ public sealed partial class ShipRepairDroneSystem
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPowerReceiverSystem _stationPower = default!;
+
+    private EntityQuery<ApcPowerReceiverComponent> _stationReceiverQuery;
 
     private void InitializeStations()
     {
+        _stationReceiverQuery = GetEntityQuery<ApcPowerReceiverComponent>();
+
         SubscribeLocalEvent<ShipRepairStationComponent, MapInitEvent>(OnStationInit);
         SubscribeLocalEvent<ShipRepairStationComponent, ComponentShutdown>(OnStationShutdown);
         SubscribeLocalEvent<ShipRepairStationComponent, AnchorStateChangedEvent>(OnStationAnchor);
+        SubscribeLocalEvent<ShipRepairStationComponent, PowerChangedEvent>(OnStationPowerChanged);
         SubscribeLocalEvent<ShipRepairStationComponent, DragDropTargetEvent>(OnStationDrop, before: new[] { typeof(ClimbSystem) });
         SubscribeLocalEvent<ShipRepairStationComponent, GetVerbsEvent<Verb>>(OnStationLoadVerbs);
         SubscribeLocalEvent<ShipRepairStationComponent, ContainerIsInsertingAttemptEvent>(OnStationInsertAttempt);
@@ -33,6 +43,7 @@ public sealed partial class ShipRepairDroneSystem
 
     private void OnStationInit(Entity<ShipRepairStationComponent> ent, ref MapInitEvent args)
     {
+        _stationPower.SetPowerDisabled(ent, !Transform(ent).Anchored);
         var container = _containers.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
         foreach (var uid in container.ContainedEntities)
         {
@@ -50,7 +61,9 @@ public sealed partial class ShipRepairDroneSystem
         return !TerminatingOrDeleted(station) && !EntityManager.IsQueuedForDeletion(station) &&
                _xformQuery.TryGetComponent(station, out var xform) &&
                xform.Anchored && xform.GridUid is { } grid && !TerminatingOrDeleted(grid) &&
-               _mapGridQuery.HasComponent(grid);
+               _mapGridQuery.HasComponent(grid) &&
+               _stationReceiverQuery.TryGetComponent(station, out var receiver) &&
+               !receiver.PowerDisabled && receiver.Powered;
     }
 
     private bool TryGetStation(Entity<ShipRepairDroneComponent> drone, out Entity<ShipRepairStationComponent> station)
@@ -149,6 +162,14 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private void OnStationAnchor(Entity<ShipRepairStationComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        // An unanchored station is switched off, preserving its charge during transport.
+        _stationPower.SetPowerDisabled(ent, !args.Anchored);
+        RefreshStation(ent);
+        UpdateStationUi(ent);
+    }
+
+    private void OnStationPowerChanged(Entity<ShipRepairStationComponent> ent, ref PowerChangedEvent args)
     {
         RefreshStation(ent);
         UpdateStationUi(ent);
@@ -373,8 +394,15 @@ public sealed partial class ShipRepairDroneSystem
                 Math.Max(0, (int) Math.Ceiling((comp.NextRecall - _timing.CurTime).TotalSeconds))));
         }
         var active = IsStationActive(station);
+        var anchored = Transform(station).Anchored;
+        var batteryPowered = active && TryComp<ApcPowerReceiverBatteryComponent>(station, out var backup) && backup.Enabled;
+        var batteryPercent = 0;
+        if (TryComp<BatteryComponent>(station, out var battery) && battery.MaxCharge > 0)
+            batteryPercent = (int) Math.Clamp(Math.Ceiling(battery.CurrentCharge / battery.MaxCharge * 100), 0, 100);
         var old = station.Comp.LastUiState;
-        if (!force && old != null && old.Active == active && old.Capacity == station.Comp.Capacity && old.Drones.Count == drones.Count)
+        if (!force && old != null && old.Active == active && old.Anchored == anchored &&
+            old.BatteryPowered == batteryPowered && old.BatteryPercent == batteryPercent &&
+            old.Capacity == station.Comp.Capacity && old.Drones.Count == drones.Count)
         {
             var same = true;
             for (var i = 0; i < drones.Count; i++)
@@ -382,7 +410,7 @@ public sealed partial class ShipRepairDroneSystem
             if (same)
                 return;
         }
-        var state = new ShipRepairStationUiState(active, station.Comp.Capacity, drones);
+        var state = new ShipRepairStationUiState(active, anchored, batteryPowered, batteryPercent, station.Comp.Capacity, drones);
         station.Comp.LastUiState = state;
         _ui.SetUiState(station.Owner, ShipRepairStationUiKey.Key, state);
     }

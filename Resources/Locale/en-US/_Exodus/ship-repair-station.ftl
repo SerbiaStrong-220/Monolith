@@ -1,9 +1,14 @@
 ent-ShipRepairDroneStation = repair drone station
-    .desc = A self-powered base for five repair drones. Anchor it aboard a ship to operate. Load a nearby switched-off drone through the station's context menu or by dragging it onto the station.
+    .desc = A base for five repair drones with an internal battery providing 15 minutes of operation. Anchor it aboard a ship to charge from the power network or run on battery when external power is unavailable. Unanchoring preserves its charge. Load a nearby switched-off drone through the station's context menu or by dragging it onto the station.
 ship-repair-station-title = Repair drone station
 ship-repair-station-all = Commands for all drones
 ship-repair-station-ready = Station active. Reserved berths: { $count } / { $capacity }.
 ship-repair-station-unanchored = Station unanchored. Reserved berths: { $count } / { $capacity }.
+ship-repair-station-unpowered = Station unpowered. Reserved berths: { $count } / { $capacity }.
+ship-repair-station-battery-charge = Battery: { $percent }%
+ship-repair-station-power-grid = Running on grid power
+ship-repair-station-power-battery = Running on battery
+ship-repair-station-power-off = Power off
 ship-repair-station-enable = Enable
 ship-repair-station-disable = Disable
 ship-repair-station-repair = Repair

@@ -1,8 +1,8 @@
 - type: entity
-  parent: BaseMachine
+  parent: BaseMachinePowered
   id: ShipRepairDroneStation
   name: repair drone station
-  description: A self-powered base with five reserved berths for ship repair drones.
+  description: A base with five reserved berths for ship repair drones and a rechargeable backup battery.
   components:
   - type: Sprite
     sprite: _Exodus/Structures/Machines/ship_repair_station.rsi
@@ -19,6 +19,14 @@
           True: { visible: true }
           False: { visible: false }
   - type: ShipRepairStation
+  - type: ApcPowerReceiver
+    powerLoad: 50
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50
+    batteryRechargeRate: 100
+  - type: Battery
+    maxCharge: 45000 # 50 W for 15 minutes, regardless of drone count.
+    startingCharge: 45000
   - type: ContainerContainer
     containers:
       repair_drones: !type:Container

@@ -10,6 +10,9 @@ public sealed class ShipRepairStationWindow : DefaultWindow
     public event Action<ShipRepairStationAction, NetEntity?>? OnCommand;
 
     private readonly Label _summary;
+    private readonly Label _batteryLabel;
+    private readonly ProgressBar _batteryCharge;
+    private readonly Label _powerStatus;
     private readonly BoxContainer _list;
     private readonly Dictionary<NetEntity, DroneRow> _rows = new();
     private readonly List<NetEntity> _removed = new();
@@ -24,6 +27,14 @@ public sealed class ShipRepairStationWindow : DefaultWindow
         Contents.AddChild(root);
         _summary = new Label();
         root.AddChild(_summary);
+        var battery = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal, SeparationOverride = 8 };
+        _batteryLabel = new Label();
+        _batteryCharge = new ProgressBar { MinValue = 0, MaxValue = 100, MinHeight = 20, HorizontalExpand = true };
+        _powerStatus = new Label();
+        battery.AddChild(_batteryLabel);
+        battery.AddChild(_batteryCharge);
+        battery.AddChild(_powerStatus);
+        root.AddChild(battery);
         root.AddChild(new Label { Text = Loc.GetString("ship-repair-station-all") });
         var controls = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
         root.AddChild(controls);
@@ -44,8 +55,14 @@ public sealed class ShipRepairStationWindow : DefaultWindow
 
     public void UpdateState(ShipRepairStationUiState state)
     {
-        _summary.Text = Loc.GetString(state.Active ? "ship-repair-station-ready" : "ship-repair-station-unanchored",
+        var summary = !state.Anchored ? "ship-repair-station-unanchored" :
+            state.Active ? "ship-repair-station-ready" : "ship-repair-station-unpowered";
+        _summary.Text = Loc.GetString(summary,
             ("count", state.Drones.Count), ("capacity", state.Capacity));
+        _batteryLabel.Text = Loc.GetString("ship-repair-station-battery-charge", ("percent", state.BatteryPercent));
+        _batteryCharge.Value = state.BatteryPercent;
+        _powerStatus.Text = Loc.GetString(!state.Active ? "ship-repair-station-power-off" :
+            state.BatteryPowered ? "ship-repair-station-power-battery" : "ship-repair-station-power-grid");
         foreach (var button in _groupButtons.Values)
             button.Disabled = true;
         _removed.Clear();

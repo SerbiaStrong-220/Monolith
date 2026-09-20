@@ -1,9 +1,14 @@
 ent-ShipRepairDroneStation = станция ремонтных дронов
-    .desc = Автономная база на пять ремонтных дронов. Для работы закрепите станцию на корабле. Выключенного дрона рядом можно загрузить через меню станции или перетаскиванием.
+    .desc = База на пять ремонтных дронов с внутренней батареей на 15 минут работы. Закрепите станцию на корабле: при наличии питания она заряжается от сети, без него работает от батареи. Открученная станция сохраняет заряд. Выключенного дрона рядом можно загрузить через меню станции или перетаскиванием.
 ship-repair-station-title = Станция ремонтных дронов
 ship-repair-station-all = Команды всем дронам
 ship-repair-station-ready = Станция активна. Занято ячеек: { $count } / { $capacity }.
 ship-repair-station-unanchored = Станция не закреплена. Занято ячеек: { $count } / { $capacity }.
+ship-repair-station-unpowered = Станция без питания. Занято ячеек: { $count } / { $capacity }.
+ship-repair-station-battery-charge = Батарея: { $percent }%
+ship-repair-station-power-grid = Питание от сети
+ship-repair-station-power-battery = Питание от батареи
+ship-repair-station-power-off = Питание отключено
 ship-repair-station-enable = Включить
 ship-repair-station-disable = Выключить
 ship-repair-station-repair = Ремонт

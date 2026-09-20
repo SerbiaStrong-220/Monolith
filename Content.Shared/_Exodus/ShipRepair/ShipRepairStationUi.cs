@@ -75,10 +75,19 @@ public readonly record struct ShipRepairStationDroneInfo(
     int RecallSeconds);
 
 [Serializable, NetSerializable]
-public sealed class ShipRepairStationUiState(bool active, int capacity, List<ShipRepairStationDroneInfo> drones)
+public sealed class ShipRepairStationUiState(
+    bool active,
+    bool anchored,
+    bool batteryPowered,
+    int batteryPercent,
+    int capacity,
+    List<ShipRepairStationDroneInfo> drones)
     : BoundUserInterfaceState
 {
     public readonly bool Active = active;
+    public readonly bool Anchored = anchored;
+    public readonly bool BatteryPowered = batteryPowered;
+    public readonly int BatteryPercent = batteryPercent;
     public readonly int Capacity = capacity;
     public readonly List<ShipRepairStationDroneInfo> Drones = drones;
 }
