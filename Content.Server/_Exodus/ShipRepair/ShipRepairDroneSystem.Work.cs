@@ -3,14 +3,19 @@ using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Physics;
+using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.ShipRepair;
 
 public sealed partial class ShipRepairDroneSystem
 {
+    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
+    private static readonly ProtoId<TagPrototype> WindowTag = "Window";
+
     // Scratch space for rechecking a batch while a mobile obstruction is leaving.
     private readonly List<ShipRepairWork> _readyWork = new();
 
@@ -416,9 +421,12 @@ public sealed partial class ShipRepairDroneSystem
         var destination = _transform.ToMapCoordinates(new EntityCoordinates(grid, work.Position));
         var delta = destination.Position - origin.Position;
         var range = ent.Comp.RepairRange + ent.Comp.RepairRadius * 1.42f;
-        if (origin.MapId != destination.MapId || delta.LengthSquared() > range * range)
+        if (origin.MapId != destination.MapId)
             return false;
         var local = _transform.ToCoordinates(grid, origin).Position;
+        var allowStructuralObstructedAccess = CanReachStructuralWorkThroughObstruction(ent, grid, work, local);
+        if (delta.LengthSquared() > range * range && !allowStructuralObstructedAccess)
+            return false;
         if (WorkOverlapsDrone(ent, work, local))
             return false;
         if (delta.LengthSquared() < 0.0001f)
@@ -462,9 +470,35 @@ public sealed partial class ShipRepairDroneSystem
                 _repair.IsRepairSnapshotNeighbour(grid, work.Target, hit.HitEntity))
                 continue;
             TrackSearchObstruction(search, grid, hit.HitEntity);
+            if (allowStructuralObstructedAccess && IsStaticHullObstacle(grid, hit.HitEntity))
+                continue;
             return false;
         }
         return true;
+    }
+
+    private bool CanReachStructuralWorkThroughObstruction(Entity<ShipRepairDroneComponent> ent, EntityUid grid,
+        ShipRepairWork work, Vector2 localOrigin)
+    {
+        if (!work.AllowStructuralObstructedAccess || ent.Comp.StructuralRepairTileRange <= 0 ||
+            !_mapGridQuery.TryGetComponent(grid, out var mapGrid))
+            return false;
+
+        var range = ent.Comp.StructuralRepairTileRange * mapGrid.TileSize;
+        return Vector2.DistanceSquared(localOrigin, work.Position) <= range * range;
+    }
+
+    private bool IsStaticHullObstacle(EntityUid grid, EntityUid obstacle)
+    {
+        if (obstacle == grid)
+            return true;
+        if (_droneDoorQuery.HasComponent(obstacle) || _droneFirelockQuery.HasComponent(obstacle))
+            return false;
+        if (!_bodyQuery.TryGetComponent(obstacle, out var body) || body.BodyType != BodyType.Static ||
+            !_xformQuery.TryGetComponent(obstacle, out var xform) || xform.GridUid != grid)
+            return false;
+
+        return _tags.HasTag(obstacle, WallTag) || _tags.HasTag(obstacle, WindowTag);
     }
 
     private void FailJob(Entity<ShipRepairDroneComponent> ent)

@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.NPC;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Systems;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -39,6 +40,7 @@ public sealed partial class ShipRepairDroneSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private TagSystem _tags = default!;
 
     private EntityQuery<ShipRepairWorkQueueComponent> _queueQuery;
     private EntityQuery<TransformComponent> _xformQuery;

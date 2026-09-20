@@ -46,6 +46,8 @@ public sealed class ShipRepairWork
     public int? TileType;
     public ShipRepairStage Stage;
     public bool Underfloor;
+    /// <summary>Allows static wall or window obstructions between the drone and this hull target.</summary>
+    public bool AllowStructuralObstructedAccess;
     public Angle? WallMountArc;
     public Angle WallMountDirection;
 

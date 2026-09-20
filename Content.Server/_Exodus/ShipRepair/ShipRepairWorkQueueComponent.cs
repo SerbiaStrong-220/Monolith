@@ -86,5 +86,6 @@ public sealed class ShipRepairUnreachableRegion
     public float BodyRadius;
     public float RepairRange;
     public int RepairRadius;
+    public float StructuralRepairTileRange;
     public float ExteriorMargin;
 }

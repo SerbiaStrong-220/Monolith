@@ -69,6 +69,8 @@ public sealed partial class ShipRepairDroneSystem
         };
         var center = work.Target.Tile;
         var approachRadius = Math.Max(1, ent.Comp.RepairRadius + 1);
+        if (work.AllowStructuralObstructedAccess)
+            approachRadius = Math.Max(approachRadius, (int) MathF.Ceiling(ent.Comp.StructuralRepairTileRange));
         if (ent.Comp.BatchWorkPosition is { } batchPosition)
         {
             center = _map.LocalToTile(grid, mapGrid, new EntityCoordinates(grid, batchPosition));

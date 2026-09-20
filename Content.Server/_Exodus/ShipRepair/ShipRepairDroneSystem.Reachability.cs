@@ -166,6 +166,7 @@ public sealed partial class ShipRepairDroneSystem
             BodyRadius = GetDroneBodyRadius(ent),
             RepairRange = ent.Comp.RepairRange,
             RepairRadius = ent.Comp.RepairRadius,
+            StructuralRepairTileRange = ent.Comp.StructuralRepairTileRange,
             ExteriorMargin = ent.Comp.ExteriorMargin,
         });
     }
@@ -182,6 +183,7 @@ public sealed partial class ShipRepairDroneSystem
             if (region.Target != work.Target || region.Clearance != ent.Comp.Clearance ||
                 region.BodyRadius != bodyRadius ||
                 region.RepairRange != ent.Comp.RepairRange || region.RepairRadius != ent.Comp.RepairRadius ||
+                region.StructuralRepairTileRange != ent.Comp.StructuralRepairTileRange ||
                 region.ExteriorMargin != ent.Comp.ExteriorMargin ||
                 region.Tiles.Contains(tile) == region.FromTarget)
                 continue;

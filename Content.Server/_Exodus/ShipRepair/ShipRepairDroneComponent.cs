@@ -26,6 +26,10 @@ public sealed partial class ShipRepairDroneComponent : Component
     [DataField]
     public float RepairRange = 1.6f;
 
+    /// <summary>Maximum distance in tiles for repairing a hull barrier through static hull obstructions.</summary>
+    [DataField]
+    public float StructuralRepairTileRange = 4f;
+
     /// <summary>Empty space included outside the saved/current hull for exterior navigation.</summary>
     [DataField]
     public float ExteriorMargin = 8f;

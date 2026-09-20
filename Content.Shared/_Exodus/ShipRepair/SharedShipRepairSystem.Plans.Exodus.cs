@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared._Exodus.ShipRepair;
 using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.Damage;
+using Content.Shared.Doors.Components;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
@@ -173,6 +174,7 @@ public abstract partial class SharedShipRepairSystem
             return false;
 
         prototype.TryGetComponent<WallMountComponent>(out var wallMount, Factory);
+        var stage = GetRepairStage(prototype);
         work = new ShipRepairWork
         {
             Target = target,
@@ -186,8 +188,10 @@ public abstract partial class SharedShipRepairSystem
             Prototype = prototype.ID,
             CollisionFixtures = operation == ShipRepairOperation.Restore ? GetRepairCollisionFixtures(prototype) : null,
             Rotation = spec.Rotation,
-            Stage = GetRepairStage(prototype),
+            Stage = stage,
             Underfloor = prototype.HasComponent<SubFloorHideComponent>(Factory),
+            AllowStructuralObstructedAccess = stage == ShipRepairStage.Enclosure &&
+                !prototype.HasComponent<DoorComponent>(Factory),
             WallMountArc = wallMount?.Arc,
             WallMountDirection = wallMount?.Direction ?? Angle.Zero,
             Clearables = _quotedClearables.Count > 0 ? new HashSet<EntityUid>(_quotedClearables) : null,
