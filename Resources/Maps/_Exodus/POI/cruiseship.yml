@@ -4,7 +4,7 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 09/21/2026 01:13:22
+  time: 09/21/2026 01:37:23
   entityCount: 1519
 maps: []
 grids:
@@ -94,10 +94,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
-        ExodusBiohazardFoam: []
-        MetalFoam: []
-        Puddle: []
         Smoke: []
+        ExodusBiohazardFoam: []
+        Puddle: []
+        MetalFoam: []
         Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
@@ -6871,6 +6871,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -25.572334,12.494097
       parent: 1
+- proto: Multitool
+  entities:
+  - uid: 1520
+    components:
+    - type: Transform
+      pos: -19.25,-0.25
+      parent: 1
 - proto: OxygenTank
   entities:
   - uid: 877
@@ -8537,12 +8544,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -16.5,20.5
-      parent: 1
-  - uid: 1103
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -15.5,20.5
       parent: 1
   - uid: 1104
     components:
