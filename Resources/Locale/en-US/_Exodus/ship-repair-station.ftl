@@ -1,0 +1,58 @@
+ent-ShipRepairDroneStation = repair drone station
+    .desc = A base for five repair drones with an internal battery providing 15 minutes of operation. Anchor it aboard a ship to charge from the power network or run on battery when external power is unavailable. Unanchoring preserves its charge. Load a nearby switched-off drone through the station's context menu or by dragging it onto the station.
+
+ent-ShipRepairDroneStationStandard = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = Standard, Filled
+
+ent-ShipRepairDroneStationFleetTSF = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = TSF, Filled
+
+ent-ShipRepairDroneStationFleetPDV = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = PDV, Filled
+
+ent-ShipRepairDroneStationAsakim = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = VEF, Filled
+
+ship-repair-station-title = Repair drone station
+ship-repair-station-all = Commands for all drones
+ship-repair-station-ready = Station active. Reserved berths: { $count } / { $capacity }.
+ship-repair-station-unanchored = Station unanchored. Reserved berths: { $count } / { $capacity }.
+ship-repair-station-unpowered = Station unpowered. Reserved berths: { $count } / { $capacity }.
+ship-repair-station-battery-charge = Battery: { $percent }%
+ship-repair-station-power-grid = Running on grid power
+ship-repair-station-power-battery = Running on battery
+ship-repair-station-power-off = Power off
+ship-repair-station-enable = Enable
+ship-repair-station-disable = Disable
+ship-repair-station-repair = Repair
+ship-repair-station-return = Return
+ship-repair-station-recall = Emergency recall
+ship-repair-station-recall-countdown = Emergency recall ({ $seconds } s)
+ship-repair-station-recall-tooltip = Teleports an enabled drone back to base. Available once every 5 minutes per drone.
+ship-repair-station-eject = Eject
+ship-repair-station-load-category = Load drone
+ship-repair-station-load-failed = Could not load the drone. It must be switched off, nearby and unobstructed, and the station must have a free berth.
+ship-repair-station-command-failed = No drones can carry out this command. Check the drones, station and available exit space.
+ship-repair-drone-working-name = Drone { $id }
+ship-repair-station-status-off = Switched off
+ship-repair-station-status-destroyed = Inoperable
+ship-repair-station-status-docked = At base, awaiting orders
+ship-repair-station-status-idle = Awaiting orders
+ship-repair-station-status-searching = Looking for accessible work
+ship-repair-station-status-pathfinding = Finding a path
+ship-repair-station-status-clearing = Clearing an obstruction
+ship-repair-station-status-moving = Moving to repair
+ship-repair-station-status-repairing = Repairing
+ship-repair-station-status-prying = Prying a door
+ship-repair-station-status-stuck = Stuck, looking for clearance
+ship-repair-station-status-waiting = Waiting for the ship
+ship-repair-station-status-returning = Returning to base
+ship-repair-station-status-no-path = No path to base
+ship-repair-station-status-exit-blocked = Station exit blocked
+ship-repair-station-recall-ready = Emergency recall ready
+ship-repair-station-recall-delay = Emergency recall in { $seconds } s
+ship-repair-station-incompatible = The base's ship has no compatible SRD snapshot.

@@ -11,6 +11,7 @@ using Content.Server._NF.Station.Components; // Frontier
 using Content.Server.Administration.Logs; // Frontier
 using Content.Shared.Database; // Frontier
 using Content.Shared._NF.StationRecords; // Frontier
+using Content.Shared._Exodus.Station; // Exodus: staffing limits.
 
 namespace Content.Server.StationRecords.Systems;
 
@@ -102,7 +103,7 @@ public sealed partial class GeneralStationRecordConsoleSystem : EntitySystem
                 }
             }
             // End Frontier
-            _stationJobsSystem.TryAdjustJobSlot(station, msg.JobProto, msg.Amount, false, true);
+            _stationJobsSystem.TryAdjustJobCapacity(station, msg.JobProto, msg.Amount); // Exodus: validate total staffing, including occupied positions.
             UpdateUserInterface(ent);
         }
     }
@@ -137,17 +138,19 @@ public sealed partial class GeneralStationRecordConsoleSystem : EntitySystem
 
         // Frontier: jobs, advertisements
         IReadOnlyDictionary<ProtoId<JobPrototype>, int?>? jobList = null;
+        Dictionary<ProtoId<JobPrototype>, JobCapacityState>? jobCapacity = null; // Exodus: staffing limits.
         string? advertisement = null;
         if (owningStation != null)
         {
             jobList = _stationJobsSystem.GetJobs(owningStation.Value);
+            jobCapacity = _stationJobsSystem.GetJobCapacity(owningStation.Value); // Exodus: staffing limits.
             if (TryComp<ExtraShuttleInformationComponent>(owningStation, out var extraVessel))
                 advertisement = extraVessel.Advertisement;
         }
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState(null, null, null, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement)); // Frontier: add as many args as we can
+            _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState(null, null, null, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement, jobCapacity)); // Frontier / Exodus: staffing limits.
             return;
         }
 
@@ -156,7 +159,7 @@ public sealed partial class GeneralStationRecordConsoleSystem : EntitySystem
         switch (listing.Count)
         {
             case 0:
-                var consoleState = new GeneralStationRecordConsoleState(null, null, null, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement); // Frontier: add as many args as we can
+                var consoleState = new GeneralStationRecordConsoleState(null, null, null, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement, jobCapacity); // Frontier / Exodus: staffing limits.
                 _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, consoleState);
                 return;
             default:
@@ -167,14 +170,14 @@ public sealed partial class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (console.ActiveKey is not { } id)
         {
-            _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState(null, null, listing, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement)); // Frontier: add as many args as we can
+            _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState(null, null, listing, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement, jobCapacity)); // Frontier / Exodus: staffing limits.
             return;
         }
 
         var key = new StationRecordKey(id, owningStation.Value);
         _stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record, stationRecords);
 
-        GeneralStationRecordConsoleState newState = new(id, record, listing, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement);
+        GeneralStationRecordConsoleState newState = new(id, record, listing, jobList, console.Filter, ent.Comp.CanDeleteEntries, advertisement, jobCapacity); // Exodus: staffing limits.
         _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 }

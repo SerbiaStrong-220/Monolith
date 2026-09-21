@@ -1,0 +1,33 @@
+- type: pointOfInterest
+  id: AdsDefensivePlatform
+  parent: [BasePOI, BaseRepairablePOI]
+  name: "ВЭФ | Оборонительная платформа"
+  minimumDistance: 20000
+  maximumDistance: 40000
+  spawnGamePreset: []
+  spawnGroup: Required
+  gridPath: /Maps/_Exodus/POI/ads_medium_platform.yml
+  addComponents:
+  - type: IFF
+    color: "#ff3db1"
+    readOnly: true
+  - type: ShipRepairRestrict
+    toolWhitelist:
+      tags:
+      - ADSRepairTool
+
+- type: gameMap
+  id: AdsDefensivePlatform
+  mapName: "ВЭФ | Оборонительная платформа"
+  mapPath: /Maps/_Exodus/POI/ads_medium_platform.yml
+  minPlayers: 0
+  stations:
+    AdsDefensivePlatform:
+      stationProto: StandardFrontierOutpost
+      gridComponents:
+      - type: GridTerritory
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "ВЭФ | Оборонительная платформа"
+      - type: StationJobs
+        availableJobs: {}

@@ -1,0 +1,84 @@
+# Preserve the full machine configuration, including anchoring and faction variants, while restoring no stock.
+# Explicit zero amounts override inherited material dictionaries.
+- type: entity
+  id: PortableGeneratorPacmanShuttleRepaired
+  parent: PortableGeneratorPacmanShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradePlasma: 0
+
+- type: entity
+  id: PortableGeneratorSuperPacmanShuttleRepaired
+  parent: PortableGeneratorSuperPacmanShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradeUranium: 0
+
+- type: entity
+  id: PortableGeneratorJrPacmanShuttleRepaired
+  parent: PortableGeneratorJrPacmanShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents: []
+
+- type: entity
+  id: PortableGeneratorDKShuttleRepaired
+  parent: PortableGeneratorDKShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradeBananium: 0
+
+- type: entity
+  id: PortableGeneratorDKJrShuttleRepaired
+  parent: PortableGeneratorDKJrShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradeBananium: 0
+
+- type: entity
+  id: GeneratorCRPinchShuttleRepaired
+  parent: GeneratorCRPinchShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradePlasma: 0
+
+- type: entity
+  id: GeneratorSterlingShuttleRepaired
+  parent: GeneratorSterlingShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradePlasma: 0
+
+- type: entity
+  id: GeneratorSterlingPDVShuttleRepaired
+  parent: GeneratorSterlingPDVShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      FuelGradePlasma: 0
+
+- type: entity
+  id: BiogeneratorRepaired
+  parent: BiogeneratorFill
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MaterialStorage
+    storage:
+      Biomass: 0

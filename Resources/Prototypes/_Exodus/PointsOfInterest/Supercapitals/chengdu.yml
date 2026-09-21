@@ -50,6 +50,10 @@
           Bailiff: [ 1, 1 ]
           SeniorOfficer: [ 2, 2 ]
           Deputy: [ 8, 8 ]
+        jobLimits:
+          Bailiff: { min: 1 }
+          SeniorOfficer: { min: 2 }
+          Deputy: { min: 8 }
         tags:
         - HeadOfPersonnel
         - HeadOfSecurity

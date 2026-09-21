@@ -108,8 +108,8 @@
         Heat: 0.90
         Radiation: 0.75
   - type: PointLight
-    radius: 6 # 5->6 Mono
-    energy: 3 # 2->3 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     color: "#00ffff"
   - type: Tag
     tags:

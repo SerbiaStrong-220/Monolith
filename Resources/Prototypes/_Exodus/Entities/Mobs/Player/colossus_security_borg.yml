@@ -6,6 +6,8 @@
   name: colossus security borg
   description: A security cyborg assigned to Colossus-Central.
   components:
+  - type: PlaytimeSalary
+    salary: Silicon
   - type: SiliconLawProvider
     laws: RobocopLawset
   - type: Sprite

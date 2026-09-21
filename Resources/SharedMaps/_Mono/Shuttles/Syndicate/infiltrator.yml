@@ -36,6 +36,11 @@ entities:
   entities:
   - uid: 1
     components:
+    # Exodus: Syndicate hulls require their own SRD; repair drones cannot service them.
+    - type: ShipRepairRestrict
+      toolWhitelist:
+        tags:
+        - SyndicateRepairTool
     - type: MetaData
       name: Infiltrator
     - type: Transform

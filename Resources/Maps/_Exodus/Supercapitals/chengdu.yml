@@ -11918,13 +11918,9 @@ entities:
   entities:
   - uid: 1910
     components:
-    - type: MetaData
-      desc: A power-hungry server dedicated towards scraping data from... somewhere. This one generates research points at a rate of 1000 per second. It seems to be bolted to the floor.
     - type: Transform
       pos: -3.5,-19.5
       parent: 1
-    - type: ResearchPointSource
-      pointsPerSecond: 1000
 - proto: DefaultStationBeaconAI
   entities:
   - uid: 1911

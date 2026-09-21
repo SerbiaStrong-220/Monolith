@@ -1,0 +1,62 @@
+# Bioengineered reptilian soldiers: draconic, guttural and hardened combat voices.
+- type: randomVoicesList
+  id: Asakim
+  matchSex: true
+  voices:
+  # Male
+  - dragon_knight_dota_2
+  - dragon_knight_dragon_dota_2
+  - slardar_dota_2
+  - tidehunter_dota_2
+  - rexxar
+  - tau_kroot_dow
+  # Female
+  - winter_wyvern_dota_2
+  - legion_commander_demon_dota_2
+  - phantom_assassin_arcana_dota_2
+  - dark_eldar_wych_dow
+
+# A broader selection of soldiers, mercenaries and covert operatives.
+- type: randomVoicesList
+  id: SyndicateGhost
+  matchSex: true
+  voices:
+  # Male
+  - jericho_fl3
+  - dornan
+  - officer_enclave
+  - geralt
+  - lambert
+  - nazir
+  - strelok
+  - sniper
+  - spy
+  - punisher
+  - johnny
+  - mitch
+  - jackie
+  - horner
+  - tosh
+  - tychus
+  - guard_assassin_dow
+  - guard_karskin_dow
+  # Female
+  - alyx
+  - sarah_lyons_fl3
+  - astrid
+  - female_commander
+  - panam
+  - v_female
+  - caitlyn
+  - drow_ranger_dota_2
+  - legion_commander_dota_2
+  - phantom_assassin_dota_2
+  - templar_assassin_dota_2
+  - sisters_battle_sister_dow
+
+- type: randomVoicesList
+  id: LivingSkeleton
+  matchSex: true
+  voices:
+  - lich_dota_2
+  - phantom_assassin_arcana_dota_2

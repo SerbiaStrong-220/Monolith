@@ -355,6 +355,8 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for standard cyborg players.
+    salary: Silicon
   - type: RandomMetadata
     nameSegments:
       # - NamesBorg # Frontier

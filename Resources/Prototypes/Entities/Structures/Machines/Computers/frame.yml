@@ -49,6 +49,7 @@
   name: computer frame
   description: A computer under construction.
   components:
+  - type: ShipRepairDebris # Exodus: relocate obstructing frames with their contents.
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
     layers:
@@ -71,6 +72,7 @@
   name: broken computer
   description: This computer has seen better days.
   components:
+  - type: ShipRepairDebris # Exodus: relocate obstructing frames with their contents.
   - type: Construction
     graph: Computer
     node: monitorBroken

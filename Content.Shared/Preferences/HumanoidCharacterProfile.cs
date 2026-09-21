@@ -295,6 +295,7 @@ namespace Content.Shared.Preferences
                 Age = age,
                 Gender = gender,
                 Species = species,
+                Voice = voiceId, // Exodus: retain the voice selected for the randomized sex.
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
         }

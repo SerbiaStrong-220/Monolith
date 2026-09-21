@@ -66,13 +66,15 @@
   name: guide-entry-exodus-rule-ghost-roles
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRoles.xml"
   children:
-    - EXRuleGhostRoleBorer
-    - EXRuleGhostRoleKhsiraEighthFleet
-    - EXRuleGhostRoleChimera
-    - EXRuleGhostRoleBorg
-    - EXRuleGhostRoleSyndicate
-    - EXRuleGhostRoleCitadelService
-    - EXRuleGhostRoleLeviathan
+  - EXRuleGhostRoleBorer
+  - EXRuleGhostRoleKhsiraEighthFleet
+  - EXRuleGhostRoleChimera
+  - EXRuleGhostRoleBorg
+  - EXRuleGhostRoleSyndicate
+  - EXRuleGhostRoleCitadelService
+  - EXRuleGhostRoleLeviathan
+  - EXRuleGhostRoleRot
+  - EXRuleGhostRoleLivingSkeleton
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -184,3 +186,20 @@
   id: EXRuleGhostRoleLeviathan
   name: guide-entry-exodus-rule-ghost-roles-leviathan
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesLeviathan.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleRot
+  name: guide-entry-exodus-rule-ghost-roles-rot
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesRot.xml"
+  children:
+  - EXRuleGhostRoleRotHungry
+
+- type: guideEntry
+  id: EXRuleGhostRoleRotHungry
+  name: guide-entry-exodus-rule-ghost-roles-rot-hungry
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesRotHungry.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleLivingSkeleton
+  name: guide-entry-exodus-rule-ghost-roles-living-skeleton
+  text: /ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesLivingSkeleton.xml

@@ -1,0 +1,12 @@
+- type: localizedDataset
+  id: NamesLivingSkeletonMale
+  values:
+    prefix: names-living-skeleton-male-
+    count: 11
+
+- type: localizedDataset
+  id: NamesLivingSkeletonFemale
+  values:
+    prefix: names-living-skeleton-female-
+    count: 11
+

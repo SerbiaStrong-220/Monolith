@@ -183,6 +183,8 @@
   parent: BaseFactionBorgChassis
   abstract: true
   components:
+  - type: GameRuleDepartmentMember # Exodus: include player-controlled Asakim borgs in event requirements.
+    departments: [Combatant]
   - type: NpcFactionMember
     factions:
     # - Syndicate # Exodus-asakim-fix
@@ -419,6 +421,8 @@
   parent: StationAiBrain
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  - type: GameRuleDepartmentMember # Exodus: count the player inside the AI core as a combatant.
+    departments: [Combatant]
   - type: AsakimTrustedUser # Exodus-asakim-access
   - type: Sprite
   - type: SiliconLawProvider
@@ -500,6 +504,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, Vessel
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for vessel AI players.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldVessel
     container: station_ai_mind_slot
@@ -578,6 +584,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, TSFMC
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for faction AI players.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldTSFMC
     container: station_ai_mind_slot
@@ -598,6 +606,8 @@
   parent: StationAiBrain
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  - type: GameRuleDepartmentMember # Exodus: count the player inside the AI core as a combatant.
+    departments: [Combatant]
   - type: Sprite
   - type: SiliconLawProvider
     laws: TSFMCLawset
@@ -669,6 +679,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, PDV
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for faction AI players.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldPDV
     container: station_ai_mind_slot
@@ -689,6 +701,8 @@
   parent: StationAiBrain
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  - type: GameRuleDepartmentMember # Exodus: count the player inside the AI core as a combatant.
+    departments: [Combatant]
   - type: Sprite
   - type: SiliconLawProvider
     laws: PDVLawset

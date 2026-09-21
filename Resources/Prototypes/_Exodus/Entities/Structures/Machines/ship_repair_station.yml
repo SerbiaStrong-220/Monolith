@@ -1,0 +1,118 @@
+- type: entity
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  id: ShipRepairDroneStation
+  name: repair drone station
+  description: A base with five reserved berths for ship repair drones and a rechargeable backup battery.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/ship_repair_station.rsi
+    layers:
+    - state: base
+    - state: powered
+      shader: unshaded
+      map: ["powered"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ShipRepairStationVisuals.Active:
+        powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ShipRepairStation
+  - type: Machine
+    board: ShipRepairDroneStationMachineCircuitboard
+  - type: StaticPrice
+    price: 75
+  - type: WiresPanel
+  - type: ApcPowerReceiver
+    powerLoad: 50
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50
+    batteryRechargeRate: 100
+  - type: Battery
+    maxCharge: 45000 # 50 W for 15 minutes, regardless of drone count.
+    startingCharge: 45000
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      repair_drones: !type:Container
+  - type: ActivatableUI
+    key: enum.ShipRepairStationUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ShipRepairStationUiKey.Key:
+        type: ShipRepairStationBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [Destruction]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: ShipRepairable
+    repairTime: 8
+    repairCost: 20
+  - type: GuideHelp
+    guides:
+    - ShipRepairDrones
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationStandard
+  suffix: Standard, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+      - MobShipRepairDrone
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationFleetTSF
+  suffix: TSF, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+      - MobShipRepairDroneFleetTSF
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationFleetPDV
+  suffix: PDV, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+      - MobShipRepairDroneFleetPDV
+
+- type: entity
+  parent: ShipRepairDroneStation
+  id: ShipRepairDroneStationAsakim
+  suffix: VEF, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim
+      - MobShipRepairDroneAsakim

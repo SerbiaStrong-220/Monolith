@@ -63,6 +63,11 @@
             MailCarrier: [ 2, 2 ]
             DirectorOfCare: [ 1, 1 ]
             MdMedic: [ -1, -1 ]
+          # Exodus-begin: fixed total staffing, including occupied positions.
+          jobLimits:
+            StationRepresentative: { min: 1, max: 1 }
+            DirectorOfCare: { min: 1, max: 1 }
+          # Exodus-end
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity

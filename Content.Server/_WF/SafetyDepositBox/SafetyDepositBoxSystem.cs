@@ -140,13 +140,8 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             var boxInfoList = new List<SafetyDepositBoxInfo>(ownedBoxes.Count);
             foreach (var box in ownedBoxes)
             {
-                bool isDeposited;
-                if (!box.LastWithdrawn.HasValue)
-                    isDeposited = true;
-                else if (box.LastWithdrawnRoundId.HasValue && box.LastWithdrawnRoundId.Value != _gameTicker.RoundId)
-                    isDeposited = false;
-                else
-                    isDeposited = box.Items.Count > 0;
+                // Exodus: failed item records can remain even after the physical box has been issued.
+                var isDeposited = !box.LastWithdrawn.HasValue;
 
                 boxInfoList.Add(new SafetyDepositBoxInfo(
                     box.BoxId,
@@ -585,6 +580,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         var succeeded = false;
         var persistenceAttempted = false;
         var itemCount = 0;
+        var retainedData = new List<string>(); // Exodus: preserve items left behind by partial withdrawals.
 
         try
         {
@@ -621,8 +617,13 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                 return;
             }
 
+            // Exodus-begin: unresolved old items survive both a new deposit and its rollback.
+            foreach (var storedItem in databaseBox.Items)
+                retainedData.Add(storedItem.EntityData);
+
             var items = new List<EntityUid>(storageComp.Container.ContainedEntities);
-            var entityDataList = new List<string>(items.Count);
+            var entityDataList = new List<string>(retainedData);
+            // Exodus-end
             foreach (var item in items)
             {
                 try
@@ -641,7 +642,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                 }
             }
 
-            itemCount = entityDataList.Count;
+            itemCount = items.Count; // Exodus: only count the items physically deposited this time.
             string? nickname = null;
             if (TryComp<LabelComponent>(boxEntity, out var boxLabel) && !string.IsNullOrEmpty(boxLabel.CurrentLabel))
                 nickname = boxLabel.CurrentLabel;
@@ -676,7 +677,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             if (!succeeded)
             {
                 if (persistenceAttempted &&
-                    !await RestoreWithdrawnBoxAsync(boxId, userId.UserId, characterIndex))
+                    !await RestoreWithdrawnBoxAsync(boxId, userId.UserId, characterIndex, retainedData))
                 {
                     _adminLogger.Add(LogType.Action, LogImpact.High,
                         $"Safety deposit rollback could not confirm withdrawn state for box {boxId}; its physical copy was retained.");
@@ -736,237 +737,11 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             return;
         }
 
-        _ = ReclaimBoxAsync(uid, player, userId, characterIndex, args.BoxId);
+        _ = WithdrawBoxAsync(uid, player, userId, characterIndex, args.BoxId, reclaim: true);
         // Exodus-end
     }
 
-    // Exodus-begin: reclaim keeps the stable ID and compensates a failed delivery back to stored state.
-    private async Task ReclaimBoxAsync(
-        EntityUid consoleUid,
-        EntityUid player,
-        NetUserId userId,
-        int characterIndex,
-        Guid boxId)
-    {
-        EntityUid? boxEntity = null;
-        var databaseMutationAttempted = false;
-        var succeeded = false;
-
-        try
-        {
-            var box = await _dbManager.GetSafetyDepositBox(boxId);
-            if (box == null)
-            {
-                Reject(consoleUid, player, "safety-deposit-error-box-not-found");
-                return;
-            }
-
-            if (box.OwnerUserId != userId.UserId || box.CharacterIndex != characterIndex)
-            {
-                Reject(consoleUid, player, "safety-deposit-error-not-owner");
-                return;
-            }
-
-            var isLost = box.LastWithdrawn.HasValue &&
-                         box.LastWithdrawnRoundId.HasValue &&
-                         box.LastWithdrawnRoundId.Value != _gameTicker.RoundId &&
-                         box.Items.Count == 0;
-            if (!isLost)
-            {
-                Reject(consoleUid, player, "safety-deposit-error-not-lost");
-                return;
-            }
-
-            if (!IsActorForCharacter(player, userId, characterIndex) ||
-                !TryGetBoxPrototype(box.ProtoId, out var prototype))
-            {
-                Reject(consoleUid, player, "safety-deposit-error-invalid-box");
-                return;
-            }
-
-            boxEntity = Spawn(prototype.ID, MapCoordinates.Nullspace);
-            ConfigurePhysicalBox(boxEntity.Value, boxId, userId.UserId, characterIndex, MetaData(player).EntityName);
-
-            if (!string.IsNullOrEmpty(box.Nickname))
-                _label.Label(boxEntity.Value, box.Nickname);
-
-            databaseMutationAttempted = true;
-            await _dbManager.ClearSafetyDepositBoxItems(boxId, _gameTicker.RoundId);
-            if (!await IsBoxWithdrawnAsync(boxId, userId.UserId, characterIndex))
-                throw new InvalidOperationException($"Reclaimed safety deposit box {boxId} was not marked withdrawn.");
-
-            if (!IsActorForCharacter(player, userId, characterIndex) ||
-                !TryDeliverBox(boxEntity.Value, player, consoleUid))
-            {
-                throw new InvalidOperationException($"Could not deliver reclaimed safety deposit box {boxId}.");
-            }
-
-            succeeded = true;
-            Popup(player, "safety-deposit-reclaim-success");
-            Confirm(consoleUid);
-
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(player):actor} reclaimed lost safety deposit box {boxId}");
-        }
-        catch (Exception ex)
-        {
-            Log.Error($"Failed to reclaim safety deposit box {boxId}: {ex}");
-
-            if (!succeeded)
-            {
-                if (databaseMutationAttempted && !await RestoreStoredBoxAsync(boxId, []))
-                {
-                    if (boxEntity is { } retained && !Deleted(retained))
-                    {
-                        TryDeliverBox(retained, player, consoleUid);
-                        boxEntity = null;
-                    }
-
-                    _adminLogger.Add(LogType.Action, LogImpact.High,
-                        $"Safety deposit reclaim rollback failed for box {boxId}; its physical copy was retained.");
-                }
-
-                Reject(consoleUid, player, "safety-deposit-error-transaction");
-            }
-        }
-        finally
-        {
-            if (!succeeded && boxEntity is { } spawned && !Deleted(spawned))
-                QueueDel(spawned);
-
-            _activeBoxOperations.Remove(boxId);
-            UpdateUIIfOpen(consoleUid, player);
-        }
-    }
-    // Exodus-end
-
-    // Exodus-begin: build in nullspace, load every item, then clear DB; any failure deletes the temporary copy.
-    private async Task WithdrawBoxAsync(
-        EntityUid consoleUid,
-        EntityUid player,
-        NetUserId userId,
-        int characterIndex,
-        Guid boxId)
-    {
-        EntityUid? boxEntity = null;
-        var databaseMutationAttempted = false;
-        var succeeded = false;
-        List<string>? storedData = null;
-
-        try
-        {
-            var box = await _dbManager.GetSafetyDepositBox(boxId);
-            if (box == null)
-            {
-                Reject(consoleUid, player, "safety-deposit-error-box-not-found");
-                return;
-            }
-
-            if (box.OwnerUserId != userId.UserId || box.CharacterIndex != characterIndex)
-            {
-                Reject(consoleUid, player, "safety-deposit-error-not-owner");
-                return;
-            }
-
-            if (box.LastWithdrawn != null)
-            {
-                Reject(consoleUid, player, "safety-deposit-error-already-withdrawn");
-                return;
-            }
-
-            if (!IsActorForCharacter(player, userId, characterIndex) ||
-                !TryGetBoxPrototype(box.ProtoId, out var prototype))
-            {
-                Reject(consoleUid, player, "safety-deposit-error-invalid-box");
-                return;
-            }
-
-            storedData = new List<string>(box.Items.Count);
-            foreach (var item in box.Items)
-                storedData.Add(item.EntityData);
-
-            boxEntity = Spawn(prototype.ID, MapCoordinates.Nullspace);
-            ConfigurePhysicalBox(boxEntity.Value, box.BoxId, userId.UserId, characterIndex, MetaData(player).EntityName);
-
-            if (!TryComp<StorageComponent>(boxEntity.Value, out var storageComp))
-                throw new InvalidOperationException($"Box prototype {prototype.ID} has no StorageComponent.");
-
-            if (!string.IsNullOrEmpty(box.Nickname))
-                _label.Label(boxEntity.Value, box.Nickname);
-
-            _allowedBoxMutations.Add(boxId);
-            try
-            {
-                foreach (var itemData in storedData)
-                {
-                    using var reader = new StringReader(itemData);
-                    if (!_loader.TryLoadEntity(reader, "safety deposit box", out var entity))
-                        throw new InvalidOperationException($"Could not deserialize an item from safety deposit box {boxId}.");
-
-                    var itemEntity = entity.Value.Owner;
-                    EnsureComp<SafetyDepositStoredComponent>(itemEntity);
-
-                    if (!_storage.Insert(boxEntity.Value, itemEntity, out _, storageComp: storageComp, playSound: false))
-                    {
-                        QueueDel(itemEntity);
-                        throw new InvalidOperationException($"Could not insert a restored item into safety deposit box {boxId}.");
-                    }
-                }
-            }
-            finally
-            {
-                _allowedBoxMutations.Remove(boxId);
-            }
-
-            databaseMutationAttempted = true;
-            await _dbManager.ClearSafetyDepositBoxItems(boxId, _gameTicker.RoundId);
-            if (!await IsBoxWithdrawnAsync(boxId, userId.UserId, characterIndex))
-                throw new InvalidOperationException($"Safety deposit box {boxId} was not marked withdrawn.");
-
-            if (!IsActorForCharacter(player, userId, characterIndex) ||
-                !TryDeliverBox(boxEntity.Value, player, consoleUid))
-            {
-                throw new InvalidOperationException($"Could not deliver safety deposit box {boxId}.");
-            }
-
-            succeeded = true;
-            Popup(player, "safety-deposit-withdraw-success");
-            Confirm(consoleUid);
-
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(player):actor} withdrew safety deposit box {boxId} with {storedData.Count} items");
-        }
-        catch (Exception ex)
-        {
-            Log.Error($"Failed to withdraw safety deposit box {boxId}: {ex}");
-
-            if (!succeeded)
-            {
-                if (databaseMutationAttempted && storedData != null && !await RestoreStoredBoxAsync(boxId, storedData))
-                {
-                    if (boxEntity is { } retained && !Deleted(retained))
-                    {
-                        TryDeliverBox(retained, player, consoleUid);
-                        boxEntity = null;
-                    }
-
-                    _adminLogger.Add(LogType.Action, LogImpact.High,
-                        $"Safety deposit withdrawal rollback failed for box {boxId}; its physical copy was retained.");
-                }
-
-                Reject(consoleUid, player, "safety-deposit-error-transaction");
-            }
-        }
-        finally
-        {
-            if (!succeeded && boxEntity is { } spawned && !Deleted(spawned))
-                QueueDel(spawned);
-
-            _activeBoxOperations.Remove(boxId);
-            UpdateUIIfOpen(consoleUid, player);
-        }
-    }
-    // Exodus-end
+    // Exodus: withdrawal and reclaim recovery live in SafetyDepositBoxSystem.Withdrawal.Exodus.cs.
 
     private void OnSlotChanged(EntityUid uid, SafetyDepositConsoleComponent component, ContainerModifiedMessage args)
     {
@@ -1198,7 +973,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             _itemSlots.SetLock(consoleUid, consoleComp.BoxSlot, false);
     }
 
-    private async Task<bool> IsBoxWithdrawnAsync(Guid boxId, Guid ownerId, int characterIndex)
+    private async Task<bool> IsBoxWithdrawnAsync(Guid boxId, Guid ownerId, int characterIndex, int retainedItemCount = 0)
     {
         var box = await _dbManager.GetSafetyDepositBox(boxId);
         return box != null &&
@@ -1206,15 +981,15 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                box.CharacterIndex == characterIndex &&
                box.LastWithdrawn.HasValue &&
                box.LastWithdrawnRoundId == _gameTicker.RoundId &&
-               box.Items.Count == 0;
+               box.Items.Count == retainedItemCount;
     }
 
-    private async Task<bool> RestoreWithdrawnBoxAsync(Guid boxId, Guid ownerId, int characterIndex)
+    private async Task<bool> RestoreWithdrawnBoxAsync(Guid boxId, Guid ownerId, int characterIndex, List<string> retainedData)
     {
         try
         {
-            await _dbManager.ClearSafetyDepositBoxItems(boxId, _gameTicker.RoundId);
-            return await IsBoxWithdrawnAsync(boxId, ownerId, characterIndex);
+            await _dbManager.SetSafetyDepositBoxWithdrawnItems(boxId, _gameTicker.RoundId, retainedData);
+            return await IsBoxWithdrawnAsync(boxId, ownerId, characterIndex, retainedData.Count);
         }
         catch (Exception ex)
         {

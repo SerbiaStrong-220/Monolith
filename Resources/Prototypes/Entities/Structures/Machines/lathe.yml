@@ -370,6 +370,7 @@
     - CompanyCdmBoardsDynamic
     - CompanyAetherionDynamic
     - CompanyUnsaDynamic
+    - ShipRepairDronesBoardsDynamic # Exodus
     # Exodus-end
   - type: MaterialStorage
     whitelist:
@@ -441,6 +442,7 @@
     - S2Mechs
     - SpaceMechaWeapons
     - SpaceMechaIFF
+    - ShipRepairDronesDynamic # Exodus
   - type: MaterialStorage
     whitelist:
       tags:

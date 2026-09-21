@@ -4,6 +4,7 @@
   suffix: Full
   name: bluespace crystal
   components:
+  - type: ConstructionMaterials # Exodus: store bluespace crystals in construction material containers.
   - type: Sprite
     sprite: Nyanotrasen/Objects/Materials/materials.rsi
     layers:

@@ -1,0 +1,5 @@
+- type: playtimeSalary
+  id: Silicon
+  hourlyRate: 40000
+  payoutInterval: 1500
+  paymentMessage: playtime-salary-silicon-paid

@@ -1,0 +1,58 @@
+ent-ShipRepairDroneStation = станция ремонтных дронов
+    .desc = База на пять ремонтных дронов с внутренней батареей на 15 минут работы. Закрепите станцию на корабле: при наличии питания она заряжается от сети, без него работает от батареи. Открученная станция сохраняет заряд. Выключенного дрона рядом можно загрузить через меню станции или перетаскиванием.
+
+ent-ShipRepairDroneStationStandard = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = Нанотрайзен, заполненная
+
+ent-ShipRepairDroneStationFleetTSF = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = ТСФ, заполненная
+
+ent-ShipRepairDroneStationFleetPDV = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = ДФ, заполненная
+
+ent-ShipRepairDroneStationAsakim = { ent-ShipRepairDroneStation }
+    .desc = { ent-ShipRepairDroneStation.desc }
+    .suffix = ВЭФ, заполненная
+
+ship-repair-station-title = Станция ремонтных дронов
+ship-repair-station-all = Команды всем дронам
+ship-repair-station-ready = Станция активна. Занято ячеек: { $count } / { $capacity }.
+ship-repair-station-unanchored = Станция не закреплена. Занято ячеек: { $count } / { $capacity }.
+ship-repair-station-unpowered = Станция без питания. Занято ячеек: { $count } / { $capacity }.
+ship-repair-station-battery-charge = Батарея: { $percent }%
+ship-repair-station-power-grid = Питание от сети
+ship-repair-station-power-battery = Питание от батареи
+ship-repair-station-power-off = Питание отключено
+ship-repair-station-enable = Включить
+ship-repair-station-disable = Выключить
+ship-repair-station-repair = Ремонт
+ship-repair-station-return = На базу
+ship-repair-station-recall = Экстренный возврат
+ship-repair-station-recall-countdown = Экстренный возврат ({ $seconds } с)
+ship-repair-station-recall-tooltip = Телепортирует включённого дрона на базу. Доступно раз в 5 минут для каждого дрона.
+ship-repair-station-eject = Извлечь
+ship-repair-station-load-category = Загрузить дрона
+ship-repair-station-load-failed = Не удалось загрузить дрона. Он должен быть выключен и находиться рядом без преград, а на станции должна быть свободная ячейка.
+ship-repair-station-command-failed = Нет дронов, которые могут выполнить этот приказ. Проверьте состояние дронов, станции и доступность выхода.
+ship-repair-drone-working-name = Дрон { $id }
+ship-repair-station-status-off = Выключен
+ship-repair-station-status-destroyed = Неработоспособен
+ship-repair-station-status-docked = На базе, ожидает приказа
+ship-repair-station-status-idle = Ожидает приказа
+ship-repair-station-status-searching = Ищет доступные работы
+ship-repair-station-status-pathfinding = Ищет путь
+ship-repair-station-status-clearing = Расчищает место
+ship-repair-station-status-moving = Идёт чинить
+ship-repair-station-status-repairing = Чинит
+ship-repair-station-status-prying = Вскрывает шлюз
+ship-repair-station-status-stuck = Застрял, ищет свободный проход
+ship-repair-station-status-waiting = Ждёт корабль
+ship-repair-station-status-returning = Возвращается на базу
+ship-repair-station-status-no-path = Нет пути к базе
+ship-repair-station-status-exit-blocked = Выход из станции заблокирован
+ship-repair-station-recall-ready = Экстренное возвращение готово
+ship-repair-station-recall-delay = Экстренное возвращение через { $seconds } с
+ship-repair-station-incompatible = На корабле базы нет совместимого снимка СРД.

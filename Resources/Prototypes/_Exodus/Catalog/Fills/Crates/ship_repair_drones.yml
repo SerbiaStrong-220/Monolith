@@ -1,0 +1,11 @@
+﻿- type: entity
+  parent: CrateEngineering
+  id: CrateShipRepairDroneKit
+  name: ship-repair-drone-kit-crate-name
+  description: ship-repair-drone-kit-crate-description
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobShipRepairDroneAsakim
+      amount: 3
+    - id: ShipRepairDroneStationFlatpack

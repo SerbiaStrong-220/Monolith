@@ -142,6 +142,7 @@
     snap:
     - Wall
   components:
+  - type: ShipRepairClearable # Exodus: allow drones to dismantle temporary hull patches.
   - type: RCDDeconstructable
     cost: 2
     delay: 2
@@ -159,7 +160,7 @@
         layer:
         - WallLayer
         mask:
-        - WallLayer
+        - FullTileMask # Exodus: match walls, allowing phased drones through while retaining projectile hits.
   - type: Occluder
   - type: Appearance
   - type: SmoothEdge

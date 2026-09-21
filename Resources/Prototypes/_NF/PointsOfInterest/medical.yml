@@ -39,6 +39,10 @@
             MdMedic: [ -1, -1 ] # mono
             Pilot: [ -1, -1 ]
             Mercenary: [ -1, -1 ]
+          # Exodus-begin: fixed total staffing, including occupied positions.
+          jobLimits:
+            DirectorOfCare: { min: 1, max: 1 }
+          # Exodus-end
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity

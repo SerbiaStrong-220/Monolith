@@ -2,8 +2,7 @@
   id: ADSKashalot
   parent: [BaseMobilePOI, BaseRepairablePOI]
   name: "ВЭФ | Кашалот"
-  minimumDistance: 20000
-  maximumDistance: 30000
+  # Placement is controlled by ADSKashalotNearDefensivePlatform in relative_placement.yml.
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, ExodusRot, MonoAllAtOnce ]
   spawnGroup: Required
   gridPath: /Maps/_Exodus/POI/whale.yml
@@ -42,3 +41,7 @@
           AsakimPrefect: [ 1, 1 ]
           AsakimCenturion: [ 1, 1 ]
           AsakimWarrior: [ 3, 3 ]
+        jobLimits:
+          AsakimPrefect: { min: 1 }
+          AsakimCenturion: { min: 1 }
+          AsakimWarrior: { min: 3 }

@@ -9,3 +9,8 @@ ent-MachineShieldMS750Circuitboard = плата генератора щита М
 
 ent-NebulaThrusterMachineCircuitboard = плата фазового двигателя
     .desc = Плата машины для двигателя, настроенного для эффективной работы в туманностях.
+# Ship repair station board
+ent-ShipRepairDroneStationMachineCircuitboard = плата станции ремонтных дронов
+    .desc = Машинная плата станции ремонтных дронов.
+ship-repair-drone-station-machine-board-name = плата станции ремонтных дронов
+ship-repair-drone-station-machine-board-description = Машинная плата для сборки станции ремонтных дронов.

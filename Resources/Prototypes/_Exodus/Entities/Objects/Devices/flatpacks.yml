@@ -131,3 +131,11 @@
   - type: Sprite
     layers:
     - state: medical_lathe
+- type: entity
+  parent: BaseFlatpack
+  id: ShipRepairDroneStationFlatpack
+  name: ship-repair-drone-station-flatpack-name
+  description: ship-repair-drone-station-flatpack-description
+  components:
+  - type: Flatpack
+    entity: ShipRepairDroneStation

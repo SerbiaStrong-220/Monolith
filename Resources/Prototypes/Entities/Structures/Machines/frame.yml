@@ -6,6 +6,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ShipRepairDebris # Exodus: relocate obstructing frames with their contents.
     - type: Transform
       anchored: true
     - type: Physics
@@ -64,6 +65,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ShipRepairDebris # Exodus: relocate obstructing frames with their contents.
     - type: Transform
       anchored: true
     - type: Physics
@@ -132,6 +134,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ShipRepairDebris # Exodus: relocate obstructing frames with their contents.
     - type: Transform
       anchored: true
       noRot: true

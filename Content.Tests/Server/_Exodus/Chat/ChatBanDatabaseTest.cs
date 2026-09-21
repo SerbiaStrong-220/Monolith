@@ -41,6 +41,8 @@ public sealed class ChatBanDatabaseTest
         _logs = new LogManager();
         _configuration = MockInterfaces.MakeConfigurationManager(new Mock<IGameTiming>().Object, _logs,
             loadCvarsFromTypes: [typeof(CCVars)]);
+        // Synchronous SQLite guards must not yield through the default DEBUG acquisition delay.
+        _configuration.SetCVar(CCVars.DatabaseSqliteDelay, 0);
         _db = OpenDatabase();
         await _db.UpdatePlayerRecord(_admin, "Moderator", IPAddress.Loopback, null);
     }

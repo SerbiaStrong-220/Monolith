@@ -8,6 +8,7 @@
     name: ghost-role-information-asakim-name
     description: ghost-role-information-asakim-description
     rules: ghost-role-information-asakim-rules
+    job: AsakimWarrior # Exodus: count ghost-role warriors as combatants.
     mindRoles: # Exodus-asakim-mind-role
     - MindRoleGhostRoleNeutral
     - MindRoleAsakim

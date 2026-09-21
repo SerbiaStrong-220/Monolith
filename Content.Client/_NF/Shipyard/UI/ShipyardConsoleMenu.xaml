@@ -126,6 +126,15 @@
                     Disabled="True" /> <!-- Ru-Localization  -->
         </BoxContainer>
 
+        <!-- Exodus-begin: paid SRD snapshot replacement with an explicit warning before confirmation. -->
+        <BoxContainer Name="RepairSnapshotContainer" Orientation="Vertical" Margin="0 4 0 2" Visible="False">
+            <controls:ConfirmButton Name="RepairSnapshotButton" Disabled="True"
+                                    Text="{Loc 'shipyard-snapshot-button'}"
+                                    ConfirmationText="{Loc 'shipyard-snapshot-confirm'}" />
+            <RichTextLabel Text="{Loc 'shipyard-snapshot-warning'}" MaxWidth="590" Margin="0 4 0 0" />
+        </BoxContainer>
+        <!-- Exodus-end -->
+
         <!-- Footer -->
         <BoxContainer Orientation="Vertical" Margin="0 5 0 0" >
             <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 0" />

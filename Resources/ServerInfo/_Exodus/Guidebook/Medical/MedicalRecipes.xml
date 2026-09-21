@@ -1,0 +1,135 @@
+<Document>
+# Список медицинских рецептов
+
+Медицинский ассемблер изготавливает автоинъекторы и перевязочные средства из заготовок и готовых реагентов. Ниже перечислены все 20 рецептов, доступных в его меню без исследований.
+
+<Box>
+  <GuideEntityEmbed Entity="MedicalAssembler" Caption="Медицинский ассемблер"/>
+  <GuideEntityEmbed Entity="BlankMediPen" Caption="Пустая заготовка медипена"/>
+</Box>
+
+## Как изготовить препарат
+
+- Подайте питание на ассемблер.
+- Через меню ПКМ откройте его хранилище, положите предметные ингредиенты на ассемблер и закройте хранилище. Простого размещения предметов рядом недостаточно.
+- Вставьте ёмкость с нужными реагентами в слот для мензурки. Реагенты расходуются из этой ёмкости.
+- Обычным нажатием откройте меню производства, выберите рецепт и количество изделий.
+
+Количество ингредиентов ниже указано [bold]на один запуск рецепта[/bold]. «Ед.» обозначает единицы реагента. Базовое время каждого рецепта — 5 секунд; улучшения станка могут изменить скорость изготовления.
+
+Пустую заготовку медипена можно напечатать в медицинском техфабе. Использованный автоинъектор не заменяет эту заготовку. Если требуется ткань, предварительно отделите её от стопки и загрузите отделённый кусок.
+
+## Перевязочные средства
+
+Для этих трёх рецептов заготовка медипена не требуется. Каждый запуск выдаёт полную упаковку на [bold]15 применений[/bold]. Мазь, набор для ушибов и ткань расходуются по одной единице из загруженной стопки.
+
+<!-- Recipe: AloeCream; result: AloeCream. -->
+<GuideEntityEmbed Entity="AloeCream" Caption="Алоэ крем"/>
+
+- Предметы: 1 алоэ.
+- Реагенты: не требуются.
+
+<!-- Recipe: MedicatedSutureAssembler; result: MedicatedSuture. -->
+<GuideEntityEmbed Entity="MedicatedSuture" Caption="Медицинская нить"/>
+
+- Предметы: 1 набор для ушибов и 1 кусок ткани.
+- Реагенты: 20 ед. транексамовой кислоты и 20 ед. криптобиолина.
+
+<!-- Recipe: RegenerativeMeshAssembler; result: RegenerativeMesh. -->
+<GuideEntityEmbed Entity="RegenerativeMesh" Caption="Регенеративная сеть"/>
+
+- Предметы: 1 единица мази и 1 кусок ткани.
+- Реагенты: 20 ед. лепоразина и 20 ед. дермалина.
+
+## Автоинъекторы
+
+[bold]Каждый рецепт ниже дополнительно расходует одну пустую заготовку медипена.[/bold] На выходе получается один готовый автоинъектор.
+
+<!-- Recipe: EmergencyMedipen; result: EmergencyMedipen. -->
+<GuideEntityEmbed Entity="EmergencyMedipen" Caption="Экстренный автоинъектор"/>
+
+- 12 ед. эпинефрина и 3 ед. транексамовой кислоты.
+
+<!-- Recipe: AntiPoisonMedipen; result: AntiPoisonMedipen. -->
+<GuideEntityEmbed Entity="AntiPoisonMedipen" Caption="Автоинъектор противоядия"/>
+
+- 10 ед. ультраваскулина и 5 ед. эпинефрина.
+
+<!-- Recipe: BruteAutoInjector; result: BruteAutoInjector. -->
+<GuideEntityEmbed Entity="BruteAutoInjector" Caption="Автоинъектор мех-повреждений"/>
+
+- 15 ед. бикаридина и 5 ед. транексамовой кислоты.
+
+<!-- Recipe: BurnAutoInjector; result: BurnAutoInjector. -->
+<GuideEntityEmbed Entity="BurnAutoInjector" Caption="Автоинъектор физ-повреждений"/>
+
+- 10 ед. дермалина и 10 ед. лепоразина.
+
+<!-- Recipe: RadAutoInjector; result: RadAutoInjector. -->
+<GuideEntityEmbed Entity="RadAutoInjector" Caption="Автоинъектор рад-повреждений"/>
+
+- 15 ед. аритразина и 5 ед. бикаридина.
+
+<!-- Recipe: PunctAutoInjector; result: PunctAutoInjector. -->
+<GuideEntityEmbed Entity="PunctAutoInjector" Caption="Автоинъектор пунктураза"/>
+
+- 10 ед. пунктураза и 5 ед. транексамовой кислоты.
+
+<!-- Recipe: PyraAutoInjector; result: PyraAutoInjector. -->
+<GuideEntityEmbed Entity="PyraAutoInjector" Caption="Автоинъектор пиразина"/>
+
+- 10 ед. пиразина и 10 ед. дермалина.
+
+<!-- Recipe: AirlossAutoInjector; result: AirlossAutoInjector. -->
+<GuideEntityEmbed Entity="AirlossAutoInjector" Caption="Автоинъектор удушения"/>
+
+- 20 ед. физраствора и 20 ед. дексалина плюс.
+
+<!-- Recipe: HemostasisAutoInjector; result: HemostasisAutoInjector. -->
+<GuideEntityEmbed Entity="HemostasisAutoInjector" Caption="Кровоостанавливающий автоинъектор (hemostasis)"/>
+
+- 5 ед. транексамовой кислоты и 15 ед. физраствора.
+
+<!-- Recipe: CrisisAutoInjector; result: CrisisAutoInjector. -->
+<GuideEntityEmbed Entity="CrisisAutoInjector" Caption="Стабилизирующий автоинъектор (crisis)"/>
+
+- 10 ед. инапровалина и 10 ед. дексалина плюс.
+
+<!-- Recipe: LacerAutoInjector; result: LacerAutoInjector. -->
+<GuideEntityEmbed Entity="LacerAutoInjector" Caption="Лацериноловый автоинъектор"/>
+
+- 10 ед. лацеринола и 5 ед. транексамовой кислоты.
+
+<!-- Recipe: BruizAutoInjector; result: BruizAutoInjector. -->
+<GuideEntityEmbed Entity="BruizAutoInjector" Caption="Бруизиновый автоинъектор"/>
+
+- 10 ед. бруизина и 5 ед. транексамовой кислоты.
+
+<!-- Recipe: PolyAutoInjector; result: PolyAutoInjector. -->
+<GuideEntityEmbed Entity="PolyAutoInjector" Caption="Автоинъектор олигомеров полипирилия"/>
+
+- 15 ед. олигомеров полипирилия.
+
+<!-- Recipe: EthylredoxrazineAutoInjector; result: EthylredoxrazineAutoInjector. -->
+<GuideEntityEmbed Entity="EthylredoxrazineAutoInjector" Caption="Автоинъектор «Друг бармена» (barkeeper's friend)"/>
+
+- 15 ед. этилредоксразина и 5 ед. диловена.
+
+<!-- Recipe: StimulantAutoInjector; result: StimulantAutoInjector. -->
+<GuideEntityEmbed Entity="StimulantAutoInjector" Caption="Стимулирующий автоинъектор (stimulant)"/>
+
+- 10 ед. дезоксиэфедрина и 10 ед. диловена.
+
+<!-- Recipe: CombatMedipen; result: CombatMedipen. -->
+<GuideEntityEmbed Entity="CombatMedipen" Caption="Боевой автоинъектор"/>
+
+- 25 ед. омнизина и 5 ед. транексамовой кислоты.
+
+<!-- Recipe: Stimpack; result: Stimpack. -->
+<GuideEntityEmbed Entity="Stimpack" Caption="Автоинъектор адреналина (стимпак)"/>
+
+- 30 ед. гиперзина.
+
+<!-- Keep this list aligned with MedicalAssemblerStatic in _Mono/Recipes/Lathes/Packs/med_assembler.yml,
+     its recipes in _Mono/Recipes/Lathes/med_assembler.yml, and the output stack sizes in healing.yml. -->
+</Document>

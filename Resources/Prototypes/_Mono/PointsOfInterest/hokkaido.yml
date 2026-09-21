@@ -27,6 +27,11 @@
             MMCLiason: [ 1, 1 ]
             MMCSecurity: [ 5, 5 ]
             MMCEmployee: [ -1, -1 ]
+          # Exodus-begin: preserve the existing total staffing through records consoles.
+          jobLimits:
+            MMCLiason: { min: 1 }
+            MMCSecurity: { min: 5 }
+          # Exodus-end
           tags:
           - MieyoLiason
         - type: StationDeadDropHintExempt

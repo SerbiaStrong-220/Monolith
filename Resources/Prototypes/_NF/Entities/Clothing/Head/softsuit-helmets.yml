@@ -59,8 +59,8 @@
   - type: PointLight
     color: "#adffe6"
     enabled: false
-    radius: 3
-    energy: 2
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
@@ -189,8 +189,8 @@
       - state: equipped-head-visor
         color: "#fbe6b8"
   - type: PointLight
-    radius: 5
-    energy: 2
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
   - type: Tag
     tags:
     - PetWearable
@@ -225,8 +225,8 @@
       - state: equipped-head-visor
         color: "#2572bf"
   - type: PointLight
-    radius: 5
-    energy: 2
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
   - type: Tag
     tags:
     - PetWearable
@@ -348,7 +348,7 @@
       - state: equipped-head-visor
         color: "#adcfd5"
   - type: PointLight
-    radius: 6
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
   - type: Tag
     tags:
     - PetWearable
@@ -849,8 +849,8 @@
     sprite:  _NF/Clothing/Head/Helmets/fsb_eva_helmet.rsi
   - type: PointLight
     color: "#adf1ff"
-    radius: 7
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000

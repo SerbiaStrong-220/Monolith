@@ -1,0 +1,8 @@
+- type: entity
+  id: ExodusDatafarmResearchFaction100
+  parent: DatafarmResearchFaction200
+  suffix: 100 PPS
+  description: A power-hungry server dedicated to gathering research data. It generates 100 research points per second and is bolted to the floor.
+  components:
+  - type: ResearchPointSource
+    pointsPerSecond: 100

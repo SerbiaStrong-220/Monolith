@@ -107,6 +107,8 @@
   - type: TechnologyDisk
     recipes:
     - SheetPlasteelShm
+    - ShipRepairDrone
+    - ShipRepairDroneStationMachineCircuitboard
 
 - type: entity
   parent: TechDiskBase

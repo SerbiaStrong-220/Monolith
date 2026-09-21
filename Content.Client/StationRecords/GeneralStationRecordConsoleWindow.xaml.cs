@@ -130,7 +130,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         if (state.JobList != null)
         {
             JobListing.Visible = true;
-            PopulateJobsContainer(state.JobList);
+            PopulateJobsContainer(state.JobList, state); // Exodus: staffing limits.
         }
 
         if (state.Advertisement != null)
@@ -216,7 +216,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     }
 
     // Frontier: job container
-    private void PopulateJobsContainer(IReadOnlyDictionary<ProtoId<JobPrototype>, int?> jobList)
+    private void PopulateJobsContainer(IReadOnlyDictionary<ProtoId<JobPrototype>, int?> jobList, GeneralStationRecordConsoleState state) // Exodus: staffing limits.
     {
         JobListing.RemoveAllChildren();
         foreach (var (job, amount) in jobList)
@@ -237,6 +237,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 JobName = { Text = jobName },
                 JobAmount = { Text = amount.ToString() },
             };
+            ApplyJobCapacity(jobEntry, job, state); // Exodus: staffing limits.
             jobEntry.DecreaseJobSlot.OnPressed += (args) => { OnJobSubtract?.Invoke(job); };
             jobEntry.IncreaseJobSlot.OnPressed += (args) => { OnJobAdd?.Invoke(job); };
             JobListing.AddChild(jobEntry);

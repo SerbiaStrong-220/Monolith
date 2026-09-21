@@ -44,4 +44,8 @@
     <GuideEntityEmbed Entity="MobYowie" Caption="Йови"/>
   </Box>
 
+  <!-- Exodus: races restricted to ghost roles and events. -->
+  # Недоступные расы
+  Некоторые разумные виды нельзя выбрать на старте раунда. Подробнее — в разделе [textlink="Недоступные расы" link="ExodusUnavailableSpecies"].
+
 </Document>

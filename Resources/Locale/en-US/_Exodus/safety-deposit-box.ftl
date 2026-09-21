@@ -19,4 +19,6 @@ safety-deposit-error-not-lost = This safety deposit box is not lost and cannot b
 safety-deposit-purchase-success = Safety deposit box purchased. Box ID: {$id}...
 safety-deposit-deposit-success = Safety deposit box contents saved. The box is now stored.
 safety-deposit-withdraw-success = Safety deposit box retrieved.
+safety-deposit-withdraw-partial = Box retrieved. Items that could not be restored: {$count}. Their data has been retained; contact an administrator for recovery.
+safety-deposit-withdraw-overflow = Items that did not fit in the box or are no longer allowed in storage were placed next to you. Count: {$count}.
 safety-deposit-reclaim-success = Lost safety deposit box reclaimed. An empty replacement was issued.

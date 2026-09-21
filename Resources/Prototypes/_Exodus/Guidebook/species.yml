@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: ExodusUnavailableSpecies
+  name: guide-entry-exodus-unavailable-species
+  text: /ServerInfo/_Exodus/Guidebook/Mobs/UnavailableSpecies.xml
+  children:
+  - LivingSkeleton
+
+- type: guideEntry
+  id: LivingSkeleton
+  name: guide-entry-exodus-living-skeleton
+  text: /ServerInfo/_Exodus/Guidebook/Mobs/LivingSkeleton.xml

@@ -1,0 +1,24 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostLivingSkeleton
+  name: living skeleton ghost role spawner
+  components:
+  - type: GhostRole
+    name: ghost-role-information-living-skeleton-name
+    description: ghost-role-information-living-skeleton-description
+    rules: ghost-role-information-living-skeleton-rules
+    makeSentient: false
+    requirements: []
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobLivingSkeleton
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Species/Skeleton/parts.rsi
+      state: full
+

@@ -31,10 +31,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private IEntityManager _entityManager = default!;
 
-    /// <summary>
-    /// The maximum number of slots allowed for any job.
-    /// </summary>
-    private const int MaxJobSlots = 10;
+    // Exodus: manual staffing limits are configured per job; there is no global vacancy cap.
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -176,10 +173,10 @@ public sealed partial class StationJobsSystem : EntitySystem
             case false:
                 if (!createSlot)
                     return false;
-                // Limit to MaxJobSlots
-                var newAmount = Math.Min(amount, MaxJobSlots);
-                stationJobs.TotalJobs += newAmount;
-                jobList[jobPrototypeId] = newAmount;
+                // Exodus-begin: jobs without a configured maximum are not capped at ten vacancies.
+                stationJobs.TotalJobs += amount;
+                jobList[jobPrototypeId] = amount;
+                // Exodus-end
                 UpdateJobsAvailable();
                 return true;
             case true:
@@ -188,11 +185,11 @@ public sealed partial class StationJobsSystem : EntitySystem
                     return true;
 
                 // Would remove more jobs than we have available.
-                if (available + amount < 0 && !clamp)
+                if ((long) avail + amount < 0 && !clamp) // Exodus: avoid integer overflow.
                     return false;
 
-                // Clamp to both minimum 0 and maximum MaxJobSlots
-                jobList[jobPrototypeId] = Math.Min(Math.Max(avail + amount, 0), MaxJobSlots);
+                // Exodus: preserve nonnegative vacancies without a gameplay cap or integer overflow.
+                jobList[jobPrototypeId] = (int) Math.Clamp((long) avail + amount, 0, int.MaxValue);
                 stationJobs.TotalJobs = jobList.Values.Select(x => x ?? 0).Sum();
                 UpdateJobsAvailable();
                 return true;
@@ -255,9 +252,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (amount < 0)
             throw new ArgumentException("Tried to set a job to have a negative number of slots!", nameof(amount));
 
-        // Enforce the MaxJobSlots limit
-        var clampedAmount = Math.Min(amount, MaxJobSlots);
-
+        // Exodus: use the requested amount without an implicit vacancy cap.
         var jobList = stationJobs.JobList;
 
         switch (jobList.ContainsKey(jobPrototypeId))
@@ -265,14 +260,14 @@ public sealed partial class StationJobsSystem : EntitySystem
             case false:
                 if (!createSlot)
                     return false;
-                stationJobs.TotalJobs += clampedAmount;
-                jobList[jobPrototypeId] = clampedAmount;
+                stationJobs.TotalJobs += amount; // Exodus: no implicit vacancy cap.
+                jobList[jobPrototypeId] = amount; // Exodus: no implicit vacancy cap.
                 UpdateJobsAvailable();
                 return true;
             case true:
-                stationJobs.TotalJobs += clampedAmount - (jobList[jobPrototypeId] ?? 0);
+                stationJobs.TotalJobs += amount - (jobList[jobPrototypeId] ?? 0); // Exodus: no implicit vacancy cap.
 
-                jobList[jobPrototypeId] = clampedAmount;
+                jobList[jobPrototypeId] = amount; // Exodus: no implicit vacancy cap.
                 UpdateJobsAvailable();
                 return true;
         }

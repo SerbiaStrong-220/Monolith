@@ -1,0 +1,13 @@
+﻿- type: entity
+  id: ShipRepairDroneStationMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: ship-repair-drone-station-machine-board-name
+  description: ship-repair-drone-station-machine-board-description
+  components:
+  - type: MachineBoard
+    prototype: ShipRepairDroneStation
+    stackRequirements:
+      Diamond: 1
+      Bluespace: 2
+      Plastitanium: 50
+      Plasteel: 50

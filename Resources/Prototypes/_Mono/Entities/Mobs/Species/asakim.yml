@@ -12,6 +12,8 @@
     #    - HeadTop # WWDP - Because visible horns its cool
     - HeadSide
   - type: Hunger
+  - type: TTS # Exodus: shared sex-matched voices for Asakim, including ghost roles and clones.
+    randomVoicesList: Asakim
   - type: Puller
     needsHands: false
   - type: MovementSpeedModifier

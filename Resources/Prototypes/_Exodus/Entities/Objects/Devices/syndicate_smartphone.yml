@@ -24,6 +24,11 @@
         interactionRange: 0.5
   - type: StaticPrice
     price: 0
+  - type: Contraband
+    severity: Class3Syndicate
+    turnInValues:
+      FederationMilitaryCredit: 200
+      Doubloon: 200
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/multitool_drop.ogg

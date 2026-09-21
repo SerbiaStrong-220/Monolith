@@ -1,0 +1,16 @@
+ent-MobShipRepairDrone = ship repair drone
+    .desc = A compact drone that repairs a ship using an SRD snapshot. Load it into a repair drone station to control it.
+ent-MobShipRepairDroneFleetTSF = TSF fleet repair drone
+    .desc = Repairs accessible structures in a 3x3 area using an SRD snapshot. Repair time depends on the amount of work.
+ent-MobShipRepairDroneFleetPDV = PDV fleet repair drone
+    .desc = Repairs accessible structures in a 3x3 area using an SRD snapshot. Repair time depends on the amount of work.
+ent-MobShipRepairDroneAsakim = VEF repair drone
+    .desc = Phases through obstacles. Repairs ships using the SRD system.
+ship-repair-drone-no-snapshot = The drone station must be on a ship with an SRD snapshot to start.
+ship-repair-drone-incompatible = The drone is incompatible with this ship's repair scheme.
+ship-repair-drone-status-off = The drone is switched off.
+ship-repair-drone-status-active = The drone is switched on.
+ship-repair-drone-status-repairing = The drone is repairing damage.
+ship-repair-drone-status-waiting = The drone is waiting for its assigned ship to return.
+ship-repair-drone-status-destroyed = The drone is inoperable.
+ship-repair-drone-station-hint = Place the switched-off drone beside a repair drone station and select Load drone in its context menu. Dragging it onto the station also works.

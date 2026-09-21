@@ -452,3 +452,5 @@
   - type: MaterialStorage
     storage:
       Biomass: 50
+  - type: ShipRepairable # Exodus: restoration does not replenish consumed biomass.
+    repairTo: BiogeneratorRepaired

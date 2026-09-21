@@ -1,0 +1,42 @@
+- type: body
+  id: LivingSkeleton
+  name: living skeleton
+  root: torso
+  slots:
+    head:
+      part: HeadLivingSkeleton
+      connections:
+      - torso
+    torso:
+      part: TorsoLivingSkeleton
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      - head
+    right arm:
+      part: RightArmLivingSkeleton
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmLivingSkeleton
+      connections:
+      - left hand
+    right hand:
+      part: RightHandLivingSkeleton
+    left hand:
+      part: LeftHandLivingSkeleton
+    right leg:
+      part: RightLegLivingSkeleton
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegLivingSkeleton
+      connections:
+      - left foot
+    right foot:
+      part: RightFootLivingSkeleton
+    left foot:
+      part: LeftFootLivingSkeleton
+

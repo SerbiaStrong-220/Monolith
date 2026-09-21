@@ -217,8 +217,8 @@
   - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
-    radius: 4 # 3->4 Mono
-    energy: 3 # 2->3 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false

@@ -380,6 +380,7 @@
   name: refined diamond
   suffix: Full
   components:
+  - type: ConstructionMaterials # Exodus: store diamond in construction material containers.
   - type: Stack
     stackType: Diamond
     baseLayer: base

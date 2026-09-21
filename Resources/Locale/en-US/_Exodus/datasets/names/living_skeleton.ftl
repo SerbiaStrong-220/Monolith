@@ -1,0 +1,23 @@
+names-living-skeleton-male-1 = Kostyan
+names-living-skeleton-male-2 = Skeletal
+names-living-skeleton-male-3 = Ossified
+names-living-skeleton-male-4 = Kostya the Bony
+names-living-skeleton-male-5 = Kostyan Kostyanovich
+names-living-skeleton-male-6 = Skelet Skeletovich
+names-living-skeleton-male-7 = Kostoslav
+names-living-skeleton-male-8 = Kostimir
+names-living-skeleton-male-9 = Bonewanderer
+names-living-skeleton-male-10 = Bonecruncher
+names-living-skeleton-male-11 = Bonegnawer
+
+names-living-skeleton-female-1 = Kostyana
+names-living-skeleton-female-2 = Skeletta
+names-living-skeleton-female-3 = Ossifia
+names-living-skeleton-female-4 = Kostya the Bony
+names-living-skeleton-female-5 = Kostyana Kostyanovna
+names-living-skeleton-female-6 = Skeletta Skeletovna
+names-living-skeleton-female-7 = Kostoslava
+names-living-skeleton-female-8 = Kostimira
+names-living-skeleton-female-9 = Lady Bonewanderer
+names-living-skeleton-female-10 = Lady Bonecruncher
+names-living-skeleton-female-11 = Lady Bonegnawer

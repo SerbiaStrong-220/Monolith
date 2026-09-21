@@ -46,6 +46,16 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
         _cfg.OnValueChanged(FHCCVars.RenderStarSystem, EnsureStarSystem, true);
     }
 
+    // Exodus-begin remove overlays that cache entity systems when the client disconnects.
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _cfg.UnsubValueChanged(FHCCVars.RenderStarSystem, EnsureStarSystem);
+        EnsureStarSystem(false);
+        _starLightOverlay.ResetMemory();
+    }
+    // Exodus-end
+
     private void EnsureStarSystem(bool enabled)
     {
         if (enabled)

@@ -608,6 +608,8 @@
   parent: PlayerStationAiEmpty
   suffix: Job spawn
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for station AI players.
+    salary: Silicon
   - type: ContainerSpawnPoint
     containerId: station_ai_mind_slot
     job: StationAi

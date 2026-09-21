@@ -21,6 +21,7 @@ public sealed partial class ShipRepairDoAfterEvent : SimpleDoAfterEvent
 {
     public Vector2i TargetGridIndices;
     public int Cost;
+    public int SnapshotRevision; // Exodus: never finish repairs against a replacement snapshot.
     // if we're repairing an entity, store what we're repairing
     public int? RepairId = null;
 
@@ -32,7 +33,9 @@ public sealed partial class ShipRepairDoAfterEvent : SimpleDoAfterEvent
         if (other is not ShipRepairDoAfterEvent cast)
             return false;
 
-        return TargetGridIndices == cast.TargetGridIndices && RepairId == cast.RepairId;
+        // Exodus: distinct grids and snapshot versions are distinct repairs.
+        return TargetGrid == cast.TargetGrid && SnapshotRevision == cast.SnapshotRevision &&
+               TargetGridIndices == cast.TargetGridIndices && RepairId == cast.RepairId;
     }
 }
 
@@ -43,12 +46,14 @@ public sealed partial class RepairEntityMessage : EntityEventArgs
     public Vector2i Indices;
     public int SpecId;
     public ShipRepairEntitySpecifier NewSpec;
+    public int SnapshotRevision; // Exodus: reject late updates from a previous snapshot.
 
-    public RepairEntityMessage(NetEntity grid, Vector2i indices, int specId, ShipRepairEntitySpecifier newSpec)
+    public RepairEntityMessage(NetEntity grid, Vector2i indices, int specId, ShipRepairEntitySpecifier newSpec, int snapshotRevision) // Exodus
     {
         Grid = grid;
         Indices = indices;
         SpecId = specId;
         NewSpec = newSpec;
+        SnapshotRevision = snapshotRevision; // Exodus
     }
 }

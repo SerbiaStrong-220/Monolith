@@ -113,6 +113,39 @@
     speedModifierThresholds: {}
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 3
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: UseDelay
+    delay: 1
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionObserverShowRadar
+  - type: RadarConsole
+    followEntity: true
+    noRotate: true
+  - type: DetectionRangeMultiplier
+    infraredMultiplier: 0.5
+    visualMultiplier: 0.75
+  - type: NightVision
+    relayOverlay: false
+    goggleEffect: true
+    viewCircleRadius: 550
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
+  - type: ShowHealthBars
+  - type: ShowHealthIcons
   - type: MobState
     allowedStates: [ Alive, Dead ]
   - type: MobThresholds
@@ -147,6 +180,9 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
   - type: GhostTakeoverAvailable
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleRot
   - type: ReplacementAccent
     accent: genericAggressive
 

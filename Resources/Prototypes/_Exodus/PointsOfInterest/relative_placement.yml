@@ -50,3 +50,11 @@
   anchorPoi: HeliosFortress
   minDistance: 5500
   maxDistance: 6000
+
+# Place the existing Kashalot 128-200 tiles from the defensive platform, without adding a second ship.
+- type: relativePoiPlacement
+  id: ADSKashalotNearDefensivePlatform
+  poi: ADSKashalot
+  anchorPoi: AdsDefensivePlatform
+  minDistance: 128
+  maxDistance: 200

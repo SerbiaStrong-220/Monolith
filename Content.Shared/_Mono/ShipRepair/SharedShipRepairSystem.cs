@@ -35,100 +35,23 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         base.Initialize();
 
         InitTool();
+        InitRepairPlans(); // Exodus: shared snapshot work planning for autonomous and area repair.
     }
 
     /// <summary>
     /// Generate snapshot of grid repair data and store on grid.
     /// </summary>
+    // Exodus-begin: build before replacing the active snapshot and invalidate old repair operations.
     public void GenerateRepairData(EntityUid gridUid)
     {
-        if (!TryComp<MapGridComponent>(gridUid, out var grid))
-            return;
-
-        var repairData = EnsureComp<ShipRepairDataComponent>(gridUid);
-        repairData.Chunks.Clear();
-        repairData.EntityPalette.Clear();
-
-        var chunkSize = repairData.ChunkSize;
-
-        // tile snapshot
-        var tiles = _map.GetAllTilesEnumerator(gridUid, grid);
-        while (tiles.MoveNext(out var mTileRef))
-        {
-            if (mTileRef == null)
-                continue;
-            var tileRef = mTileRef.Value;
-
-            var gridIndices = tileRef.GridIndices;
-            var chunk = GetCreateChunk(repairData, gridIndices);
-
-            var rel = GetRelativeIndices(gridIndices, chunkSize);
-            chunk.Tiles[rel.X + rel.Y * chunkSize] = tileRef.Tile.TypeId;
-        }
-
-        // entities snapshot
-        var repairables = new HashSet<Entity<ShipRepairableComponent>>();
-        _lookup.GetLocalEntitiesIntersecting(gridUid, grid.LocalAABB, repairables);
-        foreach (var childEnt in repairables)
-        {
-            if (TerminatingOrDeleted(childEnt))
-                continue;
-
-            var childXform = Transform(childEnt);
-            // only ents directly parented to grid and anchored
-            if (childXform.ParentUid != gridUid || !childXform.Anchored)
-                continue;
-
-            var query = new ShipRepairStoreQueryEvent(true);
-            RaiseLocalEvent(childEnt, ref query);
-            if (!query.Repairable)
-                continue;
-
-            var maybeProtoId = childEnt.Comp.RepairTo;
-            if (maybeProtoId == null)
-            {
-                var meta = MetaData(childEnt);
-                if (meta.EntityPrototype == null)
-                    continue;
-                maybeProtoId = new EntProtoId(meta.EntityPrototype.ID);
-            }
-            var protoId = maybeProtoId.Value;
-
-            var paletteIndex = repairData.EntityPalette.IndexOf(protoId);
-            if (paletteIndex == -1)
-            {
-                repairData.EntityPalette.Add(protoId);
-                paletteIndex = repairData.EntityPalette.Count - 1;
-            }
-
-            var localPos = childXform.LocalPosition;
-            var gridIndices = _map.LocalToTile(gridUid, grid, childXform.Coordinates);
-            var chunk = GetCreateChunk(repairData, gridIndices);
-
-            chunk.Entities[chunk.NextUid++] = new ShipRepairEntitySpecifier
-            {
-                ProtoIndex = paletteIndex,
-                OriginalEntity = GetNetEntity(childEnt),
-                Rotation = childXform.LocalRotation,
-                LocalPosition = localPos
-            };
-        }
-
-        Dirty(gridUid, repairData);
+        if (TryCreateRepairData(gridUid, out var snapshot))
+            ApplyRepairData((gridUid, EnsureComp<ShipRepairDataComponent>(gridUid)), snapshot);
     }
+    // Exodus-end
 
     public bool TryRepairTileTile(Entity<ShipRepairDataComponent> grid, Vector2i indices)
     {
-        if (!TryGetChunk(grid.Comp, indices, out var chunk) || !TryComp<MapGridComponent>(grid, out var gridComp))
-            return false;
-
-        var relative = GetRelativeIndices(indices, grid.Comp.ChunkSize);
-        var idx = relative.X + relative.Y * grid.Comp.ChunkSize;
-
-        var tileToPlace = chunk.Tiles[idx];
-        if (tileToPlace != Tile.Empty.TypeId)
-            _map.SetTile(grid, gridComp, indices, new Tile(tileToPlace));
-        return true;
+        return TryRestoreConnectedTile(grid, indices); // Exodus: prevent isolated tiles from repeatedly splitting off.
     }
 
     protected Vector2i GetRepairChunkIndices(Vector2i gridIndices, int chunkSize)

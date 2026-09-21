@@ -570,3 +570,32 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
+- type: listing
+  id: SummoningMachineShipRepairDroneStation
+  name: summoning-machine-ship-repair-drone-station-name
+  description: summoning-machine-ship-repair-drone-station-desc
+  productEntity: ShipRepairDroneStationFlatpack
+  cost:
+    Telecrystal: 1800 # 30 minutes of summoning time.
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAsakimRepairDrone
+  name: summoning-machine-asakim-repair-drone-name
+  description: summoning-machine-asakim-repair-drone-desc
+  productEntity: MobShipRepairDroneAsakim
+  cost:
+    Telecrystal: 3600 # 1 hour of summoning time.
+  categories:
+  - SummoningMachineTechnicalContour
+
+- type: listing
+  id: SummoningMachineAsakimRepairDroneKit
+  name: summoning-machine-asakim-repair-drone-kit-name
+  description: summoning-machine-asakim-repair-drone-kit-desc
+  productEntity: CrateShipRepairDroneKit
+  cost:
+    Telecrystal: 9600 # 2 hours 40 minutes of summoning time.
+  categories:
+  - SummoningMachineFieldReserve

@@ -51,6 +51,7 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
         SellShipButton.OnPressed += (args) => { OnSellShip?.Invoke(args); };
         UnassignDeedButton.OnPressed += (args) => { OnUnassignDeed?.Invoke(args); };
         RenameButton.OnPressed += OnRenameButtonPressed;
+        InitializeRepairSnapshots(); // Exodus: paid SRD snapshot replacement.
     }
 
 
@@ -351,6 +352,7 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
 
     public void UpdateState(ShipyardConsoleInterfaceState state)
     {
+        UpdateRepairSnapshot(state); // Exodus
         BalanceLabel.Text = BankSystemExtensions.ToSpesoString(state.Balance);
         var shipPrice = 0;
         if (!state.FreeListings)

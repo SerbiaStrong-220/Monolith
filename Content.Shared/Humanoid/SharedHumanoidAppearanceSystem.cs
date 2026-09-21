@@ -547,6 +547,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem
 
         humanoid.Voice = voiceId;
         comp.VoicePrototypeId = voiceId;
+        Dirty(uid, comp); // Exodus: synchronize voices changed by profiles, pools and cloning.
     }
     // Corvax-TTS-End
 

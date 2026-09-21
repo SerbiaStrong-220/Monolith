@@ -104,6 +104,8 @@
   - Asakim
   - IPC
   - Arachnid
+  - Kidan
+  - Hydrakin
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-operative-name
@@ -144,7 +146,7 @@
     - Syndicate
   - type: NukeOperative
   - type: TTS
-    voice: dragon_knight_dota_2
+    randomVoicesList: SyndicateGhost
 
 - type: randomHumanoidSettings
   id: SyndicateGhostOperativeNoTimelock
@@ -185,8 +187,6 @@
     - SyndicateNamesNormal
   - type: EntityNamePrefix
     prefix: random-metadata-name-syndicate-leader
-  - type: TTS
-    voice: outworld_destroyer_dota_2
 
 - type: randomHumanoidSettings
   id: SyndicateGhostLeaderNoTimelock
