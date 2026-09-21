@@ -1,0 +1,38 @@
+- type: vessel
+  id: Suicidebike
+  parent: BaseVessel
+  name: Суисайдбайк
+  description: Что может быть лучше, чем на 400 метров в секунду ушататься о метеор? Лёгкий шаттл, оборудованный солнечными панелями и несколькими движками. ВНИМАНИЕ! На данном шаттле нет базого минимума, в т.ч. скафандра и атмосии!
+  price: 34200
+  category: Small
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/suicidebike.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Salvage
+  engine:
+  - Solar
+
+- type: gameMap
+  id: Suicidebike
+  mapName: 'Суисайдбайк'
+  mapPath: /SharedMaps/_Exodus/Shuttles/suicidebike.yml
+  minPlayers: 0
+  stations:
+    Suicidebike:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Суисайдбайк{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
