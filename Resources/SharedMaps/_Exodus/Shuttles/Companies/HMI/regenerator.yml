@@ -4583,8 +4583,7 @@ entities:
       pos: -3.5,20.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
     - type: ApcPowerReceiver
       powerLoad: 5
     - type: Battery
@@ -7881,8 +7880,7 @@ entities:
       pos: -10.5,12.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
       deviceLists:
       - 14
     - type: AtmosPipeColor
@@ -7925,8 +7923,7 @@ entities:
       pos: -9.5,19.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
       deviceLists:
       - 4
     - type: AtmosPipeColor
@@ -8057,8 +8054,7 @@ entities:
       pos: -13.5,12.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
       deviceLists:
       - 14
     - type: AtmosPipeColor
@@ -8103,8 +8099,7 @@ entities:
       pos: -13.5,19.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
       deviceLists:
       - 4
     - type: AtmosPipeColor
@@ -10746,8 +10741,7 @@ entities:
       nameSet: True
       id: Главный вход
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1408
     components:
     - type: Transform
@@ -10759,8 +10753,7 @@ entities:
       nameSet: True
       id: Кухня
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1409
     components:
     - type: Transform
@@ -10773,8 +10766,7 @@ entities:
       nameSet: True
       id: Инженерная
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1410
     components:
     - type: Transform
@@ -10786,8 +10778,7 @@ entities:
       nameSet: True
       id: Химия
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1411
     components:
     - type: Transform
@@ -10800,8 +10791,7 @@ entities:
       nameSet: True
       id: Вирусология
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1412
     components:
     - type: Transform
@@ -10814,8 +10804,7 @@ entities:
       nameSet: True
       id: Изолятор
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1413
     components:
     - type: Transform
@@ -10828,8 +10817,7 @@ entities:
       nameSet: True
       id: Реанимация
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1414
     components:
     - type: Transform
@@ -10841,8 +10829,7 @@ entities:
       nameSet: True
       id: Мостик
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1415
     components:
     - type: Transform
@@ -10855,8 +10842,7 @@ entities:
       nameSet: True
       id: Каюты
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1416
     components:
     - type: Transform
@@ -10868,8 +10854,7 @@ entities:
       nameSet: True
       id: Коридор-реанимации
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1417
     components:
     - type: Transform
@@ -10881,8 +10866,7 @@ entities:
       nameSet: True
       id: Цех
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1418
     components:
     - type: Transform
@@ -10894,8 +10878,7 @@ entities:
       nameSet: True
       id: Шлюз-цеха
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1419
     components:
     - type: Transform
@@ -10907,8 +10890,7 @@ entities:
       nameSet: True
       id: Клонирование
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1420
     components:
     - type: Transform
@@ -10921,8 +10903,7 @@ entities:
       nameSet: True
       id: Коридор-центральный
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1421
     components:
     - type: Transform
@@ -10935,8 +10916,7 @@ entities:
       nameSet: True
       id: Морг
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1422
     components:
     - type: Transform
@@ -10950,8 +10930,7 @@ entities:
       nameSet: True
       id: Космос-Главный-вход
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
   - uid: 1423
     components:
     - type: Transform
@@ -10963,8 +10942,7 @@ entities:
       nameSet: True
       id: Серверная
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
 - proto: SurveillanceCameraRouterGeneral
   entities:
   - uid: 1424
@@ -10973,8 +10951,7 @@ entities:
       pos: -10.5,16.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
 - proto: Table
   entities:
   - uid: 1425
