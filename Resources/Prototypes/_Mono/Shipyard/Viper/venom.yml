@@ -8,7 +8,7 @@
   parent: BaseVessel
   name: Вайперы «Веном» # Exodus Viper localization
   description: Средний эсминец с возможностями задержания. Вооружён главным орудием CYREXA, четырьмя 90-мм автопушками DRAVON и двумя АК-570. # Exodus Viper localization
-  price: 138300 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 138600 # Exodus: appraised minimum, rounded up to 100.
   category: Medium
   group: Viper
   access: Viper
