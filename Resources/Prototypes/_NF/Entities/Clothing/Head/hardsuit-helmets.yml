@@ -102,8 +102,8 @@
   - type: Clothing
     sprite: _NF/Clothing/Head/Hardsuits/maxim_prototype.rsi
   - type: PointLight # Luxury Hardsuit Light
-    radius: 8 # 7->8 Mono
-    energy: 4 # 3->4 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
   - type: Tag
     tags:
     - PetWearable

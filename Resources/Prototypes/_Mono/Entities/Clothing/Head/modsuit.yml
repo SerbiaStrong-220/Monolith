@@ -19,8 +19,8 @@
     spriteLayer: light
   - type: PointLight
     enabled: false
-    radius: 5
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
@@ -92,8 +92,8 @@
     spriteLayer: light
   - type: PointLight
     enabled: false
-    radius: 5
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
@@ -177,8 +177,8 @@
     spriteLayer: light
   - type: PointLight
     enabled: false
-    radius: 5
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
@@ -247,8 +247,8 @@
     spriteLayer: light
   - type: PointLight
     enabled: false
-    radius: 5
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
@@ -311,8 +311,8 @@
     spriteLayer: light
   - type: PointLight
     enabled: false
-    radius: 5
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false

@@ -22,8 +22,8 @@
   - type: FlashImmunity
   - type: ToggleableVisuals
   - type: PointLight
-    radius: 8
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     color: "#e24242"
   - type: RadarConsole
     followEntity: true
@@ -68,6 +68,6 @@
         Slash: 0.9
         Piercing: 0.8
   - type: PointLight
-    radius: 8 # 7->8 Mono
-    energy: 3 # 2->3 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     color: "#FF0040" # mono

@@ -131,7 +131,7 @@
       - state: equipped-head-unshaded-hydrakin
         shader: unshaded
   - type: PointLight
-    radius: 7 #6->7 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
@@ -151,8 +151,8 @@
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
   - type: PointLight
-    radius: 8 # 7->8 Mono
-    energy: 4 # 3->4 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
 
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -191,7 +191,7 @@
       - state: equipped-head-unshaded-vox
         shader: unshaded
   - type: PointLight
-    radius: 7 # 6->7 Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
@@ -338,8 +338,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PointLight
-    radius: 5
-    energy: 3
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
     color: "#adf1ff"
   - type: PressureProtection
     highPressureMultiplier: 0.6
@@ -410,8 +410,8 @@
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
   - type: PointLight
-    radius: 8 # 7->8 - Mono
-    energy: 4 # 3->4 - Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
+    energy: 5 # Exodus: match the PDV SCAF flashlight.
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -426,7 +426,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: PointLight
-    radius: 5 # Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
     color: green
   - type: PressureProtection
     highPressureMultiplier: 0.08
@@ -451,7 +451,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
   - type: PointLight
-    radius: 5 # Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
     color: green
   - type: PressureProtection
     highPressureMultiplier: 0.08
@@ -476,7 +476,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi
   - type: PointLight
-    radius: 5 # Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
     color: red
   - type: PressureProtection
     highPressureMultiplier: 0.08
@@ -506,7 +506,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: PointLight
-    radius: 5 # Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
     color: green
   - type: PressureProtection
     highPressureMultiplier: 0.08
@@ -553,7 +553,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
-    radius: 5 # Mono
+    radius: 10 # Exodus: match the PDV SCAF flashlight.
     color: "#ffadfb"
   - type: PressureProtection
     highPressureMultiplier: 0.27
