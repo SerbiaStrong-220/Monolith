@@ -40,7 +40,7 @@
   randomRotation: false
   stations:
     TSFMCIndustry:
-      stationProto: StandardFrontierOutpost
+      stationProto: RecordsFrontierOutpostCargo # Exodus: provides the cargo order database and station bank for the mapped cargo console.
       gridComponents:
       - type: VesselInfo
         description: "Колониальный корабль Федерации, направленный в радиус Колосса для промышленного освоения. Здесь живут гражданские ТСФ." # Exodus Stellar Blessing localization
