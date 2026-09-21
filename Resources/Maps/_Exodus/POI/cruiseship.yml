@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 277.0.0
+  engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 07/05/2026 10:08:00
-  entityCount: 1504
+  time: 09/21/2026 01:13:22
+  entityCount: 1519
 maps: []
 grids:
 - 1
@@ -94,10 +94,11 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
+        ExodusBiohazardFoam: []
+        MetalFoam: []
+        Puddle: []
         Smoke: []
         Kudzu: []
-        Puddle: []
-        MetalFoam: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: ImplicitRoof
@@ -951,6 +952,8 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ExplosionAirtightGrid
+    - type: ShipGridLock
+      locked: False
   - uid: 3
     mapInit: true
     paused: true
@@ -3568,13 +3571,19 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -8.5,18.5
       parent: 1
-- proto: ComputerTabletopBroken
+- proto: ComputerShuttle
   entities:
   - uid: 461
     components:
     - type: Transform
       pos: -15.5,20.5
       parent: 1
+    - type: ApcPowerReceiver
+      powerLoad: 5
+    - type: Battery
+      startingCharge: 0
+- proto: ComputerTabletopBroken
+  entities:
   - uid: 462
     components:
     - type: Transform
@@ -3620,6 +3629,19 @@ entities:
     components:
     - type: Transform
       pos: -9.5,6.5
+      parent: 1
+- proto: Crowbar
+  entities:
+  - uid: 1507
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -19.566103,-0.4961853
+      parent: 1
+  - uid: 1508
+    components:
+    - type: Transform
+      pos: -15.362978,-0.4336853
       parent: 1
 - proto: CurtainsBlue
   entities:
@@ -3738,6 +3760,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.8043194,11.549627
+      parent: 1
+- proto: DrinkMilkCarton
+  entities:
+  - uid: 1518
+    components:
+    - type: Transform
+      pos: -13.513199,7.517519
       parent: 1
 - proto: EmergencyLight
   entities:
@@ -6337,6 +6366,13 @@ entities:
       - 17
     - type: AtmosPipeLayers
       pipeLayer: Tertiary
+- proto: GeneratorRTG
+  entities:
+  - uid: 1509
+    components:
+    - type: Transform
+      pos: -25.5,7.5
+      parent: 1
 - proto: GlowstickPurple
   entities:
   - uid: 798
@@ -7603,6 +7639,20 @@ entities:
       rot: 3.141592653589793 rad
       pos: -13.5,-1.5
       parent: 1
+- proto: RCD
+  entities:
+  - uid: 1511
+    components:
+    - type: Transform
+      pos: -25.377571,5.722307
+      parent: 1
+- proto: RCDAmmo
+  entities:
+  - uid: 1512
+    components:
+    - type: Transform
+      pos: -20.713575,16.368515
+      parent: 1
 - proto: ReinforcedWindow
   entities:
   - uid: 985
@@ -7790,6 +7840,11 @@ entities:
     components:
     - type: Transform
       pos: -15.5,6.5
+      parent: 1
+  - uid: 1519
+    components:
+    - type: Transform
+      pos: -27.5,11.5
       parent: 1
 - proto: SalvageSpawnerMobMagnet75
   entities:
@@ -8164,6 +8219,35 @@ entities:
     - type: Transform
       pos: -24.5,13.5
       parent: 1
+- proto: SmallGyroscopeFlatpack
+  entities:
+  - uid: 1517
+    components:
+    - type: Transform
+      pos: -13.71624,19.620396
+      parent: 1
+- proto: SmallThrusterFlatpack
+  entities:
+  - uid: 1513
+    components:
+    - type: Transform
+      pos: -26.319265,5.222124
+      parent: 1
+  - uid: 1514
+    components:
+    - type: Transform
+      pos: -26.288015,5.940874
+      parent: 1
+  - uid: 1515
+    components:
+    - type: Transform
+      pos: -9.44929,19.499071
+      parent: 1
+  - uid: 1516
+    components:
+    - type: Transform
+      pos: -8.808665,17.874071
+      parent: 1
 - proto: SMESBasicEmpty
   entities:
   - uid: 1065
@@ -8259,6 +8343,18 @@ entities:
     components:
     - type: Transform
       pos: -10.5,19.5
+      parent: 1
+- proto: SpawnPointGhostLivingSkeleton
+  entities:
+  - uid: 1505
+    components:
+    - type: Transform
+      pos: -17.5,-2.5
+      parent: 1
+  - uid: 1506
+    components:
+    - type: Transform
+      pos: -13.5,-2.5
       parent: 1
 - proto: StationMapBroken
   entities:
@@ -10610,6 +10706,15 @@ entities:
     - type: Transform
       pos: -15.5,11.5
       parent: 1
+- proto: WarpPointAdmin
+  entities:
+  - uid: 1504
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
+    - type: WarpPoint
+      location: Покинутый круизный корабль
 - proto: WaterTank
   entities:
   - uid: 1499
@@ -10640,6 +10745,13 @@ entities:
     - type: Transform
       pos: -26.5,11.5
       parent: 1
+- proto: Wrench
+  entities:
+  - uid: 1510
+    components:
+    - type: Transform
+      pos: -25.393196,5.5760636
+      parent: 1
 - proto: ZiptiesBroken
   entities:
   - uid: 1503
@@ -10647,14 +10759,4 @@ entities:
     - type: Transform
       pos: -26.239395,8.0737
       parent: 1
-- proto: WarpPointAdmin
-  entities:
-  - uid: 1504
-    components:
-    - type: Transform
-      pos: 0,0
-      parent: 1
-    - type: WarpPoint
-      adminOnly: true
-      location: "Покинутый круизный корабль"
 ...
