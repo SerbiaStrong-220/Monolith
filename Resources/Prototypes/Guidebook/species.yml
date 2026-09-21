@@ -25,6 +25,7 @@
   - Hydrakin # Monolith/Obelisk # Exodus-restore
   - Feroxi
   - Flight # CE
+  - ExodusUnavailableSpecies # Exodus: species available only through ghost roles or events.
 
 - type: guideEntry
   id: Arachnid

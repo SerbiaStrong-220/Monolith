@@ -74,6 +74,7 @@
   - EXRuleGhostRoleCitadelService
   - EXRuleGhostRoleLeviathan
   - EXRuleGhostRoleRot
+  - EXRuleGhostRoleLivingSkeleton
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -197,3 +198,8 @@
   id: EXRuleGhostRoleRotHungry
   name: guide-entry-exodus-rule-ghost-roles-rot-hungry
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesRotHungry.xml"
+
+- type: guideEntry
+  id: EXRuleGhostRoleLivingSkeleton
+  name: guide-entry-exodus-rule-ghost-roles-living-skeleton
+  text: /ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesLivingSkeleton.xml

@@ -53,3 +53,10 @@
   - phantom_assassin_dota_2
   - templar_assassin_dota_2
   - sisters_battle_sister_dow
+
+- type: randomVoicesList
+  id: LivingSkeleton
+  matchSex: true
+  voices:
+  - lich_dota_2
+  - phantom_assassin_arcana_dota_2

@@ -1,0 +1,23 @@
+names-living-skeleton-male-1 = Костян
+names-living-skeleton-male-2 = Скелетал
+names-living-skeleton-male-3 = Закостенелый
+names-living-skeleton-male-4 = Костя Костяной
+names-living-skeleton-male-5 = Костян Костянович
+names-living-skeleton-male-6 = Скелет Скелетович
+names-living-skeleton-male-7 = Костослав
+names-living-skeleton-male-8 = Костимир
+names-living-skeleton-male-9 = Костеброд
+names-living-skeleton-male-10 = Костехруст
+names-living-skeleton-male-11 = Костегрыз
+
+names-living-skeleton-female-1 = Костяна
+names-living-skeleton-female-2 = Скелетта
+names-living-skeleton-female-3 = Закостенелая
+names-living-skeleton-female-4 = Костя Костяная
+names-living-skeleton-female-5 = Костяна Костяновна
+names-living-skeleton-female-6 = Скелетта Скелетовна
+names-living-skeleton-female-7 = Костослава
+names-living-skeleton-female-8 = Костимира
+names-living-skeleton-female-9 = Костебродка
+names-living-skeleton-female-10 = Костехрустка
+names-living-skeleton-female-11 = Костегрызка

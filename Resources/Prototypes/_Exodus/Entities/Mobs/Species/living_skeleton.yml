@@ -1,0 +1,83 @@
+- type: entity
+  abstract: true
+  save: false
+  parent: BaseMobSkeletonPerson
+  id: BaseMobLivingSkeleton
+  name: living skeleton
+  components:
+  - type: HumanoidAppearance
+    species: LivingSkeleton
+  - type: Icon
+    sprite: _Exodus/Mobs/Species/Skeleton/parts.rsi
+    state: full
+  - type: Body
+    prototype: LivingSkeleton
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:GibBehavior
+        gibContents: Skip
+  - type: NightVision
+    enabled: true
+    action: ActionToggleNightVision
+    phosphorColor: "#E6E6E6"
+    lightingColor: "#FFFFFF32"
+    goggleEffect: false
+  - type: TTS
+    randomVoicesList: LivingSkeleton
+  - type: Reactive
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ Milk, MilkGoat, MilkSoy ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          groups:
+            Burn: -2
+            Brute: -1.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ skeleton-healed-by-milk-popup ]
+        probability: 0.25
+    - reagents: [ MilkOat ]
+      methods: [ Touch ]
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ skeleton-sprayed-by-oat-milk-popup ]
+        probability: 0.5
+  - type: GuideHelp
+    guides:
+    - LivingSkeleton
+    - EXRuleGhostRoleLivingSkeleton
+    includeChildren: false
+
+- type: entity
+  save: false
+  parent: BaseMobLivingSkeleton
+  id: MobLivingSkeleton
+  name: living skeleton
+  components:
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPersonDummy
+  id: MobLivingSkeletonDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: LivingSkeleton

@@ -1,0 +1,72 @@
+- type: entity
+  abstract: true
+  parent: PartSkeletonBase
+  id: PartLivingSkeleton
+  name: living skeleton body part
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Species/Skeleton/parts.rsi
+  - type: Icon
+    sprite: _Exodus/Mobs/Species/Skeleton/parts.rsi
+  - type: BodyPart
+    species: LivingSkeleton
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseTorsoInorganic ]
+  id: TorsoLivingSkeleton
+  name: skeleton torso
+
+# No MindTransferTarget tag: death must not transfer the player into an immortal skull.
+- type: entity
+  parent: [ PartLivingSkeleton, BaseHead ]
+  id: HeadLivingSkeleton
+  name: skull
+  components:
+  - type: Sprite
+    state: skull_icon
+  - type: Icon
+    state: skull_icon
+  - type: Tag
+    tags:
+    - Head
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseLeftArm ]
+  id: LeftArmLivingSkeleton
+  name: left skeleton arm
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseRightArm ]
+  id: RightArmLivingSkeleton
+  name: right skeleton arm
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseLeftHand ]
+  id: LeftHandLivingSkeleton
+  name: left skeleton hand
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseRightHand ]
+  id: RightHandLivingSkeleton
+  name: right skeleton hand
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseLeftLeg ]
+  id: LeftLegLivingSkeleton
+  name: left skeleton leg
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseRightLeg ]
+  id: RightLegLivingSkeleton
+  name: right skeleton leg
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseLeftFoot ]
+  id: LeftFootLivingSkeleton
+  name: left skeleton foot
+
+- type: entity
+  parent: [ PartLivingSkeleton, BaseRightFoot ]
+  id: RightFootLivingSkeleton
+  name: right skeleton foot
+
