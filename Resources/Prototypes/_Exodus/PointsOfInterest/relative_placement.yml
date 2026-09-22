@@ -6,7 +6,9 @@
 # Relative placement ignores the ordinary target's minimumDistance, maximumDistance, posX and posY.
 # Ordinary targets may land in nebulas; nebula targets retain spawnIn, density and distance-from-center limits.
 # The rule does not add anchors to the spawn pool or increase target copies, even if multiple anchors exist.
-# Other POIs retain the global minimum separation; grid intersection checks also apply to the anchor.
+# By default, other POIs retain the global minimum separation; grid intersection checks also apply to the anchor.
+# ignoreAnchorClearance permits nearby satellites inside the anchor's protection radius; intersections are still rejected.
+# useGlobalMinimumSeparation: false skips the sector-wide spacing to other POIs, retaining their explicit clearances.
 # Dependency chains are processed before nebula generation and again after nebula POIs spawn.
 # Cycles, duplicate rules, invalid distances and missing anchors cause the target to be skipped with a logged error.
 # If nf14.worldgen.poi_placement_retries attempts find no space, there is no fallback spawn outside the annulus.
@@ -58,3 +60,12 @@
   anchorPoi: AdsDefensivePlatform
   minDistance: 128
   maxDistance: 200
+
+- type: relativePoiPlacement
+  id: DamagedArkansawNearCruiseShip
+  nebulaPoi: NebulaPoiDamagedArkansaw
+  anchorNebulaPoi: NebulaPoiCruiseShip
+  minDistance: 70
+  maxDistance: 100
+  ignoreAnchorClearance: true
+  useGlobalMinimumSeparation: false

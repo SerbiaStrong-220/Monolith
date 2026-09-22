@@ -1,0 +1,11 @@
+ent-BaseDelayedExplosionMarker = delayed explosion marker
+    .desc = Detonates 20 seconds after map initialization, allowing an SRD snapshot to record the intact grid first.
+ent-ExplosionMarkerSmall = small explosion marker
+    .desc = { ent-BaseDelayedExplosionMarker.desc }
+    .suffix = 20 seconds
+ent-ExplosionMarkerMedium = medium explosion marker
+    .desc = { ent-BaseDelayedExplosionMarker.desc }
+    .suffix = 20 seconds
+ent-ExplosionMarkerLarge = large explosion marker
+    .desc = { ent-BaseDelayedExplosionMarker.desc }
+    .suffix = 20 seconds

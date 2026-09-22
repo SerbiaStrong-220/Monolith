@@ -43,4 +43,18 @@ public sealed partial class RelativePoiPlacementPrototype : IPrototype
     /// <summary>Inclusive outer radius in world meters; must be finite and at least MinDistance.</summary>
     [DataField(required: true)]
     public float MaxDistance { get; private set; }
+
+    /// <summary>
+    /// Ignores the anchor POI's clearance radius for nearby satellites. Grid intersection checks,
+    /// the target's own clearance and separation from other POIs still apply.
+    /// </summary>
+    [DataField]
+    public bool IgnoreAnchorClearance { get; private set; }
+
+    /// <summary>
+    /// Applies the sector-wide minimum distance to other POIs. Disable for nearby satellites
+    /// in dense POI groups; explicit grid clearances and intersection checks still apply.
+    /// </summary>
+    [DataField]
+    public bool UseGlobalMinimumSeparation { get; private set; } = true;
 }

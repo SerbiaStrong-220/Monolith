@@ -33,7 +33,8 @@ public record struct RelativePoiPositionAttemptEvent(
     MapId Map,
     System.Numerics.Vector2 Position,
     System.Numerics.Vector2 AnchorOrigin,
-    float Clearance)
+    float Clearance,
+    float MinimumSeparation)
 {
     public bool Cancelled;
 }

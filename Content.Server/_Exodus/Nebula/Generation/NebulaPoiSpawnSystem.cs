@@ -293,7 +293,7 @@ public sealed partial class NebulaPoiSpawnSystem : EntitySystem
             : _relativePoi.TryLoadRelativeGrid(mapId, poi.Path, relative, poi.ProtectedRadius, positionFilter, out grid);
         if (!success || grid is not { } loaded)
         {
-            _sawmill.Warning($"POI {poi.ID}: failed to load grid {poi.Path}.");
+            _sawmill.Warning($"POI {poi.ID}: failed to load or place grid {poi.Path}.");
             return false;
         }
 

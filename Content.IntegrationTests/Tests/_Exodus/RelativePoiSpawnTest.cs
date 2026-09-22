@@ -6,6 +6,7 @@ using Content.Shared._NF.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -162,6 +163,120 @@ public sealed class RelativePoiSpawnTest
                 entities.DeleteEntity(mapUid);
             }
         });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task SatelliteFitsInsideAnchorProtectionWithAnotherNearbyPoi()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entities.System<SharedMapSystem>();
+            var loader = entities.System<MapLoaderSystem>();
+            var placement = entities.System<RelativePoiSpawnSystem>();
+            var transform = entities.System<SharedTransformSystem>();
+            var prototypes = server.ResolveDependency<IPrototypeManager>();
+            var rule = prototypes.Index<RelativePoiPlacementPrototype>("DamagedArkansawNearCruiseShip");
+            var mapUid = maps.CreateMap(out var mapId, runMapInit: false);
+            try
+            {
+                Assert.That(prototypes.Index<RelativePoiPlacementPrototype>("TestRelativeA").IgnoreAnchorClearance, Is.False);
+                Assert.That(prototypes.Index<RelativePoiPlacementPrototype>("TestRelativeA").UseGlobalMinimumSeparation, Is.True);
+                Assert.That(rule.IgnoreAnchorClearance, Is.True);
+                Assert.That(rule.UseGlobalMinimumSeparation, Is.False);
+                Assert.That(loader.TryLoadGrid(mapId, GridPath, out var anchor));
+                placement.Register(anchor!.Value.Owner, new(true, "NebulaPoiCruiseShip"), 150);
+                var anchorBounds = transform.GetWorldMatrix(anchor.Value.Owner).TransformBox(anchor.Value.Comp.LocalAABB);
+
+                Assert.That(loader.TryLoadGrid(mapId, GridPath, out var nearby, offset: new Vector2(1000, 0)));
+                placement.Register(nearby!.Value.Owner, new(true, "NebulaPoiBurnedShuttle"), 150);
+                var nearbyBounds = transform.GetWorldMatrix(nearby.Value.Owner).TransformBox(nearby.Value.Comp.LocalAABB);
+
+                for (var i = 0; i < 6; i++)
+                {
+                    Assert.That(placement.TryLoadRelativeGrid(mapId, GridPath, rule, 0, null, out var satellite));
+                    var satelliteBounds = transform.GetWorldMatrix(satellite!.Value.Owner)
+                        .TransformBox(satellite.Value.Comp.LocalAABB);
+                    Assert.That(Vector2.Distance(anchorBounds.Center, satelliteBounds.Center), Is.InRange(69.99f, 100.01f));
+                    Assert.That(satelliteBounds.Intersects(anchorBounds), Is.False);
+                    Assert.That(Vector2.Distance(nearbyBounds.Center, satelliteBounds.Center), Is.GreaterThanOrEqualTo(150f));
+                    Assert.That(satelliteBounds.Intersects(nearbyBounds), Is.False);
+                    entities.DeleteEntity(satellite.Value.Owner);
+                }
+            }
+            finally
+            {
+                entities.DeleteEntity(mapUid);
+            }
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task RejectedSatelliteStaysOnItsMapUntilDeleted()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        EntityUid mapUid = default;
+        EntityUid? rejectedGrid = null;
+
+        try
+        {
+            await server.WaitAssertion(() =>
+            {
+                var maps = entities.System<SharedMapSystem>();
+                var loader = entities.System<MapLoaderSystem>();
+                var placement = entities.System<RelativePoiSpawnSystem>();
+                var rule = server.ResolveDependency<IPrototypeManager>()
+                    .Index<RelativePoiPlacementPrototype>("DamagedArkansawNearCruiseShip");
+                mapUid = maps.CreateMap(out var mapId, runMapInit: false);
+                Assert.That(loader.TryLoadGrid(mapId, GridPath, out var anchor));
+                placement.Register(anchor!.Value.Owner, new(true, "NebulaPoiCruiseShip"), 150);
+
+                // Even satellite rules must reject intersections with the target's own clearance.
+                var sawmill = server.ResolveDependency<ILogManager>().GetSawmill("system.relative_poi_spawn");
+                var previousLevel = sawmill.Level;
+                try
+                {
+                    // Suppress the expected placement failure only; PVS and map errors must still fail the test.
+                    sawmill.Level = LogLevel.Fatal;
+                    Assert.That(placement.TryLoadRelativeGrid(mapId, GridPath, rule, 1000, null, out var satellite), Is.False);
+                    Assert.That(satellite, Is.Null);
+                }
+                finally
+                {
+                    sawmill.Level = previousLevel;
+                }
+
+                var children = entities.GetComponent<TransformComponent>(mapUid).ChildEnumerator;
+                while (children.MoveNext(out var child))
+                {
+                    if (!entities.IsQueuedForDeletion(child))
+                        continue;
+
+                    Assert.That(rejectedGrid, Is.Null, "Only one candidate grid should be loaded across retries.");
+                    rejectedGrid = child;
+                    Assert.That(entities.GetComponent<TransformComponent>(child).MapUid, Is.EqualTo(mapUid));
+                }
+                Assert.That(rejectedGrid, Is.Not.Null, "The rejected grid must remain on the map until deletion.");
+            });
+
+            await server.WaitRunTicks(2);
+            await server.WaitAssertion(() => Assert.That(entities.EntityExists(rejectedGrid!.Value), Is.False));
+        }
+        finally
+        {
+            await server.WaitPost(() =>
+            {
+                if (entities.EntityExists(mapUid))
+                    entities.DeleteEntity(mapUid);
+            });
+        }
         await pair.CleanReturnAsync();
     }
 

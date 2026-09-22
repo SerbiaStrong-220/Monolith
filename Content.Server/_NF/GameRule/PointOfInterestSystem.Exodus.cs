@@ -2,7 +2,6 @@
 using System.Numerics;
 using Content.Server._Exodus.Worldgen;
 using Content.Server._NF.Trade;
-using Content.Shared._NF.CCVar;
 using Robust.Shared.Map;
 
 namespace Content.Server._NF.GameRule;
@@ -33,9 +32,7 @@ public sealed partial class PointOfInterestSystem
         if (args.Map != _ticker.DefaultMap)
             return;
 
-        var separation = MathF.Max(0, _cfg.GetCVar(NFCCVars.MinPOIDistance)) *
-                         MathF.Max(0.1f, _cfg.GetCVar(NFCCVars.POIDistanceModifier));
-        args.Cancelled |= !IsPlacementValid(args.Position, args.Clearance, separation, args.AnchorOrigin);
+        args.Cancelled |= !IsPlacementValid(args.Position, args.Clearance, args.MinimumSeparation, args.AnchorOrigin);
     }
 
     private void OnSpawnRelativePoi(ref RelativePoiSpawnEvent args)

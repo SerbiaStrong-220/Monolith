@@ -12,6 +12,7 @@
     state: full
   - type: Body
     prototype: LivingSkeleton
+  - type: LayingDown
   - type: VirusImmunity
   - type: MobThresholds
     thresholds:

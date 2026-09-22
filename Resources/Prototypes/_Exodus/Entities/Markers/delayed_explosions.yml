@@ -1,0 +1,49 @@
+- type: entity
+  parent: MarkerBase
+  id: BaseDelayedExplosionMarker
+  abstract: true
+  name: delayed explosion marker
+  description: Detonates 20 seconds after map initialization, allowing an SRD snapshot to record the intact grid first.
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - state: timed
+  - type: TriggerOnSpawn
+    timerOnly: true
+  - type: OnUseTimerTrigger
+    delay: 20
+    doPopup: false
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 5
+    maxIntensity: 50
+    deleteAfterExplosion: true
+
+- type: entity
+  parent: BaseDelayedExplosionMarker
+  id: ExplosionMarkerSmall
+  name: small explosion marker
+  suffix: 20 seconds
+  components:
+  - type: Explosive
+    totalIntensity: 300 # Approximately 4 tiles in radius before obstruction.
+
+- type: entity
+  parent: BaseDelayedExplosionMarker
+  id: ExplosionMarkerMedium
+  name: medium explosion marker
+  suffix: 20 seconds
+  components:
+  - type: Explosive
+    totalIntensity: 2400 # Approximately 8 tiles in radius before obstruction.
+
+- type: entity
+  parent: BaseDelayedExplosionMarker
+  id: ExplosionMarkerLarge
+  name: large explosion marker
+  suffix: 20 seconds
+  components:
+  - type: Explosive
+    totalIntensity: 8100 # Approximately 12 tiles in radius before obstruction.
