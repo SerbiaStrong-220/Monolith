@@ -8,8 +8,9 @@ public sealed partial class HandsSystem
 {
     private static string GetHandLayerKey(string key, Hand hand, HandsComponent hands)
     {
+        // Prefix scoped keys so enum.* keys are treated as strings instead of invalid enum values.
         return HasMultipleHandsAtLocation(hand, hands)
-            ? $"{key}-{hand.Name}"
+            ? $"hand-{hand.Name}-{key}"
             : key;
     }
 
@@ -18,11 +19,11 @@ public sealed partial class HandsSystem
         Hand hand,
         HandsComponent hands)
     {
-        var keySuffix = HasMultipleHandsAtLocation(hand, hands)
-            ? $"-{hand.Name}"
+        var keyPrefix = HasMultipleHandsAtLocation(hand, hands)
+            ? $"hand-{hand.Name}-"
             : string.Empty;
 
-        if (keySuffix.Length == 0 && hand.VisualOffset == Vector2.Zero)
+        if (keyPrefix.Length == 0 && hand.VisualOffset == Vector2.Zero)
             return layerData;
 
         HashSet<string>? mapKeys = null;
@@ -30,7 +31,7 @@ public sealed partial class HandsSystem
         {
             mapKeys = new HashSet<string>();
             foreach (var mapKey in layerData.MapKeys)
-                mapKeys.Add(mapKey + keySuffix);
+                mapKeys.Add(keyPrefix + mapKey);
         }
 
         PrototypeCopyToShaderParameters? copyToShaderParameters = null;
@@ -38,7 +39,7 @@ public sealed partial class HandsSystem
         {
             copyToShaderParameters = new PrototypeCopyToShaderParameters
             {
-                LayerKey = layerData.CopyToShaderParameters.LayerKey + keySuffix,
+                LayerKey = keyPrefix + layerData.CopyToShaderParameters.LayerKey,
                 ParameterTexture = layerData.CopyToShaderParameters.ParameterTexture,
                 ParameterUV = layerData.CopyToShaderParameters.ParameterUV,
             };
