@@ -1,0 +1,11 @@
+ent-BaseDelayedExplosionMarker = маркер отложенного взрыва
+    .desc = Вызывает взрыв через 20 секунд после инициализации карты, чтобы СРД успела сохранить снимок целого грида.
+ent-ExplosionMarkerSmall = маркер малого взрыва
+    .desc = { ent-BaseDelayedExplosionMarker.desc }
+    .suffix = 20 секунд
+ent-ExplosionMarkerMedium = маркер среднего взрыва
+    .desc = { ent-BaseDelayedExplosionMarker.desc }
+    .suffix = 20 секунд
+ent-ExplosionMarkerLarge = маркер большого взрыва
+    .desc = { ent-BaseDelayedExplosionMarker.desc }
+    .suffix = 20 секунд

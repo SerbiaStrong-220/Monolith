@@ -167,6 +167,7 @@
   - NebulaPurpleMarker
   minDensity: 0.1
   maxDensity: 1
+  maxSpawnDistanceFromCenter: 40000
   protectedRadius: 150
   name: "Покинутый круизный корабль"
   addComponents:
@@ -176,6 +177,28 @@
     flags: [HideLabel]
     readOnly: true
   - type: ForceAnchor
+  - type: Tag
+    tags: [ POI ]
+  - type: InitRepairSnapshot
+
+# Independent map copy for remapping; placement is configured in relative_placement.yml.
+- type: nebulaPoi
+  id: NebulaPoiDamagedArkansaw
+  path: /Maps/_Exodus/POI/damaged_arkansaw.yml
+  spawnIn:
+  - NebulaBlueMarker
+  - NebulaPurpleMarker
+  minDensity: 0
+  maxDensity: 1
+  maxCount: 1
+  protectedRadius: 0
+  name: "Подбитый Аркансоу"
+  addComponents:
+  - type: IffAffiliation
+  - type: IFF
+    color: "#ffa600"
+    flags: [HideLabel]
+    readOnly: true
   - type: Tag
     tags: [ POI ]
   - type: InitRepairSnapshot

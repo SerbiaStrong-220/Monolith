@@ -194,7 +194,13 @@ public sealed class RelativePoiSpawnSystem : EntitySystem
 
         _random.Shuffle(anchors);
         var retries = Math.Max(1, _configuration.GetCVar(NFCCVars.POIPlacementRetries));
+        var minimumSeparation = rule.UseGlobalMinimumSeparation
+            ? MathF.Max(0, _configuration.GetCVar(NFCCVars.MinPOIDistance)) *
+              MathF.Max(0.1f, _configuration.GetCVar(NFCCVars.POIDistanceModifier))
+            : 0f;
         Entity<MapGridComponent>? loaded = null;
+        EntityUid? blockingGrid = null;
+        var lastFailure = "no live anchor";
         for (var attempt = 0; attempt < retries; attempt++)
         {
             var anchor = anchors[attempt % anchors.Count];
@@ -211,12 +217,19 @@ public sealed class RelativePoiSpawnSystem : EntitySystem
             var radius = (float) Math.Sqrt(minSquared + _random.NextFloat() * (maxSquared - minSquared));
             var position = anchorCenter + _random.NextAngle().RotateVec(new Vector2(radius, 0));
             if (filter != null && !filter(position))
+            {
+                lastFailure = "position filter";
                 continue;
+            }
 
-            var ev = new RelativePoiPositionAttemptEvent(map, position, _transform.GetWorldPosition(anchorXform), clearance);
+            var ev = new RelativePoiPositionAttemptEvent(map, position, _transform.GetWorldPosition(anchorXform),
+                clearance, minimumSeparation);
             RaiseLocalEvent(ref ev);
             if (ev.Cancelled)
+            {
+                lastFailure = "reserved POI clearance";
                 continue;
+            }
 
             if (loaded == null && !_loader.TryLoadGrid(map, path, out loaded, offset: position, rot: _random.NextAngle()))
             {
@@ -230,8 +243,12 @@ public sealed class RelativePoiSpawnSystem : EntitySystem
             var xform = Transform(candidate.Owner);
             var rotation = _transform.GetWorldRotation(xform);
             _transform.SetWorldPosition(candidate.Owner, position - rotation.RotateVec(candidate.Comp.LocalAABB.Center));
-            if (!IsClear(map, candidate, anchor, position, clearance))
+            if (!IsClear(map, candidate, anchor, position, clearance, rule.IgnoreAnchorClearance,
+                    minimumSeparation, out blockingGrid))
+            {
+                lastFailure = "grid intersection or POI clearance";
                 continue;
+            }
 
             grid = candidate;
             var anchorName = rule.AnchorPlanet is { } planet ? $"planet {planet}" : Anchor(rule).ToString();
@@ -241,19 +258,21 @@ public sealed class RelativePoiSpawnSystem : EntitySystem
 
         if (loaded is { } failed)
         {
-            _transform.DetachEntity(failed.Owner);
+            // Keep the grid on its map until normal entity deletion cleans up its PVS and map proxies.
             QueueDel(failed.Owner);
         }
-        Log.Error($"Relative POI {rule.ID}: no valid position in {rule.MinDistance}–{rule.MaxDistance} m after {retries} attempts; skipped.");
+
+        var blocker = blockingGrid is { } blockedBy ? $"{ToPrettyString(blockedBy)}" : "none";
+        Log.Error($"Relative POI {rule.ID}: no valid position in {rule.MinDistance}–{rule.MaxDistance} m after {retries} attempts; skipped. Last rejection: {lastFailure}. Last blocking grid: {blocker}.");
         return false;
     }
 
-    private bool IsClear(MapId map, Entity<MapGridComponent> candidate, EntityUid anchor, Vector2 position, float clearance)
+    private bool IsClear(MapId map, Entity<MapGridComponent> candidate, EntityUid anchor, Vector2 position,
+        float clearance, bool ignoreAnchorClearance, float minimumSeparation, out EntityUid? blockingGrid)
     {
+        blockingGrid = null;
         var bounds = _transform.GetWorldMatrix(candidate.Owner).TransformBox(candidate.Comp.LocalAABB);
         var protectedBounds = bounds.Enlarged(MathF.Max(0, clearance));
-        var minimumSeparation = MathF.Max(0, _configuration.GetCVar(NFCCVars.MinPOIDistance)) *
-                                MathF.Max(0.1f, _configuration.GetCVar(NFCCVars.POIDistanceModifier));
         var query = AllEntityQuery<MapGridComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var otherGrid, out var xform))
         {
@@ -262,16 +281,24 @@ public sealed class RelativePoiSpawnSystem : EntitySystem
 
             var otherBounds = _transform.GetWorldMatrix(xform).TransformBox(otherGrid.LocalAABB);
             if (protectedBounds.Intersects(otherBounds))
+            {
+                blockingGrid = uid;
                 return false;
+            }
 
             if (!TryComp<PoiSpawnIdentityComponent>(uid, out var identity))
                 continue;
 
-            var separation = MathF.Max(0, clearance) + identity.Clearance;
+            var separation = MathF.Max(0, clearance);
+            if (uid != anchor || !ignoreAnchorClearance)
+                separation += identity.Clearance;
             if (uid != anchor)
                 separation = MathF.Max(separation, minimumSeparation);
             if (Vector2.DistanceSquared(position, otherBounds.Center) < separation * separation)
+            {
+                blockingGrid = uid;
                 return false;
+            }
         }
         return true;
     }
