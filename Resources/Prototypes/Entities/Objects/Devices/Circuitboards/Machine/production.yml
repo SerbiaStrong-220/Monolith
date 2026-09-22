@@ -1171,6 +1171,7 @@
     state: supply
   - type: MachineBoard
     prototype: OreProcessorIndustrial
+    flatpackable: false # Exodus: prevent obtaining composite armor plates through flatpacking.
     requirements: # Frontier
       MatterBin: 1 # Frontier stackRequirements<requirements
       Manipulator: 3 # Frontier stackRequirements<requirements
