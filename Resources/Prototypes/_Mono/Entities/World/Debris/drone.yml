@@ -63,6 +63,7 @@
     - SpawnDroneCrown
     - SpawnDroneGust
     - SpawnDronePiercer
+    - SpawnDroneReaper # Exodus drone-reaper
 
 - type: entity
   id: MonoDroneSpawnerT2Middle
@@ -100,6 +101,8 @@
       weight: 10
     - id: SpawnDroneFlashbang # Exodus drone-flashbang
       weight: 10
+    - id: SpawnDroneReaper # Exodus drone-reaper
+      weight: 10
 
 - type: entityTable
   id: DroneTableT22
@@ -111,6 +114,8 @@
       weight: 10
     - id: SpawnDroneBracket
       weight: 10
+    - id: SpawnDroneReaper # Exodus drone-reaper
+      weight: 10
 
 - type: entityTable
   id: DroneTableT23
@@ -121,6 +126,8 @@
     - id: SpawnDroneQuake
       weight: 10
     - id: SpawnDroneDeflector # Exodus drone-deflector
+      weight: 10
+    - id: SpawnDroneReaper # Exodus drone-reaper
       weight: 10
 
 - type: entityTable

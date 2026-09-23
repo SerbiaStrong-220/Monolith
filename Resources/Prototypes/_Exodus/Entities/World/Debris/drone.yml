@@ -40,3 +40,23 @@
       - DroneHex
       - DroneHex
     nameGrid: false
+
+- type: entity
+  id: SpawnDroneReaper
+  parent: SpawnDroneBase
+  components:
+  - type: GridSpawner
+    path: /SharedMaps/_Exodus/Shuttles/World/reaper.yml
+    addComponents:
+    - type: RandomMetadata
+      nameSeparator: ""
+      nameSegments:
+      - "ЖНЕЦ"
+      - DroneAltHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+    nameGrid: false
