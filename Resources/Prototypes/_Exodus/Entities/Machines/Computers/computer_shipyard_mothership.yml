@@ -1,0 +1,8 @@
+- type: entity
+  id: HMIRegeneratorCarrierComputer
+  parent: BaseCarrierComputer
+  name: Regenerator shipyard console
+  components:
+  - type: ShipyardListing
+    shuttles:
+    - HMIpod

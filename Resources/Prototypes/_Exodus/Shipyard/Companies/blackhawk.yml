@@ -40,3 +40,47 @@
           Contractor: [ 0, 0 ]
           Pilot: [ 0, 0 ]
           Mercenary: [ 0, 0 ]
+
+# Author Info
+# GitHub: R-R0S Discord: mq.gg
+# Shuttle under Exodus CLA
+- type: vessel
+  id: BlackhawkScarab
+  parent: BaseVessel
+  name: company-vessel-blackhawk-scarab-name
+  description: company-vessel-blackhawk-scarab-description
+  price: 725000 # Price x4.26
+  category: Medium
+  group: Shipyard
+  requiredCompanies:
+  - blackhawkpmc
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/blackhawk/scarab.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  class:
+  - Mercenary
+  - Frigate
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: BlackhawkScarab
+  mapName: 'Блэкхок Скарабей'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/blackhawk/scarab.yml
+  minPlayers: 0
+  stations:
+    BlackhawkScarab:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Скарабей{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

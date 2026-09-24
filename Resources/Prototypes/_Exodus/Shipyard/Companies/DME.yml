@@ -1,0 +1,38 @@
+# Author Info
+# Discord: DegonX5
+# Shuttle DMEumbra under Exodus CLA
+- type: vessel
+  id: DMEumbra
+  parent: BaseVessel
+  name: company-vessel-dme-umbra-name
+  description: company-vessel-dme-umbra-description
+  price: 350500
+  category: Medium
+  group: Shipyard
+  requiredCompanies:
+  - DarkMatterEnterprises
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/DME/umbra.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  class:
+  - Mercenary
+  - Salvage
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: DMEumbra
+  mapName: 'ДМИ «Умбра»'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/DME/umbra.yml
+  minPlayers: 0
+  stations:
+    DMEumbra:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Умбра{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
