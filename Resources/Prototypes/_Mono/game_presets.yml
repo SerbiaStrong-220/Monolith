@@ -19,7 +19,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoRogueTSF
@@ -37,7 +37,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoRogueUSSP
@@ -55,7 +55,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoTSFUSSP
@@ -73,7 +73,7 @@
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoADS
@@ -92,7 +92,7 @@
   # Exodus: ADS and Asakim shuttle event schedulers replaced by manual emergency beacons.
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoChimera
@@ -111,7 +111,7 @@
   - MonoChimeraSTCShuttleSpawnerScheduler
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoMixed
@@ -135,7 +135,7 @@
   - ExodusSyndicateScheduler # Exodus-syndicate-ships
   - MonoMonolithicEventsScheduler
   # - PortstrikeAnnounceRuleHour2 # Exodus-NoPortstrikeAnnounce
-  - RoundEndRuleHour8 # Exodus
+  # - RoundEndRuleHour8 # Exodus: round timing is managed externally.
 
 - type: gamePreset
   id: MonoAllAtOnce

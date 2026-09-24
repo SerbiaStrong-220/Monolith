@@ -65,8 +65,7 @@
   storage:
     # Replace the backpack contents; equipment, weapon and belt inherit from the shared kit.
     back:
-    - Telecrystal50
-    - Telecrystal50
+    - ShipVoucherTalon
     - PinpointerSyndicatePOI
     - MicroBombImplanter
     - DoubleEmergencyOxygenTankFilled

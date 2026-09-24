@@ -738,9 +738,9 @@
   productEntity: StealthBox
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 10 # Mono
+    Telecrystal: 30 # Exodus - triple stealth box price
   cost:
-    Telecrystal: 25 # Mono
+    Telecrystal: 75 # Exodus - triple stealth box price
   categories:
   - UplinkDeception
 
@@ -751,9 +751,9 @@
   productEntity: ChameleonProjector
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 20 # Mono
+    Telecrystal: 60 # Exodus - triple chameleon projector price
   cost:
-    Telecrystal: 35 # Mono
+    Telecrystal: 105 # Exodus - triple chameleon projector price
   categories:
   - UplinkDeception
 

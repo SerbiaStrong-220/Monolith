@@ -340,5 +340,5 @@
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
-  - RoundEndRuleHour8
+  # - RoundEndRuleHour8 # Round timing is managed externally.
   - ExodusRotRule
