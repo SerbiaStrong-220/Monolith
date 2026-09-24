@@ -127,9 +127,7 @@
       weight: 10
     - id: SpawnDroneDeflector # Exodus drone-deflector
       weight: 10
-    - id: SpawnDroneReaper # Exodus drone-reaper
-      weight: 10
-
+  
 - type: entityTable
   id: DroneSpawnTableT2Middle
   table: !type:GroupSelector
