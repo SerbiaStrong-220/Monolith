@@ -13,7 +13,7 @@
   category: Large
   group: Shipyard
   access: Mercenary
-  shuttlePath: /SharedMaps/_Exodus/Shuttles/Privateer.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/privateer.yml
   guidebookPage: Null
   class:
   - Patrol
