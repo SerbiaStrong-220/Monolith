@@ -34,6 +34,8 @@ public sealed partial class GeneticModifiers
     [DataField] public float MeleeMultiplier = 1f;
     [DataField] public float StaminaMultiplier = 1f;
     [DataField] public float DamageMultiplier = 1f;
+    /// <summary>Innate damage resistance, combined across active genes without replacing species or armor modifiers.</summary>
+    [DataField] public DamageModifierSet DamageModifiers = new();
     /// <summary>Relative sprite and fixture size contributed by the genome.</summary>
     [DataField] public float SizeMultiplier = 1f;
     /// <summary>Prevents firing ranged weapons while preserving melee attacks.</summary>

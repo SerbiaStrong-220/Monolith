@@ -13,6 +13,8 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Temperature;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Genetics;
 
@@ -22,6 +24,8 @@ public sealed class SharedGeneticEffectsSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public const string TelekinesisRangeProvider = "GeneticTelekinesis";
 
@@ -56,6 +60,9 @@ public sealed class SharedGeneticEffectsSystem : EntitySystem
         if (args.Cancelled || ent.Comp.Reverting || !ent.Comp.Modifiers.BlockRangedWeapons)
             return;
         args.Cancel();
+        if (!_net.IsClient || !_timing.IsFirstTimePredicted || _timing.CurTime < ent.Comp.NextBlockedShotPopup)
+            return;
+        ent.Comp.NextBlockedShotPopup = _timing.CurTime + ent.Comp.BlockedShotPopupInterval;
         _popup.PopupClient(Loc.GetString("genetics-hulk-cannot-shoot"), ent.Owner, ent.Owner);
     }
 
@@ -126,15 +133,20 @@ public sealed class SharedGeneticEffectsSystem : EntitySystem
 
     private void OnDamage(Entity<GeneticEffectsComponent> ent, ref DamageModifyEvent args)
     {
-        if (ent.Comp.Reverting || ent.Comp.Modifiers.DamageMultiplier == 1f)
+        var modifiers = ent.Comp.Modifiers;
+        if (ent.Comp.Reverting || modifiers.DamageMultiplier == 1f &&
+            modifiers.DamageModifiers.FlatReduction.Count == 0 && modifiers.DamageModifiers.Coefficients.Count == 0)
             return;
 
         // Healing is not amplified by a vulnerability.
-        var damage = new DamageSpecifier(args.Damage);
-        foreach (var (type, amount) in args.Damage.DamageDict)
+        var damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifiers.DamageModifiers);
+        if (modifiers.DamageMultiplier != 1f)
         {
-            if (amount > 0)
-                damage.DamageDict[type] = amount * ent.Comp.Modifiers.DamageMultiplier;
+            foreach (var type in args.Damage.DamageDict.Keys)
+            {
+                if (damage.DamageDict.TryGetValue(type, out var amount) && amount > 0)
+                    damage.DamageDict[type] = amount * modifiers.DamageMultiplier;
+            }
         }
         args.Damage = damage;
     }

@@ -22,6 +22,15 @@
     thirstMultiplier: 1.5
     meleeMultiplier: 2.5
     staminaMultiplier: 0.25
+    damageModifiers:
+      flatReductions:
+        Blunt: 5
+        Slash: 5
+        Piercing: 5
+        Heat: 5
+        Shock: 5
+        Cold: 5
+        Caustic: 5
     blockedStatuses: [Stun, KnockedDown]
   actions: [ActionGeneticPry]
 

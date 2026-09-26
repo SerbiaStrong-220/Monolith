@@ -10,12 +10,16 @@ namespace Content.Client._Exodus.Genetics;
 public sealed class GeneticsWindow : FancyWindow
 {
     public event Action<GeneticsMessage>? OperationRequested;
-    private readonly RichTextLabel _status = new();
-    private readonly Label _selectedLabel = new();
-    private readonly RichTextLabel _instructions = new();
-    private readonly BoxContainer _blocks = new() { Orientation = BoxContainer.LayoutOrientation.Vertical };
-    private readonly BoxContainer _adminEdit = new();
+    private readonly GeneticsMachineHeader _header = new("genetics-ui-laboratory-module");
+    private readonly Label _patient = new() { ClipText = true, HorizontalExpand = true, FontColorOverride = GeneticsUiTheme.Text };
+    private readonly Label _selectedLabel = new() { MinWidth = 90, FontColorOverride = GeneticsUiTheme.Accent };
+    private readonly Label _diskStatus = new() { HorizontalExpand = true, FontColorOverride = GeneticsUiTheme.Muted };
+    private readonly RichTextLabel _adminDetails = new();
+    private readonly GeneticBlockGrid _blocks = new();
+    private readonly Label _empty = GeneticsUiTheme.Caption("genetics-ui-scan-required");
+    private readonly BoxContainer _adminEdit = GeneticsUiTheme.Row();
     private readonly LineEdit _hex = new() { Text = "000", MinWidth = 90 };
+    private readonly Button _help;
     private readonly Button _ejectPatient;
     private readonly Button _ejectDisk;
     private readonly List<Button> _patientButtons = new();
@@ -31,78 +35,118 @@ public sealed class GeneticsWindow : FancyWindow
     public GeneticsWindow()
     {
         Title = Loc.GetString("genetics-title");
-        MinSize = new Vector2(520, 520);
-        SetSize = new Vector2(600, 600);
-        // Give long instructions a finite width and keep the debug controls reachable in a compact window.
-        var contentScroll = new ScrollContainer { HScrollEnabled = false };
-        ContentsContainer.AddChild(contentScroll);
-        var root = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, SeparationOverride = 8 };
-        contentScroll.AddChild(root);
-        root.AddChild(_status);
-        root.AddChild(_instructions);
-        var operations = new BoxContainer();
-        root.AddChild(operations);
-        AddButton(operations, "genetics-scan", GeneticsOperation.Scan, false);
-        _ejectPatient = AddButton(operations, "genetics-eject-patient", GeneticsOperation.EjectPatient, false, requiresPatient: false);
-        _adminButtons.Add(AddButton(operations, "genetics-reset", GeneticsOperation.Reset));
-        var scroll = new ScrollContainer { VerticalExpand = true, MinHeight = 180, HScrollEnabled = false };
-        scroll.AddChild(_blocks);
-        root.AddChild(scroll);
+        Stylesheet = GeneticsUiTheme.CreateStylesheet(UserInterfaceManager.Stylesheet);
+        MinSize = new Vector2(600, 720);
+        SetSize = new Vector2(680, 720);
+        // Normal controls fit without scrolling; the scroll also accommodates the extra ADMIN buffers.
+        var scroll = new ScrollContainer { HScrollEnabled = false };
+        ContentsContainer.AddChild(scroll);
+        var root = GeneticsUiTheme.Column();
+        root.Margin = new Thickness(10);
+        scroll.AddChild(root);
+        root.AddChild(_header);
 
-        var edit = new BoxContainer();
+        var patientRow = GeneticsUiTheme.Row();
+        patientRow.AddChild(_patient);
+        var scan = AddButton(patientRow, "genetics-scan", GeneticsOperation.Scan, false);
+        scan.HorizontalExpand = false;
+        scan.MinWidth = 80;
+        _ejectPatient = AddButton(patientRow, "genetics-eject-patient", GeneticsOperation.EjectPatient, false, requiresPatient: false);
+        _ejectPatient.HorizontalExpand = false;
+        _ejectPatient.MinWidth = 170;
+        _help = GeneticsUiTheme.StyleButton(new Button { Text = "?", MinWidth = 32, HorizontalExpand = false });
+        _help.HorizontalExpand = false;
+        patientRow.AddChild(_help);
+        root.AddChild(patientRow);
+
+        var map = GeneticsUiTheme.Column(4);
+        map.AddChild(GeneticsUiTheme.Caption("genetics-ui-block-map"));
+        map.AddChild(_blocks);
+        _empty.MinHeight = 232;
+        _empty.Align = Label.AlignMode.Center;
+        map.AddChild(_empty);
+        root.AddChild(GeneticsUiTheme.Panel(map));
+
+        var editing = GeneticsUiTheme.Column();
+        var edit = GeneticsUiTheme.Row();
         edit.AddChild(_selectedLabel);
         for (var digit = 0; digit < 3; digit++)
         {
             var button = AddButton(edit, "genetics-edit", GeneticsOperation.Edit, digit: digit);
-            button.MinWidth = 50;
+            button.MinSize = new Vector2(48, 40);
+            button.HorizontalExpand = false;
             button.ToolTip = Loc.GetString("genetics-digit-tooltip", ("number", digit + 1));
             _digits.Add(button);
         }
-        root.AddChild(edit);
+        var hint = new RichTextLabel { HorizontalExpand = true, Margin = new Thickness(6, 0, 0, 0) };
+        hint.SetMessage(Loc.GetString("genetics-ui-edit-hint"));
+        edit.AddChild(hint);
+        editing.AddChild(edit);
+        editing.AddChild(_adminDetails);
         _adminEdit.AddChild(_hex);
         AddButton(_adminEdit, "genetics-set-block", GeneticsOperation.SetBlock);
-        root.AddChild(_adminEdit);
-        var printing = new BoxContainer();
+        _adminButtons.Add(AddButton(_adminEdit, "genetics-reset", GeneticsOperation.Reset));
+        editing.AddChild(_adminEdit);
+        root.AddChild(GeneticsUiTheme.Panel(editing));
+
+        var printing = GeneticsUiTheme.Row();
         AddButton(printing, "genetics-print", GeneticsOperation.PrintInjector);
         AddButton(printing, "genetics-print-genome", GeneticsOperation.PrintGenome);
         root.AddChild(printing);
 
+        var disk = GeneticsUiTheme.Column(4);
+        var diskTitle = GeneticsUiTheme.Row();
+        diskTitle.AddChild(_diskStatus);
+        var diskHelp = GeneticsUiTheme.Caption("genetics-ui-disk-hint");
+        diskHelp.ToolTip = Loc.GetString("genetics-lab-disk-help");
+        diskTitle.AddChild(diskHelp);
+        disk.AddChild(diskTitle);
+        var diskRow = GeneticsUiTheme.Row();
+        var write = AddButton(diskRow, "genetics-write-disk", GeneticsOperation.WriteDisk);
+        write.ToolTip = Loc.GetString("genetics-lab-disk-help");
+        _diskButtons.Add(write);
+        _ejectDisk = AddButton(diskRow, "genetics-eject-disk", GeneticsOperation.EjectDisk, false, requiresPatient: false);
+        disk.AddChild(diskRow);
+        root.AddChild(GeneticsUiTheme.Panel(disk));
+
         for (var i = 0; i < 3; i++)
         {
-            var row = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical };
-            var controls = new BoxContainer();
-            controls.AddChild(new Label { Text = Loc.GetString("genetics-buffer", ("number", i + 1)), MinWidth = 90 });
+            var row = GeneticsUiTheme.Column(4);
+            row.AddChild(GeneticsUiTheme.Caption("genetics-ui-admin-buffer"));
+            var controls = GeneticsUiTheme.Row();
+            controls.AddChild(new Label { Text = Loc.GetString("genetics-buffer", ("number", i + 1)) });
             AddButton(controls, "genetics-store", GeneticsOperation.StoreBuffer, buffer: i);
             var restore = AddButton(controls, "genetics-restore", GeneticsOperation.RestoreBuffer, buffer: i);
-            _adminButtons.Add(restore);
             _bufferButtons.Add((restore, i));
             _diskButtons.Add(AddButton(controls, "genetics-read-disk", GeneticsOperation.ReadDisk, buffer: i));
             row.AddChild(controls);
-            var bufferPrinting = new BoxContainer();
+            var bufferPrinting = GeneticsUiTheme.Row();
             _bufferButtons.Add((AddButton(bufferPrinting, "genetics-print-buffer-block", GeneticsOperation.PrintBufferInjector, buffer: i), i));
             _bufferButtons.Add((AddButton(bufferPrinting, "genetics-print-buffer-genome", GeneticsOperation.PrintBufferGenome, buffer: i), i));
             row.AddChild(bufferPrinting);
-            root.AddChild(row);
-            _adminRows.Add(row);
+            var panel = GeneticsUiTheme.Panel(row);
+            panel.Visible = false;
+            root.AddChild(panel);
+            _adminRows.Add(panel);
         }
-        var diskRow = new BoxContainer();
-        _diskButtons.Add(AddButton(diskRow, "genetics-write-disk", GeneticsOperation.WriteDisk));
-        _ejectDisk = AddButton(diskRow, "genetics-eject-disk", GeneticsOperation.EjectDisk, false, requiresPatient: false);
-        root.AddChild(diskRow);
-        var diskHelp = new RichTextLabel();
-        diskHelp.SetMessage(Loc.GetString("genetics-lab-disk-help"));
-        root.AddChild(diskHelp);
+
+        _blocks.BlockSelected += index =>
+        {
+            if (_state == null || index >= _state.Blocks.Count)
+                return;
+            _selected = index;
+            _hex.Text = _state.Blocks[index].Value.ToString("X3");
+            UpdateSelection();
+        };
+        _adminDetails.Visible = false;
         _adminEdit.Visible = false;
-        foreach (var button in _adminButtons)
-            button.Visible = false;
-        foreach (var row in _adminRows)
-            row.Visible = false;
     }
 
-    private Button AddButton(BoxContainer parent, string label, GeneticsOperation operation, bool scanned = true, int buffer = 0, int digit = 0,
-        bool requiresPatient = true)
+    private Button AddButton(BoxContainer parent, string label, GeneticsOperation operation, bool scanned = true,
+        int buffer = 0, int digit = 0, bool requiresPatient = true)
     {
-        var button = new Button { Text = Loc.GetString(label), Disabled = true };
+        var button = GeneticsUiTheme.StyleButton(new Button { Text = Loc.GetString(label), Disabled = true });
+        button.ToolTip = button.Text;
         button.OnPressed += _ =>
         {
             if (_state == null)
@@ -124,20 +168,21 @@ public sealed class GeneticsWindow : FancyWindow
 
     public void UpdateState(GeneticsUiState state)
     {
+        if (_state?.PatientEntity != state.PatientEntity)
+            _selected = 0;
         _state = state;
         _selected = Math.Clamp(_selected, 0, Math.Max(0, state.Blocks.Count - 1));
-        _instructions.SetMessage(Loc.GetString(state.Debug ? "genetics-admin-instructions" : "genetics-instructions"));
-        var status = Loc.GetString(!state.Powered ? "genetics-offline" :
-            state.PatientEntity != null && !state.Living ? "genetics-dead-patient" : state.Busy ? "genetics-busy" : "genetics-ready");
-        _status.SetMessage(state.Stability is { } stability
-            ? Loc.GetString("genetics-admin-status", ("patient", state.Patient), ("stability", stability),
-                ("mutagen", state.Mutagen), ("status", status))
-            : Loc.GetString("genetics-status", ("patient", state.Patient), ("mutagen", state.Mutagen), ("status", status)));
+        _header.UpdateState(state.Powered, state.Busy, state.Mutagen);
+        _patient.Text = state.PatientEntity != null && !state.Living
+            ? Loc.GetString("genetics-dead-patient") : state.Patient;
+        _patient.ToolTip = state.Patient;
+        _help.ToolTip = Loc.GetString(state.Debug ? "genetics-admin-instructions" : "genetics-instructions");
+        _diskStatus.Text = Loc.GetString(state.Disk ? "genetics-ui-disk-inserted" : "genetics-disk-missing");
         var available = state.Powered && !state.Busy && state.PatientEntity != null && state.Living;
         foreach (var button in _patientButtons)
             button.Disabled = !available;
         foreach (var button in _scannedButtons)
-            button.Disabled |= state.Revision < 0;
+            button.Disabled |= state.Revision < 0 || state.Blocks.Count == 0;
         foreach (var button in _diskButtons)
             button.Disabled |= !state.Disk;
         _ejectPatient.Disabled = state.PatientEntity == null;
@@ -149,39 +194,39 @@ public sealed class GeneticsWindow : FancyWindow
         foreach (var row in _adminRows)
             row.Visible = state.Debug;
         _adminEdit.Visible = state.Debug;
+        _adminDetails.Visible = state.Debug;
         _hex.Editable = available && state.Revision >= 0;
-        var selectedValue = state.Blocks.Count > 0 ? state.Blocks[_selected].Value : 0;
-        for (var digit = 0; digit < _digits.Count; digit++)
-            _digits[digit].Text = ((selectedValue >> ((2 - digit) * 4)) & 0xF).ToString("X");
 
-        _blocks.DisposeAllChildren();
+        _blocks.SetBlockCount(state.Blocks.Count);
+        _blocks.Select(_selected);
+        _empty.Visible = state.Blocks.Count == 0;
+        _blocks.Visible = state.Blocks.Count != 0;
         for (var i = 0; i < state.Blocks.Count; i++)
         {
-            var index = i;
             var block = state.Blocks[i];
-            var row = new Button
-            {
-                Text = state.Debug
-                    ? Loc.GetString("genetics-admin-block", ("number", i + 1), ("value", block.Value.ToString("X3")),
-                        ("name", block.Name ?? Loc.GetString("genetics-empty-block")),
-                        ("state", Loc.GetString(block.Active == true ? "genetics-active" : "genetics-inactive")))
-                    : Loc.GetString("genetics-block", ("number", i + 1), ("value", block.Value.ToString("X3"))),
-                ToggleMode = true,
-                ClipText = true,
-                ToolTip = block.Description,
-                Pressed = i == _selected,
-            };
-            row.OnPressed += _ =>
-            {
-                // Use the latest state; selecting a row must not restore an old genome snapshot.
-                if (_state == null || index >= _state.Blocks.Count)
-                    return;
-                _selected = index;
-                _hex.Text = _state.Blocks[index].Value.ToString("X3");
-                UpdateState(_state);
-            };
-            _blocks.AddChild(row);
+            _blocks.SetBlock(i, block.Value, state.Debug
+                ? Loc.GetString("genetics-admin-block", ("number", i + 1), ("value", block.Value.ToString("X3")),
+                    ("name", block.Name ?? Loc.GetString("genetics-empty-block")),
+                    ("state", Loc.GetString(block.Active == true ? "genetics-active" : "genetics-inactive")))
+                : null);
         }
-        _selectedLabel.Text = Loc.GetString("genetics-selected", ("number", _selected + 1));
+        UpdateSelection();
+    }
+
+    private void UpdateSelection()
+    {
+        if (_state == null)
+            return;
+        var block = _state.Blocks.Count > 0 ? _state.Blocks[_selected] : null;
+        _selectedLabel.Text = block == null ? Loc.GetString("genetics-ui-no-block")
+            : Loc.GetString("genetics-selected", ("number", _selected + 1));
+        for (var digit = 0; digit < _digits.Count; digit++)
+            _digits[digit].Text = block == null ? "—" : ((block.Value >> ((2 - digit) * 4)) & 0xF).ToString("X");
+        if (_state.Debug)
+        {
+            _adminDetails.SetMessage(Loc.GetString("genetics-ui-admin-selection",
+                ("name", block?.Name ?? Loc.GetString("genetics-empty-block")), ("stability", _state.Stability ?? 0)));
+            _adminDetails.ToolTip = block?.Description;
+        }
     }
 }

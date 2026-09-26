@@ -295,6 +295,16 @@ public sealed partial class GeneticsSystem : EntitySystem
             modifiers.MeleeMultiplier *= source.MeleeMultiplier;
             modifiers.StaminaMultiplier *= source.StaminaMultiplier;
             modifiers.DamageMultiplier *= source.DamageMultiplier;
+            foreach (var (type, reduction) in source.DamageModifiers.FlatReduction)
+            {
+                modifiers.DamageModifiers.FlatReduction.TryGetValue(type, out var previous);
+                modifiers.DamageModifiers.FlatReduction[type] = previous + reduction;
+            }
+            foreach (var (type, coefficient) in source.DamageModifiers.Coefficients)
+            {
+                modifiers.DamageModifiers.Coefficients[type] = modifiers.DamageModifiers.Coefficients.TryGetValue(type, out var previous)
+                    ? previous * coefficient : coefficient;
+            }
             modifiers.SizeMultiplier *= source.SizeMultiplier;
             modifiers.BlockRangedWeapons |= source.BlockRangedWeapons;
             modifiers.NutritionMultiplier *= source.NutritionMultiplier;

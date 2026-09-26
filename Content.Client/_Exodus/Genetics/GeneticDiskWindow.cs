@@ -12,13 +12,16 @@ public sealed class GeneticDiskWindow : FancyWindow
     public GeneticDiskWindow()
     {
         Title = Loc.GetString("genetics-disk-title");
-        MinSize = new Vector2(520, 520);
-        SetSize = new Vector2(600, 600);
-        var root = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, SeparationOverride = 8 };
+        Stylesheet = GeneticsUiTheme.CreateStylesheet(UserInterfaceManager.Stylesheet);
+        MinSize = new Vector2(600, 480);
+        SetSize = new Vector2(660, 500);
+        var root = GeneticsUiTheme.Column(8);
+        root.Margin = new Thickness(10);
+        root.AddChild(new Label { Text = Loc.GetString("genetics-hive-brand"), FontColorOverride = GeneticsUiTheme.Accent });
         var help = new RichTextLabel();
         help.SetMessage(Loc.GetString("genetics-disk-help"));
         root.AddChild(help);
-        root.AddChild(_contents);
+        root.AddChild(GeneticsUiTheme.Panel(_contents));
         ContentsContainer.AddChild(root);
     }
 
