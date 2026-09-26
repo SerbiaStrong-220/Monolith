@@ -94,7 +94,7 @@ public sealed class GeneticTelekinesisAnimationSystem : EntitySystem
 
     private void SetSpriteOffset(Entity<SpriteComponent> ent, Vector2 offset)
     {
-        _sprites.SetOffset(ent, offset);
+        _sprites.SetOffset(ent.AsNullable(), offset);
         // SetOffset changes the drawing matrix only. Refresh culling bounds as well, including
         // the final restoration, or a stationary item can stay indexed at a point along its flight.
         _spriteTree.QueueTreeUpdate(ent);
