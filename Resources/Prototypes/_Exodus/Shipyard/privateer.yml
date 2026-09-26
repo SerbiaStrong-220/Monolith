@@ -39,7 +39,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Privateer{1}'
+          mapNameTemplate: 'Капер{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
