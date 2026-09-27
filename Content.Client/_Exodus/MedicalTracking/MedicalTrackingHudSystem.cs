@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.MedicalTracking;
 
-/// <summary>Decorates visible health icons without a separate entity scan or animation updates.</summary>
+/// <summary>Replaces health icon frames without a separate entity scan or animation updates.</summary>
 public sealed class MedicalTrackingHudSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
@@ -24,15 +24,27 @@ public sealed class MedicalTrackingHudSystem : EntitySystem
         _unshaded = _prototype.Index<ShaderPrototype>("unshaded").Instance();
     }
 
-    /// <summary>Called only after the medical status icon passed the HUD's visibility checks.</summary>
-    public void DrawBorder(EntityUid body, DrawingHandleWorld handle, Vector2 position, Vector2 iconSize)
+    /// <summary>
+    /// Draws a health icon with its one-pixel frame replaced by the implant's animated border.
+    /// Returns false to keep the original icon when no compatible service border is available.
+    /// Called only after the medical status icon passed the HUD's visibility checks.
+    /// </summary>
+    public bool TryDrawIcon(EntityUid body, DrawingHandleWorld handle, Vector2 position, Texture icon)
     {
         if (!_hudQuery.TryComp(body, out var hud) || !_prototype.TryIndex(hud.Border, out var border))
-            return;
+            return false;
 
         var texture = _sprite.GetFrame(border.Icon, _timing.RealTime);
-        var offset = (iconSize - new Vector2(texture.Width, texture.Height)) / (2f * EyeManager.PixelsPerMeter);
+        if (texture.Size != icon.Size || icon.Width <= 2 || icon.Height <= 2)
+            return false;
+
+        // Keep the current health frame and lighting, but leave its rim transparent for the fading tails.
+        var interior = new UIBox2(1, 1, icon.Width - 1, icon.Height - 1);
+        var quad = Box2.FromDimensions(position + Vector2.One / EyeManager.PixelsPerMeter,
+            interior.Size / EyeManager.PixelsPerMeter);
+        handle.DrawTextureRectRegion(icon, quad, subRegion: interior);
         handle.UseShader(_unshaded);
-        handle.DrawTexture(texture, position + offset);
+        handle.DrawTexture(texture, position);
+        return true;
     }
 }

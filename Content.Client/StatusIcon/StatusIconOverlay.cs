@@ -120,11 +120,11 @@ public sealed partial class StatusIconOverlay : Overlay
                     handle.UseShader(_unshadedShader);
 
                 var position = new Vector2(xOffset, yOffset);
-                handle.DrawTexture(texture, position);
                 // Exodus-begin medical service HUD borders
-                if (proto is HealthIconPrototype)
-                    _medicalTrackingHud.DrawBorder(uid, handle, position, new Vector2(texture.Width, texture.Height));
+                if (proto is HealthIconPrototype && _medicalTrackingHud.TryDrawIcon(uid, handle, position, texture))
+                    continue;
                 // Exodus-end
+                handle.DrawTexture(texture, position);
             }
 
             handle.UseShader(null);
