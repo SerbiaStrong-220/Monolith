@@ -17,6 +17,10 @@ public sealed partial class MedicalTrackingImplantComponent : Component
     [DataField]
     public LocId TierName = "medical-tracking-tier-basic";
 
+    /// <summary>Service badge color on tablet client cards, independent of the patient's medical condition.</summary>
+    [DataField]
+    public Color TierColor = Color.LightGray;
+
     /// <summary>Optional service border around the patient's medical HUD status icon.</summary>
     [DataField]
     public ProtoId<HealthIconPrototype>? HudBorder;

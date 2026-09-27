@@ -188,7 +188,7 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
             implant.Contact = transform.MapID == MapId.Nullspace ? null : new MedicalTrackingContact(
                 GetNetEntity(uid), Identity.Name(uid, EntityManager), implant.TierName,
                 new MapCoordinates(_transform.GetWorldPosition(transform), transform.MapID),
-                state.CurrentState, now);
+                state.CurrentState, now, implant.TierColor);
         }
 
         UpdateTablets(now);

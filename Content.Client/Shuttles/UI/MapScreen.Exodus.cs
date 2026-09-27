@@ -28,7 +28,17 @@ public sealed partial class MapScreen
     }
 
     // Exodus-begin medical tablet
-    public event Action<NetEntity> MedicalContactSelected
+    public void SetupMedicalMap(EntityUid entity)
+    {
+        SetupReadOnlyMap(entity);
+        // Medical windows reserve room for triage and patient details even at their minimum size.
+        MapRadar.MinSize = new Vector2(220, 180);
+        MapRadar.HorizontalAlignment = HAlignment.Stretch;
+        MapRadar.VerticalAlignment = VAlignment.Stretch;
+        MapRadar.Margin = new Thickness(0);
+    }
+
+    public event Action<NetEntity?> MedicalContactSelected
     {
         add => MapRadar.MedicalContactSelected += value;
         remove => MapRadar.MedicalContactSelected -= value;
@@ -52,13 +62,19 @@ public sealed partial class MapScreen
 
     public void FocusMedicalOperator()
     {
-        if (_console is { } console && _entManager.EntityExists(console))
-            FocusMedicalContact(_xformSystem.GetMapCoordinates(console));
+        if (TryGetMedicalOperatorPosition(out var coordinates))
+            FocusMedicalContact(coordinates);
     }
 
-    public void ShowMedicalContacts()
+    public void SetMedicalOperator(EntityUid? entity)
     {
-        MapRadar.ShowMedicalContacts();
+        MapRadar.SetMedicalOperator(entity);
     }
+
+    public bool TryGetMedicalOperatorPosition(out MapCoordinates coordinates)
+    {
+        return MapRadar.TryGetMedicalOperatorPosition(out coordinates);
+    }
+
     // Exodus-end
 }

@@ -19,11 +19,13 @@ public sealed partial class ShuttleMapControl
     private Vector2? _medicalMousePosition;
     private MapId _medicalMap;
     private float _medicalCellSize = -1f;
+    private EntityUid? _medicalOperator;
+    private string? _medicalOperatorLabel;
 
-    public event Action<NetEntity>? MedicalContactSelected;
+    public event Action<NetEntity?>? MedicalContactSelected;
 
     private readonly record struct MedicalMarker(MedicalTrackingContact Contact, Vector2 Position,
-        int Count, MobState State, string Label = "", string CountText = "");
+        int Count, MobState State, TimeSpan UpdatedAt, string Label = "", string CountText = "");
 
     public void SetMedicalContacts(List<MedicalTrackingContact> contacts)
     {
@@ -38,8 +40,33 @@ public sealed partial class ShuttleMapControl
 
     public void SelectMedicalContact(NetEntity? body)
     {
+        if (_selectedMedicalContact == body)
+            return;
+
         _selectedMedicalContact = body;
         _medicalCellSize = -1f;
+    }
+
+    public void SetMedicalOperator(EntityUid? entity)
+    {
+        _medicalOperator = entity;
+        _medicalOperatorLabel ??= Loc.GetString("medical-tracking-map-you");
+    }
+
+    public bool TryGetMedicalOperatorPosition(out MapCoordinates coordinates)
+    {
+        coordinates = default;
+        if (_medicalOperator is not { } entity || !_transformQuery.TryGetComponent(entity, out var transform) ||
+            transform.MapID == MapId.Nullspace || !_mapManager.MapExists(transform.MapID))
+            return false;
+
+        coordinates = new MapCoordinates(_xformSystem.GetWorldPosition(transform), transform.MapID);
+        return true;
+    }
+
+    private bool HasMedicalOperatorOnMap()
+    {
+        return TryGetMedicalOperatorPosition(out var coordinates) && coordinates.MapId == ViewingMap;
     }
 
     public void FocusMedicalPosition(MapCoordinates coordinates, float range)
@@ -51,27 +78,6 @@ public sealed partial class ShuttleMapControl
         WorldMinRange = 16f;
         ActualRadarRange = Math.Clamp(range, WorldMinRange, WorldMaxRange);
         SetMap(coordinates.MapId, coordinates.Position, recentering: true);
-    }
-
-    public void ShowMedicalContacts()
-    {
-        Vector2? minimum = null;
-        var maximum = Vector2.Zero;
-        foreach (var contact in _medicalContacts)
-        {
-            if (contact.Coordinates.MapId != ViewingMap)
-                continue;
-
-            var position = contact.Coordinates.Position;
-            maximum = minimum == null ? position : Vector2.Max(maximum, position);
-            minimum = minimum == null ? position : Vector2.Min(minimum.Value, position);
-        }
-
-        if (minimum is not { } min)
-            return;
-
-        var span = maximum - min;
-        FocusMedicalPosition(new MapCoordinates((min + maximum) / 2f, ViewingMap), MathF.Max(64f, MathF.Max(span.X, span.Y) * 0.6f));
     }
 
     private void RebuildMedicalMarkers()
@@ -102,6 +108,7 @@ public sealed partial class ShuttleMapControl
                 {
                     Position = (marker.Position * marker.Count + position) / (marker.Count + 1),
                     Count = marker.Count + 1,
+                    UpdatedAt = marker.UpdatedAt > contact.UpdatedAt ? marker.UpdatedAt : contact.UpdatedAt,
                     State = MedicalTrackingDisplay.Priority(contact.State) < MedicalTrackingDisplay.Priority(marker.State) ? contact.State : marker.State,
                 };
             }
@@ -111,7 +118,7 @@ public sealed partial class ShuttleMapControl
                     _medicalBuckets.Add(cell, _medicalMarkers.Count);
                 else
                     selectedIndex = _medicalMarkers.Count;
-                _medicalMarkers.Add(new MedicalMarker(contact, position, 1, contact.State));
+                _medicalMarkers.Add(new MedicalMarker(contact, position, 1, contact.State, contact.UpdatedAt));
             }
         }
 
@@ -183,7 +190,14 @@ public sealed partial class ShuttleMapControl
         RebuildMedicalMarkers();
         var index = MedicalMarkerAt(position);
         if (index < 0)
-            return false;
+        {
+            if (_selectedMedicalContact == null)
+                return false;
+
+            // Clear the shared window/map selection without changing the camera or scroll position.
+            MedicalContactSelected?.Invoke(null);
+            return true;
+        }
 
         var marker = _medicalMarkers[index];
         if (marker.Count > 1)
@@ -210,25 +224,30 @@ public sealed partial class ShuttleMapControl
                 continue;
 
             var color = MedicalTrackingDisplay.StatusColor(marker.State);
+            if (MedicalTrackingDisplay.SignalAge(marker.UpdatedAt, _timing.CurTime) >= MedicalTrackingDisplay.StaleSignalSeconds)
+                color = color.WithAlpha(0.55f);
             var selected = marker.Contact.Body == _selectedMedicalContact;
             if (selected)
             {
-                handle.DrawCircle(position, 14f * UIScale, Color.White);
-                handle.DrawCircle(position, 12f * UIScale, Color.Black);
+                handle.DrawCircle(position, 10f * UIScale, Color.White);
+                handle.DrawCircle(position, 8f * UIScale, Color.Black);
                 if (hovered < 0)
                     labelIndex = i;
             }
-            handle.DrawCircle(position, 10f * UIScale, Color.Black);
-            handle.DrawCircle(position, 8f * UIScale, color);
+            var countSize = marker.Count > 1 ? handle.GetDimensions(Font, marker.CountText, UIScale) : Vector2.Zero;
+            var radius = marker.Count > 1
+                ? MathF.Max(9f * UIScale, MathF.Max(countSize.X, countSize.Y) / 2f + 2f * UIScale)
+                : 5f * UIScale;
+            handle.DrawCircle(position, radius + 2f * UIScale, Color.Black);
+            handle.DrawCircle(position, radius, color);
             if (marker.Count > 1)
             {
-                var size = handle.GetDimensions(Font, marker.CountText, UIScale);
-                handle.DrawString(Font, position - size / 2f, marker.CountText, UIScale, Color.Black);
+                handle.DrawString(Font, position - countSize / 2f, marker.CountText, UIScale, Color.Black);
             }
             else
             {
-                handle.DrawRect(new UIBox2(position - new Vector2(1.5f, 5f) * UIScale, position + new Vector2(1.5f, 5f) * UIScale), Color.Black);
-                handle.DrawRect(new UIBox2(position - new Vector2(5f, 1.5f) * UIScale, position + new Vector2(5f, 1.5f) * UIScale), Color.Black);
+                handle.DrawRect(new UIBox2(position - new Vector2(1f, 3f) * UIScale, position + new Vector2(1f, 3f) * UIScale), Color.Black);
+                handle.DrawRect(new UIBox2(position - new Vector2(3f, 1f) * UIScale, position + new Vector2(3f, 1f) * UIScale), Color.Black);
             }
         }
 
@@ -243,6 +262,49 @@ public sealed partial class ShuttleMapControl
             handle.DrawRect(UIBox2.FromDimensions(origin, size + new Vector2(8f * UIScale)), Color.Black.WithAlpha(0.9f));
             handle.DrawString(Font, origin + new Vector2(4f * UIScale), marker.Label, UIScale, Color.White);
         }
+    }
+
+    private void DrawMedicalOperator(DrawingHandleScreen handle, Matrix3x2 mapTransform)
+    {
+        if (!TryGetMedicalOperatorPosition(out var coordinates) || coordinates.MapId != ViewingMap)
+            return;
+
+        var relative = Vector2.Transform(coordinates.Position, mapTransform);
+        var actualPosition = ScalePosition(relative with { Y = -relative.Y });
+        var margin = new Vector2(20f * UIScale);
+        var bounds = Vector2.Max(margin, (Vector2) PixelSize - margin);
+        var position = Vector2.Clamp(actualPosition, margin, bounds);
+        var color = MedicalTrackingUiTheme.Accent;
+
+        // A hollow diamond distinguishes the live operator from sampled patient crosses.
+        // Outside the viewport a chevron points towards the operator, without panning the map.
+        handle.DrawCircle(position, 11f * UIScale, MedicalTrackingUiTheme.Background);
+        var top = position - new Vector2(0, 9f) * UIScale;
+        var right = position + new Vector2(9f, 0) * UIScale;
+        var bottom = position + new Vector2(0, 9f) * UIScale;
+        var left = position - new Vector2(9f, 0) * UIScale;
+        handle.DrawLine(top, right, color);
+        handle.DrawLine(right, bottom, color);
+        handle.DrawLine(bottom, left, color);
+        handle.DrawLine(left, top, color);
+        if (position != actualPosition)
+        {
+            var direction = Vector2.Normalize(actualPosition - position);
+            var side = new Vector2(-direction.Y, direction.X);
+            var tip = position + direction * 14f * UIScale;
+            handle.DrawLine(tip, tip - (direction * 6f + side * 4f) * UIScale, color);
+            handle.DrawLine(tip, tip - (direction * 6f - side * 4f) * UIScale, color);
+        }
+        else
+            handle.DrawCircle(position, 3f * UIScale, color);
+
+        var label = _medicalOperatorLabel!;
+        var size = handle.GetDimensions(Font, label, UIScale);
+        var labelPosition = position + new Vector2(14f, 6f) * UIScale;
+        labelPosition = Vector2.Clamp(labelPosition, Vector2.Zero,
+            Vector2.Max(Vector2.Zero, PixelSize - size - new Vector2(8f * UIScale)));
+        handle.DrawRect(UIBox2.FromDimensions(labelPosition, size + new Vector2(8f * UIScale)), MedicalTrackingUiTheme.Background);
+        handle.DrawString(Font, labelPosition + new Vector2(4f * UIScale), label, UIScale, color);
     }
 }
 // Exodus-end

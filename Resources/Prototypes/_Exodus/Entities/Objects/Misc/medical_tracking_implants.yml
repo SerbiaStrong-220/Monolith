@@ -36,6 +36,7 @@
   - type: MedicalTrackingImplant
     tier: 2
     tierName: medical-tracking-tier-silver
+    tierColor: "#C0CED8"
     hudBorder: MedicalTrackingBorderSilver
   - type: Rattle
     critMessage: medical-tracking-silver-critical
@@ -55,6 +56,7 @@
   - type: MedicalTrackingImplant
     tier: 3
     tierName: medical-tracking-tier-gold
+    tierColor: "#E4C779"
     hudBorder: MedicalTrackingBorderGold
     trackBody: true
     updateInterval: 5
@@ -72,6 +74,7 @@
   - type: MedicalTrackingImplant
     tier: 4
     tierName: medical-tracking-tier-platinum
+    tierColor: "#A6DCE9"
     hudBorder: MedicalTrackingBorderPlatinum
     trackBrain: true
   - type: Rattle
@@ -88,6 +91,7 @@
   - type: MedicalTrackingImplant
     tier: 5
     tierName: medical-tracking-tier-ruby
+    tierColor: "#FF5C5C"
     hudBorder: MedicalTrackingBorderRuby
   - type: Rattle
     critMessage: medical-tracking-ruby-critical

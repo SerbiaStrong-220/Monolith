@@ -311,7 +311,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         DrawRecenter();
 
         // Exodus: body contacts can exist without grid markers; their sampled map may have been deleted.
-        if (InFtl || !_mapManager.MapExists(ViewingMap) || mapObjects.Count == 0 && _medicalContacts.Count == 0)
+        if (InFtl || !_mapManager.MapExists(ViewingMap) || mapObjects.Count == 0 && _medicalContacts.Count == 0 && !HasMedicalOperatorOnMap()) // Exodus show the operator even without patient signals.
         {
             DrawBacking(handle);
             DrawNoSignal(handle);
@@ -656,6 +656,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         }
 
         DrawMedicalContacts(handle, matty); // Exodus medical contacts stay above grid markers.
+        DrawMedicalOperator(handle, matty); // Exodus live operator marker remains visible above patient groups.
         DrawData(handle, coordsText, coordColor);
     }
 
