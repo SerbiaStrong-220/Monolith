@@ -32,6 +32,10 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         _sawmill = Logger.GetSawmill("Guidebook");
 
         Tree.OnSelectedItemChanged += OnSelectionChanged;
+        // Exodus-begin: retain search results while navigating the usual guidebook tree.
+        ArticleSearch.OnSearchStateChanged += searching => Tree.Visible = !searching;
+        ArticleSearch.OnEntrySelected += id => HandleClick(id);
+        // Exodus-end
 
         SearchBar.OnTextChanged += _ =>
         {
@@ -47,6 +51,14 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         if (Tree.TryGetIndexFromMetadata(entry, out var index))
         {
             Tree.ExpandParentEntries(index.Value);
+            // Exodus-begin: a link-only page may be open while its previous tree selection remains unchanged.
+            if (Tree.SelectedIndex == index)
+            {
+                if (LastEntry.Id != entry.Id)
+                    ShowGuide(entry);
+                return;
+            }
+            // Exodus-end
             Tree.SetSelectedIndex(index);
         }
         else
@@ -94,6 +106,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         }
 
         LastEntry = entry.Id;
+        ArticleSearch.SelectEntry(entry.Id); // Exodus: mark the currently displayed search result.
     }
 
     public void UpdateGuides(
@@ -104,6 +117,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
     {
         _entries = entries;
         RepopulateTree(rootEntries, forceRoot);
+        ArticleSearch.SetEntries(Tree.Items); // Exodus: search only articles available in this guidebook.
         ClearSelectedGuide();
 
         Split.State = SplitContainer.SplitState.Auto;

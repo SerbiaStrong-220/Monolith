@@ -1,0 +1,16 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical" HorizontalExpand="True">
+    <BoxContainer Orientation="Horizontal" Margin="0 0 4 4">
+        <LineEdit Name="Query" HorizontalExpand="True"
+                  PlaceHolder="{Loc 'exodus-guidebook-search-placeholder'}"
+                  ToolTip="{Loc 'exodus-guidebook-search-hint'}"/>
+        <Button Name="Clear" Text="{Loc 'exodus-guidebook-search-clear'}" Disabled="True"/>
+    </BoxContainer>
+    <Label Name="Status" Visible="False" ClipText="True" Margin="0 0 4 4"/>
+    <ScrollContainer Name="ResultsScroll" Visible="False" VerticalExpand="True" HScrollEnabled="False">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 4 0">
+            <BoxContainer Name="Results" Orientation="Vertical" HorizontalExpand="True"/>
+            <Button Name="More" Text="{Loc 'exodus-guidebook-search-more'}" Visible="False"/>
+        </BoxContainer>
+    </ScrollContainer>
+</BoxContainer>
