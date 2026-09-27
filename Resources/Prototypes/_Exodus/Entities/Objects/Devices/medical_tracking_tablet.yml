@@ -8,6 +8,11 @@
     updateInterval: 1
   - type: Item
     size: Small
+    # Empty layers disable automatic in-hand states from the item's Sprite RSI.
+    inhandVisuals:
+      left: []
+      middle: []
+      right: []
   - type: Sprite
     sprite: _Exodus/Objects/Devices/medical_tracking_tablet.rsi
     state: tablet
