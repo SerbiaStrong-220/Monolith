@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Cooldown;
+using Content.Client._Exodus.Atmos; // Exodus gas tank fill indicator
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -182,6 +183,8 @@ namespace Content.Client.UserInterface.Controls
             {
                 Visible = false,
             });
+
+            AddChild(new GasTankFillBar(this)); // Exodus gas tank fill indicator
 
             AddChild(BlockedRect = new TextureRect
             {
