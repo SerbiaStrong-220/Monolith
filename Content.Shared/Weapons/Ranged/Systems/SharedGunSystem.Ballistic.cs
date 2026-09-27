@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Weapons.Hardpoints; // Exodus hardpoint cooldown protection
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -239,7 +240,20 @@ public abstract partial class SharedGunSystem
             gunComp is { FireRateModified: > 0f } &&
             !Paused(uid))
         {
-            gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
+            // Exodus-begin: cycling a ship gun must respect mount penalties and cannot skip burst recovery.
+            var cycleDelay = TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
+            var nextFire = Timing.CurTime + cycleDelay;
+            if (HasComp<ExodusHardpointWeaponComponent>(uid))
+            {
+                var multiplier = new QueryFireRateMultiplierEvent(1f);
+                RaiseLocalEvent(uid, ref multiplier);
+                nextFire = Timing.CurTime + cycleDelay * multiplier.ReloadTimeMul;
+                if (nextFire < gunComp.NextFire)
+                    nextFire = gunComp.NextFire;
+            }
+
+            gunComp.NextFire = nextFire;
+            // Exodus-end
             DirtyField(uid, gunComp, nameof(GunComponent.NextFire));
         }
 

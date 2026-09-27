@@ -9,6 +9,9 @@
   suffix: Small, T1
   description: A light 20mm ballistic autocannon designed for rapid fire point defense and suppressing smaller targets at close range. Cheap, light, and can be remotely activated or linked up to a GCS.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Light
   - type: StaticPrice
     price: 250
   - type: Sprite
@@ -104,6 +107,9 @@
   suffix: Medium, T2
   description: A heavy duty rapid fire 30mm autocannon, originally mounted as a dogfighting weapon on atmospheric craft. # Exodus: retain main-build text outside M25/Scylla.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Medium
   - type: StaticPrice
     price: 1000
   - type: Sprite

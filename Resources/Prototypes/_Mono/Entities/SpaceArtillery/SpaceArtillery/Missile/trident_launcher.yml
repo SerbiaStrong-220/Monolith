@@ -6,6 +6,9 @@
   - BallisticArtilleryTier4HP
   description: A heavy built-in torpedo rack for cruisers which relies on manual loading, usually done at harbor. Despite this, it has the largest missiles in the sector.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Heavy
   - type: StaticPrice
     price: 10000
   - type: Sprite
@@ -55,6 +58,9 @@
   - WeaponTurretASM220
   description: A heavy built-in torpedo rack for cruisers which relies on manual loading, usually done at harbor. Despite this, it has the largest missiles in the sector. This one is connected to a system for autoloading the VLS from a capital or stations reserves.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Superheavy
   - type: BallisticAmmoProvider
     whitelist:
       tags:

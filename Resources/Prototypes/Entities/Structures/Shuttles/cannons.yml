@@ -6,6 +6,9 @@
   name: shittle gun
   abstract: true
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Light
   - type: Appearance
   - type: InteractionOutline
   - type: Anchorable
@@ -47,6 +50,9 @@
   description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire.
   categories: [ DoNotMap ]
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Energy
+    size: Light
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shuttles/laser.rsi
     layers:
@@ -103,6 +109,9 @@
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
   categories: [ DoNotMap ]
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Energy
+    size: Heavy
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shuttles/laser.rsi
     layers:
@@ -161,6 +170,9 @@
   description: A small stationary grenade launcher that holds 2 grenades.
   categories: [ DoNotMap ]
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Medium
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shuttles/launcher.rsi
     layers:
@@ -215,6 +227,9 @@
   description: A powerful stationary grenade launcher. A cartridge is required for use.
   categories: [ DoNotMap ]
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Heavy
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shuttles/launcher.rsi
     layers:
@@ -275,6 +290,9 @@
   name: pirate ship cannon
   description: Kaboom!
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Medium
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -318,6 +336,9 @@
   description: Mining turret, effective for blasting hardened targets. Has considerable range but lower firerate. # Mono: description changed
   # categories: [ DoNotMap ] Mono
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Superlight
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shuttles/kinetic.rsi
     layers:

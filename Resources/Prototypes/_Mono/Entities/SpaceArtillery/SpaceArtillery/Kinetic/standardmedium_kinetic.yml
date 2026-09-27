@@ -10,6 +10,9 @@
   suffix: Medium, T2
   description: A dual-barrel, heavy 57mm autocannon firing general-purpose APHE rounds, effective for sustained fire against medium targets. Can be remotely activated or linked up to a GCS.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Light
   - type: StaticPrice
     price: 650
   - type: Sprite
@@ -86,6 +89,9 @@
   suffix: Medium, T2
   description: A single-barrel autocannon made by Aetherion Dynamics. Medium artillery piece with high impact but relatively low fire rate, firing HEAT shells to damage ship armor and systems. Can be remotely activated or linked up to a GCS.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Medium
   - type: StaticPrice
     price: 900
   - type: Sprite

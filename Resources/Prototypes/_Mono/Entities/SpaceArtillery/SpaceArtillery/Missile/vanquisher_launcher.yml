@@ -7,6 +7,9 @@
   description: A short-ranged missile pod firing 150mm unguided rockets with devastating fire rate.
   suffix: Large, T4
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Heavy
   - type: StaticPrice
     price: 21200
   - type: Sprite

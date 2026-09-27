@@ -8,6 +8,9 @@
   description: Ultralight mass driver weapon of unknown origin, designated "Shard" during initial reverse engineering attempts. Light damage, but long range and little upkeep to mount on ships.
   suffix: Drone T1
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Light
   - type: StaticPrice
     price: 10000
   - type: Sprite
@@ -63,6 +66,9 @@
   description: Appears to be a heavily modified "Shard" mass driver. Unstable and rarely found in the wild.
   suffix: Drone T2
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Light
   - type: StaticPrice
     price: 20000
   - type: Sprite
@@ -112,6 +118,9 @@
   description: Mass driver weapon of unknown origin. Reverse engineering attempts have indicated extremely high projectile velocity and high-mass projectiles with unresolved ship-pushing payload.
   suffix: Drone T2
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Heavy
   - type: StaticPrice
     price: 30000
   - type: Sprite

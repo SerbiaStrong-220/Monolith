@@ -8,6 +8,9 @@
   name: harpoon
   description: A weapon that fires a hook with incredible piercing power. Can hold other shuttles. Don't fire it at those stronger than you.
   components:
+  - type: ExodusHardpointWeapon
+    class: Ballistic
+    size: Medium
   - type: Sprite
     sprite: _Exodus/Objects/SpaceArtillery/harpoon.rsi
     layers:

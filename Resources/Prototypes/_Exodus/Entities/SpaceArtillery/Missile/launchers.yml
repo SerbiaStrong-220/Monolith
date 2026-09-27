@@ -6,6 +6,9 @@
   - BallisticArtilleryTier3HP
   description: A self-loading fixed missile launcher. It fires light guided rockets at high speed.
   components:
+  - type: ExodusHardpointWeapon
+    class: Missile
+    size: Heavy
   - type: StaticPrice
     price: 50000
   - type: Sprite
@@ -60,6 +63,9 @@
   - BallisticArtilleryTier3HP
   description: A self-loading fixed missile launcher. It fires light guided rockets.
   components:
+  - type: ExodusHardpointWeapon
+    class: Missile
+    size: Heavy
   - type: StaticPrice
     price: 25000
   - type: Sprite

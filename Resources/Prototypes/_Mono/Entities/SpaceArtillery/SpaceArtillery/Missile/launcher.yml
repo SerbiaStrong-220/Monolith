@@ -8,6 +8,9 @@
   - BallisticArtilleryTier3HP
   description: A light torpedo launcher developed by the Syndicate during the corporate war, uses similar systems to the anaconda for self loading munitons.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Medium
   - type: StaticPrice
     price: 5000
   - type: Sprite
@@ -64,6 +67,9 @@
   - BallisticArtilleryTier3HP
   description: An odd weapon of the pre-fracture era, it projects a mass of electrons that seek out the positive charge of nearby targets, overloading systems and shattering sections of hull.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Heavy
   - type: StaticPrice
     price: 5000
   - type: Sprite

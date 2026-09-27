@@ -7,6 +7,9 @@
   suffix: Capital, T4
   abstract: true
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Superheavy
   - type: StaticPrice
     price: 30000
   - type: Sprite

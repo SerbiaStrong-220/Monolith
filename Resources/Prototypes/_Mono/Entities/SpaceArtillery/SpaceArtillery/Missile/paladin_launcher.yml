@@ -7,6 +7,9 @@
   description: Heavy missile pod firing 250mm guided rockets in bursts of 4.
   suffix: Large, T4
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Heavy
   - type: StaticPrice
     price: 24500
   - type: Sprite

@@ -7,6 +7,9 @@
   - ShipGunExplodes3x3 # Exodus self-destruct (blast size)
   description: A relatively small, armored munitions bay capable of holding up to two lightweight ordinance packages. Typically found on light spacecraft, particularly bombers, and provide a limited use method of damaging targets far above the user's weight class.
   components:
+  - type: ExodusHardpointWeapon # Exodus hardpoint compatibility
+    class: Missile
+    size: Light
   - type: StaticPrice
     price: 1000
   - type: Sprite
