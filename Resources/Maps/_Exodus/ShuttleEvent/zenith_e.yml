@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/19/2026 17:29:08
-  entityCount: 673
+  entityCount: 684 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -4075,4 +4075,89 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-2.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 674
+    components:
+    - type: Transform
+      pos: -8.5,-7.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 675
+    components:
+    - type: Transform
+      pos: 7.5,-7.5
+      rot: 0
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyHeavy
+  entities:
+  - uid: 677
+    components:
+    - type: Transform
+      pos: -7.5,-10.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 678
+    components:
+    - type: Transform
+      pos: 1.5,10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 679
+    components:
+    - type: Transform
+      pos: -2.5,10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 680
+    components:
+    - type: Transform
+      pos: 6.5,-10.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 681
+    components:
+    - type: Transform
+      pos: 2.5,7.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 682
+    components:
+    - type: Transform
+      pos: -3.5,7.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 683
+    components:
+    - type: Transform
+      pos: 8.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 684
+    components:
+    - type: Transform
+      pos: -9.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergySuperheavy
+  entities:
+  - uid: 676
+    components:
+    - type: Transform
+      pos: -0.5,11.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

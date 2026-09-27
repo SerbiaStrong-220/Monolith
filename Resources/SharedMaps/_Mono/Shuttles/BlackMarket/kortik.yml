@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/08/2026 11:49:26
-  entityCount: 1552
+  entityCount: 1570 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -10054,4 +10054,142 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticHeavy
+  entities:
+  - uid: 1553
+    components:
+    - type: Transform
+      pos: 6.5,4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1554
+    components:
+    - type: Transform
+      pos: -6.5,4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 1557
+    components:
+    - type: Transform
+      pos: -3.5,13.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1558
+    components:
+    - type: Transform
+      pos: 3.5,13.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1559
+    components:
+    - type: Transform
+      pos: -6.5,-21.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1560
+    components:
+    - type: Transform
+      pos: 6.5,-21.5
+      rot: 0
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 1563
+    components:
+    - type: Transform
+      pos: 8.5,1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1564
+    components:
+    - type: Transform
+      pos: -9.5,-8.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1565
+    components:
+    - type: Transform
+      pos: -8.5,1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1566
+    components:
+    - type: Transform
+      pos: 9.5,-8.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticSuperheavy
+  entities:
+  - uid: 1555
+    components:
+    - type: Transform
+      pos: 7.5,2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1556
+    components:
+    - type: Transform
+      pos: -7.5,2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1561
+    components:
+    - type: Transform
+      pos: 2.5,8.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1562
+    components:
+    - type: Transform
+      pos: -2.5,8.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointMissileMedium
+  entities:
+  - uid: 1567
+    components:
+    - type: Transform
+      pos: -7.5,-6.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1568
+    components:
+    - type: Transform
+      pos: -7.5,-5.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1569
+    components:
+    - type: Transform
+      pos: 7.5,-6.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1570
+    components:
+    - type: Transform
+      pos: 7.5,-5.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

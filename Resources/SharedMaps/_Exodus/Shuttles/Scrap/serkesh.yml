@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/02/2026 10:38:24
-  entityCount: 1165
+  entityCount: 1175 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -7671,4 +7671,86 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,29.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 1173
+    components:
+    - type: Transform
+      pos: 11.5,10.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1174
+    components:
+    - type: Transform
+      pos: -9.5,10.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 1170
+    components:
+    - type: Transform
+      pos: -11.5,15.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1171
+    components:
+    - type: Transform
+      pos: 13.5,15.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticSuperheavy
+  entities:
+  - uid: 1166
+    components:
+    - type: Transform
+      pos: 6.5,23.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1167
+    components:
+    - type: Transform
+      pos: -4.5,23.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1168
+    components:
+    - type: Transform
+      pos: -8.5,14.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1169
+    components:
+    - type: Transform
+      pos: 10.5,14.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyLight
+  entities:
+  - uid: 1172
+    components:
+    - type: Transform
+      pos: 2.5,29.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointMissileMedium
+  entities:
+  - uid: 1175
+    components:
+    - type: Transform
+      pos: -0.5,29.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

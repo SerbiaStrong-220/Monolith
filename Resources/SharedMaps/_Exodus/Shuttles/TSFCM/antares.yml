@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/11/2026 07:13:17
-  entityCount: 1793
+  entityCount: 1816 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -11560,4 +11560,236 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 1796
+    components:
+    - type: Transform
+      pos: -2.5,29.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1797
+    components:
+    - type: Transform
+      pos: 3.5,29.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1798
+    components:
+    - type: Transform
+      pos: -4.5,-10.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1799
+    components:
+    - type: Transform
+      pos: 5.5,-10.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1800
+    components:
+    - type: Transform
+      pos: 6.5,4.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1801
+    components:
+    - type: Transform
+      pos: -5.5,4.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticSuperlight
+  entities:
+  - uid: 1794
+    components:
+    - type: Transform
+      pos: 4.5,19.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1795
+    components:
+    - type: Transform
+      pos: -3.5,19.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+- proto: HardpointMissileHeavy
+  entities:
+  - uid: 1802
+    components:
+    - type: Transform
+      pos: 7.5,8.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1803
+    components:
+    - type: Transform
+      pos: 7.5,7.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1804
+    components:
+    - type: Transform
+      pos: 7.5,12.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1805
+    components:
+    - type: Transform
+      pos: -6.5,12.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1806
+    components:
+    - type: Transform
+      pos: -6.5,11.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1807
+    components:
+    - type: Transform
+      pos: -6.5,7.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1808
+    components:
+    - type: Transform
+      pos: -6.5,8.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1809
+    components:
+    - type: Transform
+      pos: -6.5,-15.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1810
+    components:
+    - type: Transform
+      pos: -6.5,-16.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1811
+    components:
+    - type: Transform
+      pos: -6.5,-17.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1812
+    components:
+    - type: Transform
+      pos: -6.5,-18.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1813
+    components:
+    - type: Transform
+      pos: 7.5,-15.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1814
+    components:
+    - type: Transform
+      pos: 7.5,-16.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1815
+    components:
+    - type: Transform
+      pos: 7.5,-17.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1816
+    components:
+    - type: Transform
+      pos: 7.5,-18.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1817
+    components:
+    - type: Transform
+      pos: 7.5,11.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1818
+    components:
+    - type: Transform
+      pos: 5.5,25.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1819
+    components:
+    - type: Transform
+      pos: 5.5,24.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1820
+    components:
+    - type: Transform
+      pos: 5.5,23.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1821
+    components:
+    - type: Transform
+      pos: 5.5,22.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1822
+    components:
+    - type: Transform
+      pos: -4.5,25.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1823
+    components:
+    - type: Transform
+      pos: -4.5,24.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1824
+    components:
+    - type: Transform
+      pos: -4.5,23.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1825
+    components:
+    - type: Transform
+      pos: -4.5,22.5
+      rot: 0
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/06/2026 07:57:52
-  entityCount: 1920
+  entityCount: 1931 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -12368,4 +12368,89 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticHeavy
+  entities:
+  - uid: 1923
+    components:
+    - type: Transform
+      pos: 8.5,36.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1924
+    components:
+    - type: Transform
+      pos: -7.5,36.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1925
+    components:
+    - type: Transform
+      pos: -6.5,40.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1926
+    components:
+    - type: Transform
+      pos: 7.5,40.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyLight
+  entities:
+  - uid: 1921
+    components:
+    - type: Transform
+      pos: 6.5,9.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1922
+    components:
+    - type: Transform
+      pos: -5.5,9.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1927
+    components:
+    - type: Transform
+      pos: -8.5,25.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1928
+    components:
+    - type: Transform
+      pos: 9.5,25.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1929
+    components:
+    - type: Transform
+      pos: -5.5,46.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1930
+    components:
+    - type: Transform
+      pos: 6.5,46.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergySuperheavy
+  entities:
+  - uid: 1931
+    components:
+    - type: Transform
+      pos: 0.5,35.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

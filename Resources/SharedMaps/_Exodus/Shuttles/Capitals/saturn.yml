@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 03/01/2026 01:20:36
-  entityCount: 4025
+  entityCount: 4048 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -26187,4 +26187,182 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 12.5,17.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticHeavy
+  entities:
+  - uid: 4027
+    components:
+    - type: Transform
+      pos: 16.5,-16.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4030
+    components:
+    - type: Transform
+      pos: -14.5,-16.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4031
+    components:
+    - type: Transform
+      pos: 15.5,-9.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4032
+    components:
+    - type: Transform
+      pos: -13.5,-9.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4033
+    components:
+    - type: Transform
+      pos: 16.5,14.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4035
+    components:
+    - type: Transform
+      pos: -14.5,14.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4036
+    components:
+    - type: Transform
+      pos: -11.5,26.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4037
+    components:
+    - type: Transform
+      pos: -12.5,22.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4038
+    components:
+    - type: Transform
+      pos: 13.5,26.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4044
+    components:
+    - type: Transform
+      pos: 14.5,22.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4047
+    components:
+    - type: Transform
+      pos: -13.5,18.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4049
+    components:
+    - type: Transform
+      pos: 15.5,18.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 4028
+    components:
+    - type: Transform
+      pos: 23.5,4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4029
+    components:
+    - type: Transform
+      pos: -21.5,4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 4026
+    components:
+    - type: Transform
+      pos: -8.5,41.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4034
+    components:
+    - type: Transform
+      pos: 11.5,38.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4039
+    components:
+    - type: Transform
+      pos: -5.5,42.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4040
+    components:
+    - type: Transform
+      pos: 7.5,42.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4041
+    components:
+    - type: Transform
+      pos: -9.5,38.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4042
+    components:
+    - type: Transform
+      pos: 12.5,34.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4043
+    components:
+    - type: Transform
+      pos: -10.5,34.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4048
+    components:
+    - type: Transform
+      pos: 10.5,41.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticSuperheavy
+  entities:
+  - uid: 4045
+    components:
+    - type: Transform
+      pos: 12.5,30.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4046
+    components:
+    - type: Transform
+      pos: -10.5,30.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

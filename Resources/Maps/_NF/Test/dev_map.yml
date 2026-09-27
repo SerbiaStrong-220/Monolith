@@ -10456,4 +10456,15 @@ entities:
     - type: Transform
       pos: -0.11783123,4.753312
       parent: 179
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 1620
+    components:
+    - type: Transform
+      pos: -2.5,17.5
+      rot: 3.141592653589793 rad
+      parent: 179
+      anchored: true
+# Exodus-end
 ...

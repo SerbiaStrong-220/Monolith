@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/05/2026 06:58:33
-  entityCount: 1905
+  entityCount: 1934 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -11437,4 +11437,217 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,28.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 1938
+    components:
+    - type: Transform
+      pos: -19.5,-8.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1939
+    components:
+    - type: Transform
+      pos: 20.5,-8.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 1940
+    components:
+    - type: Transform
+      pos: -9.5,5.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1941
+    components:
+    - type: Transform
+      pos: 10.5,5.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1942
+    components:
+    - type: Transform
+      pos: -10.5,3.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1943
+    components:
+    - type: Transform
+      pos: 11.5,3.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyHeavy
+  entities:
+  - uid: 1946
+    components:
+    - type: Transform
+      pos: 16.5,-11.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1947
+    components:
+    - type: Transform
+      pos: 8.5,-16.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1948
+    components:
+    - type: Transform
+      pos: 10.5,-17.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1949
+    components:
+    - type: Transform
+      pos: -9.5,-17.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1950
+    components:
+    - type: Transform
+      pos: -5.5,-15.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1951
+    components:
+    - type: Transform
+      pos: -7.5,-16.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1952
+    components:
+    - type: Transform
+      pos: 6.5,-15.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1953
+    components:
+    - type: Transform
+      pos: 3.5,25.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1954
+    components:
+    - type: Transform
+      pos: -2.5,25.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1955
+    components:
+    - type: Transform
+      pos: -15.5,-11.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1956
+    components:
+    - type: Transform
+      pos: 16.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1957
+    components:
+    - type: Transform
+      pos: -17.5,-4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1958
+    components:
+    - type: Transform
+      pos: -15.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1959
+    components:
+    - type: Transform
+      pos: 14.5,-0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1960
+    components:
+    - type: Transform
+      pos: 18.5,-4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1961
+    components:
+    - type: Transform
+      pos: -13.5,-0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergySuperheavy
+  entities:
+  - uid: 1944
+    components:
+    - type: Transform
+      pos: 20.5,-6.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1945
+    components:
+    - type: Transform
+      pos: -19.5,-6.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1966
+    components:
+    - type: Transform
+      pos: 0.5,28.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointMissileHeavy
+  entities:
+  - uid: 1962
+    components:
+    - type: Transform
+      pos: -13.5,-18.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1963
+    components:
+    - type: Transform
+      pos: 14.5,-18.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1964
+    components:
+    - type: Transform
+      pos: -7.5,9.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1965
+    components:
+    - type: Transform
+      pos: 8.5,9.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...
