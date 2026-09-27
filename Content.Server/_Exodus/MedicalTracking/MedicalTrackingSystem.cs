@@ -84,7 +84,8 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
         {
             if (old.Tier >= ent.Comp.Tier)
             {
-                _implants.ForceRemove(body, ent.Owner);
+                // Container insertion is still dispatching events; let it finish before removing this implant.
+                QueueDel(ent);
                 return;
             }
 

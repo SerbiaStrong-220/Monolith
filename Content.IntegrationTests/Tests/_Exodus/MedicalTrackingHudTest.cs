@@ -11,8 +11,9 @@ namespace Content.IntegrationTests.Tests._Exodus;
 [TestOf(typeof(MedicalTrackingSystem))]
 public sealed class MedicalTrackingHudTest
 {
-    [Test]
-    public async Task UpgradesKeepTheNewBorderAndExtractionRevokesIt()
+    [TestCase("Platinum")]
+    [TestCase("Ruby")]
+    public async Task UpgradesKeepTheNewBorderAndExtractionRevokesIt(string rejectedTier)
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -21,6 +22,7 @@ public sealed class MedicalTrackingHudTest
         EntityUid patient = default;
         EntityUid ruby = default;
         EntityUid brain = default;
+        EntityUid? rejected = null;
 
         try
         {
@@ -49,8 +51,9 @@ public sealed class MedicalTrackingHudTest
                 brain = tracking.Brain!.Value;
                 Assert.That(entities.GetComponent<MedicalTrackingBrainComponent>(brain).Registered, Is.True);
 
-                // A failed downgrade must not clear the currently installed implant's border.
-                implants.AddImplant(patient, "MedicalTrackingImplantPlatinum");
+                // A failed downgrade or duplicate must not clear the currently installed implant's border.
+                rejected = implants.AddImplant(patient, $"MedicalTrackingImplant{rejectedTier}");
+                Assert.That(rejected, Is.Not.Null);
                 Assert.That(entities.GetComponent<MedicalTrackingBodyComponent>(patient).Implant, Is.EqualTo(ruby));
             });
 
@@ -58,8 +61,11 @@ public sealed class MedicalTrackingHudTest
             await server.WaitRunTicks(2);
             await server.WaitAssertion(() =>
             {
+                Assert.That(entities.EntityExists(rejected!.Value), Is.False);
+                Assert.That(entities.GetComponent<MedicalTrackingBodyComponent>(patient).Implant, Is.EqualTo(ruby));
                 Assert.That(entities.GetComponent<MedicalTrackingHudComponent>(patient).Border?.Id,
                     Is.EqualTo("MedicalTrackingBorderRuby"));
+                Assert.That(entities.GetComponent<MedicalTrackingBrainComponent>(brain).Registered, Is.True);
                 Assert.That(entities.GetComponent<MedicalTrackingBrainComponent>(brain).Implant, Is.EqualTo(ruby));
                 entities.System<SharedSubdermalImplantSystem>().ForceRemove(patient, ruby);
             });
