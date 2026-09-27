@@ -19,7 +19,7 @@
   - MercenaryMag
   - ContractorWallet
   - ContractorCartridge
-  - ContractorImplanter
+  - MedicalStaffImplanter # Exodus: medical coverage is implanted on spawn.
   - ContractorUtility
   - ContractorEncryptionKey
   - ContractorFun

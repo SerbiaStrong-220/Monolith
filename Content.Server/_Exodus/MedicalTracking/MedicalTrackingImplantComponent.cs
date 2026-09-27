@@ -1,5 +1,6 @@
 using Content.Server._Exodus.Territory;
 using Content.Shared._Exodus.MedicalTracking;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -15,6 +16,10 @@ public sealed partial class MedicalTrackingImplantComponent : Component
     /// <summary>Localized service tier shown on medical client cards.</summary>
     [DataField]
     public LocId TierName = "medical-tracking-tier-basic";
+
+    /// <summary>Optional service border around the patient's medical HUD status icon.</summary>
+    [DataField]
+    public ProtoId<HealthIconPrototype>? HudBorder;
 
     /// <summary>Restricts radio notifications to this territory profile; null allows the whole sector.</summary>
     [DataField]

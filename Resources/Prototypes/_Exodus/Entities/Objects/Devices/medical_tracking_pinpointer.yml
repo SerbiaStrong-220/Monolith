@@ -2,7 +2,7 @@
   parent: PinpointerBase
   id: MedicalTrackingPinpointer
   name: platinum client pinpointer
-  description: Selects and tracks a registered platinum client's brain. Requires medical access.
+  description: Selects and tracks a registered platinum or ruby client's brain. Requires medical access.
   components:
   - type: Sprite
     sprite: _Exodus/Objects/Devices/medical_tracking_pinpointer.rsi

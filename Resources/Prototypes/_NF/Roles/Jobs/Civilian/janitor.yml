@@ -26,7 +26,7 @@
     holiday: GarbageDay
     prototype: WeaponRevolverInspector
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ]
+    implants: [ MindShieldImplant, MedicalTrackingImplantGold ] # Exodus medical service coverage
   - !type:GiveItemOnHolidaySpecial
     holiday: FrontierBirthday
     prototype: FrontierBirthdayGift

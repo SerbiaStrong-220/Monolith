@@ -1,3 +1,14 @@
+- type: loadoutGroup
+  id: MedicalStaffImplanter
+  name: loadout-group-contractor-implanter
+  minLimit: 0
+  maxLimit: 2
+  loadouts:
+  - ContractorLightImplanter
+  - ContractorBikeHornImplanter
+  - ContractorSadTromboneImplanter
+  - ContractorMimePowersImplanter
+
 - type: loadout
   id: ContractorMedicalTrackingImplanterSilver
   price: 25000

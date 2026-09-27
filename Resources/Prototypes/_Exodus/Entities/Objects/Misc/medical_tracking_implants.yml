@@ -36,6 +36,7 @@
   - type: MedicalTrackingImplant
     tier: 2
     tierName: medical-tracking-tier-silver
+    hudBorder: MedicalTrackingBorderSilver
   - type: Rattle
     critMessage: medical-tracking-silver-critical
     deathMessage: medical-tracking-silver-dead
@@ -54,6 +55,7 @@
   - type: MedicalTrackingImplant
     tier: 3
     tierName: medical-tracking-tier-gold
+    hudBorder: MedicalTrackingBorderGold
     trackBody: true
     updateInterval: 5
   - type: Rattle
@@ -70,11 +72,27 @@
   - type: MedicalTrackingImplant
     tier: 4
     tierName: medical-tracking-tier-platinum
+    hudBorder: MedicalTrackingBorderPlatinum
     trackBrain: true
   - type: Rattle
     critMessage: medical-tracking-platinum-critical
     deathMessage: medical-tracking-platinum-dead
     reviveMessage: medical-tracking-platinum-revive
+
+- type: entity
+  parent: MedicalTrackingImplantPlatinum
+  id: MedicalTrackingImplantRuby
+  name: ruby medical tracking implant
+  description: Platinum medical coverage with a distinctive ruby insignia.
+  components:
+  - type: MedicalTrackingImplant
+    tier: 5
+    tierName: medical-tracking-tier-ruby
+    hudBorder: MedicalTrackingBorderRuby
+  - type: Rattle
+    critMessage: medical-tracking-ruby-critical
+    deathMessage: medical-tracking-ruby-dead
+    reviveMessage: medical-tracking-ruby-revive
 
 - type: entity
   parent: BaseImplantOnlyImplanter
@@ -141,3 +159,16 @@
   - type: StaticPrice
     price: 250000
     vendPrice: 250000
+
+- type: entity
+  parent: MedicalTrackingImplanterPlatinum
+  id: MedicalTrackingImplanterRuby
+  name: ruby medical tracking implanter
+  description: Platinum medical coverage with a distinctive ruby insignia.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_ruby.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_ruby.rsi
+  - type: Implanter
+    implant: MedicalTrackingImplantRuby

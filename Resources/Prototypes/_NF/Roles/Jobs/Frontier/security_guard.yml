@@ -30,7 +30,7 @@
     - type: ChatRank
       rank: cc-judge
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ] # Mono - remove TSFMC implant
+    implants: [ MindShieldImplant, MedicalTrackingImplantGold ] # Exodus medical service coverage; Mono - remove TSFMC implant
   - !type:AddComponentSpecial
     components:
     - type: NpcFactionMember # Exodus SecColossus faction

@@ -1,0 +1,23 @@
+- type: healthIcon
+  id: MedicalTrackingBorderSilver
+  icon:
+    sprite: /Textures/_Exodus/Interface/medical_tracking_borders.rsi
+    state: silver
+
+- type: healthIcon
+  id: MedicalTrackingBorderGold
+  icon:
+    sprite: /Textures/_Exodus/Interface/medical_tracking_borders.rsi
+    state: gold
+
+- type: healthIcon
+  id: MedicalTrackingBorderPlatinum
+  icon:
+    sprite: /Textures/_Exodus/Interface/medical_tracking_borders.rsi
+    state: platinum
+
+- type: healthIcon
+  id: MedicalTrackingBorderRuby
+  icon:
+    sprite: /Textures/_Exodus/Interface/medical_tracking_borders.rsi
+    state: ruby

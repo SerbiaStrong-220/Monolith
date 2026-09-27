@@ -94,6 +94,7 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
         trackedBody.Implant = ent.Owner;
         ent.Comp.Body = body;
         ent.Comp.NextUpdate = _timing.CurTime;
+        UpdateHudBorder(ent, body);
 
         if (ent.Comp.TrackBrain && TryComp<BodyComponent>(body, out var bodyComp) &&
             FindBrain((body, bodyComp)) is { } brain)
@@ -131,7 +132,10 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
         if (ent.Comp.Body is { } body && !TerminatingOrDeleted(body))
         {
             if (TryComp<MedicalTrackingBodyComponent>(body, out var tracked) && tracked.Implant == ent.Owner)
+            {
                 tracked.Implant = EntityUid.Invalid;
+                RemCompDeferred<MedicalTrackingHudComponent>(body);
+            }
         }
 
         ent.Comp.Body = null;

@@ -9,11 +9,11 @@
   - type: Item
     size: Small
   - type: Sprite
-    sprite: Objects/Devices/tablets.rsi # Placeholder until a replacement sprite is ready.
+    sprite: _Exodus/Objects/Devices/medical_tracking_tablet.rsi
     state: tablet
   - type: Icon
-    sprite: Objects/Devices/tablets.rsi
-    state: tablet
+    sprite: _Exodus/Objects/Devices/medical_tracking_tablet.rsi
+    state: icon
   - type: RadarConsole
     followEntity: true
     noRotate: true
