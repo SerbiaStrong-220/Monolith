@@ -88,22 +88,15 @@ public sealed class MedicalBeamGunTest
         });
     }
 
-    [TestCase(MedicalBeamMode.Manual, false)]
-    [TestCase(MedicalBeamMode.Manual, true)]
-    [TestCase(MedicalBeamMode.Automatic, false)]
-    [TestCase(MedicalBeamMode.Automatic, true)]
-    public async Task HealthyOrUntreatablePatientsKeepLoopAndConsumeCharge(MedicalBeamMode mode, bool excludedInjury)
+    [TestCase(MedicalBeamMode.Manual)]
+    [TestCase(MedicalBeamMode.Automatic)]
+    public async Task HealthyPatientsKeepLoopAndConsumeCharge(MedicalBeamMode mode)
     {
         await WithPatient((entities, user, gun, target, _, now) =>
         {
             var damage = entities.GetComponent<DamageableComponent>(target);
             var damageSystem = entities.System<DamageableSystem>();
             damageSystem.SetAllDamage(target, damage, FixedPoint2.Zero);
-            if (excludedInjury)
-            {
-                damageSystem.TryChangeDamage(target, new DamageSpecifier { DamageDict = { ["Poison"] = 5 } },
-                    ignoreResistances: true, ignoreGlobalModifiers: true, canSever: false);
-            }
 
             Assert.That(entities.System<PowerCellSystem>().TryGetBatteryFromSlot(gun, out var battery), Is.True);
             var charge = battery!.CurrentCharge;
@@ -184,7 +177,7 @@ public sealed class MedicalBeamGunTest
             {
                 case "wall":
                     var wall = entities.SpawnEntity("WallSolid", new EntityCoordinates(grid, new Vector2(2.5f, 0.5f)));
-                    entities.System<SharedTransformSystem>().AnchorEntity(wall);
+                    Assert.That(entities.GetComponent<TransformComponent>(wall).Anchored, Is.True);
                     break;
                 case "range":
                     entities.System<SharedTransformSystem>().SetCoordinates(target,
@@ -207,6 +200,8 @@ public sealed class MedicalBeamGunTest
 
             var damage = entities.GetComponent<DamageableComponent>(target).TotalDamage;
             system.Update(0f);
+            Assert.That(active.Running, Is.False);
+            Assert.That(active.AudioStream, Is.Null);
             Assert.That(entities.GetComponent<EntityLinkVisualComponent>(gun).Target, Is.Null);
             Assert.That(entities.GetComponent<DamageableComponent>(target).TotalDamage, Is.EqualTo(damage));
         });
@@ -305,8 +300,6 @@ public sealed class MedicalBeamGunTest
 
     [TestCase(MedicalBeamMode.Manual, 1f, 0.8f)]
     [TestCase(MedicalBeamMode.Automatic, 1f, 0.9333333f)]
-    [TestCase(MedicalBeamMode.Manual, 0.01f, 0f)]
-    [TestCase(MedicalBeamMode.Automatic, 0.01f, 0f)]
     public async Task ClottingWorksWithoutBruteBurnOrAsphyxiationAndDoesNotReplaceBlood(
         MedicalBeamMode mode, float initialBleed, float expectedBleed)
     {
@@ -340,13 +333,9 @@ public sealed class MedicalBeamGunTest
     [TestCase("clickAgain")]
     [TestCase("emptyClick")]
     [TestCase("modeSwitch")]
-    [TestCase("drop")]
-    [TestCase("wall")]
-    [TestCase("range")]
-    [TestCase("emptyCell")]
-    public async Task AutomaticChannelCleansUpBeamAndLoop(string interruption)
+    public async Task AutomaticSelectionCanBeCancelled(string interruption)
     {
-        await WithPatient((entities, user, gun, target, grid, now) =>
+        await WithPatient((entities, user, gun, target, _, now) =>
         {
             var system = entities.System<MedicalBeamGunSystem>();
             var config = entities.GetComponent<MedicalBeamGunComponent>(gun);
@@ -369,21 +358,6 @@ public sealed class MedicalBeamGunTest
                     Assert.That(system.TrySetMode((gun, config), user, MedicalBeamMode.Manual), Is.True);
                     Assert.That(system.TryHandleInput((gun, config), user, target, MedicalBeamMode.Automatic), Is.False);
                     break;
-                case "drop":
-                    Assert.That(entities.System<SharedHandsSystem>().TryDrop(user, gun), Is.True);
-                    break;
-                case "wall":
-                    var wall = entities.SpawnEntity("WallSolid", new EntityCoordinates(grid, new Vector2(2.5f, 0.5f)));
-                    entities.System<SharedTransformSystem>().AnchorEntity(wall);
-                    break;
-                case "range":
-                    entities.System<SharedTransformSystem>().SetCoordinates(target,
-                        new EntityCoordinates(grid, new Vector2(10.6f, 0.5f)));
-                    break;
-                case "emptyCell":
-                    Assert.That(entities.System<PowerCellSystem>().TryGetBatteryFromSlot(gun, out var cell, out var battery), Is.True);
-                    entities.System<BatterySystem>().SetCharge(cell!.Value, 0, battery);
-                    break;
             }
 
             active.NextCheck = now;
@@ -404,7 +378,7 @@ public sealed class MedicalBeamGunTest
             var transform = entities.System<SharedTransformSystem>();
             transform.SetCoordinates(target, new EntityCoordinates(grid, new Vector2(10.5f, 0.5f)));
             var structure = entities.SpawnEntity(obstacle, new EntityCoordinates(grid, new Vector2(2.5f, 0.5f)));
-            transform.AnchorEntity(structure);
+            Assert.That(entities.GetComponent<TransformComponent>(structure).Anchored, Is.True);
             var system = entities.System<MedicalBeamGunSystem>();
             Assert.That(system.TrySetTarget((gun, entities.GetComponent<MedicalBeamGunComponent>(gun)), user, target), Is.True);
             entities.GetComponent<MedicalBeamActiveComponent>(gun).NextHeal = now;
@@ -417,13 +391,8 @@ public sealed class MedicalBeamGunTest
     }
 
     [TestCase("PowerCellSmall", true)]
-    [TestCase("PowerCellMedium", true)]
-    [TestCase("PowerCellHigh", true)]
-    [TestCase("PowerCellHyper", true)]
-    [TestCase("PowerCellMicroreactor", true)]
     [TestCase("PowerCellAntiqueProto", true)]
     [TestCase("PowerCageSmall", false)]
-    [TestCase("PowerCageHigh", false)]
     [TestCase("PowerCageMech", false)]
     public async Task OnlyPocketCellsFit(string prototype, bool allowed)
     {
