@@ -1,0 +1,26 @@
+- type: entity
+  parent: BluespaceSyndicateFTLInterception
+  id: BluespaceExodusPdvSupply
+  components:
+  - type: StationEvent
+    startAnnouncement: exodus-pdv-supply-start
+    warningAnnouncement: exodus-pdv-supply-warning
+    endAnnouncement: exodus-pdv-supply-end
+  - type: BluespaceErrorRule
+    groups:
+      grid: !type:GridSpawnGroup
+        nameLoc:
+        - exodus-pdv-supply-name
+        minimumDistance: 15000
+        maximumDistance: 25000
+        nameWarp: true
+        hideWarp: false
+        addComponents:
+        - type: IFF
+          color: "#9c8245"
+        - type: NpcFactionMember
+          factions:
+          - PirateNF
+        - type: LinkedLifecycleGridParent
+        paths:
+        - /Maps/_Exodus/Events/pdv_supply.yml

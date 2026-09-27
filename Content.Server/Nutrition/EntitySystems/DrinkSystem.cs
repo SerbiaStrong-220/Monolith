@@ -25,6 +25,7 @@ using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
+using Content.Shared._Mono.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -337,6 +338,9 @@ public sealed partial class DrinkSystem : SharedDrinkSystem
             var drank = new Content.Shared._Exodus.Nutrition.AfterDrinkEvent(entity.Owner);
             RaiseLocalEvent(args.Target.Value, ref drank);
         }
+
+        var speechEvent = new SpeechTriggerEvent(SpeechTrigger.Drinking);
+        RaiseLocalEvent(args.Target.Value, ref speechEvent);
 
         _forensics.TransferDna(entity, args.Target.Value);
 

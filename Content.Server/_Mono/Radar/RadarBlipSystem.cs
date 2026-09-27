@@ -30,6 +30,7 @@ public sealed partial class RadarBlipSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeMiningBeams(); // Exodus: query mining emitters without requiring client PVS visibility.
         SubscribeNetworkEvent<RequestBlipsEvent>(OnBlipsRequested);
         SubscribeLocalEvent<RadarBlipComponent, ComponentShutdown>(OnBlipShutdown);
     }
@@ -218,7 +219,8 @@ public sealed partial class RadarBlipSystem : EntitySystem
                             blipVelocity,
                             rotation,
                             configIdx,
-                            gridConfigIdx));
+                            gridConfigIdx,
+                            MiningBeam: GetMiningBeam((blipUid, blipXform)))); // Exodus: transmit grid-relative beam endpoints.
             _tempVisibleBlipsCache.Add(blipUid);
         }
 

@@ -1,0 +1,41 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Shirokami
+  parent: BaseVessel
+  name: Сироками
+  description: Компактный медицинский корабль с пластитановым корпусом, химической лабораторией и криокапсулами. Самооборону обеспечивают две 57-мм автопушки.
+  price: 112000
+  category: Medium
+  group: Medical
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMed/shirokami.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - MD
+  guidebookPage: null
+  class:
+  - Medical
+  - Chemistry
+  engine:
+  - AME
+
+- type: gameMap
+  id: Shirokami
+  mapName: 'Сироками'
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianMed/shirokami.yml
+  minPlayers: 0
+  stations:
+    Shirokami:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Сироками{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            MdMedic: [ 0, 0 ]
+            # Pilot: [ 0, 0 ]
+            # Mercenary: [ 0, 0 ]

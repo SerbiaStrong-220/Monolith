@@ -1,0 +1,39 @@
+- type: vessel
+  id: Kynda
+  parent: BaseVesselAntag
+  name: Кинда
+  description: Малый корабль ДФ с двумя тяжёлыми торпедными установками и четырьмя автопушками AK570. Для перезарядки торпед требуется выход в открытый космос, что ограничивает продолжительность боя.
+  price: 95000
+  category: Small
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/kynda.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: null
+  class:
+  - Brawler
+  - AntiShipMissileCarrier
+  - Pursuit
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Kynda
+  mapName: Кинда
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/kynda.yml
+  minPlayers: 0
+  stations:
+    Kynda:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Кинда{1}'
+        nameGenerator: !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Pirate: [ 0, 0 ]
+          PdvBorg: [ 0, 0 ]

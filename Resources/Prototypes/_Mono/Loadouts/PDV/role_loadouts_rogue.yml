@@ -139,6 +139,12 @@
 - type: roleLoadout
   id: JobPDVTarkhan
   groups:
+  # Exodus-begin: equip the backpack before storage items and add standard faction accessories.
+  - ExodusTarkhanBackpack
+  - PDVNeck
+  - PDVHud
+  - PDVFace
+  # Exodus-end
   - ContractorBoxSurvival
   - NFSpeciesSpecific
   - ContractorWallet

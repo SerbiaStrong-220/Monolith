@@ -11,4 +11,10 @@ public sealed partial class FultonBeaconComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("soundLink"), AutoNetworkedField]
     public SoundSpecifier? LinkSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
+
+    /// <summary>
+    /// Maximum deployment distance from the beacon, in meters. Exodus: synchronized for prediction.
+    /// </summary>
+    [DataField, AutoNetworkedField] // Exodus
+    public float MaxRange = 200f;
 }

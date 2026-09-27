@@ -6,7 +6,7 @@
   price: 97100 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/pillbox.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/pillbox.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -20,7 +20,7 @@
 - type: gameMap
   id: Pillbox
   mapName: 'Пилюля' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/pillbox.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/pillbox.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Pillbox:

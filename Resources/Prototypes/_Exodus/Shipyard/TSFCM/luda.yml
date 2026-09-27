@@ -1,0 +1,49 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Luda
+  parent: BaseVesselAntag
+  name: Луда
+  description: Тяжёлый ракетный эсминец ТСФ с несколькими установками SS-N-40 для крылатых ракет большой дальности. Остальное противокорабельное вооружение уступает другим капитальным кораблям.
+  limit: 1
+  hyperwarLimit: 2
+  hyperwarTimelock: 3600
+  price: 750000
+  category: Large
+  purchasable: false # voucher only - T4
+  group: Security
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/luda.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - AntiShipMissileCarrier
+  - EarlyWarning
+  - Destroyer
+  engine:
+  - AME
+
+- type: gameMap
+  id: Luda
+  mapName: 'Луда'
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/luda.yml
+  minPlayers: 0
+  stations:
+    Luda:
+      stationProto: StandardFrontierSecurityVessel
+      gridComponents:
+      - type: VesselInfo
+        description: "Revelations, 0-1: “Look to the sky!” the unknowing ones chanted, looking at the skies.
+                      A brilliant streak of white light and plasma lit up the night and dark sky like a false star." # This is what we have a lore advisor for.
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Луда{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Deputy: [ 0, 0 ]
+            TsfBorg: [ 0, 0 ]

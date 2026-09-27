@@ -19,6 +19,7 @@
       - Currency # Balance
       - Store # Balance
       - EncryptionKey # Balance
+      - Headset # Ditto
       - Implant # Prevent recursion
       - Storage # Prevent recursion
       - SafetyDepositBox # Prevent recursion
@@ -39,8 +40,16 @@
       - FTLBeacon
       - SingularityAttractor
       # Exodus-end
+      # Exodus-begin: approved upstream restrictions, alongside our existing restrictions.
+      - Contraband
+      - ThiefUndeterminedBackpack
+      - AccessOverrider
+      - PDA
+      - Pill
+      # Exodus-end
       tags:
       - Unstashable
+      - SafetyDepositBlacklist
   - type: SafetyDepositBox
   - type: Appearance
   - type: Tag

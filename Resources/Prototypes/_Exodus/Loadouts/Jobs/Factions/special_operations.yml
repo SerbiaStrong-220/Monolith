@@ -1,0 +1,43 @@
+# Compatibility entries for saved MARSOC loadouts. The backpack and its fixed contents
+# are now issued by MarsocOperativeGearHyperwarRole, so this selection must not give a second backpack.
+- type: loadoutGroup
+  id: ExodusMarsocBackpack
+  name: loadout-group-contractor-backpack
+  hidden: true
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - ExodusMarsocBackpack
+  fallbacks:
+  - ExodusMarsocBackpack
+
+- type: loadout
+  id: ExodusMarsocBackpack
+  dummyEntity: ClothingBackpackERTLeader
+
+# Applied by the job's Loadout component after starting gear, using the current species
+# instead of saved character selections. The backpack already exists at this point.
+- type: roleLoadout
+  id: ExodusMarsocSurvival
+  groups:
+  - NfsdBoxSurvival
+
+# Tarkhan still needs the backpack before its lobby storage loadouts.
+- type: loadoutGroup
+  id: ExodusTarkhanBackpack
+  name: loadout-group-contractor-backpack
+  hidden: true
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - ExodusTarkhanBackpack
+  fallbacks:
+  - ExodusTarkhanBackpack
+
+- type: loadout
+  id: ExodusTarkhanBackpack
+  equipment:
+    back: ClothingBackpackPDVTarkhan
+  storage:
+    back:
+    - BasePirateUplinkPirateCrew

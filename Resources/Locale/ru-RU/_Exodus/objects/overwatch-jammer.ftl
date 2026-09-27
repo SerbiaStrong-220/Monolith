@@ -1,0 +1,9 @@
+comp-sticky-start-stick-jammer = Вы осторожно прикрепляете глушилку...
+comp-sticky-success-stick-jammer = Вы закрепляете глушилку, и она начинает тихо гудеть.
+comp-sticky-start-unstick-jammer = Вы начинаете снимать глушилку...
+comp-sticky-success-unstick-jammer = Вы снимаете глушилку.
+uplink-pirate-overwatch-jammer-name = Глушилка Overwatch
+uplink-pirate-overwatch-jammer-desc = Не позволяет консолям Overwatch обнаружить тело, к которому прикреплена. Установите её перед перевозкой тела на «Гелиос»!
+ent-OverwatchJammer = глушилка Overwatch
+    .desc = Переделанный заряд C-4: вместо взрывчатки внутри радиопередатчик, непрерывно создающий помехи. Скрывает своего носителя от консолей Overwatch.
+exodus-overwatch-jammer-examine = Скрывает носителя от консолей Overwatch, позволяя перевозить тела, не раскрывая их координаты.

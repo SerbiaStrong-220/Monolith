@@ -1,0 +1,4 @@
+- files: ["smite_thunder.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: 'Adapted from Exodus nebula medium_lightning_impact.ogg; original contributors credited in the source history. Edited for Exodus by Renascitur (disc: renascitur) with Codex. Trimmed to 2 seconds, downmixed to mono, with attack and tail fades.'
+  source: "https://github.com/SerbiaStrong-220/Monolith/blob/5b58061038af3202a07bc36bc0d75b08d7cd140f/Resources/Audio/_Exodus/Nebula/medium_lightning_impact.ogg"

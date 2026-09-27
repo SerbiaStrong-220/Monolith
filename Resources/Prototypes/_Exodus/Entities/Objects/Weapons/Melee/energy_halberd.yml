@@ -1,0 +1,146 @@
+- type: entity
+  parent: [ BaseItem, BaseFactionGearTSFT3 ]
+  id: WeaponEnergyHalberdMARSOC
+  name: energy halberd
+  description: A polearm issued to TSF assault teams, its energy blade glowing pale blue. Reflected shots feed the smite capacitor, ready to discharge into an enemy with a crack of thunder.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Melee/energy_halberd.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      visible: false
+      shader: unshaded
+      map: [ blade ]
+  - type: Item
+    size: Huge
+    sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+  - type: Clothing
+    sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - SuitStorage
+  - type: Wieldable
+    wieldedInhandPrefix: wielded
+  - type: ItemToggle
+    onUse: false
+    onAltUse: true
+    toggleOnWield: false
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+  - type: UseDelay
+    delay: 0.5
+  - type: MeleeWeapon
+    attackRate: 0.9
+    range: 2
+    angle: 100
+    heavyStaminaCost: 2.5
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 10
+    soundHit:
+      collection: MetalThud
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 15
+        Heat: 10
+        Structural: 50
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        volume: -10
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+  - type: IncreaseDamageOnWield
+    requiresActivation: true
+    damage:
+      types:
+        Slash: 5
+        Heat: 10
+        Structural: 60
+  - type: Reflect
+    reflectProb: 0.5
+    spread: 75
+    reflects:
+    - Energy
+    - NonEnergy
+    requiresHeld: true
+    requiresWield: true
+    projectileBlacklist:
+      components:
+      - Explosive
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 0
+  - type: ReflectCharge
+    chargesPerReflection: 1
+  - type: MeleeCharge
+    effectName: melee-charge-effect-smite
+    chargesPerHit: 1
+    consumeAllCharges: true
+    bonusDamage:
+      types:
+        Shock: 8
+    hitSound:
+      path: /Audio/_Exodus/Weapons/Melee/smite_thunder.ogg
+      params:
+        volume: 0
+  - type: Appearance
+  - type: ToggleableVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+        state: inhand-left-blade
+        shader: unshaded
+      right:
+      - sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+        state: inhand-right-blade
+        shader: unshaded
+    inhandVisualsByPrefix:
+      wielded:
+        left:
+        - sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+          state: wielded-inhand-left-blade
+          shader: unshaded
+        right:
+        - sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+          state: wielded-inhand-right-blade
+          shader: unshaded
+    clothingVisuals:
+      back:
+      - sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+        state: equipped-BACKPACK-blade
+        shader: unshaded
+      suitstorage:
+      - sprite: _Exodus/Objects/Weapons/Melee/energy_halberd-inhands.rsi
+        state: equipped-SUITSTORAGE-blade
+        shader: unshaded
+  - type: ItemTogglePointLight
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    energy: 1.2
+    color: "#8bc7ed"
+    netsync: false
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: StaticPrice
+    price: 5000
+  - type: PirateBountyItem
+    id: TSFEnergyWeapon

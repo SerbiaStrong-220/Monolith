@@ -5,14 +5,15 @@ using Content.Server._Mono.Ships.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Shuttles.Systems;
 using Content.Shared._Mono.FireControl;
-using Content.Shared.Database;
 using Content.Shared._Mono.Ships.Components;
+using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -374,6 +375,16 @@ public sealed partial class FireControlSystem : EntitySystem
                 }
             }
         }
+
+        // Exodus-begin: energy ammunition does not imply manual reloading.
+        if (HasComp<ProjectileBatteryAmmoProviderComponent>(weaponEntity)
+            || HasComp<HitscanBatteryAmmoProviderComponent>(weaponEntity))
+        {
+            var ammo = new GetAmmoCountEvent();
+            RaiseLocalEvent(weaponEntity, ref ammo);
+            return (ammo.Count, false);
+        }
+        // Exodus-end
 
         return (null, false);
     }

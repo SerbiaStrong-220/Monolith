@@ -1,0 +1,40 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Gadfly
+  parent: BaseVesselAntag
+  name: Овод
+  description: Малый корабль поддержки ДФ с двумя 57-мм автопушками AK570 и двумя 150-мм установками TARNYX.
+  price: 68000
+  category: Small
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/gadfly.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Brawler
+  - Pursuit
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Gadfly
+  mapName: 'Овод'
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/gadfly.yml
+  minPlayers: 0
+  stations:
+    Gadfly:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Овод{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Pirate: [ 0, 0 ]
+            PdvBorg: [ 0, 0 ]

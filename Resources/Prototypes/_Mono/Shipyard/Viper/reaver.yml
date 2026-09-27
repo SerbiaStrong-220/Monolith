@@ -13,7 +13,7 @@
   category: Small
   group: Viper
   access: Viper # Exodus restore-viper-group
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/reaver.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/VG/reaver.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -28,7 +28,7 @@
 - type: gameMap
   id: Reaver
   mapName: 'Вайперы «Ривер»' # Exodus Viper localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Viper/reaver.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/VG/reaver.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Reaver:

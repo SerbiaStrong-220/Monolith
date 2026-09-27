@@ -10,4 +10,4 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// </summary>
 [ByRefEvent]
 public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective,
-    Vector2 Direction, bool Reflected, DamageSpecifier? Damage); // WD EDIT
+    Vector2 Direction, bool Reflected, DamageSpecifier? Damage, EntityUid? Shot = null); // WD EDIT / Exodus: preserve hitscan identity.

@@ -7,7 +7,7 @@
   category: Small
   group: Mieyo
   access: Mieyo
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/kami.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/MMC/kami.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -21,7 +21,7 @@
 - type: gameMap
   id: Kami
   mapName: 'ММС «Ками»' # Exodus MMC localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/kami.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/MMC/kami.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Kami:

@@ -1,0 +1,49 @@
+# Imported ship: faction and localization adapted for Exodus.
+# Author Info
+# Discord: lassih
+# Github: LassiH
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Keelback
+  parent: BaseVessel
+  name: Вайперы «Килбэк»
+  description: Корвет «Вайперов» с тремя ракетными установками Paladin и двумя TOVEK.
+  price: 270000
+  purchasable: false # Voucher only
+  category: Medium
+  group: Viper
+  access: Viper
+  shuttlePath: /SharedMaps/_Mono/Shuttles/VG/keelback.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Corvette
+  - Patrol
+  - Pursuit
+  engine:
+  - AME
+
+- type: gameMap
+  id: Keelback
+  mapName: 'Вайперы «Килбэк»'
+  mapPath: /SharedMaps/_Mono/Shuttles/VG/keelback.yml
+  minPlayers: 0
+  stations:
+    Keelback:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Вайперы «Килбэк»{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            VGInfanteer: [ 0, 0 ]
+            VGLieutenant: [ 0, 0 ]
+            VGCommander: [ 0, 0 ]

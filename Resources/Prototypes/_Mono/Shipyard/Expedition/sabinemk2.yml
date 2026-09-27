@@ -13,7 +13,7 @@
   category: Large
   group: Expedition
   access: Mercenary
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/sabinemk2.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianExp/sabinemk2.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -28,7 +28,7 @@
 - type: gameMap
   id: Sabinemk2
   mapName: 'Сабина М2' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Expedition/sabinemk2.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianExp/sabinemk2.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Sabinemk2:

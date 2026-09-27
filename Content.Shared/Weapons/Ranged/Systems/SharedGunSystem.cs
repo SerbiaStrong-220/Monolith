@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Exodus.Weapons.Hardpoints; // Exodus optional hardpoint bonuses
 using Content.Shared._Exodus.Weapons.Projectiles; // Exodus projectile lifecycle hooks
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -76,6 +77,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] private   UseDelaySystem _useDelay = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] protected SharedGunPredictionSystem? _gunPrediction = default!;
+    [Dependency] private readonly ExodusHardpointSystem _hardpoints = default!; // Exodus optional hardpoint bonuses
 
     protected EntityQuery<PhysicsComponent> _physQuery; // Mono
     protected EntityQuery<ProjectileComponent> _projQuery; // Mono
@@ -399,6 +401,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var rateMulEv = new QueryFireRateMultiplierEvent(1f);
         RaiseLocalEvent(gunUid, ref rateMulEv);
         fireRate *= rateMulEv.ReloadTimeMul;
+        fireRate *= _hardpoints.GetFireIntervalMultiplier((gunUid, gun)); // Exodus: combine hardpoint and event modifiers.
 
         // First shot
         // Previously we checked shotcounter but in some cases all the bullets got dumped at once

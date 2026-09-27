@@ -8,7 +8,7 @@
   category: Medium
   group: Security
   access: Security
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/fracture.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/fracture.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -23,7 +23,7 @@
 - type: gameMap
   id: Fracture
   mapName: 'Fracture'
-  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/fracture.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/fracture.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Fracture:

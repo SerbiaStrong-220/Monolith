@@ -1,0 +1,328 @@
+using Content.Server.Administration.Logs;
+using Content.Server.Destructible;
+using Content.Server.Materials;
+using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Server.Shuttles.Systems;
+using Content.Shared._Crescent.ShipShields;
+using Content.Shared._Exodus.CCVar;
+using Content.Shared._Exodus.Mining.AutoMining;
+using Content.Shared.Audio;
+using Content.Shared.Database;
+using Content.Shared.Damage;
+using Content.Shared.Materials;
+using Content.Shared.Popups;
+using Content.Shared.Power;
+using Content.Shared.UserInterface;
+using Content.Shared.Whitelist;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
+
+namespace Content.Server._Exodus.Mining.AutoMining;
+
+public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
+{
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MaterialStorageSystem _materials = default!;
+    [Dependency] private readonly ShuttleConsoleSystem _shuttleConsole = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
+
+    private readonly HashSet<Entity<BulkAutoMiningEmitterComponent>> _emitterBuffer = new();
+
+    private EntityQuery<BulkAutoMiningEmitterComponent> _emitterQuery;
+    private EntityQuery<MaterialStorageComponent> _storageQuery;
+    private EntityQuery<ApcPowerReceiverComponent> _powerQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<MapGridComponent> _gridQuery;
+    private EntityQuery<ShipShieldComponent> _shieldQuery;
+
+    private static readonly TimeSpan UiInterval = TimeSpan.FromSeconds(1);
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _emitterQuery = GetEntityQuery<BulkAutoMiningEmitterComponent>();
+        _storageQuery = GetEntityQuery<MaterialStorageComponent>();
+        _powerQuery = GetEntityQuery<ApcPowerReceiverComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+        _gridQuery = GetEntityQuery<MapGridComponent>();
+        _shieldQuery = GetEntityQuery<ShipShieldComponent>();
+
+        Subs.BuiEvents<BulkAutoMiningConsoleComponent>(BulkAutoMiningUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnUiOpened);
+            subs.Event<BulkAutoMiningSelectGridMessage>(OnSelectGrid);
+            subs.Event<BulkAutoMiningStartMessage>(OnStart);
+            subs.Event<BulkAutoMiningStopMessage>(OnStop);
+        });
+        SubscribeLocalEvent<BulkAutoMiningConsoleComponent, MapInitEvent>(OnConsoleMapInit);
+        SubscribeLocalEvent<BulkAutoMiningConsoleComponent, ComponentShutdown>(OnConsoleShutdown);
+        SubscribeLocalEvent<BulkAutoMiningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<BulkAutoMiningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<BulkAutoMiningEmitterComponent, PowerChangedEvent>(OnEmitterPowerChanged);
+        SubscribeLocalEvent<BulkAutoMiningEmitterComponent, ComponentShutdown>(OnEmitterShutdown);
+        SubscribeLocalEvent<BulkAutoMiningEmitterComponent, AnchorStateChangedEvent>(OnEmitterAnchorChanged);
+        SubscribeLocalEvent<BulkAutoMiningEmitterComponent, EntParentChangedMessage>(OnEmitterParentChanged);
+    }
+
+    private TimeSpan GetProcessInterval(BulkAutoMiningConsoleComponent console)
+    {
+        var seconds = console.ProcessInterval > TimeSpan.Zero
+            ? console.ProcessInterval.TotalSeconds
+            : _cfg.GetCVar(EXCVars.BulkMiningTickInterval);
+        return TimeSpan.FromSeconds(double.IsFinite(seconds) ? Math.Max(0.1, seconds) : 10);
+    }
+
+    private void OnConsoleMapInit(Entity<BulkAutoMiningConsoleComponent> ent, ref MapInitEvent args)
+    {
+        EnsureComp<BulkAutoMiningJobComponent>(ent);
+    }
+
+    private void OnConsoleShutdown(Entity<BulkAutoMiningConsoleComponent> ent, ref ComponentShutdown args)
+    {
+        StopMining(ent);
+    }
+
+    private void OnPowerChanged(Entity<BulkAutoMiningConsoleComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            StopMining(ent, "bulk-auto-mining-stopped-power");
+    }
+
+    private void OnAnchorChanged(Entity<BulkAutoMiningConsoleComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            StopMining(ent, "bulk-auto-mining-stopped-unanchored");
+    }
+
+    private void OnEmitterPowerChanged(Entity<BulkAutoMiningEmitterComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            ClearBeam(ent);
+    }
+
+    private void OnEmitterShutdown(Entity<BulkAutoMiningEmitterComponent> ent, ref ComponentShutdown args)
+    {
+        StopEmitterAudio(ent);
+    }
+
+    private void OnEmitterAnchorChanged(Entity<BulkAutoMiningEmitterComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+        {
+            ClearBeam(ent);
+            if (ent.Comp.Controller is { } controller && TryComp<BulkAutoMiningConsoleComponent>(controller, out var console))
+                StopMining((controller, console), "bulk-auto-mining-stopped-emitter-moved");
+        }
+    }
+
+    private void OnEmitterParentChanged(Entity<BulkAutoMiningEmitterComponent> ent, ref EntParentChangedMessage args)
+    {
+        if (ent.Comp.Controller is not { } controller || !TryComp<BulkAutoMiningConsoleComponent>(controller, out var console))
+            return;
+
+        if (Transform(ent).GridUid != Transform(controller).GridUid)
+            StopMining((controller, console), "bulk-auto-mining-stopped-emitter-moved");
+    }
+
+    private void OnUiOpened(Entity<BulkAutoMiningConsoleComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        UpdateUi(ent);
+    }
+
+    private void OnSelectGrid(Entity<BulkAutoMiningConsoleComponent> ent, ref BulkAutoMiningSelectGridMessage args)
+    {
+        if (TryGetEntity(args.Grid, out var grid) && grid is { } uid)
+            TrySelectGrid(ent, uid);
+    }
+
+    private void OnStart(Entity<BulkAutoMiningConsoleComponent> ent, ref BulkAutoMiningStartMessage args)
+    {
+        if (TryStartMining(ent))
+            _adminLog.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(args.Actor):player} started bulk mining with {ToPrettyString(ent)}.");
+    }
+
+    private void OnStop(Entity<BulkAutoMiningConsoleComponent> ent, ref BulkAutoMiningStopMessage args)
+    {
+        StopMining(ent, "bulk-auto-mining-stopped-manual");
+    }
+
+    public bool TryStartMining(Entity<BulkAutoMiningConsoleComponent> ent)
+    {
+        if (ent.Comp.Active || !TryComp<BulkAutoMiningJobComponent>(ent, out var job))
+            return false;
+
+        if (!IsPoweredAndAnchored(ent))
+        {
+            Popup(ent, "bulk-auto-mining-stopped-power");
+            return false;
+        }
+
+        ResolveEmitters(ent, job);
+        if (job.Emitters.Count == 0)
+        {
+            Popup(ent, "bulk-auto-mining-start-no-emitter");
+            return false;
+        }
+
+        var ready = false;
+        foreach (var emitter in job.Emitters)
+        {
+            if (GetEmitterStatus(ent, emitter) == BulkAutoMiningLaserStatus.Ready)
+                ready = true;
+        }
+
+        if (!ready)
+        {
+            Popup(ent, "bulk-auto-mining-start-no-ready-emitter");
+            return false;
+        }
+
+        job.GridJobs.Clear();
+        job.NextRangePairIndex = 0;
+        job.NextRangeCheckTime = _timing.CurTime;
+        ent.Comp.TotalTiles = 0;
+        ent.Comp.ProcessedTiles = 0;
+        foreach (var target in ent.Comp.SelectedGrids)
+        {
+            if (!IsTargetInRange(ent, target) || !TryPrepareGrid(target, out var gridJob))
+                continue;
+
+            job.GridJobs.Add(gridJob);
+            gridJob.RangeSearches = new BulkAutoMiningRangeSearch[job.Emitters.Count];
+            ent.Comp.TotalTiles += gridJob.Tiles.Count;
+        }
+
+        if (job.GridJobs.Count == 0)
+        {
+            Popup(ent, "bulk-auto-mining-start-no-reachable-target");
+            UpdateUi(ent);
+            return false;
+        }
+
+        foreach (var emitter in job.Emitters)
+        {
+            if (GetEmitterStatus(ent, emitter) == BulkAutoMiningLaserStatus.Ready)
+            {
+                var comp = _emitterQuery.GetComponent(emitter);
+                comp.Controller = ent;
+                comp.NextTargetSearchTime = _timing.CurTime;
+            }
+        }
+
+        ent.Comp.Active = true;
+        ProcessMiningTick(ent, job);
+        UpdateUi(ent);
+        return ent.Comp.Active || ent.Comp.ProcessedTiles > 0;
+    }
+
+    public void StopMining(Entity<BulkAutoMiningConsoleComponent> ent, string? popupLocale = null)
+    {
+        var wasActive = ent.Comp.Active;
+        ent.Comp.Active = false;
+        if (TryComp<BulkAutoMiningJobComponent>(ent, out var job))
+        {
+            foreach (var emitter in job.Emitters)
+            {
+                if (!_emitterQuery.TryComp(emitter, out var comp) || comp.Controller != ent.Owner)
+                    continue;
+
+                comp.Controller = null;
+                ClearBeam((emitter, comp));
+            }
+
+            job.GridJobs.Clear();
+            job.Statuses.Clear();
+            job.TileChecksRemaining.Clear();
+        }
+
+        if (TerminatingOrDeleted(ent))
+            return;
+
+        if (wasActive && popupLocale != null)
+            Popup(ent, popupLocale);
+
+        UpdateUi(ent);
+    }
+
+    private void ClearBeam(Entity<BulkAutoMiningEmitterComponent> ent)
+    {
+        if (ent.Comp.BeamGrid == null)
+            return;
+
+        ent.Comp.BeamGrid = null;
+        StopEmitterAudio(ent);
+        Dirty(ent);
+    }
+
+    private void StopEmitterAudio(Entity<BulkAutoMiningEmitterComponent> ent)
+    {
+        ent.Comp.StartupStream = _audio.Stop(ent.Comp.StartupStream);
+        _ambient.SetAmbience(ent, false);
+    }
+
+    private bool IsPoweredAndAnchored(EntityUid uid)
+    {
+        return !TerminatingOrDeleted(uid) && !EntityManager.IsQueuedForDeletion(uid) &&
+               _xformQuery.TryComp(uid, out var xform) && xform.Anchored &&
+               _powerQuery.TryComp(uid, out var power) && power.Powered;
+    }
+
+    private BulkAutoMiningLaserStatus GetEmitterStatus(Entity<BulkAutoMiningConsoleComponent> console, EntityUid emitter)
+    {
+        if (!_emitterQuery.TryComp(emitter, out var comp) || !IsPoweredAndAnchored(emitter) ||
+            !_storageQuery.HasComp(emitter) || Transform(emitter).GridUid != Transform(console).GridUid)
+            return BulkAutoMiningLaserStatus.Offline;
+
+        if (comp.Controller is { } controller && controller != console.Owner && !TerminatingOrDeleted(controller))
+            return BulkAutoMiningLaserStatus.Busy;
+
+        if (!_materials.CanChangeMaterialAmount(emitter, comp.SlurryMaterial, Math.Max(0, comp.SlurryPerTile), localOnly: true))
+            return BulkAutoMiningLaserStatus.Full;
+
+        return BulkAutoMiningLaserStatus.Ready;
+    }
+
+    private void ResolveEmitters(Entity<BulkAutoMiningConsoleComponent> ent, BulkAutoMiningJobComponent job)
+    {
+        // Active jobs own a fixed set of lasers until stopped; opening another UI cannot change it.
+        if (ent.Comp.Active)
+            return;
+
+        job.Emitters.Clear();
+        if (Transform(ent).GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
+            return;
+
+        _emitterBuffer.Clear();
+        _lookup.GetLocalEntitiesIntersecting(grid, gridComp.LocalAABB, _emitterBuffer, LookupFlags.Static);
+        foreach (var emitter in _emitterBuffer)
+        {
+            if (Transform(emitter).Anchored && !TerminatingOrDeleted(emitter))
+                job.Emitters.Add(emitter);
+        }
+
+        job.Emitters.Sort();
+    }
+
+    private void Popup(Entity<BulkAutoMiningConsoleComponent> ent, string locId)
+    {
+        _popup.PopupEntity(Loc.GetString(locId), ent, PopupType.SmallCaution);
+    }
+}

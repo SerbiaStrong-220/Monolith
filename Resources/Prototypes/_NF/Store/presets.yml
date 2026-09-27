@@ -36,6 +36,7 @@
     - UplinkSecurityBundles
     - UplinkSecurityVouchers # Mono
     - UplinkSecurityMedical # Exodus-Rework-Sec-Medical
+    - UplinkSecurityMaterials
     currencyWhitelist:
     - FederationMilitaryCredit
     balance:
@@ -56,6 +57,7 @@
     - UplinkPirateAmmo
     - UplinkPirateMedical
     - UplinkPirateUtility
+    - UplinkPdvMaterials
     - UplinkPirateExplosives
     - UplinkPdvVouchers
     - UplinkPdvIdCards # Exodus

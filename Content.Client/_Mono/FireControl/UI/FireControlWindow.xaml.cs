@@ -181,11 +181,11 @@ public sealed partial class FireControlWindow : FancyWindow
     }
 
     /// <summary>
-    /// Updates the text of a weapon button based on its selection state and manual reload status.
+    /// Updates the text of a weapon button based on its selection state and available ammunition. // Exodus
     /// </summary>
     private void UpdateWeaponButtonText(Button button, FireControllableEntry controllable)
     {
-        if (button.Pressed && controllable.HasManualReload && controllable.AmmoCount.HasValue)
+        if (button.Pressed && controllable.AmmoCount.HasValue) // Exodus: display energy ammunition without marking it as manually reloaded.
         {
             button.Text = Loc.GetString("gunnery-gun-select-ammo", ("name", controllable.Name), ("ammo", controllable.AmmoCount.Value));
 

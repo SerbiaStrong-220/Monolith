@@ -21,6 +21,8 @@ using Content.Server._NF.StationEvents.Components;
 using Robust.Shared.EntitySerialization.Systems;
 using Content.Server._Mono.StationEvents;
 using Content.Server._Mono.GridClaimer;
+using Content.Server._Mono.Store.Components;
+using Content.Server._Mono.Store;
 
 namespace Content.Server._NF.StationEvents.Events;
 
@@ -43,6 +45,7 @@ public sealed partial class BluespaceErrorRule : StationEventSystem<BluespaceErr
     [Dependency] private BankSystem _bank = default!;
     [Dependency] private SharedSalvageSystem _salvage = default!;
     [Dependency] private AutoExtendRuleSystem _autoExtend = default!;
+    [Dependency] private CurrencyInjectionSystem _currencyInjection = default!;
 
     public override void Initialize()
     {
@@ -124,6 +127,7 @@ public sealed partial class BluespaceErrorRule : StationEventSystem<BluespaceErr
                 EntityManager.AddComponents(spawned, group.AddComponents);
 
                 component.GridsUid.Add(spawned);
+                component.StartingValue += _pricing.AppraiseGrid(spawned);
 
                 if (component.ExtendIfPopulated)
                     _autoExtend.AutoExtend(uid, spawned);
@@ -261,6 +265,7 @@ public sealed partial class BluespaceErrorRule : StationEventSystem<BluespaceErr
                 }
 
                 var gridValue = _pricing.AppraiseGrid(gridUid, null);
+                RewardPreservedBluespaceGrid((uid, component), gridUid, gridValue); // Exodus: validate all required entities before deleting the grid.
 
                 // Deletion has to happen before grid traversal re-parents players.
                 Del(gridUid);

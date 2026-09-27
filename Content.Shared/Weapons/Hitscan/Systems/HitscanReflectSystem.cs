@@ -32,7 +32,7 @@ public sealed partial class HitscanReflectSystem : EntitySystem
             damage = hitscanDamage.Damage * _damage.UniversalHitscanDamageModifier;
 
         // Mono - Use hitscan damage component if available
-        var ev = new HitScanReflectAttemptEvent(args.Shooter ?? args.Gun, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false, damage);
+        var ev = new HitScanReflectAttemptEvent(args.Shooter ?? args.Gun, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false, damage, hitscan.Owner); // Exodus: track one ricochet chain.
         // Mono End
         RaiseLocalEvent(args.HitEntities.First(), ref ev); // Mono
 

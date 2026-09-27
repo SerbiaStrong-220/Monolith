@@ -161,6 +161,7 @@
     - Peregrine
     - Mudskipper
     - Betelgeuse
+    - Shuilian # Exodus: add the upstream botany ship without replacing existing stock.
   - type: Sprite
     sprite: _NF/Structures/Machines/computers.rsi
     layers:

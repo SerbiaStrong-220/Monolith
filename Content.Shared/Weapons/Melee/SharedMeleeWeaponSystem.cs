@@ -579,8 +579,11 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         var attackedEvent = new AttackedEvent(meleeUid, user, targetXform.Coordinates, target.Value); // Exodus | add target
         RaiseLocalEvent(target.Value, attackedEvent);
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin: user, armorPenetration: component.ArmorPenetration, partMultiplier: component.ClickPartDamageMultiplier); // Shitmed Change
+        // Exodus-begin: reserve and settle charged damage for this actual target, with normal armor/part modifiers.
+        var damageResult = ApplyChargedMeleeDamage(meleeUid, user, target.Value,
+            damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList,
+            component.ArmorPenetration, component.ClickPartDamageMultiplier, out var modifiedDamage);
+        // Exodus-end
 
         if (damageResult is {Empty: false})
         {
@@ -696,7 +699,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         foreach (var entity in entities)
         {
-            if (entity == user ||
+            if (entity == user || targets.Contains(entity) || // Exodus: one hit/charge per target in a swing.
                 !damageQuery.HasComponent(entity))
                 continue;
 
@@ -743,9 +746,11 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
             var attackedEvent = new AttackedEvent(meleeUid, user, GetCoordinates(ev.Coordinates), entity); // Exodus | add target
             RaiseLocalEvent(entity, attackedEvent);
-            var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
-
-            var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin: user, armorPenetration: component.ArmorPenetration, partMultiplier: component.HeavyPartDamageMultiplier); // Shitmed Change
+            // Exodus-begin: reserve configured charges per target; a full discharge leaves none for later targets.
+            var damageResult = ApplyChargedMeleeDamage(meleeUid, user, entity,
+                damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList,
+                component.ArmorPenetration, component.HeavyPartDamageMultiplier, out _);
+            // Exodus-end
 
             if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {

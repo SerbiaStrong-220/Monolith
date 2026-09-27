@@ -1,0 +1,43 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Osa
+  parent: BaseVesselAntag
+  name: Оса-II
+  description: Ракетно-артиллерийский корвет ДФ с установками Vanquisher и автопушками. Не имеет управляемых ракет и средств ПВО; осколочные боеприпасы могут сбивать собственные ракеты.
+  hyperwarTimelock: 1800
+  price: 150000
+  purchasable: false # Voucher only - T2
+  category: Large
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/osa.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Brawler
+  - Corvette
+  - AntiShipMissileCarrier # close enough i guess?
+  engine:
+  - AME
+
+- type: gameMap
+  id: Osa
+  mapName: 'Оса-II'
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/osa.yml
+  minPlayers: 0
+  stations:
+    Osa:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Оса-II{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Pirate: [ 0, 0 ]
+            PdvBorg: [ 0, 0 ]

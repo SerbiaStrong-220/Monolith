@@ -16,6 +16,13 @@
     maxDurability: 100
     walkSpeedModifier: 1.15
     sprintSpeedModifier: 1.15
+    staminaDamageMultipliers:
+      Absorbed: 1
+    damageToPlate:
+      Blunt: 0.35
+      Slash: 0.35
+      Piercing: 0.35
+      Heat: 0.35
     absorptionRatios:
       Blunt: 0.35
       Slash: 0.35

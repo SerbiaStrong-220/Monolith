@@ -10,7 +10,7 @@
   category: Medium
   group: BlackMarket
   access: Pirate
-  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/layak.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/layak.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: Layak
   mapName: 'PDV Layak'
-  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/layak.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/layak.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Layak:

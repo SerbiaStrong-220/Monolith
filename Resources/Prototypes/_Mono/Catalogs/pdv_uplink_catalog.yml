@@ -46,6 +46,23 @@
       - PirateUplink
 
 - type: listing
+  id: UplinkPDVVestineChemistryVial
+  name: uplink-pirate-vestine-vial-name
+  description: uplink-pirate-vestine-vial-desc
+  icon: { sprite: /Textures/Objects/Specific/Chemistry/vial.rsi, state: vial-1 }
+  productEntity: VestineChemistryVial
+  cost:
+    Doubloon: 6 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateMedical
+  - UplinkPdvMaterials
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
   id: UplinkPirateCombatMedkit
   name: uplink-pirate-combat-medkit-name
   description: uplink-pirate-combat-medkit-desc
@@ -305,6 +322,22 @@
           - PirateUplink
 
 - type: listing
+  id: UplinkPirateTeleshield
+  name: uplink-pirate-teleshield-name
+  description: uplink-pirate-teleshield-desc
+  productEntity: TelescopicShield
+  icon: { sprite: Objects/Weapons/Melee/teleriot_shield.rsi, state: teleriot-on }
+  cost:
+    Doubloon: 11 # Exodus: +10%, rounded up.
+  categories:
+    - UplinkPirateUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - PirateUplink
+
+- type: listing
   id: UplinkPirateThrusterKit
   name: uplink-pirate-thruster-kit-name
   description: uplink-pirate-thruster-kit-desc
@@ -327,6 +360,21 @@
   productEntity: RadioJammer
   cost:
     Doubloon: 11 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateOverwatchJammer
+  name: uplink-pirate-overwatch-jammer-name
+  description: uplink-pirate-overwatch-jammer-desc
+  productEntity: OverwatchJammer
+  cost:
+    Doubloon: 2 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateUtility
   conditions:
@@ -526,11 +574,71 @@
       - PirateUplink
 
 - type: listing
+  id: UplinkPirateAtreidesMag
+  name: uplink-pirate-box-5-7x28mm-smg-name
+  description: uplink-pirate-box-5-7x28mm-smg-desc
+  productEntity: BoxMagazine57x28mmSubMachineGunFMJ
+  cost:
+    Doubloon: 6 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateMla73Mag
+  name: uplink-pirate-6-35x40mm-magazine-name
+  description: uplink-pirate-6-35x40mm-magazine-desc
+  productEntity: Magazine635x40mmCaseless
+  cost:
+    Doubloon: 3 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirate10Phz
+  name: uplink-pirate-10phz-magazine-name
+  description: uplink-pirate-10phz-magazine-desc
+  productEntity: Magazine10Phz
+  cost:
+    Doubloon: 3 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
   id: UplinkPirateShellBoxLethal
   name: uplink-pirate-shell-box-lethal-name
   description: uplink-pirate-shell-box-lethal-desc
   productEntity: AmmoBox12_gaugeBuckshot
   icon: { sprite: _Mono/Objects/Weapons/Guns/Ammunition/Boxes/12_gauge.rsi, state: lethal }
+  cost:
+    Doubloon: 6 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateShellBox4_gauge
+  name: uplink-pirate-shell-box-4g-name
+  description: uplink-pirate-shell-box-4g-desc
+  productEntity: AmmoBox23x75mmBuckshot
   cost:
     Doubloon: 6 # Exodus: +10%, rounded up.
   categories:
@@ -776,7 +884,37 @@
   productEntity: ClothingBackpackDuffelPDVFilledSMG
   icon: { sprite: Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   cost:
-    Doubloon: 22 # Exodus: +10%, rounded up.
+    Doubloon: 17 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateVympel
+  name: uplink-pirate-vympel-name
+  description: uplink-pirate-vympel-desc
+  productEntity: WeaponRifleVympel
+  cost:
+    Doubloon: 17 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPiratePulsar
+  name: uplink-pirate-sultan-pulsar-name
+  description: uplink-pirate-sultan-pulsar-desc
+  productEntity: WeaponShotgunSultanPulsar
+  cost:
+    Doubloon: 17 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -792,7 +930,7 @@
   productEntity: ClothingBackpackDuffelPDVFilledAtreides
   icon: { sprite: Objects/Weapons/Guns/SMGs/atreides.rsi, state: icon }
   cost:
-    Doubloon: 110 # Exodus: +10%, rounded up.
+    Doubloon: 50 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -808,7 +946,37 @@
   productEntity: ClothingBackpackDuffelPDVFilledShotgun
   icon: { sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
   cost:
-    Doubloon: 83 # Exodus: +10%, rounded up.
+    Doubloon: 50 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateMla73
+  name: uplink-pirate-mla73-name
+  description: uplink-pirate-mla73-desc
+  productEntity: WeaponSubMachineGunMla73
+  cost:
+    Doubloon: 50 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateM90
+  name: uplink-pirate-m90-name
+  description: uplink-pirate-m90-desc
+  productEntity: WeaponRifleM90
+  cost:
+    Doubloon: 50 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -824,7 +992,7 @@
   productEntity: WeaponRevolverPython
   icon: { sprite: Objects/Weapons/Guns/Revolvers/python.rsi, state: icon }
   cost:
-    Doubloon: 22 # Exodus: +10%, rounded up.
+    Doubloon: 11 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -840,7 +1008,7 @@
   productEntity: WeaponPistolViper
   icon: { sprite: Objects/Weapons/Guns/Pistols/viper.rsi, state: icon }
   cost:
-    Doubloon: 11 # Exodus: +10%, rounded up.
+    Doubloon: 6 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -855,7 +1023,7 @@
   description: uplink-pirate-kanabou-desc
   productEntity: Kanabou
   cost:
-    Doubloon: 22 # Exodus: +10%, rounded up.
+    Doubloon: 11 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -871,7 +1039,7 @@
   productEntity: WeaponRifleAk
   icon: { sprite: Objects/Weapons/Guns/Rifles/ak.rsi, state: icon }
   cost:
-    Doubloon: 28 # Exodus: +10%, rounded up.
+    Doubloon: 17 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -887,7 +1055,7 @@
   productEntity: ClothingBackpackDuffelPDVBurner
   icon: { sprite: _Goobstation/Objects/Weapons/Guns/Rifles/burner.rsi, state: icon }
   cost:
-    Doubloon: 138 # Exodus: +10%, rounded up.
+    Doubloon: 99 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -903,7 +1071,7 @@
   productEntity: WeaponPistolAnaconda
   icon: { sprite: _Goobstation/Objects/Weapons/Guns/Pistols/anaconda.rsi, state: icon }
   cost:
-    Doubloon: 55 # Exodus: +10%, rounded up.
+    Doubloon: 17 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -919,7 +1087,7 @@
   productEntity: ClothingBackpackDuffelPDVFilledWSPR
   icon: { sprite: _Mono/Objects/Weapons/Guns/Rifles/wspr.rsi, state: icon }
   cost:
-    Doubloon: 83 # Exodus: +10%, rounded up.
+    Doubloon: 50 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -982,7 +1150,38 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
   productEntity: ClothingBackpackDuffelPDVFilledLMG
   cost:
-    Doubloon: 110 # Exodus: +10%, rounded up.
+    Doubloon: 99 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateHristovBundle
+  name: uplink-pirate-hristov-name
+  description: uplink-pirate-hristov-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/hristov.rsi, state: base }
+  productEntity: BriefcaseSyndieSniperBundleFilled
+  cost:
+    Doubloon: 99 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateBasilisk
+  name: uplink-pirate-basilisk-name
+  description: uplink-pirate-basilisk-desc
+  productEntity: WeaponDEWBasilisk
+  cost:
+    Doubloon: 99 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateWeapons
   conditions:
@@ -1069,6 +1268,81 @@
   icon: { sprite: Clothing/Mask/gassyndicate.rsi, state: icon }
   cost:
     Doubloon: 17 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateCv32
+  name: uplink-pirate-cv32-hardsuit-name
+  description: uplink-pirate-cv32-hardsuit-desc
+  productEntity: ClothingOuterHardsuitAshen
+  cost:
+    Doubloon: 50 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateCv53
+  name: uplink-pirate-cv53-tacsuit-name
+  description: uplink-pirate-cv53-tacsuit-desc
+  productEntity: ClothingOuterHardsuitAshenElite
+  cost:
+    Doubloon: 50 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateCv82
+  name: uplink-pirate-cv82-tacsuit-name
+  description: uplink-pirate-cv82-tacsuit-desc
+  productEntity: ClothingOuterHardsuitPDVMedic
+  cost:
+    Doubloon: 99 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateJuggernaut
+  name: uplink-pirate-juggernaut-hardsuit-name
+  description: uplink-pirate-juggernaut-hardsuit-desc
+  productEntity: ClothingOuterHardsuitJuggernaut
+  cost:
+    Doubloon: 99 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateStealthSuit
+  name: uplink-pirate-stealth-hardsuit-name
+  description: uplink-pirate-stealth-hardsuit-desc
+  productEntity: ClothingOuterHardsuitCybersunStealth
+  cost:
+    Doubloon: 99 # Exodus: +10%, rounded up.
   categories:
   - UplinkPirateEquipment
   conditions:
@@ -1567,3 +1841,114 @@
       - FactionStaticUplinkPdv
 
 # end T4
+
+- type: listing
+  id: UplinkHardBombPDV
+  name:  uplink-HardBomb-PDV-name
+  description: uplink-HardBomb-PDV-desc
+  productEntity: PDVBomb
+  icon: { sprite: _Mono/Structures/Machines/bomb_PDV.rsi, state: syndicate-bomb }
+  cost:
+    Doubloon: 83 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+# Exodus: import material acquisition without moving or repricing existing offers.
+- type: listing
+  id: UplinkPdvComposite5
+  name: uplink-pdv-composite5-name
+  description: uplink-pdv-composite5-desc
+  productEntity: SheetPdvComposite5
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: plastitaniumglass }
+  cost:
+    Doubloon: 28 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPdvMaterials
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPdvComposite15
+  name: uplink-pdv-composite15-name
+  description: uplink-pdv-composite15-desc
+  productEntity: SheetPdvComposite15
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: plastitaniumglass_2 }
+  cost:
+    Doubloon: 83 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPdvMaterials
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPdvComposite30
+  name: uplink-pdv-composite30-name
+  description: uplink-pdv-composite30-desc
+  productEntity: SheetPdvComposite30
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: plastitaniumglass_3 }
+  cost:
+    Doubloon: 165 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPdvMaterials
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+# Exodus: selected upstream additions, preserving existing entries.
+- type: listing
+  id: UplinkPiratePdaChameleon
+  name: uplink-pirate-chameleon-pda-name
+  description: uplink-pirate-chameleon-pda-desc
+  productEntity: ChameleonPDA
+  cost:
+    Doubloon: 6 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateHeadsetChameleon
+  name: uplink-pirate-chameleon-headset-name
+  description: uplink-pirate-chameleon-headset-desc
+  productEntity: ClothingHeadsetChameleon
+  cost:
+    Doubloon: 6 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateBackpackChameleon
+  name: uplink-pirate-chameleon-backpack-name
+  description: uplink-pirate-chameleon-backpack-desc
+  productEntity: ClothingBackpackChameleon
+  cost:
+    Doubloon: 6 # Exodus: +10%, rounded up.
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink

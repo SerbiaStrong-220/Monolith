@@ -1,0 +1,14 @@
+- type: listing
+  id: ExodusUplinkPdvOsaVoucher
+  name: exodus-uplink-pdv-osa-voucher-name
+  description: exodus-uplink-pdv-osa-voucher-desc
+  productEntity: ExodusShipVoucherOsa
+  cost:
+    Doubloon: 198 # Same price as the existing T2 Kortik voucher, including Exodus markup.
+  categories:
+  - UplinkPdvVouchers
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkPdv

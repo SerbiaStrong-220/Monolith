@@ -89,6 +89,12 @@
     - !type:JobGameRuleRequirement
       department: Combatant
       minDepartmentPlayers: 5
+  - type: CurrencyInjectionOnBluespaceError # Mono: reward TSF with FMC for defending solarian vault
+    company: TSF
+    amount:
+      FederationMilitaryCredit: 250
+    requiredEntities:
+    - DataChitStorageServer # no cheesing it
 
 - type: entity
   id: BluespaceVaultSmallError
@@ -135,6 +141,10 @@
     - !type:JobGameRuleRequirement
       department: Combatant
       minDepartmentPlayers: 5
+  - type: CurrencyInjectionOnBluespaceError # Mono: reward TSF with FMC for defending solarian vault
+    company: TSF
+    amount:
+      FederationMilitaryCredit: 100
 
 - type: entity
   id: BluespaceSyndicateFTLInterception

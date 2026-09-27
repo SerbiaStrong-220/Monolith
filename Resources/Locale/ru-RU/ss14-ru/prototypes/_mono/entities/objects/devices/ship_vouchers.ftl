@@ -1,7 +1,8 @@
 ent-BaseShipLPC = ship LPC
     .desc = Contains the necessary data for a shipyard console to produce a certain design.
+# Exodus: the voucher retains Baeg and Framework and also accepts Guppy.
 ent-ShipVoucherFrontierIronMan = ваучер Железного человека
-    .desc = Позволяет приобрести бесплатно Остов или Баег на верфи. Уничтожается при продаже.
+    .desc = Позволяет бесплатно приобрести один корабль «Бэг», «Фреймворк» или «Гуппи». Уничтожается после использования.
 ent-ShipVoucherUSSPBasic = ваучер базового шаттла СССП
     .desc = Небольшой ваучер, дающий право на получение базового шаттла СССП.
 ent-ShipVoucherUSSPIntermediate = ваучер среднего шаттла СССП

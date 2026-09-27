@@ -31,7 +31,6 @@
               amount: 1
               doAfter: 1
 
-
     - node: TableFrame
       entity: TableFrame
       edges:
@@ -50,9 +49,23 @@
               amount: 1
               doAfter: 1
 
+        - to: TableBlack
+          steps:
+            - material: Steel # Exodus: match the material returned by deconstruction.
+              amount: 1
+              doAfter: 1
+
         - to: TableReinforced
           steps:
             - material: Plasteel
+              amount: 1
+              doAfter: 1
+            - tool: Welding
+              doAfter: 3
+
+        - to: TableReinforcedBlack
+          steps:
+            - material: Plasteel # Exodus: construction must consume the refunded material.
               amount: 1
               doAfter: 1
             - tool: Welding
@@ -67,6 +80,12 @@
         - to: TableReinforcedGlass
           steps:
             - material: ReinforcedGlass
+              amount: 1
+              doAfter: 1
+
+        - to: TableReinforcedGlassBlack
+          steps:
+            - material: ReinforcedGlass # Exodus: construction must consume the refunded material.
               amount: 1
               doAfter: 1
 
@@ -136,8 +155,34 @@
             - tool: Anchoring
               doAfter: 1
 
+    - node: TableBlack
+      entity: TableBlack
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
     - node: TableReinforced
       entity: TableReinforced
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 1
+          steps:
+            - tool: Welding
+              doAfter: 3
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableReinforcedBlack
+      entity: TableReinforcedBlack
       edges:
         - to: TableFrame
           completed:
@@ -164,6 +209,18 @@
 
     - node: TableReinforcedGlass
       entity: TableReinforcedGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableReinforcedGlassBlack
+      entity: TableReinforcedGlassBlack
       edges:
         - to: TableFrame
           completed:

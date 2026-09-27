@@ -12,6 +12,12 @@ public sealed partial class RecipeTooltip : Control
     {
         RobustXamlLoader.Load(this);
 
+        UpdateText(tooltip); // Exodus
+    }
+
+    // Exodus: keep the visible tooltip current without closing and reopening it.
+    public void UpdateText(string tooltip)
+    {
         RecipeTooltipLabel.SetMarkup(tooltip);
     }
 }

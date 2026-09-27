@@ -11,7 +11,7 @@
   price: 108700 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/peregrine.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/peregrine.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -25,7 +25,7 @@
 - type: gameMap
   id: Peregrine
   mapName: 'Перегрин' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/peregrine.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/peregrine.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Peregrine:

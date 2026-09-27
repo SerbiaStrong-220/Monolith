@@ -32,7 +32,7 @@
   parent: BaseShipLPCOneUse
   id: ShipVoucherFrontierIronMan
   name: Ironman LPC
-  description: Allows purchase of one free Baeg or Framework from the Shipyard. Destroyed on sale.
+  description: Allows purchase of one free Baeg, Framework or Guppy from the Shipyard. Destroyed on sale. # Exodus: retain old voucher choices.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/lpcnew.rsi
@@ -45,6 +45,8 @@
       shader: unshaded
   - type: ShipyardVoucher
     vessels:
+    # Exodus: new upstream ships; all existing choices remain.
+    - Guppy
     - Baeg
     - Framework
     consoleType: Shipyard
@@ -76,6 +78,11 @@
     consoleType: Security
     companyName: TSF
     vessels:
+    # Exodus: new upstream ships; all existing choices remain.
+    - Seax
+    - Xiphos
+    - Paladin
+    - QJ271
     - Welder
     - Hoplite
     - Shiv
@@ -343,6 +350,9 @@
     consoleType: Security
     companyName: TSF
     vessels:
+    # Exodus: new upstream ships; all existing choices remain.
+    - Banshee
+    - Cinquedea
     - Andromeda
     - Spekter
 
@@ -510,6 +520,12 @@
     consoleType: BlackMarket
     companyName: PDV
     vessels:
+    # Exodus: new upstream ships; all existing choices remain.
+    - Bazalt
+    - Gadfly
+    - Ontos
+    - Kresta # Exodus: additional upstream T0 ships; retain every existing voucher option.
+    - Kynda # Exodus
     - Hazel
     - Eris
     - Tethys
@@ -874,6 +890,8 @@
     consoleType: BlackMarket
     companyName: PDV
     vessels:
+    # Exodus: new upstream ships; all existing choices remain.
+    - Osa
     - MotleyAnne
     - Europa
     - Vulture

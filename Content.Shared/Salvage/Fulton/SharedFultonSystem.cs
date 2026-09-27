@@ -92,6 +92,10 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (args.Cancelled || args.Target == null || !TryComp<FultonComponent>(args.Used, out var fulton))
             return;
 
+        // Exodus: deployment conditions may change while the do-after is running.
+        if (!CanApplyFulton(args.Target.Value, fulton) || HasComp<FultonedComponent>(args.Target.Value))
+            return;
+
         if (!_stack.Use(args.Used.Value, 1))
         {
             return;
@@ -174,13 +178,22 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     protected bool CanApplyFulton(EntityUid targetUid, FultonComponent component)
     {
+        // Exodus: saved target/beacon references may have expired during deployment.
+        if (Deleted(targetUid) || !TryComp<TransformComponent>(targetUid, out var targetTransform) ||
+            component.Beacon is not { } beaconUid || Deleted(beaconUid) ||
+            !TryComp<FultonBeaconComponent>(beaconUid, out var beacon) ||
+            !TryComp<TransformComponent>(beaconUid, out var beaconTransform))
+            return false;
+
         if (!CanFulton(targetUid))
             return false;
 
         if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, targetUid))
             return false;
 
-        return true;
+        // Exodus: different maps and invalid coordinates cannot bypass the range limit.
+        return targetTransform.Coordinates.TryDistance(EntityManager, TransformSystem, beaconTransform.Coordinates, out var distance)
+            && distance <= beacon.MaxRange;
     }
 
     protected bool CanFulton(EntityUid uid)

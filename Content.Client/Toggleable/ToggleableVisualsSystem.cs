@@ -115,7 +115,14 @@ public sealed partial class ToggleableVisualsSystem : VisualizerSystem<Toggleabl
             || !enabled)
             return;
 
-        if (!component.InhandVisuals.TryGetValue(args.Location, out var layers))
+        // Exodus-begin: follow the same item prefix as the solid in-hand sprite.
+        var visuals = component.InhandVisuals;
+        if (TryComp<ItemComponent>(uid, out var item) && item.HeldPrefix is { } prefix &&
+            component.InhandVisualsByPrefix.TryGetValue(prefix, out var prefixed))
+            visuals = prefixed;
+        // Exodus-end
+
+        if (!visuals.TryGetValue(args.Location, out var layers)) // Exodus: use the resolved pose.
             return;
 
         var modulateColor = AppearanceSystem.TryGetData<Color>(uid, ToggleableVisuals.Color, out var color, appearance);

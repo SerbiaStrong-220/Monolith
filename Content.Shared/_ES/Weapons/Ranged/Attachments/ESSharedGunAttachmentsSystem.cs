@@ -47,6 +47,7 @@ public abstract partial class ESSharedGunAttachmentsSystem : EntitySystem
         SubscribeLocalEvent<ESGunComponentAttachmentComponent, EntGotRemovedFromContainerMessage>(OnCompAttachmentUnequip); // Mono
         SubscribeLocalEvent<ESGunRecoilAttachmentComponent, ExaminedEvent>(OnAttachmentExamined); // Mono
 
+        InitializeWieldModifiers(); // Exodus
         _attachmentQuery = GetEntityQuery<ESGunAttachmentComponent>();
     }
 
@@ -252,11 +253,29 @@ public abstract partial class ESSharedGunAttachmentsSystem : EntitySystem
             var maxSpread = recoilComponent.MaxSpreadModifier;
             var maxSpreadColor = GetColor(maxSpread);
 
+            // wielded is inverse because its subtracted from the base. 50 - (20 * 0.0005) is worse, actually.
+            var wieldRecoilRecovery = recoilComponent.WieldRecoilRecoveryModifier;
+            var wieldRecoilRecoveryColor = GetColor((wieldRecoilRecovery));
+
+            var wieldRecoilIncrease = recoilComponent.WieldRecoilIncreaseModifier;
+            var wieldRecoilIncreaseColor = GetColor(1f / wieldRecoilIncrease);
+
+            var wieldMinSpread = recoilComponent.WieldMinSpreadModifier;
+            var wieldMinSpreadColor = GetColor(1f / wieldMinSpread);
+
+            var wieldMaxSpread = recoilComponent.WieldMaxSpreadModifier;
+            var wieldMaxSpreadColor = GetColor(1f / wieldMaxSpread);
+
         // welcome to The Monolith.... I am lazy....
             args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-recovery",("color", recoilRecoveryColor),("modifier", recoilRecovery)));
             args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-recoil",("color", recoilIncreaseColor),("modifier", recoilIncrease)));
             args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-minspread",("color", minSpreadColor),("modifier", minSpread)));
             args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-maxspread",("color", maxSpreadColor),("modifier", maxSpread)));
+
+            args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-recovery-wield",("color", wieldRecoilRecoveryColor),("modifier", wieldRecoilRecovery)));
+            args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-recoil-wield",("color", wieldRecoilIncreaseColor),("modifier", wieldRecoilIncrease)));
+            args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-minspread-wield",("color", wieldMinSpreadColor),("modifier", wieldMinSpread)));
+            args.PushMarkup(Loc.GetString("es-gun-attachments-inspect-modifier-maxspread-wield",("color", wieldMaxSpreadColor),("modifier", wieldMaxSpread)));
         }
     }
     // Mono end

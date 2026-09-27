@@ -11,7 +11,7 @@
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Carrier/zephyr_ec.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/Fujian/zephyr_ec.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus TSF faction-owned drone target filtering
   - type: NpcFactionMember
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: ZephyrEC
   mapName: 'Zephyr-EC'
-  mapPath: /SharedMaps/_Mono/Shuttles/Carrier/zephyr_ec.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/Fujian/zephyr_ec.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     ZephyrEC:

@@ -1,0 +1,51 @@
+# Author Info
+# GitHub: SolatK
+# Discord: SolarK
+
+# Shuttle Notes: Made because i can
+
+- type: vessel
+  id: Privateer
+  parent: BaseVessel
+  name: Капер
+  description: Многоцелевой легкий шаттл. Всё что нужно небольшой команде наёмников.  
+  price: 250000
+  category: Large
+  group: Shipyard
+  access: Mercenary
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/privateer.yml
+  guidebookPage: Null
+  class:
+  - Patrol
+  - Corvette
+  - Science
+  - Salvage
+  - Medical
+  - Chemistry
+  engine:
+  - AME
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+
+- type: gameMap
+  id: Privateer
+  mapName: 'Капер'
+  mapPath: /SharedMaps/_Exodus/Shuttles/privateer.yml
+  minPlayers: 0
+  stations:
+    Privateer:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Капер{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
+            

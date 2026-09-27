@@ -1,0 +1,9 @@
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandYesERP
+  name: "Yes ERP"
+  description: "Sometimes you just need to say “YES”"
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Wallmounts/yes_erp.rsi
+    state: yes_erp_poster

@@ -44,6 +44,7 @@
   - UniversalMaterialResearchT1
   position: -2, -12
 
+# Exodus-begin: restore PDV weapon unlocks and their original research costs.
 - type: technology
   id: RogueAdvancedGuns
   name: research-technology-rogue-advanced-guns
@@ -105,3 +106,4 @@
   technologyPrerequisites:
   - RogueAdvancedGuns
   position: -5, -22
+# Exodus-end

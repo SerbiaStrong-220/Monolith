@@ -1,0 +1,37 @@
+- type: vessel
+  id: Shuilian
+  parent: BaseVessel
+  name: Шуйлянь
+  description: Большой ботанический корабль с четырьмя отдельными биокуполами, каждый со своей атмосферой и климатом. Оборудован фильтрами для сбора и экспорта газов.
+  price: 195000
+  category: Large
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/shuilian.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: null
+  class:
+  - Civilian
+  - Botany
+  - Chemistry
+  engine:
+  - AME
+
+- type: gameMap
+  id: Shuilian
+  mapName: Шуйлянь
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/shuilian.yml
+  minPlayers: 0
+  stations:
+    Shuilian:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Шуйлянь{1}'
+        nameGenerator: !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]

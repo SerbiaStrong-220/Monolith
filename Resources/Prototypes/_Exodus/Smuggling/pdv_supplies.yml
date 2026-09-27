@@ -1,0 +1,211 @@
+- type: entity
+  parent: CrateTradeContrabandSecure1
+  id: CrateExodusPdvSupply1
+  name: Phaethon Dynasty supply crate
+  description: Sealed Vanguard supplies. Selling the intact crate at a cargo depot pays the courier and funds PDV requisitions.
+  components:
+  - type: ExtendDescription
+    descriptionList:
+    - description: exodus-sale-funds-pdv
+      color: "#4f94ad"
+      requireDetailRange: true
+  - type: CurrencyInjectionOnSell
+    company: PDV
+    amount:
+      Doubloon: 10
+  - type: Icon
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_1.rsi
+    state: icon
+  - type: Sprite
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_1.rsi
+    layers:
+    - state: icon
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_other
+      offset: 0.275,-0.265
+      map: ["enum.TradeCrateVisualLayers.Icon"]
+      visible: false
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_priority_inactive
+      offset: 0.025,-0.265
+      map: ["enum.TradeCrateVisualLayers.Priority"]
+      visible: false
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: CrateTradeContrabandSecure2
+  id: CrateExodusPdvSupply2
+  name: Phaethon Dynasty supply crate
+  description: Sealed Vanguard supplies. Selling the intact crate at a cargo depot pays the courier and funds PDV requisitions.
+  components:
+  - type: ExtendDescription
+    descriptionList:
+    - description: exodus-sale-funds-pdv
+      color: "#4f94ad"
+      requireDetailRange: true
+  - type: CurrencyInjectionOnSell
+    company: PDV
+    amount:
+      Doubloon: 10
+  - type: Icon
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_2.rsi
+    state: icon
+  - type: Sprite
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_2.rsi
+    layers:
+    - state: icon
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_other
+      offset: 0.275,-0.265
+      map: ["enum.TradeCrateVisualLayers.Icon"]
+      visible: false
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_priority_inactive
+      offset: 0.025,-0.265
+      map: ["enum.TradeCrateVisualLayers.Priority"]
+      visible: false
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: CrateTradeContrabandSecure3
+  id: CrateExodusPdvSupply3
+  name: Phaethon Dynasty supply crate
+  description: Sealed Vanguard supplies. Selling the intact crate at a cargo depot pays the courier and funds PDV requisitions.
+  components:
+  - type: ExtendDescription
+    descriptionList:
+    - description: exodus-sale-funds-pdv
+      color: "#4f94ad"
+      requireDetailRange: true
+  - type: CurrencyInjectionOnSell
+    company: PDV
+    amount:
+      Doubloon: 10
+  - type: Icon
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_3.rsi
+    state: icon
+  - type: Sprite
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_3.rsi
+    layers:
+    - state: icon
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_other
+      offset: 0.275,-0.265
+      map: ["enum.TradeCrateVisualLayers.Icon"]
+      visible: false
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_priority_inactive
+      offset: 0.025,-0.265
+      map: ["enum.TradeCrateVisualLayers.Priority"]
+      visible: false
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: CrateTradeContrabandSecure4
+  id: CrateExodusPdvSupply4
+  name: Phaethon Dynasty supply crate
+  description: Sealed Vanguard supplies. Selling the intact crate at a cargo depot pays the courier and funds PDV requisitions.
+  components:
+  - type: ExtendDescription
+    descriptionList:
+    - description: exodus-sale-funds-pdv
+      color: "#4f94ad"
+      requireDetailRange: true
+  - type: CurrencyInjectionOnSell
+    company: PDV
+    amount:
+      Doubloon: 10
+  - type: Icon
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_4.rsi
+    state: icon
+  - type: Sprite
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_4.rsi
+    layers:
+    - state: icon
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_other
+      offset: 0.275,-0.265
+      map: ["enum.TradeCrateVisualLayers.Icon"]
+      visible: false
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_priority_inactive
+      offset: 0.025,-0.265
+      map: ["enum.TradeCrateVisualLayers.Priority"]
+      visible: false
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: CrateTradeContrabandSecure5
+  id: CrateExodusPdvSupply5
+  name: Phaethon Dynasty supply crate
+  description: Sealed Vanguard supplies. Selling the intact crate at a cargo depot pays the courier and funds PDV requisitions.
+  components:
+  - type: ExtendDescription
+    descriptionList:
+    - description: exodus-sale-funds-pdv
+      color: "#4f94ad"
+      requireDetailRange: true
+  - type: CurrencyInjectionOnSell
+    company: PDV
+    amount:
+      Doubloon: 10
+  - type: Icon
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_5.rsi
+    state: icon
+  - type: Sprite
+    sprite: _Exodus/Structures/Storage/Crates/pdv_supply_5.rsi
+    layers:
+    - state: icon
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_other
+      offset: 0.275,-0.265
+      map: ["enum.TradeCrateVisualLayers.Icon"]
+      visible: false
+    - sprite: _NF/Interface/Misc/cargo_destination_icons.rsi
+      state: cargo_priority_inactive
+      offset: 0.025,-0.265
+      map: ["enum.TradeCrateVisualLayers.Priority"]
+      visible: false
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnExodusPdvSupplyCrate
+  name: PDV supply crate spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Exodus/Structures/Storage/Crates/pdv_supply_1.rsi
+      state: icon
+  - type: RandomSpawner
+    prototypes:
+    - CrateExodusPdvSupply1
+    - CrateExodusPdvSupply1
+    - CrateExodusPdvSupply2
+    - CrateExodusPdvSupply3
+    - CrateExodusPdvSupply4
+    - CrateExodusPdvSupply5
+
+- type: entity
+  parent: AirlockExternalShuttleSyndicateLocked
+  id: AirlockExodusPdvSupplyLocked
+  suffix: PDV, Supply
+  components:
+  - type: AccessReader
+    access: [["Pirate"]]

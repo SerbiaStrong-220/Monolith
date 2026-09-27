@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "idle_0"
+    },
+    {
+      "name": "flow_0",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_1"
+    },
+    {
+      "name": "flow_1",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_2"
+    },
+    {
+      "name": "flow_2",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_3"
+    },
+    {
+      "name": "flow_3",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_4"
+    },
+    {
+      "name": "flow_4",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_5"
+    },
+    {
+      "name": "flow_5",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_6"
+    },
+    {
+      "name": "flow_6",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_7"
+    },
+    {
+      "name": "flow_7",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_8"
+    },
+    {
+      "name": "flow_8",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_9"
+    },
+    {
+      "name": "flow_9",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_10"
+    },
+    {
+      "name": "flow_10",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_11"
+    },
+    {
+      "name": "flow_11",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_12"
+    },
+    {
+      "name": "flow_12",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_13"
+    },
+    {
+      "name": "flow_13",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_14"
+    },
+    {
+      "name": "flow_14",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "idle_15"
+    },
+    {
+      "name": "flow_15",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

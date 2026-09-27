@@ -7,7 +7,7 @@
   category: Small
   group: Mieyo
   access: Mieyo
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/pebble.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/MMC/pebble.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -21,7 +21,7 @@
 - type: gameMap
   id: Pebble
   mapName: 'ММС «Пеббл»' # Exodus MMC localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/pebble.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/MMC/pebble.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Pebble:

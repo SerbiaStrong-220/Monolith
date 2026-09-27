@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "gas",
+      "delays": [
+        [
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12,
+          0.12
+        ]
+      ]
+    }
+  ]
+}

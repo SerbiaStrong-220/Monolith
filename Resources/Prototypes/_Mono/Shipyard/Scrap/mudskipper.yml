@@ -11,7 +11,7 @@
   price: 106400 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Scrap
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Scrap/mudskipper.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Scrapyard/mudskipper.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: Mudskipper
   mapName: 'Мурекс' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Scrap/mudskipper.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Scrapyard/mudskipper.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Mudskipper:

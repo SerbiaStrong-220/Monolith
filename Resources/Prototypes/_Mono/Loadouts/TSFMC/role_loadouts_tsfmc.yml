@@ -215,16 +215,12 @@
 - type: roleLoadout
   id: JobTsfMarsoc
   groups:
+  # Exodus-begin: keep wearable choices; backpack contents are fixed job gear, with species survival gear issued afterward.
+  - TsfmcNeck
   - TsfmcBalaclava
-  - NfsdBoxSurvival
   - ContractorWallet
-  - ContractorCartridge
-  - ContractorTrinkets
-  - ContractorEncryptionKey
   - NfsdSpeciesSpecific
-  - TsfmcSidearm
-  - TsfmcSidearmAmmo
-  - FactionArmorPlates
+  # Exodus-end
   canCustomizeName: true
 
 - type: roleLoadout

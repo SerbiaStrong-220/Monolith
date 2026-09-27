@@ -1,0 +1,42 @@
+# Imported ship: faction and localization adapted for Exodus.
+# Made by harrow/waphun
+- type: vessel
+  id: Seax
+  parent: BaseVesselAntag
+  name: Сакс
+  description: Быстроходный медицинский корабль ТСФ с двумя установками TOVEK для самообороны.
+  price: 120000
+  category: Small
+  group: Security
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/seax.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Medical
+  engine:
+  - Bananium
+  company:
+  - TSF
+
+- type: gameMap
+  id: Seax
+  mapName: 'Сакс'
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/seax.yml
+  minPlayers: 0
+  stations:
+    Seax:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Сакс{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

@@ -6,11 +6,17 @@
   parent: BaseVesselAntag
   name: КД-340 # Ru-Localization
   description: Шаттл с усиленным носовым вооружением две Л-1 Фаланга, АСМ-302 Ванек и М220 Рубикон. # Ru-Localization
-  price: 33600 #Rounded up to 28K, with a 20% tax
+  price: 44400 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Carrier/qj340.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMil/qj340.yml # Exodus: upstream remap, existing vessel settings retained.
+  # Exodus-begin: faction-owned fighter from the TSF carrier shipyard.
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  # Exodus-end
   guidebookPage: Null
   class:
   - Pursuit
@@ -21,7 +27,7 @@
 - type: gameMap
   id: QJ340
   mapName: 'КД-340' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Carrier/qj340.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianMil/qj340.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     QJ340:

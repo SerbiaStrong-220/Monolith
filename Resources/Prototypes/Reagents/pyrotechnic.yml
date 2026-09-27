@@ -163,6 +163,18 @@
         multiplier: 0.2
       - !type:AdjustTemperature
         amount: 6000
+    # Exodus-begin: inhaled ClF3 is much more dangerous than ordinary atmospheric toxins.
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 30
+            Caustic: 15
+            Heat: 5
+    # Exodus-end
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

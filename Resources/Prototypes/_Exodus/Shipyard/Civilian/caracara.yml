@@ -1,0 +1,46 @@
+# Imported ship: faction and localization adapted for Exodus.
+# Author Info
+# GitHub: UnicornOnLSD
+# Discord: unicornonlsd
+
+# Shuttle Notes: base is around 59K with 12K added markup
+#
+- type: vessel
+  id: Caracara
+  parent: BaseVessel
+  name: Каракара
+  description: Утилизаторский фрегат с шахтёрским лазером Apollo, тремя 20-мм орудиями, пинч-реактором и базовым FTL-приводом.
+  price: 89609
+  category: Medium
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/caracara.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: null
+  class:
+  - Salvage
+  - Frigate
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Caracara
+  mapName: 'Каракара'
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/caracara.yml
+  minPlayers: 0
+  stations:
+    Caracara:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Каракара{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            # Pilot: [ 0, 0 ]
+            # Mercenary: [ 0, 0 ]

@@ -66,7 +66,7 @@
       types:
         Blunt: 12
         Slash: 20
-        Structural: 50
+        Structural: 350 # Exodus: approved upstream structural melee damage.
   - type: ReplacementAccent
     accent: genericAggressive
   - type: SolutionContainerManager
@@ -210,7 +210,7 @@
   - type: DoAfter
   - type: Stripping
   - type: Stamina
-    critThreshold: 150
+    critThreshold: 250 # Exodus: approved upstream stamina critical threshold.
   - type: Inventory
     templateId: chimera
   - type: Appearance

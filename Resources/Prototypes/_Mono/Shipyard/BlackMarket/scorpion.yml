@@ -10,7 +10,7 @@
   category: Medium
   group: BlackMarket
   access: Pirate
-  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/scorpion.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/scorpion.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: Scorpion
   mapName: 'Скорпион'
-  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/scorpion.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/scorpion.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Scorpion:

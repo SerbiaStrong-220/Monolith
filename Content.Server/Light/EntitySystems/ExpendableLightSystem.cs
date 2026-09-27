@@ -34,6 +34,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, ComponentInit>(OnExpLightInit);
             SubscribeLocalEvent<ExpendableLightComponent, UseInHandEvent>(OnExpLightUse);
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
+            SubscribeLocalEvent<ExpendableLightComponent, MapInitEvent>(OnAutoActivate); // Exodus: activate once, after initialization.
         }
 
         public override void Update(float frameTime)

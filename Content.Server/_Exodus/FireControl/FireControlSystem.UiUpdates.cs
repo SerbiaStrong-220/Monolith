@@ -3,6 +3,7 @@ using Content.Server._Exodus.SpaceArtillery;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared._Mono.FireControl;
+using Content.Shared.Power;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
@@ -36,6 +37,7 @@ public sealed partial class FireControlSystem
         SubscribeLocalEvent<FireControllableComponent, GunShotEvent>(OnControllableGunShot);
         SubscribeLocalEvent<FireControllableComponent, GunCycledEvent>(OnControllableGunCycled);
         SubscribeLocalEvent<FireControllableComponent, OnEmptyGunShotEvent>(OnControllableEmptyShot);
+        SubscribeLocalEvent<FireControllableComponent, ChargeChangedEvent>(OnControllableChargeChanged);
 
         SubscribeLocalEvent<FireControllableComponent, EntInsertedIntoContainerMessage>(OnControllableAmmoInserted);
         SubscribeLocalEvent<FireControllableComponent, EntRemovedFromContainerMessage>(OnControllableAmmoRemoved);
@@ -131,6 +133,11 @@ public sealed partial class FireControlSystem
     }
 
     private void OnControllableEmptyShot(Entity<FireControllableComponent> ent, ref OnEmptyGunShotEvent args)
+    {
+        QueueServerUiUpdate(ent.Comp.ControllingServer);
+    }
+
+    private void OnControllableChargeChanged(Entity<FireControllableComponent> ent, ref ChargeChangedEvent args)
     {
         QueueServerUiUpdate(ent.Comp.ControllingServer);
     }

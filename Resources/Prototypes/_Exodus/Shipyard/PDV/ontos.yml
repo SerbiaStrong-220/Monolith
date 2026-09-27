@@ -1,0 +1,39 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Ontos
+  parent: BaseVesselAntag
+  name: Онтос
+  description: Корабль огневой поддержки ДФ с тяжёлой гаубицей и двумя картечными орудиями. Плохо справляется с быстрыми целями.
+  price: 49500
+  category: Small
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/ontos.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Escort
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Ontos
+  mapName: 'Онтос'
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/ontos.yml
+  minPlayers: 0
+  stations:
+    Ontos:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Онтос{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Pirate: [ 0, 0 ]
+            PdvBorg: [ 0, 0 ]

@@ -1,3 +1,4 @@
+# Exodus-begin: restore the recipe packs required by the original PDV research tree.
 - type: latheRecipePack
   id: MonoRogueGearDynamic
   recipes:
@@ -58,6 +59,7 @@
   - SnakeletVoucherRogue
   - InertiaVoucherRogue
   - MockVoucherRogue
+# Exodus-end
 
 - type: latheRecipePack
   id: MonoRogueMiscDynamic

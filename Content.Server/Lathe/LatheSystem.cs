@@ -368,7 +368,9 @@ namespace Content.Server.Lathe
                 {
                     for (var i = 0; i < comp.CurrentRecipe.ResultCount; i++) // mono
                     {
-                        var result = Spawn(resultProto, Transform(uid).Coordinates);
+                        // Exodus: large machines dispense outside their footprint.
+                        var xform = Transform(uid);
+                        var result = Spawn(resultProto, xform.Coordinates.Offset(xform.LocalRotation.RotateVec(comp.OutputOffset)));
 
                         // Frontier: adjust price before merge (stack prices changed once)
                         if (result.Valid)

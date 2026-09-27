@@ -48,7 +48,7 @@
     pack: syndicatehumanoidchatter
     minimumWait: 30
     maximumWait: 120
-    nextAdvertisementTime: 10
+    nextAdvertisementTime: 0
   - type: AutoWakeUp
   - type: TriggerOnBeingGibbed
   - type: GibOnTrigger

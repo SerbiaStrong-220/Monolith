@@ -1,0 +1,49 @@
+# Imported ship: faction and localization adapted for Exodus.
+# Author Info
+# GitHub: LassiH
+# Discord: lassih
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Lancehead
+  parent: BaseVessel
+  name: Вайперы «Лансхед»
+  description: Тяжёлая артиллерийская платформа «Вайперов» с рельсотроном Charon.
+#  limit: 3 --- Not sure. Will await review.
+  price: 220000
+  purchasable: false # Voucher only
+  category: Large
+  group: Viper
+  access: Viper
+  shuttlePath: /SharedMaps/_Mono/Shuttles/VG/lancehead.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Scrapyard
+  - Pursuit
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Lancehead
+  mapName: 'Вайперы «Лансхед»'
+  mapPath: /SharedMaps/_Mono/Shuttles/VG/lancehead.yml
+  minPlayers: 0
+  stations:
+    Lancehead:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Вайперы «Лансхед»{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            VGInfanteer: [ 0, 0 ]
+            VGLieutenant: [ 0, 0 ]
+            VGCommander: [ 0, 0 ]

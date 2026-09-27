@@ -13,6 +13,8 @@ namespace Content.Server.Entry
             "Clickable",
             "Icon",
             "CableVisualizer",
+            "MiningPipeVisualizer", // Exodus: client-side slurry window animation.
+            "ExamineIndicator", // Exodus: local machine connection indicators.
             "SolutionItemStatus",
             "UIFragment",
             "PdaBorderColor",

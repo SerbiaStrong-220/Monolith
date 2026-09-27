@@ -1,0 +1,39 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Petra
+  parent: BaseVessel
+  name: Петра
+  description: Корвет охраны Колосса с тяжёлыми орудиями и щитом. Неповоротлив и не имеет противоракетной обороны; предназначен для удержания позиции до прибытия поддержки.
+  price: 212000
+  category: Medium
+  group: Sr
+  access: Brig
+  mapchecker_group_override: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CSec/petra.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - SecColossus
+  guidebookPage: Null
+  class:
+  - Patrol
+  - Corvette
+  - Brawler
+  - Detainment
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Petra
+  mapName: 'Петра'
+  mapPath: /SharedMaps/_Mono/Shuttles/CSec/petra.yml
+  minPlayers: 0
+  stations:
+    Petra:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Петра{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'

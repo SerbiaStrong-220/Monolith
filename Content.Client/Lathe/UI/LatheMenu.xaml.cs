@@ -145,8 +145,12 @@ public sealed partial class LatheMenu : FancyWindow
             quantity = 1;
 
         var sortedRecipesToShow = recipesToShow.OrderBy(_lathe.GetRecipeName);
-        RecipeList.Children.Clear();
         _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
+        // Exodus: keep hovered buttons and their tooltips alive when only materials or the queue change.
+        if (TryRefreshRecipeControls(sortedRecipesToShow, recipesToShow.Count, quantity, lathe))
+            return;
+
+        RecipeList.DisposeAllChildren(); // Exodus: release controls when the visible recipes actually change.
 
         foreach (var prototype in sortedRecipesToShow)
         {

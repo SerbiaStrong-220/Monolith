@@ -12,7 +12,7 @@
   price: 227200 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/autumn.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/autumn.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: Autumn
   mapName: 'Аутум' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/autumn.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/autumn.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Autumn:

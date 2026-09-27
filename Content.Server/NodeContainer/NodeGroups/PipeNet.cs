@@ -17,7 +17,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         void Update();
     }
 
-    [NodeGroup(NodeGroupID.Pipe)]
+    [NodeGroup(NodeGroupID.Pipe, NodeGroupID.ExodusArmoredGasPipe)] // Exodus: separate fittings, shared gas simulation.
     public sealed class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables] public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};

@@ -50,9 +50,7 @@
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
   - type: IconSmooth
-    key: walls
-    additionalKeys:
-    - woods
+    key: walls # Exodus: IconSmooth supports a single key; remove unsupported additionalKeys.
     mode: NoSprite
   - type: AnimationPlayer
   - type: Physics

@@ -30,6 +30,7 @@
     - id: BluespaceVaultError
     - id: BluespaceVaultSmallError
     - id: BluespaceSyndicateFTLInterception
+    - id: BluespaceExodusPdvSupply # Exodus: separate PDV deliveries; Syndicate dead drops remain unchanged.
 # Mono edit start
 #    - id: BluespaceWizardFederationScout
 #    - id: BluespaceBloodMoon

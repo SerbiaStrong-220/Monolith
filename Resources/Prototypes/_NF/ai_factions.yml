@@ -58,6 +58,12 @@
   id: PirateNF
   name: npc-faction-name-pirate-nf # Exodus - faction AI radar label
   coreControlName: npc-faction-core-control-name-pirate-nf # Exodus - faction AI radar label
+  neutral:
+  - MD
+  - Cat
+  - PetsNT
+  - SimpleNeutral
+  - Mouse
   defaultHostile: true
 
 - type: npcFaction

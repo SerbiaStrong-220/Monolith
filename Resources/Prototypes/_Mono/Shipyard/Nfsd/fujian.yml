@@ -12,7 +12,7 @@
   purchasable: false # voucher only
   group: Security
   access: Security
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/fujian.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/fujian.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -27,7 +27,7 @@
 - type: gameMap
   id: Fujian
   mapName: 'Fujian'
-  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/fujian.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/fujian.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Fujian:
@@ -42,4 +42,3 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
-

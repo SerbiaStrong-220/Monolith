@@ -1,28 +1,33 @@
-armor-plate-break = Your { $plateName } has shattered!
-armor-plate-examine-with-plate = Has a [color=yellow]{ $plateName }[/color] installed. Durability: [color={ $durabilityColor }]{ $percent }%[/color]
-armor-plate-examine-with-plate-simple = Has a [color=yellow]{ $plateName }[/color] installed.
-armor-plate-examine-no-plate = No armor plate installed.
-armor-plate-examine-no-storage = No storage compartment for armor plates.
-armor-plate-examinable-verb-text = Plate attributes
-armor-plate-examinable-verb-message = Examine protection and durability characteristics.
-armor-plate-attributes-examine = This armor plate:
-armor-plate-initial-durability = Is rated for [color=yellow]{ $durability }[/color] standard units of damage.
-armor-plate-item-durability = Durability: [color={ $durabilityColor }]{ $percent }%[/color]
-armor-plate-gait-speed = speed
-armor-plate-gait-walk = walking speed
-armor-plate-gait-sprint = running speed
+# Exodus: updated armor plate mechanics and Fluent arguments.
+armor-plate-break = Ваша бронепластина { $plateName } разрушилась!
+armor-plate-examine-with-plate = Установлена [color=yellow]{ $plateName }[/color]. Прочность: [color={ $durabilityColor }]{ $percent }%[/color]
+armor-plate-examine-with-plate-simple = Установлена [color=yellow]{ $plateName }[/color].
+armor-plate-examine-no-plate = Бронепластина не установлена.
+armor-plate-examine-no-storage = Нет отсека для бронепластин.
+armor-plate-examinable-verb-text = Характеристики бронепластины
+armor-plate-examinable-verb-message = Осмотреть защитные свойства и прочность.
+armor-plate-attributes-examine = Эта бронепластина:
+armor-plate-initial-durability = Рассчитана на [color=yellow]{ $durability }[/color] условных единиц урона.
+armor-plate-item-durability = Прочность: [color={ $durabilityColor }]{ $percent }%[/color]
+armor-plate-gait-speed = скорость передвижения
+armor-plate-gait-walk = скорость ходьбы
+armor-plate-gait-sprint = скорость бега
 armor-plate-speed-display =
-    { $deltasign ->
-        [-1] Increases your { $gait } by [color=yellow]{ $speedPercent }%[/color].
-        [0] Doesn't affect your speed.
-        [1] Decreases your { $gait } by [color=yellow]{ $speedPercent }%[/color].
-       *[other] Shouldn't be have this speed value!
+    { $stringClause ->
+        [1] Увеличивает { $gait } на [color=yellow]{ $speedPercent }%[/color].
+        [-1] Уменьшает { $gait } на [color=yellow]{ $speedPercent }%[/color].
+       *[other] Не изменяет { $gait }.
     }
 armor-plate-ratios-display =
-    { $deltasign ->
-        [-1] [color=cyan]Absorbs[/color] [color=yellow]{ $ratioPercent }%[/color] of [color=yellow]{ $dmgType }[/color] and takes it as [color=yellow]x{ $multiplier }[/color] durability damage.
-        [0] Is unaffected by { $dmgType }
-        [1] [color=fuchsia]Amplifies[/color] [color=yellow]{ $dmgType }[/color] by [color=yellow]{ $ratioPercent }%[/color] and takes the added damage as [color=yellow]x{ $multiplier }[/color] durability damage.
-       *[other] { $dmgType } shouldn't be have this absorption value!
+    { $stringClause ->
+        [1] [color=cyan]Поглощает[/color] [color=yellow]{ $ratioPercent }%[/color] урона типа [color=yellow]{ $dmgType }[/color]
+        [-1] [color=fuchsia]Усиливает[/color] урон типа [color=yellow]{ $dmgType }[/color] на [color=yellow]{ $ratioPercent }%[/color]
+       *[other] Не изменяет урон типа [color=yellow]{ $dmgType }[/color]
     }
-armor-plate-stamina-value = Inflicts [color=yellow]{ $multiplier }%[/color] of absorbed damage as stamina damage.
+armor-plate-multiplier-display = и теряет прочность в размере [color=yellow]{ $multiplier }%[/color] исходного урона.
+armor-plate-multiplier-none = без потери прочности.
+armor-plate-stamina-source-absorb = [color=cyan]поглощённого[/color]
+armor-plate-stamina-concat = и
+armor-plate-stamina-source-amplified = [color=fuchsia]дополнительно усиленного[/color]
+armor-plate-stamina-source-raw = [color=red]всего входящего[/color]
+armor-plate-stamina-value = Наносит [color=yellow]{ $multiplier }%[/color] от { $sources } урона в виде урона выносливости.

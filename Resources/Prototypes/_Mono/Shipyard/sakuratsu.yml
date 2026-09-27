@@ -12,7 +12,7 @@
   price: 63300 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Medium
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/sakuratsu.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/sakuratsu.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -27,7 +27,7 @@
 - type: gameMap
   id: Sakuratsu
   mapName: 'Сакуратсу' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/sakuratsu.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/sakuratsu.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Sakuratsu:

@@ -37,54 +37,35 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
 
         var numberOfPipeLayers = GetNumberOfPipeLayers(uid, out var atmosPipeLayers);
 
-        // get connected entities
-        var anyPipeNodes = false;
-        HashSet<(EntityUid, AtmosPipeLayer)> connected = new();
-
-        foreach (var node in container.Nodes.Values)
-        {
-            if (node is not PipeNode)
-                continue;
-
-            anyPipeNodes = true;
-
-            foreach (var connectedNode in node.ReachableNodes)
-            {
-                if (connectedNode is PipeNode { } pipeNode)
-                    connected.Add((connectedNode.Owner, pipeNode.CurrentPipeLayer));
-            }
-        }
-
-        if (!anyPipeNodes)
-            return;
-
-        // find the cardinal directions of any connected entities
+        // Exodus-begin: connect visuals to pipe ports, including offsets on large machines.
         var connectedDirections = new PipeDirection[numberOfPipeLayers];
         Array.Fill(connectedDirections, PipeDirection.None);
 
-        var tile = _map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
-
-        foreach (var (neighbour, pipeLayer) in connected)
+        foreach (var node in container.Nodes.Values)
         {
-            var pipeIndex = (int)pipeLayer;
-
-            if (pipeIndex >= numberOfPipeLayers)
+            if (node is not PipeNode pipe)
                 continue;
 
-            var otherTile = _map.TileIndicesFor(xform.GridUid.Value, grid, Transform(neighbour).Coordinates);
-            var pipeLayerDirections = connectedDirections[pipeIndex];
-
-            pipeLayerDirections |= (otherTile - tile) switch
+            var tile = pipe.GetConnectionTile((uid, xform), (xform.GridUid.Value, grid), _map);
+            foreach (var connectedNode in pipe.ReachableNodes)
             {
-                (0, 1) => PipeDirection.North,
-                (0, -1) => PipeDirection.South,
-                (1, 0) => PipeDirection.East,
-                (-1, 0) => PipeDirection.West,
-                _ => PipeDirection.None
-            };
+                if (connectedNode is not PipeNode neighbor ||
+                    (int)neighbor.CurrentPipeLayer >= numberOfPipeLayers)
+                    continue;
 
-            connectedDirections[pipeIndex] = pipeLayerDirections;
+                var otherTile = neighbor.GetConnectionTile((neighbor.Owner, Transform(neighbor.Owner)),
+                    (xform.GridUid.Value, grid), _map);
+                connectedDirections[(int)neighbor.CurrentPipeLayer] |= (otherTile - tile) switch
+                {
+                    (0, 1) => PipeDirection.North,
+                    (0, -1) => PipeDirection.South,
+                    (1, 0) => PipeDirection.East,
+                    (-1, 0) => PipeDirection.West,
+                    _ => PipeDirection.None
+                };
+            }
         }
+        // Exodus-end
 
         // Convert the pipe direction array into a single int for serialization
         var netConnectedDirections = 0;

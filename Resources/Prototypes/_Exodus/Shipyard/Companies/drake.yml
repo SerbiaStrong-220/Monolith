@@ -1,0 +1,83 @@
+- type: vessel
+  id: DrakeMackinaw
+  parent: BaseVessel
+  name: company-vessel-drake-mackinaw-name
+  description: company-vessel-drake-mackinaw-description
+  price: 4603400 # Two complete lasers at 1,920,000 each plus the appraised hull and equipment, rounded up to 100.
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - DrakeIndustries
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/mackinaw.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  class:
+  - Salvage
+  - Cargo
+  engine:
+  - AME
+
+- type: gameMap
+  id: DrakeMackinaw
+  mapName: 'Дрэйк Макинав'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/drake/mackinaw.yml
+  isGrid: true
+  minPlayers: 0
+  stations:
+    DrakeMackinaw:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Макинав{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]
+
+- type: vessel
+  id: DrakeHulk
+  parent: BaseVessel
+  name: company-vessel-drake-hulk-name
+  description: company-vessel-drake-hulk-description
+  price: 9000000 # Four lasers plus the hull, equipment and engineering complexity premium.
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - DrakeIndustries
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/hulk.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  class:
+  - Salvage
+  - Cargo
+  engine:
+  - AME
+
+- type: gameMap
+  id: DrakeHulk
+  mapName: 'Дрэйк Халк'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/drake/hulk.yml
+  isGrid: true
+  minPlayers: 0
+  stations:
+    DrakeHulk:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Халк{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

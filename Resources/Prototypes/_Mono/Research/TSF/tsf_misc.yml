@@ -78,6 +78,8 @@
   tier: 3
   cost: 80000
   recipeUnlocks:
+  # Exodus: new upstream ships; all existing choices remain.
+  - ShipVoucherLudaRecipe
   - FlyssaVoucherTSF
   - AltairVoucherTSF
   - ZephyrVoucherTSF

@@ -8,12 +8,12 @@
   limit: 2
   hyperwarLimit: 3
   hyperwarTimelock: 3600
-  price: 381900 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 383300 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
   purchasable: false # voucher only
   category: Large
   group: Security
   access: Armory
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/polaris.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/polaris.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -28,7 +28,7 @@
 - type: gameMap
   id: TSFNPolaris
   mapName: 'Polaris'
-  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/polaris.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/polaris.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     TSFNPolaris:

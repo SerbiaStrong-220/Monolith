@@ -1,0 +1,46 @@
+# Imported ship: faction and localization adapted for Exodus.
+#kasature90 (github)/_starch_ (discord)
+- type: vessel
+  id: Banshee
+  parent: BaseVesselAntag
+  name: Банши
+  description: Корвет ТСФ для ближнего боя с центральным плазменным импульсным орудием и четырьмя плазменными пушками. Возможности дальнего боя ограничены.
+  limit: 3
+  hyperwarLimit: 6
+  hyperwarTimelock: 1800
+  price: 150000
+  purchasable: false # voucher only - T2
+  category: Medium
+  group: Security
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/banshee.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Pursuit
+  - Brawler
+  - Corvette
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Banshee
+  mapName: 'Банши'
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/banshee.yml
+  minPlayers: 0
+  stations:
+    Banshee:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Банши{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

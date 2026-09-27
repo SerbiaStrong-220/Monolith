@@ -27,7 +27,7 @@ namespace Content.Server._Rat.Overwatch;
 /// <summary>
 /// Система для управления Overwatch.
 /// </summary>
-public sealed class OverwatchSystem : EntitySystem
+public sealed partial class OverwatchSystem : EntitySystem // Exodus: jammer integration lives in a partial.
 {
     /// <summary>
     /// Интервал инвалидации кэша в секундах.
@@ -95,6 +95,7 @@ public sealed class OverwatchSystem : EntitySystem
         SubscribeLocalEvent<CompanyComponent, ComponentShutdown>(OnFactionComponentShutdown);
         SubscribeLocalEvent<SquadComponent, ComponentInit>(OnSquadComponentInit);
         SubscribeLocalEvent<SquadComponent, ComponentShutdown>(OnSquadComponentShutdown);
+        InitializeJammers(); // Exodus
 
         Subs.BuiEvents<OverwatchConsoleComponent>(OverwatchUiKey.Key, subs =>
         {
@@ -689,7 +690,7 @@ public sealed class OverwatchSystem : EntitySystem
         var query = EntityQueryEnumerator<CompanyComponent>();
         while (query.MoveNext(out var uid, out var factionComp))
         {
-            if (factionComp.CompanyName == faction && !HasComp<ShuttleComponent>(uid))
+            if (factionComp.CompanyName == faction && !HasComp<ShuttleComponent>(uid) && !IsOverwatchJammed(uid)) // Exodus
                 members.Add(uid);
         }
 
@@ -766,7 +767,7 @@ public sealed class OverwatchSystem : EntitySystem
     /// </summary>
     private bool IsValidCameraTarget(EntityUid target)
     {
-        return HasWearableCamera(target);
+        return !IsOverwatchJammed(target) && HasWearableCamera(target); // Exodus: stale UI requests cannot bypass jamming.
     }
 
     /// <summary>

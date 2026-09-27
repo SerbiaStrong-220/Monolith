@@ -13,7 +13,7 @@
   price: 32800 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Small
   group: Medical
-  shuttlePath: /SharedMaps/_Mono/Shuttles/stubby.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMed/stubby.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -27,7 +27,7 @@
 - type: gameMap
   id: Stubby
   mapName: 'Стабби' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/stubby.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianMed/stubby.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Stubby:

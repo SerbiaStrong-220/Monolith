@@ -1,3 +1,4 @@
+using Content.Shared._ES.Weapons.Ranged.Attachments; // Exodus
 using System.Linq;
 using Content.Shared.Camera;
 using Content.Shared.Examine;
@@ -8,6 +9,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle.Components; // Exodus: independently powered wield damage.
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -58,7 +60,7 @@ public abstract partial class SharedWieldableSystem : EntitySystem
         SubscribeLocalEvent<GunRequiresWieldComponent, ShotAttemptedEvent>(OnShootAttempt);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
-        SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
+        SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers, after: [typeof(ESSharedGunAttachmentsSystem)]); // Exodus: base modifiers precede the wield bonus.
         SubscribeLocalEvent<GunWieldBonusComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SpeedModifiedOnWieldComponent, ItemWieldedEvent>(OnSpeedModifierWielded);
         SubscribeLocalEvent<SpeedModifiedOnWieldComponent, ItemUnwieldedEvent>(OnSpeedModifierUnwielded);
@@ -134,19 +136,7 @@ public abstract partial class SharedWieldableSystem : EntitySystem
              noWieldNeeded.GetBonus)
            )
         {
-            // Mono start - do all this stupid bullshit because i'm too lazy to make attachments modify the wieldcomp
-            if (TryComp<GunComponent>(args.Gun, out var gunComp))
-            {
-                var minAngleAdd = bonus.Comp.MinAngle * (gunComp.MinAngleModified / gunComp.MinAngle);
-                var maxAngleAdd = bonus.Comp.MaxAngle * (gunComp.MaxAngleModified / gunComp.MaxAngle);
-                var angleDecayAdd = bonus.Comp.AngleDecay * (gunComp.AngleDecayModified / gunComp.AngleDecay);
-                var angleIncreaseAdd = bonus.Comp.AngleIncrease * (gunComp.AngleIncreaseModified / gunComp.AngleIncrease);
-                args.MinAngle += minAngleAdd;
-                args.MaxAngle += maxAngleAdd;
-                args.AngleDecay += angleDecayAdd;
-                args.AngleIncrease += angleIncreaseAdd;
-            }
-            // Mono end
+            ApplyAttachmentWieldBonus(bonus, ref args); // Exodus: recalculate without persistent intermediate state.
         }
     }
 
@@ -379,14 +369,19 @@ public abstract partial class SharedWieldableSystem : EntitySystem
             TryUnwield(uid, component, args.User, force: true);
     }
 
-    private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
+    // Exodus-begin: keep the bonus component on both peers and gate it on the networked power state.
+    private void OnGetMeleeDamage(Entity<IncreaseDamageOnWieldComponent> ent, ref GetMeleeDamageEvent args)
     {
-        if (!TryComp<WieldableComponent>(uid, out var wield))
+        if (!TryComp<WieldableComponent>(ent, out var wield))
             return;
 
         if (!wield.Wielded)
             return;
 
-        args.Damage += component.BonusDamage;
+        if (ent.Comp.RequiresActivation && TryComp<ItemToggleComponent>(ent, out var toggle) && !toggle.Activated)
+            return;
+
+        args.Damage += ent.Comp.BonusDamage;
     }
+    // Exodus-end
 }

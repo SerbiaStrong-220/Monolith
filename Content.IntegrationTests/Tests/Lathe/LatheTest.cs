@@ -97,7 +97,9 @@ public sealed class LatheTest
                         {
                             Assert.That(protoMan.TryIndex(materialId, out var materialProto));
                             // Make sure the material is accepted by the lathe
-                            Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
+                            // Exodus: machines fed only through pipes do not accept physical ingredients by hand.
+                            if (storageComp.InsertOnInteract)
+                                Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
                             totalQuantity += quantity;
                         }
                         // Make sure the recipe doesn't call for more material than the lathe can hold

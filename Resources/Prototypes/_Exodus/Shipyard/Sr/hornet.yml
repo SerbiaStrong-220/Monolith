@@ -1,0 +1,38 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Hornet
+  parent: BaseVessel
+  name: Хорнет
+  description: Патрульный корвет охраны Колосса с нелетальными установками TARNYX, ракетами и плазменными орудиями.
+  price: 120000
+  category: Medium
+  group: Sr
+  access: Brig
+  mapchecker_group_override: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CSec/hornet.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - SecColossus
+  guidebookPage: Null
+  class:
+  - Patrol
+  - Escort
+  - Detainment
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Hornet
+  mapName: 'Хорнет'
+  mapPath: /SharedMaps/_Mono/Shuttles/CSec/hornet.yml
+  minPlayers: 0
+  stations:
+    Hornet:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Хорнет{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'

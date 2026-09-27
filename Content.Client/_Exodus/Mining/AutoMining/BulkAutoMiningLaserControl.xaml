@@ -1,0 +1,25 @@
+<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BackgroundColor="#252F39"/>
+    </PanelContainer.PanelOverride>
+    <BoxContainer Orientation="Vertical" Margin="10 8" SeparationOverride="5">
+        <BoxContainer SeparationOverride="8">
+            <Label Name="LaserName" StyleClasses="LabelHeading" HorizontalExpand="True" ClipText="True"/>
+            <Label Name="HealthAmount" StyleClasses="LabelSubText"/>
+        </BoxContainer>
+        <ProgressBar Name="HealthBar" MinValue="0" MaxValue="1" SetHeight="3">
+            <ProgressBar.ForegroundStyleBoxOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#77B5AE"/>
+            </ProgressBar.ForegroundStyleBoxOverride>
+        </ProgressBar>
+        <RichTextLabel Name="LaserStatus"/>
+        <RichTextLabel Name="StatusHint" Visible="False"/>
+        <ProgressBar Name="BufferBar" MinValue="0" MaxValue="1" SetHeight="22">
+            <ProgressBar.ForegroundStyleBoxOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#72552F"/>
+            </ProgressBar.ForegroundStyleBoxOverride>
+            <Label Name="BufferAmount" Margin="5 0" VerticalAlignment="Center"/>
+        </ProgressBar>
+    </BoxContainer>
+</PanelContainer>

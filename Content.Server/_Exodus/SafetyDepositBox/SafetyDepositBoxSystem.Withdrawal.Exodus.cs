@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared._WF.SafetyDepositBox.Components;
 using Content.Shared.Database;
 using Content.Shared.Storage;
+using Content.Shared.Timing;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 
@@ -10,6 +11,8 @@ namespace Content.Server._WF.SafetyDepositBox;
 
 public sealed partial class SafetyDepositBoxSystem
 {
+    [Dependency] private UseDelaySystem _useDelay = default!;
+
     private async Task WithdrawBoxAsync(
         EntityUid consoleUid,
         EntityUid player,
@@ -95,6 +98,7 @@ public sealed partial class SafetyDepositBoxSystem
 
                         itemEntity = loaded.Owner;
                         EnsureComp<SafetyDepositStoredComponent>(loaded.Owner);
+                        ResetStoredUseDelays(loaded.Owner);
 
                         // Automatic stacking can report success after inserting only part of a stack.
                         // Keep each restored entity intact until its entire DB record can be consumed.
@@ -193,6 +197,28 @@ public sealed partial class SafetyDepositBoxSystem
                 _activeBoxOperations.Remove(boxId);
 
             UpdateUIIfOpen(consoleUid, player);
+        }
+    }
+
+    private void ResetStoredUseDelays(EntityUid item)
+    {
+        // Saved use delays contain timestamps from the previous server run, including on nested items.
+        var pending = new Stack<EntityUid>();
+        var delayQuery = GetEntityQuery<UseDelayComponent>();
+        var transformQuery = GetEntityQuery<TransformComponent>();
+        pending.Push(item);
+
+        while (pending.TryPop(out var current))
+        {
+            if (TerminatingOrDeleted(current) || !transformQuery.TryGetComponent(current, out var transform))
+                continue;
+
+            if (delayQuery.TryGetComponent(current, out var delay))
+                _useDelay.ResetAllDelays((current, delay));
+
+            var children = transform.ChildEnumerator;
+            while (children.MoveNext(out var child))
+                pending.Push(child);
         }
     }
 

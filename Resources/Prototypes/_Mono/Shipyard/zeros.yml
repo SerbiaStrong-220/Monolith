@@ -13,7 +13,7 @@
   price: 134000 # Exodus: appraised minimum + 5%, rounded up to 100.
   category: Large
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/zeros.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/zeros.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -29,7 +29,7 @@
 - type: gameMap
   id: Zeros
   mapName: 'Зерос' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/zeros.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/zeros.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Zeros:

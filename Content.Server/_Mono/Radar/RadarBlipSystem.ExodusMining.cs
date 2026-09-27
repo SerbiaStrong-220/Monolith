@@ -1,0 +1,32 @@
+using Content.Shared._Exodus.Mining.AutoMining;
+using Robust.Shared.Map.Components;
+
+namespace Content.Server._Mono.Radar;
+
+// Exodus: include active mining beams in the existing, range-filtered radar report.
+public sealed partial class RadarBlipSystem
+{
+    [Dependency] private readonly SharedMapSystem _miningMap = default!;
+
+    private EntityQuery<BulkAutoMiningEmitterComponent> _miningEmitters;
+    private EntityQuery<MapGridComponent> _miningGrids;
+    private EntityQuery<TransformComponent> _miningTransforms;
+
+    private void InitializeMiningBeams()
+    {
+        _miningEmitters = GetEntityQuery<BulkAutoMiningEmitterComponent>();
+        _miningGrids = GetEntityQuery<MapGridComponent>();
+        _miningTransforms = GetEntityQuery<TransformComponent>();
+    }
+
+    private BulkAutoMiningRadarBeam? GetMiningBeam(Entity<TransformComponent> ent)
+    {
+        if (!_miningEmitters.TryComp(ent, out var emitter) || emitter.BeamGrid is not { } target ||
+            TerminatingOrDeleted(target) || !_miningGrids.TryComp(target, out var grid) ||
+            !_miningTransforms.TryComp(target, out var targetXform) || targetXform.MapUid != ent.Comp.MapUid)
+            return null;
+
+        return new BulkAutoMiningRadarBeam(
+            GetNetCoordinates(_miningMap.GridTileToLocal(target, grid, emitter.BeamTile)), emitter.MuzzleOffset);
+    }
+}

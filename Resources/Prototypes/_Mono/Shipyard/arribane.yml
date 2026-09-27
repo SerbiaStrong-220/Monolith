@@ -12,7 +12,7 @@
   price: 97500
   category: Large
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/arribane.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/arribane.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: Arribane
   mapName: 'Аррибан' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/arribane.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/arribane.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Arribane:

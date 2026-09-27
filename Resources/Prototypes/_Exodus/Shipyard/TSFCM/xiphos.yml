@@ -1,0 +1,42 @@
+# Imported ship: faction and localization adapted for Exodus.
+# Made by harrow/waphun
+- type: vessel
+  id: Xiphos
+  parent: BaseVesselAntag
+  name: Ксифос
+  description: Патрульный корабль быстрого реагирования ТСФ с ЭМИ-вооружением и камерой для перевозки заключённых.
+  price: 120000
+  category: Small
+  group: Security
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/xiphos.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Patrol
+  engine:
+  - Plasma
+  company:
+  - TSF
+
+- type: gameMap
+  id: Xiphos
+  mapName: 'Ксифос'
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/xiphos.yml
+  minPlayers: 0
+  stations:
+    Xiphos:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Ксифос{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

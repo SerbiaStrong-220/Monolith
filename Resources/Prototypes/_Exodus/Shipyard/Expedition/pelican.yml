@@ -1,0 +1,46 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Pelican
+  parent: BaseVessel
+  name: Пеликан
+  description: Экспедиционный корабль дальнего действия с оснащением для добычи, утилизации, грузоперевозок, науки, химии и медицины. Оборонительное вооружение слабое для его размеров.
+  price: 282000 # Giant markup for the capabilities.
+  category: Large
+  group: Expedition
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianExp/pelican.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: null
+  class:
+  - Science
+  - Salvage
+  - Cargo
+  - Chemistry
+  - Medical
+  - Civilian
+  - Kitchen
+  - Expedition
+  engine:
+  - AME
+
+- type: gameMap
+  id: Pelican
+  mapName: 'Пеликан'
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianExp/pelican.yml
+  minPlayers: 0
+  stations:
+    Pelican:
+      stationProto: StandardFrontierExpeditionVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Пеликан{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            # Pilot: [ 0, 0 ]
+            # Mercenary: [ 0, 0 ]

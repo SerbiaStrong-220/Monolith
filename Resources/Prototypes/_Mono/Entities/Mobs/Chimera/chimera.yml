@@ -57,7 +57,7 @@
     damage:
       types:
         Slash: 16
-        Structural: 90
+        Structural: 350 # Exodus: approved upstream structural melee damage.
   - type: Clumsy
     clumsyDefaultCheck: 1
     gunShootFailDamage:

@@ -1,0 +1,37 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Zhuangzi
+  parent: BaseVessel
+  name: Чжуан-цзы
+  description: Недорогой грузовой корабль дальнего действия с большим трюмом, ядерным реактором и свободными креплениями для установки оборудования.
+  price: 92450
+  category: Large
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/zhuangzi.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: ShipyardNFROperation
+  class:
+  - Cargo
+  engine:
+  - NFR
+
+- type: gameMap
+  id: Zhuangzi
+  mapName: 'Чжуан-цзы'
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/zhuangzi.yml
+  minPlayers: 0
+  stations:
+    Zhuangzi:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Чжуан-цзы{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]

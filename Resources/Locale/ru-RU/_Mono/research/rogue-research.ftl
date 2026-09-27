@@ -12,12 +12,14 @@ research-technology-rogue-basic-guns = Базовое огнестрельное
 research-technology-rogue-thermals = Очки термального видения
 research-technology-pdv-basic-module = Базовый модуль борга ДФ
 # T2 rogue
+# Exodus: restored weapon research includes firearms as well as ammunition.
 research-technology-rogue-advanced-guns = Продвинутое огнестрельное оружие
 research-technology-rogue-cqc-guns = Оружие ближнего боя
 research-technology-rogue-hypospray = Быстрое введение реагентов
 research-technology-rogue-emag = Базовые методы взлома
 research-technology-rogue-hristov = Тяжёлое огнестрельное оружие
 research-technology-rogue-stealthsuit = Метаматериальные волокна
+# Exodus: restored subsonic firearm production.
 research-technology-rogue-subsonic = Дозвуковое оружие
 research-technology-rogue-saintie-voucher = Ваучер шаттла Сэнти
 research-technology-rogue-motley-anne-voucher = Ваучер шаттла Матерь Анна

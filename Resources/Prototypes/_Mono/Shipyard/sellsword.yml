@@ -16,7 +16,7 @@
   category: Small
   group: Shipyard
   access: Mercenary
-  shuttlePath: /SharedMaps/_Mono/Shuttles/sellsword.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMil/sellsword.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -30,7 +30,7 @@
 - type: gameMap
   id: Sellsword
   mapName: 'Селлсворд' # Exodus: preserve main-build localization.
-  mapPath: /SharedMaps/_Mono/Shuttles/sellsword.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianMil/sellsword.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Sellsword:

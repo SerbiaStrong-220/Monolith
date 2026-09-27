@@ -11,7 +11,7 @@
   - !type:OverallPlaytimeRequirement
     time: 720000 # 200 hours overall, including faction playtime
   # Exodus-end
-  startingGear: PDVTarkhanGear
+  startingGear: ExodusPDVTarkhanLobbyGear # Exodus: lobby equipment uses loadouts; reinforcement gear stays separate.
   icon: JobIconPDVTarkhan
   supervisors: job-supervisors-exodus-tarkhan # Exodus dynasty hierarchy
   alwaysUseSpawner: true # Exodus use the base's dedicated marker for late joins too.

@@ -261,6 +261,9 @@ public sealed partial class ItemToggleSystem : EntitySystem
     /// </summary>
     private void TurnOffOnUnwielded(Entity<ItemToggleComponent> ent, ref ItemUnwieldedEvent args)
     {
+        if (!ent.Comp.ToggleOnWield) // Exodus: support independently powered wieldable items.
+            return;
+
         TryDeactivate((ent, ent.Comp), args.User);
     }
 
@@ -269,6 +272,9 @@ public sealed partial class ItemToggleSystem : EntitySystem
     /// </summary>
     private void TurnOnOnWielded(Entity<ItemToggleComponent> ent, ref ItemWieldedEvent args)
     {
+        if (!ent.Comp.ToggleOnWield) // Exodus: support independently powered wieldable items.
+            return;
+
         // FIXME: for some reason both client and server play sound
         TryActivate((ent, ent.Comp));
     }

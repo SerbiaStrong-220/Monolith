@@ -110,6 +110,7 @@
 #      - NFPosterContrabandWyvernShipyards
       - NFPosterContrabandRatvarLives
         # Frontier: Ending
+      - PosterContrabandYesERP # Exodus-Add
     chance: 1
 
 - type: entity

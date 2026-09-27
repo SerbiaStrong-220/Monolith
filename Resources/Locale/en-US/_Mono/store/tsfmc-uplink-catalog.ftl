@@ -152,3 +152,6 @@ uplink-security-banner-tsf-desc = A banner of the Trans-Solar Federation. Anchor
 
 uplink-security-wearable-cameratsf-name = Wireless Camera
 uplink-security-wearable-cameratsf-desc = Camera used for overwatching an operation area. Can be worn or placed somewhere.
+
+uplink-HardBomb-TSF-name = TSF "Hiroshima" Bunker Buster
+uplink-HardBomb-TSF-desc = The TSF's answer to not enough boom

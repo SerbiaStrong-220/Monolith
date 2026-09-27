@@ -12,7 +12,7 @@
   price: 49200 #Approx 41K with a 20% tax.
   category: Small
   group: Medical
-  shuttlePath: /SharedMaps/_Mono/Shuttles/triage.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMed/triage.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus MD faction
     factions:
@@ -26,7 +26,7 @@
 - type: gameMap
   id: Triage
   mapName: 'Триэйдж' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/triage.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianMed/triage.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Triage:

@@ -12,7 +12,7 @@
   category: Medium
   group: BlackMarket
   access: Pirate
-  shuttlePath: /SharedMaps/_Mono/Shuttles/BlackMarket/motleyanne.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/motleyanne.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -27,7 +27,7 @@
 - type: gameMap
   id: MotleyAnne
   mapName: 'Матерь Анна' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/BlackMarket/motleyanne.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/motleyanne.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     MotleyAnne:
@@ -41,4 +41,3 @@
       - type: StationJobs
         availableJobs:
           Pirate: [ 0, 0 ]
-

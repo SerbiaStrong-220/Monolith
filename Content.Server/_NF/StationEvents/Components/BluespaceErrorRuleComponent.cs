@@ -59,6 +59,7 @@ public sealed partial class BluespaceErrorRuleComponent : Component
     /// <summary>
     /// How much the grid is appraised at upon entering into existence, set after starting the event
     /// </summary>
+    [DataField] // Exodus: keep the documentation attached to the serialized field.
     public double StartingValue = 0;
 }
 

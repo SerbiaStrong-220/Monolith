@@ -15,7 +15,7 @@
   price: 60000
   category: Medium
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/victoria.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/victoria.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -30,7 +30,7 @@
 - type: gameMap
   id: Victoria
   mapName: 'Виктория' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/victoria.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/victoria.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Victoria:

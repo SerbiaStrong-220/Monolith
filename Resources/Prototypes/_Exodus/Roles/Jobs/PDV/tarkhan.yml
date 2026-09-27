@@ -1,0 +1,16 @@
+# Backpack, neck equipment and HUD are supplied by the lobby loadout.
+# Reinforcements keep using PDVTarkhanGear.
+- type: startingGear
+  id: ExodusPDVTarkhanLobbyGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNfsdTacCream
+    ears: ClothingHeadsetAltVanguardCommand
+    gloves: ClothingHandsGlovesTacticalCombatBlack
+    outerClothing: ClothingOuterHardsuitTarkhan
+    shoes: ClothingShoesBootsMagAshen
+    id: PDVTarkhanPDA
+    pocket1: CrowbarPocket
+    pocket2: RadioHandheldNF
+    belt: ClothingBeltWebbingsPDVTarkhan
+  inhand:
+  - UndeterminedPDVTarkhanKit

@@ -1,0 +1,44 @@
+# Imported ship: faction and localization adapted for Exodus.
+#original concept by kasature90 (github)/_starch_ (discord)
+#internals refit by harrow/waphun
+- type: vessel
+  id: Cinquedea
+  parent: BaseVesselAntag
+  name: Чинкуэда
+  description: Бронированный многоцелевой корвет ТСФ с шестью лазерами Prometheus и двумя Phalanx для ПВО. Подходит для преследования повреждённых кораблей.
+  price: 250000 #242609 baseline. Marked up to an even 250k for being a millitary vessel.
+  purchasable: false # voucher only - T2
+  category: Medium
+  group: Security
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/cinquedea.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Pursuit
+  - Brawler
+  - Corvette
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Cinquedea
+  mapName: 'Чинкуэда'
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/cinquedea.yml
+  minPlayers: 0
+  stations:
+    Cinquedea:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Чинкуэда{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

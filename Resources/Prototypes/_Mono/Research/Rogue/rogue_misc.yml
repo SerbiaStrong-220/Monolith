@@ -1,4 +1,4 @@
-
+# Exodus-begin: restore all three tiers of PDV shipyard research.
 - type: technology
   id: PdvTierOneVouchers
   name: research-technology-rogue-tier-one-vouchers
@@ -45,6 +45,7 @@
   - PdvTierTwoVouchers
   - UniversalMaterialResearchT3
   position: -2, -27
+# Exodus-end
 
 - type: technology
   id: RogueJaws

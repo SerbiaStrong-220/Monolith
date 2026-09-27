@@ -56,9 +56,14 @@ public sealed partial class ConstructionSystem
 
         foreach (var (stackType, amount) in machineBoard.StackRequirements)
         {
-            var stack = _stackSystem.Spawn(amount, stackType, xform.Coordinates);
-            if (!_container.Insert(stack, partContainer))
-                throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Prototype(uid)?.ID ?? "N/A"}");
+            // Exodus-begin: preserve requirements larger than a single material stack.
+            var stackPrototype = _prototypeManager.Index(stackType);
+            foreach (var stack in _stackSystem.SpawnMultiple(stackPrototype.Spawn, amount, xform.Coordinates))
+            {
+                if (!_container.Insert(stack, partContainer))
+                    throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Prototype(uid)?.ID ?? "N/A"}");
+            }
+            // Exodus-end
         }
 
         foreach (var (compName, info) in machineBoard.ComponentRequirements)

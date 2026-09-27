@@ -4,12 +4,12 @@
   parent: BaseVesselAntag
   name: TSF-SKR Calypso
   description: Moderately armed and (relatively) heavily armored multipurpose corvette. Armed with 2 AK-820s and 2 AK-570s for consistent damage, 4 Phalanxes for PD, and 2 ASM-220s for the biggest targets.
-  price: 134000 # Exodus: retain main-build ship price.
+  price: 169600 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
   purchasable: false # voucher only
   category: Medium
   group: Security
   access: Security
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Nfsd/calypso.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/calypso.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents: # Exodus faction-owned shuttle target filtering
   - type: NpcFactionMember
     factions:
@@ -24,7 +24,7 @@
 - type: gameMap
   id: Calypso
   mapName: 'Calypso'
-  mapPath: /SharedMaps/_Mono/Shuttles/Nfsd/calypso.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/calypso.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Calypso:
@@ -39,4 +39,3 @@
         availableJobs:
           Deputy: [ 0, 0 ]
           TsfBorg: [ 0, 0 ]
-

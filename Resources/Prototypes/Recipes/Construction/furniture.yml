@@ -205,10 +205,34 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: TableBlack # Exodus: use the target entity's localized name, description and icon.
+  graph: Table
+  startNode: start
+  targetNode: TableBlack
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: TableReinforced
   graph: Table
   startNode: start
   targetNode: TableReinforced
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableReinforcedBlack # Exodus: use the target entity's localized name, description and icon.
+  graph: Table
+  startNode: start
+  targetNode: TableReinforcedBlack
   category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
@@ -233,6 +257,18 @@
   graph: Table
   startNode: start
   targetNode: TableReinforcedGlass
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableReinforcedGlassBlack # Exodus: use the target entity's localized name, description and icon.
+  graph: Table
+  startNode: start
+  targetNode: TableReinforcedGlassBlack
   category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter

@@ -1,0 +1,45 @@
+# Imported ship: faction and localization adapted for Exodus.
+#Author:  Onezero0
+
+- type: vessel
+  id: Paladin
+  parent: BaseVesselAntag
+  name: Паладин
+  description: Недорогой эскортный корабль ТСФ с развитой противоракетной обороной и скромным ударным вооружением.
+  price: 66000
+  category: Small
+  hyperwarTimelock: 0
+  group: Security
+  access: Security
+  shuttlePath: /SharedMaps/_Mono/Shuttles/TSF/paladin.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  guidebookPage: Null
+  class:
+  - Escort
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Paladin
+  mapName: 'Паладин'
+  mapPath: /SharedMaps/_Mono/Shuttles/TSF/paladin.yml
+  minPlayers: 0
+  stations:
+    Paladin:
+      stationProto: StandardFrontierSecurityVessel
+      gridComponents:
+      - type: VesselInfo
+        description: "A bulwark against those seeking to shatter the Federation."
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Паладин{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Deputy: [ 0, 0 ]
+          TsfBorg: [ 0, 0 ]

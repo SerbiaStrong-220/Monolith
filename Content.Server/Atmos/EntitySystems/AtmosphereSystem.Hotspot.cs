@@ -50,8 +50,13 @@ namespace Content.Server.Atmos.EntitySystems
                 ExcitedGroupResetCooldowns(tile.ExcitedGroup);
 
             // If the hotspot is too weak to exist/doesn't have the correct conditions, yeet it for deletion at the end of the tick
+            // Exodus-begin: configured contact fuels can sustain a fire without oxygen.
             if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
-                || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f) && tile.PuddleSolutionFlammability == 0)
+                || tile.Air == null ||
+                ((tile.Air.GetMoles(Gas.Oxygen) < 0.5f ||
+                  (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f && tile.PuddleSolutionFlammability == 0))
+                 && !HasContactFireFuel(tile.Air)))
+            // Exodus-end
             {
                 tile.Hotspot = new Hotspot();
                 tile.Hotspot.Type = tile.PuddleSolutionFlammability > 0 ? HotspotType.Puddle : HotspotType.Gas;
@@ -139,8 +144,9 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             var oxygen = tile.Air.GetMoles(Gas.Oxygen);
+            var contactFuel = HasContactFireFuel(tile.Air); // Exodus
 
-            if (oxygen < 0.5f)
+            if (oxygen < 0.5f && !contactFuel) // Exodus
                 return;
 
             var plasma = tile.Air.GetMoles(Gas.Plasma);
@@ -152,7 +158,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (soh)
                 {
-                    if (plasma > 0.5f || tritium > 0.5f || puddleFlammability > 0)
+                    if (plasma > 0.5f || tritium > 0.5f || puddleFlammability > 0 || contactFuel) // Exodus
                     {
                         if (tile.Hotspot.Temperature < exposedTemperature)
                             tile.Hotspot.Temperature = exposedTemperature;
@@ -166,7 +172,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // If the conditions are right for a hotspot to be created, do so!
-            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature && (plasma > 0.5f || tritium > 0.5f)) || (puddleFlammability > 0 && exposedTemperature > 573.15 - 50 * puddleFlammability) )
+            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature && (plasma > 0.5f || tritium > 0.5f || contactFuel)) || (puddleFlammability > 0 && exposedTemperature > 573.15 - 50 * puddleFlammability)) // Exodus
             {
                 if (sparkSourceUid.HasValue)
                     _adminLog.Add(LogType.Flammable, LogImpact.High, $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");

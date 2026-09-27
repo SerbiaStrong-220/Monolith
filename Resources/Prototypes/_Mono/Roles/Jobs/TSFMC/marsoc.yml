@@ -32,6 +32,10 @@
       - TSFMC
     - type: ChatRank
       rank: exodus-marsoc-rank # Exodus localized base role; reinforcement ranks are unchanged.
+    # Exodus-begin: issue the species-appropriate survival box after the fixed backpack is equipped.
+    - type: Loadout
+      roleLoadout: [ExodusMarsocSurvival]
+    # Exodus-end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, TrackingImplant, BluespaceLifelineImplant ] # Exodus match reinforcement implants for the lobby operative.
   - !type:AddLanguageSpecial
@@ -42,18 +46,29 @@
 
 - type: startingGear
   id: MarsocOperativeGearHyperwarRole
+  # Exodus: neck and wallet equipment are supplied by the lobby loadout; the backpack is fixed starting gear.
   equipment:
     jumpsuit: ClothingUniformTsfmcMopp
-    back: ClothingBackpackERTLeader
+    back: ClothingBackpackERTLeader # Exodus: always issue the backpack, independent of saved loadout groups.
     eyes: ClothingEyesHudNfsd
     ears: ClothingHeadsetAltTsfmcCommander # Exodus Colonel's headset without the CentCom channel; reinforcement gear is unchanged.
     gloves: ClothingHandsGlovesTacticalCombatBlack
     outerClothing: ClothingOuterHardsuitM86Mk4
+    suitstorage: WeaponEnergyHalberdMARSOC # Exodus: issue the halberd on the lobby operative's rear armor mount.
     shoes: ClothingShoesBootsMagAdv
     id: MarsocPDA
     pocket1: CrowbarPocket
     pocket2: RadioHandheldNF
     belt: ClothingBeltWebbingsNormalTSFMC
-    neck: ClothingNeckIFFCyan
   inhand:
   - UndeterminedTSFMarsocKit
+  # Exodus-begin: fixed backpack contents are inserted after the backpack is equipped.
+  storage:
+    back:
+    - BaseSecurityUplinkRadioOfficer
+    - BookTSFSOP
+    - WeaponPistolMk58
+    - BoxMagazine45_ACPFMJ
+    - ArmorPlatePierce
+    - EncryptionKeyTraffic
+  # Exodus-end

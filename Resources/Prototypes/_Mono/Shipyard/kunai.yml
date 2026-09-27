@@ -13,7 +13,7 @@
   category: medium
   group: Shipyard
   access: Mercenary
-  shuttlePath: /SharedMaps/_Mono/Shuttles/kunai.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMil/kunai.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -28,7 +28,7 @@
 - type: gameMap
   id: Kunai
   mapName: 'Кунай' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/kunai.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianMil/kunai.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Kunai:

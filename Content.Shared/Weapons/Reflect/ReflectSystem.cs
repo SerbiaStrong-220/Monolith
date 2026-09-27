@@ -62,128 +62,29 @@ public sealed partial class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectUserComponent, DidUnequipEvent>(OnDidUnequip);
     }
 
+    // Exodus-begin: choose the best eligible item without allocating/sorting on every shot.
     private void OnReflectUserHitscan(EntityUid uid, ReflectUserComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected)
+        if (args.Reflected || FindBestReflector(uid, args.Reflective, args.Shot) is not { } reflector)
             return;
 
-        // Get all reflective items - from hands and vest slot
-        var reflectiveItems = new List<(EntityUid Entity, ReflectComponent Component)>();
-
-        // Check if the entity has hands component
-        if (TryComp<HandsComponent>(uid, out var handsComp))
-        {
-            // Check items in hands
-            foreach (var hand in handsComp.Hands.Values)
-            {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                var ent = hand.HeldEntity.Value;
-                if (TryComp<ReflectComponent>(ent, out var reflectComp) &&
-                    _toggle.IsActivated((ent, null)) &&
-                    (reflectComp.Reflects & args.Reflective) != 0x0)
-                {
-                    reflectiveItems.Add((ent, reflectComp));
-                }
-            }
-        }
-
-        // Check standard outerClothing slot (standard location for vests/armor)
-        if (_inventorySystem.TryGetSlotEntity(uid, "outerClothing", out var outerEntity) &&
-            outerEntity != null &&
-            TryComp<ReflectComponent>(outerEntity.Value, out var outerReflectComp) &&
-            _toggle.IsActivated((outerEntity.Value, null)) &&
-            (outerReflectComp.Reflects & args.Reflective) != 0x0)
-        {
-            reflectiveItems.Add((outerEntity.Value, outerReflectComp));
-        }
-
-        // Fallback to "vest" slot
-        if (_inventorySystem.TryGetSlotEntity(uid, "vest", out var vestEntity) &&
-            vestEntity != null &&
-            TryComp<ReflectComponent>(vestEntity.Value, out var vestReflectComp) &&
-            _toggle.IsActivated((vestEntity.Value, null)) &&
-            (vestReflectComp.Reflects & args.Reflective) != 0x0)
-        {
-            reflectiveItems.Add((vestEntity.Value, vestReflectComp));
-        }
-
-        // No reflective items found
-        if (reflectiveItems.Count == 0)
-            return;
-
-        // Find the item with the highest reflection probability
-        reflectiveItems.Sort((a, b) => b.Component.ReflectProb.CompareTo(a.Component.ReflectProb));
-        var bestReflector = reflectiveItems[0];
-
-        // Try to reflect with the best reflector
-        if (TryReflectHitscan(uid, bestReflector.Entity, args.Shooter, args.SourceItem, args.Direction, args.Damage, out var dir))
+        if (TryReflectHitscan(uid, reflector.Owner, args.Shooter, args.SourceItem, args.Direction, args.Damage, out var dir, args.Shot))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
         }
     }
+
     private void OnReflectUserCollide(EntityUid uid, ReflectUserComponent component, ref ProjectileReflectAttemptEvent args)
     {
-        // First, check the projectile's reflective type
-        if (!TryComp<ReflectiveComponent>(args.ProjUid, out var reflective))
+        if (args.Cancelled || !TryComp<ReflectiveComponent>(args.ProjUid, out var reflective) ||
+            FindBestReflector(uid, reflective.Reflective, args.ProjUid) is not { } reflector)
             return;
 
-        // Get all reflective items - from hands and vest slot
-        var reflectiveItems = new List<(EntityUid Entity, ReflectComponent Component)>();
-
-        // Check if the entity has hands component
-        if (TryComp<HandsComponent>(uid, out var handsComp))
-        {
-            // Check items in hands
-            foreach (var hand in handsComp.Hands.Values)
-            {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                var ent = hand.HeldEntity.Value;
-                if (TryComp<ReflectComponent>(ent, out var reflectComp) &&
-                    _toggle.IsActivated((ent, null)) &&
-                    (reflectComp.Reflects & reflective.Reflective) != 0x0)
-                {
-                    reflectiveItems.Add((ent, reflectComp));
-                }
-            }
-        }
-
-        // Check standard outerClothing slot (standard location for vests/armor)
-        if (_inventorySystem.TryGetSlotEntity(uid, "outerClothing", out var outerEntity) &&
-            outerEntity != null &&
-            TryComp<ReflectComponent>(outerEntity.Value, out var outerReflectComp) &&
-            _toggle.IsActivated((outerEntity.Value, null)) &&
-            (outerReflectComp.Reflects & reflective.Reflective) != 0x0)
-        {
-            reflectiveItems.Add((outerEntity.Value, outerReflectComp));
-        }
-
-        // Fallback to "vest" slot
-        if (_inventorySystem.TryGetSlotEntity(uid, "vest", out var vestEntity) &&
-            vestEntity != null &&
-            TryComp<ReflectComponent>(vestEntity.Value, out var vestReflectComp) &&
-            _toggle.IsActivated((vestEntity.Value, null)) &&
-            (vestReflectComp.Reflects & reflective.Reflective) != 0x0)
-        {
-            reflectiveItems.Add((vestEntity.Value, vestReflectComp));
-        }
-
-        // No reflective items found
-        if (reflectiveItems.Count == 0)
-            return;
-
-        // Find the item with the highest reflection probability
-        reflectiveItems.Sort((a, b) => b.Component.ReflectProb.CompareTo(a.Component.ReflectProb));
-        var bestReflector = reflectiveItems[0];
-
-        // Try to reflect with the best reflector
-        if (TryReflectProjectile(uid, bestReflector.Entity, args.ProjUid, reflect: bestReflector.Component))
+        if (TryReflectProjectile(uid, reflector.Owner, args.ProjUid, reflect: reflector.Comp))
             args.Cancelled = true;
     }
+    // Exodus-end
 
     private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
     {
@@ -197,7 +98,7 @@ public sealed partial class ReflectSystem : EntitySystem
     private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
     {
         if (!Resolve(reflector, ref reflect, false) ||
-            !_toggle.IsActivated((reflector, null)) ||
+            !CanReflect(user, (reflector, reflect), projectile) || // Exodus: held/wielded and projectile restrictions.
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflect.Reflects & reflective.Reflective) == 0x0 ||
             !_random.Prob(reflect.ReflectProb) ||
@@ -238,6 +139,7 @@ public sealed partial class ReflectSystem : EntitySystem
 
             _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon)} shot by {projectileComp.Shooter}");
 
+            NotifyShotReflected(user, reflector, projectile, projectileComp.Shooter); // Exodus: actual successful reflector.
             projectileComp.Shooter = user;
             projectileComp.Weapon = user;
             Dirty(projectile, projectileComp);
@@ -258,7 +160,7 @@ public sealed partial class ReflectSystem : EntitySystem
             return;
         }
 
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, args.Damage, out var dir)) // WD EDIT
+        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, args.Damage, out var dir, args.Shot)) // WD EDIT / Exodus: preserve shot identity.
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -272,10 +174,11 @@ public sealed partial class ReflectSystem : EntitySystem
         EntityUid shotSource,
         Vector2 direction,
         DamageSpecifier? damage, // WD EDIT
-        [NotNullWhen(true)] out Vector2? newDirection)
+        [NotNullWhen(true)] out Vector2? newDirection,
+        EntityUid? shot = null) // Exodus: hitscan identity for reflection accounting.
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
-            !_toggle.IsActivated((reflector, null)) ||
+            !CanReflect(user, (reflector, reflect), shot) || // Exodus: held/wielded and projectile restrictions.
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;
@@ -301,6 +204,7 @@ public sealed partial class ReflectSystem : EntitySystem
         else
             _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected hitscan from {ToPrettyString(shotSource)}");
 
+        NotifyShotReflected(user, reflector, shot, shooter); // Exodus: charge only the successful reflector.
         return true;
     }
 

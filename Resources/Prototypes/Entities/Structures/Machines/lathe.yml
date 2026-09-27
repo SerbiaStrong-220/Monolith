@@ -275,6 +275,7 @@
     - SMSurgery # Shitmed Change
     # Exodus-begin company-fleet
     - CompanyBlackhawkDynamic
+    - CompanyDrakeMiningDynamic # Exodus: Drake industrial equipment
     - CompanyHorizonDynamic
     - CompanyBratvaDynamic
     - CompanyUllmanDynamic
@@ -365,6 +366,7 @@
     - ReactorCircuitboards # FH edit
     # Exodus-begin company-fleet
     - CompanyHorizonBoardsDynamic
+    - CompanyDrakeBoardsDynamic # Exodus: Drake mining boards
     - CompanyNosskeDynamic
     - CompanyBratvaBoardsDynamic
     - CompanyCdmBoardsDynamic

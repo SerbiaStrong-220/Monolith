@@ -8,7 +8,7 @@
   category: Small
   group: Mieyo
   access: MieyoSecurity
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Mieyo/yukikaze.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/MMC/yukikaze.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -22,7 +22,7 @@
 - type: gameMap
   id: Yukikaze
   mapName: 'ММС-CSC «Юкикадзэ»' # Exodus MMC localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Mieyo/yukikaze.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/MMC/yukikaze.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Yukikaze:

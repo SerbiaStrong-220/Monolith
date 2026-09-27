@@ -28,6 +28,7 @@ public sealed partial class HitscanBasicDamageSystem : EntitySystem
                 dmg,
                 origin: args.Shooter, // Exodus: preserve shooter attribution for every upstream multi-hit target.
                 tool: args.Gun, // Exodus: preserve the firing weapon as the damage tool.
+                damageSource: ent.Owner, // Exodus: the beam supplies shield-breaking properties, separately from the gun.
                 armorPenetration: ent.Comp.ArmorPenetration,
                 ignoreResistances: ent.Comp.IgnoreResistances); // Mono - AP
 

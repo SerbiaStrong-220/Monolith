@@ -1,0 +1,18 @@
+- type: entity
+  id: Pellet12_gaugeBlank
+  name: blank discharge
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    layers:
+    - state: bullet
+      color: "#ffffff00"
+  - type: Projectile
+    impactEffect: null
+    damage: # Exodus: explicitly override inherited bullet damage for blanks.
+      types:
+        Piercing: 0
+    soundHit: null
+  - type: Tracer # Exodus: the blank discharge has no visible projectile.
+    color: "#ffffff00"

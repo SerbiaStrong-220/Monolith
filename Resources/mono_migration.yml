@@ -93,3 +93,5 @@ ChemistryHotplate: MachineThermobath
 HotplateMachineCircuitboard: ThermobathMachineCircuitboard
 ChemistryHotplateFlatpack: MachineThermobathFlatpack
 
+
+WeaponFlareGunSecurity: WeaponFlareGun # Exodus: migrate the removed upstream flare launcher variant.

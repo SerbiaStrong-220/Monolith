@@ -1,0 +1,45 @@
+# Imported ship: faction and localization adapted for Exodus.
+# Original Author Info
+# GitHub: Onezero0
+# Discord: Onezero0
+#
+# Shuttle Notes:
+#
+- type: vessel
+  id: Guppy
+  parent: BaseVessel
+  name: Гуппи
+  description: Простой и надёжный малый шахтёрский корабль для начинающего контрактника.
+  price: 22000
+  category: Small
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/guppy.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: null
+  class:
+  - Salvage
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Guppy
+  mapName: 'Гуппи'
+  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/guppy.yml
+  minPlayers: 0
+  stations:
+    Guppy:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Гуппи{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            # Pilot: [ 0, 0 ]
+            # Mercenary: [ 0, 0 ]

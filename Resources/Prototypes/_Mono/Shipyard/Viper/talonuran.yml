@@ -9,11 +9,11 @@
   parent: BaseVessel
   name: Вайперы «Талонуран» # Exodus Viper localization
   description: Малый корабль тяжёлой поддержки, заказанный «Вайперами» для сопровождения флота. Рекомендуются магнитные сапоги. # Exodus Viper localization
-  price: 58400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 58700 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
   category: Small
   group: Viper
   access: Viper # Exodus restore-viper-group
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Viper/talonuran.yml
+  shuttlePath: /SharedMaps/_Mono/Shuttles/VG/talonuran.yml # Exodus: upstream remap, existing vessel settings retained.
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -28,7 +28,7 @@
 - type: gameMap
   id: Talonuran
   mapName: 'Вайперы «Талонуран»' # Exodus Viper localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Viper/talonuran.yml
+  mapPath: /SharedMaps/_Mono/Shuttles/VG/talonuran.yml # Exodus: upstream remap, existing vessel settings retained.
   minPlayers: 0
   stations:
     Talonuran:

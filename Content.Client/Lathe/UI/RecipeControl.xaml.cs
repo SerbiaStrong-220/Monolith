@@ -14,6 +14,7 @@ public sealed partial class RecipeControl : Control
     public RecipeControl(LatheSystem latheSystem, LatheRecipePrototype recipe, Func<string> tooltipTextSupplier, bool canProduce, Control displayControl)
     {
         RobustXamlLoader.Load(this);
+        Recipe = recipe.ID; // Exodus: identify retained recipe controls.
 
         RecipeName.Text = latheSystem.GetRecipeName(recipe);
         RecipeDisplayContainer.AddChild(displayControl);
@@ -29,6 +30,6 @@ public sealed partial class RecipeControl : Control
 
     private Control? SupplyTooltip(Control sender)
     {
-        return new RecipeTooltip(TooltipTextSupplier());
+        return _tooltip = new RecipeTooltip(TooltipTextSupplier()); // Exodus: refresh an open tooltip in place.
     }
 }

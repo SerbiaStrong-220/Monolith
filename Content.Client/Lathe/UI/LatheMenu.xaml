@@ -143,7 +143,9 @@
                     </controls:StripeBack>
                 </ScrollContainer>
             </BoxContainer>
-            <BoxContainer
+            <!-- Exodus: optional status controls supplied by specialized lathe interfaces. -->
+            <BoxContainer Name="StatusContainer" Access="Public" Visible="False" Orientation="Vertical" HorizontalExpand="True" />
+            <BoxContainer Name="MaterialsContainer" Access="Public"
             VerticalExpand="True"
             HorizontalExpand="True"
             Orientation="Vertical">

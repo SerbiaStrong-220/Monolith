@@ -1,0 +1,42 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Meteor
+  parent: BaseVessel
+  name: Метеор
+  description: Легкобронированный научно-утилизаторский корабль с большим негерметичным трюмом. Вооружение и защита ограничены.
+  price: 121000
+  category: Medium
+  group: Expedition
+  shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianExp/meteor.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: null
+  class:
+  - Science
+  - Salvage
+  - Cargo
+  - Expedition
+  engine:
+  - AME
+
+- type: gameMap
+  id: Meteor
+  mapName: 'Метеор'
+  mapPath: /SharedMaps/_Mono/Shuttles/CivilianExp/meteor.yml
+  minPlayers: 0
+  stations:
+    Meteor:
+      stationProto: StandardFrontierExpeditionVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Метеор{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            # Pilot: [ 0, 0 ]
+            # Mercenary: [ 0, 0 ]

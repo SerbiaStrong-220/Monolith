@@ -16,4 +16,16 @@ public enum NodeGroupID : byte
     /// <seealso cref="Content.Server.Power.Generation.Teg.TegSystem"/>
     /// <seealso cref="Content.Server.Power.Generation.Teg.TegNodeGroup"/>
     Teg,
+
+    // Exodus-begin
+    /// <summary>
+    /// Ship mining material pipes (ore duct under machines).
+    /// </summary>
+    ExodusMiningPipe,
+
+    /// <summary>
+    /// Gas pipes with armored fittings, isolated from ordinary atmospheric plumbing.
+    /// </summary>
+    ExodusArmoredGasPipe,
+    // Exodus-end
 }

@@ -16,10 +16,12 @@ research-technology-pdv-ias = PDV Cardiorespiratory Bionics
 research-technology-rogue-tier-one-vouchers = PDV Grade 1 Shipyard Production
 
 # T2 rogue
+# Exodus: restored weapon research includes firearms as well as ammunition.
 research-technology-rogue-advanced-guns = Advanced Ballistics
 research-technology-rogue-hypospray = Rapid Reagent Administration
 research-technology-rogue-emag = Portable Hacking Procedures
 research-technology-rogue-advanced-melee-weapon = Advanced Melee Weaponization
+# Exodus: restored subsonic firearm production.
 research-technology-rogue-subsonic = Subsonic Firearms
 research-technology-rogue-saintie-voucher = PDV Saintie Procurement LPC
 research-technology-rogue-motley-anne-voucher = PDV Motley Anne Procurement LPC
@@ -32,4 +34,6 @@ research-technology-rogue-prowler-voucher = Stealthcraft Technologies
 research-technology-rogue-hf-sword = Weaponised Resonance Technology
 research-technology-rogue-syndicate-tacsuits = Metamaterial Fibers
 research-technology-pdv-advanced-module = PDV Advanced Cyborg Module Development
+# Exodus: restored heavy firearm production.
 research-technology-rogue-heavy-weapons = Heavy Ballistics
+research-technology-PDV-large-explosives= PDV Hardbombs

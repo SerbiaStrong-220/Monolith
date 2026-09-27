@@ -1,0 +1,14 @@
+ent-GreebleAntenna3 = антенна
+    .desc = Обычно используется в системе ультравысокочастотной связи корабля или станции.
+ent-GreebleRadiator1 = радиатор
+    .desc = Большая и хрупкая панель для отвода тепла снаружи корабля. Помогает охлаждать реакторы, дополняя внутренние теплоотводы.
+ent-GreebleRadiator2 = { ent-GreebleRadiator1 }
+    .desc = { ent-GreebleRadiator1.desc }
+ent-GreebleSideLabel1 = предупреждающая табличка
+    .desc = Предупреждение об опасности. Рядом наверняка находится что-то опасное.
+ent-GreebleSideLabel2 = { ent-GreebleSideLabel1 }
+    .desc = Предупреждение об опасности реактивной струи двигателя.
+ent-GreebleSideLabel3 = { ent-GreebleSideLabel1 }
+    .desc = { ent-GreebleSideLabel1.desc }
+ent-GreebleSideLabel4 = { ent-GreebleSideLabel1 }
+    .desc = { ent-GreebleSideLabel1.desc }

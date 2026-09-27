@@ -11,9 +11,14 @@
   coreControlName: npc-faction-core-control-name-tsfmc # Exodus - faction AI radar label
   friendly:
   - SecColossus # Exodus SecColossus faction
+  - TSFMCTurret
   neutral:
-  - CC
-  - NanoTrasen
+  - CC # Exodus: retain civilian neutrality.
+  - NanoTrasen # Exodus
+  - Cat
+  - PetsNT
+  - MD
+  - Mouse
   - SimpleNeutral
   defaultHostile: true
 
@@ -23,8 +28,8 @@
   - TSFMC
   - SecColossus # Exodus SecColossus faction
   neutral:
-  - CC
-  - NanoTrasen
+  - CC # Exodus: retain civilian neutrality.
+  - NanoTrasen # Exodus
   - Cat
   - PetsNT
   - SimpleNeutral

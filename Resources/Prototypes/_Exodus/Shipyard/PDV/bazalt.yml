@@ -1,0 +1,40 @@
+# Imported ship: faction and localization adapted for Exodus.
+- type: vessel
+  id: Bazalt
+  parent: BaseVesselAntag
+  name: Базальт
+  description: Лёгкий ударный корабль ДФ с 35-мм пушкой и ракетной установкой TOVEK. Слабо защищён и не имеет FTL-привода.
+  price: 29500
+  category: Small
+  group: BlackMarket
+  access: Pirate
+  shuttlePath: /SharedMaps/_Mono/Shuttles/PDV/bazalt.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - PirateNF
+  guidebookPage: Null
+  class:
+  - Escort
+  - Pursuit
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Bazalt
+  mapName: 'Базальт'
+  mapPath: /SharedMaps/_Mono/Shuttles/PDV/bazalt.yml
+  minPlayers: 0
+  stations:
+    Bazalt:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Базальт{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Pirate: [ 0, 0 ]
+            PdvBorg: [ 0, 0 ]
