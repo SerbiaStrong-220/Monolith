@@ -40,16 +40,13 @@
       - FTLBeacon
       - SingularityAttractor
       # Exodus-end
-      # Exodus-begin: approved upstream restrictions, alongside our existing restrictions.
-      - Contraband
+      # Exodus-begin: retain only the selected upstream restrictions alongside our existing restrictions.
       - ThiefUndeterminedBackpack
-      - AccessOverrider
       - PDA
-      - Pill
       # Exodus-end
       tags:
       - Unstashable
-      - SafetyDepositBlacklist
+      # Exodus: use SafetyDepositRestricted for selected items instead of the upstream SafetyDepositBlacklist tag.
   - type: SafetyDepositBox
   - type: Appearance
   - type: Tag
