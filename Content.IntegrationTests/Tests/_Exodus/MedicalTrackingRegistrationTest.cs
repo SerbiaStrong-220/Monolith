@@ -2,10 +2,13 @@ using System.Numerics;
 using Content.Server._Exodus.MedicalTracking;
 using Content.Server.Body.Components;
 using Content.Server.IdentityManagement;
+using Content.Server.Medical.SuitSensors;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Content.Shared.Implants;
+using Content.Shared.Inventory;
+using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -114,6 +117,10 @@ public sealed class MedicalTrackingRegistrationTest
             try
             {
                 var patient = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, Vector2.Zero));
+                var uniform = entities.SpawnEntity("ClothingUniformJumpsuitColorGrey", new EntityCoordinates(map, Vector2.Zero));
+                Assert.That(entities.System<InventorySystem>().TryEquip(patient, uniform, "jumpsuit"), Is.True);
+                entities.System<SuitSensorSystem>().SetSensor(
+                    (uniform, entities.GetComponent<SuitSensorComponent>(uniform)), SuitSensorMode.SensorCords);
                 test(entities, patient, map, server.ResolveDependency<IGameTiming>().CurTime);
             }
             finally

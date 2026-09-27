@@ -40,6 +40,7 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
         SubscribeLocalEvent<MedicalTrackingBodyComponent, ComponentShutdown>(OnBodyShutdown);
         SubscribeLocalEvent<MedicalTrackingBrainComponent, ComponentShutdown>(OnBrainShutdown);
         InitializeBrainRegistration();
+        InitializeVisibility();
         InitializeTablets();
         InitializePinpointers();
     }
@@ -185,7 +186,7 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
             if (!implant.TrackBody)
                 continue;
 
-            implant.Contact = transform.MapID == MapId.Nullspace ? null : new MedicalTrackingContact(
+            implant.Contact = transform.MapID == MapId.Nullspace || !CanTrackBody((uid, state)) ? null : new MedicalTrackingContact(
                 GetNetEntity(uid), Identity.Name(uid, EntityManager), implant.TierName,
                 new MapCoordinates(_transform.GetWorldPosition(transform), transform.MapID),
                 state.CurrentState, now, implant.TierColor);

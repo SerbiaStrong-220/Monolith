@@ -37,8 +37,7 @@ public sealed partial class MedicalTrackingSystem
         if (args.Target is { } netTarget)
         {
             if (!TryGetEntity(netTarget, out var resolved) || resolved is not { } brain ||
-                TerminatingOrDeleted(brain) || !MetaData(brain).EntityInitialized ||
-                !_brainQuery.TryGetComponent(brain, out var registration) || !registration.Registered)
+                !_brainQuery.TryGetComponent(brain, out var registration) || !CanTrackBrain((brain, registration)))
                 return;
 
             target = brain;
@@ -66,8 +65,8 @@ public sealed partial class MedicalTrackingSystem
             var interval = device.UpdateInterval > TimeSpan.Zero ? device.UpdateInterval : TimeSpan.FromSeconds(1);
             device.NextUpdate += interval * (1 + (now - device.NextUpdate).Ticks / interval.Ticks);
 
-            if (pointer.Target is { } target && (TerminatingOrDeleted(target) ||
-                !_brainQuery.TryGetComponent(target, out var registration) || !registration.Registered))
+            if (pointer.Target is { } target &&
+                (!_brainQuery.TryGetComponent(target, out var registration) || !CanTrackBrain((target, registration))))
             {
                 _pinpointer.SetTarget(uid, null, pointer);
                 if (pointer.IsActive)
@@ -88,7 +87,7 @@ public sealed partial class MedicalTrackingSystem
         var query = EntityQueryEnumerator<MedicalTrackingBrainComponent>();
         while (query.MoveNext(out var uid, out var brain))
         {
-            if (brain.Registered && !TerminatingOrDeleted(uid))
+            if (CanTrackBrain((uid, brain)))
                 brains.Add(new MedicalTrackingBrain(GetNetEntity(uid), brain.ClientName, brain.TierName, brain.TierColor));
         }
 
@@ -99,7 +98,7 @@ public sealed partial class MedicalTrackingSystem
     {
         NetEntity? target = null;
         if (TryComp<PinpointerComponent>(ent, out var pointer) && pointer.Target is { } uid &&
-            !TerminatingOrDeleted(uid) && _brainQuery.TryGetComponent(uid, out var brain) && brain.Registered)
+            _brainQuery.TryGetComponent(uid, out var brain) && CanTrackBrain((uid, brain)))
             target = GetNetEntity(uid);
 
         _ui.SetUiState(ent.Owner, MedicalTrackingUiKey.Pinpointer,

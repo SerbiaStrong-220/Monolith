@@ -48,14 +48,14 @@ public sealed partial class MedicalTrackingSystem
         }
     }
 
-    private List<MedicalTrackingContact> GetContacts()
+    internal List<MedicalTrackingContact> GetContacts()
     {
         var contacts = new List<MedicalTrackingContact>();
         var query = EntityQueryEnumerator<MedicalTrackingBodyComponent>();
         while (query.MoveNext(out var uid, out var body))
         {
             if (!TerminatingOrDeleted(uid) && _implantQuery.TryGetComponent(body.Implant, out var implant) &&
-                implant.Body == uid && implant.Contact is { } contact)
+                implant.Body == uid && implant.Contact is { } contact && CanTrackBody(uid))
                 contacts.Add(contact);
         }
 
