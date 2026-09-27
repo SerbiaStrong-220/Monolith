@@ -73,6 +73,17 @@
     Plutonium: 500
     Americium: 200
 
+# --- HME medical equipment ---
+- type: latheRecipe
+  id: MedicalBeamGun
+  result: MedicalBeamGun
+  completetime: 20
+  materials:
+    Americium: 200
+    Bluespace: 500
+    Diamond: 1000
+    Plasteel: 5000
+
 # --- HME organs ---
 - type: latheRecipe
   id: HmeSynthHeart
@@ -206,6 +217,33 @@
   result: ShieldGeneratorUnsaMachineCircuitboard
 
 # --- The Hive ---
+- type: latheRecipe
+  id: GeneticDisk
+  result: GeneticDisk
+  completetime: 2
+  materials:
+    Steel: 1000
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: GeneticsLaboratoryCircuitboard
+  result: GeneticsLaboratoryCircuitboard
+  materials:
+    Americium: 100
+    Glass: 1000
+    Steel: 1000
+    Gold: 1000
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: GeneticInjectorPrinterCircuitboard
+  result: GeneticInjectorPrinterCircuitboard
+  materials:
+    Glass: 1000
+    Steel: 1000
+    Gold: 1000
+
 - type: latheRecipe
   id: HiveSynthHeart
   result: HiveSynthHeart
@@ -349,6 +387,11 @@
   - LifeInsuranceClonerMachineCircuitboard
 
 - type: latheRecipePack
+  id: CompanyHmeMedicalDynamic
+  recipes:
+  - MedicalBeamGun
+
+- type: latheRecipePack
   id: CompanyHmeOrgansDynamic
   recipes:
   - HmeSynthHeart
@@ -388,6 +431,17 @@
   id: CompanyCdmBoardsDynamic
   recipes:
   - ShieldGeneratorCdmMachineCircuitboard
+
+- type: latheRecipePack
+  id: CompanyHiveGeneticsDynamic
+  recipes:
+  - GeneticDisk
+
+- type: latheRecipePack
+  id: CompanyHiveBoardsDynamic
+  recipes:
+  - GeneticsLaboratoryCircuitboard
+  - GeneticInjectorPrinterCircuitboard
 
 - type: latheRecipePack
   id: CompanyHiveDynamic

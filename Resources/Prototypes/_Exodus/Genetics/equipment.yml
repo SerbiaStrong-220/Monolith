@@ -136,23 +136,3 @@
         - id: GeneticsMutagenBottle
           amount: !type:ConstantNumberSelector
             value: 4
-
-- type: cargoProduct
-  id: GeneticsLaboratorySupplies
-  icon:
-    sprite: _Exodus/Objects/Specific/Genetics/boards.rsi
-    state: laboratory
-  product: CrateGeneticsLaboratory
-  cost: 8000
-  category: cargoproduct-category-name-medical
-  group: market
-
-- type: cargoProduct
-  id: GeneticsBlankDisks
-  icon:
-    sprite: _Exodus/Objects/Specific/Genetics/disk.rsi
-    state: icon
-  product: GeneticDisk
-  cost: 200
-  category: cargoproduct-category-name-medical
-  group: market

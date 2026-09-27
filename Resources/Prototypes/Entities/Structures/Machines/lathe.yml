@@ -276,6 +276,8 @@
     # Exodus-begin company-fleet
     - CompanyBlackhawkDynamic
     - CompanyHorizonDynamic
+    - CompanyHmeMedicalDynamic
+    - CompanyHiveGeneticsDynamic
     - CompanyBratvaDynamic
     - CompanyUllmanDynamic
     - CompanyCdmDynamic
@@ -365,6 +367,7 @@
     - ReactorCircuitboards # FH edit
     # Exodus-begin company-fleet
     - CompanyHorizonBoardsDynamic
+    - CompanyHiveBoardsDynamic
     - CompanyNosskeDynamic
     - CompanyBratvaBoardsDynamic
     - CompanyCdmBoardsDynamic

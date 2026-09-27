@@ -90,13 +90,3 @@
         - id: GeneticsMutagenBottle
           amount: !type:ConstantNumberSelector
             value: 4
-
-- type: cargoProduct
-  id: GeneticInjectorPrinterSupplies
-  icon:
-    sprite: _Exodus/Objects/Specific/Genetics/boards.rsi
-    state: printer
-  product: CrateGeneticInjectorPrinter
-  cost: 4000
-  category: cargoproduct-category-name-medical
-  group: market
