@@ -1,0 +1,14 @@
+- type: gasReaction
+  id: ChlorineTrifluorideContact
+  priority: -3
+  minimumRequirements:
+    ChlorineTrifluoride: 0.1
+  effects:
+  - !type:GasContactReaction
+    fuel: ChlorineTrifluoride
+    product: CarbonDioxide # Gameplay residue, not a simulation of real reaction chemistry.
+    minimumOtherMoles: 0.1
+    burnFraction: 0.25
+    maximumBurnMoles: 10
+    energyPerMole: 60000
+    maximumTemperature: 3000

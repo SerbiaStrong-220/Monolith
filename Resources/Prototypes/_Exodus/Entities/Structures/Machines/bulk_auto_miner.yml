@@ -1,0 +1,188 @@
+- type: entity
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  id: BulkAutoMiningEmitter
+  name: automated mining laser
+  description: A ship-mounted mining laser. Converts excavated rock to liquid metal and supplies it to a refinery through an ore duct underneath. Mining protected grids damages the emitter.
+  components:
+  - type: Machine
+    board: BulkAutoMiningEmitterCircuitboard
+  - type: Construction
+    graph: Machine3x3Partial
+    node: machine
+  - type: WiresPanel
+  - type: BulkAutoMiningEmitter
+    consoleName: bulk-auto-mining-laser-short-name
+    forbiddenTargets:
+      components:
+      - StationMember
+    forbiddenTileDamage:
+      types:
+        Heat: 400
+    slurryMaterial: MiningSlurry
+    slurryPerTile: 200
+    muzzleOffset: 0.375 # Main lens is 12 pixels south of the pivot in the 96x96 head.
+    startSound:
+      path: /Audio/_Exodus/Machines/BulkMining/laser_start.ogg
+      params:
+        volume: 3
+        maxDistance: 14
+  - type: AmbientSound
+    enabled: false
+    range: 14
+    volume: 3
+    sound:
+      path: /Audio/_Exodus/Machines/BulkMining/laser_loop.ogg
+  - type: MaterialStorage
+    storageLimit: 20000
+    insertOnInteract: false
+    canEjectStoredMaterials: false
+    dropOnDeconstruct: false
+    dropOnDestroy: false
+  - type: MiningPipeNetworkMember
+  - type: NodeContainer
+    nodes:
+      pipe: !type:MiningPipeDeviceNode
+        nodeGroupID: ExodusMiningPipe
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/bulk_mining_laser.rsi
+    noRot: false
+    layers:
+    - state: base
+      map: ["enum.BulkAutoMiningVisualLayers.Base"]
+    - state: off
+      map: ["enum.BulkAutoMiningVisualLayers.Head"]
+  - type: Appearance
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Rotatable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 800
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: RadarBlip
+    radarColor: "#e67a22"
+    scale: 1.5
+    visibleFromOtherGrids: true
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: WallDefense1
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 4000
+      behaviors:
+      - !type:ExplodeBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Explosive
+    explosionType: HardBomb
+    totalIntensity: 2000
+    intensitySlope: 3
+    maxIntensity: 200
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Repairable
+    qualities:
+    - Applicating
+  - type: Anchorable
+    flags: Anchorable
+    delay: 10
+  - type: Pullable
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: StaticPrice
+    price: 485234 # Installed board and materials add 1,434,766; complete laser value is 1,920,000.
+  - type: Tag
+    tags:
+    - Structure
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: BulkAutoMiningEmitterCircuitboard
+  name: bulk mining laser board
+  description: An industrial laser control board. Assembly requires three units of americium.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: BulkAutoMiningEmitter
+    frameSize: 3x3
+    flatpackable: false
+    requirements:
+      MatterBin: 6
+      Manipulator: 10
+    stackRequirements:
+      Steel: 250
+      Plasteel: 150
+      Glass: 50
+      Gold: 20
+      Silver: 20
+      Plasma: 15
+      Iridite: 30
+      Americium: 3
+
+- type: entity
+  parent: BaseComputer
+  id: BulkAutoMiningConsole
+  name: mining laser fire-control console
+  description: Select asteroid grids on the radar to coordinate powered mining lasers on this ship.
+  components:
+  - type: BulkAutoMiningConsole
+    maxRange: 512
+    clearableWhitelist:
+      components:
+      - Gatherable
+      tags:
+      - Wall
+      - Ore
+  - type: RadarConsole
+    relativePanning: true
+    maxRange: 512
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: solar_screen
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: generic_panel_open
+  - type: ActivatableUI
+    key: enum.BulkAutoMiningUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BulkAutoMiningUiKey.Key:
+        type: BulkAutoMiningBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: BulkAutoMiningConsoleCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 750
+  - type: PointLight
+    color: "#e6e227"
+  - type: StaticPrice
+    price: 35000
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: BulkAutoMiningConsoleCircuitboard
+  name: mining laser fire-control board
+  description: A circuit board for a mining laser fire-control console.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: BulkAutoMiningConsole

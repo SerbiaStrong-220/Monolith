@@ -130,6 +130,15 @@
   - type: TechnologyDisk
     recipes:
     - SyndicateBombCerberus
+    - BulkAutoMiningConsoleCircuitboard
+    - BulkMiningRefineryCircuitboard
+    - BulkMiningExhaustCircuitboard
+    - BulkMiningPipeStack10
+    - GasPipeArmoredHalf
+    - GasPipeArmoredStraight
+    - GasPipeArmoredBend
+    - GasPipeArmoredTJunction
+    - GasPipeArmoredFourway
 
 - type: entity
   parent: TechDiskBase

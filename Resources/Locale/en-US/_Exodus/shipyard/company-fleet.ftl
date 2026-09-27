@@ -19,3 +19,9 @@ company-vessel-blackhawk-scarab-description = The PMC Blackhawk medium combat fr
 # DME
 company-vessel-dme-umbra-name = DME «Umbra»
 company-vessel-dme-umbra-description = A heavy mining shuttle designed by Dark Matter Enterprises for autonomous resource extraction. The vessel is capable of processing entire asteroids thanks to a powerful system of industrial drills, plasma lasers, and a production department.
+
+# Drake Industries
+company-vessel-drake-mackinaw-name = Drake "Mackinaw"
+company-vessel-drake-mackinaw-description = A Drake Industries mining ship with two mining lasers, an liquid metal refinery, and a cargo hold. Powered by an antimatter engine.
+company-vessel-drake-hulk-name = Drake "Hulk"
+company-vessel-drake-hulk-description = A Drake Industries mining ship with four mining lasers, an liquid metal refinery, and a cargo hold. An expanded antimatter engine powers its mining equipment.

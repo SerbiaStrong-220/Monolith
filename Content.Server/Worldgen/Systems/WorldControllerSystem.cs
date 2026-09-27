@@ -193,6 +193,8 @@ public sealed partial class WorldControllerSystem : EntitySystem
         }
         // Mono edit end.
 
+        AddBulkMiningLoaders(); // Exodus: retain the owning chunks of active mining targets.
+
         var loadedEnum = EntityQueryEnumerator<LoadedChunkComponent, WorldChunkComponent>();
         var chunksUnloaded = 0;
 

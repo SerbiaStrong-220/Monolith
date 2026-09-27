@@ -1,0 +1,70 @@
+# One piece per batch; rare ores consume more liquid metal while sharing the normal refining cycle.
+- type: latheRecipe
+  id: BulkMiningSalt
+  result: Salt1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 150
+
+- type: latheRecipe
+  id: BulkMiningCopper
+  result: CopperOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 200
+
+- type: latheRecipe
+  id: BulkMiningLithium
+  result: LithiumOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 300
+
+- type: latheRecipe
+  id: BulkMiningSilver
+  result: SilverOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 400
+
+- type: latheRecipe
+  id: BulkMiningGold
+  result: GoldOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 600
+
+- type: latheRecipe
+  id: BulkMiningPlasma
+  result: PlasmaOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 800
+
+- type: latheRecipe
+  id: BulkMiningUranium
+  result: UraniumOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 1000
+
+- type: latheRecipe
+  id: BulkMiningBananium
+  result: BananiumOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 1500
+
+- type: latheRecipe
+  id: BulkMiningDiamond
+  result: DiamondOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 2500
+
+- type: latheRecipe
+  id: BulkMiningBluespace
+  result: BluespaceOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 4000

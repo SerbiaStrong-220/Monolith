@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
+using Content.Server._Exodus.NodeContainer; // Exodus: offset pipe ports.
 
 namespace Content.Server.NodeContainer.Nodes
 {
@@ -189,7 +190,10 @@ namespace Content.Server.NodeContainer.Nodes
                 yield break;
 
             var mapSystem = entMan.System<SharedMapSystem>();
-            var pos = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
+            // Exodus-begin: resolve ports at their configured tile rather than the machine's center.
+            var pos = GetConnectionTile(xform, gridEnt, mapSystem);
+            entMan.TryGetComponent(gridEnt, out OffsetPipeNodeGridComponent? offsetPorts);
+            // Exodus-end
 
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
@@ -198,7 +202,7 @@ namespace Content.Server.NodeContainer.Nodes
                 if (!CurrentPipeDirection.HasDirection(pipeDir))
                     continue;
 
-                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, gridEnt, nodeQuery, mapSystem))
+                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, gridEnt, nodeQuery, mapSystem, offsetPorts)) // Exodus
                 {
                     yield return pipe;
                 }
@@ -213,9 +217,10 @@ namespace Content.Server.NodeContainer.Nodes
             PipeDirection pipeDir,
             Entity<MapGridComponent> grid,
             EntityQuery<NodeContainerComponent> nodeQuery,
-            SharedMapSystem mapSystem)
+            SharedMapSystem mapSystem,
+            OffsetPipeNodeGridComponent? offsetPorts) // Exodus
         {
-            foreach (var pipe in PipesInDirection(pos, pipeDir, grid, nodeQuery, mapSystem))
+            foreach (var pipe in PipesInDirection(pos, pipeDir, grid, nodeQuery, mapSystem, offsetPorts)) // Exodus
             {
                 if (pipe.NodeGroupID == NodeGroupID
                     && pipe.CurrentPipeLayer == CurrentPipeLayer
@@ -234,7 +239,8 @@ namespace Content.Server.NodeContainer.Nodes
             PipeDirection pipeDir,
             Entity<MapGridComponent> grid,
             EntityQuery<NodeContainerComponent> nodeQuery,
-            SharedMapSystem mapSystem)
+            SharedMapSystem mapSystem,
+            OffsetPipeNodeGridComponent? offsetPorts) // Exodus
         {
             var offsetPos = pos.Offset(pipeDir.ToDirection());
 
@@ -245,10 +251,18 @@ namespace Content.Server.NodeContainer.Nodes
 
                 foreach (var node in container.Nodes.Values)
                 {
-                    if (node is PipeNode pipe)
+                    if (node is PipeNode pipe && pipe.ConnectionOffset == Vector2i.Zero) // Exodus: offset ports use the index below.
                         yield return pipe;
                 }
             }
+
+            // Exodus-begin
+            if (offsetPorts != null && offsetPorts.Ports.TryGetValue(offsetPos, out var ports))
+            {
+                foreach (var pipe in ports)
+                    yield return pipe;
+            }
+            // Exodus-end
         }
     }
 }

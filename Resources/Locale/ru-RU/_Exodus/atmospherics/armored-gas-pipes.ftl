@@ -1,0 +1,14 @@
+ent-GasPipeArmoredBase = бронированная газовая труба
+    .desc = Ребристая бронированная труба для трифторида хлора. Соединяет переработчик с выбрасывателем; фитинги несовместимы с обычной атмосферной сетью.
+ent-GasPipeArmoredHalf = бронированная газовая труба (концевая)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredStraight = бронированная газовая труба (прямая)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredBend = бронированная газовая труба (угловая)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredTJunction = бронированная газовая труба (Т-образная)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredFourway = бронированная газовая труба (крестовая)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredBroken = сломанная бронированная газовая труба
+    .desc = Пробитая броня и разорванная внутренняя оболочка. Газ больше не удерживает.

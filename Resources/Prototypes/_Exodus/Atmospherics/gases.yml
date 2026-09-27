@@ -1,0 +1,13 @@
+- type: gas
+  id: 13 # Gas.ChlorineTrifluoride; existing gas indices must remain unchanged.
+  name: gases-chlorine-trifluoride
+  specificHeat: 75
+  heatCapacityRatio: 1.2
+  molarMass: 92.45
+  gasOverlaySprite: /Textures/_Exodus/Effects/chlorine_trifluoride.rsi
+  gasOverlayState: gas
+  gasMolesVisible: 0.25
+  color: A5AA70
+  reagent: ChlorineTrifluoride
+  contactFireMoles: 0.1
+  pricePerMole: 0

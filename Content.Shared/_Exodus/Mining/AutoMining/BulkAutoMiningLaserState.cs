@@ -1,0 +1,26 @@
+using Robust.Shared.Serialization;
+
+namespace Content.Shared._Exodus.Mining.AutoMining;
+
+[Serializable, NetSerializable]
+public enum BulkAutoMiningLaserStatus : byte
+{
+    Ready,
+    Mining,
+    Offline,
+    Busy,
+    Full,
+    Blocked,
+    Searching,
+}
+
+[Serializable, NetSerializable]
+public readonly record struct BulkAutoMiningLaserState(
+    NetEntity Emitter,
+    string Name,
+    float CurrentHp,
+    float MaxHp,
+    BulkAutoMiningLaserStatus Status,
+    int Stored,
+    int Capacity,
+    string? ConsoleName = null);

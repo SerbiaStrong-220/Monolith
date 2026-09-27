@@ -133,6 +133,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private void OnStartupEvent(EntityUid uid, NodeContainerComponent component, ComponentStartup args)
         {
+            UpdateOffsetPipePorts((uid, component)); // Exodus: expose offset ports before rebuilding networks.
             foreach (var node in component.Nodes.Values)
             {
                 _nodeGroupSystem.QueueReflood(node);
@@ -143,6 +144,10 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             foreach (var node in component.Nodes.Values)
             {
+                // Exodus-begin
+                if (node is PipeNode pipe)
+                    RemoveOffsetPipePort(pipe);
+                // Exodus-end
                 _nodeGroupSystem.QueueNodeRemove(node);
                 node.Deleting = true;
             }
@@ -165,10 +170,13 @@ namespace Content.Server.NodeContainer.EntitySystems
                 else
                     _nodeGroupSystem.QueueNodeRemove(node);
             }
+
+            UpdateOffsetPipePorts((uid, component)); // Exodus
         }
 
         private void OnReAnchor(EntityUid uid, NodeContainerComponent component, ref ReAnchorEvent args)
         {
+            UpdateOffsetPipePorts((uid, component)); // Exodus: migrate ports when their grid changes.
             foreach (var node in component.Nodes.Values)
             {
                 _nodeGroupSystem.QueueNodeRemove(node);
@@ -178,6 +186,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private void OnMoveEvent(EntityUid uid, NodeContainerComponent container, ref MoveEvent ev)
         {
+            UpdateOffsetPipePorts((uid, container)); // Exodus: offset ports also rotate on four-way nodes.
             if (ev.NewRotation == ev.OldRotation)
             {
                 return;

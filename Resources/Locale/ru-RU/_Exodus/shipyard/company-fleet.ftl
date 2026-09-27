@@ -19,3 +19,9 @@ company-vessel-blackhawk-scarab-description = Средний боевой фре
 # DME
 company-vessel-dme-umbra-name = ДМИ «Умбра»
 company-vessel-dme-umbra-description = Тяжелый шахтерский шаттл корпорации Dark Matter Enterprises, созданный для автономной добычи ресурсов. Судно способно перерабатывать целые астероиды благодаря мощному комплексу из промышленных буров, плазменных лазеров и  производственного отдела.
+
+# Drake Industries
+company-vessel-drake-mackinaw-name = Дрэйк «Макинав»
+company-vessel-drake-mackinaw-description = Шахтёрский корабль Drake Industries с двумя буровыми лазерами, переработчиком жидкого металла и грузовым отсеком. Питается от двигателя антиматерии.
+company-vessel-drake-hulk-name = Дрэйк «Халк»
+company-vessel-drake-hulk-description = Шахтёрский корабль Drake Industries с четырьмя буровыми лазерами, переработчиком жидкого металла и грузовым отсеком. Усиленная установка антиматерии обеспечивает работу добывающего оборудования.

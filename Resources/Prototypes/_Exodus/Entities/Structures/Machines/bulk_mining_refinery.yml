@@ -1,0 +1,263 @@
+- type: damageContainer
+  id: MiningRefinery
+  supportedGroups:
+  - Brute
+  supportedTypes:
+  - Heat
+  - Shock
+  - Caustic
+
+- type: material
+  id: MiningSlurry
+  name: materials-mining-slurry
+  unit: materials-unit-mining-slurry
+  color: "#a57c52"
+  price: 0
+  icon:
+    sprite: _Exodus/Objects/Materials/mining_slurry.rsi
+    state: icon
+
+- type: latheRecipePack
+  id: BulkMiningRefining
+  recipes:
+  - BulkMiningSteelOre
+  - BulkMiningQuartz
+  - BulkMiningCoal
+  - BulkMiningSalt
+  - BulkMiningCopper
+  - BulkMiningLithium
+  - BulkMiningSilver
+  - BulkMiningGold
+  - BulkMiningPlasma
+  - BulkMiningUranium
+  - BulkMiningBananium
+  - BulkMiningDiamond
+  - BulkMiningBluespace
+
+- type: latheRecipe
+  id: BulkMiningSteelOre
+  result: SteelOre1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 100
+
+- type: latheRecipe
+  id: BulkMiningQuartz
+  result: SpaceQuartz1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 100
+
+- type: latheRecipe
+  id: BulkMiningCoal
+  result: Coal1
+  completetime: 1.25
+  materials:
+    MiningSlurry: 150
+
+- type: entity
+  parent: BaseLathe
+  id: BulkMiningRefinery
+  name: liquid metal refinery
+  description: Separates ore from liquid metal and produces extremely toxic chlorine trifluoride. Connect an ore duct underneath and an armored gas pipe just beyond the south edge of the body, two tiles from the center, leading to a mining exhaust injector. Trapped gas corrodes the machine; overfilling causes a powerful explosion.
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.LatheUiKey.Key:
+        type: MiningRefineryBoundUserInterface
+  - type: ExamineIndicator
+    indicator: MiningRefineryGasArrow
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: MiningRefinery
+    exhaustGas: ChlorineTrifluoride
+    exhaustMolesPerBatch: 10
+    exhaustMolesPerSecond: 5
+    corrosionThreshold: 200
+    corrosionDelay: 30
+    explosionThreshold: 400
+    corrosionDamage:
+      types:
+        Caustic: 5
+  - type: Explosive
+    explosionType: HardBomb
+    totalIntensity: 2000
+    intensitySlope: 4
+    maxIntensity: 100
+  - type: MiningPipeNetworkMember
+    supplyMaterials: false
+  - type: NodeContainer
+    nodes:
+      pipe: !type:MiningPipeDeviceNode
+        nodeGroupID: ExodusMiningPipe
+      exhaust: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: South
+        connectionOffset: 0, -1
+        volume: 200
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/bulk_mining_refinery.rsi
+    noRot: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: BulkMiningRefineryCircuitboard
+  - type: Construction
+    graph: BulkMiningRefinery
+    node: machine
+  - type: Damageable
+    damageContainer: MiningRefinery
+  - type: MaterialStorage
+    storageLimit: 60000
+    insertOnInteract: false
+    canEjectStoredMaterials: false
+    dropOnDeconstruct: false
+    dropOnDestroy: false
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    unlitIdleState: unlit
+    unlitRunningState: working
+    defaultProductionAmount: 1
+    outputOffset: 0, -2
+    staticPacks:
+    - BulkMiningRefining
+
+# The arrow points to the first free tile beyond the machine's south edge.
+- type: entity
+  id: MiningRefineryGasArrow
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Markers/teg_arrow.rsi
+    drawdepth: Overlays
+    color: "#D5DB87EE"
+    layers:
+    - state: arrow
+      offset: 0, -1.75
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: BulkMiningRefineryCircuitboard
+  name: liquid metal refinery board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: BulkMiningRefinery
+    frameSize: 3x3
+    requirements:
+      MatterBin: 8
+      Manipulator: 8
+    stackRequirements:
+      Steel: 200
+      Plasteel: 100
+      Glass: 40
+      Gold: 15
+      Silver: 25
+      Plasma: 20
+      Iridite: 10
+      Americium: 1
+
+- type: entity
+  parent: [BaseMachine, ConstructibleMachine]
+  id: BulkMiningExhaust
+  name: mining exhaust injector
+  description: A two-tile exhaust unit that discharges chlorine trifluoride through its north-facing nozzle every 27 seconds. Connect armored gas pipes to the south-facing inlet and aim the nozzle into space.
+  components:
+  - type: Machine
+    board: BulkMiningExhaustCircuitboard
+  - type: WiresPanel
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Rotatable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: AtmosDevice
+  - type: PulsedGasOutlet
+    cycleInterval: 27
+    molesPerPulse: 35
+    outletOffset: 0, 1.6
+    effectDuration: 4
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: South
+        volume: 200
+  - type: Appearance
+  - type: Sprite
+    sprite: _Exodus/Structures/Pipes/mining_exhaust.rsi
+    noRot: false
+    layers:
+    - state: base
+      offset: 0, 0.5
+      map: ["enum.PulsedGasOutletVisualLayers.Body"]
+    - state: light
+      offset: 0, 0.5
+      shader: unshaded
+      map: ["enum.PulsedGasOutletVisualLayers.Indicator"]
+    - state: burst
+      sprite: _Exodus/Effects/mining_exhaust.rsi
+      offset: 0, 4
+      shader: unshaded
+      visible: false
+      loop: false
+      map: ["enum.PulsedGasOutletVisualLayers.Plume"]
+  - type: StaticPrice
+    price: 1500
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: BulkMiningExhaustCircuitboard
+  name: mining exhaust injector board
+  description: A circuit board for an industrial waste gas injector.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: BulkMiningExhaust
+    requirements:
+      MatterBin: 4
+      Manipulator: 4
+    stackRequirements:
+      Steel: 50
+      Plasteel: 30
+      Glass: 10
+      Gold: 5
+      Silver: 10
+      Plasma: 10

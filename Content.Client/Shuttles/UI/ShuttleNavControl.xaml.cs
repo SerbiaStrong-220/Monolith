@@ -1150,6 +1150,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Exodus-end
 
         DrawSafeZones(handle, worldToView, ourGridId); // Exodus - SafeZone
+        DrawAdditionalOverlays(handle, worldToView, xform.MapID, rawBlips, ourGridId); // Exodus: reuse radar blips and the view transform for mining beams.
     }
 
     // Exodus-begin: integrate the upstream filled-grid pre-pass with our detailed radar renderer.

@@ -168,6 +168,7 @@ namespace Content.Shared.Atmos
             [Gas.Ammonia] = Loc.GetString("gas-ammonia-abbreviation"),
             [Gas.BZ] = Loc.GetString("gas-bz-abbreviation"), // Funky/Goob - Ported gas
             [Gas.CarbonDioxide] = Loc.GetString("gas-carbon-dioxide-abbreviation"),
+            [Gas.ChlorineTrifluoride] = Loc.GetString("gas-chlorine-trifluoride-abbreviation"), // Exodus
             [Gas.Frezon] = Loc.GetString("gas-frezon-abbreviation"),
             [Gas.Healium] = Loc.GetString("gas-healium-abbreviation"), // Funky/Goob - Ported gas
             [Gas.Nitrium] = Loc.GetString("gas-nitrium-abbreviation"), // Funky/Goob - Ported gas
@@ -189,6 +190,7 @@ namespace Content.Shared.Atmos
             [Gas.Ammonia] = Loc.GetString("gases-ammonia"),
             [Gas.BZ] = Loc.GetString("gases-bz"), // Funky/Goob - Ported gas
             [Gas.CarbonDioxide] = Loc.GetString("gases-co2"),
+            [Gas.ChlorineTrifluoride] = Loc.GetString("gases-chlorine-trifluoride"), // Exodus
             [Gas.Frezon] = Loc.GetString("gases-frezon"),
             [Gas.Healium] = Loc.GetString("gases-healium"), // Funky/Goob - Ported gas
             [Gas.Nitrium] = Loc.GetString("gases-nitrium"), // Funky/Goob - Ported gas
@@ -228,7 +230,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 13; //Funky/Goob: 9 >> 13
+        public const int TotalNumberOfGases = 14; // Exodus: chlorine trifluoride after the Funky/Goob gases.
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -430,5 +432,6 @@ namespace Content.Shared.Atmos
         Healium = 10, //Funky/Goob
         Nitrium = 11, //Funky/Goob
 		Pluoxium = 12, //Funky/Goob
+        ChlorineTrifluoride = 13, // Exodus: append gases to preserve saved mixtures.
     }
 }

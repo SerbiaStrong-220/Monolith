@@ -1,0 +1,6 @@
+- type: stack
+  id: BulkMiningPipe
+  name: stack-bulk-mining-pipe
+  icon: { sprite: "/Textures/_Exodus/Objects/Tools/mining_pipe_coil.rsi", state: coil-30 }
+  spawn: BulkMiningPipeStack1
+  maxCount: 100

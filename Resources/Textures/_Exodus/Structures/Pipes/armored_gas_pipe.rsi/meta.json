@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pipeHalf",
+      "directions": 4
+    },
+    {
+      "name": "storageHalf"
+    },
+    {
+      "name": "pipeStraight",
+      "directions": 4
+    },
+    {
+      "name": "storageStraight"
+    },
+    {
+      "name": "pipeBend",
+      "directions": 4
+    },
+    {
+      "name": "storageBend"
+    },
+    {
+      "name": "pipeTJunction",
+      "directions": 4
+    },
+    {
+      "name": "storageTJunction"
+    },
+    {
+      "name": "pipeFourway",
+      "directions": 4
+    },
+    {
+      "name": "storageFourway"
+    },
+    {
+      "name": "pipeBroken",
+      "directions": 4
+    },
+    {
+      "name": "pipeConnector",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "Bend-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "Bend-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "TJunction-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "TJunction-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "Fourway-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "Fourway-inhand-right",
+      "directions": 4
+    }
+  ]
+}

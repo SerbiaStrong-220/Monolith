@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared._Exodus.Mining.AutoMining; // Exodus: receive mining beams through the radar feed.
 using Content.Shared._Mono.Radar;
 using Robust.Shared.Map;
 using Robust.Shared.Localization; // Exodus bluespace-map-blips
@@ -148,7 +149,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
                 maybeGrid = grid != EntityUid.Invalid ? grid : null;
             }
 
-            _cachedBlipData.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config, blip.Label));
+            _cachedBlipData.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config, blip.Label, blip.MiningBeam)); // Exodus mining radar beams
         }
 
         return _cachedBlipData;
@@ -198,7 +199,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
                 maybeGrid = grid != EntityUid.Invalid ? grid : null;
             }
 
-            target.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config, blip.Label));
+            target.Add(new(blip.Uid, predictedPos, rotation, maybeGrid, config, blip.Label, blip.MiningBeam)); // Exodus mining radar beams
         }
     }
     // Exodus-end
@@ -277,7 +278,8 @@ public record struct BlipData
     Angle Rotation,
     EntityUid? GridUid,
     BlipConfig Config,
-    LocId? Label
+    LocId? Label,
+    BulkAutoMiningRadarBeam? MiningBeam = null // Exodus: keep beam data on its radar blip, including stale/removal handling.
 );
 
 public record struct MissileVectorData

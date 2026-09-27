@@ -1,0 +1,147 @@
+- type: entity
+  abstract: true
+  id: BulkMiningPipeBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Visibility
+    layer: 1
+  - type: MiningPipe
+    cuttingDelay: 1
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    drawdepth: ThinWire
+    visible: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: SubFloorHide
+  - type: CollideOnAnchor
+  - type: Appearance
+  - type: MiningPipeVis
+    node: pipe
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 0
+    fx: EffectRCDConstruct0
+
+- type: entity
+  parent: BulkMiningPipeBase
+  id: BulkMiningPipe
+  name: ore duct
+  description: A subfloor duct that carries liquid metal. Lay it under machines on exposed plating to connect them.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Pipes/mining_pipe.rsi
+    state: idle_0
+  - type: Icon
+    sprite: _Exodus/Structures/Pipes/mining_pipe.rsi
+    state: flow_3
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:MiningPipeNode
+        nodeGroupID: ExodusMiningPipe
+  - type: MiningPipe
+    pipeDroppedOnCutPrototype: BulkMiningPipeStack1
+    pipeType: Ore
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BulkMiningPipeStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: MiningPipeVisualizer
+
+- type: entity
+  parent: BulkMiningPipe
+  id: BulkMiningPipeUncuttable
+  suffix: uncuttable
+  components:
+  - type: MiningPipe
+    cuttingQuality: null
+
+- type: entity
+  id: BulkMiningPipeStack
+  parent: BaseItem
+  name: ore duct coil
+  suffix: Full
+  description: A coil of subfloor ore ducts for linking automated mining lasers to refineries.
+  components:
+  - type: Tag
+    tags:
+    - CableCoil
+  - type: Stack
+    stackType: BulkMiningPipe
+    count: 100
+    baseLayer: base
+    layerStates:
+    - coil-10
+    - coil-20
+    - coil-30
+  - type: Sprite
+    sprite: _Exodus/Objects/Tools/mining_pipe_coil.rsi
+    state: coil-30
+    layers:
+    - state: coil-30
+      map: ["base"]
+  - type: Item
+    sprite: _Exodus/Objects/Tools/mining_pipe_coil.rsi
+    heldPrefix: coil
+    size: Small
+    storedRotation: -90
+  - type: MiningPipePlacer
+    pipePrototypeId: BulkMiningPipe
+    blockingPipeType: Ore
+  - type: Clickable
+  - type: Appearance
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 3
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 15
+
+- type: entity
+  parent: BulkMiningPipeStack
+  id: BulkMiningPipeStack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: coil-10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: BulkMiningPipeStack
+  id: BulkMiningPipeStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coil-10
+  - type: Stack
+    count: 1

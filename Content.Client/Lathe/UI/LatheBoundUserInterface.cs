@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Lathe.UI
 {
     [UsedImplicitly]
-    public sealed class LatheBoundUserInterface : BoundUserInterface
+    public class LatheBoundUserInterface : BoundUserInterface // Exodus: specialized lathes can add status controls.
     {
         [ViewVariables]
         private LatheMenu? _menu;
@@ -20,6 +20,7 @@ namespace Content.Client.Lathe.UI
 
             _menu = this.CreateWindowCenteredRight<LatheMenu>();
             _menu.SetEntity(Owner);
+            ConfigureMenu(_menu); // Exodus
 
             _menu.OnServerListButtonPressed += _ =>
             {
@@ -36,6 +37,11 @@ namespace Content.Client.Lathe.UI
             _menu.OnSkipCheckboxPressed += (skip) => SendMessage(new LatheSetSkipMessage(skip));
             _menu.OnRecipeCancelled += (index) => SendMessage(new LatheRecipeCancelMessage(index));
             // </Mono>
+        }
+
+        // Exodus: reuse the normal recipe, queue and research controls in specialized machines.
+        protected virtual void ConfigureMenu(LatheMenu menu)
+        {
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

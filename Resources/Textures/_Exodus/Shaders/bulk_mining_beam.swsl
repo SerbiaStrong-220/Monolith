@@ -1,0 +1,64 @@
+light_mode unshaded;
+blend_mode add;
+
+void fragment()
+{
+    // U is distance along the beam; the formation zone stays next to the muzzle.
+    highp float across = UV.y * 2.0 - 1.0;
+
+    // Keep fragments readable on radar and at low zoom. Only boundaries are antialiased.
+#ifdef HAS_DFDX
+    highp float pixelX = length(vec2(dFdx(UV.x), dFdy(UV.x)));
+    highp float distanceScale = min(1.0, 0.0625 / max(pixelX, 0.0001));
+    highp float aaX = max(pixelX * distanceScale * 0.65, 0.002);
+    highp float aaY = max(fwidth(across) * 0.65, 0.003);
+#else
+    highp float distanceScale = 1.0;
+    highp float aaX = 0.025;
+    highp float aaY = 0.06;
+#endif
+
+    highp float along = max(UV.x, 0.0) * distanceScale;
+    highp float wave = sin(along * 6.0 - TIME * 10.0);
+    highp float shimmer = 0.5 + 0.5 * sin(along * 11.0 - TIME * 18.0);
+    highp float radius = abs(across - wave * 0.018);
+    highp float body = 1.0 - smoothstep(0.38 - aaY, 0.38 + aaY, radius);
+    highp float core = 1.0 - smoothstep(0.12 - aaY, 0.12 + aaY, radius);
+    highp float rim = 1.0 - smoothstep(0.46 - aaY, 0.46 + aaY, radius);
+    highp float filament = 1.0 - smoothstep(0.025, 0.025 + aaY,
+        abs(abs(across) - 0.25 - wave * 0.035));
+
+    highp vec3 color = vec3(0.95, 0.26, 0.025) * rim * 0.20
+        + vec3(1.0, 0.57, 0.10) * body * (0.44 + shimmer * 0.09)
+        + vec3(0.82, 0.90, 1.0) * core * 0.80
+        + vec3(1.0, 0.80, 0.34) * filament * (0.13 + shimmer * 0.10);
+
+    // Three staggered streams of rounded micro-segments merge into the solid core.
+    // This extra work is confined to the formation zone, with no particle entities or textures.
+    if (along < 1.6)
+    {
+        highp float formation = smoothstep(0.55, 1.6, along);
+        highp float lane = clamp(floor(across / 0.24 + 0.5), -1.0, 1.0);
+        highp float travel = along / 0.28 - TIME * 8.0 + lane * 0.37;
+        highp float variation = fract(floor(travel) * 0.618034 + lane * 0.43);
+        highp float cell = (fract(travel) - 0.5) * 0.28;
+        highp float shardRadius = 0.024 + variation * 0.01;
+        highp float shardDistance = length(vec2(max(abs(cell) - 0.025 - variation * 0.035, 0.0),
+            (across - lane * 0.24 - (variation - 0.5) * 0.04) * 0.5));
+        highp float shardAA = max(aaX, aaY * 0.5);
+        highp float shards = 1.0 - smoothstep(shardRadius - shardAA, shardRadius + shardAA, shardDistance);
+
+        // Average sub-pixel fragments instead of flashing them on distant views.
+        highp float detail = 1.0 - smoothstep(0.045, 0.11, shardAA);
+        highp float stream = mix(body * 0.40, shards, detail);
+        highp vec3 fragmentColor = mix(vec3(1.0, 0.43, 0.07), vec3(1.0, 0.91, 0.60),
+            1.0 - abs(lane) * 0.65);
+        color = mix(fragmentColor * stream * (0.75 + variation * 0.25), color, formation);
+    }
+
+    // Every layer vanishes before the near edge of the quad, removing the flat cut at the muzzle.
+    highp float start = smoothstep(0.015, 0.16, along);
+    color *= start;
+    highp float alpha = clamp(max(max(color.r, color.g), color.b), 0.0, 1.0);
+    COLOR = vec4(color / max(alpha, 0.001), alpha);
+}

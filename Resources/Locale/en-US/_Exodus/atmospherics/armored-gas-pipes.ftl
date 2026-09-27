@@ -1,0 +1,14 @@
+ent-GasPipeArmoredBase = armored gas pipe
+    .desc = A ribbed, armored pipe for chlorine trifluoride. Connects the refinery to its exhaust injector; its fittings are incompatible with ordinary atmospheric plumbing.
+ent-GasPipeArmoredHalf = armored gas pipe (capped)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredStraight = armored gas pipe (straight)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredBend = armored gas pipe (elbow)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredTJunction = armored gas pipe (T-junction)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredFourway = armored gas pipe (four-way)
+    .desc = { ent-GasPipeArmoredBase.desc }
+ent-GasPipeArmoredBroken = broken armored gas pipe
+    .desc = Ruptured armor and torn inner lining. It can no longer carry gas.

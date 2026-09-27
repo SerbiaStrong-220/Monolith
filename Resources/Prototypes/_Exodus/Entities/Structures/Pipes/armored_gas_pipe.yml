@@ -1,0 +1,194 @@
+# Uses the normal PipeNode/PipeNet simulation with an isolated fitting group.
+- type: entity
+  abstract: true
+  parent: GasPipeSansLayers
+  id: GasPipeArmoredBase
+  name: armored gas pipe
+  description: A ribbed, armored conduit for corrosive refinery exhaust. Its fittings are incompatible with ordinary atmospheric pipes.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+  - type: Item
+    sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+  - type: PipeAppearance
+    sprite:
+    - { sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi, state: pipeConnector }
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GasPipeArmoredBroken:
+            min: 1
+            max: 1
+        offset: 0
+      - !type:DoActsBehavior
+        acts: [Breakage]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 0
+      Plasteel: 200
+  - type: StaticPrice
+    price: 60
+
+- type: entity
+  parent: GasPipeArmoredBase
+  id: GasPipeArmoredHalf
+  name: armored gas pipe (capped)
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: South
+  - type: Sprite
+    layers:
+    - state: pipeHalf
+      map: ["enum.PipeVisualLayers.Pipe"]
+  - type: Construction
+    graph: GasPipeArmored
+    node: half
+  - type: Item
+    size: Small
+    storedSprite:
+      sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+      state: storageHalf
+
+- type: entity
+  parent: GasPipeArmoredBase
+  id: GasPipeArmoredStraight
+  name: armored gas pipe (straight)
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: Longitudinal
+  - type: Sprite
+    layers:
+    - state: pipeStraight
+      map: ["enum.PipeVisualLayers.Pipe"]
+  - type: Construction
+    graph: GasPipeArmored
+    node: straight
+  - type: Item
+    size: Normal
+    storedSprite:
+      sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+      state: storageStraight
+
+- type: entity
+  parent: GasPipeArmoredBase
+  id: GasPipeArmoredBend
+  name: armored gas pipe (elbow)
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: SWBend
+  - type: Sprite
+    layers:
+    - state: pipeBend
+      map: ["enum.PipeVisualLayers.Pipe"]
+  - type: Construction
+    graph: GasPipeArmored
+    node: bend
+  - type: Item
+    size: Small
+    heldPrefix: Bend
+    storedSprite:
+      sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+      state: storageBend
+
+- type: entity
+  parent: GasPipeArmoredBase
+  id: GasPipeArmoredTJunction
+  name: armored gas pipe (T-junction)
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: TSouth
+  - type: Sprite
+    layers:
+    - state: pipeTJunction
+      map: ["enum.PipeVisualLayers.Pipe"]
+  - type: Construction
+    graph: GasPipeArmored
+    node: tjunction
+  - type: Item
+    size: Normal
+    heldPrefix: TJunction
+    storedSprite:
+      sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+      state: storageTJunction
+
+- type: entity
+  parent: GasPipeArmoredBase
+  id: GasPipeArmoredFourway
+  name: armored gas pipe (four-way)
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: Fourway
+  - type: Sprite
+    layers:
+    - state: pipeFourway
+      map: ["enum.PipeVisualLayers.Pipe"]
+  - type: Construction
+    graph: GasPipeArmored
+    node: fourway
+  - type: Item
+    size: Normal
+    heldPrefix: Fourway
+    storedSprite:
+      sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+      state: storageFourway
+
+- type: entity
+  parent: GasPipeArmoredBase
+  id: GasPipeArmoredBroken
+  name: broken armored gas pipe
+  description: Ruptured armor and torn inner lining. It can no longer carry gas.
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeBroken
+      map: ["enum.PipeVisualLayers.Pipe"]
+  - type: Item
+    size: Small
+    storedSprite:
+      sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
+      state: pipeBroken
+  - type: Construction
+    graph: GasPipeArmored
+    node: broken
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 0
+      Plasteel: 100
+  - type: StaticPrice
+    price: 30
