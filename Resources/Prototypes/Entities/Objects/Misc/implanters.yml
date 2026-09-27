@@ -53,6 +53,10 @@
       - StimulantsImplant
       - CombatImplant
       - VirusImmunityImplant # SS220 / Exodus: immunity ends when the implant is extracted.
+      - MedicalTrackingImplantBasic # Exodus medical service tiers
+      - MedicalTrackingImplantSilver # Exodus medical service tiers
+      - MedicalTrackingImplantGold # Exodus medical service tiers
+      - MedicalTrackingImplantPlatinum # Exodus medical service tiers
       # Exodus-Implants-End
       deimplantFailureDamage:
         types:

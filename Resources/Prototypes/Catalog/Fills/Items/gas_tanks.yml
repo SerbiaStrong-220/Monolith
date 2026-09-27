@@ -135,6 +135,10 @@
         NitrousOxide: 0.014251686 # 5% N2O
         # 0.285033721       total
       temperature: 293.15
+  # Exodus-begin: nominal supply includes the added nitrous oxide
+  - type: GasTankFillIndicator
+    nominalMoles: 0.285033721
+  # Exodus-end
 
 - type: entity
   id: AirTankFilled
@@ -151,6 +155,10 @@
         Nitrogen: 3.200151318 # 78% nitrogen
         # 4.10275810       total
       temperature: 293.15
+  # Exodus-begin: this tank starts with twice the standard filling pressure
+  - type: GasTankFillIndicator
+    nominalMoles: 4.10275810
+  # Exodus-end
 
 - type: entity
   id: NitrogenTankFilled

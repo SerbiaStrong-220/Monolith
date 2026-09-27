@@ -45,7 +45,7 @@ public sealed partial class PinpointerSystem : SharedPinpointerSystem
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
+        if (args.Handled || !args.Complex || !component.ToggleOnInteract) // Exodus UI-controlled pinpointers
             return;
 
         TogglePinpointer(uid, component);

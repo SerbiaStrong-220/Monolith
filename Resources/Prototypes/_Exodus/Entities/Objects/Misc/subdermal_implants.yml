@@ -80,12 +80,17 @@
     - DeathAcidifier
 
 - type: entity
-  parent: MedicalTrackingImplant
+  parent: BaseSubdermalImplant
   id: AsakimTrackingImplant
   name: asakim tracking implant
   description: This implant reports critical life signs to the Asakim remnants channel.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SubdermalImplant
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
   - type: Rattle
     radioChannel: Remnants
     language: Azaziba

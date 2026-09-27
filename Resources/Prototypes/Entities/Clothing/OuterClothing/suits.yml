@@ -79,6 +79,11 @@
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
   components:
+  # Exodus-begin: pressure-sealed suit protection against infection.
+  - type: VirusProtection
+    vectors: Contact, Proximity, Splash
+    blockChance: 0.9
+  # Exodus-end
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: Clothing
@@ -308,6 +313,11 @@
   suffix: Hardsuit, DO NOT MAP
   categories: [ DoNotMap ]
   components:
+  # Exodus-begin: hardsuit protection against infection.
+  - type: VirusProtection
+    vectors: Contact, Proximity, Splash
+    blockChance: 0.9
+  # Exodus-end
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000

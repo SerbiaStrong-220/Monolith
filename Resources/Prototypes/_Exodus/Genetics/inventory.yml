@@ -1,0 +1,12 @@
+- type: inventoryTemplate
+  id: GeneticPocket
+  slots:
+  - name: geneticPocket
+    slotTexture: pocket
+    fullTextureName: template_small
+    slotFlags: POCKET
+    slotGroup: MainHotbar
+    stripTime: 3
+    uiWindowPos: 3,3
+    strippingWindowPos: 4,4
+    displayName: genetics-inventory-pocket

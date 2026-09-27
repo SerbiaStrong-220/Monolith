@@ -6,6 +6,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Client._Exodus.MedicalTracking; // Exodus medical service HUD borders
 
 namespace Content.Client.StatusIcon;
 
@@ -18,6 +19,7 @@ public sealed partial class StatusIconOverlay : Overlay
     private readonly SpriteSystem _sprite;
     private readonly TransformSystem _transform;
     private readonly StatusIconSystem _statusIcon;
+    private readonly MedicalTrackingHudSystem _medicalTrackingHud; // Exodus medical service HUD borders
     private readonly ShaderInstance _unshadedShader;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -29,6 +31,7 @@ public sealed partial class StatusIconOverlay : Overlay
         _sprite = _entity.System<SpriteSystem>();
         _transform = _entity.System<TransformSystem>();
         _statusIcon = _entity.System<StatusIconSystem>();
+        _medicalTrackingHud = _entity.System<MedicalTrackingHudSystem>(); // Exodus medical service HUD borders
         _unshadedShader = _prototype.Index<ShaderPrototype>("unshaded").Instance();
     }
 
@@ -117,6 +120,10 @@ public sealed partial class StatusIconOverlay : Overlay
                     handle.UseShader(_unshadedShader);
 
                 var position = new Vector2(xOffset, yOffset);
+                // Exodus-begin medical service HUD borders
+                if (proto is HealthIconPrototype && _medicalTrackingHud.TryDrawIcon(uid, handle, position, texture))
+                    continue;
+                // Exodus-end
                 handle.DrawTexture(texture, position);
             }
 

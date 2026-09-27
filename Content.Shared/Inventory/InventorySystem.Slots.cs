@@ -64,7 +64,7 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
             return;
 
-        component.Slots = invTemplate.Slots;
+        component.Slots = GetExtendedSlots((uid, component), invTemplate); // Exodus: preserve additional slots.
         component.Containers = new ContainerSlot[component.Slots.Length];
         for (var i = 0; i < component.Containers.Length; i++)
         {
@@ -88,9 +88,7 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out InventoryTemplatePrototype? invTemplate))
             return;
 
-        DebugTools.Assert(ent.Comp.Slots.Length == invTemplate.Slots.Length);
-
-        ent.Comp.Slots = invTemplate.Slots;
+        ApplySlotDefinitions(ent, GetExtendedSlots(ent, invTemplate)); // Exodus: reconcile added/removed slots.
 
         var ev = new InventoryTemplateUpdated();
         RaiseLocalEvent(ent, ref ev);
@@ -216,7 +214,9 @@ public partial class InventorySystem : EntitySystem
     {
         var newPrototype = _prototypeManager.Index(newTemplate);
 
-        if (!newPrototype.Slots.Select(x => x.Name).SequenceEqual(ent.Comp.Slots.Select(x => x.Name)))
+        // Exodus: compatibility concerns the base templates, not independently supplied slots.
+        var oldPrototype = _prototypeManager.Index<InventoryTemplatePrototype>(ent.Comp.TemplateId);
+        if (!newPrototype.Slots.Select(x => x.Name).SequenceEqual(oldPrototype.Slots.Select(x => x.Name)))
             throw new ArgumentException("Incompatible inventory template!");
 
         ent.Comp.TemplateId = newTemplate;

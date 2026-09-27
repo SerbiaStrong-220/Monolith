@@ -12,6 +12,10 @@
     #    - HeadTop # WWDP - Because visible horns its cool
     - HeadSide
   - type: Hunger
+  # Exodus-begin: native genetic deflection, shared by all biological Asakim variants.
+  - type: Genome
+    initialMutations: [GeneticJump]
+  # Exodus-end
   - type: TTS # Exodus: shared sex-matched voices for Asakim, including ghost roles and clones.
     randomVoicesList: Asakim
   - type: Puller

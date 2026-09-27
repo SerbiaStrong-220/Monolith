@@ -168,21 +168,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem
         if (!Resolve(source, ref sourceHumanoid) || !Resolve(target, ref targetHumanoid))
             return;
 
-        targetHumanoid.Species = sourceHumanoid.Species;
-        targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
-        targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
-        targetHumanoid.Age = sourceHumanoid.Age;
-        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
-        targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
-        targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
-
-        SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid); // Corvax-TTS
-
-        targetHumanoid.Gender = sourceHumanoid.Gender;
-        if (TryComp<GrammarComponent>(target, out var grammar))
-            grammar.Gender = sourceHumanoid.Gender;
-
-        Dirty(target, targetHumanoid);
+        ApplyAppearance((target, targetHumanoid), sourceHumanoid); // Exodus: also supports detached appearance snapshots.
     }
 
     /// <summary>

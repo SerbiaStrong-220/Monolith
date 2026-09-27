@@ -1,0 +1,83 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:medical="clr-namespace:Content.Client._Exodus.MedicalTracking"
+                      xmlns:system="clr-namespace:System;assembly=System.Runtime"
+                      Title="{Loc 'medical-tracking-pinpointer-title'}"
+                      SetSize="460 560" MinSize="380 420">
+    <BoxContainer Orientation="Vertical" SeparationOverride="6" Margin="6">
+        <PanelContainer StyleClasses="MedicalHeader">
+            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                <medical:MedicalTrackingEmblem VerticalAlignment="Center" />
+                <BoxContainer Orientation="Vertical" SeparationOverride="0" HorizontalExpand="True">
+                    <Label Text="{Loc 'medical-tracking-dispatch'}" ClipText="True">
+                        <Label.StyleClasses>
+                            <system:String>LabelHeading</system:String>
+                            <system:String>MedicalAccent</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                    <Label Text="{Loc 'medical-tracking-pinpointer-subtitle'}" ClipText="True" ToolTip="{Loc 'medical-tracking-pinpointer-subtitle'}">
+                        <Label.StyleClasses>
+                            <system:String>LabelSubText</system:String>
+                            <system:String>MedicalMuted</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+        <PanelContainer StyleClasses="MedicalPanel">
+            <BoxContainer Orientation="Vertical" SeparationOverride="6">
+                <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                    <PanelContainer StyleClasses="MedicalMap">
+                        <SpriteView Name="Pointer" SetSize="64 64" Scale="2 2" />
+                    </PanelContainer>
+                    <BoxContainer Orientation="Vertical" SeparationOverride="2" HorizontalExpand="True" VerticalAlignment="Center">
+                        <Label Text="{Loc 'medical-tracking-pinpointer-target'}">
+                            <Label.StyleClasses>
+                                <system:String>LabelSubText</system:String>
+                                <system:String>MedicalMuted</system:String>
+                            </Label.StyleClasses>
+                        </Label>
+                        <Label Name="TargetName" Text="{Loc 'medical-tracking-select-patient'}" ClipText="True">
+                            <Label.StyleClasses>
+                                <system:String>LabelHeading</system:String>
+                                <system:String>MedicalText</system:String>
+                            </Label.StyleClasses>
+                        </Label>
+                        <Label Name="TargetTier" StyleClasses="LabelSubText" Visible="False" ClipText="True" />
+                    </BoxContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                    <Label Name="SignalStatus" HorizontalExpand="True" VerticalAlignment="Center" ClipText="True">
+                        <Label.StyleClasses>
+                            <system:String>LabelSubText</system:String>
+                            <system:String>MedicalMuted</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                    <Button Name="ClearTarget" Text="{Loc 'medical-tracking-clear'}" StyleClasses="MedicalButton" Disabled="True" />
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+        <PanelContainer StyleClasses="MedicalPanel" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" SeparationOverride="6">
+                <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                    <Label Text="{Loc 'medical-tracking-client-list'}" HorizontalExpand="True">
+                        <Label.StyleClasses>
+                            <system:String>LabelSubText</system:String>
+                            <system:String>MedicalMuted</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                    <Label Name="ClientCount">
+                        <Label.StyleClasses>
+                            <system:String>LabelSubText</system:String>
+                            <system:String>MedicalAccent</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                </BoxContainer>
+                <LineEdit Name="Search" PlaceHolder="{Loc 'medical-tracking-search'}" />
+                <ScrollContainer Name="ClientScroll" VerticalExpand="True" HScrollEnabled="False" MinHeight="80">
+                    <BoxContainer Name="Brains" Orientation="Vertical" SeparationOverride="3" />
+                </ScrollContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

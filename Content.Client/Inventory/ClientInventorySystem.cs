@@ -73,6 +73,8 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(InventorySlotsComponent component, DidUnequipEvent args)
         {
+            if (!component.SlotData.ContainsKey(args.Slot)) // Exodus: a dynamic slot may already be gone.
+                return;
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalEntity)
                 return;
@@ -82,6 +84,8 @@ namespace Content.Client.Inventory
 
         private void OnDidEquip(InventorySlotsComponent component, DidEquipEvent args)
         {
+            if (!component.SlotData.ContainsKey(args.Slot)) // Exodus: ignore stale events for removed slots.
+                return;
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalEntity)
                 return;
@@ -242,11 +246,7 @@ namespace Content.Client.Inventory
 
             if (TryComp(ent, out InventorySlotsComponent? inventorySlots))
             {
-                foreach (var slot in ent.Comp.Slots)
-                {
-                    if (inventorySlots.SlotData.TryGetValue(slot.Name, out var slotData))
-                        slotData.SlotDef = slot;
-                }
+                ReconcileSlotControls(ent, inventorySlots); // Exodus: include added and removed slots.
             }
         }
 

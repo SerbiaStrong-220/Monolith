@@ -38,7 +38,7 @@
     - type: ChatRank
       rank: cc-overseer
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ] # Mono - remove TSFMC implant
+    implants: [ MindShieldImplant, MedicalTrackingImplantRuby ] # Exodus medical service coverage; Mono - remove TSFMC implant
   - !type:AddComponentSpecial
     components:
     - type: CommandStaff

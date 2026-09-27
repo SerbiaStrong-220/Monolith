@@ -17,7 +17,7 @@ public abstract partial class SharedScaleVisualsSystem : EntitySystem
 
     private void OnMapInit(Entity<ScaleVisualsComponent> ent, ref MapInitEvent args)
     {
-        SetSpriteScale(ent.Owner, ent.Comp.Scale);
+        SetSpriteScale(ent.Owner, ent.Comp.Scale, ent.Comp.RelativeToOriginal); // Exodus: preserve the scaling mode.
     }
 
     private void OnComponentShutdown(Entity<ScaleVisualsComponent> ent, ref ComponentShutdown args)
@@ -34,14 +34,16 @@ public abstract partial class SharedScaleVisualsSystem : EntitySystem
     /// <summary>
     /// Used to set the <see cref="Robust.Client.GameObjects.SpriteComponent.Scale"/> datafield to a certain value from the server.
     /// </summary>
-    public void SetSpriteScale(EntityUid uid, Vector2 scale)
+    public void SetSpriteScale(EntityUid uid, Vector2 scale, bool relativeToOriginal = false) // Exodus: optional scaling relative to the original sprite.
     {
         var comp = EnsureComp<ScaleVisualsComponent>(uid);
         comp.Scale = scale;
+        comp.RelativeToOriginal = relativeToOriginal; // Exodus
         Dirty(uid, comp);
 
         var appearanceComponent = EnsureComp<AppearanceComponent>(uid);
         _appearance.SetData(uid, ScaleVisuals.Scale, scale, appearanceComponent);
+        _appearance.SetData(uid, ScaleVisuals.RelativeToOriginal, relativeToOriginal, appearanceComponent); // Exodus
 
         // Raise an event for content use.
         var ev = new ScaleEntityEvent(uid, scale);
@@ -74,4 +76,5 @@ public readonly record struct ScaleEntityEvent(EntityUid Uid, Vector2 Scale);
 public enum ScaleVisuals : byte
 {
     Scale,
+    RelativeToOriginal, // Exodus
 }

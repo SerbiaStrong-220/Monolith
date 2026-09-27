@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 12/23/2025 05:09:04
-  entityCount: 754
+  entityCount: 757 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -5238,4 +5238,38 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,7.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticHeavy
+  entities:
+  - uid: 755
+    components:
+    - type: Transform
+      pos: -7.5,7.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 756
+    components:
+    - type: Transform
+      pos: 5.5,7.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 757
+    components:
+    - type: Transform
+      pos: -4.5,17.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 758
+    components:
+    - type: Transform
+      pos: 2.5,17.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

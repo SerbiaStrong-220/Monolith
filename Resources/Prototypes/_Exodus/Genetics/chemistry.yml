@@ -1,0 +1,36 @@
+- type: reagent
+  id: Genostabilin
+  name: reagent-name-genostabilin
+  group: Medicine
+  desc: reagent-desc-genostabilin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#69bcb4"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:StabilizeGenome
+
+- type: reaction
+  id: Genostabilin
+  reactants:
+    StableMutagen:
+      amount: 1
+    Phalanximine:
+      amount: 1
+    Dylovene:
+      amount: 1
+  products:
+    Genostabilin: 3
+
+- type: entity
+  parent: BaseChemistryEmptyBottle
+  id: GenostabilinChemistryBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Genostabilin
+          Quantity: 30

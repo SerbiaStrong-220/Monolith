@@ -398,13 +398,24 @@ namespace Content.Server.VendingMachines
                     // If we paid completely, pay our station taxes
                     if (paidFully)
                     {
-                        foreach (var (account, taxCoeff) in component.TaxAccounts)
+                        // Exodus-begin direct product revenue, replacing the usual tax split.
+                        var inventory = _prototypeManager.Index<VendingMachineInventoryPrototype>(component.PackPrototypeId);
+                        if (inventory.RevenueAccounts.TryGetValue(itemId, out var recipient))
                         {
-                            if (!float.IsFinite(taxCoeff) || taxCoeff <= 0.0f)
-                                continue;
-                            var tax = (int)Math.Floor(totalPrice * taxCoeff);
-                            _bankSystem.TrySectorDeposit(account, tax, LedgerEntryType.VendorTax);
+                            if (totalPrice > 0 && !_bankSystem.TrySectorDeposit(recipient, totalPrice, LedgerEntryType.ProductSales))
+                                Log.Error($"Could not credit {totalPrice} to {recipient} for vending product {itemId}.");
                         }
+                        else
+                        {
+                            foreach (var (account, taxCoeff) in component.TaxAccounts)
+                            {
+                                if (!float.IsFinite(taxCoeff) || taxCoeff <= 0.0f)
+                                    continue;
+                                var tax = (int)Math.Floor(totalPrice * taxCoeff);
+                                _bankSystem.TrySectorDeposit(account, tax, LedgerEntryType.VendorTax);
+                            }
+                        }
+                        // Exodus-end
                     }
 
                     // Something was ejected, update the vending component's state

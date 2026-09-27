@@ -283,6 +283,11 @@ public sealed partial class StaminaSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
+        // Exodus: allow source-owned modifiers to affect all stamina damage paths.
+        value = ev.Value;
+        if (value == 0)
+            return;
+
         // Have we already reached the point of max stamina damage?
         if (component.Critical && immediate)
         {

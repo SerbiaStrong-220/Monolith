@@ -26,6 +26,10 @@
   - Frontier
   - StationTrafficController
   special:
+  # Exodus-begin medical service coverage
+  - !type:AddImplantSpecial
+    implants: [ MedicalTrackingImplantGold ]
+  # Exodus-end
   - !type:AddComponentSpecial
     components:
     - type: NpcFactionMember # Exodus SecColossus faction

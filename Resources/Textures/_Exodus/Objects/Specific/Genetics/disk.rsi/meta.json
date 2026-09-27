@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "For Exodus by Renascitur (disc: renascitur). Original disk and in-hand artwork; placement follows the standard SS14 hand anchors. Hive mark adapted from _Exodus/Interface/Misc/company_icons.rsi by NullReference (Discord: nrfr), CC-BY-SA-4.0.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

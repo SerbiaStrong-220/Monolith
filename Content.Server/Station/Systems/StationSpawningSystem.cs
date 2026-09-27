@@ -192,6 +192,7 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
             long initialBankBalance = profile!.BankBalance; //Frontier
             initialBankBalance += session == null ? 0l : _coins.GetMonoCoinsBalance(session.UserId) ?? 0l;
             var bankBalance = initialBankBalance; //Frontier
+            Dictionary<SectorBankAccount, int>? loadoutRevenue = null; // Exodus paid loadout recipients
             bool hasBalance = false; // Frontier
 
             // Note: since this is stored per character, we don't have a cached
@@ -226,6 +227,15 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
                         bankBalance -= int.Max(0, loadoutProto.Price); // Treat negatives as zero.
                         EquipStartingGear(entity.Value, loadoutProto, raiseEvent: false);
                         equippedItems.Add(loadoutProto.ID);
+
+                        // Exodus-begin account only for purchased items, excluding free fallbacks.
+                        if (loadoutProto.Price > 0 && loadoutProto.RevenueAccount is { } recipient)
+                        {
+                            loadoutRevenue ??= new();
+                            loadoutRevenue.TryGetValue(recipient, out var revenue);
+                            loadoutRevenue[recipient] = revenue + loadoutProto.Price;
+                        }
+                        // Exodus-end
 
                         // Add support for IPC encryption keys from loadout headsets
                         if (HasComp<EncryptionKeyHolderComponent>(entity.Value))
@@ -294,7 +304,10 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
             if (hasBalance)
             {
                 // also spend long-term currency on this
-                _bank.TryBankWithdraw(session!, prefs!, profile!, (int)(initialBankBalance - bankBalance), out var newBalance, true);
+                // Exodus-begin only credit revenue after a successful payment.
+                if (_bank.TryBankWithdraw(session!, prefs!, profile!, (int)(initialBankBalance - bankBalance), out var newBalance, true))
+                    DepositLoadoutRevenue(loadoutRevenue);
+                // Exodus-end
             }
             /// End Frontier: overwriting EquipRoleLoadout
         }

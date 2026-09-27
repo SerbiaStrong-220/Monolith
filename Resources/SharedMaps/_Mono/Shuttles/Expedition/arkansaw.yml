@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/20/2025 20:52:36
-  entityCount: 3336
+  entityCount: 3347 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -22468,4 +22468,122 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,20.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 3337
+    components:
+    - type: Transform
+      pos: 10.5,8.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3338
+    components:
+    - type: Transform
+      pos: -9.5,20.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3339
+    components:
+    - type: Transform
+      pos: 10.5,-8.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3340
+    components:
+    - type: Transform
+      pos: 10.5,23.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3341
+    components:
+    - type: Transform
+      pos: -9.5,8.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3342
+    components:
+    - type: Transform
+      pos: 0.5,33.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 3345
+    components:
+    - type: Transform
+      pos: 10.5,20.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3346
+    components:
+    - type: Transform
+      pos: -9.5,23.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3347
+    components:
+    - type: Transform
+      pos: -9.5,-8.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3348
+    components:
+    - type: Transform
+      pos: -11.5,-31.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 3349
+    components:
+    - type: Transform
+      pos: 0.5,-33.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 3350
+    components:
+    - type: Transform
+      pos: 12.5,-31.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 3351
+    components:
+    - type: Transform
+      pos: 13.5,-30.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3352
+    components:
+    - type: Transform
+      pos: -12.5,-30.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyLight
+  entities:
+  - uid: 3343
+    components:
+    - type: Transform
+      pos: 12.5,-23.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 3344
+    components:
+    - type: Transform
+      pos: 12.5,-17.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

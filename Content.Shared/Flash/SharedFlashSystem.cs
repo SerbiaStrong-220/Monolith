@@ -158,6 +158,12 @@ public abstract partial class SharedFlashSystem : EntitySystem
         if (attempt.Cancelled)
             return;
 
+        // Exodus-begin: physiological sensitivity stacks without removing equipment immunity.
+        var duration = new Content.Shared._Exodus.Genetics.FlashDurationModifyEvent(flashDuration);
+        RaiseLocalEvent(target, ref duration);
+        flashDuration = duration.Duration;
+        // Exodus-end
+
         // don't paralyze, slowdown or convert to rev if the target is immune to flashes
         if (!_statusEffectsSystem.TryAddStatusEffect<FlashedComponent>(target, FlashedKey, flashDuration, true))
             return;

@@ -1,7 +1,7 @@
 #Medical implants
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: MedicalTrackingImplantSilver # Exodus legacy implants retain sector coverage and participate in tier replacement.
   id: MedicalTrackingImplant
   name: medical tracking implant
   description: This implant has a tracking device monitor for the Medical radio channel.

@@ -35,7 +35,11 @@ public sealed partial class ShipRepairDroneSystem
             if (!queue.Reservations.TryGetValue(work.Target, out var owner) || owner != ent.Owner)
                 continue;
             queue.Reservations.Remove(work.Target);
-            if (queue.TargetStages.TryGetValue(work.Target, out var stage) && queue.Stages[stage].Reserved.Remove(work.Target))
+            // A failed approach is on cooldown, not newly available work. Restarting every drone's
+            // stage probe here can starve later stages forever when enough approaches keep failing.
+            // The periodic stage retry will revisit this target without resetting an unfinished scan.
+            if (queue.TargetStages.TryGetValue(work.Target, out var stage) && queue.Stages[stage].Reserved.Remove(work.Target) &&
+                (!ent.Comp.FailedTargets.TryGetValue(work.Target, out var retry) || _timing.CurTime >= retry))
                 queue.Stages[stage].Revision++;
             if (plan.Revision == queue.Revision && data != null)
                 RefreshQueuedWork((plan.Grid, data), queue, work.Target);

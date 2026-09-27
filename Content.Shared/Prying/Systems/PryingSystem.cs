@@ -186,7 +186,12 @@ public sealed partial class PryingSystem : EntitySystem
 
         if (args.Used != null && comp != null)
         {
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+            // Exodus-begin: include the actor of a server-only remote interaction.
+            if (args.Args.PredictSound)
+                _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+            else
+                _audioSystem.PlayPvs(comp.UseSound, args.Target.Value);
+            // Exodus-end
         }
 
         var ev = new PriedEvent(args.User);

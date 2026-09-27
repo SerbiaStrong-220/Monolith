@@ -226,6 +226,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
         // Exodus-end
 
+        // Exodus-begin - only the initiating interaction can assign an extended range.
+        var beforeStart = new BeforeDoAfterStartEvent(args);
+        RaiseLocalEvent(args.User, ref beforeStart);
+        // Exodus-end
+
         // Duplicate blocking & cancellation.
         if (!ProcessDuplicates(args, comp))
         {

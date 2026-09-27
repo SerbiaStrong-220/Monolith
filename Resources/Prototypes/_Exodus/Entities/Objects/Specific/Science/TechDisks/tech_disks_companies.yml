@@ -36,6 +36,7 @@
       shader: unshaded
   - type: TechnologyDisk
     recipes:
+    - MedicalBeamGun
     - HmeSynthHeart
     - HmeSynthHeartFortified
     - HmeSynthLungs
@@ -220,6 +221,9 @@
       shader: unshaded
   - type: TechnologyDisk
     recipes:
+    - GeneticDisk
+    - GeneticsLaboratoryCircuitboard
+    - GeneticInjectorPrinterCircuitboard
     - HiveSynthHeart
     - HiveSynthLungs
     - HiveSynthLiver

@@ -84,6 +84,17 @@ public sealed partial class RespiratorSystem : EntitySystem
             if (_mobState.IsDead(uid) || HasComp<BreathingImmunityComponent>(uid)) // Shitmed: BreathingImmunity
                 continue;
 
+            // Exodus-begin: independently supplied respiratory adaptations.
+            var respirationAttempt = new Content.Shared._Exodus.Genetics.RespirationAttemptEvent();
+            RaiseLocalEvent(uid, ref respirationAttempt);
+            if (respirationAttempt.Cancelled)
+            {
+                StopSuffocation((uid, respirator));
+                respirator.SuffocationCycles = 0;
+                continue;
+            }
+            // Exodus-end
+
             UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
 
             if (!_mobState.IsIncapacitated(uid) && !HasComp<DebrainedComponent>(uid)) // Shitmed Change - Cannot breathe in crit or when no brain.

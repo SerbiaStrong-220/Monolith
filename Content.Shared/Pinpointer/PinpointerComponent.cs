@@ -48,6 +48,12 @@ public sealed partial class PinpointerComponent : Component
     [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanRetarget;
 
+    // Exodus-begin allow dedicated target-selection interfaces to control tracking.
+    /// <summary>Whether normal activation toggles the pointer.</summary>
+    [DataField]
+    public bool ToggleOnInteract = true;
+    // Exodus-end
+
     [ViewVariables]
     public EntityUid? Target = null;
 

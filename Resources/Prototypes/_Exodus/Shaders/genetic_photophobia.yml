@@ -1,0 +1,7 @@
+- type: shader
+  id: GeneticPhotophobia
+  kind: source
+  path: "/Textures/_Exodus/Shaders/genetic_photophobia.swsl"
+  params:
+    LightThreshold: 0.6
+    LightSaturation: 1.0

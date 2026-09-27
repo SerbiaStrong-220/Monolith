@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/16/2026 12:09:39
-  entityCount: 1742
+  entityCount: 1754 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -10883,4 +10883,96 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-0.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticHeavy
+  entities:
+  - uid: 1753
+    components:
+    - type: Transform
+      pos: -12.5,-4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1754
+    components:
+    - type: Transform
+      pos: 13.5,-4.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 1743
+    components:
+    - type: Transform
+      pos: -13.5,-10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1744
+    components:
+    - type: Transform
+      pos: 14.5,-10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1745
+    components:
+    - type: Transform
+      pos: 7.5,-22.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1746
+    components:
+    - type: Transform
+      pos: -6.5,-22.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1747
+    components:
+    - type: Transform
+      pos: -5.5,11.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1748
+    components:
+    - type: Transform
+      pos: 6.5,11.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1749
+    components:
+    - type: Transform
+      pos: 7.5,-2.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 1750
+    components:
+    - type: Transform
+      pos: -6.5,-2.5
+      rot: 0
+      parent: 1
+      anchored: true
+- proto: HardpointBallisticSuperheavy
+  entities:
+  - uid: 1751
+    components:
+    - type: Transform
+      pos: -2.5,-0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 1752
+    components:
+    - type: Transform
+      pos: 3.5,-0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

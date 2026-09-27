@@ -305,6 +305,14 @@ namespace Content.Server.Cloning
             DebugTools.Assert(sourceBody != null ^ profile != null,
                 "SpawnClone requires exactly one of sourceBody/profile.");
 
+            // Exodus: let body-owned disguises supply the original biological species.
+            if (sourceBody is { } original && TryComp<HumanoidAppearanceComponent>(original, out var bodyAppearance))
+            {
+                var speciesEvent = new CloningSpeciesEvent(species?.ID ?? bodyAppearance.Species);
+                RaiseLocalEvent(original, ref speciesEvent);
+                species = _prototype.Index(speciesEvent.Species);
+            }
+
             species ??= _prototype.Index<SpeciesPrototype>(profile!.Species);
 
             var mob = Spawn(species.Prototype, coords);

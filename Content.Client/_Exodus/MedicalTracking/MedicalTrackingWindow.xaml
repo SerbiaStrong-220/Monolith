@@ -1,0 +1,168 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+                      xmlns:medical="clr-namespace:Content.Client._Exodus.MedicalTracking"
+                      xmlns:system="clr-namespace:System;assembly=System.Runtime"
+                      Title="{Loc 'medical-tracking-title'}"
+                      SetSize="1100 720" MinSize="800 540">
+    <BoxContainer Orientation="Vertical" SeparationOverride="6" Margin="6">
+        <PanelContainer StyleClasses="MedicalHeader">
+            <BoxContainer Orientation="Horizontal" SeparationOverride="12">
+                <medical:MedicalTrackingEmblem VerticalAlignment="Center" />
+                <BoxContainer Orientation="Vertical" SeparationOverride="0" HorizontalExpand="True">
+                    <Label Text="{Loc 'medical-tracking-dispatch'}" ClipText="True">
+                        <Label.StyleClasses>
+                            <system:String>LabelHeading</system:String>
+                            <system:String>MedicalAccent</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                    <Label Text="{Loc 'medical-tracking-dispatch-subtitle'}" ClipText="True">
+                        <Label.StyleClasses>
+                            <system:String>LabelSubText</system:String>
+                            <system:String>MedicalMuted</system:String>
+                        </Label.StyleClasses>
+                    </Label>
+                </BoxContainer>
+                <Label Name="OperatorPosition" VerticalAlignment="Center">
+                    <Label.StyleClasses>
+                        <system:String>LabelSubText</system:String>
+                        <system:String>MedicalAccent</system:String>
+                    </Label.StyleClasses>
+                </Label>
+            </BoxContainer>
+        </PanelContainer>
+        <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+            <Button Name="AllFilter" StyleClasses="MedicalButton" ToggleMode="True" HorizontalExpand="True" MinHeight="30" />
+            <Button Name="CriticalFilter" ToggleMode="True" HorizontalExpand="True" MinHeight="30">
+                <Button.StyleClasses>
+                    <system:String>MedicalButton</system:String>
+                    <system:String>MedicalWarning</system:String>
+                </Button.StyleClasses>
+            </Button>
+            <Button Name="DeadFilter" ToggleMode="True" HorizontalExpand="True" MinHeight="30">
+                <Button.StyleClasses>
+                    <system:String>MedicalButton</system:String>
+                    <system:String>MedicalDanger</system:String>
+                </Button.StyleClasses>
+            </Button>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" SeparationOverride="6" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" SeparationOverride="6" HorizontalExpand="True">
+                <PanelContainer StyleClasses="MedicalMap" VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="4 0">
+                            <Label Text="{Loc 'medical-tracking-sector-map'}" HorizontalExpand="True" ClipText="True">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalMuted</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                            <Button Name="MyPosition" Text="{Loc 'medical-tracking-my-position'}" StyleClasses="MedicalButton" />
+                            <Button Name="FocusPatient" Text="{Loc 'medical-tracking-focus-patient'}" ToolTip="{Loc 'medical-tracking-focus-patient-tip'}" StyleClasses="MedicalButton" Disabled="True" />
+                        </BoxContainer>
+                        <ui:MapScreen Name="Map" HorizontalExpand="True" VerticalExpand="True" />
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="12" Margin="4 0">
+                            <Label Text="{Loc 'medical-tracking-legend-you'}">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalAccent</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                            <Label Text="{Loc 'medical-tracking-legend-alive'}">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalAlive</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                            <Label Text="{Loc 'medical-tracking-legend-critical'}">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalWarning</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                            <Label Text="{Loc 'medical-tracking-legend-dead'}">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalDanger</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+                <PanelContainer Name="PatientPanel" StyleClasses="MedicalPanel" MinHeight="108">
+                    <BoxContainer Orientation="Vertical" SeparationOverride="2">
+                        <Label Text="{Loc 'medical-tracking-selected-patient'}">
+                            <Label.StyleClasses>
+                                <system:String>LabelSubText</system:String>
+                                <system:String>MedicalMuted</system:String>
+                            </Label.StyleClasses>
+                        </Label>
+                        <Label Name="PatientName" Text="{Loc 'medical-tracking-select-patient'}" ClipText="True">
+                            <Label.StyleClasses>
+                                <system:String>LabelHeading</system:String>
+                                <system:String>MedicalText</system:String>
+                            </Label.StyleClasses>
+                        </Label>
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                            <Label Name="PatientStatus" />
+                            <Label Name="PatientTier" ClipText="True" HorizontalExpand="True">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalMuted</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                            <Label Name="PatientDistance">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalAccent</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                            <Label Name="PatientCoordinates" HorizontalExpand="True" ClipText="True">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalMuted</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                            <Label Name="PatientAge">
+                                <Label.StyleClasses>
+                                    <system:String>LabelSubText</system:String>
+                                    <system:String>MedicalMuted</system:String>
+                                </Label.StyleClasses>
+                            </Label>
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <PanelContainer StyleClasses="MedicalPanel" SetWidth="310">
+                <BoxContainer Orientation="Vertical" SeparationOverride="6">
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'medical-tracking-client-list'}" HorizontalExpand="True">
+                            <Label.StyleClasses>
+                                <system:String>LabelSubText</system:String>
+                                <system:String>MedicalMuted</system:String>
+                            </Label.StyleClasses>
+                        </Label>
+                        <Label Name="ClientCount">
+                            <Label.StyleClasses>
+                                <system:String>LabelSubText</system:String>
+                                <system:String>MedicalAccent</system:String>
+                            </Label.StyleClasses>
+                        </Label>
+                    </BoxContainer>
+                    <LineEdit Name="Search" PlaceHolder="{Loc 'medical-tracking-search'}" />
+                    <ScrollContainer Name="ContactScroll" VerticalExpand="True" HScrollEnabled="False" ReserveScrollbarSpace="True">
+                        <BoxContainer Name="Contacts" Orientation="Vertical" SeparationOverride="3" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <Label Text="{Loc 'medical-tracking-map-hint'}" ClipText="True" ToolTip="{Loc 'medical-tracking-map-hint'}">
+            <Label.StyleClasses>
+                <system:String>LabelSubText</system:String>
+                <system:String>MedicalMuted</system:String>
+            </Label.StyleClasses>
+        </Label>
+    </BoxContainer>
+</controls:FancyWindow>

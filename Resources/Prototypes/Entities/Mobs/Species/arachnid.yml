@@ -12,6 +12,11 @@
     species: Arachnid
   - type: Hunger
   - type: Thirst
+  # Exodus-begin: native web glands and immunity to web slowdown.
+  - type: Genome
+    initialMutations: [GeneticWeb]
+  - type: IgnoreSpiderWeb
+  # Exodus-end
   - type: Sericulture
     action: ActionSericulture
     productionLength: 2

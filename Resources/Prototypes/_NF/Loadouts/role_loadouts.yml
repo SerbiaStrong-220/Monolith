@@ -240,7 +240,7 @@
   - StationRepPDA
   - ContractorWallet
   - ContractorCartridge
-  - ContractorImplanter
+  - MedicalStaffImplanter # Exodus: medical coverage is implanted on spawn.
   - ContractorUtility # Mono
  # - ContractorFun # Mono - no fun allowed
   - StationRepTrinkets
@@ -297,7 +297,7 @@
   - DocPDA
   - ContractorWallet
   - ContractorCartridge
-  - ContractorImplanter
+  - MedicalStaffImplanter # Exodus: medical coverage is implanted on spawn.
   - ContractorUtility # Mono
   - ContractorEncryptionKey
   - ContractorFirearm # Exodus-Loadout-Tweak

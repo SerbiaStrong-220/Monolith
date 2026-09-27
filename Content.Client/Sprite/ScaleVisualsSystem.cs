@@ -24,6 +24,10 @@ public sealed partial class ScaleVisualsSystem : SharedScaleVisualsSystem
         ent.Comp.OriginalScale ??= args.Sprite.Scale;
 
         var vecScale = (Vector2)scale;
+        // Exodus-begin: retain the sprite's native proportions for relative size effects.
+        if (args.AppearanceData.TryGetValue(ScaleVisuals.RelativeToOriginal, out var relative) && relative is true)
+            vecScale *= ent.Comp.OriginalScale.Value;
+        // Exodus-end
         _sprite.SetScale((ent.Owner, args.Sprite), vecScale);
     }
 

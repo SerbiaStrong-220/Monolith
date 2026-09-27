@@ -1,7 +1,9 @@
+<!-- Exodus: import the article search control namespace. -->
 <controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:exodus="clr-namespace:Content.Client._Exodus.Guidebook"
                 SetSize="900 700"
                 MinSize="100 200"
                 Resizable="True"
@@ -9,7 +11,12 @@
     <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" Name="TreeBox">
-            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            <!-- Exodus-begin: article search alongside the existing contents tree. -->
+            <BoxContainer Orientation="Vertical" MinWidth="240" HorizontalExpand="True">
+                <exodus:GuidebookSearchControl Name="ArticleSearch"/>
+                <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            </BoxContainer>
+            <!-- Exodus-end -->
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">

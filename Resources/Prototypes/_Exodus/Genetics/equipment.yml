@@ -1,0 +1,138 @@
+- type: entity
+  id: GeneticsRound
+  save: false
+  categories: [HideSpawnMenu]
+  components:
+  - type: GeneticsRound
+    blockCount: 50
+
+- type: entity
+  parent: MedicalScanner
+  id: GeneticsLaboratory
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/genetics_laboratory.rsi
+  - type: GeneticsLaboratory
+  - type: Machine
+    board: GeneticsLaboratoryCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 1500
+  - type: ActivatableUI
+    key: enum.GeneticsUiKey.Laboratory
+  - type: UserInterface
+    interfaces:
+      enum.GeneticsUiKey.Laboratory:
+        type: GeneticsBoundUserInterface
+  - type: ItemSlots
+    slots:
+      genetics-disk:
+        name: genetics-disk-slot
+        insertSound: /Audio/Machines/id_insert.ogg
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        whitelist:
+          tags: [GeneticDisk]
+  - type: ContainerContainer
+    containers:
+      scanner-bodyContainer: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      genetics-disk: !type:ContainerSlot
+  - type: SolutionContainerManager
+    solutions:
+      buffer:
+        maxVol: 300
+  - type: RefillableSolution
+    solution: buffer
+  - type: DrainableSolution
+    solution: buffer
+  - type: ExaminableSolution
+    solution: buffer
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - scanner-bodyContainer
+    - genetics-disk
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: GeneticsLaboratoryCircuitboard
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Genetics/boards.rsi
+    state: laboratory
+  - type: MachineBoard
+    prototype: GeneticsLaboratory
+    requirements:
+      Capacitor: 2
+      Manipulator: 2
+    stackRequirements:
+      Glass: 5
+      Cable: 5
+
+- type: entity
+  parent: BaseItem
+  id: GeneticDisk
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Genetics/disk.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: GeneticDisk
+  - type: ActivatableUI
+    key: enum.GeneticsUiKey.Disk
+  - type: UserInterface
+    interfaces:
+      enum.GeneticsUiKey.Disk:
+        type: GeneticDiskBoundUserInterface
+  - type: Tag
+    tags: [GeneticDisk]
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: BaseItem
+  id: GeneticInjector
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Genetics/injector.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: GeneticInjector
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  id: GeneticObservationEye
+  categories: [HideSpawnMenu]
+  components:
+  - type: Eye
+
+- type: entity
+  parent: UnstableMutagenChemistryBottle
+  id: GeneticsMutagenBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: UnstableMutagen
+          Quantity: 30
+
+- type: entity
+  parent: CrateMedical
+  id: CrateGeneticsLaboratory
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: GeneticsLaboratoryCircuitboard
+        - id: GeneticInjectorPrinterCircuitboard
+        - id: GeneticDisk
+          amount: !type:ConstantNumberSelector
+            value: 3
+        - id: GeneticsMutagenBottle
+          amount: !type:ConstantNumberSelector
+            value: 4

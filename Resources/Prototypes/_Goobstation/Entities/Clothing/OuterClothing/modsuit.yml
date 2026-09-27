@@ -40,6 +40,11 @@
     - type: TemperatureProtection
       coolingCoefficient: 0.1
       heatingCoefficient: 0.4
+    # Exodus-begin: sealed modsuit protection against infection.
+    - type: VirusProtection
+      vectors: Contact, Proximity, Splash
+      blockChance: 0.9
+    # Exodus-end
   - type: FireProtection
     reduction: 0.5
 
@@ -118,6 +123,11 @@
     - type: TemperatureProtection
       coolingCoefficient: 0.1
       heatingCoefficient: 0.4
+    # Exodus-begin: sealed modsuit protection against infection.
+    - type: VirusProtection
+      vectors: Contact, Proximity, Splash
+      blockChance: 0.9
+    # Exodus-end
   - type: FireProtection
     reduction: 0.5
 
@@ -167,6 +177,11 @@
     - type: TemperatureProtection
       coolingCoefficient: 0.1
       heatingCoefficient: 0.4
+    # Exodus-begin: sealed modsuit protection against infection.
+    - type: VirusProtection
+      vectors: Contact, Proximity, Splash
+      blockChance: 0.9
+    # Exodus-end
   - type: FireProtection
     reduction: 0.5
 

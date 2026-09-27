@@ -36,7 +36,7 @@
   - ChiefMedicalOfficer #Mono
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ] # Mono - remove TSFMC implant
+    implants: [ MindShieldImplant, MedicalTrackingImplantRuby ] # Exodus medical service coverage; Mono - remove TSFMC implant
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
@@ -65,6 +65,8 @@
     back:
     - RubberStampDoc
     - BoxFolderMedicalDoctor
+    - MedicalTrackingTablet # Exodus medical rescue tracking
+    - MedicalTrackingPinpointer # Exodus platinum client tracking
     - StationAdministrationConsoleFlatpack
     - PhoneInstrumentHigh
     - MDHandheldOverwatchConsole

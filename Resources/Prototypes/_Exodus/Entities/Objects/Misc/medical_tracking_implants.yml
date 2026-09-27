@@ -1,0 +1,178 @@
+- type: entity
+  abstract: true
+  parent: BaseSubdermalImplant
+  id: BaseMedicalServiceImplant
+  components:
+  - type: SubdermalImplant
+  - type: MedicalTrackingImplant
+    tierName: medical-tracking-tier-basic
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: Rattle
+    radioChannel: Medical
+    critMessage: medical-tracking-basic-critical
+    deathMessage: medical-tracking-basic-dead
+    reviveMessage: medical-tracking-basic-revive
+
+- type: entity
+  parent: BaseMedicalServiceImplant
+  id: MedicalTrackingImplantBasic
+  name: basic medical tracking implant
+  description: Reports the client's death within Colossus territory to the medical channel.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MedicalTrackingImplant
+    tier: 1
+    notificationTerritory: ColossusCentral
+
+- type: entity
+  parent: BaseMedicalServiceImplant
+  id: MedicalTrackingImplantSilver
+  name: silver medical tracking implant
+  description: Reports critical condition and death throughout the sector to the medical channel.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MedicalTrackingImplant
+    tier: 2
+    tierName: medical-tracking-tier-silver
+    tierColor: "#C0CED8"
+    hudBorder: MedicalTrackingBorderSilver
+  - type: Rattle
+    critMessage: medical-tracking-silver-critical
+    deathMessage: medical-tracking-silver-dead
+    reviveMessage: medical-tracking-silver-revive
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+
+- type: entity
+  parent: MedicalTrackingImplantSilver
+  id: MedicalTrackingImplantGold
+  name: gold medical tracking implant
+  description: Also reports the body's position and condition to medical tablets every 5 seconds.
+  components:
+  - type: MedicalTrackingImplant
+    tier: 3
+    tierName: medical-tracking-tier-gold
+    tierColor: "#E4C779"
+    hudBorder: MedicalTrackingBorderGold
+    trackBody: true
+    updateInterval: 5
+  - type: Rattle
+    critMessage: medical-tracking-gold-critical
+    deathMessage: medical-tracking-gold-dead
+    reviveMessage: medical-tracking-gold-revive
+
+- type: entity
+  parent: MedicalTrackingImplantGold
+  id: MedicalTrackingImplantPlatinum
+  name: platinum medical tracking implant
+  description: Also registers the client's brain for tracking, even after the body is destroyed.
+  components:
+  - type: MedicalTrackingImplant
+    tier: 4
+    tierName: medical-tracking-tier-platinum
+    tierColor: "#A6DCE9"
+    hudBorder: MedicalTrackingBorderPlatinum
+    trackBrain: true
+  - type: Rattle
+    critMessage: medical-tracking-platinum-critical
+    deathMessage: medical-tracking-platinum-dead
+    reviveMessage: medical-tracking-platinum-revive
+
+- type: entity
+  parent: MedicalTrackingImplantPlatinum
+  id: MedicalTrackingImplantRuby
+  name: ruby medical tracking implant
+  description: Platinum medical coverage with a distinctive ruby insignia.
+  components:
+  - type: MedicalTrackingImplant
+    tier: 5
+    tierName: medical-tracking-tier-ruby
+    tierColor: "#FF5C5C"
+    hudBorder: MedicalTrackingBorderRuby
+  - type: Rattle
+    critMessage: medical-tracking-ruby-critical
+    deathMessage: medical-tracking-ruby-dead
+    reviveMessage: medical-tracking-ruby-revive
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: MedicalTrackingImplanterBasic
+  name: basic medical tracking implanter
+  description: Reports death within Colossus territory. A higher tier replaces the previous medical implant.
+  components:
+  - type: Implanter
+    implant: MedicalTrackingImplantBasic
+  - type: StaticPrice
+    price: 1000
+    vendPrice: 1000
+
+- type: entity
+  parent: MedicalTrackingImplanterBasic
+  id: MedicalTrackingImplanterSilver
+  name: silver medical tracking implanter
+  description: Reports critical condition and death throughout the sector.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_silver.rsi
+    layers:
+    - state: implanter0
+      map: ["implantOnly"]
+    - state: implanter1
+      map: ["implantFull"]
+      visible: true
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_silver.rsi
+  - type: Implanter
+    implant: MedicalTrackingImplantSilver
+  - type: StaticPrice
+    price: 25000
+    vendPrice: 25000
+
+- type: entity
+  parent: MedicalTrackingImplanterSilver
+  id: MedicalTrackingImplanterGold
+  name: gold medical tracking implanter
+  description: Also reports the body's position and condition to medical tablets every 5 seconds.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_gold.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_gold.rsi
+  - type: Implanter
+    implant: MedicalTrackingImplantGold
+  - type: StaticPrice
+    price: 125000
+    vendPrice: 125000
+
+- type: entity
+  parent: MedicalTrackingImplanterGold
+  id: MedicalTrackingImplanterPlatinum
+  name: platinum medical tracking implanter
+  description: Also registers the client's brain for tracking after extraction or destruction of the body.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_platinum.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_platinum.rsi
+  - type: Implanter
+    implant: MedicalTrackingImplantPlatinum
+  - type: StaticPrice
+    price: 250000
+    vendPrice: 250000
+
+- type: entity
+  parent: MedicalTrackingImplanterPlatinum
+  id: MedicalTrackingImplanterRuby
+  name: ruby medical tracking implanter
+  description: Platinum medical coverage with a distinctive ruby insignia.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_ruby.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Specific/Medical/medical_implanter_ruby.rsi
+  - type: Implanter
+    implant: MedicalTrackingImplantRuby

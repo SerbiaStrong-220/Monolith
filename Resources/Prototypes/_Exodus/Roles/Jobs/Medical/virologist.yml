@@ -13,6 +13,9 @@
   access:
   - Medical
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MedicalTrackingImplantPlatinum ]
 
 - type: startingGear
   id: VirologistGear

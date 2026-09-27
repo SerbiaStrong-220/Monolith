@@ -270,6 +270,12 @@ public sealed partial class TemperatureSystem : EntitySystem
 
         if (temperature.CurrentTemperature >= heatDamageThreshold)
         {
+            // Exodus-begin: temperature immunity is independent of ordinary damage resistance.
+            var attempt = new Content.Shared._Exodus.Genetics.TemperatureDamageAttemptEvent(true);
+            RaiseLocalEvent(uid, ref attempt);
+            if (attempt.Cancelled)
+                return;
+            // Exodus-end
             if (!temperature.TakingDamage)
             {
                 _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking high temperature damage");
@@ -282,6 +288,12 @@ public sealed partial class TemperatureSystem : EntitySystem
         }
         else if (temperature.CurrentTemperature <= coldDamageThreshold)
         {
+            // Exodus-begin: independently supplied cold adaptation.
+            var attempt = new Content.Shared._Exodus.Genetics.TemperatureDamageAttemptEvent(false);
+            RaiseLocalEvent(uid, ref attempt);
+            if (attempt.Cancelled)
+                return;
+            // Exodus-end
             if (!temperature.TakingDamage)
             {
                 _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking low temperature damage");

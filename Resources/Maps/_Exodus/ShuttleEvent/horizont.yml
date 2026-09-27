@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/31/2026 01:53:37
-  entityCount: 4706
+  entityCount: 4747 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -27561,4 +27561,301 @@ entities:
       rot: 3.141592653589793 rad
       pos: 13.5,2.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 4711
+    components:
+    - type: Transform
+      pos: 15.5,-41.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4713
+    components:
+    - type: Transform
+      pos: 8.5,20.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4715
+    components:
+    - type: Transform
+      pos: -5.5,28.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4719
+    components:
+    - type: Transform
+      pos: 34.5,-5.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4721
+    components:
+    - type: Transform
+      pos: -17.5,-38.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4722
+    components:
+    - type: Transform
+      pos: 6.5,28.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4723
+    components:
+    - type: Transform
+      pos: 18.5,-38.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4726
+    components:
+    - type: Transform
+      pos: -33.5,-5.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4729
+    components:
+    - type: Transform
+      pos: 10.5,12.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4730
+    components:
+    - type: Transform
+      pos: -9.5,12.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4732
+    components:
+    - type: Transform
+      pos: -14.5,-41.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4740
+    components:
+    - type: Transform
+      pos: -7.5,20.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyHeavy
+  entities:
+  - uid: 4707
+    components:
+    - type: Transform
+      pos: 22.5,-30.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4708
+    components:
+    - type: Transform
+      pos: 24.5,-28.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4709
+    components:
+    - type: Transform
+      pos: 26.5,-26.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4710
+    components:
+    - type: Transform
+      pos: 16.5,-40.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4717
+    components:
+    - type: Transform
+      pos: -16.5,-39.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4720
+    components:
+    - type: Transform
+      pos: -15.5,-40.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4724
+    components:
+    - type: Transform
+      pos: -22.5,-1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4725
+    components:
+    - type: Transform
+      pos: 17.5,-39.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 4728
+    components:
+    - type: Transform
+      pos: -21.5,-30.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4731
+    components:
+    - type: Transform
+      pos: 27.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4733
+    components:
+    - type: Transform
+      pos: 23.5,-1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4734
+    components:
+    - type: Transform
+      pos: -26.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4735
+    components:
+    - type: Transform
+      pos: -27.5,-24.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4738
+    components:
+    - type: Transform
+      pos: -25.5,-26.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4739
+    components:
+    - type: Transform
+      pos: -23.5,-28.5
+      rot: -1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4741
+    components:
+    - type: Transform
+      pos: 21.5,-0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4742
+    components:
+    - type: Transform
+      pos: 25.5,-1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4743
+    components:
+    - type: Transform
+      pos: 28.5,-24.5
+      rot: 1.5707963267948966 rad
+      parent: 1
+      anchored: true
+  - uid: 4744
+    components:
+    - type: Transform
+      pos: 29.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4745
+    components:
+    - type: Transform
+      pos: -28.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4746
+    components:
+    - type: Transform
+      pos: -24.5,-1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4747
+    components:
+    - type: Transform
+      pos: -20.5,-0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergySuperheavy
+  entities:
+  - uid: 4712
+    components:
+    - type: Transform
+      pos: -12.5,2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4714
+    components:
+    - type: Transform
+      pos: 0.5,43.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4718
+    components:
+    - type: Transform
+      pos: 18.5,1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4736
+    components:
+    - type: Transform
+      pos: 13.5,2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4737
+    components:
+    - type: Transform
+      pos: -17.5,1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointMissileHeavy
+  entities:
+  - uid: 4716
+    components:
+    - type: Transform
+      pos: 32.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 4727
+    components:
+    - type: Transform
+      pos: -31.5,-2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

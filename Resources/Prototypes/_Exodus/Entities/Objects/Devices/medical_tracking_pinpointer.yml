@@ -1,0 +1,28 @@
+- type: entity
+  parent: PinpointerBase
+  id: MedicalTrackingPinpointer
+  name: platinum client pinpointer
+  description: Selects and tracks a registered platinum or ruby client's brain. Requires medical access.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/medical_tracking_pinpointer.rsi
+  - type: Icon
+    sprite: _Exodus/Objects/Devices/medical_tracking_pinpointer.rsi
+  - type: Item
+    sprite: _Exodus/Objects/Devices/medical_tracking_pinpointer.rsi
+  - type: MedicalTrackingPinpointer
+    updateInterval: 1
+  - type: Pinpointer
+    toggleOnInteract: false
+  - type: ActivatableUI
+    key: enum.MedicalTrackingUiKey.Pinpointer
+    blockSpectators: true
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: UserInterface
+    interfaces:
+      enum.MedicalTrackingUiKey.Pinpointer:
+        type: MedicalTrackingPinpointerBoundUserInterface
+  - type: StaticPrice
+    price: 500

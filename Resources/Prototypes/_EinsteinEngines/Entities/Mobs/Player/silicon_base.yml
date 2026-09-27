@@ -5,6 +5,7 @@
   parent: [BaseMob, MobDamageable, MobCombat, MobAtmosExposed, MobFlammable]
   abstract: true
   components:
+  - type: GeneticIncompatible # Exodus: synthetic bodies have no somatic genome.
   - type: ContentEye
   - type: CameraRecoil
   - type: Reactive

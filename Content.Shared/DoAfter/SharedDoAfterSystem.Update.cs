@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.DoAfter; // Exodus - validate providers of extended interaction range.
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -168,6 +169,16 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (args.Used is { } @using && !xformQuery.HasComp(@using))
             return true;
+
+        // Exodus-begin - losing the range provider must also interrupt an ongoing interaction.
+        if (args.RangeProvider != null)
+        {
+            var rangeCheck = new ValidateDoAfterRangeEvent(args);
+            RaiseLocalEvent(args.User, ref rangeCheck);
+            if (!rangeCheck.Handled || rangeCheck.Cancelled)
+                return true;
+        }
+        // Exodus-end
 
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))

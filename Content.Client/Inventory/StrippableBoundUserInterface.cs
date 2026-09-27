@@ -95,11 +95,15 @@ namespace Content.Client.Inventory
 
             _strippingMenu.ClearButtons();
 
+            var width = 300f; // Exodus: include additional inventory columns.
             if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv))
             {
                 foreach (var slot in inv.Slots)
                 {
                     AddInventoryButton(Owner, slot.Name, inv);
+                    // Exodus: preserve the existing window padding around the rightmost slot.
+                    width = Math.Max(width, slot.StrippingWindowPos.X * (SlotControl.DefaultButtonSize + ButtonSeparation)
+                        + SlotControl.DefaultButtonSize + 32);
                 }
             }
 
@@ -155,7 +159,7 @@ namespace Content.Client.Inventory
             // for now: shit-code
             // this breaks for drones (too many hands, lots of empty vertical space), and looks shit for monkeys and the like.
             // but the window is realizable, so eh.
-            _strippingMenu.SetSize = new Vector2(300, snare?.IsEnsnared == true ? 550 : 530);
+            _strippingMenu.SetSize = new Vector2(width, snare?.IsEnsnared == true ? 550 : 530); // Exodus: fit extra slots.
         }
 
         private void AddHandButton(Hand hand)

@@ -277,6 +277,8 @@
     - CompanyBlackhawkDynamic
     - CompanyDrakeMiningDynamic # Exodus: Drake industrial equipment
     - CompanyHorizonDynamic
+    - CompanyHmeMedicalDynamic
+    - CompanyHiveGeneticsDynamic
     - CompanyBratvaDynamic
     - CompanyUllmanDynamic
     - CompanyCdmDynamic
@@ -366,6 +368,7 @@
     - ReactorCircuitboards # FH edit
     # Exodus-begin company-fleet
     - CompanyHorizonBoardsDynamic
+    - CompanyHiveBoardsDynamic
     - CompanyDrakeBoardsDynamic # Exodus: Drake mining boards
     - CompanyNosskeDynamic
     - CompanyBratvaBoardsDynamic

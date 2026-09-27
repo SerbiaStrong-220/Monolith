@@ -1,0 +1,237 @@
+- type: geneticMutation
+  id: GeneticTelekinesis
+  activationMessage: genetics-feeling-telekinesis
+  name: genetics-gene-telekinesis
+  description: genetics-gene-telekinesis-desc
+  instability: 25
+  modifiers:
+    abilities: Telekinesis
+  actions: [ActionGeneticTelekinesis]
+
+- type: geneticMutation
+  id: GeneticHulk
+  activationMessage: genetics-feeling-hulk
+  name: genetics-gene-hulk
+  description: genetics-gene-hulk-desc
+  instability: 30
+  modifiers:
+    abilities: ForcePry
+    sizeMultiplier: 1.15
+    blockRangedWeapons: true
+    nutritionMultiplier: 1.5
+    thirstMultiplier: 1.5
+    meleeMultiplier: 2.5
+    staminaMultiplier: 0.25
+    damageModifiers:
+      flatReductions:
+        Blunt: 5
+        Slash: 5
+        Piercing: 5
+        Heat: 5
+        Shock: 5
+        Cold: 5
+        Caustic: 5
+    blockedStatuses: [Stun, KnockedDown]
+  actions: [ActionGeneticPry]
+
+- type: geneticMutation
+  id: GeneticRemoteViewing
+  activationMessage: genetics-feeling-view
+  name: genetics-gene-view
+  description: genetics-gene-view-desc
+  instability: 20
+  modifiers:
+    abilities: RemoteViewing
+  actions: [ActionGeneticRemoteViewing]
+
+- type: geneticMutation
+  id: GeneticCloak
+  activationMessage: genetics-feeling-cloak
+  name: genetics-gene-cloak
+  description: genetics-gene-cloak-desc
+  instability: 25
+  modifiers:
+    abilities: Cloak
+  actions: [ActionGeneticCloak]
+
+- type: geneticMutation
+  id: GeneticMimic
+  activationMessage: genetics-feeling-mimic
+  name: genetics-gene-mimic
+  description: genetics-gene-mimic-desc
+  instability: 15
+  modifiers:
+    abilities: Mimic
+  actions: [ActionGeneticMimic, ActionGeneticRestoreAppearance]
+
+- type: geneticMutation
+  id: GeneticNoBreathing
+  activationMessage: genetics-feeling-breathing
+  name: genetics-gene-breathing
+  description: genetics-gene-breathing-desc
+  instability: 15
+  modifiers:
+    noBreathing: true
+
+- type: geneticMutation
+  id: GeneticColdResistance
+  activationMessage: genetics-feeling-cold
+  name: genetics-gene-cold
+  description: genetics-gene-cold-desc
+  instability: 15
+  modifiers:
+    coldImmunity: true
+    lowPressureImmunity: true
+
+- type: geneticMutation
+  id: GeneticHeatResistance
+  activationMessage: genetics-feeling-heat
+  name: genetics-gene-heat
+  description: genetics-gene-heat-desc
+  instability: 15
+  modifiers:
+    heatImmunity: true
+    highPressureImmunity: true
+
+- type: geneticMutation
+  id: GeneticRegeneration
+  activationMessage: genetics-feeling-regeneration
+  name: genetics-gene-regeneration
+  description: genetics-gene-regeneration-desc
+  instability: 30
+  periodicDamage:
+    groups:
+      Brute: -0.6
+      Burn: -0.6
+
+- type: geneticMutation
+  id: GeneticLethargy
+  activationMessage: genetics-feeling-lethargy
+  name: genetics-gene-lethargy
+  description: genetics-gene-lethargy-desc
+  instability: -10
+  modifiers:
+    movementMultiplier: 0.75
+
+- type: geneticMutation
+  id: GeneticBrittle
+  activationMessage: genetics-feeling-brittle
+  name: genetics-gene-brittle
+  description: genetics-gene-brittle-desc
+  instability: -15
+  modifiers:
+    damageMultiplier: 1.3
+
+- type: geneticMutation
+  id: GeneticNightVision
+  name: genetics-gene-night-vision
+  description: genetics-gene-night-vision-desc
+  activationMessage: genetics-feeling-night-vision
+  instability: 15
+  modifiers:
+    abilities: NightVision
+  actions: [ActionGeneticNightVision]
+
+- type: geneticMutation
+  id: GeneticClotting
+  name: genetics-gene-clotting
+  description: genetics-gene-clotting-desc
+  activationMessage: genetics-feeling-clotting
+  instability: 15
+  modifiers:
+    clottingRate: 0.75
+
+- type: geneticMutation
+  id: GeneticJump
+  name: genetics-gene-jump
+  description: genetics-gene-jump-desc
+  activationMessage: genetics-feeling-jump
+  instability: 20
+  modifiers:
+    abilities: Deflection
+
+- type: geneticMutation
+  id: GeneticPouch
+  name: genetics-gene-pouch
+  description: genetics-gene-pouch-desc
+  activationMessage: genetics-feeling-pouch
+  instability: 15
+  modifiers:
+    abilities: Pouch
+
+- type: geneticMutation
+  id: GeneticInsulation
+  name: genetics-gene-insulation
+  description: genetics-gene-insulation-desc
+  activationMessage: genetics-feeling-insulation
+  instability: 15
+  modifiers:
+    conductivityMultiplier: 0
+
+- type: geneticMutation
+  id: GeneticGlow
+  name: genetics-gene-glow
+  description: genetics-gene-glow-desc
+  activationMessage: genetics-feeling-glow
+  instability: 5
+  modifiers:
+    abilities: Glow
+  actions: [ActionGeneticGlow]
+
+- type: geneticMutation
+  id: GeneticHearing
+  name: genetics-gene-hearing
+  description: genetics-gene-hearing-desc
+  activationMessage: genetics-feeling-hearing
+  instability: 20
+  modifiers:
+    abilities: Hearing
+  actions: [ActionGeneticHearing]
+
+- type: geneticMutation
+  id: GeneticWeb
+  name: genetics-gene-web
+  description: genetics-gene-web-desc
+  activationMessage: genetics-feeling-web
+  instability: 20
+  modifiers:
+    abilities: Web
+  actions: [ActionGeneticWeb]
+
+- type: geneticMutation
+  id: GeneticFireBreath
+  name: genetics-gene-fire-breath
+  description: genetics-gene-fire-breath-desc
+  activationMessage: genetics-feeling-fire-breath
+  instability: 30
+  modifiers:
+    abilities: FireBreath
+  actions: [ActionGeneticFireBreath]
+
+- type: geneticMutation
+  id: GeneticHemophilia
+  name: genetics-gene-hemophilia
+  description: genetics-gene-hemophilia-desc
+  activationMessage: genetics-feeling-hemophilia
+  instability: -10
+  modifiers:
+    bleedingMultiplier: 2
+
+- type: geneticMutation
+  id: GeneticPhotophobia
+  name: genetics-gene-photophobia
+  description: genetics-gene-photophobia-desc
+  activationMessage: genetics-feeling-photophobia
+  instability: -5
+  modifiers:
+    flashDurationMultiplier: 1.75
+    photophobiaStrength: 0.25
+
+- type: geneticMutation
+  id: GeneticHypermetabolism
+  name: genetics-gene-hypermetabolism
+  description: genetics-gene-hypermetabolism-desc
+  activationMessage: genetics-feeling-hypermetabolism
+  instability: -5
+  modifiers:
+    nutritionDrain: 0.036

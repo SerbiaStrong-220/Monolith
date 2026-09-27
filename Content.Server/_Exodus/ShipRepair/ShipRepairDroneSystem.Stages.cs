@@ -66,7 +66,7 @@ public sealed partial class ShipRepairDroneSystem
     }
 
     private static ShipRepairStageProbe GetStageProbe(ShipRepairDroneComponent drone, ShipRepairWorkQueueComponent queue,
-        ShipRepairStage stage)
+        ShipRepairStage stage, bool retryDeferred = false)
     {
         if (!drone.StageProbes.TryGetValue(stage, out var probe))
         {
@@ -75,31 +75,39 @@ public sealed partial class ShipRepairDroneSystem
         }
         var pending = queue.Stages[stage];
         if (probe.Revision != pending.Revision || probe.SnapshotRevision != queue.Revision ||
-            probe.RetryRevision != queue.StageRetryRevision && probe.Remaining == 0)
+            retryDeferred && probe.RetryRevision != queue.StageRetryRevision && probe.Remaining == 0)
         {
             probe.Revision = pending.Revision;
             probe.SnapshotRevision = queue.Revision;
             probe.RetryRevision = queue.StageRetryRevision;
             probe.Remaining = pending.Targets.Count;
         }
-        // Periodic retries must not restart an unfinished large scan every 30 seconds.
-        probe.RetryRevision = queue.StageRetryRevision;
+        // An unfinished pass already checks the current geometry. An exhausted pass keeps its
+        // pending retry until the drone has checked the remaining stages for useful work.
+        if (probe.Remaining > 0 || retryDeferred)
+            probe.RetryRevision = queue.StageRetryRevision;
         return probe;
     }
 
     /// <summary>
     /// Each idle drone chooses its earliest free group. Another drone's reservation is not a barrier.
     /// </summary>
-    private ShipRepairStage? GetCurrentRepairStage(Entity<ShipRepairDroneComponent> drone, ShipRepairWorkQueueComponent queue)
+    internal static ShipRepairStage? GetCurrentRepairStage(Entity<ShipRepairDroneComponent> drone, ShipRepairWorkQueueComponent queue)
     {
         if (!queue.Indexed)
             return null;
-        foreach (var stage in RepairStages)
+        // First finish the eligibility pass across all stages. Rebuilding a wall or opening a door
+        // must not keep sending every drone back to the same rejected floors before other work.
+        // Newly discovered damage still resets its stage immediately through pending.Revision.
+        for (var pass = 0; pass < 2; pass++)
         {
-            if (!queue.Stages.TryGetValue(stage, out var pending) || pending.Targets.Count <= pending.Reserved.Count)
-                continue;
-            if (GetStageProbe(drone.Comp, queue, stage).Remaining > 0)
-                return stage;
+            foreach (var stage in RepairStages)
+            {
+                if (!queue.Stages.TryGetValue(stage, out var pending) || pending.Targets.Count <= pending.Reserved.Count)
+                    continue;
+                if (GetStageProbe(drone.Comp, queue, stage, retryDeferred: pass > 0).Remaining > 0)
+                    return stage;
+            }
         }
         return null;
     }

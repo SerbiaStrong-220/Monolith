@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 06/19/2026 17:26:20
-  entityCount: 634
+  entityCount: 645 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -3901,4 +3901,89 @@ entities:
       rot: 3.141592653589793 rad
       pos: -6.5,1.5
       parent: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 639
+    components:
+    - type: Transform
+      pos: -4.5,3.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 640
+    components:
+    - type: Transform
+      pos: 3.5,3.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 641
+    components:
+    - type: Transform
+      pos: 1.5,-14.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 642
+    components:
+    - type: Transform
+      pos: -2.5,-14.5
+      rot: 0
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyHeavy
+  entities:
+  - uid: 644
+    components:
+    - type: Transform
+      pos: 5.5,1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 645
+    components:
+    - type: Transform
+      pos: 2.5,7.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 646
+    components:
+    - type: Transform
+      pos: -2.5,10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 647
+    components:
+    - type: Transform
+      pos: 1.5,10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 648
+    components:
+    - type: Transform
+      pos: -3.5,7.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 649
+    components:
+    - type: Transform
+      pos: -6.5,1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergySuperheavy
+  entities:
+  - uid: 643
+    components:
+    - type: Transform
+      pos: -0.5,11.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...

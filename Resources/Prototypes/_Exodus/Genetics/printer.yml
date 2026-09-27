@@ -1,0 +1,92 @@
+- type: entity
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  id: GeneticInjectorPrinter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/genetic_printer.rsi
+    layers:
+    - state: icon
+    - state: powered
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Machine
+    board: GeneticInjectorPrinterCircuitboard
+  - type: GeneticPrinter
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: ActivatableUI
+    key: enum.GeneticsUiKey.Printer
+  - type: UserInterface
+    interfaces:
+      enum.GeneticsUiKey.Printer:
+        type: GeneticPrinterBoundUserInterface
+  - type: ItemSlots
+    slots:
+      genetics-disk:
+        name: genetics-disk-slot
+        insertSound: /Audio/Machines/id_insert.ogg
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        whitelist:
+          tags: [GeneticDisk]
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      genetics-disk: !type:ContainerSlot
+  - type: SolutionContainerManager
+    solutions:
+      buffer:
+        maxVol: 300
+  - type: RefillableSolution
+    solution: buffer
+  - type: DrainableSolution
+    solution: buffer
+  - type: ExaminableSolution
+    solution: buffer
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - genetics-disk
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: GeneticInjectorPrinterCircuitboard
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Genetics/boards.rsi
+    state: printer
+  - type: MachineBoard
+    prototype: GeneticInjectorPrinter
+    requirements:
+      Capacitor: 1
+      Manipulator: 2
+    stackRequirements:
+      Glass: 5
+      Cable: 5
+
+- type: entity
+  parent: CrateMedical
+  id: CrateGeneticInjectorPrinter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: GeneticInjectorPrinterCircuitboard
+        - id: GeneticDisk
+          amount: !type:ConstantNumberSelector
+            value: 2
+        - id: GeneticsMutagenBottle
+          amount: !type:ConstantNumberSelector
+            value: 4

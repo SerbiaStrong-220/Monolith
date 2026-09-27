@@ -77,6 +77,9 @@
     slope: 4.17
     enabled: false
   - type: PoweredRadiationSource
+  # Shield the construction materials without blocking the thruster's own radiation.
+  - type: RadiationBlockingContainer
+    resistance: 1000
   - type: AmbientSound
     enabled: false
     range: 10

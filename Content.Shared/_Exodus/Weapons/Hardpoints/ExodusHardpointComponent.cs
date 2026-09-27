@@ -1,18 +1,23 @@
+using Content.Shared._Mono.ShipGuns;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared._Exodus.Weapons.Hardpoints;
 
 /// <summary>
-/// Optional fire interval bonus for anchored guns on this mount's grid tile.
-/// Weapon classes and sizes do not restrict compatibility.
+/// A ship weapon mounting point. Compatibility is checked on its grid tile when a weapon fires.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ExodusHardpointComponent : Component
 {
     /// <summary>
-    /// Multiplier for the interval between shots, including shots within a burst.
-    /// Values outside (0, 1) provide no bonus. Reloading and energy recharge are unaffected.
+    /// Weapon class supported by this platform. Universal platforms accept every class.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float FireIntervalMultiplier = 0.8f;
+    public ExodusHardpointClass Class = ExodusHardpointClass.Ballistic;
+
+    /// <summary>
+    /// Largest weapon mount size supported without a firing rate penalty.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ShipGunClass Size = ShipGunClass.Medium;
 }

@@ -12,7 +12,7 @@
     BoxBottle: 3
     ClothingEyesHudMedical: 2
     ClothingEyesEyepatchHudMedical: 2
-    MedicalTrackingImplanterLabeled: 4294967295 # Frontier - infinite
+    # Exodus: tiered medical tracking implants are sold by CiviMed and hospital vendors.
     SadTromboneImplanterLabeled: 10 # Frontier
     BikeHornImplanterLabeled: 10 # Frontier
     LightImplanterLabeled: 10 # Frontier

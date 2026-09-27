@@ -51,8 +51,15 @@ public abstract partial class SharedToolSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ToolComponent tool, ToolDoAfterEvent args)
     {
+        // Exodus-begin: server-only interactions must also send completion sounds to their actor.
         if (!args.Cancelled)
-            PlayToolSound(uid, tool, args.User);
+        {
+            if (args.Args.PredictSound)
+                PlayToolSound(uid, tool, args.User);
+            else
+                _audioSystem.PlayPvs(tool.UseSound, uid);
+        }
+        // Exodus-end
 
         var ev = args.WrappedEvent;
         ev.DoAfter = args.DoAfter;

@@ -217,11 +217,14 @@ public sealed partial class ShipRepairDroneSystem
             }
             if (queue.Reservations.ContainsKey(target))
                 continue;
-            if (target.EntityId != null && (ent.Comp.RepairRadius == 0 || stage != ShipRepairStage.Floor) &&
-                _repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(target.Tile)) ||
-                ent.Comp.FailedTargets.TryGetValue(target, out var retry) && _timing.CurTime < retry ||
+            if (ent.Comp.FailedTargets.TryGetValue(target, out var retry) && _timing.CurTime < retry ||
                 !_repair.TryPlanRepair(tool, grid, target, true, out var work, checkMobileObstructions: false,
                     allowClearables: true))
+                continue;
+            // Rebuilding requires its saved floor. Healing a surviving structure does not.
+            if (work.Operation == ShipRepairOperation.Restore &&
+                (ent.Comp.RepairRadius == 0 || stage != ShipRepairStage.Floor) &&
+                _repair.NeedsSnapshotRepair(grid, new ShipRepairTarget(target.Tile)))
                 continue;
             if (IsKnownUnreachable(ent, grid, queue, work, position) ||
                 work.Operation == ShipRepairOperation.Restore && !work.Underfloor &&
@@ -463,7 +466,7 @@ public sealed partial class ShipRepairDroneSystem
             return true;
 
         var rayLength = delta.Length();
-        var ignoreSupport = work.Underfloor;
+        var ignoreSupport = work.Operation == ShipRepairOperation.Tile || work.Underfloor;
         if (work.WallMountArc is { } arc)
         {
             // Match normal wall-mount interaction, including directional mounts on rotated grids.
@@ -473,7 +476,8 @@ public sealed partial class ShipRepairDroneSystem
         }
         if (ignoreSupport && _mapGridQuery.TryGetComponent(grid, out var mapGrid))
         {
-            // Service covered utilities and wall mounts at the target tile's edge, not through preceding walls.
+            // Service floors, covered utilities and wall mounts at the target tile's edge.
+            // A surviving wall on the target tile must not hide its damaged floor; preceding walls still block access.
             var lower = (Vector2) work.Target.Tile * mapGrid.TileSize;
             var bounds = new Box2(lower, lower + new Vector2(mapGrid.TileSize));
             if (bounds.Contains(local))

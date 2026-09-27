@@ -22,7 +22,7 @@
   - Medical
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, MedicalTrackingImplantPlatinum ] # Exodus medical service coverage
   - !type:AddComponentSpecial
     components:
       - type: NpcFactionMember
@@ -45,3 +45,5 @@
     back:
     - RubberStampDoctor
     - BoxFolderMedicalDoctor
+    - MedicalTrackingTablet # Exodus medical rescue tracking
+    - MedicalTrackingPinpointer # Exodus platinum client tracking

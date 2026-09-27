@@ -95,7 +95,7 @@ public sealed partial class ReflectSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    public bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null) // Exodus: reusable reflection sources.
     {
         if (!Resolve(reflector, ref reflect, false) ||
             !CanReflect(user, (reflector, reflect), projectile) || // Exodus: held/wielded and projectile restrictions.
@@ -167,7 +167,7 @@ public sealed partial class ReflectSystem : EntitySystem
         }
     }
 
-    private bool TryReflectHitscan(
+    public bool TryReflectHitscan( // Exodus: reusable reflection sources.
         EntityUid user,
         EntityUid reflector,
         EntityUid? shooter,

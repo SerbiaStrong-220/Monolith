@@ -1,0 +1,68 @@
+- type: entity
+  id: GeneticGlow
+  categories: [HideSpawnMenu]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#a8e9ba"
+    radius: 9
+    energy: 1.5
+
+- type: entity
+  id: GeneticDeflector
+  categories: [HideSpawnMenu]
+  components:
+  - type: Reflect
+    reflectProb: 0.1
+    reflects: [NonEnergy, Energy]
+
+- type: entity
+  parent: SpiderWeb
+  id: GeneticWeb
+  categories: [HideSpawnMenu]
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+
+- type: entity
+  id: ProjectileGeneticFlame
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeCircle
+          radius: 0.15
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Projectile
+    damage:
+      types:
+        Heat: 12
+  - type: PointLight
+    color: "#e25822"
+    radius: 2
+    energy: 2
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
+  - type: IgniteOnProjectileHit
+    fireStacks: 2
+  - type: TimedDespawn
+    lifetime: 0.65

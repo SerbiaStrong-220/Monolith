@@ -280,6 +280,8 @@ public sealed partial class DoAfterArgs
         BreakOnWeightlessMove = other.BreakOnWeightlessMove;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;
+        RangeProvider = other.RangeProvider; // Exodus - preserve the extended-range requirement across state copies.
+        PredictSound = other.PredictSound; // Exodus: preserve sound routing for server-only interactions.
         BreakOnDamage = other.BreakOnDamage;
         DamageThreshold = other.DamageThreshold;
         RequireCanInteract = other.RequireCanInteract;

@@ -1,5 +1,10 @@
 - type: vendingMachineInventory
   id: HospitalMedVendInventory
+  revenueAccounts:
+    MedicalTrackingImplanterBasic: Medical
+    MedicalTrackingImplanterSilver: Medical
+    MedicalTrackingImplanterGold: Medical
+    MedicalTrackingImplanterPlatinum: Medical
   startingInventory:
     HandheldHealthAnalyzer: 4294967295 # Infinite
     Brutepack: 4294967295 # Infinite
@@ -15,7 +20,10 @@
     BodyBagFolded: 4294967295 # Infinite
     ClothingEyesHudMedical: 4294967295 # Infinite
     ClothingEyesEyepatchHudMedical: 4294967295 # Infinite
-    MedicalTrackingImplanterLabeled: 4294967295 # Infinite
+    MedicalTrackingImplanterBasic: 4294967295
+    MedicalTrackingImplanterSilver: 4294967295
+    MedicalTrackingImplanterGold: 4294967295
+    MedicalTrackingImplanterPlatinum: 4294967295
     SadTromboneImplanterLabeled: 4294967295 # Infinite
     BikeHornImplanterLabeled: 4294967295 # Infinite
     LightImplanterLabeled: 4294967295 # Infinite

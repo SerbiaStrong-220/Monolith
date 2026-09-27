@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseItem
+  id: MedicalTrackingTablet
+  name: medical rescue tablet
+  description: Shows medical clients' last known body positions and condition on the bluespace map.
+  components:
+  - type: MedicalTrackingTablet
+    updateInterval: 1
+  - type: Item
+    size: Small
+    # Empty layers disable automatic in-hand states from the item's Sprite RSI.
+    inhandVisuals:
+      left: []
+      middle: []
+      right: []
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/medical_tracking_tablet.rsi
+    state: tablet
+  - type: Icon
+    sprite: _Exodus/Objects/Devices/medical_tracking_tablet.rsi
+    state: icon
+  - type: RadarConsole
+    followEntity: true
+    noRotate: true
+    hideCoords: false
+    maxIffRange: null
+  - type: ActivatableUI
+    key: enum.MedicalTrackingUiKey.Key
+    blockSpectators: true
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: UserInterface
+    interfaces:
+      enum.MedicalTrackingUiKey.Key:
+        type: MedicalTrackingBoundUserInterface
+  - type: StaticPrice
+    price: 500

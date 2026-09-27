@@ -408,6 +408,11 @@ public sealed partial class BloodstreamSystem : EntitySystem
         if (!Resolve(uid, ref component, logMissing: false))
             return false;
 
+        // Exodus-begin: allow independent physiological modifiers without replacing bloodstream settings.
+        var ev = new Content.Shared._Exodus.Genetics.BleedAmountChangeEvent(amount);
+        RaiseLocalEvent(uid, ref ev);
+        amount = ev.Amount;
+        // Exodus-end
         component.BleedAmount += amount;
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 

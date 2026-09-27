@@ -1,10 +1,13 @@
 #T0
 - type: loadout
   id: ContractorMedicalTrackingImplanter
-  name: medical tracking implanter
+  # Exodus-begin paid basic medical implant.
+  price: 1000
+  revenueAccount: Medical
   storage:
     back:
-    - MedicalTrackingImplanter
+    - MedicalTrackingImplanterBasic
+  # Exodus-end
 
 #T1
 - type: loadout

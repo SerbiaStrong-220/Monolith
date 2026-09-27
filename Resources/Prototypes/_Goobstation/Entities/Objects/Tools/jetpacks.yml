@@ -20,6 +20,10 @@
       moles:
         - 10000 # oxygen
         - 10000 # nitrogen
+  # Exodus-begin: nominal supply for the gas fill indicator
+  - type: GasTankFillIndicator
+    nominalMoles: 20000
+  # Exodus-end
   - type: Jetpack
     moleUsage: 0.00002
   - type: MovementSpeedModifier

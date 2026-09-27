@@ -132,6 +132,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         // Exodus-end
 
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
+        OnMouseExited += _ => _medicalMousePosition = null; // Exodus medical marker hover
     }
 
     public void SetMap(MapId mapId, Vector2 offset, bool recentering = false)
@@ -155,10 +156,18 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     protected override void MouseMove(GUIMouseMoveEventArgs args)
     {
         base.MouseMove(args);
+        _medicalMousePosition = args.RelativePixelPosition; // Exodus medical marker hover
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
+        // Exodus-begin medical marker selection is confined to read-only medical maps.
+        if (!FtlMode && args.Function == EngineKeyFunctions.UIClick && TrySelectMedicalContact(args.RelativePixelPosition))
+        {
+            args.Handle();
+            return;
+        }
+        // Exodus-end
         if (FtlMode && ViewingMap != MapId.Nullspace)
         {
             if (args.Function == EngineKeyFunctions.UIClick)
@@ -301,7 +310,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var mapObjects = _mapObjects;
         DrawRecenter();
 
-        if (InFtl || mapObjects.Count == 0)
+        // Exodus: body contacts can exist without grid markers; their sampled map may have been deleted.
+        if (InFtl || !_mapManager.MapExists(ViewingMap) || mapObjects.Count == 0 && _medicalContacts.Count == 0 && !HasMedicalOperatorOnMap()) // Exodus show the operator even without patient signals.
         {
             DrawBacking(handle);
             DrawNoSignal(handle);
@@ -645,6 +655,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             coordColor = shipCompanyProto.Color;
         }
 
+        DrawMedicalContacts(handle, matty); // Exodus medical contacts stay above grid markers.
+        DrawMedicalOperator(handle, matty); // Exodus live operator marker remains visible above patient groups.
         DrawData(handle, coordsText, coordColor);
     }
 

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "For Exodus by Renascitur (disc: renascitur). Implanter silhouette adapted from Objects/Specific/Medical/implanter.rsi by @linkblyat, original from https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d (CC-BY-SA-3.0). Medical service detailing and in-hand artwork redrawn for Exodus.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "implanter0"
+    },
+    {
+      "name": "implanter1"
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "0-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "0-inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/11/2026 11:24:57
-  entityCount: 961
+  entityCount: 976 # Exodus: weapon hardpoints
 maps: []
 grids:
 - 1
@@ -6007,4 +6007,117 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
+# Exodus-begin: weapon hardpoints
+- proto: HardpointBallisticMedium
+  entities:
+  - uid: 966
+    components:
+    - type: Transform
+      pos: -10.5,-3.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 969
+    components:
+    - type: Transform
+      pos: -10.5,-12.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 971
+    components:
+    - type: Transform
+      pos: 9.5,-12.5
+      rot: 0
+      parent: 1
+      anchored: true
+  - uid: 976
+    components:
+    - type: Transform
+      pos: 9.5,-3.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergyHeavy
+  entities:
+  - uid: 963
+    components:
+    - type: Transform
+      pos: -3.5,10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 967
+    components:
+    - type: Transform
+      pos: 2.5,10.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 968
+    components:
+    - type: Transform
+      pos: 8.5,-1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 970
+    components:
+    - type: Transform
+      pos: -9.5,-1.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 973
+    components:
+    - type: Transform
+      pos: 1.5,19.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 975
+    components:
+    - type: Transform
+      pos: -2.5,19.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+- proto: HardpointEnergySuperheavy
+  entities:
+  - uid: 962
+    components:
+    - type: Transform
+      pos: -0.5,22.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 964
+    components:
+    - type: Transform
+      pos: 6.5,0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 965
+    components:
+    - type: Transform
+      pos: 4.5,2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 972
+    components:
+    - type: Transform
+      pos: -5.5,2.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+  - uid: 974
+    components:
+    - type: Transform
+      pos: -7.5,0.5
+      rot: 3.141592653589793 rad
+      parent: 1
+      anchored: true
+# Exodus-end
 ...
