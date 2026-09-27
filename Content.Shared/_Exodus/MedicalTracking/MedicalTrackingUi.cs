@@ -16,7 +16,7 @@ public readonly record struct MedicalTrackingContact(NetEntity Body, string Name
     MapCoordinates Coordinates, MobState State, TimeSpan UpdatedAt);
 
 [Serializable, NetSerializable]
-public readonly record struct MedicalTrackingBrain(NetEntity Entity, string Name);
+public readonly record struct MedicalTrackingBrain(NetEntity Entity, string Name, string TierName);
 
 [Serializable, NetSerializable]
 public sealed class MedicalTrackingState(List<MedicalTrackingContact> contacts) : BoundUserInterfaceState

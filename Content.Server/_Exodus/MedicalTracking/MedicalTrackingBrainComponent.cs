@@ -11,7 +11,11 @@ public sealed partial class MedicalTrackingBrainComponent : Component
     [DataField]
     public bool Registered;
 
-    /// <summary>Identity presented by the client at registration, retained after extraction of the brain.</summary>
+    /// <summary>Last visible identity of the original client, retained after extraction of the brain.</summary>
     [DataField]
     public string ClientName = string.Empty;
+
+    /// <summary>Localized service tier retained with the brain after destruction of the implant.</summary>
+    [DataField]
+    public LocId TierName = "medical-tracking-tier-platinum";
 }

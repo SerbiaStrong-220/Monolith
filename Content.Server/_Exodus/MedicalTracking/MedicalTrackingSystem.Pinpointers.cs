@@ -82,14 +82,14 @@ public sealed partial class MedicalTrackingSystem
         }
     }
 
-    private List<MedicalTrackingBrain> GetBrains()
+    internal List<MedicalTrackingBrain> GetBrains()
     {
         var brains = new List<MedicalTrackingBrain>();
         var query = EntityQueryEnumerator<MedicalTrackingBrainComponent>();
         while (query.MoveNext(out var uid, out var brain))
         {
             if (brain.Registered && !TerminatingOrDeleted(uid))
-                brains.Add(new MedicalTrackingBrain(GetNetEntity(uid), brain.ClientName));
+                brains.Add(new MedicalTrackingBrain(GetNetEntity(uid), brain.ClientName, brain.TierName));
         }
 
         return brains;

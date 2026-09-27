@@ -33,11 +33,13 @@ public sealed partial class MedicalTrackingPinpointerWindow : FancyWindow
         foreach (var brain in state.Brains)
         {
             var selected = brain.Entity == state.Target;
-            var button = new Button { Text = brain.Name, Disabled = selected };
+            var name = Loc.GetString("medical-tracking-brain-client",
+                ("name", brain.Name), ("tier", Loc.GetString(brain.TierName)));
+            var button = new Button { Text = name, Disabled = selected };
             button.OnPressed += _ => SelectTarget?.Invoke(brain.Entity);
             Brains.AddChild(button);
             if (selected)
-                TargetLabel.Text = Loc.GetString("medical-tracking-target", ("name", brain.Name));
+                TargetLabel.Text = Loc.GetString("medical-tracking-target", ("name", name));
         }
 
         if (state.Brains.Count == 0)

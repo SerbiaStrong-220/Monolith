@@ -25,6 +25,7 @@ medical-tracking-no-target = No brain selected
 medical-tracking-target = Tracking: { $name }
 medical-tracking-no-bodies = No body signals received
 medical-tracking-no-brains = No registered brains
+medical-tracking-brain-client = { $name } · { $tier }
 medical-tracking-alive = alive
 medical-tracking-critical = critical
 medical-tracking-dead = dead

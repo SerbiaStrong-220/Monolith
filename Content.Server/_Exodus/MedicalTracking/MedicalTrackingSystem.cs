@@ -1,5 +1,4 @@
 using Content.Server._Exodus.Territory;
-using Content.Server.Body.Components;
 using Content.Server.Implants;
 using Content.Server.Popups;
 using Content.Server.Radio;
@@ -40,6 +39,7 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
         SubscribeLocalEvent<MedicalTrackingImplantComponent, RadioSendAttemptEvent>(OnRadioSend);
         SubscribeLocalEvent<MedicalTrackingBodyComponent, ComponentShutdown>(OnBodyShutdown);
         SubscribeLocalEvent<MedicalTrackingBrainComponent, ComponentShutdown>(OnBrainShutdown);
+        InitializeBrainRegistration();
         InitializeTablets();
         InitializePinpointers();
     }
@@ -64,10 +64,10 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
 
     private EntityUid? FindBrain(Entity<BodyComponent?> body)
     {
-        foreach (var brain in _body.GetBodyOrganEntityComps<BrainComponent>(body))
+        foreach (var (uid, _) in _body.GetBodyOrgans(body.Owner, body.Comp))
         {
-            if (!TerminatingOrDeleted(brain.Owner))
-                return brain.Owner;
+            if (_brainOrganQuery.HasComp(uid) && !TerminatingOrDeleted(uid))
+                return uid;
         }
 
         return null;
@@ -96,15 +96,7 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
         ent.Comp.NextUpdate = _timing.CurTime;
         UpdateHudBorder(ent, body);
 
-        if (ent.Comp.TrackBrain && TryComp<BodyComponent>(body, out var bodyComp) &&
-            FindBrain((body, bodyComp)) is { } brain)
-        {
-            var trackedBrain = EnsureComp<MedicalTrackingBrainComponent>(brain);
-            trackedBrain.Implant = ent.Owner;
-            trackedBrain.Registered = true;
-            trackedBrain.ClientName = Identity.Name(body, EntityManager);
-            ent.Comp.Brain = brain;
-        }
+        UpdateBrainRegistration(ent, body);
     }
 
     private void OnRemoved(Entity<MedicalTrackingImplantComponent> ent, ref EntGotRemovedFromContainerMessage args)
@@ -180,13 +172,19 @@ public sealed partial class MedicalTrackingSystem : EntitySystem
                 continue;
             }
 
-            if (!_implantQuery.TryGetComponent(tracking.Implant, out var implant) || !implant.TrackBody ||
+            if (!_implantQuery.TryGetComponent(tracking.Implant, out var implant) ||
+                (!implant.TrackBody && !implant.TrackBrain) ||
                 implant.Body != uid || now < implant.NextUpdate)
                 continue;
 
             // Advance by whole intervals after a stall; never resample repeatedly to catch up.
             var interval = implant.UpdateInterval > TimeSpan.Zero ? implant.UpdateInterval : TimeSpan.FromSeconds(5);
             implant.NextUpdate += interval * (1 + (now - implant.NextUpdate).Ticks / interval.Ticks);
+            // Job implants may be inserted before the brain is available. Retry on the normal sampling interval.
+            UpdateBrainRegistration((tracking.Implant, implant), uid);
+            if (!implant.TrackBody)
+                continue;
+
             implant.Contact = transform.MapID == MapId.Nullspace ? null : new MedicalTrackingContact(
                 GetNetEntity(uid), Identity.Name(uid, EntityManager), implant.TierName,
                 new MapCoordinates(_transform.GetWorldPosition(transform), transform.MapID),

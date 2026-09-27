@@ -25,6 +25,7 @@ medical-tracking-no-target = Мозг для поиска не выбран
 medical-tracking-target = Поиск: { $name }
 medical-tracking-no-bodies = Нет сигналов от тел клиентов
 medical-tracking-no-brains = Нет зарегистрированных мозгов
+medical-tracking-brain-client = { $name } · { $tier }
 medical-tracking-alive = жив
 medical-tracking-critical = критическое состояние
 medical-tracking-dead = мёртв
