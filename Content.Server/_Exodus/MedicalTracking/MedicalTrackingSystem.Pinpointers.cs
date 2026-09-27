@@ -89,7 +89,7 @@ public sealed partial class MedicalTrackingSystem
         while (query.MoveNext(out var uid, out var brain))
         {
             if (brain.Registered && !TerminatingOrDeleted(uid))
-                brains.Add(new MedicalTrackingBrain(GetNetEntity(uid), brain.ClientName, brain.TierName));
+                brains.Add(new MedicalTrackingBrain(GetNetEntity(uid), brain.ClientName, brain.TierName, brain.TierColor));
         }
 
         return brains;

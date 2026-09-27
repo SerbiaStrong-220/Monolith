@@ -18,4 +18,8 @@ public sealed partial class MedicalTrackingBrainComponent : Component
     /// <summary>Localized service tier retained with the brain after destruction of the implant.</summary>
     [DataField]
     public LocId TierName = "medical-tracking-tier-platinum";
+
+    /// <summary>Service badge color retained after destruction of the implant.</summary>
+    [DataField]
+    public Color TierColor = Color.LightGray;
 }

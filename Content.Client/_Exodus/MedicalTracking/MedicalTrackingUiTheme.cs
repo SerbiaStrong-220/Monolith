@@ -5,7 +5,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client._Exodus.MedicalTracking;
 
-/// <summary>Local tablet styling, following the panel and button layout of the genetics instruments.</summary>
+/// <summary>Shared medical device styling, following the panel and button layout of the genetics instruments.</summary>
 public static class MedicalTrackingUiTheme
 {
     public const string ButtonClass = "MedicalButton";

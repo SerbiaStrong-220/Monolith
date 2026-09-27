@@ -38,6 +38,7 @@ public sealed partial class MedicalTrackingSystem
             registration.Implant == implant.Owner)
         {
             registration.TierName = implant.Comp.TierName;
+            registration.TierColor = implant.Comp.TierColor;
             return;
         }
 
@@ -51,6 +52,7 @@ public sealed partial class MedicalTrackingSystem
         registration.Implant = implant.Owner;
         registration.Registered = true;
         registration.TierName = implant.Comp.TierName;
+        registration.TierColor = implant.Comp.TierColor;
         // Identity.Name reads a cache that still contains "identity" during round-start implantation.
         // Resolve the current visible identity directly, retaining disguise and ID-card rules.
         registration.ClientName = _identity.GetEntityIdentity(body);
