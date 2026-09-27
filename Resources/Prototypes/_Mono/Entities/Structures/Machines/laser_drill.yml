@@ -8,6 +8,19 @@
     proto: SpawnLootOres15
     interval: 10
     needApcPower: false
+    storeInMaterialStorage: true 
+  
+  - type: MaterialStorage
+    storageLimit: 1000000
+    insertOnInteract: false
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+      - Ore
+  - type: OreSiloClient
+  
   - type: Sprite
     offset: 0,0.5
     noRot: true
@@ -75,6 +88,7 @@
     flags: None # 1984
   - type: ItemMiner
     interval: 1 # previously 20
+    storeInMaterialStorage: true
   - type: PowerConsumer
     voltage: High
     drawRate: 150000

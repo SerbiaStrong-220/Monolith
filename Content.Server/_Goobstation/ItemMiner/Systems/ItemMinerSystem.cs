@@ -69,6 +69,11 @@ public sealed partial class ItemMinerSystem : EntitySystem
             if (miner.SpawnChance < 1f && !_gambling.Prob(miner.SpawnChance))
                 continue;
 
+            
+            if (miner.StoreInMaterialStorage && TryStoreMinedMaterials(uid, miner, proto))
+                continue;
+            
+
             // mine
             var minedUid = Spawn(proto, xform.Coordinates);
             var ev = new ItemMinedEvent(minedUid);
