@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Medical;
 using Content.Shared.Damage;
 
 namespace Content.Server._Exodus.Medical;
@@ -11,6 +12,14 @@ public sealed partial class MedicalBeamActiveComponent : Component
 
     [ViewVariables]
     public EntityUid Target;
+
+    /// <summary>The mode that established this channel; automatic channels do not need input heartbeats.</summary>
+    [ViewVariables]
+    public MedicalBeamMode Mode;
+
+    /// <summary>Entity playing the treatment loop. Cleared on every interruption.</summary>
+    [ViewVariables]
+    public EntityUid? AudioStream;
 
     [ViewVariables, AutoPausedField]
     public TimeSpan InputExpires;

@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Medical;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 
@@ -5,6 +6,18 @@ namespace Content.Server._Exodus.Medical;
 
 public sealed partial class MedicalBeamGunSystem
 {
+    internal static FixedPoint2 GetHealingRate(MedicalBeamGunComponent gun, FixedPoint2 rate)
+    {
+        return gun.Mode == MedicalBeamMode.Automatic
+            ? FixedPoint2.New(Math.Round(rate.Double() / Math.Max(1f, gun.AutomaticRateDivisor), MidpointRounding.AwayFromZero))
+            : rate;
+    }
+
+    internal static float GetChargeRate(MedicalBeamGunComponent gun)
+    {
+        return Math.Max(0f, gun.ChargePerSecond);
+    }
+
     /// <summary>
     /// Distributes a capped group budget proportionally across injuries still present.
     /// Carrying the remaining budget forward preserves hundredths without healing undamaged types.

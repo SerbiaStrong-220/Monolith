@@ -1,4 +1,5 @@
 using Content.Server._Exodus.Medical;
+using Content.Shared._Exodus.Medical;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
@@ -11,6 +12,19 @@ public sealed class MedicalBeamHealingTest
 {
     private static readonly string[] Brute = { "Blunt", "Slash", "Piercing" };
     private static readonly string[] Burn = { "Heat", "Shock", "Cold", "Caustic" };
+
+    [Test]
+    public void AutomaticModeRoundsThePerSecondRateBeforeSplittingPulses()
+    {
+        var gun = new MedicalBeamGunComponent { ChargePerSecond = 36, AutomaticRateDivisor = 3 };
+        Assert.That(MedicalBeamGunSystem.GetHealingRate(gun, 5), Is.EqualTo(FixedPoint2.New(5)));
+        Assert.That(MedicalBeamGunSystem.GetChargeRate(gun), Is.EqualTo(36f));
+        gun.Mode = MedicalBeamMode.Automatic;
+        var rate = MedicalBeamGunSystem.GetHealingRate(gun, 5);
+        Assert.That(rate, Is.EqualTo(FixedPoint2.New(2)));
+        Assert.That(rate * gun.HealInterval.TotalSeconds, Is.EqualTo(FixedPoint2.New(0.4)));
+        Assert.That(MedicalBeamGunSystem.GetChargeRate(gun), Is.EqualTo(36f));
+    }
 
     [Test]
     public void SingleInjuryGetsTheEntireGroupBudget()

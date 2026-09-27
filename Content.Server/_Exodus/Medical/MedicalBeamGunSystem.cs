@@ -1,5 +1,6 @@
-using System.Numerics;
 using Content.Server._Exodus.Visuals;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.PowerCell;
 using Content.Shared._Exodus.Medical;
 using Content.Shared._Exodus.Visuals;
@@ -7,15 +8,22 @@ using Content.Shared._Shitmed.Targeting;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -27,9 +35,13 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private EntityLinkVisualSystem _links = default!;
@@ -39,8 +51,10 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
     private EntityQuery<CombatModeComponent> _combatQuery;
     private EntityQuery<MobStateComponent> _mobQuery;
     private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
     private EntityQuery<MedicalBeamActiveComponent> _activeQuery;
     private EntityQuery<MedicalBeamPatientComponent> _patientQuery;
+    private EntityQuery<RequireProjectileTargetComponent> _projectileTargetQuery;
 
     public override void Initialize()
     {
@@ -49,8 +63,10 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
         _combatQuery = GetEntityQuery<CombatModeComponent>();
         _mobQuery = GetEntityQuery<MobStateComponent>();
         _damageQuery = GetEntityQuery<DamageableComponent>();
+        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
         _activeQuery = GetEntityQuery<MedicalBeamActiveComponent>();
         _patientQuery = GetEntityQuery<MedicalBeamPatientComponent>();
+        _projectileTargetQuery = GetEntityQuery<RequireProjectileTargetComponent>();
 
         SubscribeNetworkEvent<MedicalBeamGunInputEvent>(OnInput);
         SubscribeLocalEvent<MedicalBeamGunComponent, HandDeselectedEvent>(OnDeselected);
@@ -58,6 +74,9 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
         SubscribeLocalEvent<MedicalBeamGunComponent, ComponentShutdown>(OnGunShutdown);
         SubscribeLocalEvent<MedicalBeamGunComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MedicalBeamActiveComponent, ComponentShutdown>(OnActiveShutdown);
+        SubscribeLocalEvent<MedicalBeamGunComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<MedicalBeamGunComponent, GetVerbsEvent<AlternativeVerb>>(OnModeVerb);
+        SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(OnPlayerDetached);
     }
 
     private void OnInput(MedicalBeamGunInputEvent message, EntitySessionEventArgs args)
@@ -67,17 +86,35 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
             TerminatingOrDeleted(gun) || !TryComp<MedicalBeamGunComponent>(gun, out var component))
             return;
 
-        if (message.Target is not { } netTarget || !TryGetEntity(netTarget, out var target) || target is not { } patient)
+        EntityUid? target = null;
+        if (message.Target is { } netTarget)
+            TryGetEntity(netTarget, out target);
+        TryHandleInput((gun, component), user, target, message.Mode);
+    }
+
+    internal bool TryHandleInput(Entity<MedicalBeamGunComponent> gun, EntityUid user, EntityUid? target, MedicalBeamMode mode)
+    {
+        // Ignore stale heartbeats/releases from the previous mode after the selector has changed.
+        if (gun.Comp.Mode != mode || !_handsQuery.TryComp(user, out var hands) || hands.ActiveHandEntity != gun.Owner)
+            return false;
+
+        if (target == null)
         {
             if (_activeQuery.TryComp(gun, out var active) && active.User == user)
                 StopHealing((gun, active));
-            return;
+            return true;
         }
 
-        TrySetTarget((gun, component), user, patient);
+        if (mode == MedicalBeamMode.Automatic && _activeQuery.TryComp(gun, out var previous) &&
+            previous.Running && previous.User == user && previous.Target == target)
+        {
+            StopHealing((gun, previous));
+            return true;
+        }
+        return TrySetTarget(gun, user, target.Value);
     }
 
-    /// <summary>Accepts an authenticated held input. Treatment is validated again on each pulse.</summary>
+    /// <summary>Accepts an authenticated target request. Treatment is validated again on each pulse.</summary>
     internal bool TrySetTarget(Entity<MedicalBeamGunComponent> gun, EntityUid user, EntityUid target)
     {
         if (!CanTreat(gun, user, target))
@@ -100,6 +137,7 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
         active = EnsureComp<MedicalBeamActiveComponent>(gun);
         active.User = user;
         active.Target = target;
+        active.Mode = gun.Comp.Mode;
         active.InputExpires = _timing.CurTime + gun.Comp.InputTimeout;
         active.NextCheck = _timing.CurTime;
         // No instant healing on click: switching patients or tapping cannot bypass the rate limit.
@@ -112,8 +150,11 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
         return user != target && !TerminatingOrDeleted(gun) && !TerminatingOrDeleted(user) &&
                !TerminatingOrDeleted(target) && !Paused(gun) && !Paused(user) && !Paused(target) &&
                gun.Comp.Range > 0f && gun.Comp.HealInterval > TimeSpan.Zero && gun.Comp.InputTimeout > TimeSpan.Zero &&
-               _handsQuery.TryComp(user, out var hands) && hands.ActiveHandEntity == gun.Owner &&
-               _combatQuery.TryComp(user, out var combat) && combat.IsInCombatMode &&
+               _handsQuery.TryComp(user, out var hands) &&
+               (hands.ActiveHandEntity == gun.Owner ||
+                gun.Comp.Mode == MedicalBeamMode.Automatic && _hands.IsHolding((user, hands), gun.Owner)) &&
+               (gun.Comp.Mode == MedicalBeamMode.Automatic ||
+                _combatQuery.TryComp(user, out var combat) && combat.IsInCombatMode) &&
                _mobQuery.TryComp(user, out var medic) && medic.CurrentState == MobState.Alive &&
                _mobQuery.TryComp(target, out var patient) && patient.CurrentState != MobState.Dead &&
                _damageQuery.HasComp(target) && !HasComp<EmpDisabledComponent>(gun) &&
@@ -132,7 +173,9 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
             if (!active.Running)
                 continue;
             Entity<MedicalBeamActiveComponent> beam = (uid, active);
-            if (now >= active.InputExpires || TerminatingOrDeleted(active.User) || TerminatingOrDeleted(active.Target))
+            if (active.Mode != gun.Mode ||
+                active.Mode == MedicalBeamMode.Manual && now >= active.InputExpires ||
+                TerminatingOrDeleted(active.User) || TerminatingOrDeleted(active.Target))
             {
                 StopHealing(beam);
                 continue;
@@ -143,14 +186,14 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
             if (active.NextCheck <= now)
                 active.NextCheck = now + gun.HealInterval;
 
-            if (!CanTreat((uid, gun), active.User, active.Target) || !HasClearBeam(active.User, active.Target, gun.Range) ||
+            if (!CanTreat((uid, gun), active.User, active.Target) || !HasClearBeam(active.User, active.Target, gun) ||
                 !_damageQuery.TryComp(active.Target, out var damageable))
             {
                 StopHealing(beam);
                 continue;
             }
 
-            var charge = Math.Max(0f, gun.ChargePerSecond) * (float) gun.HealInterval.TotalSeconds;
+            var charge = GetChargeRate(gun) * (float) gun.HealInterval.TotalSeconds;
             if (charge > 0f && !_cells.HasCharge(uid, charge))
             {
                 StopHealing(beam);
@@ -159,10 +202,12 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
 
             var patient = EnsureComp<MedicalBeamPatientComponent>(active.Target);
             if (patient.Gun is { } other && other != uid && _activeQuery.TryComp(other, out var otherBeam) &&
-                otherBeam.Running && otherBeam.Target == active.Target && now < otherBeam.InputExpires)
+                otherBeam.Running && otherBeam.Target == active.Target &&
+                (otherBeam.Mode == MedicalBeamMode.Automatic || now < otherBeam.InputExpires))
             {
                 // Wait for the current medic to release the patient; no duplicate healing or cell drain.
                 ClearVisual(uid);
+                StopTreatmentSound(beam);
                 continue;
             }
 
@@ -177,6 +222,7 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
                 StopHealing(beam);
                 continue;
             }
+            StartTreatmentSound(beam, gun);
             if (now < active.NextHeal)
                 continue;
 
@@ -185,41 +231,66 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
                 active.NextHeal = now + gun.HealInterval;
             patient.NextHeal = active.NextHeal;
 
-            var healing = active.Healing;
-            healing.DamageDict.Clear();
-            foreach (var (groupId, rate) in gun.GroupHealing)
-            {
-                if (_prototype.TryIndex(groupId, out var group))
-                    AddGroupHealing(damageable.Damage, group.DamageTypes, rate * gun.HealInterval.TotalSeconds, healing);
-            }
-            foreach (var (type, rate) in gun.TypeHealing)
-                AddTypeHealing(damageable.Damage, type.Id, rate * gun.HealInterval.TotalSeconds, healing);
-
-            // A healthy patient can remain targeted without consuming energy.
-            if (healing.Empty)
-                continue;
+            // Maintaining the beam costs power even if the patient has no injuries.
             if (charge > 0f && !_cells.TryUseCharge(uid, charge))
             {
                 StopHealing(beam);
                 continue;
             }
 
-            _damage.TryChangeDamage(active.Target, healing, ignoreResistances: true, interruptsDoAfters: false,
-                damageable: damageable, origin: active.User, targetPart: TargetBodyPart.All, canSever: false, tool: uid);
+            var healing = active.Healing;
+            healing.DamageDict.Clear();
+            foreach (var (groupId, rate) in gun.GroupHealing)
+            {
+                if (_prototype.TryIndex(groupId, out var group))
+                    AddGroupHealing(damageable.Damage, group.DamageTypes, GetHealingRate(gun, rate) * gun.HealInterval.TotalSeconds, healing);
+            }
+            foreach (var (type, rate) in gun.TypeHealing)
+                AddTypeHealing(damageable.Damage, type.Id, GetHealingRate(gun, rate) * gun.HealInterval.TotalSeconds, healing);
+
+            if (gun.BleedReductionPerSecond > 0f &&
+                _bloodstreamQuery.TryComp(active.Target, out var blood) && blood.BleedAmount > 0f)
+            {
+                var reduction = gun.BleedReductionPerSecond * (float) gun.HealInterval.TotalSeconds;
+                if (gun.Mode == MedicalBeamMode.Automatic)
+                    reduction /= Math.Max(1f, gun.AutomaticRateDivisor);
+                _bloodstream.TryModifyBleedAmount(active.Target, -reduction, blood);
+            }
+
+            if (!healing.Empty)
+            {
+                _damage.TryChangeDamage(active.Target, healing, ignoreResistances: true, interruptsDoAfters: false,
+                    damageable: damageable, origin: active.User, targetPart: TargetBodyPart.All, canSever: false, tool: uid);
+            }
         }
     }
 
-    private bool HasClearBeam(EntityUid user, EntityUid target, float range)
+    private bool HasClearBeam(EntityUid user, EntityUid target, MedicalBeamGunComponent gun)
     {
         var from = _transform.GetMapCoordinates(user);
         var to = _transform.GetMapCoordinates(target);
-        return from.MapId == to.MapId && Vector2.DistanceSquared(from.Position, to.Position) <= range * range &&
-               _interaction.InRangeUnobstructed(user, target, range, overlapCheck: false);
+        var difference = to.Position - from.Position;
+        var distance = difference.Length();
+        if (from.MapId != to.MapId || distance > gun.Range)
+            return false;
+        if (MathHelper.CloseTo(distance, 0f))
+            return true;
+
+        var ray = new CollisionRay(from.Position, difference / distance, (int) gun.CollisionMask);
+        var state = (User: user, Target: target, Query: _projectileTargetQuery);
+        var hits = _physics.IntersectRayWithPredicate(from.MapId, ray, state,
+            static (hit, context) => hit == context.User || hit == context.Target ||
+                                    context.Query.TryComp(hit, out var selective) && selective.Active,
+            distance);
+        foreach (var _ in hits)
+            return false;
+        return true;
     }
 
     private void StopHealing(Entity<MedicalBeamActiveComponent> beam)
     {
         ClearVisual(beam);
+        StopTreatmentSound(beam);
         if (_patientQuery.TryComp(beam.Comp.Target, out var patient) && patient.Gun == beam.Owner)
             patient.Gun = null;
         RemCompDeferred<MedicalBeamActiveComponent>(beam);
@@ -234,13 +305,14 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
     private void OnActiveShutdown(Entity<MedicalBeamActiveComponent> ent, ref ComponentShutdown args)
     {
         ClearVisual(ent);
+        StopTreatmentSound(ent);
         if (_patientQuery.TryComp(ent.Comp.Target, out var patient) && patient.Gun == ent.Owner)
             patient.Gun = null;
     }
 
     private void OnDeselected(Entity<MedicalBeamGunComponent> ent, ref HandDeselectedEvent args)
     {
-        if (_activeQuery.TryComp(ent, out var active))
+        if (_activeQuery.TryComp(ent, out var active) && active.Mode == MedicalBeamMode.Manual)
             StopHealing((ent, active));
     }
 
@@ -259,10 +331,24 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
     private void OnExamined(Entity<MedicalBeamGunComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("medical-beam-gun-examine", ("range", ent.Comp.Range)));
-        if (ent.Comp.ChargePerSecond <= 0f)
+        args.PushMarkup(Loc.GetString("medical-beam-gun-mode", ("mode", GetModeName(ent.Comp.Mode))));
+        args.PushMarkup(Loc.GetString(ent.Comp.Mode == MedicalBeamMode.Automatic
+            ? "medical-beam-gun-controls-automatic"
+            : "medical-beam-gun-controls-manual"));
+        var chargeRate = GetChargeRate(ent.Comp);
+        if (chargeRate <= 0f)
             return;
         args.PushMarkup(_cells.TryGetBatteryFromSlot(ent, out var battery)
-            ? Loc.GetString("medical-beam-gun-charge", ("seconds", (int) (battery.CurrentCharge / ent.Comp.ChargePerSecond)))
+            ? Loc.GetString("medical-beam-gun-charge", ("seconds", (int) (battery.CurrentCharge / chargeRate)))
             : Loc.GetString("medical-beam-gun-no-cell"));
+    }
+
+    private void OnPlayerDetached(Entity<HandsComponent> ent, ref PlayerDetachedEvent args)
+    {
+        foreach (var hand in ent.Comp.Hands.Values)
+        {
+            if (hand.HeldEntity is { } gun && _activeQuery.TryComp(gun, out var active) && active.User == ent.Owner)
+                StopHealing((gun, active));
+        }
     }
 }

@@ -1,0 +1,8 @@
+- files:
+  - healing_loop.ogg
+  - beam_start.ogg
+  - beam_stop.ogg
+  - mode_switch.ogg
+  license: CC0-1.0
+  copyright: "For Exodus by Renascitur (disc: renascitur)"
+  source: https://github.com/space-exodus/Monolith

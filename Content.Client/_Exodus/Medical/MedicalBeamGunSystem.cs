@@ -25,6 +25,7 @@ public sealed class MedicalBeamGunSystem : EntitySystem
 
     // Local input state, not replicated world state.
     private NetEntity? _sentGun;
+    private bool _useWasDown;
     private TimeSpan _nextInput;
     private static readonly TimeSpan InputInterval = TimeSpan.FromSeconds(0.1);
 
@@ -40,11 +41,13 @@ public sealed class MedicalBeamGunSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
+        var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) == BoundKeyState.Down;
+        var pressed = useDown && !_useWasDown;
+        _useWasDown = useDown;
+
         if (_player.LocalEntity is not { } user ||
-            !TryComp<CombatModeComponent>(user, out var combat) || !combat.IsInCombatMode ||
             !TryComp<HandsComponent>(user, out var hands) || hands.ActiveHandEntity is not { } gun ||
-            !HasComp<MedicalBeamGunComponent>(gun) ||
-            _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down ||
+            !TryComp<MedicalBeamGunComponent>(gun, out var config) ||
             _state.CurrentState is not GameplayStateBase screen)
         {
             StopInput();
@@ -53,6 +56,29 @@ public sealed class MedicalBeamGunSystem : EntitySystem
         }
 
         var netGun = GetNetEntity(gun);
+        if (config.Mode == MedicalBeamMode.Automatic)
+        {
+            StopInput();
+            _nextInput = TimeSpan.Zero;
+            if (!pressed)
+                return;
+
+            var click = _eye.PixelToMap(_input.MouseScreenPosition);
+            if (click.MapId == MapId.Nullspace)
+                return;
+            var patient = screen.GetDamageableClickedEntity(click);
+            if (patient == user)
+                patient = null;
+            RaiseNetworkEvent(new MedicalBeamGunInputEvent(netGun, GetNetEntity(patient), MedicalBeamMode.Automatic));
+            return;
+        }
+
+        if (!useDown || !TryComp<CombatModeComponent>(user, out var combat) || !combat.IsInCombatMode)
+        {
+            StopInput();
+            _nextInput = TimeSpan.Zero;
+            return;
+        }
         if (_sentGun != null && _sentGun != netGun)
             StopInput();
         if (_timing.CurTime < _nextInput)
@@ -67,7 +93,7 @@ public sealed class MedicalBeamGunSystem : EntitySystem
             return;
         }
 
-        RaiseNetworkEvent(new MedicalBeamGunInputEvent(netGun, GetNetEntity(target)));
+        RaiseNetworkEvent(new MedicalBeamGunInputEvent(netGun, GetNetEntity(target), MedicalBeamMode.Manual));
         _sentGun = netGun;
     }
 
@@ -75,7 +101,7 @@ public sealed class MedicalBeamGunSystem : EntitySystem
     {
         if (_sentGun is not { } gun)
             return;
-        RaiseNetworkEvent(new MedicalBeamGunInputEvent(gun, null));
+        RaiseNetworkEvent(new MedicalBeamGunInputEvent(gun, null, MedicalBeamMode.Manual));
         _sentGun = null;
     }
 }
