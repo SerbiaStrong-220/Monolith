@@ -55,8 +55,9 @@ public sealed class GeneticDiskTest
                 var message = new GeneticPrinterMessage(operation, entities.GetNetEntity(disk), revision ?? diskData.Revision, block)
                 {
                     Actor = user,
+                    UiKey = GeneticsUiKey.Printer,
                 };
-                entities.EventBus.RaiseComponentEvent(machine, printer, message);
+                entities.EventBus.RaiseLocalEvent(machine, message);
             }
 
             var operation = fullGenome ? GeneticPrinterOperation.PrintGenome : GeneticPrinterOperation.PrintBlock;

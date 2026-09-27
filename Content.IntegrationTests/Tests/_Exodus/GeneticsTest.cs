@@ -20,10 +20,12 @@ using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Prying.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests._Exodus;
 
@@ -123,8 +125,11 @@ public sealed class GeneticsTest
             body = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, Vector2.Zero));
             entities.EnsureComponent<GodmodeComponent>(body); // Isolate the interaction from vacuum damage on the test map.
             door = entities.SpawnEntity("Airlock", new EntityCoordinates(map, new Vector2(5, 0)));
-            entities.GetComponent<DoorComponent>(door).PryTime = 0.5f;
+            var timing = server.ResolveDependency<IGameTiming>();
+            entities.GetComponent<DoorComponent>(door).PryTime = (float) timing.TickPeriod.TotalSeconds * 4;
             var tool = entities.SpawnEntity("Crowbar", new EntityCoordinates(map, Vector2.Zero));
+            // The default crowbar opens unpowered airlocks instantly; this test needs a running DoAfter.
+            entities.GetComponent<PryingComponent>(tool).InstaPry = false;
             Assert.That(entities.System<SharedHandsSystem>().TryPickup(body, tool), Is.True);
             Assert.That(genetics.TryGetLivingGenome(body, out var foundGenome), Is.True);
             genome = foundGenome!;
@@ -148,6 +153,7 @@ public sealed class GeneticsTest
         await server.WaitAssertion(() =>
         {
             Assert.That(operation.Cancelled, Is.False, "The next tick must retain the remote interaction's range.");
+            Assert.That(operation.Completed, Is.False, "The action must still be running before testing interruptions.");
             Assert.That(entities.System<SharedInteractionSystem>().InRangeUnobstructed(body, door), Is.False,
                 "Ordinary interactions must not gain range while a telekinetic DoAfter is running.");
             switch (outcome)
@@ -164,7 +170,7 @@ public sealed class GeneticsTest
             }
         });
 
-        await server.WaitRunTicks(30);
+        await server.WaitRunTicks(5);
         await server.WaitAssertion(() =>
         {
             Assert.That(operation.Cancelled, Is.EqualTo(outcome != "complete"));
@@ -217,7 +223,7 @@ public sealed class GeneticsTest
             var poison = damage.Damage.DamageDict["Poison"];
             var expectedDamage = Content.Shared.FixedPoint.FixedPoint2.New(admin ? 0 : 5);
             var interaction = new AfterInteractEvent(user, item, target, new EntityCoordinates(map, new Vector2(0.5f, 0)), true);
-            entities.EventBus.RaiseComponentEvent(item, injector, interaction);
+            entities.EventBus.RaiseLocalEvent(item, interaction);
             Assert.That(injector.Used, Is.True);
             Assert.That(genome!.Blocks[breathing], Is.EqualTo(0xFFF));
             Assert.That(damage.Damage.DamageDict["Poison"] - poison, Is.EqualTo(expectedDamage));
@@ -225,7 +231,7 @@ public sealed class GeneticsTest
                 Assert.That(genome.Blocks, Is.EqualTo(injector.Sample!.Blocks));
             var revision = genome.Revision;
             interaction = new AfterInteractEvent(user, item, target, new EntityCoordinates(map, new Vector2(0.5f, 0)), true);
-            entities.EventBus.RaiseComponentEvent(item, injector, interaction);
+            entities.EventBus.RaiseLocalEvent(item, interaction);
             Assert.That(genome.Revision, Is.EqualTo(revision), "Used injectors cannot apply twice.");
             Assert.That(damage.Damage.DamageDict["Poison"] - poison, Is.EqualTo(expectedDamage));
             entities.DeleteEntity(map);
@@ -335,8 +341,12 @@ public sealed class GeneticsTest
             void Send(GeneticsOperation operation, int block = 0, int digit = 0)
             {
                 var message = new GeneticsMessage(operation, entities.GetNetEntity(patient), genome!.Revision,
-                    block: block, value: 0xFFF, digit: digit) { Actor = user };
-                entities.EventBus.RaiseComponentEvent(machine, lab, message);
+                    block: block, value: 0xFFF, digit: digit)
+                {
+                    Actor = user,
+                    UiKey = GeneticsUiKey.Laboratory,
+                };
+                entities.EventBus.RaiseLocalEvent(machine, message);
             }
 
             Send(GeneticsOperation.Scan);

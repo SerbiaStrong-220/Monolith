@@ -143,7 +143,7 @@ public sealed class MedicalTrackingVisibilityTest
                     Actor = medic,
                     UiKey = MedicalTrackingUiKey.Pinpointer,
                 };
-                entities.EventBus.RaiseComponentEvent(pointer, device, message);
+                entities.EventBus.RaiseLocalEvent(pointer, message);
             }
 
             void Refresh(bool sample = true)
