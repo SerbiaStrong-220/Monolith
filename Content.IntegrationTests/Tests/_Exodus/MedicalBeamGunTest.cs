@@ -155,6 +155,42 @@ public sealed class MedicalBeamGunTest
         });
     }
 
+    [TestCase(MedicalBeamMode.Manual)]
+    [TestCase(MedicalBeamMode.Automatic)]
+    public async Task MobsDoNotObstructTreatmentButWallsStillDo(MedicalBeamMode mode)
+    {
+        await WithPatient((entities, user, gun, target, grid, now) =>
+        {
+            var bystander = entities.SpawnEntity("MobHuman", new EntityCoordinates(grid, new Vector2(1.5f, 0.5f)));
+            var bystanderDamage = entities.GetComponent<DamageableComponent>(bystander).TotalDamage;
+            var system = entities.System<MedicalBeamGunSystem>();
+            var config = entities.GetComponent<MedicalBeamGunComponent>(gun);
+            var damage = entities.GetComponent<DamageableComponent>(target);
+            var initialDamage = damage.TotalDamage;
+            Assert.That(system.TrySetMode((gun, config), user, mode), Is.True);
+            Assert.That(system.TrySetTarget((gun, config), user, target), Is.True);
+            var active = entities.GetComponent<MedicalBeamActiveComponent>(gun);
+            active.NextHeal = now;
+            system.Update(0f);
+
+            Assert.That(active.Running, Is.True);
+            Assert.That(entities.GetComponent<EntityLinkVisualComponent>(gun).Target, Is.EqualTo(target));
+            Assert.That(damage.TotalDamage, Is.LessThan(initialDamage));
+            Assert.That(entities.GetComponent<DamageableComponent>(bystander).TotalDamage, Is.EqualTo(bystanderDamage));
+
+            // Ignoring a mob must not hide an opaque obstacle behind it.
+            entities.SpawnEntity("WallSolid", new EntityCoordinates(grid, new Vector2(2.5f, 0.5f)));
+            var treatedDamage = damage.TotalDamage;
+            active.NextCheck = now;
+            active.NextHeal = now;
+            system.Update(0f);
+
+            Assert.That(active.Running, Is.False);
+            Assert.That(entities.GetComponent<EntityLinkVisualComponent>(gun).Target, Is.Null);
+            Assert.That(damage.TotalDamage, Is.EqualTo(treatedDamage));
+        });
+    }
+
     [TestCase("wall")]
     [TestCase("range")]
     [TestCase("timeout")]
