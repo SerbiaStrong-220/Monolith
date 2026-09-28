@@ -6,7 +6,7 @@ namespace Content.Server._Exodus.MedicalTracking;
 
 public sealed partial class MedicalTrackingSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     private void InitializeTabletAudio()
     {
