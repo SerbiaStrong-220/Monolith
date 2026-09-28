@@ -40,7 +40,11 @@ public sealed class SuitSensorActivityTest
                     ? containers.EnsureContainer<ContainerSlot>(patient, "sensor-test")
                     : null;
                 if (container != null)
+                {
+#pragma warning disable RA0002 // Configure the activation container for this test fixture.
                     sensor.ActivationContainer = container.ID;
+#pragma warning restore RA0002
+                }
 
                 void Attach()
                 {
@@ -52,7 +56,9 @@ public sealed class SuitSensorActivityTest
                 void AssertPolling(bool expected)
                 {
                     // Make the sensor due; inactive sensors must not even advance their timer.
+#pragma warning disable RA0002 // Force a due update to test multiple transitions within the same tick.
                     sensor.NextUpdate = now;
+#pragma warning restore RA0002
                     sensors.Update(0f);
                     var nextUpdate = expected ? now + sensor.UpdateRate : now;
                     Assert.That(sensor.NextUpdate, Is.EqualTo(nextUpdate));
