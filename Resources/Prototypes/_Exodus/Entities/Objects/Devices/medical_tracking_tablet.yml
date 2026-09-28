@@ -6,6 +6,26 @@
   components:
   - type: MedicalTrackingTablet
     updateInterval: 1
+    openSound:
+      path: /Audio/_Exodus/Items/MedicalTablet/open.ogg
+      params:
+        volume: -6
+    closeSound:
+      path: /Audio/_Exodus/Items/MedicalTablet/close.ogg
+      params:
+        volume: -6
+    alertCooldown: 3
+    alertSounds:
+      Critical:
+        path: /Audio/_Exodus/Items/MedicalTablet/critical.ogg
+        params:
+          volume: -4
+          maxDistance: 5
+      Dead:
+        path: /Audio/_Exodus/Items/MedicalTablet/death.ogg
+        params:
+          volume: -4
+          maxDistance: 5
   - type: Item
     size: Small
     # Empty layers disable automatic in-hand states from the item's Sprite RSI.

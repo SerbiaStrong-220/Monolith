@@ -14,6 +14,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -24,6 +25,95 @@ namespace Content.IntegrationTests.Tests._Exodus;
 [TestOf(typeof(MedicalTrackingSystem))]
 public sealed class MedicalTrackingVisibilityTest
 {
+    [TestCase("MedicalTrackingImplantBasic", false)]
+    [TestCase("MedicalTrackingImplantSilver", false)]
+    [TestCase("MedicalTrackingImplantGold", true)]
+    [TestCase("MedicalTrackingImplantPlatinum", true)]
+    [TestCase("MedicalTrackingImplantRuby", true)]
+    public async Task TabletAlertsFollowTransitionsWithClosedUi(string prototype, bool shouldAlert)
+    {
+        await WithPatient(prototype, (entities, patient, implant, map, now) =>
+        {
+            var tracking = entities.System<MedicalTrackingSystem>();
+            var states = entities.System<MobStateSystem>();
+            var tablet = entities.SpawnEntity("MedicalTrackingTablet", new EntityCoordinates(map, Vector2.Zero));
+            var device = entities.GetComponent<MedicalTrackingTabletComponent>(tablet);
+            // Neither UI refreshes nor periodic position samples should be needed for an emergency alert.
+            device.NextUpdate = now + TimeSpan.FromMinutes(1);
+            implant.Comp.NextUpdate = device.NextUpdate;
+            Assert.That(entities.System<UserInterfaceSystem>().IsUiOpen(tablet, MedicalTrackingUiKey.Key), Is.False);
+
+            states.ChangeMobState(patient, MobState.Critical);
+            tracking.Update(0f);
+            Assert.That(CountTabletSounds(entities, tablet, "critical"), Is.EqualTo(shouldAlert ? 1 : 0));
+            tracking.Update(0f);
+            Assert.That(CountTabletSounds(entities, tablet, "critical"), Is.EqualTo(shouldAlert ? 1 : 0),
+                "Remaining critical must not repeat the notification.");
+
+            states.ChangeMobState(patient, MobState.Dead);
+            tracking.Update(0f);
+            Assert.That(CountTabletSounds(entities, tablet, "death"), Is.Zero, "The cooldown must prevent overlap.");
+            device.NextAlert = now;
+            tracking.Update(0f);
+            Assert.That(CountTabletSounds(entities, tablet, "death"), Is.EqualTo(shouldAlert ? 1 : 0));
+
+            // Reviving into critical is an improvement, not a new critical emergency.
+            states.ChangeMobState(patient, MobState.Critical);
+            states.ChangeMobState(patient, MobState.Alive);
+            device.NextAlert = now;
+            tracking.Update(0f);
+            Assert.That(device.PendingAlert, Is.Null);
+            Assert.That(CountTabletSounds(entities, tablet, "critical"), Is.EqualTo(shouldAlert ? 1 : 0));
+        });
+    }
+
+    [Test]
+    public async Task SimultaneousTabletAlertsPreferDeathAndSkipPausedDevices()
+    {
+        await WithPatient("MedicalTrackingImplantGold", (entities, patient, _, map, _) =>
+        {
+            var origin = new EntityCoordinates(map, Vector2.Zero);
+            var tracking = entities.System<MedicalTrackingSystem>();
+            var states = entities.System<MobStateSystem>();
+            var tablet = entities.SpawnEntity("MedicalTrackingTablet", origin);
+            var paused = entities.SpawnEntity("MedicalTrackingTablet", origin);
+            entities.System<MetaDataSystem>().SetEntityPaused(paused, true);
+            var otherPatient = entities.SpawnEntity("MobHuman", origin);
+            Assert.That(entities.System<SharedSubdermalImplantSystem>().AddImplant(
+                otherPatient, "MedicalTrackingImplantGold"), Is.Not.Null);
+
+            states.ChangeMobState(patient, MobState.Critical);
+            states.ChangeMobState(patient, MobState.Dead);
+            states.ChangeMobState(otherPatient, MobState.Critical);
+            tracking.Update(0f);
+
+            Assert.That(CountTabletSounds(entities, tablet, "death"), Is.EqualTo(1));
+            Assert.That(CountTabletSounds(entities, tablet, "critical"), Is.Zero);
+            Assert.That(entities.GetComponent<MedicalTrackingTabletComponent>(paused).PendingAlert, Is.Null);
+            entities.System<MetaDataSystem>().SetEntityPaused(paused, false);
+            tracking.Update(0f);
+            Assert.That(CountTabletSounds(entities, paused, "death"), Is.Zero);
+            Assert.That(CountTabletSounds(entities, paused, "critical"), Is.Zero);
+        });
+    }
+
+    private static int CountTabletSounds(IEntityManager entities, EntityUid tablet, string sound)
+    {
+        var count = 0;
+        var query = entities.EntityQueryEnumerator<AudioComponent, TransformComponent>();
+        while (query.MoveNext(out _, out var audio, out var transform))
+        {
+            if (transform.ParentUid != tablet || audio.FileName != $"/Audio/_Exodus/Items/MedicalTablet/{sound}.ogg")
+                continue;
+
+            Assert.That(audio.Global, Is.False);
+            Assert.That(audio.Params.MaxDistance, Is.EqualTo(5f));
+            count++;
+        }
+
+        return count;
+    }
+
     [TestCase("MedicalTrackingImplantGold")]
     [TestCase("MedicalTrackingImplantPlatinum")]
     [TestCase("MedicalTrackingImplantRuby")]

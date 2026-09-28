@@ -266,7 +266,7 @@ public sealed partial class MapScreen : BoxContainer
     /// </summary>
     public void PingMap()
     {
-        if (_console != null)
+        if (_console != null && PlayPingSound) // Exodus configurable map ping audio
         {
             _audio.PlayEntity(new SoundPathSpecifier("/Audio/Effects/Shuttle/radar_ping.ogg"), Filter.Local(), _console.Value, true);
         }
