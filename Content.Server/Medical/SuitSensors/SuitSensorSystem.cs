@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Exodus.Medical.SuitSensors; // Exodus: only poll active sensors.
 using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.CrewMonitoring;
@@ -55,6 +56,7 @@ public sealed partial class SuitSensorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeSensorActivity(); // Exodus: maintain the active sensor query through events.
         //SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn); // Frontier modification
         SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SuitSensorComponent, ClothingGotEquippedEvent>(OnEquipped);
@@ -74,10 +76,16 @@ public sealed partial class SuitSensorSystem : EntitySystem
 
         var curTime = _gameTiming.CurTime;
         //var sensors = EntityManager.EntityQueryEnumerator<SuitSensorComponent, DeviceNetworkComponent>(); // Frontier modification
-        var sensors = EntityQueryEnumerator<SuitSensorComponent, DeviceNetworkComponent, TransformComponent>(); // Frontier modification
+        // Exodus-begin: skip disabled and unworn sensors without scanning every uniform each tick.
+        var sensors = EntityQueryEnumerator<ActiveSuitSensorComponent, SuitSensorComponent, DeviceNetworkComponent, TransformComponent>();
 
-        while (sensors.MoveNext(out var uid, out var sensor, out var device, out var xform)) // Frontier modification
+        while (sensors.MoveNext(out var uid, out var active, out var sensor, out var device, out var xform))
         {
+            // Deferred removal stops a marker before it leaves the query.
+            if (active.LifeStage >= ComponentLifeStage.Stopping)
+                continue;
+            // Exodus-end
+
             if (device.TransmitFrequency is null)
                 continue;
 
@@ -94,7 +102,7 @@ public sealed partial class SuitSensorSystem : EntitySystem
             sensor.NextUpdate = curTime + sensor.UpdateRate;
 
             // get sensor status
-            var status = GetSensorState(uid, sensor);
+            var status = GetSensorState(uid, sensor, xform); // Exodus: reuse the queried transform.
             if (status == null)
                 continue;
 
@@ -186,6 +194,8 @@ public sealed partial class SuitSensorSystem : EntitySystem
             };
             component.Mode = _random.Pick(modesDist);
         }
+
+        UpdateSensorActivity((uid, component)); // Exodus
     }
 
     private void OnEquipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotEquippedEvent args)
@@ -194,11 +204,13 @@ public sealed partial class SuitSensorSystem : EntitySystem
             return; // Frontier
 
         component.User = args.Wearer;
+        UpdateSensorActivity((uid, component)); // Exodus
     }
 
     private void OnUnequipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotUnequippedEvent args)
     {
         component.User = null;
+        UpdateSensorActivity((uid, component)); // Exodus
     }
 
     private void OnExamine(EntityUid uid, SuitSensorComponent component, ExaminedEvent args)
@@ -262,6 +274,7 @@ public sealed partial class SuitSensorSystem : EntitySystem
             return; // Frontier
 
         component.User = args.Container.Owner;
+        UpdateSensorActivity((uid, component)); // Exodus
     }
 
     private void OnRemove(EntityUid uid, SuitSensorComponent component, EntGotRemovedFromContainerMessage args)
@@ -270,6 +283,7 @@ public sealed partial class SuitSensorSystem : EntitySystem
             return;
 
         component.User = null;
+        UpdateSensorActivity((uid, component)); // Exodus
     }
 
     private void OnEmpPulse(EntityUid uid, SuitSensorComponent component, ref EmpPulseEvent args)
@@ -361,6 +375,7 @@ public sealed partial class SuitSensorSystem : EntitySystem
         var comp = sensors.Comp;
 
         comp.Mode = mode;
+        UpdateSensorActivity(sensors); // Exodus: includes EMP shutdown and recovery.
 
         if (userUid != null)
         {
