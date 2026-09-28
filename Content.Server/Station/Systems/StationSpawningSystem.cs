@@ -1,3 +1,4 @@
+using Content.Server.Access.Components; // Exodus personalized IDs no longer use their preset.
 using Content.Server.Access.Systems;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -372,6 +373,9 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
 
         if (!TryComp<IdCardComponent>(cardId, out var card))
             return;
+
+        // Exodus: remove the preset immediately so round-start extended access cannot overwrite the assigned job.
+        RemComp<PresetIdCardComponent>(cardId);
 
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
