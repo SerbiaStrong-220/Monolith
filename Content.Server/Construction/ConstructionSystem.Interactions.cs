@@ -318,6 +318,10 @@ namespace Content.Server.Construction
 
                         insert = stack;
                     }
+                    // Exodus-begin: tag/component ingredients also consume only one stack item.
+                    else if (!_stackItems.TryTakeOne(insert, out insert))
+                        return HandleResult.False;
+                    // Exodus-end
 
                     // Container-storage handling.
                     if (!string.IsNullOrEmpty(insertStep.Store))

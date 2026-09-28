@@ -59,6 +59,7 @@ jobs:
       env:
         DOTNET_gcServer: '1'
       # Exodus: temporarily exclude genetics tests while diagnosing integration test hangs.
+      # Exodus: use one NUnit worker to reduce concurrent integration-test load.
       run: >-
         dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj
         --filter "FullyQualifiedName!~ShipyardTest&FullyQualifiedName!~Content.IntegrationTests.Tests._Exodus.Genetic"
@@ -66,7 +67,8 @@ jobs:
         --logger "trx;LogFileName=integration-tests.trx"
         --results-directory "$(pwd)/test_results/integration"
         --blame-hang-timeout 10m --blame-hang-dump-type mini
-        -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed NUnit.TestOutputXml="logs" NUnit.WorkDirectory="$(pwd)/test_results"
+        -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed NUnit.NumberOfTestWorkers=1
+        NUnit.TestOutputXml="logs" NUnit.WorkDirectory="$(pwd)/test_results"
       # Exodus-end
 
     - name: Archive NUnit3 test results.

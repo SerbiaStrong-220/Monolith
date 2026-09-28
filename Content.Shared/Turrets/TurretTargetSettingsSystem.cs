@@ -12,7 +12,7 @@ namespace Content.Shared.Turrets;
 /// </summary>
 public sealed partial class TurretTargetSettingsSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!; // Exodus: generated dependency injection.
 
     private ProtoId<AccessLevelPrototype> _accessLevelBorg = "Borg";
     private ProtoId<AccessLevelPrototype> _accessLevelBasicSilicon = "BasicSilicon";

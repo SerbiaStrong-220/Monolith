@@ -11,12 +11,12 @@ namespace Content.Server._Exodus.PersonalShield;
 /// <summary>
 /// Maintains upstream shield links at a bounded rate and replicates membership only when it changes.
 /// </summary>
-public sealed class ShieldLinkSystem : EntitySystem
+public sealed partial class ShieldLinkSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<ShieldLinkSourceComponent> _sourceQuery;
     private EntityQuery<ShieldLinkReceiverComponent> _receiverQuery;

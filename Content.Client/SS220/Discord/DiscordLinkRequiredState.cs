@@ -10,10 +10,10 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.SS220.Discord;
 
-public sealed class DiscordLinkRequiredState : State
+public sealed partial class DiscordLinkRequiredState : State // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-    [Dependency] private readonly IClientNetManager _netManager = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private IClientNetManager _netManager = default!; // Exodus: generated dependency injection.
 
     private DiscordLinkRequiredGui? _linkGui;
     private readonly CancellationTokenSource _timerCancel = new();

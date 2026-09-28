@@ -8,7 +8,7 @@
   [locid="guidebook-corporation-tech-disk-acquisition"]
 
   <Box>
-    <GuideEntityEmbed Entity="TechDiskDmePlutonium"/>
+    <GuideEntityEmbed Entity="TechDiskHorizonHarmonyHammerMatter"/>
   </Box>
 
   [locid="tech-disk-dme-plutonium-description"]

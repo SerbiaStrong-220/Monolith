@@ -20,7 +20,7 @@ public sealed partial class BulkAutoMiningSystem
                 continue;
 
             if (!TerminatingOrDeleted(grid) && _gridQuery.TryComp(grid, out var gridComp) &&
-                !_map.GetTileRef(grid, gridComp, emitter.BeamTile).Tile.IsEmpty &&
+                IsTargetTile((grid, gridComp), emitter.BeamTile) &&
                 CanReachTile(console, (uid, emitter), (grid, gridComp), emitter.BeamTile))
                 continue;
 

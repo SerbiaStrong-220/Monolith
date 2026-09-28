@@ -11,7 +11,7 @@
   category: Large
   group: Shipyard
   requiredCompanies:
-  - HarmonyMedicalEnterprises
+  - HorizonHarmonyHammerMatter
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/HMI/regenerator.yml
   addComponents:
   - type: NpcFactionMember

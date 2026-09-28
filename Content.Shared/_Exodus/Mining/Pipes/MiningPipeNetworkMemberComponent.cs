@@ -21,4 +21,8 @@ public sealed partial class MiningPipeNetworkMemberComponent : Component
     /// <summary>Read-only client view of remote buffers. Never used as authoritative storage.</summary>
     [ViewVariables, AutoNetworkedField]
     public Dictionary<ProtoId<MaterialPrototype>, int> RemoteMaterials = new();
+
+    /// <summary>Server-side notification that material, capacity or connectivity changes need a new UI snapshot.</summary>
+    [ViewVariables]
+    public bool ClientMaterialsDirty;
 }

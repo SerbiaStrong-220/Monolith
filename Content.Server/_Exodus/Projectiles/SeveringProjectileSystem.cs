@@ -9,7 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server._Exodus.Projectiles;
 
-public sealed class SeveringProjectileSystem : EntitySystem
+public sealed partial class SeveringProjectileSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private SharedBodySystem _body = default!;

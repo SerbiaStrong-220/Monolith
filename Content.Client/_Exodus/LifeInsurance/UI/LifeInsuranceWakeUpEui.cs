@@ -6,7 +6,7 @@ using Robust.Client.Graphics;
 namespace Content.Client._Exodus.LifeInsurance.UI;
 
 [UsedImplicitly]
-public sealed class LifeInsuranceWakeUpEui : BaseEui
+public sealed partial class LifeInsuranceWakeUpEui : BaseEui
 {
     [Dependency] private IClyde _clyde = default!;
 

@@ -1,5 +1,6 @@
 using Content.Server._Mono.AlertLevel;
 using Content.Shared._Exodus.Territory;
+using Content.Shared._Exodus.War;
 using Content.Shared.Database;
 using Robust.Shared.Prototypes;
 
@@ -7,20 +8,17 @@ namespace Content.Server._Exodus.War;
 
 public sealed partial class FactionWarSystem
 {
+    /// <summary>
+    /// Pairwise cooldown deadline. The active faction code is checked separately by <see cref="CodeAllowsWar"/>.
+    /// </summary>
     public TimeSpan GetDeclarationAvailableAt(
         Entity<WarLevelComponent> state,
         ProtoId<TerritoryFactionPrototype> first,
         ProtoId<TerritoryFactionPrototype> second)
     {
-        var availableAt = GetDeclarationAvailableAt(state);
-        if (TryGetWarCooldown(state, first, second, out var cooldown))
-        {
-            var pairAvailableAt = _ticker.RoundStartTimeSpan + cooldown.AvailableAtRoundTime;
-            if (pairAvailableAt > availableAt)
-                availableAt = pairAvailableAt;
-        }
-
-        return availableAt;
+        return TryGetWarCooldown(state, first, second, out var cooldown)
+            ? _ticker.RoundStartTimeSpan + cooldown.AvailableAtRoundTime
+            : TimeSpan.Zero;
     }
 
     public TimeSpan GetPeaceOfferAvailableAt(FactionWarDeclaration declaration)
@@ -158,17 +156,8 @@ public sealed partial class FactionWarSystem
 
     private void StartWarCooldown(Entity<WarLevelComponent> state, FactionWarDeclaration declaration)
     {
-        if (!TryGetWarCooldown(state, declaration.DeclaringFaction, declaration.TargetFaction, out var cooldown))
-        {
-            cooldown = new FactionWarCooldown
-            {
-                FirstFaction = declaration.DeclaringFaction,
-                SecondFaction = declaration.TargetFaction,
-            };
-            state.Comp.WarCooldowns.Add(cooldown);
-        }
-
-        cooldown.AvailableAtRoundTime = GetRoundTimeForLog() + state.Comp.PostWarCooldown;
+        StartPairCooldown(state, declaration.DeclaringFaction, declaration.TargetFaction,
+            state.Comp.PostWarCooldown, WarLockReason.PostWar);
     }
 
     private void LogPeaceAction(

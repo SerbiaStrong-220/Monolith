@@ -11,13 +11,13 @@ using Content.Shared.Throwing;
 
 namespace Content.Shared._Goobstation.Dash;
 
-public sealed class DashActionSystem : EntitySystem
+public sealed partial class DashActionSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private SharedActionsSystem _actions = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedGravitySystem _gravity = default!; // Exodus: generated dependency injection.
+    [Dependency] private ThrowingSystem _throwing = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedTransformSystem _transform = default!; // Exodus: generated dependency injection.
+    [Dependency] private StaminaSystem _stamina = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

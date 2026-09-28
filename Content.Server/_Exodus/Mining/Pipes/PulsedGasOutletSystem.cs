@@ -13,19 +13,20 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Mining.Pipes;
 
-public sealed class PulsedGasOutletSystem : EntitySystem
+public sealed partial class PulsedGasOutletSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly NodeContainerSystem _nodes = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IMapManager _maps = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private NodeContainerSystem _nodes = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private IMapManager _maps = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<PulsedGasOutletComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<PulsedGasOutletComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PulsedGasOutletComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<PulsedGasOutletComponent, ActivateInWorldEvent>(OnActivate);
@@ -33,9 +34,16 @@ public sealed class PulsedGasOutletSystem : EntitySystem
         SubscribeLocalEvent<PulsedGasOutletComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
     }
 
+    private void OnStartup(Entity<PulsedGasOutletComponent> ent, ref ComponentStartup args)
+    {
+        // Already initialized grids do not run MapInit again when loaded.
+        if (ent.Comp.NextPulseTime == TimeSpan.Zero)
+            ent.Comp.NextPulseTime = _timing.CurTime + ent.Comp.CycleInterval;
+    }
+
     private void OnMapInit(Entity<PulsedGasOutletComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextPulse = _timing.CurTime + ent.Comp.CycleInterval;
+        ent.Comp.NextPulseTime = _timing.CurTime + ent.Comp.CycleInterval;
     }
 
     private void OnAnchorChanged(Entity<PulsedGasOutletComponent> ent, ref AnchorStateChangedEvent args)
@@ -43,7 +51,7 @@ public sealed class PulsedGasOutletSystem : EntitySystem
         if (LifeStage(ent) < EntityLifeStage.MapInitialized)
             return;
 
-        ent.Comp.NextPulse = _timing.CurTime + ent.Comp.CycleInterval;
+        ent.Comp.NextPulseTime = _timing.CurTime + ent.Comp.CycleInterval;
     }
 
     private void OnActivate(Entity<PulsedGasOutletComponent> ent, ref ActivateInWorldEvent args)
@@ -52,7 +60,7 @@ public sealed class PulsedGasOutletSystem : EntitySystem
             return;
 
         ent.Comp.Enabled = !ent.Comp.Enabled;
-        ent.Comp.NextPulse = _timing.CurTime + ent.Comp.CycleInterval;
+        ent.Comp.NextPulseTime = _timing.CurTime + ent.Comp.CycleInterval;
         Dirty(ent);
         args.Handled = true;
     }
@@ -66,12 +74,12 @@ public sealed class PulsedGasOutletSystem : EntitySystem
     private void OnAtmosUpdate(Entity<PulsedGasOutletComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         var now = _timing.CurTime;
-        if (!ent.Comp.Enabled || ent.Comp.CycleInterval <= TimeSpan.Zero || now < ent.Comp.NextPulse)
+        if (!ent.Comp.Enabled || ent.Comp.CycleInterval <= TimeSpan.Zero || now < ent.Comp.NextPulseTime)
             return;
 
         // Preserve the cadence, but never replay missed bursts after a stalled atmos update.
-        var intervals = (now - ent.Comp.NextPulse).Ticks / ent.Comp.CycleInterval.Ticks + 1;
-        ent.Comp.NextPulse += TimeSpan.FromTicks(ent.Comp.CycleInterval.Ticks * intervals);
+        var intervals = (now - ent.Comp.NextPulseTime).Ticks / ent.Comp.CycleInterval.Ticks + 1;
+        ent.Comp.NextPulseTime += TimeSpan.FromTicks(ent.Comp.CycleInterval.Ticks * intervals);
         TryDischarge(ent);
     }
 
@@ -106,7 +114,7 @@ public sealed class PulsedGasOutletSystem : EntitySystem
             return false;
 
         _atmos.Merge(environment, inlet.Air.Remove(amount));
-        ent.Comp.LastPulse = _timing.CurTime;
+        ent.Comp.LastPulseTime = _timing.CurTime;
         Dirty(ent);
         _audio.PlayPvs(ent.Comp.DischargeSound, ent);
         return true;

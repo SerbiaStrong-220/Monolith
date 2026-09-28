@@ -6,15 +6,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Exodus.Mining.AutoMining;
 
-public sealed class BulkAutoMiningBeamOverlay : Overlay
+public sealed partial class BulkAutoMiningBeamOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private readonly BulkAutoMiningEmitterVisualSystem _visuals;
     private readonly BulkAutoMiningBeamRenderer _renderer;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     public BulkAutoMiningBeamOverlay()
     {

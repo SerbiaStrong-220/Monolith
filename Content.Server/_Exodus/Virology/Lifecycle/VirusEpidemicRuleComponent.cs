@@ -37,6 +37,16 @@ public sealed partial class VirusEpidemicRuleComponent : Component
     [DataField(required: true)]
     public SortedDictionary<int, int> CarrierThresholds = new();
 
+    /// <summary>Optional core spawned for the first terminal victims of this epidemic.</summary>
+    [DataField]
+    public EntProtoId? IntelligentCorePrototype;
+
+    [DataField]
+    public int IntelligentCoreLimit = 2;
+
+    [DataField]
+    public int IntelligentCoreVictims;
+
     [DataField, AutoPausedField]
     public TimeSpan SeedAt;
 

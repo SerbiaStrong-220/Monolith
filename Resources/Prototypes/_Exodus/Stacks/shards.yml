@@ -1,0 +1,34 @@
+- type: stack
+  id: GlassShard
+  name: stack-glass-shard
+  icon: { sprite: Objects/Materials/Shards/shard.rsi, state: shard1 }
+  spawn: ShardGlass
+  maxCount: 100
+
+- type: stack
+  id: ReinforcedGlassShard
+  name: stack-reinforced-glass-shard
+  icon: { sprite: Objects/Materials/Shards/shard.rsi, state: shard1 }
+  spawn: ShardGlassReinforced
+  maxCount: 100
+
+- type: stack
+  id: PlasmaGlassShard
+  name: stack-plasma-glass-shard
+  icon: { sprite: Objects/Materials/Shards/shard.rsi, state: shard1 }
+  spawn: ShardGlassPlasma
+  maxCount: 100
+
+- type: stack
+  id: UraniumGlassShard
+  name: stack-uranium-glass-shard
+  icon: { sprite: Objects/Materials/Shards/shard.rsi, state: shard1 }
+  spawn: ShardGlassUranium
+  maxCount: 100
+
+- type: stack
+  id: ClockworkGlassShard
+  name: stack-clockwork-glass-shard
+  icon: { sprite: Objects/Materials/Shards/shard.rsi, state: shard1 }
+  spawn: ShardGlassClockwork
+  maxCount: 100

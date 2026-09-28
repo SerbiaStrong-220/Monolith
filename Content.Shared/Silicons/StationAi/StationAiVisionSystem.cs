@@ -63,7 +63,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Returns whether a tile is accessible based on vision.
     /// </summary>
-    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
+    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false, EntityUid? network = null) // Exodus: isolated camera networks.
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -80,17 +80,21 @@ public sealed partial class StationAiVisionSystem : EntitySystem
 
         foreach (var seed in _seeds)
         {
-            if (!seed.Comp.Enabled)
+            if (!seed.Comp.Enabled || seed.Comp.Network != network) // Exodus
                 continue;
 
             _job.Data.Add(seed);
         }
 
-        if (_seeds.Count == 0)
+        if (_job.Data.Count == 0) // Exodus: only this network's sources count.
             return false;
 
         // Skip occluders step if we're just doing range checks.
-        if (!fastPath)
+        // Exodus-begin
+        if (!fastPath && network != null)
+            GatherNetworkOccluders(grid, expandedBounds, grid.Comp2.TileSize);
+        // Exodus-end
+        else if (!fastPath)
         {
             var tileEnumerator = _maps.GetLocalTilesEnumerator(grid, grid, expandedBounds, ignoreEmpty: false);
 
@@ -143,7 +147,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     /// Gets a byond-equivalent for tiles in the specified worldAABB.
     /// </summary>
     /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
-    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f)
+    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f, EntityUid? network = null) // Exodus: isolated camera networks.
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -161,21 +165,25 @@ public sealed partial class StationAiVisionSystem : EntitySystem
 
         foreach (var seed in _seeds)
         {
-            if (!seed.Comp.Enabled)
+            if (!seed.Comp.Enabled || seed.Comp.Network != network) // Exodus
                 continue;
 
             _job.Data.Add(seed);
         }
 
-        if (_seeds.Count == 0)
+        if (_job.Data.Count == 0) // Exodus
             return;
 
+        // Exodus-begin
+        if (network != null)
+            GatherNetworkOccluders(grid, enlargedLocalAabb, grid.Comp2.TileSize);
+        // Exodus-end
         // Get viewport tiles
         var tileEnumerator = _maps.GetLocalTilesEnumerator(grid, grid, localAabb, ignoreEmpty: false);
 
         while (tileEnumerator.MoveNext(out var tileRef))
         {
-            if (IsOccluded(grid, tileRef.GridIndices))
+            if (network == null && IsOccluded(grid, tileRef.GridIndices)) // Exodus
             {
                 _opaque.Add(tileRef.GridIndices);
             }
@@ -190,7 +198,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
             if (_viewportTiles.Contains(tileRef.GridIndices))
                 continue;
 
-            if (IsOccluded(grid, tileRef.GridIndices))
+            if (network == null && IsOccluded(grid, tileRef.GridIndices)) // Exodus
             {
                 _opaque.Add(tileRef.GridIndices);
             }

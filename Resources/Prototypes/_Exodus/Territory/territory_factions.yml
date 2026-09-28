@@ -51,7 +51,11 @@
   radarLabel: territory-faction-tsf
   displayName: territory-faction-tsf-name
   banner: BannerNGC
+  icon:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: tsf-banner
   npcFaction: TSFMC
+  allianceRadioChannels: [Nfsd]
   discountAlignment: Positive
   color: "#00a1fc"  # TSF company ship blue
 
@@ -60,7 +64,11 @@
   radarLabel: territory-faction-phaeton
   displayName: territory-faction-phaeton-name
   banner: BannerPDV
+  icon:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: pdv-banner
   npcFaction: PirateNF
+  allianceRadioChannels: [Freelance]
   discountAlignment: Positive
   color: "#D2B48C"  # PDV ship / equipment tan
 
@@ -69,7 +77,11 @@
   radarLabel: territory-faction-khsira
   displayName: territory-faction-khsira-name
   banner: BannerKhsira
+  icon:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: khsira-banner
   npcFaction: AsakimDefenceForces
+  allianceRadioChannels: [Remnants]
   discountAlignment: Positive
   color: "#ff3db1"  # Medium violet red / pink-red for Khsira Empire
 

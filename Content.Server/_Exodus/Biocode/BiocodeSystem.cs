@@ -15,7 +15,7 @@ namespace Content.Server._Exodus.Biocode;
 /// body. The reaction itself (gib, explosion, etc.) is defined by reject handlers or trigger
 /// behaviors on the prototype.
 /// </summary>
-public sealed class BiocodeSystem : SharedBiocodeSystem
+public sealed partial class BiocodeSystem : SharedBiocodeSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private InventorySystem _inventory = default!;

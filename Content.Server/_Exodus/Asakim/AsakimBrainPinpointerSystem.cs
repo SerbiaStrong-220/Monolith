@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Asakim;
 
-public sealed class AsakimBrainPinpointerSystem : EntitySystem
+public sealed partial class AsakimBrainPinpointerSystem : EntitySystem
 {
     [Dependency] private PinpointerSystem _pinpointer = default!;
     [Dependency] private IGameTiming _timing = default!;

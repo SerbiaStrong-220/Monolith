@@ -11,7 +11,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client._Exodus.Visuals;
 
 /// <summary>Coordinates one-shot and looping animations without competing sprite writers.</summary>
-public sealed class CreatureAnimationSystem : EntitySystem
+public sealed partial class CreatureAnimationSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -100,6 +100,9 @@ public sealed class CreatureAnimationSystem : EntitySystem
                 && physics.LinearVelocity.LengthSquared() > 0.01f)
                 state = moving;
 
+            var ev = new CreatureAnimationStateEvent(state, dead);
+            RaiseLocalEvent(uid, ref ev);
+            state = ev.State;
             if (state == animation.CurrentState)
                 continue;
 
@@ -109,3 +112,6 @@ public sealed class CreatureAnimationSystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct CreatureAnimationStateEvent(string State, bool Dead);

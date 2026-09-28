@@ -9,7 +9,7 @@
   category: Small
   group: Shipyard
   requiredCompanies:
-  - blackhawkpmc
+  - DrakeBlackArmsUSA
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/blackhawk/kortic.yml
   addComponents:
   - type: NpcFactionMember

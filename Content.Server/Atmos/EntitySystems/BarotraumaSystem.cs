@@ -165,10 +165,15 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public float GetFeltLowPressure(EntityUid uid, BarotraumaComponent barotrauma, float environmentPressure)
         {
-            // Exodus-begin: source-owned pressure adaptations.
+            // Exodus-begin: preserve pressure adaptations and local habitat defenses.
             var immunity = new Content.Shared._Exodus.Genetics.PressureImmunityEvent(false);
             RaiseLocalEvent(uid, ref immunity);
             if (immunity.Immune)
+                return Atmospherics.OneAtmosphere;
+
+            var attempt = new Content.Server._Exodus.Body.EnvironmentDamageAttemptEvent(Content.Server._Exodus.Body.EnvironmentHazard.LowPressure);
+            RaiseLocalEvent(uid, ref attempt);
+            if (attempt.Cancelled)
                 return Atmospherics.OneAtmosphere;
             // Exodus-end
             if (barotrauma.HasImmunity)

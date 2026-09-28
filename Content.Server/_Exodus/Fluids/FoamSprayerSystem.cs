@@ -12,7 +12,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server._Exodus.Fluids;
 
-public sealed class FoamSprayerSystem : EntitySystem
+public sealed partial class FoamSprayerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChargesSystem _charges = default!;

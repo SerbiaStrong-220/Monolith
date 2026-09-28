@@ -7,8 +7,8 @@ namespace Content.Client.Turrets;
 
 public sealed partial class DeployableTurretSystem : SharedDeployableTurretSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private AppearanceSystem _appearance = default!; // Exodus: generated dependency injection.
+    [Dependency] private AnimationPlayerSystem _animation = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

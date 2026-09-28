@@ -83,6 +83,8 @@ namespace Content.Client.Verbs
             };
 
             RaiseLocalEvent(player, ref ev);
+            if (ev.Cancelled) // Exodus: do not disclose entities behind an organic camera mask.
+                return false;
             visibility = ev.Visibility;
 
             // Initially, we include all entities returned by a sprite area lookup

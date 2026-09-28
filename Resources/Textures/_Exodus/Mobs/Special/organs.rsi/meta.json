@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "states": [
+    {
+      "name": "brain",
+      "directions": 1
+    },
+    {
+      "name": "brain-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "brain-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "eyes",
+      "directions": 1
+    },
+    {
+      "name": "eyes-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "eyes-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "heart",
+      "directions": 1
+    },
+    {
+      "name": "heart-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "heart-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "lungs",
+      "directions": 1
+    },
+    {
+      "name": "lungs-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "lungs-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "stomach",
+      "directions": 1
+    },
+    {
+      "name": "stomach-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "stomach-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "liver",
+      "directions": 1
+    },
+    {
+      "name": "liver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "liver-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "kidneys",
+      "directions": 1
+    },
+    {
+      "name": "kidneys-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "kidneys-inhand-right",
+      "directions": 4
+    }
+  ]
+}

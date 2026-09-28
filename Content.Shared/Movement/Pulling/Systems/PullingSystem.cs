@@ -232,12 +232,22 @@ public sealed partial class PullingSystem : EntitySystem
         {
             var (walkMod, sprintMod) =
                 _clothingMoveSpeed.GetHeldMovementSpeedModifiers(component.Pulling.Value, heldMoveSpeed);
-            args.ModifySpeed(walkMod, sprintMod);
+            // Exodus-begin - strong pullers resist the load's native movement penalty.
+            args.ModifySpeed(ApplyPullingSlowdown(walkMod, component.PullingSlowdownModifier),
+                ApplyPullingSlowdown(sprintMod, component.PullingSlowdownModifier));
+            // Exodus-end
             return;
         }
 
-        args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
+        // Exodus-begin
+        args.ModifySpeed(ApplyPullingSlowdown(component.WalkSpeedModifier, component.PullingSlowdownModifier),
+            ApplyPullingSlowdown(component.SprintSpeedModifier, component.PullingSlowdownModifier));
+        // Exodus-end
     }
+
+    // Exodus - preserve speed bonuses; attenuate only the pulling penalty.
+    private static float ApplyPullingSlowdown(float speed, float fraction) =>
+        speed >= 1f ? speed : 1f - (1f - speed) * Math.Clamp(fraction, 0f, 1f);
 
     private void OnPullableMoveInput(EntityUid uid, PullableComponent component, ref MoveInputEvent args)
     {

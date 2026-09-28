@@ -73,6 +73,7 @@
     node: CompanyTerritoryBannerDrakeNode
   - type: CompanyTerritoryBanner
     company: DrakeIndustries
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerTSFCivilian
@@ -117,6 +118,7 @@
     node: CompanyTerritoryBannerSteelHammerNode
   - type: CompanyTerritoryBanner
     company: SteelHammerManufacturing
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerHme
@@ -131,6 +133,7 @@
     node: CompanyTerritoryBannerHmeNode
   - type: CompanyTerritoryBanner
     company: HarmonyMedicalEnterprises
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerMaco
@@ -145,6 +148,7 @@
     node: CompanyTerritoryBannerMacoNode
   - type: CompanyTerritoryBanner
     company: MidnightArmsCo
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerDme
@@ -159,6 +163,7 @@
     node: CompanyTerritoryBannerDmeNode
   - type: CompanyTerritoryBanner
     company: DarkMatterEnterprises
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerAetherion
@@ -173,6 +178,7 @@
     node: CompanyTerritoryBannerAetherionNode
   - type: CompanyTerritoryBanner
     company: AetherionDynamics
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerHorizon
@@ -187,6 +193,7 @@
     node: CompanyTerritoryBannerHorizonNode
   - type: CompanyTerritoryBanner
     company: HorizonEnergy
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerUnsa
@@ -201,6 +208,7 @@
     node: CompanyTerritoryBannerUnsaNode
   - type: CompanyTerritoryBanner
     company: UniversalStatesOfAmerica
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerCdm
@@ -215,6 +223,7 @@
     node: CompanyTerritoryBannerCdmNode
   - type: CompanyTerritoryBanner
     company: CivilDefenseMilita
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerUllman
@@ -229,6 +238,7 @@
     node: CompanyTerritoryBannerUllmanNode
   - type: CompanyTerritoryBanner
     company: UllmanIndustries
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerNosske
@@ -243,6 +253,7 @@
     node: CompanyTerritoryBannerNosskeNode
   - type: CompanyTerritoryBanner
     company: NosskeEienResearchandDevelopment
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerBlackhawk
@@ -257,6 +268,7 @@
     node: CompanyTerritoryBannerBlackhawkNode
   - type: CompanyTerritoryBanner
     company: blackhawkpmc
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerHive
@@ -271,6 +283,7 @@
     node: CompanyTerritoryBannerHiveNode
   - type: CompanyTerritoryBanner
     company: TheHive
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerBratva
@@ -285,6 +298,7 @@
     node: CompanyTerritoryBannerBratvaNode
   - type: CompanyTerritoryBanner
     company: paycheckbratva
+    canClaim: false # Exodus: subsidiary banner is decorative; only a concern banner claims territory.
 
 - type: entity
   id: CompanyTerritoryBannerMMC

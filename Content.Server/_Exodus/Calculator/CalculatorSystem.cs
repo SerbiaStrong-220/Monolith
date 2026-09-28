@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Calculator;
 
-public sealed class CalculatorSystem : SharedCalculatorSystem
+public sealed partial class CalculatorSystem : SharedCalculatorSystem
 {
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private IGameTiming _gameTiming = default!;

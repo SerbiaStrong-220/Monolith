@@ -1,0 +1,87 @@
+<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical"
+    HorizontalExpand="True" VerticalExpand="True" SeparationOverride="10">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <BoxContainer Margin="12 8" SeparationOverride="12">
+            <TextureRect Name="SourceBanner" Access="Public" SetSize="64 64" Stretch="KeepAspectCentered"/>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" SeparationOverride="4">
+                <Label Text="{Loc 'faction-console-command'}" StyleClasses="LabelSecondaryColor"/>
+                <Label Name="SourceName" Access="Public" StyleClasses="LabelHeadingBigger" ClipText="True"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" VerticalAlignment="Center" SeparationOverride="4">
+                <Label Name="SectorSummary" Access="Public"/>
+                <Label Name="FactionSummary" Access="Public"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+    <TabContainer Name="Tabs" Access="Public" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Name="DiplomacyTab" TabContainer.TabTitle="{Loc 'faction-console-tab-diplomacy'}"
+            SeparationOverride="12" Margin="8">
+            <BoxContainer Orientation="Vertical" SeparationOverride="8" MinWidth="252" MaxWidth="252">
+                <Label Text="{Loc 'faction-console-map-title'}" StyleClasses="LabelHeading"/>
+                <BoxContainer Name="RelationMapHost" Access="Public" MinHeight="260"/>
+                <BoxContainer Name="FactionLegend" Access="Public" Orientation="Vertical" SeparationOverride="6"/>
+                <Label Text="{Loc 'faction-console-relations-help'}" StyleClasses="LabelSecondaryColor"
+                    ToolTip="{Loc 'faction-console-relations-hint'}"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8">
+                <Label Name="WarHeading" Access="Public" StyleClasses="LabelHeading" ClipText="True"/>
+                <RichTextLabel Name="WarUnlockLabel" Access="Public"/>
+                <RichTextLabel Name="WarEmpty" Access="Public" Visible="False" Text="{Loc 'faction-console-no-targets'}"/>
+                <ScrollContainer Name="WarScroll" Access="Public" HScrollEnabled="False" VerticalExpand="True">
+                    <BoxContainer Name="WarRows" Access="Public" Orientation="Vertical" SeparationOverride="10"/>
+                </ScrollContainer>
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer TabContainer.TabTitle="{Loc 'faction-console-tab-comms'}" SeparationOverride="16" Margin="8">
+            <BoxContainer Orientation="Vertical" MinWidth="340" MaxWidth="340" SeparationOverride="10">
+                <Label Text="{Loc 'faction-console-codes-title'}" StyleClasses="LabelHeading"/>
+                <PanelContainer Name="SectorCodeCard" Access="Public" StyleClasses="BackgroundDark">
+                    <BoxContainer SeparationOverride="10">
+                        <PanelContainer Name="SectorColorBar" Access="Public" MinWidth="4"/>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 8 12 8" SeparationOverride="6">
+                            <Label Text="{Loc 'comms-console-sector-code'}" StyleClasses="LabelSecondaryColor"/>
+                            <BoxContainer Name="SectorSelectorHost" Access="Public"/>
+                            <RichTextLabel Name="SectorCodeDetail" Access="Public"/>
+                            <RichTextLabel Name="SectorTransition" Access="Public"/>
+                            <RichTextLabel Name="SectorCodeCooldown" Access="Public"/>
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+                <PanelContainer Name="FactionCodeCard" Access="Public" StyleClasses="BackgroundDark">
+                    <BoxContainer SeparationOverride="10">
+                        <PanelContainer Name="FactionColorBar" Access="Public" MinWidth="4"/>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 8 12 8" SeparationOverride="6">
+                            <Label Text="{Loc 'comms-console-faction-code'}" StyleClasses="LabelSecondaryColor"/>
+                            <OptionButton Name="FactionAlertLevelButton" Access="Public"
+                                ToolTip="{Loc 'comms-console-faction-code-tooltip'}" MinHeight="36"/>
+                            <RichTextLabel Name="FactionCodeDetail" Access="Public"/>
+                            <RichTextLabel Name="FactionTransition" Access="Public"/>
+                            <RichTextLabel Name="FactionCodeCooldown" Access="Public"/>
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8">
+                <Label Text="{Loc 'faction-console-message-title'}" StyleClasses="LabelHeading"/>
+                <RichTextLabel Text="{Loc 'faction-console-message-hint'}"/>
+                <PanelContainer StyleClasses="BackgroundDark" VerticalExpand="True">
+                    <BoxContainer Name="MessageHost" Access="Public" Margin="12"/>
+                </PanelContainer>
+                <Label Name="MessageCounter" Access="Public" HorizontalAlignment="Right" StyleClasses="LabelSecondaryColor"/>
+                <RichTextLabel Name="MessageStatus" Access="Public"/>
+                <BoxContainer Name="AnnouncementActions" Access="Public" SeparationOverride="8"/>
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer TabContainer.TabTitle="{Loc 'comms-console-corporations-title'}"
+            Orientation="Vertical" SeparationOverride="10" Margin="8">
+            <Label Text="{Loc 'comms-console-corporations-title'}" StyleClasses="LabelHeading"/>
+            <RichTextLabel Text="{Loc 'faction-console-corporations-hint'}"/>
+            <LineEdit Name="CorporationSearch" Access="Public" PlaceHolder="{Loc 'faction-console-search'}"/>
+            <Label Name="CorporationEmpty" Access="Public" Visible="False" Text="{Loc 'faction-console-search-empty'}"/>
+            <ScrollContainer Name="CorporationScroll" Access="Public" HScrollEnabled="False" VerticalExpand="True">
+                <BoxContainer Name="CorporationRows" Access="Public" Orientation="Vertical" SeparationOverride="6"/>
+            </ScrollContainer>
+            <Label Name="CorporationCount" Access="Public" StyleClasses="LabelSecondaryColor" HorizontalAlignment="Right"/>
+        </BoxContainer>
+    </TabContainer>
+</BoxContainer>

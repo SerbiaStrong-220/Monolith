@@ -6,6 +6,9 @@
   name: armored gas pipe
   description: A ribbed, armored conduit for corrosive refinery exhaust. Its fittings are incompatible with ordinary atmospheric pipes.
   components:
+  - type: ShipRepairable
+    repairTime: 2
+    repairCost: 5
   - type: Sprite
     sprite: _Exodus/Structures/Pipes/armored_gas_pipe.rsi
   - type: Item

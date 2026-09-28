@@ -26,6 +26,10 @@ public sealed partial class VirusRadiophasiaSystem : EntitySystem
 
     private void OnStartup(Entity<VirusRadiophasiaComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.StateApplied)
+            return;
+        ent.Comp.StateApplied = true;
+
         if (TryComp<RadiationSourceComponent>(ent.Owner, out var existing))
             ent.Comp.PreviousIntensity = existing.Intensity;
         else

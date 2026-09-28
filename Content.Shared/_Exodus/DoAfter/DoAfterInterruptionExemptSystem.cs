@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared._Exodus.DoAfter;
 
-public sealed class DoAfterInterruptionExemptSystem : EntitySystem
+public sealed partial class DoAfterInterruptionExemptSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;

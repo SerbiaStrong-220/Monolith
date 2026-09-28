@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Shuttles; // Exodus
 using Content.Server._NF.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
@@ -30,7 +31,7 @@ public sealed partial class ForceAnchorSystem : EntitySystem
             return;
 
         // Check if the entity trying to FTL has a ForceAnchorComponent
-        if (HasComp<ForceAnchorComponent>(args.Uid))
+        if (HasComp<ForceAnchorComponent>(args.Uid) && !HasComp<GridAnchorReleasedComponent>(args.Uid)) // Exodus
         {
             args.Cancelled = true;
             args.Reason = Loc.GetString("shuttle-console-force-anchored");
@@ -39,12 +40,16 @@ public sealed partial class ForceAnchorSystem : EntitySystem
 
     private void OnForceAnchorMapInit(Entity<ForceAnchorComponent> ent, ref MapInitEvent args)
     {
+        if (HasComp<GridAnchorReleasedComponent>(ent)) // Exodus
+            return;
         _shuttle.Disable(ent, force: true); // Mono
         EnsureComp<PreventGridAnchorChangesComponent>(ent);
     }
 
     private void OnForceAnchorPostFTLCompleted(Entity<ForceAnchorPostFTLComponent> ent, ref FTLCompletedEvent args)
     {
+        if (HasComp<GridAnchorReleasedComponent>(ent)) // Exodus
+            return;
         _shuttle.Disable(ent, force: true); // Mono
         EnsureComp<PreventGridAnchorChangesComponent>(ent);
     }

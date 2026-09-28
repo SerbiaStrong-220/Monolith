@@ -1,4 +1,9 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -43,15 +48,51 @@ public sealed partial class RotLarvaComponent : Component
     [DataField]
     public LocId? PupaName;
 
-    [DataField, AutoPausedField]
-    public TimeSpan? NextBite;
+    [DataField]
+    public HashSet<ProtoId<ReagentPrototype>> BloodReagents = [];
 
-    [DataField, AutoPausedField]
+    [DataField]
+    public FixedPoint2 BloodPerBite = 2.5;
+
+    [DataField]
+    public DoAfterId? FeedDoAfter;
+
+    [DataField]
+    public TimeSpan ShelterSearchMin = TimeSpan.FromSeconds(24);
+
+    [DataField]
+    public TimeSpan ShelterSearchMax = TimeSpan.FromSeconds(48);
+
+    [DataField]
+    public EntityWhitelist ShelterWalls = new() { Tags = new() { "Wall" } };
+
+    [DataField]
+    public int MinimumShelterWalls = 2;
+
+    [DataField]
+    public int PreferredShelterWalls = 3;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan? PupateBy;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? HatchAt;
 }
 
 [Serializable, NetSerializable]
 public enum RotLarvaVisuals : byte
 {
-    Sated,
+    State,
 }
+
+[Serializable, NetSerializable]
+public enum RotLarvaState : byte
+{
+    Hungry,
+    Sated,
+    Pupa,
+    Dead,
+}
+
+[Serializable, NetSerializable]
+public sealed partial class RotLarvaFeedEvent : SimpleDoAfterEvent;

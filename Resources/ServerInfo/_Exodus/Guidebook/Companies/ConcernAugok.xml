@@ -1,0 +1,16 @@
+<Document>
+  [head=1][locid="concern-augok-name"][/head]
+  [locid="concern-augok-description"]
+  [head=2][locid="guidebook-corporation-banner-heading"][/head]
+  [locid="guidebook-corporation-banner-usage"]
+  <Box>
+    <GuideEntityEmbed Entity="CompanyTerritoryBannerAugok"/>
+  </Box>
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskAugok"/>
+  </Box>
+  [locid="concern-tech-disk-augok-description"]
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

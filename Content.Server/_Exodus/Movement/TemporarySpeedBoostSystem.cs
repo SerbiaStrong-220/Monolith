@@ -6,11 +6,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Movement;
 
-public sealed class TemporarySpeedBoostSystem : EntitySystem
+public sealed partial class TemporarySpeedBoostSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
 
     public override void Initialize()
     {

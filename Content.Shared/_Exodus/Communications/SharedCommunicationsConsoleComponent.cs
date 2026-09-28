@@ -17,19 +17,42 @@ public sealed class CommunicationsConsoleInterfaceState : BoundUserInterfaceStat
     public string CurrentAlert;
     public float CurrentAlertDelay;
     public readonly WarDeclarationConsoleState? WarState;
+    public readonly FactionAlertLevelState? FactionAlertState;
+    public readonly string? PendingAlert;
+    public readonly TimeSpan PendingAlertAt;
+    public readonly Color CurrentAlertColor;
 
     public CommunicationsConsoleInterfaceState(
         bool canAnnounce,
         List<string>? alertLevels,
         string currentAlert,
         float currentAlertDelay,
-        WarDeclarationConsoleState? warState = null)
+        WarDeclarationConsoleState? warState = null,
+        FactionAlertLevelState? factionAlertState = null,
+        string? pendingAlert = null,
+        TimeSpan pendingAlertAt = default,
+        Color currentAlertColor = default)
     {
         CanAnnounce = canAnnounce;
         AlertLevels = alertLevels;
         CurrentAlert = currentAlert;
         CurrentAlertDelay = currentAlertDelay;
         WarState = warState;
+        FactionAlertState = factionAlertState;
+        PendingAlert = pendingAlert;
+        PendingAlertAt = pendingAlertAt;
+        CurrentAlertColor = currentAlertColor;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CommunicationsConsoleSelectFactionAlertLevelMessage : BoundUserInterfaceMessage
+{
+    public readonly string Level;
+
+    public CommunicationsConsoleSelectFactionAlertLevelMessage(string level)
+    {
+        Level = level;
     }
 }
 

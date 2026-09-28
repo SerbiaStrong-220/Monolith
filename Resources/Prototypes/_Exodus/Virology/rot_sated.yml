@@ -17,12 +17,22 @@
 
 - type: entity
   id: MobRotSated
-  parent: [ SimpleSpaceMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, MobCombat, BaseRotColonyMob ]
   name: sated
   description: A towering, emaciated silhouette. Something shifts beneath its loose, waxy skin.
   components:
-  - type: RotCreature
+  - type: RotRetaliation
   - type: VirusImmunity
+  - type: RotDefender
+    stuckDelay: 2.5
+    detourDelay: 3
+    restDuration: 14
+    colonyRestDuration: 12
+    stuckDamage:
+      types:
+        Structural: 120
+    stuckSound:
+      collection: MetalSlam
   - type: RotSated
     consumeDuration: 60
     larvaePerCorpse: 4
@@ -63,6 +73,8 @@
     movingState: running
     attackState: attack
     attackDuration: 0.7
+    heavyAttackState: smash
+    heavyAttackDuration: 1.04
     spawnState: emerge
     spawnDuration: 1.2
     dyingState: dying
@@ -87,6 +99,7 @@
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcClaw
+    wideAnimation: WeaponArcRotSatedSmash
     attackRate: 0.8
     damage:
       types:
@@ -96,13 +109,44 @@
         Radiation: 5
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-rot-sated-name
+    description: ghost-role-rot-sated-description
+    rules: ghost-role-rot-sated-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+  - type: GhostTakeoverAvailable
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: htnCompound
   id: RotSatedCompound
   branches:
   - tasks:
     - !type:HTNPrimitiveTask
+      operator: !type:RotRetaliationOperator
+  - tasks:
+    - !type:HTNPrimitiveTask
       operator: !type:RotSatedOperator
+
+- type: entity
+  id: WeaponArcRotSatedSmash
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WeaponArcVisuals
+    fadeOut: false
+  - type: Sprite
+    sprite: _Exodus/Effects/rot_sated_slam.rsi
+    state: slam
+    noRotation: true
+    offset: 0, -0.15
+    drawdepth: HighFloorObjects
+  - type: TimedDespawn
+    lifetime: 1.039
 
 - type: entity
   id: RotSatedDeathEffect

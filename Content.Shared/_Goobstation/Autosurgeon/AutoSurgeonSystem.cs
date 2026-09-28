@@ -16,14 +16,14 @@ namespace Content.Shared._Goobstation.Autosurgeon;
 
 // There might be some goidacode inside, I warned you.
 // It should also maybe be in _Shitmed instead of here, but who cares.
-public sealed class AutoSurgeonSystem : EntitySystem
+public sealed partial class AutoSurgeonSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedBodySystem _body = default!; // Exodus: generated dependency injection.
+    [Dependency] private IComponentFactory _componentFactory = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedDoAfterSystem _doAfter = default!; // Exodus: generated dependency injection.
+    [Dependency] private INetManager _netManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private ISerializationManager _serializationManager = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

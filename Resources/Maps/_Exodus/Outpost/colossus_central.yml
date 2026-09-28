@@ -134,6 +134,7 @@ entities:
     - type: Transform
       parent: 1
     - type: ForceAnchor
+      bedrock: true # Exodus: Colossus Central cannot be unanchored.
     - type: StationTransit
     - type: ProtectedGrid
       hostileMobKillSound: !type:SoundPathSpecifier

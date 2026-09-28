@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace Content.Server._Exodus.Research.Systems;
 
-public sealed class DataFarmSystem : EntitySystem
+public sealed partial class DataFarmSystem : EntitySystem
 {
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private AtmosphereSystem _atmos = default!;

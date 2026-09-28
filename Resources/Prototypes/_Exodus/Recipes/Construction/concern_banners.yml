@@ -1,0 +1,52 @@
+# Exodus: construction entries for the four territory-claiming concern banners.
+- type: construction
+  id: CompanyTerritoryBannerAugok
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerAugokNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerDrakeBlackArmsUSA
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerDrakeBlackArmsUSANode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerHorizonHarmonyHammerMatter
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerHorizonHarmonyHammerMatterNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid
+
+- type: construction
+  id: CompanyTerritoryBannerBuno
+  graph: CompanyTerritoryBannersGraph
+  startNode: start
+  targetNode: CompanyTerritoryBannerBunoNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  - !type:NoActiveCompanyTerritoryBannerOnGrid

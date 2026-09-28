@@ -16,7 +16,7 @@ namespace Content.Client._Mono.Shipyard;
 /// <summary>
 /// This handles spawning client-side grid and getting data from it.
 /// </summary>
-public sealed class ShipyardPreviewSystem : SharedShipyardPreviewSystem
+public sealed partial class ShipyardPreviewSystem : SharedShipyardPreviewSystem // Exodus: generated dependency injection.
 {
     [Dependency] private MapSystem _map = default!;
     [Dependency] private MapLoaderSystem _loader = default!;

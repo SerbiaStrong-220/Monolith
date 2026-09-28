@@ -1,0 +1,32 @@
+- type: factionAlertLevels
+  id: factionAlerts
+  defaultLevel: hestia
+  initialMinimumDuration: 2700
+  levels:
+    hestia:
+      name: faction-alert-code-hestia
+      description: faction-alert-code-hestia-description
+      startAnnouncement: faction-alert-hestia-start
+      endAnnouncement: faction-alert-hestia-end
+      transitionDuration: 900
+      minimumDuration: 3600
+      color: "#7DCEA0"
+      order: 0
+    pandora:
+      name: faction-alert-code-pandora
+      description: faction-alert-code-pandora-description
+      startAnnouncement: faction-alert-pandora-start
+      endAnnouncement: faction-alert-pandora-end
+      transitionDuration: 900
+      minimumDuration: 3600
+      color: "#E67E22"
+      order: 1
+    ares:
+      name: faction-alert-code-ares
+      description: faction-alert-code-ares-description
+      startAnnouncement: faction-alert-ares-start
+      endAnnouncement: faction-alert-ares-end
+      transitionDuration: 1200
+      minimumDuration: 3600
+      color: "#E74C3C"
+      order: 2

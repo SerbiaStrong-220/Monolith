@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Casino;
 
-public sealed class RouletteBetsOverlay : Overlay
+public sealed partial class RouletteBetsOverlay : Overlay
 {
     private const int MaxVisibleChipsPerCell = 6;
     private const int MaxVisibleChipsPerTable = 64;

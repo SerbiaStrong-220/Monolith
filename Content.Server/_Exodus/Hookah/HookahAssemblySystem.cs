@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Hookah;
 
-public sealed class HookahAssemblySystem : EntitySystem
+public sealed partial class HookahAssemblySystem : EntitySystem
 {
     private static readonly EntProtoId HookahPartialId = "HookahPartial";
     private static readonly EntProtoId HookahPartialFullId = "HookahPartialFull";
@@ -18,9 +18,9 @@ public sealed class HookahAssemblySystem : EntitySystem
     private static readonly LocId HookahAssemblyStage2 = "hookah-assembly-stage2";
     private static readonly LocId HookahAssemblyComplete = "hookah-assembly-complete";
 
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

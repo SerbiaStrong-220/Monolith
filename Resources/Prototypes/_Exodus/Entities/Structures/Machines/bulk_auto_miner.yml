@@ -2,24 +2,26 @@
   parent: [BaseMachinePowered, ConstructibleMachine]
   id: BulkAutoMiningEmitter
   name: automated mining laser
-  description: A ship-mounted mining laser. Converts excavated rock to liquid metal and supplies it to a refinery through an ore duct underneath. Mining protected grids damages the emitter.
+  description: A ship-mounted mining laser. Converts original asteroid and planetoid terrain to liquid metal and supplies it to a refinery through an ore duct underneath. Firing at artificial grids damages the emitter.
   components:
   - type: Machine
     board: BulkAutoMiningEmitterCircuitboard
   - type: Construction
-    graph: Machine3x3Partial
+    graph: MachineNoReturn
     node: machine
   - type: WiresPanel
   - type: BulkAutoMiningEmitter
     consoleName: bulk-auto-mining-laser-short-name
-    forbiddenTargets:
-      components:
-      - StationMember
     forbiddenTileDamage:
       types:
         Heat: 400
     slurryMaterial: MiningSlurry
-    slurryPerTile: 200
+    slurryPerTile:
+      min: 400
+      max: 900
+    warmupTime: 60
+    cooldownTime: 30
+    maxWarmupYieldBonus: 0.35
     muzzleOffset: 0.375 # Main lens is 12 pixels south of the pivot in the 96x96 head.
     startSound:
       path: /Audio/_Exodus/Machines/BulkMining/laser_start.ogg
@@ -33,7 +35,7 @@
     sound:
       path: /Audio/_Exodus/Machines/BulkMining/laser_loop.ogg
   - type: MaterialStorage
-    storageLimit: 20000
+    storageLimit: 200000
     insertOnInteract: false
     canEjectStoredMaterials: false
     dropOnDeconstruct: false
@@ -93,6 +95,9 @@
   - type: Repairable
     qualities:
     - Applicating
+  - type: ShipRepairable
+    repairTime: 30
+    repairCost: 300 # Full capacity of a standard SRD; three repair matter cartridges.
   - type: Anchorable
     flags: Anchorable
     delay: 10
@@ -138,6 +143,7 @@
   components:
   - type: BulkAutoMiningConsole
     maxRange: 512
+    processInterval: 4
     clearableWhitelist:
       components:
       - Gatherable
@@ -169,6 +175,9 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BulkAutoMiningConsoleCircuitboard
+  - type: ShipRepairable
+    repairTime: 10
+    repairCost: 50
   - type: ApcPowerReceiver
     powerLoad: 750
   - type: PointLight

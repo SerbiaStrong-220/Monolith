@@ -8,7 +8,7 @@
   [locid="guidebook-corporation-tech-disk-acquisition"]
 
   <Box>
-    <GuideEntityEmbed Entity="TechDiskMacoSmallArms"/>
+    <GuideEntityEmbed Entity="TechDiskDrakeBlackArmsUSA"/>
   </Box>
 
   [locid="tech-disk-maco-small-arms-description"]

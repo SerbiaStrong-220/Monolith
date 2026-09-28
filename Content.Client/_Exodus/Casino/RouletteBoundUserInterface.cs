@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Casino;
 
-public sealed class RouletteBoundUserInterface : BoundUserInterface
+public sealed partial class RouletteBoundUserInterface : BoundUserInterface
 {
     [Dependency] private IGameTiming _timing = default!;
 

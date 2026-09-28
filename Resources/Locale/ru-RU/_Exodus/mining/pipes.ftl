@@ -1,5 +1,6 @@
 materials-mining-slurry = жидкий металл
 materials-unit-mining-slurry = порций
+bulk-mining-refinery-upgrade-capacity = Вместимость баков жидкого металла и отработанного газа
 bulk-mining-refinery-ui-slurry = Запас жидкого металла
 bulk-mining-refinery-ui-slurry-amount = {$stored} / {$capacity} порций
 bulk-mining-refinery-ui-slurry-unlimited = {$stored} порций · вместимость не ограничена

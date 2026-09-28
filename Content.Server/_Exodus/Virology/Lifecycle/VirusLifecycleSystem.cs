@@ -34,6 +34,7 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityTableSystem _tables = default!;
+    [Dependency] private VirusEpidemicRuleSystem _epidemic = default!;
 
     private TimeSpan _nextUpdate;
     private TimeSpan _nextExposure;
@@ -58,7 +59,15 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
     private void OnBroodMobState(Entity<VirusBroodComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
+        {
             BeginIncubation(ent);
+            if (!ent.Comp.IntelligentCoreClaimed && Transform(ent).MapUid != null
+                && _epidemic.TryClaimIntelligentCore(ent, out var prototype))
+            {
+                ent.Comp.IntelligentCoreClaimed = true;
+                Spawn(prototype, Transform(ent).Coordinates);
+            }
+        }
         else
             ent.Comp.Incubating = false;
     }
@@ -157,21 +166,26 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
     }
 
     public void SpawnOffspring(EntityCoordinates coordinates, VirusDescriptor strain, EntProtoId fallback,
-        EntityTableSelector? table = null)
+        EntityTableSelector? table = null, EntityUid? parent = null)
     {
         if (table == null)
         {
-            SpawnVector(fallback, coordinates, strain);
+            SpawnVector(fallback, coordinates, strain, parent);
             return;
         }
 
         foreach (var prototype in _tables.GetSpawns(table))
-            SpawnVector(prototype, coordinates, strain);
+            SpawnVector(prototype, coordinates, strain, parent);
     }
 
-    private void SpawnVector(EntProtoId prototype, EntityCoordinates coordinates, VirusDescriptor strain)
+    private void SpawnVector(EntProtoId prototype, EntityCoordinates coordinates, VirusDescriptor strain, EntityUid? parent)
     {
         var child = Spawn(prototype, coordinates);
+        if (parent is { } source)
+        {
+            var spawned = new VirusOffspringSpawnedEvent(child);
+            RaiseLocalEvent(source, ref spawned);
+        }
         var vector = EnsureComp<VirusOffspringComponent>(child);
         vector.Strain = FreshInfection(strain);
         if (vector.Lifetime is { } lifetime)
@@ -180,6 +194,9 @@ public sealed partial class VirusLifecycleSystem : EntitySystem
 
     private int GetOffspringCount(Entity<VirusBroodComponent> ent)
     {
+        if (ent.Comp.OffspringCount is { } count)
+            return Math.Max(1, count);
+
         if (ent.Comp.HealthPerOffspring <= 0)
         {
             Log.Error($"Virus brood on {ToPrettyString(ent)} has non-positive healthPerOffspring.");

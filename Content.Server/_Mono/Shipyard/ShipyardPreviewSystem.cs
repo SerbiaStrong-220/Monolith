@@ -19,7 +19,7 @@ namespace Content.Server._Mono.Shipyard;
 /// <summary>
 /// This handles preview map and preview observer.
 /// </summary>
-public sealed class ShipyardPreviewSystem : SharedShipyardPreviewSystem
+public sealed partial class ShipyardPreviewSystem : SharedShipyardPreviewSystem // Exodus: generated dependency injection.
 {
     [Dependency] private MapSystem _map = default!;
     [Dependency] private MetaDataSystem _meta = default!;

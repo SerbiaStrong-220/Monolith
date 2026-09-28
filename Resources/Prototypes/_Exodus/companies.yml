@@ -1,6 +1,64 @@
 - type: company
   id: Syndicate
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: company-name-syndicate
   color: "#C94242"
   disabled: true
   npcFaction: Syndicate
+
+# Exodus-begin corporate concerns
+- type: company
+  id: Augok
+  diplomacyVisible: true
+  name: concern-augok-name
+  description: concern-augok-description
+  color: "#7E72B2"
+  lobbyImage:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: augok-banner
+  atmDepositCommission: 0.15
+  startingItems:
+  - CompanyTechDiskCaseAugok
+
+- type: company
+  id: DrakeBlackArmsUSA
+  diplomacyVisible: true
+  name: concern-drake-black-arms-usa-name
+  description: concern-drake-black-arms-usa-description
+  color: "#C97D7D"
+  image: /Textures/_Mono/Companies/drake_industries.png
+  lobbyImage:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: drake-black-arms-usa-banner
+  atmDepositCommission: 0.10
+  startingItems:
+  - CompanyTechDiskCaseDrakeBlackArmsUSA
+
+- type: company
+  id: HorizonHarmonyHammerMatter
+  diplomacyVisible: true
+  name: concern-horizon-harmony-hammer-matter-name
+  description: concern-horizon-harmony-hammer-matter-description
+  color: "#69E37F"
+  image: /Textures/_Mono/Companies/horizon_energy.png
+  lobbyImage:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: horizon-harmony-hammer-matter-banner
+  atmDepositCommission: 0.15
+  startingItems:
+  - CompanyTechDiskCaseHorizonHarmonyHammerMatter
+
+- type: company
+  id: Buno
+  diplomacyVisible: true
+  name: concern-buno-name
+  description: concern-buno-description
+  color: "#7A0303"
+  lobbyImage:
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: buno-banner
+  statusIcon: ExodusHiveMember
+  atmDepositCommission: 0.15
+  startingItems:
+  - CompanyTechDiskCaseBuno
+# Exodus-end

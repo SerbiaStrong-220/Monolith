@@ -1,0 +1,42 @@
+- type: body
+  id: Special
+  name: Special
+  root: torso
+  slots:
+    torso:
+      part: TorsoSpecial
+      organs:
+        heart: OrganSpecialHeart
+        lungs: OrganSpecialLungs
+        stomach: OrganSpecialStomach
+        liver: OrganSpecialLiver
+        kidneys: OrganSpecialKidneys
+      connections: [head, left arm, right arm, left leg, right leg, tail]
+    head:
+      part: HeadSpecial
+      connections: [torso]
+      organs:
+        brain: OrganSpecialBrain
+        eyes: OrganSpecialEyes
+    left arm:
+      part: LeftArmSpecial
+      connections: [left hand]
+    right arm:
+      part: RightArmSpecial
+      connections: [right hand]
+    left hand:
+      part: LeftHandSpecial
+    right hand:
+      part: RightHandSpecial
+    left leg:
+      part: LeftLegSpecial
+      connections: [left foot]
+    right leg:
+      part: RightLegSpecial
+      connections: [right foot]
+    left foot:
+      part: LeftFootSpecial
+    right foot:
+      part: RightFootSpecial
+    tail:
+      part: TailSpecial

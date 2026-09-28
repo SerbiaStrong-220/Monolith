@@ -8,8 +8,8 @@ namespace Content.Server.DeviceLinking.Systems;
 
 public sealed partial class GunSignalControlSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
+    [Dependency] private DeviceLinkSystem _signalSystem = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedGunSystem _gun = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

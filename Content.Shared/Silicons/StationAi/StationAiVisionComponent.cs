@@ -6,6 +6,10 @@ namespace Content.Shared.StationAi;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStationAiSystem))]
 public sealed partial class StationAiVisionComponent : Component
 {
+    // Exodus: independent organic camera networks never grant station AI access.
+    [DataField, AutoNetworkedField]
+    public EntityUid? Network;
+
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 

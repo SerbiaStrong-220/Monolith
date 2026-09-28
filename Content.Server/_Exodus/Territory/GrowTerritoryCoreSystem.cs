@@ -12,19 +12,19 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Territory;
 
-public sealed class GrowTerritoryCoreSystem : EntitySystem
+public sealed partial class GrowTerritoryCoreSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TerritoryCoreSystem _cores = default!;
-    [Dependency] private readonly TerritoryClaimIntegritySystem _integrity = default!;
-    [Dependency] private readonly TerritoryClaimRulesSystem _rules = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TerritoryCoreSystem _cores = default!;
+    [Dependency] private TerritoryClaimIntegritySystem _integrity = default!;
+    [Dependency] private TerritoryClaimRulesSystem _rules = default!;
 
     public override void Initialize()
     {

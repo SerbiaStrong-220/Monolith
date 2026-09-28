@@ -15,6 +15,12 @@
         </ProgressBar>
         <RichTextLabel Name="LaserStatus"/>
         <RichTextLabel Name="StatusHint" Visible="False"/>
+        <ProgressBar Name="WarmupBar" MinValue="0" MaxValue="1" SetHeight="22">
+            <ProgressBar.ForegroundStyleBoxOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#9A532E"/>
+            </ProgressBar.ForegroundStyleBoxOverride>
+            <Label Name="WarmupAmount" Margin="5 0" VerticalAlignment="Center"/>
+        </ProgressBar>
         <ProgressBar Name="BufferBar" MinValue="0" MaxValue="1" SetHeight="22">
             <ProgressBar.ForegroundStyleBoxOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#72552F"/>

@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Client._Exodus.Medical;
 
 /// <summary>Samples held input and the patient under the cursor; the server owns all healing.</summary>
-public sealed class MedicalBeamGunSystem : EntitySystem
+public sealed partial class MedicalBeamGunSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IInputManager _input = default!;

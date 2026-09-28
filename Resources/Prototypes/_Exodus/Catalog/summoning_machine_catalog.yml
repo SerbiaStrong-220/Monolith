@@ -549,7 +549,7 @@
   description: summoning-machine-beacon-horizont-desc
   productEntity: AsakimShuttleEmergencyBeaconHorizont
   cost:
-    Telecrystal: 21600
+    Telecrystal: 28800
   categories:
   - SummoningMachineEmergencyBeacons
   conditions:

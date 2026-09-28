@@ -5,7 +5,7 @@ using Robust.Client.Player;
 
 namespace Content.Client._Exodus.Atmos;
 
-public sealed class GasTankFillIndicatorSystem : EntitySystem
+public sealed partial class GasTankFillIndicatorSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;
 

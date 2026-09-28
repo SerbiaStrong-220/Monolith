@@ -18,12 +18,6 @@ public sealed partial class WarLevelComponent
     ];
 
     /// <summary>
-    /// Minimum elapsed round time before players may declare war.
-    /// </summary>
-    [DataField]
-    public TimeSpan DeclarationDelay = TimeSpan.FromHours(2);
-
-    /// <summary>
     /// Lockout for both factions of a pair after their war ends.
     /// </summary>
     [DataField]
@@ -52,4 +46,31 @@ public sealed partial class WarLevelComponent
     /// </summary>
     [DataField]
     public List<FactionWarDeclaration> Declarations = new();
+
+    /// <summary>
+    /// Active mutual alliances. Alliances prevent a war declaration until they are broken.
+    /// </summary>
+    [DataField]
+    public List<FactionAlliance> Alliances = new();
+
+    /// <summary>
+    /// Pending alliance proposals, indexed by the unordered faction pair.
+    /// </summary>
+    [DataField]
+    public List<FactionAllianceOfferEntry> AllianceOffers = new();
+
+    [DataField]
+    public int NextAllianceOfferId;
+
+    /// <summary>
+    /// After either side breaks an alliance, neither may declare war on the other until this elapses.
+    /// </summary>
+    [DataField]
+    public TimeSpan AllianceBreakCooldown = TimeSpan.FromMinutes(20);
+
+    /// <summary>
+    /// Delay before either side may send another alliance offer after a withdrawal.
+    /// </summary>
+    [DataField]
+    public TimeSpan AllianceOfferCooldown = TimeSpan.FromSeconds(30);
 }

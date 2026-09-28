@@ -11,7 +11,7 @@ namespace Content.Client._DV.TapeRecorder.UI;
 [GenerateTypedNameReferences]
 public sealed partial class TapeRecorderWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private IEntityManager _entMan = default!; // Exodus: generated dependency injection.
 
     public EntityUid Owner;
     private bool _onCooldown;

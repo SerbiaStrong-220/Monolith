@@ -69,6 +69,9 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
 
     public bool CanUnderstand(Entity<LanguageSpeakerComponent?> ent, ProtoId<LanguagePrototype> language)
     {
+        if (!IsAnatomicallyAllowed(ent, language)) // Exodus - anatomical restrictions also apply to universal speech.
+            return false;
+
         if (language == PsychomanticPrototype || language == UniversalPrototype || TryComp<UniversalLanguageSpeakerComponent>(ent, out var uni) && uni.Enabled)
             return true;
 
@@ -211,6 +214,8 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
         }
 
         RaiseLocalEvent(ent, ref ev);
+
+        RestrictLanguages(ent, ref ev); // Exodus - translators cannot bypass anatomical language restrictions.
 
         ent.Comp.SpokenLanguages.Clear();
         ent.Comp.UnderstoodLanguages.Clear();

@@ -12,7 +12,7 @@ namespace Content.Server._Exodus.Genetics;
 
 public sealed partial class GeneticAbilitiesSystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     private void InitializeTelekinesis()
     {

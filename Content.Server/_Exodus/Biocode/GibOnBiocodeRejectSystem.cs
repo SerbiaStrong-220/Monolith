@@ -4,7 +4,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Server._Exodus.Biocode;
 
-public sealed class GibOnBiocodeRejectSystem : EntitySystem
+public sealed partial class GibOnBiocodeRejectSystem : EntitySystem
 {
     [Dependency] private BodySystem _body = default!;
     [Dependency] private InventorySystem _inventory = default!;

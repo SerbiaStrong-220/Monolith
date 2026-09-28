@@ -37,11 +37,11 @@
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
+      # Exodus-begin: spawn filled stacks directly, preserving the unit count.
+      - !type:SpawnStackBehavior
+        stack: GlassShard
+        sizes: [100, 10, 1]
+      # Exodus-end
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: SolutionContainerManager
@@ -170,11 +170,11 @@
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlassReinforced:
-            min: 1
-            max: 1
+      # Exodus-begin: spawn filled stacks directly, preserving the unit count.
+      - !type:SpawnStackBehavior
+        stack: ReinforcedGlassShard
+        sizes: [100, 10, 1]
+      # Exodus-end
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -247,11 +247,11 @@
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlassPlasma:
-            min: 1
-            max: 1
+      # Exodus-begin: spawn filled stacks directly, preserving the unit count.
+      - !type:SpawnStackBehavior
+        stack: PlasmaGlassShard
+        sizes: [100, 10, 1]
+      # Exodus-end
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -377,11 +377,11 @@
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlassUranium:
-            min: 1
-            max: 1
+      # Exodus-begin: spawn filled stacks directly, preserving the unit count.
+      - !type:SpawnStackBehavior
+        stack: UraniumGlassShard
+        sizes: [100, 10, 1]
+      # Exodus-end
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Extractable
@@ -506,11 +506,11 @@
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlassClockwork:
-            min: 1
-            max: 1
+      # Exodus-begin: spawn filled stacks directly, preserving the unit count.
+      - !type:SpawnStackBehavior
+        stack: ClockworkGlassShard
+        sizes: [100, 10, 1]
+      # Exodus-end
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Extractable

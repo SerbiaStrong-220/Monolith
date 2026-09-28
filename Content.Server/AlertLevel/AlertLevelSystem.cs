@@ -38,6 +38,14 @@ public sealed partial class AlertLevelSystem : EntitySystem
 
         while (query.MoveNext(out var station, out var alert))
         {
+            // Exodus-begin: a pending sector code waits on PendingAt, not on the float delay.
+            if (alert.PendingLevel != null)
+            {
+                TryCompleteSectorCodeTransition((station, alert));
+                continue;
+            }
+            // Exodus-end
+
             if (alert.CurrentDelay <= 0)
             {
                 if (alert.ActiveDelay)
@@ -151,7 +159,10 @@ public sealed partial class AlertLevelSystem : EntitySystem
         // }
         // End Frontier
 
-        return alert.CurrentDelay;
+        // Exodus: report remaining transition time to callers of the legacy delay API.
+        return alert.PendingLevel != null
+            ? (float)Math.Max(0, (alert.PendingAt - _timing.CurTime).TotalSeconds)
+            : alert.CurrentDelay;
     }
 
     /// <summary>
@@ -175,20 +186,42 @@ public sealed partial class AlertLevelSystem : EntitySystem
         // End Frontier
 
         if (component.AlertLevels == null // Frontier: remove component, resolve station to data component later
-            || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
-            || component.CurrentLevel == level)
+            || !component.AlertLevels.Levels.TryGetValue(level, out var detail)) // Exodus: allow forcing the active code to cancel a pending transition.
         {
             return;
         }
+
+        // Exodus-begin: forcing the current level must also cancel any pending transition.
+        if (force)
+        {
+            component.PendingLevel = null;
+            component.CurrentDelay = 0;
+            component.ActiveDelay = false;
+            component.IsLevelLocked = locked;
+            var ev = new SectorCodeTransitionChangedEvent();
+            RaiseLocalEvent(ref ev);
+        }
+
+        if (component.CurrentLevel == level)
+            return;
+        // Exodus-end
 
         if (!force)
         {
             if (!detail.Selectable
                 || component.CurrentDelay > 0
-                || component.IsLevelLocked)
+                || !component.IsSelectable || component.PendingLevel != null) // Exodus: respect the current lock and pending transition.
             {
                 return;
             }
+
+            // Exodus-begin: selectable sector codes transition before the new rules apply.
+            if (detail.TransitionDuration > TimeSpan.Zero)
+            {
+                BeginSectorCodeTransition((sectorEnt, component), level, detail, playSound, announce, locked);
+                return;
+            }
+            // Exodus-end
 
             component.CurrentDelay = _cfg.GetCVar(CCVars.GameAlertLevelChangeDelay);
             component.ActiveDelay = true;
@@ -235,12 +268,26 @@ public sealed partial class AlertLevelSystem : EntitySystem
 
         if (announce && Resolve(station, ref dataComponent)) // Frontier: add Resolve for dataComponent
         {
-            var stationName = announcementSender ?? dataComponent.EntityName; // Frontier: moved down, Exodus alert-level-announcement-sender
-            _chatSystem.DispatchGlobalAnnouncement(
-                announcementFull,
-                sender: stationName,
-                playSound: playDefault,
-                colorOverride: detail.Color);
+            // Exodus-begin: the second sector-code announcement replaces the generic wrapper.
+            if (detail.EndAnnouncement is { } endId &&
+                Loc.TryGetString(endId, out var endAnnouncement))
+            {
+                _chatSystem.DispatchGlobalAnnouncement(
+                    endAnnouncement,
+                    sender: Loc.GetString("faction-alert-announcement-sender"),
+                    playSound: playDefault,
+                    colorOverride: detail.Color);
+            }
+            else
+            // Exodus-end
+            {
+                var stationName = announcementSender ?? dataComponent.EntityName; // Frontier: moved down, Exodus alert-level-announcement-sender
+                _chatSystem.DispatchGlobalAnnouncement(
+                    announcementFull,
+                    sender: stationName,
+                    playSound: playDefault,
+                    colorOverride: detail.Color);
+            }
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(EntityUid.Invalid, level)); // Frontier: pass invalid, we have no station

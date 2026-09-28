@@ -1,0 +1,123 @@
+# Exodus: each concern distributes one disk with the recipes of its constituent brands.
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskAugok
+  name: concern-tech-disk-augok-name
+  description: concern-tech-disk-augok-description
+  components:
+  - type: SafetyDepositRestricted
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#7E72B2"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - AetherionGunneryServerUltraCircuitboard
+    - WeaponTurretDravonFlatpackUllman
+    - ShieldGeneratorCdmMachineCircuitboard
+    - CdmShieldReserveCartridge
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskDrakeBlackArmsUSA
+  name: concern-tech-disk-drake-black-arms-usa-name
+  description: concern-tech-disk-drake-black-arms-usa-description
+  components:
+  - type: SafetyDepositRestricted
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#C97D7D"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - SyndicateBombCerberus
+    - BulkAutoMiningConsoleCircuitboard
+    - BulkMiningRefineryCircuitboard
+    - BulkMiningExhaustCircuitboard
+    - BulkMiningPipeStack10
+    - GasPipeArmoredHalf
+    - GasPipeArmoredStraight
+    - GasPipeArmoredBend
+    - GasPipeArmoredTJunction
+    - GasPipeArmoredFourway
+    - ShipArmorModuleBlackhawkFlatpack
+    - WeaponPistolMaco
+    - MagazinePistolMaco
+    - WeaponLightPhaserMaco
+    - CartridgeLightPhaserMaco
+    - ShieldGeneratorUnsaMachineCircuitboard
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskHorizonHarmonyHammerMatter
+  name: concern-tech-disk-horizon-harmony-hammer-matter-name
+  description: concern-tech-disk-horizon-harmony-hammer-matter-description
+  components:
+  - type: SafetyDepositRestricted
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#69E37F"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - NebulaGasSiphonMachineCircuitboard
+    - NebulaGasSiphonFilter
+    - MedicalBeamGun
+    - HmeSynthHeart
+    - HmeSynthHeartFortified
+    - HmeSynthLungs
+    - HmeSynthLiver
+    - HmeSynthEyes
+    - HmeSynthLeftLeg
+    - HmeSynthRightLeg
+    - SheetPlasteelShm
+    - ShipRepairDrone
+    - ShipRepairDroneStationMachineCircuitboard
+    - UraniumCentrifugePlutoniumRecoveryMini
+    - UraniumCentrifugeAmericiumSynthesisMini
+
+- type: entity
+  parent: TechDiskBase
+  id: TechDiskBuno
+  name: concern-tech-disk-buno-name
+  description: concern-tech-disk-buno-description
+  components:
+  - type: SafetyDepositRestricted
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base"]
+      color: "#7A0303"
+    - state: label
+    - state: protect
+    - state: holo
+      shader: unshaded
+  - type: TechnologyDisk
+    recipes:
+    - ClothingOuterHardsuitBratva
+    - NearestShuttleTeleporterMachineCircuitboard
+    - GeneticDisk
+    - GeneticsLaboratoryCircuitboard
+    - GeneticInjectorPrinterCircuitboard
+    - HiveSynthHeart
+    - HiveSynthLungs
+    - HiveSynthLiver
+    - HiveSynthEyes
+    - LifeInsuranceConsoleComputerCircuitboard
+    - LifeInsuranceScannerMachineCircuitboard
+    - LifeInsuranceClonerMachineCircuitboard

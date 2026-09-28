@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Body;
 
-public sealed class StartingOrgansSystem : EntitySystem
+public sealed partial class StartingOrgansSystem : EntitySystem
 {
     [Dependency] private SharedBodySystem _body = default!;
     [Dependency] private SharedContainerSystem _containers = default!;

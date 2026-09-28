@@ -1,10 +1,16 @@
 using Content.Shared.FixedPoint;
 
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Shared._Exodus.Virology.Behaviors;
 
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class BloodVomitComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     /// <summary>Time between attacks while this symptom stage is active.</summary>
     [DataField]
     public TimeSpan Interval = TimeSpan.FromSeconds(45);
@@ -14,6 +20,6 @@ public sealed partial class BloodVomitComponent : Component
     public FixedPoint2 BloodAmount = 20;
 
     /// <summary>Scheduled attack, shifted along with the host when its map is paused.</summary>
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextVomit;
 }

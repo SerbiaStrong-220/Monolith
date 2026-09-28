@@ -1,0 +1,55 @@
+- type: entity
+  id: BaseMachineFrame3x1
+  abstract: true
+  components:
+  - type: Construction
+    graph: Machine3x1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.45,-0.45,1.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/parts_3x1.rsi
+    snapCardinals: false
+
+- type: entity
+  id: UnfinishedMachineFrame3x1
+  parent: [BaseMachineFrame3x1, UnfinishedMachineFrame]
+  name: machine frame (3x1)
+
+- type: entity
+  id: MachineFrame3x1
+  parent: [BaseMachineFrame3x1, MachineFrame]
+  name: machine frame (3x1)
+  suffix: Ready
+  components:
+  - type: Construction
+    graph: Machine3x1
+    node: machineFrame
+    defaultTarget: machine
+  - type: MachineFrame
+    frameSize: 3x1
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/parts_3x1.rsi
+    state: box_1
+
+- type: entity
+  id: MachineFrameDestroyed3x1
+  parent: [BaseMachineFrame3x1, MachineFrameDestroyed]
+  name: destroyed machine frame (3x1)
+  components:
+  - type: Transform
+    noRot: false
+  - type: Construction
+    graph: Machine3x1
+    node: destroyedMachineFrame
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/parts_3x1.rsi
+    state: destroyed

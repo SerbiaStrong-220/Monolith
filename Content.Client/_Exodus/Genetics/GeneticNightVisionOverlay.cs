@@ -9,11 +9,11 @@ using Robust.Shared.Enums;
 namespace Content.Client._Exodus.Genetics;
 
 /// <summary>Biological ambient vision. Other night-vision sources retain their own overlay and settings.</summary>
-public sealed class GeneticNightVisionOverlay : Overlay
+public sealed partial class GeneticNightVisionOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
 
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 

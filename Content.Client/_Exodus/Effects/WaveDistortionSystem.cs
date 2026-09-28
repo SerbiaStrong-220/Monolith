@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Exodus.Effects;
 
-public sealed class WaveDistortionSystem : EntitySystem
+public sealed partial class WaveDistortionSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IOverlayManager _overlays = default!;

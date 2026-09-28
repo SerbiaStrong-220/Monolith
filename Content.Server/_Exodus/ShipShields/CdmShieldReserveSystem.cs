@@ -11,11 +11,11 @@ namespace Content.Server._Exodus.ShipShields;
 /// <summary>
 /// Lets a CDM Bastion shield consume a reserve cartridge to avert one overload.
 /// </summary>
-public sealed class CdmShieldReserveSystem : EntitySystem
+public sealed partial class CdmShieldReserveSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
     {

@@ -20,7 +20,7 @@ public sealed partial class ShipShieldsSystem
 {
     private const int DirectionalShieldMinimumSegments = 16; // Exodus directional shields
     private const int DirectionalShieldMaximumSegments = 256; // Exodus directional shields
-    [Dependency] private readonly IGameTiming _timing = default!; // Exodus shield overload handling
+    [Dependency] private IGameTiming _timing = default!; // Exodus shield overload handling // Exodus: generated dependency injection.
 
     // Exodus-begin | shield hit absorption, overload causes and directional shield rotation
     private void InitializeShieldHitAbsorption()

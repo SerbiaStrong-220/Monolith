@@ -28,6 +28,10 @@ public sealed partial class VirusElectrophiliaSystem : EntitySystem
 
     private void OnStartup(Entity<VirusElectrophiliaComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.StateApplied)
+            return;
+        ent.Comp.StateApplied = true;
+
         ent.Comp.LastShock = _timing.CurTime;
     }
 

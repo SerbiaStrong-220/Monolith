@@ -231,6 +231,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
+        // Exodus: living grid controllers reserve piloting without replacing another pilot on rejection.
+        var attempt = new ShuttlePilotAttemptEvent(user, uid, Transform(uid).GridUid);
+        RaiseLocalEvent(ref attempt);
+        if (attempt.Cancelled)
+            return false;
+
         if (!_tags.HasTag(user, CanPilotTag) ||
             !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
             !this.IsPowered(uid, EntityManager) ||
@@ -474,6 +480,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         base.HandlePilotShutdown(uid, component, args);
         RemovePilot(uid, component);
+        // Exodus-begin
+        var stopped = new ShuttlePilotStoppedEvent();
+        RaiseLocalEvent(uid, ref stopped);
+        // Exodus-end
     }
 
     private void OnConsoleShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)

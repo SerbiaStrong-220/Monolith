@@ -26,13 +26,13 @@ namespace Content.Server.Turrets;
 
 public sealed partial class DeployableTurretSystem : SharedDeployableTurretSystem
 {
-    [Dependency] private readonly HTNSystem _htn = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly BatteryWeaponFireModesSystem _turretfiremode = default!;
-    [Dependency] private readonly TurretTargetSettingsSystem _turretaccess = default!;
+    [Dependency] private HTNSystem _htn = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedAppearanceSystem _appearance = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!; // Exodus: generated dependency injection.
+    [Dependency] private IGameTiming _timing = default!; // Exodus: generated dependency injection.
+    [Dependency] private BatteryWeaponFireModesSystem _turretfiremode = default!; // Exodus: generated dependency injection.
+    [Dependency] private TurretTargetSettingsSystem _turretaccess = default!; // Exodus: generated dependency injection.
     public override void Initialize()
     {
         base.Initialize();

@@ -7,12 +7,12 @@ using Content.Server.Body.Systems;
 
 namespace Content.Shared.Sound.Systems;
 
-public sealed class InternalsNoiseSystem : EntitySystem
+public sealed partial class InternalsNoiseSystem : EntitySystem // Exodus: generated dependency injection.
 {
 
-    [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private InternalsSystem _internals = default!; // Exodus: generated dependency injection.
 
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
 
 
     public override void Initialize()

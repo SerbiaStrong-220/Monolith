@@ -10,11 +10,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Goobstation.ChangePrefixAfterDelay;
 
-public sealed class ChangePrefixAfterDelaySystem : EntitySystem
+public sealed partial class ChangePrefixAfterDelaySystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly ClothingSystem _clothing = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private ClothingSystem _clothing = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedItemSystem _item = default!; // Exodus: generated dependency injection.
+    [Dependency] private IGameTiming _timing = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

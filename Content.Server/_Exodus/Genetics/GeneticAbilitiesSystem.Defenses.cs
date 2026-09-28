@@ -11,9 +11,9 @@ namespace Content.Server._Exodus.Genetics;
 
 public sealed partial class GeneticAbilitiesSystem
 {
-    [Dependency] private readonly SharedScaleVisualsSystem _scale = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly ReflectSystem _reflect = default!;
+    [Dependency] private SharedScaleVisualsSystem _scale = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private ReflectSystem _reflect = default!;
 
     private void InitializeDeflection()
     {

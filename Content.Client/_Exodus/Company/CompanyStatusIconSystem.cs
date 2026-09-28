@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Exodus.Company;
 
-public sealed class CompanyStatusIconSystem : EntitySystem
+public sealed partial class CompanyStatusIconSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IPrototypeManager _prototype = default!;

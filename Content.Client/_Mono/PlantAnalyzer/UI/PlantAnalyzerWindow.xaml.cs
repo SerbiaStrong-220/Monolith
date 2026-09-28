@@ -12,7 +12,7 @@ namespace Content.Client._Mono.PlantAnalyzer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class PlantAnalyzerWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private IEntityManager _entities = default!; // Exodus: generated dependency injection.
     private const string Indent = "\n   ";
     private PlantAnalyzerMode _mode;
     private PlantGeneId _gene;

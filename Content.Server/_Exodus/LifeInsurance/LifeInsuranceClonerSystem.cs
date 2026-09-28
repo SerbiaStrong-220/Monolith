@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-public sealed class LifeInsuranceClonerSystem : EntitySystem
+public sealed partial class LifeInsuranceClonerSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private CloningSystem _cloning = default!;

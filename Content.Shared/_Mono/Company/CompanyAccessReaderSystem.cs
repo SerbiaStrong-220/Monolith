@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components; // Exodus-company-card-access
 using Content.Shared.Access.Systems; // Exodus-company-card-access
+using Content.Shared._Exodus.Company; // Exodus concern migration
 using Content.Shared.Hands.EntitySystems; // Exodus-company-card-access
 using Content.Shared.Interaction; // Exodus-company-card-access
 using Content.Shared.Inventory; // Exodus-company-card-access
@@ -8,6 +9,7 @@ using Content.Shared.Storage.Components; // Exodus-company-card-access
 using Content.Shared.Storage.EntitySystems; // Exodus-company-card-access
 using Content.Shared.UserInterface;
 using Robust.Shared.GameObjects; // Exodus-company-card-access
+using Robust.Shared.Prototypes; // Exodus concern migration
 
 namespace Content.Shared._Mono.Company;
 
@@ -23,6 +25,7 @@ public sealed partial class CompanyAccessReaderSystem : EntitySystem
     [Dependency] private SharedIdCardSystem _idCard = default!; // Exodus-company-card-access
     [Dependency] private InventorySystem _inventory = default!; // Exodus-company-card-access
     [Dependency] private SharedUserInterfaceSystem _ui = default!; // Exodus-company-card-access
+    [Dependency] private IPrototypeManager _prototypes = default!; // Exodus concern migration
 
     public override void Initialize()
     {
@@ -89,7 +92,7 @@ public sealed partial class CompanyAccessReaderSystem : EntitySystem
         if (!TryComp<CompanyComponent>(user, out var userCompany))
             return component.Inverted;
 
-        return component.RequiredCompanies.Contains(userCompany.CompanyName) != component.Inverted;
+        return MatchesCompany(component, userCompany.CompanyName) != component.Inverted; // Exodus concern migration
     }
 
     private bool HasAllowedCompanyCard(CompanyAccessReaderComponent component, EntityUid user)
@@ -115,15 +118,29 @@ public sealed partial class CompanyAccessReaderSystem : EntitySystem
         return false;
     }
 
-    private static bool IsCardAllowed(CompanyAccessReaderComponent component, IdCardComponent idCard)
+    private bool IsCardAllowed(CompanyAccessReaderComponent component, IdCardComponent idCard) // Exodus concern migration
     {
         if (idCard.CompanyName.Id == "None")
             return false;
 
         return component.RequiredCompanies.Count == 0
             ? !component.Inverted
-            : component.RequiredCompanies.Contains(idCard.CompanyName) != component.Inverted;
+            : MatchesCompany(component, idCard.CompanyName) != component.Inverted; // Exodus concern migration
     }
+
+    // Exodus-begin concern migration
+    private bool MatchesCompany(CompanyAccessReaderComponent component, ProtoId<CompanyPrototype> company)
+    {
+        var currentCompany = CompanyConsolidation.Normalize(company.Id, _prototypes);
+        foreach (var required in component.RequiredCompanies)
+        {
+            if (CompanyConsolidation.Normalize(required.Id, _prototypes) == currentCompany)
+                return true;
+        }
+
+        return false;
+    }
+    // Exodus-end
 
     private void ShowDeniedPopup(Entity<CompanyAccessReaderComponent> entity, EntityUid user)
     {

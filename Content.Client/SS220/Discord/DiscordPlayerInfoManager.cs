@@ -6,10 +6,10 @@ using Robust.Shared.Network;
 
 namespace Content.Client.SS220.Discord;
 
-public sealed class DiscordPlayerInfoManager
+public sealed partial class DiscordPlayerInfoManager // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly IClientNetManager _netMgr = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private IClientNetManager _netMgr = default!; // Exodus: generated dependency injection.
+    [Dependency] private IStateManager _stateManager = default!; // Exodus: generated dependency injection.
 
     private DiscordSponsorInfo? _info;
 

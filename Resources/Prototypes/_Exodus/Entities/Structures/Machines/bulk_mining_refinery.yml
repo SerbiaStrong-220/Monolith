@@ -81,12 +81,21 @@
         layer:
         - MachineLayer
   - type: MiningRefinery
+    # T1/T2/T3/T4 parts use internal ratings 1/3/4/6.
+    capacityMultipliers:
+      1: 1
+      3: 1.5
+      4: 2
+      6: 2.5
     exhaustGas: ChlorineTrifluoride
+    exhaust:
+      volume: 1000
+      temperature: 293.15
     exhaustMolesPerBatch: 10
     exhaustMolesPerSecond: 5
-    corrosionThreshold: 200
+    corrosionThreshold: 1000
     corrosionDelay: 30
-    explosionThreshold: 400
+    explosionThreshold: 2000
     corrosionDamage:
       types:
         Caustic: 5
@@ -119,13 +128,16 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: BulkMiningRefineryCircuitboard
+  - type: ShipRepairable
+    repairTime: 25
+    repairCost: 200
   - type: Construction
     graph: BulkMiningRefinery
     node: machine
   - type: Damageable
     damageContainer: MiningRefinery
   - type: MaterialStorage
-    storageLimit: 60000
+    storageLimit: 600000
     insertOnInteract: false
     canEjectStoredMaterials: false
     dropOnDeconstruct: false
@@ -190,6 +202,9 @@
   components:
   - type: Machine
     board: BulkMiningExhaustCircuitboard
+  - type: ShipRepairable
+    repairTime: 10
+    repairCost: 50
   - type: WiresPanel
   - type: Transform
     anchored: true
@@ -208,6 +223,8 @@
         layer:
         - MachineLayer
   - type: AtmosDevice
+    # Small grids without a simulated atmosphere must still discharge their pipe network.
+    joinSystem: true
   - type: PulsedGasOutlet
     cycleInterval: 27
     molesPerPulse: 35

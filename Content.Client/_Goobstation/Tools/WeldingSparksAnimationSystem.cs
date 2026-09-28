@@ -9,11 +9,11 @@ using System.Numerics;
 
 namespace Content.Client._Goobstation.Tools;
 
-public sealed class WeldingSparksAnimationSystem : EntitySystem
+public sealed partial class WeldingSparksAnimationSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!; // Exodus: generated dependency injection.
+    [Dependency] private IEyeManager _eyeManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private TransformSystem _transformSystem = default!; // Exodus: generated dependency injection.
 
     private const string ANIM_KEY = "WeldAnim";
 

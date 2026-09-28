@@ -11,9 +11,9 @@ namespace Content.Client._Exodus.Territory;
 /// Shared corporate border rendering for the mass scanner and BSS map.
 /// Geometry and glyph metrics are reused between frames and between territories.
 /// </summary>
-public sealed class CorporateTerritoryRingRenderer
+public sealed partial class CorporateTerritoryRingRenderer
 {
-    [Dependency] private readonly ILocalizationManager _localization = default!;
+    [Dependency] private ILocalizationManager _localization = default!;
 
     private readonly Dictionary<string, LabelLayout> _labels = new();
     private Vector2[] _bandVertices = [];

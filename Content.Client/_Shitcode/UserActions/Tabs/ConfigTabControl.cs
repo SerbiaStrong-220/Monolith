@@ -15,7 +15,7 @@ namespace Content.Client._Shitcode.UserActions.Tabs;
 [GenerateTypedNameReferences]
 public sealed partial class ConfigTabControl : BaseTabControl
 {
-    [Dependency] private readonly IClientConsoleHost _console = default!;
+    [Dependency] private IClientConsoleHost _console = default!; // Exodus: generated dependency injection.
 
     public ConfigTabControl()
     {

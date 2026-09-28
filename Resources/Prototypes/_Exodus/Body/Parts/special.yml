@@ -1,0 +1,241 @@
+- type: entity
+  id: PartSpecial
+  parent: [BaseItem, BasePart]
+  abstract: true
+  name: Special body part
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/parts.rsi
+  - type: Icon
+    sprite: _Exodus/Mobs/Special/parts.rsi
+  - type: BodyPart
+    species: Special
+    severIntegrity: 600
+    vitalDamage: 900
+    healingTime: 10
+    selfHealingAmount: 5
+    integrityThresholds:
+      CriticallyWounded: 450
+      HeavilyWounded: 375
+      ModeratelyWounded: 300
+      SomewhatWounded: 200
+      LightlyWounded: 100
+      Healthy: 50
+  - type: Damageable
+    damageModifierSet: Special
+  - type: StaticPrice
+    price: 90000
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Ichor
+        Quantity: 20
+
+- type: entity
+  id: TorsoSpecial
+  parent: [PartSpecial, BaseTorso]
+  name: Special torso
+  components:
+  - type: Sprite
+    state: torso
+  - type: Icon
+    state: torso
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: HeadSpecial
+  parent: [PartSpecial, BaseHead]
+  name: Special head
+  components:
+  - type: Sprite
+    state: head
+  - type: Icon
+    state: head
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: LeftArmSpecial
+  parent: [PartSpecial, BaseLeftArm]
+  name: Special left arm
+  components:
+  - type: Sprite
+    state: l_arm
+  - type: Icon
+    state: l_arm
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: RightArmSpecial
+  parent: [PartSpecial, BaseRightArm]
+  name: Special right arm
+  components:
+  - type: Sprite
+    state: r_arm
+  - type: Icon
+    state: r_arm
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: LeftHandSpecial
+  parent: [PartSpecial, BaseLeftHand]
+  name: Special left hand
+  components:
+  - type: Sprite
+    state: l_hand
+  - type: Icon
+    state: l_hand
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: RightHandSpecial
+  parent: [PartSpecial, BaseRightHand]
+  name: Special right hand
+  components:
+  - type: Sprite
+    state: r_hand
+  - type: Icon
+    state: r_hand
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: LeftLegSpecial
+  parent: [PartSpecial, BaseLeftLeg]
+  name: Special left leg
+  components:
+  - type: MovementBodyPart
+    walkSpeed: 2
+    sprintSpeed: 3
+  - type: Sprite
+    state: l_leg
+  - type: Icon
+    state: l_leg
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: RightLegSpecial
+  parent: [PartSpecial, BaseRightLeg]
+  name: Special right leg
+  components:
+  - type: MovementBodyPart
+    walkSpeed: 2
+    sprintSpeed: 3
+  - type: Sprite
+    state: r_leg
+  - type: Icon
+    state: r_leg
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: LeftFootSpecial
+  parent: [PartSpecial, BaseLeftFoot]
+  name: Special left foot
+  components:
+  - type: Sprite
+    state: l_foot
+  - type: Icon
+    state: l_foot
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: RightFootSpecial
+  parent: [PartSpecial, BaseRightFoot]
+  name: Special right foot
+  components:
+  - type: Sprite
+    state: r_foot
+  - type: Icon
+    state: r_foot
+  - type: BodyPart
+    severIntegrity: 600
+    vitalDamage: 900
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:GibPartBehavior {}
+
+- type: entity
+  id: TailSpecial
+  parent: PartSpecial
+  name: Special tail
+  components:
+  - type: Sprite
+    state: tail
+  - type: Icon
+    state: tail
+  - type: BodyPart
+    partType: Tail
+    vital: false

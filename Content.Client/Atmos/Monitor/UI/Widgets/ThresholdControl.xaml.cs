@@ -118,6 +118,7 @@ public sealed partial class ThresholdControl : BoxContainer
 
     public void UpdateThresholdData(AtmosAlarmThreshold threshold, float currentAmount)
     {
+        _threshold = threshold; // Exodus: edits must use the latest received threshold object.
         threshold.CheckThreshold(currentAmount, out var alarm, out var bound);
 
         var upperDangerState = AtmosAlarmType.Normal;

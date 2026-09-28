@@ -18,7 +18,7 @@ using Content.Server.Access.Components;
 
 namespace Content.Server._Exodus.AutoSalarySystem;
 
-public sealed class AutoSalarySystem : EntitySystem
+public sealed partial class AutoSalarySystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IPlayerManager _playerManager = default!;

@@ -27,7 +27,7 @@ namespace Content.Server._Rat.Overwatch;
 /// <summary>
 /// Система для управления Overwatch.
 /// </summary>
-public sealed partial class OverwatchSystem : EntitySystem // Exodus: jammer integration lives in a partial.
+public sealed partial class OverwatchSystem : EntitySystem // Exodus: generated dependency injection and jammer integration.
 {
     /// <summary>
     /// Интервал инвалидации кэша в секундах.

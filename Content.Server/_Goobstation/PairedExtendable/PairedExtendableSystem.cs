@@ -12,10 +12,10 @@ using Content.Shared.Popups;
 
 namespace Content.Server._Goobstation.PairedExtendable;
 
-public sealed class PairedExtendableSystem : EntitySystem
+public sealed partial class PairedExtendableSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedHandsSystem _hands = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedPopupSystem _popup = default!; // Exodus: generated dependency injection.
 
     /// <summary>
     /// Tries to extend or retract an extendable out from the user.

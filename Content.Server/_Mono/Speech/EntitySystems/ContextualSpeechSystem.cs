@@ -15,11 +15,13 @@ namespace Content.Server._Mono.Speech.EntitySystems;
 /// <summary>
 /// Handles contextual speech triggered by entity events.
 /// </summary>
-public sealed class ContextualSpeechSystem : EntitySystem
+public sealed partial class ContextualSpeechSystem : EntitySystem // Exodus: support generated dependency injection.
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    // Exodus-begin: dependencies are assigned by the source generator.
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    // Exodus-end
 
     private readonly Dictionary<ProtoId<LocalizedDatasetPrototype>, LocalizedDatasetPrototype> _cachedDatasets = new();
 

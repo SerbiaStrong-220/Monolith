@@ -24,7 +24,7 @@ public sealed partial class HookahSystem
     private static readonly LocId HookahVerbTurnOff = "hookah-electric-verb-turn-off";
     private static readonly LocId HookahVerbEjectCell = "hookah-electric-verb-eject-cell";
 
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
 
     private void InitializeElectric()
     {

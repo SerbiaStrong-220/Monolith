@@ -24,7 +24,7 @@ using Robust.Shared.Timing;
 namespace Content.Server._Exodus.Nebula.Admin;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaDebugVisualizeCommand : IConsoleCommand
+public sealed partial class NebulaDebugVisualizeCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -78,7 +78,7 @@ public sealed class NebulaDebugVisualizeCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaDebugClearCommand : IConsoleCommand
+public sealed partial class NebulaDebugClearCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -101,7 +101,7 @@ public sealed class NebulaDebugClearCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaStatusCommand : IConsoleCommand
+public sealed partial class NebulaStatusCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -129,7 +129,7 @@ public sealed class NebulaStatusCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaAreaCommand : IConsoleCommand
+public sealed partial class NebulaAreaCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -164,7 +164,7 @@ public sealed class NebulaAreaCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaPresenceCommand : IConsoleCommand
+public sealed partial class NebulaPresenceCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -218,7 +218,7 @@ public sealed class NebulaPresenceCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaThrustStatusCommand : IConsoleCommand
+public sealed partial class NebulaThrustStatusCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -345,7 +345,7 @@ public sealed class NebulaThrustStatusCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaNpcPresenceStatusCommand : IConsoleCommand
+public sealed partial class NebulaNpcPresenceStatusCommand : IConsoleCommand
 {
     private const float MaxNearbyRadius = 5000f;
     private const int MaxNearbyEntries = 100;
@@ -673,7 +673,7 @@ public sealed class NebulaNpcPresenceStatusCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NebulaHazardStatusCommand : IConsoleCommand
+public sealed partial class NebulaHazardStatusCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;

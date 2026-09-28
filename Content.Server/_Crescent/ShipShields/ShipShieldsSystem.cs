@@ -234,6 +234,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         InitializeCommands();
         InitializeEmitters();
         InitializeShieldHitAbsorption(); // Exodus | shield hit absorption events
+        InitializeEmpProtection(); // Exodus ship shield EMP protection
     }
 
     private void OnPreventCollide(EntityUid uid, ShipShieldComponent component, ref PreventCollideEvent args)
@@ -364,6 +365,10 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         if (source != null && TryComp<ShipShieldEmitterComponent>(source.Value, out var emitter))
         {
             shieldVisuals.ShieldColor = emitter.ShieldColor;
+            // Exodus-begin ship shield ripples
+            shieldVisuals.RippleWidth = emitter.RippleWidth;
+            shieldVisuals.RippleSpeed = emitter.RippleSpeed;
+            // Exodus-end
             // Exodus-begin layered ship shield visuals
             if (_layeredShieldQuery.TryGetComponent(source.Value, out var layered))
             {

@@ -16,19 +16,19 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Genetics;
 
-public sealed class GeneticPrinterSystem : EntitySystem
+public sealed partial class GeneticPrinterSystem : EntitySystem
 {
-    [Dependency] private readonly GeneticDiskSystem _disks = default!;
-    [Dependency] private readonly GeneticsSystem _genetics = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly ISharedAdminLogManager _admin = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private GeneticDiskSystem _disks = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private ISharedAdminLogManager _admin = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<GeneticDiskComponent> _diskQuery;
 

@@ -8,12 +8,12 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Client._Exodus.Mining.AutoMining;
 
-public sealed class BulkAutoMiningEmitterVisualSystem : EntitySystem
+public sealed partial class BulkAutoMiningEmitterVisualSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     private EntityQuery<TransformComponent> _transforms;
     private EntityQuery<MapGridComponent> _grids;

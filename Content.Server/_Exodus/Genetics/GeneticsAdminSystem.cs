@@ -13,12 +13,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server._Exodus.Genetics;
 
-public sealed class GeneticsAdminSystem : EntitySystem
+public sealed partial class GeneticsAdminSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminManager _admins = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly GeneticsSystem _genetics = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private IAdminManager _admins = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
     {

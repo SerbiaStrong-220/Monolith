@@ -2,9 +2,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._Exodus.Mining.AutoMining;
 
-public sealed class BulkAutoMiningBeamSystem : EntitySystem
+public sealed partial class BulkAutoMiningBeamSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
 
     private BulkAutoMiningBeamOverlay? _beamOverlay;
 

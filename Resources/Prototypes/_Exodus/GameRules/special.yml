@@ -1,0 +1,50 @@
+- type: entity
+  id: SpecialWreckSpawnScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:AllSelector
+      children:
+      - id: SpecialWreckSpawn
+    minimumTimeUntilFirstEvent: 5400 # 90 minutes; the scheduler adds up to 120 seconds of starting variance.
+    minMaxEventTiming:
+      min: 86400 # 24 hours; the event also consumes its only occurrence on a failed roll.
+      max: 86400
+
+- type: entity
+  id: SpecialWreckSpawn
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 90
+    maxOccurrences: 1
+  - type: RingEntitySpawnRule
+    prototype: SpawnSpecialWreckChance
+    minimumDistance: 4500
+    maximumDistance: 7500
+
+- type: entity
+  id: SpawnSpecialWreckChance
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: RandomSpawner
+    prototypes: [ SpawnSpecialWreck ]
+    chance: 0.5
+    offset: 0
+
+- type: entity
+  id: SpawnSpecialWreck
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: GridSpawner
+    path: /Maps/_Exodus/POI/special_wreck.yml
+    nameGrid: false
+    addComponents:
+    - type: IffAffiliation
+    - type: IFF
+      color: '#656b70'
+      flags: [HideLabel]
+      readOnly: true
+    - type: CleanupImmune
+  - type: TimedDespawn
+    lifetime: 0

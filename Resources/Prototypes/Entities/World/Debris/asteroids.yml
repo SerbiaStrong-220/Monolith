@@ -4,6 +4,7 @@
   name: asteroid debris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: MapGrid
     - type: BlobFloorPlanBuilder
       floorTileset:

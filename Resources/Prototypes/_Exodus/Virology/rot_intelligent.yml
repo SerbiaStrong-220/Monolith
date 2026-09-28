@@ -1,0 +1,690 @@
+- type: entity
+  id: BaseRotColonyMob
+  abstract: true
+  components:
+  - type: RotCreature
+  - type: RotColonyMember
+    size: 0, 0
+    needsSupport: false
+    visionRange: 7.5
+  - type: LanguageKnowledge
+    speaks:
+    - OargoVoi
+    understands:
+    - OargoVoi
+
+- type: entity
+  id: BaseRotOrgan
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: RotCreature
+  - type: RotHabitat
+  - type: RotColonyMember
+  - type: Transform
+    anchored: true
+  - type: LanguageKnowledge
+    speaks:
+    - OargoVoi
+    understands:
+    - OargoVoi
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_eyeball.rsi
+    layers:
+    - state: dormant
+    drawdepth: Objects
+  - type: RotOrganVisuals
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 100
+        hard: true
+        mask: [ FullTileMask ]
+        layer: [ MachineLayer ]
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ Destruction ]
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 330
+    coldDamageThreshold: 0
+    heatDamage:
+      types:
+        Heat: 2
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 3
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [ Touch ]
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+  - type: VirusReservoir
+    initialVirus: VirusRot
+    range: 2
+    footprint: 1, 1
+    infectionChance: 0.3
+
+- type: entity
+  id: MobRotIntelligent
+  save: true
+  parent: [ SimpleSpaceMobBase, BaseRotOrgan ]
+  name: intelligent rot
+  description: A rooted intelligence that grows a colony through living tissue.
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Bloodstream
+    initializeOnMapInit: true
+  - type: ContainerContainer
+    containers:
+      body_root_part: !type:ContainerSlot {}
+  - type: RotSpread
+  - type: RotRootVisuals
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: HTN
+    enabled: false
+  - type: RotIntelligent
+    buildings: [ RotBuildTissue, RotBuildWall, RotBuildDoor, RotBuildEyeball, RotBuildFlagellum, RotBuildKidney, RotBuildProducer, RotBuildNursery ]
+  - type: RotColonyMember
+    needsSupport: false
+    conductive: true
+    visionRange: 7.5
+  - type: RotOrganVisuals
+    enabled: false
+  - type: CreatureAnimationVisuals
+    idleState: alive
+    spawnState: growing
+    spawnDuration: 0.8
+    dyingState: dying
+    deathDuration: 0.8
+    deadState: dead
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_intelligent.rsi
+    offset: 0, 0.35
+    layers:
+    - state: alive
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: RotSated
+  - type: Destructible
+    thresholds: []
+  - type: MobState
+    allowedStates: [ Alive, Dead ]
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1000: Dead
+  - type: VirusImmunity
+  - type: NpcFactionMember
+    factions: [ SimpleHostile ]
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-rot-intelligent-name
+    description: ghost-role-rot-intelligent-description
+    rules: ghost-role-rot-intelligent-rules
+    mindRoles: [ MindRoleGhostRoleTeamAntagonist ]
+  - type: GhostTakeoverAvailable
+  - type: ActionGrant
+    actions:
+    - ActionRotIntelligentMenu
+    - ActionRotIntelligentReturn
+    - ActionRotIntelligentPilot
+    - ActionRotIntelligentUnanchor
+    - ActionRotIntelligentRepair
+    - ActionRotIntelligentDissolve
+    - ActionRotIntelligentAdopt
+    - ActionRotIntelligentRally
+  - type: ShuttleConsole
+    zoom: 1, 1
+  - type: DeviceLinkSource
+    ports:
+    - device-button-1
+    - device-button-2
+    - device-button-3
+    - device-button-4
+    - device-button-5
+    - device-button-6
+    - device-button-7
+    - device-button-8
+  - type: RadarConsole
+  - type: UserInterface
+    interfaces:
+      enum.RotIntelligentUiKey.Key:
+        type: RotIntelligentBoundUserInterface
+        requireInputValidation: false
+      enum.ShuttleConsoleUiKey.Key:
+        type: ShuttleConsoleBoundUserInterface
+  - type: Tag
+    tags: [ CanPilot ]
+
+- type: entity
+  id: RotIntelligentEye
+  parent: [ Incorporeal, BaseMob ]
+  name: colony eye
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: RotIntelligentEye
+  - type: Eye
+    pvsScale: 1.5
+  - type: Visibility
+    layer: 2
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_eye.rsi
+    layers:
+    - state: eye
+      shader: unshaded
+
+- type: entity
+  id: RotTissue
+  parent: BaseRotOrgan
+  name: colony tissue
+  description: Living strands connecting the organs of a rot colony.
+  components:
+  - type: RotColonyMember
+    conductive: true
+    tissue: true
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_tissue.rsi
+    drawdepth: FloorTiles
+    layers:
+    - state: "0"
+  - type: RotOrganVisuals
+    activeState: "0"
+    dormantState: "0"
+    tissue: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+        hard: false
+        mask: [ ItemMask ]
+        layer: [ LowImpassable ]
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ Destruction ]
+
+  - type: RotOrganDecay
+    effect: RotTissueDeathEffect
+
+- type: entity
+  id: RotWall
+  parent: BaseRotOrgan
+  name: organic wall
+  description: A dense barrier of interwoven cartilage. Airtight and vulnerable to fire.
+  components:
+  - type: RotColonyMember
+    conductive: true
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_wall.rsi
+    layers:
+    - state: closed
+    drawdepth: Walls
+  - type: RotOrganVisuals
+    activeState: closed
+    dormantState: closed
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 1000
+        hard: true
+        layer: [ WallLayer ]
+  - type: Airtight
+  - type: Occluder
+  - type: Tag
+    tags: [ Wall ]
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ Destruction ]
+
+  - type: RotOrganDecay
+    effect: RotWallDeathEffect
+
+- type: entity
+  id: RotOrganicDoor
+  parent: BaseRotOrgan
+  name: organic valve
+  description: A living passage that opens for creatures of rot.
+  components:
+  - type: RotColonyMember
+    conductive: true
+  - type: DoorUserWhitelist
+    whitelist:
+      components:
+      - RotCreature
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_wall.rsi
+    layers:
+    - state: closed
+      map: [ "enum.DoorVisualLayers.Base" ]
+  - type: RotOrganVisuals
+    enabled: false
+    activeState: closed
+    dormantState: closed
+  - type: AnimationPlayer
+  - type: Door
+    bumpOpen: true
+    clickOpen: true
+    canCrush: false
+    openTimeOne: 0.24
+    openTimeTwo: 0.24
+    closeTimeOne: 0.24
+    closeTimeTwo: 0.24
+    openingAnimationTime: 0.48
+    closingAnimationTime: 0.48
+    openSound:
+      path: /Audio/Effects/demon_consume.ogg
+    closeSound:
+      path: /Audio/Effects/demon_consume.ogg
+  - type: Airtight
+  - type: Occluder
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        hard: true
+        mask: [ FullTileMask ]
+        layer: [ AirlockLayer ]
+
+  - type: RotOrganDecay
+    effect: RotOrganicDoorDeathEffect
+
+- type: entity
+  id: RotEyeball
+  parent: BaseRotOrgan
+  name: eyeball
+  description: A watchful organ sharing its sight with the colony.
+  components:
+  - type: RotSpread
+  - type: RotColonyMember
+    visionRange: 24
+
+  - type: RotOrganDecay
+    effect: RotEyeballDeathEffect
+
+- type: entity
+  id: RotFlagellum
+  parent: BaseRotOrgan
+  name: flagellum
+  description: A long contractile tail that propels its grid in one direction.
+  components:
+  - type: RotSpread
+  - type: RotColonyMember
+    size: 1, 3
+    requiresExhaust: true
+  - type: VirusReservoir
+    footprint: 1, 3
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_flagellum.rsi
+    offset: 0, 1
+    layers:
+    - state: dormant
+    - state: dormant
+      visible: false
+      map: [ "enum.ThrusterVisualLayers.ThrustOn" ]
+    - state: alive
+      visible: false
+      map: [ "enum.ThrusterVisualLayers.Thrusting" ]
+  - type: RotOrganVisuals
+    activeState: dormant
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,2.45"
+        density: 100
+        hard: true
+        mask: [ FullTileMask ]
+        layer: [ MachineLayer ]
+  - type: Thruster
+    enabled: false
+    thrust: 200
+    baseThrust: 200
+    requireSpace: false
+    burnShape: []
+    damage: null
+
+  - type: RotOrganDecay
+    effect: RotFlagellumDeathEffect
+
+- type: entity
+  id: RotKidney
+  parent: BaseRotOrgan
+  name: kidney
+  description: A pulsating organ that turns the colony's grid.
+  components:
+  - type: RotSpread
+  - type: RotColonyMember
+    size: 2, 2
+  - type: VirusReservoir
+    footprint: 2, 2
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_kidney.rsi
+    offset: 0.5, 0.5
+    layers:
+    - state: dormant
+    - state: alive
+      visible: false
+      map: [ "enum.ThrusterVisualLayers.ThrustOn" ]
+  - type: RotOrganVisuals
+    activeState: dormant
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,1.45,1.45"
+        density: 100
+        hard: true
+        mask: [ FullTileMask ]
+        layer: [ MachineLayer ]
+  - type: Thruster
+    enabled: false
+    thrusterType: Angular
+    thrust: 800
+    baseThrust: 800
+    requireSpace: false
+    burnShape: []
+    damage: null
+
+  - type: RotOrganDecay
+    effect: RotKidneyDeathEffect
+
+- type: entity
+  id: RotProducer
+  parent: BaseRotOrgan
+  name: progenitor
+  description: A large digestive organ that continuously produces biomass.
+  components:
+  - type: RotSpread
+  - type: RotColonyMember
+    size: 3, 3
+    income: 1
+  - type: VirusReservoir
+    footprint: 3, 3
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_producer.rsi
+    offset: 1, 1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,2.45,2.45"
+        density: 100
+        hard: true
+        mask: [ FullTileMask ]
+        layer: [ MachineLayer ]
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ Destruction ]
+
+  - type: RotOrganDecay
+    effect: RotProducerDeathEffect
+
+- type: entity
+  id: RotNursery
+  parent: BaseRotOrgan
+  name: nursery
+  description: A maturing cocoon that releases one creature after two minutes of nourishment.
+  components:
+  - type: RotSpread
+  - type: RotColonyMember
+    size: 2, 2
+  - type: VirusReservoir
+    footprint: 2, 2
+  - type: RotNursery
+    offspring: !type:NestedSelector
+      tableId: RotNurseryOffspring
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nursery.rsi
+    offset: 0.5, 0.5
+  - type: RotOrganVisuals
+    activeState: stage0
+    growthPrefix: stage
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,1.45,1.45"
+        density: 100
+        hard: true
+        mask: [ FullTileMask ]
+        layer: [ MachineLayer ]
+
+  - type: RotOrganDecay
+    effect: RotNurseryDeathEffect
+
+- type: entityTable
+  id: RotNurseryOffspring
+  table: !type:GroupSelector
+    children:
+    - id: MobRotSpawn
+      amount: !type:ConstantNumberSelector
+        value: 3
+    - id: MobRotHungry
+    - id: MobRotSated
+    - id: MobRotNester
+
+- type: entity
+  id: RotNurseryHatchEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nursery_hatch.rsi
+    state: hatch
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotConstructionMarker
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_markers.rsi
+    state: build
+    drawdepth: HighFloorObjects
+  - type: Transform
+    anchored: true
+  - type: DoAfter
+
+- type: entity
+  id: RotRallyMarker
+  name: colony rally point
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_markers.rsi
+    state: rally
+    drawdepth: Effects
+  - type: RotCreature
+  - type: RotColonyMember
+    size: 0, 0
+    needsSupport: false
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  id: RotNutritionBlob
+  name: nutritious mass
+  description: A rich bolus regurgitated by a nester. Enough to feed two hungry larvae.
+  components:
+  - type: RotNutritionBlob
+  - type: RotCreature
+  - type: RotColonyMember
+    size: 0, 0
+    needsSupport: false
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nutrition.rsi
+    layers:
+    - state: full
+    drawdepth: SmallObjects
+  - type: Clickable
+  - type: Appearance
+  - type: RotOrganVisuals
+    nutrition: true
+    activeState: full
+    dormantState: full
+    growDuration: 0.48
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ Destruction ]
+
+  - type: RotOrganDecay
+    effect: RotNutritionBlobDeathEffect
+
+- type: entity
+  id: RotTissueDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_tissue.rsi
+    state: dying
+    offset: 0, 0
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotWallDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_wall.rsi
+    state: dying
+    offset: 0, 0
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotOrganicDoorDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_wall.rsi
+    state: dying
+    offset: 0, 0
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotEyeballDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_eyeball.rsi
+    state: dying
+    offset: 0, 0
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotFlagellumDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_flagellum.rsi
+    state: dying
+    offset: 0, 1
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotKidneyDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_kidney.rsi
+    state: dying
+    offset: 0.5, 0.5
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotProducerDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_producer.rsi
+    state: dying
+    offset: 1, 1
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotNurseryDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nursery.rsi
+    state: dying
+    offset: 0.5, 0.5
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79
+
+- type: entity
+  id: RotNutritionBlobDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nutrition.rsi
+    state: dying
+    offset: 0, 0
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79

@@ -47,10 +47,10 @@ public sealed partial class VirusLaserEyesComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
-    [ViewVariables]
+    [DataField]
     public int ShotsFired;
 
-    [ViewVariables]
+    [DataField]
     public int AppliedEyeDamage;
 }
 

@@ -18,18 +18,18 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Gimmicks.SlotMachine;
 
-public sealed class SlotMachineSystem : EntitySystem
+public sealed partial class SlotMachineSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     private static readonly TimeSpan SpinDuration = TimeSpan.FromSeconds(2.5);
     private static readonly TimeSpan CollectionFailSafeDelay = TimeSpan.FromSeconds(1);

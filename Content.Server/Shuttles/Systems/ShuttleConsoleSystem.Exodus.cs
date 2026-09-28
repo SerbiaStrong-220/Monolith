@@ -11,6 +11,9 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem
 {
+    // Exodus: integrated consoles reuse the native pilot lifecycle.
+    public bool TryStartPilot(EntityUid user, EntityUid console) => TryPilot(user, console);
+
     private static readonly TimeSpan ShieldUiUpdateInterval = TimeSpan.FromMilliseconds(250);
 
     [Dependency] private NebulaSystem _nebula = default!;

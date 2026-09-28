@@ -1,4 +1,5 @@
 using Content.Shared._Exodus.Territory;
+using Content.Shared._Exodus.War;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.War;
@@ -33,6 +34,9 @@ public sealed partial class FactionWarCooldown
     /// </summary>
     [DataField]
     public TimeSpan AvailableAtRoundTime;
+
+    [DataField]
+    public WarLockReason Reason = WarLockReason.PostWar;
 }
 
 public enum PeaceOfferResult : byte

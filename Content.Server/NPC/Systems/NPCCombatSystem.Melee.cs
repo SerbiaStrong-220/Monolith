@@ -47,9 +47,14 @@ public sealed partial class NPCCombatSystem
 
         while (query.MoveNext(out var uid, out var comp, out _))
         {
+            // Exodus-begin: deferred removal stops combat before the component leaves entity queries.
+            if (!comp.Running)
+                continue;
+            // Exodus-end
+
             if (!combatQuery.TryGetComponent(uid, out var combat) || !combat.IsInCombatMode)
             {
-                RemComp<NPCMeleeCombatComponent>(uid);
+                RemCompDeferred<NPCMeleeCombatComponent>(uid); // Exodus: keep the active query valid.
                 continue;
             }
 

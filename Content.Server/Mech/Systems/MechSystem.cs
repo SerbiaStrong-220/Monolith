@@ -67,7 +67,7 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<MechComponent, EmpAttemptEvent>(OnEmpAttempt);
+        SubscribeLocalEvent<MechComponent, EmpPulseEvent>(OnEmpPulse); // Exodus respect EMP cancellation before draining mech batteries
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
         SubscribeLocalEvent<MechComponent, RefreshMovementSpeedModifiersEvent>(OnMechRefreshMovementSpeed); // Mono
 
@@ -319,25 +319,17 @@ public sealed partial class MechSystem : SharedMechSystem
             TryEject(uid, component);
     }
 
-    private void OnEmpAttempt(EntityUid uid, MechComponent comp, EmpAttemptEvent args) // Monolith
+    // Exodus-begin apply EMP effects only after immunity checks
+    private void OnEmpPulse(Entity<MechComponent> ent, ref EmpPulseEvent args)
     {
-        // Mono: Removed EMP damage
-        //if (comp.Broken != true)
-        //    _damageable.TryChangeDamage(uid, comp.EMPdamage);
-        // End mono
+        if (!TryComp<BatteryComponent>(ent.Comp.BatterySlot.ContainedEntity, out var battery))
+            return;
 
-        if (TryComp<BatteryComponent>(comp.BatterySlot.ContainedEntity, out var battery))
-        {
-            var maxCharge = battery.MaxCharge;
-            var currentCharge = battery.CurrentCharge;
-            var chargeDelta = maxCharge / 2;
-
-            if (chargeDelta > currentCharge)
-                chargeDelta = currentCharge;
-
-            TryChangeEnergy(uid, -chargeDelta, comp);
-        }
+        var chargeDelta = Math.Min(battery.MaxCharge / 2f, battery.CurrentCharge);
+        if (chargeDelta > 0f)
+            args.Affected |= TryChangeEnergy(ent, -chargeDelta, ent.Comp);
     }
+    // Exodus-end
 
     private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
     {

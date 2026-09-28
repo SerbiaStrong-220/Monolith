@@ -37,6 +37,9 @@ namespace Content.Client.Viewport
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
 
+        // Exodus: allow world systems to consume wheel input while the pointer is over the viewport.
+        public event Action<GUIMouseWheelEventArgs>? WheelScrolled;
+
         // Fire edit start
         public ShaderInstance? Shader;
         // Fire edit end
@@ -126,6 +129,13 @@ namespace Content.Client.Viewport
         {
             IoCManager.InjectDependencies(this);
             RectClipContent = true;
+        }
+
+        // Exodus: forward world viewport wheel input to systems such as rot construction.
+        protected override void MouseWheel(GUIMouseWheelEventArgs args)
+        {
+            base.MouseWheel(args);
+            WheelScrolled?.Invoke(args);
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)

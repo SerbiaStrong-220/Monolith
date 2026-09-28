@@ -11,13 +11,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Territory;
 
-public sealed class TerritoryCoreSystem : EntitySystem
+public sealed partial class TerritoryCoreSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AnchorableSystem _anchorable = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AnchorableSystem _anchorable = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     private EntityQuery<GridTerritoryComponent> _territoryQuery;
     private EntityQuery<TerritoryCoreComponent> _coreQuery;

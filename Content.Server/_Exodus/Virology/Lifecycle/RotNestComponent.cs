@@ -1,3 +1,4 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
@@ -32,6 +33,6 @@ public sealed partial class RotNestComponent : Component
     [DataField]
     public bool Seeded;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextSpawn;
 }

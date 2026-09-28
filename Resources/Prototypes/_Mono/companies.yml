@@ -2,6 +2,7 @@
 # "None" - DO NOT REMOVE!
 - type: company
   id: None
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: Нет # Ru-Localization
   color: "#FFFFFF"
 
@@ -11,8 +12,12 @@
 
 - type: company
   id: TSF
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: tsf-name # Exodus: localized display name
   color: "#00a1fc" # Exodus territory update
+  lobbyImage: # Exodus side-selection banner
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: tsf-banner
   disabled: true
   companyUplinkCurrency: FederationMilitaryCredit
   npcFaction: TSFMC # Exodus - company NPC faction
@@ -27,8 +32,12 @@
 
 - type: company
   id: PDV
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: pdv-name # Ru-Localization
   color: "#D2B48C"
+  lobbyImage: # Exodus side-selection banner
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: pdv-banner
   disabled: true
   companyUplinkCurrency: Doubloon
   npcFaction: PirateNF # Exodus - company NPC faction (PDV)
@@ -43,12 +52,14 @@
 
 - type: company
   id: MD
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: med-name  # Ru-Localization
   color: "#3B8EEA"
   disabled: true
 
 - type: company
   id: Colonial
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: colonial-name # Ru-Localization
   color: "#279659"
   disabled: true
@@ -56,14 +67,19 @@
 # Exodus-begin asakim-company
 - type: company
   id: AsakimDefenceForces
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: npc-faction-name-asakim-defence-forces
   color: "#ff3db1"
+  lobbyImage: # Exodus side-selection banner
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: khsira-banner
   disabled: true
   npcFaction: AsakimDefenceForces
 # Exodus-end asakim-company
 
 - type: company
   id: TSFHighComm
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: winter-solstice-name # Ru-Localization
   description: winter-solstice-description
   color: "#008CE3"
@@ -72,6 +88,7 @@
 
 - type: company
   id: PDVHighComm
+  diplomacyVisible: false # Exodus: service/faction identity, not a corporation.
   name: Dynasty High Command
   description: pdv-highcomm-description
   color: "#D2B48C"
@@ -85,143 +102,163 @@
 
 - type: company
   id: DrakeIndustries
+  successor: DrakeBlackArmsUSA # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: drake-industries-name # Ru-Localization
   description: drake-industries-description
   color: "#C97D7D"
   image: /Textures/_Mono/Companies/drake_industries.png
-  atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseDrake # Exodus company-fleet
+  atmDepositCommission: 0.10 # Exodus corporate ATM commission
 
 - type: company
   id: SteelHammerManufacturing
+  successor: HorizonHarmonyHammerMatter # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: steel-hammer-name # Ru-Localization
   description: steel-hammer-description
   color: "#92a2a1"
   image: /Textures/_Mono/Companies/steel_hammer.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseSteelHammer # Exodus company-fleet
 
 - type: company
   id: HarmonyMedicalEnterprises
+  successor: HorizonHarmonyHammerMatter # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: harmony-medical-enterprises-name # Ru-Localization
   description: harmony-medical-enterprises-description
   color: "#FC7303"
   image: /Textures/_Mono/Companies/HME.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseHme # Exodus company-fleet
 
 - type: company
   id: MidnightArmsCo
+  successor: DrakeBlackArmsUSA # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: midnight-arms-co-name # Ru-Localization
   description: midnight-arms-co-description
   color: "#FF2E2E"
   image: /Textures/_Mono/Companies/MACo.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseMaco # Exodus company-fleet
 
 - type: company
   id: USSP
+  diplomacyVisible: true # Exodus: retain the existing diplomacy directory entry.
   name: ussp-name # Ru-Localization
   color: "#ff0033" # Exodus USSP Company color
   disabled: false # Mercs are now USSP-pilled.
   description: ussp-description
   image: /Textures/_Mono/Companies/USSP.png
+  lobbyImage: # Exodus side-selection banner
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: ussp-banner
   npcFaction: USSP # Exodus - company NPC faction
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
 
 - type: company
   id: MMC
+  diplomacyVisible: true # Exodus: job-assigned companies also appear in faction consoles.
   name: mmc-company-name # Exodus MMC localization
   description: mmc-company-description # Exodus MMC localization
   color: "#FF8800" # Exodus: match the MMC communications console announcement color.
+  lobbyImage: # Exodus side-selection banner
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: mmc-banner
   disabled: true
 
 # Major companies
 
 - type: company
   id: DarkMatterEnterprises
+  successor: HorizonHarmonyHammerMatter # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: dark-matter-enterprises-name # Ru-Localization
   description: dark-matter-enterprises-description
   color: "#BF00B9"
   image: /Textures/_Mono/Companies/dme.png #DME Logo
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseDme # Exodus company-fleet
 
 - type: company
   id: AetherionDynamics
+  successor: Augok # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: aetherion-dynamics-name # Ru-Localization
   description: aetherion-dynamics-description
   color: "#7E72B2"
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseAetherion # Exodus company-fleet
 
 - type: company
   id: HorizonEnergy
+  successor: HorizonHarmonyHammerMatter # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: horizon-energy-name # Ru-Localization
   description: horizon-energy-description
   color: "#69E37F"
   image: /Textures/_Mono/Companies/horizon_energy.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseHorizon # Exodus company-fleet
 
 
 # Minor companies
 
 - type: company
   id: UniversalStatesOfAmerica
+  successor: DrakeBlackArmsUSA # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: universal-states-of-america-name # Ru-Localization
   description: universal-states-of-america-description
   color: "#0A3161"
   image: /Textures/_Mono/Companies/UNSA.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseUnsa # Exodus company-fleet
 
 - type: company
   id: CivilDefenseMilita
+  successor: Augok # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: civil-defense-milita-name # Ru-Localization
   description: civil-defense-milita-description
   color: "#5e6ab3" # Exodus-Company-Recolor
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseCdm # Exodus company-fleet
 
 - type: company
   id: UllmanIndustries
+  successor: Augok # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: ullman-industries-name # Ru-Localization
   description: ullman-industries-description
   color: "#52326A"
   image: /Textures/_Mono/Companies/ullman_industries.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseUllman # Exodus company-fleet
 
 - type: company
   id: NosskeEienResearchandDevelopment
+  successor: Buno # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: nosske-eien-rnd-name # Ru-Localization
   description: nosske-eien-rnd-description
   color: "#9573AF"
   image: /Textures/_Mono/Companies/ne_rd.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseNosske # Exodus company-fleet
 
 - type: company
   id: blackhawkpmc
+  successor: DrakeBlackArmsUSA # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: blackhawkpmc-name # Ru-Localization
   description: blackhawkpmc-description
   color: "#419E23"
   image: /Textures/_Mono/Companies/BMC.png
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseBlackhawk # Exodus company-fleet
 
 
 # Religious groups
@@ -241,27 +278,30 @@
 
 - type: company
   id: TheHive
+  successor: Buno # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: The-Hive-name # Ru-Localization
   description: The-Hive-description
   color: "#5918a8"
   statusIcon: ExodusHiveMember # Exodus company recognition for chimeras
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseHive # Exodus company-fleet
 
 # Black Market Companies
 
 - type: company
   id: paycheckbratva
+  successor: Buno # Exodus concern migration
+  disabled: true # Exodus: replaced by a playable concern; retained for saved entities.
+  diplomacyVisible: false # Exodus: legacy brand, not a separate diplomatic party.
   name: paycheck-bratva-name # Ru-Localization
   description: paycheck-bratva-description
   color: "#7a0303"
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
-  startingItems: # Exodus company-fleet
-  - CompanyTechDiskCaseBratva # Exodus company-fleet
 
 - type: company
   id: CerberusSurplusProvisions
+  diplomacyVisible: false # Exodus: excluded from the faction console directory.
   name: cerberus-surplus-name # Ru-Localization
   description: cerberus-surplus-provisions
   color: "#aa1010"
@@ -272,15 +312,20 @@
 # Exodus: Viper Group is assigned through dedicated jobs only.
 - type: company
   id: TheViperGroup
+  diplomacyVisible: true # Exodus: job-assigned companies also appear in faction consoles.
   name: viper-group-name # Ru-Localization
   description: viper-group-description
   color: "#B82121"
   image: /Textures/_Mono/Companies/thevipergroup.png
+  lobbyImage: # Exodus side-selection banner
+    sprite: _Exodus/Interface/SideSelection/banners.rsi
+    state: viper-banner
   disabled: true # Exodus hide Viper Group from manual company selection.
   atmDepositCommission: 0.15 # Exodus corporate ATM commission
 
 - type: company
   id: RedSailCorsairs
+  diplomacyVisible: false # Exodus: excluded from the faction console directory.
   name: redsail-corsairs-name # Ru-Localization
   description: redsail-corsairs-description
   color: "#930000"
@@ -290,6 +335,7 @@
 
 - type: company
   id: PLXCOR
+  diplomacyVisible: false # Exodus: excluded from the faction console directory.
   name: PLXCOR
   description: plxcor-description
   color: "#B500B5"

@@ -8,9 +8,9 @@ namespace Content.Server._Exodus.Genetics;
 
 public sealed partial class GeneticsSystem
 {
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly ThirstSystem _thirst = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private ThirstSystem _thirst = default!;
 
     private void UpdatePhysiology(EntityUid uid, float seconds)
     {

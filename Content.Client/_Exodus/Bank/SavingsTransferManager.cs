@@ -9,7 +9,7 @@ namespace Content.Client._Exodus.Bank;
 /// Client-side counterpart of the savings transfer system. Sends transfer requests to the server
 /// and raises <see cref="BankBalanceUpdated"/> when the server reports the new main bank balance.
 /// </summary>
-public sealed class SavingsTransferManager
+public sealed partial class SavingsTransferManager
 {
     [Dependency] private INetManager _net = default!;
 

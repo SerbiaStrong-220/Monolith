@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared._Mono.Company;
+using Content.Shared._Exodus.Company; // Exodus concern migration
 using Content.Shared.Preferences;
 using Robust.Client;
 using Robust.Client.Player;
@@ -19,6 +20,7 @@ namespace Content.Client.Lobby
         [Dependency] private IClientNetManager _netManager = default!;
         [Dependency] private IBaseClient _baseClient = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IPrototypeManager _prototypes = default!; // Exodus concern migration
 
         public event Action? OnServerDataLoaded;
 
@@ -66,6 +68,11 @@ namespace Content.Client.Lobby
             // Verify company exists if this is a humanoid profile
             if (profile is HumanoidCharacterProfile humanoidProfile)
             {
+                // Exodus-begin concern migration
+                var normalizedCompany = CompanyConsolidation.Normalize(humanoidProfile.Company, _prototypes);
+                if (normalizedCompany != humanoidProfile.Company)
+                    profile = humanoidProfile = humanoidProfile.WithCompany(normalizedCompany);
+                // Exodus-end
                 var protoManager = IoCManager.Resolve<IPrototypeManager>();
                 if (!string.IsNullOrEmpty(humanoidProfile.Company) &&
                     humanoidProfile.Company != "None" &&
@@ -146,7 +153,18 @@ namespace Content.Client.Lobby
                 {
                     var updatedProfile = profile;
 
-                    if (profile is HumanoidCharacterProfile humanoidProfile &&
+                    // Exodus-begin concern migration
+                    if (profile is HumanoidCharacterProfile legacyProfile)
+                    {
+                        var normalizedCompany = CompanyConsolidation.Normalize(legacyProfile.Company, _prototypes);
+                        if (normalizedCompany != legacyProfile.Company)
+                        {
+                            updatedProfile = legacyProfile.WithCompany(normalizedCompany);
+                            needsUpdate = true;
+                        }
+                    }
+                    // Exodus-end
+                    if (updatedProfile is HumanoidCharacterProfile humanoidProfile &&
                         !string.IsNullOrEmpty(humanoidProfile.Company) &&
                         humanoidProfile.Company != "None" &&
                         !protoManager.HasIndex<CompanyPrototype>(humanoidProfile.Company))

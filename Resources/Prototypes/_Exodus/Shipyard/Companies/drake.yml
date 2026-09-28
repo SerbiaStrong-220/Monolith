@@ -3,11 +3,11 @@
   parent: BaseVessel
   name: company-vessel-drake-mackinaw-name
   description: company-vessel-drake-mackinaw-description
-  price: 4603400 # Two complete lasers at 1,920,000 each plus the appraised hull and equipment, rounded up to 100.
+  price: 4640000 # Appraised hull and equipment value rounded up to 10,000.
   category: Large
   group: Shipyard
   requiredCompanies:
-  - DrakeIndustries
+  - DrakeBlackArmsUSA
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/mackinaw.yml
   addComponents:
   - type: NpcFactionMember
@@ -49,7 +49,7 @@
   category: Large
   group: Shipyard
   requiredCompanies:
-  - DrakeIndustries
+  - DrakeBlackArmsUSA
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/hulk.yml
   addComponents:
   - type: NpcFactionMember

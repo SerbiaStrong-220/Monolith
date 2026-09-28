@@ -4,7 +4,7 @@ using Content.Shared.Power.Components;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-public sealed class LifeInsuranceBackupBatterySystem : EntitySystem
+public sealed partial class LifeInsuranceBackupBatterySystem : EntitySystem
 {
     [Dependency] private PowerReceiverSystem _power = default!;
 

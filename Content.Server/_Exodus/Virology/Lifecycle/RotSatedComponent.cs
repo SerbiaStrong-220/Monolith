@@ -1,11 +1,8 @@
-using System.Threading;
-using System.Threading.Tasks;
-using Content.Server.NPC.Pathfinding;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Virology.Lifecycle;
@@ -14,19 +11,7 @@ namespace Content.Server._Exodus.Virology.Lifecycle;
 public sealed partial class RotSatedComponent : Component
 {
     [DataField]
-    public float SearchRange = 32f;
-
-    [DataField]
     public float ThreatRange = 8f;
-
-    [DataField]
-    public float EscapeRange = 18f;
-
-    [DataField]
-    public TimeSpan ThinkInterval = TimeSpan.FromSeconds(1);
-
-    [DataField]
-    public TimeSpan RestDuration = TimeSpan.FromSeconds(10);
 
     [DataField]
     public TimeSpan StripInterval = TimeSpan.FromSeconds(2);
@@ -74,12 +59,6 @@ public sealed partial class RotSatedComponent : Component
     public string BirthState = "brood";
 
     [DataField]
-    public HashSet<EntityUid> Enemies = [];
-
-    [DataField]
-    public EntityUid? Target;
-
-    [DataField]
     public EntityUid? Corpse;
 
     [DataField]
@@ -97,36 +76,44 @@ public sealed partial class RotSatedComponent : Component
     [DataField]
     public bool BirthRequested;
 
-    [DataField]
-    public EntityCoordinates? EscapePoint;
-
-    [DataField]
-    public bool Escaping;
-
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextThink;
 
-    [DataField, AutoPausedField]
-    public TimeSpan NextStrip;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextActivityUpdate;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextSpill;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan ActivityUntil;
 
-    [DataField, AutoPausedField]
-    public TimeSpan RestUntil;
-
-    [DataField, AutoPausedField]
-    public TimeSpan MoveUntil;
-
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan CorpseRetryAt;
 
-    public CancellationTokenSource? PathCancellation;
+    [DataField]
+    public EntProtoId ConsumeAction = "ActionRotSatedConsume";
 
-    public Task<PathResultEvent>? EscapePath;
+    [DataField]
+    public EntProtoId StopAction = "ActionRotSatedStop";
+
+    [DataField]
+    public EntProtoId StrikeAction = "ActionRotSatedStrike";
+
+    [DataField]
+    public EntityUid? ConsumeActionEntity;
+
+    [DataField]
+    public EntityUid? StopActionEntity;
+
+    [DataField]
+    public EntityUid? StrikeActionEntity;
+
+    [DataField]
+    public DoAfterId? StripDoAfter;
+
+    [DataField]
+    public bool PreparingConsumption;
 }
 
 public enum RotSatedActivity : byte

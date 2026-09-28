@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-public sealed class LifeInsuranceGhostAbilitySystem : EntitySystem
+public sealed partial class LifeInsuranceGhostAbilitySystem : EntitySystem
 {
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedActionsSystem _actions = default!;

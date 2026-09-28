@@ -1,0 +1,111 @@
+# Shared by hungry and nester so their attacks stay identical when balanced.
+- type: entity
+  id: BaseRotClawAttacks
+  abstract: true
+  components:
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcSmash
+    attackRate: 0.8
+    damage:
+      types:
+        Poison: 25
+        Slash: 15
+        Radiation: 5
+        Cellular: 5
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+
+- type: entity
+  id: MobRotNester
+  parent: [ SimpleSpaceMobBase, MobCombat, BaseRotClawAttacks, BaseRotColonyMob ]
+  name: nester
+  description: A one-eyed ghoul on four limbs, carrying nutrition for its colony's larvae.
+  components:
+  - type: RotNester
+  - type: RotRetaliation
+  - type: RotDefender
+    repathBeforeStrike: true
+    avoidThreatsOnRoutes: true
+    stuckDelay: 3
+    detourDelay: 3
+    restDuration: 14
+    colonyRestDuration: 12
+    stuckDamage:
+      types:
+        Structural: 120
+    stuckSound:
+      collection: MetalSlam
+  - type: VirusImmunity
+  - type: Damageable
+    damageModifierSet: RotSated
+  - type: VirusOffspring
+    initialVirus: VirusRot
+    lifetime: null
+    remains: RotGrowth
+    remainsOnDeath: true
+    retargetAfterInfection: false
+    decayEffect: RotNesterDeathEffect
+    infectionChance: 0.65
+  - type: HTN
+    sleepWithoutPlayers: false
+    rootTask:
+      task: RotNesterCompound
+    blackboard:
+      NavSmash: !type:Bool true
+      NavInteract: !type:Bool true
+  - type: NpcFactionMember
+    factions: [ SimpleHostile ]
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nester.rsi
+    layers:
+    - state: alive
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Appearance
+  - type: CreatureAnimationVisuals
+    idleState: alive
+    movingState: running
+    attackState: attack
+    attackDuration: 0.8
+    heavyAttackState: smash
+    heavyAttackDuration: 0.8
+    spawnState: emerge
+    spawnDuration: 0.8
+    dyingState: dying
+    deathDuration: 0.8
+    deadState: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 5.5
+  - type: SlowOnDamage
+    speedModifierThresholds: {}
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: MobState
+    allowedStates: [ Alive, Dead ]
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      400: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 300
+    bloodRefreshAmount: 3
+
+- type: htnCompound
+  id: RotNesterCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:RotNesterOperator
+
+- type: entity
+  id: RotNesterDeathEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Virology/rot_nester.rsi
+    state: dying
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.79

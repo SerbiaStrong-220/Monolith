@@ -9,7 +9,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server._Exodus.Silicons.StationAi;
 
-public sealed class AiRenameSystem : EntitySystem
+public sealed partial class AiRenameSystem : EntitySystem
 {
     [Dependency] private EuiManager _eui = default!;
     [Dependency] private MetaDataSystem _metaData = default!;

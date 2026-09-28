@@ -1,26 +1,24 @@
 using System.Numerics;
 using Content.Server.NPC.Components;
-using Content.Shared._Exodus.Virology.Lifecycle;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server._Exodus.Virology.Lifecycle;
 
 public sealed partial class RotHungrySystem
 {
+    [Dependency] private RotColonySiteSystem _sites = default!;
+    private readonly List<Entity<RotColonySiteComponent, TransformComponent>> _nestSites = [];
+
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private TurfSystem _turf = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private RotGroundStrikeSystem _groundStrike = default!;
 
     private void OnDoorOpening(Entity<DoorComponent> ent, ref BeforeDoorOpenedEvent args)
     {
@@ -62,34 +60,13 @@ public sealed partial class RotHungrySystem
             return false;
         }
 
-        if (now - ent.Comp.LastMoved < ent.Comp.StuckDelay || !TryComp<MeleeWeaponComponent>(ent, out var weapon)
-            || !_physicsQuery.TryComp(ent, out var body) || transform.GridUid is not { } grid
-            || !TryComp<MapGridComponent>(grid, out var mapGrid))
+        if (now - ent.Comp.LastMoved < ent.Comp.StuckDelay || !HasComp<MeleeWeaponComponent>(ent))
             return false;
 
         if (ent.Comp.ClearingObstacle && now < ent.Comp.NextStuckAttack)
             return true;
 
-        // Query tile bounds in grid space: offset railing fixtures and rotated ships must be included.
-        var tile = _map.TileIndicesFor(grid, mapGrid, coordinates);
-        var radius = ent.Comp.StuckTileRadius;
-        var minimum = new Vector2(tile.X - radius, tile.Y - radius) * mapGrid.TileSize;
-        var size = new Vector2((2 * radius + 1) * mapGrid.TileSize);
-        _obstacles.Clear();
-        _lookup.GetLocalEntitiesIntersecting(grid, Box2.FromDimensions(minimum, size), _obstacles, LookupFlags.Uncontained);
-        var blocked = false;
-        foreach (var (obstacle, _) in _obstacles)
-        {
-            if (obstacle == ent.Owner || _rotQuery.HasComp(obstacle) || !_physicsQuery.TryComp(obstacle, out var physics)
-                || !physics.Hard || !physics.CanCollide || !IsInGroundStrikeArea(obstacle, (grid, mapGrid), tile, radius)
-                || (physics.CollisionLayer & body.CollisionMask) == 0 && (physics.CollisionMask & body.CollisionLayer) == 0)
-                continue;
-
-            blocked = true;
-            break;
-        }
-
-        if (!blocked)
+        if (!_groundStrike.HasObstacle(ent, ent.Comp.StuckTileRadius))
             return false;
 
         // Both combat and native path clearing can consume the melee cooldown with missed swings.
@@ -100,36 +77,14 @@ public sealed partial class RotHungrySystem
         if (now < ent.Comp.NextStuckAttack)
             return true;
 
-        if (!_melee.AttemptHeavyAttack(ent, ent, weapon, [], new EntityCoordinates(ent, 0f, -0.3f)))
+        if (!_groundStrike.TryStrike(ent, ent.Comp.StuckTileRadius, ent.Comp.StuckDamage, ent.Comp.StuckSound))
         {
             ent.Comp.NextStuckAttack = now + ent.Comp.ThinkInterval;
             return true;
         }
-
         ent.Comp.ObstructionSince ??= now;
         ent.Comp.NextStuckAttack = now + ent.Comp.StuckAttackInterval;
-        _audio.PlayPvs(ent.Comp.StuckSound, ent);
-        foreach (var (obstacle, _) in _obstacles)
-        {
-            if (obstacle == ent.Owner || _rotQuery.HasComp(obstacle)
-                || !IsInGroundStrikeArea(obstacle, (grid, mapGrid), tile, radius))
-                continue;
-
-            _damage.TryChangeDamage(obstacle, ent.Comp.StuckDamage, origin: ent.Owner);
-        }
-
         return true;
-    }
-
-    private bool IsInGroundStrikeArea(EntityUid obstacle, Entity<MapGridComponent> grid, Vector2i center, int radius)
-    {
-        if (TerminatingOrDeleted(obstacle) || !_transformQuery.TryComp(obstacle, out var transform)
-            || transform.GridUid != grid.Owner)
-            return false;
-
-        // Physics shapes can overlap a tile boundary; damage is limited to the selected tiles.
-        var tile = _map.TileIndicesFor(grid.Owner, grid.Comp, transform.Coordinates);
-        return Math.Abs(tile.X - center.X) <= radius && Math.Abs(tile.Y - center.Y) <= radius;
     }
 
     private EntityUid? FindNest(Entity<RotHungryComponent> ent, bool nurseryOnly)
@@ -151,8 +106,8 @@ public sealed partial class RotHungrySystem
 
         var origin = _transform.GetMapCoordinates(ent);
         var nearest = float.MaxValue;
-        var query = EntityQueryEnumerator<RotColonySiteComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var siteTransform))
+        _sites.GetSites(ent, _nestSites);
+        foreach (var (uid, _, siteTransform) in _nestSites)
         {
             if (TerminatingOrDeleted(uid) || _containers.IsEntityInContainer(uid)
                 || siteTransform.GridUid == null || grid != null && siteTransform.GridUid != grid
@@ -180,66 +135,6 @@ public sealed partial class RotHungrySystem
             Move(ent, home, 2f);
         else
             Stop(ent);
-    }
-
-    private void Retreat(Entity<RotHungryComponent> ent)
-    {
-        RemComp<NPCMeleeCombatComponent>(ent);
-        DropCorpse(ent);
-        if (ent.Comp.Target is not { } target)
-        {
-            ReturnHome(ent);
-            return;
-        }
-
-        if (_timing.CurTime >= ent.Comp.NextShelterSearch || ent.Comp.Shelter is not { } oldShelter || !oldShelter.IsValid(EntityManager))
-        {
-            ent.Comp.NextShelterSearch = _timing.CurTime + TimeSpan.FromSeconds(5);
-            ent.Comp.Shelter = FindShelter(ent, target);
-        }
-
-        if (ent.Comp.Shelter is { } shelter)
-            Move(ent, shelter, 0.6f);
-        else
-            ReturnHome(ent);
-    }
-
-    private EntityCoordinates? FindShelter(Entity<RotHungryComponent> ent, EntityUid threat)
-    {
-        var transform = Transform(ent);
-        if (transform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var mapGrid))
-            return null;
-
-        var origin = _transform.GetMapCoordinates(ent);
-        var enemy = _transform.GetMapCoordinates(threat);
-        var away = origin.Position - enemy.Position;
-        if (away.LengthSquared() < 0.01f)
-            away = Vector2.UnitX;
-        away = Vector2.Normalize(away);
-        var bestScore = float.MinValue;
-        EntityCoordinates? result = null;
-        // A small fixed set of retreat points; native pathfinding handles the route around cover.
-        for (var i = 0; i < 12; i++)
-        {
-            var angle = i * MathF.Tau / 12f;
-            var offset = new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * 6f;
-            var point = new MapCoordinates(origin.Position + offset, origin.MapId);
-            var local = _transform.ToCoordinates(grid, point);
-            var indices = _map.TileIndicesFor(grid, mapGrid, local);
-            var tile = _map.GetTileRef(grid, mapGrid, indices);
-            if (_turf.IsSpace(tile) || _turf.IsTileBlocked(tile, CollisionGroup.Impassable))
-                continue;
-
-            var score = Vector2.Dot(offset, away);
-            if (!_interaction.InRangeUnobstructed(threat, local, 0))
-                score += 12f;
-            if (score <= bestScore)
-                continue;
-            bestScore = score;
-            result = local;
-        }
-
-        return result;
     }
 
     private bool DeliverCorpse(Entity<RotHungryComponent> ent)

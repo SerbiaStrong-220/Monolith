@@ -1,0 +1,8 @@
+is_global = true
+
+# Classes with dependencies and their containing types must support the generator.
+dotnet_diagnostic.RA0049.severity = error
+dotnet_diagnostic.RA0050.severity = error
+
+# The generator assigns dependencies after construction.
+dotnet_diagnostic.RA0051.severity = error

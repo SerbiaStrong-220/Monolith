@@ -8,7 +8,7 @@
   [locid="guidebook-corporation-tech-disk-acquisition"]
 
   <Box>
-    <GuideEntityEmbed Entity="TechDiskCdmShield"/>
+    <GuideEntityEmbed Entity="TechDiskAugok"/>
   </Box>
 
   [locid="tech-disk-cdm-shield-description"]

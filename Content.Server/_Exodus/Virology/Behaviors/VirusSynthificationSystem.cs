@@ -34,15 +34,18 @@ public sealed partial class VirusSynthificationSystem : EntitySystem
 
     private void OnStartup(Entity<VirusSynthificationComponent> ent, ref ComponentStartup args)
     {
-        var lawsets = _prototype.EnumeratePrototypes<SiliconLawsetPrototype>()
-            .Where(lawset => !ent.Comp.ExcludedLawsets.Contains(lawset.ID))
-            .OrderBy(lawset => lawset.ID, StringComparer.Ordinal)
-            .ToList();
-        if (lawsets.Count > 0)
+        if (!ent.Comp.StateApplied)
         {
-            // deterministic per carrier, so a re-grant (stage change) reproduce same lawset
-            var rng = new Random(ent.Owner.GetHashCode());
-            ent.Comp.RolledLawset = lawsets[rng.Next(lawsets.Count)].ID;
+            var lawsets = _prototype.EnumeratePrototypes<SiliconLawsetPrototype>()
+                .Where(lawset => !ent.Comp.ExcludedLawsets.Contains(lawset.ID))
+                .OrderBy(lawset => lawset.ID, StringComparer.Ordinal)
+                .ToList();
+            if (lawsets.Count > 0)
+            {
+                // deterministic per carrier, so a re-grant (stage change) reproduce same lawset
+                var rng = new Random(ent.Owner.GetHashCode());
+                ent.Comp.RolledLawset = lawsets[rng.Next(lawsets.Count)].ID;
+            }
         }
 
         _actions.AddAction(ent.Owner, ref ent.Comp.LawsActionEntity, ent.Comp.LawsAction);
@@ -54,9 +57,11 @@ public sealed partial class VirusSynthificationSystem : EntitySystem
 
         if (TryComp<LanguageSpeakerComponent>(ent, out var language))
         {
-            ent.Comp.OriginalSelected = language.CurrentLanguage;
+            if (!ent.Comp.StateApplied)
+                ent.Comp.OriginalSelected = language.CurrentLanguage;
             _language.UpdateEntityLanguages((ent.Owner, language));
         }
+        ent.Comp.StateApplied = true;
     }
 
     private void OnShutdown(Entity<VirusSynthificationComponent> ent, ref ComponentShutdown args)

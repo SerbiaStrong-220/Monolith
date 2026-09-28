@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server._Exodus.Body; // Exodus - alternative respiratory organs.
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared._Shitmed.Body.Components; // Shitmed Change
@@ -97,7 +98,11 @@ public sealed partial class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
 
-            if (!_mobState.IsIncapacitated(uid) && !HasComp<DebrainedComponent>(uid)) // Shitmed Change - Cannot breathe in crit or when no brain.
+            // Exodus-begin - alternative lungs still use the normal saturation and suffocation pipeline.
+            var respiration = new RespirationAttemptEvent();
+            RaiseLocalEvent(uid, ref respiration);
+            // Exodus-end
+            if (!respiration.Handled && !_mobState.IsIncapacitated(uid) && !HasComp<DebrainedComponent>(uid)) // Exodus; Shitmed Change - Cannot breathe in crit or when no brain.
             {
                 switch (respirator.Status)
                 {
@@ -235,6 +240,13 @@ public sealed partial class RespiratorSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
+
+        // Exodus-begin - use the same breathing rules for internals and atmosphere checks.
+        var alternative = new CanBreatheGasEvent(gas);
+        RaiseLocalEvent(ent, ref alternative);
+        if (alternative.Result is { } result)
+            return result;
+        // Exodus-end
 
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         if (organs.Count == 0)

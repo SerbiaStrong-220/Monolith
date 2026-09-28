@@ -27,6 +27,10 @@ public sealed partial class BloodVomitSystem : EntitySystem
 
     private void OnStartup(Entity<BloodVomitComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.StateApplied)
+            return;
+        ent.Comp.StateApplied = true;
+
         ent.Comp.NextVomit = _timing.CurTime + ent.Comp.Interval;
     }
 

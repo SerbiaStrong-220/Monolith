@@ -11,9 +11,9 @@ using RadarBlipData = Content.Client._Mono.Radar.BlipData;
 
 namespace Content.Client._Exodus.Mining.AutoMining;
 
-public sealed class BulkAutoMiningNavControl : ShuttleNavControl
+public sealed partial class BulkAutoMiningNavControl : ShuttleNavControl
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
 
     private readonly EntityQuery<MapGridComponent> _gridQuery;
     private readonly EntityQuery<TransformComponent> _xformQuery;

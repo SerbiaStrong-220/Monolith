@@ -27,15 +27,15 @@ public sealed partial class GeneticsSystem : EntitySystem
     /// <summary>Notifies administrative viewers after a genome and its effects have been reconciled.</summary>
     public event Action<EntityUid>? GenomeUpdated;
 
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly IAdminLogManager _admin = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
+    [Dependency] private IAdminLogManager _admin = default!;
+    [Dependency] private IChatManager _chat = default!;
 
     public const int MaxBlockValue = 0xFFF;
 

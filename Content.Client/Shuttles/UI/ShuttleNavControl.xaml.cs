@@ -1690,6 +1690,14 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
 
             ChainShape chain = (ChainShape)shieldFixture.Shape;
 
+            // Exodus-begin rippling ship shield scanner visuals
+            if (visuals.RippleWidth > 0f)
+            {
+                DrawRipplingShieldOnRadar(handle, (uid, visuals, xform), chain, matrix);
+                continue;
+            }
+            // Exodus-end
+
             var count = chain.Count;
             var verticies = chain.Vertices;
             // Exodus-begin layered ship shield scanner visuals

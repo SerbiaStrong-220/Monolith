@@ -12,6 +12,33 @@
       Steel: 5
 
 - type: entity
+  id: NebulaThrusterLargeMachineCircuitboard
+  parent: NebulaThrusterMachineCircuitboard
+  name: large phasic thruster machine board
+  description: A machine board for a large phasic thruster. Requires a 3x1 machine frame.
+  components:
+  - type: MachineBoard
+    prototype: NebulaThrusterLarge
+    frameSize: 3x1
+    requirements:
+      Capacitor: 3
+    stackRequirements:
+      Steel: 15
+
+- type: entity
+  id: NebulaThrusterCornerMachineCircuitboard
+  parent: NebulaThrusterMachineCircuitboard
+  name: corner phasic thruster machine board
+  description: A machine board for a corner phasic thruster.
+  components:
+  - type: MachineBoard
+    prototype: NebulaThrusterCorner
+    requirements:
+      Capacitor: 2
+    stackRequirements:
+      Steel: 10
+
+- type: entity
   id: MachineGCSSuperCircuitboard
   parent: BaseMachineCircuitboard
   name: super-high-power gunnery control server board

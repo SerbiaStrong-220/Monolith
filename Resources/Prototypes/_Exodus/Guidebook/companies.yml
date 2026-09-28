@@ -3,20 +3,50 @@
   name: guide-entry-corporations
   text: "/ServerInfo/_Exodus/Guidebook/Companies/Corporations.xml"
   children:
-  - CorporationDrakeIndustries
-  - CorporationSteelHammerManufacturing
-  - CorporationHarmonyMedicalEnterprises
-  - CorporationMidnightArmsCo
-  - CorporationDarkMatterEnterprises
+  - ConcernAugok
+  - ConcernDrakeBlackArmsUSA
+  - ConcernHorizonHarmonyHammerMatter
+  - ConcernBuno
+
+# Exodus-begin corporate concerns
+- type: guideEntry
+  id: ConcernAugok
+  name: concern-augok-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/ConcernAugok.xml"
+  children:
   - CorporationAetherionDynamics
-  - CorporationHorizonEnergy
-  - CorporationUniversalStatesOfAmerica
-  - CorporationCivilDefenseMilitia
   - CorporationUllmanIndustries
-  - CorporationNosskeEienResearchAndDevelopment
+  - CorporationCivilDefenseMilitia
+
+- type: guideEntry
+  id: ConcernDrakeBlackArmsUSA
+  name: concern-drake-black-arms-usa-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/ConcernDrakeBlackArmsUSA.xml"
+  children:
+  - CorporationDrakeIndustries
   - CorporationBlackhawkPmc
+  - CorporationMidnightArmsCo
+  - CorporationUniversalStatesOfAmerica
+
+- type: guideEntry
+  id: ConcernHorizonHarmonyHammerMatter
+  name: concern-horizon-harmony-hammer-matter-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/ConcernHorizonHarmonyHammerMatter.xml"
+  children:
+  - CorporationHorizonEnergy
+  - CorporationHarmonyMedicalEnterprises
+  - CorporationSteelHammerManufacturing
+  - CorporationDarkMatterEnterprises
+
+- type: guideEntry
+  id: ConcernBuno
+  name: concern-buno-name
+  text: "/ServerInfo/_Exodus/Guidebook/Companies/ConcernBuno.xml"
+  children:
   - CorporationTheHive
   - CorporationPaycheckBratva
+  - CorporationNosskeEienResearchAndDevelopment
+# Exodus-end
 
 - type: guideEntry
   id: CorporationDrakeIndustries

@@ -117,13 +117,7 @@ public sealed partial class BulkAutoMiningSystem
         // The aiming pass has just validated every surviving beam; avoid raycasting them again this tick.
         job.NextBeamCheckTime = now + BeamCheckInterval;
 
-        foreach (var grid in job.GridJobs)
-        {
-            if (grid.RemainingTiles.Count > 0)
-                return;
-        }
-
-        StopMining(console, "bulk-auto-mining-complete");
+        TryFinishMining(console, job);
     }
 
     private bool TryProcessNextTile(
@@ -133,19 +127,29 @@ public sealed partial class BulkAutoMiningSystem
         ref int checks,
         bool excavate)
     {
+        var searchIncomplete = false;
         // Keep aiming at the selected intact tile instead of moving the beam on every search update.
         if (emitter.Comp.BeamGrid is { } beamGrid && checks > 0)
         {
             for (var index = 0; index < job.GridJobs.Count; index++)
             {
                 var gridJob = job.GridJobs[index];
-                if (gridJob.GridUid != beamGrid || !gridJob.RemainingTiles.Contains(emitter.Comp.BeamTile) ||
-                    TerminatingOrDeleted(beamGrid) || !_gridQuery.TryComp(beamGrid, out var grid) ||
-                    _map.GetTileRef(beamGrid, grid, emitter.Comp.BeamTile).Tile.IsEmpty)
+                if (gridJob.GridUid != beamGrid || !gridJob.RemainingTiles.Contains(emitter.Comp.BeamTile))
+                    continue;
+
+                if (TerminatingOrDeleted(beamGrid) || EntityManager.IsQueuedForDeletion(beamGrid) ||
+                    !_gridQuery.TryComp(beamGrid, out var grid) || !_xformQuery.HasComp(beamGrid))
+                {
+                    InvalidateGridJob(console, job, gridJob);
+                    break;
+                }
+
+                if (!IsTargetTile((beamGrid, grid), emitter.Comp.BeamTile))
                     continue;
 
                 checks--;
-                if (CanReachTile(console, emitter, (beamGrid, grid), emitter.Comp.BeamTile))
+                if (CanReachTile(console, emitter, (beamGrid, grid), emitter.Comp.BeamTile) &&
+                    IsSafeToMine((beamGrid, grid), emitter.Comp.BeamTile, ref searchIncomplete))
                     return TryProcessTile(console, job, emitter, index, (beamGrid, grid), emitter.Comp.BeamTile, excavate);
 
                 break;
@@ -159,7 +163,6 @@ public sealed partial class BulkAutoMiningSystem
         }
 
         emitter.Comp.NextTargetSearchTime = _timing.CurTime + TargetSearchInterval;
-        var searchIncomplete = false;
         for (var offset = 0; offset < job.GridJobs.Count; offset++)
         {
             if (checks <= 0)
@@ -173,10 +176,11 @@ public sealed partial class BulkAutoMiningSystem
             if (gridJob.RemainingTiles.Count == 0)
                 continue;
 
-            if (TerminatingOrDeleted(gridJob.GridUid) || !_gridQuery.TryComp(gridJob.GridUid, out var grid))
+            if (TerminatingOrDeleted(gridJob.GridUid) || EntityManager.IsQueuedForDeletion(gridJob.GridUid) ||
+                !_gridQuery.TryComp(gridJob.GridUid, out var grid) || !_xformQuery.HasComp(gridJob.GridUid))
             {
-                StopMining(console, "bulk-auto-mining-stopped-invalid-grid");
-                return false;
+                InvalidateGridJob(console, job, gridJob);
+                continue;
             }
 
             var attempts = Math.Min(Math.Max(1, checks / (job.GridJobs.Count - offset)), gridJob.Tiles.Count);
@@ -195,9 +199,9 @@ public sealed partial class BulkAutoMiningSystem
                 if (!gridJob.RemainingTiles.Contains(tile))
                     continue;
 
-                if (_map.GetTileRef(gridJob.GridUid, grid, tile).Tile.IsEmpty)
+                if (!IsTargetTile((gridJob.GridUid, grid), tile))
                 {
-                    // Another miner may have already removed this tile.
+                    // Another miner or construction may have removed this tile's deposit.
                     gridJob.RemainingTiles.Remove(tile);
                     console.Comp.ProcessedTiles++;
                     continue;
@@ -205,7 +209,8 @@ public sealed partial class BulkAutoMiningSystem
 
                 if (!TryFindBeamTile(console, emitter, (gridJob.GridUid, grid), tile, ref checks, ref searchIncomplete, out var reachable) ||
                     !gridJob.RemainingTiles.Contains(reachable) ||
-                    _map.GetTileRef(gridJob.GridUid, grid, reachable).Tile.IsEmpty)
+                    !IsTargetTile((gridJob.GridUid, grid), reachable) ||
+                    !IsSafeToMine((gridJob.GridUid, grid), reachable, ref searchIncomplete))
                 {
                     gridJob.Tiles.Enqueue(tile);
                     continue;
@@ -221,6 +226,17 @@ public sealed partial class BulkAutoMiningSystem
             ? BulkAutoMiningLaserStatus.Searching
             : BulkAutoMiningLaserStatus.Blocked;
         return false;
+    }
+
+    private bool IsSafeToMine(Entity<MapGridComponent> grid, Vector2i tile, ref bool searchIncomplete)
+    {
+        // Forbidden grids retain their existing overload behavior; they are never excavated.
+        if (!_deposits.IsInitialized(grid))
+            return true;
+
+        var safety = _connectivity.GetTileSafety(grid, tile);
+        searchIncomplete |= safety == BulkMiningTileSafety.Pending;
+        return safety == BulkMiningTileSafety.Safe;
     }
 
     private bool TryProcessTile(
@@ -239,7 +255,21 @@ public sealed partial class BulkAutoMiningSystem
             return true;
         }
 
-        var amount = emitter.Comp.SlurryPerTile;
+        // Only generated deposits authorize mining, independently of station membership or IFF.
+        // Reject artificial grids before any payout or excavation.
+        if (!_deposits.IsInitialized(grid))
+        {
+            _damageable.TryChangeDamage(emitter, emitter.Comp.ForbiddenTileDamage, ignoreResistances: true);
+            StopMining(console, TerminatingOrDeleted(emitter) || EntityManager.IsQueuedForDeletion(emitter)
+                ? "bulk-auto-mining-stopped-laser-overload"
+                : "bulk-auto-mining-stopped-forbidden-target");
+            return false;
+        }
+
+        if (!_deposits.CanMine(grid, tile) || _map.GetTileRef(grid, grid.Comp, tile).Tile.IsEmpty)
+            return false;
+
+        var amount = GetSlurryYield(emitter, emitter.Comp.SlurryPerTile.Next(_random));
         if (amount <= 0 || !_materials.TryChangeMaterialAmount(emitter, emitter.Comp.SlurryMaterial, amount, localOnly: true))
         {
             job.Statuses[emitter] = BulkAutoMiningLaserStatus.Full;
@@ -260,7 +290,6 @@ public sealed partial class BulkAutoMiningSystem
         Entity<MapGridComponent> grid,
         Vector2i tile)
     {
-        var forbidden = IsForbiddenGrid(grid, emitter.Comp);
         var anchored = _map.GetAnchoredEntitiesEnumerator(grid, grid.Comp, tile);
         while (anchored.MoveNext(out var uid))
         {
@@ -278,16 +307,9 @@ public sealed partial class BulkAutoMiningSystem
                 QueueDel(entity);
         }
 
-        // Clear the floor synchronously, preventing another emitter from paying out for the same tile.
+        // The synchronous tile-change event also consumes the deposit before another laser can mine it.
         _map.SetTile(grid, grid.Comp, tile, Tile.Empty);
         SetBeam(emitter, grid, tile);
-
-        if (forbidden)
-        {
-            _damageable.TryChangeDamage(emitter, emitter.Comp.ForbiddenTileDamage, ignoreResistances: true);
-            if (TerminatingOrDeleted(emitter) || EntityManager.IsQueuedForDeletion(emitter))
-                StopMining(console, "bulk-auto-mining-stopped-laser-overload");
-        }
     }
 
     private void SetBeam(Entity<BulkAutoMiningEmitterComponent> emitter, EntityUid grid, Vector2i tile)
@@ -297,6 +319,7 @@ public sealed partial class BulkAutoMiningSystem
 
         if (emitter.Comp.BeamGrid == null)
         {
+            SnapshotWarmup(emitter);
             emitter.Comp.StartupStream = _audio.PlayPvs(emitter.Comp.StartSound, emitter)?.Entity;
             _ambient.SetAmbience(emitter, true);
         }

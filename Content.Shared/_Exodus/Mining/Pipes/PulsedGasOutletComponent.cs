@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Exodus.Mining.Pipes;
 
@@ -37,12 +38,13 @@ public sealed partial class PulsedGasOutletComponent : Component
         Params = AudioParams.Default.WithVolume(-8),
     };
 
-    [DataField, AutoPausedField]
-    public TimeSpan NextPulse;
+    // New field names intentionally discard legacy absolute timestamps from saved grids.
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextPulseTime;
 
     /// <summary>Only successful gas transfers start a visible plume; late observers resume its current frame.</summary>
-    [DataField, AutoNetworkedField, AutoPausedField]
-    public TimeSpan? LastPulse;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? LastPulseTime;
 }
 
 public enum PulsedGasOutletVisualLayers : byte

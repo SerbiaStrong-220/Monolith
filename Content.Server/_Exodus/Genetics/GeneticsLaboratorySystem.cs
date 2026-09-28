@@ -20,21 +20,21 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Genetics;
 
-public sealed class GeneticsLaboratorySystem : EntitySystem
+public sealed partial class GeneticsLaboratorySystem : EntitySystem
 {
-    [Dependency] private readonly GeneticsSystem _genetics = default!;
-    [Dependency] private readonly GeneticDiskSystem _disks = default!;
-    [Dependency] private readonly MedicalScannerSystem _scanner = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
+    [Dependency] private GeneticDiskSystem _disks = default!;
+    [Dependency] private MedicalScannerSystem _scanner = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
 
     public override void Initialize()
     {

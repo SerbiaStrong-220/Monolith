@@ -288,11 +288,19 @@ public sealed partial class TemperatureSystem : EntitySystem
         }
         else if (temperature.CurrentTemperature <= coldDamageThreshold)
         {
-            // Exodus-begin: independently supplied cold adaptation.
+            // Exodus-begin: preserve cold adaptation and environmental habitat defenses.
             var attempt = new Content.Shared._Exodus.Genetics.TemperatureDamageAttemptEvent(false);
             RaiseLocalEvent(uid, ref attempt);
             if (attempt.Cancelled)
                 return;
+
+            var environmentAttempt = new Content.Server._Exodus.Body.EnvironmentDamageAttemptEvent(Content.Server._Exodus.Body.EnvironmentHazard.Cold);
+            RaiseLocalEvent(uid, ref environmentAttempt);
+            if (environmentAttempt.Cancelled)
+            {
+                temperature.TakingDamage = false;
+                return;
+            }
             // Exodus-end
             if (!temperature.TakingDamage)
             {

@@ -7,6 +7,10 @@ namespace Content.Shared._Exodus.Virology.Behaviors;
 [RegisterComponent]
 public sealed partial class VirusRadiophasiaComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     [DataField]
     public float RadiationIntensity = 0.5f;
 
@@ -15,10 +19,10 @@ public sealed partial class VirusRadiophasiaComponent : Component
     public DamageSpecifier HealPerRad = new();
 
     /// <summary>We added host's radiation source, so cure only ours.</summary>
-    [ViewVariables]
+    [DataField]
     public bool AddedRadiation;
 
     /// <summary>Carrier's own radiation to restore to.</summary>
-    [ViewVariables]
+    [DataField]
     public float? PreviousIntensity;
 }

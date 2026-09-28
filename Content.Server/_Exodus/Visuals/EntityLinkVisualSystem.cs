@@ -8,7 +8,7 @@ namespace Content.Server._Exodus.Visuals;
 /// <summary>
 /// Server-authoritative API for persistent and temporary visual links between entities.
 /// </summary>
-public sealed class EntityLinkVisualSystem : EntitySystem
+public sealed partial class EntityLinkVisualSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
 

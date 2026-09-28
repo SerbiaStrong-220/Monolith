@@ -1,4 +1,4 @@
-# Boards are licensed through the Drake Industries disk. Laser boards have no recipe.
+# Boards are licensed through the Drake&Black&Arms&USA concern disk and the legacy Drake Industries disk. Laser boards have no recipe.
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: BulkAutoMiningConsoleCircuitboard

@@ -8,7 +8,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
-public sealed class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTeleportInvokerComponent>
+public sealed partial class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERandomTeleportInvokerComponent> // Exodus: generated dependency injection.
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPopupSystem _popup = default!;

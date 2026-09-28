@@ -8,8 +8,8 @@ namespace Content.Server._NF.GameRule;
 
 public sealed partial class PointOfInterestSystem
 {
-    [Dependency] private readonly RelativePoiSpawnSystem _relativePoi = default!;
-    [Dependency] private readonly SharedTransformSystem _relativeTransform = default!;
+    [Dependency] private RelativePoiSpawnSystem _relativePoi = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedTransformSystem _relativeTransform = default!; // Exodus: generated dependency injection.
 
     private void InitializeRelativePlacement()
     {

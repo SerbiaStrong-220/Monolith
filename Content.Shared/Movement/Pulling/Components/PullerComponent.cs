@@ -41,6 +41,12 @@ public sealed partial class PullerComponent : Component
     [DataField]
     public bool NeedsHands = true;
 
+    // Exodus-begin - fraction of native pulling slowdown applied to this puller.
+    /// <summary>Zero ignores pulling penalties; one preserves the ordinary pulling speed.</summary>
+    [DataField, AutoNetworkedField]
+    public float PullingSlowdownModifier = 1f;
+    // Exodus-end
+
     [DataField]
     public ProtoId<AlertPrototype> PullingAlert = "Pulling";
 }

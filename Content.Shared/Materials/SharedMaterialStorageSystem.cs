@@ -135,7 +135,8 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
-        return component.StorageLimit == null || GetTotalMaterialAmount(uid, component, true) + volume <= component.StorageLimit;
+        // Exodus: downgrading a buffer must not prevent consumption of its existing contents.
+        return volume <= 0 || component.StorageLimit == null || GetTotalMaterialAmount(uid, component, true) + volume <= component.StorageLimit;
     }
 
     /// <summary>
@@ -229,7 +230,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
 
         var existing = component.Storage.GetOrNew(materialId);
 
-        var localUpperLimit = component.StorageLimit == null ? int.MaxValue : component.StorageLimit.Value - existing;
+        var localUpperLimit = component.StorageLimit == null ? int.MaxValue : Math.Max(0, component.StorageLimit.Value - existing); // Exodus: preserve overfilled contents after downgrades.
         var localLowerLimit = -existing;
         var localChange = Math.Clamp(remaining, localLowerLimit, localUpperLimit);
 
@@ -283,7 +284,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         {
             var existing = entity.Comp.Storage.GetOrNew(material);
 
-            var localUpperLimit = entity.Comp.StorageLimit == null ? int.MaxValue : entity.Comp.StorageLimit.Value - existing;
+            var localUpperLimit = entity.Comp.StorageLimit == null ? int.MaxValue : Math.Max(0, entity.Comp.StorageLimit.Value - existing); // Exodus: preserve overfilled contents after downgrades.
             var localLowerLimit = -existing;
             var localChange = Math.Clamp(remaining, localLowerLimit, localUpperLimit);
 

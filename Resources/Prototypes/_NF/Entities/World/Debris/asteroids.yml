@@ -5,6 +5,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - FloorAsteroidSand
@@ -71,6 +72,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - FloorIce
@@ -140,6 +142,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - FloorCaveDrought
@@ -199,6 +202,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - FloorBasalt
@@ -252,6 +256,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - FloorLowDesert
@@ -311,6 +316,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - FloorChromite
@@ -372,6 +378,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
         - FloorAsteroidSand
@@ -433,6 +440,7 @@
   parent: NFBaseDebris
   abstract: true
   components:
+    - type: BulkMiningDeposit # Exodus finite natural bulk-mining deposits.
     - type: BlobFloorPlanBuilder
       floorTileset:
       - Lattice

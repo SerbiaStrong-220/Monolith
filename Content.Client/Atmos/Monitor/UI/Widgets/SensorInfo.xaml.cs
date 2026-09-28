@@ -17,8 +17,7 @@ public sealed partial class SensorInfo : BoxContainer
 
     private ThresholdControl _pressureThreshold;
     private ThresholdControl _temperatureThreshold;
-    private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
-    private Dictionary<Gas, RichTextLabel> _gasLabels = new();
+    // Exodus: gas rows and the current sensor snapshot are managed in SensorInfo.Exodus.cs.
     private Button _copySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
@@ -40,29 +39,7 @@ public sealed partial class SensorInfo : BoxContainer
                 ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"),
                 ("temperature", $"{data.Temperature:0.##}")));
 
-        foreach (var (gas, amount) in data.Gases)
-        {
-            var label = new RichTextLabel();
-
-            var fractionGas = amount / data.TotalMoles;
-            label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator", ("gas", Loc.GetString($"atmos-gas-{gas}")), // Exodus-Localization
-                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
-                ("amount", $"{amount:0.####}"),
-                ("percentage", $"{(100 * fractionGas):0.##}")));
-            GasContainer.AddChild(label);
-            _gasLabels.Add(gas, label);
-
-            var threshold = data.GasThresholds[gas];
-            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", Loc.GetString($"atmos-gas-{gas}"))), threshold, AtmosMonitorThresholdType.Gas, gas, 100); // Exodus-Localization
-            gasThresholdControl.Margin = new Thickness(20, 2, 2, 2);
-            gasThresholdControl.ThresholdDataChanged += (type, alarmThreshold, arg3) =>
-            {
-                OnThresholdUpdate?.Invoke(_address, type, alarmThreshold, arg3);
-            };
-
-            _gasThresholds.Add(gas, gasThresholdControl);
-            GasContainer.AddChild(gasThresholdControl);
-        }
+        InitializeGasControls(data); // Exodus: tolerate missing gas thresholds.
 
         _pressureThreshold = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-pressure-title"), data.PressureThreshold, AtmosMonitorThresholdType.Pressure);
         PressureThresholdContainer.AddChild(_pressureThreshold);
@@ -83,7 +60,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         _copySettings.OnPressed += _ =>
         {
-            SensorDataCopied?.Invoke(data);
+            SensorDataCopied?.Invoke(_data); // Exodus: copy the latest received settings.
         };
     }
 
@@ -103,31 +80,10 @@ public sealed partial class SensorInfo : BoxContainer
                 ("tempC", $"{TemperatureHelpers.KelvinToCelsius(data.Temperature):0.#}"),
                 ("temperature", $"{data.Temperature:0.##}")));
 
-        foreach (var (gas, amount) in data.Gases)
-        {
-            if (!_gasLabels.TryGetValue(gas, out var label))
-            {
-                continue;
-            }
-
-            var fractionGas = amount / data.TotalMoles;
-            label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator", ("gas", Loc.GetString($"atmos-gas-{gas}")),
-                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
-                ("amount", $"{amount:0.####}"),
-                ("percentage", $"{(100 * fractionGas):0.##}")));
-        }
+        UpdateGasData(data); // Exodus: reconcile gas readings and threshold controls.
 
         _pressureThreshold.UpdateThresholdData(data.PressureThreshold, data.Pressure);
         _temperatureThreshold.UpdateThresholdData(data.TemperatureThreshold, data.Temperature);
-        foreach (var (gas, control) in _gasThresholds)
-        {
-            if (!data.GasThresholds.TryGetValue(gas, out var threshold))
-            {
-                continue;
-            }
-
-            control.UpdateThresholdData(threshold, data.Gases[gas] / data.TotalMoles);
-        }
     }
 
  }

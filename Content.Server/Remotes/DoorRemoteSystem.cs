@@ -13,14 +13,14 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Remotes
 {
-    public sealed class DoorRemoteSystem : SharedDoorRemoteSystem
+    public sealed partial class DoorRemoteSystem : SharedDoorRemoteSystem // Exodus: generated dependency injection.
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AirlockSystem _airlock = default!;
-        [Dependency] private readonly DoorSystem _doorSystem = default!;
-        [Dependency] private readonly ExamineSystemShared _examine = default!;
-        [Dependency] private readonly SharedElectrocutionSystem _electrify = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!; // Exodus: generated dependency injection.
+        [Dependency] private AirlockSystem _airlock = default!; // Exodus: generated dependency injection.
+        [Dependency] private DoorSystem _doorSystem = default!; // Exodus: generated dependency injection.
+        [Dependency] private ExamineSystemShared _examine = default!; // Exodus: generated dependency injection.
+        [Dependency] private SharedElectrocutionSystem _electrify = default!; // Exodus: generated dependency injection.
+        [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
 
         public override void Initialize()
         {

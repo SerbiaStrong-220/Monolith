@@ -5,10 +5,10 @@ using Robust.Shared.Timing;
 namespace Content.Client._Exodus.Mining.Pipes;
 
 /// <summary>Plays baked particle frames locally; the server only synchronizes actual discharge timestamps.</summary>
-public sealed class PulsedGasOutletVisualSystem : EntitySystem
+public sealed partial class PulsedGasOutletVisualSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprites = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprites = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void FrameUpdate(float frameTime)
     {
@@ -16,7 +16,7 @@ public sealed class PulsedGasOutletVisualSystem : EntitySystem
         var query = EntityQueryEnumerator<PulsedGasOutletComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out var outlet, out var sprite))
         {
-            var age = outlet.LastPulse is { } pulse ? _timing.CurTime - pulse : TimeSpan.MaxValue;
+            var age = outlet.LastPulseTime is { } pulse ? _timing.CurTime - pulse : TimeSpan.MaxValue;
             var active = age >= TimeSpan.Zero && age < outlet.EffectDuration;
             Entity<SpriteComponent?> ent = (uid, sprite);
             _sprites.LayerSetRsiState(ent, PulsedGasOutletVisualLayers.Body, active ? "venting" : "base");

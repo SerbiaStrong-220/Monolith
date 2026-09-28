@@ -88,6 +88,7 @@
     - type: VirusBrood
       symptom: RotSyndrome
       offspring: MobRotSpawn
+      offspringCount: 3
       offspringTable: !type:NestedSelector
         tableId: RotOffspring
       burstEffect: RotHatchEffect
@@ -108,12 +109,12 @@
     progressMessage: pathology-rot-progress-4
 
 - type: entity
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, BaseRotColonyMob ]
   id: MobRotSpawn
   name: rot spawn
   description: A short-lived carrier grown inside a terminal victim. Destroy it before it takes root.
   components:
-  - type: RotCreature
+  - type: RotRetaliation
   - type: VirusImmunity
   - type: VirusOffspring
     initialVirus: VirusRot
@@ -178,6 +179,9 @@
   branches:
   - tasks:
     - !type:HTNPrimitiveTask
+      operator: !type:RotRetaliationOperator
+  - tasks:
+    - !type:HTNPrimitiveTask
       operator: !type:VirusTargetOperator
     - !type:HTNPrimitiveTask
       operator: !type:MoveToOperator
@@ -197,6 +201,12 @@
         targetKey: Target
         rangeKey: MeleeRange
   - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:RotRallyOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: true
+  - tasks:
     - !type:HTNCompoundTask
       task: IdleCompound
 
@@ -207,6 +217,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: RotCreature
+  - type: RotColonyMember
+    size: 0, 0
+    needsSupport: false
   - type: Transform
     anchored: true
   - type: Sprite
@@ -306,6 +320,8 @@
   - type: VirusEpidemicRule
     virus: VirusRot
     symptom: RotSyndrome
+    intelligentCorePrototype: MobRotIntelligent
+    intelligentCoreLimit: 2
     preparationMessage: rot-mode-preparation
     warningMessages:
     - rot-mode-warning-1
@@ -333,6 +349,7 @@
   rules:
   # Keep the standard sector rules, then add the epidemic.
   - NFAdventure
+  - SpecialWreckSpawnScheduler
   - BasicStationEventScheduler
   - BluespaceEventScheduler
   - BluespaceDungeonEventScheduler

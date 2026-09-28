@@ -7,7 +7,7 @@ using Robust.Shared.Enums;
 namespace Content.Client._Exodus.Effects;
 
 /// <summary>All visible waves share one screen snapshot instead of copying the viewport per projectile.</summary>
-public sealed class WaveDistortionOverlay : Overlay
+public sealed partial class WaveDistortionOverlay : Overlay
 {
     [Dependency] private IEntityManager _entities = default!;
 

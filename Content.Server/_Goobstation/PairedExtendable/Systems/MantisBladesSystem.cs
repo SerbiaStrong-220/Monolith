@@ -14,12 +14,12 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server._Goobstation.PairedExtendable.Systems;
 
-public sealed class MantisBladesSystem : EntitySystem
+public sealed partial class MantisBladesSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly PairedExtendableSystem _pairedExtendable = default!;
+    [Dependency] private SharedActionsSystem _actions = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedPopupSystem _popup = default!; // Exodus: generated dependency injection.
+    [Dependency] private PairedExtendableSystem _pairedExtendable = default!; // Exodus: generated dependency injection.
     public override void Initialize()
     {
         base.Initialize();

@@ -90,6 +90,12 @@ namespace Content.Shared.Examine
         [Pure]
         public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
+            // Exodus: alternative viewing origins may override range, but cannot bypass target restrictions.
+            var remote = new Content.Shared._Exodus.Examine.RemoteExamineEvent(target, examined);
+            RaiseLocalEvent(examiner, ref remote);
+            if (remote.Handled && !remote.Allowed)
+                return false;
+
             // TODO occluded container checks
             // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI
 
@@ -107,6 +113,9 @@ namespace Content.Shared.Examine
                 if (ev.Cancelled)
                     return false;
             }
+
+            if (remote.Handled) // Exodus: the target's ExamineAttemptEvent has already been checked.
+                return remote.Allowed;
 
             if (!examinerComp.CheckInRangeUnOccluded)
                 return true;

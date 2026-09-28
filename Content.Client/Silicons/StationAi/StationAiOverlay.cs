@@ -1,3 +1,4 @@
+using Content.Client._Exodus.StationAi; // Exodus
 using System.Numerics;
 using Content.Client.Graphics;
 using Content.Shared.Silicons.StationAi;
@@ -58,18 +59,33 @@ public sealed partial class StationAiOverlay : Overlay
         var playerEnt = _player.LocalEntity;
         _entManager.TryGetComponent(playerEnt, out TransformComponent? playerXform);
         var gridUid = playerXform?.GridUid ?? EntityUid.Invalid;
+        // Exodus-begin: organic observers receive only their current view, calculated on the server.
+        _entManager.TryGetComponent(playerEnt, out CameraViewMaskComponent? organicView);
+        if (organicView != null)
+        {
+            if (organicView.Frame is { } frame && _entManager.EntityExists(frame))
+                gridUid = frame;
+            else
+            {
+                organicView.Frame = null;
+                organicView.Tiles.Clear();
+                gridUid = EntityUid.Invalid;
+            }
+        }
+        // Exodus-end
         _entManager.TryGetComponent(gridUid, out MapGridComponent? grid);
         _entManager.TryGetComponent(gridUid, out BroadphaseComponent? broadphase);
 
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
         _accumulator -= (float) _timing.FrameTime.TotalSeconds;
 
-        if (grid != null && broadphase != null)
+        if (grid != null && broadphase != null || organicView?.Frame != null) // Exodus: map-aligned space views
         {
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
 
-            if (_accumulator <= 0f)
+            // Exodus: private masks are already current; avoid copying their tiles every frame.
+            if (organicView == null && _accumulator <= 0f && grid != null && broadphase != null)
             {
                 _accumulator = MathF.Max(0f, _accumulator + _updateRate);
                 _visibleTiles.Clear();
@@ -84,9 +100,9 @@ public sealed partial class StationAiOverlay : Overlay
             {
                 worldHandle.SetTransform(matty);
 
-                foreach (var tile in _visibleTiles)
+                foreach (var tile in organicView?.Tiles ?? _visibleTiles) // Exodus
                 {
-                    var aabb = lookups.GetLocalBounds(tile, grid.TileSize);
+                    var aabb = lookups.GetLocalBounds(tile, grid?.TileSize ?? 1); // Exodus: space views
                     worldHandle.DrawRect(aabb, Color.White);
                 }
             },

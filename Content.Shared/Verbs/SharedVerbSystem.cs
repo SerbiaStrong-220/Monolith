@@ -11,6 +11,7 @@ namespace Content.Shared.Verbs
     {
         [Dependency] private SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!; // Exodus
         [Dependency] protected SharedContainerSystem ContainerSystem = default!;
 
         public override void Initialize()
@@ -71,6 +72,17 @@ namespace Content.Shared.Verbs
         {
             SortedSet<Verb> verbs = new();
             extraCategories = new();
+
+            // Exodus-begin: remote viewers cannot request verbs for hidden objects.
+            if (!force)
+            {
+                var remote = new Content.Shared._Exodus.Examine.RemoteExamineEvent(
+                    _transformSystem.GetMapCoordinates(target), target);
+                RaiseLocalEvent(user, ref remote);
+                if (remote.Handled && !remote.Allowed)
+                    return verbs;
+            }
+            // Exodus-end
 
             // accessibility checks
             var canAccess = force || _interactionSystem.InRangeAndAccessible(user, target);
@@ -183,6 +195,7 @@ namespace Content.Shared.Verbs
     [ByRefEvent]
     public record struct MenuVisibilityEvent
     {
+        public bool Cancelled; // Exodus: remote cameras can deny menus outside their visible region.
         public MapCoordinates TargetPos;
         public MenuVisibility Visibility;
     }
