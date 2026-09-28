@@ -22,16 +22,16 @@ namespace Content.Server._Exodus.Genetics;
 
 public sealed partial class GeneticAbilitiesSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _appearance = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly SharedStealthSystem _stealth = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedHumanoidAppearanceSystem _appearance = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private ISerializationManager _serialization = default!;
+    [Dependency] private SharedStealthSystem _stealth = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     private const string CloakSource = "Genetics";
 

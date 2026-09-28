@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Chemistry;
 
-public sealed class CyclingHypospraySystem : EntitySystem
+public sealed partial class CyclingHypospraySystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private ReagentAutoRechargeSystem _reagentAutoRecharge = default!;

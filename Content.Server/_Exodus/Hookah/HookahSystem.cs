@@ -53,21 +53,21 @@ public sealed partial class HookahSystem : EntitySystem
     private static readonly LocId HookahExamineTobacco = "hookah-examine-tobacco";
     private static readonly LocId HookahExamineCoal = "hookah-examine-coal";
 
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private ReactiveSystem _reactive = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {

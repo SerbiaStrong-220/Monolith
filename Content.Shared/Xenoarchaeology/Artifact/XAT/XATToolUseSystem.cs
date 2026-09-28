@@ -9,7 +9,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// This handles <see cref="XATToolUseComponent"/>
 /// </summary>
-public sealed class XATToolUseSystem : BaseXATSystem<XATToolUseComponent>
+public sealed partial class XATToolUseSystem : BaseXATSystem<XATToolUseComponent> // Exodus: generated dependency injection.
 {
     [Dependency] private SharedToolSystem _tool = default!;
 

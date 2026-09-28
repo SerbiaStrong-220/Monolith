@@ -14,8 +14,8 @@ namespace Content.Client._Exodus.Mining.Pipes.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MiningRefineryStorageControl : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private readonly StyleBoxFlat _gasFill = new(Color.FromHex("#687747"));
     private (MiningRefineryStorageState, Gas, ProtoId<MaterialPrototype>, float, float)? _lastReadings;

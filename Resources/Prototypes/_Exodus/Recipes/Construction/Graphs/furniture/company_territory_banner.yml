@@ -6,6 +6,47 @@
     actions:
     - !type:DestroyEntity {}
     edges:
+    # Exodus: territory-claiming concern banners.
+    - to: CompanyTerritoryBannerAugokNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerDrakeBlackArmsUSANode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerHorizonHarmonyHammerMatterNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
+    - to: CompanyTerritoryBannerBunoNode
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 2
+        doAfter: 15
     - to: CompanyTerritoryBannerDrakeNode
       completed:
       - !type:SnapToGrid {}
@@ -206,6 +247,66 @@
 
   - node: CompanyTerritoryBannerPDVCivilianNode
     entity: CompanyTerritoryBannerPDVCivilian
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerAugokNode
+    entity: CompanyTerritoryBannerAugok
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerDrakeBlackArmsUSANode
+    entity: CompanyTerritoryBannerDrakeBlackArmsUSA
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerHorizonHarmonyHammerMatterNode
+    entity: CompanyTerritoryBannerHorizonHarmonyHammerMatter
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: MaterialCloth1
+        amount: 2
+      steps:
+      - tool: Screwing
+        doAfter: 30
+
+  - node: CompanyTerritoryBannerBunoNode
+    entity: CompanyTerritoryBannerBuno
     edges:
     - to: start
       completed:

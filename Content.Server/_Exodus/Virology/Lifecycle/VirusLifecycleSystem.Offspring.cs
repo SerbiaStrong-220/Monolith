@@ -48,6 +48,7 @@ public sealed partial class VirusLifecycleSystem
 
         // The native melee operator will fail and let HTN choose a fresh susceptible host.
         if (ent.Comp.RetargetAfterInfection && TryComp<NPCMeleeCombatComponent>(ent, out var combat)
+            && HasComp<VirusSusceptibleComponent>(combat.Target)
             && !_virology.CanAcquireVirus(combat.Target, strain))
             RemCompDeferred<NPCMeleeCombatComponent>(ent);
     }
@@ -88,6 +89,8 @@ public sealed partial class VirusLifecycleSystem
             }
         }
         var remains = Spawn(prototype, Transform(uid).Coordinates);
+        var spawned = new VirusOffspringSpawnedEvent(remains);
+        RaiseLocalEvent(uid, ref spawned);
         // Replace the occupant even in a full slot; decomposition must not spill through a sealed container.
         if (_containers.TryGetContainingContainer(uid, out var container)
             && (!_containers.Remove(uid, container, reparent: false, force: true)

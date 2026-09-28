@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client._Exodus.ShipRepair;
 
 /// <summary>Shows the actual item's preview beneath the normal animated SRD construction effect.</summary>
-public sealed class ShipRepairConstructionVisualsSystem : EntitySystem
+public sealed partial class ShipRepairConstructionVisualsSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;

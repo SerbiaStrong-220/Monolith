@@ -11,6 +11,7 @@ public sealed partial class BulkAutoMiningLaserControl : PanelContainer
     public BulkAutoMiningLaserControl()
     {
         RobustXamlLoader.Load(this);
+        WarmupBar.ToolTip = Loc.GetString("bulk-auto-mining-laser-warmup-hint");
     }
 
     public void UpdateState(BulkAutoMiningLaserState state, int index)
@@ -21,6 +22,9 @@ public sealed partial class BulkAutoMiningLaserControl : PanelContainer
         HealthAmount.Text = Loc.GetString("bulk-auto-mining-laser-health",
             ("hp", (int)state.CurrentHp), ("max", (int)state.MaxHp));
         HealthBar.Value = state.MaxHp > 0 ? Math.Clamp(state.CurrentHp / state.MaxHp, 0, 1) : 0;
+        WarmupBar.Value = Math.Clamp(state.Warmup, 0, 1);
+        WarmupAmount.Text = Loc.GetString("bulk-auto-mining-laser-warmup",
+            ("percent", (int)MathF.Round(state.Warmup * 100)), ("bonus", MathF.Round(state.YieldBonus * 100, 1)));
         BufferBar.Value = state.Capacity > 0 ? Math.Clamp((float)state.Stored / state.Capacity, 0, 1) : 0;
         BufferAmount.Text = Loc.GetString(state.Capacity > 0
                 ? "bulk-auto-mining-laser-buffer" : "bulk-auto-mining-laser-buffer-unlimited",

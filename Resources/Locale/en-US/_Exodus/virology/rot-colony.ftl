@@ -10,6 +10,23 @@ ent-RotMoldVine = moldy vine
     .desc = A damp carpet of mold that nourishes creatures born of the rot.
 rot-larva-satiety = Satiety: {$current}/{$maximum}.
 rot-larva-sated = The larva has pupated. A new creature stirs beneath its thick casing.
+rot-larva-seeking-shelter = The well-fed larva is looking for a secluded place to pupate.
+rot-sated-cannot-consume = Approach an available dead body. Finish or cancel your current meal first.
+rot-sated-remembered-enemy = You remember this aggressor. Their presence awakens your rage.
+ent-ActionRotSatedConsume = Consume corpse
+    .desc = Strip a nearby corpse and consume it to produce larvae. Its belongings remain on the floor.
+ent-ActionRotSatedStop = Stop consuming
+    .desc = Interrupt feeding and regain movement. Already formed larvae will be born.
+ent-ActionRotSatedStrike = Ground strike
+    .desc = Smash obstacles in the 3 by 3 area beneath you.
+ghost-role-rot-sated-name = Sated
+ghost-role-rot-sated-description = A corpse eater that breeds rot larvae. Consume bodies, protect the colony and smash obstacles beneath you.
+ghost-role-rot-sated-rules =
+    You are a [color={ role-type-team-antagonist-color }][bold]Sated[/bold][/color], a creature of the rot colony.
+    Other rot creatures and larvae are your [color=green]allies[/color]. Do not harm them or the colony.
+    Consume dead bodies to produce larvae. The consume action automatically removes belongings; the stop action interrupts feeding. Larvae may share your meal.
+    Avoid peaceful creatures. Defend yourself against attackers and remember them. When pursuit is impossible, find cover or retreat to the colony. Glass does not stop lasers.
+    You remember nothing of your previous life or anything you learned as a ghost.
 rot-pupa-name = rot pupa
 
 ent-MobRotSated = sated

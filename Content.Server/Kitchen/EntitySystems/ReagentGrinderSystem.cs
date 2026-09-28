@@ -109,13 +109,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
                     if (TryComp<StackComponent>(item, out var stack))
                     {
-                        var totalVolume = solution.Volume * stack.Count;
-                        if (totalVolume <= 0)
+                        // Exodus-begin: count whole units that fit, without rounding up or overflowing a large stack.
+                        if (solution.Volume <= 0 || stack.Count <= 0)
                             continue;
 
-                        // Maximum number of items we can process in the stack without going over AvailableVolume
-                        // We add a small tolerance, because floats are inaccurate.
-                        var fitsCount = (int) (stack.Count * FixedPoint2.Min(containerSolution.AvailableVolume / totalVolume + 0.01, 1));
+                        var fitsCount = Math.Min(stack.Count,
+                            containerSolution.AvailableVolume.Value / solution.Volume.Value);
+                        // Exodus-end
                         if (fitsCount <= 0)
                             continue;
 
@@ -123,9 +123,12 @@ namespace Content.Server.Kitchen.EntitySystems
                         // Otherwise we'll actually change the volume of the remaining stack too
                         var scaledSolution = new Solution(solution);
                         scaledSolution.ScaleSolution(fitsCount);
-                        solution = scaledSolution;
-
+                        // Exodus-begin: consume the units only after their solution has been accepted.
+                        if (!_solutionContainersSystem.TryAddSolution(containerSoln.Value, scaledSolution))
+                            continue;
                         _stackSystem.SetCount(item, stack.Count - fitsCount); // Setting to 0 will QueueDel
+                        continue;
+                        // Exodus-end
                     }
                     else
                     {

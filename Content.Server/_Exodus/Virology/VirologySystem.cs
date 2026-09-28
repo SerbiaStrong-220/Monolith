@@ -79,6 +79,7 @@ public sealed partial class VirologySystem : EntitySystem
         InitializeProgression();
         InitializeSpread();
         InitializeContamination();
+        InitializePersistence();
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)

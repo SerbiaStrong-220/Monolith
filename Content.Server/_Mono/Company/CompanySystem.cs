@@ -48,7 +48,7 @@ public sealed partial class CompanySystem : EntitySystem
         var companyComp = EnsureComp<CompanyComponent>(args.Mob);
 
         var playerId = args.Player.UserId.ToString();
-        var profileCompany = args.Profile.Company;
+        var profileCompany = Content.Shared._Exodus.Company.CompanyConsolidation.Normalize(args.Profile.Company, _prototypeManager); // Exodus concern migration
 
         // Store the player's original company preference if not already stored
         if (!_playerOriginalCompanies.ContainsKey(playerId))

@@ -1,3 +1,4 @@
+# Exodus: legacy cases remain for saved player ships; new characters receive concern cases.
 - type: entity
   parent: WeaponCaseShortAmmo
   id: CompanyTechDiskCase
@@ -23,7 +24,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - SteelHammerManufacturing
+    - HorizonHarmonyHammerMatter
   - type: ContainerFill
     containers:
       storagebase:
@@ -35,7 +36,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - HarmonyMedicalEnterprises
+    - HorizonHarmonyHammerMatter
   - type: ContainerFill
     containers:
       storagebase:
@@ -47,7 +48,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - MidnightArmsCo
+    - DrakeBlackArmsUSA
   - type: ContainerFill
     containers:
       storagebase:
@@ -59,7 +60,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - HorizonEnergy
+    - HorizonHarmonyHammerMatter
   - type: ContainerFill
     containers:
       storagebase:
@@ -71,7 +72,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - blackhawkpmc
+    - DrakeBlackArmsUSA
   - type: ContainerFill
     containers:
       storagebase:
@@ -83,7 +84,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - paycheckbratva
+    - Buno
   - type: ContainerFill
     containers:
       storagebase:
@@ -95,7 +96,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - DrakeIndustries
+    - DrakeBlackArmsUSA
   - type: ContainerFill
     containers:
       storagebase:
@@ -107,7 +108,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - NosskeEienResearchandDevelopment
+    - Buno
   - type: ContainerFill
     containers:
       storagebase:
@@ -119,7 +120,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - UllmanIndustries
+    - Augok
   - type: ContainerFill
     containers:
       storagebase:
@@ -131,7 +132,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - CivilDefenseMilita
+    - Augok
   - type: ContainerFill
     containers:
       storagebase:
@@ -143,7 +144,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - TheHive
+    - Buno
   - type: ContainerFill
     containers:
       storagebase:
@@ -155,7 +156,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - AetherionDynamics
+    - Augok
   - type: ContainerFill
     containers:
       storagebase:
@@ -167,7 +168,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - DarkMatterEnterprises
+    - HorizonHarmonyHammerMatter
   - type: ContainerFill
     containers:
       storagebase:
@@ -179,7 +180,7 @@
   components:
   - type: CompanyAccessReader
     requiredCompanies:
-    - UniversalStatesOfAmerica
+    - DrakeBlackArmsUSA
   - type: ContainerFill
     containers:
       storagebase:

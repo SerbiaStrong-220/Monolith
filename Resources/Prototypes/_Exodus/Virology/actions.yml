@@ -47,3 +47,46 @@
     useDelay: 2
     icon: Interface/Actions/ghostHearingToggled.png
     event: !type:UseKeenHearingEvent
+
+- type: entity
+  id: ActionRotSatedConsume
+  name: Consume corpse
+  description: Strip and consume a nearby corpse, then give birth to larvae.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: _Exodus/Virology/rot_sated.rsi
+      state: consume
+    range: 1.2
+    canTargetSelf: false
+    whitelist:
+      components:
+      - Body
+    event: !type:RotSatedConsumeActionEvent
+
+- type: entity
+  id: ActionRotSatedStop
+  name: Stop consuming
+  description: Interrupt feeding and regain movement. Already formed larvae will be born.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_sated.rsi
+      state: alive
+    useDelay: 0.5
+    event: !type:RotSatedStopActionEvent
+
+- type: entity
+  id: ActionRotSatedStrike
+  name: Ground strike
+  description: Smash structures in the 3 by 3 area beneath you.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_sated.rsi
+      state: attack
+    useDelay: 1.5
+    event: !type:RotSatedStrikeActionEvent

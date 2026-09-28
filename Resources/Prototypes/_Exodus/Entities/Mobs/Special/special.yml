@@ -1,0 +1,271 @@
+- type: entity
+  id: MobSpecial
+  parent: [BaseMob, MobDamageable, MobCombat, MobAtmosExposed, MobFlammable, MobRespirator, MobBloodstream, StripableInventoryBase]
+  name: Special
+  description: A black, four-eyed creature. Beneath its low silhouette are long, dexterous arms and a coiled, segmented tail.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/special.rsi
+    drawdepth: Mobs
+    layers:
+    - state: quadruped
+      map: [body]
+  - type: LocomotionStanceVisuals
+  - type: SpriteMovement
+  - type: LocomotionStance
+    toggleStanceAction: ActionSpecialStance
+    toggleRestAction: ActionSpecialCurl
+    transitionDuration: 0.8
+    quadrupedSpeedMultiplier: 2.2
+    uprightDamage:
+      types:
+        Piercing: 20
+        Structural: 60
+    quadrupedDamage:
+      types:
+        Piercing: 40
+        Poison: 5
+        Structural: 80
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: Body
+    prototype: Special
+    requiredLegs: 2
+  - type: Hands
+    showInHands: false
+  - type: ComplexInteraction
+  - type: VirusGunLock
+  - type: Stripping
+  - type: Inventory
+    templateId: Special
+    # Transparent displacement masks hide equipment without disabling inventory slots.
+    displacements:
+      back:
+        sizeMaps:
+          32:
+            sprite: Effects/speech.rsi
+            state: empty0
+      belt:
+        sizeMaps:
+          32:
+            sprite: Effects/speech.rsi
+            state: empty0
+      id:
+        sizeMaps:
+          32:
+            sprite: Effects/speech.rsi
+            state: empty0
+  - type: SurgeryTarget
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.SurgeryUIKey.Key:
+        type: SurgeryBui
+  - type: Puller
+    pullingSlowdownModifier: 0
+  - type: HeldSpeedModifier
+    walkModifier: 0.2
+    sprintModifier: 0.2
+    mirrorClothingModifier: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 1000
+        mask: [MobMask]
+        layer: [MobLayer]
+  - type: Buckle
+  - type: StandingState
+  - type: AnimationPlayer
+  - type: Climbing
+  - type: ShuttleBoostingPilot
+    angularMultiplier: 1.3
+    accelerationMultiplier: 1.3
+  - type: Tag
+    tags: [CanPilot, DoorBumpOpener, FootstepSound]
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepFloor
+      params:
+        volume: -6
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Special
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      700: Critical
+      900: Dead
+  - type: MobState
+    allowedStates: [Alive, Critical, Dead]
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 1800
+      behaviors:
+      - !type:GibBehavior
+  - type: Stamina
+    critThreshold: 250
+  - type: PassiveDamage
+    allowedStates: [Alive, Critical]
+    damage:
+      groups:
+        Brute: -3
+        Burn: -3
+        Toxin: -2
+        Airloss: -2
+        Genetic: -0.5
+  - type: RestingRegeneration
+    restingMultiplier: 2
+    requiresBreathing: [Asphyxiation]
+  - type: Bloodstream
+    bloodReagent: Ichor
+    bloodMaxVolume: 400
+    bloodRefreshAmount: 2
+  - type: Respirator
+    saturation: 2
+    maxSaturation: 2
+    minSaturation: -2
+    suffocationThreshold: 0
+    # 5 damage * 0.75 resistance / 2 seconds = 1.875 HP/s: about 8 minutes from full health.
+    damage:
+      types:
+        Asphyxiation: 5
+    damageRecovery:
+      types:
+        Asphyxiation: -2
+  - type: PressureImmunity
+  - type: Temperature
+    coldDamageThreshold: 0
+    heatDamageThreshold: 400
+  - type: MeleeWeapon
+    hidden: true
+    altDisarm: false
+    attackRate: 1
+    range: 1.5
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 40
+        Poison: 5
+        Structural: 80
+  - type: Speech
+    speechVerb: LargeMob
+  - type: Emoting
+  - type: Vocal
+    sounds:
+      Unsexed: MaleReptilian
+  - type: LanguageKnowledge
+    speaks: [AntiTraeka]
+    understands: [AntiTraeka]
+  - type: LanguageRestriction
+    allowed: [AntiTraeka]
+  - type: NpcFactionMember
+    factions: [SimpleNeutral]
+  - type: CleanupImmune
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    ensureParentDebrisChunkLoaded: true
+  - type: TypingIndicator
+    proto: alien
+
+- type: entity
+  id: MobSpecialGhostRole
+  parent: MobSpecial
+  suffix: Ghost role, 250 hours
+  components:
+  - type: GhostRole
+    name: ghost-role-special-name
+    description: ghost-role-special-description
+    rules: ghost-role-special-rules
+    mindRoles: [MindRoleGhostRoleNeutral]
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 900000
+  - type: GhostTakeoverAvailable
+  - type: ObjectivesOnMind
+    objectives: [SpecialSurviveObjective]
+
+- type: entity
+  id: ActionSpecialStance
+  name: Change stance
+  description: Stand upright to use your hands, or drop everything and run on all fours.
+  categories: [HideSpawnMenu]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    useDelay: 1
+    icon:
+      sprite: _Exodus/Mobs/Special/actions.rsi
+      state: stand
+    iconOn:
+      sprite: _Exodus/Mobs/Special/actions.rsi
+      state: run
+    event: !type:ToggleLocomotionStanceEvent
+
+- type: entity
+  id: ActionSpecialCurl
+  name: Curl up
+  description: Coil your tail around your body and rest, doubling regeneration. You cannot move or interact while curled up.
+  categories: [HideSpawnMenu]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    useDelay: 1
+    icon:
+      sprite: _Exodus/Mobs/Special/actions.rsi
+      state: curl
+    event: !type:ToggleCurledRestEvent
+
+- type: damageModifierSet
+  id: Special
+  coefficients:
+    Blunt: 0.6
+    Slash: 0.6
+    Piercing: 0.6
+    Heat: 0.65
+    Cold: 0.65
+    Shock: 0.65
+    Caustic: 0.65
+    Poison: 0.6
+    Radiation: 0.6
+    Cellular: 0.75
+    Bloodloss: 0.75
+    Asphyxiation: 0.75
+
+- type: entity
+  id: ActionSpecialNightVision
+  parent: ActionToggleNightVision
+  categories: [HideSpawnMenu]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+
+- type: entity
+  id: ActionSpecialThermalVision
+  parent: ToggleThermalVision
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+
+- type: entity
+  id: SpecialSurviveObjective
+  parent: BaseSurviveObjective
+  name: Survive the round
+  description: Stay alive until the end of the round. Your organs are worth more than most ships; choose your encounters carefully.
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: objective-issuer-special
+    icon:
+      sprite: _Exodus/Mobs/Special/actions.rsi
+      state: curl

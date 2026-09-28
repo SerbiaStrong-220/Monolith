@@ -21,7 +21,7 @@ namespace Content.Server._Exodus.Bank;
 /// savings (MonoCoins). The server is authoritative: it moves the bank balance (via the character's
 /// preferences) and the savings, then echoes the new bank balance back to the client.
 /// </summary>
-public sealed class SavingsTransferManager
+public sealed partial class SavingsTransferManager
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private IPlayerManager _player = default!;

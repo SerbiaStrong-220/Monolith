@@ -12,6 +12,12 @@ namespace Content.Shared._Exodus.Territory;
 public sealed partial class CompanyTerritoryBannerComponent : Component
 {
     /// <summary>
+    /// Decorative brand banners retain this component for saved maps but cannot claim territory.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanClaim = true;
+
+    /// <summary>
     /// Corporation that owns this banner. Null means that the banner has not been installed yet.
     /// </summary>
     [DataField, AutoNetworkedField]

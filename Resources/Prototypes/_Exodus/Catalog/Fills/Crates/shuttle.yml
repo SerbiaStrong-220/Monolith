@@ -7,3 +7,23 @@
   - type: StorageFill
     contents:
     - id: NebulaThrusterFlatpack
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringNebulaThrusterLarge
+  name: large phasic thruster crate
+  description: Contains a large phasic thruster flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: NebulaThrusterLargeFlatpack
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringNebulaThrusterCorner
+  name: corner phasic thruster crate
+  description: Contains a corner phasic thruster flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: NebulaThrusterCornerFlatpack

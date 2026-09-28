@@ -40,6 +40,6 @@ public sealed partial class NoActiveCompanyTerritoryBannerOnGrid : IConstruction
             return false;
         }
 
-        return entityManager.HasComponent<CompanyTerritoryBannerComponent>(activeBanner);
+        return entityManager.TryGetComponent<CompanyTerritoryBannerComponent>(activeBanner, out var banner) && banner.CanClaim;
     }
 }

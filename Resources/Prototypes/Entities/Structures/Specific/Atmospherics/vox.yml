@@ -18,6 +18,8 @@
       BZ: danger  #Funky
       Healium: stationNO #Funky 
       Nitrium: danger #Funky
+      Pluoxium: ignore # Exodus: this gas is not inherited from AirSensorBase's dictionary.
+      ChlorineTrifluoride: danger # Exodus: monitor refinery exhaust.
 
 - type: entity
   parent: [AirSensorVoxBase, AirSensor]

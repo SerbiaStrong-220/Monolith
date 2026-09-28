@@ -7,7 +7,7 @@
   category: Small
   group: Shipyard
   requiredCompanies:
-  - HorizonEnergy
+  - HorizonHarmonyHammerMatter
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/horizont/siphon.yml
   addComponents:
   - type: NpcFactionMember

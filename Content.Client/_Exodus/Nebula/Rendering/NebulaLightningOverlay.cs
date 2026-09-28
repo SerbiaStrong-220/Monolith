@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Exodus.Nebula.Rendering;
 
-public sealed class NebulaLightningOverlay : Overlay
+public sealed partial class NebulaLightningOverlay : Overlay
 {
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _prototype = default!;

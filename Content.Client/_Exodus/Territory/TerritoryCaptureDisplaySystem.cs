@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 namespace Content.Client._Exodus.Territory;
 
 /// <summary>Shared countdown presentation for navigation and FTL maps.</summary>
-public sealed class TerritoryCaptureDisplaySystem : EntitySystem
+public sealed partial class TerritoryCaptureDisplaySystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
 

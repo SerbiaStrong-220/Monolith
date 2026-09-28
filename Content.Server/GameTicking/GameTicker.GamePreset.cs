@@ -15,7 +15,7 @@ namespace Content.Server.GameTicking;
 public sealed partial class GameTicker
 {
     [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly DefaultStarSystemSystem _defaultStarSystem = default!; // Exodus
+    [Dependency] private DefaultStarSystemSystem _defaultStarSystem = default!; // Exodus // Exodus: generated dependency injection.
 
     public const float PresetFailedCooldownIncrease = 30f;
 

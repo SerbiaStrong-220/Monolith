@@ -7,7 +7,7 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
-    [Dependency] private readonly INetManager _inventoryNet = default!;
+    [Dependency] private INetManager _inventoryNet = default!;
 
     /// <summary>Rebuild slots after a provider changes, preserving the base inventory and other providers.</summary>
     public void RefreshSlots(Entity<InventoryComponent?> ent)

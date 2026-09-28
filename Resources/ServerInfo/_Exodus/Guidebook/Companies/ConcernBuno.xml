@@ -1,0 +1,16 @@
+<Document>
+  [head=1][locid="concern-buno-name"][/head]
+  [locid="concern-buno-description"]
+  [head=2][locid="guidebook-corporation-banner-heading"][/head]
+  [locid="guidebook-corporation-banner-usage"]
+  <Box>
+    <GuideEntityEmbed Entity="CompanyTerritoryBannerBuno"/>
+  </Box>
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskBuno"/>
+  </Box>
+  [locid="concern-tech-disk-buno-description"]
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

@@ -107,9 +107,14 @@ public sealed partial class DroppableBorgModuleSystem : EntitySystem
                 var handId = HandId(ent, i);
                 _hands.TryGetHand(chassis, handId, out var hand, hands);
                 if (hand?.HeldEntity is { } item)
-                    QueueDel(item);
-                else if (!TerminatingOrDeleted(chassis)) // don't care if its empty if the server is shutting down
-                    Log.Error($"Borg {ToPrettyString(chassis)} terminated with empty hand {i} in {ToPrettyString(ent)}");
+                {
+                    // Exodus-begin: teardown must not replace a deleted item with its placeholder.
+                    _placeholder.SetEnabled(item, false);
+                    if (!TerminatingOrDeleted(item))
+                        QueueDel(item);
+                    // Exodus-end
+                }
+                // Exodus: a held item or placeholder may already be gone during module deletion.
                 _hands.RemoveHand(chassis, handId, hands);
             }
             return;

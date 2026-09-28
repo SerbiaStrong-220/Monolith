@@ -11,7 +11,7 @@ namespace Content.Server._Exodus.Research;
 /// Handles the research point and technology disk integrations for the R&amp;D server magnet.
 /// Additional media types can handle <see cref="ResearchServerMagnetInsertAttemptEvent"/> independently.
 /// </summary>
-public sealed class ResearchServerDiskMagnetIntegrationSystem : EntitySystem
+public sealed partial class ResearchServerDiskMagnetIntegrationSystem : EntitySystem
 {
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private ResearchSystem _research = default!;

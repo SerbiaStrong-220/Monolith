@@ -25,7 +25,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-public sealed class LifeInsuranceConsoleSystem : EntitySystem
+public sealed partial class LifeInsuranceConsoleSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private BankSystem _bank = default!;

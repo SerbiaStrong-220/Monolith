@@ -92,6 +92,7 @@ entities:
       pos: 0.85276127,-0.66094494
       parent: 1
     - type: ForceAnchor
+      bedrock: true # Exodus: Colossus Central cannot be unanchored.
     - type: StationTransit
     - type: ProtectedGrid
       hostileMobKillSound: !type:SoundPathSpecifier

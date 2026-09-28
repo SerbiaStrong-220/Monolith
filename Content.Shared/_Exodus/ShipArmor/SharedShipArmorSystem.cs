@@ -10,9 +10,9 @@ namespace Content.Shared._Exodus.ShipArmor;
 /// Shared helpers and examine for <see cref="ShipArmorComponent"/>.
 /// Server system owns registration, absorption and regeneration.
 /// </summary>
-public abstract class SharedShipArmorSystem : EntitySystem
+public abstract partial class SharedShipArmorSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
 
     // Reused by damage interception to avoid a per-hit allocation.
     private readonly List<(string Type, FixedPoint2 Amount)> _reductions = new();

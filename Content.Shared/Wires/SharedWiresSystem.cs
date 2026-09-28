@@ -18,7 +18,7 @@ public abstract partial class SharedWiresSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedToolSystem Tool = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

@@ -14,3 +14,9 @@ ent-ShipRepairDroneStationMachineCircuitboard = repair drone station machine boa
     .desc = A machine board for constructing a repair drone station.
 ship-repair-drone-station-machine-board-name = repair drone station machine board
 ship-repair-drone-station-machine-board-description = A machine board for constructing a repair drone station.
+
+ent-NebulaThrusterLargeMachineCircuitboard = large phasic thruster machine board
+    .desc = A machine board for a large phasic thruster. Requires a 3x1 machine frame.
+
+ent-NebulaThrusterCornerMachineCircuitboard = corner phasic thruster machine board
+    .desc = A machine board for a corner phasic thruster.

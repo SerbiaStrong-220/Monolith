@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Chat;
 
-public sealed class ChatRequirementsManager
+public sealed partial class ChatRequirementsManager
 {
     [Dependency] private IBaseClient _client = default!;
     [Dependency] private INetManager _net = default!;

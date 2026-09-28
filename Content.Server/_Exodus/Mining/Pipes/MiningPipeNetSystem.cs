@@ -1,16 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server._Exodus.Mining.Pipes.NodeGroups;
 using Content.Server._Exodus.Mining.Pipes.Nodes;
 using Content.Shared._Exodus.Mining.Pipes;
+using Content.Shared._Exodus.Materials;
 using Content.Shared.Materials;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Mining.Pipes;
 
-public sealed class MiningPipeNetSystem : EntitySystem
+public sealed partial class MiningPipeNetSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMaterialStorageSystem _materials = default!;
+    [Dependency] private SharedMaterialStorageSystem _materials = default!;
 
     private EntityQuery<MiningPipeNetworkMemberComponent> _memberQuery;
     private EntityQuery<MaterialStorageComponent> _storageQuery;
@@ -22,6 +24,38 @@ public sealed class MiningPipeNetSystem : EntitySystem
         _storageQuery = GetEntityQuery<MaterialStorageComponent>();
         SubscribeLocalEvent<MiningPipeNetworkMemberComponent, GetStoredMaterialsEvent>(OnGetStoredMaterials);
         SubscribeLocalEvent<MiningPipeNetworkMemberComponent, ConsumeStoredMaterialsEvent>(OnConsumeStoredMaterials);
+        SubscribeLocalEvent<MiningPipeNetworkMemberComponent, MaterialAmountChangedEvent>(OnMaterialsChanged);
+        SubscribeLocalEvent<MiningPipeNetworkMemberComponent, MaterialStorageCapacityChangedEvent>(OnCapacityChanged);
+        SubscribeLocalEvent<MiningPipeNetworkMemberComponent, NodeGroupsRebuilt>(OnNodesRebuilt);
+    }
+
+    private void OnMaterialsChanged(Entity<MiningPipeNetworkMemberComponent> ent, ref MaterialAmountChangedEvent args)
+    {
+        InvalidateClientMaterials(ent);
+    }
+
+    private void OnCapacityChanged(Entity<MiningPipeNetworkMemberComponent> ent, ref MaterialStorageCapacityChangedEvent args)
+    {
+        InvalidateClientMaterials(ent);
+    }
+
+    private void OnNodesRebuilt(Entity<MiningPipeNetworkMemberComponent> ent, ref NodeGroupsRebuilt args)
+    {
+        // Every device in each rebuilt group receives this event, including separated buffers.
+        ent.Comp.ClientMaterialsDirty = true;
+    }
+
+    private void InvalidateClientMaterials(Entity<MiningPipeNetworkMemberComponent> ent)
+    {
+        ent.Comp.ClientMaterialsDirty = true;
+        if (!ent.Comp.SupplyMaterials || GetNetwork(ent) is not { } net)
+            return;
+
+        foreach (var node in net.Nodes)
+        {
+            if (node is MiningPipeDeviceNode && _memberQuery.TryComp(node.Owner, out var member) && member.Node == node.Name)
+                member.ClientMaterialsDirty = true;
+        }
     }
 
     private MiningPipeNet? GetNetwork(Entity<MiningPipeNetworkMemberComponent> ent)
@@ -103,6 +137,7 @@ public sealed class MiningPipeNetSystem : EntitySystem
 
     public bool UpdateClientMaterials(Entity<MiningPipeNetworkMemberComponent> ent)
     {
+        ent.Comp.ClientMaterialsDirty = false;
         if (!_storageQuery.TryComp(ent, out var storage))
             return false;
 

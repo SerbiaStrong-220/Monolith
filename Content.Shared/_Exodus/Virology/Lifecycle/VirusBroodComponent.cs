@@ -34,11 +34,19 @@ public sealed partial class VirusBroodComponent : Component
     [DataField]
     public FixedPoint2 HealthPerOffspring = 75;
 
+    /// <summary>Optional fixed brood size for infections that should not depend on the host's death threshold.</summary>
+    [DataField]
+    public int? OffspringCount;
+
     [DataField]
     public bool Incubating;
 
     [DataField]
     public bool Hatched;
+
+    /// <summary>Prevents duplicate core spawns if a death state event is repeated.</summary>
+    [DataField]
+    public bool IntelligentCoreClaimed;
 
     [DataField]
     public TimeSpan Remaining;

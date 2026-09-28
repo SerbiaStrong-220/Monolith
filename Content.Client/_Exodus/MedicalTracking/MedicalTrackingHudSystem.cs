@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 namespace Content.Client._Exodus.MedicalTracking;
 
 /// <summary>Replaces health icon frames without a separate entity scan or animation updates.</summary>
-public sealed class MedicalTrackingHudSystem : EntitySystem
+public sealed partial class MedicalTrackingHudSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IGameTiming _timing = default!;

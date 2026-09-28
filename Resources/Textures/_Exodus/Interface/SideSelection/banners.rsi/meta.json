@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    { "name": "mmc-banner" },
+    { "name": "viper-banner" },
+    { "name": "tsf-banner" },
+    { "name": "pdv-banner" },
+    { "name": "khsira-banner" },
+    { "name": "ussp-banner" },
+    { "name": "augok-banner" },
+    { "name": "drake-black-arms-usa-banner" },
+    { "name": "horizon-harmony-hammer-matter-banner" },
+    { "name": "buno-banner" }
+  ]
+}

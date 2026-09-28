@@ -4,6 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Storage.Components;
+using Content.Shared.UserInterface;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests._Exodus.Company;
@@ -20,7 +21,7 @@ public sealed class CompanyAccessReaderTest
   - type: CompanyAccessReader
     requireCompanyCard: true
     requiredCompanies:
-    - SteelHammerManufacturing
+    - HorizonHarmonyHammerMatter
     popupMessage: null
 
 - type: entity
@@ -28,6 +29,34 @@ public sealed class CompanyAccessReaderTest
   components:
   - type: Item
   - type: IdCard
+
+- type: entity
+  id: ExodusTestLegacyCardReader
+  parent: ExodusTestCompanyAccessReader
+  components:
+  - type: CompanyAccessReader
+    requiredCompanies: [SteelHammerManufacturing]
+
+- type: entity
+  id: ExodusTestLegacyInvertedCardReader
+  parent: ExodusTestLegacyCardReader
+  components:
+  - type: CompanyAccessReader
+    inverted: true
+
+- type: entity
+  id: ExodusTestLegacyCompanyReader
+  parent: ExodusTestLegacyCardReader
+  components:
+  - type: CompanyAccessReader
+    requireCompanyCard: false
+
+- type: entity
+  id: ExodusTestLegacyInvertedCompanyReader
+  parent: ExodusTestLegacyCompanyReader
+  components:
+  - type: CompanyAccessReader
+    inverted: true
 ";
 
     [Test]
@@ -47,11 +76,16 @@ public sealed class CompanyAccessReaderTest
             Assert.That(denied.Handled, Is.True);
 
             var idCard = entMan.AddComponent<IdCardComponent>(user);
-            idCard.CompanyName = "SteelHammerManufacturing";
+            idCard.CompanyName = "HorizonHarmonyHammerMatter";
 
             var allowed = CreateDumpEvent(entMan, readerUid, user);
             entMan.EventBus.RaiseLocalEvent(readerUid, allowed);
             Assert.That(allowed.Handled, Is.False);
+
+            idCard.CompanyName = "SteelHammerManufacturing";
+            var legacyCardAllowed = CreateDumpEvent(entMan, readerUid, user);
+            entMan.EventBus.RaiseLocalEvent(readerUid, legacyCardAllowed);
+            Assert.That(legacyCardAllowed.Handled, Is.False);
 
             entMan.DeleteEntity(readerUid);
             entMan.DeleteEntity(user);
@@ -77,11 +111,11 @@ public sealed class CompanyAccessReaderTest
             handsSystem.AddHand(user, "right", HandLocation.Right, hands);
 
             var wrongCard = entMan.Spawn("ExodusTestCompanyCard");
-            entMan.GetComponent<IdCardComponent>(wrongCard).CompanyName = "MidnightArmsCo";
+            entMan.GetComponent<IdCardComponent>(wrongCard).CompanyName = "DrakeBlackArmsUSA";
             Assert.That(handsSystem.TryPickup(user, wrongCard, "left", checkActionBlocker: false, animate: false));
 
             var matchingCard = entMan.Spawn("ExodusTestCompanyCard");
-            entMan.GetComponent<IdCardComponent>(matchingCard).CompanyName = "SteelHammerManufacturing";
+            entMan.GetComponent<IdCardComponent>(matchingCard).CompanyName = "HorizonHarmonyHammerMatter";
             Assert.That(handsSystem.TryPickup(user, matchingCard, "right", checkActionBlocker: false, animate: false));
 
             var allowed = CreateDumpEvent(entMan, readerUid, user);
@@ -92,6 +126,44 @@ public sealed class CompanyAccessReaderTest
             entMan.DeleteEntity(user);
         });
 
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase("ExodusTestLegacyCardReader", false)]
+    [TestCase("ExodusTestLegacyInvertedCardReader", true)]
+    [TestCase("ExodusTestLegacyCompanyReader", false)]
+    [TestCase("ExodusTestLegacyInvertedCompanyReader", true)]
+    public async Task SavedLegacyReaderRecognizesConcernAndSubsidiaries(string readerId, bool inverted)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var entities = pair.Server.EntMan;
+        await pair.Server.WaitAssertion(() =>
+        {
+            var reader = entities.Spawn(readerId);
+            var user = entities.Spawn();
+            var card = entities.AddComponent<IdCardComponent>(user);
+            var company = entities.AddComponent<CompanyComponent>(user);
+            try
+            {
+                foreach (var id in new[] { "HorizonHarmonyHammerMatter", "SteelHammerManufacturing", "DarkMatterEnterprises" })
+                {
+                    card.CompanyName = company.CompanyName = id;
+                    var attempt = new ActivatableUIOpenAttemptEvent(user);
+                    entities.EventBus.RaiseLocalEvent(reader, attempt);
+                    Assert.That(attempt.Cancelled, Is.EqualTo(inverted), id);
+                }
+
+                card.CompanyName = company.CompanyName = "Buno";
+                var wrongConcern = new ActivatableUIOpenAttemptEvent(user);
+                entities.EventBus.RaiseLocalEvent(reader, wrongConcern);
+                Assert.That(wrongConcern.Cancelled, Is.EqualTo(!inverted));
+            }
+            finally
+            {
+                entities.DeleteEntity(reader);
+                entities.DeleteEntity(user);
+            }
+        });
         await pair.CleanReturnAsync();
     }
 

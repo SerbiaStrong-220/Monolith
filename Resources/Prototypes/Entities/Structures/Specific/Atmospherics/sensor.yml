@@ -29,6 +29,7 @@
         Healium: stationNO #
         Nitrium: danger  #Funky/Goob
         Pluoxium: ignore #Funky/Goob
+        ChlorineTrifluoride: danger # Exodus: monitor refinery exhaust.
     - type: Tag
       tags:
         - AirSensor

@@ -46,7 +46,7 @@ namespace Content.Server.PDA
         [Dependency] private IdCardSystem _idCard = default!;
         [Dependency] private SectorServiceSystem _sectorService = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _config = default!; // DeltaV
+        [Dependency] private IConfigurationManager _config = default!; // DeltaV // Exodus: generated dependency injection.
         [Dependency] private FactionWarSystem _factionWar = default!; // Exodus: directional faction war status.
 
         private static DateTime ServerDate; // DeltaV - PDA

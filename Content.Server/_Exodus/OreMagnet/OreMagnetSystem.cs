@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.OreMagnet;
 
-public sealed class OreMagnetSystem : EntitySystem
+public sealed partial class OreMagnetSystem : EntitySystem
 {
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;

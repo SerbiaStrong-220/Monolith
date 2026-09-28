@@ -2,11 +2,17 @@
 
 using Robust.Shared.Prototypes;
 
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Shared._Exodus.Virology.Behaviors;
 
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class VirusSchizophreniaComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     /// <summary>Pool of self-chat lines this symptom picks from.</summary>
     [DataField]
     public ProtoId<VirusMessagePoolPrototype> Pool = "SchizophreniaThoughts";
@@ -18,10 +24,10 @@ public sealed partial class VirusSchizophreniaComponent : Component
     [DataField]
     public TimeSpan MaxInterval = TimeSpan.FromSeconds(55);
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextMessageTime;
 
     /// <summary>No same line picked twice in a row.</summary>
-    [ViewVariables]
+    [DataField]
     public int LastIndex = -1;
 }

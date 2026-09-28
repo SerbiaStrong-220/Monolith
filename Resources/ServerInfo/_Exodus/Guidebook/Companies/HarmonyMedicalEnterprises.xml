@@ -8,7 +8,7 @@
   [locid="guidebook-corporation-tech-disk-acquisition"]
 
   <Box>
-    <GuideEntityEmbed Entity="TechDiskHmeAdvancedOrgans"/>
+    <GuideEntityEmbed Entity="TechDiskHorizonHarmonyHammerMatter"/>
   </Box>
 
   [locid="tech-disk-hme-organs-description"]

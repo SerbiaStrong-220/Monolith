@@ -11,12 +11,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Client._Exodus.Genetics;
 
 /// <summary>Wash out already visible, brightly lit areas without adding light or affecting camera windows.</summary>
-public sealed class GeneticPhotophobiaOverlay : Overlay
+public sealed partial class GeneticPhotophobiaOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly ILightManager _lights = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private ILightManager _lights = default!;
 
     private static readonly ProtoId<ShaderPrototype> Shader = "GeneticPhotophobia";
     private readonly ShaderInstance _shader;

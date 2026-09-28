@@ -4,9 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.Territory;
 
-public sealed class TerritoryRegenerationSystem : EntitySystem
+public sealed partial class TerritoryRegenerationSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private EntityQuery<GridTerritoryComponent> _territoryQuery;
     private EntityQuery<TransformComponent> _transformQuery;

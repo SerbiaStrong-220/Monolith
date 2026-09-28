@@ -5,7 +5,7 @@ namespace Content.Shared.Humanoid;
 
 public abstract partial class SharedHumanoidAppearanceSystem
 {
-    [Dependency] private readonly GrammarSystem _grammar = default!;
+    [Dependency] private GrammarSystem _grammar = default!;
 
     /// <summary>Copies visual data from a live component or a detached snapshot, preserving the target's anatomy.</summary>
     public void ApplyAppearance(Entity<HumanoidAppearanceComponent?> ent, HumanoidAppearanceComponent snapshot)

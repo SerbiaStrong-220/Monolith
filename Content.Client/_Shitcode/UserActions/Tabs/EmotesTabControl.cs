@@ -21,10 +21,10 @@ namespace Content.Client._Shitcode.UserActions.Tabs;
 [GenerateTypedNameReferences]
 public sealed partial class EmotesTabControl : BaseTabControl
 {
-    [Dependency] private readonly EntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private EntityManager _entManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private IPrototypeManager _prototypeManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private ISharedPlayerManager _playerManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private IGameTiming _gameTiming = default!; // Exodus: generated dependency injection.
 
     private TimeSpan _lastEmoteTime;
     private static readonly TimeSpan EmoteCooldown = TimeSpan.FromSeconds(0);

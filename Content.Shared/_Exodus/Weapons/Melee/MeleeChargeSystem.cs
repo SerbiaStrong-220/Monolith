@@ -14,7 +14,7 @@ using Robust.Shared.Network;
 namespace Content.Shared._Exodus.Weapons.Melee;
 
 /// <summary>Event-driven charge lifecycle and per-target melee charge transactions.</summary>
-public sealed class MeleeChargeSystem : EntitySystem
+public sealed partial class MeleeChargeSystem : EntitySystem
 {
     [Dependency] private SharedChargesSystem _charges = default!;
     [Dependency] private SharedHandsSystem _hands = default!;

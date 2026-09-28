@@ -2,9 +2,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._Exodus.Genetics;
 
-public sealed class GeneticVisionSystem : EntitySystem
+public sealed partial class GeneticVisionSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
 
     public override void Initialize()
     {

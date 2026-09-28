@@ -419,7 +419,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
                 monitor.TemperatureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Gas:
-                if (gas == null || monitor.GasThresholds == null)
+                if (gas == null || !Enum.IsDefined(gas.Value) || monitor.GasThresholds == null) // Exodus: reject invalid gas indices.
                     return;
 
                 logPrefix = ((Gas) gas).ToString();
@@ -475,11 +475,17 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     /// <param name="allThresholdData">An AtmosSensorData object from which the thresholds will be loaded.</param>
     public void SetAllThresholds(EntityUid uid, AtmosSensorData allThresholdData)
     {
-        SetThreshold(uid, AtmosMonitorThresholdType.Temperature, allThresholdData.TemperatureThreshold);
-        SetThreshold(uid, AtmosMonitorThresholdType.Pressure, allThresholdData.PressureThreshold);
+        // Exodus-begin: partial settings leave unspecified thresholds unchanged.
+        if (!TryComp<AtmosMonitorComponent>(uid, out var monitor))
+            return;
+
+        SetThreshold(uid, AtmosMonitorThresholdType.Temperature, new(allThresholdData.TemperatureThreshold), monitor: monitor);
+        SetThreshold(uid, AtmosMonitorThresholdType.Pressure, new(allThresholdData.PressureThreshold), monitor: monitor);
         foreach (var gas in Enum.GetValues<Gas>())
         {
-            SetThreshold(uid, AtmosMonitorThresholdType.Gas, allThresholdData.GasThresholds[gas], gas);
+            if (allThresholdData.GasThresholds.TryGetValue(gas, out var threshold) && threshold != null)
+                SetThreshold(uid, AtmosMonitorThresholdType.Gas, new(threshold), gas, monitor);
         }
+        // Exodus-end
     }
 }

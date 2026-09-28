@@ -1,4 +1,5 @@
 using Content.Server._NF.Radio; // Frontier
+using Content.Server._Exodus.Radio; // Exodus: allied faction radio reception.
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server._EinsteinEngines.Language;
@@ -50,6 +51,7 @@ public sealed partial class RadioSystem : EntitySystem
         SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak);
 
         _exemptQuery = GetEntityQuery<TelecomExemptComponent>();
+        InitializeReceptionChannels(); // Exodus: cached receiver queries for allied channels.
     }
 
     private void OnIntrinsicSpeak(EntityUid uid, IntrinsicRadioTransmitterComponent component, EntitySpokeEvent args)
@@ -75,7 +77,7 @@ public sealed partial class RadioSystem : EntitySystem
 
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
-        if (TryComp(uid, out ActorComponent? actor))
+        if (TryComp(uid, out ActorComponent? actor) && args.ChatRecipients.Add(uid)) // Exodus: deduplicate headsets and intrinsic radios.
         {
             // Einstein Engines - Languages begin
             var listener = component.Owner;
@@ -218,6 +220,12 @@ public sealed partial class RadioSystem : EntitySystem
         var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
 
+        // Exodus-begin: resolve direct allied channels once, retaining the original message and delivery checks.
+        var receiveChannels = new GetRadioReceiveChannelsEvent(channel);
+        if (canSend)
+            RaiseLocalEvent(ref receiveChannels);
+        // Exodus-end
+
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
 
         if (frequency == null) // Nuclear-14
@@ -225,15 +233,10 @@ public sealed partial class RadioSystem : EntitySystem
 
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
-            if (!radio.ReceiveAllChannels)
-            {
-                if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) &&
-                                                             !intercom.SupportedChannels.Contains(channel.ID)))
-                    continue;
-            }
-
-            if (!HasComp<GhostComponent>(receiver) && GetFrequency(receiver, channel) != frequency) // Nuclear-14
-                continue; // Nuclear-14
+            // Exodus-begin: accept native or directly allied reception without rebroadcasting.
+            if (!CanReceiveChannel((receiver, radio), channel, frequency.Value, receiveChannels.AdditionalChannels))
+                continue;
+            // Exodus-end
 
             if (!channel.LongRange
                 && !HasComp<FTLMapComponent>(transform.MapUid)

@@ -17,15 +17,15 @@ namespace Content.Server._Exodus.Genetics;
 
 public sealed partial class GeneticAbilitiesSystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     private void InitializeAdaptations()
     {

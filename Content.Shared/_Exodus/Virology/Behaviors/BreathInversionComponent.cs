@@ -22,6 +22,6 @@ public sealed partial class BreathInversionComponent : Component
     };
 
     /// <summary>Each affected lung's original metabolizer types, to restore on cure.</summary>
-    [ViewVariables]
+    [DataField]
     public Dictionary<EntityUid, HashSet<ProtoId<MetabolizerTypePrototype>>> Original = [];
 }

@@ -7,10 +7,10 @@ namespace Content.Server._Goobstation.Light.Systems;
 /// <summary>
 ///     Handles the logic between signals and toggling OccluderComponent, early upstream merge of #30743
 /// </summary>
-public sealed class ToggleableOccluderSystem : EntitySystem
+public sealed partial class ToggleableOccluderSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-    [Dependency] private readonly OccluderSystem _occluder = default!;
+    [Dependency] private DeviceLinkSystem _signalSystem = default!; // Exodus: generated dependency injection.
+    [Dependency] private OccluderSystem _occluder = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

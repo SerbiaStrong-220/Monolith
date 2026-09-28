@@ -16,8 +16,8 @@ namespace Content.Server.TurretController;
 
 public sealed partial class DeployableTurretControllerSystem : SharedDeployableTurretControllerSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!; // Exodus: generated dependency injection.
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!; // Exodus: generated dependency injection.
 
     public const string CmdSetArmamemtState = "set_armament_state";
     public const string CmdSetAccessExemptions = "set_access_exemption";

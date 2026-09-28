@@ -10,10 +10,10 @@ using Content.Shared.Sprite;
 namespace Content.Server._Goobstation.EatToGrow;
 
 
-public sealed class EatToGrowSystem : EntitySystem
+public sealed partial class EatToGrowSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private AppearanceSystem _appearance = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedPhysicsSystem _physics = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

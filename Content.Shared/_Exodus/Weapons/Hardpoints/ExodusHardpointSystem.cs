@@ -4,9 +4,9 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared._Exodus.Weapons.Hardpoints;
 
-public sealed class ExodusHardpointSystem : EntitySystem
+public sealed partial class ExodusHardpointSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     private EntityQuery<ExodusHardpointComponent> _hardpointQuery;
     private EntityQuery<TransformComponent> _transformQuery;

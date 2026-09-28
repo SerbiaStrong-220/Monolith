@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Server._Exodus.Mining.AutoMining; // Exodus finite natural bulk-mining deposits.
 using Content.Server.Salvage.Magnet;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Procedural;
@@ -280,6 +281,7 @@ public sealed partial class SalvageSystem
         {
             case AsteroidOffering asteroid:
                 var grid = _mapManager.CreateGridEntity(salvMap);
+                AddComp<BulkMiningDepositComponent>(grid); // Exodus: only the asteroid offer grants a natural deposit.
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, asteroid.Id, grid.Owner, grid.Comp, Vector2i.Zero, seed); // Frontier: added asteroid.Id - FIXME: value makes no sense.
                 break;
             case DebrisOffering debris:

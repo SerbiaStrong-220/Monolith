@@ -3,6 +3,8 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Shared._Exodus.Virology.Behaviors;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
@@ -20,7 +22,7 @@ public sealed partial class KeenHearingComponent : Component
     [DataField]
     public bool ManualOn;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? ToggleTime;
 }
 

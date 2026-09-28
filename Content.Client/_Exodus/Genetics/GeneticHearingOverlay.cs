@@ -12,11 +12,11 @@ using Robust.Shared.Timing;
 namespace Content.Client._Exodus.Genetics;
 
 /// <summary>A brief pulse using only nearby entities already available to this client.</summary>
-public sealed class GeneticHearingOverlay : Overlay
+public sealed partial class GeneticHearingOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly TransformSystem _transform;
     private readonly ContainerSystem _containers;

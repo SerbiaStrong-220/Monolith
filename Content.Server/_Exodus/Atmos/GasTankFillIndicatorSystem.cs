@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Atmos;
 
-public sealed class GasTankFillIndicatorSystem : EntitySystem
+public sealed partial class GasTankFillIndicatorSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
 

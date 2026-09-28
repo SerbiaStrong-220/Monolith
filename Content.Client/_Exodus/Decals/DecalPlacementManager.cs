@@ -39,7 +39,7 @@ public interface IDecalPlacementManager
     bool Toggle(Color color);
 }
 
-public sealed class DecalPlacementManager : IDecalPlacementManager
+public sealed partial class DecalPlacementManager : IDecalPlacementManager
 {
     [Dependency] private IConfigurationManager _cfg = default!;
 

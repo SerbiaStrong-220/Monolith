@@ -26,6 +26,7 @@ public sealed partial class FactionWarSystem : EntitySystem
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private GameTicker _ticker = default!;
     [Dependency] private SectorServiceSystem _sectorService = default!;
+    [Dependency] private FactionAlertLevelSystem _factionAlerts = default!;
 
     public bool IsRoundRunning => _ticker.RunLevel == GameRunLevel.InRound;
 
@@ -41,9 +42,16 @@ public sealed partial class FactionWarSystem : EntitySystem
         return true;
     }
 
-    public TimeSpan GetDeclarationAvailableAt(Entity<WarLevelComponent> state)
+    /// <summary>
+    /// Only an active code other than the configured starting code permits war declarations.
+    /// Pending transitions do not change this restriction.
+    /// </summary>
+    public bool CodeAllowsWar()
     {
-        return _ticker.RoundStartTimeSpan + state.Comp.DeclarationDelay;
+        return _factionAlerts.TryGetState(out var state) &&
+               _prototype.TryIndex(state.Comp.Prototype, out var prototype) &&
+               state.Comp.CurrentLevel != prototype.DefaultLevel &&
+               prototype.Levels.ContainsKey(state.Comp.CurrentLevel);
     }
 
     public void GetConfiguredTargets(
@@ -113,6 +121,14 @@ public sealed partial class FactionWarSystem : EntitySystem
         if (validation != WarDeclarationResult.Success)
             return validation;
 
+        if (IsAllied(state, declarer, target))
+        {
+            if (!force)
+                return WarDeclarationResult.AlreadyAllied;
+
+            RemoveAlliance(state, declarer, target);
+        }
+
         if (TryGetDeclaration(state, declarer, target, out _))
             return WarDeclarationResult.AlreadyAtWar;
 
@@ -121,8 +137,8 @@ public sealed partial class FactionWarSystem : EntitySystem
             if (!IsRoundRunning)
                 return WarDeclarationResult.RoundNotRunning;
 
-            if (_ticker.RoundDuration() < state.Comp.DeclarationDelay)
-                return WarDeclarationResult.TooEarly;
+            if (!CodeAllowsWar())
+                return WarDeclarationResult.CodeRestricted;
 
             if (TryGetWarCooldown(state, declarer, target, out var cooldown) &&
                 _ticker.RoundDuration() < cooldown.AvailableAtRoundTime)
@@ -130,6 +146,8 @@ public sealed partial class FactionWarSystem : EntitySystem
                 return WarDeclarationResult.PostWarCooldown;
             }
         }
+
+        CancelAllianceOffer(state, declarer, target);
 
         var roundTime = _ticker.RunLevel == GameRunLevel.InRound
             ? _ticker.RoundDuration()

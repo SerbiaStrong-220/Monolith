@@ -5,9 +5,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client._Exodus.Mining.Pipes;
 
-public sealed class MiningRefineryUiSystem : EntitySystem
+public sealed partial class MiningRefineryUiSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {

@@ -8,9 +8,9 @@ namespace Content.Client._Exodus.Actions;
 /// <summary>
 /// Shows the targeting cursor only for opted-in actions, independently of the held-item overlay.
 /// </summary>
-public sealed class ActionTargetingCursorSystem : EntitySystem
+public sealed partial class ActionTargetingCursorSystem : EntitySystem
 {
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
 
     private EntityQuery<ActionTargetingCursorComponent> _targetingCursors;
 

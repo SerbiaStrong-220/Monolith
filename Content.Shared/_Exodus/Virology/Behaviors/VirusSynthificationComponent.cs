@@ -9,6 +9,10 @@ namespace Content.Shared._Exodus.Virology.Behaviors;
 [RegisterComponent]
 public sealed partial class VirusSynthificationComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     /// <summary>Language granted.</summary>
     [DataField]
     public ProtoId<LanguagePrototype> Binary = "RobotTalk";
@@ -25,7 +29,7 @@ public sealed partial class VirusSynthificationComponent : Component
     [DataField]
     public bool OnlyBinary;
 
-    [ViewVariables]
+    [DataField]
     public EntityUid? LawsActionEntity;
 
     /// <summary>Blacklisted lawsets.</summary>
@@ -38,10 +42,10 @@ public sealed partial class VirusSynthificationComponent : Component
     };
 
     /// <summary>Lawset rolled deterministically, so a re-grant same lawset.</summary>
-    [ViewVariables]
+    [DataField]
     public ProtoId<SiliconLawsetPrototype>? RolledLawset;
 
-    [ViewVariables]
+    [DataField]
     public bool AddedLawsUi;
 
     /// <summary>Disables language overrides while restoring the host's languages.</summary>
@@ -49,6 +53,6 @@ public sealed partial class VirusSynthificationComponent : Component
     public bool Reverting;
 
     /// <summary>Language selected before we took over, re-selected on cure if still available.</summary>
-    [ViewVariables]
+    [DataField]
     public ProtoId<LanguagePrototype>? OriginalSelected;
 }

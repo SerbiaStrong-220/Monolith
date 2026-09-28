@@ -8,7 +8,7 @@ namespace Content.Client._Exodus.Atmos;
 /// <summary>
 /// A gas supply bar drawn over a hand or equipment slot.
 /// </summary>
-public sealed class GasTankFillBar : Control
+public sealed partial class GasTankFillBar : Control
 {
     [Dependency] private IEntityManager _entities = default!;
 

@@ -46,7 +46,8 @@ public sealed partial class AlertLevelComponent : Component
                 return false;
             }
 
-            return level.Selectable && !level.DisableSelection && !IsLevelLocked;
+            // Exodus: selectable restricts entry; disableSelection restricts leaving.
+            return !level.DisableSelection && !IsLevelLocked;
         }
     }
 }

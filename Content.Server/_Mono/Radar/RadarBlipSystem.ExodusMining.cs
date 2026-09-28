@@ -6,7 +6,7 @@ namespace Content.Server._Mono.Radar;
 // Exodus: include active mining beams in the existing, range-filtered radar report.
 public sealed partial class RadarBlipSystem
 {
-    [Dependency] private readonly SharedMapSystem _miningMap = default!;
+    [Dependency] private SharedMapSystem _miningMap = default!; // Exodus: support generated dependency injection.
 
     private EntityQuery<BulkAutoMiningEmitterComponent> _miningEmitters;
     private EntityQuery<MapGridComponent> _miningGrids;

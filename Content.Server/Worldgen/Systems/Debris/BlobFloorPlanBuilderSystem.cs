@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._Exodus.Mining.AutoMining; // Exodus finite natural bulk-mining deposits.
 using Content.Server.Worldgen.Components.Debris;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -84,6 +85,10 @@ public sealed partial class BlobFloorPlanBuilderSystem : BaseWorldSystem
         }
 
         _map.SetTiles(gridUid, grid, taken.Select(x => (x.Key, x.Value)).ToList());
+        // Exodus-begin finite natural bulk-mining deposits.
+        var depositGenerated = new BulkMiningDepositGeneratedEvent();
+        RaiseLocalEvent(gridUid, ref depositGenerated);
+        // Exodus-end
     }
 }
 

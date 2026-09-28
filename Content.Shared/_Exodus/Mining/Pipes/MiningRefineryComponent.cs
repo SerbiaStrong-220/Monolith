@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Materials;
 using Robust.Shared.GameStates;
@@ -23,6 +24,34 @@ public sealed partial class MiningRefineryComponent : Component
     /// <summary>Readings for the open interface; the gas mixture itself stays on the server.</summary>
     [ViewVariables, AutoNetworkedField]
     public MiningRefineryStorageState StorageState;
+
+    /// <summary>Part whose upgrades increase the liquid metal and exhaust capacities.</summary>
+    [DataField]
+    public ProtoId<MachinePartPrototype> MachinePartCapacity = "MatterBin";
+
+    /// <summary>Capacity multiplier for each part rating. Unlisted ratings use their numeric rating as the multiplier.</summary>
+    [DataField]
+    public Dictionary<int, float> CapacityMultipliers = new();
+
+    /// <summary>Current multiplier; saved machines may already be map-initialized when loaded.</summary>
+    [DataField]
+    public float CapacityMultiplier = 1f;
+
+    /// <summary>Original liquid metal limit, captured before upgrades and saved to prevent compounding on load.</summary>
+    [DataField]
+    public int? BaseSlurryCapacity;
+
+    /// <summary>Original exhaust volume, captured before upgrades and preserved when saving the machine.</summary>
+    [DataField]
+    public float? BaseExhaustVolume;
+
+    /// <summary>Original corrosion threshold, captured before upgrades and preserved when saving the machine.</summary>
+    [DataField]
+    public float? BaseCorrosionThreshold;
+
+    /// <summary>Original explosion threshold, captured before upgrades and preserved when saving the machine.</summary>
+    [DataField]
+    public float? BaseExplosionThreshold;
 
     [DataField]
     public float ExhaustMolesPerBatch = 10f;

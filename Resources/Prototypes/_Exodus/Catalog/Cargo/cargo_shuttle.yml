@@ -9,6 +9,26 @@
   group: market
 
 - type: cargoProduct
+  id: ShuttleNebulaThrusterLarge
+  icon:
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster_large.rsi
+    state: base
+  product: CrateEngineeringNebulaThrusterLarge
+  cost: 20000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleNebulaThrusterCorner
+  icon:
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster_corner.rsi
+    state: base
+  product: CrateEngineeringNebulaThrusterCorner
+  cost: 8000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
   id: ShuttleTurretDravon
   icon:
     sprite: _Mono/Objects/ShuttleWeapons/dravon.rsi

@@ -1,0 +1,127 @@
+- type: entity
+  id: OrganSpecialBrain
+  parent: OrganHumanBrain
+  name: Special brain
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: brain
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: brain
+  - type: StaticPrice
+    price: 90000
+
+- type: entity
+  id: OrganSpecialEyes
+  parent: OrganHumanEyes
+  name: Special eyes
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: eyes
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: eyes
+  - type: StaticPrice
+    price: 90000
+  - type: Organ
+    onAdd:
+    - type: NightVision
+      relayOverlay: false
+      action: ActionSpecialNightVision
+      enabled: true
+      phosphorColor: '#B5E0D8'
+      lightingColor: '#FFFFFF32'
+    - type: ThermalVision
+      toggleAction: ActionSpecialThermalVision
+      isEquipment: false
+
+- type: entity
+  id: OrganSpecialHeart
+  parent: OrganAsakimHeart
+  name: Special heart
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: heart
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: heart
+  - type: StaticPrice
+    price: 90000
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [Animal]
+    groups:
+    - id: Medicine
+    - id: Cryogenic
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganSpecialLungs
+  parent: OrganAnimalLungs
+  name: Special lungs
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: lungs
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: lungs
+  - type: StaticPrice
+    price: 90000
+  - type: Organ
+    onAdd:
+    - type: PressureBreathing
+      minimumPressure: 20
+
+- type: entity
+  id: OrganSpecialStomach
+  parent: OrganAnimalStomach
+  name: Special stomach
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: stomach
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: stomach
+  - type: StaticPrice
+    price: 90000
+
+- type: entity
+  id: OrganSpecialLiver
+  parent: OrganAnimalLiver
+  name: Special liver
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: liver
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: liver
+  - type: StaticPrice
+    price: 90000
+
+- type: entity
+  id: OrganSpecialKidneys
+  parent: OrganHumanKidneys
+  name: Special kidneys
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    layers:
+    - state: kidneys
+  - type: Item
+    sprite: _Exodus/Mobs/Special/organs.rsi
+    heldPrefix: kidneys
+  - type: StaticPrice
+    price: 90000

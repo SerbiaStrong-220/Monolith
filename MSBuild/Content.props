@@ -9,4 +9,8 @@
     <IsPackable Condition="'$(IsPackable)' == ''">false</IsPackable>
     <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
   </PropertyGroup>
+  <!-- Exodus: require source-generated dependency injection in content projects. -->
+  <ItemGroup>
+    <GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)_Exodus/DependencyInjection.globalconfig" />
+  </ItemGroup>
 </Project>

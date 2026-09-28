@@ -1,0 +1,60 @@
+# Exodus: only these four concern banners can establish corporate territory for their member brands.
+- type: entity
+  id: CompanyTerritoryBannerAugok
+  parent: CompanyTerritoryBannerBase
+  name: concern-banner-augok-name
+  description: concern-banner-claim-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/concern-banner.rsi
+    state: augok-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerAugokNode
+  - type: CompanyTerritoryBanner
+    company: Augok
+
+- type: entity
+  id: CompanyTerritoryBannerDrakeBlackArmsUSA
+  parent: CompanyTerritoryBannerBase
+  name: concern-banner-drake-black-arms-usa-name
+  description: concern-banner-claim-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/concern-banner.rsi
+    state: drake-black-arms-usa-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerDrakeBlackArmsUSANode
+  - type: CompanyTerritoryBanner
+    company: DrakeBlackArmsUSA
+
+- type: entity
+  id: CompanyTerritoryBannerHorizonHarmonyHammerMatter
+  parent: CompanyTerritoryBannerBase
+  name: concern-banner-horizon-harmony-hammer-matter-name
+  description: concern-banner-claim-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/concern-banner.rsi
+    state: horizon-harmony-hammer-matter-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerHorizonHarmonyHammerMatterNode
+  - type: CompanyTerritoryBanner
+    company: HorizonHarmonyHammerMatter
+
+- type: entity
+  id: CompanyTerritoryBannerBuno
+  parent: CompanyTerritoryBannerBase
+  name: concern-banner-buno-name
+  description: concern-banner-claim-description
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Decoration/concern-banner.rsi
+    state: buno-banner
+  - type: Construction
+    graph: CompanyTerritoryBannersGraph
+    node: CompanyTerritoryBannerBunoNode
+  - type: CompanyTerritoryBanner
+    company: Buno

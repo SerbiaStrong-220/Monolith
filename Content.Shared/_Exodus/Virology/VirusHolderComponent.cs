@@ -10,6 +10,13 @@ public sealed partial class VirusHolderComponent : Component
 
     // Keep the exact instances we own so curing a virus cannot remove an innate or externally replaced component.
     public Dictionary<string, GrantedVirusComponent> GrantedComponents = [];
+
+    /// <summary>Populated only during map serialization; live strains stay in nullspace.</summary>
+    [DataField]
+    public List<VirusSavedState> SavedViruses = [];
+
+    [DataField]
+    public HashSet<string> SavedGrantedComponents = [];
 }
 
 public sealed record GrantedVirusComponent(IComponent Instance, IComponent Template);

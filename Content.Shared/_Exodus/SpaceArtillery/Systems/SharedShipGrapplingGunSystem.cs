@@ -9,7 +9,7 @@ using System.Numerics;
 
 namespace Content.Shared._Exodus.SpaceArtillery;
 
-public abstract class SharedShipGrapplingGunSystem : EntitySystem
+public abstract partial class SharedShipGrapplingGunSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;

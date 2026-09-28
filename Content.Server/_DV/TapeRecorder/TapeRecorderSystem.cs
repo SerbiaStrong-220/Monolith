@@ -15,12 +15,12 @@ using System.Text;
 
 namespace Content.Server._DV.TapeRecorder;
 
-public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
+public sealed partial class TapeRecorderSystem : SharedTapeRecorderSystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly PaperSystem _paper = default!;
+    [Dependency] private ChatSystem _chat = default!; // Exodus: generated dependency injection.
+    [Dependency] private HandsSystem _hands = default!; // Exodus: generated dependency injection.
+    [Dependency] private IPrototypeManager _proto = default!; // Exodus: generated dependency injection.
+    [Dependency] private PaperSystem _paper = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

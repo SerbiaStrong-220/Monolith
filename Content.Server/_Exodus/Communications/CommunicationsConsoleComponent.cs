@@ -1,21 +1,18 @@
 using Content.Shared._Exodus.Communications;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._Exodus.Communications;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
 {
-    public float UIUpdateAccumulator = 0f;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextUiUpdate;
 
-    /// <summary>
-    /// Remaining cooldown between making announcements.
-    /// </summary>
-    [DataField]
-    public float AnnouncementCooldownRemaining;
-
-    [DataField]
-    public float BroadcastCooldownRemaining;
+    /// <summary>Earliest time another announcement can be sent from this console.</summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextAnnouncementAt;
 
     /// <summary>
     /// Fluent ID for the announcement title

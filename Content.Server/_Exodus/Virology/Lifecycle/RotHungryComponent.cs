@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
@@ -30,6 +32,27 @@ public sealed partial class RotHungryComponent : Component
 
     [DataField]
     public TimeSpan RetreatDuration = TimeSpan.FromSeconds(5);
+
+    /// <summary>Look far enough ahead to keep running for the entire retreat window.</summary>
+    [DataField]
+    public float RetreatRange = 30f;
+
+    /// <summary>Extend the route before steering starts slowing down at its destination.</summary>
+    [DataField]
+    public float RetreatAdvanceRange = 3f;
+
+    [DataField]
+    public TimeSpan RetreatRepathInterval = TimeSpan.FromSeconds(1);
+
+    [DataField]
+    public Vector2 RetreatDirection;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextRetreatUpdate;
+
+    public CancellationTokenSource? RetreatCancellation;
+
+    public Task<PathResultEvent>? RetreatPath;
 
     [DataField]
     public TimeSpan PursuitMemory = TimeSpan.FromSeconds(2);
@@ -68,10 +91,10 @@ public sealed partial class RotHungryComponent : Component
     [DataField]
     public float DetourRange = 10f;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? ObstructionSince;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan DetourUntil;
 
     [DataField]
@@ -133,27 +156,27 @@ public sealed partial class RotHungryComponent : Component
     [DataField]
     public EntityUid? Pursuer;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan RetreatUntil;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan PursuitUntil;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextThink;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextRegeneration;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan LastMoved;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextStuckAttack;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextNestSearch;
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextShelterSearch;
 }

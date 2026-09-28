@@ -4,7 +4,7 @@ using Content.Shared.GameTicking.Components;
 
 namespace Content.Server._FarHorizons.StarSystem;
 
-public sealed class StarSystemRuleSystem : GameRuleSystem<StarSystemRuleComponent>
+public sealed partial class StarSystemRuleSystem : GameRuleSystem<StarSystemRuleComponent> // Exodus: generated dependency injection.
 {
     [Dependency] private StarSystemMapSystem _starSystem = default!;
 

@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared._Exodus.Virology;
 using Content.Shared._Exodus.Virology.Lifecycle;
@@ -18,6 +19,7 @@ namespace Content.Server._Exodus.Virology.Lifecycle;
 
 public sealed partial class RotSatedSystem
 {
+    [Dependency] private BodySystem _body = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -30,6 +32,7 @@ public sealed partial class RotSatedSystem
     private void InitializeConsumption()
     {
         SubscribeLocalEvent<RotSatedComponent, RotSatedConsumeEvent>(OnConsumed);
+        SubscribeLocalEvent<RotSatedComponent, RotSatedStripEvent>(OnStripped);
         SubscribeLocalEvent<RotSatedComponent, RefreshMovementSpeedModifiersEvent>(OnSpeed);
     }
 
@@ -46,13 +49,15 @@ public sealed partial class RotSatedSystem
             && _transformQuery.TryComp(corpse, out var transform) && transform.GridUid == Transform(ent).GridUid
             && transform.MapUid == Transform(ent).MapUid
             && (!TryComp<RotCorpseClaimComponent>(corpse, out var claim)
-                || claim.Consumer == ent.Owner || TerminatingOrDeleted(claim.Consumer));
+                || !claim.Running || claim.Consumer == ent.Owner || TerminatingOrDeleted(claim.Consumer));
     }
 
     private void FindCorpse(Entity<RotSatedComponent> ent)
     {
+        if (!TryComp<RotDefenderComponent>(ent, out var defender))
+            return;
         _bodies.Clear();
-        _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(ent), ent.Comp.SearchRange, _bodies);
+        _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(ent), defender.SearchRange, _bodies);
         var closest = float.MaxValue;
         foreach (var (uid, _) in _bodies)
         {
@@ -71,19 +76,18 @@ public sealed partial class RotSatedSystem
     {
         if (ent.Comp.Corpse is { } corpse && TryComp<RotCorpseClaimComponent>(corpse, out var claim)
             && claim.Consumer == ent.Owner)
-            RemComp<RotCorpseClaimComponent>(corpse);
+            RemCompDeferred<RotCorpseClaimComponent>(corpse);
         ent.Comp.Corpse = null;
     }
 
-    /// <returns>Whether an item still needs to be removed before eating.</returns>
+    /// <returns>Whether one worn or held item was successfully removed.</returns>
     private bool TryStrip(Entity<RotSatedComponent> ent, EntityUid corpse)
     {
         var slots = _inventory.GetSlotEnumerator(corpse);
         while (slots.NextItem(out _, out var definition))
         {
             // Native unequip drops dependent slots and preserves the contents of backpacks and pockets.
-            _inventory.TryUnequip(ent, corpse, definition.Name, silent: true, force: true);
-            return true;
+            return _inventory.TryUnequip(ent, corpse, definition.Name, silent: true, force: true);
         }
         if (!TryComp<HandsComponent>(corpse, out var hands))
             return false;
@@ -91,8 +95,7 @@ public sealed partial class RotSatedSystem
         {
             if (hand.HeldEntity is not { } held)
                 continue;
-            _hands.TryDrop(corpse, held, checkActionBlocker: false, handsComp: hands);
-            return true;
+            return _hands.TryDrop(corpse, held, checkActionBlocker: false, handsComp: hands);
         }
         return false;
     }
@@ -113,6 +116,58 @@ public sealed partial class RotSatedSystem
         return true;
     }
 
+    public bool TryPrepareConsumption(Entity<RotSatedComponent> ent, EntityUid corpse)
+    {
+        if (ent.Comp.Activity != RotSatedActivity.None || ent.Comp.StripDoAfter != null
+            || _mobs.IsDead(ent) || !CanConsume(ent, corpse) || _containers.IsEntityInContainer(ent)
+            || !_interaction.InRangeUnobstructed(ent.Owner, corpse, 1.2f))
+            return false;
+        ReleaseCorpse(ent);
+        if (TryComp<RotDefenderComponent>(ent, out var defender))
+            _navigation.Stop((ent, defender));
+        ent.Comp.Corpse = corpse;
+        EnsureComp<RotCorpseClaimComponent>(corpse).Consumer = ent;
+        if (IsBare(corpse))
+        {
+            ent.Comp.PreparingConsumption = false;
+            return TryStartConsumption(ent, corpse);
+        }
+        var args = new DoAfterArgs(EntityManager, ent, ent.Comp.StripInterval,
+            new RotSatedStripEvent(), ent, target: corpse)
+        {
+            NeedHand = false,
+            BreakOnMove = true,
+            BreakOnDamage = true,
+            DistanceThreshold = 1.2f,
+            MultiplyDelay = false,
+            CancelDuplicate = false,
+        };
+        _steering.Unregister(ent);
+        ent.Comp.PreparingConsumption = _doAfter.TryStartDoAfter(args, out ent.Comp.StripDoAfter);
+        if (!ent.Comp.PreparingConsumption)
+            ReleaseCorpse(ent);
+        return ent.Comp.PreparingConsumption;
+    }
+
+    private void OnStripped(Entity<RotSatedComponent> ent, ref RotSatedStripEvent args)
+    {
+        if (args.Handled || ent.Comp.StripDoAfter != args.DoAfter.Id)
+            return;
+        ent.Comp.StripDoAfter = null;
+        if (args.Cancelled || args.Target is not { } corpse || !CanConsume(ent, corpse) || _mobs.IsDead(ent)
+            || !_interaction.InRangeUnobstructed(ent.Owner, corpse, 1.2f))
+        {
+            CancelConsumption(ent);
+            return;
+        }
+        if (!IsBare(corpse) && !TryStrip(ent, corpse))
+        {
+            CancelConsumption(ent);
+            return;
+        }
+        args.Handled = true;
+    }
+
     public bool TryStartConsumption(Entity<RotSatedComponent> ent, EntityUid corpse)
     {
         if (ent.Comp.Activity != RotSatedActivity.None || ent.Comp.ConsumeDoAfter != null || _mobs.IsDead(ent)
@@ -120,7 +175,7 @@ public sealed partial class RotSatedSystem
             || !_interaction.InRangeUnobstructed(ent.Owner, corpse, 1.2f))
             return false;
 
-        RemComp<NPCMeleeCombatComponent>(ent);
+        RemCompDeferred<NPCMeleeCombatComponent>(ent);
         _steering.Unregister(ent);
         var args = new DoAfterArgs(EntityManager, ent, ent.Comp.ConsumeDuration,
             new RotSatedConsumeEvent(), ent, target: corpse)
@@ -132,6 +187,8 @@ public sealed partial class RotSatedSystem
         };
         if (!_doAfter.TryStartDoAfter(args, out var id))
             return false;
+        if (ent.Comp.Corpse != corpse)
+            ReleaseCorpse(ent);
         ent.Comp.Corpse = corpse;
         EnsureComp<RotCorpseClaimComponent>(corpse).Consumer = ent;
         ent.Comp.ConsumeDoAfter = id;
@@ -147,7 +204,8 @@ public sealed partial class RotSatedSystem
             return;
         ent.Comp.ConsumeDoAfter = null;
         if (args.Cancelled || args.Args.Target is not { } corpse || _mobs.IsDead(ent)
-            || !CanConsume(ent, corpse) || !IsBare(corpse))
+            || !CanConsume(ent, corpse) || !IsBare(corpse) || _containers.IsEntityInContainer(ent)
+            || !_interaction.InRangeUnobstructed(ent.Owner, corpse, 1.2f))
         {
             CancelConsumption(ent);
             return;
@@ -155,7 +213,8 @@ public sealed partial class RotSatedSystem
 
         args.Handled = true;
         ReleaseCorpse(ent);
-        QueueDel(corpse);
+        // Preserve organs and let the native brain removal transfer the victim's mind.
+        _body.GibBody(corpse, gibOrgans: true);
         ent.Comp.PendingLarvae = ent.Comp.LarvaePerCorpse;
         SetActivity(ent, RotSatedActivity.Rising, ent.Comp.RiseState, ent.Comp.RiseDuration);
     }
@@ -207,6 +266,10 @@ public sealed partial class RotSatedSystem
 
     private void CancelConsumption(Entity<RotSatedComponent> ent)
     {
+        var strip = ent.Comp.StripDoAfter;
+        ent.Comp.StripDoAfter = null;
+        ent.Comp.PreparingConsumption = false;
+        _doAfter.Cancel(strip);
         var id = ent.Comp.ConsumeDoAfter;
         ent.Comp.ConsumeDoAfter = null;
         _doAfter.Cancel(id);
@@ -225,6 +288,8 @@ public sealed partial class RotSatedSystem
             if (_interaction.InRangeUnobstructed(ent, offset, 0.8f))
                 coordinates = offset;
             var child = Spawn(ent.Comp.Larva, coordinates);
+            var spawned = new VirusOffspringSpawnedEvent(child);
+            RaiseLocalEvent(ent, ref spawned);
             if (TryComp<RotLarvaComponent>(child, out var larva)
                 && TryComp<VirusOffspringComponent>(ent, out var parent) && parent.Strain is { } strain)
                 larva.Strain = VirusLifecycleSystem.FreshInfection(strain);

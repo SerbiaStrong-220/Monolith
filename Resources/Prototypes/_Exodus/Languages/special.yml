@@ -1,0 +1,9 @@
+- type: language
+  id: AntiTraeka
+  isVisibleLanguage: true
+  speech:
+    color: '#83c8c7'
+  obfuscation: !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 4
+    replacement: [кх, рии, тха, сс, хр, акх, ии, кса, эх, рха, кхи, цц]

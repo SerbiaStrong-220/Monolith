@@ -228,22 +228,27 @@ namespace Content.Server.Construction
                             if (used.Contains(entity))
                                 continue;
 
+                            // Exodus-begin: entity ingredients consume a single unit of an item stack.
+                            if (!_stackItems.TryTakeOne(entity, out var ingredient))
+                                continue;
+                            // Exodus-end
+
                             // Dump out any stored entities in used entity
-                            if (TryComp<StorageComponent>(entity, out var storage))
+                            if (TryComp<StorageComponent>(ingredient, out var storage)) // Exodus
                             {
                                 _container.EmptyContainer(storage.Container);
                             }
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
-                                if (!_container.Insert(entity, container))
+                                if (!_container.Insert(ingredient, container)) // Exodus
                                     continue;
                             }
-                            else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
+                            else if (!_container.Insert(ingredient, GetContainer(arbitraryStep.Store))) // Exodus
                                 continue;
 
                             handled = true;
-                            used.Add(entity);
+                            used.Add(ingredient); // Exodus
                             break;
                         }
 

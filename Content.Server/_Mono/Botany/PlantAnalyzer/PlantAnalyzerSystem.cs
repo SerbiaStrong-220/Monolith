@@ -17,13 +17,13 @@ namespace Content.Server._Mono.Botany.PlantAnalyzer;
 
 public sealed partial class PlantAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!; // Exodus: generated dependency injection.
+    [Dependency] private IPrototypeManager _prototypeManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private ItemToggleSystem _toggle = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedDoAfterSystem _doAfter = default!; // Exodus: generated dependency injection.
+    [Dependency] private UserInterfaceSystem _ui = default!; // Exodus: generated dependency injection.
+    [Dependency] private TransformSystem _transform = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

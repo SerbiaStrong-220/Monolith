@@ -11,7 +11,7 @@ namespace Content.Server.Radio;
 /// <param name="LanguageObfuscatedChatMsg">The message to display when the Speaker cannot understand "language"</param>
 /// </summary>
 [ByRefEvent]
-public readonly record struct RadioReceiveEvent(
+public readonly partial record struct RadioReceiveEvent( // Exodus: shared recipient tracking for allied channels.
     EntityUid MessageSource,
     RadioChannelPrototype Channel,
     ChatMessage OriginalChatMsg,

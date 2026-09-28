@@ -8,6 +8,10 @@ namespace Content.Shared._Exodus.Virology.Behaviors;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VirusDogVitalityComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     /// <summary>Extra crit threshold added on top of the base one (additive, stacks with other modifiers).</summary>
     [DataField, AutoNetworkedField]
     public FixedPoint2 Threshold;
@@ -17,9 +21,9 @@ public sealed partial class VirusDogVitalityComponent : Component
     public FixedPoint2 DeathThresholdOffset;
 
     /// <summary>Set when removed so modifier refresh and drops bonus.</summary>
-    [ViewVariables]
+    [DataField]
     public FixedPoint2 AppliedCriticalBonus;
 
-    [ViewVariables]
+    [DataField]
     public FixedPoint2 AppliedDeathBonus;
 }

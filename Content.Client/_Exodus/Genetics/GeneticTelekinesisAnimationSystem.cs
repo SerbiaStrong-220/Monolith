@@ -8,14 +8,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Genetics;
 
-public sealed class GeneticTelekinesisAnimationSystem : EntitySystem
+public sealed partial class GeneticTelekinesisAnimationSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprites = default!;
-    [Dependency] private readonly SpriteTreeSystem _spriteTree = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEyeManager _eye = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SpriteSystem _sprites = default!;
+    [Dependency] private SpriteTreeSystem _spriteTree = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
 
     public override void Initialize()
     {

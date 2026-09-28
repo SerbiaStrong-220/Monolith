@@ -19,6 +19,15 @@ namespace Content.Server.Body.Components
         public static string DefaultBloodSolutionName = "bloodstream";
         public static string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
 
+        // Exodus-begin
+        /// <summary>
+        /// Defer solution creation and blood filling until map initialization, so map-savable
+        /// entities do not generate blood or DNA while loading an uninitialized map.
+        /// </summary>
+        [DataField]
+        public bool InitializeOnMapInit;
+        // Exodus-end
+
         /// <summary>
         /// The next time that blood level will be updated and bloodloss damage dealt.
         /// </summary>

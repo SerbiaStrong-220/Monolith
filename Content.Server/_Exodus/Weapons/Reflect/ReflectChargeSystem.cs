@@ -4,7 +4,7 @@ using Content.Shared.Charges.Systems;
 
 namespace Content.Server._Exodus.Weapons.Reflect;
 
-public sealed class ReflectChargeSystem : EntitySystem
+public sealed partial class ReflectChargeSystem : EntitySystem
 {
     [Dependency] private SharedChargesSystem _charges = default!;
 

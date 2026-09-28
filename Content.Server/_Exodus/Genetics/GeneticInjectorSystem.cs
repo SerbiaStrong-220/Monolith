@@ -7,13 +7,13 @@ using Content.Shared.Popups;
 
 namespace Content.Server._Exodus.Genetics;
 
-public sealed class GeneticInjectorSystem : EntitySystem
+public sealed partial class GeneticInjectorSystem : EntitySystem
 {
-    [Dependency] private readonly GeneticsSystem _genetics = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private DamageableSystem _damage = default!;
 
     public override void Initialize()
     {

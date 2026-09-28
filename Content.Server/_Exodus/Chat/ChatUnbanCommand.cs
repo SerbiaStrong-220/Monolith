@@ -7,7 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server._Exodus.Chat;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class ChatUnbanCommand : LocalizedCommands
+public sealed partial class ChatUnbanCommand : LocalizedCommands
 {
     [Dependency] private IBanManager _bans = default!;
     [Dependency] private ILogManager _logs = default!;

@@ -10,7 +10,7 @@ namespace Content.Server._Exodus.Silicons.StationAi;
 /// <summary>
 /// Keeps an AI's ghost role reserved while its player controls a remote body.
 /// </summary>
-public sealed class StationAiGhostRoleSystem : EntitySystem
+public sealed partial class StationAiGhostRoleSystem : EntitySystem
 {
     [Dependency] private GhostRoleSystem _ghostRoles = default!;
     [Dependency] private SharedStationAiSystem _stationAi = default!;

@@ -1,5 +1,6 @@
 materials-mining-slurry = liquid metal
 materials-unit-mining-slurry = portions
+bulk-mining-refinery-upgrade-capacity = Liquid metal and exhaust capacity
 bulk-mining-refinery-ui-slurry = Liquid metal reserves
 bulk-mining-refinery-ui-slurry-amount = {$stored} / {$capacity} portions
 bulk-mining-refinery-ui-slurry-unlimited = {$stored} portions · unlimited capacity

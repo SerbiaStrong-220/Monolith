@@ -15,14 +15,14 @@ namespace Content.Server._Exodus.Worldgen;
 /// Round-start placement shared by ordinary and nebula POIs. No update loop or runtime following.
 /// Deferred requests are processed before nebulas and again after their roots have spawned.
 /// </summary>
-public sealed class RelativePoiSpawnSystem : EntitySystem
+public sealed partial class RelativePoiSpawnSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private MapLoaderSystem _loader = default!;
 
     public void Begin(MapId map)
     {

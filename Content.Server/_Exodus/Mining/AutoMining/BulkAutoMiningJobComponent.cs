@@ -34,6 +34,10 @@ public sealed partial class BulkAutoMiningJobComponent : Component
 public sealed class BulkAutoMiningGridJob
 {
     public EntityUid GridUid;
+
+    /// <summary>Lost before completion. Retain the entry to keep both search cursors stable.</summary>
+    public bool Invalidated;
+
     public Queue<Vector2i> Tiles = new();
     public HashSet<Vector2i> RemainingTiles = new();
 

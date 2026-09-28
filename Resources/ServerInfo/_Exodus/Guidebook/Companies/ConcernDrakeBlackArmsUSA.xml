@@ -1,0 +1,16 @@
+<Document>
+  [head=1][locid="concern-drake-black-arms-usa-name"][/head]
+  [locid="concern-drake-black-arms-usa-description"]
+  [head=2][locid="guidebook-corporation-banner-heading"][/head]
+  [locid="guidebook-corporation-banner-usage"]
+  <Box>
+    <GuideEntityEmbed Entity="CompanyTerritoryBannerDrakeBlackArmsUSA"/>
+  </Box>
+  [head=2][locid="guidebook-corporation-tech-disk-heading"][/head]
+  [locid="guidebook-corporation-tech-disk-acquisition"]
+  <Box>
+    <GuideEntityEmbed Entity="TechDiskDrakeBlackArmsUSA"/>
+  </Box>
+  [locid="concern-tech-disk-drake-black-arms-usa-description"]
+  [locid="guidebook-corporation-tech-disk-usage"]
+</Document>

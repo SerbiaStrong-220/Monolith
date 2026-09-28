@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "states": [
+    {
+      "name": "head",
+      "directions": 1
+    },
+    {
+      "name": "torso",
+      "directions": 1
+    },
+    {
+      "name": "l_arm",
+      "directions": 1
+    },
+    {
+      "name": "r_arm",
+      "directions": 1
+    },
+    {
+      "name": "l_hand",
+      "directions": 1
+    },
+    {
+      "name": "r_hand",
+      "directions": 1
+    },
+    {
+      "name": "l_leg",
+      "directions": 1
+    },
+    {
+      "name": "r_leg",
+      "directions": 1
+    },
+    {
+      "name": "l_foot",
+      "directions": 1
+    },
+    {
+      "name": "r_foot",
+      "directions": 1
+    },
+    {
+      "name": "tail",
+      "directions": 1
+    }
+  ]
+}

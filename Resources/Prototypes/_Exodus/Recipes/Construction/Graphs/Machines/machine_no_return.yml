@@ -1,0 +1,22 @@
+- type: constructionGraph
+  id: MachineNoReturn
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity
+
+  - node: machine
+    entity: !type:BoardNodeEntity { container: machine_board }
+    edges:
+    - to: start
+      completed:
+      - !type:RaiseEvent
+        event: !type:MachineDeconstructedEvent
+        broadcast: false
+      conditions:
+      - !type:EntityAnchored
+      - !type:WirePanel
+      steps:
+      - tool: Prying
+        doAfter: 30

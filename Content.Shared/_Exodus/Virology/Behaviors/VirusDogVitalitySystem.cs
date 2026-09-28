@@ -23,11 +23,12 @@ public sealed partial class VirusDogVitalitySystem : EntitySystem
 
     private void OnStartup(Entity<VirusDogVitalityComponent> ent, ref ComponentStartup args)
     {
-        if (_net.IsClient
+        if (_net.IsClient || ent.Comp.StateApplied
             || !_mobThreshold.TryGetThresholdForState(ent, MobState.Critical, out var critical)
             || !_mobThreshold.TryGetThresholdForState(ent, MobState.Dead, out var dead))
             return;
 
+        ent.Comp.StateApplied = true;
         var newDead = dead.Value + ent.Comp.Threshold + ent.Comp.DeathThresholdOffset;
         var newCritical = FixedPoint2.Min(critical.Value + ent.Comp.Threshold, newDead - FixedPoint2.New(0.01));
         ent.Comp.AppliedCriticalBonus = newCritical - critical.Value;

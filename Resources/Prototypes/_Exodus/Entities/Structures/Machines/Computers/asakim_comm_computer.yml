@@ -29,7 +29,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-asakim
     color: "#ff3db1"
-    canSetAlertLevel: false
+    canSetAlertLevel: true # Exodus: faction consoles set the sector code as well as the faction code.
     global: true
     sound: /Audio/_Exodus/Asakim/Announcements/asakim_announcement.ogg
   - type: DeviceNetwork

@@ -11,8 +11,8 @@ namespace Content.Server._Exodus.Genetics;
 
 public sealed partial class GeneticAbilitiesSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly ViewSubscriberSystem _views = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private ViewSubscriberSystem _views = default!;
 
     private void InitializeViewing()
     {

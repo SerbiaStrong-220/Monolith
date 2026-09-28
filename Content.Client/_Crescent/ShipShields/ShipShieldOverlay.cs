@@ -1,3 +1,4 @@
+using Content.Client._Exodus.ShipShields; // Exodus ship shield ripples
 using Content.Shared._Crescent.ShipShields;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Graphics;
@@ -14,7 +15,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client._Crescent.ShipShields;
 
-public sealed class ShipShieldOverlay : Overlay
+public sealed partial class ShipShieldOverlay : Overlay // Exodus ship shield ripples
 {
     private readonly FixtureSystem _fixture;
     private readonly SharedPhysicsSystem _physics;
@@ -35,6 +36,7 @@ public sealed class ShipShieldOverlay : Overlay
         _shieldTexture = _resourceCache.GetTexture("/Textures/_Crescent/ShipShields/shieldtex.png");
 
         _unshadedShader = prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
+        _rippleRenderer = new ShipShieldRippleRenderer(prototypeManager); // Exodus ship shield ripples
 
         ZIndex = 8;
     }
@@ -81,6 +83,14 @@ public sealed class ShipShieldOverlay : Overlay
         ShipShieldVisualsComponent visuals,
         List<DrawVertexUV2D> verts)
     {
+        // Exodus-begin ship shield ripples
+        if (visuals.RippleWidth > 0f)
+        {
+            DrawRipplingShield(handle, chain, transform, visuals);
+            return;
+        }
+        // Exodus-end
+
         var layerCount = Math.Max(1, visuals.LayerCount);
         var layerThickness = Math.Max(0.05f, visuals.LayerThickness);
         var layerGap = Math.Max(0f, visuals.LayerGap);
@@ -112,7 +122,7 @@ public sealed class ShipShieldOverlay : Overlay
 
         // Mono Update: Just use transform.Position for world position already for corners
 
-        for (int i = 1; i < chain.Count; i++)
+        for (var i = 1; i < chain.Vertices.Length; i++) // Exodus include the final segment of the shield contour
         {
             var leftBaseVertex = VertexToWorldPos(chain.Vertices[i - 1], transform);
             var rightBaseVertex = VertexToWorldPos(chain.Vertices[i], transform);

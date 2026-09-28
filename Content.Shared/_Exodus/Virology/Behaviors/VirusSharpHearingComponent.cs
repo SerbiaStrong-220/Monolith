@@ -14,7 +14,7 @@ public sealed partial class VirusSharpHearingComponent : Component
     [DataField]
     public EntProtoId Action = "ActionToggleKeenHearing";
 
-    [ViewVariables]
+    [DataField]
     public EntityUid? ActionEntity;
 
     [ViewVariables]

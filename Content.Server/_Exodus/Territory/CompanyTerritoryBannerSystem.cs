@@ -1,5 +1,6 @@
 using Content.Server._Mono.Radar;
 using Content.Server.Popups;
+using Content.Shared._Exodus.Company;
 using Content.Shared._Exodus.Territory;
 using Content.Shared._Mono.Company;
 using Content.Shared._Mono.Radar;
@@ -19,20 +20,24 @@ namespace Content.Server._Exodus.Territory;
 /// Handles corporate banners as an independent layer of territory control.
 /// A corporation may expand only inside the faction territory selected by its first active banner.
 /// </summary>
-public sealed class CompanyTerritoryBannerSystem : EntitySystem
+public sealed partial class CompanyTerritoryBannerSystem : EntitySystem
 {
     private const float ActiveCompanyBannerRadarBlipHalfSize = 1.5f;
     private const float ActiveCompanyBannerRadarEdgeVisibilityPadding = 10_000f;
 
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
-    [Dependency] private readonly GridTerritorySystem _territory = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private SharedIdCardSystem _idCard = default!;
+    [Dependency] private GridTerritorySystem _territory = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+
+    private EntityQuery<CompanyTerritoryBannerComponent> _bannerQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _bannerQuery = GetEntityQuery<CompanyTerritoryBannerComponent>();
 
         SubscribeLocalEvent<CompanyTerritoryBannerComponent, AnchorAttemptEvent>(OnAnchorAttempt);
         SubscribeLocalEvent<CompanyTerritoryBannerComponent, BeforeAnchoredEvent>(OnBeforeAnchored);
@@ -47,6 +52,9 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
 
     private void OnExamined(Entity<CompanyTerritoryBannerComponent> ent, ref ExaminedEvent args)
     {
+        if (!ent.Comp.CanClaim)
+            return;
+
         if (ent.Comp.Company is not { } company)
         {
             args.PushMarkup(Loc.GetString("company-territory-banner-examine-unassigned") + "\n");
@@ -69,6 +77,32 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
 
     private void OnStartup(Entity<CompanyTerritoryBannerComponent> ent, ref ComponentStartup args)
     {
+        if (!ent.Comp.CanClaim)
+        {
+            ClearActiveBannerBlip(ent.Owner);
+            TryUnclaim(ent);
+            if (TryResolveTerritory(ent.Owner, out var grid, out var territory) &&
+                territory.ActiveCorporateBanner is null &&
+                territory.CorporateController is { } controller &&
+                ent.Comp.Company is { } brand &&
+                CompanyConsolidation.Normalize(controller.Id, _prototypes) == CompanyConsolidation.Normalize(brand.Id, _prototypes))
+            {
+                _territory.ClearCorporateController(grid);
+            }
+
+            return;
+        }
+
+        if (ent.Comp.Company is { } legacyCompany)
+        {
+            var concern = CompanyConsolidation.Normalize(legacyCompany.Id, _prototypes);
+            if (concern != legacyCompany.Id)
+            {
+                ent.Comp.Company = new ProtoId<CompanyPrototype>(concern);
+                Dirty(ent);
+            }
+        }
+
         if (Transform(ent).Anchored)
             TryClaim(ent, false);
     }
@@ -109,6 +143,7 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
         }
 
         if (!TryComp<CompanyTerritoryBannerComponent>(activeBanner, out var banner) ||
+            !banner.CanClaim ||
             banner.TerritoryFaction != newFaction)
         {
             ClearActiveBannerBlip(activeBanner);
@@ -134,7 +169,7 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
 
     private void OnAnchorAttempt(Entity<CompanyTerritoryBannerComponent> ent, ref AnchorAttemptEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || !ent.Comp.CanClaim)
             return;
 
         if (!TryResolveTerritory(ent.Owner, out var grid, out var territory))
@@ -169,7 +204,7 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
 
         if (territory.ActiveCorporateBanner is { } activeBanner && activeBanner != ent.Owner)
         {
-            if (Exists(activeBanner) && HasComp<CompanyTerritoryBannerComponent>(activeBanner))
+            if (_bannerQuery.TryGetComponent(activeBanner, out var activeClaim) && activeClaim.CanClaim)
             {
                 DenyAnchor(ent.Owner, args.User, "company-territory-banner-already-claimed", args);
                 return;
@@ -204,6 +239,9 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
 
     private void OnBeforeAnchored(Entity<CompanyTerritoryBannerComponent> ent, ref BeforeAnchoredEvent args)
     {
+        if (!ent.Comp.CanClaim)
+            return;
+
         var pendingActor = EnsureComp<PendingTerritoryClaimActorComponent>(ent.Owner);
         pendingActor.Actor = args.User;
     }
@@ -253,6 +291,9 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
         bool showPopup = true,
         EntityUid? actor = null)
     {
+        if (!banner.Comp.CanClaim)
+            return;
+
         if (!TryResolveTerritory(banner.Owner, out var grid, out var territory))
             return;
 
@@ -270,7 +311,7 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
 
         if (territory.ActiveCorporateBanner is { } activeBanner && activeBanner != banner.Owner)
         {
-            if (Exists(activeBanner) && HasComp<CompanyTerritoryBannerComponent>(activeBanner))
+            if (_bannerQuery.TryGetComponent(activeBanner, out var activeClaim) && activeClaim.CanClaim)
             {
                 if (showPopup)
                     _popup.PopupEntity(Loc.GetString("company-territory-banner-already-claimed"), banner.Owner);
@@ -425,13 +466,14 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
         ProtoId<CompanyPrototype> company,
         out ProtoId<TerritoryFactionPrototype> faction)
     {
-        var query = EntityManager.AllEntityQueryEnumerator<GridTerritoryComponent>();
+        var query = AllEntityQuery<GridTerritoryComponent>();
         while (query.MoveNext(out _, out var territory))
         {
             if (territory.CorporateController != company ||
                 territory.ActiveCorporateBanner is not { } activeBanner ||
                 territory.ControllingFaction is not { } controllingFaction ||
-                !TryComp<CompanyTerritoryBannerComponent>(activeBanner, out var banner) ||
+                !_bannerQuery.TryGetComponent(activeBanner, out var banner) ||
+                !banner.CanClaim ||
                 banner.Company != company ||
                 banner.TerritoryFaction != controllingFaction)
             {
@@ -451,7 +493,7 @@ public sealed class CompanyTerritoryBannerSystem : EntitySystem
         if (_idCard.TryFindIdCard(user, out var idCard) &&
             idCard.Comp.CompanyName.Id != "None")
         {
-            company = idCard.Comp.CompanyName;
+            company = new ProtoId<CompanyPrototype>(CompanyConsolidation.Normalize(idCard.Comp.CompanyName.Id, _prototypes));
             return true;
         }
 

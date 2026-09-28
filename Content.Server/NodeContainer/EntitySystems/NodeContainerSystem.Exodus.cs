@@ -10,7 +10,7 @@ namespace Content.Server.NodeContainer.EntitySystems;
 /// </summary>
 public sealed partial class NodeContainerSystem
 {
-    [Dependency] private readonly SharedMapSystem _offsetPipeMaps = default!;
+    [Dependency] private SharedMapSystem _offsetPipeMaps = default!; // Exodus: support generated dependency injection.
 
     private void UpdateOffsetPipePorts(Entity<NodeContainerComponent> ent)
     {

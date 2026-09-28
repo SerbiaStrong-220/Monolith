@@ -26,6 +26,6 @@ public sealed partial class RotLarvaFeedOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         if (_entities.TryGetComponent<RotLarvaComponent>(owner, out var larva))
-            larva.NextBite = null;
+            _entities.System<RotNestSystem>().CancelFeeding((owner, larva));
     }
 }

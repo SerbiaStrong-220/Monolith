@@ -3,6 +3,7 @@ using Content.Server._Exodus.Communications;
 using Content.Server._Mono.AlertLevel;
 using Content.Server.Popups;
 using Content.Shared._Exodus.Biocode;
+using Content.Shared._Exodus.Communications;
 using Content.Shared._Exodus.Territory;
 using Content.Shared._Exodus.War;
 using Content.Shared.Access.Systems;
@@ -12,11 +13,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.War;
 
-public sealed class WarDeclarationConsoleSystem : EntitySystem
+public sealed partial class WarDeclarationConsoleSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private BiocodeSystem _biocode = default!;
     [Dependency] private CommunicationsConsoleSystem _communications = default!;
+    [Dependency] private FactionAlertLevelSystem _factionAlerts = default!;
     [Dependency] private FactionWarSystem _factionWar = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PopupSystem _popup = default!;
@@ -29,8 +31,14 @@ public sealed class WarDeclarationConsoleSystem : EntitySystem
         SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleOfferPeaceMessage>(OnOfferPeace);
         SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleAcceptPeaceMessage>(OnAcceptPeace);
         SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleWithdrawPeaceMessage>(OnWithdrawPeace);
+        SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleOfferAllianceMessage>(OnOfferAlliance);
+        SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleAcceptAllianceMessage>(OnAcceptAlliance);
+        SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleWithdrawAllianceMessage>(OnWithdrawAlliance);
+        SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleBreakAllianceMessage>(OnBreakAlliance);
+        SubscribeLocalEvent<WarDeclarationConsoleComponent, CommunicationsConsoleSelectFactionAlertLevelMessage>(OnSelectFactionAlertLevelMessage);
         SubscribeLocalEvent<WarLevelChangedEvent>(OnWarLevelChanged);
         SubscribeLocalEvent<PeaceOfferChangedEvent>(OnPeaceOfferChanged);
+        SubscribeLocalEvent<AllianceOfferChangedEvent>(OnAllianceChanged);
     }
 
     private void OnDeclareWar(
@@ -52,15 +60,23 @@ public sealed class WarDeclarationConsoleSystem : EntitySystem
         var popup = result switch
         {
             WarDeclarationResult.Success => null,
-            WarDeclarationResult.TooEarly => "war-declaration-too-early",
+            WarDeclarationResult.CodeRestricted => "war-declaration-code-restricted",
             WarDeclarationResult.PostWarCooldown => "war-declaration-post-war-cooldown",
             WarDeclarationResult.AlreadyAtWar => "war-declaration-already-active",
+            WarDeclarationResult.AlreadyAllied => "war-declaration-already-allied",
             WarDeclarationResult.RoundNotRunning => "war-declaration-round-not-running",
             _ => "war-declaration-failed",
         };
 
         if (popup == null)
             return;
+
+        if (result == WarDeclarationResult.PostWarCooldown &&
+            _factionWar.TryGetWarLock(warState, ent.Comp.Faction, args.TargetFaction, out _, out var reason) &&
+            reason == WarLockReason.AllianceBreak)
+        {
+            popup = "war-declaration-alliance-break-cooldown";
+        }
 
         var availableAt = _factionWar.GetDeclarationAvailableAt(warState, ent.Comp.Faction, args.TargetFaction);
         _popup.PopupEntity(
@@ -109,6 +125,86 @@ public sealed class WarDeclarationConsoleSystem : EntitySystem
         ShowPeaceResult(ent, actor, result, "war-peace-offer-withdrawn");
     }
 
+    private void OnOfferAlliance(Entity<WarDeclarationConsoleComponent> ent, ref CommunicationsConsoleOfferAllianceMessage args)
+    {
+        if (args.Actor is not { Valid: true } actor ||
+            !TryValidateConsoleAction(ent, actor, args.TargetFaction, out var state))
+        {
+            return;
+        }
+
+        var result = _factionWar.OfferAlliance(ent.Comp.Faction, args.TargetFaction, actor, ent.Owner);
+        var availableAt = _factionWar.TryGetAllianceEntry(state, ent.Comp.Faction, args.TargetFaction, out var entry)
+            ? _factionWar.GetAllianceOfferAvailableAt(entry)
+            : TimeSpan.Zero;
+
+        ShowAllianceResult(ent, actor, result, "war-alliance-offer-sent", availableAt);
+    }
+
+    private void OnAcceptAlliance(Entity<WarDeclarationConsoleComponent> ent, ref CommunicationsConsoleAcceptAllianceMessage args)
+    {
+        if (args.Actor is not { Valid: true } actor ||
+            !TryValidateConsoleAction(ent, actor, args.TargetFaction, out _))
+        {
+            return;
+        }
+
+        var result = _factionWar.AcceptAlliance(ent.Comp.Faction, args.TargetFaction, args.OfferId, actor, ent.Owner);
+        ShowAllianceResult(ent, actor, result, "war-alliance-offer-accepted");
+    }
+
+    private void OnWithdrawAlliance(Entity<WarDeclarationConsoleComponent> ent, ref CommunicationsConsoleWithdrawAllianceMessage args)
+    {
+        if (args.Actor is not { Valid: true } actor ||
+            !TryValidateConsoleAction(ent, actor, args.TargetFaction, out _))
+        {
+            return;
+        }
+
+        var result = _factionWar.WithdrawAlliance(ent.Comp.Faction, args.TargetFaction, args.OfferId, actor, ent.Owner);
+        ShowAllianceResult(ent, actor, result, "war-alliance-offer-withdrawn");
+    }
+
+    private void OnBreakAlliance(Entity<WarDeclarationConsoleComponent> ent, ref CommunicationsConsoleBreakAllianceMessage args)
+    {
+        if (args.Actor is not { Valid: true } actor ||
+            !TryValidateConsoleAction(ent, actor, args.TargetFaction, out _))
+        {
+            return;
+        }
+
+        var result = _factionWar.BreakAlliance(ent.Comp.Faction, args.TargetFaction, actor, ent.Owner);
+        ShowAllianceResult(ent, actor, result, "war-alliance-broken");
+    }
+
+    private void OnSelectFactionAlertLevelMessage(
+        Entity<WarDeclarationConsoleComponent> ent,
+        ref CommunicationsConsoleSelectFactionAlertLevelMessage message)
+    {
+        if (message.Actor is not { Valid: true } mob)
+            return;
+
+        if (!IsAuthorized(ent, mob))
+        {
+            _popup.PopupCursor(Loc.GetString("war-declaration-no-access"), message.Actor, PopupType.Medium);
+            return;
+        }
+
+        if (_factionAlerts.TrySetLevel(message.Level, out var result, mob, ent))
+            return;
+
+        var popup = result switch
+        {
+            FactionAlertLevelSetResult.RoundNotRunning => "faction-alert-round-not-running",
+            FactionAlertLevelSetResult.TransitionInProgress => "faction-alert-transition-in-progress",
+            FactionAlertLevelSetResult.Cooldown => "faction-alert-cooldown",
+            FactionAlertLevelSetResult.AlreadyActive => "faction-alert-already-active",
+            FactionAlertLevelSetResult.NotNextLevel => "faction-alert-not-next-level",
+            _ => "faction-alert-failed",
+        };
+        _popup.PopupEntity(Loc.GetString(popup), ent, mob, PopupType.Medium);
+    }
+
     private bool TryValidateConsoleAction(
         Entity<WarDeclarationConsoleComponent> ent,
         EntityUid actor,
@@ -148,6 +244,30 @@ public sealed class WarDeclarationConsoleSystem : EntitySystem
             PeaceOfferResult.NotOfferSender => "war-peace-not-offer-sender",
             PeaceOfferResult.NotOfferRecipient => "war-peace-not-offer-recipient",
             _ => "war-peace-failed",
+        };
+        _popup.PopupEntity(Loc.GetString(message, ("time", FormatRemaining(availableAt))), ent, actor, PopupType.Medium);
+    }
+
+    private void ShowAllianceResult(
+        Entity<WarDeclarationConsoleComponent> ent,
+        EntityUid actor,
+        AllianceOfferResult result,
+        string successMessage,
+        TimeSpan availableAt = default)
+    {
+        var message = result switch
+        {
+            AllianceOfferResult.Success => successMessage,
+            AllianceOfferResult.RoundNotRunning => "war-alliance-round-not-running",
+            AllianceOfferResult.AtWar => "war-alliance-at-war",
+            AllianceOfferResult.AlreadyAllied => "war-alliance-already-allied",
+            AllianceOfferResult.AlreadyPending => "war-alliance-already-pending",
+            AllianceOfferResult.Cooldown => "war-alliance-offer-cooldown",
+            AllianceOfferResult.OfferUnavailable => "war-alliance-offer-unavailable",
+            AllianceOfferResult.NotOfferSender => "war-alliance-not-offer-sender",
+            AllianceOfferResult.NotOfferRecipient => "war-alliance-not-offer-recipient",
+            AllianceOfferResult.NotAllied => "war-alliance-not-allied",
+            _ => "war-alliance-failed",
         };
         _popup.PopupEntity(Loc.GetString(message, ("time", FormatRemaining(availableAt))), ent, actor, PopupType.Medium);
     }
@@ -200,6 +320,11 @@ public sealed class WarDeclarationConsoleSystem : EntitySystem
     }
 
     private void OnPeaceOfferChanged(ref PeaceOfferChangedEvent args)
+    {
+        _communications.UpdateCommsConsoleInterface();
+    }
+
+    private void OnAllianceChanged(ref AllianceOfferChangedEvent args)
     {
         _communications.UpdateCommsConsoleInterface();
     }

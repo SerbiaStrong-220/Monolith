@@ -153,7 +153,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
     {
         var parent = Transform(uid).ParentUid;
 
-        if (TryComp(parent, out ActorComponent? actor))
+        if (TryComp(parent, out ActorComponent? actor) && args.HeadsetRecipients.Add(parent)) // Exodus: one headset receive event per character.
         {
             // Einstein Engines - Language begin
             var canUnderstand = _language.CanUnderstand(Transform(uid).ParentUid, args.Language.ID);
@@ -161,7 +161,11 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
             {
                 Message = canUnderstand ? args.OriginalChatMsg : args.LanguageObfuscatedChatMsg
             };
-            _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
+            // Exodus-begin: intrinsic radios may already have delivered this chat message.
+            var firstReception = args.ChatRecipients.Add(parent);
+            if (firstReception)
+                _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
+            // Exodus-end
 
             // Einstein Engines - Language end
 
@@ -169,6 +173,11 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
             var ev = new RadioMessageHeardEvent(uid, msg, args.Channel);
             RaiseLocalEvent(Transform(uid).ParentUid, ref ev);
             // Mono - Borers end
+
+            // Exodus-begin: preserve headset listeners above while deduplicating noise and TTS.
+            if (!firstReception)
+                return;
+            // Exodus-end
 
             // Send radio noise event to client
             var radioNoiseEvent = new RadioNoiseEvent(GetNetEntity(uid), args.Channel.ID);

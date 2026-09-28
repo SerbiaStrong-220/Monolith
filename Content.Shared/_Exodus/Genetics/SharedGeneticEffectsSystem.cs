@@ -18,14 +18,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Genetics;
 
-public sealed class SharedGeneticEffectsSystem : EntitySystem
+public sealed partial class SharedGeneticEffectsSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public const string TelekinesisRangeProvider = "GeneticTelekinesis";
 

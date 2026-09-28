@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Exodus.Shuttles.Components; // Exodus configurable nozzles
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -44,6 +45,7 @@ public sealed partial class ThrusterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeNozzles(); // Exodus configurable nozzles
         SubscribeLocalEvent<ThrusterComponent, ActivateInWorldEvent>(OnActivateThruster);
         SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
         SubscribeLocalEvent<ThrusterComponent, MapInitEvent>(OnMapInit);
@@ -104,6 +106,14 @@ public sealed partial class ThrusterSystem : EntitySystem
             if (IsHandledExternally(uid))
                 return;
 
+            // Exodus-begin configurable nozzles
+            if (_nozzlesQuery.TryComp(uid, out var nozzles))
+            {
+                ExamineNozzles((uid, nozzles), args);
+                return;
+            }
+            // Exodus-end
+
             if (component.Type == ThrusterType.Linear &&
                 EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
                 xform.Anchored)
@@ -157,6 +167,9 @@ public sealed partial class ThrusterSystem : EntitySystem
                         if (!thrusterQuery.TryGetComponent(ent.Value, out var thruster) || !thruster.RequireSpace)
                             continue;
 
+                        if (_nozzlesQuery.HasComp(ent.Value)) // Exodus: exposure is checked for every configured nozzle.
+                            continue;
+
                         // Work out if the thruster is facing this direction
                         var xform = xformQuery.GetComponent(ent.Value);
                         var direction = xform.LocalRotation.ToWorldVec();
@@ -202,6 +215,14 @@ public sealed partial class ThrusterSystem : EntitySystem
     {
         if (IsHandledExternally(uid)) // Exodus
             return;
+
+        // Exodus-begin configurable nozzles
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+        {
+            RefreshNozzleThruster((uid, component, nozzles));
+            return;
+        }
+        // Exodus-end
 
         // TODO: Disable visualizer for old direction
         // TODO: Don't make them rotatable and make it require anchoring.
@@ -277,6 +298,14 @@ public sealed partial class ThrusterSystem : EntitySystem
 
     private void OnAnchorChange(EntityUid uid, ThrusterComponent component, ref AnchorStateChangedEvent args)
     {
+        // Exodus-begin keep exposure tracking up to date even while blocked or unpowered.
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+        {
+            RefreshNozzleThruster((uid, component, nozzles));
+            return;
+        }
+        // Exodus-end
+
         if (args.Anchored && CanEnable(uid, component))
         {
             EnableThruster(uid, component);
@@ -338,6 +367,14 @@ public sealed partial class ThrusterSystem : EntitySystem
     {
         if (IsHandledExternally(uid)) // Exodus
             return;
+
+        // Exodus-begin configurable nozzles
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+        {
+            RefreshNozzleThruster((uid, component, nozzles));
+            return;
+        }
+        // Exodus-end
 
         if (component.IsOn ||
             !Resolve(uid, ref xform))
@@ -448,6 +485,13 @@ public sealed partial class ThrusterSystem : EntitySystem
     /// </summary>
     public void DisableThruster(EntityUid uid, ThrusterComponent component, EntityUid? gridId, TransformComponent? xform = null, Angle? angle = null)
     {
+        // Exodus-begin configurable nozzles
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+        {
+            DisableNozzleThruster((uid, component, nozzles));
+            return;
+        }
+        // Exodus-end
         if (!component.IsOn ||
             !Resolve(uid, ref xform))
         {
@@ -521,6 +565,11 @@ public sealed partial class ThrusterSystem : EntitySystem
         if (!component.RequireSpace)
             return true;
 
+        // Exodus-begin configurable nozzles
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+            return GetAvailableNozzles((uid, component, nozzles), xform) != DirectionFlag.None;
+        // Exodus-end
+
         return NozzleExposed(xform);
     }
 
@@ -564,6 +613,13 @@ public sealed partial class ThrusterSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, ThrusterComponent component, ref StartCollideEvent args)
     {
+        // Exodus-begin configurable nozzles
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+        {
+            OnNozzleStartCollide((uid, component, nozzles), ref args);
+            return;
+        }
+        // Exodus-end
         if (args.OurFixtureId != BurnFixture)
             return;
 
@@ -572,6 +628,13 @@ public sealed partial class ThrusterSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, ThrusterComponent component, ref EndCollideEvent args)
     {
+        // Exodus-begin configurable nozzles
+        if (_nozzlesQuery.TryComp(uid, out var nozzles))
+        {
+            OnNozzleEndCollide((uid, component, nozzles), ref args);
+            return;
+        }
+        // Exodus-end
         if (args.OurFixtureId != BurnFixture)
             return;
 
@@ -597,6 +660,13 @@ public sealed partial class ThrusterSystem : EntitySystem
             if (!thrusterQuery.TryGetComponent(uid, out var comp))
                 continue;
 
+            // Exodus-begin configurable nozzles
+            if (_nozzlesQuery.TryComp(uid, out var nozzles))
+            {
+                UpdateNozzleFiring((uid, comp, nozzles));
+                continue;
+            }
+            // Exodus-end
             comp.Firing = true;
             appearanceQuery.TryGetComponent(uid, out var appearance);
             _appearance.SetData(uid, ThrusterVisualState.Thrusting, true, appearance);
@@ -622,6 +692,13 @@ public sealed partial class ThrusterSystem : EntitySystem
             if (!thrusterQuery.TryGetComponent(uid, out var comp))
                 continue;
 
+            // Exodus-begin configurable nozzles
+            if (_nozzlesQuery.TryComp(uid, out var nozzles))
+            {
+                UpdateNozzleFiring((uid, comp, nozzles));
+                continue;
+            }
+            // Exodus-end
             appearanceQuery.TryGetComponent(uid, out var appearance);
             comp.Firing = false;
             _appearance.SetData(uid, ThrusterVisualState.Thrusting, false, appearance);

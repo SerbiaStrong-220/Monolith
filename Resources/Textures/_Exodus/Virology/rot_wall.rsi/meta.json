@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "closed"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "opening",
+      "delays": [
+        [
+          0.12,
+          0.12,
+          0.12,
+          0.12
+        ]
+      ]
+    },
+    {
+      "name": "closing",
+      "delays": [
+        [
+          0.12,
+          0.12,
+          0.12,
+          0.12
+        ]
+      ]
+    },
+    {
+      "name": "growing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dying",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

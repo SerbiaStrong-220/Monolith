@@ -40,7 +40,10 @@ public sealed partial class BulkAutoMiningSystem
             var stored = _materials.GetTotalMaterialAmount(emitter, localOnly: true);
             var capacity = _storageQuery.TryComp(emitter, out var storage) ? storage.StorageLimit ?? 0 : 0;
             var consoleName = emitterComp.ConsoleName is { } name ? Loc.GetString(name) : null;
-            lasers.Add(new BulkAutoMiningLaserState(GetNetEntity(emitter), Name(emitter), hp, maxHp, status, stored, capacity, consoleName));
+            var warmup = GetWarmup((emitter, emitterComp));
+            var yieldBonus = GetWarmupYieldBonus((emitter, emitterComp), warmup);
+            lasers.Add(new BulkAutoMiningLaserState(GetNetEntity(emitter), Name(emitter), hp, maxHp, status, stored, capacity,
+                consoleName, (float)warmup, (float)yieldBonus));
         }
 
         // Mining does not display docking or grappling controls. Avoid collecting them across every ship.

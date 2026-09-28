@@ -12,7 +12,7 @@ namespace Content.Shared._Exodus.Biocode;
 /// not match the whitelist into the guarded slots. Catches every insertion (surgery included) via
 /// the container attempt event.
 /// </summary>
-public sealed class BodySlotInsertGuardSystem : EntitySystem
+public sealed partial class BodySlotInsertGuardSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedBodySystem _body = default!;

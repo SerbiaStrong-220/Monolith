@@ -12,7 +12,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server._Exodus.LifeInsurance;
 
-public sealed class LifeInsuranceScannerSystem : EntitySystem
+public sealed partial class LifeInsuranceScannerSystem : EntitySystem
 {
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;

@@ -19,6 +19,10 @@ public sealed partial class VirusGlowSystem : EntitySystem
 
     private void OnStartup(Entity<VirusGlowComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.StateApplied)
+            return;
+        ent.Comp.StateApplied = true;
+
         if (TryComp<PointLightComponent>(ent, out var existing))
         {
             ent.Comp.Added = false;

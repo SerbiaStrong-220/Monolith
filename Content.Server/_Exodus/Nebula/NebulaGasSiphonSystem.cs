@@ -33,20 +33,20 @@ namespace Content.Server._Exodus.Nebula;
 /// <summary>
 /// Collects gas into a pipe while the shuttle moves through dense nebula with clear space along both ends of the siphon.
 /// </summary>
-public sealed class NebulaGasSiphonSystem : EntitySystem
+public sealed partial class NebulaGasSiphonSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;

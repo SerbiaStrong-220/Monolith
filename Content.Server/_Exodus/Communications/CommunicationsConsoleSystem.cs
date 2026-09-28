@@ -1,3 +1,4 @@
+using Content.Server._Exodus.War;
 using Content.Server._NF.SectorServices; // Frontier
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
@@ -6,8 +7,8 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
-using Content.Server.Station.Systems;
 using Content.Shared._Exodus.Communications;
+using Content.Shared._Exodus.War;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -20,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.SS220.TTS;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Communications;
 
@@ -30,21 +32,24 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
     [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SectorServiceSystem _sectorService = default!; // Frontier: sector-wide alerts
+    [Dependency] private FactionAlertLevelSystem _factionAlerts = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    private const float UIUpdateInterval = 5.0f;
+    private static readonly TimeSpan UiUpdateInterval = TimeSpan.FromSeconds(5);
 
     public override void Initialize()
     {
         // All events that refresh the BUI
         SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-        SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((uid, comp, _) => UpdateCommsConsoleInterface(uid, comp));
         SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
         SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(_ => OnGenericBroadcastEvent());
+        SubscribeLocalEvent<FactionAlertLevelChangedEvent>(OnFactionAlertLevelChanged);
+        SubscribeLocalEvent<SectorCodeTransitionChangedEvent>(OnSectorCodeTransitionChanged);
+        SubscribeLocalEvent<CommunicationsConsoleComponent, BoundUIOpenedEvent>(OnUiOpened);
 
         // Messages from the BUI
         SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
@@ -60,56 +65,32 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
         var query = EntityQueryEnumerator<CommunicationsConsoleComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            // TODO refresh the UI in a less horrible way
-            if (comp.AnnouncementCooldownRemaining >= 0f)
-            {
-                comp.AnnouncementCooldownRemaining -= frameTime;
-            }
-
-            comp.UIUpdateAccumulator += frameTime;
-
-            if (comp.UIUpdateAccumulator < UIUpdateInterval)
+            if (_timing.CurTime < comp.NextUiUpdate)
                 continue;
 
-            comp.UIUpdateAccumulator -= UIUpdateInterval;
+            comp.NextUiUpdate += UiUpdateInterval;
 
             if (_uiSystem.IsUiOpen(uid, CommunicationsConsoleUiKey.Key))
-                UpdateCommsConsoleInterface(uid, comp);
+                UpdateCommsConsoleInterface((uid, comp));
         }
 
         base.Update(frameTime);
     }
 
-    public void OnCommunicationsConsoleMapInit(EntityUid uid, CommunicationsConsoleComponent comp, MapInitEvent args)
+    private void OnCommunicationsConsoleMapInit(Entity<CommunicationsConsoleComponent> ent, ref MapInitEvent args)
     {
-        comp.AnnouncementCooldownRemaining = comp.InitialDelay;
+        ent.Comp.NextAnnouncementAt = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.InitialDelay);
+        ent.Comp.NextUiUpdate = _timing.CurTime + UiUpdateInterval;
     }
 
-    /// <summary>
-    /// Update the UI of every comms console.
-    /// </summary>
     private void OnGenericBroadcastEvent()
     {
-        var query = EntityQueryEnumerator<CommunicationsConsoleComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            UpdateCommsConsoleInterface(uid, comp);
-        }
+        UpdateCommsConsoleInterface();
     }
 
-    /// <summary>
-    /// Updates all comms consoles belonging to the station that the alert level was set on
-    /// </summary>
-    /// <param name="args">Alert level changed event arguments</param>
     private void OnAlertLevelChanged(AlertLevelChangedEvent args)
     {
-        var query = EntityQueryEnumerator<CommunicationsConsoleComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            // var entStation = _stationSystem.GetOwningStation(uid); // Frontier: sector-wide alerts
-            // if (args.Station == entStation) // Frontier: sector-wide alerts
-            UpdateCommsConsoleInterface(uid, comp);
-        }
+        UpdateCommsConsoleInterface();
     }
 
     /// <summary>
@@ -120,20 +101,24 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
         var query = EntityQueryEnumerator<CommunicationsConsoleComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            UpdateCommsConsoleInterface(uid, comp);
+            if (_uiSystem.IsUiOpen(uid, CommunicationsConsoleUiKey.Key))
+                UpdateCommsConsoleInterface((uid, comp));
         }
     }
 
     /// <summary>
     /// Updates the UI for a particular comms console.
     /// </summary>
-    public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp)
+    public void UpdateCommsConsoleInterface(Entity<CommunicationsConsoleComponent> ent)
     {
-        //var stationUid = _stationSystem.GetOwningStation(uid); // Frontier: sector-wide alerts
+        var (uid, comp) = ent;
         var stationUid = _sectorService.GetServiceEntity(); // Frontier: sector-wide alerts
         List<string>? levels = null;
-        string currentLevel = default!;
+        var currentLevel = string.Empty;
         float currentDelay = 0;
+        string? pendingAlert = null;
+        var pendingAlertAt = TimeSpan.Zero;
+        var currentAlertColor = Color.White;
 
         if (stationUid.Valid) // Frontier: != null < .Valid
         {
@@ -154,21 +139,33 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
 
                 currentLevel = alertComp.CurrentLevel;
                 currentDelay = _alertLevelSystem.GetAlertLevelDelay(stationUid, alertComp); // Frontier: stationUid.Value<stationUid
+                pendingAlert = alertComp.PendingLevel;
+                pendingAlertAt = alertComp.PendingAt;
+                if (alertComp.AlertLevels.Levels.TryGetValue(currentLevel, out var currentDetail))
+                    currentAlertColor = currentDetail.Color;
             }
         }
+
+        FactionAlertLevelState? factionAlerts = null;
+        if (HasComp<WarDeclarationConsoleComponent>(uid))
+            _factionAlerts.TryCopyState(out factionAlerts);
 
         _uiSystem.SetUiState(uid, CommunicationsConsoleUiKey.Key, new CommunicationsConsoleInterfaceState(
             CanAnnounce(comp),
             levels,
             currentLevel,
             currentDelay,
-            BuildWarDeclarationState(uid)
+            BuildWarDeclarationState(uid),
+            factionAlerts,
+            pendingAlert,
+            pendingAlertAt,
+            currentAlertColor
         ));
     }
 
-    private static bool CanAnnounce(CommunicationsConsoleComponent comp)
+    private bool CanAnnounce(CommunicationsConsoleComponent comp)
     {
-        return comp.AnnouncementCooldownRemaining <= 0f;
+        return _timing.CurTime >= comp.NextAnnouncementAt;
     }
 
     private bool CanUse(EntityUid user, EntityUid console)
@@ -180,12 +177,13 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
         return true;
     }
 
-    private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
+    private void OnSelectAlertLevelMessage(Entity<CommunicationsConsoleComponent> ent, ref CommunicationsConsoleSelectAlertLevelMessage message)
     {
+        var (uid, comp) = ent;
         if (message.Actor is not { Valid: true } mob)
             return;
 
-        if (!comp.CanSetAlertLevel)
+        if (!comp.CanSetAlertLevel || string.IsNullOrWhiteSpace(message.Level))
             return;
 
         if (!CanUse(mob, uid))
@@ -194,18 +192,34 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
             return;
         }
 
-        var stationUid = _stationSystem.GetOwningStation(uid);
-        if (stationUid != null)
-        {
-            _alertLevelSystem.SetLevel(stationUid.Value, message.Level, true, true);
-        }
+        var sector = _sectorService.GetServiceEntity();
+        if (sector.Valid)
+            _alertLevelSystem.SetLevel(sector, message.Level, true, true);
     }
 
-    private void OnAnnounceMessage(EntityUid uid, CommunicationsConsoleComponent comp,
-        CommunicationsConsoleAnnounceMessage message)
+    private void OnUiOpened(Entity<CommunicationsConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
+        UpdateCommsConsoleInterface(ent);
+    }
+
+    private void OnSectorCodeTransitionChanged(ref SectorCodeTransitionChangedEvent args)
+    {
+        OnGenericBroadcastEvent();
+    }
+
+    private void OnFactionAlertLevelChanged(ref FactionAlertLevelChangedEvent args)
+    {
+        OnGenericBroadcastEvent();
+    }
+
+    private void OnAnnounceMessage(Entity<CommunicationsConsoleComponent> ent, ref CommunicationsConsoleAnnounceMessage message)
+    {
+        var (uid, comp) = ent;
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
         var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxLength);
+        if (string.IsNullOrWhiteSpace(msg))
+            return;
+
         var author = Loc.GetString("comms-console-announcement-unknown-sender");
         var voiceId = string.Empty;
         if (message.Actor is { Valid: true } mob)
@@ -231,8 +245,8 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
             }
         }
 
-        comp.AnnouncementCooldownRemaining = comp.Delay;
-        UpdateCommsConsoleInterface(uid, comp);
+        comp.NextAnnouncementAt = _timing.CurTime + TimeSpan.FromSeconds(comp.Delay);
+        UpdateCommsConsoleInterface((uid, comp));
 
         var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Actor);
         RaiseLocalEvent(ref ev);
@@ -253,11 +267,11 @@ public sealed partial class CommunicationsConsoleSystem : EntitySystem
         _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color, voiceId: voiceId);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
-
     }
 
-    private void OnBroadcastMessage(EntityUid uid, CommunicationsConsoleComponent component, CommunicationsConsoleBroadcastMessage message)
+    private void OnBroadcastMessage(Entity<CommunicationsConsoleComponent> ent, ref CommunicationsConsoleBroadcastMessage message)
     {
+        var (uid, component) = ent;
         if (!TryComp<DeviceNetworkComponent>(uid, out var net))
             return;
 

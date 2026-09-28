@@ -6,10 +6,10 @@ using Robust.Shared.Network;
 
 namespace Content.Shared._Exodus.Body;
 
-public sealed class HealthThresholdModifierSystem : EntitySystem
+public sealed partial class HealthThresholdModifierSystem : EntitySystem
 {
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

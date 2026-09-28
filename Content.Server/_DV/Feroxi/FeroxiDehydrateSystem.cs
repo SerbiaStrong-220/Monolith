@@ -5,9 +5,9 @@ using Content.Shared.Nutrition.Components;
 
 namespace Content.Server._DV.Feroxi;
 
-public sealed class FeroxiDehydrateSystem : EntitySystem
+public sealed partial class FeroxiDehydrateSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private BodySystem _body = default!; // Exodus: generated dependency injection.
 
     public override void Update(float frameTime) /// Goob start, reverted this section back to what it was on DV (Durks change broke things)
     {

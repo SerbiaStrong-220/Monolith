@@ -17,10 +17,6 @@ public sealed class FactionPeaceTest
     {
         await WithWarState((entities, wars, state, ticker) =>
         {
-            state.Comp.DeclarationDelay = TimeSpan.FromHours(2);
-            Assert.That(wars.TryDeclareWar("TSFMC", "PDV"), Is.EqualTo(WarDeclarationResult.TooEarly));
-            state.Comp.DeclarationDelay = TimeSpan.Zero;
-
             Assert.That(wars.TryDeclareWar("TSFMC", "PDV"), Is.EqualTo(WarDeclarationResult.Success));
             Assert.That(wars.TryDeclareWar("TSFMC", "Khsira"), Is.EqualTo(WarDeclarationResult.Success));
             Assert.That(wars.TryOfferPeace("PDV", "TSFMC"), Is.EqualTo(PeaceOfferResult.Success));
@@ -102,6 +98,64 @@ public sealed class FactionPeaceTest
     }
 
     [Test]
+    public async Task AllianceBlocksWarUntilItIsBroken()
+    {
+        await WithWarState((entities, wars, state, ticker) =>
+        {
+            Assert.That(wars.OfferAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.TryGetState(out state), Is.True);
+            Assert.That(state.Comp.AllianceOffers, Has.Count.EqualTo(1));
+            var offerId = state.Comp.AllianceOffers[0].Offer!.Id;
+
+            Assert.That(wars.AcceptAlliance("TSFMC", "PDV", offerId), Is.EqualTo(AllianceOfferResult.NotOfferRecipient));
+            Assert.That(wars.TryDeclareWar("TSFMC", "PDV"), Is.EqualTo(WarDeclarationResult.Success));
+            Assert.That(wars.AcceptAlliance("PDV", "TSFMC", offerId), Is.EqualTo(AllianceOfferResult.OfferUnavailable));
+            Assert.That(wars.TryEndWar("TSFMC", "PDV", force: true, announce: false), Is.EqualTo(WarDeclarationResult.Success));
+            state.Comp.WarCooldowns.Clear();
+
+            Assert.That(wars.OfferAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.Success));
+            offerId = state.Comp.AllianceOffers[0].Offer!.Id;
+            Assert.That(wars.AcceptAlliance("PDV", "TSFMC", offerId), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.IsAllied(state, "PDV", "TSFMC"), Is.True);
+            Assert.That(wars.TryDeclareWar("TSFMC", "PDV"), Is.EqualTo(WarDeclarationResult.AlreadyAllied));
+            Assert.That(wars.OfferAlliance("Khsira", "TSFMC"), Is.EqualTo(AllianceOfferResult.Success));
+
+            Assert.That(wars.BreakAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.IsAllied(state, "TSFMC", "PDV"), Is.False);
+            Assert.That(wars.TryDeclareWar("PDV", "TSFMC"), Is.EqualTo(WarDeclarationResult.PostWarCooldown));
+            var availableAt = wars.GetDeclarationAvailableAt(state, "TSFMC", "PDV");
+            Assert.That(availableAt - ticker.RoundStartTimeSpan - ticker.RoundDuration(), Is.EqualTo(TimeSpan.FromMinutes(20)));
+            Assert.That(wars.TryDeclareWar("TSFMC", "Khsira"), Is.EqualTo(WarDeclarationResult.Success));
+        });
+    }
+
+    [Test]
+    public async Task AllianceWithdrawalInvalidatesOffersAndCooldownExpiresForBothSides()
+    {
+        await WithWarState((entities, wars, state, ticker) =>
+        {
+            Assert.That(wars.OfferAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.TryGetAllianceEntry(state, "PDV", "TSFMC", out var entry), Is.True);
+            var oldId = entry.Offer!.Id;
+            Assert.That(wars.OfferAlliance("PDV", "TSFMC"), Is.EqualTo(AllianceOfferResult.AlreadyPending));
+            Assert.That(wars.WithdrawAlliance("PDV", "TSFMC", oldId), Is.EqualTo(AllianceOfferResult.NotOfferSender));
+            Assert.That(wars.WithdrawAlliance("TSFMC", "PDV", oldId), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.OfferAlliance("PDV", "TSFMC"), Is.EqualTo(AllianceOfferResult.Cooldown));
+            entry.NextOfferAtRoundTime = ticker.RoundDuration();
+            Assert.That(wars.OfferAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.AcceptAlliance("PDV", "TSFMC", oldId), Is.EqualTo(AllianceOfferResult.OfferUnavailable));
+            Assert.That(wars.AcceptAlliance("PDV", "TSFMC", entry.Offer!.Id), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.BreakAlliance("PDV", "TSFMC"), Is.EqualTo(AllianceOfferResult.Success));
+            Assert.That(wars.TryDeclareWar("TSFMC", "PDV"), Is.EqualTo(WarDeclarationResult.PostWarCooldown));
+            Assert.That(wars.TryDeclareWar("PDV", "TSFMC"), Is.EqualTo(WarDeclarationResult.PostWarCooldown));
+            Assert.That(wars.BreakAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.NotAllied));
+            state.Comp.WarCooldowns[0].AvailableAtRoundTime = ticker.RoundDuration();
+            Assert.That(wars.TryDeclareWar("PDV", "TSFMC"), Is.EqualTo(WarDeclarationResult.Success));
+            Assert.That(wars.OfferAlliance("TSFMC", "PDV"), Is.EqualTo(AllianceOfferResult.AtWar));
+        });
+    }
+
+    [Test]
     public async Task ConsolePeaceActionsRequireCommandAccess()
     {
         await WithWarState((entities, wars, state, ticker) =>
@@ -168,13 +222,20 @@ public sealed class FactionPeaceTest
                 Assert.That(wars.TryGetState(out state), Is.True);
             }
 
-            var oldDelay = state.Comp.DeclarationDelay;
+            var alerts = entities.System<FactionAlertLevelSystem>();
+            Assert.That(alerts.TryGetState(out var alertState), Is.True);
+            var oldCode = alertState.Comp.CurrentLevel;
             var oldDeclarations = state.Comp.Declarations;
             var oldCooldowns = state.Comp.WarCooldowns;
             var oldSequence = state.Comp.NextPeaceOfferId;
-            state.Comp.DeclarationDelay = TimeSpan.Zero;
+            var oldAlliances = state.Comp.Alliances;
+            var oldAllianceOffers = state.Comp.AllianceOffers;
+            var oldAllianceSequence = state.Comp.NextAllianceOfferId;
+            alertState.Comp.CurrentLevel = "pandora";
             state.Comp.Declarations = new();
             state.Comp.WarCooldowns = new();
+            state.Comp.Alliances = new();
+            state.Comp.AllianceOffers = new();
             try
             {
                 Assert.That(wars.IsRoundRunning, Is.True);
@@ -182,10 +243,13 @@ public sealed class FactionPeaceTest
             }
             finally
             {
-                state.Comp.DeclarationDelay = oldDelay;
+                alertState.Comp.CurrentLevel = oldCode;
                 state.Comp.Declarations = oldDeclarations;
                 state.Comp.WarCooldowns = oldCooldowns;
                 state.Comp.NextPeaceOfferId = oldSequence;
+                state.Comp.Alliances = oldAlliances;
+                state.Comp.AllianceOffers = oldAllianceOffers;
+                state.Comp.NextAllianceOfferId = oldAllianceSequence;
                 if (host is { } hostUid)
                     entities.DeleteEntity(hostUid);
 

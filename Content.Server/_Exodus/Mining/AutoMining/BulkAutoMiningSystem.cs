@@ -20,28 +20,33 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Mining.AutoMining;
 
 public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MaterialStorageSystem _materials = default!;
-    [Dependency] private readonly ShuttleConsoleSystem _shuttleConsole = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MaterialStorageSystem _materials = default!;
+    [Dependency] private BulkMiningDepositSystem _deposits = default!;
+    [Dependency] private BulkMiningConnectivitySystem _connectivity = default!;
+    [Dependency] private ShuttleConsoleSystem _shuttleConsole = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambient = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
 
     private readonly HashSet<Entity<BulkAutoMiningEmitterComponent>> _emitterBuffer = new();
 
@@ -227,6 +232,9 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
             }
         }
 
+        foreach (var gridJob in job.GridJobs)
+            _connectivity.RetainGrid(ent, gridJob.GridUid);
+
         ent.Comp.Active = true;
         ProcessMiningTick(ent, job);
         UpdateUi(ent);
@@ -248,6 +256,9 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
                 ClearBeam((emitter, comp));
             }
 
+            foreach (var gridJob in job.GridJobs)
+                _connectivity.ReleaseGrid(ent, gridJob.GridUid);
+
             job.GridJobs.Clear();
             job.Statuses.Clear();
             job.TileChecksRemaining.Clear();
@@ -267,6 +278,7 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         if (ent.Comp.BeamGrid == null)
             return;
 
+        SnapshotWarmup(ent);
         ent.Comp.BeamGrid = null;
         StopEmitterAudio(ent);
         Dirty(ent);
@@ -294,7 +306,9 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         if (comp.Controller is { } controller && controller != console.Owner && !TerminatingOrDeleted(controller))
             return BulkAutoMiningLaserStatus.Busy;
 
-        if (!_materials.CanChangeMaterialAmount(emitter, comp.SlurryMaterial, Math.Max(0, comp.SlurryPerTile), localOnly: true))
+        // Reserve enough room for the largest possible yield, including the current warmup bonus.
+        var maxYield = GetSlurryYield((emitter, comp), comp.SlurryPerTile.Max);
+        if (!_materials.CanChangeMaterialAmount(emitter, comp.SlurryMaterial, maxYield, localOnly: true))
             return BulkAutoMiningLaserStatus.Full;
 
         return BulkAutoMiningLaserStatus.Ready;

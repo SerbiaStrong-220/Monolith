@@ -358,6 +358,11 @@
           type: WiresBoundUserInterface
   - type: Computer
     board: ComputerIFFCircuitboard
+  # Exodus-begin IFF console reconstruction
+  - type: ShipRepairable
+    repairTime: 4
+    repairCost: 8
+  # Exodus-end
 
 - type: entity
   parent: ComputerIFF

@@ -15,15 +15,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Teleport;
 
-public sealed class NearestShuttleTeleporterSystem : EntitySystem
+public sealed partial class NearestShuttleTeleporterSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
     private readonly List<(EntityUid Grid, float DistanceSquared)> _candidateGridBuffer = new();

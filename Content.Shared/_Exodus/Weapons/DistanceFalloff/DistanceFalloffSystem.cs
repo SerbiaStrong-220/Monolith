@@ -6,7 +6,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared._Exodus.Weapons.DistanceFalloff;
 
-public sealed class DistanceFalloffSystem : EntitySystem
+public sealed partial class DistanceFalloffSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private INetManager _net = default!;

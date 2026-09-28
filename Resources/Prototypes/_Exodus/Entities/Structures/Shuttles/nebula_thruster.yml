@@ -15,3 +15,119 @@
     resistance: 1
   - type: Sprite
     sprite: _Exodus/Structures/Shuttles/phasic_thruster.rsi
+
+- type: entity
+  id: NebulaThrusterLarge
+  parent: NebulaThruster
+  name: large phasic thruster
+  description: A three-tile-wide phasic thruster with five times the thrust of a standard phasic thruster.
+  components:
+  - type: Machine
+    board: NebulaThrusterLargeMachineCircuitboard
+  - type: Construction
+    graph: Machine3x1
+  - type: Thruster
+    thrust: 500
+    baseThrust: 500
+    burnShape: ["-1.4,0.5", "-0.8,1.4", "0.8,1.4", "1.4,0.5"]
+    damage:
+      types:
+        Heat: 120
+  - type: ThrusterNozzles
+    nozzles:
+      South:
+        spaceCheckOffsets: ["-1,1", "0,1", "1,1"]
+  - type: ApcPowerReceiver
+    powerLoad: 7500
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.45,-0.45,1.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster_large.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1800
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 900
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+  - type: Anchorable
+    delay: 10
+  - type: StaticPrice
+    price: 1500
+  - type: ShipRepairable
+    repairTime: 15
+    repairCost: 15
+  - type: RadarBlip
+    scale: 2
+    gridConfig:
+      bounds: "-1.5,-0.5,1.5,0.5"
+
+- type: entity
+  id: NebulaThrusterCorner
+  parent: NebulaThruster
+  name: corner phasic thruster
+  description: A compact phasic thruster with two independently controlled nozzles at right angles.
+  components:
+  - type: Machine
+    board: NebulaThrusterCornerMachineCircuitboard
+  - type: ThrusterNozzles
+    nozzles:
+      South: {}
+      East: {}
+  - type: ApcPowerReceiver
+    powerLoad: 3000
+  - type: Sprite
+    sprite: _Exodus/Structures/Shuttles/phasic_thruster_corner.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_south
+      map: ["enum.ThrusterNozzleDirection.South"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1
+    - state: thrust_burn_east
+      map: ["enum.ThrusterNozzleDirection.East"]
+      shader: unshaded
+      visible: false
+      offset: -1, 0
+  - type: GenericVisualizer
+    visuals:
+      enum.ThrusterNozzleDirection.South:
+        enum.ThrusterNozzleDirection.South:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThrusterNozzleDirection.East:
+        enum.ThrusterNozzleDirection.East:
+          True: { visible: true }
+          False: { visible: false }
+  - type: StaticPrice
+    price: 600
+  - type: ShipRepairable
+    repairTime: 8
+    repairCost: 8

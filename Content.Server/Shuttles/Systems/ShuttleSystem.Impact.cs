@@ -173,8 +173,11 @@ public sealed partial class ShuttleSystem
 
 
             // Check if either grid has GridGodMode or ForceAnchor protection
-            var ourProtected = HasComp<GridGodModeComponent>(args.OurEntity) || HasComp<ForceAnchorComponent>(args.OurEntity);
-            var otherProtected = HasComp<GridGodModeComponent>(args.OtherEntity) || HasComp<ForceAnchorComponent>(args.OtherEntity);
+            // Exodus: a released station no longer gets immovable-station collision immunity.
+            var ourProtected = HasComp<GridGodModeComponent>(args.OurEntity) || HasComp<ForceAnchorComponent>(args.OurEntity)
+                && !HasComp<Content.Shared._Exodus.Shuttles.GridAnchorReleasedComponent>(args.OurEntity);
+            var otherProtected = HasComp<GridGodModeComponent>(args.OtherEntity) || HasComp<ForceAnchorComponent>(args.OtherEntity)
+                && !HasComp<Content.Shared._Exodus.Shuttles.GridAnchorReleasedComponent>(args.OtherEntity);
 
             // Check if the grids are docked together to prevent impact
             var areGridsDocked = _dockSystem.AreGridsDocked(args.OurEntity, args.OtherEntity);

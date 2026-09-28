@@ -22,3 +22,9 @@ ent-ShipRepairDroneStationFlatpack = упакованная станция ре�
     .desc = Универсально-сборная упаковка для станции с пятью ячейками ремонтных дронов.
 ship-repair-drone-station-flatpack-name = упакованная станция ремонтных дронов
 ship-repair-drone-station-flatpack-description = Универсально-сборная упаковка для станции с пятью ячейками ремонтных дронов.
+
+ent-NebulaThrusterLargeFlatpack = упакованный большой фазовый двигатель
+    .desc = Упаковка для сборки большого фазового двигателя размером 3×1.
+
+ent-NebulaThrusterCornerFlatpack = упакованный угловой фазовый двигатель
+    .desc = Упаковка для сборки углового фазового двигателя.

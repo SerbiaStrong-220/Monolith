@@ -61,6 +61,15 @@ public sealed partial class BloodstreamSystem : EntitySystem
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
     {
+        // Exodus-begin: map-savable entities defer blood generation until the map starts.
+        if (ent.Comp.InitializeOnMapInit)
+        {
+            InitializeSolutions(ent);
+            if (_solutionContainerSystem.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
+                _solutionContainerSystem.UpdateChemicals(ent.Comp.BloodSolution.Value);
+        }
+        // Exodus-end
+
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
     }
 
@@ -176,7 +185,15 @@ public sealed partial class BloodstreamSystem : EntitySystem
         }
     }
 
+    // Exodus-begin: preserve the default init behavior unless explicitly deferred in YAML.
     private void OnComponentInit(Entity<BloodstreamComponent> entity, ref ComponentInit args)
+    {
+        if (!entity.Comp.InitializeOnMapInit)
+            InitializeSolutions(entity);
+    }
+    // Exodus-end
+
+    private void InitializeSolutions(Entity<BloodstreamComponent> entity) // Exodus: shared init path.
     {
         if (!_solutionContainerSystem.EnsureSolution(entity.Owner,
                 entity.Comp.ChemicalSolutionName,

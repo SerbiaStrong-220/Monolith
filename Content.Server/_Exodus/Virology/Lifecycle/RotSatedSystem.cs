@@ -6,6 +6,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -16,9 +17,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Virology.Lifecycle;
 
-/// <summary>Scavenges corpses, avoids bystanders and remembers attackers until the fight is over.</summary>
+/// <summary>Scavenges corpses, remembers aggressors and retreats when opponents cannot be reached.</summary>
 public sealed partial class RotSatedSystem : EntitySystem
 {
+    [Dependency] private RotDefenderSystem _navigation = default!;
+    [Dependency] private RotGroundStrikeSystem _groundStrike = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private MobStateSystem _mobs = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -27,6 +30,7 @@ public sealed partial class RotSatedSystem : EntitySystem
     [Dependency] private NPCSteeringSystem _steering = default!;
     [Dependency] private SharedCombatModeSystem _combat = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private Intelligent.RotIntelligentSystem _colony = default!;
     private readonly HashSet<Entity<BodyComponent>> _bodies = [];
     private readonly HashSet<Entity<HumanoidAppearanceComponent>> _nearby = [];
     private readonly List<EntityUid> _removed = [];
@@ -43,37 +47,50 @@ public sealed partial class RotSatedSystem : EntitySystem
         SubscribeLocalEvent<RotSatedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RotSatedComponent, PlayerAttachedEvent>(OnPlayerAttached);
         InitializeConsumption();
+        InitializeActions();
+        SubscribeLocalEvent<ExaminedEvent>(OnExamineEnemy);
+        SubscribeLocalEvent<RotSatedComponent, RotDefenderRouteStartedEvent>(OnRouteStarted);
+    }
+
+    private void OnExamineEnemy(ExaminedEvent args)
+    {
+        if (HasComp<RotSatedComponent>(args.Examiner) && TryComp<RotDefenderComponent>(args.Examiner, out var defender)
+            && defender.Enemies.Contains(args.Examined))
+            args.PushMarkup(Loc.GetString("rot-sated-remembered-enemy"));
     }
 
     private void OnDamaged(Entity<RotSatedComponent> ent, ref DamageChangedEvent args)
     {
-        if (!args.DamageIncreased || _mobs.IsDead(ent) || args.Origin is not { } attacker
-            || !IsEnemy(attacker) || HasComp<ActorComponent>(ent))
+        if (!args.DamageIncreased || _mobs.IsDead(ent) || HasComp<ActorComponent>(ent))
             return;
-
         CancelConsumption(ent);
         ent.Comp.BirthRequested = ent.Comp.PendingLarvae > 0;
-        CancelRoute(ent);
-        ent.Comp.Enemies.Add(attacker);
-        // Retain the current conscious opponent, even if another attacker deals more damage.
-        if (ent.Comp.Target is not { } target || !IsEnemy(target) || _mobs.IsCritical(target))
-            ent.Comp.Target = attacker;
-        ent.Comp.NextThink = _timing.CurTime;
-        Fight(ent);
+    }
+
+    private void OnRouteStarted(Entity<RotSatedComponent> ent, ref RotDefenderRouteStartedEvent args)
+    {
+        if (args.Route == RotDefenderRoute.Detour && ent.Comp.Corpse is { } corpse)
+        {
+            ent.Comp.UnreachableCorpse = corpse;
+            ent.Comp.CorpseRetryAt = _timing.CurTime + TimeSpan.FromSeconds(30);
+        }
+        ReleaseCorpse(ent);
     }
 
     private void OnMobState(Entity<RotSatedComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
-            Stop(ent);
+        if (args.NewMobState != MobState.Dead)
+            return;
+        Stop(ent);
     }
 
-    private void OnShutdown(Entity<RotSatedComponent> ent, ref ComponentShutdown args) => Stop(ent);
+    private void OnShutdown(Entity<RotSatedComponent> ent, ref ComponentShutdown args)
+    {
+        Stop(ent);
+        RemoveActions(ent);
+    }
 
     private void OnPlayerAttached(Entity<RotSatedComponent> ent, ref PlayerAttachedEvent args) => Stop(ent);
-
-    private bool IsEnemy(EntityUid uid) => !TerminatingOrDeleted(uid) && !_rotQuery.HasComp(uid)
-        && (_mobs.IsAlive(uid) || _mobs.IsCritical(uid));
 
     public override void Update(float frameTime)
     {
@@ -82,6 +99,17 @@ public sealed partial class RotSatedSystem : EntitySystem
         var query = EntityQueryEnumerator<RotSatedComponent>();
         while (query.MoveNext(out var uid, out var sated))
         {
+            if (sated.PreparingConsumption && sated.StripDoAfter == null && sated.Corpse is { } corpse)
+            {
+                if (!TryPrepareConsumption((uid, sated), corpse))
+                    CancelConsumption((uid, sated));
+            }
+            if (!TerminatingOrDeleted(uid) && !_mobs.IsDead(uid) && sated.Activity != RotSatedActivity.None
+                && _timing.CurTime >= sated.NextActivityUpdate)
+            {
+                sated.NextActivityUpdate = _timing.CurTime + TimeSpan.FromSeconds(0.2);
+                UpdateConsumption((uid, sated));
+            }
             if (!sated.BirthRequested)
                 continue;
             sated.BirthRequested = false;
@@ -91,51 +119,65 @@ public sealed partial class RotSatedSystem : EntitySystem
 
     public void Think(Entity<RotSatedComponent> ent)
     {
+        if (!TryComp<RotDefenderComponent>(ent, out var defender))
+            return;
+        var brain = new Entity<RotDefenderComponent>(ent, defender);
         var now = _timing.CurTime;
         if (now < ent.Comp.NextThink || TerminatingOrDeleted(ent) || _mobs.IsDead(ent)
             || HasComp<ActorComponent>(ent) || _containers.IsEntityInContainer(ent))
             return;
-        ent.Comp.NextThink = now + ent.Comp.ThinkInterval;
+        ent.Comp.NextThink = now + defender.ThinkInterval;
 
-        if (UpdateConsumption(ent))
+        if (ent.Comp.Activity != RotSatedActivity.None || ent.Comp.StripDoAfter != null)
             return;
 
         _nearby.Clear();
-        _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(ent), ent.Comp.ThreatRange, _nearby);
-        if (ent.Comp.Enemies.Count > 0)
+        _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(ent), defender.SearchRange, _nearby);
+        var previousTarget = defender.Target;
+        if (previousTarget is { } chasing && !defender.ClearingObstacle
+            && defender.Route == RotDefenderRoute.None
+            && TryComp<NPCSteeringComponent>(ent, out var failed) && failed.Status == SteeringStatus.NoPath
+            && !_groundStrike.HasObstacle(ent, defender.StuckTileRadius))
+            _navigation.RejectEnemy(brain, chasing);
+        SelectEnemy(ent);
+
+        var environmental = defender.EnvironmentalDamage;
+        if (defender.Target is { } target && !environmental)
         {
-            SelectEnemy(ent);
-            if (ent.Comp.Target != null)
-            {
-                Fight(ent);
+            defender.DamagePending = defender.EnvironmentalDamage = false;
+            ReleaseCorpse(ent);
+            // Target selection does not own route transitions; the shared defender handles those.
+            defender.Target = previousTarget;
+            if (_navigation.PursueDefenderTarget(brain, target))
                 return;
-            }
         }
 
-        RemComp<NPCMeleeCombatComponent>(ent);
+        if (_navigation.AvoidDefenderThreat(brain, defender.Threat, false))
+            return;
+        if (defender.Threat is { } shooter && _navigation.IsEnemy(shooter)
+            && _interaction.InRangeUnobstructed(ent.Owner, shooter, defender.EscapeRange,
+                collisionMask: Content.Shared.Physics.CollisionGroup.Opaque))
+        {
+            _navigation.BeginRoute(brain, shooter, RotDefenderRoute.Cover);
+            return;
+        }
+
         EntityUid? threat = null;
         var nearest = float.MaxValue;
         foreach (var (uid, _) in _nearby)
         {
-            if (!IsEnemy(uid) || _mobs.IsCritical(uid) || _containers.IsEntityInContainer(uid)
+            if (!_navigation.IsEnemy(uid) || _mobs.IsCritical(uid) || _containers.IsEntityInContainer(uid)
                 || !Transform(ent).Coordinates.TryDistance(EntityManager, Transform(uid).Coordinates, out var distance)
                 || distance >= nearest || !_interaction.InRangeUnobstructed(ent.Owner, uid, ent.Comp.ThreatRange))
                 continue;
             nearest = distance;
             threat = uid;
         }
-        if (threat is { } avoid && !ent.Comp.Escaping)
+        if (threat is { } avoid)
         {
-            ReleaseCorpse(ent);
-            BeginRoute(ent, avoid);
+            _navigation.BeginRoute(brain, avoid, RotDefenderRoute.Cover);
             return;
         }
-
-        if (ent.Comp.Escaping && UpdateRoute(ent))
-            return;
-
-        if (now < ent.Comp.RestUntil)
-            return;
 
         if (ent.Comp.Corpse is { } old && (!CanConsume(ent, old)
             || TryComp<NPCSteeringComponent>(ent, out var oldSteering) && oldSteering.Status == SteeringStatus.NoPath))
@@ -144,99 +186,86 @@ public sealed partial class RotSatedSystem : EntitySystem
             ent.Comp.CorpseRetryAt = now + TimeSpan.FromSeconds(30);
             ReleaseCorpse(ent);
         }
+        if (ent.Comp.Corpse == null && _colony.TryGetRally(ent, out var rally))
+        {
+            _navigation.MoveDefender(brain, rally, 1.5f);
+            return;
+        }
         if (ent.Comp.Corpse == null)
             FindCorpse(ent);
         if (ent.Comp.Corpse is not { } corpse)
         {
-            if (UpdateRoute(ent))
+            if (_navigation.UpdateRoute(brain))
                 return;
-            BeginRoute(ent, null);
+            _navigation.BeginRoute(brain, null, RotDefenderRoute.Wander);
             return;
         }
 
-        CancelRoute(ent);
-        Move(ent, new EntityCoordinates(corpse, Vector2.Zero), 0.7f);
+        _navigation.CancelRoute(brain);
+        if (_navigation.HandleStuckMovement(brain, new EntityCoordinates(corpse, Vector2.Zero), 0.7f))
+            return;
+        _navigation.Move(brain, new EntityCoordinates(corpse, Vector2.Zero), 0.7f);
         if (!_interaction.InRangeUnobstructed(ent.Owner, corpse, 1.2f))
             return;
-        if (now < ent.Comp.NextStrip)
-            return;
-        ent.Comp.NextStrip = now + ent.Comp.StripInterval;
-        if (TryStrip(ent, corpse))
-            return;
-        TryStartConsumption(ent, corpse);
+        TryPrepareConsumption(ent, corpse);
     }
 
     private void SelectEnemy(Entity<RotSatedComponent> ent)
     {
+        if (!TryComp<RotDefenderComponent>(ent, out var defender))
+            return;
+        var brain = new Entity<RotDefenderComponent>(ent, defender);
         _removed.Clear();
-        foreach (var enemy in ent.Comp.Enemies)
+        foreach (var enemy in defender.Enemies)
         {
-            if (!IsEnemy(enemy))
+            if (TerminatingOrDeleted(enemy))
                 _removed.Add(enemy);
         }
         foreach (var enemy in _removed)
-            ent.Comp.Enemies.Remove(enemy);
-
-        if (ent.Comp.Target is { } current && ent.Comp.Enemies.Contains(current) && _mobs.IsAlive(current))
-            return;
-
-        var finishCurrent = ent.Comp.Target is { } wounded && ent.Comp.Enemies.Contains(wounded)
-            && _mobs.IsCritical(wounded);
-        if (!finishCurrent)
-            ent.Comp.Target = null;
-        var origin = _transform.GetMapCoordinates(ent);
-        var best = float.MaxValue;
-        var foundConscious = false;
-        foreach (var enemy in ent.Comp.Enemies)
         {
-            var position = _transform.GetMapCoordinates(enemy);
-            if (position.MapId != origin.MapId)
-                continue;
-            var conscious = _mobs.IsAlive(enemy);
-            var distance = Vector2.DistanceSquared(origin.Position, position.Position);
-            // Leave a wounded victim only to deal with another immediate threat.
-            if (finishCurrent && (!conscious || distance > ent.Comp.ThreatRange * ent.Comp.ThreatRange))
-                continue;
-            if (foundConscious && !conscious)
-                continue;
-            if (conscious == foundConscious && distance >= best)
-                continue;
-            foundConscious = conscious;
-            best = distance;
-            ent.Comp.Target = enemy;
+            defender.Enemies.Remove(enemy);
+            defender.UnreachableEnemies.Remove(enemy);
         }
-    }
-
-    private void Fight(Entity<RotSatedComponent> ent)
-    {
-        if (ent.Comp.Target is not { } target || !IsEnemy(target))
-            return;
-        ReleaseCorpse(ent);
-        var obstacle = target;
-        if (_containers.TryGetOuterContainer(target, Transform(target), out var container))
-            obstacle = container.Owner;
-        EnsureComp<NPCMeleeCombatComponent>(ent).Target = obstacle;
-        _combat.SetInCombatMode(ent, true);
-        Move(ent, new EntityCoordinates(obstacle, Vector2.Zero), 0.8f);
-    }
-
-    private void Move(Entity<RotSatedComponent> ent, EntityCoordinates destination, float range)
-    {
-        if (TryComp<NPCSteeringComponent>(ent, out var old) && old.Status == SteeringStatus.NoPath)
-            _steering.Unregister(ent);
-        var steering = _steering.Register(ent, destination);
-        steering.Range = range;
+        if (_timing.CurTime >= defender.RetryEnemiesAt)
+        {
+            defender.UnreachableEnemies.Clear();
+            defender.RetryEnemiesAt = _timing.CurTime + TimeSpan.FromSeconds(15);
+        }
+        var old = defender.Target;
+        defender.Target = null;
+        var best = float.MaxValue;
+        foreach (var (uid, _) in _nearby)
+        {
+            if (!defender.Enemies.Contains(uid) || !_navigation.CanPursue(brain, uid)
+                || _navigation.IsRejectedEnemy(brain, uid)
+                || uid != old && !_interaction.InRangeUnobstructed(ent.Owner, uid, defender.SearchRange))
+                continue;
+            var distance = Vector2.DistanceSquared(_transform.GetWorldPosition(ent), _transform.GetWorldPosition(uid));
+            if (uid == old)
+                distance *= 0.5f;
+            if (_mobs.IsCritical(uid))
+                distance += defender.SearchRange * defender.SearchRange;
+            if (distance >= best)
+                continue;
+            best = distance;
+            defender.Target = uid;
+        }
+        // Non-humanoid aggressors can also be pursued, without scanning all entities on the map.
+        if (defender.Target == null && defender.Threat is { } threat && _navigation.CanPursue(brain, threat)
+            && !_navigation.IsRejectedEnemy(brain, threat)
+            && _interaction.InRangeUnobstructed(ent.Owner, threat, defender.SearchRange))
+            defender.Target = threat;
+        if (defender.Target is { } target)
+            defender.Enemies.Add(target);
     }
 
     public void Stop(Entity<RotSatedComponent> ent)
     {
-        CancelRoute(ent);
+        if (TryComp<RotDefenderComponent>(ent, out var defender))
+            _navigation.Stop((ent, defender));
         CancelConsumption(ent);
-        RemComp<NPCMeleeCombatComponent>(ent);
-        _steering.Unregister(ent);
-        ent.Comp.PendingLarvae = 0;
-        ent.Comp.BirthRequested = false;
-        ent.Comp.Target = null;
-        ent.Comp.Enemies.Clear();
+        if (TerminatingOrDeleted(ent) || _mobs.IsDead(ent))
+            ent.Comp.PendingLarvae = 0;
+        ent.Comp.BirthRequested = ent.Comp.PendingLarvae > 0;
     }
 }

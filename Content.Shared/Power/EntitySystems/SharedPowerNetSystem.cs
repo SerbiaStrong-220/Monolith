@@ -2,7 +2,7 @@ using Content.Shared.Power.Components;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public abstract class SharedPowerNetSystem : EntitySystem
+public abstract partial class SharedPowerNetSystem : EntitySystem // Exodus: generated dependency injection.
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 

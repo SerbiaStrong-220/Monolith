@@ -12,12 +12,12 @@ namespace Content.Server._Exodus.StarSystem;
 /// Prepares the main sector independently of game presets, before POIs and nebulas are generated.
 /// Additional expedition and shuttle maps are deliberately not initialized here.
 /// </summary>
-public sealed class DefaultStarSystemSystem : EntitySystem
+public sealed partial class DefaultStarSystemSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly StarSystemMapSystem _stars = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private StarSystemMapSystem _stars = default!;
 
     public void EnsureDefaultSystem(MapId map)
     {

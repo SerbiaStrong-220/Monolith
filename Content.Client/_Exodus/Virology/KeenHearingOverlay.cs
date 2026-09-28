@@ -10,11 +10,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Virology;
 
-public sealed class KeenHearingOverlay : Overlay
+public sealed partial class KeenHearingOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly TransformSystem _transform;
     private readonly ContainerSystem _containers;

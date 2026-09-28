@@ -125,6 +125,41 @@ public sealed partial class VirusEpidemicRuleSystem : GameRuleSystem<VirusEpidem
         return Math.Clamp(count, 0, candidateCount);
     }
 
+    public bool TryClaimIntelligentCore(Entity<VirusBroodComponent> victim, out EntProtoId prototype)
+    {
+        prototype = default;
+        var symptom = victim.Comp.Symptom;
+        if (symptom == default)
+            return false;
+
+        var rules = EntityQueryEnumerator<VirusEpidemicRuleComponent>();
+        while (rules.MoveNext(out _, out var rule))
+        {
+            if (rule.IntelligentCorePrototype is not { } core || rule.IntelligentCoreVictims >= rule.IntelligentCoreLimit
+                || rule.Symptom != symptom)
+                continue;
+
+            var active = false;
+            foreach (var strain in _virology.EnumerateStrains(victim.Owner))
+            {
+                if (strain.Comp.SuppressedUntil == null && strain.Comp.SymptomStates.ContainsKey(symptom))
+                {
+                    active = true;
+                    break;
+                }
+            }
+
+            if (!active)
+                continue;
+
+            rule.IntelligentCoreVictims++;
+            prototype = core;
+            return true;
+        }
+
+        return false;
+    }
+
     public (int Carriers, int Broods, int Offspring, int Reservoirs) CountThreats(ProtoId<VirusSymptomPrototype> symptom)
     {
         var carriers = 0;

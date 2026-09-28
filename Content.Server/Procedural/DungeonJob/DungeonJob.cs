@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server._Exodus.Mining.AutoMining; // Exodus finite natural bulk-mining deposits.
 using Content.Server.Decals;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
@@ -159,6 +160,13 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         var reservedTiles = new HashSet<Vector2i>();
 
         var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed, random);
+        // Exodus-begin snapshot marked planetoids before relocation and splitting.
+        if (ValidateResume())
+        {
+            var depositGenerated = new BulkMiningDepositGeneratedEvent();
+            _entManager.EventBus.RaiseLocalEvent(_gridUid, ref depositGenerated);
+        }
+        // Exodus-end
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.

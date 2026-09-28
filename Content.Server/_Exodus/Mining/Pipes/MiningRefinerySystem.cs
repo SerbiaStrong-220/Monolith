@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Construction;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lathe;
 using Content.Server.NodeContainer.EntitySystems;
@@ -20,28 +21,82 @@ namespace Content.Server._Exodus.Mining.Pipes;
 /// The normal lathe UI owns recipe selection and looping. This system only handles its exhaust,
 /// corrosion, overpressure, and filling its material buffer through mining pipes.
 /// </summary>
-public sealed class MiningRefinerySystem : EntitySystem
+public sealed partial class MiningRefinerySystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly NodeContainerSystem _nodes = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly LatheSystem _lathe = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly MiningPipeNetSystem _pipes = default!;
-    [Dependency] private readonly ExplosionSystem _explosions = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materials = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private NodeContainerSystem _nodes = default!;
+    [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private LatheSystem _lathe = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private MiningPipeNetSystem _pipes = default!;
+    [Dependency] private ExplosionSystem _explosions = default!;
+    [Dependency] private SharedMaterialStorageSystem _materials = default!;
 
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
+    private EntityQuery<MiningPipeNetworkMemberComponent> _memberQuery;
+    private EntityQuery<LatheComponent> _latheQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+        _memberQuery = GetEntityQuery<MiningPipeNetworkMemberComponent>();
+        _latheQuery = GetEntityQuery<LatheComponent>();
         SubscribeLocalEvent<MiningRefineryComponent, LatheStartPrintingEvent>(OnPrinting);
         SubscribeLocalEvent<MiningRefineryComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MiningRefineryComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MiningRefineryComponent, BoundUIOpenedEvent>(OnUiOpen);
         SubscribeLocalEvent<MiningRefineryComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<MiningRefineryComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<MiningRefineryComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+    }
+
+    private void OnRefreshParts(Entity<MiningRefineryComponent> ent, ref RefreshPartsEvent args)
+    {
+        var comp = ent.Comp;
+        var totalMultiplier = 0f;
+        var totalParts = 0;
+        foreach (var part in args.Parts)
+        {
+            if (part.Part.PartType != comp.MachinePartCapacity)
+                continue;
+
+            var quantity = part.Quantity();
+            var multiplier = comp.CapacityMultipliers.GetValueOrDefault(part.Part.Rating, part.Part.Rating);
+            totalMultiplier += Math.Max(1f, multiplier) * quantity;
+            totalParts += quantity;
+        }
+        comp.CapacityMultiplier = totalParts > 0 ? totalMultiplier / totalParts : 1f;
+
+        // Keep serialized baselines: neither repeated refreshes nor map loading may compound upgrades.
+        comp.BaseExhaustVolume ??= comp.Exhaust.Volume;
+        comp.BaseCorrosionThreshold ??= comp.CorrosionThreshold;
+        comp.BaseExplosionThreshold ??= comp.ExplosionThreshold;
+        comp.Exhaust.Volume = comp.BaseExhaustVolume.Value * comp.CapacityMultiplier;
+        comp.CorrosionThreshold = comp.BaseCorrosionThreshold.Value * comp.CapacityMultiplier;
+        comp.ExplosionThreshold = comp.BaseExplosionThreshold.Value * comp.CapacityMultiplier;
+
+        if (TryComp<MaterialStorageComponent>(ent, out var storage))
+        {
+            comp.BaseSlurryCapacity ??= storage.StorageLimit;
+            if (comp.BaseSlurryCapacity is { } capacity)
+            {
+                var limit = (int)Math.Clamp((double)capacity * comp.CapacityMultiplier, 0, int.MaxValue);
+                _materials.SetStorageLimit((ent, storage), limit);
+            }
+        }
+
+        if (comp.Exhaust.TotalMoles <= comp.CorrosionThreshold)
+            comp.CorrosionTime = TimeSpan.Zero;
+
+        Dirty(ent);
+        UpdateStorageState(ent);
+    }
+
+    private void OnUpgradeExamine(Entity<MiningRefineryComponent> ent, ref UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("bulk-mining-refinery-upgrade-capacity", ent.Comp.CapacityMultiplier);
     }
 
     private void OnUiOpen(Entity<MiningRefineryComponent> ent, ref BoundUIOpenedEvent args)
@@ -82,21 +137,26 @@ public sealed class MiningRefinerySystem : EntitySystem
         var query = EntityQueryEnumerator<MiningRefineryComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (now < comp.NextUpdate)
+            _memberQuery.TryComp(uid, out var member);
+            var process = now >= comp.NextUpdate;
+            if (process)
+            {
+                comp.NextUpdate += UpdateInterval;
+                // Intake runs even with the UI closed and production idle.
+                if (member != null)
+                    _pipes.FillBuffer((uid, member), comp.SlurryMaterial);
+
+                UpdateExhaust((uid, comp));
+            }
+
+            // Coalesce network changes after transfers have finished, independently of the processing timer.
+            if (!process && member?.ClientMaterialsDirty != true)
                 continue;
 
-            comp.NextUpdate += UpdateInterval;
-            // Intake runs even with the UI closed and production idle.
-            if (TryComp<MiningPipeNetworkMemberComponent>(uid, out var intake))
-                _pipes.FillBuffer((uid, intake), comp.SlurryMaterial);
-
-            UpdateExhaust((uid, comp));
-            // Remote buffers do not emit MaterialAmountChangedEvent on this lathe.
             if (TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid) || !_ui.IsUiOpen(uid, LatheUiKey.Key))
                 continue;
 
-            if (TryComp<LatheComponent>(uid, out var lathe) &&
-                TryComp<MiningPipeNetworkMemberComponent>(uid, out var member) && _pipes.UpdateClientMaterials((uid, member)))
+            if (member != null && _pipes.UpdateClientMaterials((uid, member)) && _latheQuery.TryComp(uid, out var lathe))
                 _lathe.UpdateUserInterfaceState(uid, lathe);
 
             UpdateStorageState((uid, comp));

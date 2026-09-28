@@ -4,11 +4,17 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Shared._Exodus.Virology.Behaviors;
 
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class VirusElectrophiliaComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     [DataField]
     public ProtoId<DamageTypePrototype> ShockType = "Shock";
 
@@ -37,6 +43,6 @@ public sealed partial class VirusElectrophiliaComponent : Component
     public float WithdrawalStaminaDamage = 5f;
 
     /// <summary>Game time of the last shock, timer starts from here.</summary>
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan LastShock;
 }

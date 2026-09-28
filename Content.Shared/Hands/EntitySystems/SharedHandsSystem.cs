@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared._Exodus.Hands; // Exodus - anatomical stances may suppress functional hands.
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
@@ -48,6 +49,13 @@ public abstract partial class SharedHandsSystem
 
         if (handsComp.Hands.ContainsKey(handName))
             return;
+
+        // Exodus-begin - allow stances to suppress hands without disabling or removing the anatomical parts.
+        var attempt = new HandAddAttemptEvent();
+        RaiseLocalEvent(uid, ref attempt);
+        if (attempt.Cancelled)
+            return;
+        // Exodus-end
 
         var container = ContainerSystem.EnsureContainer<ContainerSlot>(uid, handName);
         container.OccludesLight = false;

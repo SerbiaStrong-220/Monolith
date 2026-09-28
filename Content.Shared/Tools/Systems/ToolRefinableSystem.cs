@@ -37,7 +37,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ToolRefinableComponent component, WelderRefineDoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || args.Handled) // Exodus: do not refine the same completion twice.
             return;
 
         if (_net.IsClient)
@@ -45,11 +45,16 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
         var xform = Transform(uid);
         var spawns = EntitySpawnCollection.GetSpawns(component.RefineResult, _random);
+        // Exodus-begin: retain the remaining units of a stack.
+        if (!TryConsumeRefinedItem(uid))
+            return;
+
+        args.Handled = true;
+        // Exodus-end
         foreach (var spawn in spawns)
         {
             SpawnNextToOrDrop(spawn, uid, xform);
         }
-
-        Del(uid);
+        // Exodus: deletion is queued by TryConsumeRefinedItem after consuming the last unit.
     }
 }

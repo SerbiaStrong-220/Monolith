@@ -5,6 +5,10 @@ namespace Content.Shared._Exodus.Virology.Behaviors;
 [RegisterComponent]
 public sealed partial class VirusGlowComponent : Component
 {
+    /// <summary>Prevents replaying initialization over the state restored from a saved host.</summary>
+    [DataField]
+    public bool StateApplied;
+
     [DataField]
     public Color LightColor = Color.White;
 
@@ -15,18 +19,18 @@ public sealed partial class VirusGlowComponent : Component
     public float LightEnergy = 1f;
 
     /// <summary>We added host's point light, so restore removes only ours.</summary>
-    [ViewVariables]
+    [DataField]
     public bool Added;
 
-    [ViewVariables]
+    [DataField]
     public Color SavedColor;
 
-    [ViewVariables]
+    [DataField]
     public float SavedRadius;
 
-    [ViewVariables]
+    [DataField]
     public float SavedEnergy;
 
-    [ViewVariables]
+    [DataField]
     public bool SavedEnabled;
 }

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    { "name": "augok-banner" },
+    { "name": "drake-black-arms-usa-banner" },
+    { "name": "horizon-harmony-hammer-matter-banner" },
+    { "name": "buno-banner" }
+  ]
+}

@@ -295,26 +295,23 @@
     emergencyShieldFraction: 0.25
   - type: PointLight
     color: "#48C96B"
-# Universal States of America corporate shield. It protects only the forward arc selected by generator rotation.
+# Universal States of America corporate shield. A rippling field protects the whole ship from EMPs.
 - type: entity
   id: ShieldGeneratorUnsa
   parent: ShieldGeneratorSmall
   name: unsa-directional-shield-generator-name
   description: unsa-directional-shield-generator-description
   components:
-  - type: DirectionalShipShieldEmitter
-    arcDegrees: 120
   - type: ShipShieldEmitter
-    damageLimit: 110000
-    healPerSecond: 700
+    damageLimit: 75000
+    healPerSecond: 550
     baseDraw: 30000
-    maxDraw: 80000
+    maxDraw: 70000
     shieldColor: "#0A5DFF"
+    empProtection: true
+    rippleWidth: 8
+    rippleSpeed: 0.75
     collisionResistanceMultiplier: 1.0
-  - type: Transform
-    noRot: false
-  - type: Rotatable
-    rotateWhileAnchored: true
   - type: Sprite
     sprite: _Exodus/Structures/ShuttleComponents/liberty_shield_generator.rsi
     snapCardinals: true

@@ -157,7 +157,7 @@ public sealed partial class RouletteVisualsSystem : EntitySystem
     }
 }
 
-public sealed class RouletteWheelControl : Control
+public sealed partial class RouletteWheelControl : Control
 {
     [Dependency] private IGameTiming _timing = default!;
 

@@ -61,9 +61,12 @@
   - type: WarLevel
     # Exodus-begin: faction wars, declaration lockouts and peace negotiations.
     factions: [TSFMC, PDV, Khsira]
-    declarationDelay: 7200
     postWarCooldown: 600
     peaceOfferCooldown: 30
+    allianceBreakCooldown: 1200
+    allianceOfferCooldown: 30
+  - type: FactionAlertLevel
+    prototype: factionAlerts
     # Exodus-end
 
 - type: sectorService

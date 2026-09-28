@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared._Exodus.Virology.Lifecycle;
@@ -23,7 +22,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -40,20 +38,18 @@ public sealed partial class RotHungrySystem : EntitySystem
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private NPCSteeringSystem _steering = default!;
-    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private SharedCombatModeSystem _combat = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private Intelligent.RotIntelligentSystem _colony = default!;
 
     private readonly HashSet<Entity<HumanoidAppearanceComponent>> _humanoids = [];
-    private readonly HashSet<Entity<DestructibleComponent>> _obstacles = [];
     private readonly List<EntityUid> _removedPrey = [];
     private EntityQuery<RotCombatHistoryComponent> _historyQuery;
     private EntityQuery<HandsComponent> _handsQuery;
     private EntityQuery<RotCreatureComponent> _rotQuery;
     private EntityQuery<TransformComponent> _transformQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
     private TimeSpan _nextHealing;
 
     public override void Initialize()
@@ -63,7 +59,6 @@ public sealed partial class RotHungrySystem : EntitySystem
         _handsQuery = GetEntityQuery<HandsComponent>();
         _rotQuery = GetEntityQuery<RotCreatureComponent>();
         _transformQuery = GetEntityQuery<TransformComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeLocalEvent<RotHungryComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<RotHungryComponent, DamageChangedEvent>(OnHungryDamaged);
         SubscribeLocalEvent<RotHungryComponent, MeleeHitEvent>(OnHungryHit);
@@ -84,7 +79,7 @@ public sealed partial class RotHungrySystem : EntitySystem
 
     private void OnAttack(Entity<HumanoidAppearanceComponent> ent, ref MeleeAttackEvent args)
     {
-        EnsureComp<RotCombatHistoryComponent>(ent).HasAttacked = true;
+        RememberAttacker(ent);
     }
 
     private void OnExamineThreat(ExaminedEvent args)
@@ -110,6 +105,8 @@ public sealed partial class RotHungrySystem : EntitySystem
     {
         if (HasComp<HumanoidAppearanceComponent>(attacker))
             EnsureComp<RotCombatHistoryComponent>(attacker).HasAttacked = true;
+        var observed = new RotCombatObservedEvent(attacker);
+        RaiseLocalEvent(ref observed);
     }
 
     private void OnHumanoidDamaged(Entity<HumanoidAppearanceComponent> ent, ref DamageChangedEvent args)
@@ -200,6 +197,8 @@ public sealed partial class RotHungrySystem : EntitySystem
             // Service an already detected obstruction at its own cadence, without repeating threat searches.
             if (ent.Comp.ClearingObstacle && now >= ent.Comp.NextStuckAttack)
                 ent.Comp.ClearingObstacle = HandleStuckMovement(ent);
+            else if (ent.Comp.Retreating && !ent.Comp.ClearingObstacle)
+                Retreat(ent);
             return;
         }
 
@@ -248,7 +247,10 @@ public sealed partial class RotHungrySystem : EntitySystem
         }
         else if (!DeliverCorpse(ent))
         {
-            ReturnHome(ent);
+            if (_colony.TryGetRally(ent, out var rally))
+                Move(ent, rally, 1.5f);
+            else
+                ReturnHome(ent);
         }
     }
 
@@ -312,6 +314,7 @@ public sealed partial class RotHungrySystem : EntitySystem
         if (TryComp<RotHungryComponent>(uid, out var hungry))
         {
             CancelDetour((uid, hungry));
+            CancelRetreatPath((uid, hungry));
             hungry.Destination = null;
             hungry.ClearingObstacle = false;
         }

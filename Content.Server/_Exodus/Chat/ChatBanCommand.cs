@@ -11,7 +11,7 @@ using Robust.Shared.Console;
 namespace Content.Server._Exodus.Chat;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class ChatBanCommand : LocalizedCommands
+public sealed partial class ChatBanCommand : LocalizedCommands
 {
     [Dependency] private IPlayerLocator _locator = default!;
     [Dependency] private IBanManager _bans = default!;

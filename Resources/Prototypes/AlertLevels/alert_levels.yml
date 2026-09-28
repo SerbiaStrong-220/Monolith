@@ -2,39 +2,58 @@
   id: stationAlerts
   defaultLevel: green
   levels:
+    # Exodus-begin: sector codes retain their existing IDs.
     green:
-      announcement: alert-level-green-announcement
+      announcement: alert-level-green-end
+      startAnnouncement: alert-level-green-start
+      endAnnouncement: alert-level-green-end
+      transitionDuration: 300 # Exodus: sector code transition
       color: Green
       emergencyLightColor: LawnGreen
       shuttleTime: 600
     blue:
-      announcement: alert-level-blue-announcement
+      announcement: alert-level-blue-end
+      startAnnouncement: alert-level-blue-start
+      endAnnouncement: alert-level-blue-end
+      transitionDuration: 300 # Exodus: sector code transition
       sound: /Audio/Misc/bluealert.ogg
       color: DodgerBlue
       forceEnableEmergencyLights: true
       emergencyLightColor: DodgerBlue
       shuttleTime: 600
     violet:
-      announcement: alert-level-violet-announcement
+      announcement: alert-level-violet-end
+      startAnnouncement: alert-level-violet-start
+      endAnnouncement: alert-level-violet-end
+      transitionDuration: 300 # Exodus: sector code transition
       sound: /Audio/Misc/notice1.ogg
       color: Violet
       emergencyLightColor: Violet
       forceEnableEmergencyLights: true
       shuttleTime: 600
+    # Exodus: existing yellow id is the sector code «Розовый». The id stays so alert visuals keep resolving.
     yellow:
-      announcement: alert-level-yellow-announcement
+      announcement: alert-level-yellow-end
+      startAnnouncement: alert-level-yellow-start
+      endAnnouncement: alert-level-yellow-end
+      transitionDuration: 300
       sound: /Audio/Misc/notice1.ogg
-      color: Yellow
-      emergencyLightColor: Goldenrod
+      color: "#FF4FA3"
+      emergencyLightColor: "#FF4FA3"
       forceEnableEmergencyLights: true
       shuttleTime: 600
     red:
-      announcement: alert-level-red-announcement
+      selectable: false # Exodus: reserved for forced sector alerts, unavailable on consoles.
+      announcement: alert-level-red-end
+      startAnnouncement: alert-level-red-start
+      endAnnouncement: alert-level-red-end
+      transitionDuration: 900 # Exodus: sector code transition
       sound: /Audio/Misc/redalert.ogg
       color: Red
       emergencyLightColor: Red
       forceEnableEmergencyLights: true
       shuttleTime: 600 #No reduction in time as we don't have swiping for red alert like in /tg/. Shuttle times are intended to create friction, so having a way to brainlessly bypass that would be dumb.
+    # Exodus-end
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false

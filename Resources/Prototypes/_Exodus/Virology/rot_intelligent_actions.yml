@@ -1,0 +1,141 @@
+- type: entity
+  id: ActionRotIntelligentMenu
+  name: Colony
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: menu
+    event: !type:RotOpenMenuEvent
+
+- type: entity
+  id: ActionRotIntelligentReturn
+  name: Return to core
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: return
+    event: !type:RotReturnToCoreEvent
+
+- type: entity
+  id: ActionRotIntelligentPilot
+  name: Pilot grid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: pilot
+    event: !type:RotPilotEvent
+
+- type: entity
+  id: ActionRotIntelligentUnanchor
+  name: Release grid anchor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: unanchor
+    useDelay: 1
+    event: !type:RotUnanchorEvent
+
+- type: entity
+  id: ActionRotIntelligentBuild
+  name: Grow selected organ
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    icon:
+      sprite: _Exodus/Virology/rot_markers.rsi
+      state: build
+    checkCanAccess: false
+    checkCanInteract: false
+    range: 0
+    repeat: true
+    useDelay: 0.2
+    event: !type:RotBuildEvent
+
+- type: entity
+  id: ActionRotIntelligentRepair
+  name: Heal organ
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: repair
+    checkCanAccess: false
+    checkCanInteract: false
+    range: 0
+    canTargetSelf: false
+    whitelist:
+      components: [ RotColonyMember ]
+    event: !type:RotRepairEvent
+
+- type: entity
+  id: ActionRotIntelligentDissolve
+  name: Dissolve organ
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: dissolve
+    checkCanAccess: false
+    checkCanInteract: false
+    range: 0
+    canTargetSelf: false
+    whitelist:
+      components: [ RotColonyMember ]
+    event: !type:RotDissolveEvent
+
+- type: entity
+  id: ActionRotIntelligentAdopt
+  name: Join creature to colony
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: adopt
+    checkCanAccess: false
+    checkCanInteract: false
+    range: 0
+    canTargetSelf: false
+    whitelist:
+      components: [ RotCreature ]
+    event: !type:RotAdoptEvent
+
+- type: entity
+  id: ActionRotIntelligentRally
+  name: Rally colony
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    icon:
+      sprite: _Exodus/Virology/rot_markers.rsi
+      state: rally
+    checkCanAccess: false
+    checkCanInteract: false
+    range: 0
+    useDelay: 1
+    event: !type:RotRallyEvent
+
+- type: entity
+  id: ActionRotIntelligentRoot
+  name: Uproot / take root
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: unanchor
+    iconOn:
+      sprite: _Exodus/Virology/rot_actions.rsi
+      state: return
+    useDelay: 1
+    event: !type:RotToggleRootEvent

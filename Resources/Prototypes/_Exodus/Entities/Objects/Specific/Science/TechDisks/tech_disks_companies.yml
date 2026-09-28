@@ -1,3 +1,4 @@
+# Exodus: legacy disks remain for saved player ships; new characters receive concern disks.
 - type: entity
   parent: TechDiskBase
   id: TechDiskBlackhawkArmor

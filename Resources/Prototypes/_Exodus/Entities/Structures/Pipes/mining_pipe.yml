@@ -32,6 +32,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: ShipRepairable
+    repairTime: 2
+    repairCost: 3
   - type: CollideOnAnchor
   - type: Appearance
   - type: MiningPipeVis

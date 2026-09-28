@@ -704,6 +704,7 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             SpawnPriority = spawnPriority;
 
+            Company = Content.Shared._Exodus.Company.CompanyConsolidation.Normalize(Company, prototypeManager); // Exodus concern migration
             // Check if the company exists, if not set to "None"
             if (!string.IsNullOrEmpty(Company) &&
                 Company != "None" &&

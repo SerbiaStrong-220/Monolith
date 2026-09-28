@@ -11,6 +11,19 @@ public sealed partial class BulkAutoMiningSystem
 
     private bool CheckTargetRange(Entity<BulkAutoMiningConsoleComponent> console, BulkAutoMiningJobComponent job)
     {
+        // Validate each target once before a reachable tile can short-circuit the range search.
+        // Empty entries keep the grid/emitter pair indices stable and are skipped below.
+        foreach (var gridJob in job.GridJobs)
+        {
+            if (gridJob.RemainingTiles.Count == 0)
+                continue;
+
+            var uid = gridJob.GridUid;
+            if (TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid) ||
+                !_gridQuery.HasComp(uid) || !_xformQuery.HasComp(uid))
+                InvalidateGridJob(console, job, gridJob);
+        }
+
         var checks = MaxRangeTileChecks;
         var pending = false;
         var rangeSquared = console.Comp.MaxRange * console.Comp.MaxRange;
@@ -24,12 +37,8 @@ public sealed partial class BulkAutoMiningSystem
                 continue;
 
             var gridUid = gridJob.GridUid;
-            if (TerminatingOrDeleted(gridUid) || !_gridQuery.TryComp(gridUid, out var grid) ||
-                !_xformQuery.TryComp(gridUid, out var gridXform))
-            {
-                StopMining(console, "bulk-auto-mining-stopped-invalid-grid");
-                return false;
-            }
+            var grid = _gridQuery.GetComponent(gridUid);
+            var gridXform = _xformQuery.GetComponent(gridUid);
 
             var emitterIndex = pairIndex % job.Emitters.Count;
             var emitterUid = job.Emitters[emitterIndex];
@@ -88,7 +97,7 @@ public sealed partial class BulkAutoMiningSystem
                 if (!gridJob.RemainingTiles.Contains(tile))
                     continue;
 
-                if (_map.GetTileRef(gridUid, grid, tile).Tile.IsEmpty)
+                if (!IsTargetTile((gridUid, grid), tile))
                 {
                     gridJob.RemainingTiles.Remove(tile);
                     console.Comp.ProcessedTiles++;
@@ -116,11 +125,9 @@ public sealed partial class BulkAutoMiningSystem
         if (pending)
             return true;
 
-        var hasRemainingTiles = false;
-        foreach (var grid in job.GridJobs)
-            hasRemainingTiles |= grid.RemainingTiles.Count > 0;
+        if (!TryFinishMining(console, job))
+            StopMining(console, "bulk-auto-mining-stopped-out-of-range");
 
-        StopMining(console, hasRemainingTiles ? "bulk-auto-mining-stopped-out-of-range" : "bulk-auto-mining-complete");
         return false;
     }
 
@@ -135,6 +142,6 @@ public sealed partial class BulkAutoMiningSystem
     private bool IsRemainingTileInRange(Entity<MapGridComponent> grid, Vector2i tile, Vector2 position, float rangeSquared)
     {
         return Vector2.DistanceSquared(position, _map.GridTileToLocal(grid, grid.Comp, tile).Position) <= rangeSquared &&
-               !_map.GetTileRef(grid, grid.Comp, tile).Tile.IsEmpty;
+               IsTargetTile(grid, tile);
     }
 }

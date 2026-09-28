@@ -8,11 +8,11 @@ namespace Content.Shared._Exodus.Body;
 /// Aggregates damage protection from installed organs without letting one organ
 /// overwrite or remove modifiers owned by another source.
 /// </summary>
-public sealed class OrganDamageProtectionSystem : EntitySystem
+public sealed partial class OrganDamageProtectionSystem : EntitySystem
 {
     private const string ModifierKeyPrefix = "organ-damage-protection-";
 
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

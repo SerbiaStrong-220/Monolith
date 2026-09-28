@@ -8,6 +8,7 @@
   showInVote: false # Mono
   rules:
     - NFAdventure
+    - SpecialWreckSpawnScheduler # Exodus: one Special wreck spawn attempt per round.
     - BasicStationEventScheduler
     - BluespaceEventScheduler
     - BluespaceDungeonEventScheduler
@@ -27,6 +28,7 @@
   showInVote: false # Mono
   rules:
     - NFAdventure
+    - SpecialWreckSpawnScheduler # Exodus: one Special wreck spawn attempt per round.
     - BasicStationEventScheduler
     - BluespaceEventScheduler
     - BluespaceDungeonEventScheduler

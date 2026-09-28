@@ -23,7 +23,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.PlaytimeSalary;
 
-public sealed class PlaytimeSalarySystem : EntitySystem
+public sealed partial class PlaytimeSalarySystem : EntitySystem
 {
     private static readonly TimeSpan CheckInterval = TimeSpan.FromSeconds(1);
     private static readonly TimeSpan RetryInterval = TimeSpan.FromMinutes(1);

@@ -22,10 +22,10 @@ namespace Content.Client._Shitcode.UserActions.Tabs;
 [GenerateTypedNameReferences]
 public sealed partial class StatusTabControl : BaseTabControl
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IEntityManager _entManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private IPrototypeManager _prototypeManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private ISharedPlayerManager _playerManager = default!; // Exodus: generated dependency injection.
+    [Dependency] private IGameTiming _gameTiming = default!; // Exodus: generated dependency injection.
 
     private ClientGameTicker? _gameTicker;
 

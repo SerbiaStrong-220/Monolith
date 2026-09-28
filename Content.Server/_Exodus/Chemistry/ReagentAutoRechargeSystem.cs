@@ -6,7 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Chemistry;
 
-public sealed class ReagentAutoRechargeSystem : EntitySystem
+public sealed partial class ReagentAutoRechargeSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;

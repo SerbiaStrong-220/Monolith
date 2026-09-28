@@ -12,6 +12,18 @@
     - sprite: Objects/Materials/Shards/shard.rsi
       state: shard1
       map: [ "enum.DamageStateVisualLayers.Base" ]
+    # Exodus-begin: show the size of a shard stack with existing shard sprites.
+    - sprite: Objects/Materials/Shards/shard.rsi
+      state: shard2
+      offset: "0.08,0.06"
+      map: ["stack-few"]
+      visible: false
+    - sprite: Objects/Materials/Shards/shard.rsi
+      state: shard3
+      offset: "-0.08,-0.06"
+      map: ["stack-many"]
+      visible: false
+    # Exodus-end
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
@@ -76,7 +88,21 @@
     damage:
       types:
         Piercing: 5
-  - type: DeleteOnTrigger
+  # Exodus-begin: consume individual shards while retaining the stack.
+  - type: StackItem
+    consumeOnTrigger: true
+    layerThresholds:
+      stack-few: 2
+      stack-many: 100
+  - type: Stack
+    count: 1
+    throwIndividually: true
+  - type: Appearance
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
+  # Exodus-end
   - type: StaticPrice
     price: 0
   - type: Scalpel # Shitmed
@@ -93,6 +119,8 @@
   name: glass shard
   description: A small piece of glass.
   components:
+  - type: Stack # Exodus
+    stackType: GlassShard # Exodus
   - type: Sprite
     color: "#bbeeff"
   - type: ToolRefinable
@@ -124,6 +152,8 @@
   name: reinforced glass shard
   description: A small piece of reinforced glass.
   components:
+  - type: Stack # Exodus
+    stackType: ReinforcedGlassShard # Exodus
   - type: Sprite
     color: "#96cdef"
   - type: MeleeWeapon
@@ -160,6 +190,8 @@
   name: plasma glass shard
   description: A small piece of plasma glass.
   components:
+  - type: Stack # Exodus
+    stackType: PlasmaGlassShard # Exodus
   - type: Sprite
     color: "#FF72E7"
   - type: MeleeWeapon
@@ -198,6 +230,8 @@
   name: uranium glass shard
   description: A small piece of uranium glass.
   components:
+  - type: Stack # Exodus
+    stackType: UraniumGlassShard # Exodus
   - type: Sprite
     color: "#8eff7a"
   - type: MeleeWeapon
@@ -238,6 +272,8 @@
   name: clockwork glass shard
   description: A small piece of brass-infused glass.
   components:
+  - type: Stack # Exodus
+    stackType: ClockworkGlassShard # Exodus
   - type: Sprite
     color: "#e0aa36"
   - type: ToolRefinable

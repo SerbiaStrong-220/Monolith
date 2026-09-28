@@ -9,10 +9,10 @@ namespace Content.Server._Exodus.Company;
 /// <summary>
 /// Spawns <see cref="CompanyPrototype.StartingItems"/> after company is assigned on join.
 /// </summary>
-public sealed class CompanyStartingItemsSystem : EntitySystem
+public sealed partial class CompanyStartingItemsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     private readonly HashSet<NetUserId> _grantedPlayers = new();
 

@@ -23,4 +23,6 @@ public readonly record struct BulkAutoMiningLaserState(
     BulkAutoMiningLaserStatus Status,
     int Stored,
     int Capacity,
-    string? ConsoleName = null);
+    string? ConsoleName = null,
+    float Warmup = 0,
+    float YieldBonus = 0);

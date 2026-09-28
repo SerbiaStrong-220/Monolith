@@ -8,7 +8,7 @@
   [locid="guidebook-corporation-tech-disk-acquisition"]
 
   <Box>
-    <GuideEntityEmbed Entity="TechDiskBratvaSuit"/>
+    <GuideEntityEmbed Entity="TechDiskBuno"/>
   </Box>
 
   [locid="tech-disk-bratva-suit-description"]

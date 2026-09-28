@@ -1,5 +1,7 @@
 using Content.Shared.NPC.Prototypes;
+using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Exodus.Territory;
 
@@ -38,11 +40,24 @@ public sealed partial class TerritoryFactionPrototype : IPrototype
     public ProtoId<EntityPrototype>? Banner { get; private set; }
 
     /// <summary>
+    /// Optional interface banner. Falls back to the territory banner's sprite when omitted.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Icon { get; private set; }
+
+    /// <summary>
     /// Optional NPC faction applied to a grid while this territory faction controls it.
     /// This makes captured territories friendly to matching factional AI cores.
     /// </summary>
     [DataField]
     public ProtoId<NpcFactionPrototype>? NpcFaction { get; private set; }
+
+    /// <summary>
+    /// Main radio channels shared with direct allies. Command and private channels should be omitted.
+    /// Receivers keep their own keys; an alliance only grants reception of the other faction's listed channels.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<RadioChannelPrototype>> AllianceRadioChannels { get; private set; } = new();
 
     /// <summary>
     /// Controls how this faction's captured territory score affects faction store discounts.

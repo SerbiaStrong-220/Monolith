@@ -24,6 +24,10 @@ public sealed partial class VirusSchizophreniaSystem : EntitySystem
 
     private void OnStartup(Entity<VirusSchizophreniaComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.StateApplied)
+            return;
+        ent.Comp.StateApplied = true;
+
         ent.Comp.NextMessageTime = _timing.CurTime + _random.Next(ent.Comp.MinInterval, ent.Comp.MaxInterval);
     }
 

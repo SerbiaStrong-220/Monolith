@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Mono.Shipyard;
 
-public abstract class SharedShipyardPreviewSystem : EntitySystem
+public abstract partial class SharedShipyardPreviewSystem : EntitySystem // Exodus: generated dependency injection.
 {
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedTransformSystem _xform = default!;

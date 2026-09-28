@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "states": [
+    {
+      "name": "stand",
+      "directions": 1
+    },
+    {
+      "name": "run",
+      "directions": 1
+    },
+    {
+      "name": "curl",
+      "directions": 1
+    }
+  ]
+}

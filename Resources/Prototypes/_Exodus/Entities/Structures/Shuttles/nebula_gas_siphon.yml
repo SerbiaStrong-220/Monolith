@@ -57,7 +57,7 @@
     minDensity: 0.25
     minSpeed: 1.5
     fullSpeed: 300
-    molesPerSecond: 8
+    molesPerSecond: 16
     targetPressure: 101.325
     pipePosition: 0, 0
     pipeArrowPosition: 0.5, 0

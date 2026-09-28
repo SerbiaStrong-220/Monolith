@@ -10,9 +10,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Exodus.Genetics;
 
-public sealed class GeneticViewWindow : FancyWindow
+public sealed partial class GeneticViewWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private IEntityManager _entities = default!;
     public event Action<NetEntity?>? TargetSelected;
     public event Action? RefreshRequested;
     private readonly BoxContainer _targets = new() { Orientation = BoxContainer.LayoutOrientation.Vertical };

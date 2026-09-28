@@ -50,10 +50,11 @@ public enum WarDeclarationResult : byte
     Success,
     StateUnavailable,
     RoundNotRunning,
-    TooEarly,
+    CodeRestricted,
     InvalidFaction,
     SameFaction,
     AlreadyAtWar,
     NotAtWar,
     PostWarCooldown,
+    AlreadyAllied,
 }

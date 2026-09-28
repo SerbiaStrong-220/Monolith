@@ -12,13 +12,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Goobstation.Sandevistan;
 
-public sealed class SandevistanSystem : EntitySystem
+public sealed partial class SandevistanSystem : EntitySystem // Exodus: generated dependency injection.
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedAudioSystem _audio = default!; // Exodus: generated dependency injection.
+    [Dependency] private MovementSpeedModifierSystem _speed = default!; // Exodus: generated dependency injection.
+    [Dependency] private SharedPopupSystem _popup = default!; // Exodus: generated dependency injection.
+    [Dependency] private IGameTiming _timing = default!; // Exodus: generated dependency injection.
 
     public override void Initialize()
     {

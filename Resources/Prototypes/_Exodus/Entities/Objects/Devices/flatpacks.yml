@@ -45,6 +45,24 @@
     entity: NebulaThruster
 
 - type: entity
+  parent: NebulaThrusterFlatpack
+  id: NebulaThrusterLargeFlatpack
+  name: large phasic thruster flatpack
+  description: A flatpack used for constructing a three-tile-wide phasic thruster.
+  components:
+  - type: Flatpack
+    entity: NebulaThrusterLarge
+
+- type: entity
+  parent: NebulaThrusterFlatpack
+  id: NebulaThrusterCornerFlatpack
+  name: corner phasic thruster flatpack
+  description: A flatpack used for constructing a corner phasic thruster.
+  components:
+  - type: Flatpack
+    entity: NebulaThrusterCorner
+
+- type: entity
   parent: BaseFlatpack
   id: GunneryServerSuperFlatpack
   name: super-high-power gunnery control server flatpack

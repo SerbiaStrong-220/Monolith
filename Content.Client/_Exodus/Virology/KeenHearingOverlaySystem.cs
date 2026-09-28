@@ -2,9 +2,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._Exodus.Virology;
 
-public sealed class KeenHearingOverlaySystem : EntitySystem
+public sealed partial class KeenHearingOverlaySystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private IOverlayManager _overlays = default!;
 
     public override void Initialize()
     {

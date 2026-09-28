@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems;
 /// This system handles the adding and removing of entities to a processing list,
 /// as well as any field changes via the API.</para>
 /// </summary>
-public sealed class DeltaPressureSystem : EntitySystem
+public sealed partial class DeltaPressureSystem : EntitySystem // Exodus: generated dependency injection.
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private SharedMapSystem _map = default!;

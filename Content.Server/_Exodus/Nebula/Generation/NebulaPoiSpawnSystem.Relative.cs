@@ -8,8 +8,8 @@ namespace Content.Server._Exodus.Nebula.Generation;
 
 public sealed partial class NebulaPoiSpawnSystem
 {
-    [Dependency] private readonly RelativePoiSpawnSystem _relativePoi = default!;
-    [Dependency] private readonly SharedTransformSystem _relativeTransform = default!;
+    [Dependency] private RelativePoiSpawnSystem _relativePoi = default!;
+    [Dependency] private SharedTransformSystem _relativeTransform = default!;
 
     private void OnSpawnRelativePoi(ref RelativePoiSpawnEvent args)
     {

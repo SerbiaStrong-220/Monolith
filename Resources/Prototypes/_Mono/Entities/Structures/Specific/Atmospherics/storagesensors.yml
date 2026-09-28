@@ -21,6 +21,7 @@
         Healium: stationNO
         Nitrium: danger
         Pluoxium: ignore
+        ChlorineTrifluoride: danger # Exodus: keep refinery exhaust out of distro storage.
         
 - type: entity
   abstract: true
@@ -45,6 +46,7 @@
         Healium: ignore
         Nitrium: ignore
         Pluoxium: ignore
+        ChlorineTrifluoride: ignore # Exodus: industrial storage allows all gases.
 
 #gas mining/general atmos work storage
 - type: entity

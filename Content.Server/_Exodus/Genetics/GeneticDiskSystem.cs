@@ -7,10 +7,10 @@ namespace Content.Server._Exodus.Genetics;
 [ByRefEvent]
 public readonly record struct GeneticDiskChangedEvent(EntityUid Disk);
 
-public sealed class GeneticDiskSystem : EntitySystem
+public sealed partial class GeneticDiskSystem : EntitySystem
 {
-    [Dependency] private readonly GeneticsSystem _genetics = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
