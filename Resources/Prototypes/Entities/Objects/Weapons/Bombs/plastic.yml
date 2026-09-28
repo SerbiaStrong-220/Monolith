@@ -34,7 +34,7 @@
       enum.Trigger.TriggerVisuals.VisualState:
         base:
           Primed: { state: primed }
-          Unprimed: { state: complete }
+          Unprimed: { state: icon } # Exodus: use the existing unprimed state for C4 and seismic charges.
 
 - type: entity
   name: composition C-4
