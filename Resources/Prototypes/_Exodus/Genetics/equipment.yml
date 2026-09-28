@@ -10,6 +10,9 @@
   parent: MedicalScanner
   id: GeneticsLaboratory
   components:
+  - type: GuideHelp
+    guides:
+    - Genetics
   - type: Sprite
     sprite: _Exodus/Structures/Machines/genetics_laboratory.rsi
   - type: GeneticsLaboratory
@@ -73,6 +76,9 @@
   parent: BaseItem
   id: GeneticDisk
   components:
+  - type: GuideHelp
+    guides:
+    - Genetics
   - type: Sprite
     sprite: _Exodus/Objects/Specific/Genetics/disk.rsi
     state: icon
@@ -94,6 +100,9 @@
   parent: BaseItem
   id: GeneticInjector
   components:
+  - type: GuideHelp
+    guides:
+    - Genetics
   - type: Sprite
     sprite: _Exodus/Objects/Specific/Genetics/injector.rsi
     state: icon
