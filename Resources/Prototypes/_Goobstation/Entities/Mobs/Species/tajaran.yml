@@ -46,7 +46,7 @@
   # Exodus-begin upstream PNV Gen 3
   - type: NightVision
     relayOverlay: false
-    goggleEffect: true
+    goggleEffect: false # Exodus: natural night vision without tint or goggle mask.
     viewCircleRadius: 450
     viewCircleCount: 4
     viewCircleSpacing: 280

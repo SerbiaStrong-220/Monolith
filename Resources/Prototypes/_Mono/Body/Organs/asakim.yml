@@ -19,7 +19,7 @@
     onAdd:
     - type: NightVision # Gen 4 wide-quadtube # Exodus PNV tint
       relayOverlay: false
-      goggleEffect: true
+      goggleEffect: false # Exodus: natural night vision without tint or goggle mask.
       viewCircleRadius: 450
       viewCircleCount: 4
       viewCircleSpacing: 280

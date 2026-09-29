@@ -168,7 +168,7 @@
     noRot: false
   - type: NightVision # Exodus: toggleable Leviathan PNV
     relayOverlay: false
-    goggleEffect: true
+    goggleEffect: false # Natural night vision without tint or goggle mask.
     viewCircleRadius: 2000 # Exodus: matches the Leviathan's 4.458x view range.
     viewCircleCount: 4
     viewCircleSpacing: 1250 # Exodus: matches the Leviathan's 4.458x view range.

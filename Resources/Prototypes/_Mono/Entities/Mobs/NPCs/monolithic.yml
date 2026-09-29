@@ -221,7 +221,7 @@
     bloodMaxVolume: 0.01
   - type: NightVision # Gen 3 wide-quadtube
     relayOverlay: false
-    goggleEffect: true
+    goggleEffect: false # Exodus: natural night vision without tint or goggle mask.
     viewCircleRadius: 450
     viewCircleCount: 4
     viewCircleSpacing: 280
