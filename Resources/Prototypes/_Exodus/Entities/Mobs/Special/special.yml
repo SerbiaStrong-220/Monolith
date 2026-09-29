@@ -56,6 +56,11 @@
           32:
             sprite: Effects/speech.rsi
             state: empty0
+      mask:
+        sizeMaps:
+          32:
+            sprite: Effects/speech.rsi
+            state: empty0
   - type: SurgeryTarget
   - type: UserInterface
     interfaces:
