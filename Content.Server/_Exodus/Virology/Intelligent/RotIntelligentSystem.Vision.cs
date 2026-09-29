@@ -164,7 +164,8 @@ public sealed partial class RotIntelligentSystem
         _viewTiles.Clear();
         if (frame is { } grid && TryComp<MapGridComponent>(grid, out var mapGrid) && TryComp<BroadphaseComponent>(grid, out var broadphase))
         {
-            var bounds = new Box2Rotated(Box2.CenteredAround(origin.Position, new Vector2(36, 36)), _transform.GetWorldRotation(grid));
+            var bounds = new Box2Rotated(Box2.CenteredAround(origin.Position, new Vector2(36, 36)),
+                _transform.GetWorldRotation(grid), origin.Position);
             _vision.GetView((grid, broadphase, mapGrid), bounds, _viewTiles,
                 expansionSize: MaximumVisionRange(ent.Comp2) + 1, network: ent.Owner);
             var center = _maps.TileIndicesFor(grid, mapGrid, _transform.ToCoordinates(grid, origin));

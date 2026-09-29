@@ -26,6 +26,8 @@ public sealed partial class RotSpreadComponent : Component
     [DataField] public EntProtoId Marker = "RotConstructionMarker";
     [DataField] public EntityWhitelist ConvertibleWalls = new() { Tags = new() { "Wall" } };
     [DataField] public EntityWhitelist Excluded = new() { Components = new[] { "Docking" }, Tags = new() { "SpreaderIgnore" } };
+    /// <summary>Floor-level entities that tissue may cover without corroding or converting them.</summary>
+    [DataField] public EntityWhitelist Ignored = new() { Tags = new() { "Catwalk" } };
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextGrowth;
     [DataField] public EntityUid? PendingMarker;
     public EntityUid? Grid;
