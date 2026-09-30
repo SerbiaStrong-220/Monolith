@@ -18,6 +18,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeSuppression();
 
         SubscribeLocalEvent<StealthComponent, ComponentGetState>(OnStealthGetState);
         SubscribeLocalEvent<StealthComponent, ComponentHandleState>(OnStealthHandleState);
@@ -43,29 +44,27 @@ public abstract partial class SharedStealthSystem : EntitySystem
         }
     }
 
-    private void OnMobStateChanged(EntityUid uid, StealthComponent component, MobStateChangedEvent args)
+    private void OnMobStateChanged(Entity<StealthComponent> ent, ref MobStateChangedEvent args)
     {
-        if (IsVisible(uid))
-            return;
-
-        if (!TryGetMinVisibilityData(uid, out var data))
+        // Suppression overrides visibility, but must not prevent a source's normal crit/death cleanup.
+        if (!TryGetMinVisibilityData(ent, out var data, ent.Comp, includeSuppressed: true))
             return;
 
         if (data != null)
         {
             if (args.NewMobState == MobState.Critical && !data.EnabledOnCrit)
             {
-                RemCompDeferred<StealthComponent>(uid);
+                RemCompDeferred<StealthComponent>(ent);
                 return;
             }
 
             if (args.NewMobState == MobState.Dead && !data.EnabledOnDeath)
             {
-                RemCompDeferred<StealthComponent>(uid);
+                RemCompDeferred<StealthComponent>(ent);
                 return;
             }
 
-            Dirty(uid, component);
+            Dirty(ent);
         }
     }
 
@@ -250,7 +249,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
 
         stealthComp.StealthLayers.Remove(key);
 
-        if (IsVisible(target))
+        if (stealthComp.StealthLayers.Count == 0)
         {
             RemCompDeferred<StealthComponent>(target);
             return true;
@@ -261,12 +260,14 @@ public abstract partial class SharedStealthSystem : EntitySystem
         return true;
     }
 
-    public bool TryGetMinVisibilityData(EntityUid uid, [NotNullWhen(true)] out StealthData? returnData, StealthComponent? component = null)
+    public bool TryGetMinVisibilityData(EntityUid uid, [NotNullWhen(true)] out StealthData? returnData,
+        StealthComponent? component = null, bool includeSuppressed = false)
     {
         returnData = null;
         var minValue = float.MaxValue;
 
-        if (!Resolve(uid, ref component) || TerminatingOrDeleted(uid) || IsVisible(uid))
+        if (!Resolve(uid, ref component) || TerminatingOrDeleted(uid) || component.StealthLayers.Count == 0 ||
+            !includeSuppressed && IsSuppressed(uid))
             return false;
 
         foreach (var data in component.StealthLayers.Values)
@@ -288,6 +289,9 @@ public abstract partial class SharedStealthSystem : EntitySystem
 
     public bool IsVisible(EntityUid uid)
     {
+        if (IsSuppressed(uid))
+            return true;
+
         if (!TryComp<StealthComponent>(uid, out var stealthComp))
             return true;
 

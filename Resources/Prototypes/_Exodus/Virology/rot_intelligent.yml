@@ -109,6 +109,15 @@
     enabled: false
   - type: RotIntelligent
     buildings: [ RotBuildTissue, RotBuildWall, RotBuildDoor, RotBuildEyeball, RotBuildFlagellum, RotBuildKidney, RotBuildProducer, RotBuildNursery ]
+  - type: NightVision
+    relayOverlay: false
+    goggleEffect: false # Natural night vision without tint or goggle mask.
+    viewCircleRadius: 550
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
   - type: RotColonyMember
     needsSupport: false
     conductive: true

@@ -49,6 +49,7 @@ public sealed partial class RotHungrySystem
 
     private void OnShutdown(Entity<RotHungryComponent> ent, ref ComponentShutdown args)
     {
+        _actions.RemoveAction(ent.Owner, ent.Comp.StrikeActionEntity);
         CancelDetour(ent);
         CancelRetreatPath(ent);
         SetFrenzy(ent, false);

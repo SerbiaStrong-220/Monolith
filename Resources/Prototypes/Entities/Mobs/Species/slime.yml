@@ -4,6 +4,8 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  - type: Genome # Exodus: native, reversible slime transformation ability.
+    initialMutations: [GeneticSlime] # Exodus
   - type: Hunger
   - type: Thirst
   - type: Carriable # Carrying system from nyanotrasen.

@@ -22,6 +22,12 @@
   groups:
   - NfsdBoxSurvival
 
+# Ghost operatives carry a halberd on the armor mount and a filled tank in pocket1.
+- type: roleLoadout
+  id: ExodusMarsocGhostSurvival
+  groups:
+  - GroupPocketTankDouble
+
 # Tarkhan still needs the backpack before its lobby storage loadouts.
 - type: loadoutGroup
   id: ExodusTarkhanBackpack

@@ -12,7 +12,7 @@
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     size: Normal
   - type: FoamSprayer
-    delay: 20
+    delay: 4
     foamPrototype: ExodusBiohazardFoam
     foamDuration: 15
     spreadAmount: 100

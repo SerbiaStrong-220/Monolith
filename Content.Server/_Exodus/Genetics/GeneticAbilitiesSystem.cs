@@ -32,6 +32,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
     [Dependency] private SharedStealthSystem _stealth = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
 
     private const string CloakSource = "Genetics";
 
@@ -45,7 +46,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
         SubscribeLocalEvent<GeneticEffectsComponent, GeneticCloakEvent>(OnCloak);
         SubscribeLocalEvent<GeneticAbilityStateComponent, ComponentShutdown>(OnStateShutdown);
         SubscribeLocalEvent<GeneticAbilityStateComponent, CloningSpeciesEvent>(OnCloningSpecies);
-        SubscribeLocalEvent<GeneticAbilityStateComponent, CloningEvent>(OnCloning, after: new[] { typeof(GeneticsSystem) });
+        SubscribeLocalEvent<GeneticAbilityStateComponent, CloningEvent>(OnCloning, before: new[] { typeof(GeneticsSystem) });
         SubscribeLocalEvent<GeneticAbilityStateComponent, StealthRevealEvent>(OnReveal);
         SubscribeLocalEvent<GeneticAbilityStateComponent, AttackedEvent>(OnAttacked);
         SubscribeLocalEvent<GeneticAbilityStateComponent, ProjectileHitTargetEvent>(OnProjectile);
@@ -57,6 +58,9 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
         InitializeTelekinesis();
         InitializeAdaptations();
         InitializeDeflection();
+        InitializeTransformation();
+        InitializeCooldowns();
+        InitializeCocoon();
     }
 
     private bool HasAbility(EntityUid uid, GeneticAbility ability)
@@ -81,7 +85,9 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
             RestoreAppearance((ent.Owner, state));
         if (!HasAbility(ent, GeneticAbility.RemoteViewing))
             StopViewing((ent.Owner, state), true);
+        ReconcileTransformation(ent, state);
         ReconcileAdaptations(ent, state);
+        RefreshGeneticCooldowns((ent.Owner, state));
     }
 
     private void OnEffectsShutdown(Entity<GeneticAbilityStateComponent> ent, ref GeneticEffectsShutdownEvent args)
@@ -97,28 +103,39 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
 
     private void OnCloningSpecies(Entity<GeneticAbilityStateComponent> ent, ref CloningSpeciesEvent args)
     {
-        if (ent.Comp.OriginalAppearance is { } original)
+        if ((ent.Comp.GeneticOriginalAppearance ?? ent.Comp.OriginalAppearance ?? ent.Comp.FormAppearance) is { } original)
             args.Species = original.Species;
     }
 
     private void OnCloning(Entity<GeneticAbilityStateComponent> ent, ref CloningEvent args)
     {
-        if (ent.Comp.OriginalAppearance is not { } original || TerminatingOrDeleted(args.Target))
+        if (TerminatingOrDeleted(args.Target) || !TryComp<HumanoidAppearanceComponent>(ent, out var current))
             return;
         var state = EnsureComp<GeneticAbilityStateComponent>(args.Target);
-        state.OriginalAppearance = _serialization.CreateCopy(original, notNullableOverride: true);
+        StopTransformation((args.Target, state));
+        var visible = ent.Comp.FormAppearance ?? current;
+        var original = ent.Comp.GeneticOriginalAppearance ?? ent.Comp.OriginalAppearance ?? visible;
+
+        // First-time genome initialization reconciles inactive genes and clears mimicry state.
+        // Do it on the biological appearance before installing the source's restoration snapshots.
+        _appearance.ApplyAppearance(args.Target, original);
+        if (!_genetics.TryGetGenome(args.Target, out _))
+            return;
+
+        state.OriginalAppearance = ent.Comp.OriginalAppearance == null
+            ? null : _serialization.CreateCopy(original, notNullableOverride: true);
         state.OriginalName = ent.Comp.OriginalName;
-        if (!HasAbility(args.Target, GeneticAbility.Mimic))
-        {
-            RestoreAppearance((args.Target, state));
-            args.NameHandled = true;
-        }
+        // Genetics applies the copied genome afterwards, rebuilding adaptations on the original anatomy.
+        _appearance.ApplyAppearance(args.Target, state.OriginalAppearance == null ? original : visible);
+        state.TransformationColor = ent.Comp.TransformationColor;
+        state.TransformationAvailable = ent.Comp.TransformationAvailable;
     }
 
     private void Cleanup(Entity<GeneticAbilityStateComponent> ent)
     {
         StopViewing(ent, true);
         CleanupAdaptations(ent);
+        StopTransformation(ent);
         if (!TerminatingOrDeleted(ent))
         {
             StopCloak(ent, false);
@@ -134,7 +151,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
 
     private void OnMimic(Entity<GeneticEffectsComponent> ent, ref GeneticMimicEvent args)
     {
-        if (args.Handled || !CanUse(ent, GeneticAbility.Mimic) || args.Target == ent.Owner ||
+        if (args.Handled || ent.Comp.InAlternateForm || !CanUse(ent, GeneticAbility.Mimic) || args.Target == ent.Owner ||
             !_interaction.InRangeUnobstructed(ent.Owner, args.Target) ||
             !TryComp<HumanoidAppearanceComponent>(ent, out var appearance) ||
             !TryComp<HumanoidAppearanceComponent>(args.Target, out var target))
@@ -162,6 +179,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
     {
         if (ent.Comp.OriginalAppearance is not { } original || TerminatingOrDeleted(ent))
             return;
+        ExitAlternateForm(ent);
         _appearance.ApplyAppearance(ent.Owner, original);
         if (ent.Comp.OriginalName is { } name)
             _metadata.SetEntityName(ent, name);
@@ -181,6 +199,11 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
             args.Handled = true;
             return;
         }
+        if (_stealth.IsSuppressed(ent))
+        {
+            _popup.PopupEntity(Loc.GetString("stealth-disruptor-suppressed"), ent, ent);
+            return;
+        }
         if (state.CloakAvailable > _timing.CurTime)
         {
             _popup.PopupEntity(Loc.GetString("genetics-cloak-cooldown"), ent, ent);
@@ -198,6 +221,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
         ent.Comp.Cloaked = false;
         if (broken)
             ent.Comp.CloakAvailable = _timing.CurTime + ent.Comp.CloakCooldown;
+        RefreshGeneticCooldowns(ent);
     }
 
     private void OnReveal(Entity<GeneticAbilityStateComponent> ent, ref StealthRevealEvent args) => StopCloak(ent, true);
@@ -213,6 +237,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
 
     private void OnMobState(Entity<GeneticAbilityStateComponent> ent, ref MobStateChangedEvent args)
     {
+        HandleTransformationMobState(ent, args.NewMobState);
         if (args.NewMobState == MobState.Alive)
             return;
         StopCloak(ent, true);

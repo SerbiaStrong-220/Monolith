@@ -37,7 +37,7 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
     {
         if (PartStatusControl != null)
         {
-            PartStatusControl.SetVisible(_targetingComponent != null);
+            RefreshGeneticFormVisibility(); // Exodus
 
             if (_targetingComponent != null)
                 PartStatusControl.SetTextures(_targetingComponent.BodyStatus);
@@ -50,7 +50,7 @@ public sealed partial class PartStatusUIController : UIController, IOnStateEnter
 
         if (PartStatusControl != null)
         {
-            PartStatusControl.SetVisible(_targetingComponent != null);
+            RefreshGeneticFormVisibility(); // Exodus
 
             if (_targetingComponent != null)
                 PartStatusControl.SetTextures(_targetingComponent.BodyStatus);

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Content.IntegrationTests.Pair;
 using Content.Server._Exodus.Mining.AutoMining;
+using Content.Shared._Exodus.CCVar;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -13,13 +15,16 @@ namespace Content.IntegrationTests.Tests._Exodus;
 [TestFixture]
 public sealed partial class BulkMiningConnectivityTest
 {
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task SafetyMatchesIndependentFloodFill(bool largeShapes)
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    public async Task SafetyMatchesIndependentFloodFill(bool largeShapes, bool localSearch)
     {
         await using var pair = await PoolManager.GetServerClient();
         var map = await pair.CreateTestMap();
         var em = pair.Server.EntMan;
+        var previous = await SetLocalSearch(pair, localSearch);
         await pair.Server.WaitAssertion(() =>
         {
             var manager = pair.Server.ResolveDependency<IMapManager>();
@@ -69,6 +74,7 @@ public sealed partial class BulkMiningConnectivityTest
                 em.DeleteEntity(grid);
             }
         });
+        await RestoreLocalSearch(pair, previous);
         await pair.CleanReturnAsync();
     }
 
@@ -78,6 +84,8 @@ public sealed partial class BulkMiningConnectivityTest
         await using var pair = await PoolManager.GetServerClient();
         var map = await pair.CreateTestMap();
         var em = pair.Server.EntMan;
+        // Exercise the shared whole-grid analysis; the local search would answer these rings at once.
+        var previous = await SetLocalSearch(pair, false);
         await pair.Server.WaitAssertion(() =>
         {
             var grid = pair.Server.ResolveDependency<IMapManager>().CreateGridEntity(map.MapId);
@@ -124,6 +132,50 @@ public sealed partial class BulkMiningConnectivityTest
             Assert.That(em.GetComponent<BulkMiningConnectivityComponent>(grid).Users.Count, Is.EqualTo(1),
                 "Stopping and restarting in the same tick must retain a live cache.");
         });
+        await RestoreLocalSearch(pair, previous);
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task LocalSearchDecidesSurfaceCutsWithoutWholeGridAnalysis()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var map = await pair.CreateTestMap();
+        var em = pair.Server.EntMan;
+        var previous = await SetLocalSearch(pair, true);
+        await pair.Server.WaitAssertion(() =>
+        {
+            var grid = pair.Server.ResolveDependency<IMapManager>().CreateGridEntity(map.MapId);
+            grid.Comp.CanSplit = false;
+            var maps = em.System<SharedMapSystem>();
+            var connectivity = em.System<BulkMiningConnectivitySystem>();
+            // A solid 64x64 block with two diagonal holes: the tile between them is not locally safe,
+            // but a short detour around either hole proves the cut safe without a whole-grid pass.
+            var changes = new List<(Vector2i, Tile)>();
+            for (var x = 0; x < 64; x++)
+            {
+                for (var y = 0; y < 64; y++)
+                {
+                    if ((x, y) is not ((33, 33) or (31, 31)))
+                        changes.Add((new Vector2i(x, y), map.Tile.Tile));
+                }
+            }
+
+            // A peninsula attached by a single tile.
+            changes.Add((new Vector2i(64, 10), map.Tile.Tile));
+            changes.Add((new Vector2i(65, 10), map.Tile.Tile));
+            changes.Add((new Vector2i(66, 10), map.Tile.Tile));
+            maps.SetTiles(grid, grid.Comp, changes);
+            connectivity.RetainGrid(map.MapUid, grid);
+            var cache = em.GetComponent<BulkMiningConnectivityComponent>(grid);
+
+            Assert.That(connectivity.GetTileSafety(grid, new Vector2i(32, 32)), Is.EqualTo(BulkMiningTileSafety.Safe));
+            Assert.That(connectivity.GetTileSafety(grid, new Vector2i(64, 10)), Is.EqualTo(BulkMiningTileSafety.Unsafe));
+            Assert.That(connectivity.GetTileSafety(grid, new Vector2i(65, 10)), Is.EqualTo(BulkMiningTileSafety.Unsafe));
+            Assert.That(cache.Pending || cache.Complete, Is.False, "No whole-grid analysis was needed.");
+            em.DeleteEntity(grid);
+        });
+        await RestoreLocalSearch(pair, previous);
         await pair.CleanReturnAsync();
     }
 
@@ -183,6 +235,7 @@ public sealed partial class BulkMiningConnectivityTest
         await using var pair = await PoolManager.GetServerClient();
         var map = await pair.CreateTestMap();
         var em = pair.Server.EntMan;
+        var previous = await SetLocalSearch(pair, false);
         await pair.Server.WaitAssertion(() =>
         {
             var grid = pair.Server.ResolveDependency<IMapManager>().CreateGridEntity(map.MapId);
@@ -214,15 +267,74 @@ public sealed partial class BulkMiningConnectivityTest
                     Is.EqualTo(distance > 1 ? BulkMiningTileSafety.Unsafe : BulkMiningTileSafety.Safe));
             }
         });
+        await RestoreLocalSearch(pair, previous);
         await pair.CleanReturnAsync();
     }
 
     [Test]
-    public async Task CachedGraphMatchesFloodFillAfterMiningConstructionAndBatchEdits()
+    public async Task LocallySafeCutsPreserveTheWholeGridAnalysis()
     {
         await using var pair = await PoolManager.GetServerClient();
         var map = await pair.CreateTestMap();
         var em = pair.Server.EntMan;
+        var previous = await SetLocalSearch(pair, false);
+        await pair.Server.WaitAssertion(() =>
+        {
+            var grid = pair.Server.ResolveDependency<IMapManager>().CreateGridEntity(map.MapId);
+            grid.Comp.CanSplit = false;
+            var maps = em.System<SharedMapSystem>();
+            var connectivity = em.System<BulkMiningConnectivitySystem>();
+            // A thick block with a long one-tile handle: the handle keeps an articulation analysis relevant.
+            var points = new HashSet<Vector2i>();
+            for (var x = 0; x < 12; x++)
+            {
+                for (var y = 0; y < 12; y++)
+                    points.Add(new Vector2i(x, y));
+            }
+
+            for (var x = 12; x < 20; x++)
+                points.Add(new Vector2i(x, 5));
+
+            var changes = new List<(Vector2i, Tile)>();
+            foreach (var point in points)
+                changes.Add((point, map.Tile.Tile));
+
+            maps.SetTiles(grid, grid.Comp, changes);
+            connectivity.RetainGrid(map.MapUid, grid);
+            var cache = em.GetComponent<BulkMiningConnectivityComponent>(grid);
+            Assert.That(ResolveSafety(connectivity, grid, new Vector2i(15, 5)), Is.EqualTo(BulkMiningTileSafety.Unsafe));
+            var generation = cache.Generation;
+
+            // Peel the block's surface: every cut is locally safe and must keep the analysis complete.
+            foreach (var cut in new[] { new Vector2i(0, 0), new Vector2i(1, 0), new Vector2i(0, 11), new Vector2i(11, 11) })
+            {
+                Assert.That(connectivity.GetTileSafety(grid, cut), Is.EqualTo(BulkMiningTileSafety.Safe));
+                maps.SetTile(grid, grid.Comp, cut, Tile.Empty);
+                points.Remove(cut);
+                Assert.That(cache.Complete, Is.True);
+                Assert.That(cache.Generation, Is.EqualTo(generation));
+            }
+
+            foreach (var point in points)
+            {
+                var expected = IsConnected(points, point) ? BulkMiningTileSafety.Safe : BulkMiningTileSafety.Unsafe;
+                Assert.That(ResolveSafety(connectivity, grid, point), Is.EqualTo(expected), $"Tile {point}");
+            }
+
+            em.DeleteEntity(grid);
+        });
+        await RestoreLocalSearch(pair, previous);
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task CachedGraphMatchesFloodFillAfterMiningConstructionAndBatchEdits(bool localSearch)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var map = await pair.CreateTestMap();
+        var em = pair.Server.EntMan;
+        var previous = await SetLocalSearch(pair, localSearch);
         await pair.Server.WaitAssertion(() =>
         {
             var manager = pair.Server.ResolveDependency<IMapManager>();
@@ -281,7 +393,25 @@ public sealed partial class BulkMiningConnectivityTest
                 em.DeleteEntity(grid);
             }
         });
+        await RestoreLocalSearch(pair, previous);
         await pair.CleanReturnAsync();
+    }
+
+    private static async Task<int> SetLocalSearch(TestPair pair, bool enabled)
+    {
+        var previous = 0;
+        await pair.Server.WaitPost(() =>
+        {
+            previous = pair.Server.CfgMan.GetCVar(EXCVars.BulkMiningLocalSearchBudget);
+            pair.Server.CfgMan.SetCVar(EXCVars.BulkMiningLocalSearchBudget,
+                enabled ? EXCVars.BulkMiningLocalSearchBudget.DefaultValue : 0);
+        });
+        return previous;
+    }
+
+    private static async Task RestoreLocalSearch(TestPair pair, int previous)
+    {
+        await pair.Server.WaitPost(() => pair.Server.CfgMan.SetCVar(EXCVars.BulkMiningLocalSearchBudget, previous));
     }
 
     private static BulkMiningTileSafety ResolveSafety(BulkMiningConnectivitySystem system, Entity<MapGridComponent> grid, Vector2i tile)

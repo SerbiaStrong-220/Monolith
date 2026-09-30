@@ -2,6 +2,9 @@
   id: DionaNymph
 
 - type: Tag
+  id: StealthDisruptorCartridge
+
+- type: Tag
   id: SpaceLeviathan
 
 - type: Tag

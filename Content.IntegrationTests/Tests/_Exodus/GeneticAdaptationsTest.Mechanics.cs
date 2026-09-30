@@ -3,11 +3,14 @@ using System.Numerics;
 using Content.Server._Exodus.Genetics;
 using Content.Shared._Exodus.Genetics;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Projectiles;
 using Content.Shared.Spider;
 using Content.Shared.Sprite;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -35,6 +38,9 @@ public sealed partial class GeneticAdaptationsTest
             var body = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, Vector2.Zero));
             var gun = entities.SpawnEntity("WeaponPistolMk58", new EntityCoordinates(map, Vector2.Zero));
             var gunComponent = entities.GetComponent<GunComponent>(gun);
+            var melee = entities.System<SharedMeleeWeaponSystem>();
+            var nativeDamage = melee.GetDamage(body, body);
+            var weaponDamage = melee.GetDamage(gun, body);
             var scale = entities.System<SharedScaleVisualsSystem>();
             var baseScale = new Vector2(0.9f, 1.1f);
             scale.SetSpriteScale(body, baseScale, relativeToOriginal: removeEffects);
@@ -50,6 +56,12 @@ public sealed partial class GeneticAdaptationsTest
             var genetics = entities.System<GeneticsSystem>();
             var genome = Enable(entities, body, "GeneticHulk");
             Enable(entities, body, "GeneticHulk");
+            Assert.That(genome.Actions.ContainsKey("ActionGeneticPry"), Is.False);
+            var hulkDamage = melee.GetDamage(body, body);
+            var damageMultiplier = entities.System<DamageableSystem>().UniversalMeleeDamageModifier;
+            Assert.That(hulkDamage.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(40) * damageMultiplier));
+            Assert.That(hulkDamage.DamageDict["Structural"], Is.EqualTo(FixedPoint2.New(350) * damageMultiplier));
+            Assert.That(melee.GetDamage(gun, body), Is.EqualTo(weaponDamage), "Hulk must only replace unarmed damage.");
             Assert.That(Vector2.Distance(scale.GetSpriteScale(body), baseScale * 1.15f), Is.LessThan(0.0001f));
             Assert.That(entities.GetComponent<ScaleVisualsComponent>(body).RelativeToOriginal, Is.EqualTo(removeEffects));
             foreach (var (id, radius) in radii)
@@ -77,6 +89,7 @@ public sealed partial class GeneticAdaptationsTest
                 entities.RemoveComponent<GeneticEffectsComponent>(body);
             else
                 Assert.That(genetics.TryStabilize(body), Is.True);
+            Assert.That(melee.GetDamage(body, body), Is.EqualTo(nativeDamage), "Native unarmed damage must return when Hulk is removed.");
             Assert.That(Vector2.Distance(scale.GetSpriteScale(body), baseScale), Is.LessThan(0.0001f));
             Assert.That(entities.GetComponent<ScaleVisualsComponent>(body).RelativeToOriginal, Is.EqualTo(removeEffects));
             foreach (var (id, radius) in radii)

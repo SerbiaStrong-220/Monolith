@@ -5,12 +5,14 @@
   children:
   - DirectorOfCare # Frontier
   - MedicalDoctor
+  - MedicalImplants # Exodus: medical service tiers, tracking and department revenue.
   - Chemist
   - Cloning
   - Cryogenics # Note: Frontier changes inside
   - Surgery # Shitmed Change
   - MedicalBounties # Frontier
   - Virology # SS220 / Exodus
+  - Genetics # Exodus: genetics guide and mutation reference.
 
 - type: guideEntry
   id: MedicalDoctor

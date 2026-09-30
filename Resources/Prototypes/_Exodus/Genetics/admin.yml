@@ -19,6 +19,14 @@
 
 - type: entity
   parent: BaseGeneticInjectorAdmin
+  id: GeneticInjectorSlime
+  suffix: ADMIN
+  components:
+  - type: GeneticInjector
+    mutation: GeneticSlime
+
+- type: entity
+  parent: BaseGeneticInjectorAdmin
   id: GeneticInjectorTelekinesis
   suffix: ADMIN
   components:
@@ -184,6 +192,14 @@
   components:
   - type: GeneticInjector
     mutation: GeneticHemophilia
+
+- type: entity
+  parent: BaseGeneticInjectorAdmin
+  id: GeneticInjectorBloodBath
+  suffix: ADMIN
+  components:
+  - type: GeneticInjector
+    mutation: GeneticBloodBath
 
 - type: entity
   parent: BaseGeneticInjectorAdmin

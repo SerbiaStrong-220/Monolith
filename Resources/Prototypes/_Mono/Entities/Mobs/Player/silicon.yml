@@ -183,6 +183,8 @@
   parent: BaseFactionBorgChassis
   abstract: true
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for Asakim and ADS cyborg players.
+    salary: Silicon
   - type: GameRuleDepartmentMember # Exodus: include player-controlled Asakim borgs in event requirements.
     departments: [Combatant]
   - type: NpcFactionMember
@@ -399,6 +401,8 @@
   parent: PlayerStationAiEmpty
   suffix: Ghost Role, Remnant
   components:
+  - type: PlaytimeSalary # Exodus: OOC savings rewards for ADS AI players, including remote borg control.
+    salary: Silicon
   - type: ContainerComp
     proto: AiHeldRedacted
     container: station_ai_mind_slot

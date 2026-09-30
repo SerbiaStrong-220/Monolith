@@ -12,15 +12,19 @@ namespace Content.IntegrationTests.Tests._Exodus;
 
 public sealed partial class RotIntelligentTest
 {
-    [TestCase("FloorSteel")]
-    [TestCase("Plating")]
-    public async Task UtilitiesDoNotBlockTissueGrowth(string floor)
+    [TestCase("FloorSteel", false)]
+    [TestCase("FloorSteel", true)]
+    [TestCase("Plating", false)]
+    [TestCase("Plating", true)]
+    public async Task FloorInfrastructureDoesNotBlockTissueGrowth(string floor, bool organ)
     {
         await using var pair = await PoolManager.GetServerClient(testContext: new LiveContext());
         var server = pair.Server;
         var em = server.EntMan;
         var map = await pair.CreateTestMap(true, floor);
         var utilities = new List<EntityUid>();
+        var sourceTile = organ ? new Vector2i(1, 0) : Vector2i.Zero;
+        var sourceCoordinates = new EntityCoordinates(map.Grid, sourceTile.X + .5f, .5f);
         EntityUid core = default;
         await server.WaitAssertion(() =>
         {
@@ -31,11 +35,20 @@ public sealed partial class RotIntelligentTest
             // Central's floors contain overlapping cable, gas and disposal networks.
             foreach (var prototype in new[] { "CableHV", "CableMV", "GasPipeStraight", "DisposalPipe" })
             {
-                var utility = em.SpawnEntity(prototype, new EntityCoordinates(map.Grid, .5f, .5f));
+                var utility = em.SpawnEntity(prototype, sourceCoordinates);
                 Assert.That(em.GetComponent<SubFloorHideComponent>(utility).IsUnderCover, Is.EqualTo(floor == "FloorSteel"));
                 utilities.Add(utility);
             }
+            // Sevastopol also has floor-level catwalks, which must not trap the growth frontier under its source.
+            foreach (var prototype in new[] { "Catwalk", "DarkCatwalkMono" })
+                utilities.Add(em.SpawnEntity(prototype, sourceCoordinates));
             core = em.SpawnEntity("MobRotIntelligent", new EntityCoordinates(map.Grid, .5f, .5f));
+            if (organ)
+            {
+                em.GetComponent<RotSpreadComponent>(core).NextGrowth += TimeSpan.FromMinutes(1);
+                var source = em.SpawnEntity("RotEyeball", sourceCoordinates);
+                Assert.That(em.System<RotIntelligentSystem>().Join(source, core), Is.True);
+            }
         });
         await pair.RunSeconds(5.5f);
         await server.WaitAssertion(() =>
@@ -46,12 +59,15 @@ public sealed partial class RotIntelligentTest
                     "Infrastructure under the core must not trap growth in the starting patch.");
                 foreach (var utility in utilities)
                     Assert.That(em.GetComponent<DamageableComponent>(utility).TotalDamage.Float(), Is.Zero,
-                        "Surface growth must leave cables and pipes intact, including on exposed plating.");
+                        "Surface growth must leave floor infrastructure intact, including on exposed plating.");
             });
             var replacement = server.ResolveDependency<ITileDefinitionManager>()[floor == "FloorSteel" ? "Plating" : "FloorSteel"];
-            em.System<SharedMapSystem>().SetTile(map.Grid.Owner, map.Grid.Comp, Vector2i.Zero, new Tile(replacement.TileId));
+            em.System<SharedMapSystem>().SetTile(map.Grid.Owner, map.Grid.Comp, sourceTile, new Tile(replacement.TileId));
             foreach (var utility in utilities)
-                Assert.That(em.GetComponent<SubFloorHideComponent>(utility).IsUnderCover, Is.EqualTo(floor != "FloorSteel"));
+            {
+                if (em.TryGetComponent<SubFloorHideComponent>(utility, out var subFloor))
+                    Assert.That(subFloor.IsUnderCover, Is.EqualTo(floor != "FloorSteel"));
+            }
         });
         await pair.RunSeconds(5);
         await server.WaitAssertion(() =>

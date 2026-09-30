@@ -25,6 +25,8 @@ public sealed partial class GeneticMutationPrototype : IPrototype
 [DataDefinition, Serializable, NetSerializable]
 public sealed partial class GeneticModifiers
 {
+    /// <summary>Optional species adaptation. Conflicts use a stable prototype-id order.</summary>
+    [DataField] public ProtoId<GeneticTransformationPrototype>? Transformation;
     [DataField] public bool NoBreathing;
     [DataField] public bool LowPressureImmunity;
     [DataField] public bool HighPressureImmunity;
@@ -32,6 +34,8 @@ public sealed partial class GeneticModifiers
     [DataField] public bool HeatImmunity;
     [DataField] public float MovementMultiplier = 1f;
     [DataField] public float MeleeMultiplier = 1f;
+    /// <summary>Optional replacement for innate melee damage. Active gene contributions add together before multipliers.</summary>
+    [DataField] public DamageSpecifier? UnarmedDamage;
     [DataField] public float StaminaMultiplier = 1f;
     [DataField] public float DamageMultiplier = 1f;
     /// <summary>Innate damage resistance, combined across active genes without replacing species or armor modifiers.</summary>
@@ -75,4 +79,6 @@ public enum GeneticAbility : ushort
     Hearing = 2048,
     Web = 4096,
     FireBreath = 8192,
+    BloodExpulsion = 16384,
+    Cocoon = 32768,
 }

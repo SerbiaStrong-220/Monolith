@@ -13,6 +13,7 @@ namespace Content.Server._Exodus.Virology.Intelligent;
 public sealed partial class RotIntelligentSystem
 {
     [Dependency] private EntityTableSystem _tables = default!;
+    [Dependency] private Lifecycle.RotPopulationSystem _population = default!;
 
     private void InitializeBrood()
     {
@@ -39,6 +40,8 @@ public sealed partial class RotIntelligentSystem
     {
         args.PushMarkup(ent.Comp.Remaining <= TimeSpan.Zero ? Loc.GetString("rot-nursery-blocked")
             : Loc.GetString("rot-nursery-progress", ("seconds", Math.Ceiling(ent.Comp.Remaining.TotalSeconds))));
+        if (_population.IsCrowded(ent))
+            args.PushMarkup(Loc.GetString("rot-colony-overcrowded"));
         if (!_members.TryComp(ent, out var member) || !member.Connected)
             args.PushMarkup(Loc.GetString("rot-organ-disconnected"));
     }
@@ -83,7 +86,7 @@ public sealed partial class RotIntelligentSystem
                         break;
                     }
                 }
-                if (spawn is not { } coordinates)
+                if (spawn is not { } coordinates || !_population.TryReserve(uid))
                     break;
                 var child = Spawn(selected, coordinates);
                 if (TryComp<VirusReservoirComponent>(uid, out var reservoir) && reservoir.Strain is { } strain

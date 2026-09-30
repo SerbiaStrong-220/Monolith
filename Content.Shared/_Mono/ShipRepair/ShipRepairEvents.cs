@@ -1,5 +1,6 @@
 using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.DoAfter;
+using Robust.Shared.Map; // Exodus: networked repair coordinates.
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Mono.ShipRepair;
@@ -22,6 +23,7 @@ public sealed partial class ShipRepairDoAfterEvent : SimpleDoAfterEvent
     public Vector2i TargetGridIndices;
     public int Cost;
     public int SnapshotRevision; // Exodus: never finish repairs against a replacement snapshot.
+    public NetCoordinates Coordinates; // Exodus: location to keep within reach during repair.
     // if we're repairing an entity, store what we're repairing
     public int? RepairId = null;
 

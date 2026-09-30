@@ -36,7 +36,7 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
         if (TargetingControl == null)
             return;
 
-        TargetingControl.SetTargetDollVisible(_targetingComponent != null);
+        RefreshGeneticFormVisibility(); // Exodus
 
         if (_targetingComponent != null)
             TargetingControl.SetBodyPartsVisible(_targetingComponent.Target);
@@ -48,7 +48,7 @@ public sealed partial class TargetingUIController : UIController, IOnStateEntere
 
         if (TargetingControl != null)
         {
-            TargetingControl.SetTargetDollVisible(_targetingComponent != null);
+            RefreshGeneticFormVisibility(); // Exodus
 
             if (_targetingComponent != null)
                 TargetingControl.SetBodyPartsVisible(_targetingComponent.Target);

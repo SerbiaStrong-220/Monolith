@@ -26,3 +26,68 @@
     layers:
     - state: crypt_gold
     - state: pirate_label
+
+# Concern networks, issued in the concern's starting technology case.
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyConcernAugok
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: ConcernAugok
+    defaultChannel: ConcernAugok
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_blue
+    - state: com_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyConcernDrakeBlackArmsUSA
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: ConcernDrakeBlackArmsUSA
+    defaultChannel: ConcernDrakeBlackArmsUSA
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_red
+    - state: sec_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyConcernHorizonHarmonyHammerMatter
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: ConcernHorizonHarmonyHammerMatter
+    defaultChannel: ConcernHorizonHarmonyHammerMatter
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_silver
+    - state: medsci_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyConcernBuno
+  components:
+  - type: EncryptionKey
+    channels:
+    - channel: ConcernBuno
+    defaultChannel: ConcernBuno
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_gold
+    - state: hop_label

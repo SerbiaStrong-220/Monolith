@@ -2,6 +2,9 @@
   parent: [BaseMachinePowered, ConstructibleMachine]
   id: GeneticInjectorPrinter
   components:
+  - type: GuideHelp
+    guides:
+    - Genetics
   - type: Transform
     anchored: true
   - type: Physics

@@ -1,0 +1,91 @@
+- type: entity
+  parent: BaseItem
+  id: StealthDisruptor
+  name: cloaking disruptor
+  description: A handheld pulse generator that reveals cloaked creatures and objects, even inside containers, and disrupts chameleon projector disguises.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/stealth_disruptor.rsi
+    state: base
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: UseDelay
+    delay: 60
+  - type: ContainerContainer
+    containers:
+      cartridge: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cartridge:
+        name: stealth-disruptor-cartridge-slot
+        startingItem: StealthDisruptorCartridge
+        swap: true
+        whitelist:
+          tags:
+          - StealthDisruptorCartridge
+  - type: StealthDisruptor
+    range: 16
+    suppressionDuration: 20
+    requiresLineOfSight: false
+    targetWhitelist:
+      components:
+      - Stealth
+      - ChameleonDisguised
+    cartridgeSlot: cartridge
+    activationSound:
+      path: /Audio/_Exodus/Items/StealthDisruptor/pulse.ogg
+    revealSound:
+      path: /Audio/Effects/chime.ogg
+      params:
+        volume: 5
+
+- type: entity
+  parent: BaseItem
+  id: BaseStealthDisruptorCartridge
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/stealth_disruptor_cartridge.rsi
+    state: full
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - StealthDisruptorCartridge
+
+- type: entity
+  parent: BaseStealthDisruptorCartridge
+  id: StealthDisruptorCartridge
+  name: cloaking disruptor cartridge
+  description: A disposable pulse cartridge. Powers one activation of a cloaking disruptor.
+  components:
+  - type: DisposableCartridge
+    spentPrototype: StealthDisruptorCartridgeSpent
+
+- type: entity
+  parent: BaseStealthDisruptorCartridge
+  id: StealthDisruptorCartridgeSpent
+  name: spent cloaking disruptor cartridge
+  description: An exhausted pulse cartridge. Its casing can be recycled.
+  components:
+  - type: Sprite
+    state: empty
+  - type: Tag
+    tags:
+    - StealthDisruptorCartridge
+    - Trash
+    - Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+      Plastic: 10
+
+- type: entity
+  parent: Exclamation
+  id: StealthRevealEffect
+  categories: [ HideSpawnMenu ]
+  save: false
+  components:
+  - type: Sprite
+    offset: 0, 1

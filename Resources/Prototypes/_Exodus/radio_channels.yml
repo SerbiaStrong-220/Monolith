@@ -1,0 +1,32 @@
+# Exodus: private long-range networks of the corporate concerns.
+- type: radioChannel
+  id: ConcernAugok
+  name: chat-radio-concern-augok
+  keycode: 'г' # Ru-Localization
+  frequency: 1611
+  color: "#9C90D6"
+  longRange: true
+
+- type: radioChannel
+  id: ConcernDrakeBlackArmsUSA
+  name: chat-radio-concern-drake-black-arms-usa
+  keycode: 'р' # Ru-Localization
+  frequency: 1613
+  color: "#E08A8A"
+  longRange: true
+
+- type: radioChannel
+  id: ConcernHorizonHarmonyHammerMatter
+  name: chat-radio-concern-horizon-harmony-hammer-matter
+  keycode: 'х' # Ru-Localization
+  frequency: 1615
+  color: "#69E37F"
+  longRange: true
+
+- type: radioChannel
+  id: ConcernBuno
+  name: chat-radio-concern-buno
+  keycode: 'ж' # Ru-Localization
+  frequency: 1617
+  color: "#D04A4A"
+  longRange: true

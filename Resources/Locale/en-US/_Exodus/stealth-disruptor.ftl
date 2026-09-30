@@ -1,0 +1,15 @@
+ent-StealthDisruptor = cloaking disruptor
+    .desc = A pulse generator that reveals cloaked creatures and objects within 16 meters, including inside lockers and other containers. Removes chameleon projector disguises. Suppresses cloaking and projector use for 20 seconds. Recharges in 60 seconds. Each pulse consumes one replaceable cartridge.
+ent-StealthRevealEffect = detection
+stealth-disruptor-pulse = Decloaking pulse emitted.
+stealth-disruptor-suppressed = Cloaking is temporarily suppressed!
+ent-StealthDisruptorCartridge = cloaking disruptor cartridge
+    .desc = A disposable pulse cartridge. Powers one activation of a cloaking disruptor.
+ent-StealthDisruptorCartridgeSpent = spent cloaking disruptor cartridge
+    .desc = An exhausted pulse cartridge. Its casing can be recycled.
+stealth-disruptor-cartridge-slot = Cartridge
+stealth-disruptor-no-cartridge = Insert a fresh pulse cartridge!
+uplink-stealth-disruptor-name = Cloaking disruptor
+uplink-stealth-disruptor-desc = Reveals cloaked targets and removes chameleon projector disguises within 16 meters, including cloaked targets inside containers. Suppression lasts 20 seconds, with a 60-second cooldown. Comes with one cartridge installed.
+uplink-stealth-disruptor-cartridge-name = Cloaking disruptor cartridge
+uplink-stealth-disruptor-cartridge-desc = A replacement cartridge for one decloaking pulse. The spent casing can be recycled.

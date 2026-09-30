@@ -27,7 +27,7 @@
     containers:
       gun_chamber: !type:ContainerSlot
   - type: ChamberMagazineAmmoProvider
-    autoCycle: false
+    autoCycle: true # Exodus: eject reused flares from the chamber before throwing them.
     boltClosed: false
     canRack: false
     soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg

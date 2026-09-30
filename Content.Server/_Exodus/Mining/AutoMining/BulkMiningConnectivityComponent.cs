@@ -18,6 +18,9 @@ public sealed partial class BulkMiningConnectivityComponent : Component
     /// <summary>Explicit DFS stack, allowing long searches to yield without recursion.</summary>
     public readonly List<int> Stack = new();
 
+    /// <summary>Tiles whose bounded local search ran out of budget since the last tile change.</summary>
+    public readonly HashSet<Vector2i> LocalSearchMisses = new();
+
     public ulong Generation;
     public int Discovered;
     public bool Pending;

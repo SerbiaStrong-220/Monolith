@@ -277,10 +277,11 @@ public sealed partial class MedicalBeamGunSystem : EntitySystem
             return true;
 
         var ray = new CollisionRay(from.Position, difference / distance, (int) gun.CollisionMask);
-        var state = (User: user, Target: target, Query: _projectileTargetQuery);
+        var state = (User: user, Target: target, MobQuery: _mobQuery, ProjectileTargetQuery: _projectileTargetQuery);
         var hits = _physics.IntersectRayWithPredicate(from.MapId, ray, state,
             static (hit, context) => hit == context.User || hit == context.Target ||
-                                    context.Query.TryComp(hit, out var selective) && selective.Active,
+                                    context.MobQuery.HasComp(hit) ||
+                                    context.ProjectileTargetQuery.TryComp(hit, out var selective) && selective.Active,
             distance);
         foreach (var _ in hits)
             return false;

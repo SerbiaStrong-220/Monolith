@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Damage;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Materials;
@@ -72,4 +73,39 @@ public sealed partial class BulkAutoMiningEmitterComponent : Component
 
     [ViewVariables, AutoNetworkedField]
     public Vector2i BeamTile;
+
+    /// <summary>Partner laser of a consortium link. A linked laser fires at its partner and cannot mine.</summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? LinkPartner;
+
+    /// <summary>Grid of the partner laser; drawn from grid transforms even when the partner is outside PVS.</summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? LinkGrid;
+
+    /// <summary>Pivot of the partner laser in <see cref="LinkGrid"/> coordinates. Anchored lasers never move on their grid.</summary>
+    [ViewVariables, AutoNetworkedField]
+    public Vector2 LinkPosition;
+
+    /// <summary>Maximum distance between linked lasers, the shorter range of the two consoles that made the link.</summary>
+    [ViewVariables]
+    public float LinkRange;
+
+    /// <summary>Consecutive failed line-of-sight checks of the current link.</summary>
+    [ViewVariables]
+    public int LinkObstructedChecks;
+
+    [ViewVariables, AutoPausedField]
+    public TimeSpan NextLinkCheck;
+
+    /// <summary>Interval between validity checks of a consortium link.</summary>
+    [DataField]
+    public TimeSpan LinkCheckInterval = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>Consecutive obstructed checks tolerated before a link breaks, so a passing body only flickers it.</summary>
+    [DataField]
+    public int LinkObstructionTolerance = 1;
+
+    /// <summary>Why the last link of this laser broke, for admins inspecting it; not networked.</summary>
+    [ViewVariables]
+    public BulkMiningLinkBreakReason? LastLinkBreak;
 }

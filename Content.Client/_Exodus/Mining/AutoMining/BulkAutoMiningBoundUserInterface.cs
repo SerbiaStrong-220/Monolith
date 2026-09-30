@@ -22,6 +22,10 @@ public sealed class BulkAutoMiningBoundUserInterface : BoundUserInterface
         _window.OnStartPressed += () => SendMessage(new BulkAutoMiningStartMessage());
         _window.OnStopPressed += () => SendMessage(new BulkAutoMiningStopMessage());
         _window.OnTargetRemoved += grid => SendMessage(new BulkAutoMiningSelectGridMessage(grid));
+        _window.OnLinkRequested += grid => SendMessage(new BulkAutoMiningLinkRequestMessage(grid));
+        _window.OnLinkAccepted += grid => SendMessage(new BulkAutoMiningLinkAcceptMessage(grid));
+        _window.OnLinkDeclined += grid => SendMessage(new BulkAutoMiningLinkDeclineMessage(grid));
+        _window.OnLinkBroken += grid => SendMessage(new BulkAutoMiningLinkBreakMessage(grid));
         _window.RadarControl.OnGridSelected += grid =>
         {
             if (grid is not { } netGrid)

@@ -70,14 +70,19 @@ public sealed partial class RotSpreadSystem
                 existing = true;
                 continue;
             }
+            if (_whitelist.IsValid(ent.Comp.Ignored, uid))
+                continue;
             var blocking = _physics.TryComp(uid, out var physics) && physics.CanCollide && physics.Hard
                 && (physics.CollisionLayer & (int)CollisionGroup.FullTileMask) != 0;
             if (_mobQuery.HasComp(uid) || !Transform(uid).Anchored && !blocking)
                 continue;
+            // Docking ports are left intact instead of being eaten through into space.
+            if (_whitelist.IsValid(ent.Comp.Excluded, uid))
+                return RotGrowthCell.Blocked;
             var door = _doorQuery.HasComp(uid);
             var wall = _whitelist.IsValid(ent.Comp.ConvertibleWalls, uid);
             var destructible = _damageQuery.HasComp(uid) && _destructible.DestroyedAt(uid) != FixedPoint2.MaxValue;
-            if (Transform(uid).Anchored && (door || wall) && !_whitelist.IsValid(ent.Comp.Excluded, uid) && destructible)
+            if (Transform(uid).Anchored && (door || wall) && destructible)
             {
                 if (target != null)
                     return RotGrowthCell.Blocked;
@@ -96,19 +101,16 @@ public sealed partial class RotSpreadSystem
         return target != null ? RotGrowthCell.Convertible : existing ? RotGrowthCell.Existing : RotGrowthCell.Empty;
     }
 
-    private void Corrode(Entity<RotSpreadComponent> ent, Vector2i tile, EntityUid target, EntityUid core)
+    private void Corrode(Entity<RotSpreadComponent> ent, EntityUid target, EntityUid core)
     {
-        // Retry only this reachable frontier cell; damage and destruction use the normal game systems.
-        ent.Comp.Frontier.Enqueue(tile);
+        // Damage and destruction use the normal game systems; the shared cooldown lives on the target.
         var corrosion = EnsureComp<RotCorrosionComponent>(target);
-        if (_timing.CurTime >= corrosion.NextDamage)
-        {
-            var interval = ent.Comp.AttackInterval > TimeSpan.Zero ? ent.Comp.AttackInterval : TimeSpan.FromSeconds(0.1);
-            corrosion.NextDamage = _timing.CurTime + interval;
-            _damage.TryChangeDamage(target, ent.Comp.ObstacleDamage, origin: core);
-            LastGrowth++;
-        }
-        Delay(ent.Comp);
+        if (_timing.CurTime < corrosion.NextDamage)
+            return;
+        var interval = ent.Comp.AttackInterval > TimeSpan.Zero ? ent.Comp.AttackInterval : TimeSpan.FromSeconds(0.1);
+        corrosion.NextDamage = _timing.CurTime + interval;
+        _damage.TryChangeDamage(target, ent.Comp.ObstacleDamage, origin: core);
+        LastGrowth++;
     }
 
     private void BeginConversion(Entity<RotSpreadComponent> ent, Entity<MapGridComponent> grid, Vector2i tile, EntityUid target)

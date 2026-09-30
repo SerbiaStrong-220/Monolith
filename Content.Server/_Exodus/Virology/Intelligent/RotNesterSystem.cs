@@ -70,7 +70,7 @@ public sealed partial class RotNesterSystem : EntitySystem
     private void OnInit(Entity<RotNesterComponent> ent, ref MapInitEvent args)
     {
         _observationRange = MathF.Max(_observationRange, ent.Comp.SearchRange);
-        ent.Comp.LastReserve = ent.Comp.NextReserve = _timing.CurTime;
+        ent.Comp.NextMaintenance = _timing.CurTime;
         ent.Comp.Origin = Transform(ent).Coordinates;
         ent.Comp.Aggressors.Clear();
         ent.Comp.RejectedHomes.Clear();
@@ -91,8 +91,8 @@ public sealed partial class RotNesterSystem : EntitySystem
 
     private void OnExamined(Entity<RotNesterComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("rot-nester-reserve", ("percent",
-            Math.Clamp((int)(ent.Comp.Reserve / ent.Comp.FillDuration * 100), 0, 100))));
+        var percent = ent.Comp.BitesPerPortion > 0 ? ent.Comp.Stored * 100 / ent.Comp.BitesPerPortion : 100;
+        args.PushMarkup(Loc.GetString("rot-nester-reserve", ("percent", Math.Clamp(percent, 0, 100))));
     }
 
     private void OnObservedAttack(ref RotCombatObservedEvent args) => ObserveAttack(args.Attacker);
@@ -124,7 +124,7 @@ public sealed partial class RotNesterSystem : EntitySystem
     {
         if (!args.DamageIncreased || !_mobs.IsAlive(ent))
             return;
-        CancelProvision(ent);
+        CancelWork(ent);
         var source = args.Origin;
         if (source == null && TryComp<ProjectileComponent>(args.Tool, out var projectile))
             source = projectile.Shooter;
@@ -168,13 +168,9 @@ public sealed partial class RotNesterSystem : EntitySystem
         while (query.MoveNext(out var uid, out var nester))
         {
             _observationRange = MathF.Max(_observationRange, nester.SearchRange);
-            if (now < nester.NextReserve || !_mobs.IsAlive(uid))
+            if (now < nester.NextMaintenance || !_mobs.IsAlive(uid))
                 continue;
-            nester.NextReserve = now + TimeSpan.FromSeconds(1);
-            var elapsed = now - nester.LastReserve;
-            nester.LastReserve = now;
-            if (!_containers.IsEntityInContainer(uid))
-                nester.Reserve = TimeSpan.FromTicks(Math.Min(nester.FillDuration.Ticks, nester.Reserve.Ticks + elapsed.Ticks));
+            nester.NextMaintenance = now + TimeSpan.FromSeconds(1);
             _expired.Clear();
             foreach (var (enemy, until) in nester.Aggressors)
             {
@@ -240,7 +236,7 @@ public sealed partial class RotNesterSystem : EntitySystem
             fear = remembered;
         if (fear is { } avoid)
         {
-            CancelProvision(ent);
+            CancelWork(ent);
             if (ent.Comp.Retaliating && TryComp<RotRetaliationComponent>(ent, out var suspended))
                 _retaliation.StopMovement((ent, suspended));
             ent.Comp.Retaliating = false;
@@ -252,7 +248,7 @@ public sealed partial class RotNesterSystem : EntitySystem
         }
         if (TryComp<RotRetaliationComponent>(ent, out var retaliation) && retaliation.Target != null)
         {
-            CancelProvision(ent);
+            CancelWork(ent);
             if (!ent.Comp.Retaliating)
             {
                 _navigation.Stop(brain);
@@ -265,7 +261,7 @@ public sealed partial class RotNesterSystem : EntitySystem
         ent.Comp.Retaliating = false;
         if (navigation.EnvironmentalDamage && _navigation.AvoidDefenderThreat(brain, ent.Comp.Threat, false))
         {
-            CancelProvision(ent);
+            CancelWork(ent);
             return;
         }
         _enemies.Sort((a, b) => a.Distance.CompareTo(b.Distance));
@@ -277,15 +273,17 @@ public sealed partial class RotNesterSystem : EntitySystem
                 unreachable ??= enemy;
                 continue;
             }
-            CancelProvision(ent);
+            CancelWork(ent);
             return;
         }
         if (_navigation.AvoidDefenderThreat(brain, unreachable ?? ent.Comp.Threat, unreachable != null))
         {
-            CancelProvision(ent);
+            CancelWork(ent);
             return;
         }
         if (TryProvision(ent, brain))
+            return;
+        if (TryForage(ent, brain))
             return;
         if (_colony.TryGetRally(ent, out var rally))
         {
@@ -348,7 +346,7 @@ public sealed partial class RotNesterSystem : EntitySystem
 
     public void Stop(Entity<RotNesterComponent> ent)
     {
-        CancelProvision(ent);
+        CancelWork(ent);
         if (TryComp<RotDefenderComponent>(ent, out var navigation))
             _navigation.Stop((ent, navigation));
         if (TryComp<RotRetaliationComponent>(ent, out var retaliation))

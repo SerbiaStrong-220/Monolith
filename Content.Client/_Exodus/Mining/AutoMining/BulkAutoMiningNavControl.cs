@@ -23,12 +23,24 @@ public sealed partial class BulkAutoMiningNavControl : ShuttleNavControl
     private List<Entity<MapGridComponent>> _gridPickBuffer = new();
 
     private static readonly Color SelectedGridColor = Color.FromHex("#FF8C00");
+    public static readonly Color ConsortiumGridColor = Color.FromHex("#3FD6C8");
+    public static readonly Color RequestGridColor = Color.FromHex("#8FB8FF");
+    public static readonly Color LinkTargetColor = Color.FromHex("#C8FBFF");
 
     private readonly List<NetEntity> _selectedGrids = new();
+    private readonly List<NetEntity> _consortiumGrids = new();
+    private readonly List<NetEntity> _requestGrids = new();
     private Vector2? _selectionStart;
     private bool _active;
 
+    /// <summary>In link mode clicks pick a ship to link with instead of a mining target.</summary>
+    public bool LinkMode;
+
+    /// <summary>Ship chosen for a consortium link, highlighted on the radar.</summary>
+    public NetEntity? SelectedLinkGrid;
+
     public event Action<NetEntity?>? OnGridSelected;
+    public event Action<NetEntity?>? OnLinkGridSelected;
 
     public BulkAutoMiningNavControl() : base(64f, 512f, 512f)
     {
@@ -47,6 +59,23 @@ public sealed partial class BulkAutoMiningNavControl : ShuttleNavControl
             _selectedGrids.Add(target.Grid);
 
         _active = state.Active;
+        _consortiumGrids.Clear();
+        _requestGrids.Clear();
+        EntityUid? ownGrid = _coordinates is { } coordinates && _xformQuery.TryComp(coordinates.EntityId, out var xform)
+            ? xform.GridUid
+            : null;
+        foreach (var member in state.Link.Members)
+        {
+            if (!EntManager.TryGetEntity(member.Grid, out var grid) || grid != ownGrid)
+                _consortiumGrids.Add(member.Grid);
+        }
+
+        foreach (var ship in state.Link.Ships)
+        {
+            if (ship.Status is BulkMiningLinkShipStatus.IncomingRequest or BulkMiningLinkShipStatus.OutgoingRequest)
+                _requestGrids.Add(ship.Grid);
+        }
+
         UpdateState(state.NavState);
     }
 
@@ -73,8 +102,15 @@ public sealed partial class BulkAutoMiningNavControl : ShuttleNavControl
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            if (!_active && _selectionStart is { } start && Vector2.DistanceSquared(start, args.RelativePosition) <= 36)
-                OnGridSelected?.Invoke(TryPickGrid(args.RelativePosition));
+            if (_selectionStart is { } start && Vector2.DistanceSquared(start, args.RelativePosition) <= 36)
+            {
+                // Links can change while mining; mining targets cannot.
+                if (LinkMode)
+                    OnLinkGridSelected?.Invoke(TryPickGrid(args.RelativePosition));
+                else if (!_active)
+                    OnGridSelected?.Invoke(TryPickGrid(args.RelativePosition));
+            }
+
             _selectionStart = null;
             args.Handle();
             return;
@@ -92,21 +128,38 @@ public sealed partial class BulkAutoMiningNavControl : ShuttleNavControl
 
     private void DrawSelectedGrid(DrawingHandleScreen handle, Matrix3x2 worldToView, MapId mapId)
     {
+        foreach (var netGrid in _consortiumGrids)
+        {
+            DrawHighlightedGrid(handle, worldToView, mapId, netGrid, ConsortiumGridColor);
+        }
+
+        foreach (var netGrid in _requestGrids)
+        {
+            DrawHighlightedGrid(handle, worldToView, mapId, netGrid, RequestGridColor);
+        }
+
+        if (LinkMode && SelectedLinkGrid is { } linkTarget)
+            DrawHighlightedGrid(handle, worldToView, mapId, linkTarget, LinkTargetColor);
+
         foreach (var netGrid in _selectedGrids)
         {
-            if (!EntManager.TryGetEntity(netGrid, out var gridUid) ||
-                gridUid is not { } gUid ||
-                !_gridQuery.TryGetComponent(gUid, out var grid) ||
-                !_xformQuery.TryComp(gUid, out var xform) || xform.MapID != mapId)
-            {
-                continue;
-            }
-
-            var gridToWorld = _transform.GetWorldMatrix(gUid);
-            var gridToView = gridToWorld * worldToView;
-
-            DrawGrid(handle, gridToView, (gUid, grid), SelectedGridColor, alpha: 0.25f);
+            DrawHighlightedGrid(handle, worldToView, mapId, netGrid, SelectedGridColor);
         }
+    }
+
+    private void DrawHighlightedGrid(DrawingHandleScreen handle, Matrix3x2 worldToView, MapId mapId, NetEntity netGrid,
+        Color color)
+    {
+        if (!EntManager.TryGetEntity(netGrid, out var gridUid) ||
+            gridUid is not { } gUid ||
+            !_gridQuery.TryGetComponent(gUid, out var grid) ||
+            !_xformQuery.TryComp(gUid, out var xform) || xform.MapID != mapId)
+        {
+            return;
+        }
+
+        var gridToView = _transform.GetWorldMatrix(gUid) * worldToView;
+        DrawGrid(handle, gridToView, (gUid, grid), color, alpha: 0.25f);
     }
 
     private NetEntity? TryPickGrid(Vector2 relativePosition)

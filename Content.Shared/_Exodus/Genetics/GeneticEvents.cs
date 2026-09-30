@@ -23,7 +23,11 @@ public record struct FlashDurationModifyEvent(TimeSpan Duration);
 [ByRefEvent]
 public readonly record struct GenomeChangedEvent;
 
-/// <summary>Raised after genetic effects stop contributing, so server-owned abilities can release their resources.</summary>
+/// <summary>Raised after startup or a network state update has refreshed movement and inventory effects.</summary>
+[ByRefEvent]
+public readonly record struct GeneticEffectsRefreshedEvent;
+
+/// <summary>Raised after genetic effects stop contributing, so abilities and presentation can clean up.</summary>
 [ByRefEvent]
 public readonly record struct GeneticEffectsShutdownEvent;
 
@@ -38,6 +42,11 @@ public sealed partial class GeneticGlowEvent : InstantActionEvent;
 public sealed partial class GeneticHearingEvent : InstantActionEvent;
 public sealed partial class GeneticWebEvent : InstantActionEvent;
 public sealed partial class GeneticFireBreathEvent : WorldTargetActionEvent;
+public sealed partial class GeneticTransformEvent : InstantActionEvent;
+public sealed partial class GeneticCocoonEvent : InstantActionEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class GeneticCocoonDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
 public sealed partial class GeneticInjectionDoAfterEvent : SimpleDoAfterEvent

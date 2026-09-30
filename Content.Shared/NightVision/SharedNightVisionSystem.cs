@@ -15,6 +15,7 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<NightVisionComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<NightVisionComponent, MapInitEvent>(OnMapInit); // Exodus: defer action creation until map initialization.
         SubscribeLocalEvent<NightVisionComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<NightVisionComponent, GotEquippedEvent>(OnCompEquip);
         SubscribeLocalEvent<NightVisionComponent, GotUnequippedEvent>(OnCompUnequip);
@@ -29,8 +30,17 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
             return;
 
         RefreshOverlay(ent);
+    }
+
+    // Exodus-begin: uninitialized entities must not spawn or save action entities.
+    private void OnMapInit(Entity<NightVisionComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.RelayOverlay)
+            return;
+
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
+    // Exodus-end
 
     private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentRemove args)
     {

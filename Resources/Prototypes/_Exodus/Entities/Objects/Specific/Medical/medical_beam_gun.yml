@@ -4,15 +4,15 @@
   name: medigun
   description: A powered medical projector that treats injuries and closes bleeding wounds while its beam remains on the patient. Does not replenish blood.
   components:
+  - type: SafetyDepositRestricted
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: _Exodus/Objects/Specific/Medical/medical_beam_gun.rsi
     state: icon
-    color: "#a5ffd6"
   - type: Item
     size: Large
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: _Exodus/Objects/Specific/Medical/medical_beam_gun.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: _Exodus/Objects/Specific/Medical/medical_beam_gun.rsi
     quickEquip: false
     slots:
     - Belt

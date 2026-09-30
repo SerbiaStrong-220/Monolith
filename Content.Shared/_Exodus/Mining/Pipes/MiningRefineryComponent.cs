@@ -81,4 +81,15 @@ public sealed partial class MiningRefineryComponent : Component
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextUpdate;
+
+    /// <summary>
+    /// Consortium bonus currently folded into the lathe time and material multipliers.
+    /// Saved with the machine so that loading it without its links removes the bonus instead of compounding it.
+    /// </summary>
+    [DataField]
+    public float LinkBonus;
+
+    /// <summary>Ships whose liquid metal networks are currently joined with this refinery's network.</summary>
+    [ViewVariables]
+    public int LinkedShips = 1;
 }

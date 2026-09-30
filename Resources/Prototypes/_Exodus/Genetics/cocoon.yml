@@ -1,0 +1,133 @@
+- type: geneticMutation
+  id: GeneticCocoon
+  name: genetics-gene-cocoon
+  description: genetics-gene-cocoon-desc
+  activationMessage: genetics-feeling-cocoon
+  instability: 20
+  modifiers:
+    abilities: Cocoon
+  actions: [ActionGeneticCocoon]
+
+- type: entity
+  id: ActionGeneticCocoon
+  categories: [HideSpawnMenu]
+  components:
+  - type: InstantAction
+    icon: { sprite: _Exodus/Structures/Medical/cocoon.rsi, state: occupied }
+    event: !type:GeneticCocoonEvent
+
+- type: entity
+  parent: BaseGeneticInjectorAdmin
+  id: GeneticInjectorCocoon
+  suffix: ADMIN
+  components:
+  - type: GeneticInjector
+    mutation: GeneticCocoon
+
+- type: entity
+  parent: BaseStructure
+  id: BaseGeneticCocoon
+  abstract: true
+  components:
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Sprite
+    sprite: _Exodus/Structures/Medical/cocoon.rsi
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.32,-0.4,0.32,0.4"
+        density: 20
+        hard: true
+        mask:
+        - MachineMask
+        layer:
+        - MobLayer # Allows movement through the silk while still receiving projectile hits.
+  - type: Damageable
+    damageContainer: StructuralInorganic
+
+- type: entity
+  parent: BaseGeneticCocoon
+  id: GeneticHealingCocoon
+  name: fluffy cocoon
+  description: A snug cocoon woven from soft silk. It feels warm and peaceful inside.
+  components:
+  - type: Sprite
+    layers:
+    - state: empty
+      map: [base]
+  - type: ContainerContainer
+    containers:
+      patient: !type:ContainerSlot
+  - type: DragInsertContainer
+    containerId: patient
+    entryDelay: 2
+  - type: ExitContainerOnMove
+    containerId: patient
+  - type: HealingCocoon
+    containerId: patient
+    remainsPrototype: GeneticHealingCocoonBroken
+    whitelist:
+      requireAll: true
+      components:
+      - Body
+      - MobState
+      - Damageable
+    blacklist:
+      components:
+      - Silicon
+    interval: 1
+    supportsBreathing: true
+    healing:
+      types:
+        Asphyxiation: -5
+      groups:
+        Brute: -0.2
+        Burn: -0.2
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.HealingCocoonVisuals.Occupied:
+        base:
+          True: { state: occupied }
+          False: { state: empty }
+
+- type: entity
+  parent: BaseGeneticCocoon
+  id: GeneticHealingCocoonBroken
+  name: torn cocoon
+  description: Scraps of silk left behind by a torn cocoon.
+  components:
+  - type: Sprite
+    state: broken
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.1"
+        density: 20
+        hard: true
+        mask:
+        - MachineMask
+        layer:
+        - MobLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]

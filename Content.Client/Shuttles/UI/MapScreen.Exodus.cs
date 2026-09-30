@@ -8,6 +8,11 @@ namespace Content.Client.Shuttles.UI;
 
 public sealed partial class MapScreen
 {
+    // Exodus-begin configurable map ping audio
+    /// <summary>Whether refreshing the map plays its radar ping sound.</summary>
+    public bool PlayPingSound { get; set; } = true;
+    // Exodus-end
+
     // Exodus read-only bluespace map
     /// <summary>
     /// Configures the existing shuttle map as a read-only sector map.
@@ -30,6 +35,7 @@ public sealed partial class MapScreen
     // Exodus-begin medical tablet
     public void SetupMedicalMap(EntityUid entity)
     {
+        PlayPingSound = false;
         SetupReadOnlyMap(entity);
         // Medical windows reserve room for triage and patient details even at their minimum size.
         MapRadar.MinSize = new Vector2(220, 180);

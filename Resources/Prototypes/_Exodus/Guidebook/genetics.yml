@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: Genetics
+  name: guide-entry-genetics
+  text: "/ServerInfo/_Exodus/Guidebook/Medical/genetics.xml"
+  children:
+  - GeneticsMutations
+
+- type: guideEntry
+  id: GeneticsMutations
+  name: guide-entry-genetics-mutations
+  text: "/ServerInfo/_Exodus/Guidebook/Medical/genetic_mutations.xml"

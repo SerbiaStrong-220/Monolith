@@ -1,0 +1,105 @@
+- type: geneticTransformation
+  id: GeneticSlimeAdaptation
+  species: SlimePerson
+  formSpecies: GeneticSlimeForm
+  formMatchesSkinColor: true
+  cooldown: 120
+  healOnCriticalReturn: true
+  colors: ["#76cbd4", "#80cf94", "#b695dc", "#e0b878", "#d996bd"]
+  metabolizerTypes: [Slime]
+  breathingAlert: LowNitrogen
+  bloodReagent: Slime
+  damageModifierSet: Slime
+  formDamage:
+    types:
+      Blunt: 6
+      Structural: 4
+      Caustic: 4
+  components:
+  - type: PassiveDamage
+    allowedStates: [Alive]
+    damageCap: 65
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
+  - type: Speech
+    speechVerb: Slime
+    speechSounds: Slime
+    allowedEmotes: [Squish, Bubble, Pop]
+  - type: Vocal
+    sounds:
+      Male: MaleSlime
+      Female: FemaleSlime
+      Unsexed: MaleSlime
+  - type: TypingIndicator
+    proto: slime
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.5
+        Heat: 0.2
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Heat: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [slime-hurt-by-water-popup]
+        probability: 0.25
+
+# An alternate visual layout on the existing humanoid. No new body, organs or loot are spawned.
+- type: species
+  id: GeneticSlimeForm
+  name: genetics-slime-form-species
+  roundStart: false
+  prototype: MobSlimePerson
+  dollPrototype: MobSlimePersonDummy
+  sprites: GeneticSlimeFormSprites
+  markingLimits: GeneticSlimeFormMarkings
+  skinColoration: Hues
+
+- type: speciesBaseSprites
+  id: GeneticSlimeFormSprites
+  sprites:
+    Chest: GeneticSlimeFormBody
+
+- type: markingPoints
+  id: GeneticSlimeFormMarkings
+  points: {}
+
+- type: humanoidBaseSprite
+  id: GeneticSlimeFormBody
+  shader: GrayscaleTint
+  baseSprite:
+    sprite: Mobs/Aliens/slimes.rsi
+    state: blue_adult_slime
+
+- type: humanoidBaseSprite
+  id: GeneticSlimeFormBodyMale
+  shader: GrayscaleTint
+  baseSprite:
+    sprite: Mobs/Aliens/slimes.rsi
+    state: blue_adult_slime
+
+- type: humanoidBaseSprite
+  id: GeneticSlimeFormBodyFemale
+  shader: GrayscaleTint
+  baseSprite:
+    sprite: Mobs/Aliens/slimes.rsi
+    state: blue_adult_slime

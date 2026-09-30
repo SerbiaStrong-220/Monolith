@@ -90,3 +90,13 @@
       state: attack
     useDelay: 1.5
     event: !type:RotSatedStrikeActionEvent
+
+- type: entity
+  id: ActionRotHungryStrike
+  parent: ActionRotSatedStrike
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Exodus/Virology/rot_hungry.rsi
+      state: attack
+    event: !type:RotHungryStrikeActionEvent

@@ -71,6 +71,14 @@
       - Explosive
   - type: Damageable
     damageModifierSet: RotHungry
+  - type: MeleeWeapon
+    damage:
+      types:
+        Poison: 20
+        Slash: 25
+        Structural: 30
+        Radiation: 5
+        Cellular: 5
   - type: VirusOffspring
     initialVirus: VirusRot
     lifetime: null
@@ -139,7 +147,7 @@
     visualMultiplier: 0.75
   - type: NightVision
     relayOverlay: false
-    goggleEffect: true
+    goggleEffect: false # Natural night vision without tint or goggle mask.
     viewCircleRadius: 550
     viewCircleCount: 4
     viewCircleSpacing: 280
@@ -172,8 +180,6 @@
   - type: GuideHelp
     guides:
     - EXRuleGhostRoleRot
-  - type: ReplacementAccent
-    accent: genericAggressive
 
 - type: htnCompound
   id: RotHungryCompound

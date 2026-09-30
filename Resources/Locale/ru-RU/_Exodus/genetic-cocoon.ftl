@@ -1,0 +1,12 @@
+genetics-gene-cocoon = Пушистый кокон
+genetics-gene-cocoon-desc = Шёлковые железы позволяют сплетать укрытия, способствующие заживлению ран.
+genetics-feeling-cocoon = Железы наполняются густым шёлком. Хочется сплести тёплое убежище.
+genetics-cocoon-occupied = Здесь уже сплетён кокон.
+genetics-cocoon-thirsty = Для плетения кокона нужно выпить больше воды.
+ent-ActionGeneticCocoon = Сплести кокон
+    .desc = Сплетите шёлковое убежище для себя или раненого.
+ent-GeneticHealingCocoon = пушистый кокон
+    .desc = Плотный кокон из мягких шёлковых нитей. Внутри тепло и спокойно.
+ent-GeneticHealingCocoonBroken = порванный кокон
+    .desc = Обрывки шёлка, оставшиеся от разорванного кокона.
+ent-GeneticInjectorCocoon = генетический инъектор пушистого кокона

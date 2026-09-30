@@ -59,6 +59,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, AttackedEvent>(RelayInventoryEvent); // Exodus
         SubscribeLocalEvent<InventoryComponent, MeleeHitEvent>(RelayInventoryEvent); // Exodus
         SubscribeLocalEvent<InventoryComponent, MobStateChangedEvent>(RelayInventoryEvent); // Exodus
+        SubscribeLocalEvent<InventoryComponent, Content.Shared._Exodus.Stealth.StealthRevealEvent>(RelayInventoryEvent); // Exodus: reveal equipped cloaking devices.
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, BeforeDamageChangedEvent>(RefRelayInventoryEvent,

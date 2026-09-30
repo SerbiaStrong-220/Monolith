@@ -40,3 +40,7 @@ ent-BulkMiningPipeStack10 = катушка рудопровода
 ent-BulkMiningPipeStack1 = катушка рудопровода
     .desc = Прокладывается на открытом покрытии для соединения буровых лазеров и переработчиков.
     .suffix = 1
+
+bulk-mining-refinery-ui-consortium = Консорциум
+bulk-mining-refinery-ui-consortium-alone = Не связана с другими кораблями. Связь настраивается в консоли буровых лазеров.
+bulk-mining-refinery-ui-consortium-linked = Кораблей в сети: {$count}. Переработка [color=#6FE3C0]+{$percent}%[/color], выход металла [color=#F2C66F]+{$percent}%[/color].

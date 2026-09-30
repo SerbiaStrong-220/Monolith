@@ -69,6 +69,7 @@ public sealed partial class RotHungrySystem : EntitySystem
         SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(OnDamageDealt);
         SubscribeLocalEvent<DoorComponent, BeforeDoorOpenedEvent>(OnDoorOpening);
         InitializeFrenzy();
+        InitializeActions();
     }
 
     private void OnInit(Entity<RotHungryComponent> ent, ref MapInitEvent args)

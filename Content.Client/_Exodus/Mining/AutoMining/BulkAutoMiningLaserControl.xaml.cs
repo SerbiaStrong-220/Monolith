@@ -24,11 +24,12 @@ public sealed partial class BulkAutoMiningLaserControl : PanelContainer
         HealthBar.Value = state.MaxHp > 0 ? Math.Clamp(state.CurrentHp / state.MaxHp, 0, 1) : 0;
         WarmupBar.Value = Math.Clamp(state.Warmup, 0, 1);
         WarmupAmount.Text = Loc.GetString("bulk-auto-mining-laser-warmup",
-            ("percent", (int)MathF.Round(state.Warmup * 100)), ("bonus", MathF.Round(state.YieldBonus * 100, 1)));
+            ("percent", (int)MathF.Round(state.Warmup * 100)), ("bonus", (int)MathF.Round(state.YieldBonus * 100)));
         BufferBar.Value = state.Capacity > 0 ? Math.Clamp((float)state.Stored / state.Capacity, 0, 1) : 0;
         BufferAmount.Text = Loc.GetString(state.Capacity > 0
                 ? "bulk-auto-mining-laser-buffer" : "bulk-auto-mining-laser-buffer-unlimited",
-            ("stored", state.Stored / 100f), ("capacity", state.Capacity / 100f));
+            // Whole portions: floats reach Fluent as doubles and print every binary digit.
+            ("stored", state.Stored / 100), ("capacity", state.Capacity / 100));
 
         var (status, hint, color) = state.Status switch
         {
@@ -38,9 +39,11 @@ public sealed partial class BulkAutoMiningLaserControl : PanelContainer
             BulkAutoMiningLaserStatus.Offline => ("offline", "power", Color.FromHex("#C1C6CB")),
             BulkAutoMiningLaserStatus.Busy => ("busy", "busy", Color.FromHex("#C1C6CB")),
             BulkAutoMiningLaserStatus.Full => ("full", "full", Color.FromHex("#F2B85F")),
+            BulkAutoMiningLaserStatus.Linked => ("linked", "linked", BulkAutoMiningNavControl.ConsortiumGridColor),
             _ => ("blocked", "blocked", Color.FromHex("#F2B85F")),
         };
-        LaserStatus.SetMessage(Loc.GetString($"bulk-auto-mining-laser-{status}"));
+        LaserStatus.SetMessage(Loc.GetString($"bulk-auto-mining-laser-{status}",
+            ("ship", state.LinkedShip ?? Loc.GetString("bulk-auto-mining-unknown-grid"))));
         LaserStatus.Modulate = color;
         StatusHint.Visible = hint != null;
         if (hint != null)

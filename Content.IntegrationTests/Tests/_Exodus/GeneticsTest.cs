@@ -603,9 +603,14 @@ public sealed class GeneticsTest
 
             var clone = entities.System<CloningSystem>().SpawnClone(new EntityCoordinates(map, Vector2.One), null, sourceBody: body);
             Assert.That(entities.GetComponent<MetaDataComponent>(clone).EntityPrototype!.ID, Is.EqualTo("MobHuman"));
+            var cloneState = entities.GetComponent<GeneticAbilityStateComponent>(clone);
+            Assert.That(cloneState.OriginalAppearance, Is.Not.Null, "Initializing the clone's genome must preserve mimicry restoration data.");
+            Assert.That(cloneState.OriginalName, Is.EqualTo("Original genetics test subject"));
+            Assert.That(cloneState.OriginalAppearance, Is.Not.SameAs(entities.GetComponent<GeneticAbilityStateComponent>(body).OriginalAppearance));
+            var cloneAppearance = entities.GetComponent<HumanoidAppearanceComponent>(clone);
+            Assert.That(cloneAppearance.Species, Is.EqualTo(appearance.Species));
             Assert.That(genetics.TryGetGenome(clone, out var cloneGenome), Is.True);
             Assert.That(genetics.TrySetBlock((clone, cloneGenome!), block, 0, clone), Is.True);
-            var cloneAppearance = entities.GetComponent<HumanoidAppearanceComponent>(clone);
             Assert.That(cloneAppearance.Species, Is.EqualTo(species));
             Assert.That(cloneAppearance.Voice, Is.EqualTo(voice));
             Assert.That(entities.GetComponent<MetaDataComponent>(clone).EntityName, Is.EqualTo("Original genetics test subject"));

@@ -346,6 +346,9 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus, args.Component))
             damageVisComp.Disabled = disabledStatus;
 
+        if (HideGeneticFormOverlays(uid, damageVisComp)) // Exodus: damage changes must not redraw humanoid wounds on alternate forms.
+            return;
+
         if (damageVisComp.Disabled)
             return;
 

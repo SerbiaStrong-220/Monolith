@@ -7,7 +7,7 @@ namespace Content.Server.Body.Systems;
 
 public sealed partial class MetabolizerSystem
 {
-    public void SetMetabolizerTypes(Entity<MetabolizerComponent> entity, HashSet<ProtoId<MetabolizerTypePrototype>> types)
+    public void SetMetabolizerTypes(Entity<MetabolizerComponent> entity, HashSet<ProtoId<MetabolizerTypePrototype>>? types) // Exodus: restore untyped organs after adaptation.
     {
         entity.Comp.MetabolizerTypes = types;
     }

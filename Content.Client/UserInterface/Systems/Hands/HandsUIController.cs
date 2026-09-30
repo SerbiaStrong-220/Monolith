@@ -135,10 +135,8 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
     private void LoadPlayerHands(HandsComponent handsComp)
     {
         DebugTools.Assert(_playerHandsComponent == null);
-        if (HandsGui != null)
-            HandsGui.Visible = true;
-
         _playerHandsComponent = handsComp;
+        RefreshGeneticFormVisibility(); // Exodus: respect the active genetic form.
         // Exodus-begin: preserve server hand ordering for species with more than two hands
         foreach (var name in handsComp.SortedHands)
         {
@@ -469,8 +467,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
 
     public void OnStateEntered(GameplayState state)
     {
-        if (HandsGui != null)
-            HandsGui.Visible = _playerHandsComponent != null;
+        RefreshGeneticFormVisibility(); // Exodus: also applies after loading/reloading the HUD.
     }
 
     public override void FrameUpdate(FrameEventArgs args)

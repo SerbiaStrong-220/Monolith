@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "For Exodus by Renascitur (disc: renascitur)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "empty"
+    }
+  ]
+}

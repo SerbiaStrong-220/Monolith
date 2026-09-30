@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Numerics;
+using Content.Shared._Exodus.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server._Exodus.Mining.AutoMining;
@@ -8,6 +10,7 @@ namespace Content.Server._Exodus.Mining.AutoMining;
 public sealed partial class BulkMiningConnectivitySystem : EntitySystem
 {
     [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private const int MaxStepsPerUpdate = 16384;
     private const int StepsPerGrid = 128;
@@ -18,6 +21,12 @@ public sealed partial class BulkMiningConnectivitySystem : EntitySystem
     private readonly List<Entity<BulkMiningConnectivityComponent, MapGridComponent>> _pending = new();
     private EntityQuery<BulkMiningConnectivityComponent> _cacheQuery;
     private int _nextGridIndex;
+    private int _localSearchBudget;
+
+    // Scratch state of the bounded local search. Safety checks run on the main thread only.
+    private readonly Dictionary<Vector2i, int> _searchLabels = new();
+    private readonly Queue<Vector2i>[] _searchQueues = [new(), new(), new(), new()];
+    private readonly int[] _searchGroups = new int[4];
 
     public override void Initialize()
     {
@@ -25,6 +34,7 @@ public sealed partial class BulkMiningConnectivitySystem : EntitySystem
         _cacheQuery = GetEntityQuery<BulkMiningConnectivityComponent>();
         UpdatesBefore.Add(typeof(BulkAutoMiningSystem));
         SubscribeLocalEvent<BulkMiningConnectivityComponent, TileChangedEvent>(OnTileChanged);
+        Subs.CVar(_cfg, EXCVars.BulkMiningLocalSearchBudget, value => _localSearchBudget = Math.Max(0, value), true);
     }
 
     public void RetainGrid(EntityUid user, EntityUid grid)
@@ -76,11 +86,119 @@ public sealed partial class BulkMiningConnectivitySystem : EntitySystem
         if (IsLocallySafe(grid.Comp, tile, neighbors))
             return BulkMiningTileSafety.Safe;
 
+        // Most other cuts are decided by a short detour around the tile. Only large necks need the
+        // whole-grid analysis, which excavation elsewhere keeps invalidating on big planetoids.
+        if (comp == null || !comp.LocalSearchMisses.Contains(tile))
+        {
+            var local = SearchAround(grid.Comp, tile, neighbors);
+            if (local != BulkMiningTileSafety.Pending)
+                return local;
+
+            comp ??= EnsureComp<BulkMiningConnectivityComponent>(grid);
+            if (_localSearchBudget > 0)
+                comp.LocalSearchMisses.Add(tile);
+        }
+
         comp ??= EnsureComp<BulkMiningConnectivityComponent>(grid);
         if (!comp.Pending)
             StartAnalysis((grid, comp, grid.Comp), tile);
 
         return BulkMiningTileSafety.Pending;
+    }
+
+    /// <summary>
+    /// Bounded breadth-first searches from every occupied neighbor, run in lockstep while avoiding the tile.
+    /// Safe once all fronts meet; unsafe once any front is exhausted alone. Pending when the budget runs out.
+    /// </summary>
+    private BulkMiningTileSafety SearchAround(MapGridComponent grid, Vector2i tile, int cardinal)
+    {
+        if (_localSearchBudget <= 0)
+            return BulkMiningTileSafety.Pending;
+
+        _searchLabels.Clear();
+        var groups = 0;
+        for (var direction = 0; direction < 4; direction++)
+        {
+            _searchQueues[direction].Clear();
+            _searchGroups[direction] = direction;
+            if ((cardinal & (1 << direction)) == 0)
+                continue;
+
+            var seed = Neighbor(tile, direction);
+            _searchLabels.Add(seed, direction);
+            _searchQueues[direction].Enqueue(seed);
+            groups++;
+        }
+
+        var steps = _localSearchBudget;
+        while (steps > 0)
+        {
+            var progressed = false;
+            for (var label = 0; label < 4 && steps > 0; label++)
+            {
+                if (!_searchQueues[label].TryDequeue(out var node))
+                    continue;
+
+                progressed = true;
+                steps--;
+                var group = FindGroup(label);
+                for (var direction = 0; direction < 4; direction++)
+                {
+                    var next = Neighbor(node, direction);
+                    if (next == tile || !HasTile(grid, next))
+                        continue;
+
+                    if (_searchLabels.TryGetValue(next, out var other))
+                    {
+                        var otherGroup = FindGroup(other);
+                        if (otherGroup == group)
+                            continue;
+
+                        _searchGroups[otherGroup] = group;
+                        if (--groups <= 1)
+                            return BulkMiningTileSafety.Safe;
+
+                        continue;
+                    }
+
+                    _searchLabels.Add(next, label);
+                    _searchQueues[label].Enqueue(next);
+                }
+            }
+
+            if (!progressed)
+                return BulkMiningTileSafety.Unsafe;
+
+            // A group with no frontier left has reached everything it can without meeting the others.
+            for (var label = 0; label < 4; label++)
+            {
+                if ((cardinal & (1 << label)) != 0 && FindGroup(label) == label && IsGroupExhausted(label, cardinal))
+                    return BulkMiningTileSafety.Unsafe;
+            }
+        }
+
+        return BulkMiningTileSafety.Pending;
+    }
+
+    private int FindGroup(int label)
+    {
+        while (_searchGroups[label] != label)
+        {
+            label = _searchGroups[label];
+        }
+
+        return label;
+    }
+
+    private bool IsGroupExhausted(int group, int cardinal)
+    {
+        for (var label = 0; label < 4; label++)
+        {
+            if ((cardinal & (1 << label)) != 0 && FindGroup(label) == group && _searchQueues[label].Count > 0)
+                return false;
+        }
+
+        return true;
     }
 
     private bool HasTile(MapGridComponent grid, Vector2i tile)
@@ -143,11 +261,16 @@ public sealed partial class BulkMiningConnectivitySystem : EntitySystem
                 continue;
 
             changed = true;
-            // Removing a leaf cannot change paths between other vertices. Only its neighbor loses one part.
-            // Batch edits and interrupted analyses use full invalidation instead.
-            preserved = args.Changes.Length == 1 && change.NewTile.IsEmpty && TryPruneLeaf(ent.Comp, change.GridIndices);
+            // Removing a locally safe tile (including a leaf) cannot change articulation points outside its
+            // 3x3 neighborhood: every path through it can be rerouted along that ring. Keep the analysis and
+            // forget only the ring. Batch edits and interrupted analyses use full invalidation instead.
+            preserved = args.Changes.Length == 1 && change.NewTile.IsEmpty &&
+                        TryPreserveAfterCut(ent.Comp, args.Entity.Comp, change.GridIndices);
             UpdateNeighbors(ent.Comp, change.GridIndices, !change.NewTile.IsEmpty);
         }
+
+        if (changed)
+            ent.Comp.LocalSearchMisses.Clear();
 
         if (!changed || preserved)
             return;
@@ -158,27 +281,21 @@ public sealed partial class BulkMiningConnectivitySystem : EntitySystem
         ent.Comp.Stack.Clear();
     }
 
-    private static bool TryPruneLeaf(BulkMiningConnectivityComponent comp, Vector2i tile)
+    private bool TryPreserveAfterCut(BulkMiningConnectivityComponent comp, MapGridComponent grid, Vector2i tile)
     {
-        if (!comp.Complete || !comp.NodeIndices.TryGetValue(tile, out var index))
+        // The event follows the removal; the surrounding tiles still describe the graph before it.
+        if (!comp.Complete || !IsLocallySafe(grid, tile, GetNeighbors(grid, tile)))
             return false;
 
-        ref var node = ref GetNode(comp, index);
-        if (node.Generation != comp.Generation || !node.NeighborsKnown || (node.Neighbors & (node.Neighbors - 1)) != 0)
-            return false;
+        for (var x = -1; x <= 1; x++)
+        {
+            for (var y = -1; y <= 1; y++)
+            {
+                if (comp.NodeIndices.TryGetValue(new Vector2i(tile.X + x, tile.Y + y), out var index))
+                    GetNode(comp, index).Generation = 0;
+            }
+        }
 
-        if (node.Neighbors == 0)
-            return true;
-
-        var neighbor = Neighbor(tile, BitOperations.TrailingZeroCount((uint)node.Neighbors));
-        if (!comp.NodeIndices.TryGetValue(neighbor, out var neighborIndex))
-            return false;
-
-        ref var next = ref GetNode(comp, neighborIndex);
-        if (next.Generation != comp.Generation || next.Parts == 0)
-            return false;
-
-        next.Parts--;
         return true;
     }
 

@@ -38,6 +38,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeStealthSuppression(); // Exodus: projector disguises can be disrupted.
 
         SubscribeLocalEvent<ChameleonDisguiseComponent, InteractHandEvent>(OnDisguiseInteractHand, before: [typeof(SharedItemSystem)]);
         SubscribeLocalEvent<ChameleonDisguiseComponent, DamageChangedEvent>(OnDisguiseDamaged);
@@ -124,6 +125,11 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
     public bool TryDisguise(Entity<ChameleonProjectorComponent> ent, EntityUid user, EntityUid target)
     {
+        // Exodus-begin: suppression follows the wearer, including when switching projectors.
+        if (IsDisguiseSuppressed(user))
+            return false;
+        // Exodus-end
+
         if (_container.IsEntityInContainer(target) || _container.IsEntityInContainer(user))
         {
             _popup.PopupClient(Loc.GetString("chameleon-projector-inside-container"), target, user);
@@ -243,6 +249,11 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
     /// </summary>
     public bool TryReveal(Entity<ChameleonDisguisedComponent?> ent)
     {
+        // Exodus-begin: recursive deletion already removes the user's disguise.
+        if (TerminatingOrDeleted(ent))
+            return false;
+        // Exodus-end
+
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 

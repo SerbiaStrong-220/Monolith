@@ -27,3 +27,28 @@ ent-TechDiskHorizonHarmonyHammerMatter = технологический диск
     .desc = Открывает газодобычу, медицинское производство, ремонтных дронов и переработку сырья.
 ent-TechDiskBuno = технологический диск концерна Б.У.НО.
     .desc = Открывает защитные органы, страхование жизни и специальное снаряжение.
+
+concern-tech-disk-case-description = Запечатанный кейс с технологическим диском концерна и ключом шифрования его закрытой сети.
+
+ent-CompanyTechDiskCaseAugok = кейс технологического диска концерна АУГОК
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseDrakeBlackArmsUSA = кейс технологического диска концерна Дрэйк&Блэк&Армс&ВША
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseHorizonHarmonyHammerMatter = кейс технологического диска концерна Горизонт&Хармони&Молот&Маттер
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseBuno = кейс технологического диска концерна Б.У.НО.
+    .desc = { concern-tech-disk-case-description }
+
+chat-radio-concern-augok = АУГОК
+chat-radio-concern-drake-black-arms-usa = Дрэйк&Блэк&Армс&ВША
+chat-radio-concern-horizon-harmony-hammer-matter = Горизонт&Хармони&Молот&Маттер
+chat-radio-concern-buno = Б.У.НО.
+
+ent-EncryptionKeyConcernAugok = ключ шифрования концерна АУГОК
+    .desc = Ключ шифрования закрытой дальней связи концерна АУГОК.
+ent-EncryptionKeyConcernDrakeBlackArmsUSA = ключ шифрования концерна Дрэйк&Блэк&Армс&ВША
+    .desc = Ключ шифрования закрытой дальней связи концерна Дрэйк&Блэк&Армс&ВША.
+ent-EncryptionKeyConcernHorizonHarmonyHammerMatter = ключ шифрования концерна Горизонт&Хармони&Молот&Маттер
+    .desc = Ключ шифрования закрытой дальней связи концерна Горизонт&Хармони&Молот&Маттер.
+ent-EncryptionKeyConcernBuno = ключ шифрования концерна Б.У.НО.
+    .desc = Ключ шифрования закрытой дальней связи концерна Б.У.НО.

@@ -19,7 +19,7 @@ public sealed partial class WorldControllerSystem
 
             foreach (var target in job.GridJobs)
             {
-                if (target.Tiles.Count == 0 || TerminatingOrDeleted(target.GridUid) ||
+                if (target.Invalidated || target.Remaining == 0 || TerminatingOrDeleted(target.GridUid) ||
                     !_transformQuery.TryComp(target.GridUid, out var xform))
                     continue;
 

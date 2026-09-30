@@ -8,15 +8,20 @@ namespace Content.Client._Exodus.Mining.AutoMining;
 public sealed class BulkAutoMiningBeamRenderer
 {
     public const float WorldWidth = 1f;
-    private static readonly ProtoId<ShaderPrototype> BeamShader = "ExodusBulkMiningBeam";
+    public static readonly ProtoId<ShaderPrototype> MiningShader = "ExodusBulkMiningBeam";
+    public static readonly ProtoId<ShaderPrototype> LinkShader = "ExodusBulkMiningLinkBeam";
     private readonly ShaderInstance _shader;
     private readonly Texture _texture;
     // Reuse a managed buffer: stackalloc is rejected by the client sandbox's IL verifier.
     private readonly DrawVertexUV2D[] _vertices = new DrawVertexUV2D[4];
 
-    public BulkAutoMiningBeamRenderer(IPrototypeManager prototypes)
+    public BulkAutoMiningBeamRenderer(IPrototypeManager prototypes) : this(prototypes, MiningShader)
     {
-        _shader = prototypes.Index(BeamShader).Instance();
+    }
+
+    public BulkAutoMiningBeamRenderer(IPrototypeManager prototypes, ProtoId<ShaderPrototype> shader)
+    {
+        _shader = prototypes.Index(shader).Instance();
         _texture = Texture.White;
     }
 

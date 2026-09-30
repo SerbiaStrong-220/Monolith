@@ -1,0 +1,134 @@
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointBallisticSuperlightFlatpack
+  name: superlight ballistic hardpoint flatpack
+  description: A flatpack used for constructing a superlight ballistic hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointBallisticSuperlight
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointBallisticLightFlatpack
+  name: light ballistic hardpoint flatpack
+  description: A flatpack used for constructing a light ballistic hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointBallisticLight
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointBallisticMediumFlatpack
+  name: medium ballistic hardpoint flatpack
+  description: A flatpack used for constructing a medium ballistic hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointBallisticMedium
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointBallisticHeavyFlatpack
+  name: heavy ballistic hardpoint flatpack
+  description: A flatpack used for constructing a heavy ballistic hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointBallisticHeavy
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointBallisticSuperheavyFlatpack
+  name: superheavy ballistic hardpoint flatpack
+  description: A flatpack used for constructing a superheavy ballistic hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointBallisticSuperheavy
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointEnergySuperlightFlatpack
+  name: superlight energy hardpoint flatpack
+  description: A flatpack used for constructing a superlight energy hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointEnergySuperlight
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointEnergyLightFlatpack
+  name: light energy hardpoint flatpack
+  description: A flatpack used for constructing a light energy hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointEnergyLight
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointEnergyMediumFlatpack
+  name: medium energy hardpoint flatpack
+  description: A flatpack used for constructing a medium energy hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointEnergyMedium
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointEnergyHeavyFlatpack
+  name: heavy energy hardpoint flatpack
+  description: A flatpack used for constructing a heavy energy hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointEnergyHeavy
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointEnergySuperheavyFlatpack
+  name: superheavy energy hardpoint flatpack
+  description: A flatpack used for constructing a superheavy energy hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointEnergySuperheavy
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointMissileSuperlightFlatpack
+  name: superlight missile hardpoint flatpack
+  description: A flatpack used for constructing a superlight missile hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointMissileSuperlight
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointMissileLightFlatpack
+  name: light missile hardpoint flatpack
+  description: A flatpack used for constructing a light missile hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointMissileLight
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointMissileMediumFlatpack
+  name: medium missile hardpoint flatpack
+  description: A flatpack used for constructing a medium missile hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointMissileMedium
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointMissileHeavyFlatpack
+  name: heavy missile hardpoint flatpack
+  description: A flatpack used for constructing a heavy missile hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointMissileHeavy
+
+- type: entity
+  parent: BaseFlatpack
+  id: HardpointMissileSuperheavyFlatpack
+  name: superheavy missile hardpoint flatpack
+  description: A flatpack used for constructing a superheavy missile hardpoint.
+  components:
+  - type: Flatpack
+    entity: HardpointMissileSuperheavy

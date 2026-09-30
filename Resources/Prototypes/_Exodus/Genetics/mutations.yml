@@ -1,4 +1,14 @@
 - type: geneticMutation
+  id: GeneticSlime
+  name: genetics-gene-slime
+  description: genetics-gene-slime-desc
+  activationMessage: genetics-feeling-slime
+  instability: 20
+  modifiers:
+    transformation: GeneticSlimeAdaptation
+  actions: [ActionGeneticTransform]
+
+- type: geneticMutation
   id: GeneticTelekinesis
   activationMessage: genetics-feeling-telekinesis
   name: genetics-gene-telekinesis
@@ -20,7 +30,10 @@
     blockRangedWeapons: true
     nutritionMultiplier: 1.5
     thirstMultiplier: 1.5
-    meleeMultiplier: 2.5
+    unarmedDamage:
+      types:
+        Blunt: 40
+        Structural: 350
     staminaMultiplier: 0.25
     damageModifiers:
       flatReductions:
@@ -32,7 +45,6 @@
         Cold: 5
         Caustic: 5
     blockedStatuses: [Stun, KnockedDown]
-  actions: [ActionGeneticPry]
 
 - type: geneticMutation
   id: GeneticRemoteViewing
@@ -226,6 +238,15 @@
   modifiers:
     flashDurationMultiplier: 1.75
     photophobiaStrength: 0.25
+
+- type: geneticMutation
+  id: GeneticBloodBath
+  name: genetics-gene-blood-bath
+  description: genetics-gene-blood-bath-desc
+  activationMessage: genetics-feeling-blood-bath
+  instability: -10
+  modifiers:
+    abilities: BloodExpulsion
 
 - type: geneticMutation
   id: GeneticHypermetabolism

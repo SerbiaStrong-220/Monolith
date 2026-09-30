@@ -25,7 +25,10 @@ public sealed partial class RotSpreadComponent : Component
     [DataField] public EntProtoId Door = "RotOrganicDoor";
     [DataField] public EntProtoId Marker = "RotConstructionMarker";
     [DataField] public EntityWhitelist ConvertibleWalls = new() { Tags = new() { "Wall" } };
-    [DataField] public EntityWhitelist Excluded = new() { Components = new[] { "Docking" }, Tags = new() { "SpreaderIgnore" } };
+    /// <summary>Structures that stop growth instead of being corroded or converted, e.g. docking ports.</summary>
+    [DataField] public EntityWhitelist Excluded = new() { Components = new[] { "Docking" } };
+    /// <summary>Floor-level entities and spreader-transparent devices that tissue may cover without touching them.</summary>
+    [DataField] public EntityWhitelist Ignored = new() { Tags = new() { "Catwalk", "SpreaderIgnore" } };
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextGrowth;
     [DataField] public EntityUid? PendingMarker;
     public EntityUid? Grid;

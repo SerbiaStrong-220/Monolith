@@ -13,6 +13,7 @@ public sealed partial class BulkAutoMiningSystem
     {
         base.Update(frameTime);
         var now = _timing.CurTime;
+        UpdateLinks(now);
         _jobBuffer.Clear();
         var query = EntityQueryEnumerator<BulkAutoMiningJobComponent, BulkAutoMiningConsoleComponent>();
         while (query.MoveNext(out var uid, out var job, out var console))

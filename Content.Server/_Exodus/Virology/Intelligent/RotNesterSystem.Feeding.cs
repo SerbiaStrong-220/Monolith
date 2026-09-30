@@ -13,12 +13,14 @@ public sealed partial class RotNesterSystem
 {
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private RotNestSystem _nests = default!;
     private readonly HashSet<Entity<RotLarvaComponent>> _larvae = [];
     private readonly HashSet<Entity<RotNutritionBlobComponent>> _food = [];
 
     private void InitializeFeeding()
     {
         SubscribeLocalEvent<RotNesterComponent, RotNesterVomitEvent>(OnVomited);
+        SubscribeLocalEvent<RotNesterComponent, RotNesterBiteEvent>(OnBite);
     }
 
     private bool IsHungryAlly(EntityUid nester, EntityUid larva)
@@ -45,9 +47,96 @@ public sealed partial class RotNesterSystem
         return false;
     }
 
+    private static RotScavengeDiet GetDiet(RotNesterComponent nester) =>
+        new(nester.BloodReagents, nester.BloodPerBite, nester.CorpseMeals);
+
+    private bool HasPortion(RotNesterComponent nester) => nester.Stored >= nester.BitesPerPortion;
+
+    /// <summary>Eats corpses and spilled blood until one portion is stored; the only source of larva food.</summary>
+    private bool TryForage(Entity<RotNesterComponent> ent, Entity<RotDefenderComponent> brain)
+    {
+        if (HasPortion(ent.Comp))
+        {
+            CancelForage(ent);
+            return false;
+        }
+        if (ent.Comp.Bite != null)
+            return true;
+        var diet = GetDiet(ent.Comp);
+        if (ent.Comp.FoodTarget is { } old && !_nests.CanScavenge(old, diet))
+            ent.Comp.FoodTarget = null;
+        if (ent.Comp.FoodTarget == null)
+        {
+            if (_timing.CurTime < ent.Comp.NextFoodSearch)
+                return false;
+            ent.Comp.NextFoodSearch = _timing.CurTime + ent.Comp.FoodSearchInterval;
+            if (!_nests.TryFindScavengeFood(ent, ent.Comp.SearchRange, diet, out var found))
+                return false;
+            ent.Comp.FoodTarget = found;
+        }
+        var food = ent.Comp.FoodTarget.Value;
+        if (!_interaction.InRangeUnobstructed(ent.Owner, food, ent.Comp.FoodRange))
+        {
+            if (TryComp<NPCSteeringComponent>(ent, out var steering) && steering.Status == SteeringStatus.NoPath)
+            {
+                CancelForage(ent);
+                return false;
+            }
+            _navigation.MoveDefender(brain, new EntityCoordinates(food, Vector2.Zero), 0.8f);
+            return true;
+        }
+        _steering.Unregister(ent);
+        RemCompDeferred<NPCMeleeCombatComponent>(ent);
+        var args = new DoAfterArgs(EntityManager, ent, ent.Comp.BiteInterval, new RotNesterBiteEvent(), ent, target: food)
+        {
+            NeedHand = false,
+            BreakOnMove = true,
+            BreakOnDamage = true,
+            DistanceThreshold = ent.Comp.FoodRange,
+            MultiplyDelay = false,
+            CancelDuplicate = false,
+        };
+        if (_doAfter.TryStartDoAfter(args, out ent.Comp.Bite))
+            return true;
+        CancelForage(ent);
+        return false;
+    }
+
+    private void OnBite(Entity<RotNesterComponent> ent, ref RotNesterBiteEvent args)
+    {
+        if (args.Handled || ent.Comp.Bite != args.DoAfter.Id)
+            return;
+        ent.Comp.Bite = null;
+        args.Handled = true;
+        if (args.Cancelled || args.Target is not { } food || !_mobs.IsAlive(ent) || _containers.IsEntityInContainer(ent)
+            || HasPortion(ent.Comp) || !_interaction.InRangeUnobstructed(ent.Owner, food, ent.Comp.FoodRange)
+            || !_nests.TryScavengeBite(food, GetDiet(ent.Comp)))
+        {
+            ent.Comp.FoodTarget = null;
+            return;
+        }
+        ent.Comp.Stored++;
+        // Keep eating without waiting for the next think interval.
+        ent.Comp.NextThink = TimeSpan.Zero;
+    }
+
+    private void CancelForage(Entity<RotNesterComponent> ent)
+    {
+        var id = ent.Comp.Bite;
+        ent.Comp.Bite = null;
+        _doAfter.Cancel(id);
+        ent.Comp.FoodTarget = null;
+    }
+
+    private void CancelWork(Entity<RotNesterComponent> ent)
+    {
+        CancelProvision(ent);
+        CancelForage(ent);
+    }
+
     private bool TryProvision(Entity<RotNesterComponent> ent, Entity<RotDefenderComponent> brain)
     {
-        if (ent.Comp.Reserve < ent.Comp.FillDuration)
+        if (!HasPortion(ent.Comp))
         {
             CancelProvision(ent);
             return false;
@@ -116,7 +205,7 @@ public sealed partial class RotNesterSystem
         ent.Comp.Vomit = null;
         _appearance.SetData(ent, CreatureActivityVisuals.State, string.Empty);
         if (args.Cancelled || args.Target is not { } larva || !IsHungryAlly(ent, larva) || !_mobs.IsAlive(ent)
-            || _containers.IsEntityInContainer(ent) || ent.Comp.Reserve < ent.Comp.FillDuration
+            || _containers.IsEntityInContainer(ent) || !HasPortion(ent.Comp)
             || !_interaction.InRangeUnobstructed(ent.Owner, larva, ent.Comp.ProvisionRange) || HasProvision(ent, larva))
         {
             CancelProvision(ent);
@@ -127,8 +216,7 @@ public sealed partial class RotNesterSystem
         food.Initial = food.Remaining = Comp<RotLarvaComponent>(larva).MaxSatiety * ent.Comp.LarvaePerPortion;
         _appearance.SetData(uid, RotOrganVisuals.Nutrition, false);
         _colony.Inherit(ent, uid);
-        ent.Comp.Reserve = TimeSpan.Zero;
-        ent.Comp.LastReserve = _timing.CurTime;
+        ent.Comp.Stored -= ent.Comp.BitesPerPortion;
         args.Handled = true;
         CancelProvision(ent);
     }

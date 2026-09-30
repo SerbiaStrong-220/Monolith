@@ -5,7 +5,7 @@
   desc: reagent-desc-exodus-biohazard-neutralizer
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
-  color: "#80d8c8"
+  color: "#80d8c880"
   tileReactions:
   - !type:RemoveAnchoredEntitiesTileReaction
     whitelist:

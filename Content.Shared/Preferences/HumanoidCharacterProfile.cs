@@ -771,6 +771,11 @@ namespace Content.Shared.Preferences
             var groups = new Dictionary<string, int>();
             var result = new List<ProtoId<TraitPrototype>>();
 
+            // Exodus-begin: count all drawbacks first without changing the relative order of advantages.
+            traits = traits.OrderBy(trait =>
+                protoManager.TryIndex(trait, out var prototype) && prototype.Cost < 0 ? 0 : 1);
+            // Exodus-end
+
             foreach (var trait in traits)
             {
                 if (!protoManager.TryIndex(trait, out var traitProto))

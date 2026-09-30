@@ -286,6 +286,9 @@ public sealed partial class GeneticsSystem : EntitySystem
             load += mutation.Instability;
             periodic += mutation.PeriodicDamage;
             var source = mutation.Modifiers;
+            if (source.Transformation is { } transformation &&
+                (modifiers.Transformation == null || string.CompareOrdinal(transformation.Id, modifiers.Transformation.Value.Id) < 0))
+                modifiers.Transformation = transformation;
             modifiers.NoBreathing |= source.NoBreathing;
             modifiers.LowPressureImmunity |= source.LowPressureImmunity;
             modifiers.HighPressureImmunity |= source.HighPressureImmunity;
@@ -293,6 +296,12 @@ public sealed partial class GeneticsSystem : EntitySystem
             modifiers.HeatImmunity |= source.HeatImmunity;
             modifiers.MovementMultiplier *= source.MovementMultiplier;
             modifiers.MeleeMultiplier *= source.MeleeMultiplier;
+            if (source.UnarmedDamage is { } unarmedDamage)
+            {
+                modifiers.UnarmedDamage = modifiers.UnarmedDamage == null
+                    ? new DamageSpecifier(unarmedDamage)
+                    : modifiers.UnarmedDamage + unarmedDamage;
+            }
             modifiers.StaminaMultiplier *= source.StaminaMultiplier;
             modifiers.DamageMultiplier *= source.DamageMultiplier;
             foreach (var (type, reduction) in source.DamageModifiers.FlatReduction)

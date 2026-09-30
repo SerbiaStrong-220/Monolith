@@ -1,0 +1,12 @@
+genetics-gene-cocoon = Fluffy cocoon
+genetics-gene-cocoon-desc = Silk glands allow weaving shelters that help wounds heal.
+genetics-feeling-cocoon = Your glands fill with thick silk. You feel the urge to weave a warm shelter.
+genetics-cocoon-occupied = A cocoon has already been woven here.
+genetics-cocoon-thirsty = You need to drink more water before weaving a cocoon.
+ent-ActionGeneticCocoon = Weave cocoon
+    .desc = Weave a silk shelter for yourself or someone wounded.
+ent-GeneticHealingCocoon = fluffy cocoon
+    .desc = A snug cocoon woven from soft silk. It feels warm and peaceful inside.
+ent-GeneticHealingCocoonBroken = torn cocoon
+    .desc = Scraps of silk left behind by a torn cocoon.
+ent-GeneticInjectorCocoon = fluffy cocoon genetic injector

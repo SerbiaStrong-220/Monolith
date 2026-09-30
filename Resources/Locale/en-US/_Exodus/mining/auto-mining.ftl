@@ -66,3 +66,72 @@ ent-BulkAutoMiningConsoleCircuitboard = mining laser control board
     .desc = A circuit board for a mining laser control console.
 ent-BulkAutoMiningEmitterCircuitboard = bulk mining laser board
     .desc = An industrial laser board. Assembly requires three units of americium.
+
+## Consortium links between ships.
+bulk-auto-mining-mode-mining = Mining
+bulk-auto-mining-mode-link = Ship links
+bulk-auto-mining-mode-mining-hint = Pick asteroids and run the excavation.
+bulk-auto-mining-mode-link-hint = Consortium: shared liquid metal networks and a refining bonus.
+bulk-auto-mining-consortium-badge = Consortium {$count} · +{$percent}%
+bulk-auto-mining-consortium-badge-tooltip = Ships linked by their lasers. Refineries on the shared network work faster and use less liquid metal.
+bulk-auto-mining-laser-linked = Linked to «{$ship}»
+bulk-auto-mining-laser-hint-linked = This laser holds a consortium link and does not mine. Break the link on the Ship links tab.
+bulk-auto-mining-link-title = Consortium
+bulk-auto-mining-link-consortium = LINKED SHIPS
+bulk-auto-mining-link-consortium-size = { $count ->
+    [1] This ship only
+    [one] {$count} ship
+   *[other] {$count} ships
+}
+bulk-auto-mining-link-bonus-speed = Refining speed
+bulk-auto-mining-link-bonus-yield = Liquid metal yield
+bulk-auto-mining-link-bonus-value = +{$percent}%
+bulk-auto-mining-link-next-bonus = Another ship adds [color=#6FE3C0]+{$percent}%[/color].
+bulk-auto-mining-link-bonus-max = The consortium bonus has reached its limit.
+bulk-auto-mining-link-member-self = ● {$name} (this ship)
+bulk-auto-mining-link-member = ● {$name}
+bulk-auto-mining-link-incoming-title = Incoming requests
+bulk-auto-mining-link-active-title = Active links
+bulk-auto-mining-link-ships-title = Ships in range
+bulk-auto-mining-link-free-lasers = Free lasers: {$count}
+bulk-auto-mining-link-no-ships = No ships with a powered mining laser console nearby.
+bulk-auto-mining-link-help = A link takes one free laser on each ship. The lasers must see each other: any foreign obstacle breaks the link, except the shields of the linked ships. Every ship raises the bonus, each a little less than the last.
+bulk-auto-mining-link-radar-title = Survey and ship selection
+bulk-auto-mining-link-radar-hint = Click a ship on the radar to select it for a link.
+bulk-auto-mining-link-selected = Selected: [color=#C8FBFF]{$name}[/color].
+bulk-auto-mining-link-selected-unavailable = [color=#F2B85F]{$name}[/color] cannot answer: it has no powered mining laser console or is out of range.
+bulk-auto-mining-link-no-free-own = This ship has no free laser. Stop mining or free a laser.
+bulk-auto-mining-link-no-free-own-hint = [color=#F2B85F]This ship has no free laser.[/color] Stop mining or free a laser.
+bulk-auto-mining-link-status-available = Ready to link
+bulk-auto-mining-link-status-no-free-laser = All lasers busy
+bulk-auto-mining-link-status-obstructed = Line of sight blocked
+bulk-auto-mining-link-status-outgoing = Awaiting reply · {$seconds} s
+bulk-auto-mining-link-status-incoming = Asks to link · {$seconds} s
+bulk-auto-mining-link-status-linked = Linked
+bulk-auto-mining-link-request = Link
+bulk-auto-mining-link-cancel = Withdraw
+bulk-auto-mining-link-accept = Accept
+bulk-auto-mining-link-decline = Decline
+bulk-auto-mining-link-break = Break
+bulk-auto-mining-link-distance = {$distance} m
+bulk-auto-mining-link-lasers = {$own} — {$partner}
+bulk-auto-mining-link-range = Beam length: {$distance} / {$range} m
+bulk-auto-mining-link-stable = Channel stable
+bulk-auto-mining-link-unstable = Interference on the line: the link is about to break!
+bulk-auto-mining-link-popup-already-linked = Already linked with {$ship}.
+bulk-auto-mining-link-popup-already-requested = A request to {$ship} is already waiting.
+bulk-auto-mining-link-popup-cooldown = Too many requests. Wait a moment.
+bulk-auto-mining-link-popup-too-many = Too many unanswered link requests.
+bulk-auto-mining-link-popup-out-of-range = {$ship} is out of link range.
+bulk-auto-mining-link-popup-no-console = {$ship} has no powered mining laser console.
+bulk-auto-mining-link-popup-no-free-laser = No free powered laser is available for the link.
+bulk-auto-mining-link-popup-obstructed = No free lasers of the two ships can see each other.
+bulk-auto-mining-link-popup-incoming = {$ship} requests to link liquid metal networks.
+bulk-auto-mining-link-popup-request-expired = The request from {$ship} is no longer valid.
+bulk-auto-mining-link-popup-declined = {$ship} declined the link.
+bulk-auto-mining-link-popup-established = Linked with {$ship}. Liquid metal networks joined.
+bulk-auto-mining-link-popup-broken-manual = The link with {$ship} was broken.
+bulk-auto-mining-link-popup-broken-obstructed = The link with {$ship} is broken: the beam was blocked.
+bulk-auto-mining-link-popup-broken-range = The link with {$ship} is broken: the ships moved too far apart.
+bulk-auto-mining-link-popup-broken-power = The link with {$ship} is broken: a laser lost power.
+bulk-auto-mining-link-popup-broken-lost = The link with {$ship} is broken: a laser was lost.

@@ -16,6 +16,7 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
     {
         SubscribeLocalEvent<ShipRepairToolComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<ShipRepairToolComponent, ShipRepairDoAfterEvent>(OnRepairDoAfter);
+        SubscribeLocalEvent<ShipRepairToolComponent, DoAfterAttemptEvent<ShipRepairDoAfterEvent>>(OnRepairAttempt); // Exodus: keep checking access while repairing.
     }
 
     private void OnAfterInteract(Entity<ShipRepairToolComponent> ent, ref AfterInteractEvent args)
@@ -66,7 +67,7 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
 
             if (storedTile != currentTile.TypeId)
             {
-                StartRepair(ent, args.User, targetGrid, gridIndices, ent.Comp.TileRepairTime * ent.Comp.RepairTimeMultiplier, ent.Comp.TileRepairCost);
+                StartRepair(ent, args, targetGrid, gridIndices, ent.Comp.TileRepairTime * ent.Comp.RepairTimeMultiplier, ent.Comp.TileRepairCost); // Exodus: retain the interaction target.
                 return; // do not attempt anything else
             }
         }
@@ -151,7 +152,7 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
                 notEnoughCharges |= !enough;
                 if (needsRepair && enough)
                 {
-                    StartRepair(ent, args.User, targetGrid, gridIndices, delay, cost, id);
+                    StartRepair(ent, args, targetGrid, gridIndices, delay, cost, id); // Exodus: retain the interaction target.
                     return;
                 }
 
@@ -165,7 +166,8 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("ship-repair-tool-entity-exists"), ent, args.User, PopupType.SmallCaution);
     }
 
-    private void StartRepair(Entity<ShipRepairToolComponent> tool, EntityUid user, Entity<MapGridComponent> grid, Vector2i tileIndices, float delay, int cost, int? repairId = null)
+    // Exodus: retain the target and grid-relative repair position throughout the DoAfter.
+    private void StartRepair(Entity<ShipRepairToolComponent> tool, AfterInteractEvent interaction, Entity<MapGridComponent> grid, Vector2i tileIndices, float delay, int cost, int? repairId = null)
     {
         // Exodus: bind tile and entity repairs to the exact snapshot used to calculate their cost.
         if (!TryComp<ShipRepairDataComponent>(grid, out var repairData))
@@ -175,6 +177,13 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         if (repairId == null && !CanRestoreRepairTile(grid, tileIndices))
             return;
 
+        // Exodus-begin: follow the repair grid, rather than the user's position or a world-space point.
+        var user = interaction.User;
+        var targetCoordinates = interaction.Target is { } target
+            ? Transform(target).Coordinates
+            : interaction.ClickLocation;
+        var coordinates = _transform.WithEntityId(targetCoordinates, grid);
+        // Exodus-end
         var ev = new ShipRepairDoAfterEvent
         {
             TargetGridIndices = tileIndices,
@@ -182,13 +191,15 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
             Cost = cost,
             TargetGrid = grid,
             SnapshotRevision = repairData.Revision, // Exodus
+            Coordinates = GetNetCoordinates(coordinates), // Exodus: serialized for predicted reach checks.
         };
 
-        var args = new DoAfterArgs(EntityManager, user, delay, ev, tool)
+        var args = new DoAfterArgs(EntityManager, user, delay, ev, tool, target: interaction.Target, used: tool) // Exodus: validate target and tool access.
         {
             BreakOnMove = true,
             BreakOnDamage = true,
             MovementThreshold = 0.5f,
+            AttemptFrequency = AttemptFrequency.EveryTick, // Exodus: movement exemptions must not bypass reach.
             // only block if we're trying the exact same
             DuplicateCondition = DuplicateConditions.SameEvent
         };
@@ -212,6 +223,10 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
         ent.Comp.DoAfters.Remove(args.DoAfter.Id);
 
         if (args.Cancelled || args.Handled)
+            return;
+
+        // Exodus: validate again before restoring anything or consuming charges.
+        if (!CanReachRepairLocation(args))
             return;
 
         if (args.TargetGrid is not { } targetGrid || !TryComp<ShipRepairDataComponent>(targetGrid, out var repairData))

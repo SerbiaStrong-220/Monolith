@@ -87,6 +87,39 @@
     speedModifierThresholds: {}
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 3
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: UseDelay
+    delay: 1
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionObserverShowRadar
+  - type: RadarConsole
+    followEntity: true
+    noRotate: true
+  - type: DetectionRangeMultiplier
+    infraredMultiplier: 0.5
+    visualMultiplier: 0.75
+  - type: NightVision
+    relayOverlay: false
+    goggleEffect: false # Natural night vision without tint or goggle mask.
+    viewCircleRadius: 550
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
+  - type: ShowHealthBars
+  - type: ShowHealthIcons
   - type: MobState
     allowedStates: [ Alive, Dead ]
   - type: MobThresholds
@@ -103,12 +136,15 @@
     attackRate: 0.8
     damage:
       types:
-        Poison: 40
-        Piercing: 20
+        Poison: 35
+        Piercing: 30
+        Structural: 30
         Cellular: 5
         Radiation: 5
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: Puller
+    needsHands: false
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -119,8 +155,9 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
   - type: GhostTakeoverAvailable
-  - type: ReplacementAccent
-    accent: genericAggressive
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleRot
 
 - type: htnCompound
   id: RotSatedCompound

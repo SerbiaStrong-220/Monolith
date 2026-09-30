@@ -5,6 +5,7 @@
   description: Ingots of pure fissile plutonium. A byproduct of nuclear fission reactors. # Mono
   suffix: Full
   components:
+  # Exodus: allow plutonium in safety deposit boxes.
   - type: Material
   - type: PhysicalComposition
     materialComposition:

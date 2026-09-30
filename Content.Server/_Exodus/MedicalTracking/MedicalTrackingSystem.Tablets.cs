@@ -11,9 +11,11 @@ public sealed partial class MedicalTrackingSystem
 
     private void InitializeTablets()
     {
+        InitializeTabletAudio();
         Subs.BuiEvents<MedicalTrackingTabletComponent>(MedicalTrackingUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnTabletOpened);
+            subs.Event<BoundUIClosedEvent>(OnTabletClosed);
         });
     }
 
@@ -26,6 +28,7 @@ public sealed partial class MedicalTrackingSystem
         }
 
         _ui.SetUiState(ent.Owner, MedicalTrackingUiKey.Key, new MedicalTrackingState(GetContacts()));
+        _audio.PlayGlobal(ent.Comp.OpenSound, args.Actor);
     }
 
     private void UpdateTablets(TimeSpan now)
@@ -34,6 +37,8 @@ public sealed partial class MedicalTrackingSystem
         var query = EntityQueryEnumerator<MedicalTrackingTabletComponent>();
         while (query.MoveNext(out var uid, out var tablet))
         {
+            UpdateTabletAlert((uid, tablet), now);
+
             if (now < tablet.NextUpdate)
                 continue;
 
