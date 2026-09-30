@@ -63,6 +63,8 @@
   id: FoamTrapArmedBase
   name: foam trap
   components:
+  - type: ShipRepairable
+    repairCost: 75
   - type: Destructible
     thresholds:
     - trigger:
