@@ -202,7 +202,7 @@
   - type: Projectile
     damage:
       types:
-        Structural: 300
+        Structural: 50 # Exodus:M25's x5 damage modifier.
         Heat: 35
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/plasmashot.rsi
