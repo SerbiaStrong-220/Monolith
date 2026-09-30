@@ -165,6 +165,8 @@
         Structural: 80
   - type: Speech
     speechVerb: LargeMob
+  - type: TTS
+    voice: romka
   - type: Emoting
   - type: Vocal
     sounds:
