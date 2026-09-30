@@ -1,19 +1,22 @@
+# Rules source (second edition): https://docs.google.com/document/d/1HCiNWwC2Gt5Fu4kh4e2uRtUXMJVnBY1-JwG6Yye3iuA/edit?tab=t.0
 - type: guideEntry
   id: ExodusRuleset
   name: guide-entry-exodus-rules
   text: "/ServerInfo/_Exodus/Guidebook/Rules/ExodusRuleset.xml"
   priority: -2
   children:
-    - EXRule0DontBeAsshole
-    - EXRule1Grief
-    - EXRule2Conflicts
-    - EXRule3InGameAtmosphere
-    - EXRule4FractionInteractions
-    - EXRule5SSD
-    - EXRule6Respawn
-    - EXRule7ERP
-    - EXRule8BugAbuse
-    - EXRuleGhostRoles
+  - EXRule0DontBeAsshole
+  - EXRule1Grief
+  - EXRule2Conflicts
+  - EXRule3Contracts
+  - EXRule3InGameAtmosphere
+  - EXRule4FractionInteractions
+  - EXRule5SSD
+  - EXRule6Respawn
+  - EXRule7ERP
+  - EXRule8BugAbuse
+  - EXRuleCodes
+  - EXRuleGhostRoles
 
 - type: guideEntry
   id: EXRule0DontBeAsshole
@@ -30,6 +33,12 @@
   name: guide-entry-exodus-rule-two-conflicts
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule2_Conflicts.xml"
 
+- type: guideEntry
+  id: EXRule3Contracts
+  name: guide-entry-exodus-rule-three-contracts
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule3_Contracts.xml"
+
+# Existing IDs are kept for links; displayed numbering follows the second edition.
 - type: guideEntry
   id: EXRule3InGameAtmosphere
   name: guide-entry-exodus-rule-three-in-game-atmosphere
@@ -60,6 +69,24 @@
   id: EXRule8BugAbuse
   name: guide-entry-exodus-rule-eight-bug-abuse
   text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule8_Abuse.xml"
+
+- type: guideEntry
+  id: EXRuleCodes
+  name: guide-entry-exodus-rule-codes
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_Codes.xml"
+  children:
+  - EXRuleFactionCodes
+  - EXRuleSectorCodes
+
+- type: guideEntry
+  id: EXRuleFactionCodes
+  name: guide-entry-exodus-rule-faction-codes
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_FactionCodes.xml"
+
+- type: guideEntry
+  id: EXRuleSectorCodes
+  name: guide-entry-exodus-rule-sector-codes
+  text: "/ServerInfo/_Exodus/Guidebook/Rules/Rule_SectorCodes.xml"
 
 - type: guideEntry
   id: EXRuleGhostRoles

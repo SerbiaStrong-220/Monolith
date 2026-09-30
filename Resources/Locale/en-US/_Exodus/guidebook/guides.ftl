@@ -9,3 +9,7 @@ guide-entry-ship-repair-drones = Repair drones
 guide-entry-genetics = Genetics
 guide-entry-genetics-mutations = Mutations
 guide-entry-medical-implants = Medical implants
+guide-entry-exodus-rule-three-contracts = 3. Contracts
+guide-entry-exodus-rule-codes = Alert codes
+guide-entry-exodus-rule-faction-codes = Faction alert codes
+guide-entry-exodus-rule-sector-codes = Sector alert codes

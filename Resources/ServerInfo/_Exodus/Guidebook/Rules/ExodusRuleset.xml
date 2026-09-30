@@ -1,36 +1,41 @@
 <Document>
-
 # Основные правила сервера
 
-Следует понимать, что правила были написаны в пользу более лёгкого понимания, избегая написания полной конституции суверенного государства. В правилах важен их посыл, а не точная формулировка.
-Если вы не уверены в том, являются ли ваши действия нарушением, то спросите об этом в AHelp, прежде чем что-либо делать.
+Это вторая редакция правил сервера SS220 Exodus.
 
-Это первая редакция правил сервера SS220 Exodus.
+[color=red][italic]Все перечисленные ниже правила действуют постоянно, в том числе между раундами, непосредственно в игре и в других частях нашего сообщества. Ожидается, что данные правила будут прочитаны полностью.[/italic][/color]
 
-[color=red][italic]Если какие-либо ссылки не работают, используйте версию руководства в гайдбуке через меню (ESC) или (Numpad 0).[/italic][/color]
+## Термины
 
-[color=red][italic]Все перечисленные ниже правила действуют постоянно — включая время между раундами, непосредственно в игре и в других частях нашего сообщества. Ожидается, что данные правила будут прочитаны полностью.[/italic][/color]
+- ССД: игрок в статусе АФК (более длительное отсутствие).
+- ТСФ, ДФ, ВЭФ: основные игровые фракции.
+- MRP (Medium Role Play): формат ролевой игры сервера, где свобода действий игроков сочетается с требованием логично отыгрывать своего персонажа.
 
 ## Список правил
-Вам необходимо следовать следующим правилам Exodus:
+
 - 0. [textlink="Не быть мудаком" link="EXRule0DontBeAsshole"]
 - 1. [textlink="Гриф" link="EXRule1Grief"]
 - 2. [textlink="Конфликты" link="EXRule2Conflicts"]
-- 3. [textlink="Нарушение игровой атмосферы" link="EXRule3InGameAtmosphere"]
-- 3.1. [textlink="Метагейм — Метакооп" link="EXRule3InGameAtmosphere"]
-- 3.2. [textlink="Злоупотребление LOOC, OOC и чатом эмоций" link="EXRule3InGameAtmosphere"]
-- 3.3. [textlink="Поддержание уважительной обстановки" link="EXRule3InGameAtmosphere"]
-- 3.4. [textlink="Безграмотность" link="EXRule3InGameAtmosphere"]
-- 3.5. [textlink="Гост-роли" link="EXRule3InGameAtmosphere"]
-- 4. [textlink="Взаимодействие с фракциями" link="EXRule4FractionInteractions"]
-- 4.1. [textlink="Фракционные столкновения" link="EXRule4FractionInteractions"]
-- 4.2. [textlink="Нападение на пустой аванпост" link="EXRule4FractionInteractions"]
-- 4.3. [textlink="Безопасные зоны" link="EXRule4FractionInteractions"]
-- 5. [textlink="Игроки в АФК и ССД" link="EXRule5SSD"]
-- 6. [textlink="Память и возрождение" link="EXRule6Respawn"]
-- 7. [textlink="ERP" link="EXRule7ERP"]
-- 8. [textlink="Нечестная игра" link="EXRule8BugAbuse"]
-- 8.1. [textlink="Мультиаккаунт" link="EXRule8BugAbuse"]
+- 2.1. [textlink="Пиратство" link="EXRule2Conflicts"]
+- 3. [textlink="Контракты" link="EXRule3Contracts"]
+- 4. [textlink="Нарушение игровой атмосферы" link="EXRule3InGameAtmosphere"]
+- 4.1. [textlink="Взаимодействие фракций, корпораций, и наёмников" link="EXRule3InGameAtmosphere"]
+- 4.2. [textlink="Метагейм — Метакооп" link="EXRule3InGameAtmosphere"]
+- 4.3. [textlink="Безопасные зоны" link="EXRule3InGameAtmosphere"]
+- 4.4. [textlink="Злоупотребление LOOC, OOC и чатом эмоций" link="EXRule3InGameAtmosphere"]
+- 4.5. [textlink="Поддержание уважительной обстановки" link="EXRule3InGameAtmosphere"]
+- 4.6. [textlink="Безграмотность" link="EXRule3InGameAtmosphere"]
+- 4.7. [textlink="Гост-роли" link="EXRule3InGameAtmosphere"]
+- 5. [textlink="Взаимодействие с фракциями" link="EXRule4FractionInteractions"]
+- 5.1. [textlink="Фракционные столкновения" link="EXRule4FractionInteractions"]
+- 5.2. [textlink="Спорные территории" link="EXRule4FractionInteractions"]
+- 5.3. [textlink="Нападение на пустой аванпост" link="EXRule4FractionInteractions"]
+- 5.4. [textlink="Фракционные союзы" link="EXRule4FractionInteractions"]
+- 6. [textlink="Игроки в АФК и ССД" link="EXRule5SSD"]
+- 7. [textlink="Память и возрождение" link="EXRule6Respawn"]
+- 8. [textlink="ERP" link="EXRule7ERP"]
+- 9. [textlink="Нечестная игра" link="EXRule8BugAbuse"]
+- 9.1. [textlink="Мультиаккаунт" link="EXRule8BugAbuse"]
+- [textlink="Коды" link="EXRuleCodes"]
 - [textlink="Правила ролей призраков" link="EXRuleGhostRoles"]
-
 </Document>
