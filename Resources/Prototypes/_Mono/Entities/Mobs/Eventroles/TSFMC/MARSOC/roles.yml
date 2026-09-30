@@ -6,7 +6,7 @@
   components:
   - type: Loadout
     prototypes: [MarsocOperativeGear]
-    roleLoadout: [RoleSurvivalTankOnly]
+    roleLoadout: [ExodusMarsocGhostSurvival] # Exodus: filled pocket tank leaves the halberd's armor mount free.
   - type: GhostRole
     name: ghost-role-information-marsoc-operative-name
     description: ghost-role-information-marsoc-description
@@ -27,7 +27,7 @@
   - type: HumanoidAppearance
   - type: Loadout
     prototypes: [MarsocOperativeGear]
-    roleLoadout: [RoleSurvivalTankOnly]
+    roleLoadout: [ExodusMarsocGhostSurvival] # Exodus: filled pocket tank leaves the halberd's armor mount free.
   - type: GhostRole
     name: ghost-role-information-marsoc-operative-name
     description: ghost-role-information-marsoc-description

@@ -19,7 +19,7 @@
       time: 54000 # 15 hours
   - type: Loadout
     prototypes: [ MarsocOperativeGear ]
-    roleLoadout: [ RoleSurvivalTankOnly ]
+    roleLoadout: [ ExodusMarsocGhostSurvival ]
   - type: AutoImplant
     implants:
     - MindShieldImplant

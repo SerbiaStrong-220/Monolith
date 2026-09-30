@@ -9,11 +9,11 @@
     outerClothing: ClothingOuterHardsuitM86Mk4
     shoes: ClothingShoesBootsMagAdv
     id: MarsocPDA
-    pocket1: CrowbarPocket
+    # Exodus: pocket1 is reserved for the filled species-appropriate tank from ExodusMarsocGhostSurvival.
     pocket2: WeaponPistolMk58
     belt: ClothingBeltWebbingsNormalTSFMC
     neck: ClothingNeckIFFCyan
-    suitStorage: OxygenTankFilled
+    suitstorage: WeaponEnergyHalberdMARSOC # Exodus: carry the halberd on the armor mount.
   inhand:
   - WeaponLMGMR8B
   - GunAttachmentGripErebusLAM
@@ -21,7 +21,7 @@
     back:
     - RadioHandheldNF
     - BaseSecurityUplinkRadioDeputy
-    - DoubleEmergencyOxygenTank
+    - CrowbarPocket # Exodus: move the crowbar here instead of issuing an empty reserve tank.
     - MedkitCombatFilled
     - MedkitCombatFilled
     - SyringeCaseAltFilled
