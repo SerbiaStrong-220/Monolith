@@ -1,0 +1,12 @@
+ent-MaterialCopper = медь
+    .desc = Медь используется во множестве электронных устройств. Может быть, даже во всех. И это, пожалуй, ещё преуменьшение.
+    .suffix = Полный
+ent-SheetCopper1 = { ent-MaterialCopper }
+    .desc = { ent-MaterialCopper.desc }
+    .suffix = 1
+ent-SheetCopper10 = { ent-MaterialCopper }
+    .desc = { ent-MaterialCopper.desc }
+    .suffix = 10
+ent-SheetCopper50 = { ent-MaterialCopper }
+    .desc = { ent-MaterialCopper.desc }
+    .suffix = 50
