@@ -58,7 +58,7 @@
         - MachineLayer
   # Exodus: remain non-colliding so any weapon can be anchored on this tile.
   - type: ShipRepairable
-    repairTime: 15
+    repairTime: 5 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 50 # Main cost is in the guns.
   - type: Pullable
   - type: Tag
@@ -171,7 +171,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 20
+    repairTime: 7 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 10
 
 - type: entity
@@ -188,7 +188,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 40
+    repairTime: 14 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 15
 
 - type: entity
@@ -205,7 +205,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 60
+    repairTime: 20 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 20
 
 - type: entity
@@ -222,7 +222,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 80
+    repairTime: 27 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 25
 
 - type: entity
@@ -239,7 +239,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 100
+    repairTime: 34 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 30
 
 # Energy
@@ -258,7 +258,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 20
+    repairTime: 7 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 10
 
 - type: entity
@@ -275,7 +275,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 40
+    repairTime: 14 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 15
 
 - type: entity
@@ -292,7 +292,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 60
+    repairTime: 20 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 20
 
 - type: entity
@@ -309,7 +309,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 80
+    repairTime: 27 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 25
 
 - type: entity
@@ -326,7 +326,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 100
+    repairTime: 34 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 30
 
 # Missile
@@ -345,7 +345,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 20
+    repairTime: 7 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 10
 
 - type: entity
@@ -362,7 +362,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 40
+    repairTime: 14 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 15
 
 - type: entity
@@ -379,7 +379,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 60
+    repairTime: 20 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 20
 
 - type: entity
@@ -396,7 +396,7 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 80
+    repairTime: 27 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 25
 
 - type: entity
@@ -413,5 +413,5 @@
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 100
+    repairTime: 34 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 30
