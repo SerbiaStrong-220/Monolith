@@ -5,7 +5,6 @@
   description: A dense, highly valuable golden metal cube.
   suffix: Full
   components:
-  - type: SafetyDepositRestricted
   - type: Sprite
     sprite: _Exodus/Objects/Materials/americium.rsi
     state: americium_3
