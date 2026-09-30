@@ -55,7 +55,7 @@
 - type: entity
   parent: BaseGeneticCocoon
   id: GeneticHealingCocoon
-  name: regenerative cocoon
+  name: fluffy cocoon
   description: A snug cocoon woven from soft silk. It feels warm and peaceful inside.
   components:
   - type: Sprite
