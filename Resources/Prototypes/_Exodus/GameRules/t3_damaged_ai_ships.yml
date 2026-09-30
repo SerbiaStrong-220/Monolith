@@ -138,9 +138,6 @@
     maxOccurrences: 1
   - type: GameRule
     minPlayers: 40
-  - type: AlertLevelInterceptionRule
-    alertLevel: delta
-    overrideAlert: true
   - type: LoadMapRule
     gridPath: /Maps/_Exodus/ShuttleEvent/horizont.yml
   - type: GameRuleRequirements
