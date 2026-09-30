@@ -70,8 +70,6 @@ public sealed partial class RotSpreadSystem
                 existing = true;
                 continue;
             }
-            if (_whitelist.IsValid(ent.Comp.Ignored, uid))
-                continue;
             var blocking = _physics.TryComp(uid, out var physics) && physics.CanCollide && physics.Hard
                 && (physics.CollisionLayer & (int)CollisionGroup.FullTileMask) != 0;
             if (_mobQuery.HasComp(uid) || !Transform(uid).Anchored && !blocking)

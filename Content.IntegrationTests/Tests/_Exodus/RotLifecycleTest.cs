@@ -9,7 +9,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared._Exodus.Virology.Lifecycle;
-using Content.Shared.Actions;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -344,15 +343,14 @@ public sealed class RotLifecycleTest
         await pair.CleanReturnAsync();
     }
 
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task GhostGroundStrikeDamagesOnlyTheThreeByThreeArea(bool hungry)
+    [Test]
+    public async Task GhostGroundStrikeDamagesOnlyTheThreeByThreeArea()
     {
         await using var pair = await PoolManager.GetServerClient(testContext: new LiveContext());
         var server = pair.Server;
         var em = server.EntMan;
         var map = await pair.CreateTestMap();
-        EntityUid creature = default;
+        EntityUid sated = default;
         EntityUid adjacent = default;
         EntityUid outside = default;
         await server.WaitAssertion(() =>
@@ -363,29 +361,21 @@ public sealed class RotLifecycleTest
                 for (var y = -3; y <= 3; y++)
                     maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, y), map.Tile.Tile);
             }
-            creature = em.SpawnEntity(hungry ? "MobRotHungry" : "MobRotSated", new EntityCoordinates(map.Grid, 0.5f, 0.5f));
-            em.RemoveComponent<HTNComponent>(creature);
-            var actionEntity = hungry
-                ? em.GetComponent<RotHungryComponent>(creature).StrikeActionEntity
-                : em.GetComponent<RotSatedComponent>(creature).StrikeActionEntity;
-            Assert.That(actionEntity, Is.Not.Null);
+            sated = em.SpawnEntity("MobRotSated", new EntityCoordinates(map.Grid, 0.5f, 0.5f));
+            em.RemoveComponent<HTNComponent>(sated);
             adjacent = em.SpawnEntity("WallSolid", new EntityCoordinates(map.Grid, 1.5f, 0.5f));
             outside = em.SpawnEntity("WallSolid", new EntityCoordinates(map.Grid, 2.5f, 0.5f));
         });
         await pair.RunTicksSync(3);
         await server.WaitAssertion(() =>
         {
-            InstantActionEvent action = hungry
-                ? new RotHungryStrikeActionEvent { Performer = creature }
-                : new RotSatedStrikeActionEvent { Performer = creature };
-            em.EventBus.RaiseLocalEvent(creature, (object) action);
+            var action = new RotSatedStrikeActionEvent { Performer = sated };
+            em.EventBus.RaiseLocalEvent(sated, action);
             Assert.That(action.Handled, Is.True);
             Assert.That(em.GetComponent<DamageableComponent>(adjacent).TotalDamage, Is.GreaterThan(FixedPoint2.Zero));
             Assert.That(em.GetComponent<DamageableComponent>(outside).TotalDamage, Is.EqualTo(FixedPoint2.Zero));
-            InstantActionEvent repeated = hungry
-                ? new RotHungryStrikeActionEvent { Performer = creature }
-                : new RotSatedStrikeActionEvent { Performer = creature };
-            em.EventBus.RaiseLocalEvent(creature, (object) repeated);
+            var repeated = new RotSatedStrikeActionEvent { Performer = sated };
+            em.EventBus.RaiseLocalEvent(sated, repeated);
             Assert.That(repeated.Handled, Is.False, "The manual action must obey the shared attack cooldown.");
         });
         await pair.CleanReturnAsync();

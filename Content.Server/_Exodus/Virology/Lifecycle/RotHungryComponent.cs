@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Virology.Lifecycle;
 
@@ -114,14 +113,6 @@ public sealed partial class RotHungryComponent : Component
 
     [DataField]
     public SoundSpecifier? StuckSound;
-
-    /// <summary>Manual ground strike granted to the creature, using the same damage and cooldown as its AI.</summary>
-    [DataField]
-    public EntProtoId StrikeAction = "ActionRotHungryStrike";
-
-    /// <summary>The granted ground strike action, removed with this component.</summary>
-    [DataField]
-    public EntityUid? StrikeActionEntity;
 
     [DataField]
     public HashSet<EntityUid> Prey = [];
