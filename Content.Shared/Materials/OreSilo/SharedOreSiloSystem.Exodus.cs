@@ -11,7 +11,7 @@ namespace Content.Shared.Materials.OreSilo;
 
 public abstract partial class SharedOreSiloSystem
 {
-    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     private static readonly SoundSpecifier DisconnectSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
