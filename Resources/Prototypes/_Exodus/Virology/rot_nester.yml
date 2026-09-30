@@ -1,4 +1,4 @@
-# Shared by hungry and nester so their attacks stay identical when balanced.
+# Shared claw attack of hungry and nester; the hungry overrides only its damage.
 - type: entity
   id: BaseRotClawAttacks
   abstract: true
@@ -24,6 +24,7 @@
   description: A one-eyed ghoul on four limbs, carrying nutrition for its colony's larvae.
   components:
   - type: RotNester
+    bloodReagents: [ Blood, CopperBlood, InsectBlood, AmmoniaBlood, ZombieBlood ]
   - type: RotRetaliation
   - type: RotDefender
     repathBeforeStrike: true

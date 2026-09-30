@@ -1,5 +1,7 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -21,8 +23,20 @@ public sealed partial class RotNesterComponent : Component
     [DataField] public string VomitState = "vomit";
     [DataField] public EntityWhitelist Targets = new() { Components = ["HumanoidAppearance", "Actor"] };
     [DataField] public Robust.Shared.Map.EntityCoordinates Origin;
-    [DataField] public TimeSpan FillDuration = TimeSpan.FromSeconds(120);
-    [DataField] public TimeSpan Reserve;
+    /// <summary>Bites of corpses or spilled blood eaten towards the next portion; nothing is produced for free.</summary>
+    [DataField] public int Stored;
+    /// <summary>Bites needed to regurgitate one portion for <see cref="LarvaePerPortion"/> larvae.</summary>
+    [DataField] public int BitesPerPortion = 8;
+    /// <summary>Bites a fresh corpse holds; the pool is shared with larvae eating the same body.</summary>
+    [DataField] public int CorpseMeals = 16;
+    [DataField] public HashSet<ProtoId<ReagentPrototype>> BloodReagents = [];
+    [DataField] public FixedPoint2 BloodPerBite = 2.5;
+    [DataField] public TimeSpan BiteInterval = TimeSpan.FromSeconds(2);
+    [DataField] public float FoodRange = 1.2f;
+    [DataField] public TimeSpan FoodSearchInterval = TimeSpan.FromSeconds(2);
+    /// <summary>Corpse or blood puddle the nester is currently eating.</summary>
+    [DataField] public EntityUid? FoodTarget;
+    [DataField] public DoAfterId? Bite;
     [DataField] public TimeSpan VomitDuration = TimeSpan.FromSeconds(2);
     [DataField] public TimeSpan ThreatMemory = TimeSpan.FromSeconds(20);
     [DataField] public TimeSpan ReactionHysteresis = TimeSpan.FromSeconds(3);
@@ -36,8 +50,8 @@ public sealed partial class RotNesterComponent : Component
     [DataField] public DoAfterId? Vomit;
     [DataField] public bool Retaliating;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextThink;
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextReserve;
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan LastReserve;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextMaintenance;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextFoodSearch;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan FleeUntil;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan LarvaDeadline;
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField] public TimeSpan NextHomeSearch;

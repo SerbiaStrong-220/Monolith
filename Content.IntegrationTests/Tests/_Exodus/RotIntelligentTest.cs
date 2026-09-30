@@ -181,7 +181,7 @@ public sealed partial class RotIntelligentTest
                 em.GetComponent<RotLarvaComponent>(uid).BiteInterval = TimeSpan.FromSeconds(.15);
             }
             var parent = em.GetComponent<RotNesterComponent>(nester);
-            parent.Reserve = parent.FillDuration;
+            parent.Stored = parent.BitesPerPortion;
             parent.VomitDuration = TimeSpan.FromSeconds(.25);
         });
         await pair.RunSeconds(2);
@@ -196,7 +196,7 @@ public sealed partial class RotIntelligentTest
                 Assert.That(blob.Remaining, Is.EqualTo(2 * em.GetComponent<RotLarvaComponent>(first).MaxSatiety));
             }
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(em.GetComponent<RotNesterComponent>(nester).Reserve.TotalSeconds, Is.LessThan(3));
+            Assert.That(em.GetComponent<RotNesterComponent>(nester).Stored, Is.Zero, "The stored portion is spent.");
         });
         for (var bite = 0; bite < 4; bite++)
         {
@@ -215,6 +215,85 @@ public sealed partial class RotIntelligentTest
             Assert.That(em.GetComponent<RotLarvaComponent>(second).Satiety, Is.EqualTo(4));
             Assert.That(em.GetComponent<RotLarvaComponent>(third).Satiety, Is.Zero);
         });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task NesterMustEatCorpsesBeforeFeedingLarvae()
+    {
+        await using var pair = await PoolManager.GetServerClient(testContext: new LiveContext());
+        var server = pair.Server;
+        var em = server.EntMan;
+        var map = await pair.CreateTestMap();
+        EntityUid nester = default;
+        await server.WaitAssertion(() =>
+        {
+            nester = em.SpawnEntity("MobRotNester", map.GridCoords);
+            var larva = em.SpawnEntity("MobRotLarva", map.GridCoords);
+            em.RemoveComponent<HTNComponent>(larva);
+            var comp = em.GetComponent<RotNesterComponent>(nester);
+            comp.BiteInterval = TimeSpan.FromSeconds(.1);
+            comp.FoodSearchInterval = TimeSpan.FromSeconds(.1);
+            comp.VomitDuration = TimeSpan.FromSeconds(.25);
+        });
+        await pair.RunSeconds(2);
+        EntityUid corpse = default;
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(em.EntityQuery<RotNutritionBlobComponent>().Any(), Is.False,
+                "Without eaten corpses or blood the nester has nothing to regurgitate.");
+            Assert.That(em.GetComponent<RotNesterComponent>(nester).Stored, Is.Zero);
+            corpse = em.SpawnEntity("MobHuman", map.GridCoords);
+            em.System<MobStateSystem>().ChangeMobState(corpse, MobState.Dead);
+        });
+        await pair.RunSeconds(4);
+        await server.WaitAssertion(() =>
+        {
+            var nest = em.GetComponent<RotNesterComponent>(nester);
+            var left = em.TryGetComponent<RotCorpseNutritionComponent>(corpse, out var meals) ? meals.Remaining : -1;
+            Assert.That(em.EntityQuery<RotNutritionBlobComponent>().Count(), Is.EqualTo(1),
+                $"One portion is regurgitated after the nester ate enough of the corpse (stored {nest.Stored}, corpse {left}, target {nest.FoodTarget}, bite {nest.Bite}).");
+            Assert.That(em.GetComponent<RotCorpseNutritionComponent>(corpse).Remaining,
+                Is.EqualTo(nest.CorpseMeals - nest.BitesPerPortion - nest.Stored),
+                "Every stored bite comes out of the corpse's shared nutrition.");
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task NestsStopProducingLarvaeAtPopulationCap()
+    {
+        await using var pair = await PoolManager.GetServerClient(testContext: new LiveContext());
+        var server = pair.Server;
+        var em = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var config = server.ResolveDependency<Robust.Shared.Configuration.IConfigurationManager>();
+        EntityUid nodule = default;
+        await server.WaitAssertion(() =>
+        {
+            config.SetCVar(Content.Shared._Exodus.CCVar.EXCVars.RotPopulationCap, 2);
+            for (var i = 0; i < 2; i++)
+                em.RemoveComponent<HTNComponent>(em.SpawnEntity("MobRotLarva", map.GridCoords));
+            nodule = em.SpawnEntity("RotNodule", map.GridCoords);
+            em.System<RotPopulationSystem>().Recount();
+        });
+        await pair.RunTicksSync(5);
+        await server.WaitAssertion(() =>
+        {
+            em.GetComponent<RotNestComponent>(nodule).NextSpawn = TimeSpan.Zero;
+        });
+        await pair.RunSeconds(2);
+        await server.WaitAssertion(() =>
+        {
+            var larvae = em.GetComponent<RotNestComponent>(nodule).Larvae.Count;
+            config.SetCVar(Content.Shared._Exodus.CCVar.EXCVars.RotPopulationCap, 40);
+            em.System<RotPopulationSystem>().Recount();
+            em.GetComponent<RotNestComponent>(nodule).NextSpawn = TimeSpan.Zero;
+            Assert.That(larvae, Is.Zero, "A full grid must not grow new larvae.");
+        });
+        await pair.RunSeconds(2);
+        await server.WaitAssertion(() =>
+            Assert.That(em.GetComponent<RotNestComponent>(nodule).Larvae, Has.Count.EqualTo(1)));
         await pair.CleanReturnAsync();
     }
 }

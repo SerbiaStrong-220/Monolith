@@ -47,6 +47,7 @@ public sealed partial class RotIntelligentSystem : EntitySystem
 
     private readonly List<Entity<RotIntelligentComponent, RotColonyStateComponent>> _networkWork = [];
     private int _nextNetworkCore;
+    private int _networkBudget = 1;
     [ViewVariables] public int LastNetworkWork { get; private set; }
 
     private static readonly Vector2i[] Neighbors = [Vector2i.Up, Vector2i.Right, Vector2i.Down, Vector2i.Left];
@@ -94,6 +95,8 @@ public sealed partial class RotIntelligentSystem : EntitySystem
         InitializeShip();
         InitializeBrood();
         InitializeRooting();
+        InitializeChat();
+        Subs.CVar(_configuration, EXCVars.RotNetworkBudget, value => _networkBudget = Math.Max(1, value), true);
         SubscribeNetworkEvent<RotVisionRequestEvent>(OnVisionRequest);
         SubscribeNetworkEvent<RotRotateBuildingMessage>(OnRotateBuilding);
     }
@@ -355,7 +358,7 @@ public sealed partial class RotIntelligentSystem : EntitySystem
                 UpdateUi((uid, core, state));
             }
         }
-        var budget = Math.Max(1, _configuration.GetCVar(EXCVars.RotNetworkBudget));
+        var budget = _networkBudget;
         LastNetworkWork = 0;
         var count = _networkWork.Count;
         for (var i = 0; i < count && budget > 0; i++)

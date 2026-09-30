@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Medical;
 using Content.Shared._Exodus.Nutrition;
 using Content.Shared._Exodus.Virology.Behaviors;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
@@ -17,10 +18,12 @@ public sealed partial class BloodVomitSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private IGameTiming _timing = default!;
+    private EntityQuery<BodyComponent> _bodyQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+        _bodyQuery = GetEntityQuery<BodyComponent>();
         SubscribeLocalEvent<BloodVomitComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BloodVomitComponent, VomitEvent>(OnVomit);
     }
@@ -59,7 +62,8 @@ public sealed partial class BloodVomitSystem : EntitySystem
             // Missed attacks must not accumulate into a burst after a server hitch.
             var elapsedIntervals = (now - comp.NextVomit).Ticks / comp.Interval.Ticks + 1;
             comp.NextVomit += comp.Interval * elapsedIntervals;
-            if (!_mobState.IsDead(uid))
+            // Bodiless hosts (e.g. synthetic carriers) have no stomach to empty.
+            if (_bodyQuery.HasComp(uid) && !_mobState.IsDead(uid))
                 _vomit.Vomit(uid);
         }
     }
