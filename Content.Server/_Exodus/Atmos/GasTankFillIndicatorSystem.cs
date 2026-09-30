@@ -73,10 +73,18 @@ public sealed partial class GasTankFillIndicatorSystem : EntitySystem
 
         var nominalMoles = indicator.NominalMoles ??
             indicator.NominalPressure * tank.Air.Volume / (Atmospherics.R * Atmospherics.T20C);
+        var currentMoles = tank.Air.TotalMoles;
+
+        // Keep the scale fixed while consuming gas, but expand it after filling above nominal.
+        // Otherwise the bar stays full until the supply falls below the nominal amount.
+        if (float.IsFinite(currentMoles))
+            indicator.MaxObservedMoles = Math.Max(indicator.MaxObservedMoles, currentMoles);
+
+        var fullMoles = Math.Max(nominalMoles, indicator.MaxObservedMoles);
 
         // Use a fixed reference temperature so heating a tank cannot refill its indicator.
-        var fraction = nominalMoles > 0f && float.IsFinite(nominalMoles)
-            ? tank.Air.TotalMoles / nominalMoles
+        var fraction = fullMoles > 0f && float.IsFinite(fullMoles)
+            ? currentMoles / fullMoles
             : 0f;
         var level = float.IsFinite(fraction)
             ? (byte) Math.Clamp(MathF.Ceiling(fraction * 100f), 0f, 100f)
