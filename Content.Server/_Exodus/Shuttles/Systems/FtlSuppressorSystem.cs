@@ -166,7 +166,7 @@ public sealed partial class FtlSuppressorSystem : EntitySystem
 
             var coordinates = new NetCoordinates(GetNetEntity(mapUid), _transform.GetWorldPosition(xform));
             exclusions ??= [];
-            exclusions.Add(new ShuttleExclusionObject(coordinates, comp.Range, Loc.GetString(comp.ZoneName)));
+            exclusions.Add(new ShuttleExclusionObject(coordinates, comp.Range, Loc.GetString(comp.ZoneName), comp.ZoneFill));
         }
     }
 

@@ -1,4 +1,5 @@
 using Content.Server._Exodus.Shuttles.Systems;
+using Content.Shared._Exodus.Shuttles;
 using Robust.Shared.Audio;
 
 namespace Content.Server._Exodus.Shuttles.Components;
@@ -22,6 +23,12 @@ public sealed partial class FtlSuppressorComponent : Component
     /// </summary>
     [DataField]
     public LocId ZoneName = "ftl-suppressor-zone-name";
+
+    /// <summary>
+    /// How the suppression zone is painted on the shuttle console FTL map.
+    /// </summary>
+    [DataField]
+    public ShuttleExclusionFill ZoneFill = ShuttleExclusionFill.Hatched;
 
     /// <summary>
     /// How often an active suppressor checks whether its field moved far enough to resend it to open shuttle consoles.
