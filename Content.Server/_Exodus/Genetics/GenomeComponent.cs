@@ -20,7 +20,8 @@ public sealed partial class GenomeComponent : Component
     [DataField] public bool CapacityInitialized;
     [DataField] public TimeSpan Interval = TimeSpan.FromSeconds(1);
     [DataField, AutoPausedField] public TimeSpan NextUpdate;
-    [DataField] public DamageSpecifier InstabilityDamage = new() { DamageDict = new() { ["Radiation"] = 1 } };
+    /// <summary>Base damage per interval below zero stability, scaled by the severity of the overload.</summary>
+    [DataField] public DamageSpecifier InstabilityDamage = new() { DamageDict = new() { ["Radiation"] = 1, ["Cellular"] = 1 } };
     public HashSet<ProtoId<GeneticMutationPrototype>> Active = new();
     public Dictionary<EntProtoId, EntityUid?> Actions = new();
     public DamageSpecifier PeriodicDamage = new();
