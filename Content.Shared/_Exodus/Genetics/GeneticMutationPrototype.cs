@@ -80,4 +80,5 @@ public enum GeneticAbility : ushort
     Web = 4096,
     FireBreath = 8192,
     BloodExpulsion = 16384,
+    Cocoon = 32768,
 }

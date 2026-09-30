@@ -43,6 +43,10 @@ public sealed partial class GeneticHearingEvent : InstantActionEvent;
 public sealed partial class GeneticWebEvent : InstantActionEvent;
 public sealed partial class GeneticFireBreathEvent : WorldTargetActionEvent;
 public sealed partial class GeneticTransformEvent : InstantActionEvent;
+public sealed partial class GeneticCocoonEvent : InstantActionEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class GeneticCocoonDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
 public sealed partial class GeneticInjectionDoAfterEvent : SimpleDoAfterEvent

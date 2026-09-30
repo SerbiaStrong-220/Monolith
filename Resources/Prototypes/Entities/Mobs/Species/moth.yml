@@ -5,6 +5,8 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: Genome # Exodus: moths naturally express the regenerative cocoon gene.
+    initialMutations: [GeneticCocoon] # Exodus
   - type: CEZFlyer # Mono: z-level flight
     flightSpeed: 0.35
     flightMoveSpeedModifier: 0.35

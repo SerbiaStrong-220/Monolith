@@ -60,6 +60,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
         InitializeDeflection();
         InitializeTransformation();
         InitializeCooldowns();
+        InitializeCocoon();
     }
 
     private bool HasAbility(EntityUid uid, GeneticAbility ability)
