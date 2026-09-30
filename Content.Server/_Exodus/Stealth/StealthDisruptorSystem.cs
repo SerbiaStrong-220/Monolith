@@ -1,6 +1,8 @@
 using System.Numerics;
+using Content.Server._Exodus.Cartridges;
 using Content.Shared._Exodus.Stealth.Components;
 using Content.Shared._Exodus.Stealth.Systems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -21,6 +23,7 @@ public sealed partial class StealthDisruptorSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
 
     private EntityQuery<StealthComponent> _stealthQuery;
 
@@ -34,11 +37,19 @@ public sealed partial class StealthDisruptorSystem : EntitySystem
     private void OnUse(Entity<StealthDisruptorComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled || ent.Comp.Range <= 0 || ent.Comp.SuppressionDuration <= TimeSpan.Zero ||
-            !_useDelay.TryResetDelay(ent.Owner, checkDelayed: true))
+            !_useDelay.TryGetDelayInfo(ent.Owner, out _) || _useDelay.IsDelayed(ent.Owner))
             return;
 
+        if (!TryConsumeCartridge(ent))
+        {
+            _popup.PopupEntity(Loc.GetString("stealth-disruptor-no-cartridge"), ent, args.User);
+            return;
+        }
+
+        _useDelay.TryResetDelay(ent.Owner);
         args.Handled = true;
         args.ApplyDelay = false;
+        _audio.PlayPvs(ent.Comp.ActivationSound, ent);
         var center = _transform.GetMapCoordinates(args.User);
         // A typed stealth lookup skips ordinary lockers, and therefore their cloaked occupants.
         // The untyped query includes nested containers before filtering for stealth components.
@@ -66,5 +77,19 @@ public sealed partial class StealthDisruptorSystem : EntitySystem
         }
 
         _popup.PopupEntity(Loc.GetString("stealth-disruptor-pulse"), ent, args.User);
+    }
+
+    private bool TryConsumeCartridge(Entity<StealthDisruptorComponent> ent)
+    {
+        if (!_itemSlots.TryGetSlot(ent.Owner, ent.Comp.CartridgeSlot, out var slot) ||
+            slot.ContainerSlot is not { } container || slot.Item is not { } cartridge ||
+            TerminatingOrDeleted(cartridge) || EntityManager.IsQueuedForDeletion(cartridge) ||
+            !TryComp<DisposableCartridgeComponent>(cartridge, out var disposable) ||
+            !_containers.Remove(cartridge, container))
+            return false;
+
+        QueueDel(cartridge);
+        SpawnInContainerOrDrop(disposable.SpentPrototype, ent.Owner, ent.Comp.CartridgeSlot);
+        return true;
     }
 }

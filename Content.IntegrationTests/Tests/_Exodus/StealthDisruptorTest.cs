@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests._Exodus;
 
 [TestFixture]
 [TestOf(typeof(StealthDisruptorSystem))]
-public sealed class StealthDisruptorTest
+public sealed partial class StealthDisruptorTest
 {
     [Test]
     public async Task PulseFindsNestedOccupantsAndBoxesAndRespectsRangeAndCooldown()
@@ -34,12 +34,12 @@ public sealed class StealthDisruptorTest
             var remote = entities.SpawnEntity("StealthDisruptor", new EntityCoordinates(map, Vector2.Zero));
             var near = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, 1, 0));
             var visible = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, 1, -1));
-            var box = entities.SpawnEntity("StealthBox", new EntityCoordinates(map, 3, 0));
+            var box = entities.SpawnEntity("StealthBox", new EntityCoordinates(map, 16, 0));
             var locker = entities.SpawnEntity("CrateGenericSteel", new EntityCoordinates(map, 6, 0));
             var nestedBox = entities.SpawnEntity("StealthBox", new EntityCoordinates(map, 6, 0));
             var nestedOccupant = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, 6, 0));
             var otherOccupant = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, 6, 0));
-            var distant = entities.SpawnEntity("StealthBox", new EntityCoordinates(map, 10.1f, 0));
+            var distant = entities.SpawnEntity("StealthBox", new EntityCoordinates(map, 16.1f, 0));
             var differentMap = entities.SpawnEntity("StealthBox", new EntityCoordinates(otherMap, 1, 0));
             entities.SpawnEntity("WallSolid", new EntityCoordinates(map, 2, 0));
             var containers = entities.System<SharedContainerSystem>();

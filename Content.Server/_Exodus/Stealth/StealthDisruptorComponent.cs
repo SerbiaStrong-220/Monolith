@@ -7,8 +7,14 @@ namespace Content.Server._Exodus.Stealth;
 [RegisterComponent]
 public sealed partial class StealthDisruptorComponent : Component
 {
+    /// <summary>Item slot containing the disposable cartridge required for each pulse.</summary>
+    [DataField] public string CartridgeSlot = "cartridge";
+
+    /// <summary>Positional sound emitted by the device on every successful activation.</summary>
+    [DataField] public SoundSpecifier? ActivationSound;
+
     /// <summary>Pulse radius in world units.</summary>
-    [DataField] public float Range = 10f;
+    [DataField] public float Range = 16f;
 
     /// <summary>How long revealed targets are prevented from cloaking again.</summary>
     [DataField] public TimeSpan SuppressionDuration = TimeSpan.FromSeconds(20);

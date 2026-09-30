@@ -1,4 +1,34 @@
 - type: listing
+  id: UplinkPirateStealthDisruptor
+  name: uplink-stealth-disruptor-name
+  description: uplink-stealth-disruptor-desc
+  productEntity: StealthDisruptor
+  cost:
+    Doubloon: 60
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
+  id: UplinkPirateStealthDisruptorCartridge
+  name: uplink-stealth-disruptor-cartridge-name
+  description: uplink-stealth-disruptor-cartridge-desc
+  productEntity: StealthDisruptorCartridge
+  cost:
+    Doubloon: 5
+  categories:
+  - UplinkPirateUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - PirateUplink
+
+- type: listing
   id: UplinkPirateStimulantsImplanter
   name: uplink-stimulants-implant-name
   description: uplink-stimulants-implant-desc

@@ -1,4 +1,34 @@
 - type: listing
+  id: UplinkSecurityStealthDisruptor
+  name: uplink-stealth-disruptor-name
+  description: uplink-stealth-disruptor-desc
+  productEntity: StealthDisruptor
+  cost:
+    FederationMilitaryCredit: 60
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityStealthDisruptorCartridge
+  name: uplink-stealth-disruptor-cartridge-name
+  description: uplink-stealth-disruptor-cartridge-desc
+  productEntity: StealthDisruptorCartridge
+  cost:
+    FederationMilitaryCredit: 5
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
+- type: listing
   id: UplinkSecurityT1VoucherSentinelF
   name: uplink-security-t1-sentinel-f-voucher-name
   description: uplink-security-t1-sentinel-f-voucher-desc
