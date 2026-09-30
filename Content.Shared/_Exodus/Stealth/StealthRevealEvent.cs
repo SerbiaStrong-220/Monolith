@@ -2,7 +2,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared._Exodus.Stealth;
 
-/// <summary>Forcibly reveals the target and any equipped active cloaking devices.</summary>
+/// <summary>Forcibly reveals the target's disguises and any equipped active cloaking devices.</summary>
 public sealed class StealthRevealEvent(EntityUid target) : EntityEventArgs, IInventoryRelayEvent
 {
     public EntityUid Target = target;

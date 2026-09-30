@@ -1,12 +1,12 @@
 using System.Numerics;
 using Content.Server._Exodus.Cartridges;
-using Content.Shared._Exodus.Stealth.Components;
 using Content.Shared._Exodus.Stealth.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -24,13 +24,11 @@ public sealed partial class StealthDisruptorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-
-    private EntityQuery<StealthComponent> _stealthQuery;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _stealthQuery = GetEntityQuery<StealthComponent>();
         SubscribeLocalEvent<StealthDisruptorComponent, UseInHandEvent>(OnUse);
     }
 
@@ -52,12 +50,12 @@ public sealed partial class StealthDisruptorSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.ActivationSound, ent);
         var center = _transform.GetMapCoordinates(args.User);
         // A typed stealth lookup skips ordinary lockers, and therefore their cloaked occupants.
-        // The untyped query includes nested containers before filtering for stealth components.
+        // The untyped query includes nested containers before filtering for supported concealment.
         var targets = _lookup.GetEntitiesInRange(center, ent.Comp.Range, LookupFlags.All);
         var signaled = new HashSet<EntityUid>();
         foreach (var uid in targets)
         {
-            if (TerminatingOrDeleted(uid) || !_stealthQuery.TryComp(uid, out var stealth))
+            if (TerminatingOrDeleted(uid) || _whitelist.IsWhitelistFail(ent.Comp.TargetWhitelist, uid))
                 continue;
 
             var marker = _containers.TryGetOuterContainer(uid, Transform(uid), out var container) ? container.Owner : uid;
@@ -65,7 +63,7 @@ public sealed partial class StealthDisruptorSystem : EntitySystem
             if (position.MapId != center.MapId ||
                 Vector2.DistanceSquared(position.Position, center.Position) > ent.Comp.Range * ent.Comp.Range ||
                 ent.Comp.RequiresLineOfSight && !_examine.InRangeUnOccluded(marker, center, ent.Comp.Range) ||
-                !_stealth.TrySuppress((uid, stealth), ent.Comp.SuppressionDuration))
+                !_stealth.TrySuppress(uid, ent.Comp.SuppressionDuration))
                 continue;
 
             // Several cloaked occupants of one locker produce a single visible marker and sound.

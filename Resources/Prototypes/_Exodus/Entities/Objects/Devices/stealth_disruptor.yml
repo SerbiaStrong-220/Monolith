@@ -2,7 +2,7 @@
   parent: BaseItem
   id: StealthDisruptor
   name: cloaking disruptor
-  description: A handheld pulse generator that reveals cloaked creatures and objects, even inside containers.
+  description: A handheld pulse generator that reveals cloaked creatures and objects, even inside containers, and disrupts chameleon projector disguises.
   components:
   - type: Sprite
     sprite: _Exodus/Objects/Devices/stealth_disruptor.rsi
@@ -28,6 +28,10 @@
     range: 16
     suppressionDuration: 20
     requiresLineOfSight: false
+    targetWhitelist:
+      components:
+      - Stealth
+      - ChameleonDisguised
     cartridgeSlot: cartridge
     activationSound:
       path: /Audio/_Exodus/Items/StealthDisruptor/pulse.ogg

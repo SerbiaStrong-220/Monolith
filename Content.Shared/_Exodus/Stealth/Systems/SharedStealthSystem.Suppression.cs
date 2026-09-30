@@ -23,11 +23,15 @@ public abstract partial class SharedStealthSystem
                suppressed.LifeStage < ComponentLifeStage.Stopping;
     }
 
-    /// <summary>Reveals an actively cloaked target and suppresses all existing or newly registered sources.</summary>
+    /// <summary>Reveals a cloaked or disguised target and temporarily suppresses further concealment.</summary>
     public bool TrySuppress(Entity<StealthComponent?> ent, TimeSpan duration)
     {
-        if (_net.IsClient || duration <= TimeSpan.Zero || TerminatingOrDeleted(ent) ||
-            !Resolve(ent.Owner, ref ent.Comp, false) || IsVisible(ent))
+        if (_net.IsClient || duration <= TimeSpan.Zero || TerminatingOrDeleted(ent))
+            return false;
+
+        var attempt = new StealthRevealAttemptEvent(Resolve(ent.Owner, ref ent.Comp, false) && !IsVisible(ent));
+        RaiseLocalEvent(ent, ref attempt);
+        if (!attempt.CanReveal)
             return false;
 
         var suppressed = EnsureComp<StealthSuppressedComponent>(ent);

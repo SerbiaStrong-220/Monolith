@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -21,6 +22,9 @@ public sealed partial class StealthDisruptorComponent : Component
 
     /// <summary>When enabled, blockers between the user and the target's outer container stop the pulse.</summary>
     [DataField] public bool RequiresLineOfSight;
+
+    /// <summary>Entities eligible for a reveal attempt. Null allows any entity in range.</summary>
+    [DataField] public EntityWhitelist? TargetWhitelist;
 
     /// <summary>Effect attached to a revealed entity or its outermost container.</summary>
     [DataField] public EntProtoId RevealEffect = "StealthRevealEffect";
