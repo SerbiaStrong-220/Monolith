@@ -39,13 +39,6 @@
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
       displayName: inventory-slot-id # Ru-Localization
-    - name: outerClothing
-      slotTexture: suit
-      slotFlags: OUTERCLOTHING
-      stripTime: 6
-      uiWindowPos: 1,1
-      strippingWindowPos: 1,2
-      displayName: inventory-slot-outer-clothing # Ru-Localization
     - name: neck
       slotTexture: neck
       slotFlags: NECK
