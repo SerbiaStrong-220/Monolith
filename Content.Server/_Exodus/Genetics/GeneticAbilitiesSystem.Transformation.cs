@@ -117,11 +117,14 @@ public sealed partial class GeneticAbilitiesSystem
             return;
         }
         Reveal(ent);
+        var formColor = profile.FormMatchesSkinColor
+            ? (state.OriginalAppearance ?? appearance).SkinColor
+            : profile.FormColor;
         state.FormAppearance = _serialization.CreateCopy(appearance, notNullableOverride: true);
         appearance.CustomBaseLayers.Clear();
         appearance.MarkingSet = new MarkingSet();
         _appearance.SetSpecies(ent, profile.FormSpecies, humanoid: appearance);
-        _appearance.SetSkinColor(ent, profile.FormColor, verify: false, humanoid: appearance);
+        _appearance.SetSkinColor(ent, formColor, verify: false, humanoid: appearance);
         ent.Comp.InAlternateForm = true;
         state.TransformationAvailable = _timing.CurTime + profile.Cooldown;
         RefreshGeneticCooldowns((ent.Owner, state));

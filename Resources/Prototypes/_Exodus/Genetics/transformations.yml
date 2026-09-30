@@ -2,6 +2,7 @@
   id: GeneticSlimeAdaptation
   species: SlimePerson
   formSpecies: GeneticSlimeForm
+  formMatchesSkinColor: true
   cooldown: 120
   healOnCriticalReturn: true
   colors: ["#76cbd4", "#80cf94", "#b695dc", "#e0b878", "#d996bd"]
@@ -84,18 +85,21 @@
 
 - type: humanoidBaseSprite
   id: GeneticSlimeFormBody
+  shader: GrayscaleTint
   baseSprite:
     sprite: Mobs/Aliens/slimes.rsi
     state: blue_adult_slime
 
 - type: humanoidBaseSprite
   id: GeneticSlimeFormBodyMale
+  shader: GrayscaleTint
   baseSprite:
     sprite: Mobs/Aliens/slimes.rsi
     state: blue_adult_slime
 
 - type: humanoidBaseSprite
   id: GeneticSlimeFormBodyFemale
+  shader: GrayscaleTint
   baseSprite:
     sprite: Mobs/Aliens/slimes.rsi
     state: blue_adult_slime

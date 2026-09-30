@@ -22,6 +22,8 @@ public sealed partial class GeneticTransformationPrototype : IPrototype
     [DataField] public TimeSpan Cooldown = TimeSpan.FromMinutes(2);
     /// <summary>Tint of the alternate form's base sprite.</summary>
     [DataField] public Color FormColor = Color.White;
+    /// <summary>Use the carrier's humanoid skin color instead of FormColor, ignoring any mimicry disguise.</summary>
+    [DataField] public bool FormMatchesSkinColor;
     [DataField] public float FormMovementMultiplier = 1f;
     [DataField] public DamageSpecifier FormDamage = new();
     /// <summary>Clear accumulated damage after critical health forces a return. Never restores missing anatomy or revives the dead.</summary>

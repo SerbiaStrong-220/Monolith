@@ -25,11 +25,15 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
     private void OnHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref AfterAutoHandleStateEvent args)
     {
-        UpdateSprite(component, Comp<SpriteComponent>(uid));
+        UpdateSprite((uid, component, Comp<SpriteComponent>(uid))); // Exodus: retain the entity for base layer shaders.
     }
 
-    private void UpdateSprite(HumanoidAppearanceComponent component, SpriteComponent sprite)
+    private void UpdateSprite(Entity<HumanoidAppearanceComponent, SpriteComponent> ent) // Exodus: base layer shaders.
     {
+        // Exodus-begin
+        var (_, component, sprite) = ent;
+        ResetBaseLayerShaders(ent);
+        // Exodus-end
         UpdateLayers(component, sprite);
         ApplyMarkingSet(component, sprite);
 
@@ -101,6 +105,11 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         if (proto.BaseSprite != null)
             sprite.LayerSetSprite(layerIndex, proto.BaseSprite);
+
+        // Exodus-begin: shaders belong to the selected species layer and reset when its appearance changes.
+        if (proto.Shader is { } shader)
+            sprite.LayerSetShader(layerIndex, shader);
+        // Exodus-end
 
         _spriteSystem.LayerSetOffset((sprite.Owner, sprite), layerIndex, proto.Offset); // Exodus: humanoid base layer offsets
     }
@@ -205,7 +214,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         humanoid.SkinColor = profile.Appearance.SkinColor;
         humanoid.EyeColor = profile.Appearance.EyeColor;
 
-        UpdateSprite(humanoid, Comp<SpriteComponent>(uid));
+        UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid))); // Exodus: retain the entity for base layer shaders.
     }
 
     private void ApplyMarkingSet(HumanoidAppearanceComponent humanoid, SpriteComponent sprite)

@@ -1,0 +1,4 @@
+- type: shader
+  id: GrayscaleTint
+  kind: source
+  path: /Textures/_Exodus/Shaders/grayscale_tint.swsl

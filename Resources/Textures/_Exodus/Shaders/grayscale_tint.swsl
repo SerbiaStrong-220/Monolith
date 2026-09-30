@@ -1,0 +1,7 @@
+void fragment()
+{
+    highp vec4 color = zTexture(UV);
+    // Remove the source hue before the renderer applies the layer tint, retaining brightness and alpha.
+    highp float value = max(color.r, max(color.g, color.b));
+    COLOR = vec4(vec3(value), color.a);
+}
