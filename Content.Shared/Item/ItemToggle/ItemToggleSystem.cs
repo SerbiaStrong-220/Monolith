@@ -275,8 +275,7 @@ public sealed partial class ItemToggleSystem : EntitySystem
         if (!ent.Comp.ToggleOnWield) // Exodus: support independently powered wieldable items.
             return;
 
-        // FIXME: for some reason both client and server play sound
-        TryActivate((ent, ent.Comp));
+        TryActivate((ent, ent.Comp), args.User); // Exodus: exclude the wielder from the server copy of predicted activation audio.
     }
 
     public bool IsActivated(Entity<ItemToggleComponent?> ent)
@@ -300,6 +299,11 @@ public sealed partial class ItemToggleSystem : EntitySystem
     /// </summary>
     private void UpdateActiveSound(Entity<ItemToggleActiveSoundComponent> ent, ref ItemToggledEvent args)
     {
+        // Exodus-begin: keep looping audio server-owned so prediction rollback cannot orphan a local stream.
+        if (_netManager.IsClient)
+            return;
+        // Exodus-end
+
         var (uid, comp) = ent;
         if (!args.Activated)
         {
@@ -310,9 +314,7 @@ public sealed partial class ItemToggleSystem : EntitySystem
         if (comp.ActiveSound != null && comp.PlayingStream == null)
         {
             var loop = comp.ActiveSound.Params.WithLoop(true);
-            var stream = args.Predicted
-                ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, loop)
-                : _audio.PlayPvs(comp.ActiveSound, uid, loop);
+            var stream = _audio.PlayPvs(comp.ActiveSound, uid, loop); // Exodus: one server-owned loop for every listener, including the user.
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
         }
