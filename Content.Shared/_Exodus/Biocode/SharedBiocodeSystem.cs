@@ -1,6 +1,7 @@
 using Content.Shared._Mono.ShipRepair;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
@@ -42,11 +43,14 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
     }
 
     /// <summary>
-    /// A user is authorized if there are no conditions, or they pass the user whitelist,
-    /// or the mind attached to them passes the mind whitelist.
+    /// A user is authorized if they bypass interaction checks, there are no conditions,
+    /// they pass the user whitelist, or the mind attached to them passes the mind whitelist.
     /// </summary>
     public bool IsAllowed(Entity<BiocodeComponent> ent, EntityUid user)
     {
+        if (HasComp<BypassInteractionChecksComponent>(user))
+            return true;
+
         if (ent.Comp.Whitelist == null && ent.Comp.MindWhitelist == null)
             return true;
 

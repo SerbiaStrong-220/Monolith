@@ -880,20 +880,7 @@
     jobTitle: job-title-universal
     jobIcon: JobIconAdmin
   - type: Access
-    groups:
-    - AllAccess
-    - USSPAA # Mono
-    - Mieyo # Mono
-    - Viper # Mono
-    tags:
-    - CentralCommand
-    - NuclearOperative
-    - SyndicateAgent
-    - Wizard
-    - Pirate # Mono
-    - TsfmcEngineering # Mono
-    - GrandVizier # Mono
-    - PDVCommand # Mono
+  - type: UniversalAccess # Exodus - all current and future access levels and companies.
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
