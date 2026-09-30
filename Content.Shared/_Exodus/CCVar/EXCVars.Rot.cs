@@ -13,4 +13,11 @@ public sealed partial class EXCVars
 
     public static readonly CVarDef<int> RotSpreadMutationBudget =
         CVarDef.Create("exds.rot_spread_mutation_budget", 4, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Living rot creatures per grid (or per map in open space) above which nests and nurseries stop producing.
+    /// Zero disables the cap.
+    /// </summary>
+    public static readonly CVarDef<int> RotPopulationCap =
+        CVarDef.Create("exds.rot_population_cap", 40, CVar.SERVERONLY);
 }

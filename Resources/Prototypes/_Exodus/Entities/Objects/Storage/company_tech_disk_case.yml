@@ -3,8 +3,9 @@
   parent: WeaponCaseShortAmmo
   id: CompanyTechDiskCase
   abstract: true
-  name: company-tech-disk-case-name
-  description: company-tech-disk-case-description
+  # Exodus: readable fallback; every case has its own ent- localization.
+  name: corporate technology disk case
+  description: A sealed case containing proprietary corporate technology.
   components:
   - type: Sprite
     sprite: _Exodus/Objects/Storage/Cases/company_tech_disk_case.rsi
@@ -14,6 +15,7 @@
     whitelist:
       components:
       - TechnologyDisk
+      - EncryptionKey
   - type: CompanyAccessReader
     requireCompanyCard: true
     popupMessage: company-tech-disk-case-access-denied

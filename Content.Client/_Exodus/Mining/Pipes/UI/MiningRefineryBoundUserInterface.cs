@@ -16,6 +16,7 @@ public sealed class MiningRefineryBoundUserInterface(EntityUid owner, Enum uiKey
         menu.SetSize = new Vector2(750, 620);
         menu.MaterialsContainer.Visible = false;
         menu.StatusContainer.Visible = true;
+        menu.StatusContainer.VerticalExpand = true;
         _storage = new MiningRefineryStorageControl(Owner);
         menu.StatusContainer.AddChild(_storage);
     }

@@ -693,7 +693,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             DrawGrid(handle, ourGridToView, (ourGridId.Value, ourGrid), color, 0.01f, true);
         }
 
-        DrawGridFills(_grids, handle, (ourGrid != null && ourGridId.HasValue) ? (ourGridId.Value, ourGrid) : null);
+        DrawGridFills(_grids, handle, (ourGrid != null && ourGridId.HasValue) ? (ourGridId.Value, ourGrid) : null, viewAABB); // Exodus radar-grid-cache: cull fills to the view
 
         DrawCircles(handle);
 
@@ -1157,7 +1157,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
     private void DrawGridFills(
         List<Entity<MapGridComponent>> grids,
         DrawingHandleScreen handle,
-        Entity<MapGridComponent>? ourGrid)
+        Entity<MapGridComponent>? ourGrid,
+        Box2 viewAABB)
     {
         var worldRot = _rotation!.Value;
         var mapPos = _transform.ToMapCoordinates(_coordinates!.Value).Offset(worldRot.RotateVec(Offset));
@@ -1169,6 +1170,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         foreach (var grid in grids)
         {
             if (ourGrid != null && grid.Owner == ourGrid.Value.Owner)
+                continue;
+
+            // Off-screen fills cost nothing, whatever the radar range.
+            var curGridToWorld = _transform.GetWorldMatrix(grid.Owner);
+            if (!curGridToWorld.TransformBox(grid.Comp.LocalAABB).Intersects(viewAABB))
                 continue;
 
             var detectionLevel = _consoleEntity == null ? DetectionLevel.Detected : GetGridDetected(grid.Owner);
@@ -1185,7 +1191,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
             var hideLabel = iff != null && (iff.Flags & IFFFlags.HideLabel) != 0x0;
             var hideColor = hideLabel && iff != null && (iff.Flags & IFFFlags.AlwaysShowColor) == 0x0;
             var labelColor = hideColor ? Color.White : _shuttles.GetIFFColor(grid, self: false, iff);
-            var curGridToView = _transform.GetWorldMatrix(grid.Owner) * worldToView;
+            var curGridToView = curGridToWorld * worldToView;
 
             DrawGrid(handle, curGridToView, grid, labelColor, 0.01f, true);
         }

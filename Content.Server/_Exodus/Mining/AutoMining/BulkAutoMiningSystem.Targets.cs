@@ -54,23 +54,35 @@ public sealed partial class BulkAutoMiningSystem
 
     private bool IsTargetInRange(Entity<BulkAutoMiningConsoleComponent> ent, EntityUid target)
     {
-        if (TerminatingOrDeleted(target) || !TryComp<MapGridComponent>(target, out var grid) ||
+        return IsGridInRange(ent, target, ent.Comp.MaxRange);
+    }
+
+    /// <summary>Whether the nearest point of a grid's bounds is within range of the console.</summary>
+    private bool IsGridInRange(EntityUid console, EntityUid target, float range)
+    {
+        if (TerminatingOrDeleted(target) || !_gridQuery.TryComp(target, out var grid) ||
             !_xformQuery.TryComp(target, out var targetXform))
             return false;
 
-        var consoleXform = Transform(ent);
+        var consoleXform = Transform(console);
         if (consoleXform.MapUid == null || consoleXform.MapUid != targetXform.MapUid || consoleXform.GridUid == target)
             return false;
 
-        var position = Vector2.Transform(_transform.GetWorldPosition(consoleXform), _transform.GetInvWorldMatrix(target));
-        var nearest = Vector2.Clamp(position, grid.LocalAABB.BottomLeft, grid.LocalAABB.TopRight);
-        return Vector2.DistanceSquared(position, nearest) <= ent.Comp.MaxRange * ent.Comp.MaxRange;
+        return GetDistanceToGrid(_transform.GetWorldPosition(consoleXform), (target, grid, targetXform)) <= range;
     }
 
-    private bool TryPrepareGrid(EntityUid target, [NotNullWhen(true)] out BulkAutoMiningGridJob? job)
+    private float GetDistanceToGrid(Vector2 worldPosition, Entity<MapGridComponent, TransformComponent> grid)
+    {
+        var position = Vector2.Transform(worldPosition, _transform.GetInvWorldMatrix(grid.Comp2));
+        var nearest = Vector2.Clamp(position, grid.Comp1.LocalAABB.BottomLeft, grid.Comp1.LocalAABB.TopRight);
+        return Vector2.Distance(position, nearest);
+    }
+
+    private bool TryPrepareGrid(Entity<BulkAutoMiningConsoleComponent> console, EntityUid target,
+        [NotNullWhen(true)] out BulkAutoMiningGridJob? job)
     {
         job = null;
-        if (TerminatingOrDeleted(target) || !TryComp<MapGridComponent>(target, out var grid))
+        if (TerminatingOrDeleted(target) || !_gridQuery.HasComp(target))
             return false;
 
         // Materialize this selected grid once, not all chunks around every target on every mining tick.
@@ -78,35 +90,31 @@ public sealed partial class BulkAutoMiningSystem
         if (RemComp<LocalityLoaderComponent>(target))
             RaiseLocalEvent(target, new LocalStructureLoadedEvent());
 
-        if (TerminatingOrDeleted(target))
+        if (TerminatingOrDeleted(target) || !_gridQuery.TryComp(target, out var grid))
             return false;
 
-        var tiles = new Queue<Vector2i>();
-        var remaining = new HashSet<Vector2i>();
-        var rangeTiles = new List<Vector2i>();
-        var natural = _deposits.IsInitialized(target);
-        var enumerator = _map.GetAllTilesEnumerator(target, grid);
-        while (enumerator.MoveNext(out var tile))
+        // The surface is shared by every console mining this grid and maintained from tile events.
+        if (_surface.Retain(console, (target, grid)) is not { } surface)
+            return false;
+
+        if (surface.Remaining == 0)
         {
-            if (tile is { } tileRef && !tileRef.Tile.IsEmpty && (!natural || _deposits.CanMine(target, tileRef.GridIndices)))
-            {
-                tiles.Enqueue(tileRef.GridIndices);
-                remaining.Add(tileRef.GridIndices);
-                rangeTiles.Add(tileRef.GridIndices);
-            }
-        }
-
-        if (tiles.Count == 0)
+            _surface.Release(console, target);
             return false;
+        }
 
         job = new BulkAutoMiningGridJob
         {
             GridUid = target,
-            Tiles = tiles,
-            RemainingTiles = remaining,
-            RangeTiles = rangeTiles,
+            Remaining = surface.Remaining,
         };
         return true;
+    }
+
+    private void ReleaseGridJob(Entity<BulkAutoMiningConsoleComponent> console, BulkAutoMiningGridJob gridJob)
+    {
+        _connectivity.ReleaseGrid(console, gridJob.GridUid);
+        _surface.Release(console, gridJob.GridUid);
     }
 
     private void InvalidateGridJob(
@@ -118,13 +126,10 @@ public sealed partial class BulkAutoMiningSystem
             return;
 
         gridJob.Invalidated = true;
-        _connectivity.ReleaseGrid(console, gridJob.GridUid);
-        console.Comp.TotalTiles -= gridJob.RemainingTiles.Count;
+        ReleaseGridJob(console, gridJob);
+        console.Comp.TotalTiles -= gridJob.Remaining;
+        gridJob.Remaining = 0;
         console.Comp.SelectedGrids.Remove(gridJob.GridUid);
-        gridJob.RemainingTiles.Clear();
-        gridJob.Tiles.Clear();
-        gridJob.RangeTiles.Clear();
-        gridJob.RangeSearches = [];
         job.NextUiTime = _timing.CurTime;
 
         foreach (var uid in job.Emitters)
@@ -141,12 +146,35 @@ public sealed partial class BulkAutoMiningSystem
         }
     }
 
+    /// <summary>Counts tiles removed from shared surfaces since the last update, by any miner or event.</summary>
+    private void SyncProgress(Entity<BulkAutoMiningConsoleComponent> console, BulkAutoMiningJobComponent job)
+    {
+        foreach (var gridJob in job.GridJobs)
+        {
+            if (gridJob.Invalidated || !_surfaceQuery.TryComp(gridJob.GridUid, out var surface))
+                continue;
+
+            var delta = gridJob.Remaining - surface.Remaining;
+            if (delta == 0)
+                continue;
+
+            // Artificial targets may gain tiles; they enlarge the job instead of undoing progress.
+            if (delta > 0)
+                console.Comp.ProcessedTiles += delta;
+            else
+                console.Comp.TotalTiles -= delta;
+
+            gridJob.Remaining = surface.Remaining;
+        }
+    }
+
     private bool TryFinishMining(Entity<BulkAutoMiningConsoleComponent> console, BulkAutoMiningJobComponent job)
     {
+        SyncProgress(console, job);
         var lostTargets = false;
         foreach (var gridJob in job.GridJobs)
         {
-            if (gridJob.RemainingTiles.Count > 0)
+            if (gridJob.Remaining > 0)
                 return false;
 
             lostTargets |= gridJob.Invalidated;

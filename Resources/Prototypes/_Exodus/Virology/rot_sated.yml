@@ -136,8 +136,9 @@
     attackRate: 0.8
     damage:
       types:
-        Poison: 40
-        Piercing: 20
+        Poison: 35
+        Piercing: 30
+        Structural: 30
         Cellular: 5
         Radiation: 5
     soundHit:
@@ -157,8 +158,6 @@
   - type: GuideHelp
     guides:
     - EXRuleGhostRoleRot
-  - type: ReplacementAccent
-    accent: genericAggressive
 
 - type: htnCompound
   id: RotSatedCompound

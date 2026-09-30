@@ -12,6 +12,8 @@ public enum BulkAutoMiningLaserStatus : byte
     Full,
     Blocked,
     Searching,
+    /// <summary>Aimed at a partner ship's laser as part of a mining consortium; cannot mine.</summary>
+    Linked,
 }
 
 [Serializable, NetSerializable]
@@ -25,4 +27,5 @@ public readonly record struct BulkAutoMiningLaserState(
     int Capacity,
     string? ConsoleName = null,
     float Warmup = 0,
-    float YieldBonus = 0);
+    float YieldBonus = 0,
+    string? LinkedShip = null);

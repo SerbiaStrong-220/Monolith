@@ -39,3 +39,42 @@
   - !type:ListingLimitedStockCondition
     stock: 1
     shared: true
+
+# Bluespace suppressors: stationary faction uplinks only.
+- type: listing
+  id: UplinkTsfFtlSuppressorFlatpack
+  name: uplink-tsf-ftl-suppressor-name
+  description: uplink-tsf-ftl-suppressor-desc
+  icon: { sprite: _Exodus/Structures/Machines/ftl_suppressor.rsi, state: tsf }
+  productEntity: MachineFtlSuppressorTsfFlatpack
+  cost:
+    FederationMilitaryCredit: 100
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - FactionStaticUplinkTsf
+      components:
+      - VendingMachine
+
+- type: listing
+  id: UplinkPdvFtlSuppressorFlatpack
+  name: uplink-pdv-ftl-suppressor-name
+  description: uplink-pdv-ftl-suppressor-desc
+  icon: { sprite: _Exodus/Structures/Machines/ftl_suppressor.rsi, state: pdv }
+  productEntity: MachineFtlSuppressorPdvFlatpack
+  cost:
+    Doubloon: 100
+  categories:
+  - UplinkPirateEquipment
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      requireAll: true
+      tags:
+      - FactionStaticUplinkPdv
+      components:
+      - VendingMachine

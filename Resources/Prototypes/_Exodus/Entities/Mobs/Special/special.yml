@@ -35,6 +35,8 @@
   - type: Hands
     showInHands: false
   - type: ComplexInteraction
+  - type: ActionGrant
+    actions: [ActionSpecialToggleInternals]
   - type: VirusGunLock
   - type: Stripping
   - type: Inventory
@@ -216,6 +218,20 @@
       sprite: _Exodus/Mobs/Special/actions.rsi
       state: run
     event: !type:ToggleLocomotionStanceEvent
+
+- type: entity
+  id: ActionSpecialToggleInternals
+  name: Toggle internals
+  description: Breathe from a gas tank worn on your back or belt. A breath mask is still required.
+  categories: [HideSpawnMenu]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    useDelay: 1
+    icon:
+      sprite: Interface/Alerts/internals.rsi
+      state: internal2
+    event: !type:ToggleInternalsActionEvent
 
 - type: entity
   id: ActionSpecialCurl

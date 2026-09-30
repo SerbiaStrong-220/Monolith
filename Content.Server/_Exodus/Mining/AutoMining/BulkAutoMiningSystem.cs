@@ -33,6 +33,7 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
     [Dependency] private MaterialStorageSystem _materials = default!;
     [Dependency] private BulkMiningDepositSystem _deposits = default!;
     [Dependency] private BulkMiningConnectivitySystem _connectivity = default!;
+    [Dependency] private BulkMiningSurfaceSystem _surface = default!;
     [Dependency] private ShuttleConsoleSystem _shuttleConsole = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private PopupSystem _popup = default!;
@@ -48,14 +49,13 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
     [Dependency] private SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
 
-    private readonly HashSet<Entity<BulkAutoMiningEmitterComponent>> _emitterBuffer = new();
-
     private EntityQuery<BulkAutoMiningEmitterComponent> _emitterQuery;
     private EntityQuery<MaterialStorageComponent> _storageQuery;
     private EntityQuery<ApcPowerReceiverComponent> _powerQuery;
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<ShipShieldComponent> _shieldQuery;
+    private EntityQuery<BulkMiningSurfaceComponent> _surfaceQuery;
 
     private static readonly TimeSpan UiInterval = TimeSpan.FromSeconds(1);
 
@@ -68,6 +68,7 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         _xformQuery = GetEntityQuery<TransformComponent>();
         _gridQuery = GetEntityQuery<MapGridComponent>();
         _shieldQuery = GetEntityQuery<ShipShieldComponent>();
+        _surfaceQuery = GetEntityQuery<BulkMiningSurfaceComponent>();
 
         Subs.BuiEvents<BulkAutoMiningConsoleComponent>(BulkAutoMiningUiKey.Key, subs =>
         {
@@ -75,6 +76,10 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
             subs.Event<BulkAutoMiningSelectGridMessage>(OnSelectGrid);
             subs.Event<BulkAutoMiningStartMessage>(OnStart);
             subs.Event<BulkAutoMiningStopMessage>(OnStop);
+            subs.Event<BulkAutoMiningLinkRequestMessage>(OnLinkRequest);
+            subs.Event<BulkAutoMiningLinkAcceptMessage>(OnLinkAccept);
+            subs.Event<BulkAutoMiningLinkDeclineMessage>(OnLinkDecline);
+            subs.Event<BulkAutoMiningLinkBreakMessage>(OnLinkBreak);
         });
         SubscribeLocalEvent<BulkAutoMiningConsoleComponent, MapInitEvent>(OnConsoleMapInit);
         SubscribeLocalEvent<BulkAutoMiningConsoleComponent, ComponentShutdown>(OnConsoleShutdown);
@@ -84,6 +89,7 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         SubscribeLocalEvent<BulkAutoMiningEmitterComponent, ComponentShutdown>(OnEmitterShutdown);
         SubscribeLocalEvent<BulkAutoMiningEmitterComponent, AnchorStateChangedEvent>(OnEmitterAnchorChanged);
         SubscribeLocalEvent<BulkAutoMiningEmitterComponent, EntParentChangedMessage>(OnEmitterParentChanged);
+        InitializeLinks();
     }
 
     private TimeSpan GetProcessInterval(BulkAutoMiningConsoleComponent console)
@@ -118,12 +124,16 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
 
     private void OnEmitterPowerChanged(Entity<BulkAutoMiningEmitterComponent> ent, ref PowerChangedEvent args)
     {
-        if (!args.Powered)
-            ClearBeam(ent);
+        if (args.Powered)
+            return;
+
+        ClearBeam(ent);
+        BreakLink(ent, BulkMiningLinkBreakReason.Power);
     }
 
     private void OnEmitterShutdown(Entity<BulkAutoMiningEmitterComponent> ent, ref ComponentShutdown args)
     {
+        BreakLink(ent, BulkMiningLinkBreakReason.Lost);
         StopEmitterAudio(ent);
     }
 
@@ -132,6 +142,7 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         if (!args.Anchored)
         {
             ClearBeam(ent);
+            BreakLink(ent, BulkMiningLinkBreakReason.Lost);
             if (ent.Comp.Controller is { } controller && TryComp<BulkAutoMiningConsoleComponent>(controller, out var console))
                 StopMining((controller, console), "bulk-auto-mining-stopped-emitter-moved");
         }
@@ -139,6 +150,8 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
 
     private void OnEmitterParentChanged(Entity<BulkAutoMiningEmitterComponent> ent, ref EntParentChangedMessage args)
     {
+        // A linked laser only exists on the ship that made the link, e.g. a grid split carries it away.
+        BreakLink(ent, BulkMiningLinkBreakReason.Lost);
         if (ent.Comp.Controller is not { } controller || !TryComp<BulkAutoMiningConsoleComponent>(controller, out var console))
             return;
 
@@ -201,18 +214,17 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         }
 
         job.GridJobs.Clear();
-        job.NextRangePairIndex = 0;
+        job.BlockedTiles.Clear();
         job.NextRangeCheckTime = _timing.CurTime;
         ent.Comp.TotalTiles = 0;
         ent.Comp.ProcessedTiles = 0;
         foreach (var target in ent.Comp.SelectedGrids)
         {
-            if (!IsTargetInRange(ent, target) || !TryPrepareGrid(target, out var gridJob))
+            if (!IsTargetInRange(ent, target) || !TryPrepareGrid(ent, target, out var gridJob))
                 continue;
 
             job.GridJobs.Add(gridJob);
-            gridJob.RangeSearches = new BulkAutoMiningRangeSearch[job.Emitters.Count];
-            ent.Comp.TotalTiles += gridJob.Tiles.Count;
+            ent.Comp.TotalTiles += gridJob.Remaining;
         }
 
         if (job.GridJobs.Count == 0)
@@ -257,11 +269,14 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
             }
 
             foreach (var gridJob in job.GridJobs)
-                _connectivity.ReleaseGrid(ent, gridJob.GridUid);
+            {
+                if (!gridJob.Invalidated)
+                    ReleaseGridJob(ent, gridJob);
+            }
 
             job.GridJobs.Clear();
             job.Statuses.Clear();
-            job.TileChecksRemaining.Clear();
+            job.BlockedTiles.Clear();
         }
 
         if (TerminatingOrDeleted(ent))
@@ -303,6 +318,9 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
             !_storageQuery.HasComp(emitter) || Transform(emitter).GridUid != Transform(console).GridUid)
             return BulkAutoMiningLaserStatus.Offline;
 
+        if (comp.LinkPartner != null)
+            return BulkAutoMiningLaserStatus.Linked;
+
         if (comp.Controller is { } controller && controller != console.Owner && !TerminatingOrDeleted(controller))
             return BulkAutoMiningLaserStatus.Busy;
 
@@ -321,18 +339,26 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
             return;
 
         job.Emitters.Clear();
-        if (Transform(ent).GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
+        if (Transform(ent).GridUid is not { } grid)
             return;
 
-        _emitterBuffer.Clear();
-        _lookup.GetLocalEntitiesIntersecting(grid, gridComp.LocalAABB, _emitterBuffer, LookupFlags.Static);
-        foreach (var emitter in _emitterBuffer)
+        GetGridEmitters(grid, job.Emitters);
+    }
+
+    /// <summary>
+    /// Collects the anchored lasers of a ship in a stable order. Lasers are few across the whole server,
+    /// so a component query is far cheaper than a lookup over every static entity of the ship.
+    /// </summary>
+    private void GetGridEmitters(EntityUid grid, List<EntityUid> emitters)
+    {
+        var query = EntityQueryEnumerator<BulkAutoMiningEmitterComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
         {
-            if (Transform(emitter).Anchored && !TerminatingOrDeleted(emitter))
-                job.Emitters.Add(emitter);
+            if (xform.GridUid == grid && xform.Anchored && !TerminatingOrDeleted(uid))
+                emitters.Add(uid);
         }
 
-        job.Emitters.Sort();
+        emitters.Sort();
     }
 
     private void Popup(Entity<BulkAutoMiningConsoleComponent> ent, string locId)

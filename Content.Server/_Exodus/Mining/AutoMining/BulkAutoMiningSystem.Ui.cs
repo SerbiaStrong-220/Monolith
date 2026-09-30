@@ -42,8 +42,9 @@ public sealed partial class BulkAutoMiningSystem
             var consoleName = emitterComp.ConsoleName is { } name ? Loc.GetString(name) : null;
             var warmup = GetWarmup((emitter, emitterComp));
             var yieldBonus = GetWarmupYieldBonus((emitter, emitterComp), warmup);
+            var linkedShip = emitterComp.LinkGrid is { } linkGrid ? GetShipName(linkGrid) : null;
             lasers.Add(new BulkAutoMiningLaserState(GetNetEntity(emitter), Name(emitter), hp, maxHp, status, stored, capacity,
-                consoleName, (float)warmup, (float)yieldBonus));
+                consoleName, (float)warmup, (float)yieldBonus, linkedShip));
         }
 
         // Mining does not display docking or grappling controls. Avoid collecting them across every ship.
@@ -52,6 +53,6 @@ public sealed partial class BulkAutoMiningSystem
         nav.MaxRange = ent.Comp.MaxRange;
         _ui.SetUiState(ent.Owner, BulkAutoMiningUiKey.Key, new BulkAutoMiningBoundUserInterfaceState(
             nav, targets, lasers.Count, ent.Comp.ProcessedTiles, ent.Comp.TotalTiles, ent.Comp.Active,
-            lasers, IsPoweredAndAnchored(ent) && ready));
+            lasers, IsPoweredAndAnchored(ent) && ready, GetLinkUiState(ent, job.Emitters)));
     }
 }

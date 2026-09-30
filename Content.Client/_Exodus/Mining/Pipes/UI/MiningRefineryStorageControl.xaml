@@ -1,23 +1,34 @@
-<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="6">
-    <PanelContainer StyleClasses="Inset">
-        <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="4">
-            <Label Text="{Loc 'bulk-mining-refinery-ui-slurry'}" StyleClasses="LabelHeading" />
-            <ProgressBar Name="SlurryBar" Access="Public" MinValue="0" MaxValue="1" SetHeight="24" HorizontalExpand="True">
-                <Label Name="SlurryAmount" Margin="5 0" VerticalAlignment="Center" />
-            </ProgressBar>
-            <Label Name="UnlimitedSlurry" Visible="False" />
-            <RichTextLabel Text="{Loc 'bulk-mining-refinery-ui-slurry-hint'}" />
+<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+    <!-- The lathe column is short; scroll instead of clipping the readings. -->
+    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="6">
+            <PanelContainer StyleClasses="Inset">
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="4">
+                    <Label Text="{Loc 'bulk-mining-refinery-ui-slurry'}" StyleClasses="LabelHeading" />
+                    <ProgressBar Name="SlurryBar" Access="Public" MinValue="0" MaxValue="1" SetHeight="24" HorizontalExpand="True">
+                        <Label Name="SlurryAmount" Margin="5 0" VerticalAlignment="Center" />
+                    </ProgressBar>
+                    <Label Name="UnlimitedSlurry" Visible="False" />
+                    <RichTextLabel Text="{Loc 'bulk-mining-refinery-ui-slurry-hint'}" />
+                </BoxContainer>
+            </PanelContainer>
+            <PanelContainer StyleClasses="Inset">
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="4">
+                    <Label Name="GasName" StyleClasses="LabelHeading" />
+                    <ProgressBar Name="GasBar" Access="Public" MinValue="0" MaxValue="1" SetHeight="24" HorizontalExpand="True">
+                        <Label Name="GasAmount" Margin="5 0" VerticalAlignment="Center" />
+                    </ProgressBar>
+                    <Label Name="GasPressure" />
+                    <RichTextLabel Name="GasWarning" Visible="False" />
+                    <RichTextLabel Text="{Loc 'bulk-mining-refinery-ui-port-hint'}" />
+                </BoxContainer>
+            </PanelContainer>
+            <PanelContainer StyleClasses="Inset">
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="4">
+                    <Label Text="{Loc 'bulk-mining-refinery-ui-consortium'}" StyleClasses="LabelHeading" FontColorOverride="#3FD6C8" />
+                    <RichTextLabel Name="ConsortiumInfo" />
+                </BoxContainer>
+            </PanelContainer>
         </BoxContainer>
-    </PanelContainer>
-    <PanelContainer StyleClasses="Inset">
-        <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="4">
-            <Label Name="GasName" StyleClasses="LabelHeading" />
-            <ProgressBar Name="GasBar" Access="Public" MinValue="0" MaxValue="1" SetHeight="24" HorizontalExpand="True">
-                <Label Name="GasAmount" Margin="5 0" VerticalAlignment="Center" />
-            </ProgressBar>
-            <Label Name="GasPressure" />
-            <RichTextLabel Name="GasWarning" Visible="False" />
-            <RichTextLabel Text="{Loc 'bulk-mining-refinery-ui-port-hint'}" />
-        </BoxContainer>
-    </PanelContainer>
+    </ScrollContainer>
 </BoxContainer>

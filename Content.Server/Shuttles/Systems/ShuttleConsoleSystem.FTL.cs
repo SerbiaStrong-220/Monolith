@@ -121,6 +121,8 @@ public sealed partial class ShuttleConsoleSystem
             exclusions ??= new List<ShuttleExclusionObject>();
             exclusions.Add(new ShuttleExclusionObject(GetNetCoordinates(xform.Coordinates), comp.Range, Loc.GetString("shuttle-console-exclusion")));
         }
+
+        GetFtlSuppressorExclusions(ref exclusions); // Exodus ftl-suppressor
     }
 
     /// <summary>
@@ -145,6 +147,10 @@ public sealed partial class ShuttleConsoleSystem
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {
             // TODO: Session popup
+            // Exodus-begin ftl-suppressor
+            if (!string.IsNullOrEmpty(reason))
+                _popup.PopupEntity(reason, ent.Owner, PopupType.Medium);
+            // Exodus-end
             return;
         }
 
@@ -155,6 +161,15 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         targetCoordinates = _shuttle.ClampCoordinatesToFTLRange(shuttleUid.Value, targetCoordinates);
+
+        // Exodus-begin ftl-suppressor
+        if (!CanFTLToSuppressionField(targetCoordinates, out var suppressorRejection))
+        {
+            _popup.PopupEntity(Loc.GetString(suppressorRejection), ent.Owner, PopupType.Medium);
+            UpdateConsoles(shuttleUid.Value);
+            return;
+        }
+        // Exodus-end
 
         List<ShuttleExclusionObject>? exclusions = null;
         GetExclusions(ref exclusions);
@@ -225,6 +240,7 @@ public sealed partial class ShuttleConsoleSystem
                 out var massAdjustedStartupTime,
                 out var massAdjustedHyperSpaceTime);
             _shuttle.FTLToCoordinates(shuttleUid.Value, shuttleComp, adjustedCoordinates, targetAngle, massAdjustedStartupTime, massAdjustedHyperSpaceTime);
+            OnConsoleFTLStarted(shuttleUid.Value); // Exodus ftl-suppressor
         }
     }
 

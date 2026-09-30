@@ -48,13 +48,13 @@ public sealed class BulkAutoMiningTargetLossTest
             var job = em.GetComponent<BulkAutoMiningJobComponent>(console);
             var lostJob = job.GridJobs[lostFirst ? 0 : 1];
             var survivingJob = job.GridJobs[lostFirst ? 1 : 0];
-            AimAt(setup.Emitters[0], lostJob);
-            AimAt(setup.Emitters[1], survivingJob);
+            AimAt(em, setup.Emitters[0], lostJob);
+            AimAt(em, setup.Emitters[1], survivingJob);
             var survivingTile = setup.Emitters[1].Comp.BeamTile;
             var firstCooldown = setup.Emitters[0].Comp.NextMiningTime;
             var secondCooldown = setup.Emitters[1].Comp.NextMiningTime;
             processed = console.Comp.ProcessedTiles;
-            expectedTotal = console.Comp.TotalTiles - lostJob.RemainingTiles.Count;
+            expectedTotal = console.Comp.TotalTiles - lostJob.Remaining;
             Assert.That(GetMetal(em, setup), Is.EqualTo(processed * 10));
 
             em.DeleteEntity(setup.Targets[0]);
@@ -62,7 +62,6 @@ public sealed class BulkAutoMiningTargetLossTest
             {
                 setup.Emitters[0].Comp.BeamGrid = null;
                 setup.Emitters[0].Comp.NextTargetSearchTime = TimeSpan.Zero;
-                job.NextGridIndex = lostFirst ? 0 : 1;
             }
 
             // A range witness on another target must not hide the lost target from validation.
@@ -76,10 +75,7 @@ public sealed class BulkAutoMiningTargetLossTest
                 Assert.That(GetMetal(em, setup), Is.EqualTo(processed * 10), "Losing a target cannot pay out or bypass the cooldown.");
                 Assert.That(job.GridJobs.Count, Is.EqualTo(2));
                 Assert.That(lostJob.Invalidated, Is.True);
-                Assert.That(lostJob.RemainingTiles, Is.Empty);
-                Assert.That(lostJob.Tiles, Is.Empty);
-                Assert.That(lostJob.RangeTiles, Is.Empty);
-                Assert.That(lostJob.RangeSearches, Is.Empty);
+                Assert.That(lostJob.Remaining, Is.Zero);
                 Assert.That(setup.Emitters[0].Comp.NextMiningTime, Is.EqualTo(firstCooldown));
                 Assert.That(setup.Emitters[1].Comp.NextMiningTime, Is.EqualTo(secondCooldown));
                 Assert.That(setup.Emitters[1].Comp.BeamGrid, Is.EqualTo(setup.Targets[1].Owner));
@@ -186,7 +182,7 @@ public sealed class BulkAutoMiningTargetLossTest
         {
             Start(em, setup);
             var job = em.GetComponent<BulkAutoMiningJobComponent>(setup.Console);
-            Assert.That(job.GridJobs[0].RemainingTiles, Is.Empty);
+            Assert.That(job.GridJobs[0].Remaining, Is.Zero);
             Step(em, setup.Console, true);
             Assert.That(setup.Console.Comp.Active, Is.True);
             Assert.That(job.GridJobs[0].Invalidated, Is.False);
@@ -196,7 +192,7 @@ public sealed class BulkAutoMiningTargetLossTest
     }
 
     [Test]
-    public async Task LosingTargetPreservesBoundedSearchUntilReachableTileIsFound()
+    public async Task LosingTargetFindsTheReachablePartOfALargeSurvivorAtOnce()
     {
         await using var pair = await PoolManager.GetServerClient();
         var setup = await CreateSetup(pair, secondTiles: 256);
@@ -206,33 +202,73 @@ public sealed class BulkAutoMiningTargetLossTest
             Start(em, setup);
             var job = em.GetComponent<BulkAutoMiningJobComponent>(setup.Console);
             var survivor = job.GridJobs[1];
-            survivor.RangeTiles.Sort((a, b) => b.X.CompareTo(a.X));
-            Array.Clear(survivor.RangeSearches);
             foreach (var emitter in setup.Emitters)
-                emitter.Comp.BeamGrid = null;
-
-            em.DeleteEntity(setup.Targets[0]);
-            Step(em, setup.Console, true);
-            var checkedTiles = 0;
-            foreach (var search in survivor.RangeSearches)
-                checkedTiles += search.NextTileIndex;
-
-            Assert.That(checkedTiles, Is.EqualTo(64), "All lasers share the existing range-search budget.");
-            Assert.That(setup.Console.Comp.Active, Is.True, "An unfinished search is not proof that no target is reachable.");
-
-            var found = false;
-            for (var i = 0; i < 16 && !found; i++)
             {
-                Step(em, setup.Console, true);
-                Assert.That(setup.Console.Comp.Active, Is.True);
-                foreach (var search in survivor.RangeSearches)
-                    found |= search.CachedTile.HasValue;
+                emitter.Comp.BeamGrid = null;
+                emitter.Comp.NextTargetSearchTime = TimeSpan.Zero;
             }
 
-            Assert.That(found, Is.True);
+            // Most of the survivor lies beyond the console range; its exposed surface still answers in one check.
+            em.DeleteEntity(setup.Targets[0]);
+            Step(em, setup.Console, true);
+            Assert.That(setup.Console.Comp.Active, Is.True);
+            Assert.That(survivor.Invalidated, Is.False);
+            Assert.That(survivor.Remaining, Is.EqualTo(255));
+
+            // A line has a single safe cut in range; one laser takes it and the other cannot share it.
+            Step(em, setup.Console, false);
+            var aimed = 0;
+            foreach (var emitter in setup.Emitters)
+            {
+                if (emitter.Comp.BeamGrid == setup.Targets[1].Owner)
+                    aimed++;
+            }
+
+            Assert.That(aimed, Is.EqualTo(1));
+
             em.DeleteEntity(setup.Targets[1]);
             Step(em, setup.Console, true);
             Assert.That(setup.Console.Comp.Active, Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task LasersPeelTheNearestSafeSurfaceAndSpreadOverTargets()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var setup = await CreateSetup(pair);
+        var em = pair.Server.EntMan;
+        await pair.Server.WaitAssertion(() =>
+        {
+            Start(em, setup);
+            // Each laser started on the nearest end of a different line; the balance penalty kept them apart.
+            Assert.That(setup.Emitters[0].Comp.BeamGrid, Is.Not.EqualTo(setup.Emitters[1].Comp.BeamGrid));
+            var job = em.GetComponent<BulkAutoMiningJobComponent>(setup.Console);
+            for (var step = 0; step < 6; step++)
+            {
+                foreach (var emitter in setup.Emitters)
+                    emitter.Comp.NextMiningTime = TimeSpan.Zero;
+
+                Step(em, setup.Console, false);
+            }
+
+            // Lines are only ever cut at their near end: interior cuts would split them.
+            var maps = em.System<SharedMapSystem>();
+            foreach (var target in setup.Targets)
+            {
+                var seenGap = false;
+                for (var x = 15; x >= 0; x--)
+                {
+                    var empty = maps.GetTileRef(target, target.Comp, new Vector2i(x, 0)).Tile.IsEmpty;
+                    Assert.That(!seenGap || empty, Is.True, $"Tile {x} of {target.Owner} was cut behind remaining rock.");
+                    seenGap |= empty;
+                }
+            }
+
+            Assert.That(setup.Console.Comp.ProcessedTiles, Is.EqualTo(2 + 6 * 2));
+            Assert.That(GetMetal(em, setup), Is.EqualTo(setup.Console.Comp.ProcessedTiles * 10));
+            Assert.That(job.Statuses.Values, Has.All.EqualTo(BulkAutoMiningLaserStatus.Mining));
         });
         await pair.CleanReturnAsync();
     }
@@ -325,16 +361,23 @@ public sealed class BulkAutoMiningTargetLossTest
         Assert.That(setup.Console.Comp.ProcessedTiles, Is.EqualTo(2));
     }
 
-    private static void AimAt(Entity<BulkAutoMiningEmitterComponent> emitter, BulkAutoMiningGridJob target)
+    private static void AimAt(IEntityManager em, Entity<BulkAutoMiningEmitterComponent> emitter, BulkAutoMiningGridJob target)
     {
-        foreach (var tile in target.RemainingTiles)
+        // The near end of a line is its only safe cut.
+        Vector2i? nearest = null;
+        foreach (var (block, bits) in em.GetComponent<BulkMiningSurfaceComponent>(target.GridUid).Exposed)
         {
-            emitter.Comp.BeamGrid = target.GridUid;
-            emitter.Comp.BeamTile = tile;
-            return;
+            for (var bit = 0; bit < 64; bit++)
+            {
+                var tile = BulkMiningSurfaceSystem.GetTile(block, bit);
+                if ((bits & (1UL << bit)) != 0 && (nearest == null || tile.X < nearest.Value.X))
+                    nearest = tile;
+            }
         }
 
-        Assert.Fail("Expected a remaining tile for the test beam.");
+        Assert.That(nearest, Is.Not.Null, "Expected a remaining tile for the test beam.");
+        emitter.Comp.BeamGrid = target.GridUid;
+        emitter.Comp.BeamTile = nearest!.Value;
     }
 
     private static void Step(IEntityManager em, Entity<BulkAutoMiningConsoleComponent> console, bool rangeOnly)

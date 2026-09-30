@@ -157,3 +157,21 @@
   components:
   - type: Flatpack
     entity: ShipRepairDroneStation
+
+- type: entity
+  parent: BaseFlatpack
+  id: MachineFtlSuppressorTsfFlatpack
+  name: BS-1000 "Bastion" bluespace suppressor flatpack
+  description: A flatpack used for constructing a BS-1000 "Bastion" bluespace suppressor.
+  components:
+  - type: Flatpack
+    entity: MachineFtlSuppressorTsf
+
+- type: entity
+  parent: BaseFlatpack
+  id: MachineFtlSuppressorPdvFlatpack
+  name: '"Lasso" bluespace suppressor flatpack'
+  description: A flatpack used for constructing a "Lasso" bluespace suppressor.
+  components:
+  - type: Flatpack
+    entity: MachineFtlSuppressorPdv

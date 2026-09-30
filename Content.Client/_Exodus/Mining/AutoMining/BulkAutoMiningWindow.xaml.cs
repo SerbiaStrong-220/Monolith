@@ -10,18 +10,29 @@ namespace Content.Client._Exodus.Mining.AutoMining;
 [GenerateTypedNameReferences]
 public sealed partial class BulkAutoMiningWindow : FancyWindow
 {
+    [Dependency] private IEntityManager _entities = default!;
+
     private readonly Dictionary<NetEntity, BulkAutoMiningLaserControl> _laserCards = new();
     private readonly Dictionary<NetEntity, (BoxContainer Row, Label Name, Button Remove)> _targetRows = new();
     private readonly HashSet<NetEntity> _stale = new();
+    private BulkAutoMiningBoundUserInterfaceState? _state;
+    private bool _linkMode;
 
     public event Action? OnStartPressed;
     public event Action? OnStopPressed;
     public event Action<NetEntity>? OnTargetRemoved;
+    public event Action<NetEntity>? OnLinkRequested;
+    public event Action<NetEntity>? OnLinkAccepted;
+    public event Action<NetEntity>? OnLinkDeclined;
+    public event Action<NetEntity>? OnLinkBroken;
     public BulkAutoMiningNavControl RadarControl => Radar;
+    public BulkMiningLinkPanel LinkPanelControl => LinkPanel;
+    public bool LinkMode => _linkMode;
 
     public BulkAutoMiningWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         // Reserve both sidebars before measuring the radar and its wrapping hint.
         foreach (var panel in Workspace.Children)
         {
@@ -31,6 +42,7 @@ public sealed partial class BulkAutoMiningWindow : FancyWindow
         }
 
         LayoutContainer.SetMarginRight(TargetsPanel, TargetsPanel.SetWidth);
+        LayoutContainer.SetMarginRight(LinkPanel, LinkPanel.SetWidth);
         LayoutContainer.SetAnchorLeft(LasersPanel, 1);
         LayoutContainer.SetAnchorRight(LasersPanel, 1);
         LayoutContainer.SetMarginLeft(LasersPanel, -LasersPanel.SetWidth);
@@ -38,8 +50,26 @@ public sealed partial class BulkAutoMiningWindow : FancyWindow
         LayoutContainer.SetMarginLeft(RadarPanel, TargetsPanel.SetWidth + 12);
         LayoutContainer.SetMarginRight(RadarPanel, -LasersPanel.SetWidth - 12);
 
+        var modes = new ButtonGroup();
+        MiningModeButton.Group = modes;
+        LinkModeButton.Group = modes;
+        MiningModeButton.Pressed = true;
+        MiningModeButton.OnPressed += _ => SetLinkMode(false);
+        LinkModeButton.OnPressed += _ => SetLinkMode(true);
+
         StartButton.OnPressed += _ => OnStartPressed?.Invoke();
         StopButton.OnPressed += _ => OnStopPressed?.Invoke();
+        LinkPanel.OnRequest += grid => OnLinkRequested?.Invoke(grid);
+        LinkPanel.OnAccept += grid => OnLinkAccepted?.Invoke(grid);
+        LinkPanel.OnDecline += grid => OnLinkDeclined?.Invoke(grid);
+        LinkPanel.OnBreak += grid => OnLinkBroken?.Invoke(grid);
+        LinkPanel.OnSelect += SelectLinkTarget;
+        Radar.OnLinkGridSelected += grid =>
+        {
+            Radar.SelectedLinkGrid = grid;
+            RefreshLinkPanel();
+        };
+        SetLinkMode(false);
     }
 
     public void SetConsole(EntityUid consoleEntity)
@@ -58,11 +88,58 @@ public sealed partial class BulkAutoMiningWindow : FancyWindow
         Measure(available);
     }
 
+    /// <summary>Switches between the mining and ship link tabs.</summary>
+    public void SetLinkMode(bool linkMode)
+    {
+        _linkMode = linkMode;
+        MiningModeButton.Pressed = !linkMode;
+        LinkModeButton.Pressed = linkMode;
+        TargetsPanel.Visible = !linkMode;
+        LinkPanel.Visible = linkMode;
+        Radar.LinkMode = linkMode;
+        RadarTitle.Text = Loc.GetString(linkMode ? "bulk-auto-mining-link-radar-title" : "bulk-auto-mining-radar-title");
+        ModeHint.Text = Loc.GetString(linkMode ? "bulk-auto-mining-mode-link-hint" : "bulk-auto-mining-mode-mining-hint");
+        UpdateRadarHint();
+        RefreshLinkPanel();
+    }
+
+    private void SelectLinkTarget(NetEntity grid)
+    {
+        Radar.SelectedLinkGrid = grid;
+        if (!_linkMode)
+            SetLinkMode(true);
+        else
+            RefreshLinkPanel();
+    }
+
+    private void RefreshLinkPanel()
+    {
+        if (_state == null)
+            return;
+
+        string? selectedName = null;
+        if (Radar.SelectedLinkGrid is { } selected && _entities.TryGetEntity(selected, out var grid) &&
+            _entities.TryGetComponent(grid, out MetaDataComponent? meta))
+            selectedName = meta.EntityName;
+
+        LinkPanel.UpdateState(_state.Link, Radar.SelectedLinkGrid, selectedName);
+    }
+
+    private void UpdateRadarHint()
+    {
+        var hint = _linkMode ? "bulk-auto-mining-link-radar-hint"
+            : _state?.Active == true ? "bulk-auto-mining-select-while-active"
+            : "bulk-auto-mining-radar-hint";
+        RadarHint.SetMessage(Loc.GetString(hint));
+    }
+
     public void UpdateState(BulkAutoMiningBoundUserInterfaceState state)
     {
+        _state = state;
         Radar.UpdateMiningState(state);
         var mining = UpdateLasers(state.LinkedLasers);
         UpdateTargets(state);
+        RefreshLinkPanel();
 
         var waiting = state.Active && mining == 0;
         MiningStatus.Text = Loc.GetString(state.Active
@@ -72,6 +149,12 @@ public sealed partial class BulkAutoMiningWindow : FancyWindow
         LaserSummary.Text = Loc.GetString("bulk-auto-mining-laser-summary",
             ("mining", mining), ("total", state.LinkedLasers.Count));
 
+        var ships = state.Link.Members.Count;
+        ConsortiumBadge.Visible = ships > 1;
+        ConsortiumBadgeLabel.Text = Loc.GetString("bulk-auto-mining-consortium-badge",
+            ("count", ships), ("percent", Math.Round(state.Link.Bonus * 100, 1)));
+        ConsortiumBadge.ToolTip = Loc.GetString("bulk-auto-mining-consortium-badge-tooltip");
+
         var hint = state.Active
             ? waiting ? "bulk-auto-mining-hint-waiting" : "bulk-auto-mining-hint-active"
             : state.LinkedLasers.Count == 0 ? "bulk-auto-mining-no-lasers"
@@ -79,8 +162,7 @@ public sealed partial class BulkAutoMiningWindow : FancyWindow
             : state.SelectedTargets.Count == 0 ? "bulk-auto-mining-select-hint"
             : "bulk-auto-mining-hint-ready";
         OperationHint.SetMessage(Loc.GetString(hint));
-        RadarHint.SetMessage(Loc.GetString(state.Active
-            ? "bulk-auto-mining-select-while-active" : "bulk-auto-mining-radar-hint"));
+        UpdateRadarHint();
         SelectedTargetsSummary.Text = Loc.GetString("bulk-auto-mining-selected-targets-summary",
             ("count", state.SelectedTargets.Count), ("max", state.MaxSelectableTargets));
 

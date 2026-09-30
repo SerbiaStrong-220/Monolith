@@ -1,0 +1,52 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Vertical" SeparationOverride="8">
+    <Label Text="{Loc 'bulk-auto-mining-link-title'}" StyleClasses="LabelHeading"/>
+    <PanelContainer StyleClasses="BackgroundDark" VerticalExpand="True">
+        <ScrollContainer HScrollEnabled="False" VerticalExpand="True" ReserveScrollbarSpace="True">
+            <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="10">
+                <PanelContainer>
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#17282B" BorderColor="#3FD6C8" BorderThickness="3 0 0 0"/>
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Vertical" Margin="10 8" SeparationOverride="4">
+                        <Label Text="{Loc 'bulk-auto-mining-link-consortium'}" StyleClasses="LabelSubText" FontColorOverride="#7FCFC6"/>
+                        <Label Name="ConsortiumSize" StyleClasses="LabelHeading" FontColorOverride="#C8FBFF"/>
+                        <BoxContainer SeparationOverride="6">
+                            <Label Text="{Loc 'bulk-auto-mining-link-bonus-speed'}" HorizontalExpand="True" ClipText="True"/>
+                            <Label Name="SpeedBonus" FontColorOverride="#6FE3C0"/>
+                        </BoxContainer>
+                        <BoxContainer SeparationOverride="6">
+                            <Label Text="{Loc 'bulk-auto-mining-link-bonus-yield'}" HorizontalExpand="True" ClipText="True"/>
+                            <Label Name="YieldBonus" FontColorOverride="#F2C66F"/>
+                        </BoxContainer>
+                        <ProgressBar Name="BonusBar" MinValue="0" MaxValue="1" Value="0" SetHeight="6">
+                            <ProgressBar.ForegroundStyleBoxOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#3FD6C8"/>
+                            </ProgressBar.ForegroundStyleBoxOverride>
+                        </ProgressBar>
+                        <RichTextLabel Name="NextBonus"/>
+                        <BoxContainer Name="MembersBox" Orientation="Vertical" SeparationOverride="2" Margin="0 4 0 0"/>
+                    </BoxContainer>
+                </PanelContainer>
+                <RichTextLabel Name="SelectionHint"/>
+                <BoxContainer Name="IncomingSection" Orientation="Vertical" SeparationOverride="6" Visible="False">
+                    <Label Text="{Loc 'bulk-auto-mining-link-incoming-title'}" StyleClasses="LabelHeading" FontColorOverride="#9CF6FF"/>
+                    <BoxContainer Name="IncomingBox" Orientation="Vertical" SeparationOverride="6"/>
+                </BoxContainer>
+                <BoxContainer Name="LinksSection" Orientation="Vertical" SeparationOverride="6" Visible="False">
+                    <Label Text="{Loc 'bulk-auto-mining-link-active-title'}" StyleClasses="LabelHeading"/>
+                    <BoxContainer Name="LinksBox" Orientation="Vertical" SeparationOverride="6"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" SeparationOverride="6">
+                    <Label Text="{Loc 'bulk-auto-mining-link-ships-title'}" StyleClasses="LabelHeading" ClipText="True"/>
+                    <Label Name="FreeLasers" StyleClasses="LabelSubText" ClipText="True"/>
+                    <RichTextLabel Name="NoShipsLabel" Text="{Loc 'bulk-auto-mining-link-no-ships'}"/>
+                    <BoxContainer Name="ShipsBox" Orientation="Vertical" SeparationOverride="6"/>
+                </BoxContainer>
+                <PanelContainer StyleClasses="LowDivider"/>
+                <RichTextLabel Text="{Loc 'bulk-auto-mining-link-help'}" Margin="0 4 0 0"/>
+            </BoxContainer>
+        </ScrollContainer>
+    </PanelContainer>
+</BoxContainer>

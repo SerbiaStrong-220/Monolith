@@ -10,6 +10,7 @@
     containers:
       storagebase:
       - TechDiskAugok
+      - EncryptionKeyConcernAugok
 
 - type: entity
   parent: CompanyTechDiskCase
@@ -22,6 +23,7 @@
     containers:
       storagebase:
       - TechDiskDrakeBlackArmsUSA
+      - EncryptionKeyConcernDrakeBlackArmsUSA
 
 - type: entity
   parent: CompanyTechDiskCase
@@ -34,6 +36,7 @@
     containers:
       storagebase:
       - TechDiskHorizonHarmonyHammerMatter
+      - EncryptionKeyConcernHorizonHarmonyHammerMatter
 
 - type: entity
   parent: CompanyTechDiskCase
@@ -46,3 +49,4 @@
     containers:
       storagebase:
       - TechDiskBuno
+      - EncryptionKeyConcernBuno

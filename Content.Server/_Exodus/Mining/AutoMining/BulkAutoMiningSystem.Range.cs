@@ -1,147 +1,55 @@
 using System.Numerics;
 using Content.Shared._Exodus.Mining.AutoMining;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server._Exodus.Mining.AutoMining;
 
 public sealed partial class BulkAutoMiningSystem
 {
-    private const int MaxRangeTileChecks = 64;
     private static readonly TimeSpan RangeCheckInterval = TimeSpan.FromSeconds(1);
 
     private bool CheckTargetRange(Entity<BulkAutoMiningConsoleComponent> console, BulkAutoMiningJobComponent job)
     {
-        // Validate each target once before a reachable tile can short-circuit the range search.
-        // Empty entries keep the grid/emitter pair indices stable and are skipped below.
+        // Validate each target before a reachable tile can short-circuit the range search.
         foreach (var gridJob in job.GridJobs)
         {
-            if (gridJob.RemainingTiles.Count == 0)
+            // An exhausted target may have been deleted together with its last tile; it is complete, not lost.
+            if (gridJob.Invalidated || gridJob.Remaining == 0)
                 continue;
 
             var uid = gridJob.GridUid;
             if (TerminatingOrDeleted(uid) || EntityManager.IsQueuedForDeletion(uid) ||
-                !_gridQuery.HasComp(uid) || !_xformQuery.HasComp(uid))
+                !_gridQuery.HasComp(uid) || !_xformQuery.HasComp(uid) || !_surfaceQuery.HasComp(uid))
                 InvalidateGridJob(console, job, gridJob);
         }
 
-        var checks = MaxRangeTileChecks;
-        var pending = false;
-        var rangeSquared = console.Comp.MaxRange * console.Comp.MaxRange;
-        var pairs = job.GridJobs.Count * job.Emitters.Count;
-        var startIndex = job.NextRangePairIndex;
-        for (var offset = 0; offset < pairs; offset++)
+        SyncProgress(console, job);
+        foreach (var gridJob in job.GridJobs)
         {
-            var pairIndex = (startIndex + offset) % pairs;
-            var gridJob = job.GridJobs[pairIndex / job.Emitters.Count];
-            if (gridJob.RemainingTiles.Count == 0)
+            if (gridJob.Invalidated || gridJob.Remaining == 0 ||
+                !_surfaceQuery.TryComp(gridJob.GridUid, out var surface))
                 continue;
 
-            var gridUid = gridJob.GridUid;
-            var grid = _gridQuery.GetComponent(gridUid);
-            var gridXform = _xformQuery.GetComponent(gridUid);
-
-            var emitterIndex = pairIndex % job.Emitters.Count;
-            var emitterUid = job.Emitters[emitterIndex];
-            if (TerminatingOrDeleted(emitterUid) || !_emitterQuery.TryComp(emitterUid, out var emitter) ||
-                emitter.Controller != console.Owner || !_xformQuery.TryComp(emitterUid, out var emitterXform) ||
-                emitterXform.MapUid == null || emitterXform.MapUid != gridXform.MapUid || emitterXform.GridUid == gridUid)
-                continue;
-
-            var position = Vector2.Transform(_transform.GetWorldPosition(emitterXform), _transform.GetInvWorldMatrix(gridXform));
-            var nearest = Vector2.Clamp(position, grid.LocalAABB.BottomLeft, grid.LocalAABB.TopRight);
-            // All distant targets can be rejected in this update, even if a detailed search is unfinished.
-            if (Vector2.DistanceSquared(position, nearest) > rangeSquared)
-                continue;
-
-            ref var search = ref gridJob.RangeSearches[emitterIndex];
-            // A live beam supplies a witness immediately. Keep it when power, obstacles or a full buffer stop the beam.
-            var checksBefore = checks;
-            var candidate = emitter.BeamGrid == gridUid ? emitter.BeamTile : search.CachedTile;
-            if (candidate is { } cached)
+            var grid = _gridQuery.GetComponent(gridJob.GridUid);
+            var gridXform = _xformQuery.GetComponent(gridJob.GridUid);
+            var invMatrix = _transform.GetInvWorldMatrix(gridXform);
+            foreach (var emitterUid in job.Emitters)
             {
-                if (checks == 0)
-                {
-                    pending = true;
+                if (TerminatingOrDeleted(emitterUid) || !_emitterQuery.TryComp(emitterUid, out var emitter) ||
+                    emitter.Controller != console.Owner || !_xformQuery.TryComp(emitterUid, out var emitterXform) ||
+                    emitterXform.MapUid == null || emitterXform.MapUid != gridXform.MapUid ||
+                    emitterXform.GridUid == gridJob.GridUid)
                     continue;
-                }
 
-                checks--;
-                if (gridJob.RemainingTiles.Contains(cached) && IsRemainingTileInRange((gridUid, grid), cached, position, rangeSquared))
-                {
-                    search.CachedTile = cached;
+                // The nearest remaining tile to any outside point is always exposed, so this check is exact.
+                var local = Vector2.Transform(_transform.GetWorldPosition(emitterXform), invMatrix);
+                if (BulkMiningSurfaceSystem.HasExposedTileInRange(surface, grid.TileSize, local, console.Comp.MaxRange))
                     return true;
-                }
-
-                search.CachedTile = null;
-                search.NextTileIndex = 0;
             }
-
-            if (search.NextTileIndex == gridJob.RangeTiles.Count)
-            {
-                if (IsRangeSearchOutOfReach(search, position, console.Comp.MaxRange))
-                    continue;
-
-                search.NextTileIndex = 0;
-            }
-
-            if (search.NextTileIndex == 0)
-            {
-                search.Origin = position;
-                search.MinimumDistanceSquared = float.PositiveInfinity;
-            }
-
-            while (checks > 0 && search.NextTileIndex < gridJob.RangeTiles.Count)
-            {
-                checks--;
-                var tile = gridJob.RangeTiles[search.NextTileIndex++];
-                if (!gridJob.RemainingTiles.Contains(tile))
-                    continue;
-
-                if (!IsTargetTile((gridUid, grid), tile))
-                {
-                    gridJob.RemainingTiles.Remove(tile);
-                    console.Comp.ProcessedTiles++;
-                    continue;
-                }
-
-                var center = _map.GridTileToLocal(gridUid, grid, tile).Position;
-                search.MinimumDistanceSquared = Math.Min(search.MinimumDistanceSquared, Vector2.DistanceSquared(search.Origin, center));
-                if (Vector2.DistanceSquared(position, center) <= rangeSquared)
-                {
-                    search.CachedTile = tile;
-                    return true;
-                }
-            }
-
-            // Rotate the shared budget across pairs so a large target cannot starve other lasers or targets.
-            if (checksBefore > 0 && checks == 0)
-                job.NextRangePairIndex = (pairIndex + 1) % pairs;
-
-            pending |= search.NextTileIndex < gridJob.RangeTiles.Count ||
-                       !IsRangeSearchOutOfReach(search, position, console.Comp.MaxRange);
         }
-
-        // An incomplete search is not evidence that every remaining tile is out of reach.
-        if (pending)
-            return true;
 
         if (!TryFinishMining(console, job))
             StopMining(console, "bulk-auto-mining-stopped-out-of-range");
 
         return false;
-    }
-
-    private static bool IsRangeSearchOutOfReach(BulkAutoMiningRangeSearch search, Vector2 position, float range)
-    {
-        // Tiles are scanned relative to one origin. Allow for movement/rotation since that scan started;
-        // the triangle inequality makes a cached negative result safe without restarting on every movement.
-        var maximumDistance = range + Vector2.Distance(search.Origin, position);
-        return search.MinimumDistanceSquared > maximumDistance * maximumDistance;
-    }
-
-    private bool IsRemainingTileInRange(Entity<MapGridComponent> grid, Vector2i tile, Vector2 position, float rangeSquared)
-    {
-        return Vector2.DistanceSquared(position, _map.GridTileToLocal(grid, grid.Comp, tile).Position) <= rangeSquared &&
-               IsTargetTile(grid, tile);
     }
 }

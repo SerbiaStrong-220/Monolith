@@ -38,15 +38,12 @@ public sealed partial class BulkMiningConnectivityTest
             Assert.That(mining.TrySelectGrid(setup.Console, setup.Target), Is.True);
             Assert.That(mining.TryStartMining(setup.Console), Is.True);
             var job = em.GetComponent<BulkAutoMiningJobComponent>(setup.Console);
-            var gridJob = job.GridJobs[0];
             var bridge = new Vector2i(0, 4);
             var hiddenLeaf = new Vector2i(1, 4);
             Assert.That(ResolveSafety(connectivity, setup.Target, bridge), Is.EqualTo(BulkMiningTileSafety.Unsafe));
             Assert.That(connectivity.GetTileSafety(setup.Target, hiddenLeaf), Is.EqualTo(BulkMiningTileSafety.Safe));
 
-            // The requested leaf is safe, but its actual beam hit is the dangerous front bridge.
-            gridJob.Tiles.Clear();
-            gridJob.Tiles.Enqueue(hiddenLeaf);
+            // The hidden leaf is safe, but only the dangerous front bridge is exposed to the lasers.
             foreach (var emitter in setup.Emitters)
             {
                 emitter.Comp.BeamGrid = setup.Target;
@@ -54,14 +51,10 @@ public sealed partial class BulkMiningConnectivityTest
             }
 
             StepMining(em, setup);
-            Assert.That(setup.Console.Comp.ProcessedTiles, Is.Zero);
-            Assert.That(GetMetal(em, setup), Is.Zero);
+            Assert.That(setup.Console.Comp.ProcessedTiles, Is.InRange(0, 2), "Only the two safe line ends may be cut.");
+            Assert.That(GetMetal(em, setup), Is.EqualTo(setup.Console.Comp.ProcessedTiles * 10));
             Assert.That(maps.GetTileRef(setup.Target, setup.Target.Comp, bridge).Tile.IsEmpty, Is.False);
             Assert.That(maps.GetTileRef(setup.Target, setup.Target.Comp, hiddenLeaf).Tile.IsEmpty, Is.False);
-
-            gridJob.Tiles.Clear();
-            foreach (var point in points)
-                gridJob.Tiles.Enqueue(point);
 
             for (var step = 0; step < 100 && setup.Console.Comp.Active; step++)
             {
@@ -119,22 +112,25 @@ public sealed partial class BulkMiningConnectivityTest
             var second = new Vector2i(0, 4);
             Assert.That(ResolveSafety(connectivity, setup.Target, first), Is.EqualTo(BulkMiningTileSafety.Safe));
             Assert.That(connectivity.GetTileSafety(setup.Target, second), Is.EqualTo(BulkMiningTileSafety.Safe));
-            var job = em.GetComponent<BulkAutoMiningJobComponent>(setup.Console);
-            // Restrict alternatives so failure to mine the second cut cannot hide behind another safe cut.
-            job.GridJobs[0].Tiles.Clear();
-            job.GridJobs[0].Tiles.Enqueue(first);
-            job.GridJobs[0].Tiles.Enqueue(second);
             setup.Emitters[0].Comp.BeamGrid = setup.Target;
             setup.Emitters[0].Comp.BeamTile = first;
             setup.Emitters[1].Comp.BeamGrid = setup.Target;
             setup.Emitters[1].Comp.BeamTile = second;
             StepMining(em, setup);
 
-            Assert.That(setup.Console.Comp.ProcessedTiles, Is.EqualTo(1));
-            Assert.That(GetMetal(em, setup), Is.EqualTo(10));
+            // The second laser may pick another cut that became safe, but never its stale target.
+            Assert.That(setup.Console.Comp.ProcessedTiles, Is.InRange(1, 2));
+            Assert.That(GetMetal(em, setup), Is.EqualTo(setup.Console.Comp.ProcessedTiles * 10));
             Assert.That(maps.GetTileRef(setup.Target, setup.Target.Comp, first).Tile.IsEmpty, Is.True);
             Assert.That(maps.GetTileRef(setup.Target, setup.Target.Comp, second).Tile.IsEmpty, Is.False);
-            Assert.That(ResolveSafety(connectivity, setup.Target, second), Is.EqualTo(BulkMiningTileSafety.Unsafe));
+            var remaining = new HashSet<Vector2i>();
+            foreach (var point in points)
+            {
+                if (!maps.GetTileRef(setup.Target, setup.Target.Comp, point).Tile.IsEmpty)
+                    remaining.Add(point);
+            }
+
+            Assert.That(IsConnected(remaining), Is.True);
             em.System<GridFixtureSystem>().CheckSplits(setup.Target);
             Assert.That(CountGrids(em, setup.MapUid), Is.EqualTo(2));
         });

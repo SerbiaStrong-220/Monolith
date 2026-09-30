@@ -24,7 +24,10 @@ public sealed partial class RotSpreadSystem : EntitySystem
     private EntityQuery<RotSpreadGridComponent> _grids;
     private EntityQuery<RotColonyMemberComponent> _members;
     private readonly List<Entity<RotSpreadComponent>> _work = [];
+    private readonly List<Vector2i> _deferred = [];
     private int _cursor;
+    private int _budget = 1;
+    private int _growthBudget = 1;
     private static readonly Vector2i[] Neighbors = [Vector2i.Up, Vector2i.Right, Vector2i.Down, Vector2i.Left];
     [ViewVariables] public int LastWork { get; private set; }
     [ViewVariables] public int LastGrowth { get; private set; }
@@ -35,6 +38,8 @@ public sealed partial class RotSpreadSystem : EntitySystem
         _sources = GetEntityQuery<RotSpreadComponent>();
         _grids = GetEntityQuery<RotSpreadGridComponent>();
         _members = GetEntityQuery<RotColonyMemberComponent>();
+        Subs.CVar(_configuration, EXCVars.RotSpreadBudget, value => _budget = Math.Max(1, value), true);
+        Subs.CVar(_configuration, EXCVars.RotSpreadMutationBudget, value => _growthBudget = Math.Max(1, value), true);
         InitializeConversion();
         SubscribeLocalEvent<RotSpreadComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<RotSpreadComponent, ComponentShutdown>(OnShutdown);
@@ -202,17 +207,15 @@ public sealed partial class RotSpreadSystem : EntitySystem
         var count = _work.Count;
         if (count == 0)
             return;
-        var budget = Math.Max(1, _configuration.GetCVar(EXCVars.RotSpreadBudget));
-        var growthBudget = Math.Max(1, _configuration.GetCVar(EXCVars.RotSpreadMutationBudget));
         var start = _cursor;
-        for (var i = 0; i < count && LastWork < budget && LastGrowth < growthBudget; i++)
+        for (var i = 0; i < count && LastWork < _budget && LastGrowth < _growthBudget; i++)
         {
             var index = (start + i) % count;
             var ent = _work[index];
             // Eligibility checks also consume budget so inactive colonies cannot create unbounded work.
             LastWork++;
             if (TryContext(ent, out var core, out var grid))
-                Grow(ent, core, grid, Math.Min(16, budget - LastWork));
+                Grow(ent, core, grid, Math.Min(16, _budget - LastWork));
             _cursor = (index + 1) % count;
         }
     }
@@ -221,10 +224,9 @@ public sealed partial class RotSpreadSystem : EntitySystem
         Entity<MapGridComponent> grid, int budget)
     {
         var source = ent.Comp;
-        if (source.Target != null)
+        if (source.Target != null && source.ConversionReady)
         {
-            if (source.ConversionReady)
-                FinishConversion(ent, core, grid);
+            FinishConversion(ent, core, grid);
             return;
         }
         if (source.Rebuild)
@@ -236,7 +238,11 @@ public sealed partial class RotSpreadSystem : EntitySystem
                 for (var y = 0; y < source.Size.Y; y++)
                     Enqueue(source, source.Origin + RotGeometry.Rotate(new Vector2i(x, y), source.Rotation));
         }
-        while (budget-- > 0 && source.Frontier.TryDequeue(out var tile))
+        // Obstacles under corrosion and walls waiting for the running conversion are retried after the rest of
+        // the frontier, so a single table or wall never stalls growth into free tiles around it.
+        _deferred.Clear();
+        var grown = false;
+        while (budget-- > 0 && LastGrowth < _growthBudget && source.Frontier.TryDequeue(out var tile))
         {
             LastWork++;
             var kind = Classify(ent, core, grid, tile, out var target);
@@ -249,12 +255,19 @@ public sealed partial class RotSpreadSystem : EntitySystem
             }
             if (kind == RotGrowthCell.Destructible && target is { } damageTarget)
             {
-                Corrode(ent, tile, damageTarget, core);
-                return;
+                Corrode(ent, damageTarget, core);
+                _deferred.Add(tile);
+                continue;
+            }
+            if (kind == RotGrowthCell.Convertible && source.Target != null)
+            {
+                _deferred.Add(tile);
+                continue;
             }
             if (core.Comp2.Cells.Count >= core.Comp1.MaxTerritory)
             {
                 source.Rebuild = true;
+                _deferred.Clear();
                 Delay(source);
                 return;
             }
@@ -268,9 +281,15 @@ public sealed partial class RotSpreadSystem : EntitySystem
                 ExpandFrontier(source, tile);
                 LastGrowth++;
             }
-            Delay(source);
-            return;
+            grown = true;
+            break;
         }
+        var passFinished = source.Frontier.Count == 0;
+        foreach (var tile in _deferred)
+            source.Frontier.Enqueue(tile);
+        // Growth keeps its pace; a full pass over only obstacles waits instead of rescanning them every tick.
+        if (grown || passFinished)
+            Delay(source);
     }
 
     private void Delay(RotSpreadComponent source)

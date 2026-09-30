@@ -66,3 +66,73 @@ ent-BulkAutoMiningConsoleCircuitboard = плата консоли управле
     .desc = Плата для сборки консоли управления буровыми лазерами.
 ent-BulkAutoMiningEmitterCircuitboard = плата бурового лазера валовой выемки
     .desc = Плата промышленного лазера. Для сборки требуются три единицы америция.
+
+## Связь кораблей в консорциум.
+bulk-auto-mining-mode-mining = Добыча
+bulk-auto-mining-mode-link = Связь кораблей
+bulk-auto-mining-mode-mining-hint = Выбор астероидов и управление выемкой.
+bulk-auto-mining-mode-link-hint = Консорциум: общие сети жидкого металла и бонус переработки.
+bulk-auto-mining-consortium-badge = Консорциум {$count} · +{$percent}%
+bulk-auto-mining-consortium-badge-tooltip = Корабли связаны лазерами. Переработчики в общей сети работают быстрее и тратят меньше жидкого металла.
+bulk-auto-mining-laser-linked = Связь с «{$ship}»
+bulk-auto-mining-laser-hint-linked = Лазер держит связь консорциума и не добывает. Разорвать связь можно во вкладке «Связь кораблей».
+bulk-auto-mining-link-title = Консорциум
+bulk-auto-mining-link-consortium = СВЯЗАННЫЕ КОРАБЛИ
+bulk-auto-mining-link-consortium-size = { $count ->
+    [1] Только этот корабль
+    [one] {$count} корабль
+    [few] {$count} корабля
+   *[other] {$count} кораблей
+}
+bulk-auto-mining-link-bonus-speed = Скорость переработки
+bulk-auto-mining-link-bonus-yield = Выход жидкого металла
+bulk-auto-mining-link-bonus-value = +{$percent}%
+bulk-auto-mining-link-next-bonus = Ещё один корабль добавит [color=#6FE3C0]+{$percent}%[/color].
+bulk-auto-mining-link-bonus-max = Бонус консорциума достиг предела.
+bulk-auto-mining-link-member-self = ● {$name} (этот корабль)
+bulk-auto-mining-link-member = ● {$name}
+bulk-auto-mining-link-incoming-title = Входящие запросы
+bulk-auto-mining-link-active-title = Активные связи
+bulk-auto-mining-link-ships-title = Корабли в зоне
+bulk-auto-mining-link-free-lasers = Свободно лазеров: {$count}
+bulk-auto-mining-link-no-ships = Поблизости нет кораблей с запитанной консолью буровых лазеров.
+bulk-auto-mining-link-help = Связь занимает по одному свободному лазеру на каждом корабле. Лазеры должны видеть друг друга: любое постороннее препятствие разрывает связь, кроме щитов самих связанных кораблей. Каждый корабль увеличивает бонус, но всё слабее.
+bulk-auto-mining-link-radar-title = Обзор и выбор кораблей
+bulk-auto-mining-link-radar-hint = Нажмите на корабль на радаре, чтобы выбрать его для связи.
+bulk-auto-mining-link-selected = Выбран: [color=#C8FBFF]{$name}[/color].
+bulk-auto-mining-link-selected-unavailable = [color=#F2B85F]{$name}[/color] не может ответить: нет запитанной консоли буровых лазеров или корабль вне зоны.
+bulk-auto-mining-link-no-free-own = На этом корабле нет свободного лазера. Остановите добычу или освободите лазер.
+bulk-auto-mining-link-no-free-own-hint = [color=#F2B85F]На этом корабле нет свободного лазера.[/color] Остановите добычу или освободите лазер.
+bulk-auto-mining-link-status-available = Готов к связи
+bulk-auto-mining-link-status-no-free-laser = Все лазеры заняты
+bulk-auto-mining-link-status-obstructed = Линия закрыта
+bulk-auto-mining-link-status-outgoing = Ждём ответа · {$seconds} с
+bulk-auto-mining-link-status-incoming = Просит связи · {$seconds} с
+bulk-auto-mining-link-status-linked = Связан
+bulk-auto-mining-link-request = Связаться
+bulk-auto-mining-link-cancel = Отозвать
+bulk-auto-mining-link-accept = Принять
+bulk-auto-mining-link-decline = Отклонить
+bulk-auto-mining-link-break = Разорвать
+bulk-auto-mining-link-distance = {$distance} м
+bulk-auto-mining-link-lasers = {$own} — {$partner}
+bulk-auto-mining-link-range = Длина луча: {$distance} / {$range} м
+bulk-auto-mining-link-stable = Канал стабилен
+bulk-auto-mining-link-unstable = Помехи на линии: связь вот-вот оборвётся!
+bulk-auto-mining-link-popup-already-linked = Связь с «{$ship}» уже установлена.
+bulk-auto-mining-link-popup-already-requested = Запрос к «{$ship}» уже ждёт ответа.
+bulk-auto-mining-link-popup-cooldown = Слишком частые запросы. Подождите немного.
+bulk-auto-mining-link-popup-too-many = Слишком много запросов без ответа.
+bulk-auto-mining-link-popup-out-of-range = «{$ship}» вне зоны связи.
+bulk-auto-mining-link-popup-no-console = У «{$ship}» нет запитанной консоли буровых лазеров.
+bulk-auto-mining-link-popup-no-free-laser = Нет свободного запитанного лазера для связи.
+bulk-auto-mining-link-popup-obstructed = Свободные лазеры кораблей не видят друг друга.
+bulk-auto-mining-link-popup-incoming = «{$ship}» просит связать сети жидкого металла.
+bulk-auto-mining-link-popup-request-expired = Запрос от «{$ship}» больше не действует.
+bulk-auto-mining-link-popup-declined = «{$ship}» отклонил связь.
+bulk-auto-mining-link-popup-established = Связь с «{$ship}» установлена. Сети жидкого металла объединены.
+bulk-auto-mining-link-popup-broken-manual = Связь с «{$ship}» разорвана.
+bulk-auto-mining-link-popup-broken-obstructed = Связь с «{$ship}» оборвана: луч перекрыт.
+bulk-auto-mining-link-popup-broken-range = Связь с «{$ship}» оборвана: корабли слишком далеко.
+bulk-auto-mining-link-popup-broken-power = Связь с «{$ship}» оборвана: лазер обесточен.
+bulk-auto-mining-link-popup-broken-lost = Связь с «{$ship}» оборвана: лазер потерян.

@@ -124,8 +124,6 @@ nebula-gas-siphon-examine-speed-low = Скорость шаттла: [color=red]
 
 ent-NebulaGasSiphonFilter = небулярный газовый фильтр
     .desc = Сменный картридж для небулярного газового сифона.
-company-tech-disk-case-name = Кейс корпоративных технологических дисков
-company-tech-disk-case-description = Запечатанный кейс с технологическими дисками ведущих корпораций.
 weapon-turret-dravon-flatpack-name = Флэтпак 90-мм автопушки ADBP-7 «Дравон»
 weapon-turret-dravon-flatpack-description = Флэтпак для сборки 90-мм автопушки ADBP-7 «Дравон».
 cdm-shield-generator-name = генератор щита «Бастион» CDM

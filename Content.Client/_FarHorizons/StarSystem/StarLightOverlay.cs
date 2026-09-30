@@ -19,7 +19,7 @@ namespace Content.Client._FarHorizons.StarSystem;
 /// <summary>
 /// I was tempted to paste in a few verses from that one song "Fireflies", but I have restraint.
 /// </summary>
-public sealed class StarLightOverlay : Overlay
+public sealed partial class StarLightOverlay : Overlay // Exodus radar-grid-cache: partial for [Dependency]
 {
     private static readonly ProtoId<ShaderPrototype> StarLightShader = "StarLight";
 
@@ -48,7 +48,11 @@ public sealed class StarLightOverlay : Overlay
     /// It would likely be better to just inform the client of the occluding area somehow, but this is simpler for the time being.
     /// </summary>
     private readonly Dictionary<NetEntity, HashSet<Vector2i>> _remembered = new();
-    private readonly Dictionary<NetEntity, (GameTick Tick, List<Vector2i> Tiles)> _transparent = new();
+    private readonly Dictionary<NetEntity, (GameTick Tick, List<Vector2i> Tiles, TimeSpan NextRebuild)> _transparent = new(); // Exodus radar-grid-cache: throttle rebuilds
+    [Dependency] private IGameTiming _timing = default!; // Exodus radar-grid-cache
+
+    /// <summary>Exodus: continuously excavated grids re-enumerate their tiles at most this often.</summary>
+    private static readonly TimeSpan TransparentRebuildInterval = TimeSpan.FromSeconds(0.5); // Exodus radar-grid-cache
 
     private HashSet<Vector2i> _known = new();
     private float _trustRange;
@@ -82,6 +86,7 @@ public sealed class StarLightOverlay : Overlay
         _tileDefMan = tileDefMan;
         _cfg = cfg;
         _nebulaVisibility = nebulaVisibility; // Exodus
+        IoCManager.InjectDependencies(this); // Exodus radar-grid-cache
 
         _mapSystem = entMan.System<SharedMapSystem>();
         _xformSystem = entMan.System<SharedTransformSystem>();
@@ -342,7 +347,9 @@ public sealed class StarLightOverlay : Overlay
     {
         var net = _entMan.GetNetEntity(grid.Owner);
 
-        if (_transparent.TryGetValue(net, out var cached) && cached.Tick == grid.Comp.LastTileModifiedTick)
+        var now = _timing.RealTime; // Exodus radar-grid-cache
+        if (_transparent.TryGetValue(net, out var cached) &&
+            (cached.Tick == grid.Comp.LastTileModifiedTick || now < cached.NextRebuild)) // Exodus radar-grid-cache: mining planetoids change every tick
             return cached.Tiles;
 
         var tiles = cached.Tiles ?? new List<Vector2i>();
@@ -356,7 +363,7 @@ public sealed class StarLightOverlay : Overlay
                 tiles.Add(tileRef.Value.GridIndices);
         }
 
-        _transparent[net] = (grid.Comp.LastTileModifiedTick, tiles);
+        _transparent[net] = (grid.Comp.LastTileModifiedTick, tiles, now + TransparentRebuildInterval); // Exodus radar-grid-cache
         return tiles;
     }
 

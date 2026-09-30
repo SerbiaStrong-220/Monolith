@@ -34,7 +34,7 @@ ghost-role-rot-sated-rules =
     Вы не помните свою предыдущую жизнь и ничего из того, что узнали, будучи призраком.
 rot-hungry-threat = Вы чувствуете угрозу: этот гуманоид вооружён или уже проявлял агрессию.
 ghost-role-rot-hungry-name = Голодный
-ghost-role-rot-hungry-description = Свирепый страж колонии гнили, выслеживающий тех, кто способен ей угрожать.
+ghost-role-rot-hungry-description = Свирепый страж колонии гнили, выслеживающий тех, кто способен ей угрожать, и ломающий препятствия ударом под себя.
 ghost-role-rot-hungry-rules =
     Вы — [color={ role-type-team-antagonist-color }][bold]Голодный[/bold][/color], страж колонии гнили.
     Ваши [color=green]союзники[/color] — другие Голодные, Сытые, переносчики и личинки гнили.

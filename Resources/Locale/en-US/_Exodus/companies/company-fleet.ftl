@@ -124,8 +124,6 @@ nebula-gas-siphon-examine-speed-low = Shuttle speed: [color=red]{ $speed } / { $
 
 ent-NebulaGasSiphonFilter = nebula gas siphon filter
     .desc = A replaceable cartridge for a nebula gas siphon.
-company-tech-disk-case-name = Corporate technology disk case
-company-tech-disk-case-description = A sealed case containing proprietary technology disks from the major corporations.
 weapon-turret-dravon-flatpack-name = ADBP-7 DRAVON 90mm autocannon flatpack
 weapon-turret-dravon-flatpack-description = A flatpack used to construct an ADBP-7 DRAVON 90mm autocannon turret.
 cdm-shield-generator-name = CDM Bastion shield generator

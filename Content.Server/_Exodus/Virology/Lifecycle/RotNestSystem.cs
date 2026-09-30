@@ -38,6 +38,7 @@ public sealed partial class RotNestSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private NPCSteeringSystem _steering = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private RotPopulationSystem _population = default!;
     [Dependency] private IGameTiming _timing = default!;
     private readonly HashSet<Entity<BodyComponent>> _bodies = [];
     private readonly List<EntityUid> _removed = [];
@@ -48,6 +49,7 @@ public sealed partial class RotNestSystem : EntitySystem
         base.Initialize();
         InitializeFeeding();
         SubscribeLocalEvent<RotNestComponent, MapInitEvent>(OnNestInit);
+        SubscribeLocalEvent<RotNestComponent, ExaminedEvent>(OnNestExamined);
         SubscribeLocalEvent<RotLarvaComponent, MapInitEvent>(OnLarvaInit);
         SubscribeLocalEvent<RotLarvaComponent, ComponentShutdown>(OnLarvaShutdown);
         SubscribeLocalEvent<RotLarvaComponent, MobStateChangedEvent>(OnLarvaState);
@@ -65,6 +67,12 @@ public sealed partial class RotNestSystem : EntitySystem
     {
         ent.Comp.NextSpawn = _timing.CurTime + ent.Comp.SpawnInterval;
         ent.Comp.SelectedVines ??= new(_tables.GetSpawns(ent.Comp.Vines));
+    }
+
+    private void OnNestExamined(Entity<RotNestComponent> ent, ref ExaminedEvent args)
+    {
+        if (_population.IsCrowded(ent))
+            args.PushMarkup(Loc.GetString("rot-colony-overcrowded"));
     }
 
     private void OnLarvaInit(Entity<RotLarvaComponent> ent, ref MapInitEvent args)
@@ -136,7 +144,7 @@ public sealed partial class RotNestSystem : EntitySystem
             }
             foreach (var child in _removed)
                 nest.Larvae.Remove(child);
-            if (nest.Larvae.Count >= nest.Capacity)
+            if (nest.Larvae.Count >= nest.Capacity || !_population.TryReserve(uid))
                 continue;
 
             var larva = Spawn(nest.Larva, Transform(uid).Coordinates);

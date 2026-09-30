@@ -5,6 +5,8 @@ using Content.Server.Lathe;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Shared._Exodus.CCVar;
+using Content.Shared._Exodus.Mining.AutoMining;
 using Content.Shared._Exodus.Mining.Pipes;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -13,6 +15,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.NodeContainer;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Exodus.Mining.Pipes;
@@ -32,11 +35,16 @@ public sealed partial class MiningRefinerySystem : EntitySystem
     [Dependency] private MiningPipeNetSystem _pipes = default!;
     [Dependency] private ExplosionSystem _explosions = default!;
     [Dependency] private SharedMaterialStorageSystem _materials = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
     private EntityQuery<MiningPipeNetworkMemberComponent> _memberQuery;
     private EntityQuery<LatheComponent> _latheQuery;
+
+    private float _linkBonus;
+    private float _linkBonusDecay;
+    private float _linkMaxBonus;
 
     public override void Initialize()
     {
@@ -50,6 +58,10 @@ public sealed partial class MiningRefinerySystem : EntitySystem
         SubscribeLocalEvent<MiningRefineryComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MiningRefineryComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<MiningRefineryComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+
+        Subs.CVar(_cfg, EXCVars.BulkMiningLinkBonus, value => _linkBonus = value, true);
+        Subs.CVar(_cfg, EXCVars.BulkMiningLinkBonusDecay, value => _linkBonusDecay = value, true);
+        Subs.CVar(_cfg, EXCVars.BulkMiningLinkMaxBonus, value => _linkMaxBonus = value, true);
     }
 
     private void OnRefreshParts(Entity<MiningRefineryComponent> ent, ref RefreshPartsEvent args)
@@ -144,7 +156,10 @@ public sealed partial class MiningRefinerySystem : EntitySystem
                 comp.NextUpdate += UpdateInterval;
                 // Intake runs even with the UI closed and production idle.
                 if (member != null)
+                {
                     _pipes.FillBuffer((uid, member), comp.SlurryMaterial);
+                    UpdateLinkBonus((uid, comp), _pipes.CountJoinedShips((uid, member)));
+                }
 
                 UpdateExhaust((uid, comp));
             }
@@ -163,13 +178,37 @@ public sealed partial class MiningRefinerySystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Applies the consortium bonus of the joined liquid metal networks as a separate lathe multiplier:
+    /// faster refining and cheaper recipes (the lasers' extra yield). Machine part upgrades stay independent.
+    /// </summary>
+    public void UpdateLinkBonus(Entity<MiningRefineryComponent> ent, int ships)
+    {
+        var bonus = BulkMiningLinkBonus.Get(ships, _linkBonus, _linkBonusDecay, _linkMaxBonus);
+        if (ent.Comp.LinkedShips == ships && MathHelper.CloseTo(ent.Comp.LinkBonus, bonus))
+            return;
+
+        if (!MathHelper.CloseTo(ent.Comp.LinkBonus, bonus) && _latheQuery.TryComp(ent, out var lathe))
+        {
+            // Divide out the previous bonus, so repeated changes and loading a saved machine never compound.
+            var ratio = (1f + ent.Comp.LinkBonus) / (1f + bonus);
+            _lathe.MultiplyLatheMultipliers(ent.Owner, materialUse: ratio, time: ratio);
+            ent.Comp.LinkBonus = bonus;
+            _lathe.UpdateUserInterfaceState(ent, lathe);
+        }
+
+        ent.Comp.LinkedShips = ships;
+        Dirty(ent);
+        UpdateStorageState(ent);
+    }
+
     public void UpdateStorageState(Entity<MiningRefineryComponent> ent)
     {
         var capacity = TryComp<MiningPipeNetworkMemberComponent>(ent, out var member)
             ? _pipes.GetStorageCapacity((ent, member))
             : CompOrNull<MaterialStorageComponent>(ent)?.StorageLimit;
         var state = new MiningRefineryStorageState(ent.Comp.Exhaust.TotalMoles, ent.Comp.Exhaust.Pressure,
-            _materials.GetMaterialAmount(ent, ent.Comp.SlurryMaterial), capacity);
+            _materials.GetMaterialAmount(ent, ent.Comp.SlurryMaterial), capacity, ent.Comp.LinkedShips, ent.Comp.LinkBonus);
         if (state == ent.Comp.StorageState)
             return;
 

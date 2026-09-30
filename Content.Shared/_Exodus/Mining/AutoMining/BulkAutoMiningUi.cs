@@ -23,6 +23,9 @@ public sealed class BulkAutoMiningBoundUserInterfaceState : BoundUserInterfaceSt
     public bool CanStart;
     public List<BulkAutoMiningLaserState> LinkedLasers;
 
+    /// <summary>Consortium links of this ship, link requests and nearby ships that can be linked.</summary>
+    public BulkMiningLinkUiState Link;
+
     public BulkAutoMiningBoundUserInterfaceState(
         NavInterfaceState navState,
         List<BulkAutoMiningTargetState> selectedTargets,
@@ -31,7 +34,8 @@ public sealed class BulkAutoMiningBoundUserInterfaceState : BoundUserInterfaceSt
         int totalTiles,
         bool active,
         List<BulkAutoMiningLaserState> linkedLasers,
-        bool canStart)
+        bool canStart,
+        BulkMiningLinkUiState? link = null)
     {
         NavState = navState;
         SelectedTargets = selectedTargets;
@@ -41,6 +45,7 @@ public sealed class BulkAutoMiningBoundUserInterfaceState : BoundUserInterfaceSt
         Active = active;
         CanStart = canStart;
         LinkedLasers = linkedLasers;
+        Link = link ?? new BulkMiningLinkUiState();
     }
 }
 
