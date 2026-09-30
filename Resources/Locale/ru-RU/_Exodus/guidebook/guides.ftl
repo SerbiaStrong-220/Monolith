@@ -37,3 +37,4 @@ guide-entry-leviathan = Космический левиафан
 guide-entry-ship-repair-drones = Ремонтные дроны
 guide-entry-genetics = Генетика
 guide-entry-genetics-mutations = Мутации
+guide-entry-medical-implants = Медицинские импланты

@@ -5,6 +5,7 @@
   children:
   - DirectorOfCare # Frontier
   - MedicalDoctor
+  - MedicalImplants # Exodus: medical service tiers, tracking and department revenue.
   - Chemist
   - Cloning
   - Cryogenics # Note: Frontier changes inside

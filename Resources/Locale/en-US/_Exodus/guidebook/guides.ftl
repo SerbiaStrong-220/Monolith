@@ -8,3 +8,4 @@ guide-entry-exodus-rule-ghost-roles-rot-hungry = Hungry
 guide-entry-ship-repair-drones = Repair drones
 guide-entry-genetics = Genetics
 guide-entry-genetics-mutations = Mutations
+guide-entry-medical-implants = Medical implants
