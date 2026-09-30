@@ -1,5 +1,5 @@
 - type: playtimeSalary
   id: Silicon
-  hourlyRate: 40000
-  payoutInterval: 1500
+  hourlyRate: 48000 # 20,000 per 25-minute payout.
+  payoutInterval: 1500 # 25 minutes.
   paymentMessage: playtime-salary-silicon-paid
