@@ -18,7 +18,9 @@ using Content.Shared._Exodus.Stances;
 using Content.Shared._Exodus.Territory;
 using Content.Shared._White.Overlays;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -365,6 +367,50 @@ public sealed class SpecialCreatureTest
             {
                 em.DeleteEntity(creature);
             }
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task BreathesFromOwnTankThroughMaskEvenOnAllFours()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var em = server.EntMan;
+        EntityUid map = default;
+        EntityUid creature = default;
+        EntityUid tank = default;
+        await server.WaitAssertion(() =>
+        {
+            map = em.System<SharedMapSystem>().CreateMap();
+            creature = em.SpawnEntity("MobSpecial", new EntityCoordinates(map, 0, 0));
+            tank = em.SpawnEntity("JetpackMiniFilled", new EntityCoordinates(map, 0, 0));
+            var inventory = em.System<InventorySystem>();
+            Assert.That(inventory.TryEquip(creature, tank, "back", silent: true, force: true));
+            Assert.That(em.GetComponent<LocomotionStanceComponent>(creature).Stance, Is.EqualTo(LocomotionStance.Quadruped));
+            Assert.That(em.System<ActionBlockerSystem>().CanInteract(creature, null), Is.False);
+
+            var action = em.GetComponent<ActionGrantComponent>(creature).ActionEntities
+                .Single(uid => em.GetComponent<MetaDataComponent>(uid).EntityPrototype!.ID == "ActionSpecialToggleInternals");
+            Assert.That(em.GetComponent<InstantActionComponent>(action).CheckCanInteract, Is.False);
+            var withoutMask = new ToggleInternalsActionEvent { Performer = creature };
+            em.EventBus.RaiseLocalEvent(creature, withoutMask);
+            Assert.That(withoutMask.Handled, Is.False, "The ordinary breath tool requirement still applies.");
+
+            var mask = em.SpawnEntity("ClothingMaskBreath", new EntityCoordinates(map, 0, 0));
+            Assert.That(inventory.TryEquip(creature, mask, "mask", silent: true, force: true));
+            var toggle = new ToggleInternalsActionEvent { Performer = creature };
+            em.EventBus.RaiseLocalEvent(creature, toggle);
+            Assert.That(toggle.Handled);
+            Assert.That(em.GetComponent<InternalsComponent>(creature).GasTankEntity, Is.EqualTo(tank));
+        });
+        await pair.RunSeconds(20);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(em.GetComponent<PressureBreathingComponent>(creature).CanBreathe, "Vacuum must not matter on internals.");
+            Assert.That(em.GetComponent<DamageableComponent>(creature).Damage.DamageDict.GetValueOrDefault("Asphyxiation"),
+                Is.EqualTo(FixedPoint2.Zero));
+            em.DeleteEntity(map);
         });
         await pair.CleanReturnAsync();
     }
