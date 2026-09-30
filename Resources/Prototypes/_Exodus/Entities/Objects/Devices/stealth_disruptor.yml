@@ -1,0 +1,36 @@
+- type: entity
+  parent: BaseItem
+  id: StealthDisruptor
+  name: cloaking disruptor
+  description: A handheld pulse generator that reveals cloaked creatures and objects, even inside containers.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#ffbb33"
+    - state: door_remotescreencolour
+      color: "#66d9ff"
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: UseDelay
+    delay: 60
+  - type: StealthDisruptor
+    range: 10
+    suppressionDuration: 20
+    requiresLineOfSight: false
+    revealSound:
+      path: /Audio/Effects/chime.ogg
+      params:
+        volume: 5
+
+- type: entity
+  parent: Exclamation
+  id: StealthRevealEffect
+  categories: [ HideSpawnMenu ]
+  save: false
+  components:
+  - type: Sprite
+    offset: 0, 1

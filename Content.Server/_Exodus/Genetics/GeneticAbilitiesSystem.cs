@@ -190,6 +190,11 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
             args.Handled = true;
             return;
         }
+        if (_stealth.IsSuppressed(ent))
+        {
+            _popup.PopupEntity(Loc.GetString("stealth-disruptor-suppressed"), ent, ent);
+            return;
+        }
         if (state.CloakAvailable > _timing.CurTime)
         {
             _popup.PopupEntity(Loc.GetString("genetics-cloak-cooldown"), ent, ent);

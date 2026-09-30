@@ -59,13 +59,19 @@ public sealed partial class ActiveCloakSystem : EntitySystem
     private void OnReveal(Entity<ActiveCloakComponent> ent, ref StealthRevealEvent args)
     {
         if (ent.Comp.Enabled)
+        {
             BreakCloak(args.Target, ent.Comp);
+            Dirty(ent);
+        }
     }
 
     private void OnRevealRelayed(Entity<ActiveCloakComponent> ent, ref InventoryRelayedEvent<StealthRevealEvent> args)
     {
         if (ent.Comp.Enabled)
+        {
             BreakCloak(args.Args.Target, ent.Comp);
+            Dirty(ent);
+        }
     }
 
     private void OnShutdown(EntityUid uid, ActiveCloakComponent comp, ComponentShutdown args)
@@ -188,6 +194,12 @@ public sealed partial class ActiveCloakSystem : EntitySystem
 
     private void TryEnableCloak(EntityUid target, EntityUid cloak, ActiveCloakComponent comp)
     {
+        if (_stealth.IsSuppressed(target))
+        {
+            _popup.PopupPredicted(Loc.GetString("stealth-disruptor-suppressed"), target, target);
+            return;
+        }
+
         // if its toggleable and isn't toggled then the cloak is off too
         if (TryComp<ItemToggleComponent>(cloak, out var itemToggle) && !itemToggle.Activated)
             return;
