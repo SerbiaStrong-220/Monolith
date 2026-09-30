@@ -180,6 +180,15 @@ public sealed partial class GeneticAdaptationsTest
             Assert.That(entities.GetComponent<MetaDataComponent>(clone).EntityPrototype!.ID, Is.EqualTo("MobHuman"));
             var cloneAppearance = entities.GetComponent<HumanoidAppearanceComponent>(clone);
             Assert.That(cloneAppearance.Species.Id, Is.EqualTo("Reptilian"));
+            var cloneState = entities.GetComponent<GeneticAbilityStateComponent>(clone);
+            var sourceState = entities.GetComponent<GeneticAbilityStateComponent>(body);
+            Assert.That(cloneState.OriginalAppearance?.Species.Id, Is.EqualTo("SlimePerson"));
+            Assert.That(cloneState.GeneticOriginalAppearance?.Species.Id, Is.EqualTo("Human"));
+            Assert.That(cloneState.OriginalAppearance, Is.Not.SameAs(sourceState.OriginalAppearance));
+            Assert.That(cloneState.GeneticOriginalAppearance, Is.Not.SameAs(sourceState.GeneticOriginalAppearance));
+            Assert.That(cloneState.TransformationColor, Is.EqualTo(sourceState.TransformationColor));
+            Assert.That(cloneState.TransformationAvailable, Is.EqualTo(sourceState.TransformationAvailable));
+            Assert.That(entities.GetComponent<GeneticEffectsComponent>(clone).InAlternateForm, Is.False);
             Assert.That(genetics.TryGetGenome(clone, out var cloneGenome), Is.True);
             var round = genetics.GetRound();
             var mimicBlock = round.Mutations.IndexOf("GeneticMimic");

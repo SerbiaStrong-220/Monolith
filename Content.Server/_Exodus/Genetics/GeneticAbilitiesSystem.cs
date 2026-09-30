@@ -32,6 +32,7 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
     [Dependency] private SharedStealthSystem _stealth = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private GeneticsSystem _genetics = default!;
 
     private const string CloakSource = "Genetics";
 
@@ -113,6 +114,13 @@ public sealed partial class GeneticAbilitiesSystem : EntitySystem
         StopTransformation((args.Target, state));
         var visible = ent.Comp.FormAppearance ?? current;
         var original = ent.Comp.GeneticOriginalAppearance ?? ent.Comp.OriginalAppearance ?? visible;
+
+        // First-time genome initialization reconciles inactive genes and clears mimicry state.
+        // Do it on the biological appearance before installing the source's restoration snapshots.
+        _appearance.ApplyAppearance(args.Target, original);
+        if (!_genetics.TryGetGenome(args.Target, out _))
+            return;
+
         state.OriginalAppearance = ent.Comp.OriginalAppearance == null
             ? null : _serialization.CreateCopy(original, notNullableOverride: true);
         state.OriginalName = ent.Comp.OriginalName;
