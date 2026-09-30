@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client._Exodus.UserInterface.StatusIcons; // Exodus: selectable status icons.
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
@@ -94,12 +95,19 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
                 return;
             _severity = severity;
 
+            RefreshIcon(); // Exodus: also refresh icons when the theme changes.
+        }
+
+        // Exodus-begin: refresh only the icon, preserving cooldowns and other sprite layers.
+        private void RefreshIcon()
+        {
             if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
                 return;
-            var icon = Alert.GetIcon(_severity);
+            var icon = UserInterfaceManager.GetUIController<StatusIconThemeUIController>().GetAlertIcon(Alert, _severity);
             if (_sprite.LayerMapTryGet((_spriteViewEntity, sprite), AlertVisualLayers.Base, out var layer, false))
                 _sprite.LayerSetSprite((_spriteViewEntity, sprite), layer, icon);
         }
+        // Exodus-end
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -122,12 +130,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
                 _entityManager.QueueDeleteEntity(_spriteViewEntity);
 
             _spriteViewEntity = _entityManager.Spawn(Alert.AlertViewEntity);
-            if (_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
-            {
-                var icon = Alert.GetIcon(_severity);
-                if (_sprite.LayerMapTryGet((_spriteViewEntity, sprite), AlertVisualLayers.Base, out var layer, false))
-                    _sprite.LayerSetSprite((_spriteViewEntity, sprite), layer, icon);
-            }
+            RefreshIcon(); // Exodus: use the selected status icon theme.
 
             _icon.SetEntity(_spriteViewEntity);
         }
@@ -135,12 +138,14 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         protected override void EnteredTree()
         {
             base.EnteredTree();
+            UserInterfaceManager.GetUIController<StatusIconThemeUIController>().ThemeChanged += RefreshIcon; // Exodus
             SetupIcon();
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
+            UserInterfaceManager.GetUIController<StatusIconThemeUIController>().ThemeChanged -= RefreshIcon; // Exodus
 
             if (!_entityManager.Deleted(_spriteViewEntity))
                 _entityManager.QueueDeleteEntity(_spriteViewEntity);

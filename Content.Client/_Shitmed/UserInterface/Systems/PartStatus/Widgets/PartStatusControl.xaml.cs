@@ -36,11 +36,15 @@ public sealed partial class PartStatusControl : UIWidget
 
     public void SetTextures(Dictionary<TargetBodyPart, TargetIntegrity> state)
     {
+        // Exodus-begin: retain the displayed state for immediate theme changes.
+        _bodyStatus = state;
+        var path = StatusIconTheme.Theme.PartStatusPath;
+        // Exodus-end
         foreach (var (bodyPart, integrity) in state)
         {
             string enumName = Enum.GetName(typeof(TargetBodyPart), bodyPart) ?? "Unknown";
             int enumValue = (int) integrity;
-            var texture = new SpriteSpecifier.Rsi(new ResPath($"/Textures/_Exodus/Interface/Targeting/Status/{enumName.ToLowerInvariant()}.rsi"), $"{enumName.ToLowerInvariant()}_{enumValue}");  //Exodus retextur
+            var texture = new SpriteSpecifier.Rsi(path / $"{enumName.ToLowerInvariant()}.rsi", $"{enumName.ToLowerInvariant()}_{enumValue}"); // Exodus: selected status icon theme.
             _partStatusControls[bodyPart].Texture = _controller.GetTexture(texture);
         }
     }

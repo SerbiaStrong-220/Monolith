@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Client.UserInterface.Screens;
+using Content.Shared._Exodus.CCVar; // Exodus: selectable status icons.
+using Content.Shared._Exodus.Hud; // Exodus: selectable status icons.
 using Content.Shared._Mono.CCVar;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;
@@ -44,6 +46,18 @@ public sealed partial class MiscTab : Control
 
         Control.AddOptionDropDown(CVars.InterfaceTheme, DropDownHudTheme, themeEntries);
         Control.AddOptionDropDown(CCVars.UILayout, DropDownHudLayout, layoutEntries);
+
+        // Exodus-begin: selectable status icons.
+        var statusIconThemes = _prototypeManager.EnumeratePrototypes<StatusIconThemePrototype>().ToList();
+        statusIconThemes.Sort((left, right) => left.Order.CompareTo(right.Order));
+        var statusIconEntries = new List<OptionDropDownCVar<string>.ValueOption>();
+        foreach (var theme in statusIconThemes)
+        {
+            statusIconEntries.Add(new OptionDropDownCVar<string>.ValueOption(theme.ID, Loc.GetString(theme.Name)));
+        }
+
+        Control.AddOptionDropDown(EXCVars.StatusIconTheme, DropDownStatusIconTheme, statusIconEntries);
+        // Exodus-end
 
         Control.AddOptionCheckBox(CVars.DiscordEnabled, DiscordRich);
         Control.AddOptionCheckBox(CCVars.ShowOocPatronColor, ShowOocPatronColor);

@@ -1,0 +1,139 @@
+- type: statusIconTheme
+  id: Standard
+  name: exodus-status-icon-theme-standard
+  order: 0
+  partStatusPath: /Textures/_Shitmed/Interface/Targeting/Status/
+
+- type: statusIconTheme
+  id: Exodus
+  name: exodus-status-icon-theme-exodus
+  order: 1
+  partStatusPath: /Textures/_Exodus/Interface/Targeting/Status/
+  alertIcons:
+    LowOxygen:
+    - sprite: /Textures/_Exodus/Interface/Alerts/breathing.rsi
+      state: not_enough_oxy
+    LowNitrogen:
+    - sprite: /Textures/_Exodus/Interface/Alerts/breathing.rsi
+      state: not_enough_nitro
+    Toxins:
+    - sprite: /Textures/_Exodus/Interface/Alerts/breathing.rsi
+      state: too_much_tox
+    LowPressure:
+    - sprite: /Textures/_Exodus/Interface/Alerts/pressure.rsi
+      state: lowpressure1
+    - sprite: /Textures/_Exodus/Interface/Alerts/pressure.rsi
+      state: lowpressure2
+    HighPressure:
+    - sprite: /Textures/_Exodus/Interface/Alerts/pressure.rsi
+      state: highpressure1
+    - sprite: /Textures/_Exodus/Interface/Alerts/pressure.rsi
+      state: highpressure2
+    Fire:
+    - sprite: /Textures/_Exodus/Interface/Alerts/fire.rsi
+      state: fire
+    Weightless:
+    - sprite: /Textures/_Exodus/Interface/Alerts/weightless.rsi
+      state: weightless
+    Walking:
+    - sprite: /Textures/_Exodus/Interface/Alerts/walking.rsi
+      state: walking
+    Stun:
+    - sprite: /Textures/_Exodus/Interface/Alerts/stunned.rsi
+      state: stunned
+    Handcuffed:
+    - sprite: /Textures/_Exodus/Interface/Alerts/handcuffed.rsi
+      state: handcuffed
+    Ensnared:
+    - sprite: /Textures/_Exodus/Interface/Alerts/ensnared.rsi
+      state: ensnared
+    Buckled:
+    - sprite: /Textures/_Exodus/Interface/Alerts/buckle.rsi
+      state: buckled
+    HumanCrit:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_critical.rsi
+      state: critical
+    HumanDead:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_dead.rsi
+      state: dead
+    HumanHealth:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health0
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health1
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health2
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health3
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health4
+    Internals:
+    - sprite: /Textures/_Exodus/Interface/Alerts/internals.rsi
+      state: internal0
+    - sprite: /Textures/_Exodus/Interface/Alerts/internals.rsi
+      state: internal1
+    - sprite: /Textures/_Exodus/Interface/Alerts/internals.rsi
+      state: internal2
+    PilotingShuttle:
+    - sprite: /Textures/_Exodus/Interface/Alerts/piloting.rsi
+      state: piloting
+    Peckish:
+    - sprite: /Textures/_Exodus/Interface/Alerts/hunger.rsi
+      state: peckish
+    Stamina:
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina0
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina1
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina2
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina3
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina4
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina5
+    - sprite: /Textures/_Exodus/Interface/Alerts/stamina.rsi
+      state: stamina6
+    Starving:
+    - sprite: /Textures/_Exodus/Interface/Alerts/hunger.rsi
+      state: starving
+    Thirsty:
+    - sprite: /Textures/_Exodus/Interface/Alerts/thirst.rsi
+      state: thirsty
+    Parched:
+    - sprite: /Textures/_Exodus/Interface/Alerts/thirst.rsi
+      state: parched
+    Muted:
+    - sprite: /Textures/_Exodus/Interface/Alerts/abilities.rsi
+      state: silenced
+    VowOfSilence:
+    - sprite: /Textures/_Exodus/Interface/Alerts/abilities.rsi
+      state: silenced
+    Pulled:
+    - sprite: /Textures/_Exodus/Interface/Alerts/pull.rsi
+      state: pulled
+    Pulling:
+    - sprite: /Textures/_Exodus/Interface/Alerts/pull.rsi
+      state: pulling
+    Pacified:
+    - sprite: /Textures/_Exodus/Interface/Alerts/pacified.rsi
+      state: icon
+    Debug1:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health0
+    Debug2:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health1
+    Debug3:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health2
+    Debug4:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health3
+    Debug5:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_alive.rsi
+      state: health4
+    Debug6:
+    - sprite: /Textures/_Exodus/Interface/Alerts/human_critical.rsi
+      state: critical

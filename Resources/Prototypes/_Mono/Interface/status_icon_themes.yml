@@ -1,0 +1,135 @@
+# Exodus-begin: selectable Monolith status icons using the original Crescent resources.
+# Imported alert mapping and body indicator:
+# https://github.com/Monolith-Station/Monolith/commit/c55e373dd85f353425529aae9f786ec627fc2c98
+# Temperature sprite update (already present in Resources/Textures/_Crescent):
+# https://github.com/Monolith-Station/Monolith/commit/60767e98d110be6ddaa7bf8c92db843ceb92759c
+# Original authors and licenses are preserved in each RSI's meta.json.
+- type: statusIconTheme
+  id: Monolith
+  name: exodus-status-icon-theme-monolith
+  order: 2
+  partStatusPath: /Textures/_Crescent/Interface/Targeting/Status/
+  alertIcons:
+    LowOxygen:
+    - sprite: /Textures/_Crescent/Interface/Alerts/breathing.rsi
+      state: not_enough_oxy
+    LowNitrogen:
+    - sprite: /Textures/_Crescent/Interface/Alerts/breathing.rsi
+      state: not_enough_nitro
+    Toxins:
+    - sprite: /Textures/_Crescent/Interface/Alerts/breathing.rsi
+      state: too_much_tox
+    LowPressure:
+    - sprite: /Textures/_Crescent/Interface/Alerts/pressure.rsi
+      state: lowpressure1
+    - sprite: /Textures/_Crescent/Interface/Alerts/pressure.rsi
+      state: lowpressure2
+    HighPressure:
+    - sprite: /Textures/_Crescent/Interface/Alerts/pressure.rsi
+      state: highpressure1
+    - sprite: /Textures/_Crescent/Interface/Alerts/pressure.rsi
+      state: highpressure2
+    Fire:
+    - sprite: /Textures/_Crescent/Interface/Alerts/fire.rsi
+      state: fire
+    Cold:
+    - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
+      state: cold1
+    - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
+      state: cold2
+    - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
+      state: cold3
+    Hot:
+    - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
+      state: hot1
+    - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
+      state: hot2
+    - sprite: /Textures/_Crescent/Interface/Alerts/temperature.rsi
+      state: hot3
+    Weightless:
+    - sprite: /Textures/_Crescent/Interface/Alerts/zero_g.rsi
+      state: zero_g
+    Buckled:
+    - sprite: /Textures/_Crescent/Interface/Alerts/buckled.rsi
+      state: buckled
+    HumanCrit:
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_critical.rsi
+      state: critical
+    HumanDead:
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_dead.rsi
+      state: dead
+    HumanHealth:
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_alive.rsi
+      state: health0
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_alive.rsi
+      state: health1
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_alive.rsi
+      state: health2
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_alive.rsi
+      state: health3
+    - sprite: /Textures/_Crescent/Interface/Alerts/human_alive.rsi
+      state: health4
+    Internals:
+    - sprite: /Textures/_Crescent/Interface/Alerts/internals.rsi
+      state: internal0
+    - sprite: /Textures/_Crescent/Interface/Alerts/internals.rsi
+      state: internal1
+    - sprite: /Textures/_Crescent/Interface/Alerts/internals.rsi
+      state: internal2
+    Peckish:
+    - sprite: /Textures/_Crescent/Interface/Alerts/hunger.rsi
+      state: peckish
+    Stamina:
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina0
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina1
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina2
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina3
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina4
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina5
+    - sprite: /Textures/_Crescent/Interface/Alerts/stamina.rsi
+      state: stamina6
+    Starving:
+    - sprite: /Textures/_Crescent/Interface/Alerts/hunger.rsi
+      state: starving
+    Thirsty:
+    - sprite: /Textures/_Crescent/Interface/Alerts/thirst.rsi
+      state: thirsty
+    Parched:
+    - sprite: /Textures/_Crescent/Interface/Alerts/thirst.rsi
+      state: parched
+    Pulled:
+    - sprite: /Textures/_Crescent/Interface/Alerts/pull.rsi
+      state: pulled
+    Pulling:
+    - sprite: /Textures/_Crescent/Interface/Alerts/pull.rsi
+      state: pulling
+    Bleed:
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed0
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed1
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed2
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed3
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed4
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed5
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed6
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed7
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed8
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed9
+    - sprite: /Textures/_Crescent/Interface/Alerts/bleed.rsi
+      state: bleed10
+# Exodus-end

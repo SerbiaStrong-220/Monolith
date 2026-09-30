@@ -9,6 +9,8 @@
                        StyleClasses="LabelKeyText"/>
                 <ui:OptionDropDown Name="DropDownHudTheme" Title="{Loc 'ui-options-hud-theme'}" />
                 <ui:OptionDropDown Name="DropDownHudLayout" Title="{Loc 'ui-options-hud-layout'}" />
+                <!-- Exodus: selectable status icons. -->
+                <ui:OptionDropDown Name="DropDownStatusIconTheme" Title="{Loc 'exodus-ui-options-status-icon-theme'}" />
                 <Label Text="{Loc 'ui-options-general-discord'}"
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="DiscordRich" Text="{Loc 'ui-options-discordrich'}" />
