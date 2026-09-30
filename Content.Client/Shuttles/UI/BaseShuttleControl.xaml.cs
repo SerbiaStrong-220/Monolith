@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client._Exodus.Shuttles.Radar; // Exodus radar-grid-cache
 using Content.Client.UserInterface.Controls;
 using Content.Shared._Mono.GridEdgeMarker; // Mono
 using Content.Shared.Maps; // Mono
@@ -24,31 +25,15 @@ namespace Content.Client.Shuttles.UI;
 [Virtual]
 public partial class BaseShuttleControl : MapGridControl
 {
-    [Dependency] private IParallelManager _parallel = default!;
-    [Dependency] private ITileDefinitionManager _tileDef = default!; // Mono
     protected readonly EntityLookupSystem _lookup; // Mono
     protected readonly SharedMapSystem Maps;
 
     protected readonly Font Font;
 
-    private GridDrawJob _drawJob;
-
-    // Cache grid drawing data as it can be expensive to build
-    public readonly Dictionary<EntityUid, GridDrawData> GridData = new();
-
-    // Per-draw caching
-    private readonly Dictionary<Vector2i, ContentTileDefinition> _gridTileList = new(); // Mono
-    // Mono - tile mapped to vector lying along each of 4 directions, if any
-    private readonly Dictionary<Vector2i, Box2?[]> _gridDirEdges = new();
-    // stores inward directions of borders
-    private readonly List<(Vector2 Start, Vector2 End)> _edges = new();
-    private readonly HashSet<Entity<GridEdgeMarkerComponent>> _edgeMarkers = new();
-
-    private EntityQuery<TransformComponent> _xformQuery; // Mono
-
-    private Vector2[] _allVertices = Array.Empty<Vector2>();
-
-    private (DirectionFlag, Vector2i)[] _neighborDirections;
+    // Exodus-begin radar-grid-cache: grid outlines are built once per grid and chunk by RadarGridGeometrySystem
+    // and shared by every radar control, replacing the per-control full rebuild and CPU vertex transform.
+    private readonly RadarGridGeometrySystem _radarGeometry;
+    // Exodus-end
 
     public BaseShuttleControl() : this(32f, 32f, 32f)
     {
@@ -59,22 +44,8 @@ public partial class BaseShuttleControl : MapGridControl
         RobustXamlLoader.Load(this);
         Maps = EntManager.System<SharedMapSystem>();
         _lookup = EntManager.System<EntityLookupSystem>(); // Mono
-        _xformQuery = EntManager.GetEntityQuery<TransformComponent>(); // Mono
+        _radarGeometry = EntManager.System<RadarGridGeometrySystem>(); // Exodus radar-grid-cache
         Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
-
-        _drawJob = new GridDrawJob()
-        {
-            ScaledVertices = _allVertices,
-        };
-
-        _neighborDirections = new (DirectionFlag, Vector2i)[4];
-
-        for (var i = 0; i < 4; i++)
-        {
-            var dir = (DirectionFlag)Math.Pow(2, i);
-            var dirVec = dir.AsDir().ToIntVec();
-            _neighborDirections[i] = (dir, dirVec);
-        }
     }
 
     protected void DrawData(DrawingHandleScreen handle, string text)
@@ -425,309 +396,42 @@ public partial class BaseShuttleControl : MapGridControl
     }
     // End Mono
 
+    // Exodus-begin radar-grid-cache: draw cached grid-local geometry through the handle transform.
+    // Tile outlines are built per chunk and shared by all radars; nothing is rebuilt or transformed per frame.
+    private const int FillBatchSize = 3 * 4096;
+    private const int EdgeBatchSize = 2 * 4096;
+
     protected void DrawGrid(DrawingHandleScreen handle, Matrix3x2 gridToView, Entity<MapGridComponent> grid, Color color, float alpha = 0.01f, bool drawFill = false)
     {
-        var rator = Maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
-        var minimapScale = MinimapScale;
-        var midpoint = MidPointVector; // Exodus
-        var tileSize = grid.Comp.TileSize;
+        var geometry = _radarGeometry.GetGeometry(grid);
+        var count = drawFill ? geometry.FillCount : geometry.EdgeCount;
+        if (count == 0)
+            return;
 
-        // Check if we even have data
-        // TODO: Need to prune old grid-data if we don't draw it.
-        var gridData = GridData.GetOrNew(grid.Owner);
-
-        if (gridData.LastBuild < grid.Comp.LastTileModifiedTick)
-        {
-            gridData.Vertices.Clear();
-            _gridTileList.Clear();
-            _gridDirEdges.Clear();
-
-            // Okay so there's 2 steps to this
-            // 1. Is that get we get a set of all tiles. This is used to decompose into triangle-strips
-            // 2. Is that we get a list of all tiles. This is used for edge data to decompose into line-strips.
-            while (rator.MoveNext(out var tileRef))
-            {
-                var index = tileRef.Value.GridIndices;
-
-                // Mono - drawing logic rewritten
-                var def = (ContentTileDefinition)_tileDef[tileRef.Value.Tile.TypeId];
-                _gridTileList[index] = def;
-                _gridDirEdges[index] = new Box2?[4];
-
-                // since our shape has to be convex, just draw it by taking our first vertex as origin
-                var bl = Maps.TileToVector(grid, index);
-                var origin = bl + def.Vertices[0] * tileSize;
-                var prev = bl + def.Vertices[1] * tileSize;
-                for (var i = 2; i < def.Vertices.Count; i++)
-                {
-                    var vert = bl + def.Vertices[i] * tileSize;
-                    gridData.Vertices.Add(origin);
-                    gridData.Vertices.Add(prev);
-                    gridData.Vertices.Add(vert);
-                    prev = vert;
-                }
-
-                prev = def.Vertices[^1];
-                for (var i = 0; i < def.Vertices.Count; i++)
-                {
-                    var vert = def.Vertices[i];
-                    var wasPrev = prev;
-                    prev = vert;
-
-                    var dirFlag = DirectionFlag.None;
-                    if (wasPrev.X == 0 && vert.X == 0)
-                        dirFlag = DirectionFlag.West;
-                    else if (wasPrev.X == 1 && vert.X == 1)
-                        dirFlag = DirectionFlag.East;
-                    else if (wasPrev.Y == 0 && vert.Y == 0)
-                        dirFlag = DirectionFlag.South;
-                    else if (wasPrev.Y == 1 && vert.Y == 1)
-                        dirFlag = DirectionFlag.North;
-
-                    if (dirFlag != DirectionFlag.None)
-                    {
-                        var idxVec = dirFlag.AsDir().ToIntVec();
-                        var arrIdx = GetDirIndex(idxVec);
-                        _gridDirEdges[index][arrIdx] = new Box2(wasPrev, vert);
-                    }
-                }
-            }
-
-            gridData.EdgeIndex = gridData.Vertices.Count;
-            _edges.Clear();
-
-            foreach (var (index, def) in _gridTileList)
-            {
-                // Mono - drawing logic rewritten
-                var bl = Maps.TileToVector(grid, index);
-
-                // start from drawing the end->start line
-                var prev = def.Vertices[^1];
-                for (var i = 0; i < def.Vertices.Count; i++)
-                {
-                    var vert = def.Vertices[i];
-                    var wasPrev = prev;
-                    prev = vert;
-
-                    // check if this edge is on any direction - we do have _gridDirEdges to cache this, but it's more feasible to just do this again
-                    var dirFlag = DirectionFlag.None;
-                    if (wasPrev.X == 0 && vert.X == 0)
-                        dirFlag = DirectionFlag.West;
-                    else if (wasPrev.X == 1 && vert.X == 1)
-                        dirFlag = DirectionFlag.East;
-                    else if (wasPrev.Y == 0 && vert.Y == 0)
-                        dirFlag = DirectionFlag.South;
-                    else if (wasPrev.Y == 1 && vert.Y == 1)
-                        dirFlag = DirectionFlag.North;
-
-                    if (dirFlag != DirectionFlag.None)
-                    {
-                        var dirDir = dirFlag.AsDir();
-                        var dirVec = dirDir.ToIntVec();
-                        if (_gridDirEdges.TryGetValue(index + dirVec, out var otherEdges))
-                        {
-                            var oppositeDir = dirDir.GetOpposite().ToIntVec();
-                            var arrIdx = GetDirIndex(oppositeDir);
-                            var otherEdge = otherEdges[arrIdx];
-                            if (otherEdge is { } neighbor)
-                            {
-                                var offset = (Vector2)dirVec;
-
-                                // offset into our coordinate space: tile relative to us + point relative to tile
-                                var otherPrev = neighbor.BottomLeft + offset;
-                                var otherVert = neighbor.TopRight + offset;
-                                var otherEdgeVec = otherVert - otherPrev;
-                                // so we can map points onto the parametric form of our line
-                                var otherEdgeAdj = otherEdgeVec / otherEdgeVec.LengthSquared();
-
-                                var relPrev = wasPrev - otherPrev;
-                                var relVert = vert - otherPrev;
-                                var relPrevPos = Vector2.Dot(relPrev, otherEdgeAdj);
-                                var relVertPos = Vector2.Dot(relVert, otherEdgeAdj);
-                                // swap us around for ease of checks if needed
-                                if (relPrevPos > relVertPos)
-                                    (relVertPos, relPrevPos) = (relPrevPos, relVertPos);
-
-                                // we're fully inside the other edge: do not draw us
-                                if (relPrevPos >= 0 && relVertPos <= 1)
-                                    continue;
-
-                                // if we do not intersect, just draw us
-                                if (!(relPrevPos >= 1 || relVertPos <= 0))
-                                {
-                                    // we end somewhere inside it
-                                    if (relPrevPos >= 0 || relVertPos <= 1)
-                                    {
-                                        // draw the non-overlapping part
-                                        if (relVertPos <= 1)
-                                            relVertPos = 0;
-                                        if (relPrevPos >= 0)
-                                            relPrevPos = 1;
-
-                                        var p1 = otherPrev + otherEdgeVec * relPrevPos;
-                                        var p2 = otherPrev + otherEdgeVec * relVertPos;
-                                        if (p2 - p1 != Vector2.Zero)
-                                            _edges.Add((bl + p1 * tileSize, bl + p2 * tileSize));
-                                    }
-                                    // we fully encompass it, have to draw 2 parts
-                                    else
-                                    {
-                                        var p1 = otherPrev + otherEdgeVec * relPrevPos;
-                                        var p2 = otherPrev;
-                                        var p3 = otherVert;
-                                        var p4 = otherPrev + otherEdgeVec * relVertPos;
-                                        _edges.Add((bl + p1 * tileSize, bl + p2 * tileSize));
-                                        _edges.Add((bl + p3 * tileSize, bl + p4 * tileSize));
-                                    }
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-
-                    _edges.Add((bl + wasPrev * tileSize, bl + vert * tileSize));
-                }
-            }
-
-            // Mono
-            _edgeMarkers.Clear();
-            _lookup.GetLocalEntitiesIntersecting(grid, grid.Comp.LocalAABB, _edgeMarkers);
-            foreach (var edge in _edgeMarkers)
-            {
-                if (!_xformQuery.TryComp(edge, out var xform))
-                    continue;
-
-                var coord = xform.Coordinates.Position;
-                var rotation = xform.LocalRotation;
-                var begin = rotation.RotateVec(edge.Comp.Begin);
-                var end = rotation.RotateVec(edge.Comp.End);
-                _edges.Add((coord + begin * tileSize, coord + end * tileSize));
-            }
-
-            // Decompose the edges into longer lines to save data.
-            // Now we decompose the lines into longer lines (less data to send to the GPU)
-            var decomposed = true;
-
-            while (decomposed)
-            {
-                decomposed = false;
-
-                for (var i = 0; i < _edges.Count; i++)
-                {
-                    var (start, end) = _edges[i];
-                    var neighborFound = false;
-                    var neighborIndex = 0;
-                    Vector2 neighborStart;
-                    Vector2 neighborEnd = Vector2.Zero;
-
-                    // Does our end correspond with another start?
-                    for (var j = i + 1; j < _edges.Count; j++)
-                    {
-                        (neighborStart, neighborEnd) = _edges[j];
-
-                        if (!end.Equals(neighborStart))
-                            continue;
-
-                        neighborFound = true;
-                        neighborIndex = j;
-                        break;
-                    }
-
-                    if (!neighborFound)
-                        continue;
-
-                    // Check if our start and the neighbor's end are collinear
-                    if (!CollinearSimplifier.IsCollinear(start, end, neighborEnd, 10f * float.Epsilon))
-                        continue;
-
-                    decomposed = true;
-                    _edges[i] = (start, neighborEnd);
-                    _edges.RemoveAt(neighborIndex);
-                }
-            }
-
-            gridData.Vertices.EnsureCapacity(_edges.Count * 2);
-
-            foreach (var edge in _edges)
-            {
-                gridData.Vertices.Add(edge.Start);
-                gridData.Vertices.Add(edge.End);
-            }
-
-            gridData.LastBuild = grid.Comp.LastTileModifiedTick;
-        }
-
-        var totalData = gridData.Vertices.Count;
-        var triCount = gridData.EdgeIndex;
-        var edgeCount = totalData - gridData.EdgeIndex;
-        Extensions.EnsureLength(ref _allVertices, totalData);
-
-        _drawJob.MidPoint = midpoint;
-        _drawJob.Matrix = gridToView;
-        _drawJob.MinimapScale = minimapScale;
-        _drawJob.Vertices = gridData.Vertices;
-        _drawJob.ScaledVertices = _allVertices;
-
-        _parallel.ProcessNow(_drawJob, totalData);
-
+        var previous = handle.GetTransform();
+        handle.SetTransform(gridToView * previous);
         if (drawFill)
         {
-            const float BatchSize = 3f * 4096;
             var fillColor = Color.ToSrgb(Color.InterpolateBetween(BackingColor, color, alpha)).WithAlpha(1f);
-
-            for (var i = 0; i < Math.Ceiling(triCount / BatchSize); i++)
-            {
-                var start = (int)(i * BatchSize);
-                var end = (int)Math.Min(triCount, start + BatchSize);
-                var count = end - start;
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, new Span<Vector2>(_allVertices, start, count), fillColor);
-            }
+            DrawBatched(handle, DrawPrimitiveTopology.TriangleList, geometry.Fill, count, FillBatchSize, fillColor);
         }
         else
         {
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineList, new Span<Vector2>(_allVertices, gridData.EdgeIndex, edgeCount), color);
+            DrawBatched(handle, DrawPrimitiveTopology.LineList, geometry.Edges, count, EdgeBatchSize, color);
         }
+
+        handle.SetTransform(previous);
     }
 
-    private static int GetDirIndex(Vector2i dir)
+    private static void DrawBatched(DrawingHandleScreen handle, DrawPrimitiveTopology topology, Vector2[] vertices,
+        int count, int batchSize, Color color)
     {
-        // 1,  0 -> 1
-        // 0,  1 -> 3
-        // -1, 0 -> 0
-        // 0, -1 -> 2
-        return Math.Abs(dir.Y) * 2 + (dir.X + dir.Y + 1) / 2;
-    }
-
-    private record struct GridDrawJob : IParallelRobustJob
-    {
-        public int BatchSize => 64;
-
-        public float MinimapScale;
-        public Vector2 MidPoint;
-        public Matrix3x2 Matrix;
-
-        public List<Vector2> Vertices;
-        public Vector2[] ScaledVertices;
-
-        public void Execute(int index)
+        // Primitive batches are copied through the stack; keep each one bounded for large planetoids.
+        for (var start = 0; start < count; start += batchSize)
         {
-            ScaledVertices[index] = Vector2.Transform(Vertices[index], Matrix);
+            var length = Math.Min(batchSize, count - start);
+            handle.DrawPrimitives(topology, new ReadOnlySpan<Vector2>(vertices, start, length), color);
         }
     }
-}
-
-public sealed class GridDrawData
-{
-    /*
-     * List of lists because we use LineStrip and TriangleStrip respectively (less data to pass to the GPU).
-     */
-
-    public List<Vector2> Vertices = new();
-
-    /// <summary>
-    /// Vertices index from when edges start.
-    /// </summary>
-    public int EdgeIndex;
-
-    public GameTick LastBuild;
+    // Exodus-end
 }
