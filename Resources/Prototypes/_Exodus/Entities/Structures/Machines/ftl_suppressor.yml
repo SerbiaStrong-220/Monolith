@@ -1,0 +1,107 @@
+# Bluespace (FTL) suppressors. While anchored, powered and switched on they project a field
+# that no ship can FTL out of or into, including the ship carrying the suppressor.
+
+- type: entity
+  abstract: true
+  parent: BaseMachinePowered
+  id: BaseMachineFtlSuppressor
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/ftl_suppressor.rsi
+    snapCardinals: true
+    layers:
+    - state: tsf
+    - state: tsf_on
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: FtlSuppressor
+  - type: ApcPowerReceiver
+    powerLoad: 20000
+  - type: PowerSwitch
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 1.5
+    color: "#4FC3F7"
+  - type: LitOnPowered
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    enabled: false
+    volume: -8
+    range: 6
+    sound:
+      path: /Audio/Ambience/Objects/anomaly_generator.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Repairable
+    doAfterDelay: 8
+  - type: ShipRepairable
+    repairTime: 15
+    repairCost: 100
+
+- type: entity
+  parent: BaseMachineFtlSuppressor
+  id: MachineFtlSuppressorTsf
+  name: BS-1000 "Bastion" bluespace suppressor
+  description: A TSF interdiction device. While powered it projects a 1 km bluespace suppression field that no ship can FTL out of or into, including the ship carrying it.
+  components:
+  - type: FtlSuppressor
+    range: 1000
+
+- type: entity
+  parent: BaseMachineFtlSuppressor
+  id: MachineFtlSuppressorPdv
+  name: '"Lasso" bluespace suppressor'
+  description: A compact Phaeton Dynasty interdictor. While powered it projects a 750 m bluespace suppression field that no ship can FTL out of or into, including the ship carrying it.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/ftl_suppressor.rsi
+    snapCardinals: true
+    layers:
+    - state: pdv
+    - state: pdv_on
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 1.5
+    color: "#FF6A3D"
+  - type: FtlSuppressor
+    range: 750
