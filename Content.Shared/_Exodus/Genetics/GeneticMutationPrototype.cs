@@ -79,4 +79,5 @@ public enum GeneticAbility : ushort
     Hearing = 2048,
     Web = 4096,
     FireBreath = 8192,
+    BloodExpulsion = 16384,
 }

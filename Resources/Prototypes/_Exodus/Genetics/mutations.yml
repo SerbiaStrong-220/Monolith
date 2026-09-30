@@ -240,6 +240,15 @@
     photophobiaStrength: 0.25
 
 - type: geneticMutation
+  id: GeneticBloodBath
+  name: genetics-gene-blood-bath
+  description: genetics-gene-blood-bath-desc
+  activationMessage: genetics-feeling-blood-bath
+  instability: -10
+  modifiers:
+    abilities: BloodExpulsion
+
+- type: geneticMutation
   id: GeneticHypermetabolism
   name: genetics-gene-hypermetabolism
   description: genetics-gene-hypermetabolism-desc

@@ -13,7 +13,7 @@ public sealed partial class GeneticAbilitiesSystem
 {
     [Dependency] private BodySystem _transformationBody = default!;
     [Dependency] private MetabolizerSystem _transformationMetabolism = default!;
-    [Dependency] private BloodstreamSystem _transformationBlood = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private DamageableSystem _transformationDamage = default!;
     [Dependency] private IComponentFactory _transformationFactory = default!;
     [Dependency] private LungSystem _transformationLungs = default!;
@@ -29,7 +29,7 @@ public sealed partial class GeneticAbilitiesSystem
         if (TryComp<BloodstreamComponent>(ent, out var blood))
         {
             ent.Comp.OriginalBloodReagent = blood.BloodReagent;
-            _transformationBlood.ChangeBloodReagent(ent, profile.BloodReagent, blood);
+            _bloodstream.ChangeBloodReagent(ent, profile.BloodReagent, blood);
         }
         if (TryComp<DamageableComponent>(ent, out var damage))
         {
@@ -71,7 +71,7 @@ public sealed partial class GeneticAbilitiesSystem
         if (!TerminatingOrDeleted(ent))
         {
             if (ent.Comp.OriginalBloodReagent is { } blood)
-                _transformationBlood.ChangeBloodReagent(ent, blood);
+                _bloodstream.ChangeBloodReagent(ent, blood);
             if (ent.Comp.ChangedDamageModifier)
                 _transformationDamage.SetDamageModifierSetId(ent, ent.Comp.OriginalDamageModifier?.Id);
             foreach (var (name, saved) in ent.Comp.OriginalPhysiology)

@@ -40,6 +40,7 @@ public sealed partial class GeneticAbilitiesSystem
     {
         UpdateGeneticSize((ent.Owner, state), ent.Comp.Modifiers.SizeMultiplier);
         UpdateDeflection((ent.Owner, state));
+        ReconcileBloodExpulsion((ent.Owner, state));
         if (!HasAbility(ent, GeneticAbility.NightVision))
             ent.Comp.NightVisionEnabled = false;
         if (!HasAbility(ent, GeneticAbility.Hearing))
@@ -53,6 +54,7 @@ public sealed partial class GeneticAbilitiesSystem
 
     private void CleanupAdaptations(Entity<GeneticAbilityStateComponent> ent)
     {
+        ent.Comp.BloodExpulsionEnabled = false;
         UpdateGeneticSize(ent, 1f);
         RemoveDeflector(ent);
         StopGlow(ent);

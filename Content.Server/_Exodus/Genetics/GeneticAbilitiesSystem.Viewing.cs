@@ -124,6 +124,7 @@ public sealed partial class GeneticAbilitiesSystem
         var query = EntityQueryEnumerator<GeneticAbilityStateComponent>();
         while (query.MoveNext(out var uid, out var state))
         {
+            UpdateBloodExpulsion((uid, state));
             if (state.HearingUntil != TimeSpan.Zero && state.HearingUntil <= _timing.CurTime)
             {
                 state.HearingUntil = TimeSpan.Zero;
