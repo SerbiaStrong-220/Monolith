@@ -41,7 +41,7 @@
   - type: TrayScanReveal
   - type: Kudzu
     growthTickChance: 0.2
-    spreadChance: 0.35
+    spreadChance: 0.175 # Exodus: halve the chance to spread each attempt.
     # Heals each time it manages to do a growth tick:
     damageRecovery:
       types:
