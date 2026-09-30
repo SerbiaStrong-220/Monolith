@@ -66,5 +66,9 @@ public sealed partial class MiningRefineryStorageControl : BoxContainer
         GasWarning.Visible = warning || critical;
         GasWarning.SetMarkup(Loc.GetString(critical ? "bulk-mining-refinery-ui-critical" : "bulk-mining-refinery-ui-corrosion",
             ("limit", refinery.ExplosionThreshold)));
+        ConsortiumInfo.SetMarkup(Loc.GetString(state.LinkedShips > 1
+                ? "bulk-mining-refinery-ui-consortium-linked"
+                : "bulk-mining-refinery-ui-consortium-alone",
+            ("count", state.LinkedShips), ("percent", Math.Round(state.LinkBonus * 100, 1))));
     }
 }

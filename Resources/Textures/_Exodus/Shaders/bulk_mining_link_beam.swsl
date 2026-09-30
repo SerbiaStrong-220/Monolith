@@ -1,0 +1,43 @@
+light_mode unshaded;
+blend_mode add;
+
+// Consortium link between two bulk mining lasers: a steady teal conduit carrying
+// liquid metal both ways. U is the distance along the beam, V spans its width.
+void fragment()
+{
+    highp float across = UV.y * 2.0 - 1.0;
+
+#ifdef HAS_DFDX
+    highp float pixelX = length(vec2(dFdx(UV.x), dFdy(UV.x)));
+    highp float distanceScale = min(1.0, 0.0625 / max(pixelX, 0.0001));
+    highp float aaY = max(fwidth(across) * 0.65, 0.003);
+#else
+    highp float distanceScale = 1.0;
+    highp float aaY = 0.06;
+#endif
+
+    highp float along = max(UV.x, 0.0) * distanceScale;
+    highp float breathe = 0.5 + 0.5 * sin(TIME * 2.2);
+    highp float radius = abs(across);
+    highp float rim = 1.0 - smoothstep(0.40 - aaY, 0.40 + aaY, radius);
+    highp float body = 1.0 - smoothstep(0.26 - aaY, 0.26 + aaY, radius);
+    highp float core = 1.0 - smoothstep(0.07 - aaY, 0.07 + aaY, radius);
+
+    // Two counter-flowing lanes of molten droplets: each ship feeds the other.
+    highp float laneOffset = 0.15;
+    highp float upper = 1.0 - smoothstep(0.045, 0.045 + aaY, abs(across - laneOffset));
+    highp float lower = 1.0 - smoothstep(0.045, 0.045 + aaY, abs(across + laneOffset));
+    highp float forward = smoothstep(0.55, 1.0, 0.5 + 0.5 * sin(along * 3.2 - TIME * 7.0));
+    highp float backward = smoothstep(0.55, 1.0, 0.5 + 0.5 * sin(along * 3.2 + TIME * 7.0 + 1.7));
+    highp float droplets = upper * forward + lower * backward;
+
+    highp vec3 color = vec3(0.05, 0.42, 0.46) * rim * (0.22 + breathe * 0.06)
+        + vec3(0.12, 0.78, 0.80) * body * 0.34
+        + vec3(0.78, 1.00, 0.98) * core * (0.62 + breathe * 0.18)
+        + vec3(1.00, 0.78, 0.42) * droplets * 0.55;
+
+    highp float start = smoothstep(0.015, 0.16, along);
+    color *= start;
+    highp float alpha = clamp(max(max(color.r, color.g), color.b), 0.0, 1.0);
+    COLOR = vec4(color / max(alpha, 0.001), alpha);
+}
