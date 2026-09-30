@@ -27,3 +27,14 @@ ent-TechDiskHorizonHarmonyHammerMatter = технологический диск
     .desc = Открывает газодобычу, медицинское производство, ремонтных дронов и переработку сырья.
 ent-TechDiskBuno = технологический диск концерна Б.У.НО.
     .desc = Открывает защитные органы, страхование жизни и специальное снаряжение.
+
+concern-tech-disk-case-description = Запечатанный кейс с технологическим диском концерна.
+
+ent-CompanyTechDiskCaseAugok = кейс технологического диска концерна АУГОК
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseDrakeBlackArmsUSA = кейс технологического диска концерна Дрэйк&Блэк&Армс&ВША
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseHorizonHarmonyHammerMatter = кейс технологического диска концерна Горизонт&Хармони&Молот&Маттер
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseBuno = кейс технологического диска концерна Б.У.НО.
+    .desc = { concern-tech-disk-case-description }

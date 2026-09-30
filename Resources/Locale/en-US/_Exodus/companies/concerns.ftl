@@ -18,3 +18,14 @@ concern-tech-disk-horizon-harmony-hammer-matter-name = Horizon&Harmony&Hammer&Ma
 concern-tech-disk-horizon-harmony-hammer-matter-description = Unlocks gas extraction, medical equipment, repair drones and material processing.
 concern-tech-disk-buno-name = B.U.N.O. concern technology disk
 concern-tech-disk-buno-description = Unlocks protective organs, life insurance and specialized equipment.
+
+concern-tech-disk-case-description = A sealed case containing a concern's technology disk.
+
+ent-CompanyTechDiskCaseAugok = AUGOK concern technology disk case
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseDrakeBlackArmsUSA = Drake&Black&Arms&USA concern technology disk case
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseHorizonHarmonyHammerMatter = Horizon&Harmony&Hammer&Matter concern technology disk case
+    .desc = { concern-tech-disk-case-description }
+ent-CompanyTechDiskCaseBuno = B.U.N.O. concern technology disk case
+    .desc = { concern-tech-disk-case-description }
