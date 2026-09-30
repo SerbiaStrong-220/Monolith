@@ -24,6 +24,7 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -153,8 +154,14 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
 
     private void OnMelee(Entity<GeneticEffectsComponent> ent, ref GetMeleeDamageEvent args)
     {
-        if (!ent.Comp.Reverting && args.Weapon == ent.Owner)
-            args.Damage *= ent.Comp.Modifiers.MeleeMultiplier;
+        if (ent.Comp.Reverting || args.Weapon != ent.Owner)
+            return;
+
+        var modifiers = ent.Comp.Modifiers;
+        if (modifiers.UnarmedDamage is { } unarmedDamage)
+            args.Damage = unarmedDamage * (_damageable.UniversalMeleeDamageModifier * modifiers.MeleeMultiplier);
+        else if (modifiers.MeleeMultiplier != 1f)
+            args.Damage *= modifiers.MeleeMultiplier;
     }
 
     private void OnStamina(Entity<GeneticEffectsComponent> ent, ref BeforeStaminaDamageEvent args)

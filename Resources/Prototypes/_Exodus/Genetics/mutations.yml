@@ -20,7 +20,10 @@
     blockRangedWeapons: true
     nutritionMultiplier: 1.5
     thirstMultiplier: 1.5
-    meleeMultiplier: 2.5
+    unarmedDamage:
+      types:
+        Blunt: 40
+        Structural: 350
     staminaMultiplier: 0.25
     damageModifiers:
       flatReductions:
@@ -32,7 +35,6 @@
         Cold: 5
         Caustic: 5
     blockedStatuses: [Stun, KnockedDown]
-  actions: [ActionGeneticPry]
 
 - type: geneticMutation
   id: GeneticRemoteViewing

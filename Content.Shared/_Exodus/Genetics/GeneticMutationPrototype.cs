@@ -32,6 +32,8 @@ public sealed partial class GeneticModifiers
     [DataField] public bool HeatImmunity;
     [DataField] public float MovementMultiplier = 1f;
     [DataField] public float MeleeMultiplier = 1f;
+    /// <summary>Optional replacement for innate melee damage. Active gene contributions add together before multipliers.</summary>
+    [DataField] public DamageSpecifier? UnarmedDamage;
     [DataField] public float StaminaMultiplier = 1f;
     [DataField] public float DamageMultiplier = 1f;
     /// <summary>Innate damage resistance, combined across active genes without replacing species or armor modifiers.</summary>

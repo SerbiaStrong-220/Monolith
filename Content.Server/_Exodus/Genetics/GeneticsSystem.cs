@@ -293,6 +293,12 @@ public sealed partial class GeneticsSystem : EntitySystem
             modifiers.HeatImmunity |= source.HeatImmunity;
             modifiers.MovementMultiplier *= source.MovementMultiplier;
             modifiers.MeleeMultiplier *= source.MeleeMultiplier;
+            if (source.UnarmedDamage is { } unarmedDamage)
+            {
+                modifiers.UnarmedDamage = modifiers.UnarmedDamage == null
+                    ? new DamageSpecifier(unarmedDamage)
+                    : modifiers.UnarmedDamage + unarmedDamage;
+            }
             modifiers.StaminaMultiplier *= source.StaminaMultiplier;
             modifiers.DamageMultiplier *= source.DamageMultiplier;
             foreach (var (type, reduction) in source.DamageModifiers.FlatReduction)
