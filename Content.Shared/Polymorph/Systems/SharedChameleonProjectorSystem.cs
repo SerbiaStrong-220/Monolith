@@ -249,6 +249,11 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
     /// </summary>
     public bool TryReveal(Entity<ChameleonDisguisedComponent?> ent)
     {
+        // Exodus-begin: recursive deletion already removes the user's disguise.
+        if (TerminatingOrDeleted(ent))
+            return false;
+        // Exodus-end
+
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
