@@ -1,4 +1,12 @@
 - type: entity
+  id: ActionGeneticTransform
+  categories: [HideSpawnMenu]
+  components:
+  - type: InstantAction
+    icon: { sprite: Mobs/Aliens/slimes.rsi, state: blue_adult_slime }
+    event: !type:GeneticTransformEvent
+
+- type: entity
   id: ActionGeneticTelekinesis
   categories: [HideSpawnMenu]
   components:

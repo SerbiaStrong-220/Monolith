@@ -4,7 +4,10 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
@@ -14,6 +17,7 @@ using Content.Shared.Temperature;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Exodus.Genetics;
@@ -27,6 +31,7 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _transformationPrototypes = default!;
 
     public const string TelekinesisRangeProvider = "GeneticTelekinesis";
 
@@ -54,6 +59,33 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
         SubscribeLocalEvent<GeneticEffectsComponent, BleedAmountChangeEvent>(OnBleeding);
         SubscribeLocalEvent<GeneticEffectsComponent, FlashDurationModifyEvent>(OnFlashDuration);
         SubscribeLocalEvent<GeneticEffectsComponent, ShotAttemptedEvent>(OnShotAttempted);
+        SubscribeLocalEvent<GeneticEffectsComponent, InteractionAttemptEvent>(OnFormInteraction);
+        SubscribeLocalEvent<GeneticEffectsComponent, PickupAttemptEvent>(OnFormPickup);
+        SubscribeLocalEvent<GeneticEffectsComponent, IsEquippingAttemptEvent>(OnFormEquip);
+        SubscribeLocalEvent<GeneticEffectsComponent, UseAttemptEvent>(OnFormUse);
+    }
+
+    private void OnFormInteraction(Entity<GeneticEffectsComponent> ent, ref InteractionAttemptEvent args)
+    {
+        args.Cancelled |= ent.Comp.InAlternateForm && args.Target != null && args.Target != ent.Owner;
+    }
+
+    private void OnFormPickup(Entity<GeneticEffectsComponent> ent, ref PickupAttemptEvent args)
+    {
+        if (ent.Comp.InAlternateForm)
+            args.Cancel();
+    }
+
+    private void OnFormEquip(Entity<GeneticEffectsComponent> ent, ref IsEquippingAttemptEvent args)
+    {
+        if (ent.Comp.InAlternateForm)
+            args.Cancel();
+    }
+
+    private void OnFormUse(Entity<GeneticEffectsComponent> ent, ref UseAttemptEvent args)
+    {
+        if (ent.Comp.InAlternateForm)
+            args.Cancel();
     }
 
     private void OnShotAttempted(Entity<GeneticEffectsComponent> ent, ref ShotAttemptedEvent args)
@@ -109,6 +141,8 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
     {
         _movement.RefreshMovementSpeedModifiers(ent);
         _inventory.RefreshSlots(ent.Owner);
+        var ev = new GeneticEffectsRefreshedEvent();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnShutdown(Entity<GeneticEffectsComponent> ent, ref ComponentShutdown args)
@@ -123,7 +157,11 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
     private void OnMovement(Entity<GeneticEffectsComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
         if (!ent.Comp.Reverting)
+        {
             args.ModifySpeed(ent.Comp.Modifiers.MovementMultiplier, ent.Comp.Modifiers.MovementMultiplier);
+            if (ent.Comp.InAlternateForm && _transformationPrototypes.TryIndex(ent.Comp.Modifiers.Transformation, out var profile))
+                args.ModifySpeed(profile.FormMovementMultiplier, profile.FormMovementMultiplier);
+        }
     }
 
     private void OnStatus(Entity<GeneticEffectsComponent> ent, ref BeforeStatusEffectAddedEvent args)
@@ -158,7 +196,11 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
             return;
 
         var modifiers = ent.Comp.Modifiers;
-        if (modifiers.UnarmedDamage is { } unarmedDamage)
+        var replacement = modifiers.UnarmedDamage;
+        if (replacement == null && ent.Comp.InAlternateForm &&
+            _transformationPrototypes.TryIndex(modifiers.Transformation, out var profile))
+            replacement = profile.FormDamage;
+        if (replacement is { } unarmedDamage)
             args.Damage = unarmedDamage * (_damageable.UniversalMeleeDamageModifier * modifiers.MeleeMultiplier);
         else if (modifiers.MeleeMultiplier != 1f)
             args.Damage *= modifiers.MeleeMultiplier;

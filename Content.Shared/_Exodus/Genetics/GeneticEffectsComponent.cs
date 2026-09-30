@@ -9,6 +9,8 @@ namespace Content.Shared._Exodus.Genetics;
 public sealed partial class GeneticEffectsComponent : Component
 {
     [DataField, AutoNetworkedField] public GeneticModifiers Modifiers = new();
+    /// <summary>Alternate form of this same entity; never a replacement body.</summary>
+    [DataField, AutoNetworkedField] public bool InAlternateForm;
     [DataField, AutoNetworkedField] public bool NightVisionEnabled;
     [DataField, AutoNetworkedField] public Color NightVisionColor = Color.FromHex("#344837");
     [DataField, AutoNetworkedField] public bool HearingEnabled;

@@ -17,7 +17,7 @@ using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
-public sealed class ActionButton : Control, IEntityControl
+public sealed partial class ActionButton : Control, IEntityControl // Exodus: independent cooldown display.
 {
     private IEntityManager _entities;
     private SpriteSystem? _spriteSys;
@@ -198,10 +198,10 @@ public sealed class ActionButton : Control, IEntityControl
         if (_action is { Charges: not null })
         {
             var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {_action.Charges.Value.ToString()}/{_action.MaxCharges.ToString()}"));
-            return new ActionAlertTooltip(name, decr, charges: charges);
+            return new ActionAlertTooltip(name, decr, charges: charges) { Cooldown = DisplayedCooldown }; // Exodus
         }
 
-        return new ActionAlertTooltip(name, decr);
+        return new ActionAlertTooltip(name, decr) { Cooldown = DisplayedCooldown }; // Exodus
     }
 
     protected override void ControlFocusExited()
@@ -353,13 +353,14 @@ public sealed class ActionButton : Control, IEntityControl
 
         UpdateBackground();
 
-        Cooldown.Visible = _action != null && _action.Cooldown != null;
+        var cooldown = DisplayedCooldown; // Exodus
+        Cooldown.Visible = _action != null && cooldown != null; // Exodus
         if (_action == null)
             return;
 
-        if (_action.Cooldown != null)
+        if (cooldown != null) // Exodus
         {
-            Cooldown.FromTime(_action.Cooldown.Value.Start, _action.Cooldown.Value.End);
+            Cooldown.FromTime(cooldown.Value.Start, cooldown.Value.End); // Exodus
         }
 
         if (ActionId != null && _toggled != _action.Toggled)

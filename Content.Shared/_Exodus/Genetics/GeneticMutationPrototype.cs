@@ -25,6 +25,8 @@ public sealed partial class GeneticMutationPrototype : IPrototype
 [DataDefinition, Serializable, NetSerializable]
 public sealed partial class GeneticModifiers
 {
+    /// <summary>Optional species adaptation. Conflicts use a stable prototype-id order.</summary>
+    [DataField] public ProtoId<GeneticTransformationPrototype>? Transformation;
     [DataField] public bool NoBreathing;
     [DataField] public bool LowPressureImmunity;
     [DataField] public bool HighPressureImmunity;

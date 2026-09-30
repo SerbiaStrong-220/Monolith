@@ -286,6 +286,9 @@ public sealed partial class GeneticsSystem : EntitySystem
             load += mutation.Instability;
             periodic += mutation.PeriodicDamage;
             var source = mutation.Modifiers;
+            if (source.Transformation is { } transformation &&
+                (modifiers.Transformation == null || string.CompareOrdinal(transformation.Id, modifiers.Transformation.Value.Id) < 0))
+                modifiers.Transformation = transformation;
             modifiers.NoBreathing |= source.NoBreathing;
             modifiers.LowPressureImmunity |= source.LowPressureImmunity;
             modifiers.HighPressureImmunity |= source.HighPressureImmunity;

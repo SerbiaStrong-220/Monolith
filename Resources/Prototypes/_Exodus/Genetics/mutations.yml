@@ -1,4 +1,14 @@
 - type: geneticMutation
+  id: GeneticSlime
+  name: genetics-gene-slime
+  description: genetics-gene-slime-desc
+  activationMessage: genetics-feeling-slime
+  instability: 20
+  modifiers:
+    transformation: GeneticSlimeAdaptation
+  actions: [ActionGeneticTransform]
+
+- type: geneticMutation
   id: GeneticTelekinesis
   activationMessage: genetics-feeling-telekinesis
   name: genetics-gene-telekinesis

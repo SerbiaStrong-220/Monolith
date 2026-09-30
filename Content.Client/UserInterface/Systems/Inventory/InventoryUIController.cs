@@ -61,6 +61,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
         if (UIManager.GetActiveUIWidgetOrNull<InventoryGui>() is { } inventoryGui)
             RegisterInventoryButton(inventoryGui.InventoryButton);
+        RefreshGeneticFormVisibility(); // Exodus
     }
 
     public void OnStateEntered(GameplayState state)
@@ -229,6 +230,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
     public void ToggleStrippingMenu()
     {
+        if (InGeneticForm) // Exodus
+            return;
         UpdateStrippingWindow(_playerInventory);
         if (_strippingWindow!.IsOpen)
         {
@@ -241,6 +244,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
     public void ToggleInventoryBar()
     {
+        if (InGeneticForm) // Exodus
+            return;
         if (_inventoryHotbar == null)
         {
             Logger.Warning("Tried to toggle inventory bar when none are assigned");
@@ -406,6 +411,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         }
 
         UpdateInventoryHotbar(_playerInventory);
+        RefreshGeneticFormVisibility(); // Exodus
     }
 
     private void UnloadSlots()
@@ -421,6 +427,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         }
 
         UpdateInventoryHotbar(null);
+        RefreshGeneticFormVisibility(); // Exodus: restore normal HUD when leaving the body.
     }
 
     private void SpriteUpdated(SlotSpriteUpdate update)
