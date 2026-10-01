@@ -5,6 +5,8 @@
   components:
   - type: GeneticsRound
     blockCount: 50
+    radiationMutationRate: 0.001
+    radiationMutationCooldown: 60
 
 - type: entity
   parent: MedicalScanner

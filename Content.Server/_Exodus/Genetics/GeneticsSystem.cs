@@ -47,6 +47,7 @@ public sealed partial class GeneticsSystem : EntitySystem
         SubscribeLocalEvent<GenomeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<GenomeComponent, CloningEvent>(OnCloning);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        InitializeRadiation();
     }
 
     public GeneticsRoundComponent GetRound()

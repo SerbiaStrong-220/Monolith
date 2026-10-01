@@ -20,6 +20,8 @@ public sealed partial class GenomeComponent : Component
     [DataField] public bool CapacityInitialized;
     [DataField] public TimeSpan Interval = TimeSpan.FromSeconds(1);
     [DataField, AutoPausedField] public TimeSpan NextUpdate;
+    /// <summary>Radiation cannot activate another mutation before this time; genome resets do not clear it.</summary>
+    [DataField, AutoPausedField] public TimeSpan NextRadiationMutation;
     /// <summary>Base damage per interval below zero stability, scaled by the severity of the overload.</summary>
     [DataField] public DamageSpecifier InstabilityDamage = new() { DamageDict = new() { ["Radiation"] = 1, ["Cellular"] = 1 } };
     public HashSet<ProtoId<GeneticMutationPrototype>> Active = new();
@@ -38,6 +40,10 @@ public sealed partial class GeneticsRoundComponent : Component
 {
     /// <summary>Total positions, including empty ones. Limited to 50.</summary>
     [DataField] public int BlockCount = 50;
+    /// <summary>Mutation rate per point of irradiation damage after protection. Zero disables radiation mutations.</summary>
+    [DataField] public double RadiationMutationRate = 0.001;
+    /// <summary>Minimum time between successful radiation mutations on the same body.</summary>
+    [DataField] public TimeSpan RadiationMutationCooldown = TimeSpan.FromSeconds(60);
     public string Context = string.Empty;
     public List<ProtoId<GeneticMutationPrototype>?> Mutations = new();
     public List<ushort> Thresholds = new();

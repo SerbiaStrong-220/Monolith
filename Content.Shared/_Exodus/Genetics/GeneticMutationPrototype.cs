@@ -12,6 +12,8 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField(required: true)] public LocId Name;
     [DataField(required: true)] public LocId Description;
     [DataField] public int Instability = 10;
+    /// <summary>Relative weight among inactive genes activated by radiation. Zero excludes this mutation.</summary>
+    [DataField] public float RadiationWeight = 1f;
     /// <summary>Three hexadecimal minima, packed as a number. Default: D/A/C.</summary>
     [DataField] public int ActivationThreshold = 0xDAC;
     /// <summary>Private sensation sent to the carrier when this mutation becomes active.</summary>
