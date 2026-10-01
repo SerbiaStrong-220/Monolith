@@ -10,7 +10,7 @@
 
 - При остатке [bold]0[/bold] перегрузки ещё нет. Ниже нуля организм получает радиационный и клеточный урон.
 - Выключение способности кнопкой [bold]не освобождает стабильность[/bold]: для этого нужно отключить сам ген.
-- Врождённые гены тоже занимают запас. У обычного человека свободно [bold]60[/bold]. У азакима с рефлекторным покровом, моли с коконом, арахнида с паутинными железами и слаймолюда с метаморфозой свободно [bold]40 из 60[/bold], если других активных генов нет.
+- Врождённые гены тоже учитываются. Например, у человека свободно [bold]60[/bold], у унатха [bold]45[/bold], у хитина [bold]35[/bold], у резоми [bold]65[/bold]. Полные наборы и расчёты приведены ниже.
 
 Лаборатория не показывает оставшуюся стабильность. Учитывайте все активные мутации, включая врождённые и полученные от радиации.
 
@@ -85,9 +85,9 @@
 
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticWeb"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticWeb" field="instability"][/bold]</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Создание липкой паутины под ногами.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Паутина, производство шёлка и иммунитет к замедлению паутиной.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">5 сытости; повтор через 12 с; до 6 плетений на полу.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Паутина: 5 сытости, 12 с, до 6 плетений. Шёлк: 4 сытости и 2 с.</Box></ColorBox>
 
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFireBreath"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticFireBreath" field="instability"][/bold]</Box></ColorBox>
@@ -178,7 +178,216 @@
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ускоренный расход питания и голод.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"/>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticGrowingClaws"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticGrowingClaws" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Рост когтей и усиление безоружных атак.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Крупные когти ухудшают точность и урон оружия; самые большие запрещают стрельбу. Выключение не сбрасывает рост.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticColdDependence"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticColdDependence" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Зависимость от тепла, замедление и сонливость на холоде.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с холодовыми адаптациями, космической холодостойкостью и теплоизолирующим мехом.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticThermophilic"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticThermophilic" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ускорение и регенерация при прогреве тела; переносимость жары.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Для ускорения и лечения нужно не менее 322 К. Несовместимо с чувствительностью к жаре.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticOreSense"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticOreSense" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Обнаружение руды в радиусе 5 м.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"/>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticColdTolerance"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticColdTolerance" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Позднее замерзание и замедление; меньше холодового урона.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с холодозависимостью, полярной адаптацией и криоустойчивостью.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFlammable"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticFlammable" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Повышенный урон от огня и перегрева.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с жаростойкостью и чувствительностью к жаре.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticWoodenArmor"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticWoodenArmor" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Защита от физических повреждений.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с хитиновым панцирем.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCombustible"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticCombustible" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Уязвимость к жару и воспламенение при сильном тепловом уроне.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с жаростойкостью.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticToxinRecovery"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticToxinRecovery" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Медленное восстановление токсического урона.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Только в живом состоянии и при общем уроне ниже 20. Несовместимо со слизистой метаморфозой.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticQuietStep"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticQuietStep" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Бесшумные шаги босиком.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Работает без обуви.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticDelicateTissues"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticDelicateTissues" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Уязвимость к ударам и порезам.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с хрупкими тканями.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFur"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticFur" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Тело остывает значительно медленнее.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с холодозависимостью.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHeatSensitivity"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHeatSensitivity" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ранний перегрев и повышенный тепловой урон.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с жаростойкостью, теплолюбием и горючим покровом.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticPredatoryBite"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticPredatoryBite" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Безоружная атака наносит 7 колющего урона.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"/>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticThirst"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticThirst" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ускоренное обезвоживание.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Расход воды примерно +167%.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticChitinArmor"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticChitinArmor" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Физический урон снижен на 10%.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с древесным покровом.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticRadiotrophicMetabolism"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticRadiotrophicMetabolism" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Радиационная защита, поглощение повреждений и производство хицита.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно + кнопка</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Еда +33%. Для хицита нужно поглотить 30 единиц урона. Маска, мешающая есть, мешает производству; выключение не обнуляет накопление.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticArcticAdaptation"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticArcticAdaptation" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Выраженная холодоустойчивость и позднее замедление.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с холодозависимостью, холодоустойчивостью и криоустойчивостью.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFragileTissues"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticFragileTissues" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Физический урон увеличен на 15%.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с нежными тканями.</Box></ColorBox>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCryostasis"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticCryostasis" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Иммунитет к холодовому урону без защиты от низкого давления.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Несовместимо с другими холодовыми адаптациями и холодозависимостью.</Box></ColorBox>
+
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHyperthermia"]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHyperthermia" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Постоянный дополнительный нагрев тела.</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Требует охлаждения. Несовместимо с жаростойкостью.</Box></ColorBox>
 </Table>
+
+## Врождённые наборы
+
+У одной расы не более трёх врождённых генов. Один и тот же ген даёт одинаковый эффект независимо от расы носителя. Органы, конечности, состав крови и связанные с ними способности генами из этой таблицы не заменяются. КПБ не участвуют в биологической генетике.
+
+<Table Columns="4">
+  <ColorBox Color="#2D3D50" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]Раса[/bold]</Box></ColorBox>
+  <ColorBox Color="#2D3D50" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]Врождённые гены[/bold]</Box></ColorBox>
+  <ColorBox Color="#2D3D50" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]Сумма нагрузок[/bold]</Box></ColorBox>
+  <ColorBox Color="#2D3D50" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]Свободно из 60[/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Человек</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"/>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">0</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">60</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Дворф</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticOreSense"] ([geneticmutation="GeneticOreSense" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">5</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">55</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Унатх</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticGrowingClaws"] ([geneticmutation="GeneticGrowingClaws" field="instability"]), [geneticmutation="GeneticColdDependence"] ([geneticmutation="GeneticColdDependence" field="instability"]), [geneticmutation="GeneticThermophilic"] ([geneticmutation="GeneticThermophilic" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">15</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">45</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Моль</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCocoon"] ([geneticmutation="GeneticCocoon" field="instability"]), [geneticmutation="GeneticColdTolerance"] ([geneticmutation="GeneticColdTolerance" field="instability"]), [geneticmutation="GeneticFlammable"] ([geneticmutation="GeneticFlammable" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Арахнид</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticWeb"] ([geneticmutation="GeneticWeb" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Диона</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticWoodenArmor"] ([geneticmutation="GeneticWoodenArmor" field="instability"]), [geneticmutation="GeneticCombustible"] ([geneticmutation="GeneticCombustible" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">0</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">60</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Вокс</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticToxinRecovery"] ([geneticmutation="GeneticToxinRecovery" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">5</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">55</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Слаймолюд</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticSlime"] ([geneticmutation="GeneticSlime" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Фелинид</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticQuietStep"] ([geneticmutation="GeneticQuietStep" field="instability"]), [geneticmutation="GeneticDelicateTissues"] ([geneticmutation="GeneticDelicateTissues" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">0</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">60</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Вульпканин</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFur"] ([geneticmutation="GeneticFur" field="instability"]), [geneticmutation="GeneticHeatSensitivity"] ([geneticmutation="GeneticHeatSensitivity" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">0</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">60</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ферокси</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticPredatoryBite"] ([geneticmutation="GeneticPredatoryBite" field="instability"]), [geneticmutation="GeneticThirst"] ([geneticmutation="GeneticThirst" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">0</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">60</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Хитин</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticChitinArmor"] ([geneticmutation="GeneticChitinArmor" field="instability"]), [geneticmutation="GeneticRadiotrophicMetabolism"] ([geneticmutation="GeneticRadiotrophicMetabolism" field="instability"]), [geneticmutation="GeneticGlow"] ([geneticmutation="GeneticGlow" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">25</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">35</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Резоми</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticArcticAdaptation"] ([geneticmutation="GeneticArcticAdaptation" field="instability"]), [geneticmutation="GeneticFragileTissues"] ([geneticmutation="GeneticFragileTissues" field="instability"]), [geneticmutation="GeneticHeatSensitivity"] ([geneticmutation="GeneticHeatSensitivity" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">-5</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">65</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Гидракин</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCryostasis"] ([geneticmutation="GeneticCryostasis" field="instability"]), [geneticmutation="GeneticHyperthermia"] ([geneticmutation="GeneticHyperthermia" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">0</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">60</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Таяран</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticQuietStep"] ([geneticmutation="GeneticQuietStep" field="instability"]), [geneticmutation="GeneticColdTolerance"] ([geneticmutation="GeneticColdTolerance" field="instability"]), [geneticmutation="GeneticHeatSensitivity"] ([geneticmutation="GeneticHeatSensitivity" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">5</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">55</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Кидан</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticChitinArmor"] ([geneticmutation="GeneticChitinArmor" field="instability"]), [geneticmutation="GeneticOreSense"] ([geneticmutation="GeneticOreSense" field="instability"]), [geneticmutation="GeneticGlow"] ([geneticmutation="GeneticGlow" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Азаким (гостевая роль)</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticJump"] ([geneticmutation="GeneticJump" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
+</Table>
+
+Геностабилин сохраняет врождённые блоки. Вручную их можно отключать и переносить другим совместимым носителям. Анализатор здоровья отмечает как приобретённые гены, так и отключённые врождённые.
+
+Несовместимые гены нельзя включить вместе: изменение отклоняется целиком, даже при введении полного генома. Сначала отключите конфликтующий ген. Радиация выбирает только совместимые мутации.
+
 
 ## Примеры расчёта
 
@@ -238,6 +447,8 @@
 [bold]Нагрузка: 20.[/bold] Кнопка [bold]«Прислушаться»[/bold] на 5 секунд позволяет замечать признаки жизни поблизости, в том числе за стенами. Повторное применение доступно через 20 секунд после активации.
 
 ### Паутинные железы
+
+Ген также даёт производство шёлка за 2 секунды и 4 единицы сытости и позволяет ходить по паутине без замедления. При отключении гена эти свойства исчезают вместе со способностью плести паутину.
 
 <Box>
   <GuideEntityEmbed Entity="GeneticWeb" Caption="Органическая паутина"/>

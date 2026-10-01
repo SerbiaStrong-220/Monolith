@@ -5,6 +5,8 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Genome # Exodus: anatomy and plant organs remain independent.
+    initialMutations: [GeneticWoodenArmor, GeneticCombustible] # Exodus
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
@@ -32,7 +34,7 @@
       RightFoot: 0.05
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Diona
+    damageModifierSet: GeneticDionaBaseline # Exodus: armor and combustion are supplied by genes.
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -117,9 +119,7 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
-  - type: IgniteOnHeatDamage
-    fireStacks: 1
-    threshold: 12
+  # Exodus: ignition from heat damage is supplied by GeneticCombustible.
   - type: GibAction
     actionPrototype: DionaGibAction
     allowedStates:

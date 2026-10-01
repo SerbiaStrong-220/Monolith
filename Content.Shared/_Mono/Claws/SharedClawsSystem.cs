@@ -48,6 +48,7 @@ public abstract partial class SharedClawsSystem : EntitySystem
         SubscribeLocalEvent<ClawsComponent, ExaminedEvent>(OnExamine);
 
         InitializeNailClippers();
+        InitializeClawLifecycle(); // Exodus: reversible genetic claws.
     }
 
     private void OnMeleeAttack(Entity<ClawsComponent> ent, ref GetMeleeDamageEvent args)
@@ -57,7 +58,7 @@ public abstract partial class SharedClawsSystem : EntitySystem
             return;
 
         if (args.User == args.Weapon)
-            args.Damage += stage.Damage;
+            args.Damage += stage.Damage * _damage.UniversalMeleeDamageModifier; // Exodus: use the same scaling as the genetically supplied base attack.
         else
             args.Modifiers.Add(stage.MeleeDamageModifiers);
     }
@@ -98,6 +99,7 @@ public abstract partial class SharedClawsSystem : EntitySystem
             return;
 
         var gunAccuracyComp = EnsureComp<PlayerAccuracyModifierComponent>(uid);
+        component.AppliedAccuracy = gunAccuracyComp; // Exodus: track ownership for removal.
 
         melee.CanWideSwing = stage.CanWideSwing;
         melee.AltDisarm = !stage.CanWideSwing;

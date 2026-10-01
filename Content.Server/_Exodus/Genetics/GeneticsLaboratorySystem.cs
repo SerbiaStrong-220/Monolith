@@ -325,8 +325,9 @@ public sealed partial class GeneticsLaboratorySystem : EntitySystem
         switch (pending.Operation)
         {
             case GeneticsOperation.Edit:
-                if (_genetics.TryRandomizeDigit(target, pending.Block, pending.Digit, pending.User))
-                    _damage.TryChangeDamage(target, ent.Comp.EditDamage, true, false, ignoreGlobalModifiers: true);
+                _genetics.TryRandomizeDigit(target, pending.Block, pending.Digit, pending.User);
+                // A completed exposure still hurts if the resulting mutation conflicts with an active gene.
+                _damage.TryChangeDamage(target, ent.Comp.EditDamage, true, false, ignoreGlobalModifiers: true);
                 break;
             case GeneticsOperation.SetBlock:
                 _genetics.TrySetBlock(target, pending.Block, pending.Value, pending.User);

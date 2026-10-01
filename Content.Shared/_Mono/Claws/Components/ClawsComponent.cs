@@ -26,4 +26,12 @@ public sealed partial class ClawsComponent : Component
 
     [DataField]
     public TimeSpan DeclawItemHoldTimer = TimeSpan.Zero;
+
+    // Exodus-begin: restore only settings owned by this claw component on removal.
+    public bool OriginalWideSwing;
+    public bool OriginalAltDisarm;
+    public float? OriginalSpread;
+    public Content.Shared._DV.Weapons.Ranged.Components.PlayerAccuracyModifierComponent? AppliedAccuracy;
+    public bool CapturedMelee;
+    // Exodus-end
 }

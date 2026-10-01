@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -21,6 +22,33 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField] public GeneticModifiers Modifiers = new();
     [DataField] public List<EntProtoId> Actions = new();
     [DataField] public DamageSpecifier PeriodicDamage = new();
+    /// <summary>Incompatible genes. Checked in both directions before applying a block or sample.</summary>
+    [DataField] public HashSet<ProtoId<GeneticMutationPrototype>> Conflicts = new();
+    /// <summary>Reversible non-anatomical behavior. Never include organs, containers, health or appearance.</summary>
+    [DataField(serverOnly: true)] public ComponentRegistry Components = new();
+    /// <summary>Components whose progress survives disabling the gene, such as claw growth and absorbed radiation.</summary>
+    [DataField(serverOnly: true)] public HashSet<string> PreserveComponents = new();
+    /// <summary>Changes to temperature limits and damage, without changing the body's current temperature.</summary>
+    [DataField(serverOnly: true)] public GeneticThermalModifiers Thermal = new();
+    /// <summary>Effects evaluated once per genome interval while alive and within the specified temperature range.</summary>
+    [DataField(serverOnly: true)] public List<GeneticTemperatureEffect> TemperatureEffects = new();
+}
+
+[DataDefinition]
+public sealed partial class GeneticThermalModifiers
+{
+    [DataField] public float ColdThresholdOffset;
+    [DataField] public float HeatThresholdOffset;
+    [DataField] public float ColdDamageMultiplier = 1f;
+    [DataField] public float HeatDamageMultiplier = 1f;
+}
+
+[DataDefinition]
+public sealed partial class GeneticTemperatureEffect
+{
+    [DataField] public float MinimumTemperature = float.NegativeInfinity;
+    [DataField] public float MaximumTemperature = float.PositiveInfinity;
+    [DataField(required: true)] public List<EntityEffect> Effects = new();
 }
 
 /// <summary>Independent, source-owned contributions. These never replace organs or disease components.</summary>
@@ -33,7 +61,11 @@ public sealed partial class GeneticModifiers
     [DataField] public bool LowPressureImmunity;
     [DataField] public bool HighPressureImmunity;
     [DataField] public bool ColdImmunity;
+    /// <summary>Blocks cold damage without preventing cooling, for cryogenic physiology.</summary>
+    [DataField] public bool ColdDamageImmunity;
     [DataField] public bool HeatImmunity;
+    [DataField] public float CoolingMultiplier = 1f;
+    [DataField] public float FireDamageMultiplier = 1f;
     [DataField] public float MovementMultiplier = 1f;
     [DataField] public float MeleeMultiplier = 1f;
     /// <summary>Optional replacement for innate melee damage. Active gene contributions add together before multipliers.</summary>

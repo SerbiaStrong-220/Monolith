@@ -1,10 +1,12 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: [ BaseMobSpeciesOrganic, ReptilianClaws ]
+  parent: BaseMobSpeciesOrganic # Exodus: claws are supplied by the genome.
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: Genome # Exodus: compact native adaptations.
+    initialMutations: [GeneticGrowingClaws, GeneticColdDependence, GeneticThermophilic] # Exodus
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:
@@ -49,7 +51,7 @@
     soundsId: ReptilianBodyEmotes
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Scale
+    damageModifierSet: GeneticReptilianBaseline # Exodus: thermal adaptations are genes.
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -59,22 +61,7 @@
       types:
         Blunt: 3 # Mono
     attackRate: 1.5
-  - type: Temperature
-    heatDamageThreshold: 400
-    coldDamageThreshold: 285
-    currentTemperature: 310.15
-    specificHeat: 42
-    coldDamage:
-      types:
-        Cold : 0.15 #per second, scales with temperature & other constants. # Mono 0.1 -> 0.15
-    heatDamage:
-      types:
-        Heat : 1.5 #per second, scales with temperature & other constants
-  - type: TemperatureSpeed
-    thresholds:
-      298: 0.8 # Mono
-      292: 0.6 # Mono
-      285: 0.4 # Mono
+  # Exodus: temperature limits and slowdown are supplied by native genes.
   - type: Wagging
   - type: Inventory
     speciesId: reptilian
@@ -123,37 +110,7 @@
           - MobMask
         layer:
           - MobLayer
-  - type: ThermalRegulator
-    implicitHeatRegulation: 320
-    metabolismHeat: 230
-    radiatedHeat: 710
-    shiveringHeatRegulation: 690
-    updateInterval: 2
-  - type: TemperatureStatusEffects
-    temperatureEffects:
-    - maximumTemperature: 295
-      effects:
-      - !type:Drunk
-        boozePower: 1
-    - maximumTemperature: 285
-      effects:
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        component: Drowsiness
-        time: 2
-        type: Add
-        refresh: true
-    - minimumTemperature: 322
-      effects:
-      - !type:MovespeedModifier
-        walkSpeedModifier: 1.10
-        sprintSpeedModifier: 1.10
-      - !type:EvenHealthChange
-        damage:
-          Burn: -1
-          Brute: -1
-
-
+  # Exodus: cold dependence and warming effects are supplied by native genes.
   # Mono edit end
 
 - type: entity

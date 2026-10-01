@@ -255,7 +255,7 @@ public sealed class GeneticsTest
             var body = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, Vector2.Zero));
             Assert.That(genetics.TryGetLivingGenome(body, out var genome), Is.True);
             var round = genetics.GetRound();
-            Assert.That(round.Mutations.Count, Is.EqualTo(50));
+            Assert.That(round.Mutations.Count, Is.GreaterThanOrEqualTo(50));
             Assert.That(genome!.StabilityCapacity, Is.EqualTo(60));
             var empty = round.Mutations.IndexOf(null);
             Assert.That(empty, Is.GreaterThanOrEqualTo(0));
@@ -361,7 +361,7 @@ public sealed class GeneticsTest
             var ui = entities.System<UserInterfaceSystem>();
             Assert.That(ui.TryGetUiState<GeneticsUiState>(machine, GeneticsUiKey.Laboratory, out var state), Is.True);
             Assert.That(state!.Stability, Is.Null);
-            Assert.That(state.Blocks.Count, Is.EqualTo(50));
+            Assert.That(state.Blocks.Count, Is.EqualTo(genome!.Blocks.Count));
             foreach (var block in state.Blocks)
             {
                 Assert.That(block.Name, Is.Null);

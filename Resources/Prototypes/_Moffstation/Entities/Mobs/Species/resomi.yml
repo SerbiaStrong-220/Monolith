@@ -4,6 +4,8 @@
   id: BaseMobResomi
   abstract: true
   components:
+  - type: Genome # Exodus: fast legs and eyes remain anatomical features.
+    initialMutations: [GeneticArcticAdaptation, GeneticFragileTissues, GeneticHeatSensitivity] # Exodus
    # Einstein Engines - Start - Language
   - type: LanguageKnowledge
     speaks:
@@ -80,21 +82,7 @@
       types:
         Slash: 5
   - type: Damageable # Resomi damage modifiers
-    damageModifierSet: Resomi
-  - type: Temperature
-    coldDamageThreshold: 195.4 # Freezing point of ammonia is -77.75°C
-    heatDamageThreshold: 320.15 # Space chickens can't tolerate reasonable temperatures, but requiring them to stay icy would be cringe, so instead make their heat damage threshold dangerously close to standard atmos, at 47°C
-    coldDamage:
-      types:
-        Cold : 0.05 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 3 #per second, scales with temperature & other constants
-  - type: TemperatureSpeed # You're supposed to be used to the cold why are you so slow
-    thresholds: # Calculated based on UI alert thresholds, rounded up
-      272: 0.8
-      242: 0.6
-      196: 0.4
+    damageModifierSet: null # Exodus: damage and temperature adaptations are supplied by genes.
   - type: MovementSpeedModifier
     weightlessAcceleration: 2.5 # Birb move fast in zero-g; walk/sprint +15% is on Resomi legs (MovementBodyPart) # Exodus
   - type: MobThresholds # Exodus resomi-hp: 90% of standard human thresholds

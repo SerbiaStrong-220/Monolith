@@ -25,6 +25,20 @@ public sealed partial class MiningScannerSystem : EntitySystem
         SubscribeLocalEvent<MiningScannerComponent, EntGotInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<MiningScannerComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<MiningScannerComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<MiningScannerComponent, MapInitEvent>(OnScannerMapInit);
+        SubscribeLocalEvent<MiningScannerComponent, ComponentShutdown>(OnScannerShutdown);
+    }
+
+    private void OnScannerMapInit(Entity<MiningScannerComponent> ent, ref MapInitEvent args)
+    {
+        if (HasComp<InventoryComponent>(ent))
+            UpdateViewerComponent(ent);
+    }
+
+    private void OnScannerShutdown(Entity<MiningScannerComponent> ent, ref ComponentShutdown args)
+    {
+        if (!TerminatingOrDeleted(ent) && HasComp<InventoryComponent>(ent))
+            UpdateViewerComponent(ent, ent.Owner);
     }
 
     private void OnInserted(Entity<MiningScannerComponent> ent, ref EntGotInsertedIntoContainerMessage args)
@@ -43,18 +57,18 @@ public sealed partial class MiningScannerSystem : EntitySystem
             UpdateViewerComponent(container.Owner);
     }
 
-    public void UpdateViewerComponent(EntityUid uid)
+    public void UpdateViewerComponent(EntityUid uid, EntityUid? ignoredScanner = null)
     {
         Entity<MiningScannerComponent>? scannerEnt = null;
 
         var ents = _inventory.GetHandOrInventoryEntities(uid).Append(uid);
         foreach (var ent in ents)
         {
-            if (!TryComp<MiningScannerComponent>(ent, out var scannerComponent) ||
-                !TryComp<ItemToggleComponent>(ent, out var toggle))
+            if (ent == ignoredScanner || !TryComp<MiningScannerComponent>(ent, out var scannerComponent))
                 continue;
 
-            if (!toggle.Activated)
+            // An intrinsic scanner is always active; handheld scanners still require their toggle.
+            if (TryComp<ItemToggleComponent>(ent, out var toggle) ? !toggle.Activated : ent != uid)
                 continue;
 
             if (scannerEnt == null || scannerComponent.Range > scannerEnt.Value.Comp.Range)
@@ -64,14 +78,21 @@ public sealed partial class MiningScannerSystem : EntitySystem
         if (scannerEnt == null)
         {
             if (TryComp<MiningScannerUserComponent>(uid, out var scannerUser))
+            {
                 scannerUser.QueueRemoval = true;
+                Dirty(uid, scannerUser);
+            }
         }
         else
         {
             var scannerUser = EnsureComp<MiningScannerUserComponent>(uid);
             scannerUser.ViewRange = scannerEnt.Value.Comp.Range;
+            scannerUser.PingSound = scannerEnt.Value.Comp.PingSound;
+            scannerUser.PingDelay = scannerEnt.Value.Comp.PingDelay;
+            scannerUser.AnimationDuration = scannerEnt.Value.Comp.AnimationDuration;
             scannerUser.QueueRemoval = false;
             scannerUser.NextPingTime = _timing.CurTime + scannerUser.PingDelay;
+            Dirty(uid, scannerUser);
         }
     }
 

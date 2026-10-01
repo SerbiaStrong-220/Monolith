@@ -209,6 +209,13 @@
   modifiers:
     abilities: Web
   actions: [ActionGeneticWeb]
+  components:
+  - type: IgnoreSpiderWeb
+  - type: Sericulture
+    action: ActionSericulture
+    productionLength: 2
+    entityProduced: MaterialWebSilk1
+    hungerCost: 4
 
 - type: geneticMutation
   id: GeneticFireBreath

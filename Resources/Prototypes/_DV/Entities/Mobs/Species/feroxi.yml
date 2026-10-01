@@ -5,6 +5,8 @@
   save: false
   abstract: true
   components:
+  - type: Genome # Exodus: dehydration still acts through existing lungs.
+    initialMutations: [GeneticPredatoryBite, GeneticThirst] # Exodus
   - type: HumanoidAppearance
     species: Feroxi
     hideLayersOnEquip:
@@ -14,7 +16,7 @@
   - type: Inventory
     speciesId: feroxi
   - type: Thirst
-    baseDecayRate: 0.2
+    # Exodus: increased water consumption is supplied by GeneticThirst.
   - type: Icon
     sprite: _DV/Mobs/Species/Feroxi/parts.rsi
     state: full
@@ -89,7 +91,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 7 # oooh scary extra damage~
+        Blunt: 5 # Exodus: GeneticPredatoryBite supplies the piercing bite.
   - type: Perishable
   - type: Damageable
     damageModifierSet: Feroxi

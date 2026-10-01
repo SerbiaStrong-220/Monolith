@@ -15,13 +15,9 @@
   # Exodus-begin: native web glands and immunity to web slowdown.
   - type: Genome
     initialMutations: [GeneticWeb]
-  - type: IgnoreSpiderWeb
+  # Exodus: web immunity and silk production belong to GeneticWeb.
   # Exodus-end
-  - type: Sericulture
-    action: ActionSericulture
-    productionLength: 2
-    entityProduced: MaterialWebSilk1
-    hungerCost: 4 # Should total to 25 total silk on full hunger
+  # Exodus: silk production is supplied by the native gene.
   - type: Tag
     tags:
     - CanPilot

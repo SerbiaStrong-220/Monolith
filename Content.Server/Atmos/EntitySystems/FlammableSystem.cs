@@ -487,7 +487,11 @@ namespace Content.Server.Atmos.EntitySystems
                     if (_inventoryQuery.TryComp(uid, out var inv))
                         _inventory.RelayEvent((uid, inv), ref ev);
 
-                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * flammable.FireStacks * ev.Multiplier, interruptsDoAfters: false);
+                    // Exodus-begin: apply genetic burning sensitivity after equipment protection.
+                    var geneticFire = new Content.Shared._Exodus.Genetics.GeneticFireDamageEvent(ev.Multiplier);
+                    RaiseLocalEvent(uid, ref geneticFire);
+                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * flammable.FireStacks * geneticFire.Multiplier, interruptsDoAfters: false);
+                    // Exodus-end
 
                     AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 15f : 1f), flammable, flammable.OnFire);
                 }

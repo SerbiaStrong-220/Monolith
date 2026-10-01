@@ -5,6 +5,8 @@
   id: BaseMobVulpkanin
   abstract: true
   components:
+  - type: Genome # Exodus: compact native adaptations.
+    initialMutations: [GeneticFur, GeneticHeatSensitivity] # Exodus
   - type: HumanoidAppearance
     species: Vulpkanin
     hideLayersOnEquip: # Mono
@@ -106,9 +108,8 @@
         Slash: 3
   - type: Perishable
   - type: Damageable
-    damageModifierSet: Vulpkanin
-  - type: TemperatureProtection
-    coolingCoefficient: 0.1 # fur is insulating
+    damageModifierSet: null # Exodus: heat sensitivity is supplied by the native gene.
+  # Exodus: insulating fur is supplied by GeneticFur.
   - type: Vocal
     sounds:
       Male: MaleVulpkanin

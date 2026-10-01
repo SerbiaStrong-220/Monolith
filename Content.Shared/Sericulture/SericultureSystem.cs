@@ -47,7 +47,12 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     /// </summary>
     private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(uid, comp.ActionEntity);
+        // Exodus-begin: genetic glands can be removed after actions have already detached.
+        if (_actionsSystem.TryGetActionData(comp.ActionEntity, out var data) && data.AttachedEntity == uid)
+            _actionsSystem.RemoveAction(uid, comp.ActionEntity);
+        if (!_netManager.IsClient && comp.ActionEntity is { } action && !TerminatingOrDeleted(action))
+            QueueDel(action);
+        // Exodus-end
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)

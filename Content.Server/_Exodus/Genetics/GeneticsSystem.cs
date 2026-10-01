@@ -46,6 +46,7 @@ public sealed partial class GeneticsSystem : EntitySystem
         SubscribeLocalEvent<GenomeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GenomeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<GenomeComponent, CloningEvent>(OnCloning);
+        SubscribeLocalEvent<GenomeComponent, GeneticEffectsShutdownEvent>(OnSpeciesEffectsShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         InitializeRadiation();
     }
@@ -63,7 +64,7 @@ public sealed partial class GeneticsSystem : EntitySystem
         var uid = Spawn("GeneticsRound");
         var round = Comp<GeneticsRoundComponent>(uid);
         round.Context = Guid.NewGuid().ToString("N");
-        round.BlockCount = Math.Clamp(round.BlockCount, 1, 50);
+        round.BlockCount = Math.Max(round.BlockCount, 1);
         foreach (var mutation in _prototypes.EnumeratePrototypes<GeneticMutationPrototype>())
         {
             if (mutation.ActivationThreshold < 1 || mutation.ActivationThreshold > MaxBlockValue ||
@@ -75,12 +76,8 @@ public sealed partial class GeneticsSystem : EntitySystem
             }
             round.Mutations.Add(mutation.ID);
         }
-        _random.Shuffle(round.Mutations);
-        if (round.Mutations.Count > round.BlockCount)
-        {
-            Log.Error($"More mutations than the {round.BlockCount} available genetic blocks; selecting a random subset.");
-            round.Mutations.RemoveRange(round.BlockCount, round.Mutations.Count - round.BlockCount);
-        }
+        // Keep every mutation and at least one empty research block as the catalogue grows.
+        round.BlockCount = Math.Max(round.BlockCount, round.Mutations.Count + 1);
         while (round.Mutations.Count < round.BlockCount)
             round.Mutations.Add(null);
         _random.Shuffle(round.Mutations);
@@ -135,7 +132,7 @@ public sealed partial class GeneticsSystem : EntitySystem
         return true;
     }
 
-    /// <summary>Detects active mutations outside this body's YAML defaults without generating a genome.</summary>
+    /// <summary>Detects added or disabled native mutations without generating a genome.</summary>
     public bool HasGeneticModifications(Entity<GenomeComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -144,6 +141,11 @@ public sealed partial class GeneticsSystem : EntitySystem
         foreach (var mutation in ent.Comp.Active)
         {
             if (!ent.Comp.InitialMutations.Contains(mutation))
+                return true;
+        }
+        foreach (var mutation in ent.Comp.InitialMutations)
+        {
+            if (!ent.Comp.Active.Contains(mutation))
                 return true;
         }
         return false;
@@ -226,7 +228,10 @@ public sealed partial class GeneticsSystem : EntitySystem
             RemoveOwnedAction(ent, action);
         ent.Comp.Actions.Clear();
         if (!TerminatingOrDeleted(ent))
+        {
+            ClearSpeciesEffects(ent);
             RemCompDeferred<GeneticEffectsComponent>(ent);
+        }
     }
 
     private void RemoveOwnedAction(EntityUid owner, EntityUid? action)
@@ -246,6 +251,13 @@ public sealed partial class GeneticsSystem : EntitySystem
             ent.Comp.Context != round.Context || block < 0 || block >= ent.Comp.Blocks.Count || value < 0 || value > MaxBlockValue)
             return false;
 
+        if (IsBlockActive(value, round.Thresholds[block]) && round.Mutations[block] is { } mutation &&
+            !CanActivate(ent.Comp.Blocks, mutation, block))
+        {
+            MutationConflict(ent, actor);
+            return false;
+        }
+
         ent.Comp.Blocks[block] = (ushort) value;
         ent.Comp.Revision++;
         Reconcile(ent);
@@ -259,6 +271,12 @@ public sealed partial class GeneticsSystem : EntitySystem
         if (TerminatingOrDeleted(ent) || HasComp<GeneticIncompatibleComponent>(ent) ||
             !IsCompatible(sample) || ent.Comp.Context != sample.Context)
             return false;
+
+        if (!HasCompatibleMutations(sample.Blocks))
+        {
+            MutationConflict(ent, actor);
+            return false;
+        }
 
         ent.Comp.Blocks = new List<ushort>(sample.Blocks);
         ent.Comp.Revision++;
@@ -312,7 +330,10 @@ public sealed partial class GeneticsSystem : EntitySystem
             modifiers.LowPressureImmunity |= source.LowPressureImmunity;
             modifiers.HighPressureImmunity |= source.HighPressureImmunity;
             modifiers.ColdImmunity |= source.ColdImmunity;
+            modifiers.ColdDamageImmunity |= source.ColdDamageImmunity;
             modifiers.HeatImmunity |= source.HeatImmunity;
+            modifiers.CoolingMultiplier *= source.CoolingMultiplier;
+            modifiers.FireDamageMultiplier *= source.FireDamageMultiplier;
             modifiers.MovementMultiplier *= source.MovementMultiplier;
             modifiers.MeleeMultiplier *= source.MeleeMultiplier;
             if (source.UnarmedDamage is { } unarmedDamage)
@@ -382,6 +403,7 @@ public sealed partial class GeneticsSystem : EntitySystem
         ent.Comp.Active = active;
         ent.Comp.PeriodicDamage = periodic;
         ent.Comp.Stability = ent.Comp.StabilityCapacity - load;
+        ReconcileSpeciesEffects(ent);
         var effects = EnsureComp<GeneticEffectsComponent>(ent);
         effects.Modifiers = modifiers;
         effects.Reverting = false;
@@ -428,6 +450,7 @@ public sealed partial class GeneticsSystem : EntitySystem
             if (mob.CurrentState == MobState.Dead)
                 continue;
             UpdatePhysiology(uid, (float) genome.Interval.TotalSeconds);
+            UpdateTemperatureEffects((uid, genome), mob.CurrentState);
             if (!genome.PeriodicDamage.Empty)
                 _damage.TryChangeDamage(uid, genome.PeriodicDamage, true, false);
             if (genome.Stability < 0)

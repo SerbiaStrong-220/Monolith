@@ -57,7 +57,7 @@ public sealed partial class GeneticsSystem
                 continue;
 
             var weight = _prototypes.Index(id).RadiationWeight;
-            if (weight <= 0 || !float.IsFinite(weight))
+            if (weight <= 0 || !float.IsFinite(weight) || !CanActivate(ent.Comp.Blocks, id, i))
                 continue;
 
             // Weighted reservoir sampling selects one candidate without allocating a list.
