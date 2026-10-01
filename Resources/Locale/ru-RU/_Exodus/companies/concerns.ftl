@@ -1,54 +1,54 @@
-concern-augok-name = Концерн АУГОК
+concern-augok-name = Эгида-Арсенал
 concern-augok-description = Союз «Аэтеорион Динамикс», «Ульман Индастрис» и Гражданской обороны Колосса. Проектирует корабельные орудия, производит 90-мм автопушки «Дравон» и развивает защитные системы.
 
-concern-drake-black-arms-usa-name = Концерн Дрэйк&Блэк&Армс&ВША
-concern-drake-black-arms-usa-description = Объединение «Дрэйк Индастрис», «Блэкхок», «Миднайт Армс» и Всемирных Штатов Америки. Поставляет вооружение, охранные услуги, корабельную защиту и оборудование для промышленной добычи.
+concern-drake-black-arms-usa-name = Аквила Инк.
+concern-drake-black-arms-usa-description = A.Q.U.I.L.A. — Advanced Quartermaster Unified Industrial Logistics Agency («Передовое объединённое агентство промышленной логистики»). Объединение «Дрэйк Индастрис», «Блэкхок», «Миднайт Армс» и Всемирных Штатов Америки. Поставляет вооружение, охранные услуги, корабельную защиту и оборудование для промышленной добычи.
 
-concern-horizon-harmony-hammer-matter-name = Концерн Горизонт&Хармони&Молот&Маттер
+concern-horizon-harmony-hammer-matter-name = Холдинг «Синтез»
 concern-horizon-harmony-hammer-matter-description = Объединение «Горизонт Энерджи», «Хармони Медикал», «Стального молота» и «Дарк Маттер Интерпрайзес». Занимается добычей газов, медициной, судостроением, ремонтом и переработкой сырья.
 
-concern-buno-name = Концерн Б.У.НО.
+concern-buno-name = КОРПУС
 concern-buno-description = Объединение «Бухгалтерии», «Улья» и «Носке-Эйен». Работает с защитной биотехнологией, страхованием жизни и специальным снаряжением.
 
-concern-tech-disk-augok-name = технологический диск концерна АУГОК
+concern-tech-disk-augok-name = технологический диск концерна «Эгида-Арсенал»
 concern-tech-disk-augok-description = Открывает орудийный сервер Аэтеориона, «Дравон» и защитные системы ГОК.
-concern-tech-disk-drake-black-arms-usa-name = технологический диск концерна Дрэйк&Блэк&Армс&ВША
+concern-tech-disk-drake-black-arms-usa-name = технологический диск концерна «Аквила Инк.»
 concern-tech-disk-drake-black-arms-usa-description = Открывает вооружение, защитные системы, оборудование для промышленной добычи и бронированные газовые трубы участников концерна.
-concern-tech-disk-horizon-harmony-hammer-matter-name = технологический диск концерна Горизонт&Хармони&Молот&Маттер
+concern-tech-disk-horizon-harmony-hammer-matter-name = технологический диск холдинга «Синтез»
 concern-tech-disk-horizon-harmony-hammer-matter-description = Открывает газодобычу, медицинское производство, ремонтных дронов и переработку сырья.
-concern-tech-disk-buno-name = технологический диск концерна Б.У.НО.
+concern-tech-disk-buno-name = технологический диск концерна «КОРПУС»
 concern-tech-disk-buno-description = Открывает защитные органы, страхование жизни и специальное снаряжение.
 
-ent-TechDiskAugok = технологический диск концерна АУГОК
+ent-TechDiskAugok = технологический диск концерна «Эгида-Арсенал»
     .desc = Открывает орудийный сервер Аэтеориона, «Дравон» и защитные системы ГОК.
-ent-TechDiskDrakeBlackArmsUSA = технологический диск концерна Дрэйк&Блэк&Армс&ВША
+ent-TechDiskDrakeBlackArmsUSA = технологический диск концерна «Аквила Инк.»
     .desc = Открывает вооружение, защитные системы, оборудование для промышленной добычи и бронированные газовые трубы участников концерна.
-ent-TechDiskHorizonHarmonyHammerMatter = технологический диск концерна Горизонт&Хармони&Молот&Маттер
+ent-TechDiskHorizonHarmonyHammerMatter = технологический диск холдинга «Синтез»
     .desc = Открывает газодобычу, медицинское производство, ремонтных дронов и переработку сырья.
-ent-TechDiskBuno = технологический диск концерна Б.У.НО.
+ent-TechDiskBuno = технологический диск концерна «КОРПУС»
     .desc = Открывает защитные органы, страхование жизни и специальное снаряжение.
 
 concern-tech-disk-case-description = Запечатанный кейс с технологическим диском концерна и ключом шифрования его закрытой сети.
 
-ent-CompanyTechDiskCaseAugok = кейс технологического диска концерна АУГОК
+ent-CompanyTechDiskCaseAugok = кейс технологического диска концерна «Эгида-Арсенал»
     .desc = { concern-tech-disk-case-description }
-ent-CompanyTechDiskCaseDrakeBlackArmsUSA = кейс технологического диска концерна Дрэйк&Блэк&Армс&ВША
+ent-CompanyTechDiskCaseDrakeBlackArmsUSA = кейс технологического диска концерна «Аквила Инк.»
     .desc = { concern-tech-disk-case-description }
-ent-CompanyTechDiskCaseHorizonHarmonyHammerMatter = кейс технологического диска концерна Горизонт&Хармони&Молот&Маттер
+ent-CompanyTechDiskCaseHorizonHarmonyHammerMatter = кейс технологического диска холдинга «Синтез»
     .desc = { concern-tech-disk-case-description }
-ent-CompanyTechDiskCaseBuno = кейс технологического диска концерна Б.У.НО.
+ent-CompanyTechDiskCaseBuno = кейс технологического диска концерна «КОРПУС»
     .desc = { concern-tech-disk-case-description }
 
-chat-radio-concern-augok = АУГОК
-chat-radio-concern-drake-black-arms-usa = Дрэйк&Блэк&Армс&ВША
-chat-radio-concern-horizon-harmony-hammer-matter = Горизонт&Хармони&Молот&Маттер
-chat-radio-concern-buno = Б.У.НО.
+chat-radio-concern-augok = Эгида-Арсенал
+chat-radio-concern-drake-black-arms-usa = Аквила Инк.
+chat-radio-concern-horizon-harmony-hammer-matter = Синтез
+chat-radio-concern-buno = КОРПУС
 
-ent-EncryptionKeyConcernAugok = ключ шифрования концерна АУГОК
-    .desc = Ключ шифрования закрытой дальней связи концерна АУГОК.
-ent-EncryptionKeyConcernDrakeBlackArmsUSA = ключ шифрования концерна Дрэйк&Блэк&Армс&ВША
-    .desc = Ключ шифрования закрытой дальней связи концерна Дрэйк&Блэк&Армс&ВША.
-ent-EncryptionKeyConcernHorizonHarmonyHammerMatter = ключ шифрования концерна Горизонт&Хармони&Молот&Маттер
-    .desc = Ключ шифрования закрытой дальней связи концерна Горизонт&Хармони&Молот&Маттер.
-ent-EncryptionKeyConcernBuno = ключ шифрования концерна Б.У.НО.
-    .desc = Ключ шифрования закрытой дальней связи концерна Б.У.НО.
+ent-EncryptionKeyConcernAugok = ключ шифрования концерна «Эгида-Арсенал»
+    .desc = Ключ шифрования закрытой дальней связи концерна «Эгида-Арсенал».
+ent-EncryptionKeyConcernDrakeBlackArmsUSA = ключ шифрования концерна «Аквила Инк.»
+    .desc = Ключ шифрования закрытой дальней связи концерна «Аквила Инк.».
+ent-EncryptionKeyConcernHorizonHarmonyHammerMatter = ключ шифрования холдинга «Синтез»
+    .desc = Ключ шифрования закрытой дальней связи холдинга «Синтез».
+ent-EncryptionKeyConcernBuno = ключ шифрования концерна «КОРПУС»
+    .desc = Ключ шифрования закрытой дальней связи концерна «КОРПУС».

@@ -25,6 +25,6 @@ company-vessel-drake-mackinaw-name = Drake "Mackinaw"
 company-vessel-drake-mackinaw-description = A Drake Industries mining ship with two mining lasers, an liquid metal refinery, and a cargo hold. Powered by an antimatter engine.
 company-vessel-drake-hulk-name = Drake "Hulk"
 company-vessel-drake-hulk-description = A Drake Industries mining ship with four mining lasers, an liquid metal refinery, and a cargo hold. An expanded antimatter engine powers its mining equipment.
-# B.U.N.O.
-company-vessel-buno-revizor-name = B.U.N.O. "Revizor"
-company-vessel-buno-revizor-description = A boarding ship of the B.U.N.O. Concern's Accounting. A recall pad throws auditors onto the nearest ship, and two combat suits wait for them in the boarding bay.
+# CORPUS
+company-vessel-buno-revizor-name = CORPUS "Revizor"
+company-vessel-buno-revizor-description = A boarding ship of CORPUS's Accounting. A recall pad throws auditors onto the nearest ship, and two combat suits wait for them in the boarding bay.

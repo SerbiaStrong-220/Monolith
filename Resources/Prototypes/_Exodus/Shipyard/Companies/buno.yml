@@ -21,7 +21,7 @@
 
 - type: gameMap
   id: BunoRevizor
-  mapName: 'Б.У.Н.О. Ревизор'
+  mapName: 'КОРПУС Ревизор'
   mapPath: /SharedMaps/_Exodus/Shuttles/Companies/buno/revizor.yml
   isGrid: true
   minPlayers: 0

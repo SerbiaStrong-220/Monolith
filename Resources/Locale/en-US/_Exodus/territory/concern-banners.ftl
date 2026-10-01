@@ -1,7 +1,7 @@
-concern-banner-augok-name = AUGOK concern banner
-concern-banner-drake-black-arms-usa-name = Drake&Black&Arms&USA concern banner
-concern-banner-horizon-harmony-hammer-matter-name = Horizon&Harmony&Hammer&Matter concern banner
-concern-banner-buno-name = B.U.N.O. concern banner
+concern-banner-augok-name = Aegis-Arsenal banner
+concern-banner-drake-black-arms-usa-name = Aquila Ink. banner
+concern-banner-horizon-harmony-hammer-matter-name = Synthesis Holding banner
+concern-banner-buno-name = CORPUS banner
 concern-banner-claim-description = Establishes the concern's corporate presence inside a faction's territory.
 company-subsidiary-banner-description = A decorative subsidiary banner. Claim territory with the concern's banner instead.
 
