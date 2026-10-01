@@ -1,0 +1,19 @@
+<Document>
+  # Кидан
+
+  <Box>
+    <GuideEntityEmbed Entity="MobKidan" Caption=""/>
+  </Box>
+
+  Кидан доступны при создании персонажа. Их врождённые гены дают защиту, обнаружение руды и биолюминесценцию.
+
+  ## Расовые особенности: врождённые гены
+
+  - [bold][geneticmutation="GeneticChitinArmor"][/bold] (+[geneticmutation="GeneticChitinArmor" field="instability"]): снижает дробящий, режущий и колющий урон на 10%.
+  - [bold][geneticmutation="GeneticOreSense"][/bold] (+[geneticmutation="GeneticOreSense" field="instability"]): обнаруживает руду в радиусе 5 м.
+  - [bold][geneticmutation="GeneticGlow"][/bold] (+[geneticmutation="GeneticGlow" field="instability"]): освещает пространство вокруг носителя. Свечение включается и выключается кнопкой способности.
+
+  При базовом запасе 60 единиц врождённые гены занимают 20. Для дополнительных мутаций остаётся [bold]40 единиц стабильности[/bold]. Выключение свечения кнопкой не освобождает стабильность: для этого нужно отключить сам ген.
+
+  Эти гены можно отключать и переносить другим совместимым организмам в [textlink="генетической лаборатории" link="Genetics"]. Геностабилин сохраняет врождённые гены. Полный список генов, их нагрузка и ограничения приведены в разделе [textlink="Мутации" link="GeneticsMutations"].
+</Document>
