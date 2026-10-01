@@ -23,182 +23,156 @@
   <ColorBox Color="#2D3D50" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]Применение[/bold]</Box></ColorBox>
   <ColorBox Color="#2D3D50" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]Расходы и ограничения[/bold]</Box></ColorBox>
 
-  <!-- GeneticCocoon -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCocoon"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticCocoon" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Лечебный кокон для одного пациента.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">10 с плетения; 60 сытости и 60 воды; кокон одноразовый.</Box></ColorBox>
 
-  <!-- GeneticSlime -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticSlime"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticSlime" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Слаймолюд и обратимая форма слайма.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно + кнопка</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Повторное превращение через 120 с; экипировка падает; неснимаемая мешает.</Box></ColorBox>
 
-  <!-- GeneticTelekinesis -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticTelekinesis"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticTelekinesis" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Взаимодействие с предметами на расстоянии до 10 м.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не действует через препятствия; нельзя поднимать живых существ.</Box></ColorBox>
 
-  <!-- GeneticHulk -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHulk"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHulk" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Усиление ближнего боя, защита, иммунитет к оглушению; вскрытие дверей.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно + кнопка</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Запрет стрельбы; расход еды и воды +50%.</Box></ColorBox>
 
-  <!-- GeneticRemoteViewing -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticRemoteViewing"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticRemoteViewing" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Наблюдение за окружением другого носителя.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Цель должна быть жива и иметь тот же активный ген.</Box></ColorBox>
 
-  <!-- GeneticCloak -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCloak"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticCloak" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Маскировка тела.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Переключатель</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Попадания и боевые действия срывают маскировку; восстановление 20 с.</Box></ColorBox>
 
-  <!-- GeneticMimic -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticMimic"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticMimic" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Копирование облика, имени и голоса; возврат своего облика.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Нужен соседний гуманоид; не копирует доступы.</Box></ColorBox>
 
-  <!-- GeneticNightVision -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticNightVision"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticNightVision" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Зрение в темноте.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Переключатель</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticGlow -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticGlow"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticGlow" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Освещение вокруг носителя.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Переключатель</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticHearing -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHearing"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHearing" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Обнаружение признаков жизни поблизости, включая цели за стенами.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Действует 5 с; повтор через 20 с.</Box></ColorBox>
 
-  <!-- GeneticWeb -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticWeb"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticWeb" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Создание липкой паутины под ногами.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">5 сытости; повтор через 12 с; до 6 плетений на полу.</Box></ColorBox>
 
-  <!-- GeneticFireBreath -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFireBreath"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticFireBreath" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Горящий сгусток на расстояние до 5 м.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">10 сытости; повтор через 20 с; закрытый защитный шлем может мешать.</Box></ColorBox>
 
-  <!-- GeneticNoBreathing -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticNoBreathing"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticNoBreathing" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Отсутствие потребности в дыхании.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не защищает от давления и температуры.</Box></ColorBox>
 
-  <!-- GeneticColdResistance -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticColdResistance"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticColdResistance" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Защита от переохлаждения и низкого давления.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не заменяет дыхание.</Box></ColorBox>
 
-  <!-- GeneticHeatResistance -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHeatResistance"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHeatResistance" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Защита от перегрева и высокого давления.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не защищает от всех источников ожогов.</Box></ColorBox>
 
-  <!-- GeneticRegeneration -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticRegeneration"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticRegeneration" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Постепенное лечение физических повреждений и ожогов, в том числе в крите.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не воскрешает.</Box></ColorBox>
 
-  <!-- GeneticClotting -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticClotting"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticClotting" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ускоренная остановка кровотечения.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не восполняет кровь и не лечит раны.</Box></ColorBox>
 
-  <!-- GeneticJump -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticJump"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticJump" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Шанс отражения подходящих снарядов и лучей.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticPouch -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticPouch"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticPouch" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Дополнительный карман в инвентаре.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Для небольшого предмета; при утрате гена содержимое выпадает.</Box></ColorBox>
 
-  <!-- GeneticInsulation -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticInsulation"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticInsulation" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Отсутствие проводимости тела.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не защищает от других способов оглушения.</Box></ColorBox>
 
-  <!-- GeneticLethargy -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticLethargy"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticLethargy" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Скорость передвижения -25%.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticBrittle -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticBrittle"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticBrittle" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Получаемый урон +30%.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticHemophilia -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHemophilia"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHemophilia" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Кровотечение от новых повреждений сосудов вдвое сильнее.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticBloodBath -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticBloodBath"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticBloodBath" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Выброс крови вокруг носителя каждые 30 с.</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Автоматически</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Теряет 10% полного объёма крови и добавляет 1 единицу кровотока за выброс.</Box></ColorBox>
 
-  <!-- GeneticPhotophobia -->
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticPhotophobia"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticPhotophobia" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ухудшение зрения на ярком свету; ослепление от вспышек дольше на 75%.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"/>
 
-  <!-- GeneticHypermetabolism -->
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticHypermetabolism"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHypermetabolism" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Ускоренный расход питания и голод.</Box></ColorBox>

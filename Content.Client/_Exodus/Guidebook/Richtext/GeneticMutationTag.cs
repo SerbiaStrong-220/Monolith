@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Client._Exodus.Guidebook.RichText;
 
 /// <summary>Displays a mutation's localized name or current genetic load directly from its prototype.</summary>
-public sealed class GeneticMutationTag : IMarkupTagHandler
+public sealed partial class GeneticMutationTag : IMarkupTagHandler
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
 
