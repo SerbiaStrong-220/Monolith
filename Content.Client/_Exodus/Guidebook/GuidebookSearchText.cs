@@ -32,13 +32,14 @@ public static class GuidebookSearchText
         TimeSpan.FromMilliseconds(100));
 
     /// <summary>
-    /// Keeps prose, link labels, captions and resolved reagent names, excluding comments, prototype IDs and formatting.
-    /// Reagent resolvers supply localized names without constructing the embedded cards.
+    /// Keeps prose, link labels, captions and resolved prototype text, excluding comments, IDs and formatting.
+    /// Resolvers supply localized text without constructing the embedded controls.
     /// </summary>
     public static string Extract(
         string document,
         Func<ProtoId<ReagentPrototype>, string?>? reagentName = null,
-        Func<string, string?>? reagentGroupNames = null)
+        Func<string, string?>? reagentGroupNames = null,
+        Func<MarkupNode, string?>? markupText = null)
     {
         var text = DocumentTags.Replace(document, match =>
         {
@@ -80,6 +81,8 @@ public static class GuidebookSearchText
         {
             if (node.IsPlainText || node.Name == "textlink" && !node.Closing)
                 builder.Append(node.Value.StringValue);
+            else if (!node.Closing)
+                builder.Append(markupText?.Invoke(node));
         }
 
         return CollapseWhitespace(builder.ToString());

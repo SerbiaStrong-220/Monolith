@@ -121,6 +121,33 @@ public sealed class GuidebookSearchTextTest
         Assert.That(text, Is.EqualTo("Антидот Препарат [bold]X[/bold]"));
     }
 
+    [Test]
+    public void IndexesResolvedMutationTableTextWithoutExposingPrototypeIds()
+    {
+        const string document = """
+            <Document>
+            <!-- [geneticmutation="Hidden"] -->
+            <Table Columns="2">
+              <Box>[bold][geneticmutation="GeneticRegeneration"][/bold]</Box>
+              <Box>[geneticmutation="GeneticRegeneration" field="instability"]</Box>
+            </Table>
+            </Document>
+            """;
+
+        var text = GuidebookSearchText.Extract(document, markupText: node =>
+        {
+            if (node.Name != "geneticmutation")
+                return null;
+
+            Assert.That(node.Value.StringValue, Is.EqualTo("GeneticRegeneration"));
+            return node.Attributes.ContainsKey("field") ? "30" : "Регенерация";
+        });
+
+        Assert.That(text, Is.EqualTo("Регенерация 30"));
+        Assert.That(GuidebookSearchText.GetMatchRank("мутации", GuidebookSearchText.Normalize(text), "регенерация"),
+            Is.EqualTo(2));
+    }
+
     [TestCase("  РЕМОНТ\tДРОНОВ\r\n", "ремонт дронов")]
     [TestCase("ЖЁЛТЫЙ", "желтый")]
     [TestCase("\t\n ", "")]

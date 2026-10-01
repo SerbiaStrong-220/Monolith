@@ -1,4 +1,5 @@
 using System.Text;
+using Content.Client._Exodus.Guidebook.RichText;
 using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Guidebook;
@@ -170,7 +171,8 @@ public sealed partial class GuidebookSearchControl : BoxContainer
             try
             {
                 using var reader = _resources.ContentFileReadText(entry.Resource);
-                entry.Text = GuidebookSearchText.Extract(reader.ReadToEnd(), ResolveReagentName, ResolveReagentGroupNames);
+                entry.Text = GuidebookSearchText.Extract(
+                    reader.ReadToEnd(), ResolveReagentName, ResolveReagentGroupNames, ResolveMarkupText);
                 entry.NormalizedText = GuidebookSearchText.Normalize(entry.Text);
             }
             catch (Exception e)
@@ -209,6 +211,11 @@ public sealed partial class GuidebookSearchControl : BoxContainer
         if (_openFirstResult && _matches.Count > 0)
             OnEntrySelected?.Invoke(_matches[0].Entry.Id);
         _openFirstResult = false;
+    }
+
+    private string? ResolveMarkupText(MarkupNode node)
+    {
+        return node.Name == "geneticmutation" ? GeneticMutationTag.GetText(node, _prototypes) : null;
     }
 
     private string? ResolveReagentName(ProtoId<ReagentPrototype> id)
