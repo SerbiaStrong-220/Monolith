@@ -1,0 +1,30 @@
+- type: entity
+  parent: SeedBase
+  id: GoJuicePlantSeeds
+  name: packet of go-leaf seeds
+  description: Seeds of a rare plant whose leaves contain go-juice.
+  components:
+  - type: Seed
+    seedId: goJuicePlant
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Hydroponics/go_juice.rsi
+
+- type: entity
+  parent: ProduceBase
+  id: GoJuiceLeaves
+  name: go-leaf leaves
+  description: A bundle of thick leaves with mint-green veins. Grind them to extract go-juice or use a seed extractor to obtain more seeds.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Hydroponics/go_juice.rsi
+  - type: Item
+    size: Tiny
+  - type: Produce
+    seedId: goJuicePlant
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: GoJuice
+          Quantity: 2

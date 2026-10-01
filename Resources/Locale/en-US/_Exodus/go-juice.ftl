@@ -1,4 +1,10 @@
 reagent-name-go-juice = go-juice
+seeds-go-juice-name = go-leaf
+seeds-go-juice-display-name = go-leaf
+ent-GoJuicePlantSeeds = packet of go-leaf seeds
+    .desc = Seeds of a rare plant whose leaves contain go-juice.
+ent-GoJuiceLeaves = go-leaf leaves
+    .desc = A bundle of thick leaves with mint-green veins. Grind them to extract go-juice or use a seed extractor to obtain more seeds.
 reagent-desc-go-juice = A combat stimulant that temporarily increases movement and melee attack speed. Metabolism also satisfies genetic go-juice dependency.
 reagent-effect-guidebook-combat-stimulant = Increases movement speed by { $movement }% and melee attack rate by { $attack }% for { $duration } seconds per unit, up to { $maximum } seconds remaining. Satisfies genetic dependency on this reagent in proportion to the metabolized dose.
 ent-GoJuiceChemistryBottle = go-juice bottle

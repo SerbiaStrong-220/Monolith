@@ -1,0 +1,23 @@
+- type: seed
+  id: goJuicePlant
+  name: seeds-go-juice-name
+  noun: seeds-noun-seeds
+  displayName: seeds-go-juice-display-name
+  plantRsi: _Exodus/Objects/Specific/Hydroponics/go_juice.rsi
+  packetPrototype: GoJuicePlantSeeds
+  productPrototypes:
+  - GoJuiceLeaves
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 12
+  production: 20
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.6
+  nutrientConsumption: 0.5
+  chemicals:
+    GoJuice:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 20

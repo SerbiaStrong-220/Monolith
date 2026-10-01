@@ -305,6 +305,8 @@
     - id: ClothingBackpackFleetLootT1
       amount: 1
       maxAmount: 4
+    - id: GoJuicePlantSeeds
+      amount: 2
     - id: ClothingHeadHatLeviathanChitinCrown
       prob: 0.2
     - id: ClothingHandsGlovesLeviathanChitin
