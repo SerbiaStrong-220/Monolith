@@ -1,3 +1,5 @@
+health-analyzer-report-genetic-modifications = Genetic modifications detected
+
 genetics-title = Genetics laboratory
 genetics-hive-brand = THE HIVE · BIOTECHNOLOGY
 genetics-ui-laboratory-module = LABORATORY / TRANSFORMATION
@@ -77,7 +79,7 @@ genetics-admin-disable = Disable
 genetics-disk-slot = Genetic disk
 genetics-selected = Block { $number }:
 genetics-block = { $number }: { $value }
-genetics-admin-block = { $number }: { $value } — { $name } ({ $state })
+genetics-admin-block = { $number }: { $value } - { $name } ({ $state })
 genetics-empty-block = Empty block
 genetics-active = active
 genetics-inactive = inactive
@@ -104,9 +106,9 @@ genetics-feeling-heat = Heat seems to retreat from your skin, as though your bod
 genetics-feeling-regeneration = A gentle tingling spreads beneath your skin, as though your tissues are drawing themselves together.
 genetics-feeling-lethargy = Your limbs grow heavy. Every movement takes a little more effort.
 genetics-feeling-brittle = An unpleasant sensitivity spreads through your body. Even a light touch feels sharp.
-genetics-genostabilin-effect = Suppresses acquired genetic mutations as the body metabolizes it.
+genetics-genostabilin-effect = Suppresses acquired genetic mutations as the body metabolizes it, preserving innate genes.
 reagent-name-genostabilin = genostabilin
-reagent-desc-genostabilin = A treatment that suppresses acquired genetic mutations as it is metabolized by the body.
+reagent-desc-genostabilin = A treatment that suppresses acquired genetic mutations as it is metabolized by the body. Innate genes are preserved.
 genetics-view-title = Remote viewing
 genetics-view-refresh = Refresh carriers
 genetics-view-stop = Stop observing

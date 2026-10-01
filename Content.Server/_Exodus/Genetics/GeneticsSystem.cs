@@ -47,6 +47,7 @@ public sealed partial class GeneticsSystem : EntitySystem
         SubscribeLocalEvent<GenomeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<GenomeComponent, CloningEvent>(OnCloning);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        InitializeRadiation();
     }
 
     public GeneticsRoundComponent GetRound()
@@ -134,6 +135,20 @@ public sealed partial class GeneticsSystem : EntitySystem
         return true;
     }
 
+    /// <summary>Detects active mutations outside this body's YAML defaults without generating a genome.</summary>
+    public bool HasGeneticModifications(Entity<GenomeComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        foreach (var mutation in ent.Comp.Active)
+        {
+            if (!ent.Comp.InitialMutations.Contains(mutation))
+                return true;
+        }
+        return false;
+    }
+
     /// <summary>Critical patients are valid; dead bodies and non-mobs are not.</summary>
     public bool IsLivingSubject(EntityUid uid)
     {
@@ -164,15 +179,19 @@ public sealed partial class GeneticsSystem : EntitySystem
         return TrySetBlock(ent, block, value, actor);
     }
 
-    /// <summary>Metabolized genostabilin disables every block without changing the round cipher or stored samples.</summary>
+    /// <summary>Metabolized genostabilin clears non-native blocks, preserving native genes and stored samples.</summary>
     public bool TryStabilize(EntityUid uid)
     {
         if (!IsLivingSubject(uid) || !TryComp<GenomeComponent>(uid, out var genome) ||
             !TryGetGenome(uid, out genome))
             return false;
+        var round = GetRound();
         var changed = false;
         for (var i = 0; i < genome.Blocks.Count; i++)
         {
+            if (round.Mutations[i] is { } mutation && genome.InitialMutations.Contains(mutation))
+                continue;
+
             changed |= genome.Blocks[i] != 0;
             genome.Blocks[i] = 0;
         }
@@ -180,7 +199,7 @@ public sealed partial class GeneticsSystem : EntitySystem
             return true;
         genome.Revision++;
         Reconcile((uid, genome));
-        _admin.Add(LogType.Action, LogImpact.High, $"Genostabilin reset the genome of {ToPrettyString(uid):target}");
+        _admin.Add(LogType.Action, LogImpact.High, $"Genostabilin suppressed non-native mutations in {ToPrettyString(uid):target}");
         return true;
     }
 

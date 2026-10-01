@@ -405,7 +405,23 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeId, damageValue);
             }
 
-            TryChangeDamage(uid, damage, interruptsDoAfters: false, origin: args.Origin);
+            // Exodus-begin: notify radiation reactions only about damage that passed protection.
+            var applied = TryChangeDamage(uid, damage, interruptsDoAfters: false, origin: args.Origin);
+            if (!_netMan.IsServer || applied == null || TerminatingOrDeleted(uid))
+                return;
+
+            var received = FixedPoint2.Zero;
+            foreach (var amount in applied.DamageDict.Values)
+            {
+                if (amount > FixedPoint2.Zero)
+                    received += amount;
+            }
+            if (received > FixedPoint2.Zero)
+            {
+                var ev = new Content.Shared._Exodus.Radiation.RadiationDamageReceivedEvent(received);
+                RaiseLocalEvent(uid, ref ev);
+            }
+            // Exodus-end
         }
 
         private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)

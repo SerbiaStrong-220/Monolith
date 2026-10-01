@@ -90,7 +90,8 @@ public sealed partial class GeneticAdaptationsTest
             Enable(entities, body, "GeneticSlime");
             Assert.That(state.TransformationAvailable, Is.EqualTo(available));
             Assert.That(Transform(entities, body), Is.False, "Toggling the gene must not reset its cooldown.");
-            Assert.That(genetics.TrySetBlock((body, genome), block, 0, body), Is.True);
+            Assert.That(genetics.TryStabilize(body), Is.True);
+            Assert.That(appearance.Species.Id, Is.EqualTo("Human"), "An acquired slime gene is not native to a human body.");
             Assert.That(bodies.GetBodyOrgans(body).Select(organ => organ.Id), Is.EquivalentTo(organs.Where(organ => organ != lung)));
             Assert.That(bodies.GetBodyChildren(body).Select(part => part.Id), Is.EquivalentTo(parts));
             Assert.That(entities.EntityExists(liver), Is.True);
@@ -134,8 +135,14 @@ public sealed partial class GeneticAdaptationsTest
                 new DamageSpecifier { DamageDict = { ["Poison"] = FixedPoint2.New(15) } }, ignoreResistances: true);
             var damage = entities.GetComponent<DamageableComponent>(body).TotalDamage;
             Assert.That(Transform(entities, body), Is.True);
+            Assert.That(genetics.TryStabilize(body), Is.True);
+            Assert.That(entities.GetComponent<GeneticEffectsComponent>(body).InAlternateForm, Is.True,
+                "Genostabilin must preserve a native slime's transformation.");
             if (removeGene)
-                Assert.That(genetics.TryStabilize(body), Is.True);
+            {
+                var block = genetics.GetRound().Mutations.IndexOf("GeneticSlime");
+                Assert.That(genetics.TrySetBlock((body, genome), block, 0, body), Is.True);
+            }
             else
                 entities.System<MobStateSystem>().ChangeMobState(body, MobState.Dead);
             Assert.That(appearance.Species.Id, Is.EqualTo("SlimePerson"));
