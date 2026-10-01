@@ -49,6 +49,78 @@ public sealed class GuidebookSearchTextTest
             Is.EqualTo("Порог > 5 Давление < 10 Следующая строка"));
     }
 
+    [Test]
+    public void FindsLocalizedReagentsInIndividualCardsAndGroups()
+    {
+        const string document = """
+            <Document>
+            # Лекарства
+            <GuideReagentEmbed Reagent="Bicaridine"/>
+            <GuideReagentGroupEmbed
+                Group="Medicine"/>
+            </Document>
+            """;
+
+        var text = GuidebookSearchText.Extract(document,
+            id => id == "Bicaridine" ? "Бикаридин" : null,
+            group => group == "Medicine" ? "Дермалин\nДексалин плюс" : null);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(text, Is.EqualTo("Лекарства Бикаридин Дермалин Дексалин плюс"));
+            Assert.That(GuidebookSearchText.GetMatchRank("лекарства", GuidebookSearchText.Normalize(text), "дексалин"),
+                Is.EqualTo(2));
+            Assert.That(GuidebookSearchText.GetSnippet(text, "дексалин"), Does.Contain("Дексалин плюс"));
+        });
+    }
+
+    [Test]
+    public void DoesNotResolveReagentsInCommentsEscapedTagsOrUnrelatedAttributes()
+    {
+        const string document = """
+            <Document>
+            <!-- <GuideReagentEmbed Reagent="Hidden"/> -->
+            <!-- <GuideReagentGroupEmbed Group="Hidden"/> -->
+            \<GuideReagentEmbed Reagent="Literal"/>
+            <GuideEntityEmbed Reagent="Unrelated" Group="Unrelated"/>
+            <GuideEntityEmbed Caption="Пример Reagent=\"Quoted\""/>
+            </Document>
+            """;
+        var resolved = 0;
+
+        GuidebookSearchText.Extract(document,
+            _ =>
+            {
+                resolved++;
+                return "Скрытый препарат";
+            },
+            _ =>
+            {
+                resolved++;
+                return "Скрытая группа";
+            });
+
+        Assert.That(resolved, Is.Zero);
+    }
+
+    [Test]
+    public void PreservesCaptionsAndLiteralMarkupInNamesWhileSkippingUnknownReagents()
+    {
+        const string document = """
+            <Document>
+            <GuideReagentEmbed Caption="Антидот" Reagent="Known"></GuideReagentEmbed>
+            <GuideReagentEmbed Reagent="Missing"/>
+            <GuideReagentGroupEmbed Group="Missing"/>
+            </Document>
+            """;
+
+        var text = GuidebookSearchText.Extract(document,
+            id => id == "Known" ? "Препарат [bold]X[/bold]" : null,
+            _ => null);
+
+        Assert.That(text, Is.EqualTo("Антидот Препарат [bold]X[/bold]"));
+    }
+
     [TestCase("  РЕМОНТ\tДРОНОВ\r\n", "ремонт дронов")]
     [TestCase("ЖЁЛТЫЙ", "желтый")]
     [TestCase("\t\n ", "")]

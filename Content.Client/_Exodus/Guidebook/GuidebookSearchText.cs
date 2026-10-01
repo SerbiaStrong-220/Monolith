@@ -1,5 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
+using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client._Exodus.Guidebook;
@@ -14,8 +16,13 @@ public static class GuidebookSearchText
         RegexOptions.CultureInvariant,
         TimeSpan.FromMilliseconds(100));
 
-    private static readonly Regex Caption = new(
-        @"\bCaption=""((?:\\.|[^""\\])*)""",
+    private static readonly Regex TagName = new(
+        @"^<(?<name>\w+)(?=\s|/?>)",
+        RegexOptions.CultureInvariant,
+        TimeSpan.FromMilliseconds(100));
+
+    private static readonly Regex Attributes = new(
+        @"\s(?<name>\w+)=""(?<value>(?:\\.|[^""\\])*)""",
         RegexOptions.CultureInvariant,
         TimeSpan.FromMilliseconds(100));
 
@@ -25,10 +32,13 @@ public static class GuidebookSearchText
         TimeSpan.FromMilliseconds(100));
 
     /// <summary>
-    /// Keeps prose, link labels and explicit captions, excluding comments, prototype IDs and formatting.
-    /// Generated card contents remain accessible through the existing article-specific filter.
+    /// Keeps prose, link labels, captions and resolved reagent names, excluding comments, prototype IDs and formatting.
+    /// Reagent resolvers supply localized names without constructing the embedded cards.
     /// </summary>
-    public static string Extract(string document)
+    public static string Extract(
+        string document,
+        Func<ProtoId<ReagentPrototype>, string?>? reagentName = null,
+        Func<string, string?>? reagentGroupNames = null)
     {
         var text = DocumentTags.Replace(document, match =>
         {
@@ -46,10 +56,22 @@ public static class GuidebookSearchText
             if (match.Value.StartsWith("<!--", StringComparison.Ordinal))
                 return "\n";
 
-            var caption = Caption.Match(match.Value);
-            return caption.Success
-                ? "\n" + FormattedMessage.EscapeText(caption.Groups[1].Value) + "\n"
-                : "\n";
+            var tag = TagName.Match(match.Value).Groups["name"].Value;
+            var tagText = "\n";
+            foreach (Match attribute in Attributes.Matches(match.Value))
+            {
+                var value = attribute.Groups["value"].Value;
+                var visibleText = attribute.Groups["name"].Value switch
+                {
+                    "Caption" => value,
+                    "Reagent" when tag == "GuideReagentEmbed" => reagentName?.Invoke(value),
+                    "Group" when tag == "GuideReagentGroupEmbed" => reagentGroupNames?.Invoke(value),
+                    _ => null,
+                };
+                if (!string.IsNullOrEmpty(visibleText))
+                    tagText += FormattedMessage.EscapeText(visibleText) + "\n";
+            }
+            return tagText;
         });
         text = HeadingsAndLists.Replace(text, "");
 
