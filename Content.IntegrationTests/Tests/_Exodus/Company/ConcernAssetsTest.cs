@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared._Mono.Company;
 using Content.Shared._NF.Shipyard.Prototypes;
+using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Research.TechnologyDisk.Components;
@@ -71,6 +72,32 @@ public sealed class ConcernAssetsTest
                     }
                 }
             }
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task EveryRadioChannelIsReachableByItsKey()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var chat = entities.System<SharedChatSystem>();
+            var source = entities.SpawnEntity(null, map.GridCoords);
+            foreach (var radio in server.ProtoMan.EnumeratePrototypes<RadioChannelPrototype>())
+            {
+                // The default-channel key is checked before the channel lookup and would shadow the channel.
+                Assert.That(radio.KeyCode, Is.Not.EqualTo(SharedChatSystem.DefaultChannelKey),
+                    $"{radio.ID} uses the reserved default-channel key.");
+                Assert.That(chat.TryProccessRadioMessage(source, $"{SharedChatSystem.RadioChannelPrefix}{radio.KeyCode} test",
+                    out _, out var channel, quiet: true), radio.ID);
+                Assert.That(channel?.ID, Is.EqualTo(radio.ID), $"Key '{radio.KeyCode}' does not reach {radio.ID}.");
+            }
+
+            entities.DeleteEntity(source);
         });
         await pair.CleanReturnAsync();
     }

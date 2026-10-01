@@ -45,7 +45,7 @@
     Gold: 100
     Silver: 100
     Plutonium: 500
-    Americium: 100
+    Americium: 30
 
 - type: latheRecipe
   id: LifeInsuranceScannerMachineCircuitboard
@@ -58,7 +58,7 @@
     Silver: 100
     Plasma: 150
     Plutonium: 500
-    Americium: 100
+    Americium: 30
 
 - type: latheRecipe
   id: LifeInsuranceClonerMachineCircuitboard
@@ -71,7 +71,7 @@
     Silver: 150
     Plasma: 250
     Plutonium: 500
-    Americium: 200
+    Americium: 30
 
 # --- HME medical equipment ---
 - type: latheRecipe

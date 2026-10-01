@@ -135,7 +135,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
             EntityUid? maybeGrid = null;
 
             // Exodus mass-scanner-perf: static map overlays don't need grid lookups.
-            if (config.Shape is not RadarBlipShape.NebulaPolygon and not RadarBlipShape.TerritoryCircle)
+            if (config.Shape is not RadarBlipShape.NebulaPolygon and not RadarBlipShape.TerritoryCircle and not RadarBlipShape.SuppressionField) // Exodus hatched-ftl-zones
             {
                 var grid = EntityUid.Invalid;
                 // hijack our shape if we're on a grid and we want to do that
@@ -185,7 +185,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
             EntityUid? maybeGrid = null;
 
             // Exodus mass-scanner-perf: static map overlays don't need grid lookups.
-            if (config.Shape is not RadarBlipShape.NebulaPolygon and not RadarBlipShape.TerritoryCircle)
+            if (config.Shape is not RadarBlipShape.NebulaPolygon and not RadarBlipShape.TerritoryCircle and not RadarBlipShape.SuppressionField) // Exodus hatched-ftl-zones
             {
                 var grid = EntityUid.Invalid;
                 if (_map.TryFindGridAt(predictedMap, out grid, out _) && grid != EntityUid.Invalid)

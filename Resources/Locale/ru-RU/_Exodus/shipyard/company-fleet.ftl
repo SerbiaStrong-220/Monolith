@@ -25,3 +25,6 @@ company-vessel-drake-mackinaw-name = Дрэйк «Макинав»
 company-vessel-drake-mackinaw-description = Шахтёрский корабль Drake Industries с двумя буровыми лазерами, переработчиком жидкого металла и грузовым отсеком. Питается от двигателя антиматерии.
 company-vessel-drake-hulk-name = Дрэйк «Халк»
 company-vessel-drake-hulk-description = Шахтёрский корабль Drake Industries с четырьмя буровыми лазерами, переработчиком жидкого металла и грузовым отсеком. Усиленная установка антиматерии обеспечивает работу добывающего оборудования.
+# B.U.N.O.
+company-vessel-buno-revizor-name = Б.У.Н.О. «Ревизор»
+company-vessel-buno-revizor-description = Абордажный корабль «Бухгалтерии» концерна Б.У.Н.О. Плита возврата перебрасывает ревизоров на ближайший корабль, а в абордажном отсеке их ждут два боевых облачения.
