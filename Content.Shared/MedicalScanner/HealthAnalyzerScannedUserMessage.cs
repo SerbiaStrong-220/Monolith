@@ -19,6 +19,7 @@ public sealed class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
     public bool? Unrevivable;
     public bool? Uncloneable; // Frontier
     public bool HasViruses; // SS220 / Exodus: basic infection detection, detailed analysis requires a diagnoser.
+    public bool HasGeneticModifications; // Exodus: active mutations outside the body's native genes.
 
     public HealthAnalyzerScannedUserMessage(NetEntity? targetEntity, float temperature, float bloodLevel, bool? scanMode, bool? bleeding, bool? unrevivable, bool? uncloneable, Dictionary<TargetBodyPart, TargetIntegrity>? body, NetEntity? part = null) // Shitmed Change
     {

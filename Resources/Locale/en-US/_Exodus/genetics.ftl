@@ -1,3 +1,5 @@
+health-analyzer-report-genetic-modifications = Genetic modifications detected
+
 genetics-title = Genetics laboratory
 genetics-hive-brand = THE HIVE · BIOTECHNOLOGY
 genetics-ui-laboratory-module = LABORATORY / TRANSFORMATION

@@ -135,6 +135,20 @@ public sealed partial class GeneticsSystem : EntitySystem
         return true;
     }
 
+    /// <summary>Detects active mutations outside this body's YAML defaults without generating a genome.</summary>
+    public bool HasGeneticModifications(Entity<GenomeComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        foreach (var mutation in ent.Comp.Active)
+        {
+            if (!ent.Comp.InitialMutations.Contains(mutation))
+                return true;
+        }
+        return false;
+    }
+
     /// <summary>Critical patients are valid; dead bodies and non-mobs are not.</summary>
     public bool IsLivingSubject(EntityUid uid)
     {

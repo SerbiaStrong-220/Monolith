@@ -41,6 +41,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private Content.Server._Exodus.Virology.VirologySystem _virology = default!; // Exodus: incubation-aware detection.
+    [Dependency] private Content.Server._Exodus.Genetics.GeneticsSystem _genetics = default!; // Exodus: non-native mutation detection.
 
     public override void Initialize()
     {
@@ -287,6 +288,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
         )
         {
             HasViruses = _virology.HasDetectableVirus(target), // Exodus: hidden incubation is not detectable here.
+            HasGeneticModifications = _genetics.HasGeneticModifications(target), // Exodus: exclude native genes defined in YAML.
         });
     }
 }

@@ -1,3 +1,5 @@
+health-analyzer-report-genetic-modifications = Обнаружены генетические модификации
+
 genetics-title = Генетическая лаборатория
 genetics-hive-brand = УЛЕЙ · БИОТЕХНОЛОГИИ
 genetics-ui-laboratory-module = ЛАБОРАТОРИЯ / ПРЕОБРАЖЕНИЕ
