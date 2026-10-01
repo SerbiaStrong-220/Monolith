@@ -76,7 +76,8 @@ public sealed partial class GeneticAdaptationsTest
             var body = entities.SpawnEntity(prototype, new EntityCoordinates(map, Vector2.Zero));
             var genome = entities.GetComponent<GenomeComponent>(body);
             Assert.That(genome.Active.Contains("GeneticJump"), Is.True);
-            Assert.That(genome.Stability, Is.EqualTo(genome.StabilityCapacity - 20));
+            Assert.That(genome.Active.Contains("GeneticGoJuiceDependency"), Is.True);
+            Assert.That(genome.Stability, Is.EqualTo(genome.StabilityCapacity - 20 + 60));
             var state = entities.GetComponent<GeneticAbilityStateComponent>(body);
             Assert.That(state.Deflector, Is.Not.Null);
             Assert.That(entities.GetComponent<ReflectComponent>(state.Deflector!.Value).ReflectProb, Is.EqualTo(0.1f));

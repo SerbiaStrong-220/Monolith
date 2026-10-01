@@ -248,6 +248,12 @@
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Получаемый урон +30%.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"/>
+
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticGoJuiceDependency"][/bold]\n[color=#9BCAED][bold]Расовая особенность[/bold][/color]\n[textlink="Азаким" link="Asakim"]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticGoJuiceDependency" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Дополнительные 60 стабильности ценой потребности в гоу-соке.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">1 ед. в минуту; запас до 30 минут. Дефицит замедляет движение и атаки, через 5 минут наносит токсический урон.</Box></ColorBox>
 </Table>
 
 ## Врождённые наборы
@@ -326,9 +332,9 @@
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[textlink="Азаким" link="Asakim"] (гостевая роль)</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticJump"] ([geneticmutation="GeneticJump" field="instability"])</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">20</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">40</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticJump"] ([geneticmutation="GeneticJump" field="instability"]), [geneticmutation="GeneticGoJuiceDependency"] ([geneticmutation="GeneticGoJuiceDependency" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">-40</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">100</Box></ColorBox>
 </Table>
 
 Геностабилин сохраняет врождённые блоки. Вручную их можно отключать и переносить другим совместимым носителям. Анализатор здоровья отмечает как приобретённые гены, так и отключённые врождённые.
@@ -341,7 +347,22 @@
 - [bold]Телекинез + регенерация:[/bold] 60 - 25 - 30 = [bold]5[/bold] свободной стабильности. Ещё 15 нагрузки от ночного зрения дадут -10 и вызовут перегрузку.
 - [bold]Телекинез + регенерация + хрупкость:[/bold] 60 - 25 - 30 + 15 = [bold]20[/bold]. При этом хрупкость увеличивает получаемый урон на 30%.
 
-Эти примеры рассчитаны для носителя без других активных генов. Для азакима с врождённым рефлекторным покровом дополнительно вычтите его 20 нагрузки.
+Эти примеры рассчитаны для носителя без других активных генов. Азаким с врождёнными рефлекторным покровом и зависимостью от гоу-сока начинает со 100 свободной стабильности: 60 - 20 + 60.
+
+## Зависимость от гоу-сока
+
+[geneticmutation="GeneticGoJuiceDependency"] - врождённая особенность [textlink="азакимов" link="Asakim"]. Ген добавляет 60 стабильности и требует регулярного приёма гоу-сока. При первой активации запас рассчитан на 30 минут. Выключение и повторное включение гена сохраняет оставшийся запас и накопленный дефицит.
+
+Каждая усвоенная единица препарата восполняет одну минуту запаса, максимум 30 минут. Например, 5 единиц хватит на 5 минут, а флакона из 30 единиц на 30 минут. Число на индикаторе показывает оставшиеся минуты; нажатие показывает запас или дефицит. Это отдельная потребность, питьевая вода её не удовлетворяет.
+
+- При нулевом запасе движение и частота атак снижаются на 10%.
+- Через 2 минуты дефицита движение замедляется на 20%, частота атак на 25%.
+- Через 5 минут движение замедляется на 40%, частота атак на 50%, организм получает 0,5 токсического урона в секунду.
+- Дефицит накапливается максимум до 5 минут. Сначала препарат погашает его, затем пополняет запас. Поэтому после тяжёлой ломки 30 единиц оставят 25 минут запаса. Нанесённый урон требует лечения.
+
+Сам гоу-сок действует и без гена зависимости. Он временно ускоряет движение на 20% и атаки ближнего боя на 30%, в том числе оружием в руках. Каждая усвоенная единица добавляет 4 секунды действия, максимум 30 секунд оставшегося усиления. Повторные дозы не увеличивают силу бонусов. Во время действия меняется оттенок изображения и слегка пульсируют края экрана.
+
+<GuideEntityEmbed Entity="GoJuiceChemistryBottle"/>
 
 ## Способности с отдельной кнопкой
 
