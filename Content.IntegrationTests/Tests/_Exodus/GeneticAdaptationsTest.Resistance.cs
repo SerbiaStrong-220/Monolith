@@ -80,7 +80,13 @@ public sealed partial class GeneticAdaptationsTest
             var state = entities.GetComponent<GeneticAbilityStateComponent>(body);
             Assert.That(state.Deflector, Is.Not.Null);
             Assert.That(entities.GetComponent<ReflectComponent>(state.Deflector!.Value).ReflectProb, Is.EqualTo(0.1f));
-            Assert.That(entities.System<GeneticsSystem>().TryStabilize(body), Is.True);
+            var genetics = entities.System<GeneticsSystem>();
+            var deflector = state.Deflector;
+            Assert.That(genetics.TryStabilize(body), Is.True);
+            Assert.That(genome.Active.Contains("GeneticJump"), Is.True);
+            Assert.That(state.Deflector, Is.EqualTo(deflector));
+            var block = genetics.GetRound().Mutations.IndexOf("GeneticJump");
+            Assert.That(genetics.TrySetBlock((body, genome), block, 0, body), Is.True);
             Assert.That(genome.Active.Contains("GeneticJump"), Is.False);
             Assert.That(state.Deflector, Is.Null);
             entities.DeleteEntity(map);

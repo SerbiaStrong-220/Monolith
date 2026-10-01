@@ -124,7 +124,12 @@ public sealed partial class GeneticAdaptationsTest
             Assert.That(genome.Active.Contains("GeneticWeb"), Is.True);
             Assert.That(genome.Actions.ContainsKey("ActionGeneticWeb"), Is.True);
             Assert.That(entities.HasComponent<IgnoreSpiderWebComponent>(body), Is.True);
-            Assert.That(entities.System<GeneticsSystem>().TryStabilize(body), Is.True);
+            var genetics = entities.System<GeneticsSystem>();
+            Assert.That(genetics.TryStabilize(body), Is.True);
+            Assert.That(genome.Active.Contains("GeneticWeb"), Is.True);
+            Assert.That(genome.Actions.ContainsKey("ActionGeneticWeb"), Is.True);
+            var block = genetics.GetRound().Mutations.IndexOf("GeneticWeb");
+            Assert.That(genetics.TrySetBlock((body, genome), block, 0, body), Is.True);
             Assert.That(genome.Active.Contains("GeneticWeb"), Is.False);
             Assert.That(entities.HasComponent<IgnoreSpiderWebComponent>(body), Is.True);
             entities.DeleteEntity(map);

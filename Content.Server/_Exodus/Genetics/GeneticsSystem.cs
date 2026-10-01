@@ -179,15 +179,19 @@ public sealed partial class GeneticsSystem : EntitySystem
         return TrySetBlock(ent, block, value, actor);
     }
 
-    /// <summary>Metabolized genostabilin disables every block without changing the round cipher or stored samples.</summary>
+    /// <summary>Metabolized genostabilin clears non-native blocks, preserving native genes and stored samples.</summary>
     public bool TryStabilize(EntityUid uid)
     {
         if (!IsLivingSubject(uid) || !TryComp<GenomeComponent>(uid, out var genome) ||
             !TryGetGenome(uid, out genome))
             return false;
+        var round = GetRound();
         var changed = false;
         for (var i = 0; i < genome.Blocks.Count; i++)
         {
+            if (round.Mutations[i] is { } mutation && genome.InitialMutations.Contains(mutation))
+                continue;
+
             changed |= genome.Blocks[i] != 0;
             genome.Blocks[i] = 0;
         }
@@ -195,7 +199,7 @@ public sealed partial class GeneticsSystem : EntitySystem
             return true;
         genome.Revision++;
         Reconcile((uid, genome));
-        _admin.Add(LogType.Action, LogImpact.High, $"Genostabilin reset the genome of {ToPrettyString(uid):target}");
+        _admin.Add(LogType.Action, LogImpact.High, $"Genostabilin suppressed non-native mutations in {ToPrettyString(uid):target}");
         return true;
     }
 
