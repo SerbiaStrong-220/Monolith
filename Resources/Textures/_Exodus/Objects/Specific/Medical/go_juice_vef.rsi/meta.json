@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "For Exodus by Renascitur (disc: renascitur)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    { "name": "dose15" },
+    { "name": "dose30" },
+    { "name": "dose45" },
+    { "name": "dose15_empty" },
+    { "name": "dose30_empty" },
+    { "name": "dose45_empty" }
+  ]
+}

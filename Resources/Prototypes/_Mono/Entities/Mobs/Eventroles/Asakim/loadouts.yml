@@ -24,6 +24,8 @@
     - CognizineChemistryBottle
     - Syringe
     - RadioHandheldNF
+    - AsakimGoJuiceAutoInjector30 # Exodus-go-juice: starting dependency supplies.
+    - AsakimGoJuiceAutoInjector15 # Exodus-go-juice
     belt:
     - CombatMedipen
     - CombatMedipen

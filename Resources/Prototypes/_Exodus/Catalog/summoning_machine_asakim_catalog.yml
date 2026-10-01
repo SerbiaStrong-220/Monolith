@@ -1,4 +1,34 @@
 - type: listing
+  id: SummoningMachineGoJuice15
+  name: summoning-machine-go-juice-15-name
+  description: summoning-machine-go-juice-15-desc
+  productEntity: AsakimGoJuiceAutoInjector15
+  cost:
+    Telecrystal: 420 # 7 minutes.
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineGoJuice30
+  name: summoning-machine-go-juice-30-name
+  description: summoning-machine-go-juice-30-desc
+  productEntity: AsakimGoJuiceAutoInjector30
+  cost:
+    Telecrystal: 1080 # 7 * 2.5 = 17.5, rounded to 18 minutes.
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
+  id: SummoningMachineGoJuice45
+  name: summoning-machine-go-juice-45-name
+  description: summoning-machine-go-juice-45-desc
+  productEntity: AsakimGoJuiceAutoInjector45
+  cost:
+    Telecrystal: 1920 # 7 * 4.5 = 31.5, rounded to 32 minutes.
+  categories:
+  - SummoningMachineFieldReserve
+
+- type: listing
   id: SummoningMachineAirGrenade
   name: summoning-machine-air-grenade-name
   description: summoning-machine-air-grenade-desc
