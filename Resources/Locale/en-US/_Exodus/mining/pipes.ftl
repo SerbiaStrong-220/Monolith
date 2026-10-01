@@ -11,7 +11,6 @@ bulk-mining-refinery-ui-gas-unlimited = {$stored} mol
 bulk-mining-refinery-ui-pressure = Exhaust buffer pressure: {$pressure} kPa
 bulk-mining-refinery-ui-corrosion = [color=orange]Trapped gas is corroding the refinery. Check the exhaust![/color]
 bulk-mining-refinery-ui-critical = [color=red]Explosion risk! Critical gas reserve: {$limit} mol.[/color]
-bulk-mining-refinery-ui-port-hint = Examine the refinery (Shift + LMB) to reveal its gas outlet. Armored pipes are required.
 stack-bulk-mining-pipe = ore ducts
 bulk-mining-refinery-exhaust = Exhaust: {$moles} mol, {$pressure} kPa.
 bulk-mining-refinery-exhaust-warning = [color=orange]Exhaust is backing up! Prolonged accumulation corrodes the refinery; overfilling causes an explosion. Check the armored gas pipes and mining exhaust injector.[/color]

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Materials;
 using Content.Client.Message;
 using Content.Shared._Exodus.Mining.Pipes;
@@ -28,6 +29,23 @@ public sealed partial class MiningRefineryStorageControl : BoxContainer
         SlurryBar.ForegroundStyleBoxOverride = new StyleBoxFlat(Color.FromHex("#946037"));
         if (_entities.TryGetComponent(owner, out MiningRefineryComponent? refinery))
             UpdateReadings(refinery);
+    }
+
+    /// <summary>
+    /// A scroll container reports no size of its own, so keep the column as wide as the widest reading
+    /// instead of letting the lathe squeeze it and clip the text.
+    /// </summary>
+    protected override Vector2 MeasureOverride(Vector2 availableSize)
+    {
+        var size = base.MeasureOverride(availableSize);
+        var scrollBar = 0f;
+        foreach (var child in Scroll.Children)
+        {
+            if (child is VScrollBar bar)
+                scrollBar = bar.DesiredSize.X;
+        }
+
+        return size with { X = MathF.Max(size.X, Readings.DesiredSize.X + scrollBar) };
     }
 
     public void UpdateReadings(MiningRefineryComponent refinery)

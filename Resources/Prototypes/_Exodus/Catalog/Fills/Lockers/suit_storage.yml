@@ -1,0 +1,12 @@
+- type: entity
+  id: SuitStorageBratva
+  parent: SuitStorageBase
+  suffix: Бухгалтерия
+  components:
+  - type: StorageFill
+    contents:
+    - id: NitrogenTankFilled
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitBratva
+    - id: ClothingMaskBreath
+    - id: JetpackMiniFilled

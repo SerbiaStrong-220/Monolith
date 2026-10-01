@@ -674,6 +674,10 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         // Exodus-end
 
         DrawStarSystem(handle, worldToShuttle, shuttleToView, xform.MapUid); // Far Horizons
+        // Exodus-begin hatched-ftl-zones: blips are fetched before the grids so suppression fields lie under them.
+        var rawBlips = _blips.GetCurrentBlips();
+        DrawSuppressionFields(handle, worldToView, rawBlips);
+        // Exodus-end
 
         _grids.Clear();
         _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
@@ -1048,7 +1052,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         handle.DrawLine(origin, origin + angle.ToVec() * ScaledMinimapRadius * 1.42f, Color.Red.WithAlpha(0.1f));
 
         // Get blips
-        var rawBlips = _blips.GetCurrentBlips();
+        // Exodus hatched-ftl-zones: rawBlips are fetched before the grids are drawn.
 
         // Prepare view bounds for culling
         var monoViewBounds = new Box2(-3f, -3f, PixelSize.X + 3f, PixelSize.Y + 3f);
@@ -1057,7 +1061,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         foreach (var blip in rawBlips)
         {
             // Exodus-begin territory-marker
-            if (blip.Config.Shape == RadarBlipShape.TerritoryCircle)
+            if (blip.Config.Shape is RadarBlipShape.TerritoryCircle or RadarBlipShape.SuppressionField) // Exodus hatched-ftl-zones
                 continue;
             // Exodus-end
 

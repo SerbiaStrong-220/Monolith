@@ -21,7 +21,8 @@ public enum RadarBlipShape
     Arrow,
     Ring,
     NebulaPolygon, // Exodus nebula-radar-visualization
-    TerritoryCircle // Exodus territory-marker
+    TerritoryCircle, // Exodus territory-marker
+    SuppressionField // Exodus hatched-ftl-zones
 }
 
 [Serializable, NetSerializable]

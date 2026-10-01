@@ -1,9 +1,11 @@
 using System.Numerics;
 using Content.Server._Exodus.Shuttles.Components;
+using Content.Server._Mono.Radar;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._Mono.Radar;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -40,6 +42,12 @@ public sealed partial class FtlSuppressorSystem : EntitySystem
     /// Minimal delay between two shuttle console refreshes caused by suppressors, so flickering power can't spam them.
     /// </summary>
     private static readonly TimeSpan ConsoleRefreshCooldown = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Extra distance beyond the field radius at which mass scanners still receive it, so the edge of a field
+    /// shows up before the radar reaches its centre.
+    /// </summary>
+    private const float RadarVisibilityPadding = 10_000f;
 
     private EntityQuery<FTLComponent> _ftlQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -198,8 +206,11 @@ public sealed partial class FtlSuppressorSystem : EntitySystem
 
     private void OnSuppressorShutdown(Entity<FtlSuppressorComponent> ent, ref ComponentShutdown args)
     {
-        if (!TerminatingOrDeleted(ent))
-            RemCompDeferred<ActiveFtlSuppressorComponent>(ent);
+        if (TerminatingOrDeleted(ent))
+            return;
+
+        SetRadarBlip(ent, false);
+        RemCompDeferred<ActiveFtlSuppressorComponent>(ent);
     }
 
     private void OnActiveShutdown(Entity<ActiveFtlSuppressorComponent> ent, ref ComponentShutdown args)
@@ -240,6 +251,7 @@ public sealed partial class FtlSuppressorSystem : EntitySystem
         if (active == HasComp<ActiveFtlSuppressorComponent>(ent))
             return;
 
+        SetRadarBlip(ent, active);
         if (!active)
         {
             RemComp<ActiveFtlSuppressorComponent>(ent);
@@ -250,6 +262,37 @@ public sealed partial class FtlSuppressorSystem : EntitySystem
         activeComp.NextZoneRefresh = _timing.CurTime + ent.Comp.ZoneRefreshInterval;
         activeComp.PublishedPosition = _transform.GetMapCoordinates(xform);
         _refreshAllConsoles = true;
+    }
+
+    /// <summary>
+    /// Mass scanners learn about working fields through a radar blip, the same way they see territory circles,
+    /// so the field stays visible and follows its ship far outside PVS.
+    /// </summary>
+    private void SetRadarBlip(Entity<FtlSuppressorComponent> ent, bool active)
+    {
+        if (!active)
+        {
+            if (TryComp<RadarBlipComponent>(ent, out var disabled))
+                disabled.Enabled = false;
+
+            return;
+        }
+
+        var range = ent.Comp.Range;
+        var blip = EnsureComp<RadarBlipComponent>(ent);
+        blip.Enabled = true;
+        blip.RequireNoGrid = false;
+        blip.VisibleFromOtherGrids = true;
+        blip.MaxDistance = range + RadarVisibilityPadding;
+        blip.Config = new BlipConfig
+        {
+            Bounds = new Box2(-range, -range, range, range),
+            Color = ent.Comp.RadarColor,
+            BorderColor = ent.Comp.RadarColor,
+            Shape = RadarBlipShape.SuppressionField,
+            RespectZoom = true,
+            Rotate = false,
+        };
     }
 
     /// <summary>

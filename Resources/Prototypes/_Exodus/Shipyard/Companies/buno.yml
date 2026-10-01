@@ -1,0 +1,41 @@
+- type: vessel
+  id: BunoRevizor
+  parent: BaseVessel
+  name: company-vessel-buno-revizor-name
+  description: company-vessel-buno-revizor-description
+  price: 470000 # Appraised value (459,877) rounded up to 10,000.
+  category: Small
+  group: Shipyard
+  requiredCompanies:
+  - Buno
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/buno/revizor.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  class:
+  - Mercenary
+  engine:
+  - AME
+  limit: 4
+
+- type: gameMap
+  id: BunoRevizor
+  mapName: 'Б.У.Н.О. Ревизор'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/buno/revizor.yml
+  isGrid: true
+  minPlayers: 0
+  stations:
+    BunoRevizor:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Ревизор{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

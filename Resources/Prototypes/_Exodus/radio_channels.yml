@@ -10,7 +10,7 @@
 - type: radioChannel
   id: ConcernDrakeBlackArmsUSA
   name: chat-radio-concern-drake-black-arms-usa
-  keycode: 'р' # Ru-Localization
+  keycode: 'в' # Ru-Localization; 'р' is the reserved default-channel key
   frequency: 1613
   color: "#E08A8A"
   longRange: true
