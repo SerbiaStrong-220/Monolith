@@ -113,7 +113,8 @@ public abstract partial class SharedClawsSystem : EntitySystem
 
     protected bool TryGetStage<T>(ClawsComponent comp, [NotNullWhen(true)] out T? stage) where T : ClawType
     {
-        if (!_protoMan.TryIndex(comp.ClawStage, out var clawProto) ||
+        if (string.IsNullOrEmpty(comp.ClawStage.Id) || // Exodus: dynamic client components start before receiving their stage.
+            !_protoMan.TryIndex(comp.ClawStage, out var clawProto) ||
             clawProto.ClawType.GetType().Name !=  typeof(T).Name)
         {
             stage = null;
@@ -126,7 +127,8 @@ public abstract partial class SharedClawsSystem : EntitySystem
 
     protected bool TryGetStage(ClawsComponent comp, [NotNullWhen(true)] out ClawType? stage)
     {
-        if (!_protoMan.TryIndex(comp.ClawStage, out var clawProto))
+        if (string.IsNullOrEmpty(comp.ClawStage.Id) || // Exodus: no stage is available before the initial network state.
+            !_protoMan.TryIndex(comp.ClawStage, out var clawProto))
         {
             stage = null;
             return false;

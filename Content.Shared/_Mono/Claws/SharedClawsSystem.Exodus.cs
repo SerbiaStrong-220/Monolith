@@ -2,6 +2,7 @@
 using Content.Shared._DV.Weapons.Ranged.Components;
 using Content.Shared._Mono.Claws.Components;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._Mono.Claws;
 
@@ -10,6 +11,7 @@ public abstract partial class SharedClawsSystem
     private void InitializeClawLifecycle()
     {
         SubscribeLocalEvent<ClawsComponent, ComponentStartup>(OnClawsStartup);
+        SubscribeLocalEvent<ClawsComponent, AfterAutoHandleStateEvent>(OnClawsState);
         SubscribeLocalEvent<ClawsComponent, ComponentShutdown>(OnClawsShutdown);
     }
 
@@ -22,6 +24,11 @@ public abstract partial class SharedClawsSystem
             ent.Comp.CapturedMelee = true;
         }
         ent.Comp.OriginalSpread = TryComp<PlayerAccuracyModifierComponent>(ent, out var accuracy) ? accuracy.SpreadMultiplier : null;
+        UpdateClaws(ent, ent.Comp);
+    }
+
+    private void OnClawsState(Entity<ClawsComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
         UpdateClaws(ent, ent.Comp);
     }
 
