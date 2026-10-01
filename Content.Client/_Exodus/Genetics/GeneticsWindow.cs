@@ -15,6 +15,7 @@ public sealed class GeneticsWindow : FancyWindow
     private readonly Label _selectedLabel = new() { MinWidth = 90, FontColorOverride = GeneticsUiTheme.Accent };
     private readonly Label _diskStatus = new() { HorizontalExpand = true, FontColorOverride = GeneticsUiTheme.Muted };
     private readonly RichTextLabel _adminDetails = new();
+    private readonly RichTextLabel _error = new() { HorizontalExpand = true, Visible = false };
     private readonly GeneticBlockGrid _blocks = new();
     private readonly Label _empty = GeneticsUiTheme.Caption("genetics-ui-scan-required");
     private readonly BoxContainer _adminEdit = GeneticsUiTheme.Row();
@@ -82,6 +83,7 @@ public sealed class GeneticsWindow : FancyWindow
         hint.SetMessage(Loc.GetString("genetics-ui-edit-hint"));
         edit.AddChild(hint);
         editing.AddChild(edit);
+        editing.AddChild(_error);
         editing.AddChild(_adminDetails);
         _adminEdit.AddChild(_hex);
         AddButton(_adminEdit, "genetics-set-block", GeneticsOperation.SetBlock);
@@ -178,6 +180,11 @@ public sealed class GeneticsWindow : FancyWindow
         _patient.ToolTip = state.Patient;
         _help.ToolTip = Loc.GetString(state.Debug ? "genetics-admin-instructions" : "genetics-instructions");
         _diskStatus.Text = Loc.GetString(state.Disk ? "genetics-ui-disk-inserted" : "genetics-disk-missing");
+        _error.Visible = state.Error != null;
+        if (state.Error is { } error)
+            _error.SetMessage(error, defaultColor: GeneticsUiTheme.Warning);
+        else
+            _error.Clear();
         var available = state.Powered && !state.Busy && state.PatientEntity != null && state.Living;
         foreach (var button in _patientButtons)
             button.Disabled = !available;

@@ -37,10 +37,10 @@ public sealed partial class GeneticAdaptationsTest
 
             var cases = new (string Prototype, int Stability)[]
             {
-                ("MobHuman", 60), ("MobDwarf", 55), ("MobReptilian", 45), ("MobMoth", 40),
-                ("MobArachnid", 40), ("MobDiona", 60), ("MobVox", 55), ("MobSlimePerson", 40),
+                ("MobHuman", 60), ("MobDwarf", 55), ("MobReptilian", 50), ("MobMoth", 40),
+                ("MobArachnid", 40), ("MobDiona", 50), ("MobVox", 55), ("MobSlimePerson", 40),
                 ("MobFelinid", 60), ("MobVulpkanin", 60), ("MobFeroxi", 60), ("MobChitinid", 35),
-                ("MobResomi", 65), ("MobHydrakin", 60), ("MobTajaran", 55), ("MobKidan", 40),
+                ("MobResomi", 70), ("MobHydrakin", 60), ("MobTajaran", 55), ("MobKidan", 40),
                 ("MobAsakim", 40),
             };
             foreach (var (prototype, stability) in cases)
@@ -75,8 +75,9 @@ public sealed partial class GeneticAdaptationsTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task TemperatureGenesRestoreBaselineAndRejectConflictingSamplesAtomically()
+    [TestCase("MobHuman")]
+    [TestCase("MobResomi")]
+    public async Task TemperatureGenesRestoreBaselineAndRejectConflictingSamplesAtomically(string prototype)
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -84,22 +85,23 @@ public sealed partial class GeneticAdaptationsTest
         await server.WaitAssertion(() =>
         {
             var map = entities.System<SharedMapSystem>().CreateMap();
-            var body = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, Vector2.Zero));
+            var body = entities.SpawnEntity(prototype, new EntityCoordinates(map, Vector2.Zero));
             var genetics = entities.System<GeneticsSystem>();
             var temperature = entities.GetComponent<TemperatureComponent>(body);
             var originalThreshold = temperature.ColdDamageThreshold;
             var originalDamage = temperature.ColdDamage.DamageDict["Cold"];
             var originalTemperature = temperature.CurrentTemperature;
-            var genome = Enable(entities, body, "GeneticColdTolerance");
+            var genome = Enable(entities, body, "GeneticCryostasis");
             var round = genetics.GetRound();
-            Assert.That(temperature.ColdDamageThreshold, Is.EqualTo(originalThreshold - 30));
-            Assert.That(temperature.ColdDamage.DamageDict["Cold"], Is.EqualTo(originalDamage * 0.5f));
+            Assert.That(temperature.ColdDamageThreshold, Is.EqualTo(originalThreshold - 250));
+            Assert.That(temperature.ColdDamage.DamageDict["Cold"], Is.EqualTo(originalDamage * 0.1f));
             Enable(entities, body, "GeneticQuietStep");
-            Assert.That(temperature.ColdDamageThreshold, Is.EqualTo(originalThreshold - 30), "Reconciliation must not compound a thermal modifier.");
+            Assert.That(temperature.ColdDamageThreshold, Is.EqualTo(originalThreshold - 250), "Reconciliation must not compound a thermal modifier.");
 
+            Enable(entities, body, "GeneticWoodenArmor");
             var revision = genome.Revision;
             var before = genetics.Capture((body, genome));
-            var conflicting = round.Mutations.IndexOf("GeneticColdDependence");
+            var conflicting = round.Mutations.IndexOf("GeneticChitinArmor");
             Assert.That(genetics.TrySetBlock((body, genome), conflicting, GeneticsSystem.MaxBlockValue, body), Is.False);
             Assert.That(genome.Revision, Is.EqualTo(revision));
             var sample = genetics.Capture((body, genome));

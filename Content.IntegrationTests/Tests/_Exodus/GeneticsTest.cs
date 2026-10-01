@@ -215,7 +215,7 @@ public sealed class GeneticsTest
                 injector.Context = round.Context;
                 injector.Sample = genetics.Capture((target, genome!));
                 injector.Sample.Blocks[breathing] = 0xFFF;
-                injector.Sample.Blocks[round.Mutations.IndexOf("GeneticColdResistance")] = 0xFFF;
+                injector.Sample.Blocks[round.Mutations.IndexOf("GeneticCryostasis")] = 0xFFF;
                 injector.Sample.Blocks[round.Mutations.IndexOf("GeneticLethargy")] = 0xFFF;
             }
             Assert.That(entities.System<SharedHandsSystem>().TryPickupAnyHand(user, item), Is.True);

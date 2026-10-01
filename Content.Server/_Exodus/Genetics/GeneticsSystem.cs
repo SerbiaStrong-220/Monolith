@@ -174,11 +174,18 @@ public sealed partial class GeneticsSystem : EntitySystem
 
     public bool TryRandomizeDigit(Entity<GenomeComponent> ent, int block, int digit, EntityUid actor)
     {
+        return TryRandomizeDigit(ent, block, digit, actor, out _);
+    }
+
+    /// <summary>Returns a failure localization key for laboratory feedback without revealing gene identities.</summary>
+    public bool TryRandomizeDigit(Entity<GenomeComponent> ent, int block, int digit, EntityUid actor, out LocId? failure)
+    {
+        failure = "genetics-rescan";
         if (!IsLivingSubject(ent) || block < 0 || block >= ent.Comp.Blocks.Count || digit is < 0 or > 2)
             return false;
         var shift = (2 - digit) * 4;
         var value = (ent.Comp.Blocks[block] & ~(0xF << shift)) | (_random.Next(16) << shift);
-        return TrySetBlock(ent, block, value, actor);
+        return TrySetBlock(ent, block, value, actor, out failure);
     }
 
     /// <summary>Metabolized genostabilin clears non-native blocks, preserving native genes and stored samples.</summary>
@@ -246,6 +253,13 @@ public sealed partial class GeneticsSystem : EntitySystem
 
     public bool TrySetBlock(Entity<GenomeComponent> ent, int block, int value, EntityUid actor)
     {
+        return TrySetBlock(ent, block, value, actor, out _);
+    }
+
+    /// <summary>Returns a localization key on failure; rejected edits leave the block unchanged.</summary>
+    public bool TrySetBlock(Entity<GenomeComponent> ent, int block, int value, EntityUid actor, out LocId? failure)
+    {
+        failure = "genetics-rescan";
         var round = GetRound();
         if (TerminatingOrDeleted(ent) || HasComp<GeneticIncompatibleComponent>(ent) ||
             ent.Comp.Context != round.Context || block < 0 || block >= ent.Comp.Blocks.Count || value < 0 || value > MaxBlockValue)
@@ -254,10 +268,12 @@ public sealed partial class GeneticsSystem : EntitySystem
         if (IsBlockActive(value, round.Thresholds[block]) && round.Mutations[block] is { } mutation &&
             !CanActivate(ent.Comp.Blocks, mutation, block))
         {
+            failure = "genetics-conflicting-mutations";
             MutationConflict(ent, actor);
             return false;
         }
 
+        failure = null;
         ent.Comp.Blocks[block] = (ushort) value;
         ent.Comp.Revision++;
         Reconcile(ent);
@@ -268,16 +284,25 @@ public sealed partial class GeneticsSystem : EntitySystem
 
     public bool TryApply(Entity<GenomeComponent> ent, GeneticSnapshot sample, EntityUid actor)
     {
+        return TryApply(ent, sample, actor, out _);
+    }
+
+    /// <summary>Returns a localization key on failure; rejected samples leave the genome unchanged.</summary>
+    public bool TryApply(Entity<GenomeComponent> ent, GeneticSnapshot sample, EntityUid actor, out LocId? failure)
+    {
+        failure = "genetics-invalid-sample";
         if (TerminatingOrDeleted(ent) || HasComp<GeneticIncompatibleComponent>(ent) ||
             !IsCompatible(sample) || ent.Comp.Context != sample.Context)
             return false;
 
         if (!HasCompatibleMutations(sample.Blocks))
         {
+            failure = "genetics-conflicting-mutations";
             MutationConflict(ent, actor);
             return false;
         }
 
+        failure = null;
         ent.Comp.Blocks = new List<ushort>(sample.Blocks);
         ent.Comp.Revision++;
         Reconcile(ent);

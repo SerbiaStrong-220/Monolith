@@ -22,73 +22,6 @@
       4: ReptilianHugeClaws
 
 - type: geneticMutation
-  id: GeneticColdDependence
-  name: genetics-gene-cold-dependence
-  description: genetics-gene-cold-dependence-desc
-  activationMessage: genetics-feeling-cold-dependence
-  instability: -5
-  conflicts: [GeneticColdResistance, GeneticCryostasis, GeneticFur]
-  modifiers:
-    damageModifiers:
-      coefficients:
-        Cold: 1.3
-  thermal:
-    coldThresholdOffset: 25
-    coldDamageMultiplier: 1.5
-  components:
-  - type: TemperatureSpeed
-    thresholds:
-      298: 0.8
-      292: 0.6
-      285: 0.4
-  - type: ThermalRegulator
-    implicitHeatRegulation: 320
-    metabolismHeat: 230
-    radiatedHeat: 710
-    shiveringHeatRegulation: 690
-    sweatHeatRegulation: 2000
-    normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 2
-    updateInterval: 2
-  temperatureEffects:
-  - maximumTemperature: 295
-    effects:
-    - !type:Drunk
-      boozePower: 1
-  - maximumTemperature: 285
-    effects:
-    - !type:GenericStatusEffect
-      key: Drowsiness
-      component: Drowsiness
-      time: 2
-      type: Add
-      refresh: true
-
-- type: geneticMutation
-  id: GeneticThermophilic
-  name: genetics-gene-thermophilic
-  description: genetics-gene-thermophilic-desc
-  activationMessage: genetics-feeling-thermophilic
-  instability: 10
-  conflicts: [GeneticHeatSensitivity]
-  thermal:
-    heatThresholdOffset: 75
-  modifiers:
-    damageModifiers:
-      coefficients:
-        Heat: 0.95
-  temperatureEffects:
-  - minimumTemperature: 322
-    effects:
-    - !type:MovespeedModifier
-      walkSpeedModifier: 1.10
-      sprintSpeedModifier: 1.10
-    - !type:EvenHealthChange
-      damage:
-        Burn: -1
-        Brute: -1
-
-- type: geneticMutation
   id: GeneticOreSense
   name: genetics-gene-ore-sense
   description: genetics-gene-ore-sense-desc
@@ -98,42 +31,6 @@
   - type: MiningScanner
     range: 5
     pingSound: null
-
-- type: geneticMutation
-  id: GeneticColdTolerance
-  name: genetics-gene-cold-tolerance
-  description: genetics-gene-cold-tolerance-desc
-  activationMessage: genetics-feeling-cold-tolerance
-  instability: 5
-  thermal:
-    coldThresholdOffset: -30
-    coldDamageMultiplier: 0.5
-  modifiers:
-    damageModifiers:
-      coefficients:
-        Cold: 0.7
-  components:
-  - type: TemperatureSpeed
-    thresholds:
-      289: 0.8
-      275: 0.6
-      250: 0.4
-
-- type: geneticMutation
-  id: GeneticFlammable
-  name: genetics-gene-flammable
-  description: genetics-gene-flammable-desc
-  activationMessage: genetics-feeling-flammable
-  instability: -5
-  conflicts: [GeneticHeatResistance]
-  thermal:
-    heatThresholdOffset: -5
-    heatDamageMultiplier: 2
-  modifiers:
-    fireDamageMultiplier: 3
-    damageModifiers:
-      coefficients:
-        Heat: 1.15
 
 - type: geneticMutation
   id: GeneticWoodenArmor
@@ -148,22 +45,6 @@
         Blunt: 0.7
         Slash: 0.8
         Piercing: 0.9
-
-- type: geneticMutation
-  id: GeneticCombustible
-  name: genetics-gene-combustible
-  description: genetics-gene-combustible-desc
-  activationMessage: genetics-feeling-combustible
-  instability: -10
-  conflicts: [GeneticHeatResistance]
-  modifiers:
-    damageModifiers:
-      coefficients:
-        Heat: 1.5
-  components:
-  - type: IgniteOnHeatDamage
-    fireStacks: 1
-    threshold: 12
 
 - type: geneticMutation
   id: GeneticToxinRecovery
@@ -204,30 +85,6 @@
       coefficients:
         Blunt: 1.1
         Slash: 1.1
-
-- type: geneticMutation
-  id: GeneticFur
-  name: genetics-gene-fur
-  description: genetics-gene-fur-desc
-  activationMessage: genetics-feeling-fur
-  instability: 5
-  modifiers:
-    coolingMultiplier: 0.1
-
-- type: geneticMutation
-  id: GeneticHeatSensitivity
-  name: genetics-gene-heat-sensitivity
-  description: genetics-gene-heat-sensitivity-desc
-  activationMessage: genetics-feeling-heat-sensitivity
-  instability: -5
-  conflicts: [GeneticHeatResistance, GeneticFlammable]
-  thermal:
-    heatThresholdOffset: -5
-    heatDamageMultiplier: 2
-  modifiers:
-    damageModifiers:
-      coefficients:
-        Heat: 1.1
 
 - type: geneticMutation
   id: GeneticPredatoryBite
@@ -278,26 +135,6 @@
   - type: Chitinid
 
 - type: geneticMutation
-  id: GeneticArcticAdaptation
-  name: genetics-gene-arctic
-  description: genetics-gene-arctic-desc
-  activationMessage: genetics-feeling-arctic
-  instability: 10
-  thermal:
-    coldThresholdOffset: -64.6
-    coldDamageMultiplier: 0.5
-  modifiers:
-    damageModifiers:
-      coefficients:
-        Cold: 0.75
-  components:
-  - type: TemperatureSpeed
-    thresholds:
-      272: 0.8
-      242: 0.6
-      196: 0.4
-
-- type: geneticMutation
   id: GeneticFragileTissues
   name: genetics-gene-fragile-tissues
   description: genetics-gene-fragile-tissues-desc
@@ -316,7 +153,6 @@
   description: genetics-gene-cryostasis-desc
   activationMessage: genetics-feeling-cryostasis
   instability: 10
-  conflicts: [GeneticColdResistance]
   modifiers:
     coldDamageImmunity: true
     damageModifiers:
@@ -338,7 +174,6 @@
   description: genetics-gene-hyperthermia-desc
   activationMessage: genetics-feeling-hyperthermia
   instability: -10
-  conflicts: [GeneticHeatResistance]
   components:
   - type: PassiveHeatGeneration
     watts: 3900

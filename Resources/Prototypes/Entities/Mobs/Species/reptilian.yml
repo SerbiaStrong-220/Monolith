@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Genome # Exodus: compact native adaptations.
-    initialMutations: [GeneticGrowingClaws, GeneticColdDependence, GeneticThermophilic] # Exodus
+    initialMutations: [GeneticGrowingClaws] # Exodus: thermal traits remain innate.
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:
@@ -51,7 +51,7 @@
     soundsId: ReptilianBodyEmotes
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: GeneticReptilianBaseline # Exodus: thermal adaptations are genes.
+    damageModifierSet: Scale # Exodus: restore innate thermal resistances.
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -61,7 +61,24 @@
       types:
         Blunt: 3 # Mono
     attackRate: 1.5
-  # Exodus: temperature limits and slowdown are supplied by native genes.
+  # Exodus-begin: restore innate temperature limits and slowdown.
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 0.15
+    heatDamage:
+      types:
+        Heat: 1.5
+  - type: TemperatureSpeed
+    thresholds:
+      298: 0.8
+      292: 0.6
+      285: 0.4
+  # Exodus-end
   - type: Wagging
   - type: Inventory
     speciesId: reptilian
@@ -110,7 +127,37 @@
           - MobMask
         layer:
           - MobLayer
-  # Exodus: cold dependence and warming effects are supplied by native genes.
+  # Exodus-begin: restore innate cold dependence and warming effects.
+  - type: ThermalRegulator
+    implicitHeatRegulation: 320
+    metabolismHeat: 230
+    radiatedHeat: 710
+    shiveringHeatRegulation: 690
+    updateInterval: 2
+  - type: TemperatureStatusEffects
+    temperatureEffects:
+    - maximumTemperature: 295
+      effects:
+      - !type:Drunk
+        boozePower: 1
+    - maximumTemperature: 285
+      effects:
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
+        time: 2
+        type: Add
+        refresh: true
+    - minimumTemperature: 322
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.10
+        sprintSpeedModifier: 1.10
+      - !type:EvenHealthChange
+        damage:
+          Burn: -1
+          Brute: -1
+  # Exodus-end
   # Mono edit end
 
 - type: entity

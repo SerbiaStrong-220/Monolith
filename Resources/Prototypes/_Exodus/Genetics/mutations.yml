@@ -86,26 +86,6 @@
     noBreathing: true
 
 - type: geneticMutation
-  id: GeneticColdResistance
-  activationMessage: genetics-feeling-cold
-  name: genetics-gene-cold
-  description: genetics-gene-cold-desc
-  instability: 15
-  modifiers:
-    coldImmunity: true
-    lowPressureImmunity: true
-
-- type: geneticMutation
-  id: GeneticHeatResistance
-  activationMessage: genetics-feeling-heat
-  name: genetics-gene-heat
-  description: genetics-gene-heat-desc
-  instability: 15
-  modifiers:
-    heatImmunity: true
-    highPressureImmunity: true
-
-- type: geneticMutation
   id: GeneticRegeneration
   activationMessage: genetics-feeling-regeneration
   name: genetics-gene-regeneration

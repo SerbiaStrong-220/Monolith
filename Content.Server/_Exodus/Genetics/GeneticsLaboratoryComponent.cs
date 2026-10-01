@@ -30,6 +30,8 @@ public sealed partial class GeneticsLaboratoryComponent : Component
     public GeneticsPendingOperation? Pending;
     public EntityUid? ScannedPatient;
     public int ScannedRevision = -1;
+    /// <summary>Localized feedback retained until another operation is accepted or the patient changes.</summary>
+    [ViewVariables] public string? LastError;
 }
 
 public sealed class GeneticsPendingOperation

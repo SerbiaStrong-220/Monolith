@@ -37,7 +37,7 @@ public sealed class GeneticBlockInfo(ushort value, string? name = null, string? 
 
 [Serializable, NetSerializable]
 public sealed class GeneticsUiState(NetEntity? patientEntity, string patient, int revision, int? stability, bool powered, bool busy,
-    float mutagen, List<GeneticBlockInfo> blocks, bool[] buffers, bool disk, bool debug, bool living) : BoundUserInterfaceState
+    float mutagen, List<GeneticBlockInfo> blocks, bool[] buffers, bool disk, bool debug, bool living, string? error = null) : BoundUserInterfaceState
 {
     public readonly string Patient = patient;
     public readonly NetEntity? PatientEntity = patientEntity;
@@ -51,6 +51,7 @@ public sealed class GeneticsUiState(NetEntity? patientEntity, string patient, in
     public readonly List<GeneticBlockInfo> Blocks = blocks;
     public readonly bool[] Buffers = buffers;
     public readonly bool Disk = disk;
+    public readonly string? Error = error;
 }
 
 [Serializable, NetSerializable]

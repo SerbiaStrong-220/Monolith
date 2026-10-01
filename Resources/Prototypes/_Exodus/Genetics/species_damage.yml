@@ -1,13 +1,8 @@
-# Residual anatomy-related modifiers. Migrated adaptations are expressed only by genes.
-- type: damageModifierSet
-  id: GeneticReptilianBaseline
-  coefficients:
-    Blunt: 1.25
-    Slash: 0.85
-
+# Innate modifiers retained alongside the remaining genetic adaptations.
 - type: damageModifierSet
   id: GeneticDionaBaseline
   coefficients:
+    Heat: 1.5
     Shock: 1.2
 
 - type: damageModifierSet
@@ -25,8 +20,7 @@
     Piercing: 0.9
 
 - type: damageModifierSet
-  id: GeneticTajaranBaseline
+  id: GeneticResomiBaseline
   coefficients:
-    Blunt: 1.15
-    Slash: 1.15
-    Piercing: 1.15
+    Heat: 1.1
+    Cold: 0.75
