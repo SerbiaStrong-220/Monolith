@@ -112,6 +112,9 @@ public sealed class BulkMiningClientSyncTest
             server.PlayerMan.SetAttachedEntity(pair.Player!, observer);
         });
 
+        var consoleComp = console.Comp ?? throw new InvalidOperationException("The mining console was not initialized.");
+        var planetoidComp = planetoid.Comp ?? throw new InvalidOperationException("The planetoid grid was not initialized.");
+
         await PoolManager.WaitUntil(server, () =>
             em.GetComponent<ApcPowerReceiverComponent>(console).Powered &&
             emitters.All(e => em.GetComponent<ApcPowerReceiverComponent>(e).Powered));
@@ -127,7 +130,7 @@ public sealed class BulkMiningClientSyncTest
         var cMapId = map.MapId;
         var active = true;
         var startTiles = 0;
-        await server.WaitPost(() => startTiles = em.System<SharedMapSystem>().GetAllTiles(planetoid, planetoid.Comp).Count());
+        await server.WaitPost(() => startTiles = em.System<SharedMapSystem>().GetAllTiles(planetoid, planetoidComp).Count());
         var tick = 0;
         for (; tick < MaxTicks && active; tick++)
         {
@@ -137,16 +140,16 @@ public sealed class BulkMiningClientSyncTest
             if (failure != null)
             {
                 var processed = 0;
-                await server.WaitPost(() => processed = console.Comp.ProcessedTiles);
+                await server.WaitPost(() => processed = consoleComp.ProcessedTiles);
                 Assert.Fail($"Client grid desync after {tick} ticks, {processed}/{startTiles} tiles mined (pvs: {pvs}):\n{failure}");
             }
 
-            await server.WaitPost(() => active = console.Comp.Active);
+            await server.WaitPost(() => active = consoleComp.Active);
         }
 
         await pair.RunTicksSync(30);
         var processedTotal = 0;
-        await server.WaitPost(() => processedTotal = console.Comp.ProcessedTiles);
+        await server.WaitPost(() => processedTotal = consoleComp.ProcessedTiles);
         TestContext.Out.WriteLine($"pvs: {pvs}, ticks: {tick}, mined: {processedTotal}/{startTiles}, active: {active}");
         Assert.That(processedTotal, Is.GreaterThan(startTiles / 2), "The lasers must excavate most of the planetoid to exercise sync.");
 

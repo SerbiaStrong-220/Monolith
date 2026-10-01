@@ -1,0 +1,48 @@
+# Author's Info
+# GitHub: R-R0S Discord: mq.gg
+# Discord: DegonX5
+
+- type: vessel
+  id: NosskeVector
+  parent: BaseVessel
+  name: company-vessel-nosske-vector-name
+  description: company-vessel-nosske-vector-description
+  price: 555200
+  category: Medium
+  group: Expedition
+  requiredCompanies:
+  - Buno
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/ND/vector.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Mercenary
+  - Science
+  - Salvage
+  - Medical
+  - Chemistry
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: NosskeVector
+  mapName: 'Носке Вектор'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/ND/vector.yml
+  minPlayers: 0
+  stations:
+    NosskeVector:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Вектор{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]
