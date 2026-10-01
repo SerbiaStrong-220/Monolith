@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 namespace Content.Server._Exodus.Chemistry;
 
 /// <summary>Consumes a persisted chemical reserve, independently of the drug's short combat effect.</summary>
-public sealed partial class ChemicalDependencySystem : EntitySystem
+public sealed partial class ChemicalDependencySystem : SharedChemicalEffectsSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AlertsSystem _alerts = default!;
@@ -25,20 +25,20 @@ public sealed partial class ChemicalDependencySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChemicalDependencyComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ChemicalDependencyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ChemicalDependencyComponent, ChemicalDependencyAlertEvent>(OnAlert);
     }
 
-    private void OnStartup(Entity<ChemicalDependencyComponent> ent, ref ComponentStartup args)
+    protected override void OnDependencyStartup(Entity<ChemicalDependencyComponent> ent, ref ComponentStartup args)
     {
         // Dormant genes keep their reserve, but must not catch up the time they were disabled.
         ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
         Refresh(ent, false);
+        base.OnDependencyStartup(ent, ref args);
     }
 
-    private void OnShutdown(Entity<ChemicalDependencyComponent> ent, ref ComponentShutdown args)
+    protected override void OnDependencyShutdown(Entity<ChemicalDependencyComponent> ent, ref ComponentShutdown args)
     {
+        base.OnDependencyShutdown(ent, ref args);
         if (!TerminatingOrDeleted(ent))
             _alerts.ClearAlert(ent, ent.Comp.Alert);
     }

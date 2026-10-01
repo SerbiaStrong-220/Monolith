@@ -5,6 +5,7 @@ using Content.Server._Exodus.Genetics;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared._Exodus.Chemistry;
+using Content.Shared.Alert;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -117,6 +118,11 @@ public sealed partial class GeneticAdaptationsTest
             var genome = entities.GetComponent<GenomeComponent>(body);
             var dependency = entities.GetComponent<ChemicalDependencyComponent>(body);
             var needs = entities.System<ChemicalDependencySystem>();
+            Assert.That(entities.System<SharedChemicalEffectsSystem>(), Is.SameAs(needs));
+            var movement = entities.GetComponent<MovementSpeedModifierComponent>(body);
+            var baseSpeed = movement.SprintSpeedModifier;
+            var alerts = entities.System<AlertsSystem>();
+            Assert.That(alerts.IsShowingAlert(body, dependency.Alert), Is.True);
             dependency.Reserve = TimeSpan.FromSeconds(-119);
             dependency.NextUpdate = TimeSpan.Zero;
             needs.Update(0);
@@ -141,11 +147,15 @@ public sealed partial class GeneticAdaptationsTest
             var block = genetics.GetRound().Mutations.IndexOf("GeneticGoJuiceDependency");
             Assert.That(genetics.TrySetBlock((body, genome), block, 0, body), Is.True);
             Assert.That(entities.HasComponent<ChemicalDependencyComponent>(body), Is.False);
+            Assert.That(movement.SprintSpeedModifier, Is.EqualTo(baseSpeed).Within(0.001));
+            Assert.That(alerts.IsShowingAlert(body, dependency.Alert), Is.False);
             Assert.That(genome.Stability, Is.EqualTo(40));
             Enable(entities, body, "GeneticGoJuiceDependency");
             dependency = entities.GetComponent<ChemicalDependencyComponent>(body);
             Assert.That(dependency.Reserve, Is.EqualTo(TimeSpan.FromMinutes(-4)));
             Assert.That(dependency.Stage, Is.EqualTo(1));
+            Assert.That(movement.SprintSpeedModifier, Is.EqualTo(baseSpeed * 0.8f).Within(0.001));
+            Assert.That(alerts.IsShowingAlert(body, dependency.Alert), Is.True);
             Assert.That(genome.Stability, Is.EqualTo(100));
             Assert.That(needs.TrySatisfy(body, "GoJuice", 30), Is.True);
             Assert.That(dependency.Reserve, Is.EqualTo(TimeSpan.FromMinutes(26)));
@@ -162,11 +172,11 @@ public sealed partial class GeneticAdaptationsTest
 
     private static void MetabolizeDrugNow(IEntityManager entities, EntityUid body)
     {
+        var metabolism = entities.System<MetabolizerSystem>();
         foreach (var (organ, _) in entities.System<SharedBodySystem>().GetBodyOrgans(body))
         {
             if (entities.TryGetComponent<MetabolizerComponent>(organ, out var metabolizer))
-                metabolizer.NextUpdate = TimeSpan.Zero;
+                metabolism.Metabolize((organ, metabolizer));
         }
-        entities.System<MetabolizerSystem>().Update(0);
     }
 }

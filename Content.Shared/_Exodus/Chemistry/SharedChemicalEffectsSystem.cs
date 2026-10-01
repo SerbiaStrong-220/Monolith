@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared._Exodus.Chemistry;
 
 /// <summary>Predicted movement and attack-rate modifiers owned by the affected body, including held weapons.</summary>
-public sealed partial class SharedChemicalEffectsSystem : EntitySystem
+public abstract partial class SharedChemicalEffectsSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -25,7 +25,7 @@ public sealed partial class SharedChemicalEffectsSystem : EntitySystem
         SubscribeLocalEvent<CombatStimulantComponent, AfterAutoHandleStateEvent>(OnStimulantChanged);
         SubscribeLocalEvent<CombatStimulantComponent, ComponentShutdown>(OnStimulantShutdown);
         SubscribeLocalEvent<ChemicalDependencyComponent, RefreshMovementSpeedModifiersEvent>(OnDependencyMovement);
-        SubscribeLocalEvent<ChemicalDependencyComponent, ComponentStartup>(OnDependencyChanged);
+        SubscribeLocalEvent<ChemicalDependencyComponent, ComponentStartup>(OnDependencyStartup);
         SubscribeLocalEvent<ChemicalDependencyComponent, AfterAutoHandleStateEvent>(OnDependencyChanged);
         SubscribeLocalEvent<ChemicalDependencyComponent, ComponentShutdown>(OnDependencyShutdown);
         SubscribeLocalEvent<ChemicalDependencyComponent, GetGenericAlertCounterAmountEvent>(OnAlertCounter);
@@ -61,6 +61,11 @@ public sealed partial class SharedChemicalEffectsSystem : EntitySystem
         _movement.RefreshMovementSpeedModifiers(ent);
     }
 
+    protected virtual void OnDependencyStartup(Entity<ChemicalDependencyComponent> ent, ref ComponentStartup args)
+    {
+        _movement.RefreshMovementSpeedModifiers(ent);
+    }
+
     private void OnStimulantShutdown(Entity<CombatStimulantComponent> ent, ref ComponentShutdown args)
     {
         ent.Comp.MovementMultiplier = 1f;
@@ -69,7 +74,7 @@ public sealed partial class SharedChemicalEffectsSystem : EntitySystem
             _movement.RefreshMovementSpeedModifiers(ent);
     }
 
-    private void OnDependencyShutdown(Entity<ChemicalDependencyComponent> ent, ref ComponentShutdown args)
+    protected virtual void OnDependencyShutdown(Entity<ChemicalDependencyComponent> ent, ref ComponentShutdown args)
     {
         ent.Comp.MovementMultiplier = 1f;
         ent.Comp.AttackRateMultiplier = 1f;

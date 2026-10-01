@@ -55,6 +55,6 @@
     layers:
     - map: ["enum.AlertVisualLayers.Base"]
     - map: ["1"]
-      offset: 0.125, -0.25
+      offset: 0.375, 0
     - map: ["10"]
-      offset: 0, -0.25
+      offset: 0.25, 0
