@@ -4,7 +4,7 @@ using Robust.Shared.Network;
 namespace Content.Shared._Exodus.Nutrition;
 
 /// <summary>Activates a configured body's needs once, without depending on its current connection.</summary>
-public sealed class NeedsActivationSystem : EntitySystem
+public sealed partial class NeedsActivationSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
 

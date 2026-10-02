@@ -30,6 +30,7 @@ public sealed class BulkMiningClientSyncTest
 {
     private const int Radius = 20;
     private const int EmitterCount = 4;
+    private const int EmitterSpacing = 4;
     private const int MaxTicks = 1800;
 
     private static readonly FieldInfo ChunksField =
@@ -64,7 +65,7 @@ public sealed class BulkMiningClientSyncTest
             var power = em.System<PowerReceiverSystem>();
             for (var x = -4; x <= 1; x++)
             {
-                for (var y = -2; y <= 2; y++)
+                for (var y = -EmitterCount * EmitterSpacing / 2; y <= EmitterCount * EmitterSpacing / 2; y++)
                     maps.SetTile(map.Grid, map.Grid.Comp, new Vector2i(x, y), map.Tile.Tile);
             }
 
@@ -76,7 +77,9 @@ public sealed class BulkMiningClientSyncTest
             power.SetNeedsPower(uid, false);
             for (var i = 0; i < EmitterCount; i++)
             {
-                uid = em.SpawnEntity("BulkAutoMiningEmitter", new EntityCoordinates(map.Grid, .5f, -1.5f + i));
+                // Each laser has a 2.8-tile-wide fixture. Overlapping lasers block each other's outgoing rays.
+                var y = .5f + (i - (EmitterCount - 1) / 2f) * EmitterSpacing;
+                uid = em.SpawnEntity("BulkAutoMiningEmitter", new EntityCoordinates(map.Grid, .5f, y));
                 var emitter = em.GetComponent<BulkAutoMiningEmitterComponent>(uid);
                 emitter.SlurryPerTile = new MinMax(1, 1);
                 emitter.MaxWarmupYieldBonus = 0;

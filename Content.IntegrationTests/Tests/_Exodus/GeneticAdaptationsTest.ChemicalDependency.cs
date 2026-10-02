@@ -73,7 +73,6 @@ public sealed partial class GeneticAdaptationsTest
             var coordinates = new EntityCoordinates(map, Vector2.Zero);
             var body = entities.SpawnEntity("MobHuman", coordinates);
             var weapon = entities.SpawnEntity("Crowbar", coordinates);
-            var genome = entities.GetComponent<GenomeComponent>(body);
             var melee = entities.System<SharedMeleeWeaponSystem>();
             var movement = entities.GetComponent<MovementSpeedModifierComponent>(body);
             var speed = movement.SprintSpeedModifier;
@@ -98,7 +97,6 @@ public sealed partial class GeneticAdaptationsTest
             Assert.That(melee.GetAttackRate(weapon, body), Is.EqualTo(armedRate).Within(0.001));
             Assert.That(movement.SprintSpeedModifier, Is.EqualTo(speed).Within(0.001));
             entities.DeleteEntity(map);
-            DeleteCipher(entities, genome.Context);
         });
         await server.WaitRunTicks(2);
         await pair.CleanReturnAsync();

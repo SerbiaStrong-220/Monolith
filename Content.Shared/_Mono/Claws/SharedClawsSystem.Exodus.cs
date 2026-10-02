@@ -3,11 +3,14 @@ using Content.Shared._DV.Weapons.Ranged.Components;
 using Content.Shared._Mono.Claws.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 
 namespace Content.Shared._Mono.Claws;
 
 public abstract partial class SharedClawsSystem
 {
+    [Dependency] private INetManager _net = default!;
+
     private void InitializeClawLifecycle()
     {
         SubscribeLocalEvent<ClawsComponent, ComponentStartup>(OnClawsStartup);
@@ -49,7 +52,9 @@ public abstract partial class SharedClawsSystem
             accuracy.SpreadMultiplier = spread;
             Dirty(ent, accuracy);
         }
-        else
+        // The client's state application already queues this networked component for removal.
+        // Only the server may remove it here, otherwise that queue tries deleting it a second time.
+        else if (_net.IsServer)
             RemComp(ent, accuracy);
     }
 }
