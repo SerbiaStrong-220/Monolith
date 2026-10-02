@@ -95,6 +95,16 @@
     bodyType: Static
   - type: Bloodstream
     initializeOnMapInit: true
+  - type: Temperature
+    currentTemperature: 310.15
+    heatDamageThreshold: 330
+    coldDamageThreshold: 0
+    heatDamage:
+      types:
+        Heat: 2
+  - type: ThermalRegulator
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 2 # Cool before reaching the rot's heat damage threshold.
   - type: ContainerContainer
     containers:
       body_root_part: !type:ContainerSlot {}
@@ -109,6 +119,15 @@
     enabled: false
   - type: RotIntelligent
     buildings: [ RotBuildTissue, RotBuildWall, RotBuildDoor, RotBuildEyeball, RotBuildFlagellum, RotBuildKidney, RotBuildProducer, RotBuildNursery ]
+  - type: TerritoryOverride
+    faction: Rot
+    enabled: false # Enabled by the core only while alive and rooted.
+  - type: RadarBlip
+    config:
+      shape: Square
+      bounds: "-1.5,-1.5,1.5,1.5"
+      color: "#60C040"
+      respectZoom: true
   - type: NightVision
     relayOverlay: false
     goggleEffect: false # Natural night vision without tint or goggle mask.
@@ -140,6 +159,11 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: RotSated
+  - type: PassiveDamage
+    allowedStates: [ Alive ]
+    damage:
+      types:
+        Bloodloss: -0.5
   - type: Destructible
     thresholds: []
   - type: MobState

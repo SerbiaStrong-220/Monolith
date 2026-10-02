@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._Exodus.Territory;
 using Content.Shared._Exodus.Virology.Intelligent;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
@@ -14,6 +15,8 @@ namespace Content.Server._Exodus.Virology.Intelligent;
 
 public sealed partial class RotIntelligentSystem
 {
+    [Dependency] private TerritoryOverrideSystem _territoryOverrides = default!;
+
     private void InitializeRooting()
     {
         SubscribeLocalEvent<RotIntelligentComponent, RotToggleRootEvent>(OnToggleRoot);
@@ -162,6 +165,8 @@ public sealed partial class RotIntelligentSystem
 
     private void RefreshRootActions(Entity<RotIntelligentComponent> ent)
     {
+        // A running uprooting do-after does not release control until the core actually detaches.
+        _territoryOverrides.SetEnabled(ent.Owner, ent.Comp.Alive && ent.Comp.Rooted);
         var enabled = IsActiveCore(ent);
         if (TryComp<ActionGrantComponent>(ent, out var granted))
         {

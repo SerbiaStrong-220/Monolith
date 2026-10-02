@@ -73,6 +73,9 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
         }
 
         _companyBanners.TryClaimFromAnchoredBannersOnGrid(ent);
+
+        var ev = new GridTerritoryInitializedEvent();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     // Exodus end
@@ -226,7 +229,6 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
             {
                 if (_territory.TryStartCapture((grid, terr), banner, actor))
                 {
-                    ConfigureActiveBannerBlip(banner, (grid, terr));
                     if (showPopup)
                         _popup.PopupEntity(Loc.GetString("grid-territory-capture-started"), banner);
                 }
@@ -236,7 +238,8 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
 
         // Perform the claim. Label is resolved from the TerritoryFactionPrototype.
         _territory.SetController(grid, banner.Comp.Faction, banner.Owner, actor);
-        ConfigureActiveBannerBlip(banner, (grid, terr));
+        if (terr.ActiveClaimBanner != banner.Owner || terr.ControllingFaction != banner.Comp.Faction)
+            return;
 
         if (showPopup)
         {
@@ -280,6 +283,11 @@ public sealed partial class GridTerritoryBannerSystem : EntitySystem
     {
         if (args.OldSourceBanner is { } oldBanner && oldBanner != args.SourceBanner && !TerminatingOrDeleted(oldBanner))
             ClearActiveBannerBlip(oldBanner);
+
+        if (args.SourceBanner is { } banner && !TerminatingOrDeleted(banner) &&
+            TryComp<TerritoryBannerComponent>(banner, out var claim) &&
+            TryComp<GridTerritoryComponent>(args.Grid, out var territory))
+            ConfigureActiveBannerBlip((banner, claim), (args.Grid, territory));
     }
 
     private void ConfigureActiveBannerBlip(

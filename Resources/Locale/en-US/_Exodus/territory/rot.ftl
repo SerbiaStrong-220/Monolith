@@ -1,0 +1,1 @@
+territory-faction-rot = ROT

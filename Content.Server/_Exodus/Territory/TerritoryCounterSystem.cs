@@ -41,6 +41,10 @@ public sealed partial class TerritoryCounterSystem : EntitySystem
 
     private void OnTerritoryChanged(Entity<GridTerritoryComponent> ent, ref GridTerritoryControllerChangedEvent args)
     {
+        // Switching between sources of the same faction does not change score or refresh every store.
+        if (args.OldFaction == args.NewFaction)
+            return;
+
         int points = GetPoints(ent.Comp.Radius);
 
         if (args.OldFaction is { } oldF)

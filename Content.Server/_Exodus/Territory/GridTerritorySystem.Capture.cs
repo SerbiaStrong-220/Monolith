@@ -37,6 +37,9 @@ public sealed partial class GridTerritorySystem
 
         // ActiveClaimBanner also reserves the existing construction and hive-core claim checks.
         SetController(territory, null, banner, actor);
+        if (territory.Comp.ActiveClaimBanner != banner.Owner || territory.Comp.ControllingFaction != null)
+            return false;
+
         var capture = EnsureComp<TerritoryCaptureComponent>(territory);
         capture.Faction = banner.Comp.Faction;
         capture.Banner = banner.Owner;

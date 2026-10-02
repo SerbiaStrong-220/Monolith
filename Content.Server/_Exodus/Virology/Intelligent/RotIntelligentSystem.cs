@@ -155,6 +155,7 @@ public sealed partial class RotIntelligentSystem : EntitySystem
         ent.Comp.Established = true;
         if (!ent.Comp.Rooted)
             _transform.Unanchor(ent);
+        RefreshRootActions(ent);
         Dirty(ent);
     }
 
