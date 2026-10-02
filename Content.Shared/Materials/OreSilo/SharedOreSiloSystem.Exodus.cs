@@ -14,8 +14,6 @@ public abstract partial class SharedOreSiloSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    private static readonly SoundSpecifier DisconnectSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-
     partial void InitializeExodus()
     {
         SubscribeLocalEvent<OreSiloClientComponent, GetVerbsEvent<InteractionVerb>>(OnGetClientInteractionVerbs);
@@ -39,7 +37,7 @@ public abstract partial class SharedOreSiloSystem
         {
             Text = Loc.GetString("ore-silo-client-unlink-verb-text"),
             Message = Loc.GetString("ore-silo-client-unlink-verb-message", ("silo", Identity.Name(silo, EntityManager))),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+            Icon = ent.Comp.DisconnectIcon,
             Act = () => TryDisconnectSilo(ent, user),
             Impact = LogImpact.Low,
         });
@@ -80,15 +78,18 @@ public abstract partial class SharedOreSiloSystem
             UpdateOreSiloUi((prevSilo, siloComp));
         }
 
+        if (client.Comp.DisconnectSound != null)
+        {
+            if (user != null)
+                _audio.PlayPredicted(client.Comp.DisconnectSound, client, user.Value);
+            else
+                _audio.PlayPvs(client.Comp.DisconnectSound, client);
+        }
+
         if (user != null)
         {
-            _audio.PlayPredicted(DisconnectSound, client, user.Value);
             var msg = Loc.GetString("ore-silo-client-disconnected", ("silo", Identity.Name(prevSilo, EntityManager)));
             _popup.PopupClient(msg, client, user.Value);
-        }
-        else
-        {
-            _audio.PlayPvs(DisconnectSound, client);
         }
 
         return true;

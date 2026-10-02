@@ -13,6 +13,8 @@
   - type: MaterialStorage
     storageLimit: 1000000
     insertOnInteract: false
+    dropOnDeconstruct: false
+    dropOnDestroy: false
     whitelist:
       tags:
       - Sheet

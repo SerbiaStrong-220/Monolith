@@ -41,10 +41,8 @@ public sealed partial class ItemMinerSystem
             _minedMatsBuffer[mat] = vol * count;
         }
 
-        if (!_materialStorage.CanChangeMaterialAmount((uid, storage), _minedMatsBuffer))
-            return true;
-
-        _materialStorage.TryChangeMaterialAmount((uid, storage), _minedMatsBuffer);
+        if (!_materialStorage.TryChangeMaterialAmount((uid, storage), _minedMatsBuffer))
+            return false;
 
         if (miner.MinedSound != null)
             _audio.PlayPvs(miner.MinedSound, uid);
@@ -62,16 +60,13 @@ public sealed partial class ItemMinerSystem
 
             if (entProto.TryGetComponent<RandomSpawnerComponent>(out var randSpawner, EntityManager.ComponentFactory))
             {
-                if (randSpawner.RarePrototypes.Count > 0 && (randSpawner.RareChance == 1.0f || _gambling.Prob(randSpawner.RareChance)))
+                if (randSpawner.RarePrototypes.Count > 0 && _gambling.Prob(randSpawner.RareChance))
                 {
                     current = _gambling.Pick(randSpawner.RarePrototypes);
                     continue;
                 }
 
-                if (randSpawner.Chance != 1.0f && !_gambling.Prob(randSpawner.Chance))
-                    return null;
-
-                if (randSpawner.Prototypes.Count == 0)
+                if (!_gambling.Prob(randSpawner.Chance) || randSpawner.Prototypes.Count == 0)
                     return null;
 
                 current = _gambling.Pick(randSpawner.Prototypes);
@@ -80,10 +75,7 @@ public sealed partial class ItemMinerSystem
 
             if (entProto.TryGetComponent<ConditionalSpawnerComponent>(out var condSpawner, EntityManager.ComponentFactory))
             {
-                if (condSpawner.Chance != 1.0f && !_gambling.Prob(condSpawner.Chance))
-                    return null;
-
-                if (condSpawner.Prototypes.Count == 0)
+                if (!_gambling.Prob(condSpawner.Chance) || condSpawner.Prototypes.Count == 0)
                     return null;
 
                 current = _gambling.Pick(condSpawner.Prototypes);
