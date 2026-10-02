@@ -367,6 +367,8 @@
   name: eyeball
   description: A watchful organ sharing its sight with the colony.
   components:
+  - type: Sprite
+    drawdepth: FloorObjects
   - type: RotSpread
   - type: RotColonyMember
     visionRange: 24
@@ -388,6 +390,7 @@
     footprint: 1, 3
   - type: Sprite
     sprite: _Exodus/Virology/rot_flagellum.rsi
+    drawdepth: FloorObjects
     offset: 0, 1
     layers:
     - state: dormant
@@ -658,7 +661,7 @@
     sprite: _Exodus/Virology/rot_eyeball.rsi
     state: dying
     offset: 0, 0
-    drawdepth: Effects
+    drawdepth: FloorObjects
   - type: TimedDespawn
     lifetime: 0.79
 
@@ -670,7 +673,7 @@
     sprite: _Exodus/Virology/rot_flagellum.rsi
     state: dying
     offset: 0, 1
-    drawdepth: Effects
+    drawdepth: FloorObjects
   - type: TimedDespawn
     lifetime: 0.79
 
