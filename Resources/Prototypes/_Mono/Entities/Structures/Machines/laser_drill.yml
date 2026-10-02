@@ -12,6 +12,8 @@
   # Exodus-begin
   - type: MaterialStorage
     storageLimit: 1000000
+    dropOnDeconstruct: false
+    dropOnDestroy: false
     insertOnInteract: false
     dropOnDeconstruct: false
     dropOnDestroy: false
