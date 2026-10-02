@@ -75,6 +75,22 @@
 
 - type: entity
   parent: BaseGeneticInjectorAdmin
+  id: GeneticInjectorColdResistance
+  suffix: ADMIN
+  components:
+  - type: GeneticInjector
+    mutation: GeneticColdResistance
+
+- type: entity
+  parent: BaseGeneticInjectorAdmin
+  id: GeneticInjectorHeatResistance
+  suffix: ADMIN
+  components:
+  - type: GeneticInjector
+    mutation: GeneticHeatResistance
+
+- type: entity
+  parent: BaseGeneticInjectorAdmin
   id: GeneticInjectorRegeneration
   suffix: ADMIN
   components:
