@@ -16,7 +16,8 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FireVisualsComponent, ComponentInit>(OnComponentInit);
+        // Exodus: the fire light needs an initialized parent before it can be spawned.
+        SubscribeLocalEvent<FireVisualsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<FireVisualsComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -28,8 +29,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
             component.LightEntity = null;
         }
 
-        // Need LayerMapTryGet because Init fails if there's no existing sprite / appearancecomp
-        // which means in some setups (most frequently no AppearanceComp) the layer never exists.
+        // Exodus: the layer may not exist if startup skipped an entity without Sprite or Appearance.
         if (TryComp<SpriteComponent>(uid, out var sprite) &&
             sprite.LayerMapTryGet(FireVisualLayers.Fire, out var layer))
         {
@@ -37,8 +37,10 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
         }
     }
 
-    private void OnComponentInit(EntityUid uid, FireVisualsComponent component, ComponentInit args)
+    // Exodus-begin - defer child light creation until the burning entity has initialized.
+    private void OnStartup(Entity<FireVisualsComponent> ent, ref ComponentStartup args)
     {
+        var (uid, component) = ent;
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp(uid, out AppearanceComponent? appearance))
             return;
 
@@ -50,6 +52,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
 
         UpdateAppearance(uid, component, sprite, appearance);
     }
+    // Exodus-end
 
     protected override void OnAppearanceChange(EntityUid uid, FireVisualsComponent component, ref AppearanceChangeEvent args)
     {

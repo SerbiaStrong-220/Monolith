@@ -101,7 +101,9 @@ public sealed partial class RotIntelligentTest
         await server.WaitAssertion(() =>
         {
             var maps = em.System<SharedMapSystem>();
-            maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(4, 0), map.Tile.Tile);
+            // Keep the flag and core on one connected grid; isolated tiles trigger grid splitting.
+            for (var x = 1; x <= 4; x++)
+                maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, 0), map.Tile.Tile);
             var territory = em.AddComponent<GridTerritoryComponent>(map.Grid);
             var territories = em.System<GridTerritorySystem>();
             var flag = em.SpawnEntity("BannerNGC", map.GridCoords);
@@ -131,13 +133,16 @@ public sealed partial class RotIntelligentTest
         await server.WaitAssertion(() =>
         {
             var maps = em.System<SharedMapSystem>();
-            maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(4, 0), map.Tile.Tile);
+            // Keep the flag and core on one connected grid; isolated tiles trigger grid splitting.
+            for (var x = 1; x <= 4; x++)
+                maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, 0), map.Tile.Tile);
             var territory = em.AddComponent<GridTerritoryComponent>(map.Grid);
             var territories = em.System<GridTerritorySystem>();
             var flag = em.SpawnEntity("BannerNGC", map.GridCoords);
             Assert.That(em.System<SharedTransformSystem>().AnchorEntity((flag, em.GetComponent<TransformComponent>(flag))), Is.True);
             territories.ClearController(map.Grid);
             var banner = em.GetComponent<TerritoryBannerComponent>(flag);
+            Assert.That(em.GetComponent<TransformComponent>(flag).GridUid, Is.EqualTo(map.Grid.Owner));
             Assert.That(territories.TryStartCapture((map.Grid, territory), (flag, banner), null), Is.True);
 
             var core = em.SpawnEntity("MobRotIntelligent", new EntityCoordinates(map.Grid, 4.5f, .5f));
@@ -210,6 +215,8 @@ public sealed partial class RotIntelligentTest
         var map = await pair.CreateTestMap();
         await server.WaitAssertion(() =>
         {
+            // CreateTestMap initializes the map, but CreateGridEntity does not map-initialize its grid.
+            em.RunMapInit(map.Grid.Owner, em.GetComponent<MetaDataComponent>(map.Grid));
             var core = em.SpawnEntity("MobRotIntelligent", map.GridCoords);
             var territory = em.AddComponent<GridTerritoryComponent>(map.Grid);
             Assert.That(territory.ControllingFaction?.Id, Is.EqualTo("Rot"));
