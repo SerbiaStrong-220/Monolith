@@ -9,10 +9,10 @@ ore-silo-ui-itemlist-entry = {$linked ->
 *[false] (Out of Range)
 }
 
-
+# Exodus-begin
 ore-silo-client-unlink-verb-text = Disconnect from material silo
 ore-silo-client-unlink-verb-message = Disconnect this machine from {$silo}.
 ore-silo-client-disconnected = Disconnected from {$silo}.
 ore-silo-client-examine-connected = Connected to material silo: [color=cyan]{$silo}[/color].
 ore-silo-client-examine-not-connected = Not connected to a material silo.
-
+# Exodus-end

@@ -69,10 +69,10 @@ public sealed partial class ItemMinerSystem : EntitySystem
             if (miner.SpawnChance < 1f && !_gambling.Prob(miner.SpawnChance))
                 continue;
 
-            
+            // Exodus-begin
             if (miner.StoreInMaterialStorage && TryStoreMinedMaterials(uid, miner, proto))
                 continue;
-            
+            // Exodus-end
 
             // mine
             var minedUid = Spawn(proto, xform.Coordinates);

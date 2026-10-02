@@ -62,10 +62,10 @@ public sealed partial class ItemMinerComponent : Component
     [ViewVariables]
     public EntityUid? AudioUid = null;
 
-    
+    // Exodus-begin
     [DataField]
     public bool StoreInMaterialStorage = false;
-    
+    // Exodus-end
 
     // if you want to add a planetary miner or other varieties of miner, don't add more stuff to this, make a new comp and use events
 }

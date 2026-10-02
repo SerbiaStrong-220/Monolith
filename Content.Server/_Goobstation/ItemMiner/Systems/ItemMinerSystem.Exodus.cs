@@ -10,8 +10,8 @@ namespace Content.Server._Goobstation.ItemMiner;
 
 public sealed partial class ItemMinerSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private MaterialStorageSystem _materialStorage = default!;
 
     private readonly Dictionary<string, int> _minedMatsBuffer = new();
 
