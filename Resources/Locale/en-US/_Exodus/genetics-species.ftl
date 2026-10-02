@@ -49,5 +49,5 @@ genetics-gene-cryostasis-desc = Protects against cold damage while still allowin
 genetics-feeling-cryostasis = Cold no longer causes you pain.
 
 genetics-gene-hyperthermia = Excess heat production
-genetics-gene-hyperthermia-desc = While alive, the body produces an additional 3900 W of heat, increasing the risk of overheating.
+genetics-gene-hyperthermia-desc = While alive and awake, the body produces an additional 5400 W of heat, increasing the risk of overheating.
 genetics-feeling-hyperthermia = An exhausting heat builds inside you.

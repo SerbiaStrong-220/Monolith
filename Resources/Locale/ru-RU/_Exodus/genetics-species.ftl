@@ -49,5 +49,5 @@ genetics-gene-cryostasis-desc = Защищает от холодового ур�
 genetics-feeling-cryostasis = Холод больше не причиняет боли.
 
 genetics-gene-hyperthermia = Избыточная теплопродукция
-genetics-gene-hyperthermia-desc = В живом состоянии тело постоянно выделяет 3900 Вт дополнительного тепла, повышая риск перегрева.
+genetics-gene-hyperthermia-desc = В живом состоянии во время бодрствования тело выделяет 5400 Вт дополнительного тепла, повышая риск перегрева.
 genetics-feeling-hyperthermia = Внутри разгорается изнурительный жар.

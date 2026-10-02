@@ -53,7 +53,7 @@
   - type: HumanoidAppearance
     species: Hydrakin
   - type: ThermalRegulator #Todo, implement hydrakin thermal movement generation
-    metabolismHeat: 1600
+    metabolismHeat: 100 # Exodus: balance radiated heat; excess heat belongs to GeneticHyperthermia.
     radiatedHeat: 100
     implicitHeatRegulation: 250
     sweatHeatRegulation: 400
