@@ -95,6 +95,7 @@
     bodyType: Static
   - type: Bloodstream
     initializeOnMapInit: true
+    bleedReductionAmount: 1.5 # 0.5 per second over the default 3-second bloodstream interval.
   - type: Temperature
     currentTemperature: 310.15
     heatDamageThreshold: 330
