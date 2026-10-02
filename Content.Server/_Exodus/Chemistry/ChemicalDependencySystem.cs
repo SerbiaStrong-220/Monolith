@@ -1,4 +1,5 @@
 using Content.Shared._Exodus.Chemistry;
+using Content.Shared._Exodus.Nutrition;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -21,6 +22,7 @@ public sealed partial class ChemicalDependencySystem : SharedChemicalEffectsSyst
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private NeedsActivationSystem _needsActivation = default!;
 
     public override void Initialize()
     {
@@ -64,7 +66,7 @@ public sealed partial class ChemicalDependencySystem : SharedChemicalEffectsSyst
             if (_timing.CurTime < dependency.NextUpdate)
                 continue;
             dependency.NextUpdate += dependency.UpdateInterval;
-            if (mob.CurrentState == MobState.Dead)
+            if (mob.CurrentState == MobState.Dead || !_needsActivation.AreNeedsActive(uid))
                 continue;
 
             dependency.Reserve -= dependency.UpdateInterval;

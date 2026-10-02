@@ -18,4 +18,5 @@
     - !type:OverallPlaytimeRequirement
       time: 180000 # 50 hrs
   - type: GhostTakeoverAvailable
+  - type: NeedsActivation # Exodus: preserve food, water and chemical reserves until first possession.
   # Exodus-asakim-suit-radio: Remnants radio moved to the Asakim hardsuit.
