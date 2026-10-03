@@ -386,3 +386,4 @@
     - AstroNavCartridge
     - LedgerCartridge
     - MedTekCartridge #medtek preloaded. Should be ok.
+    - MedAlertCartridge # Exodus-med-alert
