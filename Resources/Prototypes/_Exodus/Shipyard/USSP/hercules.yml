@@ -1,0 +1,40 @@
+#Author: Starch(!)
+
+- type: vessel
+  id: Hercules
+  parent: BaseVesselUSSPAntag
+  name: Геркулес # Ru-Localization
+  description: Быстрый боевой шаттл с довольно опасным баллистическим арсеналом орудий. # Ru-Localization
+  price: 350000
+  category: Medium
+  group: Ussp
+  access: Mercenary # Exodus temp-ussp-mercenary-access
+  # access: USSP # Exodus temp-ussp-mercenary-access
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/USSP/hercules.yml # Exodus: upstream remap, existing vessel settings retained. # Exodus
+  guidebookPage: Null
+  class:
+  - Pursuit
+  - Corvette
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Drakon
+  mapName: 'Геркулес' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/USSP/hercules.yml # Exodus: upstream remap, existing vessel settings retained. # Exodus
+  minPlayers: 0
+  stations:
+    Drakon:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Геркулес СССП{1}' # Ru-Localization
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        # Exodus-begin disable-ussp-faction
+        # - type: StationJobs
+        #   availableJobs:
+        #    USSPSergeant: [ 0, 0 ]
+        #    USSPRifleman: [ 0, 0 ]
+        # Exodus-end
