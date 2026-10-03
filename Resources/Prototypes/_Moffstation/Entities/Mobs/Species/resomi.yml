@@ -5,7 +5,7 @@
   abstract: true
   components:
   - type: Genome # Exodus: fast legs and eyes remain anatomical features.
-    initialMutations: [GeneticFragileTissues] # Exodus: thermal traits remain innate.
+    initialMutations: [GeneticFragileTissues, GeneticHearing] # Exodus: thermal traits remain innate.
    # Einstein Engines - Start - Language
   - type: LanguageKnowledge
     speaks:
