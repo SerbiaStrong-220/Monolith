@@ -1,4 +1,6 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Materials.OreSilo;
 
@@ -15,4 +17,12 @@ public sealed partial class OreSiloClientComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Silo;
+
+    // Exodus-begin
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? DisconnectSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
+    [DataField, AutoNetworkedField]
+    public SpriteSpecifier? DisconnectIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"));
+    // Exodus-end
 }
