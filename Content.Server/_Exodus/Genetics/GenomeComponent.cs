@@ -11,7 +11,7 @@ public sealed partial class GenomeComponent : Component
     [DataField] public string Context = string.Empty;
     [DataField] public List<ushort> Blocks = new();
     [DataField] public List<ushort> Baseline = new();
-    /// <summary>Mutations expressed when this body's genome is first generated. Chemical resets can disable them.</summary>
+    /// <summary>Native mutations expressed on generation and preserved by genostabilin. Explicit block edits can disable them.</summary>
     [DataField] public List<ProtoId<GeneticMutationPrototype>> InitialMutations = new();
     [DataField] public int Revision;
     [DataField] public int Stability = 60;
@@ -20,12 +20,37 @@ public sealed partial class GenomeComponent : Component
     [DataField] public bool CapacityInitialized;
     [DataField] public TimeSpan Interval = TimeSpan.FromSeconds(1);
     [DataField, AutoPausedField] public TimeSpan NextUpdate;
+    /// <summary>Radiation cannot activate another mutation before this time; genome resets do not clear it.</summary>
+    [DataField, AutoPausedField] public TimeSpan NextRadiationMutation;
     /// <summary>Base damage per interval below zero stability, scaled by the severity of the overload.</summary>
     [DataField] public DamageSpecifier InstabilityDamage = new() { DamageDict = new() { ["Radiation"] = 1, ["Cellular"] = 1 } };
     public HashSet<ProtoId<GeneticMutationPrototype>> Active = new();
     public Dictionary<EntProtoId, EntityUid?> Actions = new();
     public DamageSpecifier PeriodicDamage = new();
     public bool EffectsInitialized;
+    /// <summary>Only components actually installed by genes are restored on removal.</summary>
+    public Dictionary<string, GeneticComponentGrant> ComponentGrants = new();
+    /// <summary>Progress retained while the corresponding gene is disabled; never copied by DNA samples.</summary>
+    public Dictionary<string, IComponent> DormantComponents = new();
+    public GeneticThermalState? ThermalState;
+    public List<GeneticTemperatureEffect> TemperatureEffects = new();
+}
+
+public sealed class GeneticComponentGrant
+{
+    public required ProtoId<GeneticMutationPrototype> Mutation;
+    public required IComponent Applied;
+    public IComponent? Original;
+    public bool Preserve;
+}
+
+public sealed class GeneticThermalState
+{
+    public required Content.Server.Temperature.Components.TemperatureComponent Component;
+    public float ColdThreshold;
+    public float HeatThreshold;
+    public required DamageSpecifier ColdDamage;
+    public required DamageSpecifier HeatDamage;
 }
 
 /// <summary>Opt-out for bodies without mutable biological DNA.</summary>
@@ -36,8 +61,12 @@ public sealed partial class GeneticIncompatibleComponent : Component;
 [RegisterComponent]
 public sealed partial class GeneticsRoundComponent : Component
 {
-    /// <summary>Total positions, including empty ones. Limited to 50.</summary>
+    /// <summary>Minimum positions, including empty ones. Expanded to include every registered mutation.</summary>
     [DataField] public int BlockCount = 50;
+    /// <summary>Mutation rate per point of irradiation damage after protection. Zero disables radiation mutations.</summary>
+    [DataField] public double RadiationMutationRate = 0.001;
+    /// <summary>Minimum time between successful radiation mutations on the same body.</summary>
+    [DataField] public TimeSpan RadiationMutationCooldown = TimeSpan.FromSeconds(60);
     public string Context = string.Empty;
     public List<ProtoId<GeneticMutationPrototype>?> Mutations = new();
     public List<ushort> Thresholds = new();

@@ -1,0 +1,60 @@
+- type: reagent
+  id: GoJuice
+  name: reagent-name-go-juice
+  group: Narcotics
+  desc: reagent-desc-go-juice
+  physicalDesc: reagent-physical-desc-energizing
+  flavor: sharp
+  color: "#53C896"
+  metabolisms:
+    Narcotic:
+      # Absorb an ordinary dose in one cycle. Only the removed volume grants time, not each tick of its presence.
+      metabolismRate: 30
+      effects:
+      - !type:MetabolizedCombatStimulant
+        durationPerUnit: 4
+        maximumDuration: 30
+        movementMultiplier: 1.2
+        attackRateMultiplier: 1.3
+
+- type: entity
+  parent: BaseChemistryBottleFilled
+  id: GoJuiceChemistryBottle
+  name: go-juice bottle
+  description: A bottle of combat stimulant. Contains 30 units of go-juice.
+  components:
+  - type: Label
+    currentLabel: reagent-name-go-juice
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: GoJuice
+          Quantity: 30
+
+- type: alert
+  id: GoJuiceDependency
+  icons:
+  - sprite: /Textures/_DV/Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  alertViewEntity: ChemicalDependencyAlertSpriteView
+  name: alerts-go-juice-dependency-name
+  description: alerts-go-juice-dependency-desc
+  clickEvent: !type:ChemicalDependencyAlertEvent
+
+- type: entity
+  id: ChemicalDependencyAlertSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+    digitKeys: ["1", "10"]
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    layers:
+    - map: ["enum.AlertVisualLayers.Base"]
+    - map: ["1"]
+      offset: 0.375, 0
+    - map: ["10"]
+      offset: 0.25, 0

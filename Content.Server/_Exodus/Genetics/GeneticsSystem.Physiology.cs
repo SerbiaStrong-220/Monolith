@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared._Exodus.Genetics;
+using Content.Shared._Exodus.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 
@@ -11,6 +12,7 @@ public sealed partial class GeneticsSystem
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private ThirstSystem _thirst = default!;
+    [Dependency] private NeedsActivationSystem _needsActivation = default!;
 
     private void UpdatePhysiology(EntityUid uid, float seconds)
     {
@@ -20,6 +22,10 @@ public sealed partial class GeneticsSystem
         var modifiers = effects.Modifiers;
         if (modifiers.ClottingRate > 0 && TryComp<BloodstreamComponent>(uid, out var blood) && blood.BleedAmount > 0)
             _bloodstream.TryModifyBleedAmount(uid, -modifiers.ClottingRate * seconds, blood);
+
+        if (!_needsActivation.AreNeedsActive(uid))
+            return;
+
         if ((modifiers.NutritionDrain > 0 || modifiers.NutritionMultiplier > 1) && TryComp<HungerComponent>(uid, out var hunger))
         {
             var extra = modifiers.NutritionDrain + hunger.ActualDecayRate * Math.Max(0, modifiers.NutritionMultiplier - 1);

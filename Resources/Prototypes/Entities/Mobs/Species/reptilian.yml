@@ -1,10 +1,12 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: [ BaseMobSpeciesOrganic, ReptilianClaws ]
+  parent: BaseMobSpeciesOrganic # Exodus: claws are supplied by the genome.
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: Genome # Exodus: compact native adaptations.
+    initialMutations: [GeneticGrowingClaws] # Exodus: thermal traits remain innate.
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:
@@ -49,7 +51,7 @@
     soundsId: ReptilianBodyEmotes
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Scale
+    damageModifierSet: Scale # Exodus: restore innate thermal resistances.
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -59,6 +61,7 @@
       types:
         Blunt: 3 # Mono
     attackRate: 1.5
+  # Exodus-begin: restore innate temperature limits and slowdown.
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
@@ -66,15 +69,16 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold : 0.15 #per second, scales with temperature & other constants. # Mono 0.1 -> 0.15
+        Cold: 0.15
     heatDamage:
       types:
-        Heat : 1.5 #per second, scales with temperature & other constants
+        Heat: 1.5
   - type: TemperatureSpeed
     thresholds:
-      298: 0.8 # Mono
-      292: 0.6 # Mono
-      285: 0.4 # Mono
+      298: 0.8
+      292: 0.6
+      285: 0.4
+  # Exodus-end
   - type: Wagging
   - type: Inventory
     speciesId: reptilian
@@ -123,6 +127,7 @@
           - MobMask
         layer:
           - MobLayer
+  # Exodus-begin: restore innate cold dependence and warming effects.
   - type: ThermalRegulator
     implicitHeatRegulation: 320
     metabolismHeat: 230
@@ -152,8 +157,7 @@
         damage:
           Burn: -1
           Brute: -1
-
-
+  # Exodus-end
   # Mono edit end
 
 - type: entity

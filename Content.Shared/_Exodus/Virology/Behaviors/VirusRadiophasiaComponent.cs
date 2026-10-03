@@ -18,6 +18,14 @@ public sealed partial class VirusRadiophasiaComponent : Component
     [DataField]
     public DamageSpecifier HealPerRad = new();
 
+    /// <summary>Damage healed per rad damage unit the carrier receives.</summary>
+    [DataField]
+    public DamageSpecifier HealPerDamageUnit = new();
+
+    /// <summary>If the symptome grants the user rad immunity</summary>
+    [DataField]
+    public bool RadImmunity = false;
+
     /// <summary>We added host's radiation source, so cure only ours.</summary>
     [DataField]
     public bool AddedRadiation;

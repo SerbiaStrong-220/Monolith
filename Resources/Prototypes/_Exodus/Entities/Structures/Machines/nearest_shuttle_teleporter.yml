@@ -25,6 +25,9 @@
   - type: Clickable
   - type: NearestShuttleTeleporter
     maxRange: 512
+    destinationBlacklist:
+      components:
+      - BulkMiningDeposit # Natural asteroids, planetoids, and their split fragments.
     cooldown: 60
     failureCooldown: 2
   - type: Damageable

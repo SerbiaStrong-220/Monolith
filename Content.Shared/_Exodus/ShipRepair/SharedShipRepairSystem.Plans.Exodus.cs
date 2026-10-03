@@ -481,22 +481,26 @@ public abstract partial class SharedShipRepairSystem
         return blocked;
     }
 
-    /// <summary>Shared publication path for both handheld and automated reconstruction.</summary>
+    /// <summary>
+    /// Shared publication path for both handheld and automated reconstruction.
+    /// Handheld repairs allow physics to separate mobile occupants; automated repairs require free space.
+    /// </summary>
     private bool TryRestoreSnapshotEntity(EntityUid tool, Entity<ShipRepairDataComponent> grid, Vector2i tile, int id,
-        ShipRepairEntitySpecifier spec, HashSet<EntityUid>? clearables = null)
+        ShipRepairEntitySpecifier spec, HashSet<EntityUid>? clearables = null, bool checkMobileObstructions = true)
     {
         var revision = grid.Comp.Revision;
         if (!CanRepairGrid(tool, grid) || !TryGetChunk(grid.Comp, tile, out var chunk) ||
             !chunk.Entities.TryGetValue(id, out var current) || !ReferenceEquals(current, spec) ||
             !TryGetRepairPrototype(tool, grid.Comp, spec, out var prototype, out _) ||
-            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true, clearables) ||
+            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, checkMobileObstructions, clearables) ||
             !TryMoveRepairDebris(grid, tile, chunk, spec, prototype))
             return false;
 
         // Unanchoring and moving a remnant raises events; recheck before publishing a new entity.
         if (!CanRepairGrid(tool, grid) || grid.Comp.Revision != revision ||
             !TryGetChunk(grid.Comp, tile, out chunk) || !chunk.Entities.TryGetValue(id, out current) ||
-            !ReferenceEquals(current, spec) || IsRepairPositionOccupied(grid, chunk, id, spec, prototype, true, clearables))
+            !ReferenceEquals(current, spec) ||
+            IsRepairPositionOccupied(grid, chunk, id, spec, prototype, checkMobileObstructions, clearables))
             return false;
 
         var spawned = Spawn(prototype.ID, new EntityCoordinates(grid, spec.LocalPosition));

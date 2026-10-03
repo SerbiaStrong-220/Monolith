@@ -42,6 +42,7 @@ public sealed partial class HungerSystem : EntitySystem
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<HungerComponent, RejuvenateEvent>(OnRejuvenate);
+        InitializeNeedsActivation(); // Exodus: preserve reserves before first possession.
     }
 
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)
@@ -162,8 +163,12 @@ public sealed partial class HungerSystem : EntitySystem
 
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
         {
-            component.ActualDecayRate = component.BaseDecayRate * modifier;
-            SetAuthoritativeHungerValue((uid, component), GetHunger(component));
+            // Exodus-begin: snapshot before changing the rate, so waiting time is never charged on activation.
+            var hunger = GetHunger(component);
+            component.ActualDecayRate = _needsActivation.AreNeedsActive(uid) ? component.BaseDecayRate * modifier : 0f;
+            SetAuthoritativeHungerValue((uid, component), hunger);
+            DirtyField(uid, component, nameof(HungerComponent.ActualDecayRate));
+            // Exodus-end
         }
 
         component.LastThreshold = component.CurrentThreshold;
@@ -271,6 +276,11 @@ public sealed partial class HungerSystem : EntitySystem
             if (_timing.CurTime < hunger.NextThresholdUpdateTime)
                 continue;
             hunger.NextThresholdUpdateTime = _timing.CurTime + hunger.ThresholdUpdateRate;
+
+            // Exodus-begin: waiting bodies neither consume food nor take starvation damage.
+            if (!_needsActivation.AreNeedsActive(uid))
+                continue;
+            // Exodus-end
 
             UpdateCurrentThreshold(uid, hunger);
             DoContinuousHungerEffects(uid, hunger);

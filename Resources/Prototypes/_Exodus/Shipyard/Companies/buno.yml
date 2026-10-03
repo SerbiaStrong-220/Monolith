@@ -1,14 +1,14 @@
 - type: vessel
-  id: HorizonSiphon
+  id: BunoRevizor
   parent: BaseVessel
-  name: company-vessel-horizon-siphon-name
-  description: company-vessel-horizon-siphon-description
-  price: 72000
+  name: company-vessel-buno-revizor-name
+  description: company-vessel-buno-revizor-description
+  price: 470000 # Appraised value (459,877) rounded up to 10,000.
   category: Small
   group: Shipyard
   requiredCompanies:
-  - HorizonHarmonyHammerMatter
-  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/horizont/siphon.yml
+  - Buno
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/buno/revizor.yml
   addComponents:
   - type: NpcFactionMember
     factions:
@@ -16,20 +16,21 @@
   class:
   - Mercenary
   engine:
-  - Uranium
-  limit: 3
+  - AME
+  limit: 4
 
 - type: gameMap
-  id: HorizonSiphon
-  mapName: 'Горизонт Сифон'
-  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/horizont/siphon.yml
+  id: BunoRevizor
+  mapName: 'КОРПУС Ревизор'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/buno/revizor.yml
+  isGrid: true
   minPlayers: 0
   stations:
-    HorizonSiphon:
+    BunoRevizor:
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Сифон{1}'
+        mapNameTemplate: 'Ревизор{1}'
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

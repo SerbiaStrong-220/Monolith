@@ -33,6 +33,7 @@
     Ointment: 4294967295 # Infinite
     Gauze: 4294967295 # Infinite
     EmergencyMedipen: 4294967295 # Infinite
+    GoJuiceAutoInjector15: 4294967295 # Exodus-go-juice: fixed vend price of 2,500,000.
     JugOmnizineUSSP: 10 # Limited to 10 # Exodus-Restore-Omnizine
     ClothingOuterHardsuitUsspL27: 4294967295 # Infinite
     ClothingOuterHardsuitUsspL10: 4294967295 # Infinite

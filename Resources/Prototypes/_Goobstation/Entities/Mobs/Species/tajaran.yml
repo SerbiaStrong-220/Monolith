@@ -4,6 +4,8 @@
   id: BaseMobTajaran
   abstract: true
   components:
+  - type: Genome # Exodus: native night vision remains outside genetics.
+    initialMutations: [GeneticQuietStep] # Exodus: thermal traits remain innate.
   - type: Hunger
     baseDecayRate: 0.02083333332 # 25% more than default #Mono its not actually 25% but about 15.74%, 0.0225 would be 25% more than base
   - type: Thirst
@@ -27,7 +29,7 @@
     prototype: Tajaran
     requiredLegs: 2
   - type: Damageable
-    damageModifierSet: Tajaran
+    damageModifierSet: Tajaran # Exodus: restore innate thermal resistances.
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.85  # 0.7 is base speed.
@@ -93,7 +95,7 @@
       Female: FemaleFelinid
       Unsexed: MaleFelinid
   - type: Felinid # real
-  - type: NoShoesSilentFootsteps
+  # Exodus: quiet steps are supplied by GeneticQuietStep.
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
@@ -107,15 +109,17 @@
     - FootstepSound
     - DoorBumpOpener
     - Humanoid
+  # Exodus-begin: restore innate temperature limits and damage.
   - type: Temperature
-    coldDamageThreshold: 248.15 # -25 degrees centigrade, like 12 degrees below normal
+    coldDamageThreshold: 248.15
     currentTemperature: 311.76  # Body temperature of cat
     heatDamage:
       types:
-        Heat: 2 # poor kitty
+        Heat: 2
     coldDamage:
       types:
-        Cold: 0.65 # in line with cold resist
+        Cold: 0.65
+  # Exodus-end
   - type: ThermalRegulator
     normalBodyTemperature: 311.76
   - type: Inventory

@@ -90,7 +90,7 @@
   activationMessage: genetics-feeling-cold
   name: genetics-gene-cold
   description: genetics-gene-cold-desc
-  instability: 15
+  instability: 25
   modifiers:
     coldImmunity: true
     lowPressureImmunity: true
@@ -100,7 +100,7 @@
   activationMessage: genetics-feeling-heat
   name: genetics-gene-heat
   description: genetics-gene-heat-desc
-  instability: 15
+  instability: 25
   modifiers:
     heatImmunity: true
     highPressureImmunity: true
@@ -209,6 +209,13 @@
   modifiers:
     abilities: Web
   actions: [ActionGeneticWeb]
+  components:
+  - type: IgnoreSpiderWeb
+  - type: Sericulture
+    action: ActionSericulture
+    productionLength: 2
+    entityProduced: MaterialWebSilk1
+    hungerCost: 4
 
 - type: geneticMutation
   id: GeneticFireBreath

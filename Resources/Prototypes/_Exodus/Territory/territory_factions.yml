@@ -125,3 +125,16 @@
   controlLabel: territory-faction-infestation
   iffStatus: exodus-iff-infested
   color: "#FF6A00"
+
+# Rooted intelligent cores override ordinary banners until the last active source leaves.
+- type: territoryFaction
+  id: Rot
+  claimDuration: 0
+  claimCooldown: 0
+  radarLabel: territory-faction-rot
+  displayName: territory-faction-rot
+  discountAlignment: Negative
+  allowCorporateControl: false
+  controlLabel: territory-faction-rot
+  iffStatus: exodus-iff-infested
+  color: "#60C040"

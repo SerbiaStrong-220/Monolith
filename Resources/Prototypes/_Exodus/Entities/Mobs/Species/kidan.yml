@@ -4,6 +4,8 @@
   name: Urisst' McKidan
   abstract: true
   components:
+  - type: Genome
+    initialMutations: [GeneticChitinArmor, GeneticOreSense, GeneticGlow]
   - type: Sprite
     scale: 1.04, 1.04
   - type: HumanoidAppearance
@@ -65,22 +67,15 @@
           32:
             sprite: _White/Mobs/Species/displacement.rsi
             state: shoes
-  - type: PointLight
-    energy: 1.5
-    radius: 3
-    color: "#556b2f"
-    enabled: false
   - type: Damageable
-    damageModifierSet: Kidan
+    damageModifierSet: null
   - type: CollectiveMind
     hearAll: false
     seeAllNames: true
     channels:
     - Chitine
     defaultChannel: Chitine
-  - type: Bioluminescence
   - type: SensitiveEyes
-  - type: MineralResonance
   - type: PheromonesCommunication
   - type: Bloodstream
     bloodReagent: CopperBlood

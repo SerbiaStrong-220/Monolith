@@ -185,6 +185,7 @@ namespace Content.Client.HealthAnalyzer.UI
             // Alerts
 
             var showAlerts = msg.Unrevivable == true || msg.Uncloneable == true || msg.Bleeding == true || msg.HasViruses; // SS220 / Exodus: virus alert.
+            showAlerts |= msg.HasGeneticModifications; // Exodus: non-native mutation alert.
 
             AlertsDivider.Visible = showAlerts;
             AlertsContainer.Visible = showAlerts;
@@ -201,6 +202,16 @@ namespace Content.Client.HealthAnalyzer.UI
                     MaxWidth = 300,
                 });
             // SS220 / Exodus-end
+
+            // Exodus-begin: non-native mutation alert.
+            if (msg.HasGeneticModifications)
+                AlertsContainer.AddChild(new RichTextLabel
+                {
+                    Text = Loc.GetString("health-analyzer-report-genetic-modifications"),
+                    Margin = new Thickness(0, 4),
+                    MaxWidth = 300,
+                });
+            // Exodus-end
 
             if (msg.Unrevivable == true)
                 AlertsContainer.AddChild(new RichTextLabel

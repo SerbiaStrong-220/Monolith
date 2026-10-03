@@ -5,6 +5,13 @@ store-category-summoning-technical-contour = Node: Power
 store-category-summoning-emergency-beacons = Node: Beacons
 store-category-summoning-field-reserve = Node: Supplies
 
+summoning-machine-go-juice-15-name = { ent-AsakimGoJuiceAutoInjector15 }
+summoning-machine-go-juice-15-desc = { ent-AsakimGoJuiceAutoInjector15.desc }
+summoning-machine-go-juice-30-name = { ent-AsakimGoJuiceAutoInjector30 }
+summoning-machine-go-juice-30-desc = { ent-AsakimGoJuiceAutoInjector30.desc }
+summoning-machine-go-juice-45-name = { ent-AsakimGoJuiceAutoInjector45 }
+summoning-machine-go-juice-45-desc = { ent-AsakimGoJuiceAutoInjector45.desc }
+
 summoning-machine-phase-blade-name = Nanoluminite phase blade
 summoning-machine-phase-blade-desc = A heavy pre-Fracture blade with switchable combat tuning. It looks exactly as unhealthy to argue with as it should.
 summoning-machine-magboots-name = Pre-fracture magboots

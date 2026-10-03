@@ -1,0 +1,121 @@
+- type: entity
+  abstract: true
+  parent: ChemicalMedipen
+  id: BaseGoJuiceAutoInjector
+  components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+  - type: Tag
+    tags: []
+
+- type: entity
+  parent: BaseGoJuiceAutoInjector
+  id: GoJuiceAutoInjector15
+  name: go-juice microinjector (15 units)
+  description: A single-use injector containing 15 units of go-juice. Injects the entire dose.
+  components:
+  - type: Sprite
+    layers:
+    - state: microstimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    emptySpriteName: microstimpen_empty
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: GoJuice
+          Quantity: 15
+  - type: Hypospray
+    transferAmount: 15
+  - type: StaticPrice
+    vendPrice: 2500000
+
+- type: entity
+  parent: BaseGoJuiceAutoInjector
+  id: GoJuiceAutoInjector30
+  name: go-juice injector (30 units)
+  description: A single-use injector containing 30 units of go-juice. Injects the entire dose.
+  components:
+  - type: Sprite
+    layers:
+    - state: stimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    emptySpriteName: stimpen_empty
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: GoJuice
+          Quantity: 30
+  - type: Hypospray
+    transferAmount: 30
+
+- type: entity
+  parent: BaseGoJuiceAutoInjector
+  id: GoJuiceAutoInjector45
+  name: large go-juice injector (45 units)
+  description: A single-use injector containing 45 units of go-juice. Injects the entire dose. The body's dependency reserve is still limited to 30 minutes.
+  components:
+  - type: Sprite
+    layers:
+    - state: morphen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    emptySpriteName: morphen_empty
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 45
+        reagents:
+        - ReagentId: GoJuice
+          Quantity: 45
+  - type: Hypospray
+    transferAmount: 45
+
+- type: entity
+  parent: GoJuiceAutoInjector15
+  id: AsakimGoJuiceAutoInjector15
+  name: VEF go-juice microinjector (15 units)
+  description: A single-use VEF injector containing 15 units of go-juice. Injects the entire dose.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/go_juice_vef.rsi
+    layers:
+    - state: dose15
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    emptySpriteName: dose15_empty
+  - type: StaticPrice
+    vendPrice: 0
+
+- type: entity
+  parent: GoJuiceAutoInjector30
+  id: AsakimGoJuiceAutoInjector30
+  name: VEF go-juice injector (30 units)
+  description: A single-use VEF injector containing 30 units of go-juice. Injects the entire dose.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/go_juice_vef.rsi
+    layers:
+    - state: dose30
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    emptySpriteName: dose30_empty
+
+- type: entity
+  parent: GoJuiceAutoInjector45
+  id: AsakimGoJuiceAutoInjector45
+  name: large VEF go-juice injector (45 units)
+  description: A single-use VEF injector containing 45 units of go-juice. Injects the entire dose. The body's dependency reserve is still limited to 30 minutes.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Specific/Medical/go_juice_vef.rsi
+    layers:
+    - state: dose45
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    emptySpriteName: dose45_empty

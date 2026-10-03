@@ -5,6 +5,13 @@ store-category-summoning-technical-contour = Узел: Энергетика
 store-category-summoning-emergency-beacons = Узел: Маячки
 store-category-summoning-field-reserve = Узел: Снабжение
 
+summoning-machine-go-juice-15-name = { ent-AsakimGoJuiceAutoInjector15 }
+summoning-machine-go-juice-15-desc = { ent-AsakimGoJuiceAutoInjector15.desc }
+summoning-machine-go-juice-30-name = { ent-AsakimGoJuiceAutoInjector30 }
+summoning-machine-go-juice-30-desc = { ent-AsakimGoJuiceAutoInjector30.desc }
+summoning-machine-go-juice-45-name = { ent-AsakimGoJuiceAutoInjector45 }
+summoning-machine-go-juice-45-desc = { ent-AsakimGoJuiceAutoInjector45.desc }
+
 summoning-machine-phase-blade-name = Нанолюминитный фазовый клинок
 summoning-machine-phase-blade-desc = Тяжёлый клинок эпохи до Раскола. Переключается под боевые нужды.
 summoning-machine-magboots-name = Дораскольные магнитные ботинки

@@ -15,7 +15,7 @@
       Glass: 8
       Steel: 10
       Plasma: 12
-      Americium: 6
+      Americium: 1
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -35,4 +35,4 @@
       Glass: 12
       Steel: 15
       Plasma: 20
-      Americium: 6
+      Americium: 1

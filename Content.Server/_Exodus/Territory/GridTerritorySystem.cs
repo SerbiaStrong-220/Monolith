@@ -242,6 +242,11 @@ public sealed partial class GridTerritorySystem : EntitySystem
         if (!terr.Claimable && faction != null)
             return;
 
+        var attempt = new GridTerritoryControlAttemptEvent(faction, sourceBanner);
+        RaiseLocalEvent(grid, ref attempt);
+        if (attempt.Cancelled)
+            return;
+
         ClearCaptureState(grid);
         var oldFaction = terr.ControllingFaction;
         var oldClaimBanner = terr.ActiveClaimBanner;

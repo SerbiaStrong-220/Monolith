@@ -79,7 +79,9 @@ public sealed partial class GeneticAdaptationsTest
                     entities.System<SharedDoAfterSystem>().Cancel(operation.Id);
                     break;
                 case "gene":
-                    Assert.That(entities.System<GeneticsSystem>().TryStabilize(body), Is.True);
+                    var genetics = entities.System<GeneticsSystem>();
+                    var block = genetics.GetRound().Mutations.IndexOf("GeneticCocoon");
+                    Assert.That(genetics.TrySetBlock((body, genome), block, 0, body), Is.True);
                     break;
                 case "resources":
                     entities.System<ThirstSystem>().SetThirst(body, thirst, 100);

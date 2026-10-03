@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared._Exodus.Nutrition; // Exodus
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -22,6 +23,7 @@ public sealed partial class ThirstSystem : EntitySystem
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private SharedJetpackSystem _jetpack = default!;
+    [Dependency] private NeedsActivationSystem _needsActivation = default!; // Exodus
 
     [ValidatePrototypeId<SatiationIconPrototype>]
     private const string ThirstIconOverhydratedId = "ThirstIconOverhydrated";
@@ -207,6 +209,11 @@ public sealed partial class ThirstSystem : EntitySystem
                 continue;
 
             thirst.NextUpdateTime += thirst.UpdateRate;
+
+            // Exodus-begin: keep the timer current without consuming a waiting body's water.
+            if (!_needsActivation.AreNeedsActive(uid))
+                continue;
+            // Exodus-end
 
             ModifyThirst(uid, thirst, -thirst.ActualDecayRate);
             var calculatedThirstThreshold = GetThirstThreshold(thirst, thirst.CurrentThirst);

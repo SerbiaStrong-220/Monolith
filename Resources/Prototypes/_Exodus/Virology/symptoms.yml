@@ -384,7 +384,7 @@
   - effects:
     - !type:VirusInjectReagentEffect
       reagent: Dexalin
-      amount: 0.6
+      amount: 0.2
     detection:
       description: pathology-autorespiration-detection
 
@@ -579,13 +579,21 @@
     - type: VirusRadiophasia
       healPerRad:
         types:
-          Radiation: -1
           Blunt: -1
           Slash: -1
           Piercing: -1
           Heat: -1
           Shock: -1
           Cold: -1
+      healPerDamageUnit:
+        types:
+          Radiation: -0.3
+          Blunt: -0.3
+          Slash: -0.3
+          Piercing: -0.3
+          Heat: -0.3
+          Shock: -0.3
+          Cold: -0.3
     - type: VirusGlow
       lightColor: LimeGreen
       lightRadius: 1.5
@@ -607,13 +615,22 @@
     - type: VirusRadiophasia
       healPerRad:
         types:
-          Radiation: -1
           Blunt: -1
           Slash: -1
           Piercing: -1
           Heat: -1
           Shock: -1
           Cold: -1
+      healPerDamageUnit:
+        types:
+          Radiation: -0.5
+          Blunt: -0.5
+          Slash: -0.5
+          Piercing: -0.5
+          Heat: -0.5
+          Shock: -0.5
+          Cold: -0.5
+      radImmunity: true
     - type: VirusGlow
       lightColor: LimeGreen
       lightRadius: 1.5
@@ -642,6 +659,16 @@
           Heat: -1
           Shock: -1
           Cold: -1
+      healPerDamageUnit:
+        types:
+          Radiation: -0.7
+          Blunt: -0.7
+          Slash: -0.7
+          Piercing: -0.7
+          Heat: -0.7
+          Shock: -0.7
+          Cold: -0.7
+      radImmunity: true
     - type: VirusGlow
       lightColor: LimeGreen
       lightRadius: 1.5

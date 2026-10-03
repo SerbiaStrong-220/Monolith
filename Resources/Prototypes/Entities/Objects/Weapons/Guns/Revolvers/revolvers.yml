@@ -114,7 +114,7 @@
     fireRate: 0.5
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/bigshot.ogg
-    damageModifier: 3
+    damageModifier: 2 #Exodus_mateba_dmg_nerf
 
 - type: entity
   parent: WeaponRevolverMateba

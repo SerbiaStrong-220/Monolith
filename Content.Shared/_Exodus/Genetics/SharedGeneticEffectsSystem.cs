@@ -1,5 +1,6 @@
 using Content.Shared._Exodus.DoAfter;
 using Content.Shared._Exodus.Inventory;
+using Content.Shared._Mono.Claws;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
@@ -48,11 +49,12 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
         SubscribeLocalEvent<GeneticEffectsComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<GeneticEffectsComponent, BeforeStatusEffectAddedEvent>(OnStatus);
         SubscribeLocalEvent<GeneticEffectsComponent, DamageModifyEvent>(OnDamage);
-        SubscribeLocalEvent<GeneticEffectsComponent, GetMeleeDamageEvent>(OnMelee);
+        SubscribeLocalEvent<GeneticEffectsComponent, GetMeleeDamageEvent>(OnMelee, before: new[] { typeof(SharedClawsSystem) });
         SubscribeLocalEvent<GeneticEffectsComponent, BeforeStaminaDamageEvent>(OnStamina);
         SubscribeLocalEvent<GeneticEffectsComponent, RespirationAttemptEvent>(OnRespiration);
         SubscribeLocalEvent<GeneticEffectsComponent, PressureImmunityEvent>(OnPressure);
         SubscribeLocalEvent<GeneticEffectsComponent, TemperatureDamageAttemptEvent>(OnTemperatureDamage);
+        SubscribeLocalEvent<GeneticEffectsComponent, GeneticFireDamageEvent>(OnFireDamage);
         SubscribeLocalEvent<GeneticEffectsComponent, ModifyChangedTemperatureEvent>(OnTemperatureChange);
         SubscribeLocalEvent<GeneticEffectsComponent, ValidateDoAfterRangeEvent>(OnValidateDoAfterRange);
         SubscribeLocalEvent<GeneticEffectsComponent, ElectrocutionAttemptEvent>(OnElectrocution);
@@ -228,11 +230,19 @@ public sealed partial class SharedGeneticEffectsSystem : EntitySystem
     {
         args.Cancelled |= !ent.Comp.Reverting && (args.Hot
             ? ent.Comp.Modifiers.HeatImmunity
-            : ent.Comp.Modifiers.ColdImmunity);
+            : ent.Comp.Modifiers.ColdImmunity || ent.Comp.Modifiers.ColdDamageImmunity);
+    }
+
+    private void OnFireDamage(Entity<GeneticEffectsComponent> ent, ref GeneticFireDamageEvent args)
+    {
+        if (!ent.Comp.Reverting)
+            args.Multiplier *= ent.Comp.Modifiers.FireDamageMultiplier;
     }
 
     private void OnTemperatureChange(Entity<GeneticEffectsComponent> ent, ref ModifyChangedTemperatureEvent args)
     {
+        if (!ent.Comp.Reverting && args.TemperatureDelta < 0)
+            args.TemperatureDelta *= ent.Comp.Modifiers.CoolingMultiplier;
         if (!ent.Comp.Reverting && (args.TemperatureDelta < 0 && ent.Comp.Modifiers.ColdImmunity ||
                                    args.TemperatureDelta > 0 && ent.Comp.Modifiers.HeatImmunity))
             args.TemperatureDelta = 0;

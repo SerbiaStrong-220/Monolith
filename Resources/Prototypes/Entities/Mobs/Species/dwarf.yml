@@ -72,9 +72,8 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: MiningScanner # Frontier # Exodus-MiningScannerRefactor
-    pingSound: null # Frontier
-    range: 5 # Frontier
+  - type: Genome # Exodus: ore sense is a transferable native gene.
+    initialMutations: [GeneticOreSense] # Exodus
 
 - type: entity
   parent: BaseSpeciesDummy

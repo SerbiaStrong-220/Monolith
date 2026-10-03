@@ -18,6 +18,7 @@
     - !type:OverallPlaytimeRequirement
       time: 360000 # 100 hrs
   - type: GhostTakeoverAvailable
+  - type: NeedsActivation
 
 - type: entity
   parent: MobPrefectAsakimGhostrole

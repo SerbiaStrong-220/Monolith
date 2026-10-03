@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 09/21/2026 13:38:52
-  entityCount: 101
+  time: 09/30/2026 04:50:56
+  entityCount: 102
 maps: []
 grids:
 - 1
@@ -55,9 +55,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
-        Smoke: []
+        ExodusBiohazardFoam: []
         Puddle: []
         MetalFoam: []
+        Smoke: []
         Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
@@ -79,6 +80,7 @@ entities:
     - type: RadiationGridResistance
     - type: ShipGridLock
       locked: False
+    - type: RotColonySiteTree
 - proto: AirlockExternalShuttleLocked
   entities:
   - uid: 3
@@ -91,9 +93,15 @@ entities:
   - uid: 81
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: 2.5,4.5
       parent: 1
+    - type: Door
+      secondsUntilStateChange: -85.36664
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 82
     components:
     - type: Transform
@@ -632,5 +640,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,4.5
+      parent: 1
+- proto: WarpPoint
+  entities:
+  - uid: 102
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,5.5
       parent: 1
 ...

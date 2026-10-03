@@ -5,6 +5,8 @@
   id: BaseMobVulpkanin
   abstract: true
   components:
+  - type: Genome # Exodus: thermal traits remain innate, without native mutations.
+    initialMutations: [] # Exodus
   - type: HumanoidAppearance
     species: Vulpkanin
     hideLayersOnEquip: # Mono
@@ -106,9 +108,11 @@
         Slash: 3
   - type: Perishable
   - type: Damageable
-    damageModifierSet: Vulpkanin
+    damageModifierSet: Vulpkanin # Exodus: restore innate heat sensitivity.
+  # Exodus-begin: restore innate insulating fur.
   - type: TemperatureProtection
-    coolingCoefficient: 0.1 # fur is insulating
+    coolingCoefficient: 0.1
+  # Exodus-end
   - type: Vocal
     sounds:
       Male: MaleVulpkanin

@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Virology.Behaviors;
 using Content.Shared._Shitmed.Targeting;
 // Shitmed Change
 using Content.Shared.Body.Systems;
@@ -396,6 +397,11 @@ namespace Content.Shared.Damage
 
         private void OnIrradiated(EntityUid uid, DamageableComponent component, OnIrradiatedEvent args)
         {
+            // Exodus: radiophasia symptome tweak begin
+            if (TryComp<VirusRadiophasiaComponent>(uid, out var radiophasia)
+                && radiophasia.RadImmunity)
+                return;
+            // Exodus: radiophasia symptome tweak end
             var damageValue = FixedPoint2.New(args.TotalRads);
 
             // Radiation should really just be a damage group instead of a list of types.
@@ -405,7 +411,23 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeId, damageValue);
             }
 
-            TryChangeDamage(uid, damage, interruptsDoAfters: false, origin: args.Origin);
+            // Exodus-begin: notify radiation reactions only about damage that passed protection.
+            var applied = TryChangeDamage(uid, damage, interruptsDoAfters: false, origin: args.Origin);
+            if (!_netMan.IsServer || applied == null || TerminatingOrDeleted(uid))
+                return;
+
+            var received = FixedPoint2.Zero;
+            foreach (var amount in applied.DamageDict.Values)
+            {
+                if (amount > FixedPoint2.Zero)
+                    received += amount;
+            }
+            if (received > FixedPoint2.Zero)
+            {
+                var ev = new Content.Shared._Exodus.Radiation.RadiationDamageReceivedEvent(received);
+                RaiseLocalEvent(uid, ref ev);
+            }
+            // Exodus-end
         }
 
         private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)

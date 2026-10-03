@@ -261,9 +261,11 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
                     return;
             }
 
-            // Exodus: shared reconstruction moves loose debris and uses the current empty repair variant.
-            if (!TryRestoreSnapshotEntity(ent, (targetGrid, repairData), args.TargetGridIndices, args.RepairId.Value, spec))
+            // Exodus-begin: retain debris relocation, but let physics separate mobile occupants during handheld repairs.
+            if (!TryRestoreSnapshotEntity(ent, (targetGrid, repairData), args.TargetGridIndices, args.RepairId.Value, spec,
+                    checkMobileObstructions: false))
                 return;
+            // Exodus-end
         }
         else
         {

@@ -76,6 +76,7 @@ public sealed partial class GeneticsLaboratorySystem : EntitySystem
             ent.Comp.Pending = null;
             ent.Comp.ScannedPatient = null;
             ent.Comp.ScannedRevision = -1;
+            ent.Comp.LastError = null;
         }
         UpdateUi(ent);
     }
@@ -173,6 +174,7 @@ public sealed partial class GeneticsLaboratorySystem : EntitySystem
             args.Value < 0 || args.Value > GeneticsSystem.MaxBlockValue || args.Digit is < 0 or > 2)
             return;
 
+        ent.Comp.LastError = null;
         var pending = new GeneticsPendingOperation
         {
             User = args.Actor, Patient = patient, Revision = genome.Revision,
@@ -259,7 +261,9 @@ public sealed partial class GeneticsLaboratorySystem : EntitySystem
 
     private void Fail(Entity<GeneticsLaboratoryComponent> ent, EntityUid user, LocId message)
     {
-        _popup.PopupEntity(Loc.GetString(message), ent, user);
+        var text = Loc.GetString(message);
+        ent.Comp.LastError = text;
+        _popup.PopupEntity(text, ent, user);
         UpdateUi(ent);
     }
 
@@ -322,20 +326,29 @@ public sealed partial class GeneticsLaboratorySystem : EntitySystem
         if (pending.Cost > 0 && _solutions.TryGetSolution(ent.Owner, ent.Comp.Solution, out var buffer, out _))
             _solutions.RemoveReagent(buffer.Value, ent.Comp.Reagent, pending.Cost);
 
+        LocId? failure = null;
         switch (pending.Operation)
         {
             case GeneticsOperation.Edit:
-                if (_genetics.TryRandomizeDigit(target, pending.Block, pending.Digit, pending.User))
-                    _damage.TryChangeDamage(target, ent.Comp.EditDamage, true, false, ignoreGlobalModifiers: true);
+                _genetics.TryRandomizeDigit(target, pending.Block, pending.Digit, pending.User, out failure);
+                // A completed exposure still hurts if the resulting mutation conflicts with an active gene.
+                _damage.TryChangeDamage(target, ent.Comp.EditDamage, true, false, ignoreGlobalModifiers: true);
                 break;
             case GeneticsOperation.SetBlock:
-                _genetics.TrySetBlock(target, pending.Block, pending.Value, pending.User);
+                _genetics.TrySetBlock(target, pending.Block, pending.Value, pending.User, out failure);
                 break;
             case GeneticsOperation.Reset:
             case GeneticsOperation.RestoreBuffer:
                 if (pending.Sample != null)
-                    _genetics.TryApply(target, pending.Sample, pending.User);
+                    _genetics.TryApply(target, pending.Sample, pending.User, out failure);
                 break;
+        }
+        if (failure is { } reason)
+        {
+            var message = Loc.GetString(reason);
+            ent.Comp.LastError = pending.Operation is GeneticsOperation.Edit or GeneticsOperation.SetBlock
+                ? Loc.GetString("genetics-ui-block-error", ("number", pending.Block + 1), ("reason", message))
+                : message;
         }
         var living = _genetics.IsLivingSubject(pending.Patient);
         ent.Comp.ScannedPatient = living ? pending.Patient : null;
@@ -384,7 +397,7 @@ public sealed partial class GeneticsLaboratorySystem : EntitySystem
         var state = new GeneticsUiState(patient == null ? null : GetNetEntity(patient.Value),
             patient == null ? Loc.GetString("genetics-no-patient") : Identity.Name(patient.Value, EntityManager),
             revision, stability, this.IsPowered(ent, EntityManager), ent.Comp.Pending != null, reagent, blocks, buffers,
-            _slots.GetItemOrNull(ent, ent.Comp.DiskSlot) != null, ent.Comp.Debug, living);
+            _slots.GetItemOrNull(ent, ent.Comp.DiskSlot) != null, ent.Comp.Debug, living, ent.Comp.LastError);
         _ui.SetUiState(ent.Owner, GeneticsUiKey.Laboratory, state);
     }
 }

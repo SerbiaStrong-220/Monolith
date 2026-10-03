@@ -4,7 +4,7 @@
   name: ММС «Космобайк»
   description: Улучшенная силами ММС новейшая модель Суисайдбайка. Обладает двумя большими двигателями и дополнительными маленькими. Всё это питает плазменные соляры. ВНИМАНИЕ! На данном шаттле нет базого минимума, в т.ч. скафандра и атмосии!
   price: 68200
-  category: Small
+  category: Micro
   group: Mieyo
   access: Mieyo
   shuttlePath: /SharedMaps/_Exodus/Shuttles/Mieyo/kosmobike.yml
@@ -20,7 +20,7 @@
 
 - type: gameMap
   id: Kosmobike
-  mapName: 'ММС «Космобайк»'
+  mapName: 'ММС Космобайк'
   mapPath: /SharedMaps/_Exodus/Shuttles/Mieyo/kosmobike.yml
   minPlayers: 0
   stations:
@@ -33,7 +33,4 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
-          availableJobs:
-            Contractor: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
-            Mercenary: [ 0, 0 ]
+          availableJobs: {}

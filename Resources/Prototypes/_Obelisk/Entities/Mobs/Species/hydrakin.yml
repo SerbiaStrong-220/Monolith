@@ -9,6 +9,8 @@
   id: BaseMobHydrakin
   abstract: true
   components:
+  - type: Genome # Exodus: cryogenic protection and heat generation are independent genes.
+    initialMutations: [GeneticCryostasis, GeneticHyperthermia] # Exodus
   - type: UserInterface # Mono
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:
@@ -26,7 +28,7 @@
   - type: Thirst
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Hydrakin
+    damageModifierSet: GeneticHydrakinBaseline # Exodus: cold immunity is supplied by the native gene.
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -46,20 +48,12 @@
     prototype: Hydrakin
     requiredLegs: 2
   - type: Temperature
-    coldDamageThreshold: 10 # Mono - Absurd cold resistance
+    # Exodus: cold limits and slowdown are supplied by GeneticCryostasis.
     heatDamageThreshold: 332 # no. just no. suffer.
-    coldDamage:
-      types:
-        Cold : 0.01 #per second, scales with temperature & other constants
-  - type: TemperatureSpeed
-    thresholds:
-      90: 0.9
-      40: 0.75
-      10: 0.6
   - type: HumanoidAppearance
     species: Hydrakin
   - type: ThermalRegulator #Todo, implement hydrakin thermal movement generation
-    metabolismHeat: 1600
+    metabolismHeat: 100 # Exodus: balance radiated heat; excess heat belongs to GeneticHyperthermia.
     radiatedHeat: 100
     implicitHeatRegulation: 250
     sweatHeatRegulation: 400
@@ -68,14 +62,7 @@
     thermalRegulationTemperatureThreshold: 30
     processWhileCrit: false
     # Goob
-  - type: PassiveHeatGeneration
-    watts: 3900
-    mobStateModifier:
-      Alive: 1
-      Critical: 0
-      Dead: 0
-    minimumTemperature: 27.15
-    ignoreHeatResistance: true
+  # Exodus: passive heat generation belongs to GeneticHyperthermia.
     # Goob end
   - type: PressureProtection
     lowPressureMultiplier: 1.2

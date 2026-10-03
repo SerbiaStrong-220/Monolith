@@ -1,7 +1,7 @@
-concern-banner-augok-name = знамя концерна АУГОК
-concern-banner-drake-black-arms-usa-name = знамя концерна Дрэйк&Блэк&Армс&ВША
-concern-banner-horizon-harmony-hammer-matter-name = знамя концерна Горизонт&Хармони&Молот&Маттер
-concern-banner-buno-name = знамя концерна Б.У.НО.
+concern-banner-augok-name = знамя концерна «Эгида-Арсенал»
+concern-banner-drake-black-arms-usa-name = знамя концерна «Аквила Инк.»
+concern-banner-horizon-harmony-hammer-matter-name = знамя холдинга «Синтез»
+concern-banner-buno-name = знамя концерна «КОРПУС»
 concern-banner-claim-description = Закрепляет корпоративное присутствие концерна на территории фракции.
 company-subsidiary-banner-description = Декоративное знамя дочерней корпорации. Для захвата территории требуется знамя концерна.
 

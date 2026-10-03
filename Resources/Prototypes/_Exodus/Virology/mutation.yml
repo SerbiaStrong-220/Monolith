@@ -9,6 +9,7 @@
   pool:
   - BloodVomiting
   - Sneezing
+  - Cough
   - Drowsiness
   - SkinBurst
   - Necrosis
@@ -36,6 +37,14 @@
   - RecoilWeakness
   - StoneSkin
   - Electrophilia
+  - Schizophrenia
+  - ToxicConversion
+  - ToxinFiltration
+  - Strongman
+  - ViralAggressionRna
+  - ViralAggressionDna
+  - ViralFragilityRna
+  - ViralFragilityDna
   - Dehydration
   - SteelStomach
   - Clumsiness

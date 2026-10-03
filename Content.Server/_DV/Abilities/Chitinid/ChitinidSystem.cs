@@ -28,6 +28,7 @@ public sealed partial class ChitinidSystem : EntitySystem
     {
         SubscribeLocalEvent<ChitinidComponent, ChitziteActionEvent>(OnChitzite);
         SubscribeLocalEvent<ChitinidComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ChitinidComponent, ComponentShutdown>(OnShutdown); // Exodus: reversible genetic radiation metabolism.
     }
 
     public override void Update(float frameTime)
@@ -69,13 +70,34 @@ public sealed partial class ChitinidSystem : EntitySystem
 
     private void OnMapInit(Entity<ChitinidComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.ChitziteAction != null)
+        // Exodus: a dormant gene may retain a detached action awaiting deletion this tick.
+        if (ent.Comp.ChitziteAction is { } existing && !TerminatingOrDeleted(existing) &&
+            _actions.TryGetActionData(existing, out var action) && action.AttachedEntity == ent.Owner)
             return;
 
         ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
 
+        ent.Comp.ChitziteAction = null; // Exodus: discard a stale action from a dormant gene.
         _actions.AddAction(ent, ref ent.Comp.ChitziteAction, ent.Comp.ChitziteActionId);
+        // Exodus-begin: restoring a gene does not refill its charge.
+        var ready = ent.Comp.AmountAbsorbed >= ent.Comp.MaximumAbsorbed;
+        _actions.SetCharges(ent.Comp.ChitziteAction, ready ? 1 : 0);
+        _actions.SetEnabled(ent.Comp.ChitziteAction, ready);
+        // Exodus-end
     }
+
+    // Exodus-begin: remove the owned action and cancel unfinished production when a gene is disabled.
+    private void OnShutdown(Entity<ChitinidComponent> ent, ref ComponentShutdown args)
+    {
+        if (TerminatingOrDeleted(ent))
+            return;
+        if (_actions.TryGetActionData(ent.Comp.ChitziteAction, out var data) && data.AttachedEntity == ent.Owner)
+            _actions.RemoveAction(ent, ent.Comp.ChitziteAction);
+        if (ent.Comp.ChitziteAction is { } action && !TerminatingOrDeleted(action))
+            QueueDel(action);
+        RemComp<CoughingUpChitziteComponent>(ent);
+    }
+    // Exodus-end
 
     private void OnChitzite(Entity<ChitinidComponent> ent, ref ChitziteActionEvent args)
     {

@@ -1,9 +1,11 @@
 using System.Numerics;
 using Content.Server._Exodus.Shuttles.Components;
 using Content.Server._Exodus.Shuttles.Systems;
+using Content.Server._Mono.Radar;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._Mono.Radar;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.GameObjects;
@@ -87,6 +89,36 @@ public sealed class FtlSuppressorTest
             Assert.That(em.HasComponent<ActiveFtlSuppressorComponent>(suppressor), Is.False);
             Assert.That(shuttles.CanFTL(ship, out _), Is.True);
         });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task WorkingFieldIsShownOnMassScanners()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var em = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var power = em.System<PowerReceiverSystem>();
+        EntityUid suppressor = default;
+
+        await server.WaitPost(() =>
+        {
+            suppressor = em.SpawnEntity("MachineFtlSuppressorPdv", new EntityCoordinates(map.Grid, .5f, .5f));
+            power.SetNeedsPower(suppressor, false);
+        });
+        await PoolManager.WaitUntil(server, () => em.HasComponent<ActiveFtlSuppressorComponent>(suppressor));
+        await server.WaitAssertion(() =>
+        {
+            var blip = em.GetComponent<RadarBlipComponent>(suppressor);
+            Assert.That(blip.Enabled, Is.True);
+            Assert.That(blip.Config.Shape, Is.EqualTo(RadarBlipShape.SuppressionField));
+            Assert.That(blip.Config.Bounds.Width, Is.EqualTo(1500f));
+            Assert.That(blip.MaxDistance, Is.GreaterThan(750f));
+            power.SetPowerDisabled(suppressor, true);
+        });
+        await PoolManager.WaitUntil(server, () => !em.HasComponent<ActiveFtlSuppressorComponent>(suppressor));
+        await server.WaitAssertion(() => Assert.That(em.GetComponent<RadarBlipComponent>(suppressor).Enabled, Is.False));
         await pair.CleanReturnAsync();
     }
 

@@ -9,3 +9,8 @@
   id: LivingSkeleton
   name: guide-entry-exodus-living-skeleton
   text: /ServerInfo/_Exodus/Guidebook/Mobs/LivingSkeleton.xml
+
+- type: guideEntry
+  id: Kidan
+  name: species-name-kidan
+  text: /ServerInfo/_Exodus/Guidebook/Mobs/Kidan.xml

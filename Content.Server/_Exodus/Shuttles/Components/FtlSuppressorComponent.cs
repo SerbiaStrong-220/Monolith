@@ -31,6 +31,12 @@ public sealed partial class FtlSuppressorComponent : Component
     public ShuttleExclusionFill ZoneFill = ShuttleExclusionFill.Hatched;
 
     /// <summary>
+    /// Colour of the field on mass scanners, where it is shown through a radar blip while the suppressor works.
+    /// </summary>
+    [DataField]
+    public Color RadarColor = Color.Red;
+
+    /// <summary>
     /// How often an active suppressor checks whether its field moved far enough to resend it to open shuttle consoles.
     /// </summary>
     [DataField]
