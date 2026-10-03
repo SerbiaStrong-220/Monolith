@@ -19,12 +19,12 @@
   - Plasma
 
 - type: gameMap
-  id: Drakon
+  id: Hercules
   mapName: 'Геркулес' # Ru-Localization
   mapPath: /SharedMaps/_Exodus/Shuttles/USSP/hercules.yml # Exodus: upstream remap, existing vessel settings retained. # Exodus
   minPlayers: 0
   stations:
-    Drakon:
+    Hercules:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
