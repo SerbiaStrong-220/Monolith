@@ -24,6 +24,7 @@
   - Salvage
   - Medical
   - Chemistry
+  - Expedition
   engine:
   - Plasma
 
@@ -34,7 +35,7 @@
   minPlayers: 0
   stations:
     NosskeVector:
-      stationProto: StandardFrontierVessel
+      stationProto: StandardFrontierExpeditionVessel
       components:
       - type: StationNameSetup
         mapNameTemplate: 'Вектор{1}'
