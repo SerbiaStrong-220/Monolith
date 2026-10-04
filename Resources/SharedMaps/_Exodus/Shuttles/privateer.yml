@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 10/03/2026 13:54:22
-  entityCount: 1129
+  time: 10/04/2026 18:49:25
+  entityCount: 1130
 maps: []
 grids:
 - 1
@@ -84,10 +84,10 @@ entities:
     - type: ThermalSignature
     - type: SpreaderGrid
       spreadQueues:
-        MetalFoam: []
-        Puddle: []
         Smoke: []
+        MetalFoam: []
         ExodusBiohazardFoam: []
+        Puddle: []
         Kudzu: []
     - type: Shuttle
       dampingModifier: 0.25
@@ -3165,16 +3165,23 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,16.5
       parent: 1
+    - type: AnalysisConsole
+      analyzerEntity: 188
+    - type: DeviceLinkSource
+      linkedPorts:
+        188:
+        - - ArtifactAnalyzerSender
+          - ArtifactAnalyzerReceiver
     - type: ApcPowerReceiver
       powerLoad: 5
     - type: Battery
       startingCharge: 0
 - proto: ComputerGunneryConsole
   entities:
-  - uid: 665
+  - uid: 178
     components:
     - type: Transform
-      pos: -3.5,10.5
+      pos: -1.5,10.5
       parent: 1
     - type: ApcPowerReceiver
       powerLoad: 5
@@ -3194,10 +3201,10 @@ entities:
       startingCharge: 0
 - proto: ComputerShuttle
   entities:
-  - uid: 664
+  - uid: 320
     components:
     - type: Transform
-      pos: -1.5,10.5
+      pos: -3.5,10.5
       parent: 1
     - type: ApcPowerReceiver
       powerLoad: 5
@@ -4931,10 +4938,10 @@ entities:
       parent: 1
 - proto: HighSecDoor
   entities:
-  - uid: 320
+  - uid: 664
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -0.5,8.5
       parent: 1
 - proto: KitchenElectricGrill
@@ -5030,7 +5037,7 @@ entities:
       parent: 1
 - proto: MachineMaterialSilo
   entities:
-  - uid: 178
+  - uid: 665
     components:
     - type: Transform
       pos: 3.5,18.5
@@ -7566,6 +7573,14 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,6.5
+      parent: 1
+- proto: WeaponCapacitorRecharger
+  entities:
+  - uid: 1130
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,17.5
       parent: 1
 - proto: WeaponTurretAK570
   entities:
