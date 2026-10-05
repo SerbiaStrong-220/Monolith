@@ -1,0 +1,38 @@
+- type: vessel
+  id: DmiKrot
+  parent: BaseVessel
+  name: 'Дми-Крот'
+  description: '«ДМИ-Крот» — малый шахтёрский корабль флагмана ДМИ. Оснащён бурами и лазерами М-25.'
+  price: 90000
+  category: Small
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/dmikrot.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Salvage
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: DmiKrot
+  mapName: 'Дми-Крот'
+  mapPath: /SharedMaps/_Exodus/Shuttles/dmikrot.yml
+  minPlayers: 0
+  stations:
+    DmiKrot:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Дми-Крот{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
