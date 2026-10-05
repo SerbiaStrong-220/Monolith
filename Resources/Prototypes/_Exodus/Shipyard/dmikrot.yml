@@ -6,7 +6,7 @@
   price: 90000
   category: Small
   group: Shipyard
-  shuttlePath: /SharedMaps/_Exodus/Shuttles/dmikrot.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/DME/dmikrot.yml
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -20,7 +20,7 @@
 - type: gameMap
   id: DmiKrot
   mapName: 'Дми-Крот'
-  mapPath: /SharedMaps/_Exodus/Shuttles/dmikrot.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/DME/dmikrot.yml
   minPlayers: 0
   stations:
     DmiKrot:

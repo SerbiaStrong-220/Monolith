@@ -8,7 +8,7 @@
   group: Shipyard
   requiredCompanies:
   - HorizonHarmonyHammerMatter
-  shuttlePath: /SharedMaps/_Exodus/Shuttles/genshiro.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/DME/genshiro.yml
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
@@ -23,7 +23,7 @@
 - type: gameMap
   id: Genshiro
   mapName: 'ДМИ «Генширо»'
-  mapPath: /SharedMaps/_Exodus/Shuttles/genshiro.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/DME/genshiro.yml
   minPlayers: 0
   stations:
     Genshiro:
