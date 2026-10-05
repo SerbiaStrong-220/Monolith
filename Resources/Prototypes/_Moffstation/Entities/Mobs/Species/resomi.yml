@@ -10,8 +10,10 @@
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
+    - Skechi #Exodus
     understands:
     - TauCetiBasic
+    - Skechi #Exodus
    # Einstein Engines - End
   - type: Fixtures
     fixtures:
