@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 10/05/2026 01:09:56
-  entityCount: 307
+  time: 10/05/2026 17:35:16
+  entityCount: 325
 maps: []
 grids:
 - 1
@@ -1523,6 +1523,110 @@ entities:
       parent: 1
     - type: FuelGenerator
       targetPower: 50000
+- proto: PoweredlightLED
+  entities:
+  - uid: 308
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,4.5
+      parent: 1
+  - uid: 309
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,4.5
+      parent: 1
+  - uid: 310
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-0.5
+      parent: 1
+  - uid: 311
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-0.5
+      parent: 1
+  - uid: 312
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,6.5
+      parent: 1
+  - uid: 313
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,6.5
+      parent: 1
+- proto: PoweredStrobeExteriorEnabled
+  entities:
+  - uid: 314
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,6.5
+      parent: 1
+  - uid: 315
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,6.5
+      parent: 1
+  - uid: 316
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,4.5
+      parent: 1
+  - uid: 317
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,4.5
+      parent: 1
+  - uid: 318
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,0.5
+      parent: 1
+  - uid: 319
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,0.5
+      parent: 1
+  - uid: 320
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,4.5
+      parent: 1
+  - uid: 321
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 10.5,6.5
+      parent: 1
+  - uid: 322
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -6.5,6.5
+      parent: 1
+  - uid: 323
+    components:
+    - type: Transform
+      pos: 9.5,4.5
+      parent: 1
+  - uid: 324
+    components:
+    - type: Transform
+      pos: -5.5,4.5
+      parent: 1
 - proto: Railing
   entities:
   - uid: 262
@@ -1805,6 +1909,43 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,-0.5
       parent: 1
+- proto: TwoWayLever
+  entities:
+  - uid: 325
+    components:
+    - type: Transform
+      pos: 3.5,2.5
+      parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        49:
+        - - Left
+          - Forward
+        - - Right
+          - Reverse
+        - - Middle
+          - Off
+        51:
+        - - Left
+          - Forward
+        - - Right
+          - Reverse
+        - - Middle
+          - Off
+        50:
+        - - Left
+          - Forward
+        - - Right
+          - Reverse
+        - - Middle
+          - Off
+        52:
+        - - Left
+          - Forward
+        - - Right
+          - Reverse
+        - - Middle
+          - Off
 - proto: WallPlastitanium
   entities:
   - uid: 2
