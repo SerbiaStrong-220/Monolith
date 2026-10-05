@@ -10,7 +10,7 @@
 
 - При остатке [bold]0[/bold] перегрузки ещё нет. Ниже нуля организм получает радиационный и клеточный урон.
 - Выключение способности кнопкой [bold]не освобождает стабильность[/bold]: для этого нужно отключить сам ген.
-- Врождённые гены тоже учитываются. Например, у человека свободно [bold]60[/bold], у унатха [bold]50[/bold], у хитина [bold]35[/bold], у резоми [bold]70[/bold]. Полные наборы и расчёты приведены ниже.
+- Врождённые гены тоже учитываются. Например, у человека свободно [bold]60[/bold], у унатха [bold]50[/bold], у хитина [bold]35[/bold], у резоми [bold]50[/bold]. Полные наборы и расчёты приведены ниже.
 
 Лаборатория не показывает оставшуюся стабильность. Учитывайте все активные мутации, включая врождённые и полученные от радиации.
 
@@ -87,7 +87,7 @@
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Цель должна быть жива и иметь тот же активный ген.</Box></ColorBox>
 
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHearing"][/bold]</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticHearing"][/bold]\n[color=#9BCAED][bold]Расовая особенность[/bold][/color]\n[textlink="Резоми" link="Resomi"]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]+[geneticmutation="GeneticHearing" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Обнаружение признаков жизни поблизости, включая цели за стенами.</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
@@ -328,8 +328,8 @@
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">25</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">35</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[textlink="Резоми" link="Resomi"]</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFragileTissues"] ([geneticmutation="GeneticFragileTissues" field="instability"])</Box></ColorBox>
-  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">-10</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticFragileTissues"] ([geneticmutation="GeneticFragileTissues" field="instability"]), [geneticmutation="GeneticHearing"] ([geneticmutation="GeneticHearing" field="instability"])</Box></ColorBox>
+  <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">10</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">70</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[textlink="Гидракин" link="Hydrakin"]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[geneticmutation="GeneticCryostasis"] ([geneticmutation="GeneticCryostasis" field="instability"]), [geneticmutation="GeneticHyperthermia"] ([geneticmutation="GeneticHyperthermia" field="instability"])</Box></ColorBox>
