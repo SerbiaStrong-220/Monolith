@@ -1,0 +1,12 @@
+- type: entity
+  id: MachineShipDrillLargeCircuitboard
+  parent: BaseMachineCircuitboard
+  name: large ship drill machine board
+  description: A machine board for a large ship drill.
+  components:
+  - type: MachineBoard
+    prototype: MachineShipDrillLarge
+    requirements:
+      Capacitor: 4
+    stackRequirements:
+      Steel: 14
