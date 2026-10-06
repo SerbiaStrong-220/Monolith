@@ -36,6 +36,11 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       storagebase: !type:Container
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Ore
+  - type: OreSiloClient
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
