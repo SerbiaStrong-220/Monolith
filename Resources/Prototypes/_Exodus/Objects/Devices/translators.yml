@@ -1,0 +1,16 @@
+- type: entity
+  id: SkechiTranslator
+  parent: [ TranslatorPoweredBase ]
+  name: Skechi translator
+  description: Translates speech between Skechi and Tau-Ceti. Its for talking with resomi!
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - TauCetiBasic
+    - Skechi
+    understood:
+    - TauCetiBasic
+    - Skechi
+    requires:
+    - TauCetiBasic
+    - Skechi

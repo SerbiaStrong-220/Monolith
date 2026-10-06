@@ -19,6 +19,7 @@
   parent: [BaseItem, RecyclableItemPlasticTiny] # Frontier: added RecyclableItemPlasticTiny
   abstract: true
   components:
+  - type: CleanupImmune # Exodus-add
   - type: TabletopDraggable
   - type: Sprite
     noRot: true

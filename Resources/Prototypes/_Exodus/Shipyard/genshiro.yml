@@ -1,0 +1,41 @@
+- type: vessel
+  id: Genshiro
+  parent: BaseVessel
+  name: 'ДМИ «Генширо»'
+  description: '«Генширо» — флагманский корабль корпорации «Дарк Маттер Интерпрайзес», спроектированный как ультимативное решение для шахтёрских вылетов. Судно рассчитано на команду от 3 человек, оснащено силовым щитом «Сентинел-150» для защиты от столкновений с астероидами, промышленными бурами и собственными малыми кораблями, что делает «Генширо» идеальным выбором для эффективной добычи ресурсов.'
+  price: 10000000
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - HorizonHarmonyHammerMatter
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/DME/genshiro.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Salvage
+  - Mercenary
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Genshiro
+  mapName: 'ДМИ «Генширо»'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/DME/genshiro.yml
+  minPlayers: 0
+  stations:
+    Genshiro:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'ДМИ «Генширо»{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

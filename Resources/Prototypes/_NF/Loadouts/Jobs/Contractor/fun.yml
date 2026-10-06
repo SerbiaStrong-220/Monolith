@@ -84,6 +84,26 @@
     - AcousticGuitarInstrument
 
 #T2
+# Exodus-begin
+- type: loadout
+  id: ContractorMPPlayerBase
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT2
+  price: 3500
+  inhand:
+  - MusicPlayerPortableBase
+
+- type: loadout
+  id: ContractorMPPlayerGold
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT2
+  price: 35000
+  inhand:
+  - MusicPlayerPortableGold
+#Exodus-end
+
 - type: loadout
   id: ContractorCane
   effects:

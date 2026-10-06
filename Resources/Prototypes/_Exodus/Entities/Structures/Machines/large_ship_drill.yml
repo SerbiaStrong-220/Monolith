@@ -1,0 +1,60 @@
+- type: entity
+  id: MachineShipDrillLarge
+  parent: [ConstructibleMachine, BaseMachinePowered]
+  name: large ship drill
+  description: A massive drill for mining in front of large salvage shuttles.
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Rotatable
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/large_ship_drill.rsi
+    offset: 0, -1.5
+    layers:
+    - state: off
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: on }
+          False: { state: off }
+  - type: Appearance
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -10
+    range: 1
+    sound:
+      path: /Audio/Effects/saw.ogg
+  - type: ApcPowerReceiver
+    powerLoad: 2000
+  - type: ExtensionCableReceiver
+  - type: ShipDrill
+    drillOffsets: 0, -2.5
+    drillSize: 3, 4
+    drillType: !type:GatheringDrillType
+  - type: Machine
+    board: MachineShipDrillLargeCircuitboard
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.0,1.5,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: RadarBlip
+    radarColor: "#FFFFFF"
+    visibleFromOtherGrids: true
+    scale: 2
+    shape: triangle
+    gridConfig:
+      color: "#FFFFFF"
+      shape: Triangle
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"

@@ -17,6 +17,7 @@
   # - SiikMaasTranslator
   # - MarishTranslator
   - NewKinPidginTranslator
+  - SkechiTranslator # Exodus
 
 - type: latheRecipePack
   id: TranslatorImplanters
@@ -37,3 +38,4 @@
 #  - SiikMaasTranslatorImplanter
 #  - MarishTranslatorImplanter
   - NewKinPidginTranslatorImplanter
+  - SkechiTranslatorImplanter # Exodus

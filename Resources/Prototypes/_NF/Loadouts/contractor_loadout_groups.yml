@@ -806,6 +806,8 @@
   - ContractorPlushieSharkGrey
   - ContractorPlushieSharkBlue
   - ContractorPlushieSharkPink
+  - ContractorMPPlayerBase # Exodus-add
+  - ContractorMPPlayerGold # Exodus-add
   - ContractorHarmonicaInstrument
   - ContractorSaxophoneInstrument
   - ContractorAcousticGuitarInstrument

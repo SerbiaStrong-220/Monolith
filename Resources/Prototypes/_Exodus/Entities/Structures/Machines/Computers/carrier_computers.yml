@@ -1,0 +1,8 @@
+- type: entity
+  id: dmigenhiroCarrierComputer
+  parent: BaseCarrierComputer
+  name: Genshiro mobile shipyard console
+  components:
+  - type: ShipyardListing
+    shuttles:
+    - DmiKrot

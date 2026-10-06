@@ -31,6 +31,8 @@
     XylophoneInstrument: 1
     MicrophoneInstrument: 1
     MusicalLungInstrument: 1 # This actully sound ok somehow
+    MusicPlayerPortableBase: 3 # Exodus-add
+    MusicPlayerPortableGold: 1 # Exodus-add
     TubaInstrumentFlatpack: 1
     HarpInstrumentFlatpack: 1
     ContrabassInstrumentFlatpack: 1

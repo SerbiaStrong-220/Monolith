@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by mutemaid (discord) for Space Station 14 server Мёртвый Космос, Modify by R-R0S (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "MP3player-on-SEARCH",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-on-YELLOW",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-on-PINK",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-on-overlay",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-base"
+    },
+    {
+      "name": "MP3player-off-overlay"
+    },
+    {
+      "name": "MP3player-on-BLUE",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-on-BLUE_SKY",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-on-GREEN",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "MP3player-on-MITN_GREEN",
+       "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "clear"
+    }
+  ]
+}

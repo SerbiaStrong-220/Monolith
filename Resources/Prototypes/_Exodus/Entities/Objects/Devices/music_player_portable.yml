@@ -1,0 +1,78 @@
+- type: entity
+  id: MusicPlayerPortableBase
+  parent: [BaseItem, PowerCellSlotSmallItem]
+  name: Music Player Portable
+  description: Warning, contains music!
+  components:
+  - type: MusicPlayerPortable
+    drawRate: 0.05
+  - type: Appearance
+  - type: Sprite
+    scale: 0.5, 0.5
+    sprite: _Exodus/Objects/Devices/mpplayer.rsi
+    layers:
+    - state: MP3player-base
+    - state: MP3player-off-overlay
+    - state: MP3player-on-overlay
+      visible: false
+      shader: unshaded
+      map: ["mppOverlayKey"]
+    - state: clear
+      shader: unshaded
+      visible: false
+      map: ["enum.JukeboxVisualLayers.Base"]
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - neck
+  - type: Jukebox
+    onState: clear
+    offState: clear
+    selectState: MP3player-on-SEARCH
+  - type: GenericVisualizer
+    visuals:
+      enum.MppItemVisuals.State:
+        mppOverlayKey:
+          Off: { visible: false }
+          On: { visible: true }
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 0.05
+  - type: ToggleCellDraw
+  - type: ActivatableUIRequiresPowerCell
+  - type: ActivatableUI
+    key: enum.JukeboxUiKey.Key
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+      enum.JukeboxUiKey.Key:
+        type: JukeboxBoundUserInterface
+  - type: StaticPrice
+    price: 350
+
+- type: entity
+  id: MusicPlayerPortableGold
+  parent: MusicPlayerPortableBase
+  components:
+  - type: MusicPlayerPortable
+    drawRate: 0.005
+  - type: Sprite
+    scale: 0.5, 0.5
+    sprite: _Exodus/Objects/Devices/mpplayer.rsi
+    layers:
+    - state: MP3player-base
+      color: '#FFD700FF'
+    - state: MP3player-off-overlay
+    - state: MP3player-on-overlay
+      visible: false
+      shader: unshaded
+      map: ["mppOverlayKey"]
+    - state: clear
+      shader: unshaded
+      visible: false
+      map: ["enum.JukeboxVisualLayers.Base"]
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 0.005
+  - type: StaticPrice
+    price: 3500
