@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SkechiTranslatorImplant
+  name: Skechi translator implant
+  description: An implant giving the ability to understand and speak Skechi.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    understood:
+    - Skechi
+    spoken:
+    - Skechi
+    requires:
+    - TauCetiBasic

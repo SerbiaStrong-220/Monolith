@@ -31,6 +31,7 @@
     #- SiikMaasTranslator # No tajara here
     #- MarishTranslator # No shadowkin here
     - NewKinPidginTranslator # Vox
+    - SkechiTranslator # Exodus resomi
 
 - type: entity
   parent: TechDiskBase
@@ -81,3 +82,5 @@
     - XenoTranslator
     - NewKinPidginTranslator # Vox
     - NewKinPidginTranslatorImplanter # Vox
+    - SkechiTranslator # Exodus resomi
+    - SkechiTranslatorImplanter # Exodus resomi

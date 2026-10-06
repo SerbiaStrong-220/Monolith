@@ -1,0 +1,7 @@
+- type: entity
+  id: SkechiTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: Skechi translator implant
+  components:
+  - type: Implanter
+    implant: SkechiTranslatorImplant
