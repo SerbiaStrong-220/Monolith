@@ -59,10 +59,17 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Flyssa
+      name: Флисса АБАДДОН
     - type: Transform
       pos: 0.5,0.5
       parent: invalid
+    - type: NpcFactionMember
+      factions:
+      - TSFMC
+    - type: IffAffiliation
+      mode: Faction
+      faction: TSFMC
+    - type: InitRepairSnapshot
     - type: MapGrid
       chunks:
         -1,-1:
