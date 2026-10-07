@@ -107,6 +107,7 @@
   - type: Tag  # Mono
     tags:
     - EnergySword
+    - EnergySwordSingle # Exodus: ingredient for a double-bladed energy sword.
   - type: Reflect
     reflectProb: 0.5
     reflects:
@@ -311,6 +312,9 @@
   id: EnergySwordDouble
   description: A variant of the classic Energy Sword with blades on both ends.
   components:
+  - type: Construction # Exodus: assembled from two single-bladed energy swords.
+    graph: EnergySwordDouble
+    node: doubleSword
   - type: ItemToggle
     onUse: false # wielding events control it instead
     onActivate: false # prevents the weapon from being able to be turned on when it is on the ground

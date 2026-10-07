@@ -1,0 +1,22 @@
+- type: constructionGraph
+  id: EnergySwordDouble
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: doubleSword
+      steps:
+      - tag: EnergySwordSingle
+        name: construction-graph-tag-energy-sword-single
+        icon:
+          sprite: Objects/Weapons/Melee/e_sword.rsi
+          state: e_sword
+      - tag: EnergySwordSingle
+        name: construction-graph-tag-energy-sword-single
+        icon:
+          sprite: Objects/Weapons/Melee/e_sword.rsi
+          state: e_sword
+        doAfter: 2
+
+  - node: doubleSword
+    entity: EnergySwordDouble
