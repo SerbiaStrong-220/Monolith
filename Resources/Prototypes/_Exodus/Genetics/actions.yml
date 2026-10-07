@@ -81,6 +81,11 @@
     event: !type:GeneticNightVisionEvent
 
 - type: entity
+  parent: PulseThermalVision
+  id: ActionGeneticThermalVision
+  categories: [HideSpawnMenu]
+
+- type: entity
   id: ActionGeneticGlow
   categories: [HideSpawnMenu]
   components:

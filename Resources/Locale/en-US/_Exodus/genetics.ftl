@@ -181,6 +181,9 @@ ent-GeneticInjectorBrittle = brittleness genetic injector
 genetics-gene-night-vision = Night vision
 genetics-gene-night-vision-desc = Allows you to focus your eyes and make out objects in the dark.
 genetics-feeling-night-vision = Your pupils widen. Previously invisible shapes emerge from the shadows.
+genetics-gene-thermal-vision = Thermal vision
+genetics-gene-thermal-vision-desc = Grants a 3-second thermal vision pulse. Can be used again after 4 seconds.
+genetics-feeling-thermal-vision = You begin to distinguish the warmth of living bodies among familiar shapes.
 genetics-gene-clotting = Accelerated clotting
 genetics-gene-clotting-desc = Helps stop bleeding sooner. It does not replace lost blood or heal wounds.
 genetics-feeling-clotting = An unfamiliar warmth spreads beneath your skin, and small scratches tighten at the edges.
@@ -229,6 +232,8 @@ genetics-hulk-cannot-shoot = Your thickened fingers cannot work the tiny firing 
 
 ent-ActionGeneticNightVision = Focus vision
     .desc = Adapt your eyes to the dark or return to normal vision.
+ent-ActionGeneticThermalVision = Thermal pulse
+    .desc = Focus on thermal silhouettes for 3 seconds. Can be used again after 4 seconds.
 ent-ActionGeneticGlow = Glow
     .desc = Make your body glow softly or extinguish its light.
 ent-ActionGeneticHearing = Listen closely
@@ -246,6 +251,7 @@ ent-ProjectileGeneticFlame = burning glob
     .desc = Burning secretions from a fire-breathing organism.
 
 ent-GeneticInjectorNightVision = night vision genetic injector
+ent-GeneticInjectorThermalVision = thermal vision genetic injector
 ent-GeneticInjectorClotting = accelerated clotting genetic injector
 ent-GeneticInjectorJump = reflective skin genetic injector
 ent-GeneticInjectorPouch = biological pouch genetic injector

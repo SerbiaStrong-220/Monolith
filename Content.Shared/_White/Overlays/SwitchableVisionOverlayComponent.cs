@@ -52,6 +52,11 @@ public sealed class SwitchableVisionOverlayComponentState : IComponentState
     public Color Color;
     public bool IsActive;
     public float FlashDurationMultiplier;
+    // Exodus-begin: synchronize dynamically granted vision and its current pulse.
+    public bool IsEquipment;
+    public float PulseTime;
+    public float PulseAccumulator;
+    // Exodus-end
     public SoundSpecifier? ActivateSound;
     public SoundSpecifier? DeactivateSound;
     public EntProtoId? ToggleAction;

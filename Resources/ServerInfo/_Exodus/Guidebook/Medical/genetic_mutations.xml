@@ -45,6 +45,12 @@
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пассивно</Box></ColorBox>
   <ColorBox Color="#202630" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Не воскрешает.</Box></ColorBox>
 
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticThermalVision"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]+[geneticmutation="GeneticThermalVision" field="instability"][/bold]</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Пульсовое термальное зрение на 3 секунды, как у шлемов азакимов.</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Способность</Box></ColorBox>
+  <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Повтор через 4 секунды. Не обнаруживает существ в закрытых контейнерах. Отключение гена прерывает импульс.</Box></ColorBox>
+
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold][geneticmutation="GeneticTelekinesis"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">[bold]+[geneticmutation="GeneticTelekinesis" field="instability"][/bold]</Box></ColorBox>
   <ColorBox Color="#272F3A" OutlineColor="#485464" Margin="1"><Box Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">Взаимодействие с предметами на расстоянии до 10 м.</Box></ColorBox>

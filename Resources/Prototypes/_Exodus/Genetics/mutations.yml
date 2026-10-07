@@ -145,6 +145,20 @@
   actions: [ActionGeneticNightVision]
 
 - type: geneticMutation
+  id: GeneticThermalVision
+  name: genetics-gene-thermal-vision
+  description: genetics-gene-thermal-vision-desc
+  activationMessage: genetics-feeling-thermal-vision
+  instability: 30
+  components:
+  - type: ThermalVision
+    pulseTime: 3
+    isEquipment: false
+    toggleAction: ActionGeneticThermalVision
+    activateSound: null
+    deactivateSound: null
+
+- type: geneticMutation
   id: GeneticClotting
   name: genetics-gene-clotting
   description: genetics-gene-clotting-desc
