@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/07/2026 02:28:53
-  entityCount: 3360
+  entityCount: 3362
 maps: []
 grids:
 - 1
@@ -13642,122 +13642,218 @@ entities:
     - type: Transform
       pos: -6.5,20.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 166
     components:
     - type: Transform
       pos: -6.5,21.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1055
     components:
     - type: Transform
       pos: -4.5,19.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1253
     components:
     - type: Transform
       pos: 8.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1254
     components:
     - type: Transform
       pos: -9.5,13.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1255
     components:
     - type: Transform
       pos: -9.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1256
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1257
     components:
     - type: Transform
       pos: 9.5,13.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1258
     components:
     - type: Transform
       pos: 9.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1259
     components:
     - type: Transform
       pos: 8.5,13.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1260
     components:
     - type: Transform
       pos: -10.5,13.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1281
     components:
     - type: Transform
       pos: -5.5,19.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1336
     components:
     - type: Transform
       pos: 4.5,9.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1337
     components:
     - type: Transform
       pos: -4.5,20.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1341
     components:
     - type: Transform
       pos: -5.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1348
     components:
     - type: Transform
       pos: 4.5,10.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 1352
     components:
     - type: Transform
       pos: 4.5,12.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3322
     components:
     - type: Transform
       pos: -5.5,10.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3323
     components:
     - type: Transform
       pos: 4.5,13.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3324
     components:
     - type: Transform
       pos: 4.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3325
     components:
     - type: Transform
       pos: 9.5,9.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3326
     components:
     - type: Transform
       pos: -5.5,20.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3359
     components:
     - type: Transform
       pos: 6.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
   - uid: 3360
     components:
     - type: Transform
       pos: 5.5,13.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
+        Manipulator: FemtoManipulatorStockPart
 - proto: HardpointBallisticHeavy
   entities:
   - uid: 3278
@@ -15998,7 +16094,7 @@ entities:
     - type: Transform
       pos: -4.5,44.5
       parent: 1
-- proto: SpawnPointLatejoin
+- proto: RandomHumanoidSpawnerDeathSquad
   entities:
   - uid: 1406
     components:
@@ -16014,6 +16110,16 @@ entities:
     components:
     - type: Transform
       pos: -3.5,45.5
+      parent: 1
+  - uid: 3361
+    components:
+    - type: Transform
+      pos: -3.5,44.5
+      parent: 1
+  - uid: 3362
+    components:
+    - type: Transform
+      pos: -2.5,44.5
       parent: 1
 - proto: Spoon
   entities:
@@ -16702,104 +16808,158 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -21.5,11.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1476
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 20.5,6.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1477
     components:
     - type: Transform
       pos: 18.5,18.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1478
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 20.5,12.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1479
     components:
     - type: Transform
       pos: 16.5,18.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1480
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 17.5,-2.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1481
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,-2.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1482
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 20.5,4.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1483
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -21.5,3.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1484
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -17.5,-2.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1485
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -21.5,5.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1486
     components:
     - type: Transform
       pos: -18.5,18.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1487
     components:
     - type: Transform
       pos: -20.5,18.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1488
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -19.5,-2.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1489
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,2.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1490
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,2.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1491
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,3.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
   - uid: 1492
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,3.5
       parent: 1
+    - type: Machine
+      partOverrides:
+        Capacitor: QuadraticCapacitorStockPart
 - proto: ToiletEmpty
   entities:
   - uid: 1493
