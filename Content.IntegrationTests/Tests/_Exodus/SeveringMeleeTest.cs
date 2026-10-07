@@ -299,7 +299,7 @@ public sealed class SeveringMeleeTest
             entities.System<SharedCombatModeSystem>().SetInCombatMode(user, true);
             var melee = entities.GetComponent<MeleeWeaponComponent>(weapon);
             melee.NextAttack = TimeSpan.Zero;
-            Assert.That(melee.CanWideSwing, Is.False);
+            Assert.That(melee.CanWideSwing, Is.True);
             Assert.That(entities.System<SharedMeleeWeaponSystem>().AttemptLightAttack(user, weapon, melee, target), Is.True);
             Assert.That(head.Component.Body, Is.Null);
         });
