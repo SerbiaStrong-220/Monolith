@@ -1,4 +1,6 @@
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Exodus.Biocode;
 
@@ -7,9 +9,10 @@ namespace Content.Shared._Exodus.Biocode;
 /// wear, or use the entity. Conditions and reactions are fully data-driven, so this is not tied
 /// to Asakim — any faction/role gate can be expressed through whitelists.
 ///
-/// A user is considered authorized if EITHER:
-/// - they pass <see cref="Whitelist"/> (checked against the user entity itself), OR
-/// - they pass <see cref="MindWhitelist"/> (checked against the mind entity attached to the user).
+/// A user is considered authorized if any of these conditions match:
+/// - they pass <see cref="Whitelist"/> (checked against the user entity itself),
+/// - they pass <see cref="MindWhitelist"/> (checked against the mind entity attached to the user),
+/// - they belong to one of the configured <see cref="Factions"/>.
 /// </summary>
 [RegisterComponent]
 public sealed partial class BiocodeComponent : Component
@@ -29,7 +32,14 @@ public sealed partial class BiocodeComponent : Component
     public EntityWhitelist? MindWhitelist;
 
     /// <summary>
-    /// Block ranged/after-interact, use-in-hand, activate-in-world and UI-open for non-authorized users.
+    /// Actual NPC faction membership accepted by this biocode, independent of carried ID cards.
+    /// Null disables this condition; an empty set accepts no factions.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<NpcFactionPrototype>>? Factions;
+
+    /// <summary>
+    /// Block ranged/after-interact, weapon attacks, use-in-hand, activate-in-world and UI-open for non-authorized users.
     /// </summary>
     [DataField]
     public bool BlockInteraction = true;

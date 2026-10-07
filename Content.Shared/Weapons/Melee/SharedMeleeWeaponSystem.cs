@@ -462,7 +462,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         Dirty(weaponUid, weapon);
 
         // Do this AFTER attack so it doesn't spam every tick
-        var ev = new AttemptMeleeEvent();
+        var ev = new AttemptMeleeEvent(user); // Exodus: biocode checks need the actual attacker.
         RaiseLocalEvent(weaponUid, ref ev);
 
         if (ev.Cancelled)

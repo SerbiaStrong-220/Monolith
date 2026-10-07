@@ -131,7 +131,7 @@
     lightingColor: "#FFFFFF32"
 
 - type: entity
-  parent: ClothingHandsGlovesPowerglove
+  parent: [ ClothingHandsGlovesPowerglove, BaseExodusTsfBiocodedEquipment ]
   id: ClothingHandsGlovesExodusAbaddon
   name: ABADDON power gloves
   description: Insulated powered gloves that amplify the force of each punch.

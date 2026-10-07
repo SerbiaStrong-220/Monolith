@@ -9,8 +9,9 @@
     gloves: ClothingHandsGlovesExodusAbaddon
     outerClothing: ClothingOuterHardsuitExodusAbaddon
     shoes: ClothingShoesBootsMagExodusAbaddon
-    id: DeathsquadPDA
-    pocket1: EnergySword
+    id: ExodusAbaddonPDA
+    pocket1: EnergySwordExodusAbaddon
+    pocket2: BaseSecurityUplinkRadioOfficer
     belt: ClothingBeltExodusAbaddon
   storage:
     back:
@@ -20,7 +21,9 @@
     - StasiziumAutoInjector
     - StasiziumAutoInjector
     - StasiziumAutoInjector
-    - WeaponMurasama
+    - WeaponMurasamaExodusAbaddon
     - EnergyShield
-  inhand:
-  - WeaponPulseRifle
+    - BoxMRE
+    - WeaponLRC21PPLExodusAbaddon
+    - WeaponHeavyPulseCannonExodusAbaddon
+    - WeaponPulseAnnihilatorExodusAbaddon
