@@ -16101,7 +16101,7 @@ entities:
     - type: Transform
       pos: -4.5,44.5
       parent: 1
-- proto: RandomHumanoidSpawnerDeathSquad
+- proto: RandomHumanoidSpawnerExodusDeathSquad
   entities:
   - uid: 1406
     components:

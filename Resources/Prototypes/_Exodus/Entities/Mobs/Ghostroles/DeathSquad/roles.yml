@@ -1,0 +1,22 @@
+- type: randomHumanoidSettings
+  id: ExodusDeathSquad
+  parent: EventHumanoidMindShielded
+  randomizeName: false
+  components:
+  - type: GhostRole
+    name: ghost-role-information-exodus-abaddon-name
+    description: ghost-role-information-exodus-abaddon-description
+    rules: ghost-role-information-Death-Squad-rules
+    raffle:
+      settings: short
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: Loadout
+    prototypes: [ ExodusDeathSquadGear ]
+    roleLoadout: [ RoleSurvivalEVA ]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstMilitaryLeader
+    - NamesLastMilitary
+  - type: ChatRank
+    rank: exodus-abaddon-chat-rank

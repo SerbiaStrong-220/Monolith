@@ -1,0 +1,29 @@
+- type: startingGear
+  id: ExodusDeathSquadGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDeathSquad
+    back: ClothingBackpackDeathSquad
+    mask: ClothingMaskGasDeathSquad
+    eyes: ClothingEyesHudSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitDeathsquad
+    shoes: ClothingShoesBootsMagAdv
+    id: DeathsquadPDA
+    pocket1: EnergySword
+    pocket2: EnergyShield
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  storage:
+    back:
+    - WeaponPulsePistol
+    - WeaponRevolverMatebaAP
+    - SpeedLoader357_magnumAP
+    - SpeedLoader357_magnumAP
+    - BoxFlashbang
+    - ToolDebug
+    - WelderExperimental
+    - Hypospray
+    - DeathAcidifierImplanter
+    - FreedomImplanter
+  inhand:
+  - WeaponPulseRifle
