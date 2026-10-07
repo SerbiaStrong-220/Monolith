@@ -147,14 +147,14 @@ public sealed partial class GeneticAdaptationsTest
             Assert.That(entities.HasComponent<ChemicalDependencyComponent>(body), Is.False);
             Assert.That(movement.SprintSpeedModifier, Is.EqualTo(baseSpeed).Within(0.001));
             Assert.That(alerts.IsShowingAlert(body, dependency.Alert), Is.False);
-            Assert.That(genome.Stability, Is.EqualTo(40));
+            Assert.That(genome.Stability, Is.EqualTo(25));
             Enable(entities, body, "GeneticGoJuiceDependency");
             dependency = entities.GetComponent<ChemicalDependencyComponent>(body);
             Assert.That(dependency.Reserve, Is.EqualTo(TimeSpan.FromMinutes(-4)));
             Assert.That(dependency.Stage, Is.EqualTo(1));
             Assert.That(movement.SprintSpeedModifier, Is.EqualTo(baseSpeed * 0.8f).Within(0.001));
             Assert.That(alerts.IsShowingAlert(body, dependency.Alert), Is.True);
-            Assert.That(genome.Stability, Is.EqualTo(100));
+            Assert.That(genome.Stability, Is.EqualTo(85));
             Assert.That(needs.TrySatisfy(body, "GoJuice", 30), Is.True);
             Assert.That(dependency.Reserve, Is.EqualTo(TimeSpan.FromMinutes(26)));
             Assert.That(dependency.Stage, Is.EqualTo(-1));

@@ -12,6 +12,7 @@ public sealed partial class GeneticAdaptationsTest
 {
     [TestCase("MobAsakim", "GeneticJump")]
     [TestCase("MobAsakimRandom", "GeneticJump")]
+    [TestCase("MobAsakim", "GeneticVenomousClaws")]
     [TestCase("MobMoth", "GeneticCocoon")]
     [TestCase("MobArachnid", "GeneticWeb")]
     [TestCase("MobSlimePerson", "GeneticSlime")]

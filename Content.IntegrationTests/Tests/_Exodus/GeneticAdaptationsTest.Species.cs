@@ -42,7 +42,7 @@ public sealed partial class GeneticAdaptationsTest
                 ("MobArachnid", 40), ("MobDiona", 50), ("MobVox", 55), ("MobSlimePerson", 40),
                 ("MobFelinid", 60), ("MobVulpkanin", 60), ("MobFeroxi", 60), ("MobChitinid", 35),
                 ("MobResomi", 50), ("MobHydrakin", 10), ("MobTajaran", 55), ("MobKidan", 40),
-                ("MobAsakim", 100),
+                ("MobAsakim", 85),
             };
             foreach (var (prototype, stability) in cases)
             {

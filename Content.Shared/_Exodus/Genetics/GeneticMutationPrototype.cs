@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
@@ -28,6 +29,8 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField(serverOnly: true)] public ComponentRegistry Components = new();
     /// <summary>Components whose progress survives disabling the gene, such as claw growth and absorbed radiation.</summary>
     [DataField(serverOnly: true)] public HashSet<string> PreserveComponents = new();
+    /// <summary>Dedicated reagent reservoirs, created and filled only if absent. Retained while inactive to prevent refilling by toggling the gene.</summary>
+    [DataField(serverOnly: true)] public Dictionary<string, Solution> InitialSolutions = new();
     /// <summary>Changes to temperature limits and damage, without changing the body's current temperature.</summary>
     [DataField(serverOnly: true)] public GeneticThermalModifiers Thermal = new();
     /// <summary>Effects evaluated once per genome interval while alive and within the specified temperature range.</summary>
