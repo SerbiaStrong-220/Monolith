@@ -8,7 +8,7 @@
     - Syndicate
 
 - type: entity
-  parent: BaseWeaponBallisticTurret
+  parent: BaseWeaponBallisticTurretCore # Exodus: finite ammunition must not inherit a second, battery-powered ammo provider.
   id: WeaponTurretSyndicateDisposable
   name: disposable ballistic turret
   suffix: Syndicate, Disposable
@@ -85,7 +85,7 @@
     - HostileUniversally # Mono
 
 - type: entity
-  parent: BaseWeaponBallisticTurret
+  parent: BaseWeaponBallisticTurretCore # Exodus: acid ammunition must not be combined with inherited caseless ammunition.
   id: WeaponTurretXeno
   name: xeno turret
   suffix: Xeno

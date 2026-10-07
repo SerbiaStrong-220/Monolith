@@ -86,30 +86,16 @@
     price: 100
 
 - type: entity
-  parent: BaseWeaponTurret
+  parent: BaseWeaponBallisticTurretCore # Exodus: share gun settings without forcing battery ammo on finite-ammo turrets.
   id: BaseWeaponBallisticTurret
   description: A ballistic machine gun auto-turret.
   name: ballistic turret
   abstract: true
   components:
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
+  # Exodus: gun and container settings moved to BaseWeaponBallisticTurretCore.
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
-  - type: Gun
-    fireRate: 6
-    projectileSpeed: 55
-    maxAngle: 15 # Mono
-    minAngle: 4 # Mono
-    angleIncrease: -1.2 # Mono
-    angleDecay: -4 # Mono
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: Cartridge635x40mmCaseless
     fireCost: 25

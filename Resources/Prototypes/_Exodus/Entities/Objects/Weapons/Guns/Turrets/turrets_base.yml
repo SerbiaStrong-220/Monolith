@@ -1,0 +1,23 @@
+# Common ballistic turret setup; descendants choose their own ammo provider.
+- type: entity
+  parent: BaseWeaponTurret
+  id: BaseWeaponBallisticTurretCore
+  description: A ballistic machine gun auto-turret.
+  name: ballistic turret
+  abstract: true
+  components:
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Gun
+    fireRate: 6
+    projectileSpeed: 55
+    maxAngle: 15
+    minAngle: 4
+    angleIncrease: -1.2
+    angleDecay: -4
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
