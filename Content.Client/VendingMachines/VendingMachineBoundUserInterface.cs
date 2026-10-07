@@ -3,11 +3,10 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
-using System.Linq;
 using Robust.Client.GameObjects;
 using Content.Shared._NF.Bank.Components; // Frontier
-using Content.Shared.Containers.ItemSlots; // Frontier
-using Content.Shared.Stacks; // Frontier
+using Content.Shared._Exodus.Economy; // Exodus
+using Robust.Shared.Prototypes; // Exodus
 
 namespace Content.Client.VendingMachines
 {
@@ -21,17 +20,12 @@ namespace Content.Client.VendingMachines
 
         // Frontier: market price modifier & balance
         private UserInterfaceSystem _uiSystem = default!;
-        private ItemSlotsSystem _itemSlots = default!;
-
-        [ViewVariables]
-        private float _mod = 1f;
+        private Dictionary<EntProtoId, int?> _prices = new(); // Exodus: server quotes replace local price estimates.
         [ViewVariables]
         private int _balance = 0;
         [ViewVariables]
         private int _cashSlotBalance = 0;
         // End Frontier
-        [ViewVariables]
-        private bool _requiresCash; // mono
 
         public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -41,13 +35,8 @@ namespace Content.Client.VendingMachines
         {
             base.Open();
 
-            // Frontier: state, market modifier, balance status
+            // Exodus: prices arrive in the server UI state.
             _uiSystem = EntMan.System<UserInterfaceSystem>();
-            _itemSlots = EntMan.System<ItemSlotsSystem>();
-
-            if (EntMan.TryGetComponent<MarketModifierComponent>(Owner, out var market))
-                _mod = market.Mod;
-            // End Frontier
 
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
             // Frontier: no exceptions
@@ -66,6 +55,7 @@ namespace Content.Client.VendingMachines
             _cachedInventory = system.GetAllInventory(Owner);
 
             // Frontier: state, market modifier, balance status
+            _balance = 0; // Exodus: do not retain the balance of a previous UI actor.
             var uiUsers = _uiSystem.GetActors(Owner, UiKey);
             foreach (var uiUser in uiUsers)
             {
@@ -76,7 +66,6 @@ namespace Content.Client.VendingMachines
             if (EntMan.TryGetComponent<VendingMachineComponent>(Owner, out var vendingMachine))
             {
                 _cashSlotBalance = vendingMachine.CashSlotBalance;
-                _requiresCash = vendingMachine.RequiresCash; // mono
                 if (vendingMachine.CashSlotName != null)
                     cashSlotValue = _cashSlotBalance;
             }
@@ -86,8 +75,21 @@ namespace Content.Client.VendingMachines
             }
             // End Frontier
 
-            _menu?.Populate(_cachedInventory, _mod, _balance, cashSlotValue, _requiresCash); // Frontier: add _balance, mono: add _requiresCash
+            _menu?.Populate(_cachedInventory, _prices, _balance, cashSlotValue); // Exodus: display authoritative prices.
         }
+
+        // Exodus-begin
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+            if (state is not VendingMachinePriceState prices)
+                return;
+
+            _prices = prices.Prices;
+            if (_menu != null)
+                Refresh();
+        }
+        // Exodus-end
 
         private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
         {
@@ -97,15 +99,17 @@ namespace Content.Client.VendingMachines
             if (data is not VendorItemsListData { ItemIndex: var itemIndex })
                 return;
 
-            if (_cachedInventory.Count == 0)
+            // Exodus-begin: never submit an unknown or unavailable quote.
+            if (itemIndex < 0 || itemIndex >= _cachedInventory.Count)
                 return;
 
-            var selectedItem = _cachedInventory.ElementAtOrDefault(itemIndex);
+            var selectedItem = _cachedInventory[itemIndex];
 
-            if (selectedItem == null)
+            if (selectedItem.Amount == 0 || !_prices.TryGetValue(selectedItem.ID, out var price) || price == null)
                 return;
 
-            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
+            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID, price));
+            // Exodus-end
         }
 
         protected override void Dispose(bool disposing)

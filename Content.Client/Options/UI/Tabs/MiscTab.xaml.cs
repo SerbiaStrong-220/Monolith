@@ -63,6 +63,7 @@ public sealed partial class MiscTab : Control
         Control.AddOptionCheckBox(CCVars.ShowOocPatronColor, ShowOocPatronColor);
         Control.AddOptionCheckBox(CCVars.LoocAboveHeadShow, ShowLoocAboveHeadCheckBox);
         Control.AddOptionCheckBox(CCVars.HudHeldItemShow, ShowHeldItemCheckBox);
+        Control.AddOptionCheckBox(EXCVars.MouseWheelZoomEnabled, MouseWheelZoomCheckBox); // Exodus: mouse wheel zoom.
         Control.AddOptionCheckBox(CCVars.CombatModeIndicatorsPointShow, ShowCombatModeIndicatorsCheckBox);
         Control.AddOptionCheckBox(CCVars.OpaqueStorageWindow, OpaqueStorageWindowCheckBox);
         Control.AddOptionCheckBox(CCVars.ChatEnableFancyBubbles, FancySpeechBubblesCheckBox);

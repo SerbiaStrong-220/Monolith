@@ -1,0 +1,28 @@
+- type: entity
+  id: ExodusMarketPriceShock
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    delay:
+      min: 0
+      max: 0
+  - type: StationEvent
+    # Relative weight targets roughly one shock per eight hours at normal population.
+    # Eligibility and competing events' cooldowns change the available pool and frequency.
+    weight: 0.75
+    earliestStart: 60
+    reoccurrenceDelay: 240
+    duration: 1
+  - type: MarketPriceShockRule
+    allowedGroups:
+    - RawMaterials
+    - HighPrecision
+    - UltraPrecision
+    - Gases
+    productCount: 10
+    priceChange: 0.5
+    announcement: station-event-market-price-shock-announcement
+    announcementSound:
+      path: /Audio/Announcements/attention.ogg
+    announcementColor: "#d4a017"
+    sender: station-event-market-price-shock-sender

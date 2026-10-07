@@ -16,6 +16,8 @@ public sealed class AdminLogsEuiState : EuiStateBase
 
     public bool IsLoading { get; set; }
 
+    public bool CanExportRoundLogs { get; set; } // Exodus: bulk export requires Logs and Admin permissions.
+
     public int RoundId { get; }
 
     public Dictionary<Guid, string> Players { get; }

@@ -15,6 +15,7 @@ public sealed partial class MarketConsoleComponent : Component
     [DataField]
     public int MaxCrateMachineDistance = 8;
 
+    // Exodus: intended purchases only; quantities are taken from the shared inventory at checkout.
     public List<MarketData> CartDataList = [];
 
     /// <summary>

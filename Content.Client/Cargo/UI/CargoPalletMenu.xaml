@@ -1,41 +1,73 @@
+﻿<!-- Exodus: sector market terminal language (pallet sell) -->
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            SetSize="400 195"
-            MinSize="400 195"
-                      Title="{Loc 'cargo-pallet-console-menu-title'}"> <!-- Ru-Localization Change min and set size from 300 195 to 400 195 -->
-    <BoxContainer Orientation="Vertical" Margin="5">
-        <BoxContainer Orientation="Horizontal">
-              <Label Text="{Loc 'cargo-pallet-menu-appraisal-label'}"
-                     StyleClasses="LabelKeyText" />
-              <Control HorizontalExpand="True" />
-              <Label Name="AppraisalLabel"
-                     Text="{Loc 'cargo-pallet-menu-no-goods-text'}" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-              <Label Text="{Loc 'cargo-pallet-menu-count-label'}"
-                     StyleClasses="LabelKeyText" />
-              <Control HorizontalExpand="True" />
-              <Label Name="CountLabel"
-                     Text="{Loc 'cargo-pallet-menu-no-goods-text'}" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-              <Label Text="{Loc 'cargo-pallet-menu-crate-multiplier-label'}"
-                   StyleClasses="LabelKeyText" />
-              <Control HorizontalExpand="True" />
-              <Label Name="TradeCrateMultiplierLabel"
-                   Text="1.00x" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-              <Label Text="{Loc 'cargo-pallet-menu-other-multiplier-label'}"
-                   StyleClasses="LabelKeyText" />
-              <Control HorizontalExpand="True" />
-              <Label Name="OtherMultiplierLabel"
-                   Text="1.00x" />
-        </BoxContainer>
-        <Control MinSize="0 5" HorizontalExpand="True"/>
+                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                      xmlns:market="clr-namespace:Content.Client._Exodus.Economy.UI"
+                      SetSize="500 460"
+                      MinSize="420 360"
+                      Title="{Loc 'cargo-pallet-console-menu-title'}">
+    <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6" VerticalExpand="True">
+
+        <market:MarketTerminalPanel Header="True" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" Margin="10 8" SeparationOverride="4">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'cargo-pallet-menu-appraisal-label'}"
+                           StyleClasses="LabelSubText"
+                           HorizontalExpand="True" />
+                    <Label Name="AppraisalLabel"
+                           Text="{Loc 'cargo-pallet-menu-no-goods-text'}"
+                           StyleClasses="LabelKeyText"
+                           Align="Right" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'cargo-pallet-menu-count-label'}"
+                           StyleClasses="LabelSubText"
+                           HorizontalExpand="True" />
+                    <Label Name="CountLabel"
+                           Text="{Loc 'cargo-pallet-menu-no-goods-text'}"
+                           StyleClasses="LabelKeyText"
+                           Align="Right" />
+                </BoxContainer>
+                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 2" />
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'cargo-pallet-menu-crate-multiplier-label'}"
+                           StyleClasses="LabelSubText"
+                           HorizontalExpand="True" />
+                    <Label Name="TradeCrateMultiplierLabel"
+                           Text="1.00x"
+                           StyleClasses="LabelSubText"
+                           Align="Right" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'cargo-pallet-menu-other-multiplier-label'}"
+                           StyleClasses="LabelSubText"
+                           HorizontalExpand="True" />
+                    <Label Name="OtherMultiplierLabel"
+                           Text="1.00x"
+                           StyleClasses="LabelSubText"
+                           Align="Right" />
+                </BoxContainer>
+            </BoxContainer>
+        </market:MarketTerminalPanel>
+
+        <Label Text="{Loc 'cargo-pallet-menu-items-label'}"
+               StyleClasses="LabelKeyText" />
+        <market:MarketTerminalPanel Deep="True" VerticalExpand="True" HorizontalExpand="True">
+            <ScrollContainer HorizontalExpand="True"
+                             VerticalExpand="True"
+                             HScrollEnabled="False"
+                             Margin="4">
+                <BoxContainer Name="ItemsList"
+                              Orientation="Vertical"
+                              HorizontalExpand="True"
+                              SeparationOverride="2" />
+            </ScrollContainer>
+        </market:MarketTerminalPanel>
+
         <Button Name="AppraiseButton"
-                Text="{Loc 'cargo-pallet-appraise-button'}"/>
+                Text="{Loc 'cargo-pallet-appraise-button'}" />
         <Button Name="SellButton"
-                Text="{Loc 'cargo-pallet-sell-button'}"/>
+                Text="{Loc 'cargo-pallet-sell-button'}" />
+        <market:MarketTerminalFooter />
     </BoxContainer>
 </controls:FancyWindow>

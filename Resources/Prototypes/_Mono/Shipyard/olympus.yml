@@ -8,7 +8,8 @@
   parent: BaseVessel
   name: Олимп # Ru-Localization
   description: Огромный грузовой шаттл, гордость и отрада Дрейк Индастрис. Оснащён 185 квадратными метрами специального грузового пространства, модулем БСС-50, а также собственной системой щитов и обороны. В общем - всё, что нужно для бесперебойных крупных транспортных поставок. # Ru-Localization
-  price: 273600 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 276716 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998930275 # Exodus: expected-price allowance for randomized contents.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/olympus.yml

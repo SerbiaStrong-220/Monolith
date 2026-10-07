@@ -187,6 +187,12 @@ public sealed partial class PricingSystem : EntitySystem
     /// </summary>
     public double GetEstimatedPrice(EntityPrototype prototype)
     {
+        return GetEstimatedPrice(prototype, out _); // Exodus: share nominal appraisal with market baskets.
+    }
+
+    // Exodus: adapters add missing runtime contributions before applying the unpriced-item fallback.
+    public double GetEstimatedPrice(EntityPrototype prototype, out bool handled, bool applyFallback = true)
+    {
         var ev = new EstimatedPriceCalculationEvent()
         {
             Prototype = prototype,
@@ -194,6 +200,7 @@ public sealed partial class PricingSystem : EntitySystem
 
         RaiseLocalEvent(ref ev);
 
+        handled = ev.Handled; // Exodus
         if (ev.Handled)
             return ev.Price;
 
@@ -211,7 +218,7 @@ public sealed partial class PricingSystem : EntitySystem
 
         // TODO: Proper container support.
 
-        return price;
+        return applyFallback ? ApplyUnpricedFallback(prototype, price) : price; // Exodus
     }
 
     /// <summary>
@@ -248,10 +255,17 @@ public sealed partial class PricingSystem : EntitySystem
     /// </remarks>
     public double GetPrice(EntityUid uid, bool includeContents = true)
     {
+        return GetPrice(uid, out _, includeContents); // Exodus: share opaque appraisal semantics with market baskets.
+    }
+
+    // Exodus: expose whether a custom appraisal owns the complete container subtree.
+    public double GetPrice(EntityUid uid, out bool handled, bool includeContents = true)
+    {
         var ev = new PriceCalculationEvent();
         ev.Price = 0; // Structs doesnt initialize doubles when called by constructor.
         RaiseLocalEvent(uid, ref ev);
 
+        handled = ev.Handled; // Exodus market basket appraisal
         if (ev.Handled)
             return ev.Price;
 
@@ -270,6 +284,7 @@ public sealed partial class PricingSystem : EntitySystem
             price += GetStaticPrice(uid);
         }
 
+        price = ApplyUnpricedFallback(uid, price); // Exodus: appraise the item before adding container contents.
         if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
             foreach (var container in containers.Containers.Values)
@@ -294,10 +309,18 @@ public sealed partial class PricingSystem : EntitySystem
     /// <returns>The price with vending machine discount applied if applicable</returns>
     public double GetPriceWithVendingDiscount(EntityUid uid, EntityUid currentGrid, bool includeContents = true)
     {
+        return GetPriceWithVendingDiscount(uid, currentGrid, out _, includeContents); // Exodus: expose opaque price overrides to recursive cargo appraisal.
+    }
+
+    // Exodus-begin: handled price events own the complete appraisal, including any contents.
+    public double GetPriceWithVendingDiscount(EntityUid uid, EntityUid currentGrid, out bool handled, bool includeContents = true)
+    // Exodus-end
+    {
         var ev = new PriceCalculationEvent();
         ev.Price = 0;
         RaiseLocalEvent(uid, ref ev);
 
+        handled = ev.Handled; // Exodus: cargo must not appraise overridden contents again.
         if (ev.Handled)
             return ev.Price;
 
@@ -315,6 +338,7 @@ public sealed partial class PricingSystem : EntitySystem
             price += GetStaticPriceWithVendingDiscount(uid, currentGrid);
         }
 
+        price = ApplyUnpricedFallback(uid, price); // Exodus: appraise the item before adding container contents.
         if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
             foreach (var container in containers.Containers.Values)

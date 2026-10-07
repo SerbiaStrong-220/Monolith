@@ -10,7 +10,7 @@
   name: Вайперы «Вульфснейк» # Exodus Viper localization
   description: Тяжёлая артиллерийская платформа, заказанная у GS. Оснащена массивным орудием времён корпоративных войн. # Exodus Viper localization
 #  limit: 3 --- Not sure. Will await review.
-  price: 195900 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 200294 # Exodus: expected ship and contents value; no additional markup.
   purchasable: false # Voucher only
   category: Large
   group: Viper

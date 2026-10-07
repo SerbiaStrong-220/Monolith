@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: TSF-SKR Mercury
   description: Naval designation Type-32D Guided Missile Corvette. Equipped with 4 frontal facing Paladin missile pods, and some light PD in the form of 4 L85 20mms.
-  price: 228621 # Exodus: retain main-build ship price.
+  price: 229206 # Exodus: expected ship and contents value; no additional markup.
   purchasable: false # voucher only
   category: Medium
   group: Security

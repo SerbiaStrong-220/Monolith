@@ -415,7 +415,10 @@ namespace Content.Client.Administration.UI
                     // Can only grant out perms you also have yourself.
                     // Primarily intended to prevent people giving themselves +HOST with +PERMISSIONS but generalized.
                     var disable = !ui._adminManager.HasFlag(flag);
-                    var flagName = flag.ToString().ToUpper();
+                    // Exodus: display the independent economy permission with its configured name.
+                    var flagName = flag == AdminFlags.EconomyDB
+                        ? Loc.GetString("permissions-eui-flag-economydb")
+                        : flag.ToString().ToUpper();
 
                     var group = new ButtonGroup();
 
@@ -586,7 +589,10 @@ namespace Content.Client.Administration.UI
                     // Can only grant out perms you also have yourself.
                     // Primarily intended to prevent people giving themselves +HOST with +PERMISSIONS but generalized.
                     var disable = !ui._adminManager.HasFlag(flag);
-                    var flagName = flag.ToString().ToUpper();
+                    // Exodus: display the independent economy permission with its configured name.
+                    var flagName = flag == AdminFlags.EconomyDB
+                        ? Loc.GetString("permissions-eui-flag-economydb")
+                        : flag.ToString().ToUpper();
 
                     var checkBox = new CheckBox
                     {

@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: company-vessel-buno-revizor-name
   description: company-vessel-buno-revizor-description
-  price: 470000 # Appraised value (459,877) rounded up to 10,000.
+  price: 472259 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Shipyard
   requiredCompanies:

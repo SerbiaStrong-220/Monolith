@@ -8,5 +8,13 @@ namespace Content.Shared._NF.Market.Events;
 [Serializable, NetSerializable]
 public sealed class MarketPurchaseMessage : BoundUserInterfaceMessage
 {
-};
+    // Exodus-begin: refuse checkout when the displayed total is stale or absent.
+    public int? ExpectedPrice;
+
+    public MarketPurchaseMessage(int? expectedPrice = null)
+    {
+        ExpectedPrice = expectedPrice;
+    }
+    // Exodus-end
+}
 

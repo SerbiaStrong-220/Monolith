@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Economy; // Exodus: marked cargo chutes replenish global stock.
 using Content.Shared._Crescent.Dispenser;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
@@ -9,6 +10,7 @@ public sealed partial class DispenserSystem : SharedDispenserSystem
 {
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private SharedVirtualItemSystem _virtualItemSystem = default!;
+    [Dependency] private DynamicMarketSystem _dynamicMarket = default!; // Exodus: marked exchanges wait for saved market state.
 
     public override void Initialize()
     {
@@ -52,9 +54,22 @@ public sealed partial class DispenserSystem : SharedDispenserSystem
             used = args.Used;
         }
 
+        // Exodus-begin: another chute may have consumed the item earlier in this tick.
+        if (TerminatingOrDeleted(used) || EntityManager.IsQueuedForDeletion(used))
+            return;
+        // Exodus-end
+
         if (TryPrototype(used, out var prototype)
             && TryGetDispenseItem(component, prototype.ID, out string itemId))
         {
+            // Exodus-begin: instructions and unmarked exchanges remain usable while quotes load.
+            if (HasComp<MarketStockSourceComponent>(uid) && !_dynamicMarket.Ready)
+            {
+                _audioSystem.PlayPvs(component.DenySound, uid);
+                return;
+            }
+            // Exodus-end
+
             args.Handled = true;
             TryDispenseItem(uid, component, itemId);
 
@@ -62,6 +77,13 @@ public sealed partial class DispenserSystem : SharedDispenserSystem
             {
                 _virtualItemSystem.DeleteVirtualItem((args.Used, virtualItem), args.User);
             }
+            // Exodus-begin: empty-hand instructions and unmarked dispensers are not goods sales.
+            if (HasComp<MarketStockSourceComponent>(uid))
+            {
+                var stockEvent = new MarketGoodsSoldEvent([used], uid);
+                RaiseLocalEvent(ref stockEvent);
+            }
+            // Exodus-end
             QueueDel(used);
         }
         else

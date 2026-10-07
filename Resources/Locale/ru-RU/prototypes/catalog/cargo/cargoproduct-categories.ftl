@@ -1,3 +1,4 @@
+# Exodus: supply console category names.
 cargoproduct-category-name-armory = Оружейная
 cargoproduct-category-name-atmospherics = Атмосферика
 cargoproduct-category-name-cargo = Снабжение

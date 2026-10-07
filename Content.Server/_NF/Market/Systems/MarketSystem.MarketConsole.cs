@@ -1,17 +1,14 @@
 using System.Linq;
 using Content.Server._NF.Market.Components;
 using Content.Server._NF.Market.Extensions;
-using Content.Server.Cargo.Systems;
-using Content.Server.Storage.Components;
 using Content.Shared._NF.Market;
 using Content.Shared._NF.Market.BUI;
 using Content.Shared._NF.Market.Events;
 using Content.Shared._NF.Bank.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power;
 using Content.Shared.Stacks;
-using Content.Shared.Storage;
-using Content.Shared.Materials;
+using Content.Server._Exodus.Economy; // Exodus dynamic market
+using Content.Shared._NF.CrateMachine.Components; // Exodus delivery crate appraisal
 using Robust.Shared.Prototypes;
 
 
@@ -20,13 +17,13 @@ namespace Content.Server._NF.Market.Systems;
 public sealed partial class MarketSystem
 {
 
-    [Dependency] private SharedMaterialStorageSystem _sharedMaterialStorageSystem = default!;
     private void InitializeConsole()
     {
-        SubscribeLocalEvent<EntitySoldEvent>(OnEntitySoldEvent);
+        // Exodus: completed sales are received centrally by MarketStockIntakeSystem.
         SubscribeLocalEvent<MarketConsoleComponent, BoundUIOpenedEvent>(OnConsoleUiOpened);
         SubscribeLocalEvent<MarketConsoleComponent, MarketConsoleCartMessage>(OnCartMessage);
         SubscribeLocalEvent<MarketConsoleComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<MarketInventoryChangedEvent>(OnMarketInventoryChanged); // Exodus: refresh open terminals after shared stock changes.
     }
 
     private void OnPowerChanged(EntityUid uid, MarketConsoleComponent component, ref PowerChangedEvent args)
@@ -36,200 +33,41 @@ public sealed partial class MarketSystem
         _ui.CloseUi(uid, MarketConsoleUiKey.Default);
     }
 
-    /// <summary>
-    /// This event signifies that something has been sold at a cargo pallet.
-    /// </summary>
-    /// <param name="entitySoldEvent">The details of the event</param>
-    private void OnEntitySoldEvent(ref EntitySoldEvent entitySoldEvent)
-    {
-        var station = _station.GetOwningStation(entitySoldEvent.Grid);
-        if (station is null ||
-            !_entityManager.TryGetComponent<CargoMarketDataComponent>(station, out var market))
-        {
-            return;
-        }
-
-        foreach (var sold in entitySoldEvent.Sold)
-        {
-            if (_entityManager.TryGetComponent<MaterialStorageComponent>(sold, out var materialStorageComponent))
-                UpsertMaterialStorage(market, materialStorageComponent, sold);
-            else if (_entityManager.TryGetComponent<StorageComponent>(sold, out var storageComponent))
-                UpsertStorage(market, storageComponent);
-            else if (_entityManager.TryGetComponent<EntityStorageComponent>(sold, out var entityStorageComponent))
-                UpsertEntityStorage(market, entityStorageComponent);
-            else if (_entityManager.TryGetComponent<ItemSlotsComponent>(sold, out var itemSlotsComponent))
-                UpsertItemSlots(market, itemSlotsComponent);
-
-            UpsertMetadata(market, sold);
-        }
-    }
-
-    private void UpsertMetadata(CargoMarketDataComponent marketDataComponent, EntityUid sold)
-    {
-        // Get the MetaDataComponent from the sold entity
-        if (!_entityManager.TryGetComponent<MetaDataComponent>(sold, out var metaDataComponent))
-            return;
-
-        // Get the prototype ID of the sold entity
-        if (metaDataComponent.EntityPrototype == null)
-            return;
-
-        var count = 1;
-        var entityPrototype = metaDataComponent.EntityPrototype;
-        string? stackPrototypeId = null;
-
-        // Get amount of items in the stack if it's a stackable item.
-        // If it's a stackable item, get the singular item id instead.
-        if (_entityManager.TryGetComponent<StackComponent>(sold, out var stackComponent))
-        {
-            count = stackComponent.Count;
-            stackPrototypeId = stackComponent.StackTypeId;
-            var singularId = _prototypeManager.Index<StackPrototype>(stackComponent.StackTypeId).Spawn.Id;
-            _prototypeManager.TryIndex(singularId, out entityPrototype);
-        }
-
-        // If this is null, probably couldnt find the stack type id.
-        if (entityPrototype == null)
-            return;
-
-        // Check whitelist/blacklist for particular prototype
-        if (_whitelistSystem.IsWhitelistPassOrNull(marketDataComponent.Whitelist, sold) &&
-            _whitelistSystem.IsBlacklistFailOrNull(marketDataComponent.Blacklist, sold) ||
-            _whitelistSystem.IsWhitelistPassOrNull(marketDataComponent.WhitelistOverride, sold))
-        {
-            var estimatedPrice = _pricingSystem.GetPrice(sold) / count;
-
-            // Increase the count in the MarketData for this entity
-            // Assuming the quantity to increase is 1 for each sold entity
-            marketDataComponent.MarketDataList.Upsert(entityPrototype.ID, count, estimatedPrice, stackPrototypeId);
-        }
-    }
-
-    /// <summary>
-    /// Recursively updates or inserts market data for entities contained within an EntityStorageComponent.
-    /// </summary>
-    /// <param name="marketDataComponent">The MarketDataComponent to update.</param>
-    /// <param name="entityStorageComponent">The EntityStorageComponent containing entities to process.</param>
-    private void UpsertEntityStorage(CargoMarketDataComponent marketDataComponent, EntityStorageComponent entityStorageComponent)
-    {
-        foreach (var entityUid in entityStorageComponent.Contents.ContainedEntities)
-        {
-            if (_entityManager.TryGetComponent<StorageComponent>(entityUid, out var storageComponent))
-            {
-                UpsertStorage(marketDataComponent, storageComponent);
-            }
-            else if (_entityManager.TryGetComponent<EntityStorageComponent>(entityUid, out var nestedEntityStorageComponent))
-            {
-                UpsertEntityStorage(marketDataComponent, nestedEntityStorageComponent);
-            }
-            UpsertMetadata(marketDataComponent, entityUid);
-        }
-    }
-
-    /// <summary>
-    /// Recursively updates or inserts market data for entities contained within an ItemSlotsComponent.
-    /// </summary>
-    /// <param name="marketDataComponent">The MarketDataComponent to update.</param>
-    /// <param name="itemSlotsComponent">The ItemSlotsComponent containing item slots to process.</param>
-    private void UpsertItemSlots(CargoMarketDataComponent marketDataComponent, ItemSlotsComponent itemSlotsComponent)
-    {
-        foreach (var slot in itemSlotsComponent.Slots.Values)
-        {
-            if (slot.Item is not { Valid: true } entityUid)
-                continue;
-
-            if (_entityManager.TryGetComponent<StorageComponent>(entityUid, out var storageComponent))
-            {
-                UpsertStorage(marketDataComponent, storageComponent);
-            }
-            else if (_entityManager.TryGetComponent<EntityStorageComponent>(entityUid, out var entityStorageComponent))
-            {
-                UpsertEntityStorage(marketDataComponent, entityStorageComponent);
-            }
-            UpsertMetadata(marketDataComponent, entityUid);
-        }
-    }
-
-    /// <summary>
-    /// Recursively checks the contents of the storage.
-    /// </summary>
-    /// <param name="marketDataComponent"></param>
-    /// <param name="storageComponent"></param>
-    private void UpsertStorage(CargoMarketDataComponent marketDataComponent, StorageComponent storageComponent)
-    {
-        foreach (var entityUid in storageComponent.Container.ContainedEntities.ToArray())
-        {
-            if (_entityManager.TryGetComponent<StorageComponent>(entityUid, out var comp))
-                UpsertStorage(marketDataComponent, comp);
-
-            UpsertMetadata(marketDataComponent, entityUid);
-        }
-    }
-
-    /// <summary>
-    /// Inserts market data for all materials contained within a MaterialStorageComponent.
-    /// </summary>
-    /// <param name="marketDataComponent"></param>
-    /// <param name="materialStorageComponent"></param>
-    private void UpsertMaterialStorage(CargoMarketDataComponent marketDataComponent, MaterialStorageComponent materialStorageComponent, EntityUid sold)
-    {
-        foreach (var (materialProto, amount) in materialStorageComponent.Storage)
-        {
-            if (!_prototypeManager.TryIndex<MaterialPrototype>(materialProto, out var material))
-            {
-                Log.Error("Failed to index material prototype " + materialProto);
-                continue;
-            }
-
-            if (amount <= 0 || material.StackEntity == null)
-                continue;
-
-            var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
-            if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-                continue;
-
-            var materialPerStack = composition.MaterialComposition[material.ID];
-            var amountToSpawn = amount / materialPerStack;
-            var price = material.Price * materialPerStack;
-
-            if (amountToSpawn == 0)
-                continue;
-
-            var overflowMaterial = amount - amountToSpawn * materialPerStack;
-            _sharedMaterialStorageSystem.TrySetMaterialAmount(sold, materialProto, overflowMaterial, materialStorageComponent);
-
-
-            // Increase the count in the MarketData for this material
-            marketDataComponent.MarketDataList.Upsert(entProto.ID, amountToSpawn, price, material.StackEntity);
-        }
-    }
+    // Exodus: stock intake and nested-container accounting live in MarketStockIntakeSystem.
 
     /// <summary>
     /// Calculates the total number of entities in the market data list, taking into account the maximum stack count for stackable items.
     /// </summary>
     /// <param name="marketDataList">The list of market data to calculate the total entity count from.</param>
     /// <returns>The total number of entities in the market data list.</returns>
-    public int CalculateEntityAmount(List<MarketData> marketDataList)
+    public int CalculateEntityAmount(IReadOnlyList<MarketData> marketDataList) // Exodus: accept shared inventory snapshots.
     {
-        var count = 0;
-
+        // Exodus-begin: count every non-stack item, with bounded arithmetic for untrusted quantities.
+        long count = 0;
         foreach (var data in marketDataList)
         {
+            if (data.Quantity <= 0)
+                continue;
+
             if (data.StackPrototype != null && _prototypeManager.TryIndex(data.StackPrototype, out var stackPrototype))
             {
-                var maxStackCount = stackPrototype.MaxCount;
-                if (maxStackCount != null)
-                    count += (int)Math.Ceiling((double)data.Quantity / int.Max(1, maxStackCount.Value)); // Ensure denominator is positive
+                if (stackPrototype.MaxCount is { } maxCount)
+                {
+                    var capacity = Math.Max(1, maxCount);
+                    count += ((long)data.Quantity + capacity - 1) / capacity;
+                }
                 else
-                    count += 1;
+                    count++;
             }
             else
-            {
-                count += 1;
-            }
+                count += data.Quantity;
+
+            if (count >= int.MaxValue)
+                return int.MaxValue;
         }
 
-        return count;
+        return (int)count;
+        // Exodus-end
     }
 
     /// <summary>
@@ -283,38 +121,36 @@ public sealed partial class MarketSystem
             return; // Skip this iteration if the prototype was not found
         }
 
-        // No data set for market data, can't update cart, no data.
-        var stationUid = _station.GetOwningStation(consoleUid);
-        if (!TryComp<CargoMarketDataComponent>(stationUid, out var market))
-            return;
-
-        var marketData = market.MarketDataList;
+        // Exodus-begin: a cart is an intention, so abandoning it cannot reserve global stock.
+        var existingCart = FindMarketDataByPrototype(consoleComponent.CartDataList, args.ItemPrototype!);
         if (args.RemoveFromCart)
         {
-            consoleComponent.CartDataList.Move(marketData, prototype.ID);
+            if (existingCart != null)
+                consoleComponent.CartDataList.Remove(existingCart);
         }
         else
         {
-            var maxQuantityToWithdraw = marketData.GetMaxQuantityToWithdraw(prototype);
-            var toWithdraw = MathHelper.Clamp(args.Amount, 1, maxQuantityToWithdraw);
-
-            var existing = FindMarketDataByPrototype(marketData, args.ItemPrototype!);
-            if (existing == null)
+            if (args.Amount <= 0 || !_marketInventory.TryGetStock(prototype.ID, out var existing))
                 return;
+
+            var maxQuantityToWithdraw = existing.Quantity - (existingCart?.Quantity ?? 0);
+            if (maxQuantityToWithdraw <= 0)
+                return;
+
+            var toWithdraw = Math.Min(args.Amount, maxQuantityToWithdraw);
 
             // Calculate maximum we can fit.
             var entityAmount = CalculateEntityAmount(consoleComponent.CartDataList);
             var amountPerEntity = GetAmountPerEntitySpace(existing);
-            int amountLeft;
+            long amountLeft;
             if (amountPerEntity == null)
             {
                 amountLeft = int.MaxValue; // Infinite stack, infinite space.
             }
             else
             {
-                amountLeft = (30 - entityAmount) * amountPerEntity.Value;
+                amountLeft = (30L - entityAmount) * amountPerEntity.Value;
 
-                var existingCart = FindMarketDataByPrototype(consoleComponent.CartDataList, args.ItemPrototype!);
                 if (existingCart != null)
                 {
                     // Find if there's a partially filled entity in the cart.
@@ -324,14 +160,15 @@ public sealed partial class MarketSystem
                         amountLeft += amountPerEntity.Value - quantityMod;
                     }
                 }
-                amountLeft = int.Max(0, amountLeft); // If we're over the limit as-is, don't move anything.
+                amountLeft = Math.Max(0, amountLeft);
             }
 
-            toWithdraw = int.Min(toWithdraw, amountLeft);
+            toWithdraw = (int) Math.Min(toWithdraw, amountLeft);
 
-            marketData.Upsert(existing.Prototype, -toWithdraw, existing.Price, existing.StackPrototype);
-            consoleComponent.CartDataList.Upsert(existing.Prototype, toWithdraw, existing.Price, existing.StackPrototype);
+            if (toWithdraw > 0)
+                consoleComponent.CartDataList.Upsert(existing.Prototype, toWithdraw, existing.Price, existing.StackPrototype);
         }
+        // Exodus-end
 
         RefreshState(
             consoleUid,
@@ -381,7 +218,9 @@ public sealed partial class MarketSystem
         EntityUid consoleUid,
         int balance,
         float marketMultiplier,
-        MarketConsoleComponent? component
+        MarketConsoleComponent? component,
+        List<MarketData>? displayMarket = null, // Exodus: reuse the shared catalog during an inventory notification.
+        MarketSellCeiling? ceiling = null // Exodus
     )
     {
         if (!Resolve(consoleUid, ref component))
@@ -391,27 +230,48 @@ public sealed partial class MarketSystem
         if (Transform(consoleUid).GridUid == null)
             return;
 
-        // Get the market data for this grid.
+        // Exodus-begin: every terminal sees the same server-wide stock.
         var cartData = component.CartDataList;
-        var marketData = new List<MarketData>();
-
-        // Get station and the market data attached to it.
-        var consoleStationUid = _station.GetOwningStation(consoleUid);
-        if (TryComp<CargoMarketDataComponent>(consoleStationUid, out var market))
+        if (displayMarket == null)
         {
-            marketData = market.MarketDataList;
+            var marketData = _marketInventory.GetStock();
+            ceiling ??= _marketSellCeilings.GetSnapshot();
+            displayMarket = BuildMarketDisplayData(marketData, marketMultiplier, ceiling);
         }
-        var cartBalance = MarketDataExtensions.GetMarketValue(cartData, marketMultiplier);
+        // Exodus-end
+
+        // Exodus: cart balance uses sequential sector factor + local console MarketModifier (marketMultiplier).
+        var displayCart = new List<MarketData>(cartData.Count);
+        var cartBalance = 0;
+        var cratePrice = component.TransactionCost;
+        var canPurchase = false;
+        if (cartData.Count > 0 && TryGetCartStock((consoleUid, component), out var liveCart) && // Exodus: quote only nonempty, available carts.
+            _crateMachine.FindNearestUnoccupied(consoleUid, component.MaxCrateMachineDistance, out var machine) &&
+            TryComp<CrateMachineComponent>(machine, out var crateMachine) &&
+            TryQuoteMarketCart(liveCart, marketMultiplier, crateMachine.CratePrototype, component.TransactionCost,
+                out var cartQuote, out cratePrice, displayCart, ceiling))
+        {
+            cartBalance = cartQuote.TotalPrice - cratePrice;
+            canPurchase = cartData.Count > 0;
+        }
+        else
+        {
+            displayCart.Clear();
+            // Exodus: do not expose mutable cart entries or show a stale payable line total.
+            foreach (var entry in cartData)
+                displayCart.Add(new MarketData(entry.Prototype, entry.StackPrototype, entry.Quantity, 0) { Available = false });
+        }
 
         var newState = new MarketConsoleInterfaceState(
             balance,
             marketMultiplier,
-            marketData,
-            cartData,
+            displayMarket, // Exodus: sector-adjusted display
+            displayCart, // Exodus: sequential execution prices matching CartBalance
             cartBalance,
             true, // TODO add enable/disable functionality
-            component.TransactionCost,
-            CalculateEntityAmount(cartData)
+            cratePrice,
+            CalculateEntityAmount(cartData),
+            canPurchase // Exodus: unsafe, stale or unavailable delivery cannot be purchased.
         );
         _ui.SetUiState(consoleUid, MarketConsoleUiKey.Default, newState);
     }

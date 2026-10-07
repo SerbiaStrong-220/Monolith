@@ -5,7 +5,7 @@
   name: Оса-II
   description: Ракетно-артиллерийский корвет ДФ с установками Vanquisher и автопушками. Не имеет управляемых ракет и средств ПВО; осколочные боеприпасы могут сбивать собственные ракеты.
   hyperwarTimelock: 1800
-  price: 150000
+  price: 184030 # Exodus: expected ship and contents value; no additional markup.
   purchasable: false # Voucher only - T2
   category: Large
   group: BlackMarket

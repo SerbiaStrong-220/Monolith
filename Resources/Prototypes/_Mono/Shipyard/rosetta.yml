@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: NOV-Rosetta
   description: A science vessel built by the enigmatic "System" the Rosetta model is a heavy duty, yet luxurious xenoarcheological ship. A hulking laboratory with enough firepower to persuade the undesired (and stationary) "customer" to leave.
-  price: 109300 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 120740 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999080718 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/rosetta.yml # Exodus: upstream remap, existing vessel settings retained.

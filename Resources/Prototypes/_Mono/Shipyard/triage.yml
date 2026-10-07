@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Триэйдж # Ru-Localization
   description: Чрезвычайно компактный медицинский корабль, который способен удивить своей огневой мощью. # Ru-Localization
-  price: 49200 #Approx 41K with a 20% tax.
+  price: 51785 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMed/triage.yml # Exodus: upstream remap, existing vessel settings retained.

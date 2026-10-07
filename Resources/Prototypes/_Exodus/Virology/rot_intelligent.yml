@@ -3,6 +3,9 @@
   abstract: true
   components:
   - type: RotCreature
+  - type: Tower7GDamageConversion
+    sourceType: Poison
+    targetType: Piercing
   - type: RotColonyMember
     size: 0, 0
     needsSupport: false

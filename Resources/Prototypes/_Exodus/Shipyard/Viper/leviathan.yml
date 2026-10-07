@@ -10,7 +10,8 @@
   name: Вайперы «Левиафан»
   description: Капитальный корабль «Вайперов» для ближнего боя, построенный на основе грузового судна и защищённый толстой бронёй.
   limit: 1
-  price: 540000
+  price: 585304 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999257982 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # Voucher only
   category: Large
   group: Viper

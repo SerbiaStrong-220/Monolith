@@ -6,7 +6,7 @@
   parent: BaseVesselAntag
   name: Паладин
   description: Недорогой эскортный корабль ТСФ с развитой противоракетной обороной и скромным ударным вооружением.
-  price: 66000
+  price: 72475 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   hyperwarTimelock: 0
   group: Security

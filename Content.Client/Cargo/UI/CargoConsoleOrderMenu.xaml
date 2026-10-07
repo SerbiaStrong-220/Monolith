@@ -1,33 +1,75 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'cargo-console-order-menu-title'}">
-    <BoxContainer Orientation="Vertical">
-        <GridContainer Columns="2">
-            <Label Text="{Loc 'cargo-console-order-menu-product-label'}" />
-            <Label Name="ProductName"
-                      Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-description-label'}" />
-            <RichTextLabel Name="Description"
+<!-- Exodus: compact order form with quantity selection, scrollable details and a fixed submit area. -->
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:market="clr-namespace:Content.Client._Exodus.Economy.UI"
+                      SetSize="520 440"
+                      MinSize="440 360"
+                      Title="{Loc 'cargo-console-order-menu-title'}">
+    <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="8" VerticalExpand="True">
+        <ScrollContainer HScrollEnabled="False"
+                         ReserveScrollbarSpace="True"
+                         HorizontalExpand="True"
+                         VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" SeparationOverride="8" HorizontalExpand="True">
+                <market:MarketTerminalPanel Header="True" HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="12 10" SeparationOverride="6">
+                        <Label Text="{Loc 'cargo-console-order-menu-product-label'}"
+                               StyleClasses="LabelSubText" />
+                        <Label Name="ProductName"
+                               Access="Public"
+                               StyleClasses="LabelKeyText"
+                               ClipText="True"
+                               MouseFilter="Pass"
+                               HorizontalExpand="True" />
+                        <Label Text="{Loc 'cargo-console-order-menu-description-label'}"
+                               StyleClasses="LabelSubText"
+                               Margin="0 4 0 0" />
+                        <RichTextLabel Name="Description"
+                                       Access="Public"
+                                       HorizontalExpand="True" />
+                    </BoxContainer>
+                </market:MarketTerminalPanel>
+
+                <!-- Exodus: the initial unit estimate may differ from the full sequential order quote. -->
+                <market:MarketTerminalPanel Deep="True" HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="12 8" SeparationOverride="4">
+                        <RichTextLabel Text="{Loc 'cargo-console-order-menu-estimated-unit-price'}"
+                                       StyleClasses="LabelSubText"
+                                       HorizontalExpand="True" />
+                        <Label Name="PointCost"
+                               Access="Public"
+                               StyleClasses="LabelKeyText"
+                               ClipText="True"
+                               MouseFilter="Pass"
+                               HorizontalExpand="True" />
+                    </BoxContainer>
+                </market:MarketTerminalPanel>
+
+                <market:MarketTerminalPanel HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="12 10" SeparationOverride="6">
+                        <Label Text="{Loc 'cargo-console-order-menu-amount-label'}"
+                               StyleClasses="LabelSubText" />
+                        <SpinBox Name="Amount"
+                                 Access="Public"
+                                 HorizontalExpand="True"
+                                 Value="1" />
+                    </BoxContainer>
+                </market:MarketTerminalPanel>
+            </BoxContainer>
+        </ScrollContainer>
+
+        <!-- Exodus: precise quotes are supplied by the server in the order queue. -->
+        <market:MarketTerminalPanel Deep="True" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" Margin="12 10" SeparationOverride="8">
+                <RichTextLabel Text="{Loc 'cargo-console-order-menu-quote-notice'}"
+                               HorizontalExpand="True" />
+                <Button Name="SubmitButton"
                         Access="Public"
-                        VerticalExpand="True"
-                        SetWidth="350"/>
-            <Label Text="{Loc 'cargo-console-order-menu-cost-label'}" />
-            <Label Name="PointCost"
-                      Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-requester-label'}" />
-            <LineEdit Name="Requester"
-                      Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-reason-label'}" />
-            <LineEdit Name="Reason"
-                      Access="Public" />
-            <Label Text="{Loc 'cargo-console-order-menu-amount-label'}" />
-            <SpinBox Name="Amount"
-                     Access="Public"
-                     HorizontalExpand="True"
-                     Value="1" />
-        </GridContainer>
-        <Button Name="SubmitButton"
-                Access="Public"
-                Text="{Loc 'cargo-console-order-menu-submit-button'}"
-                TextAlign="Center" />
+                        Text="{Loc 'cargo-console-order-menu-submit-button'}"
+                        TextAlign="Center"
+                        MinHeight="36"
+                        HorizontalExpand="True" />
+            </BoxContainer>
+        </market:MarketTerminalPanel>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

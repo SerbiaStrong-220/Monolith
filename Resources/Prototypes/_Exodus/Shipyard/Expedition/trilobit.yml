@@ -3,7 +3,8 @@
   parent: BaseVessel
   name: Трилобит
   description: Трилобит представляет собой массивный корабль для дальних экспедиций. Оснащен полным спектром автономных систем жизнеобеспечения, навигации и защиты, позволяющим экипажу годами существовать в изоляции без внешней поддержки.
-  price: 342400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 363112 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.909437895 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Expedition
   access: Mercenary

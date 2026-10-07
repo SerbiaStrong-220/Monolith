@@ -4,7 +4,8 @@
   parent: BaseVessel
   name: Хорнет
   description: Патрульный корвет охраны Колосса с нелетальными установками TARNYX, ракетами и плазменными орудиями.
-  price: 120000
+  price: 136365 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999982238 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Sr
   access: Brig

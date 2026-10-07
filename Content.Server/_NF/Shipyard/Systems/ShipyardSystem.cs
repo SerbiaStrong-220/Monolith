@@ -189,12 +189,22 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     /// <param name="stationUid">The ID of the station that the shuttle is docked to</param>
     /// <param name="shuttleUid">The grid ID of the shuttle to be appraised and sold</param>
     /// <param name="consoleUid">The ID of the console being used to sell the ship</param>
-    public ShipyardSaleResult TrySellShuttle(EntityUid stationUid, EntityUid shuttleUid, EntityUid consoleUid, out int bill)
+    public ShipyardSaleResult TrySellShuttle(EntityUid stationUid, EntityUid shuttleUid, EntityUid consoleUid, out int bill, bool paidSale = true) // Exodus: voucher returns do not supply resale stock.
     {
         ShipyardSaleResult result = new ShipyardSaleResult();
         bill = 0;
 
-        if (!TryComp<StationDataComponent>(stationUid, out var stationGrid)
+        // Exodus-begin: preserve the complete shuttle and station until saved market state is available.
+        if (paidSale && !_dynamicMarket.Ready)
+        {
+            result.Error = ShipyardSaleError.MessageOverwritten;
+            result.OverwrittenMessage = Loc.GetString("market-sale-unavailable");
+            return result;
+        }
+        // Exodus-end
+
+        if (TerminatingOrDeleted(shuttleUid) || EntityManager.IsQueuedForDeletion(shuttleUid) // Exodus: a queued sale cannot be paid or stocked twice.
+            || !TryComp<StationDataComponent>(stationUid, out var stationGrid)
             || !HasComp<ShuttleComponent>(shuttleUid)
             || !TryComp(shuttleUid, out TransformComponent? xform)
             || ShipyardMap == null)
@@ -261,6 +271,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
 
         bill = (int)_pricing.AppraiseGrid(shuttleUid, LacksPreserveOnSaleComp);
+
+        // Exodus: stock only the remaining goods after preservation and appraisal, before deletion.
+        if (paidSale)
+            StockSoldShuttleGoods((shuttleUid, xform), consoleUid);
 
         QueueDel(shuttleUid);
         _sawmill.Info($"Sold shuttle {shuttleUid} for {bill}");

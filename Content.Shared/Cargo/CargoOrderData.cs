@@ -9,7 +9,13 @@ namespace Content.Shared.Cargo
         /// <summary>
         /// Price when the order was added.
         /// </summary>
-        public int Price;
+        public double Price; // Exodus: preserve fractional resale prices until the final transaction total.
+
+        /// <summary>
+        /// Exodus: current quote for the entire order, or the amount paid after approval.
+        /// Null uses the legacy unit price and quantity.
+        /// </summary>
+        public int? TotalPrice; // Exodus exact order quote
 
         /// <summary>
         /// A unique (arbitrary) ID which identifies this order.
@@ -48,7 +54,13 @@ namespace Content.Shared.Cargo
 
         public NetEntity? Computer = null;
 
-        public CargoOrderData(int orderId, string productId, string productName, int price, int amount, string requester, string reason, NetEntity? computer)
+        /// <summary>
+        /// Exodus: order filled from station cargo market stock (sold goods), not YAML catalog.
+        /// Stock is deducted on approve; ProductId is the entity prototype to spawn.
+        /// </summary>
+        public bool FromResaleStock; // Exodus
+
+        public CargoOrderData(int orderId, string productId, string productName, double price, int amount, string requester, string reason, NetEntity? computer, bool fromResaleStock = false) // Exodus: fractional price and resale stock
         {
             OrderId = orderId;
             ProductId = productId;
@@ -58,6 +70,7 @@ namespace Content.Shared.Cargo
             Requester = requester;
             Reason = reason;
             Computer = computer;
+            FromResaleStock = fromResaleStock; // Exodus
         }
 
         public void SetApproverData(string? approver)

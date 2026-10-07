@@ -105,13 +105,14 @@ public sealed partial class GeneticAdaptationsTest
     [Test]
     public async Task ChemicalWithdrawalPersistsThroughGeneTogglingAndRequiresProportionalRecovery()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pair.Server;
         var entities = server.EntMan;
         await server.WaitAssertion(() =>
         {
             var map = entities.System<SharedMapSystem>().CreateMap();
             var body = entities.SpawnEntity("MobAsakim", new EntityCoordinates(map, Vector2.Zero));
+            server.PlayerMan.SetAttachedEntity(pair.Player!, body);
             var genetics = entities.System<GeneticsSystem>();
             var genome = entities.GetComponent<GenomeComponent>(body);
             var dependency = entities.GetComponent<ChemicalDependencyComponent>(body);
@@ -161,6 +162,7 @@ public sealed partial class GeneticAdaptationsTest
             Assert.That(dependency.MovementMultiplier, Is.EqualTo(1f));
             Assert.That(needs.TrySatisfy(body, "GoJuice", 30), Is.True);
             Assert.That(dependency.Reserve, Is.EqualTo(TimeSpan.FromMinutes(30)));
+            server.PlayerMan.SetAttachedEntity(pair.Player!, null);
             entities.DeleteEntity(map);
             DeleteCipher(entities, genome.Context);
         });

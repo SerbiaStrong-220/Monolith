@@ -19,8 +19,8 @@ using Content.Shared._NF.Bank.BUI;
 using Content.Shared._NF.Trade;
 using Content.Shared.Mech.Components;
 using Robust.Shared.Toolshed.Commands.Math; // Mono
-
-
+using Content.Server._Exodus.Economy; // Exodus dynamic market
+using Content.Shared._Exodus.Economy; // Exodus CargoPalletAppraisalEntry
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
@@ -79,7 +79,9 @@ public sealed partial class CargoSystem
         }
 
         // Frontier: per-object market modification
-        GetPalletGoods(uid, gridUid, out var toSell, out var amount, out var noModAmount, out var blackMarketTaxAmount, out var frontierTaxAmount, out var nfsdTaxAmount, out var medicalTaxAmount);
+        // Exodus: appraise / UI refresh — no market commit; also builds per-line listing for UI.
+        var appraisalItems = new List<CargoPalletAppraisalEntry>(); // Exodus: only allocate display rows for appraisal.
+        GetPalletGoods(uid, gridUid, out var toSell, out var amount, out var noModAmount, out _, out _, out _, out _, out _, appraisalItems);
 
         amount += noModAmount;
         // End Frontier
@@ -97,7 +99,7 @@ public sealed partial class CargoSystem
 
         _uiSystem.SetUiState(uid.Owner,
             CargoPalletConsoleUiKey.Sale, // Frontier: uid<uid.Owner
-            new CargoPalletConsoleInterfaceState((int)amount, toSell.Count, true, tradeCrateMultiplier, otherMultiplier));
+            new CargoPalletConsoleInterfaceState(DynamicMarketSystem.RoundSellPayout(amount), toSell.Count, true, tradeCrateMultiplier, otherMultiplier, appraisalItems)); // Exodus items
         // End Monolith
     }
 
@@ -222,27 +224,25 @@ public sealed partial class CargoSystem
     /// GetCargoPallets(gridUid, BuySellType.Buy) to return only Buy pads
     private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid consoleUid, EntityUid gridUid, BuySellType requestType = BuySellType.All)
     {
+        // Exodus-begin: query nearby pallets instead of scanning every grid's pallets.
         _pads.Clear();
+        _palletLookup.Clear();
+        var coordinates = _transformSystem.WithEntityId(Transform(consoleUid).Coordinates, gridUid);
+        var maxDistance = TryComp<CargoPalletConsoleComponent>(consoleUid, out var console)
+            ? console.PalletDistance
+            : DefaultPalletDistance;
+        if (maxDistance < 0)
+            return _pads;
 
-        var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
+        _lookup.GetEntitiesInRange(coordinates, Math.Max(0.01f, maxDistance), _palletLookup, LookupFlags.StaticSundries);
+        var maxDistanceSquared = (double) maxDistance * maxDistance;
 
-        while (query.MoveNext(out var uid, out var comp, out var compXform))
+        foreach (var (uid, comp) in _palletLookup)
         {
-            // Frontier addition - To support multiple cargo selling stations we add a distance check for the pallets.
-            var distance = CalculateDistance(compXform.Coordinates, Transform(consoleUid).Coordinates);
-            var maxPalletDistance = DefaultPalletDistance;
-
-            // Get the mapped checking distance from the console
-            if (TryComp<CargoPalletConsoleComponent>(consoleUid, out var cargoShuttleComponent))
-            {
-                maxPalletDistance = cargoShuttleComponent.PalletDistance;
-            }
-
-            var isTooFarAway = distance > maxPalletDistance;
-            // End of Frontier addition
-
-            if (compXform.ParentUid != gridUid ||
-                !compXform.Anchored || isTooFarAway)
+            if (!_xformQuery.TryGetComponent(uid, out var compXform) ||
+                compXform.ParentUid != gridUid ||
+                !compXform.Anchored ||
+                (compXform.LocalPosition - coordinates.Position).LengthSquared() > maxDistanceSquared)
             {
                 continue;
             }
@@ -253,10 +253,10 @@ public sealed partial class CargoSystem
             }
 
             _pads.Add((uid, comp, compXform));
-
         }
 
         return _pads;
+        // Exodus-end
     }
 
     private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>
@@ -286,14 +286,25 @@ public sealed partial class CargoSystem
 
     private bool SellPallets(Entity<CargoPalletConsoleComponent> consoleUid, EntityUid gridUid, out double amount, out double noMultiplierAmount, out double blackMarketTaxAmount, out double frontierTaxAmount, out double nfsdTaxAmount, out double medicalTaxAmount) // Frontier: first arg to Entity, add noMultiplierAmount
     {
-        GetPalletGoods(consoleUid, gridUid, out var toSell, out amount, out noMultiplierAmount, out blackMarketTaxAmount, out frontierTaxAmount, out nfsdTaxAmount, out medicalTaxAmount); // Frontier: add noMultiplierAmount
+        // Exodus-begin: wait for persisted market settings before accepting goods.
+        amount = noMultiplierAmount = blackMarketTaxAmount = frontierTaxAmount = nfsdTaxAmount = medicalTaxAmount = 0;
+        if (!_dynamicMarket.Ready)
+            return false;
+        // Exodus-end
+
+        // Exodus: price with applyImpact=false; commit market only after a real non-empty sale.
+        var marketImpactAppliedRoots = new HashSet<EntityUid>(); // Exodus: identify roots covered by the committed market transaction.
+        GetPalletGoods(consoleUid, gridUid, out var toSell, out amount, out noMultiplierAmount, out blackMarketTaxAmount, out frontierTaxAmount, out nfsdTaxAmount, out medicalTaxAmount, out var marketTx,
+            marketImpactAppliedRoots: marketImpactAppliedRoots); // Frontier + Exodus
 
         Log.Debug($"Cargo sold {toSell.Count} entities for {amount} (plus {noMultiplierAmount} without mods). (Taxes: Black Market: {blackMarketTaxAmount}, CO: {frontierTaxAmount}, TSFMC: {nfsdTaxAmount}, MD: {medicalTaxAmount})"); // Frontier: add section in parentheses
 
         if (toSell.Count == 0)
             return false;
 
-        var ev = new EntitySoldEvent(toSell, gridUid); // Frontier: add gridUid
+        _dynamicMarket.CommitTransaction(marketTx); // Exodus: sell pressure only on confirmed sale (not appraise)
+
+        var ev = new EntitySoldEvent(toSell, gridUid, marketImpactAppliedRoots); // Exodus: preserve per-root pressure ownership.
         RaiseLocalEvent(ref ev);
 
         // Collect all container entities and their contained entities recursively
@@ -339,107 +350,7 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void GetPalletGoods(Entity<CargoPalletConsoleComponent> consoleUid, EntityUid gridUid, out HashSet<EntityUid> toSell, out double amount, out double noMultiplierAmount, out double blackMarketTaxAmount, out double frontierTaxAmount, out double nfsdTaxAmount, out double medicalTaxAmount) // Frontier: first arg to Entity, add noMultiplierAmount
-    {
-        amount = 0;
-        noMultiplierAmount = 0;
-        blackMarketTaxAmount = 0;
-        frontierTaxAmount = 0;
-        nfsdTaxAmount = 0;
-        medicalTaxAmount = 0;
-        toSell = new HashSet<EntityUid>();
-
-        foreach (var (palletUid, _, _) in GetCargoPallets(consoleUid, gridUid, BuySellType.Sell))
-        {
-            // Containers should already get the sell price of their children so can skip those.
-            _setEnts.Clear();
-
-            _lookup.GetEntitiesIntersecting(palletUid, _setEnts,
-                LookupFlags.Dynamic | LookupFlags.Sundries);
-
-            foreach (var ent in _setEnts)
-            {
-                // Dont sell:
-                // - anything already being sold
-                // - anything anchored (e.g. light fixtures)
-                // - anything blacklisted (e.g. players).
-                if (toSell.Contains(ent) ||
-                    _xformQuery.TryGetComponent(ent, out var xform) &&
-                    (xform.Anchored || !CanSell(ent, xform)))
-                {
-                    continue;
-                }
-
-                // Frontier: whitelisted consoles
-                if (_whitelist.IsWhitelistFail(consoleUid.Comp.Whitelist, ent))
-                    continue;
-                // End Frontier
-
-                if (_blacklistQuery.HasComponent(ent))
-                    continue;
-
-                // Mono: Use vending machine discount pricing for cargo sales
-                var price = _pricing.GetPriceWithVendingDiscount(ent, gridUid);
-                if (price == 0)
-                    continue;
-                toSell.Add(ent);
-
-                var station = _station.GetOwningStation(ent);
-                double multiplier = 1;
-
-                if (station != null
-                    && !HasComp<TradeCrateWildcardDestinationComponent>(station)
-                    && TryComp<MarketModifierComponent>(consoleUid, out var marketModifier)
-                    && !HasComp<IgnoreMarketModifierComponent>(ent)
-                    && !marketModifier.Buy
-                    && !HasComp<TradeCrateComponent>(ent))
-                {
-                    multiplier = marketModifier.Mod;
-                }
-
-                if (station != null
-                    && TryComp<TradeCrateWildcardDestinationComponent>(station, out var wildcard)
-                    && HasComp<TradeCrateComponent>(ent))
-                {
-                    multiplier = wildcard.ValueMultiplier;
-                }
-
-                // Frontier: check for items that are immune to market modifiers
-                if (HasComp<IgnoreMarketModifierComponent>(ent))
-                    noMultiplierAmount += price;
-                else
-                    amount += price * multiplier;
-
-
-                // End Frontier: check for items that are immune to market modifiers
-                // Mono: ItemTaxs to budgets.
-                if (TryComp<ItemTaxComponent>(ent, out var itemTax))
-                {
-                    foreach (var (account, taxCoeff) in itemTax.TaxAccounts)
-                    {
-                        switch (account)
-                        {
-                            case SectorBankAccount.BlackMarket:
-                                blackMarketTaxAmount += price * taxCoeff;
-                                break;
-                            case SectorBankAccount.Frontier:
-                                frontierTaxAmount += price * taxCoeff;
-                                break;
-                            case SectorBankAccount.Nfsd:
-                                nfsdTaxAmount += price * taxCoeff;
-                                break;
-                            case SectorBankAccount.Medical:
-                                medicalTaxAmount += price * taxCoeff;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                // End Mono
-            }
-        }
-    }
+    // Exodus: market-aware pallet valuation is in CargoSystem.PalletMarket.Exodus.cs.
 
     private bool CanSell(EntityUid uid, TransformComponent xform)
     {
@@ -448,7 +359,8 @@ public sealed partial class CargoSystem
             return false;
 
         // Frontier: allow selling dead mobs, Mono: and mecha
-        if (_mobQuery.TryComp(uid, out var mob) && mob.CurrentState != MobState.Dead && !TryComp<MechComponent>(uid, out _))
+        if (_mobQuery.TryComp(uid, out var mob) && mob.CurrentState != MobState.Dead && !TryComp<MechComponent>(uid, out _) &&
+            !CanSellLivingMob(uid)) // Exodus: explicitly saleable NPC equipment may remain operational.
             return false;
         // End Frontier
 
@@ -487,36 +399,36 @@ public sealed partial class CargoSystem
         // End Frontier: market modifiers & immune objects
         // Mono Begin
         if (blackMarketTaxAmount > 0)
-            _bank.TrySectorDeposit(SectorBankAccount.BlackMarket, (int)blackMarketTaxAmount, LedgerEntryType.BlackMarketSales);
+            _bank.TrySectorDeposit(SectorBankAccount.BlackMarket, DynamicMarketSystem.RoundSellPayout(blackMarketTaxAmount), LedgerEntryType.BlackMarketSales); // Exodus: bounded economy payout
         if (frontierTaxAmount > 0)
-            _bank.TrySectorDeposit(SectorBankAccount.Frontier, (int)frontierTaxAmount, LedgerEntryType.ColonialOutpostSales);
+            _bank.TrySectorDeposit(SectorBankAccount.Frontier, DynamicMarketSystem.RoundSellPayout(frontierTaxAmount), LedgerEntryType.ColonialOutpostSales); // Exodus: bounded economy payout
         if (nfsdTaxAmount > 0)
-            _bank.TrySectorDeposit(SectorBankAccount.Nfsd, (int)nfsdTaxAmount, LedgerEntryType.TSFMCSales);
+            _bank.TrySectorDeposit(SectorBankAccount.Nfsd, DynamicMarketSystem.RoundSellPayout(nfsdTaxAmount), LedgerEntryType.TSFMCSales); // Exodus: bounded economy payout
         if (medicalTaxAmount > 0)
-            _bank.TrySectorDeposit(SectorBankAccount.Medical, (int)medicalTaxAmount, LedgerEntryType.MedicalSales);
+            _bank.TrySectorDeposit(SectorBankAccount.Medical, DynamicMarketSystem.RoundSellPayout(medicalTaxAmount), LedgerEntryType.MedicalSales); // Exodus: bounded economy payout
         if (blackMarketTaxAmount < 0)
         {
             blackMarketTaxAmount = -blackMarketTaxAmount;
-            _bank.TrySectorWithdraw(SectorBankAccount.BlackMarket, (int)blackMarketTaxAmount, LedgerEntryType.BlackMarketPenalties);
+            _bank.TrySectorWithdraw(SectorBankAccount.BlackMarket, DynamicMarketSystem.RoundSellPayout(blackMarketTaxAmount), LedgerEntryType.BlackMarketPenalties); // Exodus: bounded economy payout
         }
         if (frontierTaxAmount < 0)
         {
             frontierTaxAmount = -frontierTaxAmount;
-            _bank.TrySectorWithdraw(SectorBankAccount.Frontier, (int)frontierTaxAmount, LedgerEntryType.ColonialOutpostPenalties);
+            _bank.TrySectorWithdraw(SectorBankAccount.Frontier, DynamicMarketSystem.RoundSellPayout(frontierTaxAmount), LedgerEntryType.ColonialOutpostPenalties); // Exodus: bounded economy payout
         }
         if (nfsdTaxAmount < 0)
         {
             nfsdTaxAmount = -nfsdTaxAmount;
-            _bank.TrySectorWithdraw(SectorBankAccount.Nfsd, (int)nfsdTaxAmount, LedgerEntryType.TSFMCPenalties);
+            _bank.TrySectorWithdraw(SectorBankAccount.Nfsd, DynamicMarketSystem.RoundSellPayout(nfsdTaxAmount), LedgerEntryType.TSFMCPenalties); // Exodus: bounded economy payout
         }
         if (medicalTaxAmount < 0)
         {
             medicalTaxAmount = -medicalTaxAmount;
-            _bank.TrySectorWithdraw(SectorBankAccount.Medical, (int)medicalTaxAmount, LedgerEntryType.MedicalPenalties);
+            _bank.TrySectorWithdraw(SectorBankAccount.Medical, DynamicMarketSystem.RoundSellPayout(medicalTaxAmount), LedgerEntryType.MedicalPenalties); // Exodus: bounded economy payout
         }
         // Mono End
         var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
-        _stack.Spawn((int)price, stackPrototype, xform.Coordinates);
+        _stack.Spawn(DynamicMarketSystem.RoundSellPayout(price), stackPrototype, xform.Coordinates); // Exodus: saturate oversized payout
         _audio.PlayPvs(ApproveSound, uid);
         UpdatePalletConsoleInterface((uid, component)); // Frontier: EntityUid<Entity
     }
@@ -535,4 +447,8 @@ public sealed partial class CargoSystem
 /// deleted but after the price has been calculated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct EntitySoldEvent(HashSet<EntityUid> Sold, EntityUid Grid);
+// Exodus: null identifies endpoints whose goods have not contributed to a market transaction yet.
+public readonly record struct EntitySoldEvent(
+    HashSet<EntityUid> Sold,
+    EntityUid Grid,
+    IReadOnlySet<EntityUid>? MarketImpactAppliedRoots = null);

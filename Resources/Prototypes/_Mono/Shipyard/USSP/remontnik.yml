@@ -5,7 +5,8 @@
   parent: BaseVesselUSSPAntag
   name: Ремонтник # Ru-Localization
   description: Инженерно-добывающий корабль СССП, спроектированный народным производственным союзом. Оснащён модулем БСС, картошкой с маслом и алкоголем в холодильнике. # Ru-Localization
-  price: 108400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 123034 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.997205734 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Ussp
   access: Mercenary # Exodus temp-ussp-mercenary-access

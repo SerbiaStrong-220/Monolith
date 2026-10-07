@@ -147,7 +147,7 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
 
     private void CalculateCanisterPrice(EntityUid uid, GasCanisterComponent component, ref PriceCalculationEvent args)
     {
-        args.Price += _atmos.GetPrice(component.Air);
+        args.Price += _atmos.GetPrice(component.Air); // Exodus: nominal appraisal; market baskets apply trade impact separately.
     }
 
     /// <summary>

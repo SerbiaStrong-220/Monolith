@@ -285,7 +285,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         RaiseLocalEvent(uid, ref afterev);
     }
 
-    public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
+    public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null, bool mergeStacks = true) // Exodus: allow whole-stack insertion without partial transfers.
     {
         if (!ResolveStorage(container, ref component))
             return false;
@@ -299,7 +299,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         _joints.RecursiveClearJoints(toInsert);
 
         // Try to stack
-        if (_stackQuery.TryGetComponent(toInsert, out var insertStack))
+        if (mergeStacks && _stackQuery.TryGetComponent(toInsert, out var insertStack)) // Exodus: bulk delivery accounts for complete batches only.
         {
             var toInsertCount = insertStack.Count;
 

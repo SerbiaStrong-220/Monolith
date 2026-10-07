@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Economy; // Exodus pallet appraisal list
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.BUI;
@@ -30,12 +31,24 @@ public sealed class CargoPalletConsoleInterfaceState : BoundUserInterfaceState
     /// </summary>
     public double OtherMultiplier;
 
-    public CargoPalletConsoleInterfaceState(int appraisal, int count, bool enabled, double tradeCrateMultiplier = 1, double otherMultiplier = 1)
+    /// <summary>
+    /// Exodus: per-entity appraisal lines for the sell console scroll list.
+    /// </summary>
+    public List<CargoPalletAppraisalEntry>? Items; // Exodus
+
+    public CargoPalletConsoleInterfaceState(
+        int appraisal,
+        int count,
+        bool enabled,
+        double tradeCrateMultiplier = 1,
+        double otherMultiplier = 1,
+        List<CargoPalletAppraisalEntry>? items = null) // Exodus items
     {
         Appraisal = appraisal;
         Count = count;
         Enabled = enabled;
         TradeCrateMultiplier = tradeCrateMultiplier;
         OtherMultiplier = otherMultiplier;
+        Items = items; // Exodus
     }
 }

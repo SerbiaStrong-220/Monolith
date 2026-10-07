@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Database._Exodus.Economy; // Exodus persistent economy settings
 using Content.Server._Mono.Company;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -1918,6 +1919,152 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         }
 
         #endregion
+
+        // Exodus-begin: global dynamic market persistence
+        private const int EconomyMarketQuoteBatchSize = 500;
+
+        public async Task<(long Revision, string Settings)?> GetEconomyMarketSettings(CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var row = await db.DbContext.EconomyMarketSettings.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == MarketSettingsRecord.SingletonId, cancel);
+            return row == null ? null : (row.Revision, row.Settings);
+        }
+
+        /// <summary>
+        /// Saves settings only if their persisted revision matches the caller's snapshot.
+        /// Revision zero denotes a missing settings row. Database failures propagate to the caller.
+        /// </summary>
+        public async Task<bool> TrySaveEconomyMarketSettings(long expectedRevision, string settings, CancellationToken cancel = default)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegative(expectedRevision);
+            ArgumentOutOfRangeException.ThrowIfEqual(expectedRevision, long.MaxValue);
+            ArgumentException.ThrowIfNullOrWhiteSpace(settings);
+
+            await using var db = await GetDb(cancel);
+            if (expectedRevision == 0)
+            {
+                // The primary key makes concurrent first writes mutually exclusive on both providers.
+                var inserted = await db.DbContext.Database.ExecuteSqlInterpolatedAsync($"""
+                    INSERT INTO economy_market_settings (id, revision, settings)
+                    VALUES ({MarketSettingsRecord.SingletonId}, 1, {settings})
+                    ON CONFLICT (id) DO NOTHING;
+                    """, cancel);
+                return inserted == 1;
+            }
+
+            var updated = await db.DbContext.EconomyMarketSettings
+                .Where(e => e.Id == MarketSettingsRecord.SingletonId && e.Revision == expectedRevision)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(e => e.Revision, expectedRevision + 1)
+                    .SetProperty(e => e.Settings, settings), cancel);
+            return updated == 1;
+        }
+
+        public async Task<IReadOnlyList<(string MarketKey, double Factor, float Trend, DateTime UpdatedAt)>> GetAllEconomyMarketQuotes(CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+            var rows = await db.DbContext.EconomyMarketQuotes.AsNoTracking().ToListAsync(cancel);
+            var result = new List<(string, double, float, DateTime)>(rows.Count);
+            foreach (var row in rows)
+            {
+                result.Add((row.MarketKey, row.Factor, row.Trend, NormalizeDatabaseTime(row.UpdatedAt)));
+            }
+
+            return result;
+        }
+
+        public Task UpsertEconomyMarketQuotes(IReadOnlyList<(string MarketKey, double Factor, float Trend)> quotes, CancellationToken cancel = default)
+        {
+            return SaveEconomyMarketQuotes(quotes, [], false, cancel);
+        }
+
+        public Task DeleteEconomyMarketQuotes(IReadOnlyCollection<string> keys, CancellationToken cancel = default)
+        {
+            return SaveEconomyMarketQuotes([], keys, false, cancel);
+        }
+
+        public Task ClearEconomyMarketQuotes(CancellationToken cancel = default)
+        {
+            return SaveEconomyMarketQuotes([], [], true, cancel);
+        }
+
+        /// <summary>
+        /// Apply a market snapshot atomically, including resets and removed quotes.
+        /// A failed replacement must not leave the persisted market empty or partially updated.
+        /// </summary>
+        public async Task SaveEconomyMarketQuotes(
+            IReadOnlyList<(string MarketKey, double Factor, float Trend)> quotes,
+            IReadOnlyCollection<string> deletedKeys,
+            bool clear,
+            CancellationToken cancel = default)
+        {
+            if (!clear && quotes.Count == 0 && deletedKeys.Count == 0)
+                return;
+
+            await using var db = await GetDb(cancel);
+            await using var transaction = await db.DbContext.Database.BeginTransactionAsync(cancel);
+            if (clear)
+                await db.DbContext.EconomyMarketQuotes.ExecuteDeleteAsync(cancel);
+
+            var now = DateTime.UtcNow;
+            var keys = new List<string>(quotes.Count);
+            for (var i = 0; i < quotes.Count; i++)
+            {
+                keys.Add(quotes[i].MarketKey);
+            }
+
+            var existing = new Dictionary<string, EconomyMarketQuote>();
+            for (var offset = 0; !clear && offset < keys.Count; offset += EconomyMarketQuoteBatchSize)
+            {
+                var count = Math.Min(EconomyMarketQuoteBatchSize, keys.Count - offset);
+                var batch = keys.GetRange(offset, count);
+                var rows = await db.DbContext.EconomyMarketQuotes
+                    .Where(e => batch.Contains(e.MarketKey))
+                    .ToListAsync(cancel);
+
+                foreach (var row in rows)
+                {
+                    existing[row.MarketKey] = row;
+                }
+            }
+
+            foreach (var (key, factor, trend) in quotes)
+            {
+                if (existing.TryGetValue(key, out var row))
+                {
+                    row.Factor = factor;
+                    row.Trend = trend;
+                    row.UpdatedAt = now;
+                }
+                else
+                {
+                    row = new EconomyMarketQuote
+                    {
+                        MarketKey = key,
+                        Factor = factor,
+                        Trend = trend,
+                        UpdatedAt = now,
+                    };
+                    db.DbContext.EconomyMarketQuotes.Add(row);
+                    existing.Add(key, row);
+                }
+            }
+
+            await db.DbContext.SaveChangesAsync(cancel);
+            var keyList = deletedKeys as List<string> ?? deletedKeys.ToList();
+            for (var offset = 0; offset < keyList.Count; offset += EconomyMarketQuoteBatchSize)
+            {
+                var count = Math.Min(EconomyMarketQuoteBatchSize, keyList.Count - offset);
+                var batch = keyList.GetRange(offset, count);
+                await db.DbContext.EconomyMarketQuotes
+                    .Where(e => batch.Contains(e.MarketKey))
+                    .ExecuteDeleteAsync(cancel);
+            }
+
+            await transaction.CommitAsync(cancel);
+        }
+        // Exodus-end
 
         public abstract Task SendNotification(DatabaseNotification notification);
 

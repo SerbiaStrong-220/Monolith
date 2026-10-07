@@ -6,7 +6,8 @@
   parent: BaseVessel
   name: Зибель # Ru-Localization
   description: Зибель - шаттл, созданный для борьбы с химерами, однако многие используют его для экспедиционных исследований. # Ru-Localization
-  price: 175000
+  price: 183337 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.997232378 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Expedition
   access: Mercenary

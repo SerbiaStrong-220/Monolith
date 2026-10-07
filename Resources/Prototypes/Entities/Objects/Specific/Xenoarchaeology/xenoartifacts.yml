@@ -23,6 +23,7 @@
     - Xenoarchaeology
   # gameplay interactions
   - type: XenoArtifact
+    priceMultiplier: 1 # Exodus: increase artifact research sale value.
     effectsTable: !type:NestedSelector
       tableId: XenoArtifactEffectsDefaultTable
   - type: Damageable

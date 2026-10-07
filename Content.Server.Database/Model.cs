@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
+using Content.Server.Database._Exodus.Economy; // Exodus persistent economy settings
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -50,6 +51,8 @@ namespace Content.Server.Database
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
         public DbSet<CompanyMember> CompanyMembers { get; set; } = null!;
+        public DbSet<EconomyMarketQuote> EconomyMarketQuotes { get; set; } = null!; // Exodus
+        public DbSet<MarketSettingsRecord> EconomyMarketSettings { get; set; } = null!; // Exodus persistent economy settings
         public DbSet<WayfarerSafetyDepositBox> WayfarerSafetyDepositBox { get; set; } = null!;
         public DbSet<WayfarerSafetyDepositBoxItem> WayfarerSafetyDepositBoxItem { get; set; } = null!;
 
@@ -305,6 +308,14 @@ namespace Content.Server.Database
                 .HasForeignKey(w => w.PlayerUserId)
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Exodus-begin
+            modelBuilder.Entity<EconomyMarketQuote>()
+                .HasKey(e => e.MarketKey);
+
+            modelBuilder.Entity<MarketSettingsRecord>()
+                .ToTable(t => t.HasCheckConstraint("EconomyMarketSettingsSingleton", "id = 1"));
+            // Exodus-end
 
             // Exodus - Keep the unified ban model configuration alongside safety deposit boxes.
             ModelBan.OnModelCreating(modelBuilder);
@@ -1107,6 +1118,23 @@ namespace Content.Server.Database
         public string CompanyId { get; set; } = default!;
     }
     // Mono-End
+
+    // Exodus-begin
+    /// <summary>
+    /// Persisted global dynamic market quote (cross-round supply/demand factor).
+    /// </summary>
+    public class EconomyMarketQuote
+    {
+        [Key]
+        public string MarketKey { get; set; } = null!;
+
+        public double Factor { get; set; } = 1.0;
+
+        public float Trend { get; set; }
+
+        public DateTime UpdatedAt { get; set; }
+    }
+    // Exodus-end
 
     // Wayfarer Safety Deposit Box Tables
     public class WayfarerSafetyDepositBox

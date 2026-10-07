@@ -8,7 +8,8 @@
   parent: BaseVessel
   name: Эзериал # Ru-Localization
   description: Научный шаттл в форме бабочки. Оснащён помещениями для ботаники и исследования артефактов, а также химической лабораторией. Имеет бассейн и бар. # Ru-Localization
-  price: 120000
+  price: 139203 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.997481406 # Exodus: expected-price allowance for randomized contents.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/ethereal.yml

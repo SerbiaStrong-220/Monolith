@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Альдебаран # Ru-Localization
   description: Корвет с усиленным носовым вооружением, оснащённый двумя Цирексами для боя на дальних дистанциях и ракетами для тяжёлых целей и ближнего боя. # Ru-Localization
-  price: 160200
+  price: 169796 # Exodus: expected ship and contents value; no additional markup.
   purchasable: false # voucher only
   category: Medium
   group: Security

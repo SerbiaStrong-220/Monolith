@@ -10,7 +10,7 @@
   parent: BaseVesselUSSP
   name: Свинья # Ru-Localization
   description: Компактный штурмовой шаттл, усеянный малокалиберным вооружением. # Ru-Localization
-  price: 39000 # appraised at ~33200
+  price: 42363 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Ussp
   access: Mercenary # Exodus temp-ussp-mercenary-access

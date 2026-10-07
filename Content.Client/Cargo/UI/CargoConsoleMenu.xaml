@@ -1,68 +1,87 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           SetSize="600 600"
-                           MinSize="600 600">
-    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
-                   StyleClasses="LabelKeyText" />
-            <Label Name="AccountNameLabel"
-                   Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-points-label'}"
-                   StyleClasses="LabelKeyText" />
-            <Label Name="PointsLabel"
-                   Text="-" /> <!-- Frontier: "$0"<"-" -->
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
-                   StyleClasses="LabelKeyText" />
-            <Label Name="ShuttleCapacityLabel"
-                   Text="0/20" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <OptionButton Name="Categories"
-                          Prefix="{Loc 'cargo-console-menu-categories-label'}"
-                          HorizontalExpand="True" />
-            <LineEdit Name="SearchBar"
-                      PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
-                      HorizontalExpand="True" />
-        </BoxContainer>
-        <ScrollContainer HorizontalExpand="True"
-                         VerticalExpand="True"
-                         SizeFlagsStretchRatio="6">
-            <BoxContainer Name="Products"
-                          Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <!-- Products get added here by code -->
-            </BoxContainer>
-        </ScrollContainer>
-        <PanelContainer VerticalExpand="True"
-                        SizeFlagsStretchRatio="6">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#000000" />
-            </PanelContainer.PanelOverride>
-            <ScrollContainer VerticalExpand="True">
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'cargo-console-menu-requests-label'}" />
-                    <BoxContainer Name="Requests"
-                                  Orientation="Vertical"
-                                  VerticalExpand="True">
-                        <!-- Requests are added here by code -->
-                    </BoxContainer>
-                    <Label Text="{Loc 'cargo-console-menu-orders-label'}" />
-                    <BoxContainer Name="Orders"
-                                  Orientation="Vertical"
-                                  StyleClasses="transparentItemList"
-                                  VerticalExpand="True">
-                        <!-- Orders are added here by code -->
-                    </BoxContainer>
+﻿<!-- Exodus: cargo terminal with bounded columns and full-height order tabs. -->
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:market="clr-namespace:Content.Client._Exodus.Economy.UI"
+                      SetSize="1060 680"
+                      MinSize="900 560">
+    <BoxContainer Orientation="Vertical" Margin="10 8" SeparationOverride="10">
+        <market:MarketTerminalPanel Header="True" HorizontalExpand="True">
+            <BoxContainer Margin="12 10" SeparationOverride="24">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+                    <Label Text="{Loc 'cargo-console-menu-account-name-label'}" StyleClasses="LabelSubText" ClipText="True" />
+                    <Label Name="AccountNameLabel" Text="{Loc 'cargo-console-menu-account-name-none-text'}"
+                           StyleClasses="LabelKeyText" ClipText="True" MouseFilter="Pass" />
                 </BoxContainer>
-            </ScrollContainer>
-        </PanelContainer>
-        <TextureButton VerticalExpand="True" />
+                <BoxContainer Orientation="Vertical" SetWidth="190" SeparationOverride="2">
+                    <Label Text="{Loc 'cargo-console-menu-points-label'}" StyleClasses="LabelSubText" ClipText="True" />
+                    <Label Name="PointsLabel" Text="-" StyleClasses="LabelKeyText" FontColorOverride="#8ED6BF" ClipText="True" MouseFilter="Pass" />
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" SetWidth="140" SeparationOverride="2">
+                    <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}" StyleClasses="LabelSubText" ClipText="True" />
+                    <Label Name="ShuttleCapacityLabel" Text="0/20" StyleClasses="LabelKeyText" ClipText="True" />
+                </BoxContainer>
+            </BoxContainer>
+        </market:MarketTerminalPanel>
+
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True" SeparationOverride="10">
+            <market:MarketTerminalPanel Deep="True" SetWidth="180" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="8">
+                    <Label Text="{Loc 'cargo-console-menu-categories-heading'}" StyleClasses="LabelKeyText" ClipText="True" Margin="4 2" />
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False" ReserveScrollbarSpace="True">
+                        <BoxContainer Name="CategoryListContainer" Orientation="Vertical"
+                                      HorizontalExpand="True" SeparationOverride="4" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </market:MarketTerminalPanel>
+
+            <market:MarketTerminalPanel HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
+                    <BoxContainer SeparationOverride="8">
+                        <Label Name="CatalogTitleLabel" Text="{Loc 'cargo-console-menu-catalog-heading'}"
+                               StyleClasses="LabelKeyText" HorizontalExpand="True" ClipText="True" MouseFilter="Pass" />
+                        <Label Name="ProductCountLabel" StyleClasses="LabelSubText" Align="Right" />
+                    </BoxContainer>
+                    <BoxContainer SeparationOverride="4">
+                        <LineEdit Name="SearchBar" PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
+                                  HorizontalExpand="True" MinHeight="32" />
+                        <Button Name="ClearSearchButton" Text="✖" SetWidth="32"
+                                ToolTip="{Loc 'cargo-console-menu-clear-search'}" />
+                    </BoxContainer>
+                    <RichTextLabel Text="{Loc 'cargo-console-menu-price-estimate'}" StyleClasses="LabelSubText" />
+                    <ScrollContainer Name="ProductScroll" HorizontalExpand="True" VerticalExpand="True"
+                                     HScrollEnabled="False" ReserveScrollbarSpace="True">
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8">
+                            <RichTextLabel Name="ProductsEmptyLabel" Text="{Loc 'cargo-console-menu-products-empty'}"
+                                           Visible="False" Margin="8" />
+                            <BoxContainer Name="Products" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="6" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                </BoxContainer>
+            </market:MarketTerminalPanel>
+
+            <market:MarketTerminalPanel SetWidth="300" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="8">
+                    <Label Text="{Loc 'cargo-console-menu-queue-heading'}" StyleClasses="LabelKeyText" ClipText="True" Margin="2" />
+                    <TabContainer Name="OrderTabs" VerticalExpand="True" HorizontalExpand="True">
+                        <ScrollContainer TabContainer.TabTitle="{Loc 'cargo-console-menu-requests-label'}"
+                                         HScrollEnabled="False" ReserveScrollbarSpace="True" Margin="4 8 4 4">
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8">
+                                <RichTextLabel Name="RequestsEmptyLabel" Text="{Loc 'cargo-console-menu-requests-empty'}" Margin="6" />
+                                <BoxContainer Name="Requests" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8" />
+                            </BoxContainer>
+                        </ScrollContainer>
+                        <ScrollContainer TabContainer.TabTitle="{Loc 'cargo-console-menu-orders-label'}"
+                                         HScrollEnabled="False" ReserveScrollbarSpace="True" Margin="4 8 4 4">
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8">
+                                <RichTextLabel Name="OrdersEmptyLabel" Text="{Loc 'cargo-console-menu-orders-empty'}" Margin="6" />
+                                <BoxContainer Name="Orders" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8" />
+                            </BoxContainer>
+                        </ScrollContainer>
+                    </TabContainer>
+                </BoxContainer>
+            </market:MarketTerminalPanel>
+        </BoxContainer>
+
+        <market:MarketTerminalFooter />
     </BoxContainer>
 </controls:FancyWindow>

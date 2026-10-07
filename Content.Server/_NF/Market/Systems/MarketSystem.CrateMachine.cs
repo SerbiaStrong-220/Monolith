@@ -1,4 +1,5 @@
-﻿using Content.Server._NF.CrateMachine;
+using Content.Server._NF.CrateMachine;
+using Content.Server._Exodus.Economy; // Exodus bounded dynamic market prices
 using Content.Server._NF.Market.Components;
 using Content.Server._NF.Market.Extensions;
 using Content.Shared._NF.Market;
@@ -54,7 +55,7 @@ public sealed partial class MarketSystem
         if (!TryComp<BankAccountComponent>(player, out var bankAccount))
             return;
 
-        TrySpawnCrate(crateMachineUid, player, consoleUid, component, consoleComponent, marketMod, bankAccount);
+        TrySpawnCrate(crateMachineUid, player, consoleUid, component, consoleComponent, marketMod, bankAccount, args.ExpectedPrice); // Exodus: bind payment to the displayed quote.
     }
 
     private void TrySpawnCrate(EntityUid crateMachineUid,
@@ -63,28 +64,76 @@ public sealed partial class MarketSystem
         CrateMachineComponent component,
         MarketConsoleComponent consoleComponent,
         float marketMod,
-        BankAccountComponent playerBank)
+        BankAccountComponent playerBank,
+        int? expectedPrice) // Exodus
     {
-        if (!TryComp<MarketItemSpawnerComponent>(crateMachineUid, out var itemSpawner))
+        if (consoleComponent.CartDataList.Count == 0 || // Exodus: reject stale purchases after a successful checkout.
+            !TryComp<MarketItemSpawnerComponent>(crateMachineUid, out var itemSpawner))
             return;
 
-        var cartBalance = MarketDataExtensions.GetMarketValue(consoleComponent.CartDataList, marketMod);
-        if (playerBank.Balance < cartBalance)
+        // Exodus-begin: a cart contains intentions; another station may have bought these units.
+        if (!TryGetCartStock((consoleUid, consoleComponent), out var liveCart))
+        {
+            _popup.PopupEntity(Loc.GetString("market-purchase-stock-changed"), consoleUid, player);
+            RefreshState(consoleUid, playerBank.Balance, marketMod, consoleComponent);
             return;
+        }
+        // Exodus-end
+
+        // Exodus: one sequential walk for cost + working factors; commit only after payment.
+        // TransactionCost is the crate/machine fee shown in UI (cartBalance + cratecost).
+        // Exodus: quote the cart and the actual delivery crate as one purchase.
+        if (!TryQuoteMarketCart(liveCart, marketMod, component.CratePrototype,
+                consoleComponent.TransactionCost, out var quote, out _))
+        {
+            _popup.PopupEntity(Loc.GetString("market-purchase-unavailable"), consoleUid, player);
+            RefreshState(consoleUid, playerBank.Balance, marketMod, consoleComponent); // Exodus: invalidate the old payable quote.
+            return;
+        }
+
+        var spawnCost = quote.TotalPrice;
+        if (expectedPrice != spawnCost)
+        {
+            _popup.PopupEntity(Loc.GetString("market-purchase-price-changed"), consoleUid, player);
+            RefreshState(consoleUid, playerBank.Balance, marketMod, consoleComponent);
+            return;
+        }
+        if (playerBank.Balance < spawnCost)
+            return;
+
+        // Exodus-begin: validate and take the complete basket on the server thread before payment.
+        if (!_marketInventory.TryTakeStock(liveCart, out var reserved))
+        {
+            _popup.PopupEntity(Loc.GetString("market-purchase-stock-changed"), consoleUid, player);
+            RefreshState(consoleUid, playerBank.Balance, marketMod, consoleComponent);
+            return;
+        }
+        // Exodus-end
 
         // Withdraw spesos from player
-        var spawnCost = int.Abs(MarketDataExtensions.GetMarketValue(consoleComponent.CartDataList, marketMod));
         if (!_bankSystem.TryBankWithdraw(player, spawnCost))
         {
+            // Exodus: payment failure returns exactly the units that were taken, without a taxable refund.
+            foreach (var entry in reserved)
+            {
+                if (!_marketInventory.TryAddStock(entry.Prototype, entry.Quantity, entry.Price, entry.StackPrototype))
+                    Log.Error($"Unable to return {entry.Quantity} units of {entry.Prototype} after a failed market checkout.");
+            }
+
             _popup.PopupEntity(Loc.GetString("market-insufficient-funds"), consoleUid, player);
             _audio.PlayPredicted(consoleComponent.ErrorSound, consoleUid, null, AudioParams.Default.WithMaxDistance(5f));
             return;
         }
+
+        // Exodus: commit buy pressure only after successful payment (same tx as quoted cart cost).
+        _dynamicMarket.CommitTransaction(quote.Transaction); // Exodus: paid composition, including the crate.
+
         _audio.PlayPredicted(consoleComponent.SuccessSound, consoleUid, null, AudioParams.Default.WithMaxDistance(5f));
 
-        itemSpawner.ItemsToSpawn = consoleComponent.CartDataList;
+        itemSpawner.ItemsToSpawn = reserved; // Exodus: deliver the detached stock actually consumed by this payment.
         consoleComponent.CartDataList = [];
         _crateMachine.OpenFor(crateMachineUid, component);
+        RefreshState(consoleUid, playerBank.Balance, marketMod, consoleComponent); // Exodus: publish the empty cart and remaining balance after checkout.
     }
 
     private void SpawnCrateItems(List<MarketData> spawnList, EntityUid targetCrate)
@@ -105,7 +154,7 @@ public sealed partial class MarketSystem
                 // Spawn the requested quantity of non-stackable items
                 for (int i = 0; i < data.Quantity; i++)
                 {
-                    var spawn = Spawn(data.Prototype, coordinates);
+                    var spawn = Spawn(data.Prototype); // Exodus: initialize structures away from the grid before packing.
                     _crateMachine.InsertIntoCrate(spawn, targetCrate);
                 }
             }

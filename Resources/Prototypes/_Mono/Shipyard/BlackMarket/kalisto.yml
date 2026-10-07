@@ -5,7 +5,8 @@
   parent: BaseVesselAntag
   name: BT-Y Kalisto
   description: A quick and mass produced corvette, armed with 2x Palladin misile launchers in its maw and 3x DRAVON 90mm autocannons on its left side, along with some PD.
-  price: 139700 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 146055 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999421299 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # voucher only
   category: Medium
   group: BlackMarket

@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: ММС-SKR «Мэйё-Аутум» # Exodus MMC localization
   description: Лицензионная версия «Аутум». В ней заменили напольное покрытие и скафандры на продукцию ММС. # Exodus MMC localization
-  price: 224831
+  price: 238023 # Exodus: expected ship and contents value; no additional markup.
   category: Large
   group: Mieyo
   access: Mieyo

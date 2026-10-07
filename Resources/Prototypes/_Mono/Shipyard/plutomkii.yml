@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Плутон М2 # Ru-Localization
   description: Лёгкий грузовой скоростной шаттл производства Дрейк Индастрис. Замена легендарному Плутону. Превосходит своего предшественника по всем параметрам, а именно у него больший грузовой отсек, более прочный корпус, выше максимальная скорость и более обтекаемый дизайн. # Ru-Localization
-  price: 38900 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 42559 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.986274838 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/plutomkii.yml

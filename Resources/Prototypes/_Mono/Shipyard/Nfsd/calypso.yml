@@ -4,7 +4,8 @@
   parent: BaseVesselAntag
   name: TSF-SKR Calypso
   description: Moderately armed and (relatively) heavily armored multipurpose corvette. Armed with 2 AK-820s and 2 AK-570s for consistent damage, 4 Phalanxes for PD, and 2 ASM-220s for the biggest targets.
-  price: 169600 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
+  price: 186648 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999984562 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # voucher only
   category: Medium
   group: Security

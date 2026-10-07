@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Пайщик # Ru-Localization
   description: Дешёвый и доступный утилизаторский шаттл, который оснащён удобной гостиной в ущерб всему остальному (на остальное бюджета просто не хватило). # Ru-Localization
-  price: 21600 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 24895 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.975359976 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/shareholder.yml

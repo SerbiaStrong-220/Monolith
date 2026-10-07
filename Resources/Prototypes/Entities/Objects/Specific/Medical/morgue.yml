@@ -111,6 +111,10 @@
   name: ash
   description: This used to be something, but now it's not.
   components:
+  # Exodus-begin: keep burnt residue cheaper than the paper it is recovered from.
+  - type: StaticPrice
+    price: 0.02
+  # Exodus-end
   - type: Item
     size: Tiny
   - type: Sprite

@@ -1,5 +1,7 @@
+<!-- Exodus: the export panel remains attached to these controls when the log window is popped out. -->
 <Control xmlns="https://spacestation14.io"
          xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:logExport="clr-namespace:Content.Client._Exodus.Administration.LogExport"
          xmlns:util220="clr-namespace:Content.Client.SS220.UserInterface.Utility">
     <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Horizontal">
@@ -52,6 +54,8 @@
                     <Control HorizontalExpand="True"/>
                     <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
                 </BoxContainer>
+                <!-- Exodus: export the entire explicitly confirmed round, independently of table filters. -->
+                <logExport:AdminLogExportPanel Name="ExportPanel" Access="Public"/>
                 <BoxContainer Orientation="Horizontal">
                     <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
                               HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>

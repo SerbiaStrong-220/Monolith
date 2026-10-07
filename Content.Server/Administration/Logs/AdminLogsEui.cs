@@ -60,6 +60,14 @@ public sealed partial class AdminLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
+        // Exodus-begin: never load log metadata without its browse permission.
+        if (!CanReadLogs)
+        {
+            Close();
+            return;
+        }
+        // Exodus-end
+
         var roundId = _filter.Round ?? CurrentRoundId;
         await LoadFromDb(roundId);
     }
@@ -71,6 +79,12 @@ public sealed partial class AdminLogsEui : BaseEui
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
     {
+        // Exodus-begin: export needs both flags even when browsing remains available.
+        if (args.Player != Player)
+            return;
+
+        ExportPermissionsChanged();
+        // Exodus-end
         if (args.Player == Player && !_adminManager.HasAdminFlag(Player, AdminFlags.Logs))
         {
             Close();
@@ -79,15 +93,23 @@ public sealed partial class AdminLogsEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
+        // Exodus-begin: avoid publishing metadata after revocation or disconnect.
+        if (!CanReadLogs)
+            return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>(), 0);
+        // Exodus-end
         if (_isLoading)
         {
             return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>(), 0)
             {
-                IsLoading = true
+                IsLoading = true,
+                CanExportRoundLogs = CanExportRoundLogs // Exodus round-log export capability.
             };
         }
 
-        var state = new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs);
+        var state = new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs)
+        {
+            CanExportRoundLogs = CanExportRoundLogs // Exodus round-log export capability.
+        };
 
         return state;
     }
@@ -96,7 +118,12 @@ public sealed partial class AdminLogsEui : BaseEui
     {
         base.HandleMessage(msg);
 
-        if (!_adminManager.HasAdminFlag(Player, AdminFlags.Logs))
+        // Exodus-begin: exports have their own per-message and post-await authorization.
+        if (HandleExportMessage(msg))
+            return;
+        // Exodus-end
+
+        if (!CanReadLogs) // Exodus also guards a closed/disconnected EUI.
         {
             return;
         }
@@ -129,6 +156,9 @@ public sealed partial class AdminLogsEui : BaseEui
                 var roundId = _filter.Round ??= CurrentRoundId;
                 await LoadFromDb(roundId);
 
+                if (!CanReadLogs) // Exodus permission may change while metadata is being read.
+                    return;
+
                 SendLogs(true);
                 break;
             }
@@ -154,38 +184,54 @@ public sealed partial class AdminLogsEui : BaseEui
 
     private async void SendLogs(bool replace)
     {
+        // Exodus-begin: capture one request and recheck authorization after its asynchronous read.
+        var filter = _filter;
+        List<SharedAdminLog>? logs = null;
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var logs = await Task.Run(async () => await _adminLogs.All(_filter, _adminLogListPool.Get),
-            _filter.CancellationToken);
-
-        if (logs.Count > 0)
+        try
         {
-            _filter.LogsSent += logs.Count;
+            logs = await Task.Run(async () => await _adminLogs.All(filter, _adminLogListPool.Get),
+                filter.CancellationToken);
+            if (!CanReadLogs || filter != _filter || filter.CancellationToken.IsCancellationRequested)
+                return;
 
-            var largestId = _filter.DateOrder switch
+            if (logs.Count > 0)
             {
-                DateOrder.Ascending => 0,
-                DateOrder.Descending => ^1,
-                _ => throw new ArgumentOutOfRangeException(nameof(_filter.DateOrder), _filter.DateOrder, null)
-            };
+                filter.LogsSent += logs.Count;
+                var largestId = filter.DateOrder switch
+                {
+                    DateOrder.Ascending => 0,
+                    DateOrder.Descending => ^1,
+                    _ => throw new ArgumentOutOfRangeException(nameof(filter.DateOrder), filter.DateOrder, null)
+                };
+                filter.LastLogId = logs[largestId].Id;
+            }
 
-            _filter.LastLogId = logs[largestId].Id;
+            SendMessage(new NewLogs(logs, replace, logs.Count >= filter.Limit));
+            _sawmill.Info($"Sent {logs.Count} logs to {Player.Name} in {stopwatch.Elapsed.TotalMilliseconds} ms");
         }
-
-        var message = new NewLogs(logs, replace, logs.Count >= _filter.Limit);
-
-        SendMessage(message);
-
-        _sawmill.Info($"Sent {logs.Count} logs to {Player.Name} in {stopwatch.Elapsed.TotalMilliseconds} ms");
-
-        _adminLogListPool.Return(logs);
+        catch (OperationCanceledException)
+        {
+            // A replacement browse request or a closed window cancels the old read.
+        }
+        catch (Exception exception)
+        {
+            _sawmill.Error($"Admin log browse failed with {exception.GetType().Name}");
+        }
+        finally
+        {
+            if (logs != null)
+                _adminLogListPool.Return(logs);
+        }
+        // Exodus-end
     }
 
     public override void Closed()
     {
         base.Closed();
+        CloseExport(); // Exodus cancellation retains any lease until outstanding IO returns.
 
         _configuration.UnsubValueChanged(CCVars.AdminLogsClientBatchSize, ClientBatchSizeChanged);
         _adminManager.OnPermsChanged -= OnPermsChanged;
@@ -202,6 +248,9 @@ public sealed partial class AdminLogsEui : BaseEui
         var round = _adminLogs.Round(roundId);
         var count = _adminLogs.CountLogs(roundId);
         await Task.WhenAll(round, count);
+
+        if (!CanReadLogs) // Exodus permission may change while metadata is being read.
+            return;
 
         var players = (await round).Players
             .ToDictionary(player => player.UserId, player => player.LastSeenUserName);

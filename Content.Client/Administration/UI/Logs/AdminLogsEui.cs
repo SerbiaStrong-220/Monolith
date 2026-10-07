@@ -21,6 +21,7 @@ public sealed partial class AdminLogsEui : BaseEui
         LogsWindow = new AdminLogsWindow();
         LogsWindow.OnClose += OnCloseWindow;
         LogsControl = LogsWindow.Logs;
+        InitializeLogExport(); // Exodus: keep export lifetime independent of the log window.
 
         LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
         LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
@@ -40,13 +41,19 @@ public sealed partial class AdminLogsEui : BaseEui
 
     private void OnRequestClosed(WindowRequestClosedEventArgs args)
     {
+        CloseLogExport(); // Exodus: cancel pending file operations immediately when the pop-out closes.
         SendMessage(new CloseEuiMessage());
     }
 
     private void OnCloseWindow()
     {
+        // Exodus-begin: close the export only when the whole EUI is closed, not when moving to a pop-out.
         if (ClydeWindow == null)
+        {
+            CloseLogExport();
             SendMessage(new CloseEuiMessage());
+        }
+        // Exodus-end
     }
 
     private void RequestLogs()
@@ -109,6 +116,7 @@ public sealed partial class AdminLogsEui : BaseEui
     public override void HandleState(EuiStateBase state)
     {
         var s = (AdminLogsEuiState) state;
+        _logExport.SetPermission(s.CanExportRoundLogs); // Exodus: revoke local export access immediately.
 
         if (s.IsLoading)
         {
@@ -132,6 +140,11 @@ public sealed partial class AdminLogsEui : BaseEui
     public override void HandleMessage(EuiMessageBase msg)
     {
         base.HandleMessage(msg);
+
+        // Exodus-begin: export chunks have their own bounded stream and do not populate log labels.
+        if (HandleLogExportMessage(msg))
+            return;
+        // Exodus-end
 
         switch (msg)
         {
@@ -169,6 +182,7 @@ public sealed partial class AdminLogsEui : BaseEui
     public override void Closed()
     {
         base.Closed();
+        CloseLogExport(); // Exodus: cancel and clean up even when the server closes the EUI.
 
         if (ClydeWindow != null)
         {

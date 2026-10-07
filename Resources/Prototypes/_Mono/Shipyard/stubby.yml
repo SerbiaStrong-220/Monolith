@@ -10,7 +10,8 @@
   parent: BaseVessel
   name: Стабби # Ru-Localization
   description: Бронированный лёгкий шаттл с минимальным медицинским оборудованием. Тесноват, но юркий и живучий, как пёс. # Ru-Localization
-  price: 32800 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 38585 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999893129 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMed/stubby.yml # Exodus: upstream remap, existing vessel settings retained.
