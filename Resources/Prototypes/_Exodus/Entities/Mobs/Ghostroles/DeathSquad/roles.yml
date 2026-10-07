@@ -1,8 +1,13 @@
-- type: randomHumanoidSettings
-  id: ExodusDeathSquad
-  parent: EventHumanoidMindShielded
-  randomizeName: false
+- type: entity
+  id: MobHumanExodusDeathSquad
+  parent: MobHuman
+  name: ABADDON operative
+  categories: [ HideSpawnMenu ]
   components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: MindShield
+  - type: AntagImmune
   - type: GhostRole
     name: ghost-role-information-exodus-abaddon-name
     description: ghost-role-information-exodus-abaddon-description
@@ -11,12 +16,30 @@
       settings: short
     mindRoles:
     - MindRoleGhostRoleFamiliar
+  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ ExodusDeathSquadGear ]
-    roleLoadout: [ RoleSurvivalEVA ]
   - type: RandomMetadata
     nameSegments:
     - NamesFirstMilitaryLeader
     - NamesLastMilitary
   - type: ChatRank
     rank: exodus-abaddon-chat-rank
+  - type: NpcFactionMember
+    factions:
+    - TSFMC
+  - type: TTS
+    randomVoicesList: ExodusAbaddon
+  - type: Genome
+    initialMutations: [ GeneticJump, GeneticRegeneration ]
+  - type: StartingOrgans
+    organs:
+      heart: OrganHeartSandevistan
+      stomach: OrganChimeraStomach
+      lungs: OrganChimeraLungs
+  - type: AutoImplant
+    implants:
+    - FreedomImplant
+    - VirusImmunityImplant
+    - EmpImplant
+    - BluespaceLifelineImplant

@@ -6,9 +6,8 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
     state: icon
-  - type: RandomMetadata
-    nameSegments:
-    - NamesFirstMilitaryLeader
-    - NamesLastMilitary
-  - type: RandomHumanoidSpawner
-    settings: ExodusDeathSquad
+  - type: RandomSpawner
+    prototypes:
+    - MobHumanExodusDeathSquad
+    chance: 1
+    offset: 0

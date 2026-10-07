@@ -2,28 +2,25 @@
   id: ExodusDeathSquadGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitDeathSquad
-    back: ClothingBackpackDeathSquad
+    back: ClothingBackpackExodusAbaddon
     mask: ClothingMaskGasDeathSquad
-    eyes: ClothingEyesHudSecurity
+    eyes: ClothingEyesGlassesExodusAbaddon
     ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitDeathsquad
-    shoes: ClothingShoesBootsMagAdv
+    gloves: ClothingHandsGlovesExodusAbaddon
+    outerClothing: ClothingOuterHardsuitExodusAbaddon
+    shoes: ClothingShoesBootsMagExodusAbaddon
     id: DeathsquadPDA
     pocket1: EnergySword
-    pocket2: EnergyShield
-    belt: ClothingBeltMilitaryWebbingMedFilled
+    belt: ClothingBeltExodusAbaddon
   storage:
     back:
-    - WeaponPulsePistol
-    - WeaponRevolverMatebaAP
-    - SpeedLoader357_magnumAP
-    - SpeedLoader357_magnumAP
-    - BoxFlashbang
-    - ToolDebug
-    - WelderExperimental
     - Hypospray
-    - DeathAcidifierImplanter
-    - FreedomImplanter
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - WeaponMurasama
+    - EnergyShield
   inhand:
   - WeaponPulseRifle

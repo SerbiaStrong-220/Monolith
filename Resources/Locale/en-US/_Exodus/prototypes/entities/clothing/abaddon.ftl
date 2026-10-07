@@ -1,0 +1,14 @@
+ent-ClothingBackpackExodusAbaddon = ABADDON backpack
+    .desc = A combat backpack with a bluespace storage compartment.
+ent-ClothingBeltExodusAbaddon = ABADDON medical chest rig
+    .desc = Tactical medical webbing issued to ABADDON operatives.
+ent-ClothingOuterHardsuitExodusAbaddon = ABADDON hardsuit
+    .desc = A special operations hardsuit with reinforced shielding, armor plate mounts and an emergency teleportation and injection system. Its wearer cannot remove it unaided.
+ent-ClothingHeadHelmetHardsuitExodusAbaddon = ABADDON hardsuit helmet
+    .desc = A sealed combat helmet with colorless night vision.
+ent-ClothingHandsGlovesExodusAbaddon = ABADDON power gloves
+    .desc = Insulated powered gloves that amplify the force of each punch.
+ent-ClothingEyesGlassesExodusAbaddon = ABADDON tactical glasses
+    .desc = TSF officer glasses with continuous thermal imaging.
+ent-ClothingShoesBootsMagExodusAbaddon = ABADDON advanced magboots
+    .desc = Powered magnetic boots that reduce slowdown from injuries by 75% and boost movement speed by 20% while active. Their integrated jetpack holds 5 L of liquid oxygen.
