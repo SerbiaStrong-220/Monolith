@@ -6,6 +6,8 @@
   components:
   - type: Seed
     seedId: goJuicePlant
+  - type: StaticPrice
+    price: 50000
   - type: Sprite
     sprite: _Exodus/Objects/Specific/Hydroponics/go_juice.rsi
 

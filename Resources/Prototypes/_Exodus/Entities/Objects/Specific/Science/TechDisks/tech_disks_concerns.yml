@@ -17,6 +17,8 @@
       shader: unshaded
   - type: TechnologyDisk
     recipes:
+    - EncryptionKeyConcernAugok
+    - HardpointBallisticMediumFlatpack
     - AetherionGunneryServerUltraCircuitboard
     - WeaponTurretDravonFlatpackUllman
     - ShieldGeneratorCdmMachineCircuitboard
@@ -40,6 +42,7 @@
       shader: unshaded
   - type: TechnologyDisk
     recipes:
+    - EncryptionKeyConcernDrakeBlackArmsUSA
     - SyndicateBombCerberus
     - BulkAutoMiningConsoleCircuitboard
     - BulkMiningLinkRelayCircuitboard
@@ -80,6 +83,7 @@
       shader: unshaded
   - type: TechnologyDisk
     recipes:
+    - EncryptionKeyConcernHorizonHarmonyHammerMatter
     - NebulaGasSiphonMachineCircuitboard
     - NebulaGasSiphonFilter
     - MedicalBeamGun
@@ -114,6 +118,7 @@
       shader: unshaded
   - type: TechnologyDisk
     recipes:
+    - EncryptionKeyConcernBuno
     - ClothingOuterHardsuitBratva
     - NearestShuttleTeleporterMachineCircuitboard
     - GeneticDisk

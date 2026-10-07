@@ -55,6 +55,7 @@ cargo-console-resale-out-of-stock = Out of resale stock
 # Authoritative purchase quotes
 market-purchase-unavailable = Purchase unavailable
 market-sale-unavailable = Selling is temporarily unavailable. Try again shortly.
+market-appraisal-unavailable = Unable to determine this object's market value.
 market-purchase-stock-changed = Shared stock has changed. Please check your cart.
 market-cart-shared-stock-hint = All stations share this stock. Items in your cart are not reserved; availability and price are checked at payment.
 market-purchase-price-changed = The price has changed. Check the updated quote and try again.

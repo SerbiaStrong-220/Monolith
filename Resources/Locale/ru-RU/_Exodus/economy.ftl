@@ -55,6 +55,7 @@ cargo-console-resale-out-of-stock = Нет на складе перепрода�
 # Серверные котировки покупок
 market-purchase-unavailable = Покупка недоступна
 market-sale-unavailable = Продажа временно недоступна. Попробуйте чуть позже.
+market-appraisal-unavailable = Не удалось определить рыночную стоимость этого объекта.
 market-purchase-stock-changed = Остаток на общем складе изменился. Проверьте корзину.
 market-cart-shared-stock-hint = Склад общий для всех станций. Товары в корзине не бронируются; остаток и цена проверяются при оплате.
 market-purchase-price-changed = Цена изменилась. Проверьте новую стоимость и повторите покупку.

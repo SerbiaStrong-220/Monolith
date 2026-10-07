@@ -1,3 +1,4 @@
+using Content.Server._Exodus.Economy; // Exodus market appraisal
 using Content.Server.Cargo.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
@@ -6,6 +7,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Content.Shared.Timing;
 using Content.Shared.Cargo.Components;
+using Content.Shared.IdentityManagement; // Exodus identity-aware appraisal history
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -14,7 +16,7 @@ public sealed partial class AppraisalCartridgeSystem : EntitySystem
     [Dependency] private CargoSystem _bountySystem = default!;
     [Dependency] private CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private PricingSystem _pricingSystem = default!;
+    // Exodus: prices come from the completed scanner event, without a second appraisal.
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
 
@@ -22,7 +24,7 @@ public sealed partial class AppraisalCartridgeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<AppraisalCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
-        SubscribeLocalEvent<AppraisalCartridgeComponent, CartridgeAfterInteractEvent>(AfterInteract);
+        SubscribeLocalEvent<CartridgeLoaderComponent, PriceGunAppraisedEvent>(OnPriceGunAppraised); // Exodus reuse scan result
         SubscribeLocalEvent<AppraisalCartridgeComponent, CartridgeActivatedEvent>(OnCartridgeActivated);
         SubscribeLocalEvent<AppraisalCartridgeComponent, CartridgeDeactivatedEvent>(OnCartridgeDeactivated);
     }
@@ -32,8 +34,7 @@ public sealed partial class AppraisalCartridgeSystem : EntitySystem
     // the functionality in there, rather than adding a PriceGunComponent to the PDA itself, but getting
     // that passthrough to work is not a straightforward thing.
 
-    // Because of this weird workaround, items appraised with the right-click utility verb don't get added
-    // to the history in the UI. That'll be something to revisit someday if anyone notices and complains :P
+    // Exodus: both clicks and utility verbs now record the completed price gun result in history.
 
     // Doing this on cartridge activation and deactivation rather than install and remove so that the price
     // gun functionality is only there when the program is active.
@@ -51,38 +52,25 @@ public sealed partial class AppraisalCartridgeSystem : EntitySystem
         RemComp<UseDelayComponent>(parent);
     }
 
-    /// <summary>
-    /// The <see cref="CartridgeAfterInteractEvent" /> gets relayed to this system if the cartridge loader is running
-    /// the Appraisal program and someone clicks on something with it. <br/>
-    /// <br/>
-    /// Does the thing... TODO
-    /// </summary>
-    private void AfterInteract(EntityUid uid, AppraisalCartridgeComponent component, CartridgeAfterInteractEvent args)
+    // Exodus-begin: only successful, throttled scans enter history; the price is calculated once.
+    private void OnPriceGunAppraised(Entity<CartridgeLoaderComponent> ent, ref PriceGunAppraisedEvent args)
     {
-        if (args.InteractEvent.Handled || !args.InteractEvent.CanReach || !args.InteractEvent.Target.HasValue)
+        if (ent.Comp.ActiveProgram is not { } program ||
+            !TryComp<AppraisalCartridgeComponent>(program, out var component) ||
+            component.MaxSavedItems <= 0 || Deleted(args.Target))
+        {
             return;
+        }
 
-        var target = args.InteractEvent.Target;
-        var who = args.InteractEvent.User;
-        double price = 0.00;
-
-        // All of the pop up display stuff is being handled by the PriceGunComponent addded to the PDA,
-        // all we're doing in here is getting the price and recording it to the PDA interface bit.
-        price = _pricingSystem.GetPrice(target.Value);
-
-        //Limit the amount of saved probe results to 9
-        //This is hardcoded because the UI doesn't support a dynamic number of results
         if (component.AppraisedItems.Count >= component.MaxSavedItems)
-            component.AppraisedItems.RemoveAt(0);
+            component.AppraisedItems.RemoveRange(0, component.AppraisedItems.Count - component.MaxSavedItems + 1);
 
-        var item = new AppraisedItem(
-            Name(target.Value),
-            price.ToString("0.00")
-        );
-
-        component.AppraisedItems.Add(item);
-        UpdateUiState(uid, args.Loader, component);
+        component.AppraisedItems.Add(new AppraisedItem(
+            Identity.Name(args.Target, EntityManager),
+            args.Price.ToString("0.00")));
+        UpdateUiState(program, ent.Owner, component);
     }
+    // Exodus-end
 
     /// <summary>
     /// This gets called when the ui fragment needs to be updated for the first time after activating

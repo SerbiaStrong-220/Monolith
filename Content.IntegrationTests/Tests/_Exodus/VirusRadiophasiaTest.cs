@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Server._Exodus.Genetics;
 using Content.Server._Exodus.Virology;
 using Content.Server._Exodus.Virology.Behaviors;
@@ -16,96 +16,184 @@ namespace Content.IntegrationTests.Tests._Exodus;
 [TestOf(typeof(VirusRadiophasiaSystem))]
 public sealed class VirusRadiophasiaTest
 {
-    [TestCase(0f, 0f)]
-    [TestCase(2f, 2f)]
-    public async Task StageOneAmbientRadiationOnlyHealsForExternalExposure(float externalRads, float expectedHealing)
+    [TestCase(1, 0f, 0f)]
+    [TestCase(2, 0f, 0f)]
+    [TestCase(3, 0f, 0f)]
+    [TestCase(1, 2f, 0.667f)]
+    [TestCase(2, 2f, 0.667f)]
+    [TestCase(3, 2f, 0.667f)]
+    [TestCase(1, 100f, 0.99f)]
+    [TestCase(2, 100f, 0.99f)]
+    [TestCase(3, 100f, 0.99f)]
+    public async Task AmbientRadiationExcludesSelfAndCapsHealing(int stage, float externalRads, float healing)
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entities = server.EntMan;
-        await server.WaitAssertion(() =>
+        await WithHost(stage, (entities, host) =>
         {
-            var map = entities.System<SharedMapSystem>().CreateMap();
-            try
-            {
-                var host = SpawnInfectedHost(entities, new EntityCoordinates(map, Vector2.Zero));
-                var radiophasia = entities.GetComponent<VirusRadiophasiaComponent>(host);
-                var damage = entities.System<DamageableSystem>();
-                var damageable = entities.GetComponent<DamageableComponent>(host);
-                var before = damageable.Damage.DamageDict["Blunt"];
-
-                // Gridcast includes the host's own source in its total. Call the real event chain
-                // synchronously so no unrelated radiation, metabolism or symptom progression runs.
-                entities.System<RadiationSystem>().IrradiateEntity(host,
-                    radiophasia.RadiationIntensity + externalRads, 1f);
-
-                var expected = before - FixedPoint2.New(expectedHealing) * damage.UniversalAllHealModifier;
-                Assert.That(damageable.Damage.DamageDict["Blunt"], Is.EqualTo(expected),
-                    "Own radiation must not heal, and external irradiation must not also trigger direct-damage healing.");
-            }
-            finally
-            {
-                entities.DeleteEntity(map);
-            }
+            var symptom = entities.GetComponent<VirusRadiophasiaComponent>(host);
+            var totalRads = symptom.RadiationIntensity + externalRads;
+            // Exercise the real event chain without unrelated metabolism or symptom progression.
+            entities.System<RadiationSystem>().IrradiateEntity(host, totalRads, 1f);
+            AssertDamage(entities, host, healing, totalRads * 0.05f);
         });
-        await server.WaitRunTicks(2);
-        await pair.CleanReturnAsync();
     }
 
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task StageOneDirectRadiationDamageStillHealsRegardlessOfOrigin(bool selfOrigin)
+    [TestCase(1, 2, 0.375f, false)]
+    [TestCase(1, 2, 0.375f, true)]
+    [TestCase(2, 2, 0.5f, false)]
+    [TestCase(3, 2, 0.583f, false)]
+    [TestCase(1, 100, 0.968f, false)]
+    [TestCase(2, 100, 0.98f, false)]
+    [TestCase(3, 100, 0.986f, false)]
+    public async Task DirectRadiationHealsOnceAndRetainsFivePercentDamage(int stage, int rads, float healing, bool selfOrigin)
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entities = server.EntMan;
-        await server.WaitAssertion(() =>
+        await WithHost(stage, (entities, host) =>
         {
-            var map = entities.System<SharedMapSystem>().CreateMap();
-            try
-            {
-                var host = SpawnInfectedHost(entities, new EntityCoordinates(map, Vector2.Zero));
-                var damage = entities.System<DamageableSystem>();
-                var damageable = entities.GetComponent<DamageableComponent>(host);
-                var before = damageable.Damage.DamageDict["Blunt"];
-
-                // Chemistry and other direct damage sources do not raise OnIrradiatedEvent.
-                // A self origin alone must not classify their Radiation damage as ambient exposure.
-                damage.TryChangeDamage(host, new DamageSpecifier
-                {
-                    DamageDict = new() { ["Radiation"] = 2 },
-                }, origin: selfOrigin ? host : null);
-
-                var expected = before - FixedPoint2.New(0.6f) * damage.UniversalAllHealModifier;
-                Assert.That(damageable.Damage.DamageDict["Blunt"], Is.EqualTo(expected),
-                    "First-stage radiophasia must retain its 30% direct-radiation healing.");
-            }
-            finally
-            {
-                entities.DeleteEntity(map);
-            }
+            IrradiateDirectly(entities, host, rads, selfOrigin);
+            AssertDamage(entities, host, healing, rads * 0.05f);
         });
-        await server.WaitRunTicks(2);
-        await pair.CleanReturnAsync();
     }
 
-    private static EntityUid SpawnInfectedHost(IEntityManager entities, EntityCoordinates coordinates)
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(3)]
+    public async Task AmbientAndDirectRadiationShareOneHealingBudget(int stage)
     {
-        var host = entities.SpawnEntity("MobHuman", coordinates);
-        // Keep random radiation mutations from changing the host during this isolated symptom test.
-        entities.AddComponent<GeneticIncompatibleComponent>(host);
+        await WithHost(stage, (entities, host) =>
+        {
+            IrradiateDirectly(entities, host, 2);
+            var symptom = entities.GetComponent<VirusRadiophasiaComponent>(host);
+            var totalRads = symptom.RadiationIntensity + 2f;
+            entities.System<RadiationSystem>().IrradiateEntity(host, totalRads, 1f);
+            IrradiateDirectly(entities, host, 100);
+            AssertDamage(entities, host, 0.97f, (102f + totalRads) * 0.05f);
+        });
+    }
+
+    [Test]
+    public async Task RepeatedRadiationHasDecreasingMarginalHealing()
+    {
+        await WithHost(1, (entities, host) =>
+        {
+            var damage = entities.GetComponent<DamageableComponent>(host).Damage.DamageDict;
+            var before = damage["Blunt"];
+            IrradiateDirectly(entities, host, 1);
+            var afterFirst = damage["Blunt"];
+            AssertDamage(entities, host, 0.231f, 0.05f);
+            IrradiateDirectly(entities, host, 1);
+            var secondHealing = afterFirst - damage["Blunt"];
+
+            Assert.That(secondHealing, Is.GreaterThan(FixedPoint2.Zero));
+            Assert.That(secondHealing, Is.LessThan(before - afterFirst));
+            AssertDamage(entities, host, 0.375f, 0.1f);
+        });
+    }
+
+    [Test]
+    public async Task MultipleStrainsDoNotStackHealingOrProtectionAndCureRestoresDamage()
+    {
+        await WithHost(1, (entities, host) =>
+        {
+            var virology = entities.System<VirologySystem>();
+            Assert.That(virology.AddVirus(host, new VirusDescriptor
+            {
+                Name = "Distinct radiophasia regression strain",
+                Genome = VirusGenome.Dna,
+                // Ordinary strains with the same genome merge instead of coexisting.
+                IsSupervirus = true,
+                Symptoms = [new() { Symptom = "Radiophasia" }, new() { Symptom = "BreathInversion" }],
+            }), Is.True);
+            Assert.That(virology.GetStrains(host), Has.Count.EqualTo(2));
+            IrradiateDirectly(entities, host, 2);
+            AssertDamage(entities, host, 0.375f, 0.1f);
+
+            virology.RemoveVirus(virology.GetStrains(host)[0]);
+            Assert.That(entities.HasComponent<VirusRadiophasiaComponent>(host), Is.True);
+            IrradiateDirectly(entities, host, 100);
+            AssertDamage(entities, host, 0.968f, 5.1f);
+
+            virology.RemoveVirus(virology.GetStrains(host)[0]);
+            Assert.That(entities.HasComponent<VirusRadiophasiaComponent>(host), Is.False);
+            IrradiateDirectly(entities, host, 2);
+            AssertDamage(entities, host, 0.968f, 7.1f);
+        });
+    }
+
+    private static void IrradiateDirectly(IEntityManager entities, EntityUid host, int rads, bool selfOrigin = false)
+    {
         entities.System<DamageableSystem>().TryChangeDamage(host, new DamageSpecifier
         {
-            DamageDict = new() { ["Blunt"] = 20 },
-        }, ignoreResistances: true, ignoreGlobalModifiers: true);
+            DamageDict = new() { ["Radiation"] = rads },
+        }, origin: selfOrigin ? host : null);
+    }
 
-        Assert.That(entities.System<VirologySystem>().AddVirus(host, new VirusDescriptor
+    private static void AssertDamage(IEntityManager entities, EntityUid host, float healing, float radiationDamage)
+    {
+        var system = entities.System<DamageableSystem>();
+        var damage = entities.GetComponent<DamageableComponent>(host).Damage.DamageDict;
+        // Group distribution and global modifiers round each individual fixed-point value.
+        var tolerance = 0.04f * Math.Max(1f, system.UniversalAllHealModifier);
+        var brute = damage["Blunt"] + damage["Slash"] + damage["Piercing"];
+        var burn = damage["Heat"] + damage["Shock"] + damage["Cold"] + damage["Caustic"];
+        Assert.Multiple(() =>
         {
-            Name = "Radiophasia radiation regression strain",
-            Genome = VirusGenome.Dna,
-            Symptoms = [new() { Symptom = "Radiophasia" }],
-        }), Is.True);
-        Assert.That(entities.HasComponent<VirusRadiophasiaComponent>(host), Is.True);
-        return host;
+            Assert.That(brute.Float(), Is.EqualTo(15f - healing * system.UniversalAllHealModifier).Within(tolerance));
+            Assert.That(burn.Float(), Is.EqualTo(20f - healing * system.UniversalAllHealModifier).Within(tolerance));
+            Assert.That(brute.Float(), Is.GreaterThanOrEqualTo(15f - system.UniversalAllHealModifier - 0.001f));
+            Assert.That(burn.Float(), Is.GreaterThanOrEqualTo(20f - system.UniversalAllHealModifier - 0.001f));
+            if (healing == 0f)
+            {
+                Assert.That(brute, Is.EqualTo(FixedPoint2.New(15)));
+                Assert.That(burn, Is.EqualTo(FixedPoint2.New(20)));
+            }
+
+            Assert.That(damage["Radiation"].Float(),
+                Is.EqualTo(5f + radiationDamage * system.UniversalAllDamageModifier).Within(0.04f));
+            Assert.That(damage["Poison"], Is.EqualTo(FixedPoint2.New(5)));
+            Assert.That(damage["Cellular"], Is.EqualTo(FixedPoint2.New(5)));
+        });
+    }
+
+    private static async Task WithHost(int stage, Action<IEntityManager, EntityUid> assertion)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        await server.WaitAssertion(() =>
+        {
+            var map = entities.System<SharedMapSystem>().CreateMap();
+            try
+            {
+                var host = entities.SpawnEntity("MobHuman", new EntityCoordinates(map, Vector2.Zero));
+                entities.AddComponent<GeneticIncompatibleComponent>(host);
+                entities.System<DamageableSystem>().TryChangeDamage(host, new DamageSpecifier
+                {
+                    DamageDict = new()
+                    {
+                        ["Blunt"] = 5, ["Slash"] = 5, ["Piercing"] = 5,
+                        ["Heat"] = 5, ["Shock"] = 5, ["Cold"] = 5, ["Caustic"] = 5,
+                        ["Radiation"] = 5, ["Poison"] = 5, ["Cellular"] = 5,
+                    },
+                }, ignoreResistances: true, ignoreGlobalModifiers: true);
+
+                var virology = entities.System<VirologySystem>();
+                Assert.That(virology.AddVirus(host, new VirusDescriptor
+                {
+                    Name = "Radiophasia radiation regression strain",
+                    Genome = VirusGenome.Dna,
+                    Symptoms = [new() { Symptom = "Radiophasia" }],
+                }), Is.True);
+                for (var current = 1; current < stage; current++)
+                    Assert.That(virology.ForceAdvanceAllSymptoms(host), Is.EqualTo(1));
+
+                Assert.That(entities.HasComponent<VirusRadiophasiaComponent>(host), Is.True);
+                assertion(entities, host);
+            }
+            finally
+            {
+                entities.DeleteEntity(map);
+            }
+        });
+        await server.WaitRunTicks(2);
+        await pair.CleanReturnAsync();
     }
 }

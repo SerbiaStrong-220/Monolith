@@ -1,0 +1,50 @@
+# Equipment unlocked by concern technology disks.
+- type: latheRecipe
+  id: EncryptionKeyConcernAugok
+  result: EncryptionKeyConcernAugok
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: EncryptionKeyConcernDrakeBlackArmsUSA
+  result: EncryptionKeyConcernDrakeBlackArmsUSA
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: EncryptionKeyConcernHorizonHarmonyHammerMatter
+  result: EncryptionKeyConcernHorizonHarmonyHammerMatter
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: EncryptionKeyConcernBuno
+  result: EncryptionKeyConcernBuno
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: HardpointBallisticMediumFlatpack
+  result: HardpointBallisticMediumFlatpack
+  completetime: 30
+  materials:
+    Steel: 150000
+    Plasteel: 10000
+    Plastitanium: 10000
+
+- type: latheRecipePack
+  id: CompanyConcernKeysDynamic
+  recipes:
+  - EncryptionKeyConcernAugok
+  - EncryptionKeyConcernDrakeBlackArmsUSA
+  - EncryptionKeyConcernHorizonHarmonyHammerMatter
+  - EncryptionKeyConcernBuno
+
+- type: latheRecipePack
+  id: CompanyAugokDynamic
+  recipes:
+  - HardpointBallisticMediumFlatpack

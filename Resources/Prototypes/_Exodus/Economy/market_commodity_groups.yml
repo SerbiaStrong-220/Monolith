@@ -239,6 +239,17 @@
   - MedicatedSuture
   - RegenerativeMesh
 
+# Go-leaf seeds and their stimulant products require rare leviathan loot.
+- type: marketCommodityRule
+  id: HighGoJuiceProducts
+  group: HighPrecision
+  priority: 200
+  parents:
+  - GoJuicePlantSeeds
+  - GoJuiceLeaves
+  - GoJuiceChemistryBottle
+  - BaseGoJuiceAutoInjector
+
 # Americium requires corporate synthesis from processed nuclear materials.
 - type: marketCommodityRule
   id: UltraAmericium

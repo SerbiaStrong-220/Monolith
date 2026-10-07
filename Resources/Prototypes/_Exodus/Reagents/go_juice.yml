@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-energizing
   flavor: sharp
   color: "#53C896"
+  pricePerUnit: 10000
   metabolisms:
     Narcotic:
       # Absorb an ordinary dose in one cycle. Only the removed volume grants time, not each tick of its presence.

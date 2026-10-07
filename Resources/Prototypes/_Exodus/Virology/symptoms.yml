@@ -577,23 +577,19 @@
   # Stage 1
   - components:
     - type: VirusRadiophasia
+      radiationDamageCoefficient: 0.05
+      maxHealingPerSecond:
+        groups:
+          Brute: 1
+          Burn: 1
       healPerRad:
-        types:
-          Blunt: -1
-          Slash: -1
-          Piercing: -1
-          Heat: -1
-          Shock: -1
-          Cold: -1
+        groups:
+          Brute: -1
+          Burn: -1
       healPerDamageUnit:
-        types:
-          Radiation: -0.3
-          Blunt: -0.3
-          Slash: -0.3
-          Piercing: -0.3
-          Heat: -0.3
-          Shock: -0.3
-          Cold: -0.3
+        groups:
+          Brute: -0.3
+          Burn: -0.3
     - type: VirusGlow
       lightColor: LimeGreen
       lightRadius: 1.5
@@ -613,24 +609,19 @@
   - progressMessage: pathology-radiophasia-progress-2
     components:
     - type: VirusRadiophasia
+      radiationDamageCoefficient: 0.05
+      maxHealingPerSecond:
+        groups:
+          Brute: 1
+          Burn: 1
       healPerRad:
-        types:
-          Blunt: -1
-          Slash: -1
-          Piercing: -1
-          Heat: -1
-          Shock: -1
-          Cold: -1
+        groups:
+          Brute: -1
+          Burn: -1
       healPerDamageUnit:
-        types:
-          Radiation: -0.5
-          Blunt: -0.5
-          Slash: -0.5
-          Piercing: -0.5
-          Heat: -0.5
-          Shock: -0.5
-          Cold: -0.5
-      radImmunity: true
+        groups:
+          Brute: -0.5
+          Burn: -0.5
     - type: VirusGlow
       lightColor: LimeGreen
       lightRadius: 1.5
@@ -650,25 +641,19 @@
   - progressMessage: pathology-radiophasia-progress-3
     components:
     - type: VirusRadiophasia
+      radiationDamageCoefficient: 0.05
+      maxHealingPerSecond:
+        groups:
+          Brute: 1
+          Burn: 1
       healPerRad:
-        types:
-          Radiation: -1
-          Blunt: -1
-          Slash: -1
-          Piercing: -1
-          Heat: -1
-          Shock: -1
-          Cold: -1
+        groups:
+          Brute: -1
+          Burn: -1
       healPerDamageUnit:
-        types:
-          Radiation: -0.7
-          Blunt: -0.7
-          Slash: -0.7
-          Piercing: -0.7
-          Heat: -0.7
-          Shock: -0.7
-          Cold: -0.7
-      radImmunity: true
+        groups:
+          Brute: -0.7
+          Burn: -0.7
     - type: VirusGlow
       lightColor: LimeGreen
       lightRadius: 1.5

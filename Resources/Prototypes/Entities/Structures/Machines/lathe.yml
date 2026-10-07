@@ -282,6 +282,8 @@
     - CompanyBratvaDynamic
     - CompanyUllmanDynamic
     - CompanyCdmDynamic
+    - CompanyConcernKeysDynamic # Exodus: concern encryption keys
+    - CompanyAugokDynamic # Exodus: Aegis-Arsenal hardpoints
     # Exodus-end
     # WD EDIT START
     - VisionGoggles
