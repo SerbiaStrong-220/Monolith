@@ -15466,7 +15466,7 @@ entities:
     - type: Transform
       pos: -5.4481773,6.491163
       parent: 1
-- proto: ScuttleDeviceRazorN
+- proto: ScuttleDeviceTacticalNuclear
   entities:
   - uid: 1273
     components:
