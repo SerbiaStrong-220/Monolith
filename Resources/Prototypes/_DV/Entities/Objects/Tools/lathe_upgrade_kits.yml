@@ -22,6 +22,13 @@
   description: An upgrade kit with all the parts needed to upgrade a lathe. This one will save materials at the cost of speed and producing heat.
   components:
   - type: UpgradeKit
+    # Exodus-begin: some industrial machines cannot accept hyper-convection kits.
+    blacklist:
+      components:
+      - UpgradedMachine
+      tags:
+      - NoHyperConvection
+    # Exodus-end
     components:
     - type: UpgradedMachine
       upgrade: lathe-upgrade-kit-hyper-convection

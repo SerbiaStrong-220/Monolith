@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Rubeebeebee
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # Author Info
 # GitHub: Rubeebeebee
 # Discord: rubeebee
@@ -9,12 +13,14 @@
   parent: BaseVessel
   name: Фортуна # Ru-Localization
   description: Будучи частым шаттлом в флотилии Всемирных Штатов Америки, Фортуна - это штурмовой шаттл, оснащённый лобовой бронёй и орудиями для пробивания корпусов. В конструкцию входит абордажный порт, позволяющий доставлять солдат к пробитому корпусу врага для подавления и уничтожения угрозы в ближнем бою. # Ru-Localization
-  price: 152000 # relatively thin armor, and subpar weapons for it's size.
+  price: 200000 # Exodus: appraised minimum + 5% for randomized contents, rounded up to 100.
   category: Medium
   group: Expedition
+  requiredCompanies:
+  - DrakeBlackArmsUSA # Exodus: require Drake Black Arms USA
   access: Mercenary
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/fortunate.yml
-  addComponents:
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Expedition/FortunaUNSA.yml # Exodus: remapped shuttle path
+  addComponents: # Exodus: faction-owned shuttle target filtering
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
     - NanoTrasen
@@ -22,13 +28,14 @@
   class:
   - Expedition
   - Pursuit
+  - Mercenary
   engine:
-  - Uranium
+  - Plasma
 
 - type: gameMap
   id: Fortunate
   mapName: 'Фортуна' # Ru-Localization
-  mapPath: /SharedMaps/_Mono/Shuttles/Expedition/fortunate.yml
+  mapPath: /SharedMaps/_Exodus/Shuttles/Expedition/FortunaUNSA.yml # Exodus: remapped map path
   minPlayers: 0
   stations:
     Fortunate:

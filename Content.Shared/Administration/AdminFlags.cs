@@ -124,6 +124,13 @@ namespace Content.Shared.Administration
         /// </summary>
         NameColor = 1 << 21,
 
+        // Exodus-begin: independent permission for persistent economy administration.
+        /// <summary>
+        ///     Lets you view and change persistent economy settings and market quotes.
+        /// </summary>
+        EconomyDB = 1 << 22,
+        // Exodus-end
+
         /// <summary>
         ///     DeltaV - The ability to whitelist people. Either this permission or +BAN is required for remove.
         /// </summary>

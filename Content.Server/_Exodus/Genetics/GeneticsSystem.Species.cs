@@ -1,5 +1,6 @@
 using Content.Server.Temperature.Components;
 using Content.Shared._Exodus.Genetics;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.EntityEffects;
 using Content.Shared.Mobs;
@@ -17,6 +18,7 @@ public sealed partial class GeneticsSystem
     [Dependency] private ISerializationManager _geneticSerialization = default!;
     [Dependency] private SharedTemperatureSystem _temperatureSpeed = default!;
     [Dependency] private SharedPopupSystem _geneticPopup = default!;
+    [Dependency] private SharedSolutionContainerSystem _geneticSolutions = default!;
 
     private void MutationConflict(EntityUid target, EntityUid actor)
     {
@@ -75,6 +77,12 @@ public sealed partial class GeneticsSystem
         foreach (var id in ent.Comp.Active)
         {
             var mutation = _prototypes.Index(id);
+            foreach (var (name, initial) in mutation.InitialSolutions)
+            {
+                // Add individual reservoirs without replacing the body's blood or chemical containers.
+                if (_geneticSolutions.EnsureSolutionEntity(ent.Owner, name, out var existed, out var solution, initial.MaxVolume) && !existed)
+                    _geneticSolutions.TryAddSolution(solution.Value, initial);
+            }
             thermal.ColdThresholdOffset += mutation.Thermal.ColdThresholdOffset;
             thermal.HeatThresholdOffset += mutation.Thermal.HeatThresholdOffset;
             thermal.ColdDamageMultiplier *= mutation.Thermal.ColdDamageMultiplier;

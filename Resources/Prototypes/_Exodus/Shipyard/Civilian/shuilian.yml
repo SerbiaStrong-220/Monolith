@@ -3,7 +3,8 @@
   parent: BaseVessel
   name: Шуйлянь
   description: Большой ботанический корабль с четырьмя отдельными биокуполами, каждый со своей атмосферой и климатом. Оборудован фильтрами для сбора и экспорта газов.
-  price: 195000
+  price: 209581 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999988437 # Exodus: expected-price allowance for randomized contents.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/shuilian.yml

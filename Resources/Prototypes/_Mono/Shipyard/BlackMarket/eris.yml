@@ -6,7 +6,8 @@
   parent: BaseVesselAntag
   name: PDV Eris
   description: A small, run down vessel designed for material aquisition and cargo hauling around the sector.
-  price: 125300 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 132740 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998721838 # Exodus: expected-price allowance for randomized contents.
   category: Small
   hyperwarTimelock: 0
   group: BlackMarket

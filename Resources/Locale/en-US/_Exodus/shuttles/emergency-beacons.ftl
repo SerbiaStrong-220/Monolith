@@ -58,5 +58,8 @@ ent-MarsocArcturusArrivalBeacon = MARSOC Arcturus arrival beacon
 ent-TarkhanJupiterArrivalBeacon = Tarkhan Jupiter arrival beacon
     .desc = A single-use beacon that calls in a Phaethon Dynasty special operations ship.
 
+ent-AbaddonFlyssaArrivalBeacon = ABADDON squad beacon
+    .desc = A single-use beacon that calls in task force ABADDON aboard the Flyssa.
+
 ent-SpaceLeviathanEmergencyBeacon = space leviathan summoning beacon
     .desc = A single-use bluespace beacon that lures a space leviathan to the outer sector and broadcasts its coordinates to the sector.

@@ -11,7 +11,8 @@
   parent: BaseVessel
   name: Антракт # Ru-Localization
   description: Большой медицинский шаттл с холлом, баром, едой и медицинскими примочками. Способен спасать жизни и утолять аппетиты - всё здесь и сразу. # Ru-Localization
-  price: 134750
+  price: 147414 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999962687 # Exodus: expected-price allowance for randomized contents.
   category: Large
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/intermission.yml

@@ -83,7 +83,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public static readonly SoundSpecifier DefaultAnnouncementSound
          = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
     public static readonly SoundSpecifier CentComAnnouncementSound // (SS220) Corvax-Announcements
-        = new SoundPathSpecifier("/Audio/Corvax/Announcements/centcomm.ogg"); // (SS220) Corvax-Announcements
+        = DefaultAnnouncementSound; // Exodus: use the bundled announcement sound instead of the missing Corvax asset.
 
     public const float DefaultObfuscationFactor = 0.2f; // Percentage of symbols in a whispered message that can be seen even by "far" listeners
     public readonly Color DefaultSpeakColor = Color.White; // Einstein Engines - Language

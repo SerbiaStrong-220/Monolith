@@ -1,0 +1,109 @@
+- type: entity
+  id: BaseExodusTsfBiocodedEquipment
+  abstract: true
+  components:
+  - type: Biocode
+    factions: [ TSFMC ]
+    blockEquip: true
+    blockItemActions: true
+
+- type: entity
+  parent: [ WeaponLRC21PPL, BaseExodusTsfBiocodedEquipment ]
+  id: WeaponLRC21PPLExodusAbaddon
+  name: ABADDON LRC-21 PPL
+  description: A TSF-biocoded pulsed plasma lance with an integrated reactor and a semi-automatic firing system.
+  components:
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: Battery
+    maxCharge: 30000
+    startingCharge: 30000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 30000
+    autoRechargePause: false
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        startingItem: null
+        locked: true # Uses its internal reactor instead of a removable plasma canister.
+
+- type: entity
+  parent: [ WeaponHeavyPulseCannon, BaseExodusTsfBiocodedEquipment ]
+  id: WeaponHeavyPulseCannonExodusAbaddon
+  name: ABADDON heavy pulse cannon
+  description: A compact TSF-biocoded pulse cannon with a continuously replenished energy reserve.
+  components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,5,2
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: Battery
+    maxCharge: 6000000
+    startingCharge: 6000000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 6000000
+    autoRechargePause: false
+
+- type: entity
+  parent: [ WeaponPulseRifle, BaseExodusTsfBiocodedEquipment ]
+  id: WeaponPulseAnnihilatorExodusAbaddon
+  name: ABADDON pulse ANNIHILATOR
+  description: A TSF-biocoded pulse shotgun with an integrated reactor. Each volley fires six full-power rifle pulses. Can be fired one-handed.
+  components:
+  - type: SafetyDepositRestricted
+  - type: Gun
+    fireRate: 4 # WeaponShotgunFlagbearer, issued to Tarkhans.
+    minAngle: 1
+    maxAngle: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: GunWieldBonus
+    minAngle: 0
+    maxAngle: 0
+  - type: HitscanBatteryAmmoProvider
+    proto: ExodusAbaddonRiflePulseSpread
+    fireCost: 600
+  - type: Battery
+    maxCharge: 6000
+    startingCharge: 6000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 6000
+    autoRechargePause: false
+
+- type: entity
+  parent: RiflePulse
+  id: ExodusAbaddonRiflePulseSpread
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: ExodusAbaddonRiflePulseSpread
+    count: 6
+    spread: 15
+  - type: TimedDespawn
+    lifetime: 0.1 # The firing system consumes only the initial hitscan; extra beams must also despawn.
+
+- type: entity
+  parent: [ WeaponMurasama, BaseExodusTsfBiocodedEquipment ]
+  id: WeaponMurasamaExodusAbaddon
+  name: ABADDON Murasama
+  description: A Murasama high-frequency blade biocoded for TSF personnel.
+  components:
+  - type: SafetyDepositRestricted
+
+- type: entity
+  parent: [ EnergySword, BaseExodusTsfBiocodedEquipment ]
+  id: EnergySwordExodusAbaddon
+  name: ABADDON energy sword
+  description: An energy sword biocoded for TSF personnel.

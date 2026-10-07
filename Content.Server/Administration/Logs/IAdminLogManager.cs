@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using System.Threading.Tasks;
+using System.Threading; // Exodus log export
+using Content.Server._Exodus.Administration.LogExport; // Exodus log export
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
@@ -24,4 +26,9 @@ public interface IAdminLogManager : ISharedAdminLogManager
     IAsyncEnumerable<JsonDocument> CurrentRoundJson(LogFilter? filter = null);
     Task<Round> CurrentRound();
     Task<int> CountLogs(int round);
+
+    // Exodus-begin: bounded round snapshots for full log exports.
+    Task<AdminLogExportSnapshot?> CreateExportSnapshotAsync(int roundId, CancellationToken cancel = default);
+    Task<IReadOnlyList<SharedAdminLog>> ReadExportPageAsync(AdminLogExportSnapshot snapshot, int offset, int afterId, int limit, CancellationToken cancel = default);
+    // Exodus-end
 }

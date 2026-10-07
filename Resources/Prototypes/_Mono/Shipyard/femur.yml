@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Фемур # Ru-Localization
   description: Фемур - шаттл среднего класса с модулем БСС, созданный Дрейк Индастрис. Спроектирован и оснащён всеми необходимыми средствами для агрессивных абордажных операций. Хотя Дрэйк Индастрис в целом известна своей политикой ненападения в секторе, недавно они начали выпускать этот агрессивный шаттл. Совет директоров не сделал о этом никаких публичных заявлений. # Ru-Localization
-  price: 93900
+  price: 98025 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Shipyard
   access: Mercenary

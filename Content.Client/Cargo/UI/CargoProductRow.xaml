@@ -1,24 +1,29 @@
+﻿<!-- Exodus: two-line catalog card; the price never competes with the product name. -->
 <PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 HorizontalExpand="True">
-    <Button Name="MainButton"
-            ToolTip=""
-            Access="Public"
-            HorizontalExpand="True"
-            VerticalExpand="True" />
-    <BoxContainer Orientation="Horizontal"
-                  HorizontalExpand="True">
-        <TextureRect Name="Icon"
-                     Access="Public"
-                     MinSize="32 32"
-                     RectClipContent="True" />
-        <Label Name="ProductName"
-               Access="Public"
-               HorizontalExpand="True" />
-        <PanelContainer StyleClasses="BackgroundDark">
-            <Label Name="PointCost"
-                   Access="Public"
-                   MinSize="52 32"
-                   Align="Right" />
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BackgroundColor="#1E1E24" BorderThickness="1" BorderColor="#3A3A44" />
+    </PanelContainer.PanelOverride>
+    <Button Name="MainButton" ToolTip="" Access="Public" HorizontalExpand="True"
+            VerticalExpand="True" StyleClasses="ButtonSquare" />
+    <BoxContainer HorizontalExpand="True" Margin="8" SeparationOverride="10" MouseFilter="Ignore">
+        <PanelContainer SetSize="44 44" VerticalAlignment="Center" MouseFilter="Ignore">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#121216" BorderThickness="1" BorderColor="#3A3A44" />
+            </PanelContainer.PanelOverride>
+            <TextureRect Name="Icon" Access="Public" SetSize="36 36" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Stretch="KeepAspectCentered" MouseFilter="Ignore" />
         </PanelContainer>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center"
+                      SeparationOverride="4" MouseFilter="Ignore">
+            <Label Name="ProductName" Access="Public" HorizontalExpand="True" ClipText="True" MouseFilter="Ignore" />
+            <BoxContainer SeparationOverride="8" MouseFilter="Ignore">
+                <Label Name="PointCost" Access="Public" HorizontalExpand="True" ClipText="True"
+                       StyleClasses="LabelKeyText" FontColorOverride="#8ED6BF" MouseFilter="Ignore" />
+                <Label Name="Trend" Access="Public" SetWidth="80" Align="Right" ClipText="True"
+                       StyleClasses="LabelSubText" MouseFilter="Ignore" />
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </PanelContainer>

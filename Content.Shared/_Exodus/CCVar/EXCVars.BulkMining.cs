@@ -11,15 +11,19 @@ public sealed partial class EXCVars
     public static readonly CVarDef<int> BulkMiningLocalSearchBudget =
         CVarDef.Create("exds.bulk_mining_local_search_budget", 384, CVar.SERVERONLY);
 
-    /// <summary>Refinery bonus granted by the first linked ship of a bulk mining consortium.</summary>
+    /// <summary>Refinery yield bonus granted by the first linked ship of a bulk mining consortium.</summary>
     public static readonly CVarDef<float> BulkMiningLinkBonus =
         CVarDef.Create("exds.bulk_mining_link_bonus", 0.15f, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>Mining speed bonus granted by the first linked ship, independent of refinery yield.</summary>
+    public static readonly CVarDef<float> BulkMiningLinkSpeedBonus =
+        CVarDef.Create("exds.bulk_mining_link_speed_bonus", 0.2f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>Each further ship adds the previous ship's bonus multiplied by this factor (diminishing returns).</summary>
     public static readonly CVarDef<float> BulkMiningLinkBonusDecay =
         CVarDef.Create("exds.bulk_mining_link_bonus_decay", 0.5f, CVar.SERVER | CVar.REPLICATED);
 
-    /// <summary>Upper bound of the consortium bonus, as a fraction.</summary>
+    /// <summary>Upper bound of each consortium bonus, as a fraction.</summary>
     public static readonly CVarDef<float> BulkMiningLinkMaxBonus =
         CVarDef.Create("exds.bulk_mining_link_max_bonus", 0.3f, CVar.SERVER | CVar.REPLICATED);
 }

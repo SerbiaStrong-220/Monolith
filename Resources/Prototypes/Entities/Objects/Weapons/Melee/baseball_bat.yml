@@ -51,6 +51,10 @@
   id: IncompleteBaseBallBat
   description: A few planks of wood stuck together.
   components:
+  # Exodus-begin: retain the value of the five wooden planks recovered on deconstruction.
+  - type: StaticPrice
+    price: 50
+  # Exodus-end
   - type: Sprite
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi
     state: icon

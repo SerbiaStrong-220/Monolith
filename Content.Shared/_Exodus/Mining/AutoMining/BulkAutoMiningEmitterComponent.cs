@@ -16,6 +16,10 @@ public sealed partial class BulkAutoMiningEmitterComponent : Component
     [DataField]
     public LocId? ConsoleName;
 
+    /// <summary>Whether this laser can excavate terrain. Disabled lasers can still link liquid metal networks.</summary>
+    [DataField]
+    public bool CanMine = true;
+
     /// <summary>Damage to the emitter when firing at a grid without a generated natural deposit.</summary>
     [DataField]
     public DamageSpecifier ForbiddenTileDamage = new();

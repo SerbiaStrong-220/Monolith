@@ -4,6 +4,10 @@
   name: microwave
   description: It's magic.
   components:
+  # Exodus-begin: retain the value of the machine frame's five steel sheets.
+  - type: StaticPrice
+    price: 29.5
+  # Exodus-end
   - type: Microwave
     capacity: 10
     canMicrowaveIdsSafely: false # Frontier: true<false

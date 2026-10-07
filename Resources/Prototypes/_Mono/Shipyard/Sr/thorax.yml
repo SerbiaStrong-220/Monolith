@@ -7,7 +7,8 @@
   parent: BaseVessel
   name: Торакс # Ru-Localization
   description: Лёгкий носитель мехов с заранее построенной фабрикой, включающая 4 различных дока для обеспечения поддержки. # Ru-Localization
-  price: 102200 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 118774 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.99862504 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Sr
   access: Brig

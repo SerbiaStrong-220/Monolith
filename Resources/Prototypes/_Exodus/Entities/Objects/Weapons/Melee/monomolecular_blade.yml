@@ -1,0 +1,45 @@
+- type: entity
+  id: CyborgMonomolecularBlade
+  parent: BaseItem
+  name: monomolecular blade
+  description: A cyborg-mounted blade with a monomolecular edge, designed to sever limbs in close combat.
+  suffix: For Borgs
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Weapons/Melee/monomolecular_blade.rsi
+    state: icon
+  - type: Item
+    size: Large
+  - type: Sharp
+  - type: MeleeWeapon
+    attackRate: 0.8
+    range: 1.5
+    canWideSwing: true
+    animation: WeaponArcSlash
+    damage:
+      types:
+        Slash: 25
+        Structural: 300
+    soundSwing:
+      path: /Audio/_Exodus/Weapons/Melee/Monomolecular/swing.ogg
+      params:
+        volume: -5
+        variation: 0.04
+    soundHit:
+      path: /Audio/_Exodus/Weapons/Melee/Monomolecular/hit.ogg
+      params:
+        volume: -4
+        variation: 0.04
+    soundNoDamage:
+      path: /Audio/_Exodus/Weapons/Melee/Monomolecular/block.ogg
+      params:
+        volume: -5
+        variation: 0.04
+  - type: Reflect
+    reflectProb: 0.35
+  - type: SeveringProjectile
+    chance: 0.5
+    parts:
+    - Head
+    - Arm
+    - Leg

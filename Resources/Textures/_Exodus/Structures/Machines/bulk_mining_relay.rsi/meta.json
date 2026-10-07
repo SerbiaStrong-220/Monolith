@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "idle"
+    },
+    {
+      "name": "mining"
+    }
+  ]
+}

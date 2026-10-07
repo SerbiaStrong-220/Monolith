@@ -12,7 +12,7 @@
   parent: BaseVessel
   name: Виктория # Ru-Localization
   description: Переработанный шаттл неизвестного производителя, переоборудованный для ксеноархеологии, но сохранивший некоторые свои добывающие и утилизаторские способности. # Ru-Localization
-  price: 60000
+  price: 66537 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/victoria.yml # Exodus: upstream remap, existing vessel settings retained.

@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Магус # Ru-Localization
   description: Экспедиционный шаттл, на удивление имеющий много медицинского оборудования для своего вида. # Ru-Localization
-  price: 69420 # ~20,000$ markup
+  price: 79863 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998462379 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/magus.yml

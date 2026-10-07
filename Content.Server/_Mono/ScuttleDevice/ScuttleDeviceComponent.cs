@@ -89,6 +89,12 @@ public sealed partial class ScuttleDeviceComponent : Component
 
     // Exodus-begin
     /// <summary>
+    ///     Whether arming requires anchoring and an armed device prevents unanchoring.
+    /// </summary>
+    [DataField]
+    public bool RequiresAnchoring = true;
+
+    /// <summary>
     ///     If true, the arm announcement is dispatched globally across all players instead of a local radius.
     /// </summary>
     [DataField]

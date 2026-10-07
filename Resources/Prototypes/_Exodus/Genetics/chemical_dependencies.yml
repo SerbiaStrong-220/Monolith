@@ -9,6 +9,7 @@
   - type: ChemicalDependency
     reagent: GoJuice
     alert: GoJuiceDependency
+    pauseWithoutPlayer: true
     reservePerUnit: 60
     maxReserve: 1800
     reserve: 1800

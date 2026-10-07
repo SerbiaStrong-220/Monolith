@@ -4,7 +4,7 @@
   parent: BaseVesselAntag
   name: Гоплит # Ru-Localization
   description: Патрульный шаттл, предназначенный для перехвата контрабандистов и легких вражеских кораблей, оснащённый мощными двигателями и ЭМИ-орудиями. Вооружён двумя Рубиконами, двумя плазменными пульсаторами и двумя Мародёрами. # Ru-Localization
-  price: 94400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 98907 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Security
   access: Security

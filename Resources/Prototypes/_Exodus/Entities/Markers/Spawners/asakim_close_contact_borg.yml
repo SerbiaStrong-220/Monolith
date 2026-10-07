@@ -1,0 +1,23 @@
+- type: entity
+  id: SpawnAsakimCloseContactBorg
+  parent: MarkerBase
+  name: close contact operator spawner
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimCloseContactGhostRole
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: _Exodus/Mobs/Silicon/asakim_close_contact.rsi
+      state: close_contact
+
+- type: entity
+  id: SpawnAsakimCloseContactBorgNoTimelock
+  parent: SpawnAsakimCloseContactBorg
+  suffix: No Timelock
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgAsakimCloseContactGhostRoleNoTimelock

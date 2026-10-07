@@ -147,17 +147,21 @@ public sealed partial class BulkAutoMiningWindow : FancyWindow
             : state.CanStart ? "bulk-auto-mining-status-ready" : "bulk-auto-mining-status-idle");
         MiningStatus.FontColorOverride = state.Active ? Color.FromHex("#F2B85F") : Color.FromHex("#C3D9D7");
         LaserSummary.Text = Loc.GetString("bulk-auto-mining-laser-summary",
-            ("mining", mining), ("total", state.LinkedLasers.Count));
+            ("mining", mining), ("total", state.MaxSelectableTargets));
 
         var ships = state.Link.Members.Count;
+        var speedPercent = Math.Round(state.Link.SpeedBonus * 100, 1);
+        var yieldPercent = Math.Round(state.Link.Bonus * 100, 1);
         ConsortiumBadge.Visible = ships > 1;
         ConsortiumBadgeLabel.Text = Loc.GetString("bulk-auto-mining-consortium-badge",
-            ("count", ships), ("percent", Math.Round(state.Link.Bonus * 100, 1)));
-        ConsortiumBadge.ToolTip = Loc.GetString("bulk-auto-mining-consortium-badge-tooltip");
+            ("count", ships), ("percent", speedPercent));
+        ConsortiumBadge.ToolTip = Loc.GetString("bulk-auto-mining-consortium-badge-tooltip",
+            ("speed", speedPercent), ("yield", yieldPercent));
 
         var hint = state.Active
             ? waiting ? "bulk-auto-mining-hint-waiting" : "bulk-auto-mining-hint-active"
             : state.LinkedLasers.Count == 0 ? "bulk-auto-mining-no-lasers"
+            : state.MaxSelectableTargets == 0 ? "bulk-auto-mining-relays-only"
             : !state.CanStart ? "bulk-auto-mining-start-no-ready-emitter"
             : state.SelectedTargets.Count == 0 ? "bulk-auto-mining-select-hint"
             : "bulk-auto-mining-hint-ready";

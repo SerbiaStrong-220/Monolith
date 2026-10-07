@@ -42,4 +42,4 @@ ent-BulkMiningPipeStack1 = ore duct coil
 
 bulk-mining-refinery-ui-consortium = Consortium
 bulk-mining-refinery-ui-consortium-alone = Not linked with other ships. Set up links at the mining laser console.
-bulk-mining-refinery-ui-consortium-linked = Ships in network: {$count}. Refining [color=#6FE3C0]+{$percent}%[/color], metal yield [color=#F2C66F]+{$percent}%[/color].
+bulk-mining-refinery-ui-consortium-linked = Ships in network: {$count}. Metal yield [color=#F2C66F]+{$percent}%[/color].

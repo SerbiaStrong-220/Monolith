@@ -1,0 +1,41 @@
+light_mode unshaded;
+
+uniform highp float waveSpeed;
+
+void fragment()
+{
+    // A staggered hexagonal lattice wraps exactly once around the closed shield contour.
+    // UV.y stays inside the collision boundary, as with the standard ripple renderer.
+    highp vec2 cellSize = vec2(1.7320508, 3.0);
+    highp vec2 point = vec2(UV.x * 36.0 * cellSize.x, UV.y * 6.0);
+    highp vec2 first = mod(point, cellSize) - cellSize * 0.5;
+    highp vec2 second = mod(point - cellSize * 0.5, cellSize) - cellSize * 0.5;
+    highp vec2 cell = dot(first, first) < dot(second, second) ? first : second;
+    highp vec2 absoluteCell = abs(cell);
+    highp float hexRadius = max(dot(absoluteCell, vec2(0.5, 0.8660254)), absoluteCell.x);
+
+    // Smooth subpixel cell edges as the map zooms or a shield moves across the screen.
+#ifdef HAS_DFDX
+    highp vec2 cellPixel = fwidth(point);
+    highp float edgeAa = max(max(cellPixel.x, cellPixel.y) * 0.5, 0.01);
+#else
+    highp float edgeAa = 0.045;
+#endif
+    highp float lineWidth = 0.045;
+    highp float edge = 1.0 - smoothstep(lineWidth - edgeAa, lineWidth + edgeAa, 0.8660254 - hexRadius);
+    edge *= min(1.0, lineWidth / edgeAa);
+
+    // A slow pulse energizes successive bands without modifying collision geometry.
+    highp float phase = TIME * waveSpeed * 6.2831853;
+    highp float pulse = 0.5 + 0.5 * cos(UV.y * 12.5663706 - phase);
+    highp float beacon = 0.5 + 0.5 * sin(UV.x * 25.1327412 + phase * 0.6);
+    highp float envelope = smoothstep(0.0, 0.12, UV.y)
+        * (1.0 - smoothstep(0.97, 1.0, UV.y));
+    highp float rim = smoothstep(0.91, 0.95, UV.y)
+        * (1.0 - smoothstep(0.96, 1.0, UV.y));
+    highp float alpha = envelope * (0.06 + edge * (0.5 + pulse * 0.25 + beacon * 0.12))
+        + rim * 0.6;
+
+    MODULATE.rgb = mix(MODULATE.rgb, vec3(1.0), edge * pulse * 0.3 + rim * 0.35);
+    COLOR = vec4(vec3(1.0), min(alpha, 0.95));
+}

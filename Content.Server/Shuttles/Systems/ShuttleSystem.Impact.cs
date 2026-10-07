@@ -28,6 +28,7 @@ using System.Numerics;
 using Content.Server._Mono.Cleanup;
 using Content.Shared._Mono.CCVar;
 using Content.Shared._Exodus.ShipArmor; // Exodus dynamic armor tile protection
+using Content.Server._Exodus.ShipShields; // Exodus shield impact notifications
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -231,15 +232,25 @@ public sealed partial class ShuttleSystem
             // Mono Edit - partial credit to https://github.com/Sector-Crescent/Hullrot/pull/692
             //ShipShieldedComp is removed when shields are broken, reduces both energies when shields are active. ShipShieldsSystem ln 256.
             float shieldFactor = 1f;
-            if (TryComp<ShipShieldedComponent>(args.OurEntity, out var ShipShieldedComponent) //Our ship collision resistance
-                && TryComp<ShipShieldEmitterComponent>(ShipShieldedComponent.Source, out var ShipShieldEmitterComponent)
-            )
-                shieldFactor *= ShipShieldEmitterComponent.CollisionResistanceMultiplier;
+            // Exodus-begin notify shield emitters that participate in a damaging collision
+            if (TryComp<ShipShieldedComponent>(args.OurEntity, out var ourShield)
+                && ourShield.Source is { } ourSource
+                && TryComp<ShipShieldEmitterComponent>(ourSource, out var ourEmitter))
+            {
+                shieldFactor *= ourEmitter.CollisionResistanceMultiplier;
+                var hit = new ShipShieldHitEvent();
+                RaiseLocalEvent(ourSource, ref hit);
+            }
 
-            if (TryComp<ShipShieldedComponent>(args.OtherEntity, out var OtherShipShieldedComponent) //Other ship collision resistance
-                && TryComp<ShipShieldEmitterComponent>(OtherShipShieldedComponent.Source, out var OtherShipShieldEmitterComponent)
-            )
-                shieldFactor *= OtherShipShieldEmitterComponent.CollisionResistanceMultiplier;
+            if (TryComp<ShipShieldedComponent>(args.OtherEntity, out var otherShield)
+                && otherShield.Source is { } otherSource
+                && TryComp<ShipShieldEmitterComponent>(otherSource, out var otherEmitter))
+            {
+                shieldFactor *= otherEmitter.CollisionResistanceMultiplier;
+                var hit = new ShipShieldHitEvent();
+                RaiseLocalEvent(otherSource, ref hit);
+            }
+            // Exodus-end
             toUsEnergy *= shieldFactor;
             toOtherEnergy *= shieldFactor;
             // Mono Edit end

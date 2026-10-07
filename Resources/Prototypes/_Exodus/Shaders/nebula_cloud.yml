@@ -1,0 +1,27 @@
+# Shared cloud shader with different currents for each parallax depth.
+- type: shader
+  id: ExodusNebulaCloudFar
+  kind: source
+  path: /Textures/_Exodus/Shaders/nebula_cloud.swsl
+  params:
+    strength: 0.010
+    speed: 0.065
+    phase: 0.0
+
+- type: shader
+  id: ExodusNebulaCloudMid
+  kind: source
+  path: /Textures/_Exodus/Shaders/nebula_cloud.swsl
+  params:
+    strength: 0.016
+    speed: 0.085
+    phase: 2.1
+
+- type: shader
+  id: ExodusNebulaCloudNear
+  kind: source
+  path: /Textures/_Exodus/Shaders/nebula_cloud.swsl
+  params:
+    strength: 0.022
+    speed: 0.105
+    phase: 4.2

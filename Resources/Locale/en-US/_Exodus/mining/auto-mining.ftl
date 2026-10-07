@@ -71,9 +71,9 @@ ent-BulkAutoMiningEmitterCircuitboard = bulk mining laser board
 bulk-auto-mining-mode-mining = Mining
 bulk-auto-mining-mode-link = Ship links
 bulk-auto-mining-mode-mining-hint = Pick asteroids and run the excavation.
-bulk-auto-mining-mode-link-hint = Consortium: shared liquid metal networks and a refining bonus.
-bulk-auto-mining-consortium-badge = Consortium {$count} · +{$percent}%
-bulk-auto-mining-consortium-badge-tooltip = Ships linked by their lasers. Refineries on the shared network work faster and use less liquid metal.
+bulk-auto-mining-mode-link-hint = Consortium: shared liquid metal networks, faster mining and material savings.
+bulk-auto-mining-consortium-badge = Consortium {$count} · Mining +{$percent}%
+bulk-auto-mining-consortium-badge-tooltip = Linked ships gain +{$speed}% mining speed and +{$yield}% resource yield when refining.
 bulk-auto-mining-laser-linked = Linked to «{$ship}»
 bulk-auto-mining-laser-hint-linked = This laser holds a consortium link and does not mine. Break the link on the Ship links tab.
 bulk-auto-mining-link-title = Consortium
@@ -83,11 +83,11 @@ bulk-auto-mining-link-consortium-size = { $count ->
     [one] {$count} ship
    *[other] {$count} ships
 }
-bulk-auto-mining-link-bonus-speed = Refining speed
-bulk-auto-mining-link-bonus-yield = Liquid metal yield
+bulk-auto-mining-link-bonus-speed = Mining speed
+bulk-auto-mining-link-bonus-yield = Resource yield
 bulk-auto-mining-link-bonus-value = +{$percent}%
-bulk-auto-mining-link-next-bonus = Another ship adds [color=#6FE3C0]+{$percent}%[/color].
-bulk-auto-mining-link-bonus-max = The consortium bonus has reached its limit.
+bulk-auto-mining-link-next-bonus = Another ship adds [color=#6FE3C0]+{$speed}%[/color] mining speed and [color=#F2C66F]+{$yield}%[/color] resource yield.
+bulk-auto-mining-link-bonus-max = The consortium bonuses have reached their limits.
 bulk-auto-mining-link-member-self = ● {$name} (this ship)
 bulk-auto-mining-link-member = ● {$name}
 bulk-auto-mining-link-incoming-title = Incoming requests

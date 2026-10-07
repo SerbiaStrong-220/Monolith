@@ -1,6 +1,9 @@
 <Document>
   # Люди
 
+  <!-- Exodus: link racial genetic traits to the mutation reference. -->
+  У этой расы нет врождённых генов. Сведения о доступных мутациях и стабильности приведены в разделе [textlink="Мутации" link="GeneticsMutations"].
+
   <Box>
     <GuideEntityEmbed Entity="MobHumanDummy" Caption=""/>
   </Box>

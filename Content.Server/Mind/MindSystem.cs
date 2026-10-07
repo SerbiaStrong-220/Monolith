@@ -84,14 +84,18 @@ public sealed partial class MindSystem : SharedMindSystem
 
     public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
     {
+        // Exodus-begin: player data may already be cleared during server shutdown.
         if (base.TryGetMind(user, out mindId, out mind))
         {
-            DebugTools.Assert(_players.GetPlayerData(user).ContentData() is not { } data || data.Mind == mindId);
+            DebugTools.Assert(!_players.TryGetPlayerData(user, out var playerData) ||
+                              playerData.ContentData() is not { } data || data.Mind == mindId);
             return true;
         }
 
-        DebugTools.Assert(_players.GetPlayerData(user).ContentData()?.Mind == null);
+        DebugTools.Assert(!_players.TryGetPlayerData(user, out var missingMindData) ||
+                          missingMindData.ContentData()?.Mind == null);
         return false;
+        // Exodus-end
     }
 
     public override void WipeAllMinds()

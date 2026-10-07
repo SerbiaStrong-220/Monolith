@@ -36,6 +36,8 @@ public sealed class MarketConsoleInterfaceState : BoundUserInterfaceState
     /// </summary>
     public bool Enabled;
 
+    public bool CanPurchase = true; // Exodus: false when the cart cannot be safely quoted.
+
     /// <summary>
     /// The cost of one transaction.
     /// </summary>
@@ -46,7 +48,7 @@ public sealed class MarketConsoleInterfaceState : BoundUserInterfaceState
     /// </summary>
     public int CartEntities;
 
-    public MarketConsoleInterfaceState(int balance, float marketModifier, List<MarketData> marketDataList, List<MarketData> cartDataList, int cartBalance, bool enabled, int transactionCost, int cartEntities)
+    public MarketConsoleInterfaceState(int balance, float marketModifier, List<MarketData> marketDataList, List<MarketData> cartDataList, int cartBalance, bool enabled, int transactionCost, int cartEntities, bool canPurchase = true) // Exodus
     {
         Balance = balance;
         MarketModifier = marketModifier;
@@ -56,5 +58,6 @@ public sealed class MarketConsoleInterfaceState : BoundUserInterfaceState
         Enabled = enabled;
         TransactionCost = transactionCost;
         CartEntities = cartEntities;
+        CanPurchase = canPurchase; // Exodus
     }
 }

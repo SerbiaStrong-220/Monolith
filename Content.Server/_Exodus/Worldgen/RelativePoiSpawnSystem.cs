@@ -153,8 +153,9 @@ public sealed partial class RelativePoiSpawnSystem : EntitySystem
         if (!final)
             return;
 
+        // Valid anchors can be absent from a random spawn pool or have no suitable placement.
         foreach (var request in state.Pending)
-            Log.Error($"Relative POI {request.Rule}: anchor did not spawn on map {map}; dependent POI skipped.");
+            Log.Info($"Relative POI {request.Rule}: anchor did not spawn on map {map}; dependent POI skipped.");
         state.Pending.Clear();
         RemComp<RelativePoiGenerationComponent>(mapUid.Value);
     }

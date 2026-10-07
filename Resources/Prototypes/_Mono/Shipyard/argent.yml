@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Аргент # Ru-Localization
   description: Списанный фрегат, полностью переоборудованный для грузовых перевозок. # Ru-Localization
-  price: 80900 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 86549 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.978794098 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/argent.yml

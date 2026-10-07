@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: company-vessel-horizon-siphon-name
   description: company-vessel-horizon-siphon-description
-  price: 72000
+  price: 81980 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Shipyard
   requiredCompanies:

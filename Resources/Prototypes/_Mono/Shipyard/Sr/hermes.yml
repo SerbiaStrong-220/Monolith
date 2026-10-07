@@ -3,7 +3,8 @@
   parent: BaseVessel
   name: Гермес # Ru-Localization
   description: Почтовый многофункциональный служебный шаттл, спроектированный с приоритетом его скорости в ушерб некоторых других элементов. Разработан и произведён Пантеон Коллектив. # Ru-Localization
-  price: 61200 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 65424 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998461366 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Sr
   access: Mail

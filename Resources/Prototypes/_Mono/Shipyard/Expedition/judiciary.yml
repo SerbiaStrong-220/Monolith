@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Судья # Ru-Localization
   description: Переоборудованное исследовательское судно, оснащённое экспедиционным и боевым оборудованием. # Ru-Localization
-  price: 70001 # ~20,000$ markup
+  price: 78518 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998913288 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/judiciary.yml

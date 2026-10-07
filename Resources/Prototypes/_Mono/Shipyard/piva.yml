@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Пива # Ru-Localization
   description: Небольшой, но манёвренный грузовой шаттл с боковым выходом в космос для обмена грузами в космосе без стыковки. # Ru-Localization
-  price: 20900 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 23676 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/piva.yml

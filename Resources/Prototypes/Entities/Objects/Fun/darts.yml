@@ -4,6 +4,10 @@
   parent: BaseItem
   id: Dart
   components:
+  # Exodus-begin: retain the value of the metal rod recovered on destruction.
+  - type: StaticPrice
+    price: 5
+  # Exodus-end
   - type: EmbeddableProjectile
     minimumSpeed: 3
     removalTime: 0.5

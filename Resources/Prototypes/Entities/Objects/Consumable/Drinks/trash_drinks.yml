@@ -7,6 +7,10 @@
   description: An empty bottle.
   suffix: Empty
   components:
+  # Exodus-begin: appraise the 100 units of glass independently of bottle size.
+  - type: StaticPrice
+    price: 7.5
+  # Exodus-end
   - type: Sprite
     state: icon
   - type: Item

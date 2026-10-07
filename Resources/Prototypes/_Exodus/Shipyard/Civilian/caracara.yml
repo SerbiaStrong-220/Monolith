@@ -10,7 +10,7 @@
   parent: BaseVessel
   name: Каракара
   description: Утилизаторский фрегат с шахтёрским лазером Apollo, тремя 20-мм орудиями, пинч-реактором и базовым FTL-приводом.
-  price: 89609
+  price: 89922 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/caracara.yml

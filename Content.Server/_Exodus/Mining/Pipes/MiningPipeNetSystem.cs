@@ -34,6 +34,7 @@ public sealed partial class MiningPipeNetSystem : EntitySystem
         SubscribeLocalEvent<MiningPipeNetworkMemberComponent, MaterialAmountChangedEvent>(OnMaterialsChanged);
         SubscribeLocalEvent<MiningPipeNetworkMemberComponent, MaterialStorageCapacityChangedEvent>(OnCapacityChanged);
         SubscribeLocalEvent<MiningPipeNetworkMemberComponent, NodeGroupsRebuilt>(OnNodesRebuilt);
+        InitializeStorage();
     }
 
     private void OnMaterialsChanged(Entity<MiningPipeNetworkMemberComponent> ent, ref MaterialAmountChangedEvent args)

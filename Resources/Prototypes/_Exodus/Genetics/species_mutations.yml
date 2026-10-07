@@ -22,6 +22,34 @@
       4: ReptilianHugeClaws
 
 - type: geneticMutation
+  id: GeneticVenomousClaws
+  name: genetics-gene-venomous-claws
+  description: genetics-gene-venomous-claws-desc
+  activationMessage: genetics-feeling-venomous-claws
+  instability: 15
+  modifiers:
+    unarmedDamage:
+      types:
+        Slash: 15
+        Structural: 24
+  initialSolutions:
+    geneticVenom:
+      maxVol: 20
+      reagents:
+      - ReagentId: GastroToxin
+        Quantity: 20
+  components:
+  - type: SolutionRegeneration
+    solution: geneticVenom
+    generated:
+      reagents:
+      - ReagentId: GastroToxin
+        Quantity: 20
+  - type: MeleeChemicalInjector
+    solution: geneticVenom
+    transferAmount: 1
+
+- type: geneticMutation
   id: GeneticOreSense
   name: genetics-gene-ore-sense
   description: genetics-gene-ore-sense-desc

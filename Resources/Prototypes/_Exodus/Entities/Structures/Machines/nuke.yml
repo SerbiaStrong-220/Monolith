@@ -1,0 +1,21 @@
+- type: entity
+  parent: ScuttleDeviceRazorN
+  id: ScuttleDeviceTacticalNuclear
+  name: tactical nuclear charge
+  description: A mobile high-yield nuclear charge with a 90-second timer. Its countdown continues during transport, even outside a station.
+  components:
+  - type: ScuttleDevice
+    timer: 90
+    minimumTime: 90
+    requiresAnchoring: false
+    disarmOnUnanchor: false
+    disarmOnMapChange: false
+    announceSender: scuttle-device-tactical-nuclear-announcement-sender
+    armAnnouncementKey: scuttle-device-tactical-nuclear-announcement-armed
+  - type: Explosive
+    maxIntensity: 960
+    totalIntensity: 16500000
+  - type: Anchorable
+    flags: Anchorable, Unanchorable
+  - type: NavMapBeacon
+    text: ""

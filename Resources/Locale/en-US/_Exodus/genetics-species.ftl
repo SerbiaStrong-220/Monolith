@@ -4,6 +4,10 @@ genetics-gene-growing-claws = Growing claws
 genetics-gene-growing-claws-desc = Claws grow over time and strengthen unarmed attacks. Large claws hinder weapon handling. Disabling the gene preserves growth progress and declawing.
 genetics-feeling-growing-claws = You feel pressure at your fingertips.
 
+genetics-gene-venomous-claws = Venomous claws
+genetics-gene-venomous-claws-desc = Unarmed attacks deal 15 slash and 24 structural damage and inject 1 unit of gastrotoxin on a successful hit, unless blocked by protective clothing. The 20-unit venom reservoir regenerates while the gene is active.
+genetics-feeling-venomous-claws = Your fingers grow sharp claws, and venom gathers beneath them.
+
 genetics-gene-ore-sense = Ore sense
 genetics-gene-ore-sense-desc = Periodically detects ore deposits within 5 meters.
 genetics-feeling-ore-sense = You sense a faint response from nearby minerals.

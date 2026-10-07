@@ -13,8 +13,10 @@ public abstract partial class SharedMeleeWeaponSystem
     {
         var charged = _meleeCharges.TryReserveHit(weapon, user, target, out var use);
         modifiedDamage = DamageSpecifier.ApplyModifierSets(charged ? damage + use.Damage : damage, modifiers);
+        var toolEvent = new GetMeleeDamageToolEvent();
+        RaiseLocalEvent(weapon, ref toolEvent);
         var result = Damageable.TryChangeDamage(target, modifiedDamage, origin: user,
-            armorPenetration: armorPenetration, partMultiplier: partMultiplier);
+            armorPenetration: armorPenetration, partMultiplier: partMultiplier, tool: toolEvent.Tool);
         if (charged)
             _meleeCharges.CompleteHit(use, user, target, result);
         return result;

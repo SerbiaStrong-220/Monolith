@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Зефир # Ru-Localization
   description: Шаттл, сделанный наспех из обломков старых шаттлов. # Ru-Localization
-  price: 16400
+  price: 17866 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

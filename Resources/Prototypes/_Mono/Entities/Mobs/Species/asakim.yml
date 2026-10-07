@@ -12,9 +12,9 @@
     #    - HeadTop # WWDP - Because visible horns its cool
     - HeadSide
   - type: Hunger
-  # Exodus-begin: native genetic deflection and go-juice dependency, shared by biological Asakim variants.
+  # Exodus-begin: native genetic deflection, go-juice dependency and venomous claws for biological Asakim variants.
   - type: Genome
-    initialMutations: [GeneticJump, GeneticGoJuiceDependency]
+    initialMutations: [GeneticJump, GeneticGoJuiceDependency, GeneticVenomousClaws]
   # Exodus-end
   - type: TTS # Exodus: shared sex-matched voices for Asakim, including ghost roles and clones.
     randomVoicesList: Asakim
@@ -90,25 +90,7 @@
       collection: AlienClaw
     angle: 30
     animation: WeaponArcClaw
-    damage:
-      types:
-        Slash: 15
-        Structural: 24
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        reagents:
-        - ReagentId: GastroToxin
-          Quantity: 20
-  - type: SolutionRegeneration
-    solution: melee
-    generated:
-      reagents:
-      - ReagentId: GastroToxin
-        Quantity: 20
-  - type: MeleeChemicalInjector
-    solution: melee
-    transferAmount: 1
+    # Exodus: claw damage and gastrotoxin are supplied by GeneticVenomousClaws; ordinary damage is inherited.
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285

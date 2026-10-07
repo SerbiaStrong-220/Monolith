@@ -22,6 +22,7 @@ public sealed partial class BulkAutoMiningLaserControl : PanelContainer
         HealthAmount.Text = Loc.GetString("bulk-auto-mining-laser-health",
             ("hp", (int)state.CurrentHp), ("max", (int)state.MaxHp));
         HealthBar.Value = state.MaxHp > 0 ? Math.Clamp(state.CurrentHp / state.MaxHp, 0, 1) : 0;
+        WarmupBar.Visible = state.CanMine;
         WarmupBar.Value = Math.Clamp(state.Warmup, 0, 1);
         WarmupAmount.Text = Loc.GetString("bulk-auto-mining-laser-warmup",
             ("percent", (int)MathF.Round(state.Warmup * 100)), ("bonus", (int)MathF.Round(state.YieldBonus * 100)));
@@ -40,6 +41,7 @@ public sealed partial class BulkAutoMiningLaserControl : PanelContainer
             BulkAutoMiningLaserStatus.Busy => ("busy", "busy", Color.FromHex("#C1C6CB")),
             BulkAutoMiningLaserStatus.Full => ("full", "full", Color.FromHex("#F2B85F")),
             BulkAutoMiningLaserStatus.Linked => ("linked", "linked", BulkAutoMiningNavControl.ConsortiumGridColor),
+            BulkAutoMiningLaserStatus.LinkOnly => ("link-only", "link-only", BulkAutoMiningNavControl.ConsortiumGridColor),
             _ => ("blocked", "blocked", Color.FromHex("#F2B85F")),
         };
         LaserStatus.SetMessage(Loc.GetString($"bulk-auto-mining-laser-{status}",

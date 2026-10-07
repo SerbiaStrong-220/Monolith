@@ -30,6 +30,8 @@
           True: { visible: true }
           False: { visible: false }
   - type: FtlSuppressor
+  - type: StaticPrice
+    price: 250000 # Restricted faction equipment; keep its flatpacks at the same base value.
   - type: ApcPowerReceiver
     powerLoad: 20000
   - type: PowerSwitch

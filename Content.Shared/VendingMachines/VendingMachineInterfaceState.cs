@@ -7,10 +7,12 @@ namespace Content.Shared.VendingMachines
     {
         public readonly InventoryType Type;
         public readonly string ID;
-        public VendingMachineEjectMessage(InventoryType type, string id)
+        public readonly int? ExpectedPrice; // Exodus: require confirmation of the displayed paid quote.
+        public VendingMachineEjectMessage(InventoryType type, string id, int? expectedPrice = null) // Exodus
         {
             Type = type;
             ID = id;
+            ExpectedPrice = expectedPrice; // Exodus
         }
     }
 

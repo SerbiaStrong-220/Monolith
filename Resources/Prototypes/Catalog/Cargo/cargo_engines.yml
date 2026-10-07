@@ -5,7 +5,7 @@
     state: jar
   product: CrateEngineeringAMEShielding
   cost: 15000 # Frontier - Up the price
-  category: Engineering
+  category: cargoproduct-category-name-engineering # Exodus: was bare English "Engineering"
   group: market
 
 - type: cargoProduct
@@ -37,7 +37,7 @@
     state: icon
   product: CrateEngineeringSingularityGenerator
   cost: 4000
-  category: Engineering
+  category: cargoproduct-category-name-engineering # Exodus: was bare English "Engineering"
   group: market
 
 - type: cargoProduct

@@ -198,3 +198,12 @@
   - type: ShuttleEventBeacon
     rule: TarkhanJupiterArrival
     shuttleFaction: PDV
+
+- type: entity
+  id: AbaddonFlyssaArrivalBeacon
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  suffix: ADMIN ONLY
+  components:
+  - type: ShuttleEventBeacon
+    rule: AbaddonFlyssaArrival
+    shuttleFaction: TSFMC

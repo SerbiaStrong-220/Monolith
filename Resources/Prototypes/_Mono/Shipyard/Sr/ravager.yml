@@ -7,7 +7,8 @@
   parent: BaseVessel
   name: Опустошитель # Ru-Localization
   description: Большой материнский корабль безопасности класса, созданный для быстрой нейтрализации угроз гражданам. # Ru-Localization
-  price: 875800
+  price: 914478 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999820113 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # voucher only
   category: Large
   group: Sr

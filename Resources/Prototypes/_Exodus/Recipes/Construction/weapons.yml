@@ -1,0 +1,9 @@
+- type: construction
+  id: EnergySwordDouble
+  name: construction-energy-sword-double
+  description: construction-energy-sword-double-desc
+  graph: EnergySwordDouble
+  startNode: start
+  targetNode: doubleSword
+  category: construction-category-weapons
+  objectType: Item

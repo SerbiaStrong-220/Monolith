@@ -5,7 +5,8 @@
   parent: BaseVesselAntag
   name: Хейзел # Ru-Localization
   description: Маленький, тесный шаттл, оснащённый синдикатской трёхствольной 220-мм батареей и двумя АСМ-302 Ванек. Хорошо бронирован для своих размеров. Не имеет модуля БСС. Дешёвый вариант, но надёжность при этом вызывает вопросы. # Ru-Localization
-  price: 89600 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 94462 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998271823 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: BlackMarket
   access: Pirate

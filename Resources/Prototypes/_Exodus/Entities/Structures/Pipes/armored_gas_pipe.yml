@@ -56,6 +56,7 @@
       pipe: !type:PipeNode
         nodeGroupID: ExodusArmoredGasPipe
         pipeDirection: South
+        volume: 20
   - type: Sprite
     layers:
     - state: pipeHalf
@@ -79,6 +80,7 @@
       pipe: !type:PipeNode
         nodeGroupID: ExodusArmoredGasPipe
         pipeDirection: Longitudinal
+        volume: 20
   - type: Sprite
     layers:
     - state: pipeStraight
@@ -102,6 +104,7 @@
       pipe: !type:PipeNode
         nodeGroupID: ExodusArmoredGasPipe
         pipeDirection: SWBend
+        volume: 20
   - type: Sprite
     layers:
     - state: pipeBend
@@ -126,6 +129,7 @@
       pipe: !type:PipeNode
         nodeGroupID: ExodusArmoredGasPipe
         pipeDirection: TSouth
+        volume: 20
   - type: Sprite
     layers:
     - state: pipeTJunction
@@ -150,6 +154,7 @@
       pipe: !type:PipeNode
         nodeGroupID: ExodusArmoredGasPipe
         pipeDirection: Fourway
+        volume: 20
   - type: Sprite
     layers:
     - state: pipeFourway

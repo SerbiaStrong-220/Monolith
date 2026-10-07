@@ -1,0 +1,47 @@
+- type: vessel
+  id: DrakeOrca
+  parent: BaseVessel
+  name: company-vessel-drake-orca-name
+  description: company-vessel-drake-orca-description
+  price: 9300000 # Appraised hull and equipment value rounded up to 10,000.
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - DrakeBlackArmsUSA
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/orca.yml
+  addComponents:
+  # Count the ship immediately, before the periodic activity update.
+  - type: ShipActivity
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Mercenary
+  - Cargo
+  - Salvage
+  engine:
+  - AME
+  limit: 1
+  hyperwarLimit: 1
+
+- type: gameMap
+  id: DrakeOrca
+  mapName: 'Дрэйк Орка'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/drake/orca.yml
+  isGrid: true
+  minPlayers: 0
+  stations:
+    DrakeOrca:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Орка{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

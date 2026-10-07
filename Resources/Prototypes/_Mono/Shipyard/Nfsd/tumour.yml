@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Тумор # Ru-Localization
   description: Уродливая картофелина-носитель. Почти не имеет вооружения для самообороны, но оснащена техфаюами для поддержки своих шаттлов. # Ru-Localization
-  price: 68250
+  price: 74901 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Security
   access: Security

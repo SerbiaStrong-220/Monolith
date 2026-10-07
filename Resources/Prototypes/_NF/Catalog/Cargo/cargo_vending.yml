@@ -13,7 +13,7 @@
     state: base
   product: CrateVendingMachineRestockAstroVendFilled
   cost: 1200 # Frontier
-  category: Engineering
+  category: cargoproduct-category-name-engineering # Exodus: was bare English
   group: market
 
 - type: cargoProduct
@@ -24,7 +24,7 @@
     state: base
   product: CrateVendingMachineRestockAmmoFilled
   cost: 100 # Frontier
-  category: Security
+  category: cargoproduct-category-name-security # Exodus: was bare English
   group: market
 
 - type: cargoProduct

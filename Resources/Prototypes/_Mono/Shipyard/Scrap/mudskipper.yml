@@ -8,7 +8,8 @@
   parent: BaseVessel
   name: Мурекс # Ru-Localization
   description: Сильно модифицированный шаттл для боевого использования. Внешние слои внутренних отсеков обрушены ради дополнительного слоя брони, интерьер перестроен для установки генератора щитов, а на обшивку теперь установлены четыре Драупнира. # Ru-Localization
-  price: 106400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 113268 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999155998 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Scrap
   shuttlePath: /SharedMaps/_Mono/Shuttles/Scrapyard/mudskipper.yml # Exodus: upstream remap, existing vessel settings retained.

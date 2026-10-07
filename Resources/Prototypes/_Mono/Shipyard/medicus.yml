@@ -10,7 +10,8 @@
   parent: BaseVessel
   name: Медикус #medisus # Ru-Localization
   description: Надёжный медицинский шаттл, оснащённый криокапсулой, ботаническим отсеком, химической лабораторией и рабочим местом для парамедиков. # Ru-Localization
-  price: 104200 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 113071 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998487175 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Medical
   shuttlePath: /SharedMaps/_Mono/Shuttles/CivilianMed/medicus.yml # Exodus: upstream remap, existing vessel settings retained.

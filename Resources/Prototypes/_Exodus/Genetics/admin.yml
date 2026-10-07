@@ -123,6 +123,14 @@
 
 - type: entity
   parent: BaseGeneticInjectorAdmin
+  id: GeneticInjectorThermalVision
+  suffix: ADMIN
+  components:
+  - type: GeneticInjector
+    mutation: GeneticThermalVision
+
+- type: entity
+  parent: BaseGeneticInjectorAdmin
   id: GeneticInjectorClotting
   suffix: ADMIN
   components:

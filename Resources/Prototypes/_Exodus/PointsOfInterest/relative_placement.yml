@@ -10,7 +10,8 @@
 # ignoreAnchorClearance permits nearby satellites inside the anchor's protection radius; intersections are still rejected.
 # useGlobalMinimumSeparation: false skips the sector-wide spacing to other POIs, retaining their explicit clearances.
 # Dependency chains are processed before nebula generation and again after nebula POIs spawn.
-# Cycles, duplicate rules, invalid distances and missing anchors cause the target to be skipped with a logged error.
+# Cycles, duplicate rules and invalid distances cause the target to be skipped with a logged error.
+# Missing anchors skip their dependents with an informational log: random generation does not guarantee every anchor.
 # If nf14.worldgen.poi_placement_retries attempts find no space, there is no fallback spawn outside the annulus.
 # Placement applies only during round generation; the target does not follow its anchor during gameplay.
 # Nebula protection is configured separately through nebulaProtectedStation.

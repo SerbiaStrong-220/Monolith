@@ -1,0 +1,31 @@
+- type: entity
+  parent: IDCardStandard
+  id: ExodusAbaddonIDCard
+  name: ABADDON ID card
+  description: An identification card issued to Winter Solstice's ABADDON operatives.
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Item
+    heldPrefix: blue
+  - type: Access
+    groups:
+    - AllAccess
+    tags:
+    - CentralCommand
+    - TsfmcEngineering
+  - type: IdCard
+    jobTitle: ghost-role-information-exodus-abaddon-name
+    jobIcon: JobIconTSFMarsoc
+    companyName: TSFHighComm
+
+- type: entity
+  parent: DeathsquadPDA
+  id: ExodusAbaddonPDA
+  name: ABADDON PDA
+  description: A command PDA with an ABADDON operative's ID card.
+  suffix: ABADDON
+  components:
+  - type: Pda
+    id: ExodusAbaddonIDCard

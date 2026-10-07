@@ -46,5 +46,6 @@ public sealed class CargoPalletConsoleBoundUserInterface : BoundUserInterface
         _menu?.SetCount(palletState.Count);
         _menu?.SetTradeCrateMultiplier(palletState.TradeCrateMultiplier);
         _menu?.SetOtherMultiplier(palletState.OtherMultiplier);
+        _menu?.SetItems(palletState.Items); // Exodus: per-item appraisal list
     }
 }

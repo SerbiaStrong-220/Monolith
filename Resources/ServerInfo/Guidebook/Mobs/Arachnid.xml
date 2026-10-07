@@ -1,6 +1,9 @@
 <Document>
   # Арахниды
 
+  <!-- Exodus: link racial genetic traits to the mutation reference. -->
+  Врождённые гены этой расы и их влияние на стабильность описаны в разделе [textlink="Мутации" link="GeneticsMutations"], в таблице «Врождённые наборы».
+
   <Box>
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>

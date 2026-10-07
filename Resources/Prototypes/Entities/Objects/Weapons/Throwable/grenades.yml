@@ -455,6 +455,10 @@
   - type: CartridgeAmmo
     proto: CleanerGrenadeLaunched
     deleteOnSpawn: true
+  # Exodus-begin: match the grenade casing appraisal; recipe fallback exceeds the janitorial supply price.
+  - type: StaticPrice
+    price: 30
+  # Exodus-end
 
 - type: entity
   parent: SmokeGrenade

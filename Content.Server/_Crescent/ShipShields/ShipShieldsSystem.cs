@@ -94,7 +94,13 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             if (emitter.Recharging)
                 healed *= emitter.UnpoweredBonus;
 
-            emitter.Damage -= healed;
+            // Exodus-begin configurable recovery after quiet shield intervals
+            var regeneration = new ShipShieldRegenerationEvent(healed,
+                poweredBeforeLoad && !power.PowerDisabled && !emitter.Recharging &&
+                previousOverload <= 0f && emitter.Shield != null);
+            RaiseLocalEvent(uid, ref regeneration);
+            emitter.Damage -= regeneration.Amount;
+            // Exodus-end
 
             if (emitter.Damage < 0)
             {
@@ -368,6 +374,7 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             // Exodus-begin ship shield ripples
             shieldVisuals.RippleWidth = emitter.RippleWidth;
             shieldVisuals.RippleSpeed = emitter.RippleSpeed;
+            shieldVisuals.RippleShader = emitter.RippleShader; // Exodus configurable animated shield shader
             // Exodus-end
             // Exodus-begin layered ship shield visuals
             if (_layeredShieldQuery.TryGetComponent(source.Value, out var layered))

@@ -181,6 +181,9 @@ ent-GeneticInjectorBrittle = генетический инъектор хруп�
 genetics-gene-night-vision = Ночное зрение
 genetics-gene-night-vision-desc = Позволяет различать предметы в темноте, сосредоточив зрение.
 genetics-feeling-night-vision = Ваши зрачки расширяются. Вы замечаете прежде незаметные очертания в тенях.
+genetics-gene-thermal-vision = Термальное зрение
+genetics-gene-thermal-vision-desc = Позволяет на 3 секунды включить пульсовое термальное зрение. Повторное использование доступно через 4 секунды.
+genetics-feeling-thermal-vision = Вы начинаете различать тепло живых тел среди привычных очертаний.
 genetics-gene-clotting = Ускоренное свёртывание
 genetics-gene-clotting-desc = Помогает быстрее остановить кровотечение. Потерянная кровь и сами раны не восстанавливаются.
 genetics-feeling-clotting = Под кожей разливается непривычное тепло, а края мелких царапин стягивает.
@@ -229,6 +232,8 @@ genetics-hulk-cannot-shoot = Огрубевшие пальцы не слушаю
 
 ent-ActionGeneticNightVision = Сосредоточить зрение
     .desc = Приспособьте глаза к темноте или верните привычное зрение.
+ent-ActionGeneticThermalVision = Термальный импульс
+    .desc = Сосредоточьтесь на тепловых силуэтах на 3 секунды. Повторное использование через 4 секунды.
 ent-ActionGeneticGlow = Свечение
     .desc = Заставьте тело мягко светиться или погасите свечение.
 ent-ActionGeneticHearing = Прислушаться
@@ -246,6 +251,7 @@ ent-ProjectileGeneticFlame = горящий сгусток
     .desc = Горящие выделения огнедышащего организма.
 
 ent-GeneticInjectorNightVision = генетический инъектор ночного зрения
+ent-GeneticInjectorThermalVision = генетический инъектор термального зрения
 ent-GeneticInjectorClotting = генетический инъектор ускоренного свёртывания
 ent-GeneticInjectorJump = генетический инъектор рефлекторного покрова
 ent-GeneticInjectorPouch = генетический инъектор биокармана

@@ -5,6 +5,7 @@ guide-entry-leviathan = Space Leviathan
 guide-entry-exodus-rule-ghost-roles-leviathan = Space Leviathan
 guide-entry-exodus-rule-ghost-roles-rot = Rot
 guide-entry-exodus-rule-ghost-roles-rot-hungry = Hungry
+guide-entry-exodus-rule-ghost-roles-abaddon = ABADDON operative
 guide-entry-ship-repair-drones = Repair drones
 guide-entry-genetics = Genetics
 guide-entry-genetics-mutations = Mutations

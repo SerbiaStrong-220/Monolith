@@ -4,7 +4,7 @@
   parent: BaseVessel
   name: Чжуан-цзы
   description: Недорогой грузовой корабль дальнего действия с большим трюмом, ядерным реактором и свободными креплениями для установки оборудования.
-  price: 92450
+  price: 101387 # Exodus: expected ship and contents value; no additional markup.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/zhuangzi.yml

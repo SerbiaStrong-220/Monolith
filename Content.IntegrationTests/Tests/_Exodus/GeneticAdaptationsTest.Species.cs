@@ -8,6 +8,7 @@ using Content.Shared._Exodus.Genetics;
 using Content.Shared._Exodus.Mining.Components;
 using Content.Shared._Mono.Claws.Components;
 using Content.Shared.Actions;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sericulture;
 using Content.Shared.StepTrigger.Components;
@@ -40,15 +41,15 @@ public sealed partial class GeneticAdaptationsTest
                 ("MobHuman", 60), ("MobDwarf", 55), ("MobReptilian", 50), ("MobMoth", 40),
                 ("MobArachnid", 40), ("MobDiona", 50), ("MobVox", 55), ("MobSlimePerson", 40),
                 ("MobFelinid", 60), ("MobVulpkanin", 60), ("MobFeroxi", 60), ("MobChitinid", 35),
-                ("MobResomi", 70), ("MobHydrakin", 60), ("MobTajaran", 55), ("MobKidan", 40),
-                ("MobAsakim", 100),
+                ("MobResomi", 50), ("MobHydrakin", 10), ("MobTajaran", 55), ("MobKidan", 40),
+                ("MobAsakim", 85),
             };
             foreach (var (prototype, stability) in cases)
             {
                 var body = entities.SpawnEntity(prototype, new EntityCoordinates(map, Vector2.Zero));
                 if (!genetics.TryGetLivingGenome(body, out var genome))
                     throw new AssertionException($"Missing living genome: {prototype}");
-                Assert.That(genome.InitialMutations.Count, Is.LessThanOrEqualTo(3), prototype);
+                Assert.That(genome.InitialMutations.Count, Is.LessThanOrEqualTo(4), prototype);
                 Assert.That(genome.Active, Is.EquivalentTo(genome.InitialMutations), prototype);
                 Assert.That(genome.Stability, Is.EqualTo(stability), prototype);
                 Assert.That(genetics.HasGeneticModifications(body), Is.False, prototype);
@@ -70,6 +71,69 @@ public sealed partial class GeneticAdaptationsTest
             }
             entities.DeleteEntity(map);
             DeleteCipher(entities, round.Context);
+        });
+        await server.WaitRunTicks(2);
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task HydrakinNativeRegenerationAndRemoteViewingWorkUntilTheirGenesAreDisabled(bool stabilize)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        await server.WaitAssertion(() =>
+        {
+            var map = entities.System<SharedMapSystem>().CreateMap();
+            var body = entities.SpawnEntity("MobHydrakin", new EntityCoordinates(map, Vector2.Zero));
+            var genetics = entities.System<GeneticsSystem>();
+            var genome = entities.GetComponent<GenomeComponent>(body);
+            if (stabilize)
+            {
+                Enable(entities, body, "GeneticQuietStep");
+                Assert.That(genetics.TryStabilize(body), Is.True);
+            }
+
+            ProtoId<GeneticMutationPrototype>[] nativeGenes =
+            [
+                "GeneticCryostasis", "GeneticHyperthermia", "GeneticRegeneration", "GeneticRemoteViewing",
+            ];
+            Assert.That(genome.InitialMutations, Is.EquivalentTo(nativeGenes));
+            Assert.That(genome.Active, Is.EquivalentTo(nativeGenes));
+            Assert.That(genome.Stability, Is.EqualTo(10));
+            Assert.That(genetics.HasGeneticModifications(body), Is.False);
+
+            var effects = entities.GetComponent<GeneticEffectsComponent>(body);
+            Assert.That(effects.Modifiers.Abilities.HasFlag(GeneticAbility.RemoteViewing), Is.True);
+            Assert.That(Action(entities, genome, "ActionGeneticRemoteViewing").Comp.AttachedEntity, Is.EqualTo(body));
+
+            var damage = entities.System<DamageableSystem>();
+            damage.TryChangeDamage(body, new DamageSpecifier { DamageDict = new() { ["Slash"] = 5, ["Heat"] = 5 } }, ignoreResistances: true);
+            var damageable = entities.GetComponent<DamageableComponent>(body);
+            var slashBefore = damageable.Damage.DamageDict["Slash"];
+            var heatBefore = damageable.Damage.DamageDict["Heat"];
+            genome.NextUpdate = TimeSpan.Zero;
+            genetics.Update(0);
+            Assert.That(damageable.Damage.DamageDict["Slash"], Is.LessThan(slashBefore));
+            Assert.That(damageable.Damage.DamageDict["Heat"], Is.LessThan(heatBefore));
+
+            var round = genetics.GetRound();
+            Assert.That(genetics.TrySetBlock((body, genome), round.Mutations.IndexOf("GeneticRemoteViewing"), 0, body), Is.True);
+            Assert.That(genetics.TrySetBlock((body, genome), round.Mutations.IndexOf("GeneticRegeneration"), 0, body), Is.True);
+            Assert.That(effects.Modifiers.Abilities.HasFlag(GeneticAbility.RemoteViewing), Is.False);
+            Assert.That(genome.Actions.ContainsKey("ActionGeneticRemoteViewing"), Is.False);
+            Assert.That(genome.Stability, Is.EqualTo(60));
+            Assert.That(genetics.HasGeneticModifications(body), Is.True);
+            slashBefore = damageable.Damage.DamageDict["Slash"];
+            heatBefore = damageable.Damage.DamageDict["Heat"];
+            genome.NextUpdate = TimeSpan.Zero;
+            genetics.Update(0);
+            Assert.That(damageable.Damage.DamageDict["Slash"], Is.EqualTo(slashBefore));
+            Assert.That(damageable.Damage.DamageDict["Heat"], Is.EqualTo(heatBefore));
+
+            entities.DeleteEntity(map);
+            DeleteCipher(entities, genome.Context);
         });
         await server.WaitRunTicks(2);
         await pair.CleanReturnAsync();

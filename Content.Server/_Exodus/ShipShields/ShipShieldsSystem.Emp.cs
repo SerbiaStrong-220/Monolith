@@ -1,3 +1,4 @@
+using Content.Server._Exodus.ShipShields;
 using Content.Shared.Emp;
 
 namespace Content.Server._Crescent.ShipShields;
@@ -37,5 +38,7 @@ public sealed partial class ShipShieldsSystem
         }
 
         args.Cancelled = true;
+        var hit = new ShipShieldHitEvent();
+        RaiseLocalEvent(source, ref hit);
     }
 }

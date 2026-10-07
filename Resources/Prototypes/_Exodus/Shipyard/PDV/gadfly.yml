@@ -4,7 +4,7 @@
   parent: BaseVesselAntag
   name: Овод
   description: Малый корабль поддержки ДФ с двумя 57-мм автопушками AK570 и двумя 150-мм установками TARNYX.
-  price: 68000
+  price: 73969 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: BlackMarket
   access: Pirate

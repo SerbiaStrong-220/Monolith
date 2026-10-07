@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Weapons.Melee;
 using Content.Shared._Shitmed.Body.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -5,6 +6,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Random;
 
 namespace Content.Server._Exodus.Projectiles;
@@ -18,7 +20,13 @@ public sealed partial class SeveringProjectileSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SeveringProjectileComponent, GetMeleeDamageToolEvent>(OnGetMeleeDamageTool);
         SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnDamageChanged);
+    }
+
+    private void OnGetMeleeDamageTool(Entity<SeveringProjectileComponent> ent, ref GetMeleeDamageToolEvent args)
+    {
+        args.Tool = ent.Owner;
     }
 
     private void OnDamageChanged(Entity<BodyComponent> ent, ref DamageChangedEvent args)
@@ -42,6 +50,7 @@ public sealed partial class SeveringProjectileSystem : EntitySystem
         {
             if (!part.CanSever
                 || part.Body != ent.Owner
+                || uid == ent.Comp.RootContainer.ContainedEntity
                 || !severing.Parts.Contains(part.PartType)
                 || TerminatingOrDeleted(uid)
                 || !part.Initialized)
@@ -61,8 +70,16 @@ public sealed partial class SeveringProjectileSystem : EntitySystem
 
         if (limb.Comp.Body != ent.Owner)
         {
-            _adminLog.Add(LogType.BulletHit, LogImpact.High,
-                $"Projectile {ToPrettyString(tool):tool} severed {ToPrettyString(limb):part} from {ToPrettyString(ent):target}");
+            if (HasComp<MeleeWeaponComponent>(tool))
+            {
+                _adminLog.Add(LogType.MeleeHit, LogImpact.High,
+                    $"Melee weapon {ToPrettyString(tool):tool} severed {ToPrettyString(limb):part} from {ToPrettyString(ent):target}");
+            }
+            else
+            {
+                _adminLog.Add(LogType.BulletHit, LogImpact.High,
+                    $"Projectile {ToPrettyString(tool):tool} severed {ToPrettyString(limb):part} from {ToPrettyString(ent):target}");
+            }
         }
     }
 }

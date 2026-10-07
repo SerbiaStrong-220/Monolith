@@ -92,12 +92,16 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
         InitializeLinks();
     }
 
-    private TimeSpan GetProcessInterval(BulkAutoMiningConsoleComponent console)
+    private TimeSpan GetProcessInterval(Entity<BulkAutoMiningConsoleComponent> console)
     {
-        var seconds = console.ProcessInterval > TimeSpan.Zero
-            ? console.ProcessInterval.TotalSeconds
+        var seconds = console.Comp.ProcessInterval > TimeSpan.Zero
+            ? console.Comp.ProcessInterval.TotalSeconds
             : _cfg.GetCVar(EXCVars.BulkMiningTickInterval);
-        return TimeSpan.FromSeconds(double.IsFinite(seconds) ? Math.Max(0.1, seconds) : 10);
+        var interval = TimeSpan.FromSeconds(double.IsFinite(seconds) ? Math.Max(0.1, seconds) : 10);
+        if (_xformQuery.GetComponent(console).GridUid is not { } grid)
+            return interval;
+
+        return interval / (1f + GetConsortiumSpeedBonus(GetConsortiumSize(grid)));
     }
 
     private void OnConsoleMapInit(Entity<BulkAutoMiningConsoleComponent> ent, ref MapInitEvent args)
@@ -315,18 +319,21 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
     private BulkAutoMiningLaserStatus GetEmitterStatus(Entity<BulkAutoMiningConsoleComponent> console, EntityUid emitter)
     {
         if (!_emitterQuery.TryComp(emitter, out var comp) || !IsPoweredAndAnchored(emitter) ||
-            !_storageQuery.HasComp(emitter) || Transform(emitter).GridUid != Transform(console).GridUid)
+            !_storageQuery.TryComp(emitter, out var storage) || Transform(emitter).GridUid != Transform(console).GridUid)
             return BulkAutoMiningLaserStatus.Offline;
 
         if (comp.LinkPartner != null)
             return BulkAutoMiningLaserStatus.Linked;
+
+        if (!comp.CanMine)
+            return BulkAutoMiningLaserStatus.LinkOnly;
 
         if (comp.Controller is { } controller && controller != console.Owner && !TerminatingOrDeleted(controller))
             return BulkAutoMiningLaserStatus.Busy;
 
         // Reserve enough room for the largest possible yield, including the current warmup bonus.
         var maxYield = GetSlurryYield((emitter, comp), comp.SlurryPerTile.Max);
-        if (!_materials.CanChangeMaterialAmount(emitter, comp.SlurryMaterial, maxYield, localOnly: true))
+        if (!_pipes.CanDepositMaterial((emitter, storage), comp.SlurryMaterial, maxYield))
             return BulkAutoMiningLaserStatus.Full;
 
         return BulkAutoMiningLaserStatus.Ready;
@@ -343,6 +350,18 @@ public sealed partial class BulkAutoMiningSystem : SharedBulkAutoMiningSystem
             return;
 
         GetGridEmitters(grid, job.Emitters);
+    }
+
+    private int CountMiningEmitters(List<EntityUid> emitters)
+    {
+        var count = 0;
+        foreach (var uid in emitters)
+        {
+            if (_emitterQuery.TryComp(uid, out var emitter) && emitter.CanMine)
+                count++;
+        }
+
+        return count;
     }
 
     /// <summary>

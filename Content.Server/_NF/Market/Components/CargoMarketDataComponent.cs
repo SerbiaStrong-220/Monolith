@@ -1,18 +1,17 @@
+using Content.Server._Exodus.Economy; // Exodus: configurable additional stock rules.
 using Content.Server._NF.Market.Systems;
-using Content.Shared._NF.Market;
 using Content.Shared.Whitelist;
 
 namespace Content.Server._NF.Market.Components;
 
 /// <summary>
-/// Component that is put on the console's grid that will hold all things that are sold at cargo, for that grid.
+/// Exodus: optional local admission rules for the server-wide market inventory.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(MarketSystem))]
+[Access(typeof(MarketSystem), typeof(MarketStockIntakeSystem))] // Exodus: central intake owns admission.
 public sealed partial class CargoMarketDataComponent : Component
 {
-    [DataField]
-    public List<MarketData> MarketDataList = [];
+    // Exodus: stock belongs to MarketInventoryComponent and is shared by all sale endpoints.
 
     /// <summary>
     /// Sold items must match this whitelist to enter into this data set.
@@ -31,4 +30,13 @@ public sealed partial class CargoMarketDataComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? WhitelistOverride;
+
+    // Exodus-begin: additional admission paths retain their own blacklist.
+    /// <summary>
+    /// Additional rules that can admit sold entities when the standard filters reject them.
+    /// Each rule must pass its whitelist and blacklist independently.
+    /// </summary>
+    [DataField]
+    public List<MarketStockRule> AdditionalStockRules = [];
+    // Exodus-end
 }

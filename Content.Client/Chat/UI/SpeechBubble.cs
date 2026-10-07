@@ -103,7 +103,7 @@ namespace Content.Client.Chat.UI
             bubble.Measure(Vector2Helpers.Infinity);
             ContentSize = bubble.DesiredSize;
             _verticalOffsetAchieved = -ContentSize.Y;
-            _deathTime = _timing.RealTime + TotalTime;
+            _deathTime = _timing.RealTime + TextRevealDuration + TotalTime; // Exodus: leave time to read revealed speech.
         }
 
         protected abstract Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null);
@@ -111,6 +111,8 @@ namespace Content.Client.Chat.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
+
+            UpdateTextReveal(); // Exodus: reveal speech using real time, independently of the frame rate.
 
             var timeLeft = (float)(_deathTime - _timing.RealTime).TotalSeconds;
             if (_entityManager.Deleted(_senderEntity) || timeLeft <= 0)
@@ -180,6 +182,7 @@ namespace Content.Client.Chat.UI
         /// </summary>
         public void FadeNow()
         {
+            CompleteTextReveal(); // Exodus: do not discard an unfinished sentence when the bubble cap is reached.
             if (_deathTime > _timing.RealTime)
             {
                 _deathTime = _timing.RealTime + FadeTime;
@@ -241,12 +244,7 @@ namespace Content.Client.Chat.UI
         {
             if (!ConfigManager.GetCVar(CCVars.ChatEnableFancyBubbles))
             {
-                var label = new RichTextLabel
-                {
-                    MaxWidth = SpeechMaxWidth
-                };
-
-                label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
+                var label = CreateSpeechTextLabel(message, fontColor); // Exodus: animate speech with names disabled too.
 
                 var unfanciedPanel = new PanelContainer
                 {
@@ -263,17 +261,16 @@ namespace Content.Client.Chat.UI
                 Margin = new Thickness(1, 1, 1, 1),
             };
 
-            var bubbleContent = new RichTextLabel
-            {
-                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleTextOpacity)),
-                MaxWidth = SpeechMaxWidth,
-                Margin = new Thickness(2, 6, 2, 2),
-                StyleClasses = { "bubbleContent" },
-            };
+            // Exodus-begin: preserve the full text layout while revealing its glyphs.
+            var bubbleContent = CreateSpeechTextLabel(message, fontColor);
+            bubbleContent.ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleTextOpacity));
+            bubbleContent.Margin = new Thickness(2, 6, 2, 2);
+            bubbleContent.StyleClasses.Add("bubbleContent");
+            // Exodus-end
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr
             bubbleHeader.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleHeader", fontColor));
-            bubbleContent.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
+            // Exodus: bubble content is set by CreateSpeechTextLabel above.
 
             //As for below: Some day this could probably be converted to xaml. But that is not today. -Myr
             var mainPanel = new PanelContainer

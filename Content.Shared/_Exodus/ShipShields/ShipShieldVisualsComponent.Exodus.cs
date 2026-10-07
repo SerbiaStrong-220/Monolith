@@ -16,6 +16,12 @@ public sealed partial class ShipShieldVisualsComponent
     [DataField, AutoNetworkedField]
     public float RippleSpeed = 0.5f;
 
+    /// <summary>
+    /// Client shader used by the animated contour. ShaderPrototype is unavailable in shared code.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string RippleShader = "ShipShieldRipple";
+
     [DataField, AutoNetworkedField]
     public int LayerCount = 1;
 

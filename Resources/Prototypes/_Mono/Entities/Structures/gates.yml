@@ -4,6 +4,10 @@
   name: timer
   description: Sends a signal after a specified time after receiving a signal.
   components:
+  # Exodus-begin: retain the value of the four steel sheets recovered on deconstruction.
+  - type: StaticPrice
+    price: 23.6
+  # Exodus-end
   - type: Sprite
     layers:
     - state: base

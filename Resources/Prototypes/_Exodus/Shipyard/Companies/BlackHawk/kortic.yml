@@ -3,7 +3,7 @@
   parent: BaseVessel
   name: company-vessel-blackhawk-kortic-name
   description: company-vessel-blackhawk-kortic-description
-  price: 92300 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 98027 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Shipyard
   requiredCompanies:

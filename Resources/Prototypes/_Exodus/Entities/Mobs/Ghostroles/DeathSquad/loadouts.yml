@@ -1,0 +1,32 @@
+- type: startingGear
+  id: ExodusDeathSquadGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDeathSquad
+    back: ClothingBackpackExodusAbaddon
+    mask: ClothingMaskGasDeathSquad
+    eyes: ClothingEyesGlassesExodusAbaddon
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesExodusAbaddon
+    outerClothing: ClothingOuterHardsuitExodusAbaddon
+    shoes: ClothingShoesBootsMagExodusAbaddon
+    id: ExodusAbaddonPDA
+    pocket2: BaseSecurityUplinkRadioOfficer
+    belt: ClothingBeltExodusAbaddon
+  storage:
+    back:
+    - Hypospray
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - StasiziumAutoInjector
+    - WeaponMurasamaExodusAbaddon
+    - EnergyShield
+    - BoxMRE
+    - WeaponLRC21PPLExodusAbaddon
+    - WeaponHeavyPulseCannonExodusAbaddon
+    - WeaponPulseAnnihilatorExodusAbaddon
+    - SpaceLeviathanChitinArmorPlate
+    - SpaceLeviathanChitinArmorPlate
+    - SpaceLeviathanChitinArmorPlate
+    - SpaceLeviathanChitinArmorPlate

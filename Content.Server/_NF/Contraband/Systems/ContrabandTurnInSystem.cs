@@ -1,6 +1,8 @@
 using Content.Server._NF.Contraband.Components;
+using Content.Server._Exodus.Economy; // Exodus: global stock receives stationless turn-ins.
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Popups; // Exodus: explain why an unavailable economy cannot accept goods.
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Shared._NF.Contraband;
@@ -27,6 +29,10 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    // Exodus-begin: no goods or rewards change before saved market state is available.
+    [Dependency] private DynamicMarketSystem _dynamicMarket = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    // Exodus-end
 
     private EntityQuery<MobStateComponent> _mobQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -120,6 +126,13 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
             var ev = new EntitySoldEvent(toSell, gridUid);
             RaiseLocalEvent(ref ev);
         }
+        // Exodus-begin: stations already forward EntitySoldEvent to the global inventory.
+        else
+        {
+            var stockEvent = new MarketGoodsSoldEvent(toSell, gridUid);
+            RaiseLocalEvent(ref stockEvent);
+        }
+        // Exodus-end
 
         foreach (var ent in toSell)
         {
@@ -202,6 +215,14 @@ public sealed partial class ContrabandTurnInSystem : SharedContrabandTurnInSyste
 
         if (player == null)
             return;
+
+        // Exodus-begin: the completion event cannot undo a paid turn-in while quotes are loading.
+        if (!_dynamicMarket.Ready)
+        {
+            _popup.PopupEntity(Loc.GetString("market-sale-unavailable"), uid, player);
+            return;
+        }
+        // Exodus-end
 
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {

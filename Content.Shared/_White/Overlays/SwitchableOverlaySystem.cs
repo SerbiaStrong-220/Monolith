@@ -94,6 +94,11 @@ public abstract partial class SwitchableOverlaySystem<TComp, TEvent> : EntitySys
         {
             Color = component.Color,
             IsActive = component.IsActive,
+            // Exodus-begin: dynamically granted components have no client-side prototype configuration.
+            IsEquipment = component.IsEquipment,
+            PulseTime = component.PulseTime,
+            PulseAccumulator = component.PulseAccumulator,
+            // Exodus-end
             FlashDurationMultiplier = component.FlashDurationMultiplier,
             ActivateSound = component.ActivateSound,
             DeactivateSound = component.DeactivateSound,
@@ -109,6 +114,14 @@ public abstract partial class SwitchableOverlaySystem<TComp, TEvent> : EntitySys
         if (args.Current is not SwitchableVisionOverlayComponentState state)
             return;
 
+        // Exodus-begin: apply pulse configuration and refresh the HUD when a pulse starts or ends.
+        var pulseChanged = component.IsEquipment != state.IsEquipment ||
+                           component.PulseTime != state.PulseTime ||
+                           component.PulseAccumulator != state.PulseAccumulator;
+        component.IsEquipment = state.IsEquipment;
+        component.PulseTime = state.PulseTime;
+        component.PulseAccumulator = state.PulseAccumulator;
+        // Exodus-end
         component.Color = state.Color;
         component.FlashDurationMultiplier = state.FlashDurationMultiplier;
         component.ActivateSound = state.ActivateSound;
@@ -127,7 +140,7 @@ public abstract partial class SwitchableOverlaySystem<TComp, TEvent> : EntitySys
         if (component is ThermalVisionComponent thermal)
             thermal.LightRadius = state.LightRadius;
 
-        if (component.IsActive == state.IsActive)
+        if (component.IsActive == state.IsActive && !pulseChanged) // Exodus: pulse state also affects visibility.
             return;
 
         component.IsActive = state.IsActive;
@@ -180,6 +193,7 @@ public abstract partial class SwitchableOverlaySystem<TComp, TEvent> : EntitySys
         if (component.PulseTime > 0f)
         {
             component.PulseAccumulator = activate ? 0f : component.PulseTime;
+            Dirty(uid, component); // Exodus: replicate pulse start/end, including server-triggered actions.
             return;
         }
 

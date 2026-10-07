@@ -44,7 +44,7 @@ public sealed partial class BulkAutoMiningSystem
 
         var budget = console.Comp.TilesPerTick > 0 ? console.Comp.TilesPerTick : _cfg.GetCVar(EXCVars.BulkMiningTilesPerTick);
         budget = Math.Clamp(budget, 1, MaxTilesPerTick);
-        var interval = GetProcessInterval(console.Comp);
+        var interval = GetProcessInterval(console);
         job.NextProcessTime = now + TargetSearchInterval;
 
         foreach (var emitterUid in job.Emitters)
@@ -399,7 +399,8 @@ public sealed partial class BulkAutoMiningSystem
             return false;
 
         var amount = GetSlurryYield(emitter, emitter.Comp.SlurryPerTile.Next(_random));
-        if (amount <= 0 || !_materials.TryChangeMaterialAmount(emitter, emitter.Comp.SlurryMaterial, amount, localOnly: true))
+        if (amount <= 0 || !_storageQuery.TryComp(emitter, out var storage) ||
+            !_pipes.TryDepositMaterial((emitter, storage), emitter.Comp.SlurryMaterial, amount))
         {
             job.Statuses[emitter] = BulkAutoMiningLaserStatus.Full;
             return false;

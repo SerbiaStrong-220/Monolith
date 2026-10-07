@@ -210,8 +210,7 @@ public sealed partial class NebulaGasSiphonSystem : EntitySystem
         _mergeBuffer.Temperature = profile.Temperature;
         _atmosphere.Merge(net.Air, _mergeBuffer);
 
-        filter.Remaining = MathF.Max(0f, filter.Remaining - toSpawn * filter.ConsumptionPerMole);
-        UpdateFilterAppearance(filterUid, filter);
+        ConsumeFilter((filterUid, filter), toSpawn * filter.ConsumptionPerMole);
         UpdateSiphonEmissionAppearance(uid, filter);
 
         if (filter.Remaining < Atmospherics.GasMinMoles)
@@ -905,6 +904,16 @@ public sealed partial class NebulaGasSiphonSystem : EntitySystem
 
         var percent = GetRemainingStage(ent.Comp) * 100 / NebulaGasSiphonFilterComponent.RemainingStageCount;
         args.PushMarkup(Loc.GetString("nebula-gas-siphon-filter-examine", ("percent", percent)));
+    }
+
+    /// <summary>Consumes cartridge life and updates its appearance and quantized remaining-life readout.</summary>
+    public void ConsumeFilter(Entity<NebulaGasSiphonFilterComponent> ent, float amount)
+    {
+        if (TerminatingOrDeleted(ent) || !float.IsFinite(amount) || amount <= 0)
+            return;
+
+        ent.Comp.Remaining = Math.Max(0f, ent.Comp.Remaining - amount);
+        UpdateFilterAppearance(ent, ent.Comp);
     }
 
     private void UpdateFilterAppearance(EntityUid uid, NebulaGasSiphonFilterComponent filter)

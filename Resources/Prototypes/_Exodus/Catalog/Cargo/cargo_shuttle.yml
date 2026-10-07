@@ -28,13 +28,15 @@
   category: cargoproduct-category-name-shuttle
   group: market
 
+# Ship weapons are priced closer to their deployed value, including initial contents.
+# Retain a purchase premium, with more headroom for high-value guns at premium trade outlets.
 - type: cargoProduct
   id: ShuttleTurretDravon
   icon:
     sprite: _Mono/Objects/ShuttleWeapons/dravon.rsi
     state: space_artillery
   product: CrateWeaponTurretDravon
-  cost: 45000
+  cost: 12000
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -54,7 +56,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/longbow.rsi
     state: space_artillery
   product: CrateWeaponTurretLongbow
-  cost: 80000
+  cost: 55000
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -96,7 +98,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/vespera.rsi
     state: space_artillery
   product: CrateWeaponTurretVespera
-  cost: 60000
+  cost: 17500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -106,7 +108,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/vanyk.rsi
     state: space_artillery
   product: CrateWeaponTurretVanyk
-  cost: 50000
+  cost: 16500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -116,7 +118,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/rac-30_draupnir.rsi
     state: space_artillery
   product: CrateWeaponTurretRAC30
-  cost: 35000
+  cost: 10000
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -126,7 +128,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/prometheus.rsi
     state: space_artillery
   product: CrateWeaponTurretPrometheus
-  cost: 45000
+  cost: 32000
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -136,7 +138,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/hlgg9.rsi
     state: space_artillery
   product: CrateWeaponTurretL1Phalanx
-  cost: 30000
+  cost: 10000
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -146,7 +148,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/adder.rsi
     state: space_artillery
   product: CrateWeaponTurretAdder
-  cost: 25000
+  cost: 6500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -156,7 +158,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/cerberus.rsi
     state: space_artillery
   product: CrateWeaponTurretCerberus
-  cost: 50000
+  cost: 14500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -166,7 +168,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/t35.rsi
     state: space_artillery
   product: CrateWeaponTurretType35
-  cost: 35000
+  cost: 10500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -186,7 +188,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/asm220.rsi
     state: space_artillery
   product: CrateWeaponTurretASM220
-  cost: 50000
+  cost: 20500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -196,7 +198,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/artillery.rsi
     state: space_artillery
   product: CrateWeaponTurretAK570
-  cost: 57000
+  cost: 15000
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -206,7 +208,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/L85.rsi
     state: icon
   product: CrateWeaponTurretL85
-  cost: 20000
+  cost: 5500
   category: cargoproduct-category-name-shuttle
   group: market
 
@@ -216,7 +218,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/m25.rsi
     state: space_artillery
   product: CrateWeaponTurretM25
-  cost: 25000
+  cost: 9500
   category: cargoproduct-category-name-shuttle
   group: market
 

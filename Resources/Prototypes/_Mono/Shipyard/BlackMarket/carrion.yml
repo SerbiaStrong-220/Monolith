@@ -5,7 +5,7 @@
   parent: BaseVesselAntag
   name: Керрион # Ru-Localization
   description: Истребитель, вооружённый четырьмя 90-мм Дравонами и малым боевым отсеком вооружения. Создан для разведки и скоротечных боёв на больших скоростях. # Ru-Localization
-  price: 49000 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 52707 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: BlackMarket
   access: Pirate

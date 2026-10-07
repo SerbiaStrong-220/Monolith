@@ -1,0 +1,41 @@
+- type: entity
+  parent: BulkAutoMiningEmitter
+  id: BulkMiningLinkRelay
+  name: liquid metal relay laser
+  description: A simplified mining laser that links liquid metal networks between ships. It cannot excavate terrain. Connect an ore duct underneath and establish a link from a mining console.
+  components:
+  - type: Machine
+    board: BulkMiningLinkRelayCircuitboard
+  - type: BulkAutoMiningEmitter
+    consoleName: bulk-auto-mining-relay-short-name
+    canMine: false
+    muzzleOffset: 0.625
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/bulk_mining_relay.rsi
+  - type: RadarBlip
+    radarColor: "#4bbfaf"
+  - type: StaticPrice
+    price: 958416.8 # Installed board and materials add 1,583.2; complete relay value is 960,000, half a mining laser.
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: BulkMiningLinkRelayCircuitboard
+  name: liquid metal relay laser board
+  description: A circuit board for a relay laser that connects liquid metal networks without mining equipment.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: BulkMiningLinkRelay
+    frameSize: 3x3
+    flatpackable: false
+    requirements:
+      MatterBin: 2
+      Manipulator: 4
+    stackRequirements:
+      Steel: 50
+      Plasteel: 30
+      Glass: 20
+      Gold: 5
+      Silver: 5
+      Plasma: 5

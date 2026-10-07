@@ -18,6 +18,10 @@ public sealed partial class MiningPipeNetworkMemberComponent : Component
     [DataField]
     public bool SupplyMaterials = true;
 
+    /// <summary>Whether connected producers can deposit overflow into this buffer while it supplies materials.</summary>
+    [DataField]
+    public bool ReceiveMaterials;
+
     /// <summary>Read-only client view of remote buffers. Never used as authoritative storage.</summary>
     [ViewVariables, AutoNetworkedField]
     public Dictionary<ProtoId<MaterialPrototype>, int> RemoteMaterials = new();

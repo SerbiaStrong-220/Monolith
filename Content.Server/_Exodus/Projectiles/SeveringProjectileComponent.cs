@@ -3,7 +3,7 @@ using Content.Shared.Body.Part;
 namespace Content.Server._Exodus.Projectiles;
 
 /// <summary>
-/// Gives damage dealt by this projectile a chance to sever one attached body part.
+/// Gives damage dealt by this projectile or melee weapon a chance to sever one attached body part.
 /// </summary>
 [RegisterComponent]
 public sealed partial class SeveringProjectileComponent : Component

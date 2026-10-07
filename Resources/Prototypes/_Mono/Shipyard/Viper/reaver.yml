@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Вайперы «Ривер» # Exodus Viper localization
   description: Малый штурмовой и эскортный корабль, заказанный «Вайперами» у стороннего производителя. Разработан недавно и использует современное вооружение с чёрного рынка. # Exodus Viper localization
-  price: 83100 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 87689 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Viper
   access: Viper # Exodus restore-viper-group

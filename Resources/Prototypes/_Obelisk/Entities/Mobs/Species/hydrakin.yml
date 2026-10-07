@@ -9,8 +9,8 @@
   id: BaseMobHydrakin
   abstract: true
   components:
-  - type: Genome # Exodus: cryogenic protection and heat generation are independent genes.
-    initialMutations: [GeneticCryostasis, GeneticHyperthermia] # Exodus
+  - type: Genome # Exodus: native temperature traits, regeneration and remote viewing.
+    initialMutations: [GeneticCryostasis, GeneticHyperthermia, GeneticRegeneration, GeneticRemoteViewing] # Exodus
   - type: UserInterface # Mono
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:

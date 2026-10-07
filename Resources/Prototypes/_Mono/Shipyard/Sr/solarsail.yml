@@ -3,7 +3,8 @@
   parent: BaseVessel
   name: Парусник # Ru-Localization
   description: Личный транспорт и мобильный офис Коменданта. # Ru-Localization
-  price: 25500
+  price: 25940 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999909341 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Sr
   access: HeadOfPersonnel

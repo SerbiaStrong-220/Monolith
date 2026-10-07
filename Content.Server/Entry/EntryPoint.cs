@@ -1,5 +1,6 @@
 using Content.Server._Exodus.Adminbus.WebAPI; // Exodus-WebAPI
 using Content.Server._Exodus.GuideGenerator; // Exodus
+using Content.Server._Exodus.Economy; // Exodus market persistence
 using Content.Server._Mono.Company; // Mono
 using Content.Server._Mono.MonoCoins; // Mono
 using Content.Server._Exodus.Bank; // Exodus
@@ -225,6 +226,10 @@ namespace Content.Server.Entry
         protected override void Dispose(bool disposing)
         {
             _playTimeTracking?.Shutdown();
+            // Exodus-begin: entity systems shut down after the database, so flush the market first.
+            if (_sysMan != null && _sysMan.TryGetEntitySystem<DynamicMarketSystem>(out var market))
+                market.FlushForShutdown();
+            // Exodus-end
             _dbManager?.Shutdown();
             IoCManager.Resolve<ServerApi>().Shutdown();
 

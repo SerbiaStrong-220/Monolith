@@ -738,9 +738,9 @@
   productEntity: StealthBox
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 30 # Exodus - triple stealth box price
+    Telecrystal: 10 # Exodus - stealth box discount
   cost:
-    Telecrystal: 75 # Exodus - triple stealth box price
+    Telecrystal: 25 # Exodus - stealth box price
   categories:
   - UplinkDeception
 

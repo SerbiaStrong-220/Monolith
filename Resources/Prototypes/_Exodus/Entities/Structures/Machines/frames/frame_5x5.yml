@@ -1,0 +1,79 @@
+- type: entity
+  parent: UnfinishedMachineFrame3x3
+  id: UnfinishedMachineFrame5x5
+  name: machine frame (5x5)
+  description: A large machine under construction. Needs more parts.
+  suffix: Unfinished
+  components:
+  - type: Construction
+    graph: Machine5x5
+  - type: Sprite
+    offset: 0, 0
+    scale: 1.666667, 1.666667
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-2.4,-2.4,2.4,2.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: MachineFrame3x3
+  id: MachineFrame5x5
+  name: machine frame (5x5)
+  suffix: Ready
+  components:
+  - type: Construction
+    graph: Machine5x5
+  - type: MachineFrame
+    frameSize: 5x5
+  - type: Sprite
+    offset: 0, 0
+    scale: 1.666667, 1.666667
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-2.4,-2.4,2.4,2.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: MachineFrameDestroyed3x3
+  id: MachineFrameDestroyed5x5
+  name: destroyed machine frame (5x5)
+  components:
+  - type: Construction
+    graph: Machine5x5
+  - type: Sprite
+    offset: 0, 0
+    scale: 1.666667, 1.666667
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-2.4,-2.4,2.4,2.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 25
+            max: 75
+      - !type:DoActsBehavior
+        acts: [Destruction]

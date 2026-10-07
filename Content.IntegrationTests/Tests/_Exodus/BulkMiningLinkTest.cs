@@ -1,11 +1,15 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using Content.Client._Exodus.Mining.AutoMining;
 using Content.IntegrationTests.Pair;
 using Content.Server._Exodus.Mining.AutoMining;
 using Content.Server._Exodus.Mining.Pipes;
 using Content.Server._Exodus.Mining.Pipes.Components;
+using Content.Server.Cargo.Systems;
+using Content.Server.Lathe;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -15,10 +19,16 @@ using Content.Shared._Exodus.Mining.Pipes;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Server.GameObjects;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests._Exodus;
 
@@ -43,8 +53,11 @@ public sealed class BulkMiningLinkTest
         });
     }
 
-    [Test]
-    public async Task RequestAndAcceptJoinLiquidMetalNetworksAndApplyBonuses()
+    [TestCase("BulkAutoMiningEmitter", "BulkAutoMiningEmitter")]
+    [TestCase("BulkMiningLinkRelay", "BulkAutoMiningEmitter")]
+    [TestCase("BulkAutoMiningEmitter", "BulkMiningLinkRelay")]
+    [TestCase("BulkMiningLinkRelay", "BulkMiningLinkRelay")]
+    public async Task RequestAndAcceptJoinLiquidMetalNetworksAndApplyBonuses(string firstPrototype, string secondPrototype)
     {
         await using var pair = await PoolManager.GetServerClient();
         var map = await pair.CreateTestMap();
@@ -54,8 +67,8 @@ public sealed class BulkMiningLinkTest
         EntityUid refinery = default;
         await pair.Server.WaitAssertion(() =>
         {
-            first = CreateShip(pair, map, new Vector2(0, 30), 2.5f);
-            second = CreateShip(pair, map, new Vector2(20, 30), -2.5f);
+            first = CreateShip(pair, map, new Vector2(0, 30), firstPrototype, 2.5f);
+            second = CreateShip(pair, map, new Vector2(20, 30), secondPrototype, -2.5f);
             // The first ship feeds a refinery from its linked laser through an ore duct.
             refinery = em.SpawnEntity("BulkMiningRefinery", new EntityCoordinates(first.Grid, -1.5f, -3.5f));
             for (var y = -4; y <= 0; y++)
@@ -108,7 +121,7 @@ public sealed class BulkMiningLinkTest
             Assert.That(materials.GetMaterialAmount(refinery, slurry), Is.EqualTo(5700), "Remote buffers are offered to the lathe.");
 
             refineries.UpdateLinkBonus((refinery, em.GetComponent<MiningRefineryComponent>(refinery)), 2);
-            Assert.That(lathe.FinalTimeMultiplier, Is.EqualTo(baseTime / 1.15f).Within(0.0001f));
+            Assert.That(lathe.FinalTimeMultiplier, Is.EqualTo(baseTime).Within(0.0001f), "The consortium speeds up mining, not refining.");
             Assert.That(lathe.FinalMaterialUseMultiplier, Is.EqualTo(baseMaterial / 1.15f).Within(0.0001f));
             Assert.That(em.GetComponent<MiningRefineryComponent>(refinery).StorageState.LinkBonus, Is.EqualTo(0.15f).Within(0.0001f));
 
@@ -122,6 +135,198 @@ public sealed class BulkMiningLinkTest
             refineries.UpdateLinkBonus((refinery, em.GetComponent<MiningRefineryComponent>(refinery)), 1);
             Assert.That(lathe.FinalTimeMultiplier, Is.EqualTo(baseTime).Within(0.0001f), "Removing the bonus must not drift.");
             Assert.That(lathe.FinalMaterialUseMultiplier, Is.EqualTo(baseMaterial).Within(0.0001f));
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task ConsortiumSpeedsUpMiningAndUpdatesWhenLinksChange()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var map = await pair.CreateTestMap();
+        var em = pair.Server.EntMan;
+        LinkShip first = default!;
+        LinkShip middle = default!;
+        LinkShip last = default!;
+        await pair.Server.WaitAssertion(() =>
+        {
+            first = CreateShip(pair, map, new Vector2(0, 30), 2.5f, -2.5f);
+            middle = CreateShip(pair, map, new Vector2(20, 30), -2.5f, 2.5f);
+            last = CreateShip(pair, map, new Vector2(40, 30), -2.5f);
+            first.Console.Comp.TilesPerTick = 1;
+
+            var maps = em.System<SharedMapSystem>();
+            map.Grid.Comp.CanSplit = false;
+            for (var x = 0; x < 16; x++)
+                maps.SetTile(map.Grid, map.Grid.Comp, new Vector2i(x, 0), map.Tile.Tile);
+
+            em.AddComponent<BulkMiningDepositComponent>(map.Grid);
+            var generated = new BulkMiningDepositGeneratedEvent();
+            em.EventBus.RaiseLocalEvent(map.Grid, ref generated);
+        });
+        await WaitPowered(pair, first, middle, last);
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            var system = em.System<BulkAutoMiningSystem>();
+            var timing = pair.Server.ResolveDependency<IGameTiming>();
+            var miner = em.GetComponent<BulkAutoMiningEmitterComponent>(first.Lasers[1]);
+            var job = em.GetComponent<BulkAutoMiningJobComponent>(first.Console);
+            Assert.That(system.TryRequestLink(first.Console, middle.Grid), Is.True);
+            Assert.That(system.TryAcceptLink(middle.Console, first.Grid), Is.True);
+            Assert.That(system.TrySelectGrid(first.Console, map.Grid), Is.True);
+            Assert.That(system.TryStartMining(first.Console), Is.True);
+            Assert.That(first.Console.Comp.ProcessedTiles, Is.EqualTo(1));
+            Assert.That((miner.NextMiningTime - timing.CurTime).TotalSeconds, Is.EqualTo(3.333333).Within(0.00001),
+                "+20% mining speed divides the console's four-second cycle by 1.2.");
+
+            Assert.That(system.TryRequestLink(last.Console, middle.Grid), Is.True);
+            Assert.That(system.TryAcceptLink(middle.Console, last.Grid), Is.True);
+            miner.NextMiningTime = TimeSpan.Zero;
+            job.NextProcessTime = TimeSpan.Zero;
+            system.Update(0);
+            Assert.That(first.Console.Comp.ProcessedTiles, Is.EqualTo(2));
+            Assert.That((miner.NextMiningTime - timing.CurTime).TotalSeconds, Is.EqualTo(3.076923).Within(0.00001),
+                "A third ship raises the mining bonus to the 30% cap.");
+
+            // Losing the remote link must update the surviving consortium without reopening the console.
+            em.DeleteEntity(last.Laser);
+            miner.NextMiningTime = TimeSpan.Zero;
+            job.NextProcessTime = TimeSpan.Zero;
+            system.Update(0);
+            Assert.That(first.Console.Comp.ProcessedTiles, Is.EqualTo(3));
+            Assert.That((miner.NextMiningTime - timing.CurTime).TotalSeconds, Is.EqualTo(3.333333).Within(0.00001));
+
+            Assert.That(system.TryBreakLink(first.Console, middle.Grid), Is.True);
+            miner.NextMiningTime = TimeSpan.Zero;
+            job.NextProcessTime = TimeSpan.Zero;
+            system.Update(0);
+            Assert.That(first.Console.Comp.ProcessedTiles, Is.GreaterThanOrEqualTo(4));
+            Assert.That((miner.NextMiningTime - timing.CurTime).TotalSeconds, Is.EqualTo(4).Within(0.00001),
+                "An isolated ship returns to its base mining interval.");
+            system.StopMining(first.Console);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SavedConsortiumBonusDoesNotLeaveARefiningSpeedBonus(bool legacy)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var map = await pair.CreateTestMap();
+        var em = pair.Server.EntMan;
+        await pair.Server.WaitAssertion(() =>
+        {
+            var uid = em.SpawnEntity("BulkMiningRefinery", map.GridCoords);
+            var refinery = em.GetComponent<MiningRefineryComponent>(uid);
+            var lathe = em.GetComponent<LatheComponent>(uid);
+            var baseTime = lathe.TimeMultiplier;
+            var baseMaterial = lathe.MaterialUseMultiplier;
+            // Recreate the serialized multipliers of a linked refinery before or after the speed change.
+            em.System<LatheSystem>().SetLatheMultipliers((uid, lathe),
+                materialUse: baseMaterial / 1.15f, time: legacy ? baseTime / 1.15f : baseTime);
+            refinery.LinkBonus = 0.15f;
+
+            var loader = em.System<MapLoaderSystem>();
+            using var writer = new StringWriter();
+            Assert.That(loader.TrySaveGrid(map.Grid, writer), Is.True);
+            var saved = writer.ToString();
+            if (legacy)
+                saved = new Regex(@"(?m)^[ \t]*linkBonusAffectsSpeed:.*\r?\n").Replace(saved, "");
+
+            em.DeleteEntity(map.Grid);
+            using var reader = new StringReader(saved);
+            Assert.That(loader.TryLoadGrid(reader, "consortium-speed-save-test", out _, out var grid,
+                DeserializationOptions.Default with { InitializeMaps = true }), Is.True);
+
+            var found = 0;
+            var query = em.AllEntityQueryEnumerator<MiningRefineryComponent, LatheComponent, TransformComponent>();
+            while (query.MoveNext(out var loaded, out var loadedRefinery, out var loadedLathe, out var xform))
+            {
+                if (xform.GridUid != grid!.Value.Owner)
+                    continue;
+
+                found++;
+                var system = em.System<MiningRefinerySystem>();
+                for (var i = 0; i < 3; i++)
+                    system.UpdateLinkBonus((loaded, loadedRefinery), 1);
+
+                Assert.That(loadedLathe.TimeMultiplier, Is.EqualTo(baseTime).Within(0.00001));
+                Assert.That(loadedLathe.FinalTimeMultiplier, Is.EqualTo(baseTime).Within(0.00001));
+                Assert.That(loadedLathe.MaterialUseMultiplier, Is.EqualTo(baseMaterial).Within(0.00001));
+            }
+            Assert.That(found, Is.EqualTo(1));
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task RelaysCannotMineOrIncreaseTheMiningTargetLimit()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var map = await pair.CreateTestMap();
+        var em = pair.Server.EntMan;
+        LinkShip ship = default!;
+        EntityUid miner = default;
+        Entity<MapGridComponent> secondTarget = default;
+        await pair.Server.WaitAssertion(() =>
+        {
+            ship = CreateShip(pair, map, new Vector2(0, 30), "BulkMiningLinkRelay", 2.5f);
+            ship.Console.Comp.TilesPerTick = 1;
+            var maps = em.System<SharedMapSystem>();
+            map.Grid.Comp.CanSplit = false;
+            for (var x = 0; x < 4; x++)
+                maps.SetTile(map.Grid, map.Grid.Comp, new Vector2i(x, 0), map.Tile.Tile);
+
+            em.AddComponent<BulkMiningDepositComponent>(map.Grid);
+            var generated = new BulkMiningDepositGeneratedEvent();
+            em.EventBus.RaiseLocalEvent(map.Grid, ref generated);
+            secondTarget = pair.Server.ResolveDependency<IMapManager>().CreateGridEntity(map.MapId);
+            em.System<SharedTransformSystem>().SetWorldPosition(secondTarget, new Vector2(20, 0));
+            maps.SetTile(secondTarget, secondTarget.Comp, Vector2i.Zero, map.Tile.Tile);
+        });
+        await WaitPowered(pair, ship);
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            var system = em.System<BulkAutoMiningSystem>();
+            Assert.That(system.TrySelectGrid(ship.Console, map.Grid), Is.False, "A relay grants no mining target slots.");
+            // A saved or otherwise stale selection must not allow the relay to start excavating.
+            ship.Console.Comp.SelectedGrids.Add(map.Grid);
+            Assert.That(system.TryStartMining(ship.Console), Is.False);
+            ship.Console.Comp.SelectedGrids.Clear();
+            Assert.That(em.System<SharedMapSystem>().GetTileRef(map.Grid, map.Grid.Comp, Vector2i.Zero).Tile.IsEmpty, Is.False);
+
+            miner = em.SpawnEntity("BulkAutoMiningEmitter", new EntityCoordinates(ship.Grid, -2.5f, .5f));
+            em.System<PowerReceiverSystem>().SetNeedsPower(miner, false);
+            ship.Lasers.Add(miner);
+        });
+        await WaitPowered(pair, ship);
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            var system = em.System<BulkAutoMiningSystem>();
+            Assert.That(system.TrySelectGrid(ship.Console, map.Grid), Is.True);
+            Assert.That(system.TrySelectGrid(ship.Console, secondTarget), Is.False,
+                "One miner and one relay still allow only one mining target.");
+            Assert.That(system.TryStartMining(ship.Console), Is.True);
+        });
+        await PoolManager.WaitUntil(pair.Server, () => ship.Console.Comp.ProcessedTiles > 0);
+        await pair.Server.WaitAssertion(() =>
+        {
+            var relay = em.GetComponent<BulkAutoMiningEmitterComponent>(ship.Laser);
+            var materials = em.System<SharedMaterialStorageSystem>();
+            Assert.Multiple(() =>
+            {
+                Assert.That(relay.Controller, Is.Null, "Mining must leave relays free for links.");
+                Assert.That(relay.BeamGrid, Is.Null);
+                Assert.That(materials.GetTotalMaterialAmount(ship.Laser, localOnly: true), Is.Zero);
+                Assert.That(materials.GetTotalMaterialAmount(miner, localOnly: true), Is.GreaterThan(0));
+                Assert.That(em.System<PricingSystem>().GetPrice(ship.Laser),
+                    Is.LessThan(em.System<PricingSystem>().GetPrice(miner)), "The assembled relay must be cheaper.");
+            });
+            em.System<BulkAutoMiningSystem>().StopMining(ship.Console);
         });
         await pair.CleanReturnAsync();
     }
@@ -268,8 +473,9 @@ public sealed class BulkMiningLinkTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task ConsoleWindowShowsIncomingRequestsAndLinks()
+    [TestCase("BulkAutoMiningEmitter", true)]
+    [TestCase("BulkMiningLinkRelay", false)]
+    public async Task ConsoleWindowShowsIncomingRequestsAndLinks(string prototype, bool canMine)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pair.Server;
@@ -281,7 +487,7 @@ public sealed class BulkMiningLinkTest
         EntityUid actor = default;
         await server.WaitAssertion(() =>
         {
-            first = CreateShip(pair, map, new Vector2(0, 30), 2.5f);
+            first = CreateShip(pair, map, new Vector2(0, 30), prototype, 2.5f);
             second = CreateShip(pair, map, new Vector2(20, 30), -2.5f);
         });
         await WaitPowered(pair, first, second);
@@ -294,6 +500,13 @@ public sealed class BulkMiningLinkTest
         await server.WaitAssertion(() =>
         {
             Assert.That(em.System<SharedUserInterfaceSystem>().TryOpenUi(first.Console.Owner, BulkAutoMiningUiKey.Key, actor), Is.True);
+            Assert.That(em.System<UserInterfaceSystem>().TryGetUiState<BulkAutoMiningBoundUserInterfaceState>(
+                first.Console.Owner, BulkAutoMiningUiKey.Key, out var state), Is.True);
+            Assert.That(state.MaxSelectableTargets, Is.EqualTo(canMine ? 1 : 0));
+            Assert.That(state.CanStart, Is.EqualTo(canMine));
+            Assert.That(state.LinkedLasers.Single().CanMine, Is.EqualTo(canMine));
+            Assert.That(state.LinkedLasers.Single().Status,
+                Is.EqualTo(canMine ? BulkAutoMiningLaserStatus.Ready : BulkAutoMiningLaserStatus.LinkOnly));
             Assert.That(em.System<BulkAutoMiningSystem>().TryRequestLink(second.Console, first.Grid), Is.True);
         });
         await pair.RunTicksSync(10);
@@ -315,6 +528,8 @@ public sealed class BulkMiningLinkTest
         {
             Assert.That(window.LinkPanelControl.ActiveLinks, Is.EqualTo(1));
             Assert.That(window.LinkPanelControl.IncomingRequests, Is.Zero);
+            Assert.That(window.LinkPanelControl.FindControl<Label>("SpeedBonus").Text, Is.EqualTo("+20%"));
+            Assert.That(window.LinkPanelControl.FindControl<Label>("YieldBonus").Text, Is.EqualTo("+15%"));
             window.SetLinkMode(false);
             Assert.That(window.RadarControl.LinkMode, Is.False);
         });
@@ -332,6 +547,11 @@ public sealed class BulkMiningLinkTest
 
     /// <summary>A small ship with a console and lasers at the given local X positions, facing along the X axis.</summary>
     private static LinkShip CreateShip(TestPair pair, TestMapData map, Vector2 position, params float[] lasers)
+    {
+        return CreateShip(pair, map, position, "BulkAutoMiningEmitter", lasers);
+    }
+
+    private static LinkShip CreateShip(TestPair pair, TestMapData map, Vector2 position, EntProtoId prototype, params float[] lasers)
     {
         var em = pair.Server.EntMan;
         var maps = em.System<SharedMapSystem>();
@@ -351,7 +571,7 @@ public sealed class BulkMiningLinkTest
         var ship = new LinkShip { Grid = grid, Console = (consoleUid, console) };
         foreach (var x in lasers)
         {
-            var laser = em.SpawnEntity("BulkAutoMiningEmitter", new EntityCoordinates(grid, x, .5f));
+            var laser = em.SpawnEntity(prototype, new EntityCoordinates(grid, x, .5f));
             power.SetNeedsPower(laser, false);
             ship.Lasers.Add(laser);
         }

@@ -11,6 +11,8 @@ public sealed class MarketConsoleBoundUserInterface : BoundUserInterface
 {
     private MarketMenu? _menu;
 
+    private int? _expectedPrice; // Exodus: total received with the most recent valid cart quote.
+
     [ViewVariables]
     public int BankBalance { get; private set; }
 
@@ -21,7 +23,7 @@ public sealed class MarketConsoleBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = new MarketMenu();
-        //_menu.OnClose += Close;
+        _menu.OnClose += Close; // Exodus: closing the persistent cart also closes its server UI session.
         _menu.OnAddToCart1 += args => AddToCart(args, 1);
         _menu.OnAddToCart5 += args => AddToCart(args, 5);
         _menu.OnAddToCart10 += args => AddToCart(args, 10);
@@ -39,6 +41,13 @@ public sealed class MarketConsoleBoundUserInterface : BoundUserInterface
 
         if (state is not MarketConsoleInterfaceState uiState)
             return;
+
+        // Exodus-begin: use the exact server quote and reject overflowing or unavailable totals.
+        var total = (long) uiState.CartBalance + uiState.TransactionCost;
+        _expectedPrice = uiState.Enabled && uiState.CanPurchase && total >= 0 && total <= int.MaxValue
+            ? (int) total
+            : null;
+        // Exodus-end
 
         if (_menu == null)
             return;
@@ -69,8 +78,12 @@ public sealed class MarketConsoleBoundUserInterface : BoundUserInterface
 
     private void PurchaseCrate(ButtonEventArgs args)
     {
-        SendMessage(new MarketPurchaseMessage());
-        Close();
+        // Exodus-begin: keep the cart open so a changed quote can be displayed before retrying.
+        if (_expectedPrice is not { } expectedPrice)
+            return;
+
+        SendMessage(new MarketPurchaseMessage(expectedPrice));
+        // Exodus-end
     }
 
     protected override void Dispose(bool disposing)

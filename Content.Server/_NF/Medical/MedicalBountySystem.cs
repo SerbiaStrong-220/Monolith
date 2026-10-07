@@ -1,5 +1,6 @@
 
 using System.Linq;
+using Content.Server._Exodus.Economy; // Exodus: redeemed goods enter the global stock.
 using Content.Server._NF.Bank;
 using Content.Server._NF.Medical.Components;
 using Content.Server.Body.Components;
@@ -41,6 +42,7 @@ public sealed partial class MedicalBountySystem : EntitySystem
     [Dependency] PowerReceiverSystem _power = default!;
     [Dependency] SharedAppearanceSystem _appearance = default!;
     [Dependency] BankSystem _bank = default!;
+    [Dependency] private DynamicMarketSystem _dynamicMarket = default!; // Exodus: wait for saved market state before redemption.
 
     private List<MedicalBountyPrototype> _cachedPrototypes = new();
 
@@ -153,6 +155,15 @@ public sealed partial class MedicalBountySystem : EntitySystem
 
     private void RedeemMedicalBounty(EntityUid uid, MedicalBountyRedemptionComponent component, RedeemMedicalBountyMessage ev)
     {
+        // Exodus-begin: never pay for or consume a patient while the economy is still loading.
+        if (!_dynamicMarket.Ready)
+        {
+            _popup.PopupEntity(Loc.GetString("market-sale-unavailable"), uid);
+            _audio.PlayPvs(component.DenySound, uid);
+            return;
+        }
+        // Exodus-end
+
         // Check that the medical redeemer has a valid medical bounty inside
         if (!_container.TryGetContainer(uid, component.BodyContainer, out var container) ||
             container.ContainedEntities.Count <= 0)
@@ -164,6 +175,11 @@ public sealed partial class MedicalBountySystem : EntitySystem
 
         // Assumption: only one object can be in the MedicalBountyRedemption
         EntityUid bountyUid = container.ContainedEntities[0];
+
+        // Exodus-begin: a queued body must not pay or enter stock twice before the end of the tick.
+        if (TerminatingOrDeleted(bountyUid) || EntityManager.IsQueuedForDeletion(bountyUid))
+            return;
+        // Exodus-end
 
         if (!TryComp<MedicalBountyComponent>(bountyUid, out var medicalBounty) ||
             medicalBounty.Bounty == null ||
@@ -210,6 +226,10 @@ public sealed partial class MedicalBountySystem : EntitySystem
             }
         }
 
+        // Exodus-begin: capture admitted goods before the patient's subtree is removed.
+        var stockEvent = new MarketGoodsSoldEvent([bountyUid], uid);
+        RaiseLocalEvent(ref stockEvent);
+        // Exodus-end
         QueueDel(bountyUid);
 
         _popup.PopupEntity(Loc.GetString("medical-bounty-redemption-success"), uid);
