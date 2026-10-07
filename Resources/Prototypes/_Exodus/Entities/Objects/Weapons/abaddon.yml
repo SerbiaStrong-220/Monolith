@@ -60,6 +60,7 @@
   name: ABADDON pulse ANNIHILATOR
   description: A TSF-biocoded pulse shotgun with an integrated reactor. Each volley fires six full-power rifle pulses. Can be fired one-handed.
   components:
+  - type: SafetyDepositRestricted
   - type: Gun
     fireRate: 4 # WeaponShotgunFlagbearer, issued to Tarkhans.
     minAngle: 1
@@ -98,6 +99,8 @@
   id: WeaponMurasamaExodusAbaddon
   name: ABADDON Murasama
   description: A Murasama high-frequency blade biocoded for TSF personnel.
+  components:
+  - type: SafetyDepositRestricted
 
 - type: entity
   parent: [ EnergySword, BaseExodusTsfBiocodedEquipment ]

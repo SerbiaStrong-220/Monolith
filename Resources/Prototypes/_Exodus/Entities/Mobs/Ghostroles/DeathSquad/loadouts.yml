@@ -10,7 +10,6 @@
     outerClothing: ClothingOuterHardsuitExodusAbaddon
     shoes: ClothingShoesBootsMagExodusAbaddon
     id: ExodusAbaddonPDA
-    pocket1: EnergySwordExodusAbaddon
     pocket2: BaseSecurityUplinkRadioOfficer
     belt: ClothingBeltExodusAbaddon
   storage:
@@ -27,3 +26,7 @@
     - WeaponLRC21PPLExodusAbaddon
     - WeaponHeavyPulseCannonExodusAbaddon
     - WeaponPulseAnnihilatorExodusAbaddon
+    - SpaceLeviathanChitinArmorPlate
+    - SpaceLeviathanChitinArmorPlate
+    - SpaceLeviathanChitinArmorPlate
+    - SpaceLeviathanChitinArmorPlate
