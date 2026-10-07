@@ -11,12 +11,18 @@
   - type: GhostRole
     name: ghost-role-information-exodus-abaddon-name
     description: ghost-role-information-exodus-abaddon-description
-    rules: ghost-role-information-Death-Squad-rules
+    rules: ghost-role-information-exodus-abaddon-rules
     raffle:
       settings: short
     mindRoles:
     - MindRoleGhostRoleFamiliar
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 72000 # 20 hours
   - type: GhostTakeoverAvailable
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleAbaddon
   - type: Loadout
     prototypes: [ ExodusDeathSquadGear ]
   - type: RandomMetadata
