@@ -6,7 +6,7 @@
   parent: BaseVesselAntag
   name: КД-270 # Ru-Localization
   description: Оснащён двумя 57-мм орудиями и двумя малыми малыми боевыми отсеками вооружения. В отличие от других шаттлов, его корпус выполнен из пластитана вместо пластали, что обеспечивает гораздо большую защиту. # Ru-Localization
-  price: 64700 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
+  price: 69162 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

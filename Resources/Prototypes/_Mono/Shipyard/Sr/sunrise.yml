@@ -7,7 +7,8 @@
   parent: BaseVessel
   name: Восход # Ru-Localization
   description: Шаттл оборудованный под нужды частного детектива. Оснащён набором криминалистических инструментов для расследований. Способен останавливать контрабандистов и гражданские корабли с помощью М220 Рубикон и сбегать от всего, что опаснее его самого. # Ru-Localization
-  price: 59000
+  price: 65339 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.97672677 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Sr
   access: Brig # Oddball, matches guard ID, specific enough to exclude cadets

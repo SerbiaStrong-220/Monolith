@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Слепень # Ru-Localization
   description: Лёгкий вооруженный шаттл, сваренный из металлолома шайкой безумных наёмников. Спроектирован так, чтобы сделать один выстрел и умереть. Не оснащён никакой атмосферой - берите свой скафандр. # Ru-Localization
-  price: 35800 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 38576 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999352634 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Scrap
   shuttlePath: /SharedMaps/_Mono/Shuttles/Scrapyard/horsefly.yml # Exodus: upstream remap, existing vessel settings retained.

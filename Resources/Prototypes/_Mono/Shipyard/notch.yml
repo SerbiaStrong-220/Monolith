@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Нотч # Ru-Localization
   description: Небольшой утилизаторский шаттл с самым необходимым для любого начинающего старателя в секторе. Быстрый и компактный. Гордая часть коллекции гражданских космических кораблей Дрэйк Индастрис. # Ru-Localization
-  price: 25900
+  price: 29879 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.980575979 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/notch.yml

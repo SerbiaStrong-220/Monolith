@@ -75,6 +75,7 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, EntRemovedFromContainerMessage>(OnEntityRemoved); // Frontier
 
             SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
+            SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnMarketUiOpened); // Exodus: quote on open.
 
             Subs.BuiEvents<VendingMachineComponent>(VendingMachineUiKey.Key, subs =>
             {
@@ -133,7 +134,15 @@ namespace Content.Server.VendingMachines
             if (component.Ejecting)
                 return;
 
-            AuthorizedVend(uid, entity, args.Type, args.ID, component);
+            // Exodus-begin: clients must acknowledge the price they were shown.
+            if (component.RequiresCash && args.ExpectedPrice == null)
+            {
+                RejectMarketPurchase((uid, component), entity, "market-purchase-price-changed");
+                return;
+            }
+
+            AuthorizedVend(uid, entity, args.Type, args.ID, component, args.ExpectedPrice);
+            // Exodus-end
         }
 
         private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, ref PowerChangedEvent args)
@@ -271,54 +280,14 @@ namespace Content.Server.VendingMachines
         /// <param name="vendComponent"></param>
         public bool TryEjectVendorItem(EntityUid uid, InventoryType type, string itemId, bool throwItem, VendingMachineComponent? vendComponent = null)
         {
-            if (!Resolve(uid, ref vendComponent))
+            // Exodus-begin: share preflight with paid vending, without consuming anything on failure.
+            if (!Resolve(uid, ref vendComponent) ||
+                !TryPrepareMarketVend((uid, vendComponent), type, itemId, out var entry))
                 return false;
 
-            if (vendComponent.Ejecting || vendComponent.Broken || !this.IsPowered(uid, EntityManager))
-            {
-                return false;
-            }
-
-            var entry = GetEntry(uid, itemId, type, vendComponent);
-
-            if (entry == null)
-            {
-                Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
-                Deny(uid, vendComponent);
-                return false;
-            }
-
-            if (entry.Amount <= 0)
-            {
-                Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid);
-                Deny(uid, vendComponent);
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(entry.ID))
-                return false;
-
-            if (!TryComp<TransformComponent>(vendComponent.Owner, out var transformComp))
-                return false;
-
-            // Start Ejecting, and prevent users from ordering while anim playing
-            vendComponent.Ejecting = true;
-            vendComponent.NextItemToEject = entry.ID;
-            vendComponent.ThrowNextItem = throwItem;
-
-            if (TryComp(uid, out SpeakOnUIClosedComponent? speakComponent))
-                _speakOnUIClosed.TrySetFlag((uid, speakComponent));
-
-            // Frontier: unlimited vending
-            // Infinite supplies must stay infinite.
-            if (entry.Amount != uint.MaxValue)
-                entry.Amount--;
-            // End Frontier
-
-            Dirty(uid, vendComponent);
-            TryUpdateVisualState(uid, vendComponent);
-            Audio.PlayPvs(vendComponent.SoundVend, uid);
+            BeginMarketVend((uid, vendComponent), entry, throwItem);
             return true;
+            // Exodus-end
         }
 
         // Frontier: custom vending check
@@ -330,102 +299,10 @@ namespace Content.Server.VendingMachines
         /// <param name="type">The type of inventory the item is from</param>
         /// <param name="itemId">The prototype ID of the item</param>
         /// <param name="component"></param>
-        public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
+        /// <param name="expectedPrice">Exodus: optional for server grants; paid UI requests must confirm their quote.</param>
+        public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component, int? expectedPrice = null)
         {
-            if (!_prototypeManager.TryIndex<EntityPrototype>(itemId, out var proto))
-                return;
-
-            var price = _pricing.GetEstimatedPrice(proto);
-            // Somewhere deep in the code of pricing, a hardcoded 20 dollar value exists for anything without
-            // a staticprice component for some god forsaken reason, and I cant find it or think of another way to
-            // get an accurate price from a prototype with no staticprice comp.
-            // this will undoubtably lead to vending machine exploits if I cant find wtf pricing system is doing.
-            // also stacks, food, solutions, are handled poorly too f
-            if (price == 0)
-                price = 20;
-
-            if (TryComp<MarketModifierComponent>(component.Owner, out var modifier))
-                price *= modifier.Mod;
-
-            var totalPrice = component.RequiresCash ? (int) price : 0;
-
-            // If any price has a vendor price, explicitly use its value - higher OR lower, over others.
-            var priceVend = _pricing.GetEstimatedVendPrice(proto);
-            if (priceVend > 0.0 && component.RequiresCash) // if vending price exists, overwrite it.
-                totalPrice = (int) priceVend;
-
-            if (IsAuthorized(uid, sender, component))
-            {
-                int bankBalance = 0;
-                if (!HasComp<IronmanComponent>(sender) && TryComp<BankAccountComponent>(sender, out var bank))
-                    bankBalance = bank.Balance;
-
-                int cashSlotBalance = 0;
-                Entity<StackComponent>? cashEntity = null;
-                if (component.CashSlotName != null
-                    && component.CurrencyStackType != null
-                    && ItemSlots.TryGetSlot(uid, component.CashSlotName, out var cashSlot)
-                    && TryComp<StackComponent>(cashSlot?.ContainerSlot?.ContainedEntity, out var stackComp)
-                    && stackComp!.StackTypeId == component.CurrencyStackType)
-                {
-                    cashSlotBalance = stackComp!.Count;
-                    cashEntity = (cashSlot!.ContainerSlot!.ContainedEntity.Value, stackComp!);
-                }
-
-                if (totalPrice > bankBalance + cashSlotBalance)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("bank-insufficient-funds"), uid);
-                    Deny(uid, component);
-                    return;
-                }
-
-                bool paidFully = false;
-                // Mono: Store the purchase price for tracking
-                component.LastPurchasePrice = totalPrice;
-
-                if (TryEjectVendorItem(uid, type, itemId, component.CanShoot, component))
-                {
-                    if (cashEntity != null)
-                    {
-                        var newCashSlotBalance = Math.Max(cashSlotBalance - totalPrice, 0);
-                        _stack.SetCount(cashEntity.Value.Owner, newCashSlotBalance, cashEntity.Value.Comp);
-                        component.CashSlotBalance = newCashSlotBalance;
-                        paidFully = true; // Either we paid fully with cash, or we need to withdraw the remainder
-                    }
-                    if (totalPrice > cashSlotBalance && !HasComp<Content.Shared._Mono.Traits.Physical.IronmanComponent>(sender))
-                        paidFully = _bankSystem.TryBankWithdraw(sender, totalPrice - cashSlotBalance);
-
-                    // If we paid completely, pay our station taxes
-                    if (paidFully)
-                    {
-                        // Exodus-begin direct product revenue, replacing the usual tax split.
-                        var inventory = _prototypeManager.Index<VendingMachineInventoryPrototype>(component.PackPrototypeId);
-                        if (inventory.RevenueAccounts.TryGetValue(itemId, out var recipient))
-                        {
-                            if (totalPrice > 0 && !_bankSystem.TrySectorDeposit(recipient, totalPrice, LedgerEntryType.ProductSales))
-                                Log.Error($"Could not credit {totalPrice} to {recipient} for vending product {itemId}.");
-                        }
-                        else
-                        {
-                            foreach (var (account, taxCoeff) in component.TaxAccounts)
-                            {
-                                if (!float.IsFinite(taxCoeff) || taxCoeff <= 0.0f)
-                                    continue;
-                                var tax = (int)Math.Floor(totalPrice * taxCoeff);
-                                _bankSystem.TrySectorDeposit(account, tax, LedgerEntryType.VendorTax);
-                            }
-                        }
-                        // Exodus-end
-                    }
-
-                    // Something was ejected, update the vending component's state
-                    Dirty(uid, component);
-
-                    _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"{ToPrettyString(sender):user} bought from [vendingMachine:{ToPrettyString(uid!)}, product:{proto.Name}, cost:{totalPrice},  with ${cashSlotBalance} in the cash slot and ${bankBalance} in the bank.");
-                }
-            }
-            // End Frontier
+            PurchaseVendorItem((uid, component), sender, type, itemId, expectedPrice); // Exodus: quote, pay, reserve, commit.
         }
 
         /// <summary>
@@ -592,6 +469,7 @@ namespace Content.Server.VendingMachines
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            UpdateMarketPrices(); // Exodus: refresh quotes only for machines with an open UI.
 
             var query = EntityQueryEnumerator<VendingMachineComponent>();
             while (query.MoveNext(out var uid, out var comp))

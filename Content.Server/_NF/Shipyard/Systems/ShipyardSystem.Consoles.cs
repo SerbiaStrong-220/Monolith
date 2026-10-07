@@ -501,6 +501,15 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         bool voucherUsed = deed.PurchasedWithVoucher;
 
+        // Exodus-begin: wait before transferring records or applying any paid sale side effects.
+        if (!voucherUsed && !_dynamicMarket.Ready)
+        {
+            ConsolePopup(player, Loc.GetString("market-sale-unavailable"));
+            PlayDenySound(player, uid, component);
+            return;
+        }
+        // Exodus-end
+
         if (!TryComp<BankAccountComponent>(player, out var bank))
         {
             ConsolePopup(player, Loc.GetString("shipyard-console-no-bank"));
@@ -539,7 +548,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        var saleResult = TrySellShuttle(stationUid, shuttleUid, uid, out var bill);
+        var saleResult = TrySellShuttle(stationUid, shuttleUid, uid, out var bill, paidSale: !voucherUsed); // Exodus: unpaid voucher returns cannot stock the market.
         if (saleResult.Error != ShipyardSaleError.Success)
         {
             switch (saleResult.Error)
@@ -553,6 +562,11 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 case ShipyardSaleError.InvalidShip:
                     ConsolePopup(player, Loc.GetString("shipyard-console-sale-invalid-ship"));
                     break;
+                // Exodus-begin: preserve the caller's localized explanation for a rejected sale.
+                case ShipyardSaleError.MessageOverwritten:
+                    ConsolePopup(player, saleResult.OverwrittenMessage ?? Loc.GetString("market-sale-unavailable"));
+                    break;
+                // Exodus-end
                 default:
                     ConsolePopup(player, Loc.GetString("shipyard-console-sale-unknown-reason", ("reason", saleResult.Error.ToString())));
                     break;

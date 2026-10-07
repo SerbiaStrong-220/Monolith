@@ -35,6 +35,7 @@
                 <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
                 <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
                 <CheckBox Name="ShowOfferModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-offer-mode-indicators'}" /> <!-- CorvaxGoob-Offer -->
+                <CheckBox Name="MouseWheelZoomCheckBox" Text="{Loc 'exodus-ui-options-mouse-wheel-zoom'}" /> <!-- Exodus: mouse wheel zoom. -->
                 <Label Text="{Loc 'ui-options-general-storage'}"
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />

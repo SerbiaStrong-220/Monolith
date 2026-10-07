@@ -1,0 +1,58 @@
+- type: entity
+  id: ShieldGeneratorAegis
+  parent: ShieldGeneratorEmpBase
+  name: aegis-shield-generator-name
+  description: aegis-shield-generator-description
+  components:
+  - type: ShipShieldEmitter
+    # Slightly below the MS-250, with EMP protection inherited from the shared base.
+    damageLimit: 165000
+    healPerSecond: 700
+    damageExp: 1.05
+    baseDraw: 30000
+    maxDraw: 70000
+    unpoweredBonus: 4
+    damageOverloadTimePunishment: 110
+    collisionResistanceMultiplier: 0.65
+    shieldColor: "#36E8C5"
+    rippleShader: ShipShieldHoneycomb
+  - type: ShipShieldRecoveryBoost
+    recoveryDelay: 9
+    multiplier: 1.4
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+  - type: Sprite
+    sprite: _Exodus/Structures/ShuttleComponents/hex_shield_generator.rsi
+    offset: 0,0
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+  - type: PointLight
+    color: "#36E8C5"
+    offset: 0,0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: RadarBlip
+    visibleFromOtherGrids: false
+    config:
+      color: "#36E8C5"
+      shape: Square
+      respectZoom: true
+      rotate: true
+      bounds: "-1.5,-1.5,1.5,1.5"
+  - type: Machine
+    board: ShieldGeneratorAegisMachineCircuitboard
+  - type: Construction
+    graph: Machine3x3Centered

@@ -295,12 +295,11 @@
     emergencyShieldFraction: 0.25
   - type: PointLight
     color: "#48C96B"
-# Universal States of America corporate shield. A rippling field protects the whole ship from EMPs.
+# Shared field configuration for full-coverage EMP-protecting shields.
 - type: entity
-  id: ShieldGeneratorUnsa
+  id: ShieldGeneratorEmpBase
   parent: ShieldGeneratorSmall
-  name: unsa-directional-shield-generator-name
-  description: unsa-directional-shield-generator-description
+  abstract: true
   components:
   - type: ShipShieldEmitter
     damageLimit: 75000
@@ -312,6 +311,14 @@
     rippleWidth: 8
     rippleSpeed: 0.75
     collisionResistanceMultiplier: 1.0
+
+# Universal States of America corporate shield. A rippling field protects the whole ship from EMPs.
+- type: entity
+  id: ShieldGeneratorUnsa
+  parent: ShieldGeneratorEmpBase
+  name: unsa-directional-shield-generator-name
+  description: unsa-directional-shield-generator-description
+  components:
   - type: Sprite
     sprite: _Exodus/Structures/ShuttleComponents/liberty_shield_generator.rsi
     snapCardinals: true

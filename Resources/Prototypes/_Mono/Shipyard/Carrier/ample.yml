@@ -4,7 +4,7 @@
   parent: BaseVessel
   name: Эмпл # Ru-Localization
   description: Лёгкий шахтёрский шаттл, использующий для работы PTK-800. # Ru-Localization
-  price: 6250
+  price: 7130 # Exodus: expected ship and contents value; no additional markup.
   category: Micro
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

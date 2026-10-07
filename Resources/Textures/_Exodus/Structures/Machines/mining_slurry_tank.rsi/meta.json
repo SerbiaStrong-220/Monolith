@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "EXDS-RL",
+  "copyright": "for Exodus by NullReference {Discord: nrfr}",
+  "size": {
+    "y": 32,
+    "x": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

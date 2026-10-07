@@ -54,6 +54,13 @@
                        MaxWidth="250"
                        HorizontalExpand="True" />
             </BoxContainer>
+            <!-- Exodus: dynamic market trend -->
+            <Label Name="Trend"
+                   Access="Public"
+                   Align="Right"
+                   MaxWidth="250"
+                   HorizontalExpand="True"
+                   StyleClasses="LabelSubText" />
             <BoxContainer Orientation="Horizontal"
                           Align="Center"
                           MinWidth="60"

@@ -10,8 +10,11 @@ public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
 {
     public int OrderId;
 
-    public CargoConsoleApproveOrderMessage(int orderId)
+    public int? ExpectedPrice; // Exodus: approve only the total shown to the player.
+
+    public CargoConsoleApproveOrderMessage(int orderId, int? expectedPrice = null) // Exodus
     {
         OrderId = orderId;
+        ExpectedPrice = expectedPrice; // Exodus
     }
 }

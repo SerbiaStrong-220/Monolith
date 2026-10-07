@@ -8,7 +8,8 @@
   limit: 3
   hyperwarLimit: 5
   hyperwarTimelock: 1800
-  price: 280650
+  price: 295336 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998824835 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # voucher only
   category: Large
   group: BlackMarket

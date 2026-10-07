@@ -6,7 +6,7 @@
   parent: BaseVesselAntag
   name: Веска # Ru-Localization
   description: Модифицированный Эмпл, из которого убрали рудодобывающее оборудование и установили лёгкое корабельное орудие. # Ru-Localization
-  price: 6500
+  price: 8358 # Exodus: expected ship and contents value; no additional markup.
   category: Micro
   group: Custom
   mapchecker_group_override: BlackMarket  # Treat this as a BlackMarket vessel for mapchecker purposes

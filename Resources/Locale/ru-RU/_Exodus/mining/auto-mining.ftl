@@ -71,9 +71,9 @@ ent-BulkAutoMiningEmitterCircuitboard = плата бурового лазера
 bulk-auto-mining-mode-mining = Добыча
 bulk-auto-mining-mode-link = Связь кораблей
 bulk-auto-mining-mode-mining-hint = Выбор астероидов и управление выемкой.
-bulk-auto-mining-mode-link-hint = Консорциум: общие сети жидкого металла и бонус переработки.
-bulk-auto-mining-consortium-badge = Консорциум {$count} · +{$percent}%
-bulk-auto-mining-consortium-badge-tooltip = Корабли связаны лазерами. Переработчики в общей сети работают быстрее и тратят меньше жидкого металла.
+bulk-auto-mining-mode-link-hint = Консорциум: общие сети жидкого металла, ускорение добычи и экономия сырья.
+bulk-auto-mining-consortium-badge = Консорциум {$count} · добыча +{$percent}%
+bulk-auto-mining-consortium-badge-tooltip = Связь кораблей даёт +{$speed}% к скорости добычи и +{$yield}% к выходу ресурсов при переработке.
 bulk-auto-mining-laser-linked = Связь с «{$ship}»
 bulk-auto-mining-laser-hint-linked = Лазер держит связь консорциума и не добывает. Разорвать связь можно во вкладке «Связь кораблей».
 bulk-auto-mining-link-title = Консорциум
@@ -84,11 +84,11 @@ bulk-auto-mining-link-consortium-size = { $count ->
     [few] {$count} корабля
    *[other] {$count} кораблей
 }
-bulk-auto-mining-link-bonus-speed = Скорость переработки
-bulk-auto-mining-link-bonus-yield = Выход жидкого металла
+bulk-auto-mining-link-bonus-speed = Скорость добычи
+bulk-auto-mining-link-bonus-yield = Выход ресурсов
 bulk-auto-mining-link-bonus-value = +{$percent}%
-bulk-auto-mining-link-next-bonus = Ещё один корабль добавит [color=#6FE3C0]+{$percent}%[/color].
-bulk-auto-mining-link-bonus-max = Бонус консорциума достиг предела.
+bulk-auto-mining-link-next-bonus = Ещё один корабль добавит [color=#6FE3C0]+{$speed}%[/color] к скорости добычи и [color=#F2C66F]+{$yield}%[/color] к выходу ресурсов.
+bulk-auto-mining-link-bonus-max = Бонусы консорциума достигли предела.
 bulk-auto-mining-link-member-self = ● {$name} (этот корабль)
 bulk-auto-mining-link-member = ● {$name}
 bulk-auto-mining-link-incoming-title = Входящие запросы

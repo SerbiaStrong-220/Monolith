@@ -102,6 +102,10 @@
   name: air sensor assembly
   description: Air sensor assembly. An assembly of air sensors?
   components:
+    # Exodus-begin: retain the value of the two steel sheets in the assembly.
+    - type: StaticPrice
+      price: 11.8
+    # Exodus-end
     - type: Item
       size: Small
     - type: Anchorable

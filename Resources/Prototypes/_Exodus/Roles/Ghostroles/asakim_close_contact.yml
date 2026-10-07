@@ -1,0 +1,7 @@
+- type: ghostRole
+  id: AsakimCloseContactBorg
+  name: ghost-role-information-asakim-close-contact-borg
+  description: ghost-role-information-asakim-close-contact-borg-description
+  rules: ghost-role-information-silicon-rules
+  entityPrototype: PlayerBorgAsakimCloseContact
+  whitelisted: false

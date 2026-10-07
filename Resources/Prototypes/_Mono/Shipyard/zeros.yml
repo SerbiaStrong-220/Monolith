@@ -10,7 +10,8 @@
   parent: BaseVessel
   name: Зерос # Ru-Localization
   description: Шаттл-закусочная, стилизованный под тягач с полуприцепом. Имеет обеденный зал с доступом из открытого космоса и небольшой грузовой отсек. # Ru-Localization
-  price: 134000 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 142873 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.983619511 # Exodus: expected-price allowance for randomized contents.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/zeros.yml # Exodus: upstream remap, existing vessel settings retained.

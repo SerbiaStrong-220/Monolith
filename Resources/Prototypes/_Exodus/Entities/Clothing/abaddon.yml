@@ -1,0 +1,210 @@
+- type: entity
+  parent: ClothingBackpackDeathSquad
+  id: ClothingBackpackExodusAbaddon
+  name: ABADDON backpack
+  description: A combat backpack with a bluespace storage compartment.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9 # Same capacity as the satchel and duffelbag of holding.
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbingMed
+  id: ClothingBeltExodusAbaddon
+  name: ABADDON medical chest rig
+  description: Tactical medical webbing issued to ABADDON operatives.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitCombatFilled
+    - id: PowerDrill
+    - id: JawsOfLife
+    - id: WelderExperimental
+    - id: HandHeldMassScannerBorg
+
+- type: entity
+  parent: [ ClothingOuterHardsuitDeathsquad, MonoEnergyShieldClothing ]
+  id: ClothingOuterHardsuitExodusAbaddon
+  name: ABADDON hardsuit
+  description: A special operations hardsuit with reinforced shielding, armor plate mounts and an emergency teleportation and injection system. Its wearer cannot remove it unaided.
+  components:
+  - type: Clothing
+    stripDelay: 120
+    equipDelay: 120
+  - type: SelfUnremovableClothing
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.1
+        Piercing: 0.1
+        Heat: 0.1
+        Radiation: 0
+        Caustic: 0.1
+  - type: PersonalShield
+    visuals:
+      fillLevel: 0.15
+      hexDensity: 3
+      pixelGrid: 96
+      color: "#7F00FF"
+      scale: 2.0
+    shield:
+      requiredSlot: OUTERCLOTHING
+      maxCharge: 2500 # Ten times the M86 Mk.4 shield capacity and regeneration.
+      regenRate: 50
+      spinupTime: 0.75
+      breakCooldown: 20
+      powerDraw: 0.5
+      blockModifier:
+        coefficients:
+          Heat: 1.25
+          Radiation: 1.5
+  - type: Battery
+    maxCharge: 100
+    startingCharge: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 5
+    autoRechargePauseTime: 5
+  - type: EmpResistance
+    coefficient: 0.0001
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    oldMobState:
+    - Alive
+  - type: AddReagentOnTrigger
+    cooldown: 120
+    reagents:
+    - ReagentId: Ichor
+      Quantity: 25
+    - ReagentId: Omnizine
+      Quantity: 25
+  - type: RandomTeleportOnTrigger
+    cooldown: 120
+    specifier:
+      teleportRadius: 40
+      teleportAttempts: 5
+      forceSafe: false
+      minRadiusFraction: 0.75
+  - type: ToggleableClothing
+    requiredSlot: outerclothing
+    blockUnequipWhenAttached: false
+    replaceCurrentClothing: true
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitExodusAbaddon
+      helmetcover: ClothingHeadHelmetCoverBlock
+      helmetattachment: ClothingHeadHelmetAttachmentBlock
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitExodusAbaddon
+  name: ABADDON hardsuit helmet
+  description: A sealed combat helmet with colorless night vision.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: FireProtection
+    reduction: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+        Radiation: 0.8
+        Caustic: 0.95
+  - type: FlashImmunity
+  - type: NightVision
+    relayOverlay: true
+    goggleEffect: false
+    viewCircleRadius: 450
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#E6E6E6"
+    lightingColor: "#FFFFFF32"
+
+- type: entity
+  parent: [ ClothingHandsGlovesPowerglove, BaseExodusTsfBiocodedEquipment ]
+  id: ClothingHandsGlovesExodusAbaddon
+  name: ABADDON power gloves
+  description: Insulated powered gloves that amplify the force of each punch.
+  components:
+  - type: Insulated
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 50
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+
+- type: entity
+  parent: [ ClothingEyesBase, ShowSecurityIcons ]
+  id: ClothingEyesGlassesExodusAbaddon
+  name: ABADDON tactical glasses
+  description: TSF officer glasses with continuous thermal imaging.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Eyes/Glasses/deathsquad.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Eyes/Glasses/deathsquad.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: ThermalVision
+    isEquipment: true
+    pulseTime: 0
+    toggleAction: ToggleThermalVision
+    color: "#FFFFFFFF"
+    lightRadius: 45
+  - type: SafetyDepositRestricted
+  - type: Tag
+    tags:
+    - PetWearable
+    - SafetyDepositBlacklist
+
+- type: entity
+  parent: [ ClothingShoesBootsMagAdv, BaseJetpack ]
+  id: ClothingShoesBootsMagExodusAbaddon
+  name: ABADDON advanced magboots
+  description: Powered magnetic boots that compensate for injuries and boost movement speed while active. Their integrated jetpack holds 5 L of liquid oxygen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+    slots:
+    - FEET
+  - type: Item
+    sprite: null
+    size: Normal
+  - type: ClothingSpeedModifier
+    walkModifier: 1.2
+    sprintModifier: 1.2
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.25
+  - type: GasTank
+    outputPressure: 42.6
+    # Reinforced reservoir, safe even if its cryogenic contents warm to room temperature.
+    tankLeakPressure: 40000
+    tankRupturePressure: 45000
+    tankFragmentPressure: 50000
+    air:
+      volume: 5
+      temperature: 72
+      moles:
+        Oxygen: 62.369035 # LiquidOxygenCanister concentration, scaled from 1500 L to 5 L.

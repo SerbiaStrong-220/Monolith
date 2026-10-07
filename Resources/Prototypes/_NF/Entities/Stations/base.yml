@@ -88,7 +88,7 @@
       - Mail
       - Paper
       components:
-      - Anchorable # No structures, they won't fit in crates
+      - Anchorable # Exodus: structures use the additional stock rule below.
       - Food
       - Currency # No selling money.
       - SpaceGarbage
@@ -103,13 +103,68 @@
       - MindContainer # Positronic brains
       - Body # No corpses
       - MobPrice # Animals (live or dead) and the like
-      - Artifact # Unique, abusable for research points
+      - XenoArtifact # Exodus: current artifact component; unique, abusable for research points.
       - RCD # Dup charges
       - Storage # Till fixed
       - StorageFill # Till fixed
     whitelistOverride:
       components:
       - UraniumMaterials # Counts as food
+    # Exodus-begin: structures may be explosive machinery, but retain the other stock exclusions.
+    additionalStockRules:
+    - whitelist:
+        components:
+        - Anchorable
+      blacklist:
+        tags:
+        - Trash
+        - Mail
+        - Paper
+        components:
+        - Food
+        - Currency
+        - SpaceGarbage
+        - Contraband
+        - Gun
+        - Ammo
+        - Drink
+        - GasTank
+        - Actor
+        - Mind
+        - MindContainer
+        - Body
+        - MobPrice
+        - XenoArtifact
+        - RCD
+        - Storage
+        - StorageFill
+    # Exodus: explicitly saleable autonomous mobs may have an empty MindContainer.
+    - whitelist:
+        components:
+        - CargoSellableMob
+      blacklist:
+        tags:
+        - Trash
+        - Mail
+        - Paper
+        components:
+        - Food
+        - Currency
+        - SpaceGarbage
+        - Contraband
+        - Gun
+        - Ammo
+        - Drink
+        - GasTank
+        - Actor
+        - Mind
+        - Body
+        - MobPrice
+        - XenoArtifact
+        - RCD
+        - Storage
+        - StorageFill
+    # Exodus-end
 
 - type: entity
   id: BaseStationDeadDrops

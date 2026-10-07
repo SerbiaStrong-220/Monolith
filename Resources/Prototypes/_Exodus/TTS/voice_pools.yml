@@ -54,6 +54,22 @@
   - templar_assassin_dota_2
   - sisters_battle_sister_dow
 
+# Winter Solstice's elite operatives.
+- type: randomVoicesList
+  id: ExodusAbaddon
+  matchSex: true
+  voices:
+  # Male
+  - dornan
+  - officer_enclave
+  - guard_karskin_dow
+  - tychus
+  # Female
+  - sarah_lyons_fl3
+  - female_commander
+  - legion_commander_dota_2
+  - sisters_battle_sister_dow
+
 - type: randomVoicesList
   id: LivingSkeleton
   matchSex: true

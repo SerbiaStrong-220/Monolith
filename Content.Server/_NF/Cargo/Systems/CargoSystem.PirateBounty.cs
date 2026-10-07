@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server._Exodus.Economy; // Exodus: redeemed goods enter the global stock.
 using Content.Server._NF.Contraband.Components;
 using Content.Server._NF.Pirate.Components;
 using Content.Server.Labels;
@@ -370,6 +371,15 @@ public sealed partial class CargoSystem
         if (component.LastRedeemAttempt + _redemptionDelay > _timing.CurTime)
             return;
 
+        // Exodus-begin: keep bounty records and goods intact until saved market state is available.
+        if (!_dynamicMarket.Ready)
+        {
+            _audio.PlayPvs(component.DenySound, uid);
+            _popup.PopupEntity(Loc.GetString("market-sale-unavailable"), args.Actor);
+            return;
+        }
+        // Exodus-end
+
         EntityUid gridUid = Transform(uid).GridUid ?? EntityUid.Invalid;
         if (gridUid == EntityUid.Invalid)
             return;
@@ -429,6 +439,7 @@ public sealed partial class CargoSystem
         // 4. When done, note all completed bounties.  Remove them from the list of accepted bounties, and spawn the rewards.
         bool bountiesRemoved = false;
         string redeemedBounties = string.Empty;
+        var soldEntities = new HashSet<EntityUid>(); // Exodus: collect overlapping bounty roots before deleting any contents.
         foreach (var (id, bounty) in bountySearchState.CrateBounties)
         {
             bool bountyMet = true;
@@ -450,10 +461,7 @@ public sealed partial class CargoSystem
 
                 TryRemovePirateBounty(_sectorService.GetServiceEntity(), id);
                 amount += prototype.Reward;
-                foreach (var entity in bounty.Entities)
-                {
-                    Del(entity);
-                }
+                soldEntities.UnionWith(bounty.Entities); // Exodus: process all successful bounties as one intake.
             }
         }
 
@@ -478,12 +486,21 @@ public sealed partial class CargoSystem
 
                 TryRemovePirateBounty(_sectorService.GetServiceEntity(), id);
                 amount += prototype.Reward;
-                foreach (var entity in bounty.Entities)
-                {
-                    Del(entity);
-                }
+                soldEntities.UnionWith(bounty.Entities); // Exodus: process all successful bounties as one intake.
             }
         }
+
+        // Exodus-begin: snapshot each consumed subtree once while all its entities still exist.
+        if (soldEntities.Count > 0)
+        {
+            var stockEvent = new MarketGoodsSoldEvent(soldEntities, uid);
+            RaiseLocalEvent(ref stockEvent);
+            foreach (var entity in soldEntities)
+            {
+                Del(entity);
+            }
+        }
+        // Exodus-end
 
         if (amount > 0)
         {

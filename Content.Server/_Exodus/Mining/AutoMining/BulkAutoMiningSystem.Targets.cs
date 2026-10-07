@@ -36,7 +36,7 @@ public sealed partial class BulkAutoMiningSystem
             return false;
 
         ResolveEmitters(ent, job);
-        if (ent.Comp.SelectedGrids.Count >= job.Emitters.Count)
+        if (ent.Comp.SelectedGrids.Count >= CountMiningEmitters(job.Emitters))
         {
             Popup(ent, "bulk-auto-mining-start-no-emitter");
             return false;

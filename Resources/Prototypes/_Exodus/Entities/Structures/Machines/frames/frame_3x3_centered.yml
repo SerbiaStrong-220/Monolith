@@ -1,0 +1,66 @@
+- type: entity
+  parent: UnfinishedMachineFrame3x3
+  id: UnfinishedMachineFrame3x3Centered
+  name: centered machine frame (3x3)
+  description: A machine under construction with its mounting point in the center. Needs more parts.
+  suffix: Unfinished
+  components:
+  - type: Construction
+    graph: Machine3x3Centered
+  - type: Sprite
+    offset: 0, 0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: MachineFrame3x3
+  id: MachineFrame3x3Centered
+  name: centered machine frame (3x3)
+  description: A wired machine frame with its mounting point in the center.
+  suffix: Ready
+  components:
+  - type: Construction
+    graph: Machine3x3Centered
+  - type: MachineFrame
+    frameSize: 3x3Centered
+  - type: Sprite
+    offset: 0, 0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: MachineFrameDestroyed3x3
+  id: MachineFrameDestroyed3x3Centered
+  name: destroyed centered machine frame (3x3)
+  description: The remains of a machine with its mounting point in the center. Can be salvaged with a welding tool.
+  components:
+  - type: Construction
+    graph: Machine3x3Centered
+  - type: Sprite
+    offset: 0, 0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

@@ -8,7 +8,8 @@
   limit: 2
   hyperwarLimit: 4
   hyperwarTimelock: 3600
-  price: 345000 # Exodus: retain main-build ship price.
+  price: 354113 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.99932307 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # Voucher only
   category: Large
   group: BlackMarket

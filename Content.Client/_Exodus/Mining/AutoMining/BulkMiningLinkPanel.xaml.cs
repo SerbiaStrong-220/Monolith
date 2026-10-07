@@ -71,14 +71,15 @@ public sealed partial class BulkMiningLinkPanel : BoxContainer
     {
         var count = Math.Max(1, state.Members.Count);
         ConsortiumSize.Text = Loc.GetString("bulk-auto-mining-link-consortium-size", ("count", count));
-        var percent = Math.Round(state.Bonus * 100, 1);
-        SpeedBonus.Text = Loc.GetString("bulk-auto-mining-link-bonus-value", ("percent", percent));
-        YieldBonus.Text = Loc.GetString("bulk-auto-mining-link-bonus-value", ("percent", percent));
+        SpeedBonus.Text = Loc.GetString("bulk-auto-mining-link-bonus-value", ("percent", Math.Round(state.SpeedBonus * 100, 1)));
+        YieldBonus.Text = Loc.GetString("bulk-auto-mining-link-bonus-value", ("percent", Math.Round(state.Bonus * 100, 1)));
         var max = _cfg.GetCVar(EXCVars.BulkMiningLinkMaxBonus);
         BonusBar.Value = max > 0 ? Math.Clamp(state.Bonus / max, 0, 1) : 0;
         var next = state.NextBonus - state.Bonus;
-        NextBonus.SetMarkup(next > 0.0005f
-            ? Loc.GetString("bulk-auto-mining-link-next-bonus", ("percent", Math.Round(next * 100, 1)))
+        var nextSpeed = state.NextSpeedBonus - state.SpeedBonus;
+        NextBonus.SetMarkup(next > 0.0005f || nextSpeed > 0.0005f
+            ? Loc.GetString("bulk-auto-mining-link-next-bonus",
+                ("speed", Math.Round(nextSpeed * 100, 1)), ("yield", Math.Round(next * 100, 1)))
             : Loc.GetString("bulk-auto-mining-link-bonus-max"));
 
         MembersBox.RemoveAllChildren();

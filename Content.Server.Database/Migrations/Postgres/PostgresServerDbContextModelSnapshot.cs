@@ -873,6 +873,31 @@ namespace Content.Server.Database.Migrations.Postgres
                         });
                 });
 
+            // Exodus
+            modelBuilder.Entity("Content.Server.Database.EconomyMarketQuote", b =>
+                {
+                    b.Property<string>("MarketKey")
+                        .HasColumnType("text")
+                        .HasColumnName("market_key");
+
+                    b.Property<double>("Factor")
+                        .HasColumnType("double precision")
+                        .HasColumnName("factor");
+
+                    b.Property<float>("Trend")
+                        .HasColumnType("real")
+                        .HasColumnName("trend");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("MarketKey")
+                        .HasName("PK_economy_market_quotes");
+
+                    b.ToTable("economy_market_quotes", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
                 {
                     b.Property<int>("Id")
@@ -1600,6 +1625,32 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 
             // SS220-end
+            // Exodus-begin: persistent economy settings
+            modelBuilder.Entity("Content.Server.Database._Exodus.Economy.MarketSettingsRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<long>("Revision")
+                        .HasColumnType("bigint")
+                        .HasColumnName("revision");
+
+                    b.Property<string>("Settings")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("settings");
+
+                    b.HasKey("Id")
+                        .HasName("PK_economy_market_settings");
+
+                    b.ToTable("economy_market_settings", null, t =>
+                        {
+                            t.HasCheckConstraint("EconomyMarketSettingsSingleton", "id = 1");
+                        });
+                });
+            // Exodus-end
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.Property<int>("PlayersId")

@@ -3,7 +3,8 @@
   parent: BaseVesselAntag
   name: Ладья
   description: Пока нет описания, но оно обязательно скоро появится!
-  price: 323300 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 332023 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.990501642 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Security
   access: Security

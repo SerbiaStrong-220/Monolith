@@ -25,6 +25,9 @@
       - MachineUpgrading
     - type: Stack
       count: 1
+    # Exodus: base stock parts used to sell for 0 — floor price per unit
+    - type: StackPrice
+      price: 150
 
 # Rating 1
 
@@ -45,6 +48,8 @@
       rating: 1 # Frontier
     - type: Stack
       stackType: Capacitor
+    - type: StackPrice # Exodus
+      price: 150
 
 - type: entity
   id: MicroManipulatorStockPart
@@ -60,6 +65,8 @@
       rating: 1 # Frontier
     - type: Stack
       stackType: Manipulator
+    - type: StackPrice # Exodus
+      price: 150
 
 - type: entity
   id: MatterBinStockPart
@@ -75,3 +82,5 @@
       rating: 1 # Frontier
     - type: Stack
       stackType: MatterBin
+    - type: StackPrice # Exodus
+      price: 150

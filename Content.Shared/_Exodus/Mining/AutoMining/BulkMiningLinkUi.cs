@@ -68,11 +68,17 @@ public sealed class BulkMiningLinkUiState
     /// <summary>Ships of this consortium, including this one. A lone ship is a consortium of one.</summary>
     public List<BulkMiningConsortiumMemberState> Members = new();
 
-    /// <summary>Current refinery speed and liquid metal yield bonus, as a fraction.</summary>
+    /// <summary>Current refinery yield bonus, as a fraction.</summary>
     public float Bonus;
 
-    /// <summary>Bonus after one more ship joins, shown to motivate linking.</summary>
+    /// <summary>Refinery yield bonus after one more ship joins.</summary>
     public float NextBonus;
+
+    /// <summary>Current mining speed bonus, as a fraction.</summary>
+    public float SpeedBonus;
+
+    /// <summary>Mining speed bonus after one more ship joins.</summary>
+    public float NextSpeedBonus;
 
     public int FreeLasers;
 

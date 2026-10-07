@@ -4,7 +4,7 @@
   parent: BaseVesselAntag
   name: Онтос
   description: Корабль огневой поддержки ДФ с тяжёлой гаубицей и двумя картечными орудиями. Плохо справляется с быстрыми целями.
-  price: 49500
+  price: 55600 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: BlackMarket
   access: Pirate

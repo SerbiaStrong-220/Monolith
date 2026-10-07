@@ -598,6 +598,7 @@ namespace Content.Server.Lathe
 
             component.FinalTimeMultiplier = component.TimeMultiplier * MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);
             component.FinalMaterialUseMultiplier = component.MaterialUseMultiplier * MathF.Pow(component.PartRatingMaterialUseMultiplier, materialUseRating - 1);
+            ApplyPartMultiplierOverrides((uid, component), args); // Exodus: configurable part upgrade curves.
             Dirty(uid, component);
         }
 

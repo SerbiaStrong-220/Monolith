@@ -1,0 +1,8 @@
+- type: construction
+  id: MachineFrame3x3Centered
+  graph: Machine3x3Centered
+  startNode: start
+  targetNode: machine
+  category: construction-category-machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

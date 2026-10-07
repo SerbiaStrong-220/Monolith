@@ -16,7 +16,7 @@ public sealed partial class GeneticAdaptationsTest
     [TestCase("MobPrefectAsakimGhostroleNoTimelock")]
     public async Task GhostRoleNeedsStartOnlyOnFirstPossession(string prototype)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pair.Server;
         var entities = server.EntMan;
         var map = await pair.CreateTestMap();
@@ -41,19 +41,19 @@ public sealed partial class GeneticAdaptationsTest
             ticks = server.ResolveDependency<IGameTiming>().TickRate * 3;
         });
 
-        await server.WaitRunTicks(ticks);
+        await pair.RunTicksSync(ticks);
         await server.WaitAssertion(() =>
         {
             Assert.That(GetNeeds(body), Is.EqualTo(waiting), "An unclaimed role must retain all three reserves.");
-            AssertConsumed(GetNeeds(control), controlBefore);
+            AssertConsumed(GetNeeds(control), controlBefore, consumeDrug: false);
 
             var minds = entities.System<SharedMindSystem>();
-            mind = minds.CreateMind(null).Owner;
+            mind = minds.CreateMind(pair.Player!.UserId).Owner;
             minds.TransferTo(mind, body);
             Assert.That(GetNeeds(body), Is.EqualTo(waiting), "First possession must not charge the time spent waiting.");
         });
 
-        await server.WaitRunTicks(ticks);
+        await pair.RunTicksSync(ticks);
         await server.WaitAssertion(() =>
         {
             occupied = GetNeeds(body);
@@ -62,10 +62,10 @@ public sealed partial class GeneticAdaptationsTest
             Assert.That(GetNeeds(body), Is.EqualTo(occupied), "Leaving a body must not refill its reserves.");
         });
 
-        await server.WaitRunTicks(ticks);
+        await pair.RunTicksSync(ticks);
         await server.WaitAssertion(() =>
         {
-            AssertConsumed(GetNeeds(body), occupied);
+            AssertConsumed(GetNeeds(body), occupied, consumeDrug: false);
             var beforeSecondPossession = GetNeeds(body);
             entities.System<SharedMindSystem>().TransferTo(mind, body);
             Assert.That(GetNeeds(body), Is.EqualTo(beforeSecondPossession), "Returning must not reset the reserves.");
@@ -76,7 +76,7 @@ public sealed partial class GeneticAdaptationsTest
             entities.DeleteEntity(map.MapUid);
             DeleteCipher(entities, context);
         });
-        await server.WaitRunTicks(2);
+        await pair.RunTicksSync(2);
         await pair.CleanReturnAsync();
 
         (float Food, float Water, TimeSpan Drug) GetNeeds(EntityUid uid)
@@ -87,13 +87,13 @@ public sealed partial class GeneticAdaptationsTest
         }
 
         static void AssertConsumed((float Food, float Water, TimeSpan Drug) after,
-            (float Food, float Water, TimeSpan Drug) before)
+            (float Food, float Water, TimeSpan Drug) before, bool consumeDrug = true)
         {
             Assert.Multiple(() =>
             {
                 Assert.That(after.Food, Is.LessThan(before.Food));
                 Assert.That(after.Water, Is.LessThan(before.Water));
-                Assert.That(after.Drug, Is.LessThan(before.Drug));
+                Assert.That(after.Drug, consumeDrug ? Is.LessThan(before.Drug) : Is.EqualTo(before.Drug));
             });
         }
     }

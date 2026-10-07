@@ -11,7 +11,7 @@ namespace Content.Server._Exodus.Mining.AutoMining;
 
 /// <summary>
 /// Mining consortiums: two ships aim a free bulk mining laser at each other, joining their liquid metal networks.
-/// Links are pairwise; every connected set of linked ships shares slurry and refinery bonuses.
+/// Links are pairwise; every connected set of linked ships shares slurry, mining speed and refinery yield bonuses.
 /// </summary>
 public sealed partial class BulkAutoMiningSystem
 {
@@ -27,6 +27,7 @@ public sealed partial class BulkAutoMiningSystem
     private EntityQuery<BulkAutoMiningConsoleComponent> _consoleQuery;
 
     private float _linkBonus;
+    private float _linkSpeedBonus;
     private float _linkBonusDecay;
     private float _linkMaxBonus;
     private TimeSpan _nextRequestSweep;
@@ -46,6 +47,7 @@ public sealed partial class BulkAutoMiningSystem
         _linkGridQuery = GetEntityQuery<BulkMiningLinkGridComponent>();
         _consoleQuery = GetEntityQuery<BulkAutoMiningConsoleComponent>();
         Subs.CVar(_cfg, EXCVars.BulkMiningLinkBonus, value => _linkBonus = value, true);
+        Subs.CVar(_cfg, EXCVars.BulkMiningLinkSpeedBonus, value => _linkSpeedBonus = value, true);
         Subs.CVar(_cfg, EXCVars.BulkMiningLinkBonusDecay, value => _linkBonusDecay = value, true);
         Subs.CVar(_cfg, EXCVars.BulkMiningLinkMaxBonus, value => _linkMaxBonus = value, true);
     }
@@ -316,6 +318,7 @@ public sealed partial class BulkAutoMiningSystem
         SetLinkEnd(first, second, range);
         SetLinkEnd(second, first, range);
         _pipes.InvalidateJoinedNetworks(first);
+        RefreshConsortium(Transform(first).GridUid);
     }
 
     private void SetLinkEnd(EntityUid uid, EntityUid partner, float range)
@@ -358,6 +361,9 @@ public sealed partial class BulkAutoMiningSystem
 
         if (!TerminatingOrDeleted(partner))
             _pipes.InvalidateJoinedNetworks(partner);
+
+        RefreshConsortium(ownGrid);
+        RefreshConsortium(otherGrid);
 
         if (ownGrid is not { } a || otherGrid is not { } b || TerminatingOrDeleted(a) || TerminatingOrDeleted(b))
             return;
@@ -607,14 +613,33 @@ public sealed partial class BulkAutoMiningSystem
     /// <summary>Number of ships linked with this one, directly or through other members, including itself.</summary>
     public int GetConsortiumSize(EntityUid grid)
     {
-        CollectConsortium(grid, _consortium);
-        return _consortium.Count;
+        return _linkGridQuery.TryComp(grid, out var links) ? links.ConsortiumSize : 1;
     }
 
-    /// <summary>Consortium bonus of a ship, as used by the refineries on its joined network.</summary>
+    /// <summary>Refreshes the component cache on topology changes, avoiding graph searches during mining.</summary>
+    private void RefreshConsortium(EntityUid? grid)
+    {
+        if (grid is not { } uid || TerminatingOrDeleted(uid))
+            return;
+
+        CollectConsortium(uid, _consortium);
+        foreach (var member in _consortium)
+        {
+            if (!TerminatingOrDeleted(member))
+                EnsureComp<BulkMiningLinkGridComponent>(member).ConsortiumSize = _consortium.Count;
+        }
+    }
+
+    /// <summary>Refinery yield bonus of a consortium of this size.</summary>
     public float GetConsortiumBonus(int ships)
     {
         return BulkMiningLinkBonus.Get(ships, _linkBonus, _linkBonusDecay, _linkMaxBonus);
+    }
+
+    /// <summary>Mining speed bonus of a consortium of this size.</summary>
+    public float GetConsortiumSpeedBonus(int ships)
+    {
+        return BulkMiningLinkBonus.Get(ships, _linkSpeedBonus, _linkBonusDecay, _linkMaxBonus);
     }
 
     private string GetShipName(EntityUid grid)
@@ -680,6 +705,8 @@ public sealed partial class BulkAutoMiningSystem
 
         state.Bonus = GetConsortiumBonus(_consortium.Count);
         state.NextBonus = GetConsortiumBonus(_consortium.Count + 1);
+        state.SpeedBonus = GetConsortiumSpeedBonus(_consortium.Count);
+        state.NextSpeedBonus = GetConsortiumSpeedBonus(_consortium.Count + 1);
         state.FreeLasers = CountFreeLasers(ownGrid);
 
         var position = _transform.GetWorldPosition(consoleXform);

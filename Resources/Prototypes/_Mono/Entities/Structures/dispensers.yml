@@ -5,6 +5,7 @@
   abstract: true
   description: A machine with piping systems that lead into the bowels of the station, accepting export goods for trade deeds.
   components:
+  - type: MarketStockSource # Exodus: accepted goods replenish the global market.
   - type: Anchorable
     flags:
     - None

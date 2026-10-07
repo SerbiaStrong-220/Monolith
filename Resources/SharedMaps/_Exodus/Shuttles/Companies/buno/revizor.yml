@@ -2443,7 +2443,7 @@ entities:
       powerLoad: 5
     - type: Battery
       startingCharge: 0
-- proto: ComputerTabletopAdvancedRadar
+- proto: ComputerTabletopIFF
   entities:
   - uid: 342
     components:

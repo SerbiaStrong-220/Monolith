@@ -5,7 +5,7 @@
   # Exodus-begin: preserve main-build localization and price.
   name: Бетельгейзе # Ru-Localization
   description: Тесный утилизаторский шаттл, работающий на надеждах и мечтах, но оснащённый одним из самых мощных шахтёрских орудий в этом секторе. # Ru-Localization
-  price: 47400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 51458 # Exodus: expected ship and contents value; no additional markup.
   # Exodus-end
   category: Small
   group: Scrap

@@ -31,6 +31,7 @@
     - id: SmugglingFax # Frontier
     - id: SnailMigration # Mono
     - id: VirusOutbreak # SS220 / Exodus
+    - id: ExodusMarketPriceShock # Exodus: rare global market price changes.
 
 # Frontier: not used!
 - type: entityTable

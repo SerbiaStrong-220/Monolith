@@ -7,7 +7,7 @@
   parent: BaseVessel
   name: company-vessel-HMI-pod-name
   description: company-vessel-HMI-pod-desc
-  price: 12000
+  price: 14314 # Exodus: expected ship and contents value; no additional markup.
   category: Micro
   group: Custom
   mapchecker_group_override: Shipyard

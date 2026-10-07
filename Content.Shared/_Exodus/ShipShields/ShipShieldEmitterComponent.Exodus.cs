@@ -23,6 +23,13 @@ public sealed partial class ShipShieldEmitterComponent
     public float RippleSpeed = 0.5f;
 
     /// <summary>
+    /// Client shader used by the animated contour. The shader must provide a waveSpeed uniform.
+    /// ShaderPrototype is client-only, so its identifier crosses the shared boundary as a string.
+    /// </summary>
+    [DataField]
+    public string RippleShader = "ShipShieldRipple";
+
+    /// <summary>
     /// Reduces the load added by projectiles stopped by this shield.
     /// </summary>
     [DataField]

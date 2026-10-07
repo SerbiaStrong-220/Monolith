@@ -10,7 +10,8 @@
   parent: BaseVessel
   name: Вайперы «Килбэк»
   description: Корвет «Вайперов» с тремя ракетными установками Paladin и двумя TOVEK.
-  price: 270000
+  price: 277528 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.993632793 # Exodus: expected-price allowance for randomized contents.
   purchasable: false # Voucher only
   category: Medium
   group: Viper

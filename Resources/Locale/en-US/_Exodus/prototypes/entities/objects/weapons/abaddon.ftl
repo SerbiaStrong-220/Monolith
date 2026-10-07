@@ -1,0 +1,12 @@
+ent-WeaponLRC21PPLExodusAbaddon = ABADDON LRC-21 PPL
+    .desc = A TSF-biocoded pulsed plasma lance with an integrated reactor. Fires two semi-automatic shots per second without reloading.
+ent-WeaponHeavyPulseCannonExodusAbaddon = ABADDON heavy pulse cannon
+    .desc = A compact TSF-biocoded pulse cannon with a continuously replenished energy reserve. Fires two semi-automatic shots per second and fits in a backpack.
+ent-WeaponPulseAnnihilatorExodusAbaddon = pulse ANNIHILATOR
+    .desc = A TSF-biocoded ABADDON pulse shotgun with an integrated reactor. Fires six full-power rifle pulses per volley, at four volleys per second. Can be fired one-handed.
+ent-ExodusAbaddonRiflePulseSpread = pulse volley
+    .desc = { "" }
+ent-WeaponMurasamaExodusAbaddon = ABADDON Murasama
+    .desc = A Murasama high-frequency blade biocoded for TSF personnel.
+ent-EnergySwordExodusAbaddon = ABADDON energy sword
+    .desc = An energy sword biocoded for TSF personnel.

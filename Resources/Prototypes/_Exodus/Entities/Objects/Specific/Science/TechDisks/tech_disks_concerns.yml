@@ -42,8 +42,13 @@
     recipes:
     - SyndicateBombCerberus
     - BulkAutoMiningConsoleCircuitboard
+    - BulkMiningLinkRelayCircuitboard
     - BulkMiningRefineryCircuitboard
+    - BulkMiningRefineryLargeCircuitboard
+    - DrakeRefineryFilter
     - BulkMiningExhaustCircuitboard
+    - MiningSlurryTankCircuitboard
+    - MiningSlurryTankLargeCircuitboard
     - BulkMiningPipeStack10
     - GasPipeArmoredHalf
     - GasPipeArmoredStraight

@@ -252,6 +252,10 @@
   parent: BaseItem
   description: A pole with powerful mounted lights on it. It's broken.
   components:
+  # Exodus-begin: retain the value of the steel sheet recovered on destruction.
+  - type: StaticPrice
+    price: 5.9
+  # Exodus-end
   - type: Sprite
     sprite: Objects/Misc/Lights/lights.rsi
     state: floodlight_broken

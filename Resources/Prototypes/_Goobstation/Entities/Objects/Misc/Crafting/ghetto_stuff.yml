@@ -4,6 +4,10 @@
   name: wooden handle
   description: A normal wooden handle, that can be used in crafting.
   components:
+  # Exodus-begin: retain the value of the five wooden planks recovered on deconstruction.
+  - type: StaticPrice
+    price: 50
+  # Exodus-end
   - type: Sprite
     sprite: _Goobstation/Objects/Misc/Crafting/wooden_handle.rsi
     state: icon

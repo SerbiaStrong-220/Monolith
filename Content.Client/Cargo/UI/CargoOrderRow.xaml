@@ -1,32 +1,29 @@
-﻿<PanelContainer xmlns="https://spacestation14.io"
+﻿<!-- Exodus: order details and actions occupy separate rows within the queue column. -->
+<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 HorizontalExpand="True">
-    <BoxContainer Orientation="Horizontal"
-                  HorizontalExpand="True">
-        <TextureRect Name="Icon"
-                     Access="Public"
-                     MinSize="32 32"
-                     RectClipContent="True" />
-        <BoxContainer Orientation="Vertical"
-                      HorizontalExpand="True"
-                      VerticalExpand="True">
-            <Label Name="ProductName"
-                   Access="Public"
-                   HorizontalExpand="True"
-                   StyleClasses="LabelSubText"
-                   ClipText="True" />
-            <Label Name="Description"
-                   Access="Public"
-                   HorizontalExpand="True"
-                   StyleClasses="LabelSubText"
-                   ClipText="True" />
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BackgroundColor="#1E1E24" BorderThickness="1" BorderColor="#3A3A44" />
+    </PanelContainer.PanelOverride>
+    <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6">
+        <BoxContainer SeparationOverride="8">
+            <TextureRect Name="Icon" Access="Public" SetSize="32 32" Stretch="KeepAspectCentered" VerticalAlignment="Center" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+                <Label Name="ProductName" Access="Public" HorizontalExpand="True" ClipText="True" MouseFilter="Pass" />
+                <Label Name="Requester" Access="Public" HorizontalExpand="True" StyleClasses="LabelSubText" ClipText="True" MouseFilter="Pass" />
+            </BoxContainer>
         </BoxContainer>
-        <Button Name="Approve"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-cargo-order-row-approve-button'}"
-                StyleClasses="LabelSubText" />
-        <Button Name="Cancel"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-cargo-order-row-cancel-button'}"
-                StyleClasses="LabelSubText" />
+        <Label Name="Description" Access="Public" HorizontalExpand="True" StyleClasses="LabelSubText" ClipText="True" MouseFilter="Pass" />
+        <BoxContainer Orientation="Vertical" SeparationOverride="2">
+            <Label Name="TotalPriceTitle" Access="Public" StyleClasses="LabelSubText" ClipText="True" />
+            <Label Name="TotalPrice" Access="Public" HorizontalExpand="True" StyleClasses="LabelKeyText"
+                   FontColorOverride="#8ED6BF" ClipText="True" MouseFilter="Pass" />
+        </BoxContainer>
+        <BoxContainer Name="Actions" Access="Public" SeparationOverride="6">
+            <Button Name="Approve" Access="Public" Text="{Loc 'cargo-console-menu-cargo-order-row-approve-button'}"
+                    HorizontalExpand="True" MinHeight="30" ClipText="True" TextAlign="Center" />
+            <Button Name="Cancel" Access="Public" Text="{Loc 'cargo-console-menu-cargo-order-row-cancel-button'}"
+                    HorizontalExpand="True" MinHeight="30" ClipText="True" TextAlign="Center" />
+        </BoxContainer>
     </BoxContainer>
 </PanelContainer>

@@ -8,6 +8,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -24,9 +26,12 @@ public sealed partial class ChemicalDependencySystem : SharedChemicalEffectsSyst
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private NeedsActivationSystem _needsActivation = default!;
 
+    private EntityQuery<ActorComponent> _actorQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+        _actorQuery = GetEntityQuery<ActorComponent>();
         SubscribeLocalEvent<ChemicalDependencyComponent, ChemicalDependencyAlertEvent>(OnAlert);
     }
 
@@ -67,6 +72,11 @@ public sealed partial class ChemicalDependencySystem : SharedChemicalEffectsSyst
                 continue;
             dependency.NextUpdate += dependency.UpdateInterval;
             if (mob.CurrentState == MobState.Dead || !_needsActivation.AreNeedsActive(uid))
+                continue;
+
+            // Keep advancing NextUpdate while absent so returning never charges missed withdrawal ticks.
+            if (dependency.PauseWithoutPlayer &&
+                (!_actorQuery.TryComp(uid, out var actor) || actor.PlayerSession.Status != SessionStatus.InGame))
                 continue;
 
             dependency.Reserve -= dependency.UpdateInterval;

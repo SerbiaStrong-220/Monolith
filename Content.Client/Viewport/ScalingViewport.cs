@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Content.Client._Exodus.Camera; // Exodus: mouse wheel zoom.
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -136,6 +137,7 @@ namespace Content.Client.Viewport
         {
             base.MouseWheel(args);
             WheelScrolled?.Invoke(args);
+            _entityManager.System<MouseWheelZoomSystem>().HandleMouseWheel(this, args); // Exodus: zoom after other wheel actions.
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)

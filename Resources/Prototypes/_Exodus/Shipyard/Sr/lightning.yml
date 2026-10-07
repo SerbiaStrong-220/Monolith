@@ -4,7 +4,7 @@
   parent: BaseVessel
   name: Лайтнинг
   description: Быстроходный корабль поддержки охраны Колосса с четырьмя TOVEK и двумя многоствольными пушками.
-  price: 71000
+  price: 76560 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Sr
   access: Brig

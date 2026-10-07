@@ -1,0 +1,167 @@
+- type: entity
+  parent: BulkMiningRefinery
+  id: BulkMiningRefineryLarge
+  name: industrial liquid metal refinery
+  description: A 5x5 refinery with large reserves and four replaceable filters. A full local tank reduces material costs by up to 20%; each working filter saves another 5%. Produces twice the exhaust gas. Connect armored gas pipes three tiles south of its center. Incompatible with hyper-convection upgrades.
+  components:
+  - type: ExamineIndicator
+    indicator: MiningRefineryLargeGasArrow
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-2.4,-2.4,2.4,2.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: MiningRefinery
+    capacityMultipliers:
+      1: 1
+      3: 1.06
+      4: 1.12
+      6: 1.18
+    exhaust:
+      volume: 5000
+      temperature: 293.15
+    exhaustMolesPerBatch: 20
+    exhaustMolesPerSecond: 200
+    corrosionThreshold: 5000
+    explosionThreshold: 10000
+    maxFullnessDiscount: 0.2
+    discountPerFilter: 0.05
+    filterSlots:
+    - filter1
+    - filter2
+    - filter3
+    - filter4
+  - type: LathePartMultipliers
+    printTimeMultipliers:
+      1: 1
+      3: 0.94
+      4: 0.88
+      6: 0.82
+    materialUseMultipliers:
+      1: 1
+      3: 0.94
+      4: 0.88
+      6: 0.82
+  - type: MaterialStorage
+    storageLimit: 3000000
+  - type: NodeContainer
+    nodes:
+      pipe: !type:MiningPipeDeviceNode
+        nodeGroupID: ExodusMiningPipe
+      exhaust: !type:PipeNode
+        nodeGroupID: ExodusArmoredGasPipe
+        pipeDirection: South
+        connectionOffset: 0, -2
+        volume: 20
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/bulk_mining_refinery_large.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    # Roof socket centers: (43/67/91/115, 49) in the 160px body, at 32px per tile.
+    - state: mounted
+      sprite: _Exodus/Objects/Devices/drake_refinery_filter.rsi
+      offset: -1.15625, 0.96875
+      visible: false
+      map: [filter1]
+    - state: mounted
+      sprite: _Exodus/Objects/Devices/drake_refinery_filter.rsi
+      offset: -0.40625, 0.96875
+      visible: false
+      map: [filter2]
+    - state: mounted
+      sprite: _Exodus/Objects/Devices/drake_refinery_filter.rsi
+      offset: 0.34375, 0.96875
+      visible: false
+      map: [filter3]
+    - state: mounted
+      sprite: _Exodus/Objects/Devices/drake_refinery_filter.rsi
+      offset: 1.09375, 0.96875
+      visible: false
+      map: [filter4]
+  - type: ItemSlots
+    slots:
+      filter1:
+        name: bulk-mining-refinery-filter-slot-1
+        whitelist:
+          components:
+          - NebulaGasSiphonFilter
+      filter2:
+        name: bulk-mining-refinery-filter-slot-2
+        whitelist:
+          components:
+          - NebulaGasSiphonFilter
+      filter3:
+        name: bulk-mining-refinery-filter-slot-3
+        whitelist:
+          components:
+          - NebulaGasSiphonFilter
+      filter4:
+        name: bulk-mining-refinery-filter-slot-4
+        whitelist:
+          components:
+          - NebulaGasSiphonFilter
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      filter1: !type:ContainerSlot
+      filter2: !type:ContainerSlot
+      filter3: !type:ContainerSlot
+      filter4: !type:ContainerSlot
+  - type: Machine
+    board: BulkMiningRefineryLargeCircuitboard
+  - type: Construction
+    graph: Machine5x5
+    node: machine
+  - type: Lathe
+    outputOffset: 0, -3
+  - type: Tag
+    tags:
+    - NoHyperConvection
+  - type: StaticPrice
+    price: 4000
+
+- type: entity
+  parent: MiningRefineryGasArrow
+  id: MiningRefineryLargeGasArrow
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    layers:
+    - state: arrow
+      offset: 0, -2.75
+      shader: unshaded
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: BulkMiningRefineryLargeCircuitboard
+  name: industrial liquid metal refinery board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: BulkMiningRefineryLarge
+    frameSize: 5x5
+    requirements:
+      MatterBin: 12
+      Manipulator: 12
+    stackRequirements:
+      Steel: 400
+      Plasteel: 200
+      Glass: 80
+      Gold: 30
+      Silver: 50
+      Plasma: 40
+      Iridite: 20
+      Americium: 2

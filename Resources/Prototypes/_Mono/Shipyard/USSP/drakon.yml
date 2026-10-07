@@ -5,7 +5,7 @@
   parent: BaseVesselUSSPAntag
   name: Дракон # Ru-Localization
   description: Быстрый боевой шаттл с довольно опасным баллистическим арсеналом орудий. # Ru-Localization
-  price: 95900 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
+  price: 103917 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Ussp
   access: Mercenary # Exodus temp-ussp-mercenary-access

@@ -72,6 +72,19 @@ public sealed partial class MiningRefineryStorageControl : BoxContainer
             UnlimitedSlurry.Text = Loc.GetString("bulk-mining-refinery-ui-slurry-unlimited", ("stored", stored));
         }
 
+        EfficiencyPanel.Visible = refinery.MaxFullnessDiscount > 0 || state.FilterCapacity > 0;
+        if (EfficiencyPanel.Visible)
+        {
+            LocalReserve.SetMarkup(Loc.GetString("bulk-mining-refinery-ui-local-reserve",
+                ("stored", Math.Round(state.LocalSlurryStored / (double)unitVolume, 1)),
+                ("capacity", Math.Round((state.LocalSlurryCapacity ?? 0) / (double)unitVolume, 1))));
+            FullnessBonus.SetMarkup(Loc.GetString("bulk-mining-refinery-ui-fullness-discount",
+                ("percent", Math.Round(state.FullnessDiscount * 100, 1))));
+            FilterBonus.SetMarkup(Loc.GetString("bulk-mining-refinery-ui-filters",
+                ("installed", state.InstalledFilters), ("capacity", state.FilterCapacity),
+                ("active", state.ActiveFilters), ("percent", Math.Round(state.FilterDiscount * 100, 1))));
+        }
+
         GasName.Text = Loc.GetString("bulk-mining-refinery-ui-gas", ("gas", Atmospherics.GasNames[refinery.ExhaustGas]));
         var limit = refinery.ExplosionThreshold > 0 ? refinery.ExplosionThreshold : refinery.CorrosionThreshold;
         GasBar.Value = limit > 0 ? Math.Clamp(state.GasMoles / limit, 0, 1) : 0;

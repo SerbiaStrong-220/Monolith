@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Пройдоха # Ru-Localization
   description: Появившийся из глубин Тесея примерно столетие назад от неизвестного создателя, Пройдоха был сделан не по чертежам, не за месяцы исследований и не трудами инженеров. Он был сделан из того, что было под рукой, и задуман как остриё копья против тех, кто пытался обдирать "честных" граждан, и для установления справедливости и закона - как они это сами называли. # Ru-Localization
-  price: 132000 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 135639 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.739610434 # Exodus: expected-price allowance for randomized contents.
   category: medium
   group: Scrap
   access: Mercenary

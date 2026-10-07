@@ -1,0 +1,103 @@
+- type: entity
+  parent: [BaseMachine, ConstructibleMachine]
+  id: MiningSlurryTank
+  name: liquid metal tank
+  description: A compact industrial tank that stores liquid metal without electricity. Connect an ore duct beneath its center and anchor the tank to connect it to the network. Unanchoring preserves its contents.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: WiresPanel
+  - type: Appearance
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/mining_slurry_tank.rsi
+    state: icon
+  - type: Machine
+    board: MiningSlurryTankCircuitboard
+  - type: ShipRepairable
+    repairTime: 10
+    repairCost: 50
+  - type: MaterialStorage
+    storageLimit: 600000
+    materialWhiteList:
+    - MiningSlurry
+    insertOnInteract: false
+    canEjectStoredMaterials: false
+    dropOnDeconstruct: false
+    dropOnDestroy: false
+  - type: MiningPipeNetworkMember
+    supplyMaterials: true
+    receiveMaterials: true
+  - type: NodeContainer
+    nodes:
+      pipe: !type:MiningPipeDeviceNode
+        nodeGroupID: ExodusMiningPipe
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: MiningSlurryTank
+  id: MiningSlurryTankLarge
+  name: industrial liquid metal tank
+  description: A large 3x3 industrial tank that stores liquid metal without electricity. Connect an ore duct beneath its center and anchor the tank to connect it to the network. Unanchoring preserves its contents.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/Machines/mining_slurry_tank_large.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Machine
+    board: MiningSlurryTankLargeCircuitboard
+  - type: ShipRepairable
+    repairTime: 20
+    repairCost: 100
+  - type: Construction
+    graph: Machine3x3Centered
+    node: machine
+  - type: MaterialStorage
+    storageLimit: 6000000
+  - type: StaticPrice
+    price: 1500
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MiningSlurryTankCircuitboard
+  name: liquid metal tank board
+  description: A circuit board for a compact liquid metal tank.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: MiningSlurryTank
+    requirements:
+      MatterBin: 2
+    stackRequirements:
+      Steel: 20
+      Plasteel: 10
+      Glass: 5
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MiningSlurryTankLargeCircuitboard
+  name: industrial liquid metal tank board
+  description: A circuit board for a large liquid metal tank. Requires a centered 3x3 machine frame.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: MiningSlurryTankLarge
+    frameSize: 3x3Centered
+    requirements:
+      MatterBin: 4
+    stackRequirements:
+      Steel: 80
+      Plasteel: 40
+      Glass: 15

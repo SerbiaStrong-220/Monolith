@@ -52,6 +52,11 @@ public partial class ShipShieldsSystem
     // Exodus-begin shield deflection damage handling
     private void OnShieldDeflected(Entity<ShipShieldEmitterComponent> ent, ref ShieldDeflectedEvent args)
     {
+        // Exodus-begin notify recovery modifiers before nested projectile effects
+        var hit = new ShipShieldHitEvent();
+        RaiseLocalEvent(ent.Owner, ref hit);
+        // Exodus-end
+
         // Exodus-begin layered shield recovery
         _layeredShieldQuery.TryGetComponent(ent, out var layered);
         if (layered is not null && layered.ActiveLayerCount < Math.Max(1, layered.LayerCount))

@@ -4,6 +4,10 @@
   name: empty circuit
   description: Something seems to be missing.
   components:
+  # Exodus-begin: retain the value of the three steel sheets in the circuit.
+  - type: StaticPrice
+    price: 17.7
+  # Exodus-end
   - type: Sprite
     sprite: Objects/Devices/gates.rsi
     layers:
@@ -205,6 +209,10 @@
   name: edge detector
   description: Splits rising and falling edges into unique pulses and detects how edgy you are.
   components:
+  # Exodus-begin: three steel and two glass sheets, rounded up to a whole credit.
+  - type: StaticPrice
+    price: 33
+  # Exodus-end
   - type: Sprite
     layers:
     - state: base

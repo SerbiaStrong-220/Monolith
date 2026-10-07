@@ -24,3 +24,12 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+
+- type: construction
+  id: MachineFrame5x5
+  graph: Machine5x5
+  startNode: start
+  targetNode: machine
+  category: construction-category-machines
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

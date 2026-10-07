@@ -1,0 +1,9 @@
+- type: entity
+  id: ShieldGeneratorAegisMachineCircuitboard
+  parent: ShieldGeneratorUnsaMachineCircuitboard
+  name: aegis-shield-board-name
+  description: aegis-shield-board-description
+  components:
+  - type: MachineBoard
+    prototype: ShieldGeneratorAegis
+    frameSize: 3x3Centered

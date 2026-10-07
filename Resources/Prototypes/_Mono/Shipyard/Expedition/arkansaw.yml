@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Аркансоу # Ru-Localization
   description: Шаттл, используемый как транспортёр мехов с отдельными научным и добывающим отсеками, оснащённый шахтёрскими пушками. Не имеет какой либо брони. Питается от трёх соединённых между собой генераторов на бананиуме.  # Ru-Localization
-  price: 281400 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 297997 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.998162806 # Exodus: expected-price allowance for randomized contents.
   category: Large
   group: Expedition
   shuttlePath: /SharedMaps/_Mono/Shuttles/Expedition/arkansaw.yml

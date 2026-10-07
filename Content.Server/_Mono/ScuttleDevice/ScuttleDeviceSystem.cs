@@ -77,7 +77,7 @@ public sealed partial class ScuttleDeviceSystem : EntitySystem
 
     private void OnAlternateVerb(Entity<ScuttleDeviceComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!Transform(ent).Anchored || !args.CanComplexInteract)
+        if (!args.CanComplexInteract || (ent.Comp.RequiresAnchoring && !Transform(ent).Anchored)) // Exodus: support portable charges.
             return;
 
         var user = args.User;
@@ -129,7 +129,7 @@ public sealed partial class ScuttleDeviceSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (ent.Comp.Armed)
+        if (ent.Comp.Armed && ent.Comp.RequiresAnchoring) // Exodus: allow portable charges to be moved while armed.
             args.Cancel();
     }
 
@@ -255,7 +255,7 @@ public sealed partial class ScuttleDeviceSystem : EntitySystem
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(ent, true);
 
-        if (!nukeXform.Anchored)
+        if (ent.Comp.RequiresAnchoring && !nukeXform.Anchored) // Exodus: portable charges may remain unanchored.
         {
             // Admin command shenanigans, just make sure.
             _transform.AnchorEntity(ent, nukeXform);
@@ -361,7 +361,7 @@ public sealed partial class ScuttleDeviceSystem : EntitySystem
     {
         var xform = Transform(ent);
 
-        _appearance.SetData(ent, NukeVisuals.Deployed, xform.Anchored);
+        _appearance.SetData(ent, NukeVisuals.Deployed, xform.Anchored || ent.Comp.Armed); // Exodus: show the armed timer on portable charges.
 
         NukeVisualState state;
         if (ent.Comp.PlayedAlertSound)

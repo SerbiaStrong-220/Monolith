@@ -1,0 +1,312 @@
+# Commodity groups describe production complexity and scale trade pressure, not base prices.
+- type: marketCommodityGroup
+  id: General
+  name: market-commodity-group-general
+  default: true
+
+- type: marketCommodityGroup
+  id: Gases
+  name: market-commodity-group-gases
+  gases: true
+  impactMultiplier: 0.003
+
+- type: marketCommodityGroup
+  id: RawMaterials
+  name: market-commodity-group-raw-materials
+
+- type: marketCommodityGroup
+  id: HighPrecision
+  name: market-commodity-group-high-precision
+
+- type: marketCommodityGroup
+  id: UltraPrecision
+  name: market-commodity-group-ultra-precision
+
+# Resource families include unprocessed ores, refined sheets, animal materials
+# and scrap. Material/Stack alone also match food, medicine and currency.
+- type: marketCommodityRule
+  id: RawResourceFamilies
+  group: RawMaterials
+  priority: 100
+  parents:
+  - OreBase
+  - MaterialBase
+  - PartBase
+  - IngotBase
+  - SheetMetalBase
+  - SheetGlassBase
+  - SheetOtherBase
+  - BaseScrap
+  - BaseScrapLarge
+  - ShardBase
+  - ShardCrystalBase
+  - FuelPlasma
+  - FuelUranium
+  - FuelBananium
+  prototypes:
+  - ArmorPlateEconomy1Broken
+  - ArmorPlateEconomy2Broken
+  - ArmorPlateEconomy3Broken
+  - ArmorPlateEconomy4Broken
+  - ArmorPlateEconomy3Fragment
+  - SiliconWaferScrapEconomy
+  - SiliconBouleScrapEconomy
+  tags:
+  - Ore
+  - RawMaterial
+  - RockMaterial
+  - SandMaterial
+  - MothroachHide
+  - MaterialHideRosyMothroach
+  - SpaceLeviathanChitin
+  excludeComponents:
+  - Food
+  - Drink
+
+# Completed machines combine separately produced boards, parts and a frame.
+# Basic boards, electronics and printed organs have no blanket High rule.
+- type: marketCommodityRule
+  id: HighAssembledEquipment
+  group: HighPrecision
+  priority: 150
+  components:
+  - Machine
+  - Computer
+  - Mech
+
+# These complete devices also have ordinary single-printer flatpack recipes.
+# Use their simplest production route rather than their Machine component.
+- type: marketCommodityRule
+  id: GeneralPrintedEquipment
+  group: General
+  priority: 160
+  prototypes:
+  - GasMiningDrill
+  - GasMiningDrillFlatpack
+  - GaslockFrame
+  - GaslockFrameFlatpack
+  - NFMagnetBoxOre
+  - OreBoxFlatpack
+  - NFMagnetBoxConstruction
+  - MaterialBoxFlatpack
+  - NFMagnetBoxRubbish
+  - ScrapBoxFlatpack
+  - SolarAssembly
+  - SolarAssemblyFlatpack
+  - NFVehicleJanicartKey
+  - JanicartFlatpack
+  - HydroponicsSoilNutrition
+  - HydroponicsSoilNutritionFlatpack
+  - ShipArmorModuleBlackhawk
+  - ShipArmorModuleBlackhawkFlatpack
+  - WeaponTurretDravon
+  - WeaponTurretDravonFlatpack
+
+# Higher stock-part tiers and technology disks are High, including the
+# bluespace tier: its ordinary lathe recipe does not make it Ultra.
+- type: marketCommodityRule
+  id: HighAdvancedComponents
+  group: HighPrecision
+  priority: 200
+  parents:
+  - AdvancedCapacitorStockPart
+  - NanoManipulatorStockPart
+  - AdvancedMatterBinStockPart
+  - SuperCapacitorStockPart
+  - PicoManipulatorStockPart
+  - SuperMatterBinStockPart
+  - QuadraticCapacitorStockPart
+  - FemtoManipulatorStockPart
+  - BluespaceMatterBinStockPart
+  components:
+  - TechnologyDisk
+  - ResearchDisk
+
+# These products require enriched nuclear material, plutonium recovery or
+# the iridite refining chain before printing. Simple printed organs do not.
+- type: marketCommodityRule
+  id: HighProcessedMaterialEquipment
+  group: HighPrecision
+  priority: 200
+  parents:
+  - ClothingBackpackHolding
+  - ClothingBackpackSatchelHolding
+  - ClothingBackpackDuffelHolding
+  - ClothingBackpackMessengerHolding
+  - DeviceQuantumSpinInverter
+  - PowerCellMicroreactor
+  - PortableRecharger
+  - BluespaceRPED
+  - BorgModuleBluespaceRPED
+  - BulkAutoMiningConsoleCircuitboard
+  - BulkMiningRefineryCircuitboard
+  - BulkMiningExhaustCircuitboard
+  - BulkMiningPipeStack
+  - HmeSynthHeart
+  - HmeSynthHeartFortified
+  - CartridgeLightPhaserMaco
+  - CdmShieldReserveCartridge
+  - DrakeBomb
+  - MachineGCSUltraCircuitboard
+  - UraniumReactorFuelRod
+  - PlutoniumReactorFuelRod
+  - ArmorPlateHeat
+  - PowerCageMech
+  - LargePowerCellPlasma68x52mm
+  - AutosurgeonRightMantisBladeMieyo
+  - AutosurgeonRightMantisBladeMieyoFlatpack
+  - AutosurgeonLeftMantisBladeMieyo
+  - AutosurgeonLeftMantisBladeMieyoFlatpack
+  - AutosurgeonAdvHeartMMC
+  - AutosurgeonAdvHeartMMCFlatpack
+  - OrganHeartMMCSakimoto
+  - TSFBomb
+  - PDVBomb
+  - ClothingOuterHardsuitUIEnforcerMKII
+  - UllmanWeaponPulsePistol
+  - UllmanWeaponPulseRifle
+  - UllmanWeaponPulseSniper
+  - UllmanPlasmaBlade
+  - CharonSubnuclearSlugAmmo
+
+# Precision-assembler and arc-furnace products consume previously made
+# components, sometimes together with prepared chemical reagents.
+- type: marketCommodityRule
+  id: HighAssembledComponents
+  group: HighPrecision
+  priority: 200
+  parents:
+  - MotorEconomy1
+  - MatterBinEconomy2
+  - MatterBinEconomy3
+  - MicroprocessorEconomy2
+  - MicroprocessorEconomy3
+  - OpticsEconomy2
+  - CameraEconomy1
+  - RadioEconomy1
+  - RadioEconomy2
+  - CapacitorEconomy2
+  - CapacitorEconomy3
+  - ElectromagnetEconomy2Start
+  - ElectromagnetEconomy2
+  - ElectromagnetEconomy3Start
+  - ElectromagnetEconomy3
+  - ComponentBrickEconomy1
+  - ComponentBrickEconomy2
+  - ComponentBrickEconomy3
+  - ArmorPlateEconomy2Start
+  - ArmorPlateEconomy2
+  - ArmorPlateEconomy3
+  - ArmorPlateEconomy4Start
+  - ArmorPlateEconomy4
+  - MaterialIndustryElectronics
+  - MaterialIndustryElectronicsAdvanced
+  - MaterialIndustryFCS
+  - MaterialIndustryMechanical
+  - MaterialIndustryPlates
+  - MaterialIndustryRecievers
+  - MaterialIndustrySensors
+  - MaterialIndustryShip
+  - MaterialIndustrySterile
+  prototypes:
+  - SiliconBouleEconomy
+  - SiliconWaferEconomy
+
+# Filled medical products combine a manufactured carrier with synthesized
+# reagents. Empty injectors and simple plant-based dressings remain General.
+- type: marketCommodityRule
+  id: HighAssembledMedicalProducts
+  group: HighPrecision
+  priority: 200
+  parents:
+  - EmergencyMedipen
+  - AntiPoisonMedipen
+  - BruteAutoInjector
+  - BurnAutoInjector
+  - RadAutoInjector
+  - PunctAutoInjector
+  - PyraAutoInjector
+  - AirlossAutoInjector
+  - HemostasisAutoInjector
+  - StimulantAutoInjector
+  - CrisisAutoInjector
+  - LacerAutoInjector
+  - BruizAutoInjector
+  - PolyAutoInjector
+  - EthylredoxrazineAutoInjector
+  - CombatMedipen
+  - Stimpack
+  - MedicatedSuture
+  - RegenerativeMesh
+
+# Americium requires corporate synthesis from processed nuclear materials.
+- type: marketCommodityRule
+  id: UltraAmericium
+  group: UltraPrecision
+  priority: 300
+  stackTypes:
+  - Americium
+
+# Repair drones and fleet interdiction equipment have restricted acquisition
+# or require americium and other products of lengthy production chains.
+- type: marketCommodityRule
+  id: UltraFleetEquipment
+  group: UltraPrecision
+  priority: 300
+  components:
+  - ShipRepairDrone
+  - ShipRepairStation
+  - FtlSuppressor
+  prototypes:
+  - ShipRepairDroneStationMachineCircuitboard
+  - ShipRepairDroneStationFlatpack
+  - MachineFtlSuppressorTsfFlatpack
+  - MachineFtlSuppressorPdvFlatpack
+
+# Kasatura exoskeletons are restricted Asakim equipment, including their
+# Centurion/Prefect derivatives and separately saleable helmets.
+- type: marketCommodityRule
+  id: UltraAsakimArmor
+  group: UltraPrecision
+  priority: 300
+  parents:
+  - ClothingOuterHardsuitAsakim
+  - ClothingOuterHardsuitCenturionAsakim
+  - ClothingHelmetHardsuitAsakim
+  - ClothingHelmetHardsuitCenturionAsakim
+
+# Americium is required either by these recipes or by their final assembly.
+- type: marketCommodityRule
+  id: UltraAmericiumEquipment
+  group: UltraPrecision
+  priority: 300
+  parents:
+  - LifeInsuranceScanner
+  - LifeInsuranceCloner
+  - LifeInsuranceConsole
+  - LifeInsuranceScannerMachineCircuitboard
+  - LifeInsuranceClonerMachineCircuitboard
+  - LifeInsuranceConsoleComputerCircuitboard
+  - MedicalBeamGun
+  - WeaponLightPhaserMaco
+  - GeneticsLaboratory
+  - GeneticsLaboratoryCircuitboard
+  - BulkAutoMiningEmitter
+  - BulkMiningRefinery
+
+# Restricted cybernetics combine extensive iridite processing and enriched
+# nuclear materials; include the packaged, unpacked and implanted products.
+- type: marketCommodityRule
+  id: UltraRestrictedCybernetics
+  group: UltraPrecision
+  priority: 300
+  parents:
+  - AutosurgeonSandevistanMieyo
+  - AutosurgeonSandevistanMieyoFlatpack
+  - AutosurgeonSandevistanTSF
+  - AutosurgeonSandevistanTSFFlatpack
+  - AutosurgeonShuntTSF
+  - AutosurgeonShuntTSFFlatpack
+  - OrganHeartSandevistan
+  - OrganHeartTSFSandevistan
+  - OrganHeartTSFShunt

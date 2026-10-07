@@ -1,0 +1,137 @@
+- type: entity
+  id: BorgChassisAsakimCloseContact
+  parent: BaseBorgChassisRedacted
+  name: close contact operator
+  description: A fast close-combat synthetic of the Khs'i-Ra Empire, equipped with a monomolecular blade.
+  components:
+  - type: IonStormTarget
+    chance: 0
+    randomLawsetChance: 0
+    removeChance: 0
+    replaceChance: 0
+    shuffleChance: 0
+  - type: SiliconLawProvider
+    laws: AsakimOccupant
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/asakim_close_contact.rsi
+    layers:
+    - state: close_contact
+      map: ["enum.BorgVisualLayers.Body"]
+    - state: close_contact_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Azaziba
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Azaziba
+  - type: CanMoveInAir
+  - type: BorgChassis
+    maxModules: 10
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: close_contact_e
+    noMindState: close_contact_e_r
+  - type: Construction
+    node: derelictcyborg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-derelict-cyborg
+    interactFailureString: petting-failure-derelict-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 5
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Critical
+      400: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      220: 0.8
+      280: 0.6
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 220
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: PlayerBorgAsakimCloseContact
+  parent: BorgChassisAsakimCloseContact
+  suffix: Battery, Module
+  components:
+  - type: AsakimTrustedUser
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleAsakimMonomolecularBlade
+      - BorgModuleTool
+      - BorgModuleRedactedRCD
+      - BorgModuleGPS
+      - BorgModuleJetpackADM
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
+
+- type: entity
+  id: PlayerBorgAsakimCloseContactGhostRole
+  parent: PlayerBorgAsakimCloseContact
+  suffix: Ghost
+  components:
+  - type: GhostRole
+    name: ghost-role-information-asakim-close-contact-borg
+    description: ghost-role-information-asakim-close-contact-borg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    prototype: AsakimCloseContactBorg
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 180000 # 50 hrs
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgAsakimCloseContactGhostRoleNoTimelock
+  parent: PlayerBorgAsakimCloseContactGhostRole
+  suffix: Ghost, No Timelock
+  components:
+  - type: GhostRole
+    requirements: []

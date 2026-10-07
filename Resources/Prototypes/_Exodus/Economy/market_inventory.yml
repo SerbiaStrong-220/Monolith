@@ -1,0 +1,6 @@
+- type: entity
+  id: ExodusMarketInventory
+  parent: BaseStationCargoMarket
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MarketInventory

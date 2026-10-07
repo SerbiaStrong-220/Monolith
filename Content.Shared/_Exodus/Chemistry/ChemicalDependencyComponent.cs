@@ -29,6 +29,10 @@ public sealed partial class ChemicalDependencyComponent : Component
     [DataField]
     public TimeSpan Reserve = TimeSpan.FromMinutes(30);
 
+    /// <summary>Pause reserve consumption and withdrawal damage unless a connected player controls the body.</summary>
+    [DataField]
+    public bool PauseWithoutPlayer;
+
     /// <summary>Stages are selected by time spent below zero reserve.</summary>
     [DataField]
     public List<ChemicalWithdrawalStage> Stages = new();

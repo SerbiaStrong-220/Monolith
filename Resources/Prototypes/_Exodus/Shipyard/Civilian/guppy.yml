@@ -10,7 +10,8 @@
   parent: BaseVessel
   name: Гуппи
   description: Простой и надёжный малый шахтёрский корабль для начинающего контрактника.
-  price: 22000
+  price: 26097 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.420372128 # Exodus: expected-price allowance for randomized contents.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/guppy.yml

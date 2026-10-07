@@ -12,14 +12,13 @@ namespace Content.Client._Exodus.ShipShields;
 /// </summary>
 public sealed class ShipShieldRippleRenderer : IDisposable
 {
-    private static readonly ProtoId<ShaderPrototype> _rippleShaderPrototypeId = "ShipShieldRipple";
-    private readonly ShaderPrototype _shaderPrototype;
-    private readonly Dictionary<float, ShaderInstance> _shaders = new();
+    private readonly IPrototypeManager _prototypes;
+    private readonly Dictionary<(ProtoId<ShaderPrototype> Shader, float Speed), ShaderInstance> _shaders = new();
     private readonly List<DrawVertexUV2D> _vertices = new(128);
 
     public ShipShieldRippleRenderer(IPrototypeManager prototypes)
     {
-        _shaderPrototype = prototypes.Index(_rippleShaderPrototypeId);
+        _prototypes = prototypes;
     }
 
     /// <param name="localToView">Transforms fixture vertices into world or control coordinates.</param>
@@ -34,14 +33,16 @@ public sealed class ShipShieldRippleRenderer : IDisposable
         if (visuals.RippleWidth <= 0f || chain.Vertices.Length < 2)
             return;
 
-        // Draw commands are deferred. Share immutable instances by speed so shields cannot
+        // Draw commands are deferred. Share immutable instances by shader and speed so shields cannot
         // overwrite each other's uniforms or allocate boxed parameter values every frame.
-        if (!_shaders.TryGetValue(visuals.RippleSpeed, out var shader))
+        ProtoId<ShaderPrototype> shaderId = visuals.RippleShader;
+        var shaderKey = (shaderId, visuals.RippleSpeed);
+        if (!_shaders.TryGetValue(shaderKey, out var shader))
         {
-            shader = _shaderPrototype.InstanceUnique();
+            shader = _prototypes.Index(shaderId).InstanceUnique();
             shader.SetParameter("waveSpeed", visuals.RippleSpeed);
             shader.MakeImmutable();
-            _shaders.Add(visuals.RippleSpeed, shader);
+            _shaders.Add(shaderKey, shader);
         }
 
         var width = MathF.Max(visuals.RippleWidth, minimumWidth);

@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server._Exodus.Construction;
 using Content.Server.Construction;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lathe;
@@ -36,6 +37,7 @@ public sealed partial class MiningRefinerySystem : EntitySystem
     [Dependency] private ExplosionSystem _explosions = default!;
     [Dependency] private SharedMaterialStorageSystem _materials = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private MachinePartUpgradeSystem _partUpgrades = default!;
 
     private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
@@ -58,6 +60,7 @@ public sealed partial class MiningRefinerySystem : EntitySystem
         SubscribeLocalEvent<MiningRefineryComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MiningRefineryComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<MiningRefineryComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+        InitializeEfficiency();
 
         Subs.CVar(_cfg, EXCVars.BulkMiningLinkBonus, value => _linkBonus = value, true);
         Subs.CVar(_cfg, EXCVars.BulkMiningLinkBonusDecay, value => _linkBonusDecay = value, true);
@@ -67,19 +70,9 @@ public sealed partial class MiningRefinerySystem : EntitySystem
     private void OnRefreshParts(Entity<MiningRefineryComponent> ent, ref RefreshPartsEvent args)
     {
         var comp = ent.Comp;
-        var totalMultiplier = 0f;
-        var totalParts = 0;
-        foreach (var part in args.Parts)
-        {
-            if (part.Part.PartType != comp.MachinePartCapacity)
-                continue;
-
-            var quantity = part.Quantity();
-            var multiplier = comp.CapacityMultipliers.GetValueOrDefault(part.Part.Rating, part.Part.Rating);
-            totalMultiplier += Math.Max(1f, multiplier) * quantity;
-            totalParts += quantity;
-        }
-        comp.CapacityMultiplier = totalParts > 0 ? totalMultiplier / totalParts : 1f;
+        comp.CapacityMultiplier = Math.Max(1f,
+            _partUpgrades.GetMultiplier(args.Parts, comp.MachinePartCapacity, comp.CapacityMultipliers, useRatingAsFallback: true));
+        comp.ExhaustMultiplier = _partUpgrades.GetMultiplier(args.Parts, comp.MachinePartExhaust, comp.ExhaustMultipliers);
 
         // Keep serialized baselines: neither repeated refreshes nor map loading may compound upgrades.
         comp.BaseExhaustVolume ??= comp.Exhaust.Volume;
@@ -109,6 +102,7 @@ public sealed partial class MiningRefinerySystem : EntitySystem
     private void OnUpgradeExamine(Entity<MiningRefineryComponent> ent, ref UpgradeExamineEvent args)
     {
         args.AddPercentageUpgrade("bulk-mining-refinery-upgrade-capacity", ent.Comp.CapacityMultiplier);
+        args.AddPercentageUpgrade("bulk-mining-refinery-upgrade-exhaust", ent.Comp.ExhaustMultiplier);
     }
 
     private void OnUiOpen(Entity<MiningRefineryComponent> ent, ref BoundUIOpenedEvent args)
@@ -131,12 +125,16 @@ public sealed partial class MiningRefinerySystem : EntitySystem
 
     private void OnMapInit(Entity<MiningRefineryComponent> ent, ref MapInitEvent args)
     {
+        ent.Comp.LinkBonusAffectsSpeed = false;
         ent.Comp.NextUpdate = _timing.CurTime + UpdateInterval;
+        RefreshFilters(ent);
     }
 
     private void OnPrinting(Entity<MiningRefineryComponent> ent, ref LatheStartPrintingEvent args)
     {
-        ent.Comp.Exhaust.AdjustMoles(ent.Comp.ExhaustGas, Math.Max(0, ent.Comp.ExhaustMolesPerBatch));
+        var moles = Math.Max(0, ent.Comp.ExhaustMolesPerBatch * ent.Comp.ExhaustMultiplier);
+        ent.Comp.Exhaust.AdjustMoles(ent.Comp.ExhaustGas, moles);
+        ConsumeFilters(ent, moles);
         // Production can cross the limit between scheduled exhaust updates.
         if (!TryDetonate(ent))
             UpdateStorageState(ent);
@@ -179,8 +177,8 @@ public sealed partial class MiningRefinerySystem : EntitySystem
     }
 
     /// <summary>
-    /// Applies the consortium bonus of the joined liquid metal networks as a separate lathe multiplier:
-    /// faster refining and cheaper recipes (the lasers' extra yield). Machine part upgrades stay independent.
+    /// Applies the consortium material discount of the joined liquid metal networks.
+    /// Mining speed is handled by the lasers; refining speed and machine part upgrades stay independent.
     /// </summary>
     public void UpdateLinkBonus(Entity<MiningRefineryComponent> ent, int ships)
     {
@@ -192,8 +190,9 @@ public sealed partial class MiningRefinerySystem : EntitySystem
         {
             // Divide out the previous bonus, so repeated changes and loading a saved machine never compound.
             var ratio = (1f + ent.Comp.LinkBonus) / (1f + bonus);
-            _lathe.MultiplyLatheMultipliers(ent.Owner, materialUse: ratio, time: ratio);
+            _lathe.MultiplyLatheMultipliers(ent.Owner, materialUse: ratio);
             ent.Comp.LinkBonus = bonus;
+            ent.Comp.LinkBonusAffectsSpeed = false;
             _lathe.UpdateUserInterfaceState(ent, lathe);
         }
 
@@ -204,11 +203,14 @@ public sealed partial class MiningRefinerySystem : EntitySystem
 
     public void UpdateStorageState(Entity<MiningRefineryComponent> ent)
     {
+        var storage = CompOrNull<MaterialStorageComponent>(ent);
         var capacity = TryComp<MiningPipeNetworkMemberComponent>(ent, out var member)
             ? _pipes.GetStorageCapacity((ent, member))
-            : CompOrNull<MaterialStorageComponent>(ent)?.StorageLimit;
+            : storage?.StorageLimit;
         var state = new MiningRefineryStorageState(ent.Comp.Exhaust.TotalMoles, ent.Comp.Exhaust.Pressure,
-            _materials.GetMaterialAmount(ent, ent.Comp.SlurryMaterial), capacity, ent.Comp.LinkedShips, ent.Comp.LinkBonus);
+            _materials.GetMaterialAmount(ent, ent.Comp.SlurryMaterial), capacity, ent.Comp.LinkedShips, ent.Comp.LinkBonus,
+            ent.Comp.FullnessDiscount, GetFilterDiscount(ent), ent.Comp.ActiveFilters, ent.Comp.InstalledFilters,
+            ent.Comp.FilterSlots.Count, storage?.Storage.GetValueOrDefault(ent.Comp.SlurryMaterial) ?? 0, storage?.StorageLimit);
         if (state == ent.Comp.StorageState)
             return;
 

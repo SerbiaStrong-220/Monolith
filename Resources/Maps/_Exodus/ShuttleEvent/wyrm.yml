@@ -2445,7 +2445,7 @@ entities:
     - type: Transform
       pos: -3.5,-2.5
       parent: 1
-- proto: SpawnRedactedBorg
+- proto: SpawnAsakimCloseContactBorg
   entities:
   - uid: 394
     components:

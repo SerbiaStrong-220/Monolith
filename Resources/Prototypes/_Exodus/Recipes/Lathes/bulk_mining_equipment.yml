@@ -1,4 +1,14 @@
-# Boards are licensed through the Aquila Ink. concern disk and the legacy Drake Industries disk. Laser boards have no recipe.
+# Boards are licensed through the Aquila Ink. concern disk and the legacy Drake Industries disk. Mining laser boards have no recipe.
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: BulkMiningLinkRelayCircuitboard
+  result: BulkMiningLinkRelayCircuitboard
+  completetime: 20
+  materials:
+    Glass: 1000
+    Gold: 500
+    Silver: 500
+
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: BulkAutoMiningConsoleCircuitboard
@@ -22,6 +32,23 @@
     Silver: 1500
     Plasma: 1000
     UraniumFissile: 500
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: BulkMiningRefineryLargeCircuitboard
+  result: BulkMiningRefineryLargeCircuitboard
+  completetime: 60
+  materials:
+    Glass: 4000
+    Gold: 3000
+    Silver: 3000
+    Plasma: 2000
+    UraniumFissile: 1000
+
+- type: latheRecipe
+  parent: NebulaGasSiphonFilter
+  id: DrakeRefineryFilter
+  result: DrakeRefineryFilter
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
@@ -81,13 +108,18 @@
 - type: latheRecipePack
   id: CompanyDrakeBoardsDynamic
   recipes:
+  - BulkMiningLinkRelayCircuitboard
   - BulkAutoMiningConsoleCircuitboard
   - BulkMiningRefineryCircuitboard
+  - BulkMiningRefineryLargeCircuitboard
   - BulkMiningExhaustCircuitboard
+  - MiningSlurryTankCircuitboard
+  - MiningSlurryTankLargeCircuitboard
 
 - type: latheRecipePack
   id: CompanyDrakeMiningDynamic
   recipes:
+  - DrakeRefineryFilter
   - BulkMiningPipeStack10
   - GasPipeArmoredHalf
   - GasPipeArmoredStraight

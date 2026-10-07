@@ -1,0 +1,18 @@
+- type: entity
+  id: BorgModuleAsakimMonomolecularBlade
+  parent: [BaseBorgModuleSyndicate, BaseProviderBorgModule]
+  name: monomolecular blade cyborg module
+  description: A module containing a monomolecular blade and an Asakim neural pinpointer.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - sprite: _Exodus/Objects/Weapons/Melee/monomolecular_blade.rsi
+      state: icon
+  - type: ItemBorgModule
+    moduleId: MonomolecularBlade
+    items:
+    - CyborgMonomolecularBlade
+    - PinpointerAsakimBrain
+  - type: BorgModuleIcon
+    icon: {sprite: _Exodus/Objects/Weapons/Melee/monomolecular_blade.rsi, state: icon}

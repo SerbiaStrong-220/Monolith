@@ -21,6 +21,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared._NF.Bank.BUI; // Frontier
+using Content.Server._Exodus.Economy; // Exodus dynamic market
+using Content.Shared._NF.Market; // Exodus resale reservation
+using Content.Shared._Exodus.Economy; // Exodus CargoMarketListing
+using Content.Shared.Stacks; // Exodus market lot sizing
+using Content.Server._Exodus.Cargo; // Exodus bulk cargo packaging
 
 namespace Content.Server.Cargo.Systems
 {
@@ -211,7 +216,41 @@ namespace Content.Server.Cargo.Systems
                 PlayDenySound(uid, component);
             }
 
-            var cost = order.Price * order.OrderQuantity;
+            // Exodus: resale stock — cannot approve more than remaining station market stock
+            if (order.FromResaleStock)
+            {
+                // Exodus: an old request never silently purchases fewer shared units.
+                if (!_market.TryGetStock(station.Value, order.ProductId, out var stock) ||
+                    order.OrderQuantity <= 0 || order.OrderQuantity > stock.Quantity)
+                {
+                    order.TotalPrice = null; // Exodus: invalidate the stale payable quote.
+                    ConsolePopup(args.Actor, Loc.GetString("cargo-console-resale-out-of-stock"));
+                    PlayDenySound(uid, component);
+                    UpdateOrders(station.Value); // Exodus: show the unavailable order and current shared stock.
+                    return;
+                }
+
+                order.Price = stock.Price; // Exodus: approve against the current stock appraisal, not an old request.
+            }
+
+            // Exodus-begin: sequential buy lots × global sector factor; optional local MarketModifier on console
+            if (!TryQuoteCargoOrder(uid, order, out var marketQuote))
+            {
+                order.TotalPrice = null;
+                ConsolePopup(args.Actor, Loc.GetString("market-purchase-unavailable"));
+                UpdateOrders(station.Value);
+                return;
+            }
+
+            var cost = marketQuote.TotalPrice;
+            if (args.ExpectedPrice != cost)
+            {
+                order.TotalPrice = cost;
+                ConsolePopup(args.Actor, Loc.GetString("market-purchase-price-changed"));
+                UpdateOrders(station.Value);
+                return;
+            }
+            // Exodus-end
 
             // Not enough balance
             if (!_bank.TryBankWithdraw(player, cost, dry: true)) // Exodus: Correct bank check
@@ -238,6 +277,29 @@ namespace Content.Server.Cargo.Systems
             //     }
             // }
             // End Frontier
+
+            // Exodus: reserve stock before charging; rollback stock rather than making a taxable refund.
+            MarketData? reservedStock = null;
+            if (order.FromResaleStock &&
+                !_market.TryTakeStock(station.Value, order.ProductId, order.OrderQuantity, out reservedStock))
+            {
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-resale-out-of-stock"));
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            if (!_bank.TryBankWithdraw(player, cost))
+            {
+                if (reservedStock != null)
+                    _market.ReturnStock(station.Value, reservedStock);
+
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            _dynamicMarket.CommitTransaction(marketQuote.Transaction); // Exodus: commit the paid composition exactly once.
+            order.TotalPrice = cost; // Exodus: retain the amount actually paid in the approved order.
 
             order.Approved = true;
             _audio.PlayPvs(component.ConfirmSound, uid);
@@ -271,10 +333,9 @@ namespace Content.Server.Cargo.Systems
             {
                 if (!float.IsFinite(taxCoeff) || taxCoeff <= 0.0f)
                     continue;
-                var tax = (int)Math.Floor(cost * taxCoeff);
+                var tax = DynamicMarketSystem.RoundToPrice(Math.Floor(marketQuote.NominalPrice * (double)taxCoeff)); // Exodus: the price-floor adjustment is never distributed.
                 _bank.TrySectorDeposit(account, tax, LedgerEntryType.CargoTax);
             }
-            _bank.TryBankWithdraw(player, cost);
             // End Frontier
 
             UpdateOrders(station.Value);
@@ -302,10 +363,11 @@ namespace Content.Server.Cargo.Systems
                     {
                         var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 
-                        if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                        var delivered = FulfillOrder(order, coordinates, orderDatabase.PrinterOutput); // Exodus: count actual deliveries.
+                        if (delivered > 0)
                         {
                             tradeDestination = trade;
-                            order.NumDispatched++;
+                            order.NumDispatched += delivered; // Exodus
                             if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
                                 break;
                         }
@@ -354,6 +416,14 @@ namespace Content.Server.Cargo.Systems
             if (!TryGetOrderDatabase(uid, out var dbUid, out var orderDatabase, component))
                 return;
 
+            // Exodus-begin: resale stock from sold goods (not YAML cargo catalog)
+            if (CargoMarketListing.TryParseResaleId(args.CargoProductId, out var resaleEntityId))
+            {
+                TryAddResaleOrder((uid, component), player, (dbUid!.Value, orderDatabase), args, resaleEntityId);
+                return;
+            }
+            // Exodus-end
+
             if (!_protoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
             {
                 Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
@@ -364,6 +434,14 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             var data = GetOrderData(EntityManager.GetNetEntity(uid), args, product, GenerateOrderId(orderDatabase));
+            // Exodus: reject unsupported or unrepresentable purchases before creating an order.
+            if (!TryQuoteCargoOrder(uid, data, out var purchaseQuote))
+            {
+                ConsolePopup(player, Loc.GetString("market-purchase-unavailable"));
+                return;
+            }
+
+            data.TotalPrice = purchaseQuote.TotalPrice;
 
             if (!TryAddOrder(orderDatabase.Owner, data, orderDatabase))
             {
@@ -395,7 +473,9 @@ namespace Content.Server.Cargo.Systems
         }
 
         // Frontier: custom UpdateOrderState function
-        private void UpdateOrderState(EntityUid uid, CargoOrderConsoleComponent component, EntityUid? station)
+        // Exodus: reuse a catalog and sale ceiling only within the current shared inventory notification.
+        private void UpdateOrderState(EntityUid uid, CargoOrderConsoleComponent component, EntityUid? station,
+            List<CargoMarketListing>? marketListings = null, MarketSellCeiling? marketCeiling = null)
         {
             var uiUsers = _uiSystem.GetActors((uid, null), CargoConsoleUiKey.Orders);
             foreach (var user in uiUsers)
@@ -413,19 +493,50 @@ namespace Content.Server.Cargo.Systems
                     balance = stationBank.Balance;
                 }
 
-                if (station == null || !TryGetOrderDatabase(station.Value, out var _, out var orderDatabase, component))
+                if (station == null || !TryGetOrderDatabase(station.Value, out var orderStation, out var orderDatabase, component)) // Exodus: use the owning station for resale prices.
                     return;
 
                 // Frontier - we only want to see orders made on the same computer, so filter them out
                 var filteredOrders = orderDatabase.Orders
                     .Where(order => order.Computer == EntityManager.GetNetEntity(uid)).ToList();
 
+                // Exodus: pending orders show a live quote; approved orders retain their paid total.
+                marketCeiling ??= _marketSellCeilings.GetSnapshot(); // Exodus
+                foreach (var order in filteredOrders)
+                {
+                    if (!order.Approved)
+                    {
+                        // Exodus-begin: a pending shared-stock order is payable only while all units remain available.
+                        if (order.FromResaleStock)
+                        {
+                            if (orderStation == null ||
+                                !_market.TryGetStock(orderStation.Value, order.ProductId, out var stock) ||
+                                order.OrderQuantity <= 0 || order.OrderQuantity > stock.Quantity)
+                            {
+                                order.TotalPrice = null;
+                                continue;
+                            }
+
+                            order.Price = stock.Price;
+                        }
+                        // Exodus-end
+
+                        order.TotalPrice = TryQuoteCargoOrder(uid, order, out var purchaseQuote, marketCeiling)
+                            ? purchaseQuote.TotalPrice
+                            : null; // Exodus: unavailable prices must not fall back to an unsafe legacy estimate.
+                    }
+                }
+
+                // Exodus-begin: live catalog listings from global sector market
+                marketListings ??= BuildCargoMarketListings((uid, component), marketCeiling);
                 var state = new CargoConsoleInterfaceState(
                     MetaData(user).EntityName,
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     balance,
-                    filteredOrders);
+                    filteredOrders,
+                    marketListings);
+                // Exodus-end
 
                 _uiSystem.SetUiState(uid, CargoConsoleUiKey.Orders, state);
             }
@@ -536,7 +647,8 @@ namespace Content.Server.Cargo.Systems
 
         public void RemoveOrder(EntityUid dbUid, int index, StationCargoOrderDatabaseComponent orderDB)
         {
-            var sequenceIdx = orderDB.Orders.FindIndex(order => order.OrderId == index);
+            // Exodus: paid goods remain queued until delivery; client cancellation cannot discard or return them.
+            var sequenceIdx = orderDB.Orders.FindIndex(order => order.OrderId == index && !order.Approved);
             if (sequenceIdx != -1)
             {
                 orderDB.Orders.RemoveAt(sequenceIdx);
@@ -552,50 +664,88 @@ namespace Content.Server.Cargo.Systems
             component.Orders.Clear();
         }
 
-        private static bool PopFrontOrder(List<NetEntity> consoleUidList, StationCargoOrderDatabaseComponent orderDB, [NotNullWhen(true)] out CargoOrderData? orderOut)
+        // Exodus-begin: choose an order without consuming it before delivery succeeds.
+        private bool TryGetNextOrder(List<NetEntity> consoleUidList, StationCargoOrderDatabaseComponent orderDB, [NotNullWhen(true)] out CargoOrderData? orderOut)
         {
-            var orderIdx = orderDB.Orders.FindIndex(order => order.Approved && consoleUidList.Any(consoleUid => consoleUid == order.Computer));
-            if (orderIdx == -1)
+            foreach (var order in orderDB.Orders)
             {
-                orderOut = null;
-                return false;
+                if (!order.Approved || order.NumDispatched >= order.OrderQuantity ||
+                    order.Computer is not { } console || !consoleUidList.Contains(console) ||
+                    !_protoMan.HasIndex<EntityPrototype>(order.ProductId))
+                    continue;
+
+                orderOut = order;
+                return true;
             }
 
-            orderOut = orderDB.Orders[orderIdx];
-            orderOut.NumDispatched++;
-
-            if (orderOut.NumDispatched >= orderOut.OrderQuantity)
-            {
-                // Order is complete. Remove from the queue.
-                orderDB.Orders.RemoveAt(orderIdx);
-            }
-            return true;
+            orderOut = null;
+            return false;
         }
+        // Exodus-end
 
         /// <summary>
         /// Tries to fulfill the next outstanding order.
         /// </summary>
         private bool FulfillNextOrder(List<NetEntity> consoleUidList, StationCargoOrderDatabaseComponent orderDB, EntityCoordinates spawn, string? paperProto)
         {
-            if (!PopFrontOrder(consoleUidList, orderDB, out var order))
+            if (!TryGetNextOrder(consoleUidList, orderDB, out var order)) // Exodus: select without dequeuing.
                 return false;
 
-            return FulfillOrder(order, spawn, paperProto);
+            // Exodus-begin: one crate can fulfill multiple paid order units.
+            var delivered = FulfillOrder(order, spawn, paperProto, orderDB.BulkPackaging);
+            if (delivered <= 0)
+                return false;
+
+            order.NumDispatched += delivered;
+            if (order.NumDispatched >= order.OrderQuantity)
+                orderDB.Orders.Remove(order);
+
+            return true;
+            // Exodus-end
         }
 
         /// <summary>
         /// Fulfills the specified cargo order and spawns paper attached to it.
         /// </summary>
-        private bool FulfillOrder(CargoOrderData order, EntityCoordinates spawn, string? paperProto)
+        // Exodus: return the actual shipped quantity, including bulk packages.
+        private int FulfillOrder(CargoOrderData order, EntityCoordinates spawn, string? paperProto,
+            CargoOrderPackagingSettings? packaging = null)
         {
-            // Create the item itself
-            var item = Spawn(order.ProductId, spawn);
+            // Exodus: invalid/stale orders must stay queued rather than lose paid goods.
+            if (order.NumDispatched >= order.OrderQuantity || !_protoMan.HasIndex<EntityPrototype>(order.ProductId))
+                return 0;
+
+            // Exodus: initialize packaged structures in nullspace so they never anchor to the delivery floor.
+            var requiresPackaging = _packaging.RequiresPackaging(order.ProductId);
+            var item = requiresPackaging ? Spawn(order.ProductId) : Spawn(order.ProductId, spawn);
+
+            // Exodus: resale inventory counts individual units even if a prototype spawns a full stack.
+            if (order.FromResaleStock && TryComp<StackComponent>(item, out var stack))
+                _stack.SetCount(item, 1, stack);
 
             // Ensure the item doesn't start anchored
             _transformSystem.Unanchor(item, Transform(item));
 
+            // Exodus-begin: attach one manifest to the package, retaining the purchased item's name.
+            var itemName = MetaData(item).EntityName;
+            var quantity = 1;
+            if ((packaging != null || requiresPackaging) &&
+                _packaging.TryPackOrder(item, order, packaging ?? new CargoOrderPackagingSettings(), spawn,
+                    out var package, out var packed))
+            {
+                item = package;
+                quantity = packed;
+            }
+            else if (requiresPackaging)
+            {
+                QueueDel(item);
+                return 0;
+            }
+            // Exodus-end
+
             // Create a sheet of paper to write the order details on
             var printed = EntityManager.SpawnEntity(paperProto, spawn);
+            EnsureComp<MarketReceiptComponent>(printed); // Exodus: issued invoices cannot be farmed by splitting cheap orders.
             if (TryComp<PaperComponent>(printed, out var paper))
             {
                 // fill in the order data
@@ -605,8 +755,8 @@ namespace Content.Server.Cargo.Systems
                 _paperSystem.SetContent((printed, paper), Loc.GetString(
                         "cargo-console-paper-print-text",
                         ("orderNumber", order.OrderId),
-                        ("itemName", MetaData(item).EntityName),
-                        ("orderQuantity", order.OrderQuantity),
+                        ("itemName", itemName), // Exodus: describe the goods rather than their packing crate.
+                        ("orderQuantity", quantity), // Exodus: quantity in this delivery.
                         ("requester", order.Requester),
                         ("reason", order.Reason),
                         ("approver", order.Approver ?? string.Empty)));
@@ -618,8 +768,7 @@ namespace Content.Server.Cargo.Systems
                 }
             }
 
-            return true;
-
+            return quantity; // Exodus: update the queue only after successful delivery.
         }
 
         #region Station

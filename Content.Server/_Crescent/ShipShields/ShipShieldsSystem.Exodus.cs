@@ -294,6 +294,11 @@ public sealed partial class ShipShieldsSystem
         // Exodus-begin shield damage-overload handling
         var poweredBeforeLoad = _apcPowerReceiverQuery.TryGetComponent(source, out var receiver) && receiver.Powered;
 
+        // Exodus-begin notify recovery modifiers of an accepted shield strike
+        var hit = new ShipShieldHitEvent();
+        RaiseLocalEvent(source, ref hit);
+        // Exodus-end
+
         // Convert added watt load into the emitter's existing Damage accumulator so it shares
         // the same recovery/overload logic as projectile deflection.
         var currentLoad = CalculateLoadDamage(emitter);

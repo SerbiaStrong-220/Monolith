@@ -9,7 +9,7 @@
   parent: BaseVessel
   name: Аррибан # Ru-Localization
   description: Шаттл, специально построенный Горизонт Энерджи для атмосферных работ и добычи газа. Жилые отсеки тесные, но удобные. # Ru-Localization
-  price: 97500
+  price: 101622 # Exodus: expected ship and contents value; no additional markup.
   category: Large
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/arribane.yml # Exodus: upstream remap, existing vessel settings retained.

@@ -53,7 +53,8 @@ public sealed partial class VirusRadiophasiaSystem : EntitySystem
 
     private void OnDamageTaken(Entity<VirusRadiophasiaComponent> ent, ref DamageModifyEvent args) // Radiation damage originating from anything except the RadiationSystem was unhandled
     {
-        if (ent.Comp.HealPerDamageUnit.Empty)
+        // Irradiation is handled once by OnIrradiated, including its own-source exclusion.
+        if (args.OriginFlag == DamageableSystem.DamageOriginFlag.Irradiation || ent.Comp.HealPerDamageUnit.Empty)
             return;
 
         if (!args.Damage.DamageDict.TryGetValue("Radiation", out var damageValue) ||

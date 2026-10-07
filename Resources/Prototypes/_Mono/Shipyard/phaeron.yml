@@ -12,7 +12,8 @@
   parent: BaseVessel
   name: Фарон # Ru-Localization
   description: Часть новой инициативы Горизонт Энерджи по добыче газа. Этот гигантский газовоз способен добывать и хранить пугающее количество газа. Идеален для добычи плазмы в секторе Колосс. # Ru-Localization
-  price: 64600 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 73049 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.99947536 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/phaeron.yml

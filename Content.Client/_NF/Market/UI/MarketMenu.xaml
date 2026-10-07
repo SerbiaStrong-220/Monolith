@@ -2,6 +2,7 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      xmlns:market="clr-namespace:Content.Client._Exodus.Economy.UI"
                       MinSize="1000 500"
                       Title="{Loc 'market-console-menu-title'}">
 
@@ -62,7 +63,9 @@
                                   HorizontalExpand="True">
                         <!-- Balance, cart balance, etc -->
                         <BoxContainer Orientation="Horizontal" Margin="5">
+                            <!-- Exodus: selecting items does not reserve the shared stock. -->
                             <Label Text="{Loc 'market-cart-prefix'}"
+                                   ToolTip="{Loc 'market-cart-shared-stock-hint'}"
                                    StyleClasses="LabelKeyText" />
                             <Label Name="CartBalanceLabel"
                                    HorizontalExpand="True"
@@ -95,20 +98,19 @@
                     </BoxContainer>
                     <Button Name="ClearSearchButton" Access="Public" Text="✖" />
                 </BoxContainer>
+                <!-- Exodus: explain the shared inventory at the purchase action. -->
                 <Button Name="PurchaseCart"
                         Access="Public"
-                        ToolTip=""
+                        ToolTip="{Loc 'market-cart-shared-stock-hint'}"
                         HorizontalExpand="True"
                         Margin="5 0 5 0"
                         Text="{Loc 'market-purchase-cart-button'}"
                         StyleClasses="LabelSubText" />
             </BoxContainer>
         </BoxContainer>
-        <BoxContainer Name="ContentFooter" HorizontalExpand="True" SetHeight="28" Margin="1 0 2 1">
-            <controls:StripeBack HasBottomEdge="False" HasMargins="False" HorizontalExpand="True">
-                <Label Text="Robust#OS ™" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalExpand="True"
-                       Margin="6 0" StyleClasses="PdaContentFooterText" />
-            </controls:StripeBack>
+        <!-- Exodus: shared sector market footer -->
+        <BoxContainer Name="ContentFooter" HorizontalExpand="True" Margin="1 0 2 1">
+            <market:MarketTerminalFooter />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

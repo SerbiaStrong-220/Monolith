@@ -57,6 +57,9 @@
     - SimpleNeutral
   - type: ShipRepairDrone
   - type: ShipRepairTool
+  - type: CargoSellableMob
+  - type: StaticPrice
+    price: 86972 # Full standard drone material cost.
   - type: Tag
     tags:
     - ShipRepairTool
@@ -99,6 +102,8 @@
   - type: ShipRepairDrone
     repairRadius: 1
     repairThroughput: 1.8
+  - type: StaticPrice
+    price: 122672 # Full fleet drone material cost; inherited by PDV.
   - type: Access
     groups: [GeneralNfsdAccess]
 
@@ -130,6 +135,8 @@
     - AsakimDefenceForces
   - type: ShipRepairDrone
     canPhase: true
+  - type: StaticPrice
+    price: 145000 # Asakim model has no material recipe; separately balanced phase-capable drone.
   - type: GenericVisualizer
     visuals:
       enum.ShipRepairDroneVisuals.State:

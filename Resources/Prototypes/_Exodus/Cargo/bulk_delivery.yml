@@ -1,0 +1,22 @@
+- type: entity
+  parent: CrateGenericSteel
+  id: ExodusCargoDeliveryCrate
+  name: shipping crate
+  description: A shipping crate used to pack bulk supply orders.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StaticPrice
+    price: 0
+  - type: Construction
+    graph: ExodusCargoDeliveryCrate
+    node: crate
+    deconstructionTarget: null
+
+# Free delivery packaging cannot be dismantled into materials.
+- type: constructionGraph
+  id: ExodusCargoDeliveryCrate
+  start: crate
+  graph:
+  - node: crate
+    entity: ExodusCargoDeliveryCrate
+    edges: []

@@ -14,33 +14,60 @@ public static class MarketDataExtensions
     /// <param name="marketDataList">The market data list to modify.</param>
     /// <param name="estimatedPrice">The estimated price by the pricing system.</param>
     /// <param name="stackPrototypeId">The stack prototype id for this prototype if any.</param>
-    public static void Upsert(this List<MarketData> marketDataList,
+    // Exodus-begin: validate the whole stock change before mutating quantities or prices.
+    public static bool Upsert(this List<MarketData> marketDataList,
         string entityPrototypeId,
         int increaseAmount,
         double estimatedPrice,
         string? stackPrototypeId = null)
     {
-        // Find the MarketData for the given EntityPrototype.
-        var prototypeMarketData = marketDataList.FirstOrDefault(md => md.Prototype == entityPrototypeId);
+        if (increaseAmount == 0)
+            return true;
 
-        if (prototypeMarketData != null && (prototypeMarketData.Quantity + increaseAmount) >= 0)
+        if (increaseAmount > 0 && (!double.IsFinite(estimatedPrice) || estimatedPrice < 0))
+            return false;
+
+        MarketData? prototypeMarketData = null;
+        foreach (var entry in marketDataList)
         {
-            // If it exists, change the count.
-            prototypeMarketData.Quantity += increaseAmount;
-            if (prototypeMarketData.Quantity <= 0)
+            if (entry.Prototype == entityPrototypeId)
             {
-                marketDataList.Remove(prototypeMarketData);
+                prototypeMarketData = entry;
+                break;
             }
         }
-        else if (increaseAmount > 0)
+
+        if (prototypeMarketData == null)
         {
-            // If it doesn't exist, create a new MarketData and add it to the list.
-            marketDataList.Add(new MarketData(entityPrototypeId,
-                stackPrototypeId ?? prototypeMarketData?.StackPrototype,
-                increaseAmount,
-                estimatedPrice));
+            if (increaseAmount < 0)
+                return false;
+
+            marketDataList.Add(new MarketData(entityPrototypeId, stackPrototypeId, increaseAmount, estimatedPrice));
+            return true;
         }
+
+        var newQuantity = (long) prototypeMarketData.Quantity + increaseAmount;
+        if (newQuantity < 0 || newQuantity > int.MaxValue)
+            return false;
+
+        if (newQuantity == 0)
+        {
+            marketDataList.Remove(prototypeMarketData);
+            return true;
+        }
+
+        if (increaseAmount > 0)
+        {
+            var addedShare = increaseAmount / (double) newQuantity;
+            prototypeMarketData.Price = double.IsFinite(prototypeMarketData.Price)
+                ? prototypeMarketData.Price * (1 - addedShare) + estimatedPrice * addedShare
+                : estimatedPrice;
+        }
+
+        prototypeMarketData.Quantity = (int) newQuantity;
+        return true;
     }
+    // Exodus-end
 
     /// <summary>
     /// Moves a MarketData item from the source list to the target list.
@@ -51,9 +78,9 @@ public static class MarketDataExtensions
     public static void Move(this List<MarketData> sourceList, List<MarketData> targetList, string prototypeId)
     {
         var marketData = sourceList.FirstOrDefault(md => md.Prototype == prototypeId);
-        if (marketData != null)
+        if (marketData != null &&
+            targetList.Upsert(marketData.Prototype, marketData.Quantity, marketData.Price, marketData.StackPrototype)) // Exodus: retain source when destination rejects the transfer.
         {
-            targetList.Upsert(marketData.Prototype, marketData.Quantity, marketData.Price, marketData.StackPrototype);
             sourceList.Remove(marketData);
         }
     }

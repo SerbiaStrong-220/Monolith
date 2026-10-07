@@ -4,7 +4,7 @@
   parent: BaseVessel
   name: СпайГласс # Ru-Localization
   description: Исследовательский корабль Ульман Индастрис. Эта малютка способна заниматься ксеноархеологией - и ничем больше. # Ru-Localization
-  price: 57200 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 66616 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/spyglass.yml

@@ -9,7 +9,8 @@
   parent: BaseVessel
   name: Сумрак М2 # Ru-Localization
   description: Шаттл, переоборудованный сомнительными методами в боеспособный корабль. В основном используется отчаявшимися или экономными. # Ru-Localization
-  price: 64200 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 70675 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999898553 # Exodus: expected-price allowance for randomized contents.
   category: Medium
   group: Expedition
   access: Mercenary

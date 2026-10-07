@@ -8,7 +8,7 @@
   parent: BaseVessel
   name: Нобл # Ru-Localization
   description: Утилизаторский шаттл, оснащённый как переработчиком металлолома, так и рудоперерабатывающим оборудованием, а также четырьмя шахтёрскими  М25. В остальном он довольно скуден, если не считать термоядерный реактор. # Ru-Localization
-  price: 60900 # Exodus: appraised minimum + 5%, rounded up to 100.
+  price: 71053 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/noble.yml # Exodus: upstream remap, existing vessel settings retained.

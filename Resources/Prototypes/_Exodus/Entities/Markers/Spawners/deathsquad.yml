@@ -1,0 +1,13 @@
+- type: entity
+  id: RandomHumanoidSpawnerExodusDeathSquad
+  name: ABADDON operative
+  suffix: Exodus, ERTRole, Death Squad
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+    state: icon
+  - type: RandomSpawner
+    prototypes:
+    - MobHumanExodusDeathSquad
+    chance: 1
+    offset: 0

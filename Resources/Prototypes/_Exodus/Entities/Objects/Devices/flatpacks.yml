@@ -166,6 +166,8 @@
   components:
   - type: Flatpack
     entity: MachineFtlSuppressorTsf
+  - type: StaticPrice
+    price: 250000 # Same base value as the deployed suppressor.
 
 - type: entity
   parent: BaseFlatpack
@@ -175,3 +177,5 @@
   components:
   - type: Flatpack
     entity: MachineFtlSuppressorPdv
+  - type: StaticPrice
+    price: 250000 # Same base value as the deployed suppressor.

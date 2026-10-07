@@ -6,7 +6,7 @@
   parent: BaseVesselAntag
   name: КД-340 # Ru-Localization
   description: Шаттл с усиленным носовым вооружением две Л-1 Фаланга, АСМ-302 Ванек и М220 Рубикон. # Ru-Localization
-  price: 44400 # Exodus: remapped ship appraisal rounded up to 100; prevent resale arbitrage.
+  price: 48496 # Exodus: expected ship and contents value; no additional markup.
   category: Small
   group: Custom
   mapchecker_group_override: Shipyard  # Treat this as a Shipyard vessel for mapchecker purposes

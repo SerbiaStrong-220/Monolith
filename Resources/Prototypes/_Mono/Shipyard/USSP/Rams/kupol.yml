@@ -4,7 +4,7 @@
   name: М-Купол # Ru-Localization
   description: Оружейный модуль, созданный для компенсации недостаточной огневой мощи Ледокола. # Ru-Localization
   limit: 1
-  price: 90000
+  price: 92607 # Exodus: expected ship and contents value; no additional markup.
   purchasable: false # voucher only
   category: Small
   group: Custom

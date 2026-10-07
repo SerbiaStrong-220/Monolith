@@ -1,0 +1,8 @@
+- type: entity
+  parent: NebulaGasSiphonFilter
+  id: DrakeRefineryFilter
+  name: Drake Industries refinery filter
+  description: A replaceable industrial filter cartridge for liquid metal refineries. Also compatible with nebula gas siphons. Replace when depleted.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Devices/drake_refinery_filter.rsi
