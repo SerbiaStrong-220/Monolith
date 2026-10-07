@@ -280,6 +280,42 @@ public sealed class RelativePoiSpawnTest
         await pair.CleanReturnAsync();
     }
 
+    [TestCase(false, "TestRelativePoiA")]
+    [TestCase(false, "TestRelativePlanetPoi")]
+    [TestCase(true, "NebulaPoiDamagedArkansaw")]
+    public async Task MissingAnchorsAreSkippedAtEndOfGeneration(bool isNebula, string target)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entities.System<SharedMapSystem>();
+            var placement = entities.System<RelativePoiSpawnSystem>();
+            var mapUid = maps.CreateMap(out var mapId, runMapInit: false);
+            try
+            {
+                placement.Begin(mapId);
+                var output = new List<EntityUid>();
+                Assert.That(placement.QueueIfRelative(mapId, new(isNebula, target), output), Is.True);
+                placement.ProcessPending(mapId);
+                Assert.That(entities.GetComponent<RelativePoiGenerationComponent>(mapUid).Pending, Has.Count.EqualTo(1));
+
+                placement.ProcessPending(mapId, final: true);
+                Assert.That(output, Is.Empty);
+                Assert.That(entities.HasComponent<RelativePoiGenerationComponent>(mapUid), Is.False);
+                placement.ProcessPending(mapId, final: true);
+                Assert.That(output, Is.Empty);
+            }
+            finally
+            {
+                entities.DeleteEntity(mapUid);
+            }
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task DeferredChainsWaitForAnchorsOnTheirOwnMapAndSpawnOnlyOnce()
     {
