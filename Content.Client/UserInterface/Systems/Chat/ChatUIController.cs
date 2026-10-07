@@ -453,7 +453,7 @@ public sealed partial class ChatUIController : UIController
         EnqueueSpeechBubble(ent, msg, speechType);
     }
 
-    private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
+    private SpeechBubble CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData) // Exodus: use the reveal duration for the queue.
     {
         var bubble =
             SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity);
@@ -483,6 +483,8 @@ public sealed partial class ChatUIController : UIController
             var last = existing[0];
             last.FadeNow();
         }
+
+        return bubble; // Exodus: expose the created bubble's reveal duration.
     }
 
     private void SpeechBubbleDied(EntityUid entity, SpeechBubble bubble)
@@ -639,11 +641,14 @@ public sealed partial class ChatUIController : UIController
 
             var msg = queueData.MessageQueue.Dequeue();
 
-            queueData.TimeLeft += BubbleDelayBase + msg.Message.Message.Length * BubbleDelayFactor;
-
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
             // When the timer hits 0 and there's no messages left, THEN we can clear it up.
-            CreateSpeechBubble(entity, msg);
+            // Exodus-begin: finish revealing one sentence before starting the next.
+            var bubble = CreateSpeechBubble(entity, msg);
+            queueData.TimeLeft += bubble.TextRevealDuration > TimeSpan.Zero
+                ? BubbleDelayBase + (float) bubble.TextRevealDuration.TotalSeconds
+                : BubbleDelayBase + msg.Message.Message.Length * BubbleDelayFactor;
+            // Exodus-end
         }
 
         var player = _player.LocalEntity;
