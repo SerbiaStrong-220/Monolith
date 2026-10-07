@@ -37,7 +37,7 @@ public sealed class BiocodeWeaponTest
                 // Test the biocode independently of the LRC-21's separate melee wield requirement.
                 entities.RemoveComponent<MeleeRequiresWieldComponent>(weapon);
                 AssertAccess(false);
-                factions.AddFaction((user, null), "PDV");
+                factions.AddFaction((user, null), "PirateNF");
                 AssertAccess(false);
                 factions.AddFaction((user, null), "TSFMC");
                 AssertAccess(true);
