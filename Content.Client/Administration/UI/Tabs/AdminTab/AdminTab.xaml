@@ -17,6 +17,8 @@
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
             <cc:CommandButton Command="timetransferpanel" Text="{Loc admin-player-actions-window-time-transfer}"/>
+            <!-- Exodus: safety deposit management -->
+            <cc:CommandButton Command="adminsafetydeposit" Text="{Loc admin-safety-deposit-title}"/>
         </GridContainer>
     </BoxContainer>
 </Control>
