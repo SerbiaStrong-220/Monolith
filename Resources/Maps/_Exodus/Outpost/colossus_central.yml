@@ -50127,9 +50127,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,42.5
       parent: 2
-    - type: PoweredlightOrange
+    - type: PoweredLight
       lastGhostBlink: 10540.3561262
-    - type: BlinkingPoweredlightOrange
+    - type: BlinkingPoweredLight
       stopBlinkingTime: 0
 - proto: PoweredStrobeLightEmpty
   entities:
@@ -50180,9 +50180,9 @@ entities:
     - type: Transform
       pos: -35.5,1.5
       parent: 2
-    - type: PoweredlightOrange
+    - type: PoweredLight
       lastGhostBlink: 1918.1980818
-    - type: BlinkingPoweredlightOrange
+    - type: BlinkingPoweredLight
       stopBlinkingTime: 0
 - proto: PoweredStrobeOrangeEnabled
   entities:
