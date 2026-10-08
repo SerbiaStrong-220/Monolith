@@ -8,6 +8,7 @@
   color: "#80d8c880"
   tileReactions:
   - !type:RemoveAnchoredEntitiesTileReaction
+    tileRadius: 1
     whitelist:
       components:
       - ChimeraCleanable

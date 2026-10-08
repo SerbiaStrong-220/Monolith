@@ -7,7 +7,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server._Exodus.Chemistry.TileReactions;
 
-/// <summary>Removes anchored entities matching a configurable whitelist on the affected tile.</summary>
+/// <summary>Removes anchored entities matching a configurable whitelist on and around the affected tile.</summary>
 [DataDefinition]
 public sealed partial class RemoveAnchoredEntitiesTileReaction : ITileReaction
 {
@@ -15,7 +15,11 @@ public sealed partial class RemoveAnchoredEntitiesTileReaction : ITileReaction
     [DataField(required: true)]
     public EntityWhitelist Whitelist = new();
 
-    /// <summary>Reagent consumed per tile when at least one matching entity is removed.</summary>
+    /// <summary>Radius in tiles, including diagonals. Zero affects only the reacting tile.</summary>
+    [DataField]
+    public int TileRadius;
+
+    /// <summary>Reagent consumed per reaction when at least one matching entity is removed.</summary>
     [DataField]
     public FixedPoint2 Usage = FixedPoint2.New(1);
 
@@ -29,15 +33,24 @@ public sealed partial class RemoveAnchoredEntitiesTileReaction : ITileReaction
         }
 
         var whitelist = entityManager.System<EntityWhitelistSystem>();
-        var entities = entityManager.System<SharedMapSystem>().GetAnchoredEntitiesEnumerator(tile.GridUid, grid, tile.GridIndices);
+        var map = entityManager.System<SharedMapSystem>();
+        var radius = Math.Max(0, TileRadius);
         var removed = false;
-        while (entities.MoveNext(out var uid))
+        for (var x = -radius; x <= radius; x++)
         {
-            if (entityManager.IsQueuedForDeletion(uid.Value) || !whitelist.IsValid(Whitelist, uid.Value))
-                continue;
+            for (var y = -radius; y <= radius; y++)
+            {
+                var indices = tile.GridIndices + new Vector2i(x, y);
+                var entities = map.GetAnchoredEntitiesEnumerator(tile.GridUid, grid, indices);
+                while (entities.MoveNext(out var uid))
+                {
+                    if (entityManager.IsQueuedForDeletion(uid.Value) || !whitelist.IsValid(Whitelist, uid.Value))
+                        continue;
 
-            entityManager.QueueDeleteEntity(uid.Value);
-            removed = true;
+                    entityManager.QueueDeleteEntity(uid.Value);
+                    removed = true;
+                }
+            }
         }
 
         return removed ? Usage : FixedPoint2.Zero;
