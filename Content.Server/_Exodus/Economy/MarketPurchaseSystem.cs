@@ -103,6 +103,10 @@ public sealed partial class MarketPurchaseSystem : EntitySystem
             var allocated = false;
             foreach (var line in basket.Lines)
             {
+                // Free liquids neither pay out nor create artificial demand when their carrier is bought.
+                if (DynamicMarketSystem.IsReagentKey(line.MarketKey) && line.UnitBasePrice == 0)
+                    continue;
+
                 var units = line.Quantity * scale;
                 var taxMultiplier = Math.Max(line.Tax.PositiveMultiplier, line.ResaleTaxMultiplier ?? 1);
                 if (!double.IsFinite(units) || units <= 0 || !double.IsFinite(line.UnitBasePrice) || line.UnitBasePrice < 0 ||
@@ -205,7 +209,7 @@ public sealed partial class MarketPurchaseSystem : EntitySystem
                     for (var lineIndex = package.FirstLine; lineIndex < package.FirstLine + package.LineCount; lineIndex++)
                     {
                         var line = wrapper.Basket.Lines[lineIndex];
-                        contents += line.Quantity * wrapper.Scale * resaleUnitCeilings[line.MarketKey];
+                        contents += line.Quantity * wrapper.Scale * resaleUnitCeilings.GetValueOrDefault(line.MarketKey);
                     }
 
                     // Multi-use packages can release earlier payloads and still be redeemed before

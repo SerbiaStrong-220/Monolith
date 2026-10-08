@@ -55,10 +55,12 @@ public sealed partial class GasTankFillIndicatorSystem : EntitySystem
             UpdateIndicator(internals.GasTankEntity);
         }
 
-        var jetpackQuery = EntityQueryEnumerator<ActiveJetpackComponent>();
-        while (jetpackQuery.MoveNext(out var uid, out _))
+        // Keep the selected tank visible and up to date during jetpack standby as well.
+        var jetpackQuery = EntityQueryEnumerator<JetpackUserComponent>();
+        while (jetpackQuery.MoveNext(out _, out var user))
         {
-            UpdateIndicator(uid);
+            if (user.Running)
+                UpdateIndicator(user.Jetpack);
         }
     }
 

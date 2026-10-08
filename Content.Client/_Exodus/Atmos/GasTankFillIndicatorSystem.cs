@@ -12,7 +12,6 @@ public sealed partial class GasTankFillIndicatorSystem : EntitySystem
     private EntityQuery<GasTankFillIndicatorComponent> _indicatorQuery;
     private EntityQuery<GasTankComponent> _tankQuery;
     private EntityQuery<JetpackComponent> _jetpackQuery;
-    private EntityQuery<ActiveJetpackComponent> _activeJetpackQuery;
 
     public override void Initialize()
     {
@@ -21,7 +20,6 @@ public sealed partial class GasTankFillIndicatorSystem : EntitySystem
         _indicatorQuery = GetEntityQuery<GasTankFillIndicatorComponent>();
         _tankQuery = GetEntityQuery<GasTankComponent>();
         _jetpackQuery = GetEntityQuery<JetpackComponent>();
-        _activeJetpackQuery = GetEntityQuery<ActiveJetpackComponent>();
     }
 
     /// <summary>
@@ -40,10 +38,9 @@ public sealed partial class GasTankFillIndicatorSystem : EntitySystem
         }
 
         var breathing = tank.User == user;
-        var flying = _activeJetpackQuery.HasComp(uid) &&
-            _jetpackQuery.TryComp(uid, out var jetpack) && jetpack.JetpackUser == user;
+        var jetpackEnabled = _jetpackQuery.TryComp(uid, out var jetpack) && jetpack.JetpackUser == user;
 
-        if (!breathing && !flying)
+        if (!breathing && !jetpackEnabled)
             return false;
 
         level = indicator.FillLevel;

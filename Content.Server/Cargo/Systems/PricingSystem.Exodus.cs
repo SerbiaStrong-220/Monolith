@@ -21,9 +21,9 @@ public sealed partial class PricingSystem
     }
 
     // Exodus: splitting changes the stack count but preserves fixed static and solution appraisals.
-    public double GetEstimatedSingleStackPrice(EntityPrototype prototype, out bool handled)
+    public double GetEstimatedSingleStackPrice(EntityPrototype prototype, out bool handled, bool includeSolutions = true)
     {
-        var price = GetEstimatedPrice(prototype, out handled, applyFallback: false);
+        var price = GetEstimatedPrice(prototype, out handled, applyFallback: false, includeSolutions: includeSolutions);
         if (handled || !prototype.TryGetComponent<StackComponent>(out var stack, Factory) || stack.Count <= 0)
             return price;
 

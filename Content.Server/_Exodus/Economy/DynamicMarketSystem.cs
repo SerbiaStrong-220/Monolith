@@ -48,7 +48,7 @@ public sealed partial class DynamicMarketSystem : EntitySystem
     [Dependency] private MarketSettingsSystem _settings = default!;
 
     /// <summary>
-    /// Single global quote store. Key format: "stack:&lt;id&gt;" or "proto:&lt;id&gt;".
+    /// Single global quote store. Keys identify a prototype, stack, gas species or reagent.
     /// </summary>
     private readonly Dictionary<string, MarketQuote> _quotes = new();
 
@@ -261,6 +261,12 @@ public sealed partial class DynamicMarketSystem : EntitySystem
         {
             CommitFactor(key, factor);
         }
+
+        if (tx.ReagentSales != null)
+        {
+            foreach (var (key, sale) in tx.ReagentSales)
+                LogReagentSale(key, sale);
+        }
     }
 
     public IReadOnlyDictionary<string, MarketQuote> GetAllQuotes() => _quotes;
@@ -462,6 +468,7 @@ public sealed partial class DynamicMarketSystem : EntitySystem
         tx ??= new MarketTransactionState();
 
         var workingFactor = ClampFactor(tx.GetOrLoad(marketKey, GetFactor(marketKey)));
+        var initialFactor = workingFactor;
         var integratedFactor = workingFactor * totalUnits;
         // A purchase and its reverse sale must follow the same curve. Independent strengths let
         // sell/buy cycles profit even when each individual purchase exceeds its immediate resale.
@@ -490,7 +497,11 @@ public sealed partial class DynamicMarketSystem : EntitySystem
         if (applyImpact)
             CommitFactor(marketKey, workingFactor);
 
-        return unitBasePrice * consoleMod * integratedFactor;
+        var value = unitBasePrice * consoleMod * integratedFactor;
+        if (isSell)
+            RecordReagentSale(tx, marketKey, totalUnits, unitBasePrice * totalUnits, value,
+                initialFactor, workingFactor, applyImpact);
+        return value;
     }
 
     private void CommitFactor(string marketKey, double newFactor)

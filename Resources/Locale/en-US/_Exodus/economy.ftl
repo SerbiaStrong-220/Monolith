@@ -67,6 +67,7 @@ market-purchase-unit-price = First unit: {$price}
 # Commodity groups
 market-commodity-group-general = General goods
 market-commodity-group-gases = Gases
+market-commodity-group-reagents = Reagents
 market-commodity-group-raw-materials = Raw materials
 market-commodity-group-high-precision = High-precision goods
 market-commodity-group-ultra-precision = Ultra-precision goods

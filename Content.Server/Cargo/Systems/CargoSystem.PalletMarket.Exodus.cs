@@ -49,6 +49,7 @@ public sealed partial class CargoSystem
         EntityUid gridUid,
         double consoleModifier,
         bool ignoreConsoleModifier,
+        double reagentConsoleModifier,
         List<PalletMarketEntry> priced,
         HashSet<(EntityUid Station, string Id)> bounties)
     {
@@ -71,10 +72,12 @@ public sealed partial class CargoSystem
             if (line.UnitBasePrice <= 0 || line.Quantity <= 0)
                 continue;
 
-            var modifier = line.IgnoreMarketModifier ? 1 : consoleModifier;
+            // Exodus: transferable liquids use this terminal's rate regardless of the root carrier.
+            var reagent = DynamicMarketSystem.IsReagentKey(line.MarketKey);
+            var modifier = reagent ? reagentConsoleModifier : line.IgnoreMarketModifier ? 1 : consoleModifier;
             // Exodus: pay each commodity's own tax; a container cannot tax unrelated contents.
             priced.Add(new PalletMarketEntry(line.SourceEntity ?? uid, line.Tax, line.UnitBasePrice,
-                modifier, ignoreConsoleModifier || line.IgnoreMarketModifier, line.MarketKey, Units: line.Quantity));
+                modifier, !reagent && (ignoreConsoleModifier || line.IgnoreMarketModifier), line.MarketKey, Units: line.Quantity));
         }
 
         return true;
@@ -178,7 +181,9 @@ public sealed partial class CargoSystem
             }
 
             var start = priced.Count;
-            if (!AddPricedEntities(ent, ent, gridUid, multiplier, ignoreModifier, priced, bounties))
+            // Exodus: the liquid's destination rate does not inherit trade-crate or shell exemptions.
+            var reagentMultiplier = station != null && hasModifier ? marketModifier!.Mod : 1;
+            if (!AddPricedEntities(ent, ent, gridUid, multiplier, ignoreModifier, reagentMultiplier, priced, bounties))
             {
                 priced.RemoveRange(start, priced.Count - start);
                 continue;

@@ -107,7 +107,7 @@
   - type: Implanter
     implant: MedicalTrackingImplantBasic
   - type: StaticPrice
-    price: 1000
+    price: 35
     vendPrice: 1000
 
 - type: entity
@@ -129,7 +129,7 @@
   - type: Implanter
     implant: MedicalTrackingImplantSilver
   - type: StaticPrice
-    price: 25000
+    price: 35
     vendPrice: 25000
 
 - type: entity
@@ -145,7 +145,7 @@
   - type: Implanter
     implant: MedicalTrackingImplantGold
   - type: StaticPrice
-    price: 125000
+    price: 35
     vendPrice: 125000
 
 - type: entity
@@ -161,7 +161,7 @@
   - type: Implanter
     implant: MedicalTrackingImplantPlatinum
   - type: StaticPrice
-    price: 250000
+    price: 35
     vendPrice: 250000
 
 - type: entity

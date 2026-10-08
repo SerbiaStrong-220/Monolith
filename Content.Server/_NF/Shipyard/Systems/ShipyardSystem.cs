@@ -258,6 +258,16 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return result;
         }
 
+        // Exodus-begin: validate reagent appraisal before any station or preservation state changes.
+        double appraisal = 0;
+        if (paidSale && !TryAppraiseShuttle(shuttleUid, out appraisal))
+        {
+            result.Error = ShipyardSaleError.MessageOverwritten;
+            result.OverwrittenMessage = Loc.GetString("market-sale-unavailable");
+            return result;
+        }
+        // Exodus-end
+
         //just yeet and delete for now. Might want to split it into another function later to send back to the shipyard map first to pause for something
         //also superman 3 moment
         if (_station.GetOwningStation(shuttleUid) is { Valid: true } shuttleStationUid)
@@ -270,7 +280,11 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             CleanGrid(shuttleUid, consoleUid);
         }
 
-        bill = (int)_pricing.AppraiseGrid(shuttleUid, LacksPreserveOnSaleComp);
+        // Exodus-begin: use the same pure chemical quote as console previews.
+        bill = paidSale
+            ? Content.Server._Exodus.Economy.DynamicMarketSystem.RoundSellPayout(appraisal)
+            : (int)_pricing.AppraiseGrid(shuttleUid, LacksPreserveOnSaleComp);
+        // Exodus-end
 
         // Exodus: stock only the remaining goods after preservation and appraisal, before deletion.
         if (paidSale)

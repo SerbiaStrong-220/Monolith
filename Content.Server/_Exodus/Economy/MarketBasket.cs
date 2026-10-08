@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._Exodus.Economy;
 
 /// <summary>
-/// One independently traded commodity. Quantities are stack units, gas moles, or individual objects.
+/// One independently traded commodity. Quantities are stack units, gas moles, reagent u, or individual objects.
 /// ResaleUnitPrice bounds extracting individual stack units without changing the actual whole-stack appraisal.
 /// Tax applies only to this commodity. ResaleTaxMultiplier also covers merging into another stack variant.
 /// </summary>
@@ -70,7 +70,7 @@ public sealed class MarketBasket
 
 /// <summary>
 /// Prototype price adapters for systems whose runtime PriceCalculationEvent needs extra state.
-/// OwnPrice excludes separately listed containers, ammunition, materials and gas. An adapter may
+/// OwnPrice excludes separately listed containers, ammunition, materials, gas and reagents. An adapter may
 /// clear Failure only when it supplies a valid prototype appraisal for that unsupported state.
 /// Prototype reload invalidates cached results; adapters must not depend on changing world state.
 /// </summary>

@@ -400,8 +400,11 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (!voucherUsed)
         {
             // Get the price of the ship
-            if (TryComp<ShuttleDeedComponent>(targetId, out var deed))
-                sellValue = (int)_pricing.AppraiseGrid((EntityUid)(deed?.ShuttleUid!), LacksPreserveOnSaleComp);
+            // Exodus-begin: preview the same shared reagent price used by the completed ship sale.
+            if (TryComp<ShuttleDeedComponent>(targetId, out var deed) && deed.ShuttleUid is { } previewShuttle &&
+                TryAppraiseShuttle(previewShuttle, out var appraisal))
+                sellValue = Content.Server._Exodus.Economy.DynamicMarketSystem.RoundSellPayout(appraisal);
+            // Exodus-end
 
             // Adjust for taxes
             sellValue = CalculateShipResaleValue((shipyardConsoleUid, component), sellValue);
@@ -665,7 +668,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         int sellValue = 0;
         if (deed?.ShuttleUid != null)
         {
-            sellValue = (int)_pricing.AppraiseGrid((EntityUid)(deed?.ShuttleUid!), LacksPreserveOnSaleComp);
+            // Exodus-begin: ship appraisal previews never commit reagent market pressure.
+            if (TryAppraiseShuttle(deed.ShuttleUid.Value, out var appraisal))
+                sellValue = Content.Server._Exodus.Economy.DynamicMarketSystem.RoundSellPayout(appraisal);
+            // Exodus-end
             sellValue = CalculateShipResaleValue((uid, component), sellValue);
         }
 
@@ -767,7 +773,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             int sellValue = 0;
             if (deed?.ShuttleUid != null)
             {
-                sellValue = (int)_pricing.AppraiseGrid(deed.ShuttleUid.Value, LacksPreserveOnSaleComp);
+                // Exodus-begin: refresh the shared reagent quote without applying a sale.
+                if (TryAppraiseShuttle(deed.ShuttleUid.Value, out var appraisal))
+                    sellValue = Content.Server._Exodus.Economy.DynamicMarketSystem.RoundSellPayout(appraisal);
+                // Exodus-end
                 sellValue = CalculateShipResaleValue((uid, component), sellValue);
             }
 

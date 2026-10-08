@@ -119,7 +119,7 @@ public sealed partial class MarketBasketSystem : EntitySystem
     }
 
     /// <summary>
-    /// Resolves only this entity's live commodities, including gas, stored materials and virtual ammunition.
+    /// Resolves only this entity's live commodities, including reagents, gas, stored materials and virtual ammunition.
     /// Actual contained entities are left to the caller's traversal. When an opaque appraisal or unopened
     /// package owns the whole subtree, <paramref name="includesContents"/> prevents counting it again.
     /// Inexact prototype payload bounds are rejected rather than treated as actual sold quantities.

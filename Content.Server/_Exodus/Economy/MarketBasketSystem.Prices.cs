@@ -1,15 +1,12 @@
 // (c) Space Exodus Team - EXDS-RL with CLA
 using Content.Server.Cargo.Components;
 using Content.Server.Materials.Components;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Armor;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Exodus.Economy;
@@ -20,8 +17,8 @@ public sealed partial class MarketBasketSystem
         bool singleStack = false)
     {
         price = singleStack
-            ? _pricing.GetEstimatedSingleStackPrice(prototype, out var handled)
-            : _pricing.GetEstimatedPrice(prototype, out handled, applyFallback: false);
+            ? _pricing.GetEstimatedSingleStackPrice(prototype, out var handled, includeSolutions: false)
+            : _pricing.GetEstimatedPrice(prototype, out handled, applyFallback: false, includeSolutions: false);
         if (handled)
         {
             // An estimated full-price override does not describe its delivered contents.
@@ -63,30 +60,6 @@ public sealed partial class MarketBasketSystem
             eventPrice = 0;
 
         price += eventPrice + GetTradeCrateElsewherePriceBound(prototype);
-
-        if (prototype.TryGetComponent<RandomFillSolutionComponent>(out var randomSolution, _factory) &&
-            randomSolution.WeightedRandomId is { } fillId)
-        {
-            if (!_prototypes.TryIndex<WeightedRandomFillSolutionPrototype>(fillId, out var fills))
-                return state.Fail($"Unknown random solution fill {fillId}.");
-
-            state.Exact = false;
-            double maximum = 0;
-            foreach (var fill in fills.Fills)
-            {
-                if (!float.IsFinite(fill.Weight) || fill.Weight < 0 || fill.Quantity < 0)
-                    return state.Fail($"Invalid random solution fill {fillId}.");
-                if (fill.Weight == 0)
-                    continue;
-                foreach (var reagentId in fill.Reagents)
-                {
-                    if (!Visit(state, 0) || !_prototypes.TryIndex<ReagentPrototype>(reagentId, out var reagent))
-                        return state.Fail($"Unknown reagent {reagentId} in random fill {fillId}.");
-                    maximum = Math.Max(maximum, (float)fill.Quantity * reagent.PricePerUnit);
-                }
-            }
-            price += maximum;
-        }
 
         var appraisal = new MarketBasketPriceEvent(prototype, price);
         foreach (var component in prototype.Components.Keys)

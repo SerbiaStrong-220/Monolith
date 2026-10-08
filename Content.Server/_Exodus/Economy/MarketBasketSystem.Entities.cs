@@ -24,7 +24,7 @@ public sealed partial class MarketBasketSystem
         {
             foreach (var child in container.ContainedEntities)
             {
-                // Solution entities have no prototype and are already included by PricingSystem.
+                // Internal solution entities are represented by their owner's reagent lines.
                 if (HasComp<Content.Shared.Chemistry.Components.SolutionComponent>(child))
                     continue;
 
@@ -64,6 +64,11 @@ public sealed partial class MarketBasketSystem
 
             if (payload.Exact)
             {
+                if (!TryGetReagentContents(uid, out var actualReagents, out var reagentFailure))
+                    return state.Fail(reagentFailure!);
+                if (actualReagents.NominalValue > 0)
+                    return state.Fail($"Use-spawner {prototype.ID} has additional live reagents requiring a basket adapter.");
+
                 includesContents = true;
                 foreach (var line in payload.Lines)
                 {
@@ -76,13 +81,19 @@ public sealed partial class MarketBasketSystem
 
         var tax = GetEntityTax(uid);
         var price = appraisalGrid is { } grid
-            ? _pricing.GetPriceWithVendingDiscount(uid, grid, out var handled, includeContents: false)
-            : _pricing.GetPrice(uid, out handled, includeContents: false);
+            ? _pricing.GetPriceWithVendingDiscount(uid, grid, out var handled, includeContents: false, includeSolutions: false)
+            : _pricing.GetPrice(uid, out handled, includeContents: false, includeSolutions: false);
         if (!double.IsFinite(price))
             return state.Fail($"Non-finite runtime appraisal for {prototype.ID}.");
 
         if (handled)
         {
+            // An opaque override cannot safely fold transferable chemicals into its carrier key.
+            if (!TryGetReagentContents(uid, out var reagents, out var failure))
+                return state.Fail(failure!);
+            if (reagents.NominalValue > 0)
+                return state.Fail($"Opaque reagent appraisal for {prototype.ID} requires a basket adapter.");
+
             // Runtime handled events own the entire subtree. Random packages retain their actual,
             // opaque payout here; their prototype upper bounds also cover this wrapper commodity.
             includesContents = true;
@@ -163,6 +174,6 @@ public sealed partial class MarketBasketSystem
                 Tax: tax)))
             return false;
 
-        return true;
+        return AddEntitySolutions(uid, prototype.ID, state);
     }
 }

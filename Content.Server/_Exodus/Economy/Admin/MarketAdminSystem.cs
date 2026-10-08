@@ -7,6 +7,7 @@ using Content.Shared._Exodus.Economy;
 using Content.Shared._Exodus.Economy.Admin;
 using Content.Shared.Administration;
 using Content.Shared.Atmos.Prototypes;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using Content.Shared.Stacks;
@@ -355,6 +356,11 @@ public sealed partial class MarketAdminSystem : EntitySystem
                      _prototypes.TryIndex(new ProtoId<GasPrototype>(key[4..]), out var gas))
             {
                 name = Loc.GetString(gas.Name);
+            }
+            else if (key.StartsWith("reagent:", StringComparison.Ordinal) &&
+                     _prototypes.TryIndex(new ProtoId<ReagentPrototype>(key[8..]), out var reagent))
+            {
+                name = reagent.LocalizedName;
             }
             _catalog.Add(key, new CatalogEntry(name, classification, name));
         }

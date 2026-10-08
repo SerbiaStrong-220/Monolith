@@ -38,12 +38,18 @@ public sealed partial class MarketBasketSystem
             if (!AddPrototypeContents(prototype, count, state, depth))
                 return false;
 
-            if (prototype.TryGetComponent<StackComponent>(out var stack, _factory) &&
-                (state.Lines.Count != firstLine + 1 ||
-                 state.Lines[firstLine].MarketKey != DynamicMarketSystem.StackKey(stack.StackTypeId) ||
-                 prototype.Components.ContainsKey("SpawnItemsOnUse")))
+            if (prototype.TryGetComponent<StackComponent>(out var stack, _factory))
             {
-                return state.Fail($"Composite stack {prototype.ID} requires a split-contents basket adapter.");
+                if (state.Lines.Count <= firstLine ||
+                    state.Lines[firstLine].MarketKey != DynamicMarketSystem.StackKey(stack.StackTypeId) ||
+                    prototype.Components.ContainsKey("SpawnItemsOnUse"))
+                    return state.Fail($"Composite stack {prototype.ID} requires a split-contents basket adapter.");
+
+                for (var i = firstLine + 1; i < state.Lines.Count; i++)
+                {
+                    if (!DynamicMarketSystem.IsReagentKey(state.Lines[i].MarketKey))
+                        return state.Fail($"Composite stack {prototype.ID} requires a split-contents basket adapter.");
+                }
             }
 
             return true;
@@ -142,6 +148,9 @@ public sealed partial class MarketBasketSystem
         if (!AddLine(state, new MarketBasketLine(prototype.ID, key, ownPrice / units, units * count,
                 ignoreModifier, ResaleUnitPrice: resaleUnitPrice, Tax: GetPrototypeTax(prototype),
                 ResaleTaxMultiplier: stack == null ? null : _stackTaxMultipliers.GetValueOrDefault(stack.StackTypeId, 1))))
+            return false;
+
+        if (!AddPrototypeSolutions(prototype, count, state))
             return false;
 
         // Gas deposit consoles can sell each species without the pallet's mixture-purity penalty.

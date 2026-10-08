@@ -33,7 +33,14 @@ public sealed partial class MarketCommodityGroupPrototype : IPrototype
     public bool Gases { get; private set; }
 
     /// <summary>
-    /// Multiplier for buy and sell price pressure per market unit (mole for gases).
+    /// Use this group for all reagent commodity keys, separately from their carriers.
+    /// Exactly one group must have this flag.
+    /// </summary>
+    [DataField]
+    public bool Reagents { get; private set; }
+
+    /// <summary>
+    /// Multiplier for buy and sell price pressure per market unit (mole for gases, u for reagents).
     /// Must be finite and non-negative. Zero disables trade pressure for this group.
     /// </summary>
     [DataField]

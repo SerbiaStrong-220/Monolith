@@ -67,6 +67,7 @@ market-purchase-unit-price = Первая единица: {$price}
 # Товарные группы
 market-commodity-group-general = Общие
 market-commodity-group-gases = Газы
+market-commodity-group-reagents = Реагенты
 market-commodity-group-raw-materials = Сырьё
 market-commodity-group-high-precision = Высокоточные
 market-commodity-group-ultra-precision = Сверхвысокоточные

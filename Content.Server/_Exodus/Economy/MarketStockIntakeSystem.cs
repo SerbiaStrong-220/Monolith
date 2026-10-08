@@ -2,6 +2,7 @@
 using Content.Server._NF.Market.Components;
 using Content.Server._Exodus.Shipyard;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chemistry.Components;
 using Content.Server.Construction.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Containers;
@@ -176,6 +177,15 @@ public sealed partial class MarketStockIntakeSystem : EntitySystem
             }
         }
 
+        if (prototype != null && _baskets.TryGetReagentDispenserFillCount(prototype, out var fillCount))
+        {
+            for (var i = 0; i < fillCount; i++)
+            {
+                if (container.ID == ReagentDispenserComponent.BaseStorageSlotId + i)
+                    return true;
+            }
+        }
+
         return false;
     }
 
@@ -215,7 +225,7 @@ public sealed partial class MarketStockIntakeSystem : EntitySystem
         if (count <= 0)
             return;
 
-        var price = _pricing.GetPrice(uid, includeContents: false) / count;
+        var price = _pricing.GetPrice(uid, out _, includeContents: false, includeSolutions: false) / count;
         _inventory.TryAddStock(prototype.ID, count, price, stackId);
     }
 

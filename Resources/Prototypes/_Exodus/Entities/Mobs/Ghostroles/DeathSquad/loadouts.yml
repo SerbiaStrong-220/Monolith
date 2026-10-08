@@ -14,12 +14,16 @@
     belt: ClothingBeltExodusAbaddon
   storage:
     back:
+    - AccessBreaker
     - Hypospray
     - StasiziumAutoInjector
     - StasiziumAutoInjector
     - StasiziumAutoInjector
     - StasiziumAutoInjector
     - StasiziumAutoInjector
+    - ExodusBiohazardSprayerAbaddon
+    - ExodusBiohazardSprayerAbaddon
+    - ExodusBiohazardSprayerAbaddon
     - WeaponMurasamaExodusAbaddon
     - EnergyShield
     - BoxMRE

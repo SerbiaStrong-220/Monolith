@@ -24,6 +24,9 @@ public sealed partial class MarketBasketSystem
             return false;
         }
 
+        if (!AddReagentDispenserContents(prototype, count, state, depth + 1))
+            return false;
+
         if (prototype.TryGetComponent<ComputerComponent>(out var computer, _factory) &&
             !string.IsNullOrEmpty(computer.BoardPrototype))
         {

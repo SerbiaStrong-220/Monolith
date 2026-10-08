@@ -116,7 +116,7 @@ public sealed partial class MarketStockIntakeSystem
     {
         if (item.Material is not { } material)
             return _inventory.TryAddStock(item.Prototype, count,
-                _pricing.GetPrice(item.Uid, includeContents: false) / item.Count, item.StackId);
+                _pricing.GetPrice(item.Uid, out _, includeContents: false, includeSolutions: false) / item.Count, item.StackId);
 
         if (!TryComp<MaterialStorageComponent>(item.Uid, out var storage))
             return false;

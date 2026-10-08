@@ -11,6 +11,12 @@
   impactMultiplier: 0.003
 
 - type: marketCommodityGroup
+  id: Reagents
+  name: market-commodity-group-reagents
+  reagents: true
+  impactMultiplier: 1
+
+- type: marketCommodityGroup
   id: RawMaterials
   name: market-commodity-group-raw-materials
 

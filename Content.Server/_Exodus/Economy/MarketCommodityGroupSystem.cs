@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Content.Shared._Exodus.Economy;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._Exodus.Economy;
 
 /// <summary>
-/// A commodity's group and the rule that selected it. Default and gas groups have no matching rule.
+/// A commodity's group and the rule that selected it. Default, gas and reagent groups have no matching rule.
 /// </summary>
 public readonly record struct MarketCommodityClassification(
     ProtoId<MarketCommodityGroupPrototype> Group,
@@ -68,7 +69,7 @@ public sealed partial class MarketCommodityGroupSystem : EntitySystem
 
     /// <summary>
     /// Resolve an object's own group. Stack variants share their canonical spawn's group;
-    /// a gas container retains its shell's group independently of the gases inside it.
+    /// a container retains its shell's group independently of the gases and reagents inside it.
     /// </summary>
     public ProtoId<MarketCommodityGroupPrototype> GetPrototypeGroup(EntProtoId prototype)
     {
@@ -95,7 +96,8 @@ public sealed partial class MarketCommodityGroupSystem : EntitySystem
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (args.WasModified<MarketCommodityGroupPrototype>() || args.WasModified<MarketCommodityRulePrototype>() ||
-            args.WasModified<EntityPrototype>() || args.WasModified<StackPrototype>() || args.WasModified<TagPrototype>())
+            args.WasModified<EntityPrototype>() || args.WasModified<StackPrototype>() || args.WasModified<TagPrototype>() ||
+            args.WasModified<ReagentPrototype>())
         {
             try
             {
@@ -113,6 +115,7 @@ public sealed partial class MarketCommodityGroupSystem : EntitySystem
         var groups = new Dictionary<ProtoId<MarketCommodityGroupPrototype>, float>();
         ProtoId<MarketCommodityGroupPrototype>? defaultGroup = null;
         ProtoId<MarketCommodityGroupPrototype>? gasGroup = null;
+        ProtoId<MarketCommodityGroupPrototype>? reagentGroup = null;
         foreach (var group in _prototypes.EnumeratePrototypes<MarketCommodityGroupPrototype>())
         {
             if (!float.IsFinite(group.ImpactMultiplier) || group.ImpactMultiplier < 0f)
@@ -131,10 +134,16 @@ public sealed partial class MarketCommodityGroupSystem : EntitySystem
                     throw new InvalidGroupConfigurationException("Market commodity groups must have exactly one gas group.");
                 gasGroup = group.ID;
             }
+            if (group.Reagents)
+            {
+                if (reagentGroup != null)
+                    throw new InvalidGroupConfigurationException("Market commodity groups must have exactly one reagent group.");
+                reagentGroup = group.ID;
+            }
         }
 
-        if (defaultGroup == null || gasGroup == null)
-            throw new InvalidGroupConfigurationException("Market commodity groups require one default group and one gas group.");
+        if (defaultGroup == null || gasGroup == null || reagentGroup == null)
+            throw new InvalidGroupConfigurationException("Market commodity groups require one default group, one gas group and one reagent group.");
 
         var rules = new List<MarketCommodityRulePrototype>();
         var matchParents = false;
@@ -201,6 +210,10 @@ public sealed partial class MarketCommodityGroupSystem : EntitySystem
         var gasClassification = new MarketCommodityClassification(gasGroup.Value);
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             classifications.Add(DynamicMarketSystem.GasKey(i), gasClassification);
+
+        var reagentClassification = new MarketCommodityClassification(reagentGroup.Value);
+        foreach (var reagent in _prototypes.EnumeratePrototypes<ReagentPrototype>())
+            classifications.Add(DynamicMarketSystem.ReagentKey(reagent.ID), reagentClassification);
 
         // Publish complete snapshots together; a failed rebuild leaves the previous caches available.
         _defaultGroup = defaultGroup.Value;

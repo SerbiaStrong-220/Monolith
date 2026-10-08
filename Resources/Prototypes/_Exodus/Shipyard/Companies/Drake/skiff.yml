@@ -1,0 +1,43 @@
+- type: vessel
+  id: DrakeSkiff
+  parent: BaseVessel
+  name: company-vessel-drake-skiff-name
+  description: company-vessel-drake-skiff-description
+  price: 10430000 # Appraised hull and equipment value rounded up to 10,000.
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - DrakeBlackArmsUSA
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/skiff.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Mercenary
+  - Salvage
+  - Cargo
+  engine:
+  - AME
+
+- type: gameMap
+  id: DrakeSkiff
+  mapName: 'Дрэйк Скифф'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/drake/skiff.yml
+  isGrid: true
+  minPlayers: 0
+  stations:
+    DrakeSkiff:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Скифф{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

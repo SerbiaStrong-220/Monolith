@@ -126,7 +126,7 @@ public sealed partial class PricingSystem : EntitySystem
                     continue;
 
                 // TODO check ReagentData for price information?
-                price += (float) quantity * reagentProto.PricePerUnit;
+                price += quantity.Double() * reagentProto.PricePerUnit; // Exodus: retain fractional reagent precision.
             }
         }
 
@@ -145,7 +145,7 @@ public sealed partial class PricingSystem : EntitySystem
                     continue;
 
                 // TODO check ReagentData for price information?
-                price += (float) quantity * reagentProto.PricePerUnit;
+                price += quantity.Double() * reagentProto.PricePerUnit; // Exodus: match live reagent precision.
             }
         }
 
@@ -191,7 +191,7 @@ public sealed partial class PricingSystem : EntitySystem
     }
 
     // Exodus: adapters add missing runtime contributions before applying the unpriced-item fallback.
-    public double GetEstimatedPrice(EntityPrototype prototype, out bool handled, bool applyFallback = true)
+    public double GetEstimatedPrice(EntityPrototype prototype, out bool handled, bool applyFallback = true, bool includeSolutions = true)
     {
         var ev = new EstimatedPriceCalculationEvent()
         {
@@ -206,7 +206,8 @@ public sealed partial class PricingSystem : EntitySystem
 
         var price = ev.Price;
         price += GetMaterialsPrice(prototype);
-        price += GetSolutionsPrice(prototype);
+        if (includeSolutions) // Exodus: market baskets appraise transferable reagents independently.
+            price += GetSolutionsPrice(prototype);
         // Can't use static price with stackprice
         var oldPrice = price;
         price += GetStackPrice(prototype);
@@ -259,7 +260,7 @@ public sealed partial class PricingSystem : EntitySystem
     }
 
     // Exodus: expose whether a custom appraisal owns the complete container subtree.
-    public double GetPrice(EntityUid uid, out bool handled, bool includeContents = true)
+    public double GetPrice(EntityUid uid, out bool handled, bool includeContents = true, bool includeSolutions = true)
     {
         var ev = new PriceCalculationEvent();
         ev.Price = 0; // Structs doesnt initialize doubles when called by constructor.
@@ -273,7 +274,8 @@ public sealed partial class PricingSystem : EntitySystem
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
         // DO NOT FORGET TO UPDATE ESTIMATED PRICING
         price += GetMaterialsPrice(uid);
-        price += GetSolutionsPrice(uid);
+        if (includeSolutions) // Exodus: retain the empty shell's appraisal and fallback.
+            price += GetSolutionsPrice(uid);
 
         // Can't use static price with stackprice
         var oldPrice = price;
@@ -291,7 +293,7 @@ public sealed partial class PricingSystem : EntitySystem
             {
                 foreach (var ent in container.ContainedEntities)
                 {
-                    price += GetPrice(ent);
+                    price += GetPrice(ent, out _, includeSolutions: includeSolutions); // Exodus
                 }
             }
         }
@@ -313,7 +315,7 @@ public sealed partial class PricingSystem : EntitySystem
     }
 
     // Exodus-begin: handled price events own the complete appraisal, including any contents.
-    public double GetPriceWithVendingDiscount(EntityUid uid, EntityUid currentGrid, out bool handled, bool includeContents = true)
+    public double GetPriceWithVendingDiscount(EntityUid uid, EntityUid currentGrid, out bool handled, bool includeContents = true, bool includeSolutions = true)
     // Exodus-end
     {
         var ev = new PriceCalculationEvent();
@@ -326,7 +328,8 @@ public sealed partial class PricingSystem : EntitySystem
 
         var price = ev.Price;
         price += GetMaterialsPrice(uid);
-        price += GetSolutionsPrice(uid);
+        if (includeSolutions) // Exodus: reagents do not inherit their carrier's discount.
+            price += GetSolutionsPrice(uid);
 
         // Can't use static price with stackprice
         var oldPrice = price;
@@ -345,7 +348,7 @@ public sealed partial class PricingSystem : EntitySystem
             {
                 foreach (var ent in container.ContainedEntities)
                 {
-                    price += GetPriceWithVendingDiscount(ent, currentGrid);
+                    price += GetPriceWithVendingDiscount(ent, currentGrid, out _, includeSolutions: includeSolutions); // Exodus
                 }
             }
         }
