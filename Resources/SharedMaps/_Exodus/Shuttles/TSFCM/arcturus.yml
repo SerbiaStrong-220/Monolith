@@ -94,6 +94,7 @@ entities:
       - TSFMC
     - type: Company
       companyName: TSF
+    - type: InitRepairSnapshot
     - type: MapGrid
       chunks:
         0,0:
