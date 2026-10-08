@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 277.0.0
+  engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 06/11/2026 20:54:19
-  entityCount: 1674 # Exodus: weapon hardpoints
+  time: 10/08/2026 17:22:07
+  entityCount: 1708
 maps: []
 grids:
 - 1
@@ -86,7 +86,8 @@ entities:
       pos: -1.0273438,0.010117531
       parent: invalid
     - type: IFF
-      color: '#00a1fc'
+      address: ' 0F93-C268'
+      color: '#00A1FCFF'
       flags: HideLabel, IsPlayerShuttle
     - type: NpcFactionMember
       factions:
@@ -137,9 +138,10 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        Kudzu: []
-        MetalFoam: []
+        ExodusBiohazardFoam: []
         Smoke: []
+        MetalFoam: []
+        Kudzu: []
         Puddle: []
     - type: Shuttle
       dampingModifier: 0.25
@@ -476,6 +478,7 @@ entities:
       data: {}
     - type: ThermalSignature
     - type: ExplosionAirtightGrid
+    - type: RotColonySiteTree
 - proto: ActionToggleInternals
   entities:
   - uid: 4
@@ -788,6 +791,13 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 36
+- proto: AlwaysPoweredlightCyan
+  entities:
+  - uid: 1011
+    components:
+    - type: Transform
+      pos: 0.5,22.5
+      parent: 1
 - proto: APCHighCapacity
   entities:
   - uid: 72
@@ -4167,13 +4177,6 @@ entities:
     - type: Transform
       pos: -1.5,-11.5
       parent: 1
-- proto: ChemistryHotplate
-  entities:
-  - uid: 730
-    components:
-    - type: Transform
-      pos: -1.5,-8.5
-      parent: 1
 - proto: ChemMasterFilled
   entities:
   - uid: 731
@@ -4287,6 +4290,28 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: ClothingShoesBootsMagVoid
+  entities:
+  - uid: 1701
+    components:
+    - type: Transform
+      pos: 0.8175812,22.699535
+      parent: 1
+  - uid: 1702
+    components:
+    - type: Transform
+      pos: 0.8488312,22.37141
+      parent: 1
+  - uid: 1703
+    components:
+    - type: Transform
+      pos: 0.14570618,22.762035
+      parent: 1
+  - uid: 1704
+    components:
+    - type: Transform
+      pos: 0.11445618,22.37141
+      parent: 1
 - proto: CMSemioticAirlock
   entities:
   - uid: 738
@@ -4655,12 +4680,96 @@ entities:
     - type: Transform
       pos: 4.7341094,-13.423183
       parent: 1
+- proto: ExodusBiohazardSprayer
+  entities:
+  - uid: 1009
+    components:
+    - type: Transform
+      pos: -0.08866882,19.26741
+      parent: 1
+  - uid: 1010
+    components:
+    - type: Transform
+      pos: -0.13554382,19.57991
+      parent: 1
+  - uid: 1016
+    components:
+    - type: Transform
+      pos: -0.18241882,19.220535
+      parent: 1
+  - uid: 1017
+    components:
+    - type: Transform
+      pos: -0.32304382,19.720535
+      parent: 1
+  - uid: 1147
+    components:
+    - type: Transform
+      pos: -0.35429382,19.189285
+      parent: 1
+  - uid: 1621
+    components:
+    - type: Transform
+      pos: -0.36991882,19.42366
+      parent: 1
 - proto: FaxMachineBase
   entities:
   - uid: 784
     components:
     - type: Transform
       pos: 3.5,12.5
+      parent: 1
+- proto: FederationMilitaryCredit
+  entities:
+  - uid: 1690
+    components:
+    - type: Transform
+      pos: 2.3019562,22.728638
+      parent: 1
+  - uid: 1691
+    components:
+    - type: Transform
+      pos: 2.4425812,22.713013
+      parent: 1
+  - uid: 1692
+    components:
+    - type: Transform
+      pos: 2.5988312,22.728638
+      parent: 1
+  - uid: 1693
+    components:
+    - type: Transform
+      pos: 2.7082062,22.728638
+      parent: 1
+  - uid: 1694
+    components:
+    - type: Transform
+      pos: 2.8644562,22.713013
+      parent: 1
+  - uid: 1695
+    components:
+    - type: Transform
+      pos: 2.0988312,22.728638
+      parent: 1
+  - uid: 1696
+    components:
+    - type: Transform
+      pos: 2.0988312,22.494263
+      parent: 1
+  - uid: 1697
+    components:
+    - type: Transform
+      pos: 2.2082062,22.447388
+      parent: 1
+  - uid: 1698
+    components:
+    - type: Transform
+      pos: 2.4269562,22.525513
+      parent: 1
+  - uid: 1699
+    components:
+    - type: Transform
+      pos: 2.7394562,22.556763
       parent: 1
 - proto: Flash
   entities:
@@ -5838,6 +5947,38 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-4.5
       parent: 1
+- proto: GoJuiceAutoInjector45
+  entities:
+  - uid: 1622
+    components:
+    - type: Transform
+      pos: -0.7292938,19.783035
+      parent: 1
+  - uid: 1685
+    components:
+    - type: Transform
+      pos: -0.7292938,19.658035
+      parent: 1
+  - uid: 1686
+    components:
+    - type: Transform
+      pos: -0.7605438,19.126785
+      parent: 1
+  - uid: 1687
+    components:
+    - type: Transform
+      pos: -0.7449188,19.283035
+      parent: 1
+  - uid: 1688
+    components:
+    - type: Transform
+      pos: -0.7917938,19.39241
+      parent: 1
+  - uid: 1689
+    components:
+    - type: Transform
+      pos: -0.8386688,19.564285
+      parent: 1
 - proto: GravityGeneratorMini
   entities:
   - uid: 929
@@ -6050,8 +6191,6 @@ entities:
     - type: Transform
       pos: 2.5,17.5
       parent: 1
-    - type: Thruster
-      enabled: False
     - type: ApcPowerReceiver
       powerLoad: 1
   - uid: 964
@@ -6106,6 +6245,128 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: HardpointBallisticLight
+  entities:
+  - uid: 1665
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-10.5
+      parent: 1
+  - uid: 1666
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-10.5
+      parent: 1
+  - uid: 1667
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,4.5
+      parent: 1
+  - uid: 1668
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,4.5
+      parent: 1
+- proto: HardpointBallisticSuperlight
+  entities:
+  - uid: 1663
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 4.5,19.5
+      parent: 1
+  - uid: 1664
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,19.5
+      parent: 1
+- proto: HardpointMissileHeavy
+  entities:
+  - uid: 1669
+    components:
+    - type: Transform
+      pos: 7.5,8.5
+      parent: 1
+  - uid: 1670
+    components:
+    - type: Transform
+      pos: 7.5,7.5
+      parent: 1
+  - uid: 1671
+    components:
+    - type: Transform
+      pos: 7.5,12.5
+      parent: 1
+  - uid: 1672
+    components:
+    - type: Transform
+      pos: -6.5,12.5
+      parent: 1
+  - uid: 1673
+    components:
+    - type: Transform
+      pos: -6.5,11.5
+      parent: 1
+  - uid: 1674
+    components:
+    - type: Transform
+      pos: -6.5,7.5
+      parent: 1
+  - uid: 1675
+    components:
+    - type: Transform
+      pos: -6.5,8.5
+      parent: 1
+  - uid: 1676
+    components:
+    - type: Transform
+      pos: -6.5,-15.5
+      parent: 1
+  - uid: 1677
+    components:
+    - type: Transform
+      pos: -6.5,-16.5
+      parent: 1
+  - uid: 1678
+    components:
+    - type: Transform
+      pos: -6.5,-17.5
+      parent: 1
+  - uid: 1679
+    components:
+    - type: Transform
+      pos: -6.5,-18.5
+      parent: 1
+  - uid: 1680
+    components:
+    - type: Transform
+      pos: 7.5,-15.5
+      parent: 1
+  - uid: 1681
+    components:
+    - type: Transform
+      pos: 7.5,-16.5
+      parent: 1
+  - uid: 1682
+    components:
+    - type: Transform
+      pos: 7.5,-17.5
+      parent: 1
+  - uid: 1683
+    components:
+    - type: Transform
+      pos: 7.5,-18.5
+      parent: 1
+  - uid: 1684
+    components:
+    - type: Transform
+      pos: 7.5,11.5
+      parent: 1
 - proto: HolofanProjector
   entities:
   - uid: 18
@@ -6287,6 +6548,13 @@ entities:
     components:
     - type: Transform
       pos: 3.5,4.5
+      parent: 1
+- proto: MachineThermobath
+  entities:
+  - uid: 730
+    components:
+    - type: Transform
+      pos: -1.5,-8.5
       parent: 1
 - proto: Magazine762x39mmBox
   entities:
@@ -6600,6 +6868,28 @@ entities:
     components:
     - type: Transform
       pos: -0.6133261,-16.206112
+      parent: 1
+- proto: PowerCellMicroreactor
+  entities:
+  - uid: 1705
+    components:
+    - type: Transform
+      pos: 0.5050812,22.71516
+      parent: 1
+  - uid: 1706
+    components:
+    - type: Transform
+      pos: 0.5207062,22.387035
+      parent: 1
+  - uid: 1707
+    components:
+    - type: Transform
+      pos: 0.48945618,22.68391
+      parent: 1
+  - uid: 1708
+    components:
+    - type: Transform
+      pos: 0.45820618,22.418285
       parent: 1
 - proto: PoweredlightCyan
   entities:
@@ -7022,6 +7312,11 @@ entities:
     - type: Transform
       pos: 4.5,-13.5
       parent: 1
+  - uid: 1700
+    components:
+    - type: Transform
+      pos: 0.5,22.5
+      parent: 1
 - proto: RailingRound
   entities:
   - uid: 1094
@@ -7391,32 +7686,6 @@ entities:
     - type: Transform
       pos: -3.582498,-15.789531
       parent: 1
-- proto: SpawnMobWeaponTurretLaserTSFMC
-  entities:
-  - uid: 1138
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -4.5,-3.5
-      parent: 1
-  - uid: 1139
-    components:
-    - type: Transform
-      pos: 5.5,0.5
-      parent: 1
-- proto: SpawnMobWeaponTurretTFSMC
-  entities:
-  - uid: 1140
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-3.5
-      parent: 1
-  - uid: 1141
-    components:
-    - type: Transform
-      pos: -4.5,0.5
-      parent: 1
 - proto: SpawnMarsocGhostOperative
   entities:
   - uid: 1142
@@ -7443,6 +7712,32 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-0.5
+      parent: 1
+- proto: SpawnMobWeaponTurretLaserTSFMC
+  entities:
+  - uid: 1138
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-3.5
+      parent: 1
+  - uid: 1139
+    components:
+    - type: Transform
+      pos: 5.5,0.5
+      parent: 1
+- proto: SpawnMobWeaponTurretTFSMC
+  entities:
+  - uid: 1140
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,-3.5
+      parent: 1
+  - uid: 1141
+    components:
+    - type: Transform
+      pos: -4.5,0.5
       parent: 1
 - proto: StasisBed
   entities:
@@ -10215,6 +10510,40 @@ entities:
     - type: Transform
       pos: 4.6816564,-16.687363
       parent: 1
+- proto: WeaponEnergyGunFrost
+  entities:
+  - uid: 1012
+    components:
+    - type: Transform
+      pos: 1.4894562,20.26741
+      parent: 1
+  - uid: 1013
+    components:
+    - type: Transform
+      pos: 1.5207062,20.501785
+      parent: 1
+    - type: EnergyGun
+      currentFireMode:
+        state: ""
+        name: disable
+        fireCost: 75
+        proto: BulletDisabler
+  - uid: 1014
+    components:
+    - type: Transform
+      pos: 1.5363312,20.79866
+      parent: 1
+    - type: EnergyGun
+      currentFireMode:
+        state: ""
+        name: disable
+        fireCost: 75
+        proto: BulletDisabler
+  - uid: 1015
+    components:
+    - type: Transform
+      pos: 1.5988312,20.26741
+      parent: 1
 - proto: WeaponLaserTurboNF
   entities:
   - uid: 1613
@@ -10262,18 +10591,6 @@ entities:
     components:
     - type: Transform
       pos: 1.4141312,19.788658
-      parent: 1
-- proto: WeaponMinigun
-  entities:
-  - uid: 1621
-    components:
-    - type: Transform
-      pos: -0.5983689,19.70745
-      parent: 1
-  - uid: 1622
-    components:
-    - type: Transform
-      pos: -0.43586898,19.344799
       parent: 1
 - proto: WeaponPulseRifle
   entities:
@@ -10471,166 +10788,4 @@ entities:
       parent: 1
     - type: DeltaPressure
       gridUid: 1
-# Exodus-begin: weapon hardpoints
-- proto: HardpointBallisticLight
-  entities:
-  - uid: 1665
-    components:
-    - type: Transform
-      pos: -4.5,-10.5
-      rot: -1.5707963267948966 rad
-      parent: 1
-      anchored: true
-  - uid: 1666
-    components:
-    - type: Transform
-      pos: 5.5,-10.5
-      rot: 1.5707963267948966 rad
-      parent: 1
-      anchored: true
-  - uid: 1667
-    components:
-    - type: Transform
-      pos: 6.5,4.5
-      rot: 1.5707963267948966 rad
-      parent: 1
-      anchored: true
-  - uid: 1668
-    components:
-    - type: Transform
-      pos: -5.5,4.5
-      rot: -1.5707963267948966 rad
-      parent: 1
-      anchored: true
-- proto: HardpointBallisticSuperlight
-  entities:
-  - uid: 1663
-    components:
-    - type: Transform
-      pos: 4.5,19.5
-      rot: 1.5707963267948966 rad
-      parent: 1
-      anchored: true
-  - uid: 1664
-    components:
-    - type: Transform
-      pos: -3.5,19.5
-      rot: -1.5707963267948966 rad
-      parent: 1
-      anchored: true
-- proto: HardpointMissileHeavy
-  entities:
-  - uid: 1669
-    components:
-    - type: Transform
-      pos: 7.5,8.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1670
-    components:
-    - type: Transform
-      pos: 7.5,7.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1671
-    components:
-    - type: Transform
-      pos: 7.5,12.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1672
-    components:
-    - type: Transform
-      pos: -6.5,12.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1673
-    components:
-    - type: Transform
-      pos: -6.5,11.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1674
-    components:
-    - type: Transform
-      pos: -6.5,7.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1675
-    components:
-    - type: Transform
-      pos: -6.5,8.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1676
-    components:
-    - type: Transform
-      pos: -6.5,-15.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1677
-    components:
-    - type: Transform
-      pos: -6.5,-16.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1678
-    components:
-    - type: Transform
-      pos: -6.5,-17.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1679
-    components:
-    - type: Transform
-      pos: -6.5,-18.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1680
-    components:
-    - type: Transform
-      pos: 7.5,-15.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1681
-    components:
-    - type: Transform
-      pos: 7.5,-16.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1682
-    components:
-    - type: Transform
-      pos: 7.5,-17.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1683
-    components:
-    - type: Transform
-      pos: 7.5,-18.5
-      rot: 0
-      parent: 1
-      anchored: true
-  - uid: 1684
-    components:
-    - type: Transform
-      pos: 7.5,11.5
-      rot: 0
-      parent: 1
-      anchored: true
-# Exodus-end
 ...
