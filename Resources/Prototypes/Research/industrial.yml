@@ -300,6 +300,7 @@
   cost: 50000
   recipeUnlocks:
   - MaterialSiloMachineCircuitboard
+  - BoxSorterMachineCircuitboard
   technologyPrerequisites:
   - SuperParts
   position: -1, 6

@@ -1,0 +1,20 @@
+box-sorter-title = Сортировщик грузов
+box-sorter-type-other = Прочие
+box-sorter-unconfigured = Не настроено
+box-sorter-channel = Канал
+box-sorter-destination-header = Назначение
+box-sorter-channel-header = Канал
+box-sorter-slot-name = Слот рамки
+box-sorter-examine-unpowered = Без питания — сортировка не работает.
+box-sorter-examine-route = { $dest } → { $channel }
+cargo-teleporter-title = Выход телепорта
+cargo-teleporter-examine = Выход { $id }, канал { $channel }.
+
+ent-BoxSorter = сортировщик грузов
+    .desc = Сортирует торговые ящики с конвейера на площадки телепортов по назначению. Рамки для новых площадок хранятся внутри.
+ent-CargoBoxTeleporter = грузовой телепорт
+    .desc = Точка назначения для отсортированных грузовых ящиков. Поставьте на исходящую линию конвейера, чтобы ящики вставали на неё после прибытия. Номер канала задаётся кликом.
+ent-CargoTeleporterFrame = рамка телепорта
+    .desc = Сложенная площадка телепорта. Используйте на конвейере, чтобы развернуть выход.
+ent-BoxSorterMachineCircuitboard = печатная плата сортировщика грузов
+    .desc = Печатная плата сортировщика грузов.

@@ -1,0 +1,212 @@
+- type: entity
+  id: BoxSorter
+  parent: [BaseStructure, ConstructibleMachine]
+  name: box sorter
+  description: Sorts trade crates from the conveyor to teleporter pads by destination. Frames for new pads are stored inside.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Exodus/Structures/box_sorter.rsi
+    state: machine
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      sorter:
+        shape: !type:PolygonShape
+          vertices:
+          - -0.50,-0.50
+          - 0.50,-0.50
+          - 0.50,0.50
+          - -0.50,0.50
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        - DoorPassable
+        hard: false
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Clickable
+  - type: InteractionOutline
+  - type: BoxSorter
+  - type: Machine
+    board: BoxSorterMachineCircuitboard
+  - type: ItemSlots
+    slots:
+      frame_1:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_2:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_3:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_4:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_5:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_6:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_7:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+      frame_8:
+        name: box-sorter-slot-name
+        startingItem: CargoTeleporterFrame
+        whitelist:
+          components:
+          - CargoTeleporterFrame
+  - type: ActivatableUI
+    key: enum.BoxSorterUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BoxSorterUiKey.Key:
+        type: BoxSorterBoundUserInterface
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: CargoBoxTeleporter
+  parent: BaseStructure
+  name: cargo teleporter
+  description: Destination point for sorted cargo boxes. Place on an outgoing conveyor line so boxes ride on after arrival. Its channel number is set by clicking on it.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Exodus/Structures/cargo_teleporter.rsi
+    layers:
+    - state: channel_1
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CargoBoxTeleporterVisuals.Channel:
+        base:
+          "0": { state: channel_0 }
+          "1": { state: channel_1 }
+          "2": { state: channel_2 }
+          "3": { state: channel_3 }
+          "4": { state: channel_4 }
+          "5": { state: channel_5 }
+          "6": { state: channel_6 }
+          "7": { state: channel_7 }
+          "8": { state: channel_8 }
+          "9": { state: channel_9 }
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+        - MachineMask
+        hard: false
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Clickable
+  - type: InteractionOutline
+  - type: CargoBoxTeleporter
+  - type: ActivatableUI
+    key: enum.CargoBoxTeleporterUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CargoBoxTeleporterUiKey.Key:
+        type: CargoBoxTeleporterBoundUserInterface
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: CargoTeleporterFrame
+  parent: BaseItem
+  name: teleporter frame
+  description: A folded teleporter pad. Use it on a conveyor to deploy the exit.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Structures/box_sorter.rsi
+    state: folded
+  - type: CargoTeleporterFrame
+
+- type: entity
+  id: BoxSorterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: box sorter machine board
+  description: A machine printed circuit board for a cargo sorter.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: BoxSorter
+    stackRequirements:
+      Cable: 5
+      Steel: 15
+      Americium: 1
+      Bluespace: 1
+    tagRequirements:
+      ArmorPlateEconomy1:
+        amount: 2
+        defaultPrototype: ArmorPlateEconomy1
+      RadioEconomy1:
+        amount: 2
+        defaultPrototype: RadioEconomy1
+      MotorEconomy1:
+        amount: 1
+        defaultPrototype: MotorEconomy1
+      MicroprocessorEconomy2:
+        amount: 1
+        defaultPrototype: MicroprocessorEconomy2
+      ElectromagnetEconomy3:
+        amount: 1
+        defaultPrototype: ElectromagnetEconomy3

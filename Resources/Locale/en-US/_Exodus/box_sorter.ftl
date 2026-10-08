@@ -1,0 +1,11 @@
+box-sorter-title = Cargo sorter
+box-sorter-type-other = Other
+box-sorter-unconfigured = Unconfigured
+box-sorter-channel = Channel
+box-sorter-destination-header = Destination
+box-sorter-channel-header = Channel
+box-sorter-slot-name = Frame slot
+box-sorter-examine-unpowered = Unpowered — sorting is offline.
+box-sorter-examine-route = { $dest } → { $channel }
+cargo-teleporter-title = Teleporter exit
+cargo-teleporter-examine = Exit { $id }, channel { $channel }.

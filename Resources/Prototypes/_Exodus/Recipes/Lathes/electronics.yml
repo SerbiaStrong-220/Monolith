@@ -18,3 +18,12 @@
     Glass: 2000
     Gold: 1000
     Silver: 1000
+
+- type: latheRecipe
+  id: BoxSorterMachineCircuitboard
+  parent: BaseCircuitboardRecipe
+  result: BoxSorterMachineCircuitboard
+  completetime: 10
+  materials:
+    Steel: 1000
+    Americium: 100
