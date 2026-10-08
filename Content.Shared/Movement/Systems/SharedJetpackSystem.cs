@@ -4,14 +4,11 @@ using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Popups;
 using Robust.Shared.Configuration; // EE
 using Robust.Shared.Containers;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
-using Content.Shared.Clothing;
-using JetBrains.Annotations; // Mono
+// Exodus: auto-pause and lifecycle dependencies live in SharedJetpackSystem.Exodus.cs.
 
 namespace Content.Shared.Movement.Systems;
 
@@ -20,7 +17,6 @@ public abstract partial class SharedJetpackSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private IConfigurationManager _config = default!; // EE
@@ -35,16 +31,17 @@ public abstract partial class SharedJetpackSystem : EntitySystem
 
         SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserWeightlessMovement);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
-        SubscribeLocalEvent<JetpackUserComponent, MagbootsToggledEvent>(OnJetpackUserMagbootsToggled); // Mono
-        SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
         SubscribeLocalEvent<JetpackComponent, EntGotInsertedIntoContainerMessage>(OnJetpackMoved);
 
-        SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
+        InitializeAutoPause(); // Exodus: watch the user's weightlessness instead of disabling jetpacks grid-wide.
         SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnJetpackUserWeightlessMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
     {
+        if (!ent.Comp.Active) // Exodus: standby must not change movement.
+            return;
+
         // Yes this bulldozes the values but primarily for backwards compat atm.
         args.WeightlessAcceleration = ent.Comp.WeightlessAcceleration;
         args.WeightlessModifier = ent.Comp.WeightlessModifier;
@@ -58,124 +55,33 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
+    // Exodus-begin: lifecycle handlers use the persistent enabled state.
+    private void OnJetpackDropped(Entity<JetpackComponent> ent, ref DroppedEvent args)
     {
-        if (_config.GetCVar(EECCVars.JetpackEnableAnywhere)) // EE
-            return; // EE
-
-        var gridUid = ev.ChangedGridIndex;
-        var jetpackQuery = GetEntityQuery<JetpackComponent>();
-
-        // First, disable jetpacks on users
-        var query = EntityQueryEnumerator<JetpackUserComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var user, out var transform))
-        {
-            if (transform.GridUid == gridUid && ev.HasGravity &&
-                jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
-            {
-                _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
-
-                SetEnabled(user.Jetpack, jetpack, false, uid);
-            }
-        }
-
-        // Additionally, find any active jetpacks without users on the grid that need to be disabled
-        if (ev.HasGravity)
-        {
-            var activeJetpackQuery = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, TransformComponent>();
-
-            while (activeJetpackQuery.MoveNext(out var jetpackUid, out _, out var jetpackComponent, out var jetpackTransform))
-            {
-                // If the jetpack is on this grid and has no user, disable it
-                if (jetpackTransform.GridUid == gridUid && !HasComp<JetpackUserComponent>(jetpackUid))
-                {
-                    // Check if the jetpack is being held/worn by someone
-                    EntityUid? user = null;
-                    Container.TryGetContainingContainer((jetpackUid, null, null), out var container);
-                    user = container?.Owner;
-
-                    SetEnabled(jetpackUid, jetpackComponent, false, user);
-                }
-            }
-        }
-    }
-
-    private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
-    {
-        SetEnabled(uid, component, false, args.User);
+        SetEnabled(ent, false);
     }
 
     private void OnJetpackMoved(Entity<JetpackComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
         if (args.Container.Owner != ent.Comp.JetpackUser)
-            SetEnabled(ent, ent.Comp, false, ent.Comp.JetpackUser);
+            SetEnabled(ent, false);
     }
 
-    private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
+    private void OnJetpackUserCanWeightless(Entity<JetpackUserComponent> ent, ref CanWeightlessMoveEvent args)
     {
-        args.CanMove = true;
+        if (ent.Comp.Active)
+            args.CanMove = true;
     }
 
-    private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
-    {
-        // Frontier: note - comment from upstream, dead men tell no tales
-        // No and no again! Do not attempt to activate the jetpack on a grid with gravity disabled. You will not be the first or the last to try this.
-        // https://discord.com/channels/310555209753690112/310555209753690112/1270067921682694234
-        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack)
-            && (!CanEnableOnGrid(args.Transform.GridUid)
-                || !UserNotParented(uid, jetpack) // EE
-                || !_gravity.IsWeightless(uid))) // Mono
-        {
-            SetEnabled(component.Jetpack, jetpack, false, uid);
-
-            _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
-        }
-    }
-
-    private void SetupUser(EntityUid user, EntityUid jetpackUid, JetpackComponent component)
-    {
-        EnsureComp<JetpackUserComponent>(user, out var userComp);
-        component.JetpackUser = user;
-
-        if (TryComp<PhysicsComponent>(user, out var physics))
-            _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
-
-        userComp.Jetpack = jetpackUid;
-        userComp.WeightlessAcceleration = component.Acceleration;
-        userComp.WeightlessModifier = component.WeightlessModifier;
-        userComp.WeightlessFriction = component.Friction;
-        userComp.WeightlessFrictionNoInput = component.Friction;
-        _movementSpeedModifier.RefreshWeightlessModifiers(user);
-    }
-
-    private void RemoveUser(EntityUid uid, JetpackComponent component)
-    {
-        if (!RemComp<JetpackUserComponent>(uid))
-            return;
-
-        component.JetpackUser = null;
-
-        if (TryComp<PhysicsComponent>(uid, out var physics))
-            _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
-
-        _movementSpeedModifier.RefreshWeightlessModifiers(uid);
-    }
-
-    private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
+    private void OnJetpackToggle(Entity<JetpackComponent> ent, ref ToggleJetpackEvent args)
     {
         if (args.Handled)
             return;
 
-        if (TryComp(uid, out TransformComponent? xform) && !CanEnableOnGrid(xform.GridUid)
-        || !_gravity.IsWeightless(args.Performer)) // Mono
-        {
-            _popup.PopupClient(Loc.GetString("jetpack-no-station"), uid, args.Performer);
-
-            return;
-        }
-
-        SetEnabled(uid, component, !IsEnabled(uid));
+        SetEnabled(ent, ent.Comp.JetpackUser == null, args.Performer);
+        args.Handled = true;
     }
+    // Exodus-end
 
     private bool CanEnableOnGrid(EntityUid? gridUid)
     {
@@ -194,56 +100,18 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
-    private bool IsEnabled(EntityUid uid)
-    {
-        return HasComp<ActiveJetpackComponent>(uid);
-    }
-
-    public void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
-    {
-        if (user == null)
-        {
-            if (!Container.TryGetContainingContainer((uid, null, null), out var container))
-                return;
-            user = container.Owner;
-        }
-
-        bool canEnable = CanEnable(uid, user.Value, component);
-
-        if (IsEnabled(uid) == enabled ||
-            enabled && !canEnable) // Mono: i'm pretty sure that user is true here
-            return;
-
-        // EE: check if user has a parent (e.g. vehicle, duffelbag, bed)
-        if (enabled && !UserNotParented(user, component))
-            return;
-        // End EE
-
-        if (enabled)
-        {
-            SetupUser(user.Value, uid, component);
-            EnsureComp<ActiveJetpackComponent>(uid);
-        }
-        else
-        {
-            RemoveUser(user.Value, component);
-            RemComp<ActiveJetpackComponent>(uid);
-        }
-
-
-        Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
-        Dirty(uid, component);
-    }
-
+    // Exodus-begin: standby users are not flying; enabling no longer requires weightlessness.
+    // State transitions and cleanup are implemented in SharedJetpackSystem.Exodus.cs.
     public bool IsUserFlying(EntityUid uid)
     {
-        return HasComp<JetpackUserComponent>(uid);
+        return TryComp<JetpackUserComponent>(uid, out var user) && user.Active;
     }
 
-    protected virtual bool CanEnable(EntityUid uid, EntityUid user, JetpackComponent component)
+    protected virtual bool CanEnable(Entity<JetpackComponent> ent, EntityUid user)
     {
-        return _gravity.IsWeightless(user); // Mono
+        return true;
     }
+    // Exodus-end
 
     // EE: check parent
     protected virtual bool UserNotParented(EntityUid? user, JetpackComponent component)
@@ -254,16 +122,7 @@ public abstract partial class SharedJetpackSystem : EntitySystem
     }
     // End EE
 
-    // Mono
-    private void OnJetpackUserMagbootsToggled(EntityUid uid, JetpackUserComponent component, ref MagbootsToggledEvent args)
-    {
-        if (!args.State || !IsEnabled(component.Jetpack) || _gravity.IsWeightless(uid) || !TryComp<JetpackComponent>(component.Jetpack, out var jetpack))
-            return;
-
-        _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
-        SetEnabled(component.Jetpack, jetpack, false, uid);
-    }
-    // End Mono
+    // Exodus: magboots now pause/resume through WeightlessnessChangedEvent.
 }
 
 [Serializable, NetSerializable]

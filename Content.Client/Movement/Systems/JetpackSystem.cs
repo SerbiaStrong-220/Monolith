@@ -23,7 +23,7 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
         SubscribeLocalEvent<JetpackComponent, AppearanceChangeEvent>(OnJetpackAppearance);
     }
 
-    protected override bool CanEnable(EntityUid uid, EntityUid user, JetpackComponent component)
+    protected override bool CanEnable(Entity<JetpackComponent> ent, EntityUid user) // Exodus: Entity<T> jetpack API.
     {
         // No predicted atmos so you'd have to do a lot of funny to get this working.
         return false;
