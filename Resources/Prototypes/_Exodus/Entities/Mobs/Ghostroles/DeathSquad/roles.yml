@@ -27,13 +27,19 @@
     prototypes: [ ExodusDeathSquadGear ]
   - type: RandomMetadata
     nameSegments:
-    - NamesFirstMilitaryLeader
     - NamesLastMilitary
   - type: ChatRank
     rank: exodus-abaddon-chat-rank
   - type: NpcFactionMember
     factions:
     - TSFMC
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - SolCommon
+    understands:
+    - TauCetiBasic
+    - SolCommon
   - type: TTS
     randomVoicesList: ExodusAbaddon
   - type: Genome

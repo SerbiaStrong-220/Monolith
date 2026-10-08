@@ -28,3 +28,14 @@
   - type: Tag
     tags:
     - Spray
+
+- type: entity
+  id: ExodusBiohazardSprayerAbaddon
+  parent: ExodusBiohazardSprayer
+  name: Abaddon biohazard foam sprayer
+  description: A self-replenishing foam sprayer for the Abaddon squad. Instantly releases decontamination foam when activated in hand and regenerates its charge in 10 seconds.
+  components:
+  - type: FoamSprayer
+    delay: 0
+  - type: AutoRecharge
+    rechargeDuration: 10
