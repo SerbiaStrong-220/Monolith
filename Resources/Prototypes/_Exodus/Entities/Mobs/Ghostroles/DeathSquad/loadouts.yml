@@ -14,6 +14,7 @@
     belt: ClothingBeltExodusAbaddon
   storage:
     back:
+    - AccessBreaker
     - Hypospray
     - StasiziumAutoInjector
     - StasiziumAutoInjector

@@ -152,7 +152,7 @@
     mustBeEquippedToUse: true
 
 - type: entity
-  parent: [ ClothingEyesBase, ShowSecurityIcons ]
+  parent: [ ClothingEyesBase, ShowSecurityIcons, ShowMedicalIcons ]
   id: ClothingEyesGlassesExodusAbaddon
   name: ABADDON tactical glasses
   description: TSF officer glasses with continuous thermal imaging.
