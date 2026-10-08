@@ -56,7 +56,13 @@ public sealed partial class SafetyDepositBoxSystem
         var faulted = false;
         try
         {
-            if (!canContinue() || !IsAdminPhysicalBoxValid(physical, box) || TerminatingOrDeleted(item) ||
+            if (!canContinue())
+            {
+                result = "admin-safety-deposit-error-permission";
+                return result;
+            }
+
+            if (!IsAdminPhysicalBoxValid(physical, box) || TerminatingOrDeleted(item) ||
                 !GetAdminPhysicalBoxes().TryGetValue(box.BoxId, out var current) || current != physical ||
                 !TryComp<StorageComponent>(physical, out storage))
                 return result;

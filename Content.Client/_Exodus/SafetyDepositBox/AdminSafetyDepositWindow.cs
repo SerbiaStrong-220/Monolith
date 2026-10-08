@@ -306,13 +306,14 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
         var validReason = _reason.Text.Length <= MaxReasonLength;
         var canAdd = canEdit && (box?.Status == AdminSafetyDepositBoxStatus.Stored ||
             box is { Status: AdminSafetyDepositBoxStatus.Withdrawn, Entity: not null });
+        var canCreatePrototype = canAdd && _state?.CanSpawn == true;
         var canModifyItem = canEdit && validReason && _selectedItem is { } item && (item.RecordId > 0 || item.Entity != null);
         _refresh.Disabled = busy;
         _find.Disabled = busy || string.IsNullOrWhiteSpace(_search.Text) || _search.Text.Length > MaxSearchLength;
         _search.Editable = !busy;
-        _prototype.Editable = canAdd;
+        _prototype.Editable = canCreatePrototype;
         _reason.Editable = canEdit;
-        _add.Disabled = !canAdd || !validReason || string.IsNullOrWhiteSpace(_prototype.Text) || _prototype.Text.Length > MaxPrototypeLength;
+        _add.Disabled = !canCreatePrototype || !validReason || string.IsNullOrWhiteSpace(_prototype.Text) || _prototype.Text.Length > MaxPrototypeLength;
         _addFromHand.Disabled = !canAdd || !validReason;
         _withdraw.Disabled = !canModifyItem;
         _delete.Disabled = !canModifyItem;

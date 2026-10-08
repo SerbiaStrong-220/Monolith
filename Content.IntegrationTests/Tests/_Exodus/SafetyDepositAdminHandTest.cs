@@ -264,6 +264,97 @@ public sealed class SafetyDepositAdminHandTest
         await pair.CleanReturnAsync();
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task PrototypeAdditionRequiresSpawnPermissionForStoredAndIssuedBoxes(bool issued)
+    {
+        await using var pair = await PoolManager.GetServerClient(Settings());
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        try
+        {
+            await AttachAdmin(pair, map.GridCoords);
+            var database = server.ResolveDependency<IServerDbManager>();
+            var ownerId = pair.Player!.UserId.UserId;
+            var box = await database.PurchaseSafetyDepositBox(ownerId, 3, "owner of test box", "SafetyDepositBoxSmall");
+            await database.UpdateSafetyDepositBoxNickname(box.BoxId, "permission-test vault");
+            EntityUid? physical = null;
+            if (issued)
+                physical = await IssueBox(pair, box, map.GridCoords);
+            var before = await database.GetSafetyDepositBox(box.BoxId);
+            var request = new AdminSafetyDepositModifyMessage(box.BoxId, Guid.NewGuid(), AdminSafetyDepositAction.Add,
+                0, null, "ExodusSafetyDepositHandStack", "prototype-add permission test");
+
+            Assert.That(await ModifyBox(pair, ownerId, request), Is.EqualTo("admin-safety-deposit-error-permission"),
+                "The Admin flag must not grant permission to create new objects.");
+            var denied = await database.GetSafetyDepositBox(box.BoxId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(denied.Items, Is.Empty);
+                Assert.That(denied.OwnerUserId, Is.EqualTo(ownerId));
+                Assert.That(denied.CharacterIndex, Is.EqualTo(3));
+                Assert.That(denied.OwnerName, Is.EqualTo("owner of test box"));
+                Assert.That(denied.ProtoId, Is.EqualTo("SafetyDepositBoxSmall"));
+                Assert.That(denied.Nickname, Is.EqualTo("permission-test vault"));
+                Assert.That(denied.PurchaseDate, Is.EqualTo(before.PurchaseDate));
+                Assert.That(denied.LastWithdrawn, Is.EqualTo(before.LastWithdrawn));
+                Assert.That(denied.LastWithdrawnRoundId, Is.EqualTo(before.LastWithdrawnRoundId));
+            });
+            Assert.That(await database.GetSafetyDepositAdminAudits(box.BoxId), Is.Empty,
+                "Rejected creation must not create a successful receipt or pending physical mutation.");
+            await server.WaitAssertion(() =>
+            {
+                if (physical is { } physicalBox)
+                    Assert.That(entities.GetComponent<StorageComponent>(physicalBox).Container.ContainedEntities, Is.Empty);
+                server.ResolveDependency<IAdminManager>().GetAdminData(pair.Player!)!.Flags = AdminFlags.Admin | AdminFlags.Spawn;
+            });
+
+            // Reuse the exact request to show that the first rejection was authorization, not invalid input.
+            Assert.That(await ModifyBox(pair, ownerId, request), Is.EqualTo("admin-safety-deposit-success"));
+            var allowed = await database.GetSafetyDepositBox(box.BoxId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(allowed.LastWithdrawn, Is.EqualTo(before.LastWithdrawn));
+                Assert.That(allowed.LastWithdrawnRoundId, Is.EqualTo(before.LastWithdrawnRoundId));
+                Assert.That(allowed.Nickname, Is.EqualTo("permission-test vault"));
+                Assert.That(allowed.Items, Has.Count.EqualTo(issued ? 0 : 1));
+            });
+            var audits = await database.GetSafetyDepositAdminAudits(box.BoxId);
+            Assert.That(audits, Has.Count.EqualTo(1));
+            Assert.That(audits[0].Action, Is.EqualTo("Add"));
+            Assert.That(audits[0].Result, Is.EqualTo("success"));
+            await server.WaitAssertion(() =>
+            {
+                EntityUid added;
+                if (physical is { } physicalBox)
+                {
+                    var contents = entities.GetComponent<StorageComponent>(physicalBox).Container.ContainedEntities;
+                    Assert.That(contents, Has.Count.EqualTo(1));
+                    added = contents.Single();
+                }
+                else
+                {
+                    using var reader = new StringReader(allowed.Items[0].EntityData);
+                    Assert.That(server.System<MapLoaderSystem>().TryLoadEntity(reader, "permitted prototype-add test", out var restored), Is.True);
+                    Assert.That(restored, Is.Not.Null);
+                    added = restored.Value.Owner;
+                }
+
+                Assert.That(entities.GetComponent<MetaDataComponent>(added).EntityPrototype!.ID, Is.EqualTo("ExodusSafetyDepositHandStack"));
+                Assert.That(entities.GetComponent<StackComponent>(added).Count, Is.EqualTo(1));
+                if (!issued)
+                    entities.DeleteEntity(added);
+            });
+        }
+        finally
+        {
+            await Cleanup(pair, map);
+        }
+
+        await pair.CleanReturnAsync();
+    }
+
     private static PoolSettings Settings()
     {
         return new PoolSettings
@@ -332,11 +423,16 @@ public sealed class SafetyDepositAdminHandTest
 
     private static async Task<string> AddFromHand(TestPair pair, Guid ownerId, Guid boxId)
     {
+        var request = new AdminSafetyDepositModifyMessage(boxId, Guid.NewGuid(), AdminSafetyDepositAction.AddFromHand,
+            0, null, string.Empty, "hand-transfer integration test");
+        return await ModifyBox(pair, ownerId, request);
+    }
+
+    private static async Task<string> ModifyBox(TestPair pair, Guid ownerId, AdminSafetyDepositModifyMessage request)
+    {
         Task<string> operation = null;
         await pair.Server.WaitPost(() =>
         {
-            var request = new AdminSafetyDepositModifyMessage(boxId, Guid.NewGuid(), AdminSafetyDepositAction.AddFromHand,
-                0, null, string.Empty, "hand-transfer integration test");
             operation = pair.Server.System<SafetyDepositBoxSystem>().AdminModifyBoxAsync(pair.Player!, ownerId, request, () => true);
         });
         await PoolManager.WaitUntil(pair.Server, () => operation.IsCompleted);

@@ -45,5 +45,6 @@ public sealed class AdminSafetyDepositEuiState : EuiStateBase
     public Guid ViewId;
     public bool Busy;
     public bool CanEdit;
+    public bool CanSpawn;
     public string Message = string.Empty;
 }

@@ -99,7 +99,7 @@ public sealed partial class SafetyDepositBoxSystem
         AdminSafetyDepositModifyMessage request,
         Func<bool> canContinue)
     {
-        if (!CanAdminModify(admin, canContinue))
+        if (!CanAdminModify(admin, request.Action, canContinue))
             return "admin-safety-deposit-error-permission";
 
         if (!Enum.IsDefined(request.Action) || request.Reason is null or { Length: > 500 } ||
@@ -133,7 +133,7 @@ public sealed partial class SafetyDepositBoxSystem
             }
 
             var box = await _dbManager.GetSafetyDepositBox(request.BoxId);
-            if (!CanAdminModify(admin, canContinue) || roundId != _gameTicker.RoundId)
+            if (!CanAdminModify(admin, request.Action, canContinue) || roundId != _gameTicker.RoundId)
                 return "admin-safety-deposit-error-permission";
 
             if (box == null || box.OwnerUserId != ownerId)
@@ -153,13 +153,13 @@ public sealed partial class SafetyDepositBoxSystem
             if (box.LastWithdrawn == null && handItem is { } storedSource)
             {
                 return await AdminStoreHandItemAsync(admin, box, request, storedSource, staging,
-                    () => CanAdminModify(admin, canContinue) && roundId == _gameTicker.RoundId);
+                    () => CanAdminModify(admin, request.Action, canContinue) && roundId == _gameTicker.RoundId);
             }
 
             if (request.RecordId > 0 || (request.Action == AdminSafetyDepositAction.Add && box.LastWithdrawn == null))
             {
                 return await AdminModifyStoredItemAsync(admin, box, request, staging,
-                    () => CanAdminModify(admin, canContinue) && roundId == _gameTicker.RoundId);
+                    () => CanAdminModify(admin, request.Action, canContinue) && roundId == _gameTicker.RoundId);
             }
 
             if (box.LastWithdrawn == null || !physical.Valid || !IsAdminPhysicalBoxValid(physical, box) ||
@@ -167,7 +167,7 @@ public sealed partial class SafetyDepositBoxSystem
                 return "admin-safety-deposit-error-unavailable";
 
             return await AdminModifyPhysicalItemAsync(admin, box, physical, request, handItem, staging,
-                () => CanAdminModify(admin, canContinue) && roundId == _gameTicker.RoundId);
+                () => CanAdminModify(admin, request.Action, canContinue) && roundId == _gameTicker.RoundId);
         }
         catch (Exception ex)
         {
@@ -197,9 +197,13 @@ public sealed partial class SafetyDepositBoxSystem
         }
     }
 
-    private bool CanAdminModify(ICommonSession admin, Func<bool> canContinue)
+    private bool CanAdminModify(ICommonSession admin, AdminSafetyDepositAction action, Func<bool> canContinue)
     {
-        return canContinue() && _adminManager.HasAdminFlag(admin, AdminFlags.Admin) &&
+        var requiredFlags = AdminFlags.Admin;
+        if (action == AdminSafetyDepositAction.Add)
+            requiredFlags |= AdminFlags.Spawn;
+
+        return canContinue() && _adminManager.HasAdminFlag(admin, requiredFlags) &&
                _playerManager.TryGetSessionById(admin.UserId, out var session) && session == admin;
     }
 

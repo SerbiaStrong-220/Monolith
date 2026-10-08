@@ -72,13 +72,25 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return Authorized ? _state : new AdminSafetyDepositEuiState();
+        if (!Authorized)
+            return new AdminSafetyDepositEuiState();
+
+        _state.CanSpawn = _admins.HasAdminFlag(Player, AdminFlags.Spawn);
+        return _state;
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
     {
-        if (args.Player == Player && !Authorized)
+        if (args.Player != Player)
+            return;
+
+        if (!Authorized)
+        {
             Close();
+            return;
+        }
+
+        StateDirty();
     }
 
     public override void HandleMessage(EuiMessageBase msg)
