@@ -11,6 +11,9 @@ public partial interface IServerDbManager
     Task CompleteSafetyDepositAdminAudit(Guid operationId, string result, string details, CancellationToken cancel = default);
     Task<SafetyDepositAdminAudit?> GetSafetyDepositAdminAudit(Guid operationId, CancellationToken cancel = default);
     Task<List<SafetyDepositAdminAudit>> GetSafetyDepositAdminAudits(Guid boxId, int limit = 50, CancellationToken cancel = default);
+    Task<bool> TryTransitionSafetyDepositAdminWithdrawal(Guid operationId, string expectedResult, string result, CancellationToken cancel = default);
+    Task<List<SafetyDepositAdminAudit>> GetSafetyDepositAdminRecoveries(Guid boxId, CancellationToken cancel = default);
+    Task<bool> TryResolveSafetyDepositAdminWithdrawal(Guid operationId, string expectedResult, bool restore, SafetyDepositAdminAudit resolution, CancellationToken cancel = default);
     Task<bool> TryAdminReplaceSafetyDepositBoxItems(WayfarerSafetyDepositBox expected, List<string> replacementData, SafetyDepositAdminAudit audit, CancellationToken cancel = default);
 }
 
@@ -50,5 +53,23 @@ public sealed partial class ServerDbManager
     {
         DbWriteOpsMetric.Inc();
         return RunDbCommand(() => _db.TryAdminReplaceSafetyDepositBoxItems(expected, replacementData, audit, cancel));
+    }
+
+    public Task<bool> TryTransitionSafetyDepositAdminWithdrawal(Guid operationId, string expectedResult, string result, CancellationToken cancel = default)
+    {
+        DbWriteOpsMetric.Inc();
+        return RunDbCommand(() => _db.TryTransitionSafetyDepositAdminWithdrawal(operationId, expectedResult, result, cancel));
+    }
+
+    public Task<List<SafetyDepositAdminAudit>> GetSafetyDepositAdminRecoveries(Guid boxId, CancellationToken cancel = default)
+    {
+        DbReadOpsMetric.Inc();
+        return RunDbCommand(() => _db.GetSafetyDepositAdminRecoveries(boxId, cancel));
+    }
+
+    public Task<bool> TryResolveSafetyDepositAdminWithdrawal(Guid operationId, string expectedResult, bool restore, SafetyDepositAdminAudit resolution, CancellationToken cancel = default)
+    {
+        DbWriteOpsMetric.Inc();
+        return RunDbCommand(() => _db.TryResolveSafetyDepositAdminWithdrawal(operationId, expectedResult, restore, resolution, cancel));
     }
 }

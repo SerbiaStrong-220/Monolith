@@ -80,46 +80,19 @@ public sealed partial class SafetyDepositBoxSystem
         if (!canContinue())
             return "admin-safety-deposit-error-permission";
 
-        var audit = CreateAdminAudit(admin, box, request.Action.ToString(),
-            request.Action == AdminSafetyDepositAction.Withdraw ? "pending" : "success",
-            $"{description}; source: database; reason: {request.Reason.Trim()}", itemData);
+        var details = $"{description}; source: database; reason: {request.Reason.Trim()}";
+        if (request.Action == AdminSafetyDepositAction.Withdraw && itemEntity is { } withdrawn)
+        {
+            return await AdminWithdrawStoredItemAsync(admin, box, replacement, withdrawn,
+                itemData, details, staging, canContinue);
+        }
+
+        var audit = CreateAdminAudit(admin, box, request.Action.ToString(), "success", details, itemData);
         var committed = await CommitAdminStoredChangeAsync(box, replacement, audit, staging);
         if (committed == null)
             return "admin-safety-deposit-error-recovery";
         if (!committed.Value)
             return "admin-safety-deposit-error-stale";
-
-        if (request.Action == AdminSafetyDepositAction.Withdraw && itemEntity is { } withdrawn)
-        {
-            if (!canContinue() || !TryGetAdminRecipient(admin, out _))
-            {
-                if (await RestoreAdminStoredChangeAsync(admin, box, replacement, audit))
-                    return "admin-safety-deposit-error-recipient";
-
-                staging.Retain = true;
-                return "admin-safety-deposit-error-recovery";
-            }
-
-            // Once delivery begins, never recreate the DB record on an ambiguous game-world failure.
-            // Keep the lock and staged entity for recovery instead of risking two copies.
-            staging.Retain = true;
-            if (!TryDeliverAdminItem(admin, withdrawn))
-                return "admin-safety-deposit-error-recovery";
-
-            ReleaseAdminStagedItem(withdrawn, staging);
-            staging.Retain = false;
-            audit.Result = "success";
-            try
-            {
-                await _dbManager.CompleteSafetyDepositAdminAudit(audit.Id, audit.Result, audit.Details);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Safety deposit item delivered for {audit.Id}, audit completion failed: {ex}");
-                LogAdminBoxAction(admin, audit);
-                return "admin-safety-deposit-success-audit-pending";
-            }
-        }
 
         LogAdminBoxAction(admin, audit);
         return "admin-safety-deposit-success";
@@ -195,70 +168,6 @@ public sealed partial class SafetyDepositBoxSystem
                 Log.Error($"Safety deposit commit {audit.Id} is ambiguous; box {audit.BoxId} stays locked: {receiptError}");
                 return null;
             }
-        }
-    }
-
-    private async Task<bool> RestoreAdminStoredChangeAsync(
-        ICommonSession admin,
-        WayfarerSafetyDepositBox original,
-        List<string> replacement,
-        SafetyDepositAdminAudit operation)
-    {
-        try
-        {
-            var current = await _dbManager.GetSafetyDepositBox(original.BoxId);
-            if (current == null || current.LastWithdrawn != original.LastWithdrawn ||
-                current.LastWithdrawnRoundId != original.LastWithdrawnRoundId ||
-                current.OwnerUserId != original.OwnerUserId || current.CharacterIndex != original.CharacterIndex)
-                return false;
-
-            var remaining = new List<string>(replacement);
-            foreach (var record in current.Items)
-            {
-                if (!remaining.Remove(record.EntityData))
-                    return false;
-            }
-
-            if (remaining.Count != 0)
-                return false;
-
-            var data = new List<string>(original.Items.Count);
-            foreach (var record in original.Items)
-                data.Add(record.EntityData);
-
-            var rollback = CreateAdminAudit(admin, original, "Rollback", "success",
-                $"Restored operation {operation.Id}: recipient unavailable.");
-            var committed = false;
-            try
-            {
-                committed = await _dbManager.TryAdminReplaceSafetyDepositBoxItems(current, data, rollback);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Safety deposit rollback {rollback.Id} failed; checking receipt: {ex}");
-                committed = await _dbManager.GetSafetyDepositAdminAudit(rollback.Id) != null;
-            }
-
-            if (!committed)
-                return false;
-
-            LogAdminBoxAction(admin, rollback);
-            // Failure to annotate the original receipt must not undo a confirmed rollback.
-            try
-            {
-                await _dbManager.CompleteSafetyDepositAdminAudit(operation.Id, "rolled-back", operation.Details);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Could not annotate rolled-back safety deposit operation {operation.Id}: {ex}");
-            }
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            Log.Error($"Could not restore safety deposit operation {operation.Id}: {ex}");
-            return false;
         }
     }
 

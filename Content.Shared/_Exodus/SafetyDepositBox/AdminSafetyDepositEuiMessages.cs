@@ -51,3 +51,18 @@ public sealed class AdminSafetyDepositModifyMessage(
     public string PrototypeId { get; } = prototypeId;
     public string Reason { get; } = reason;
 }
+
+[Serializable, NetSerializable]
+public sealed class AdminSafetyDepositResolveRecoveryMessage(
+    Guid boxId,
+    Guid viewId,
+    Guid operationId,
+    bool restore,
+    string reason) : EuiMessageBase
+{
+    public Guid BoxId { get; } = boxId;
+    public Guid ViewId { get; } = viewId;
+    public Guid OperationId { get; } = operationId;
+    public bool Restore { get; } = restore;
+    public string Reason { get; } = reason;
+}

@@ -64,6 +64,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeAdminRecovery(); // Exodus: release obsolete admin locks when the world is reset.
 
         SubscribeLocalEvent<SafetyDepositConsoleComponent, ComponentInit>(OnConsoleInit);
         SubscribeLocalEvent<SafetyDepositConsoleComponent, ComponentRemove>(OnConsoleRemove); // Exodus: clean up async UI state.

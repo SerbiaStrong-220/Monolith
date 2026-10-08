@@ -76,6 +76,12 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
             return new AdminSafetyDepositEuiState();
 
         _state.CanSpawn = _admins.HasAdminFlag(Player, AdminFlags.Spawn);
+        for (var i = 0; i < _state.Recoveries.Count; i++)
+        {
+            var entry = _state.Recoveries[i];
+            _state.Recoveries[i] = entry with { CanRestore = !entry.Uncertain || _state.CanSpawn, CanConfirm = entry.Uncertain };
+        }
+
         return _state;
     }
 
@@ -112,6 +118,33 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
                 break;
             case AdminSafetyDepositSelectBoxMessage select when _state.SelectedUser != null:
                 Run(() => LoadBoxAsync(select.BoxId, true));
+                break;
+            case AdminSafetyDepositResolveRecoveryMessage recovery:
+                if (_state.SelectedUser is not { } recoveryOwner || _state.SelectedBox != recovery.BoxId || _state.ViewId != recovery.ViewId)
+                {
+                    _state.Message = Loc.GetString("admin-safety-deposit-error-stale");
+                    StateDirty();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(recovery.Reason) || recovery.Reason.Length > 500)
+                {
+                    _state.Message = Loc.GetString("admin-safety-deposit-error-invalid");
+                    StateDirty();
+                    return;
+                }
+
+                Run(async () =>
+                {
+                    _adminLog.Add(LogType.Action, LogImpact.High,
+                        $"{Player:actor} requested safety deposit recovery {recovery.OperationId}, restore {recovery.Restore}, owner {new NetUserId(recoveryOwner):subject}, box {recovery.BoxId}");
+                    var message = await Boxes.AdminResolveWithdrawalAsync(Player, recoveryOwner, recovery, () => Authorized);
+                    if (!Authorized)
+                        return;
+
+                    _state.Message = Loc.GetString(message);
+                    await RefreshAsync();
+                });
                 break;
             case AdminSafetyDepositModifyMessage modify when _state.SelectedUser is { } owner:
                 if (_state.SelectedBox != modify.BoxId || _state.ViewId != modify.ViewId || !_state.CanEdit)
@@ -315,6 +348,10 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
         if (!Authorized)
             return;
 
+        var recoveries = await _db.GetSafetyDepositAdminRecoveries(boxId, _cancellation.Token);
+        if (!Authorized)
+            return;
+
         // A fresh read after the audit awaits avoids showing a consumed snapshot alongside current world entities.
         box = await _db.GetSafetyDepositBox(boxId, _cancellation.Token);
         if (!Authorized)
@@ -347,6 +384,15 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
         _state.ViewId = Guid.NewGuid();
         _state.Items = Boxes.GetAdminBoxItems(box, hasPhysical ? entity : null);
         _state.CanEdit = !Boxes.IsAdminBoxBusy(boxId) && !(box.LastWithdrawn == null && hasPhysical);
+        _state.Recoveries.Clear();
+        var canSpawn = _admins.HasAdminFlag(Player, AdminFlags.Spawn);
+        foreach (var entry in recoveries)
+        {
+            var uncertain = !(entry.Action == "WithdrawStored" && entry.Result == "prepared");
+            _state.Recoveries.Add(new AdminSafetyDepositRecoveryEntry(entry.Id, entry.CreatedAt, entry.AdminName,
+                entry.Details, uncertain, !uncertain || canSpawn, uncertain));
+        }
+
         _state.Audit.Clear();
         foreach (var entry in history)
         {
@@ -370,6 +416,7 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
         _state.Items.Clear();
         _state.Audit.Clear();
         _state.CanEdit = false;
+        _state.Recoveries.Clear();
     }
 
     private static string LocalizeAction(string action) => Loc.GetString(action switch
@@ -378,6 +425,9 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
         "Add" => "admin-safety-deposit-action-add",
         "AddFromHand" => "admin-safety-deposit-action-add-from-hand",
         "Withdraw" => "admin-safety-deposit-action-withdraw",
+        "WithdrawStored" => "admin-safety-deposit-action-withdraw",
+        "RestoreWithdrawal" => "admin-safety-deposit-action-restore-withdrawal",
+        "ConfirmWithdrawal" => "admin-safety-deposit-action-confirm-withdrawal",
         "Delete" => "admin-safety-deposit-action-delete",
         "Rollback" => "admin-safety-deposit-action-rollback",
         _ => "admin-safety-deposit-action-unknown",
@@ -388,6 +438,9 @@ public sealed partial class AdminSafetyDepositEui : BaseEui
         "success" => "admin-safety-deposit-result-success",
         "failed" => "admin-safety-deposit-result-failed",
         "rolled-back" => "admin-safety-deposit-result-rolled-back",
+        "prepared" or "delivering" => "admin-safety-deposit-result-pending",
+        "recovered" => "admin-safety-deposit-result-recovered",
+        "confirmed" => "admin-safety-deposit-result-confirmed",
         _ => "admin-safety-deposit-result-pending",
     });
 }

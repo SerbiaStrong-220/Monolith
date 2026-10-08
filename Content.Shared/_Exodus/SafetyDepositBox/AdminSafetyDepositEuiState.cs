@@ -33,12 +33,23 @@ public readonly record struct AdminSafetyDepositItem(int RecordId, NetEntity? En
 public readonly record struct AdminSafetyDepositAuditEntry(DateTime Date, string Admin, string Action, string Result, string Details);
 
 [Serializable, NetSerializable]
+public readonly record struct AdminSafetyDepositRecoveryEntry(
+    Guid OperationId,
+    DateTime Date,
+    string Admin,
+    string Details,
+    bool Uncertain,
+    bool CanRestore,
+    bool CanConfirm);
+
+[Serializable, NetSerializable]
 public sealed class AdminSafetyDepositEuiState : EuiStateBase
 {
     public List<AdminSafetyDepositPlayer> Players = [];
     public List<AdminSafetyDepositBox> Boxes = [];
     public List<AdminSafetyDepositItem> Items = [];
     public List<AdminSafetyDepositAuditEntry> Audit = [];
+    public List<AdminSafetyDepositRecoveryEntry> Recoveries = [];
     public Guid? SelectedUser;
     public string SelectedName = string.Empty;
     public Guid? SelectedBox;

@@ -304,8 +304,245 @@ public sealed class SafetyDepositAdminDatabaseTest
         Assert.That(await _database.GetSafetyDepositAdminAudit(attempted.Id), Is.Null);
         var priorReceipt = await _database.GetSafetyDepositAdminAudit(previous.Id);
         Assert.That(priorReceipt.ItemData, Is.EqualTo("recoverable prior operation"));
+        var resolution = CreateResolution(box, true);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(previous.Id, "pending", true, resolution), Is.False);
+        Assert.That(await _database.GetSafetyDepositAdminAudit(resolution.Id), Is.Null);
+        Assert.That((await _database.GetSafetyDepositAdminAudit(previous.Id)).Result, Is.EqualTo("pending"));
         await using var context = new SqliteServerDbContext(_options);
         Assert.That(await context.WayfarerSafetyDepositBoxItem.CountAsync(), Is.Zero);
+    }
+
+    [Test]
+    public async Task PreparedRecoveryAppendsExactlyOnceWithoutOverwritingLaterBoxContentsOrStatus()
+    {
+        var original = await AddBox(Guid.NewGuid(), 3, "withdrawn item", "retained item");
+        var withdrawal = CreateAudit(original, "withdrawn item");
+        withdrawal.Action = "WithdrawStored";
+        withdrawal.Result = "prepared";
+        Assert.That(await _database.TryAdminReplaceSafetyDepositBoxItems(original, ["retained item"], withdrawal), Is.True);
+
+        // An identical later item is legitimate; recovery must neither discard it nor deduplicate by YAML.
+        await _database.SetSafetyDepositBoxWithdrawnItems(original.BoxId, 88, ["retained item", "withdrawn item"]);
+        var current = await _database.GetSafetyDepositBox(original.BoxId);
+        var resolution = CreateResolution(current, true);
+        Assert.That(resolution.AdminUserId, Is.Not.EqualTo(withdrawal.AdminUserId), "Another administrator may resolve the operation.");
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(withdrawal.Id, "prepared", true, resolution), Is.True);
+
+        var recovered = await OpenDatabase().GetSafetyDepositBox(original.BoxId);
+        Assert.Multiple(() =>
+        {
+            AssertBoxState(recovered, current);
+            Assert.That(recovered.Items.Select(item => item.EntityData),
+                Is.EquivalentTo(new[] { "retained item", "withdrawn item", "withdrawn item" }));
+            Assert.That(recovered.Items.Where(item => current.Items.Any(previous => previous.Id == item.Id))
+                .Select(item => (item.Id, item.EntityData)),
+                Is.EquivalentTo(current.Items.Select(item => (item.Id, item.EntityData))), "Existing rows must retain their identities.");
+        });
+        var receipt = await _database.GetSafetyDepositAdminAudit(withdrawal.Id);
+        Assert.That(receipt.Result, Is.EqualTo("recovered"));
+        Assert.That(receipt.ItemData, Is.EqualTo("withdrawn item"));
+        Assert.That(await _database.GetSafetyDepositAdminAudit(resolution.Id), Is.Not.Null);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(withdrawal.Id, "prepared", true, resolution), Is.False);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(withdrawal.Id, "prepared", true,
+            CreateResolution(current, true)), Is.False);
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(withdrawal.Id, "prepared", "delivering"), Is.False);
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(withdrawal.Id, "delivering", "success"), Is.False);
+        Assert.That((await _database.GetSafetyDepositBox(original.BoxId)).Items, Has.Count.EqualTo(3));
+        Assert.That(await _database.GetSafetyDepositAdminAudits(original.BoxId), Has.Count.EqualTo(2));
+        Assert.That(await _database.GetSafetyDepositAdminRecoveries(original.BoxId), Is.Empty);
+    }
+
+    [Test]
+    public async Task DeliveryTransitionsCannotSkipPreparationReplayOrMutateLegacyWithdrawals()
+    {
+        var box = await AddBox(Guid.NewGuid(), 0);
+        var operation = CreateAudit(box);
+        operation.Action = "WithdrawStored";
+        operation.Result = "prepared";
+        await _database.AddSafetyDepositAdminAudit(operation);
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "prepared", "success"));
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("prepared"));
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "prepared", "delivering"), Is.True);
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "prepared", "delivering"), Is.False);
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("delivering"));
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "delivering", "success"), Is.True);
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "delivering", "success"), Is.False);
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("success"));
+
+        var legacy = CreateAudit(box);
+        legacy.Result = "prepared";
+        await _database.AddSafetyDepositAdminAudit(legacy);
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(legacy.Id, "prepared", "delivering"), Is.False);
+        Assert.That((await _database.GetSafetyDepositAdminAudit(legacy.Id)).Result, Is.EqualTo("prepared"));
+    }
+
+    [Test]
+    public async Task StaleResolutionAndConfirmationBeforeDeliveryCannotModifyBoxOrCreateReceipts()
+    {
+        var box = await AddBox(Guid.NewGuid(), 0, "current content");
+        var operation = CreateAudit(box, "withdrawn item");
+        operation.Action = "WithdrawStored";
+        operation.Result = "prepared";
+        await _database.AddSafetyDepositAdminAudit(operation);
+        var stale = CreateResolution(box, true);
+        var premature = CreateResolution(box, false);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(operation.Id, "delivering", true, stale), Is.False);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(operation.Id, "prepared", false, premature), Is.False);
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("prepared"));
+        Assert.That(await _database.GetSafetyDepositAdminAudit(stale.Id), Is.Null);
+        Assert.That(await _database.GetSafetyDepositAdminAudit(premature.Id), Is.Null);
+
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "prepared", "delivering"), Is.True);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(operation.Id, "prepared", true, stale), Is.False);
+        var unchanged = await _database.GetSafetyDepositBox(box.BoxId);
+        Assert.That(unchanged.Items.Select(item => (item.Id, item.EntityData)),
+            Is.EqualTo(box.Items.Select(item => (item.Id, item.EntityData))));
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("delivering"));
+        Assert.That(await _database.GetSafetyDepositAdminAudits(box.BoxId), Has.Count.EqualTo(1));
+    }
+
+    [TestCase("WithdrawStored", "delivering")]
+    [TestCase("Withdraw", "pending")]
+    public async Task ConfirmingUncertainDeliveryNeedsNeitherBoxNorPayloadAndCannotBeReplayed(string action, string state)
+    {
+        var box = await AddBox(Guid.NewGuid(), 4, "old box content");
+        var operation = CreateAudit(box);
+        operation.Action = action;
+        operation.Result = state;
+        operation.ItemData = null;
+        await _database.AddSafetyDepositAdminAudit(operation);
+        await _database.DeleteSafetyDepositBox(box.BoxId);
+        var resolution = CreateResolution(box, false);
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(operation.Id, state, false, resolution), Is.True);
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("confirmed"));
+        Assert.That((await _database.GetSafetyDepositAdminAudit(resolution.Id)).Action, Is.EqualTo("ConfirmWithdrawal"));
+        Assert.That(await _database.TryResolveSafetyDepositAdminWithdrawal(operation.Id, state, false,
+            CreateResolution(box, false)), Is.False);
+        Assert.That(await _database.TryTransitionSafetyDepositAdminWithdrawal(operation.Id, "delivering", "success"), Is.False);
+        Assert.That(await _database.GetSafetyDepositBox(box.BoxId), Is.Null);
+        Assert.That(await _database.GetSafetyDepositAdminRecoveries(box.BoxId), Is.Empty);
+        Assert.That(await _database.GetSafetyDepositAdminAudits(box.BoxId), Has.Count.EqualTo(2));
+    }
+
+    [TestCase("safety_deposit_admin_audit")]
+    [TestCase("wayfarer_safety_deposit_box_item")]
+    public async Task FailedRecoveryRollsBackSourceReceiptAppendedItemAndResolutionReceiptTogether(string failingTable)
+    {
+        var box = await AddBox(Guid.NewGuid(), 0, "current content");
+        var operation = CreateAudit(box, "withdrawn item");
+        operation.Action = "WithdrawStored";
+        operation.Result = "prepared";
+        await _database.AddSafetyDepositAdminAudit(operation);
+        await using (var context = new SqliteServerDbContext(_options))
+        {
+            // Fixed test-case table names inject a failure after the source receipt's CAS update.
+            await context.Database.ExecuteSqlRawAsync($"""
+                CREATE TRIGGER fail_recovery_write BEFORE INSERT ON {failingTable}
+                BEGIN SELECT RAISE(ABORT, 'Injected recovery write failure'); END;
+                """);
+        }
+
+        var resolution = CreateResolution(box, true);
+        Assert.ThrowsAsync<DbUpdateException>(async () =>
+            await _database.TryResolveSafetyDepositAdminWithdrawal(operation.Id, "prepared", true, resolution));
+        var unchanged = await _database.GetSafetyDepositBox(box.BoxId);
+        Assert.That(unchanged.Items.Select(item => (item.Id, item.EntityData)),
+            Is.EqualTo(box.Items.Select(item => (item.Id, item.EntityData))));
+        Assert.That((await _database.GetSafetyDepositAdminAudit(operation.Id)).Result, Is.EqualTo("prepared"));
+        Assert.That(await _database.GetSafetyDepositAdminAudit(resolution.Id), Is.Null);
+        Assert.That(await _database.GetSafetyDepositAdminRecoveries(box.BoxId), Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public async Task RecoveryListKeepsOldUnfinishedOperationsOutsideHistoryWindowWithoutReadingPayloads()
+    {
+        var box = await AddBox(Guid.NewGuid(), 0);
+        var otherBox = await AddBox(Guid.NewGuid(), 0);
+        var prepared = CreateAudit(box);
+        prepared.Action = "WithdrawStored";
+        prepared.Result = "prepared";
+        prepared.CreatedAt = new DateTime(2026, 10, 1, 12, 0, 0, DateTimeKind.Utc);
+        var delivering = CreateAudit(box);
+        delivering.Action = "WithdrawStored";
+        delivering.Result = "delivering";
+        delivering.CreatedAt = prepared.CreatedAt;
+        var legacyStored = CreateAudit(box);
+        legacyStored.Result = "pending";
+        legacyStored.Details = "source: database";
+        legacyStored.CreatedAt = prepared.CreatedAt;
+        var legacyWorld = CreateAudit(box);
+        legacyWorld.Result = "pending";
+        legacyWorld.Details = "source: world";
+        legacyWorld.CreatedAt = prepared.CreatedAt;
+        var unrelated = CreateAudit(otherBox);
+        unrelated.Action = "WithdrawStored";
+        unrelated.Result = "prepared";
+        await using (var context = new SqliteServerDbContext(_options))
+        {
+            context.SafetyDepositAdminAudits.AddRange(prepared, delivering, legacyStored, legacyWorld, unrelated);
+            for (var index = 0; index < 205; index++)
+            {
+                var finished = CreateAudit(box);
+                finished.Action = "WithdrawStored";
+                context.SafetyDepositAdminAudits.Add(finished);
+            }
+            await context.SaveChangesAsync();
+        }
+
+        Assert.That((await _database.GetSafetyDepositAdminAudits(box.BoxId)).Any(a => a.Id == prepared.Id), Is.False);
+        _capture.Columns.Clear();
+        var recoveries = await _database.GetSafetyDepositAdminRecoveries(box.BoxId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(recoveries.Select(a => a.Id),
+                Is.EquivalentTo(new[] { prepared.Id, delivering.Id, legacyStored.Id, legacyWorld.Id }));
+            Assert.That(recoveries.All(a => a.ItemData == null), Is.True);
+            Assert.That(_capture.Columns, Is.Not.Empty);
+            Assert.That(_capture.Columns.SelectMany(columns => columns), Does.Not.Contain("item_data"));
+        });
+    }
+
+    [TestCase("Withdraw", "recovered")]
+    [TestCase("Withdraw", "confirmed")]
+    [TestCase("WithdrawStored", "prepared")]
+    [TestCase("WithdrawStored", "delivering")]
+    [TestCase("WithdrawStored", "success")]
+    public async Task GenericCompletionCannotOverwriteStoredWithdrawalProtocolOrFinalResolutions(string action, string result)
+    {
+        var box = await AddBox(Guid.NewGuid(), 0);
+        var operation = CreateAudit(box, "original recovery payload");
+        operation.Action = action;
+        operation.Result = result;
+        await _database.AddSafetyDepositAdminAudit(operation);
+
+        await _database.CompleteSafetyDepositAdminAudit(operation.Id, "success", "late physical completion");
+        var unchanged = await _database.GetSafetyDepositAdminAudit(operation.Id);
+        Assert.Multiple(() =>
+        {
+            Assert.That(unchanged.Result, Is.EqualTo(result));
+            Assert.That(unchanged.Details, Is.EqualTo("Administrative recovery test"));
+            Assert.That(unchanged.ItemData, Is.EqualTo("original recovery payload"));
+        });
+    }
+
+    [Test]
+    public async Task GenericCompletionStillUpdatesPhysicalReceiptsAndRejectsMissingOperations()
+    {
+        var box = await AddBox(Guid.NewGuid(), 0);
+        var operation = CreateAudit(box, "physical item snapshot");
+        operation.Result = "pending";
+        await _database.AddSafetyDepositAdminAudit(operation);
+        await _database.CompleteSafetyDepositAdminAudit(operation.Id, "success", "physical item delivered");
+        var completed = await _database.GetSafetyDepositAdminAudit(operation.Id);
+        Assert.Multiple(() =>
+        {
+            Assert.That(completed.Result, Is.EqualTo("success"));
+            Assert.That(completed.Details, Is.EqualTo("physical item delivered"));
+            Assert.That(completed.ItemData, Is.EqualTo("physical item snapshot"));
+        });
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await _database.CompleteSafetyDepositAdminAudit(Guid.NewGuid(), "success", "missing receipt"));
     }
 
     private async Task<WayfarerSafetyDepositBox> AddBox(Guid ownerId, int characterIndex, params string[] itemData)
@@ -352,6 +589,14 @@ public sealed class SafetyDepositAdminDatabaseTest
             ItemData = itemData,
             RoundId = 999,
         };
+    }
+
+    private static SafetyDepositAdminAudit CreateResolution(WayfarerSafetyDepositBox box, bool restore)
+    {
+        var resolution = CreateAudit(box);
+        resolution.Action = restore ? "RestoreWithdrawal" : "ConfirmWithdrawal";
+        resolution.ItemData = null;
+        return resolution;
     }
 
     private static void AssertBoxState(WayfarerSafetyDepositBox actual, WayfarerSafetyDepositBox expected)

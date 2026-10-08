@@ -26,6 +26,13 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
     private readonly ItemList _boxes = new() { VerticalExpand = true, HorizontalExpand = true };
     private readonly ItemList _items = new() { VerticalExpand = true, HorizontalExpand = true };
     private readonly BoxContainer _audit = Vertical();
+    private readonly LineEdit _recoveryReason = new()
+    {
+        HorizontalExpand = true,
+        PlaceHolder = Loc.GetString("admin-safety-deposit-recovery-reason"),
+    };
+    private readonly Button _cancelRecovery = new() { Text = Loc.GetString("admin-safety-deposit-recovery-cancel"), Visible = false };
+    private readonly List<RecoveryRow> _recoveryRows = [];
     private readonly Label _status = new() { ClipText = true };
     private readonly Label _selectedAccount = new() { ClipText = true };
     private readonly Label _selectedBox = new() { ClipText = true };
@@ -51,6 +58,8 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
     private bool _updating;
     private bool _pending;
     private bool _confirmDelete;
+    private Guid? _confirmRecovery;
+    private bool _restoreRecovery;
 
     public AdminSafetyDepositWindow()
     {
@@ -95,6 +104,8 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
         };
         _prototype.OnTextChanged += _ => UpdateActions();
         _reason.OnTextChanged += _ => CancelDelete();
+        _recoveryReason.OnTextChanged += _ => CancelRecovery();
+        _cancelRecovery.OnPressed += _ => CancelRecovery();
         _add.OnPressed += _ => Modify(AdminSafetyDepositAction.Add);
         _addFromHand.OnPressed += _ => Modify(AdminSafetyDepositAction.AddFromHand);
         _withdraw.OnPressed += _ => Modify(AdminSafetyDepositAction.Withdraw);
@@ -146,6 +157,7 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
         _updating = true;
         _pending = false;
         _confirmDelete = false;
+        _confirmRecovery = null;
         _state = state;
         _selectedItem = null;
         _status.Text = state.Busy ? Loc.GetString("admin-safety-deposit-busy") : state.Message;
@@ -209,7 +221,34 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
 
     private void UpdateAudit(AdminSafetyDepositEuiState state)
     {
-        _audit.DisposeAllChildren();
+        _audit.RemoveAllChildren();
+        _recoveryRows.Clear();
+        if (state.Recoveries.Count > 0)
+        {
+            _audit.AddChild(Help("admin-safety-deposit-recovery-help"));
+            _audit.AddChild(_recoveryReason);
+            _audit.AddChild(_cancelRecovery);
+        }
+
+        foreach (var entry in state.Recoveries)
+        {
+            var row = Vertical();
+            var text = Loc.GetString("admin-safety-deposit-recovery-row", ("date", entry.Date.ToString("u")),
+                ("admin", entry.Admin), ("operation", entry.OperationId.ToString()), ("details", entry.Details));
+            row.AddChild(new Label { Text = text, ToolTip = text, ClipText = true });
+            row.AddChild(Help(entry.Uncertain ? "admin-safety-deposit-recovery-uncertain" : "admin-safety-deposit-recovery-safe"));
+            var actions = new BoxContainer { SeparationOverride = 6 };
+            var restore = new Button();
+            var confirm = new Button();
+            restore.OnPressed += _ => ResolveRecovery(entry.OperationId, true);
+            confirm.OnPressed += _ => ResolveRecovery(entry.OperationId, false);
+            actions.AddChild(restore);
+            actions.AddChild(confirm);
+            row.AddChild(actions);
+            _recoveryRows.Add(new RecoveryRow(entry, restore, confirm));
+            _audit.AddChild(row);
+        }
+
         _audit.AddChild(Help("admin-safety-deposit-history-help"));
         if (state.Audit.Count == 0)
             _audit.AddChild(new Label { Text = Loc.GetString("admin-safety-deposit-history-empty") });
@@ -263,6 +302,7 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
             return;
 
         _pending = true;
+        _confirmRecovery = null;
         CancelDelete();
         _status.Text = Loc.GetString("admin-safety-deposit-busy");
         Send?.Invoke(message);
@@ -298,6 +338,36 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
         UpdateActions();
     }
 
+    private void ResolveRecovery(Guid operationId, bool restore)
+    {
+        if (IsBusy() || _state?.SelectedBox is not { } boxId ||
+            string.IsNullOrWhiteSpace(_recoveryReason.Text) || _recoveryReason.Text.Length > MaxReasonLength)
+            return;
+
+        foreach (var entry in _state.Recoveries)
+        {
+            if (entry.OperationId != operationId || !(restore ? entry.CanRestore : entry.CanConfirm))
+                continue;
+
+            if (_confirmRecovery != operationId || _restoreRecovery != restore)
+            {
+                _confirmRecovery = operationId;
+                _restoreRecovery = restore;
+                UpdateActions();
+                return;
+            }
+
+            Request(new AdminSafetyDepositResolveRecoveryMessage(boxId, _state.ViewId, operationId, restore, _recoveryReason.Text.Trim()));
+            return;
+        }
+    }
+
+    private void CancelRecovery()
+    {
+        _confirmRecovery = null;
+        UpdateActions();
+    }
+
     private void UpdateActions()
     {
         var busy = IsBusy();
@@ -325,6 +395,21 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
             ? Loc.GetString("admin-safety-deposit-delete-warning", ("name", selected.Name), ("count", selected.Count))
             : string.Empty;
         _deleteWarning.ToolTip = _deleteWarning.Text;
+        var canResolve = !busy && _state?.SelectedBox != null &&
+            !string.IsNullOrWhiteSpace(_recoveryReason.Text) && _recoveryReason.Text.Length <= MaxReasonLength;
+        _recoveryReason.Editable = !busy;
+        _cancelRecovery.Visible = _confirmRecovery != null;
+        _cancelRecovery.Disabled = busy;
+        foreach (var row in _recoveryRows)
+        {
+            var confirming = _confirmRecovery == row.Entry.OperationId;
+            row.Restore.Disabled = !canResolve || !row.Entry.CanRestore;
+            row.Confirm.Disabled = !canResolve || !row.Entry.CanConfirm;
+            row.Restore.Text = Loc.GetString(confirming && _restoreRecovery
+                ? "admin-safety-deposit-recovery-restore-confirm" : "admin-safety-deposit-recovery-restore");
+            row.Confirm.Text = Loc.GetString(confirming && !_restoreRecovery
+                ? "admin-safety-deposit-recovery-delivered-confirm" : "admin-safety-deposit-recovery-delivered");
+        }
     }
 
     private bool IsBusy() => _pending || _state?.Busy == true;
@@ -368,4 +453,6 @@ public sealed class AdminSafetyDepositWindow : FancyWindow
         label.SetMessage(Loc.GetString(key));
         return label;
     }
+
+    private sealed record RecoveryRow(AdminSafetyDepositRecoveryEntry Entry, Button Restore, Button Confirm);
 }

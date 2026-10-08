@@ -123,7 +123,10 @@ public sealed partial class SafetyDepositBoxSystem
             return "admin-safety-deposit-error-busy";
 
         var staging = new AdminBoxStaging();
+        _adminBoxOperations.Add(request.BoxId, staging);
         var roundId = _gameTicker.RoundId;
+        bool CanContinue() => IsAdminOperationCurrent(request.BoxId, staging) &&
+                              roundId == _gameTicker.RoundId && CanAdminModify(admin, request.Action, canContinue);
         try
         {
             if (handItem is { } requestedSource)
@@ -133,7 +136,7 @@ public sealed partial class SafetyDepositBoxSystem
             }
 
             var box = await _dbManager.GetSafetyDepositBox(request.BoxId);
-            if (!CanAdminModify(admin, request.Action, canContinue) || roundId != _gameTicker.RoundId)
+            if (!CanContinue())
                 return "admin-safety-deposit-error-permission";
 
             if (box == null || box.OwnerUserId != ownerId)
@@ -153,13 +156,13 @@ public sealed partial class SafetyDepositBoxSystem
             if (box.LastWithdrawn == null && handItem is { } storedSource)
             {
                 return await AdminStoreHandItemAsync(admin, box, request, storedSource, staging,
-                    () => CanAdminModify(admin, request.Action, canContinue) && roundId == _gameTicker.RoundId);
+                    CanContinue);
             }
 
             if (request.RecordId > 0 || (request.Action == AdminSafetyDepositAction.Add && box.LastWithdrawn == null))
             {
                 return await AdminModifyStoredItemAsync(admin, box, request, staging,
-                    () => CanAdminModify(admin, request.Action, canContinue) && roundId == _gameTicker.RoundId);
+                    CanContinue);
             }
 
             if (box.LastWithdrawn == null || !physical.Valid || !IsAdminPhysicalBoxValid(physical, box) ||
@@ -167,7 +170,7 @@ public sealed partial class SafetyDepositBoxSystem
                 return "admin-safety-deposit-error-unavailable";
 
             return await AdminModifyPhysicalItemAsync(admin, box, physical, request, handItem, staging,
-                () => CanAdminModify(admin, request.Action, canContinue) && roundId == _gameTicker.RoundId);
+                CanContinue);
         }
         catch (Exception ex)
         {
@@ -178,22 +181,7 @@ public sealed partial class SafetyDepositBoxSystem
         }
         finally
         {
-            if (!staging.Retain)
-            {
-                foreach (var entity in staging.Entities)
-                {
-                    if (!TerminatingOrDeleted(entity))
-                        TryQueueDel(entity);
-                }
-
-                _activeBoxOperations.Remove(request.BoxId);
-            }
-            else
-            {
-                Log.Error($"Safety deposit box {request.BoxId} remains locked after an uncertain admin operation; staged entities: {string.Join(", ", staging.Entities)}");
-            }
-
-            RefreshPlayerSafetyDepositUis();
+            FinishAdminBoxOperation(request.BoxId, staging);
         }
     }
 

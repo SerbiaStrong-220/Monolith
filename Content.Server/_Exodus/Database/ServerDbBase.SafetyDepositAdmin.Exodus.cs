@@ -50,7 +50,10 @@ public abstract partial class ServerDbBase
         await db.DbContext.SaveChangesAsync(cancel);
     }
 
-    /// <summary>Updates the outcome while retaining the original operation and recovery payload.</summary>
+    /// <summary>
+    /// Updates physical and general audit outcomes while retaining recovery payloads.
+    /// Stored withdrawals and finalized resolutions are left unchanged, even by late callbacks.
+    /// </summary>
     public async Task CompleteSafetyDepositAdminAudit(
         Guid operationId,
         string result,
@@ -58,13 +61,13 @@ public abstract partial class ServerDbBase
         CancellationToken cancel = default)
     {
         await using var db = await GetDb(cancel);
-        var audit = await db.DbContext.SafetyDepositAdminAudits.SingleOrDefaultAsync(a => a.Id == operationId, cancel);
-        if (audit == null)
+        var affected = await db.DbContext.SafetyDepositAdminAudits
+            .Where(a => a.Id == operationId && a.Action != "WithdrawStored" &&
+                        a.Result != "recovered" && a.Result != "confirmed")
+            .ExecuteUpdateAsync(setters => setters.SetProperty(a => a.Result, result)
+                .SetProperty(a => a.Details, details), cancel);
+        if (affected == 0 && !await db.DbContext.SafetyDepositAdminAudits.AnyAsync(a => a.Id == operationId, cancel))
             throw new InvalidOperationException($"Safety deposit operation {operationId} no longer exists.");
-
-        audit.Result = result;
-        audit.Details = details;
-        await db.DbContext.SaveChangesAsync(cancel);
     }
 
     /// <summary>Returns the full journal entry, including YAML for recovery after an uncertain commit.</summary>
@@ -106,6 +109,141 @@ public abstract partial class ServerDbBase
                 RoundId = a.RoundId,
             })
             .ToListAsync(cancel);
+    }
+
+    /// <summary>
+    /// Atomically advances a stored withdrawal toward delivery. Finalized or stale receipts cannot advance.
+    /// A successful transition authorizes this operation's handoff, never replay of an earlier handoff.
+    /// </summary>
+    public async Task<bool> TryTransitionSafetyDepositAdminWithdrawal(
+        Guid operationId,
+        string expectedResult,
+        string result,
+        CancellationToken cancel = default)
+    {
+        if (operationId == Guid.Empty)
+            throw new ArgumentException("A withdrawal requires an operation identifier.", nameof(operationId));
+
+        if (!(expectedResult == "prepared" && result == "delivering") &&
+            !(expectedResult == "delivering" && result == "success"))
+        {
+            throw new ArgumentException("Only prepared-to-delivering and delivering-to-success transitions are allowed.", nameof(result));
+        }
+
+        await using var db = await GetDb(cancel);
+        return await db.DbContext.SafetyDepositAdminAudits
+            .Where(a => a.Id == operationId && a.Action == "WithdrawStored" && a.Result == expectedResult)
+            .ExecuteUpdateAsync(setters => setters.SetProperty(a => a.Result, result), cancel) == 1;
+    }
+
+    /// <summary>
+    /// Lists every unfinished withdrawal for a box without loading recovery payloads or hiding old entries.
+    /// Legacy pending withdrawals remain uncertain regardless of their human-readable source details.
+    /// </summary>
+    public async Task<List<SafetyDepositAdminAudit>> GetSafetyDepositAdminRecoveries(
+        Guid boxId,
+        CancellationToken cancel = default)
+    {
+        await using var db = await GetDb(cancel);
+        return await db.DbContext.SafetyDepositAdminAudits
+            .AsNoTracking()
+            .Where(a => a.BoxId == boxId &&
+                        (a.Action == "WithdrawStored" && (a.Result == "prepared" || a.Result == "delivering") ||
+                         a.Action == "Withdraw" && a.Result == "pending"))
+            .OrderByDescending(a => a.CreatedAt)
+            .ThenByDescending(a => a.Id)
+            .Select(a => new SafetyDepositAdminAudit
+            {
+                Id = a.Id,
+                AdminUserId = a.AdminUserId,
+                AdminName = a.AdminName,
+                OwnerUserId = a.OwnerUserId,
+                CharacterIndex = a.CharacterIndex,
+                BoxId = a.BoxId,
+                CreatedAt = a.CreatedAt,
+                Action = a.Action,
+                Result = a.Result,
+                Details = a.Details,
+                RoundId = a.RoundId,
+            })
+            .ToListAsync(cancel);
+    }
+
+    /// <summary>
+    /// Resolves one unfinished withdrawal exactly once. Restoration appends its original item to the
+    /// current matching box without replacing later contents or changing box status. The source receipt,
+    /// appended item, and resolution receipt commit together. Rights and explicit uncertainty confirmation
+    /// must be checked by the calling system; another administrator may resolve the original operation.
+    /// </summary>
+    public async Task<bool> TryResolveSafetyDepositAdminWithdrawal(
+        Guid operationId,
+        string expectedResult,
+        bool restore,
+        SafetyDepositAdminAudit resolution,
+        CancellationToken cancel = default)
+    {
+        if (operationId == Guid.Empty || resolution.Id == Guid.Empty || resolution.Id == operationId ||
+            resolution.AdminUserId == Guid.Empty || string.IsNullOrWhiteSpace(resolution.AdminName) ||
+            resolution.Action != (restore ? "RestoreWithdrawal" : "ConfirmWithdrawal") || resolution.Result != "success")
+        {
+            throw new ArgumentException("A resolution requires a distinct operation identifier, actor, and matching action and outcome.", nameof(resolution));
+        }
+
+        await using var db = await GetDb(cancel);
+        await using var transaction = await db.DbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancel);
+        if (await db.DbContext.SafetyDepositAdminAudits.AnyAsync(a => a.Id == resolution.Id, cancel))
+            return false;
+
+        var original = await db.DbContext.SafetyDepositAdminAudits
+            .AsNoTracking()
+            .SingleOrDefaultAsync(a => a.Id == operationId, cancel);
+        if (original == null || original.Result != expectedResult ||
+            !(original.Action == "WithdrawStored" && (original.Result == "prepared" || original.Result == "delivering") ||
+              original.Action == "Withdraw" && original.Result == "pending") ||
+            !restore && original.Result == "prepared")
+        {
+            return false;
+        }
+
+        if (resolution.BoxId != original.BoxId || resolution.OwnerUserId != original.OwnerUserId ||
+            resolution.CharacterIndex != original.CharacterIndex)
+        {
+            throw new ArgumentException("The resolution receipt must identify the original box owner and character slot.", nameof(resolution));
+        }
+
+        WayfarerSafetyDepositBox? box = null;
+        if (restore)
+        {
+            if (string.IsNullOrWhiteSpace(original.ItemData))
+                return false;
+
+            box = await db.DbContext.WayfarerSafetyDepositBox.SingleOrDefaultAsync(
+                b => b.BoxId == original.BoxId && b.OwnerUserId == original.OwnerUserId &&
+                     b.CharacterIndex == original.CharacterIndex, cancel);
+            if (box == null)
+                return false;
+        }
+
+        var affected = await db.DbContext.SafetyDepositAdminAudits
+            .Where(a => a.Id == operationId && a.Action == original.Action && a.Result == expectedResult)
+            .ExecuteUpdateAsync(setters => setters.SetProperty(a => a.Result, restore ? "recovered" : "confirmed"), cancel);
+        if (affected != 1)
+            return false;
+
+        if (box != null)
+        {
+            db.DbContext.WayfarerSafetyDepositBoxItem.Add(new WayfarerSafetyDepositBoxItem
+            {
+                BoxId = box.Id,
+                EntityData = original.ItemData!,
+                DepositDate = DateTime.UtcNow,
+            });
+        }
+
+        db.DbContext.SafetyDepositAdminAudits.Add(resolution);
+        await db.DbContext.SaveChangesAsync(cancel);
+        await transaction.CommitAsync(cancel);
+        return true;
     }
 
     /// <summary>
