@@ -50,6 +50,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         _mobQuery = GetEntityQuery<MobStateComponent>();
 
         SubscribeLocalEvent<BoxSorterComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<BoxSorterComponent, ComponentStartup>(OnSorterStartup);
         SubscribeLocalEvent<BoxSorterComponent, ExaminedEvent>(OnSorterExamined);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ExaminedEvent>(OnPadExamined);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ComponentStartup>(OnPadStartup);
@@ -71,6 +72,12 @@ public sealed partial class BoxSorterSystem : EntitySystem
             subs.Event<BoundUIOpenedEvent>(OnPadUiOpened);
             subs.Event<CargoBoxTeleporterSetChannelMessage>(OnPadSetChannel);
         });
+    }
+
+    private void OnSorterStartup(Entity<BoxSorterComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.DestinationRoutes.Count > 0)
+            PurgeDeadRoutes(ent);
     }
 
     private void OnCollide(Entity<BoxSorterComponent> ent, ref StartCollideEvent args)
