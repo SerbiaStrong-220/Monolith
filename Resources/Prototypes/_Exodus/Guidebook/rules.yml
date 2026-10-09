@@ -103,6 +103,7 @@
   - EXRuleGhostRoleRot
   - EXRuleGhostRoleLivingSkeleton
   - EXRuleGhostRoleAbaddon
+  - EXRuleGhostRoleMalfDreadnought
     
 - type: guideEntry
   id: EXRuleGhostRoleBorer
@@ -236,3 +237,8 @@
   id: EXRuleGhostRoleAbaddon
   name: guide-entry-exodus-rule-ghost-roles-abaddon
   text: /ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesAbaddon.xml
+
+- type: guideEntry
+  id: EXRuleGhostRoleMalfDreadnought
+  name: guide-entry-exodus-rule-ghost-roles-malf-dreadnought
+  text: /ServerInfo/_Exodus/Guidebook/Rules/Rule_GhostRolesMalfDreadnought.xml

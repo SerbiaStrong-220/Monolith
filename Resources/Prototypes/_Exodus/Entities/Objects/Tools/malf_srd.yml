@@ -1,0 +1,16 @@
+- type: entity
+  id: ShipRepairDeviceMalf
+  parent: ShipRepairDeviceRecharging
+  name: hacked SRD
+  description: A regenerating ship repair device configured to reconstruct malfunctioning drone vessels. Holds 800 charges.
+  suffix: Borg
+  components:
+  - type: LimitedCharges
+    maxCharges: 800
+    charges: 50
+  - type: AutoRecharge
+    rechargeDuration: 2
+  - type: Tag
+    tags:
+    - ShipRepairTool
+    - MalfRepairTool

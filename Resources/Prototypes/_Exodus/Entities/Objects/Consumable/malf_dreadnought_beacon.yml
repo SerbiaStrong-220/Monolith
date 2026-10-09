@@ -1,0 +1,19 @@
+- type: entity
+  id: MalfDreadnoughtEmergencyBeacon
+  parent: BaseADSShuttleEmergencyBeaconTier3
+  name: malfunctioning drone dreadnought beacon
+  description: A single-use bluespace beacon that summons a malfunctioning drone dreadnought to the outer sector and broadcasts its coordinates.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Objects/Consumable/Beacons/malf_dreadnought_beacon.rsi
+    layers:
+    - state: beacon
+    - state: beacon_emission
+      shader: unshaded
+  - type: Item
+    sprite: _Exodus/Objects/Consumable/Beacons/malf_dreadnought_beacon.rsi
+  - type: ShuttleEventBeacon
+    rule: MalfDreadnoughtArrival
+    shuttleFaction: null
+  - type: StaticPrice
+    price: 125000

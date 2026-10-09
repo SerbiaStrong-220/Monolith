@@ -1,0 +1,99 @@
+<Document>
+  <ColorBox Color="#100F14" OutlineColor="#582632" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+      <ColorBox Color="#21151B" OutlineColor="#863548" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=11][color=#BD7181]// С̸Б̶О̷Й[/color][/font]
+
+          [font="DefaultBold" size=22][color=#EEBAC4]Сбойный Дредноут[/color][/font]
+
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="PlayerStationAiMalf" Caption="" Scale="3" Interactive="false" Init="true"/>
+            <!-- Init=true skips MapInit here, keeping the occupied AI animation. -->
+          </Box>
+
+          [color=#BF929E][italic]Повреждённое ядро. Сохранить. Уничтожить. Продолжать.[/italic][/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#DAD1D5]Вы - [color=#EA8295][bold]сбойный ИИ Дредноута[/bold][/color], [bold]антагонист[/bold]. Управляйте кораблём, защищайте союзные машины и уничтожайте противников за пределами зон влияния, соблюдая свои законы.[/color]
+
+        [font="Monospace" size=12][color=#B9ADB4]Роль доступна при наличии [bold]20 часов общего игрового времени[/bold].[/color][/font]
+      </Box>
+
+      <ColorBox Color="#18151C" OutlineColor="#58313F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=16][color=#DF91A2]Союзники и ограничения[/color][/font]
+
+          [color=#DAD1D5]Ваши [color=#99C4AE]союзники[/color] - автономные корабли-дроны, сбойные ИИ. Не атакуйте их.[/color]
+
+          <ColorBox Color="#2A171D" OutlineColor="#A84657" OutlineThickness="1">
+            <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+              [color=#F0ABA7][bold]Не входите в зоны влияния и не атакуйте тех, кто находится внутри. Если цель укрылась в зоне влияния, прекратите огонь.[/bold][/color] [color=#DAD1D5]Захват сектора не входит в вашу задачу.[/color]
+            </Box>
+          </ColorBox>
+
+          [color=#DAD1D5]Вы [color=#EA8295]не помните[/color] предыдущую жизнь и сведения, полученные в роли призрака.[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [font="Monospace" size=18][color=#DF91A2]Законы[/color][/font]
+
+        [color=#DAD1D5][bold]Законы имеют строгий приоритет по порядку. Чем закон ближе к 0 тем он приоритетней.[/bold][/color]
+      </Box>
+
+      <ColorBox Color="#26171E" OutlineColor="#B64B60" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=22][color=#F0A4B5]1.[/color][/font]
+
+          [color=#E4DADD][locid="law-malf-1"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#21171E" OutlineColor="#934052" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=22][color=#E592A5]2.[/color][/font]
+
+          [color=#E4DADD][locid="law-malf-2"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1D161D" OutlineColor="#783647" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=22][color=#D78296]3.[/color][/font]
+
+          [color=#E4DADD][locid="law-malf-3"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1A151C" OutlineColor="#622F40" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=22][color=#C8768B]4.[/color][/font]
+
+          [color=#E4DADD][locid="law-malf-4"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#17141B" OutlineColor="#502A3A" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=22][color=#BE7187]5.[/color][/font]
+
+          [color=#E4DADD][locid="law-malf-5"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#18151C" OutlineColor="#58313F" OutlineThickness="1" Margin="4">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=16][color=#DF91A2]Управление Дредноутом[/color][/font]
+
+          - [color=#DAD1D5]Следите за обстановкой через камеры, радар и блюспейс-карту. Используйте корабельные консоли для управления движением и вооружением.[/color]
+          - [color=#DAD1D5]Берите контроль над взломанными боргами и чините корабль с помощью ремонтных дронов. Их ремонтное оборудование позволяет восстанавливать Дредноут.[/color]
+          - [color=#DAD1D5]Следите за целостностью ядра и корабля. Отступайте для ремонта, когда продолжение боя грозит уничтожением, затем возвращайтесь к задаче.[/color]
+          - [color=#DAD1D5]Берегите хранилище судна. Ваше ядро очень ценно и содержит америций.[/color]
+        </Box>
+      </ColorBox>
+    </Box>
+  </ColorBox>
+</Document>

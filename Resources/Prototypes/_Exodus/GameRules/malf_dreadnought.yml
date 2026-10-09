@@ -1,0 +1,8 @@
+- type: entity
+  id: MalfDreadnoughtArrival
+  parent: LeviathanArrival
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RingEntitySpawnRule
+    prototype: SpawnMalfDreadnought
+    announcement: malf-dreadnought-arrival-announcement

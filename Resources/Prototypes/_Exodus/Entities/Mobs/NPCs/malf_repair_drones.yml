@@ -1,0 +1,19 @@
+- type: entity
+  parent: MobShipRepairDrone
+  id: MobShipRepairDroneMalf
+  name: hacked ship repair drone
+  description: A ship repair drone reprogrammed by a malfunctioning AI. Its repair tools are compatible with malfunctioning drone ships.
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/repair_drone_malf.rsi
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    retainLoadedChunksRadius: 2
+  - type: NpcFactionMember
+    factions:
+    - Malf
+  - type: Tag
+    tags:
+    - ShipRepairTool
+    - DoorBumpOpener
+    - MalfRepairTool

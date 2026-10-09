@@ -1,5 +1,7 @@
 - type: npcFaction
   id: RogueNpcStationAi
+  friendly:
+  - Malf
   defaultHostile: true
 
 - type: npcFaction
@@ -18,4 +20,12 @@
   - Cat
   - PetsNT
   - Mouse
+  defaultHostile: true
+
+- type: npcFaction
+  id: Malf
+  name: npc-faction-name-malf
+  coreControlName: npc-faction-core-control-name-malf
+  friendly:
+  - RogueNpcStationAi
   defaultHostile: true

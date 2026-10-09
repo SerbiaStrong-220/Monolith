@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using Content.Server.Database._Exodus.Economy; // Exodus persistent economy settings
+using Content.Server.Database._Exodus.SafetyDepositBox; // Exodus safety deposit administration
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,6 +56,7 @@ namespace Content.Server.Database
         public DbSet<MarketSettingsRecord> EconomyMarketSettings { get; set; } = null!; // Exodus persistent economy settings
         public DbSet<WayfarerSafetyDepositBox> WayfarerSafetyDepositBox { get; set; } = null!;
         public DbSet<WayfarerSafetyDepositBoxItem> WayfarerSafetyDepositBoxItem { get; set; } = null!;
+        public DbSet<SafetyDepositAdminAudit> SafetyDepositAdminAudits { get; set; } = null!; // Exodus safety deposit administration
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -336,6 +338,11 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<WayfarerSafetyDepositBoxItem>()
                 .HasIndex(i => i.BoxId);
+
+            // Exodus-begin safety deposit administration
+            modelBuilder.Entity<SafetyDepositAdminAudit>()
+                .HasIndex(a => new { a.BoxId, a.CreatedAt });
+            // Exodus-end
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)

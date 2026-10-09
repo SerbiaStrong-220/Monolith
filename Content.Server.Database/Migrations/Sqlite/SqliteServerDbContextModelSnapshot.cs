@@ -1565,6 +1565,70 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
             // Exodus-end
 
+            // Exodus-begin safety deposit administration
+            modelBuilder.Entity("Content.Server.Database._Exodus.SafetyDepositBox.SafetyDepositAdminAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("action");
+
+                    b.Property<string>("AdminName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_name");
+
+                    b.Property<Guid>("AdminUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_user_id");
+
+                    b.Property<Guid>("BoxId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("box_id");
+
+                    b.Property<int>("CharacterIndex")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("character_index");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("details");
+
+                    b.Property<string>("ItemData")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("item_data");
+
+                    b.Property<Guid>("OwnerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("owner_user_id");
+
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("result");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("round_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_safety_deposit_admin_audit");
+
+                    b.HasIndex("BoxId", "CreatedAt");
+
+                    b.ToTable("safety_deposit_admin_audit", (string)null);
+                });
+            // Exodus-end
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.Property<int>("PlayersId")

@@ -48,6 +48,31 @@ public sealed class StartEndGameRulesTest
             Assert.That(!gameTicker.GetAddedGameRules().Any());
         });
 
-        await pair.CleanReturnAsync();
+        // Exodus-begin: Preserve crash details when the pool's disposal error masks the original failure.
+        try
+        {
+            await pair.CleanReturnAsync();
+        }
+        catch (Exception exception)
+        {
+            TestContext.Out.WriteLine($"Test pair cleanup failed: {exception}");
+            try
+            {
+                await Task.WhenAll(server.WaitIdleAsync(false), pair.Client.WaitIdleAsync(false));
+
+                if (server.UnhandledException is { } serverException)
+                    TestContext.Out.WriteLine($"Server failure during cleanup: {serverException}");
+
+                if (pair.Client.UnhandledException is { } clientException)
+                    TestContext.Out.WriteLine($"Client failure during cleanup: {clientException}");
+            }
+            catch (Exception diagnosticException)
+            {
+                TestContext.Out.WriteLine($"Failure while collecting cleanup diagnostics: {diagnosticException}");
+            }
+
+            throw;
+        }
+        // Exodus-end
     }
 }

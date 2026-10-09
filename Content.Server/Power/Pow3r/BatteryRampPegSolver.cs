@@ -365,7 +365,8 @@ namespace Content.Server.Power.Pow3r
 
                         DebugTools.Assert(!nets.Contains(subNet));
                         DebugTools.Assert(!netIds.Contains(subNet.Id));
-                        DebugTools.Assert(subNet.Height < net.Height);
+                        // Exodus: Battery cycles can reverse depth order, but connected nets must use different layers.
+                        DebugTools.Assert(subNet.Height != net.Height);
                     }
 
                     foreach (var batteryId in net.BatterySupplies)
@@ -383,7 +384,8 @@ namespace Content.Server.Power.Pow3r
 
                         DebugTools.Assert(!nets.Contains(parentNet));
                         DebugTools.Assert(!netIds.Contains(parentNet.Id));
-                        DebugTools.Assert(parentNet.Height > net.Height);
+                        // Exodus: Keep the parallel-safety check valid for back-edges in battery cycles.
+                        DebugTools.Assert(parentNet.Height != net.Height);
                     }
 
                     DebugTools.Assert(nets.Add(net));

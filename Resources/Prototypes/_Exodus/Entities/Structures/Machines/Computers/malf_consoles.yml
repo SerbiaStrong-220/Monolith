@@ -1,0 +1,16 @@
+# Keep world loading disabled after an SRD rebuild as well as on the mapped ship.
+- type: entity
+  id: ComputerGunneryConsoleMalf
+  parent: ComputerGunneryConsole
+  suffix: Malfunctioning Drones
+  components:
+  - type: WorldLoader
+    disabled: true
+
+- type: entity
+  id: ComputerShuttleMalf
+  parent: ComputerShuttle
+  suffix: Malfunctioning Drones
+  components:
+  - type: WorldLoader
+    disabled: true

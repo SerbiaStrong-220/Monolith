@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original AI eye created by SuperJoelD00D for Monolith Station. Malfunctioning AI eye variation: For Exodus by Renascitur (disc: renascitur)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ai_camera",
+      "directions": 1,
+      "delays": [
+        [
+          0.42,
+          0.12,
+          0.08,
+          0.3,
+          0.1,
+          0.1,
+          0.4,
+          0.09,
+          0.08,
+          0.35
+        ]
+      ]
+    }
+  ]
+}

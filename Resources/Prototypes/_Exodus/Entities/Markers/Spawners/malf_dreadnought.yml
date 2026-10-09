@@ -1,0 +1,10 @@
+- type: entity
+  id: SpawnMalfDreadnought
+  parent: MarkerBase
+  name: malfunctioning drone dreadnought spawner
+  components:
+  - type: GridSpawner
+    path: /SharedMaps/_Exodus/Shuttles/World/Dreadnought.yml
+    nameGrid: false
+  - type: TimedDespawn
+    lifetime: 1

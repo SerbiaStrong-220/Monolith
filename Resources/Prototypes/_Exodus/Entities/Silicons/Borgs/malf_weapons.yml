@@ -1,0 +1,90 @@
+# Use an internal battery as the ammo fabricator, as with other borg weapons.
+# BaseItem avoids inheriting magazine providers and wield requirements.
+# Fire the original projectiles directly to avoid generating spent casings.
+- type: entity
+  id: CyborgWeaponMalfAnubis
+  parent: BaseItem
+  name: hacked cyborg Anubis
+  description: A one-handed Anubis grenade launcher adapted for cyborg use. Its internal fabricator holds six SAPHE grenades and regenerates one every ten seconds.
+  suffix: One-Handed, For Borgs
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/Launchers/mk6-tpgl.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Huge
+    sprite: _Mono/Objects/Weapons/Guns/Launchers/mk6-tpgl_inhands_32x.rsi
+  - type: Gun
+    minAngle: 0
+    maxAngle: 3
+    projectileSpeed: 30
+    fireRate: 0.2
+    resetOnHandSelected: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Harmony/Weapons/Guns/Gunshots/hristov_fire_alt.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: Bullet35mmGrenadeSAPHE
+    fireCost: 100
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 10
+  - type: AmmoCounter
+  - type: Appearance
+
+- type: entity
+  id: CyborgWeaponMalfRatel
+  parent: BaseItem
+  name: hacked cyborg Ratel
+  description: A one-handed Ratel machine gun adapted for cyborg use. Its internal fabricator holds sixty 7.62x51mm FMJ rounds and regenerates one every second.
+  suffix: One-Handed, For Borgs
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/LMGs/ratel/Ratel-icon.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Huge
+    sprite: _Mono/Objects/Weapons/Guns/LMGs/ratel/Ratel-inhands.rsi
+    shape:
+    - 0,0,5,2
+  - type: Gun
+    minAngle: 0
+    maxAngle: 15
+    angleIncrease: 7
+    angleDecay: 28
+    projectileSpeed: 60
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Mono/Weapons/Guns/SmallArms/Gunshots/heavy_rifle_1.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: Bullet762x51mmFMJ
+    fireCost: 100
+  - type: Battery
+    maxCharge: 6000
+    startingCharge: 6000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 100
+  - type: AmmoCounter
+  - type: Appearance

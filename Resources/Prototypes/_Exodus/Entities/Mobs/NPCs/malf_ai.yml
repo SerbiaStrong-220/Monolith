@@ -1,0 +1,145 @@
+- type: entity
+  id: NpcStationAiAttackerStaticSmartMalf
+  parent: NpcStationAiFactionAttackerStaticSmart
+  name: malfunctioning attacker core
+  description: A hostile autonomous AI core belonging to the Malfunctioning Drones faction.
+  suffix: AI, Malfunctioning Drones
+  components:
+  - type: StaticPrice
+    price: 500000
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/npc_ai_malf.rsi
+    layers:
+    - state: base
+    - state: malf_t2
+      shader: unshaded
+  - type: FactionNpcAiCore
+    faction: Malf
+    ignoredFactions:
+    - RogueNpcStationAi
+  - type: NpcFactionMember
+    factions:
+    - Malf
+
+- type: entity
+  id: PlayerStationAiMalf
+  parent: PlayerStationAiVessel
+  name: malfunctioning AI core
+  description: An AI core belonging to the Malfunctioning Drones faction.
+  suffix: Ghost Role, Malfunctioning Drones
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/station_ai_malf.rsi
+    layers:
+    - state: base
+    - state: ai
+      map: ["unshaded"]
+      shader: unshaded
+  - type: CleanupImmune
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    retainLoadedChunksRadius: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      triggersOnce: true
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingBackpackFleetLootT2:
+            min: 1
+            max: 1
+          ClothingBackpackDroneLootT22:
+            min: 5
+            max: 5
+      - !type:DoActsBehavior
+        acts: [Destruction]
+  - type: FactionNpcAiCore
+    faction: Malf
+    ignoredFactions:
+    - RogueNpcStationAi
+  - type: NpcFactionMember
+    factions:
+    - Malf
+  - type: ContainerComp
+    proto: AiHeldMalf
+    container: station_ai_mind_slot
+  - type: ContainerFill
+    containers:
+      station_ai_mind_slot:
+      - StationAiBrainMalf
+  - type: StationAiCore
+    remoteEntityProto: StationAiHoloMalf
+    physicalEntityProto: StationAiHoloLocalMalf
+
+- type: entity
+  id: StationAiBrainMalf
+  parent: StationAiBrainVessel
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    retainLoadedChunksRadius: 2
+  - type: SiliconLawProvider
+    laws: MalfLawset
+  - type: RandomMetadata
+    nameSegments: [NamesMalfAI]
+  - type: GhostRole
+    name: ghost-role-information-malf-core
+    description: ghost-role-information-malf-core-description
+    rules: ghost-role-information-malf-core-rules
+    prototype: MalfAICore
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 72000 # 20 hours
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+  - type: NpcFactionMember
+    factions:
+    - Malf
+
+# Keep the worldgen exemption on StationAiBrainMalf itself: ContainerComp removes
+# every overlay component when the brain is extracted, including pre-existing ones.
+- type: entity
+  id: AiHeldMalf
+  parent: AiHeldVessel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Malf
+
+- type: entity
+  id: StationAiHoloMalf
+  parent: StationAiHolo
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/ai_eye_malf.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    retainLoadedChunksRadius: 2
+  - type: NpcFactionMember
+    factions:
+    - Malf
+
+- type: entity
+  id: StationAiHoloLocalMalf
+  parent: StationAiHoloLocal
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    retainLoadedChunksRadius: 2
+  - type: NpcFactionMember
+    factions:
+    - Malf

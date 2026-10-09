@@ -1,6 +1,10 @@
 light_mode unshaded;
 
 uniform highp float waveSpeed;
+// Shader prototypes set the distortion scale independently of field width and speed.
+uniform highp float waveDistortion;
+// Keep dark shield palettes from washing out at the wave crests.
+uniform highp float highlightStrength;
 
 void fragment()
 {
@@ -8,8 +12,8 @@ void fragment()
     // UV.y runs from the inside of the band to the fixed collision boundary (almost so).
     highp float angle = UV.x * 6.2831853;
     highp float phase = TIME * waveSpeed * 6.2831853;
-    highp float drift = sin(angle * 6.0 - phase) * 0.045
-        + sin(angle * 11.0 + phase * 0.65) * 0.02;
+    highp float drift = (sin(angle * 6.0 - phase) * 0.045
+        + sin(angle * 11.0 + phase * 0.65) * 0.02) * waveDistortion;
     highp float radial = UV.y + drift;
 
     // Bright crests travel outwards while the contour gently ripples sideways MAYBE.
@@ -23,6 +27,6 @@ void fragment()
     highp float alpha = envelope * (crest * 0.7 + rim * 0.8 + glow * 0.2);
 
     // Lift the wave crests towards white so they remain visible against space and nebulae.
-    MODULATE.rgb = mix(MODULATE.rgb, vec3(1.0), crest * 0.3 + rim * 0.4);
+    MODULATE.rgb = mix(MODULATE.rgb, vec3(1.0), (crest * 0.3 + rim * 0.4) * highlightStrength);
     COLOR = vec4(vec3(1.0), min(alpha, 0.95));
 }

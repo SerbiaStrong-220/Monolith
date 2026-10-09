@@ -1,0 +1,10 @@
+- type: entity
+  id: WeaponTurretMalf
+  parent: BaseWeaponBallisticTurret
+  name: hacked turret
+  description: An automated ballistic turret reprogrammed to protect malfunctioning drones and their allied autonomous drone ships.
+  suffix: Malfunctioning Drones
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Malf

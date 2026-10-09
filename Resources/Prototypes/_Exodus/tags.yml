@@ -52,3 +52,7 @@
 
 - type: Tag
   id: NoHyperConvection
+
+# Allows future Malf SRDs and repair drones to repair Malf-restricted grids.
+- type: Tag
+  id: MalfRepairTool

@@ -1,0 +1,25 @@
+- type: entity
+  id: ShieldGeneratorMediumMalf
+  parent: ShieldGeneratorMedium
+  name: MS-250 "Fracture" shield generator
+  description: >-
+    A scarred MS-250 kept running by an unrelenting will. Heavy crimson waves writhe across its field.
+    Scratched into the scorched panel is a command: "HOLD THE LINE. LOSSES ARE UNACCEPTABLE."
+  suffix: Malfunctioning Drones
+  components:
+  - type: ShipShieldEmitter
+    shieldColor: "#801522"
+    rippleWidth: 6
+    rippleSpeed: 0.8
+    rippleShader: ShipShieldMalfRipple
+  - type: Sprite
+    sprite: _Exodus/Structures/ShuttleComponents/malf_shield_generator.rsi
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#FFFFFF"
+  - type: PointLight
+    color: "#801522"

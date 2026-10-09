@@ -1,0 +1,9 @@
+- type: entity
+  parent: MachineFTLDrive50
+  id: MachineFTLDrive50Malf
+  suffix: Malfunctioning Drones
+  components:
+  - type: ShipRepairableRestrict
+    toolWhitelist:
+      tags:
+      - MalfRepairTool

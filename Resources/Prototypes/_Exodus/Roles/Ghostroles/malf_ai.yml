@@ -1,0 +1,6 @@
+- type: ghostRole
+  id: MalfAICore
+  name: ghost-role-information-malf-core
+  description: ghost-role-information-malf-core-description
+  rules: ghost-role-information-malf-core-rules
+  entityPrototype: StationAiBrainMalf

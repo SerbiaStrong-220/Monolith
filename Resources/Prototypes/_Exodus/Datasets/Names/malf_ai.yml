@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesMalfAI
+  values:
+    prefix: names-malf-ai-
+    count: 20

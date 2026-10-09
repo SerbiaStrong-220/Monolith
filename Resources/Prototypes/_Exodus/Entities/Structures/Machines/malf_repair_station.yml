@@ -1,0 +1,15 @@
+- type: entity
+  parent: ShipRepairDroneStationStandard
+  id: ShipRepairDroneStationMalf
+  name: hacked repair drone station
+  description: A repair drone station reprogrammed by a malfunctioning AI, with five hacked drones and a rechargeable backup battery.
+  suffix: Malfunctioning Drones, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      repair_drones:
+      - MobShipRepairDroneMalf
+      - MobShipRepairDroneMalf
+      - MobShipRepairDroneMalf
+      - MobShipRepairDroneMalf
+      - MobShipRepairDroneMalf

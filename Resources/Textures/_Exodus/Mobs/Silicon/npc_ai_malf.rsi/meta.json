@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original drone core made by Zethine (@1089422198294462574 on Discord) for Monolith. Malfunctioning core variation: For Exodus by Renascitur (disc: renascitur)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "malf_t2",
+      "delays": [
+        [
+          0.4,
+          0.08,
+          0.1,
+          0.12,
+          0.26,
+          0.06,
+          0.1,
+          0.12,
+          0.18,
+          0.06,
+          0.1,
+          0.22
+        ]
+      ]
+    }
+  ]
+}

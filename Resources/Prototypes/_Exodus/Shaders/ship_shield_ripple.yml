@@ -2,3 +2,14 @@
   id: ShipShieldRipple
   kind: source
   path: /Textures/_Exodus/Shaders/ship_shield_ripple.swsl
+  params:
+    waveDistortion: 1.0
+    highlightStrength: 1.0
+
+- type: shader
+  id: ShipShieldMalfRipple
+  kind: source
+  path: /Textures/_Exodus/Shaders/ship_shield_ripple.swsl
+  params:
+    waveDistortion: 1.8
+    highlightStrength: 0.15

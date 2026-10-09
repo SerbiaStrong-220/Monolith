@@ -1,0 +1,8 @@
+- type: entity
+  id: SpawnAiRemoteBorgMalfDerelict
+  parent: SpawnAiRemoteBorgDerelict
+  suffix: Malfunctioning Drones
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - AiRemoteBorgMalfDerelict

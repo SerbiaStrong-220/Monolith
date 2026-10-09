@@ -10,6 +10,11 @@
     - type: IFF
       flags: AlwaysShowColor
       color: "#9a2020"
+    # Exodus-begin drone IFF affiliation
+    - type: IffAffiliation
+      mode: FixedLabel
+      label: exodus-iff-drone-malfunction
+    # Exodus-end drone IFF affiliation
     - type: GridCleanupGrid
       cleanupAcceleration: 3
       ignorePowered: true

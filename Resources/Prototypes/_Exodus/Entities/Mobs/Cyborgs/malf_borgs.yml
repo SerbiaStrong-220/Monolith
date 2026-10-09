@@ -1,0 +1,26 @@
+- type: entity
+  id: AiRemoteBorgMalfDerelict
+  parent: AiRemoteBorgDerelict
+  suffix: AI Remote, Malfunctioning Drones
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Malf
+  - type: SiliconLawProvider
+    laws: MalfLawset
+  - type: StartIonStormed
+    ionStormAmount: 0
+  - type: WorldChunkLoadingExempt
+    retainLoadedChunks: true
+    retainLoadedChunksRadius: 2
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - AiRemoteBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleJetpack
+      - BorgModuleGPS
+      - BorgModuleMalfSRD
+      - BorgModuleMalfEsword
+      - BorgModuleMalfWeapon

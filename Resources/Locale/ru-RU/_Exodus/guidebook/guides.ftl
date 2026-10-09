@@ -35,6 +35,7 @@ guide-entry-exodus-rule-ghost-roles-leviathan = Космический леви�
 guide-entry-exodus-rule-ghost-roles-rot = Гниль
 guide-entry-exodus-rule-ghost-roles-rot-hungry = Голодный
 guide-entry-exodus-rule-ghost-roles-abaddon = Оперативник АБАДДОНа
+guide-entry-exodus-rule-ghost-roles-malf-dreadnought = Сбойный Дредноут
 guide-entry-faction-cores = Фракционные Ядра
 guide-entry-territory-capture = Захват территории
 guide-entry-summoning-gateway = Межпространственный шлюз

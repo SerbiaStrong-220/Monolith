@@ -43,6 +43,13 @@ public sealed partial class ShipTargetingSystem
         if (TerminatingOrDeleted(targetUid) || TerminatingOrDeleted(weaponUid))
             return true;
 
+        var targetGrid = Transform(targetUid).GridUid;
+        if (IsFriendlyNpcFireTarget(source, sourceFaction, sourceCore, targetUid, targetGrid))
+            return false;
+
+        if (sourceCore == null)
+            return true;
+
         var weaponMapPos = _transform.GetMapCoordinates(Transform(weaponUid));
         if (weaponMapPos.MapId != targetMapPos.MapId)
             return false;
@@ -52,7 +59,6 @@ public sealed partial class ShipTargetingSystem
         if (distance <= float.Epsilon)
             return true;
 
-        var targetGrid = Transform(targetUid).GridUid;
         var ray = new CollisionRay(weaponMapPos.Position, targetVector / distance, (int) CollisionGroup.BulletImpassable);
         var state = new FactionFriendlyFireRayState(this, source, sourceFaction, sourceCore, sourceGrid, targetUid, targetGrid, weaponUid);
 
@@ -69,17 +75,9 @@ public sealed partial class ShipTargetingSystem
         EntityUid sourceGrid,
         out EntityUid source,
         out NpcFactionMemberComponent? faction,
-        out FactionNpcAiCoreComponent core)
+        out FactionNpcAiCoreComponent? core)
     {
-        if (!_exodusFactionAiCoreQuery.TryGetComponent(sourceUid, out var coreComp) || coreComp == null)
-        {
-            source = default;
-            faction = null;
-            core = default!;
-            return false;
-        }
-
-        core = coreComp;
+        _exodusFactionAiCoreQuery.TryGetComponent(sourceUid, out core);
 
         if (_exodusFactionQuery.TryGetComponent(sourceUid, out faction))
         {
@@ -95,7 +93,7 @@ public sealed partial class ShipTargetingSystem
 
         source = sourceUid;
         faction = null;
-        return true;
+        return core != null;
     }
 
     private static bool ShouldIgnoreFactionFriendlyFireHit(EntityUid hit, FactionFriendlyFireRayState state)
@@ -120,11 +118,12 @@ public sealed partial class ShipTargetingSystem
     private bool IsFriendlyNpcFireTarget(
         EntityUid source,
         NpcFactionMemberComponent? sourceFaction,
-        FactionNpcAiCoreComponent sourceCore,
+        FactionNpcAiCoreComponent? sourceCore,
         EntityUid target,
-        EntityUid targetGrid)
+        EntityUid? targetGrid)
     {
-        if (_exodusFactionAiGridQuery.TryGetComponent(targetGrid, out var control) &&
+        if (targetGrid is { } grid &&
+            _exodusFactionAiGridQuery.TryGetComponent(grid, out var control) &&
             control.State == FactionAiControlState.Controlled &&
             control.Faction is { } controlFaction &&
             HasFriendlyFaction(source, sourceFaction, sourceCore, controlFaction))
@@ -135,28 +134,29 @@ public sealed partial class ShipTargetingSystem
         if (_exodusFactionQuery.TryGetComponent(target, out var targetFaction))
             return HasFriendlyFaction(source, sourceFaction, sourceCore, target, targetFaction);
 
-        return _exodusFactionQuery.TryGetComponent(targetGrid, out targetFaction) &&
-               HasFriendlyFaction(source, sourceFaction, sourceCore, targetGrid, targetFaction);
+        return targetGrid is { } factionGrid &&
+               _exodusFactionQuery.TryGetComponent(factionGrid, out targetFaction) &&
+               HasFriendlyFaction(source, sourceFaction, sourceCore, factionGrid, targetFaction);
     }
 
     private bool HasFriendlyFaction(
         EntityUid source,
         NpcFactionMemberComponent? sourceFaction,
-        FactionNpcAiCoreComponent sourceCore,
+        FactionNpcAiCoreComponent? sourceCore,
         EntityUid target,
         NpcFactionMemberComponent targetFaction)
     {
-        return sourceCore.IgnoredFactions.Overlaps(targetFaction.Factions) ||
+        return (sourceCore != null && sourceCore.IgnoredFactions.Overlaps(targetFaction.Factions)) ||
                sourceFaction != null && _exodusNpcFaction.IsEntityFriendly((source, sourceFaction), (target, targetFaction));
     }
 
     private bool HasFriendlyFaction(
         EntityUid source,
         NpcFactionMemberComponent? sourceFaction,
-        FactionNpcAiCoreComponent sourceCore,
+        FactionNpcAiCoreComponent? sourceCore,
         ProtoId<NpcFactionPrototype> targetFaction)
     {
-        return sourceCore.IgnoredFactions.Contains(targetFaction) ||
+        return (sourceCore != null && sourceCore.IgnoredFactions.Contains(targetFaction)) ||
                sourceFaction != null && _exodusNpcFaction.IsFactionFriendlyOrSame(targetFaction, (source, sourceFaction));
     }
 
@@ -164,7 +164,7 @@ public sealed partial class ShipTargetingSystem
         ShipTargetingSystem System,
         EntityUid Source,
         NpcFactionMemberComponent? SourceFaction,
-        FactionNpcAiCoreComponent SourceCore,
+        FactionNpcAiCoreComponent? SourceCore,
         EntityUid SourceGrid,
         EntityUid Target,
         EntityUid? TargetGrid,
