@@ -8,7 +8,9 @@ box-sorter-slot-name = Слот рамки
 box-sorter-examine-unpowered = Без питания — сортировка не работает.
 box-sorter-examine-route = { $dest } → { $channel }
 cargo-teleporter-title = Выход телепорта
-cargo-teleporter-examine = Выход { $id }, канал { $channel }.
+cargo-teleporter-channel-button = Канал { $channel }
+cargo-teleporter-window-title = Выход телепорта — канал { $channel }
+cargo-teleporter-examine = Выход телепорта, канал { $channel }.
 
 ent-BoxSorter = сортировщик грузов
     .desc = Сортирует торговые ящики с конвейера на площадки телепортов по назначению. Рамки для новых площадок хранятся внутри.

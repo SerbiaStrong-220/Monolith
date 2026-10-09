@@ -3,14 +3,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Exodus.BoxSorter;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class CargoBoxTeleporterComponent : Component
 {
-
-    [DataField, AutoNetworkedField]
-    public string TeleporterId = "Teleporter";
-
-    [DataField, AutoNetworkedField]
+    [DataField]
     public int Channel = 1;
 }
 

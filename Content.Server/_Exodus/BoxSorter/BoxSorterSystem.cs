@@ -1,6 +1,5 @@
 using Content.Server._NF.Trade;
-using Content.Server.Power.EntitySystems;
-using Content.Shared._Exodus.BoxSorter;
+using Content.Server.Power.EntitySystems;using Content.Shared._Exodus.BoxSorter;
 using Content.Shared._NF.Trade;
 using Content.Shared.Conveyor;
 using Content.Shared.DoAfter;
@@ -56,6 +55,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ComponentStartup>(OnPadStartup);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ComponentShutdown>(OnPadShutdown);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, EntParentChangedMessage>(OnPadParentChanged);
+        SubscribeLocalEvent<TradeCrateDestinationComponent, ComponentShutdown>(OnDestinationShutdown);
         SubscribeLocalEvent<CargoTeleporterFrameComponent, AfterInteractEvent>(OnFrameInteract);
         SubscribeLocalEvent<CargoTeleporterFrameComponent, BoxSorterDeployDoAfterEvent>(OnFrameDeployDoAfter);
 
@@ -96,10 +96,15 @@ public sealed partial class BoxSorterSystem : EntitySystem
 
         int? channel = null;
 
-        if (_destinationQuery.TryComp(trade.DestinationStation, out var destination)
-            && ent.Comp.DestinationRoutes.TryGetValue(destination.DestinationProto.Id, out var destChannel))
+        if (trade.DestinationStation != EntityUid.Invalid
+            && ent.Comp.DestinationRoutes.TryGetValue(trade.DestinationStation, out var destChannel))
         {
-            channel = destChannel;
+            if (!TerminatingOrDeleted(trade.DestinationStation))
+                channel = destChannel;
+            else
+            {
+                ent.Comp.DestinationRoutes.Remove(trade.DestinationStation);
+            }
         }
 
         channel ??= ent.Comp.RouteOther;
@@ -224,6 +229,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
 
     private void OnUiOpened(Entity<BoxSorterComponent> ent, ref BoundUIOpenedEvent args)
     {
+        PurgeDeadRoutes(ent);
         _ui.SetUiState(ent.Owner, BoxSorterUiKey.Key, BuildState(ent.Comp));
     }
 
@@ -235,12 +241,14 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (TerminatingOrDeleted(ent.Owner))
             return;
 
-        if (msg.Channel != null && !BoxSorterComponent.IsValidChannel(msg.Channel.Value))
+        if (msg.Channel != null && !IsValidChannel(msg.Channel.Value))
+            return;
+
+        if (ent.Comp.RouteOther == msg.Channel)
             return;
 
         ent.Comp.RouteOther = msg.Channel;
 
-        Dirty(ent.Owner, ent.Comp);
         _ui.SetUiState(ent.Owner, BoxSorterUiKey.Key, BuildState(ent.Comp));
     }
 
@@ -252,21 +260,25 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (TerminatingOrDeleted(ent.Owner))
             return;
 
-        if (string.IsNullOrEmpty(msg.Destination))
+        var destination = GetEntity(msg.Destination);
+        if (TerminatingOrDeleted(destination) || !_destinationQuery.HasComp(destination))
             return;
 
         if (msg.Channel == null)
         {
-            if (ent.Comp.DestinationRoutes.Remove(msg.Destination))
-                Dirty(ent.Owner, ent.Comp);
+            if (!ent.Comp.DestinationRoutes.Remove(destination))
+                return;
         }
         else
         {
-            if (!BoxSorterComponent.IsValidChannel(msg.Channel.Value))
+            if (!IsValidChannel(msg.Channel.Value))
                 return;
 
-            ent.Comp.DestinationRoutes[msg.Destination] = msg.Channel.Value;
-            Dirty(ent.Owner, ent.Comp);
+            if (ent.Comp.DestinationRoutes.TryGetValue(destination, out var current)
+                && current == msg.Channel.Value)
+                return;
+
+            ent.Comp.DestinationRoutes[destination] = msg.Channel.Value;
         }
 
         _ui.SetUiState(ent.Owner, BoxSorterUiKey.Key, BuildState(ent.Comp));
@@ -285,14 +297,21 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (TerminatingOrDeleted(ent.Owner))
             return;
 
-        if (!BoxSorterComponent.IsValidChannel(msg.Channel))
+        if (!IsValidChannel(msg.Channel))
+            return;
+
+        if (ent.Comp.Channel == msg.Channel)
             return;
 
         ent.Comp.Channel = msg.Channel;
-        Dirty(ent.Owner, ent.Comp);
         UpdatePadVisual(ent);
         IndexPad(ent);
         _ui.SetUiState(ent.Owner, CargoBoxTeleporterUiKey.Key, new CargoBoxTeleporterUiState(ent.Comp.Channel));
+    }
+
+    private static bool IsValidChannel(int channel)
+    {
+        return channel >= BoxSorterComponent.MinChannel && channel <= BoxSorterComponent.MaxChannel;
     }
 
     private void OnPadStartup(Entity<CargoBoxTeleporterComponent> ent, ref ComponentStartup args)
@@ -304,6 +323,33 @@ public sealed partial class BoxSorterSystem : EntitySystem
     private void OnPadShutdown(Entity<CargoBoxTeleporterComponent> ent, ref ComponentShutdown args)
     {
         DeindexPad(ent.Owner);
+    }
+
+    private void OnDestinationShutdown(Entity<TradeCrateDestinationComponent> ent, ref ComponentShutdown args)
+    {
+        var query = EntityQueryEnumerator<BoxSorterComponent>();
+        while (query.MoveNext(out var uid, out var sorter))
+        {
+            sorter.DestinationRoutes.Remove(ent.Owner);
+        }
+    }
+
+    private void PurgeDeadRoutes(Entity<BoxSorterComponent> ent)
+    {
+        List<EntityUid>? dead = null;
+        foreach (var dest in ent.Comp.DestinationRoutes.Keys)
+        {
+            if (!TerminatingOrDeleted(dest))
+                continue;
+            dead ??= new List<EntityUid>();
+            dead.Add(dest);
+        }
+
+        if (dead == null)
+            return;
+
+        foreach (var dest in dead)
+            ent.Comp.DestinationRoutes.Remove(dest);
     }
 
     private void OnPadParentChanged(Entity<CargoBoxTeleporterComponent> ent, ref EntParentChangedMessage args)
@@ -347,7 +393,9 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (args.Args.Target is not { } target)
             return;
 
-        if (TerminatingOrDeleted(ent.Owner) || TerminatingOrDeleted(target))
+        if (TerminatingOrDeleted(ent.Owner)
+            || EntityManager.IsQueuedForDeletion(ent.Owner)
+            || TerminatingOrDeleted(target))
             return;
 
         if (!HasComp<ConveyorComponent>(target) || !Transform(target).Anchored)
@@ -356,7 +404,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (Transform(ent.Owner).GridUid != Transform(target).GridUid)
             return;
 
-        var pad = Spawn("CargoBoxTeleporter", Transform(target).Coordinates);
+        var pad = Spawn(ent.Comp.DeployResult, Transform(target).Coordinates);
         if (TerminatingOrDeleted(pad))
             return;
 
@@ -369,17 +417,13 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (!_power.IsPowered(ent.Owner))
             args.PushMarkup(Loc.GetString("box-sorter-examine-unpowered"));
 
-        var shown = new HashSet<string>();
         var destQuery = EntityQueryEnumerator<TradeCrateDestinationComponent>();
-        while (destQuery.MoveNext(out var destUid, out var dest))
+        while (destQuery.MoveNext(out var destUid, out _))
         {
             if (TerminatingOrDeleted(destUid))
                 continue;
 
-            if (!shown.Add(dest.DestinationProto.Id))
-                continue;
-
-            if (!ent.Comp.DestinationRoutes.TryGetValue(dest.DestinationProto.Id, out var channel))
+            if (!ent.Comp.DestinationRoutes.TryGetValue(destUid, out var channel))
                 continue;
 
             args.PushMarkup(Loc.GetString("box-sorter-examine-route",
@@ -400,26 +444,24 @@ public sealed partial class BoxSorterSystem : EntitySystem
     private void OnPadExamined(Entity<CargoBoxTeleporterComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("cargo-teleporter-examine",
-            ("id", ent.Comp.TeleporterId),
             ("channel", ent.Comp.Channel)));
     }
 
     private BoxSorterUiState BuildState(BoxSorterComponent comp)
     {
-        var destinations = new Dictionary<string, string>();
-        var destinationRoutes = new Dictionary<string, int>();
+        var destinations = new Dictionary<NetEntity, string>();
+        var destinationRoutes = new Dictionary<NetEntity, int>();
         var destQuery = EntityQueryEnumerator<TradeCrateDestinationComponent>();
-        while (destQuery.MoveNext(out var destUid, out var dest))
+        while (destQuery.MoveNext(out var destUid, out _))
         {
             if (TerminatingOrDeleted(destUid))
                 continue;
 
-            var proto = dest.DestinationProto.Id;
-            if (!destinations.ContainsKey(proto))
-                destinations[proto] = Name(destUid);
+            var netDest = GetNetEntity(destUid);
+            destinations[netDest] = Name(destUid);
 
-            if (comp.DestinationRoutes.TryGetValue(proto, out var channel))
-                destinationRoutes[proto] = channel;
+            if (comp.DestinationRoutes.TryGetValue(destUid, out var channel))
+                destinationRoutes[netDest] = channel;
         }
 
         return new BoxSorterUiState(comp.RouteOther, destinations, destinationRoutes);

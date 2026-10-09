@@ -35,53 +35,48 @@
   - type: BoxSorter
   - type: Machine
     board: BoxSorterMachineCircuitboard
+  - type: Construction
+    graph: MachineNoReturn
+    node: machine
   - type: ItemSlots
     slots:
       frame_1:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_2:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_3:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_4:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_5:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_6:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_7:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
       frame_8:
         name: box-sorter-slot-name
-        startingItem: CargoTeleporterFrame
         whitelist:
           components:
           - CargoTeleporterFrame
@@ -178,6 +173,7 @@
     sprite: _Exodus/Structures/box_sorter.rsi
     state: folded
   - type: CargoTeleporterFrame
+    deployResult: CargoBoxTeleporter
 
 - type: entity
   id: BoxSorterMachineCircuitboard

@@ -28,7 +28,7 @@ public sealed class CargoBoxTeleporterWindow : DefaultWindow
             var picked = channel;
             var button = new Button
             {
-                Text = $"{Loc.GetString("box-sorter-channel")} {picked}",
+                Text = Loc.GetString("cargo-teleporter-channel-button", ("channel", picked)),
                 HorizontalExpand = true,
             };
             button.OnPressed += _ => OnChannelSelected?.Invoke(picked);
@@ -40,6 +40,6 @@ public sealed class CargoBoxTeleporterWindow : DefaultWindow
 
     public void UpdateState(CargoBoxTeleporterUiState state)
     {
-        Title = $"{Loc.GetString("cargo-teleporter-title")} — {Loc.GetString("box-sorter-channel")} {state.Channel}";
+        Title = Loc.GetString("cargo-teleporter-window-title", ("channel", state.Channel));
     }
 }
