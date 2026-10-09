@@ -91,7 +91,6 @@ public sealed class BoxSorterWindow : DefaultWindow
                 var row = _destinationRows[dest];
                 _destinationRows.Remove(dest);
                 _destinations.RemoveChild(row.Row);
-                row.Row.Dispose();
             }
         }
 

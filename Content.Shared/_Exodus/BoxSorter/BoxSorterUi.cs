@@ -12,13 +12,13 @@ public enum BoxSorterUiKey : byte
 public sealed class BoxSorterUiState : BoundUserInterfaceState
 {
     public readonly int? OtherRoute;
-    public readonly Dictionary<string, string> Destinations;
-    public readonly Dictionary<string, int> DestinationRoutes;
+    public readonly Dictionary<NetEntity, string> Destinations;
+    public readonly Dictionary<NetEntity, int> DestinationRoutes;
 
     public BoxSorterUiState(
         int? otherRoute,
-        Dictionary<string, string> destinations,
-        Dictionary<string, int> destinationRoutes)
+        Dictionary<NetEntity, string> destinations,
+        Dictionary<NetEntity, int> destinationRoutes)
     {
         OtherRoute = otherRoute;
         Destinations = destinations;
@@ -42,11 +42,11 @@ public sealed class BoxSorterSetOtherRouteMessage : BoundUserInterfaceMessage
 public sealed class BoxSorterSetDestinationRouteMessage : BoundUserInterfaceMessage
 {
 
-    public readonly string Destination;
+    public readonly NetEntity Destination;
 
     public readonly int? Channel;
 
-    public BoxSorterSetDestinationRouteMessage(string destination, int? channel)
+    public BoxSorterSetDestinationRouteMessage(NetEntity destination, int? channel)
     {
         Destination = destination;
         Channel = channel;
