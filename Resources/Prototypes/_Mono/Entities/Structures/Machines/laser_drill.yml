@@ -8,6 +8,21 @@
     proto: SpawnLootOres15
     interval: 10
     needApcPower: false
+    storeInMaterialStorage: true # Exodus
+  # Exodus-begin
+  - type: MaterialStorage
+    storageLimit: 1000000
+    insertOnInteract: false
+    dropOnDeconstruct: false
+    dropOnDestroy: false
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+      - Ore
+  - type: OreSiloClient
+  # Exodus-end
   - type: Sprite
     offset: 0,0.5
     noRot: true
@@ -75,6 +90,7 @@
     flags: None # 1984
   - type: ItemMiner
     interval: 1 # previously 20
+    storeInMaterialStorage: true # Exodus
   - type: PowerConsumer
     voltage: High
     drawRate: 150000
