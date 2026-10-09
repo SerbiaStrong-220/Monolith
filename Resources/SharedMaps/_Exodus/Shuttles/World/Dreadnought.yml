@@ -186,6 +186,9 @@ entities:
       color: '#9A2020FF'
       flags: AlwaysShowColor
       readOnly: true
+    - type: BluespaceMapIcon
+      sides: 3
+      innerRadius: 0.6
     - type: IffAffiliation
       mode: FixedLabel
       label: exodus-iff-drone-malfunction
