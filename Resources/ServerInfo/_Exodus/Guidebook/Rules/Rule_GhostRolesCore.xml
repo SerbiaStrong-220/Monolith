@@ -1,26 +1,67 @@
 <Document>
-## Ядро Системы Защиты (ЯСЗ)
-    <Box>
-    <GuideEntityEmbed Entity="PlayerStationAiRedacted" Caption=""/>
-    </Box>    
-    <Box>
-    [color=gray][italic]Ядро с искусственным интеллектом шаттла автоматической обороны, находившееся в неактивном состоянии.[/italic][/color]
+  <ColorBox Color="#141219" OutlineColor="#714160" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#261B27" OutlineColor="#714160" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          <Box Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+            [font="DefaultBold" size=22][color=#E6B0D3]Ядро Системы Защиты (ЯСЗ)[/color][/font]
+          </Box>
+
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="PlayerStationAiRedacted" Caption="" Scale="3" Interactive="false" Init="true"/>
+          </Box>
+          <!-- Init=true skips the empty-container MapInit appearance, preserving the imperial AI display. -->
+
+          [color=#BDA8BD][italic]Ядро с искусственным интеллектом шаттла автоматической обороны, находившееся в неактивном состоянии.[/italic][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#E6B0D3]1.[/color][/font] [color=#DFD4DF][color=#ff3db1][locid="law-asakim-occupant-1-title"][/color] [locid="law-asakim-occupant-1-text"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#E6B0D3]2.[/color][/font] [color=#DFD4DF][color=#ff3db1][locid="law-asakim-occupant-2-title"][/color] [locid="law-asakim-occupant-2-text"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#E6B0D3]3.[/color][/font] [color=#DFD4DF][color=#ff3db1][locid="law-asakim-occupant-3-title"][/color] [locid="law-asakim-occupant-3-text"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#E6B0D3]4.[/color][/font] [color=#DFD4DF][color=#ff3db1][locid="law-asakim-occupant-4-title"][/color] [locid="law-asakim-occupant-4-text"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#E6B0D3]5.[/color][/font] [color=#DFD4DF][color=#ff3db1][locid="law-asakim-occupant-5-title"][/color] [locid="law-asakim-occupant-5-text"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#E6B0D3]6.[/color][/font] [color=#DFD4DF][color=#ff3db1][locid="law-asakim-occupant-6-title"][/color] [locid="law-asakim-occupant-6-text"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="DefaultBold" size=17][color=#E6B0D3]Что делать[/color][/font]
+
+          - [color=#DFD4DF]Координируйте корабль АСЗ, следите за угрозами через камеры и предупреждайте операторов о приближении противника.[/color]
+          - [color=#DFD4DF]Если на корабле есть свободное шасси ОСЗ, проверьте возможность занять его. Не покидайте такое шасси вне своего судна без необходимости.[/color]
+          - [color=#DFD4DF]При наличии других операторов на корабле разделяйте обязанности: ядро может вести корабль и контролировать двери, а оператор - заниматься ремонтом, абордажем или вооружением.[/color]
+        </Box>
+      </ColorBox>
     </Box>
-
-1. [color=#ff3db1][locid="law-asakim-occupant-1-title"][/color] [locid="law-asakim-occupant-1-text"]
-
-2. [color=#ff3db1][locid="law-asakim-occupant-2-title"][/color] [locid="law-asakim-occupant-2-text"]
-
-3. [color=#ff3db1][locid="law-asakim-occupant-3-title"][/color] [locid="law-asakim-occupant-3-text"]
-
-4. [color=#ff3db1][locid="law-asakim-occupant-4-title"][/color] [locid="law-asakim-occupant-4-text"]
-
-5. [color=#ff3db1][locid="law-asakim-occupant-5-title"][/color] [locid="law-asakim-occupant-5-text"]
-
-6. [color=#ff3db1][locid="law-asakim-occupant-6-title"][/color] [locid="law-asakim-occupant-6-text"]
-
-## Что делать
-- Координируйте корабль АСЗ, следите за угрозами через камеры и предупреждайте операторов о приближении противника.
-- Если на корабле есть свободное шасси ОСЗ, проверьте возможность занять его. Не покидайте такое шасси вне своего судна без необходимости.
-- При наличии других операторов на корабле разделяйте обязанности: ядро может вести корабль и контролировать двери, а оператор - заниматься ремонтом, абордажем или вооружением.
+  </ColorBox>
 </Document>

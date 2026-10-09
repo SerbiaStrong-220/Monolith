@@ -1,29 +1,72 @@
 <Document>
-## Оператор Персональной Защиты (ОПЗ)
-    <Box>
-    <GuideEntityEmbed Entity="PlayerBorgAsakimRedacted" Caption=""/>
+  <ColorBox Color="#131419" OutlineColor="#6D4854" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#202027" OutlineColor="#6D4854" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          <Box Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+            [font="DefaultBold" size=22][color=#D8BEC5]Оператор Персональной Защиты (ОПЗ)[/color][/font]
+          </Box>
+
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="PlayerBorgAsakimRedacted" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+
+          [color=#B6ADB9][italic]Синтетик-телохранитель, назначенный для защиты офицерского состава Империи Кхси'Ра.[/italic][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#DBD7DF]ОПЗ не является обычным оператором сектора. Его приоритет - не патрулирование и не миротворчество, а сохранение жизни офицерского состава Империи Кхси'Ра: Легатов, Трибунов, [textlink="Префектов" link="EXRuleGhostRolePrefectAsakim"], [textlink="Центурионов" link="EXRuleGhostRoleCenturionAsakim"] и Опционов.[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="6">
+        [font="DefaultBold" size=17][color=#D8BEC5]Законы "Чёрного Щита"[/color][/font]
+      </Box>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D8BEC5]1.[/color][/font] [color=#DBD7DF][locid="law-asakim-black-shield-1"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D8BEC5]2.[/color][/font] [color=#DBD7DF][locid="law-asakim-black-shield-2"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D8BEC5]3.[/color][/font] [color=#DBD7DF][locid="law-asakim-black-shield-3"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D8BEC5]4.[/color][/font] [color=#DBD7DF][locid="law-asakim-black-shield-4"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D8BEC5]5.[/color][/font] [color=#DBD7DF][locid="law-asakim-black-shield-5"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#191A22" OutlineColor="#6D4854" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="DefaultBold" size=17][color=#D8BEC5]Что делать[/color][/font]
+
+          - [color=#DBD7DF]Охраняйте офицера высшего доступного ранга. Если целей одного ранга несколько, выберите приоритет самостоятельно по ситуации.[/color]
+          - [color=#DBD7DF][textlink="Центурион" link="EXRuleGhostRoleCenturionAsakim"] не может приказать вам не охранять его. Вы можете выполнять его просьбы, если они не мешают защите.[/color]
+          - [color=#DBD7DF]Держите цель охраны в зоне контроля. При гибели офицера эвакуируйте тело или мозг и добейтесь восстановления.[/color]
+          - [color=#DBD7DF]Если весь офицерский состав безвозвратно потерян, выберите рядового воина, претендующего на лидерство, и защищайте его как временную командную цель.[/color]
+          - [color=#DBD7DF]Помогайте АСЗ только тогда, когда это не мешает первым четырём законам "Чёрного Щита".[/color]
+        </Box>
+      </ColorBox>
     </Box>
-    <Box>
-    [color=gray][italic]Синтетик-телохранитель, назначенный для защиты офицерского состава Империи Кхси'Ра.[/italic][/color]
-    </Box>
-
-ОПЗ не является обычным оператором сектора. Его приоритет - не патрулирование и не миротворчество, а сохранение жизни офицерского состава Империи Кхси'Ра: Легатов, Трибунов, [textlink="Префектов" link="EXRuleGhostRolePrefectAsakim"], [textlink="Центурионов" link="EXRuleGhostRoleCenturionAsakim"] и Опционов.
-
-## Законы "Чёрного Щита"
-1. [locid="law-asakim-black-shield-1"]
-
-2. [locid="law-asakim-black-shield-2"]
-
-3. [locid="law-asakim-black-shield-3"]
-
-4. [locid="law-asakim-black-shield-4"]
-
-5. [locid="law-asakim-black-shield-5"]
-
-## Что делать
-- Охраняйте офицера высшего доступного ранга. Если целей одного ранга несколько, выберите приоритет самостоятельно по ситуации.
-- [textlink="Центурион" link="EXRuleGhostRoleCenturionAsakim"] не может приказать вам не охранять его. Вы можете выполнять его просьбы, если они не мешают защите.
-- Держите цель охраны в зоне контроля. При гибели офицера эвакуируйте тело или мозг и добейтесь восстановления.
-- Если весь офицерский состав безвозвратно потерян, выберите рядового воина, претендующего на лидерство, и защищайте его как временную командную цель.
-- Помогайте АСЗ только тогда, когда это не мешает первым четырём законам "Чёрного Щита".
+  </ColorBox>
 </Document>

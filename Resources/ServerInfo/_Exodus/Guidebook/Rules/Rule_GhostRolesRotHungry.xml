@@ -1,21 +1,43 @@
 <Document>
-# Голодный
+  <ColorBox Color="#151A14" OutlineColor="#687750" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+      <ColorBox Color="#252E20" OutlineColor="#8A9B64" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          <Box HorizontalAlignment="Center">
+            [font="DefaultBold" size=22][color=#C6D9AA]Голодный[/color][/font]
+          </Box>
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="MobRotHungry" Caption="" Scale="2" Interactive="false"/>
+          </Box>
+          [color=#DBDFD2]Вы — [color=#C6D9AA][bold]Голодный[/bold][/color], страж колонии гнили.[/color]
+        </Box>
+      </ColorBox>
 
-<Box>
-  <GuideEntityEmbed Entity="MobRotHungry" Caption=""/>
-</Box>
+      <ColorBox Color="#20281C" OutlineColor="#687750" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#DBDFD2]Ваши [color=#B7D399]союзники[/color] — другие Голодные, Сытые, переносчики и личинки гнили.[/color]
 
-Вы — [color=#d82000][bold]Голодный[/bold][/color], страж колонии гнили.
+          [color=#DBDFD2]Ваша задача — [bold]защищать место вылупления, порождений гнили и её очаги[/bold]. Приносите тела убитых к гнилым наростам, чтобы кормить личинок.[/color]
+        </Box>
+      </ColorBox>
 
-Ваши [color=green]союзники[/color] — другие Голодные, Сытые, переносчики и личинки гнили.
+      <ColorBox Color="#29251A" OutlineColor="#8A794A" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#DBDFD2]Ваши [color=#E7A08E]цели[/color] — гуманоиды с оружием или пригодными для драки предметами в руках, а также гуманоиды, уже атаковавшие кого-либо или что-либо. Начатую охоту можно довести до смерти жертвы, даже если она бросила оружие.[/color]
+        </Box>
+      </ColorBox>
 
-Ваша задача — [bold]защищать место вылупления, порождений гнили и её очаги[/bold]. Приносите тела убитых к гнилым наростам, чтобы кормить личинок.
+      <ColorBox Color="#2D201B" OutlineColor="#A36F53" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#DBDFD2]Вам [color=#E7A08E][bold]ЗАПРЕЩЕНО[/bold][/color] нападать на мирных безоружных существ, не проявлявших агрессии, и вредить союзникам или очагам гнили.[/color]
+        </Box>
+      </ColorBox>
 
-Ваши [color=red]цели[/color] — гуманоиды с оружием или пригодными для драки предметами в руках, а также гуманоиды, уже атаковавшие кого-либо или что-либо. Начатую охоту можно довести до смерти жертвы, даже если она бросила оружие.
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#DBDFD2]Вы не помните свою предыдущую жизнь и ничего из того, что узнали, будучи призраком.[/color]
 
-Вам [color=red][bold]ЗАПРЕЩЕНО[/bold][/color] нападать на мирных безоружных существ, не проявлявших агрессии, и вредить союзникам или очагам гнили.
-
-Вы не помните свою предыдущую жизнь и ничего из того, что узнали, будучи призраком.
-
-Описание болезни и колонии — в разделе [textlink="Гниль" link="EXRuleGhostRoleRot"].
+        [color=#DBDFD2]Описание болезни и колонии — в разделе [textlink="Гниль" link="EXRuleGhostRoleRot"].[/color]
+      </Box>
+    </Box>
+  </ColorBox>
 </Document>

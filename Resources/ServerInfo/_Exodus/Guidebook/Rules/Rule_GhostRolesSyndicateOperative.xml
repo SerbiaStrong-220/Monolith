@@ -1,23 +1,57 @@
 <Document>
-## Оперативник Синдиката
-    <Box>
-    <GuideEntityEmbed Entity="MobSyndicateGhostOperativeGuide" Caption=""/>
+  <ColorBox Color="#130F12" OutlineColor="#6E2B35" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#28151B" OutlineColor="#A44350" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="DefaultBold" size=22][color=#F1B0B8]Оперативник Синдиката[/color][/font]
+
+          <Box Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+            <GuideEntityEmbed Entity="BannerSyndicate" Caption="" Scale="2" Interactive="false"/>
+
+            <GuideEntityEmbed Entity="MobSyndicateGhostOperativeGuide" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+
+          [color=#E0D9DC]Вы - [color=#F1B0B8][bold]оперативник подразделения Синдиката "Омикрон"[/bold][/color]. Вы настоящие политические трикстеры, направленные в сектор для провокаций и подрыва чужих планов.[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B151B" OutlineColor="#51303B" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E0D9DC]Ваши [color=#A4D6AF]союзники[/color] - другие [color=#F1B0B8]представители Синдиката[/color] и [color=#F1B0B8]базы Синдиката[/color] в секторе.[/color]
+
+          [color=#E0D9DC]Вы не должны грабить или уничтожать союзные силы и присваивать их содержимое, однако вольны посещать и защищать союзные силы.[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#30191D" OutlineColor="#AC5059" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#F4B7B6][bold]Вы не должны атаковать, захватывать, проводить диверсии на территории зоны влияния Флагмана Фалкон и Крепости Гелиос в течение первых двух часов от начала раунда.[/bold][/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#E0D9DC][color=#DCC195][bold]Династия Фаэтон[/bold][/color] по умолчанию нейтральна, но отношение может измениться в ходе раунда.[/color]
+      </Box>
+
+      <ColorBox Color="#30191D" OutlineColor="#AC5059" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#F4B7B6][bold]Вам запрещено за роль синдиката нападать на наёмников без внутриигрового конфликта. Вы не получаете право на свободное пиратство, выбирая эту роль.[/bold][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#21181D" OutlineColor="#7B4550" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E0D9DC]Вы обязаны слушать приказы вашего сержанта, если он есть, и приказы командования [color=#F1B0B8]Синдиката[/color].[/color]
+
+          [color=#E0D9DC]Ваша задача - дестабилизировать политическую обстановку в секторе. Местные фракции являются вашей целью номер один: не допускайте формирования доминирующей силы в секторе любыми доступными способами и средствами.[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B151B" OutlineColor="#6E2B35" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E0D9DC]Вы [color=#F4B7B6]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.[/color]
+        </Box>
+      </ColorBox>
     </Box>
-Вы - [color=#c94242][bold]оперативник подразделения Синдиката "Омикрон"[/bold][/color]. Вы настоящие политические трикстеры, направленные в сектор для провокаций и подрыва чужих планов.
-
-Ваши [color=green]союзники[/color] - другие [color=#c94242]представители Синдиката[/color] и [color=#c94242]базы Синдиката[/color] в секторе.
-
-Вы не должны грабить или уничтожать союзные силы и присваивать их содержимое, однако вольны посещать и защищать союзные силы.
-
-Вы не должны атаковать, захватывать, проводить диверсии на территории зоны влияния Флагмана Фалкон и Крепости Гелиос в течение первых двух часов от начала раунда.
-
-[color=#d2b48c][bold]Династия Фаэтон[/bold][/color] по умолчанию нейтральна, но отношение может измениться в ходе раунда.
-
-Вам запрещено за роль синдиката нападать на наёмников без внутриигрового конфликта. Вы не получаете право на свободное пиратство, выбирая эту роль.
-
-Вы обязаны слушать приказы вашего сержанта, если он есть, и приказы командования [color=#c94242]Синдиката[/color].
-    
-Ваша задача - дестабилизировать политическую обстановку в секторе. Местные фракции являются вашей целью номер один: не допускайте формирования доминирующей силы в секторе любыми доступными способами и средствами.
-
-Вы [color=red]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.
+  </ColorBox>
 </Document>

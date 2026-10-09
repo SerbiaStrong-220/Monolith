@@ -1,16 +1,55 @@
 <Document>
-# Восьмой экспедиционный флот Империи Кхси'Ра
+  <ColorBox Color="#15101D" OutlineColor="#67416F" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#21162B" OutlineColor="#67416F" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          <Box Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+            [font="DefaultBold" size=22][color=#E2B9EB]Восьмой экспедиционный флот Империи Кхси'Ра[/color][/font]
+          </Box>
 
-О Восьмом экспедиционном флоте Империи Кхси'Ра достоверно ничего неизвестно. Однако вы могли замечать различные реликвии прошлого, частично аффилированные с пиком величия Империи Кхси'Ра.
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+        </Box>
+      </ColorBox>
 
-## Общее знание Азакимов и АСЗ
-Около 200 лет назад весь ваш флот отправили на боевой фронт в этот сектор. Однако по неизвестным причинам, флот застрял в бесконечном Блюспейс-Прыжке, из которого время от времени всё же вызволяются отдельные корабли.
-ВЭФ | Кашалот - один из командных кораблей снабжения, способный вызволять из БСС прыжка корабли благодаря установленным Межпространственным шлюзам.
-События в секторе происходят после недавнего случайного вызволения Кашалота из БСС: Вы еще не успели вызволить оставшийся флот.
-Ваш флот разделен на две части: на личный состав и автоматическую систему защиты (АСЗ). АСЗ - Синтетики, созданы Империей и помогают вам в захвате и установления контроля над сектором.
-Субъективно для вас прошло несколько дней.
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#DDCFDF]О Восьмом экспедиционном флоте Империи Кхси'Ра достоверно ничего неизвестно. Однако вы могли замечать различные реликвии прошлого, частично аффилированные с пиком величия Империи Кхси'Ра.[/color]
+      </Box>
 
-## Разделы
-- 1. [textlink="Азакимы" link="EXRuleGhostRoleAsakims"]
-- 2. [textlink="Автоматическая Система Защиты" link="EXRuleGhostRoleADS"]
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="DefaultBold" size=17][color=#E2B9EB]Общее знание Азакимов и АСЗ[/color][/font]
+
+          [color=#DDCFDF]Около 200 лет назад весь ваш флот отправили на боевой фронт в этот сектор. Однако по неизвестным причинам, флот застрял в бесконечном Блюспейс-Прыжке, из которого время от времени всё же вызволяются отдельные корабли.[/color]
+          [color=#DDCFDF]ВЭФ | Кашалот - один из командных кораблей снабжения, способный вызволять из БСС прыжка корабли благодаря установленным Межпространственным шлюзам.[/color]
+          [color=#DDCFDF]События в секторе происходят после недавнего случайного вызволения Кашалота из БСС: Вы еще не успели вызволить оставшийся флот.[/color]
+          [color=#DDCFDF]Ваш флот разделен на две части: на личный состав и автоматическую систему защиты (АСЗ). АСЗ - Синтетики, созданы Империей и помогают вам в захвате и установления контроля над сектором.[/color]
+          [color=#DDCFDF]Субъективно для вас прошло несколько дней.[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="6">
+        [font="DefaultBold" size=17][color=#E2B9EB]Разделы[/color][/font]
+      </Box>
+
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="MobAsakimGhostrole" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DDCFDF]1. [textlink="Азакимы" link="EXRuleGhostRoleAsakims"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="PlayerBorgRedacted" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DDCFDF]2. [textlink="Автоматическая Система Защиты" link="EXRuleGhostRoleADS"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+    </Box>
+  </ColorBox>
 </Document>
