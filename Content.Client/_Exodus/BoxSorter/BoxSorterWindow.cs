@@ -8,10 +8,10 @@ namespace Content.Client._Exodus.BoxSorter;
 public sealed class BoxSorterWindow : DefaultWindow
 {
     public event Action<int?>? OnOtherRouteSelected;
-    public event Action<NetEntity, int?>? OnDestinationRouteSelected;
+    public event Action<string, int?>? OnDestinationRouteSelected;
 
     private readonly BoxContainer _destinations;
-    private readonly Dictionary<NetEntity, (BoxContainer Row, Label Name, OptionButton Picker)> _destinationRows = new();
+    private readonly Dictionary<string, (BoxContainer Row, Label Name, OptionButton Picker)> _destinationRows = new();
     private readonly OptionButton _otherPicker;
 
     public BoxSorterWindow()
@@ -52,10 +52,10 @@ public sealed class BoxSorterWindow : DefaultWindow
 
     public void UpdateState(BoxSorterUiState state)
     {
-        var destinations = new List<KeyValuePair<NetEntity, string>>(state.Destinations);
+        var destinations = new List<KeyValuePair<string, string>>(state.Destinations);
         destinations.Sort((a, b) => string.Compare(a.Value, b.Value, StringComparison.Ordinal));
 
-        var alive = new HashSet<NetEntity>();
+        var alive = new HashSet<string>();
         foreach (var pair in destinations)
         {
             alive.Add(pair.Key);
@@ -75,12 +75,12 @@ public sealed class BoxSorterWindow : DefaultWindow
                 row.Picker.SelectId(-1);
         }
 
-        List<NetEntity>? gone = null;
+        List<string>? gone = null;
         foreach (var dest in _destinationRows.Keys)
         {
             if (alive.Contains(dest))
                 continue;
-            gone ??= new List<NetEntity>();
+            gone ??= new List<string>();
             gone.Add(dest);
         }
 

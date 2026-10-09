@@ -13,7 +13,7 @@ public sealed partial class BoxSorterComponent : Component
     public int? RouteOther;
 
     [DataField]
-    public Dictionary<EntityUid, int> DestinationRoutes = new();
+    public Dictionary<string, int> DestinationRoutes = new();
 
     [DataField]
     public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Machines/phasein.ogg");
