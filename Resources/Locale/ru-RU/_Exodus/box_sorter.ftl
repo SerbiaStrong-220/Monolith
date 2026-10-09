@@ -11,6 +11,7 @@ cargo-teleporter-title = Выход телепорта
 cargo-teleporter-channel-button = Канал { $channel }
 cargo-teleporter-window-title = Выход телепорта — канал { $channel }
 cargo-teleporter-examine = Выход телепорта, канал { $channel }.
+cargo-teleporter-fold = Свернуть телепорт
 
 ent-BoxSorter = сортировщик грузов
     .desc = Сортирует торговые ящики с конвейера на площадки телепортов по назначению. Рамки для новых площадок хранятся внутри.

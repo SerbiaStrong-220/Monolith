@@ -11,3 +11,4 @@ cargo-teleporter-title = Teleporter exit
 cargo-teleporter-channel-button = Channel { $channel }
 cargo-teleporter-window-title = Teleporter exit — Channel { $channel }
 cargo-teleporter-examine = Exit channel { $channel }.
+cargo-teleporter-fold = Fold teleporter

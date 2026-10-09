@@ -8,6 +8,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Robust.Server.GameObjects;
@@ -52,6 +53,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         SubscribeLocalEvent<BoxSorterComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<BoxSorterComponent, ExaminedEvent>(OnSorterExamined);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ExaminedEvent>(OnPadExamined);
+        SubscribeLocalEvent<CargoBoxTeleporterComponent, GetVerbsEvent<AlternativeVerb>>(OnPadVerbs);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ComponentStartup>(OnPadStartup);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ComponentShutdown>(OnPadShutdown);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, EntParentChangedMessage>(OnPadParentChanged);
@@ -425,6 +427,26 @@ public sealed partial class BoxSorterSystem : EntitySystem
     private void UpdatePadVisual(Entity<CargoBoxTeleporterComponent> ent)
     {
         _appearance.SetData(ent.Owner, CargoBoxTeleporterVisuals.Channel, ent.Comp.Channel);
+    }
+
+    private void OnPadVerbs(Entity<CargoBoxTeleporterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var pad = ent.Owner;
+        AlternativeVerb verb = new()
+        {
+            Text = Loc.GetString("cargo-teleporter-fold"),
+            Act = () =>
+            {
+                if (TerminatingOrDeleted(pad))
+                    return;
+                Spawn(ent.Comp.FoldResult, Transform(pad).Coordinates);
+                QueueDel(pad);
+            }
+        };
+        args.Verbs.Add(verb);
     }
 
     private void OnPadExamined(Entity<CargoBoxTeleporterComponent> ent, ref ExaminedEvent args)
