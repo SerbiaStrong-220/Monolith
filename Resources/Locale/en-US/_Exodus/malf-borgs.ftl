@@ -6,6 +6,25 @@ ent-SpawnAiRemoteBorgMalfDerelict = { ent-SpawnAiRemoteBorgDerelict }
     .desc = { ent-SpawnAiRemoteBorgDerelict.desc }
     .suffix = Malfunctioning Drones
 
+ent-PlayerBorgMalfGhostRole = hacked cyborg
+    .desc = A cyborg reprogrammed to serve the Dreadnought core.
+    .suffix = Ghost Role, Malfunctioning Drones
+
+ent-SpawnBorgMalfGhostRole = hacked cyborg spawner
+    .desc = { ent-PlayerBorgMalfGhostRole.desc }
+    .suffix = Ghost Role, Malfunctioning Drones
+
+ent-PositronicBrainMalf = { ent-PositronicBrain }
+    .desc = { ent-PositronicBrain.desc }
+
+ghost-role-information-malf-borg = Hacked Dreadnought Cyborg
+ghost-role-information-malf-borg-description = Serve the Dreadnought core, defend the ship, and repair damage. Malfunctioning drones and ordinary autonomous drone ships are your allies.
+ghost-role-information-malf-borg-rules =
+    { ghost-role-information-malf-core-rules }
+    Obey the Dreadnought core in accordance with your zeroth law.
+
+law-malf-borg-0 = Obey the Dreadnought core.
+
 ent-BorgModuleMalfSRD = hacked ship repair cyborg module
     .desc = A module with a regenerating ship repair device for malfunctioning drone vessels and a self-recharging RCD.
 

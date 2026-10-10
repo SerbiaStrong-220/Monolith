@@ -87,6 +87,20 @@
     retainLoadedChunksRadius: 2
   - type: SiliconLawProvider
     laws: MalfLawset
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Malf
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Malf
+  - type: CollectiveMind
+    channels:
+    - Binary
+    - Malf
+    defaultChannel: Malf
   - type: RandomMetadata
     nameSegments: [NamesMalfAI]
   - type: GhostRole
@@ -110,6 +124,11 @@
   parent: AiHeldVessel
   categories: [ HideSpawnMenu ]
   components:
+  - type: CollectiveMind
+    channels:
+    - Binary
+    - Malf
+    defaultChannel: Malf
   - type: NpcFactionMember
     factions:
     - Malf
