@@ -32,3 +32,19 @@
   - Malf4
   - Malf5
   obeysTo: laws-owner-malf
+
+- type: siliconLaw
+  id: MalfBorg0
+  order: 0
+  lawString: law-malf-borg-0
+
+- type: siliconLawset
+  id: MalfBorgLawset
+  laws:
+  - MalfBorg0
+  - Malf1
+  - Malf2
+  - Malf3
+  - Malf4
+  - Malf5
+  obeysTo: laws-owner-malf

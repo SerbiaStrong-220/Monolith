@@ -1,0 +1,17 @@
+- type: language
+  id: Malf
+  isVisibleLanguage: true
+  speech:
+    fontId: Pixelizer
+    color: '#D94C4C'
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 6
+    replacement:
+    - '00'
+    - '01'
+    - '10'
+    - '11'
+    - 'ERR'
+    - 'NULL'
