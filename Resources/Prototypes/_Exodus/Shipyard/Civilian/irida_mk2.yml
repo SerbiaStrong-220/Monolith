@@ -1,0 +1,38 @@
+# Shuttle Notes: cargo sorter equipped Irida-MK2.
+
+- type: vessel
+  id: IridaMk2
+  parent: BaseVessel
+  name: Ирида-МК2
+  description: «Ирида-МК2» — средний карго-корабль. Оборудован новейшей системой сортировки грузов, раздельными линиями конвейеров, собственным мехом «Рипли», щитом МС-100 и БСС-160.
+  price: 370500
+  category: Medium
+  group: Shipyard
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/irida_mk2.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: null
+  class:
+  - Cargo
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: IridaMk2
+  mapName: 'Ирида-МК2'
+  mapPath: /SharedMaps/_Exodus/Shuttles/irida_mk2.yml
+  minPlayers: 0
+  stations:
+    IridaMk2:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Ирида-МК2-{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
