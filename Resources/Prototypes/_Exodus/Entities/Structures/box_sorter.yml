@@ -38,6 +38,18 @@
   - type: Construction
     graph: MachineNoReturn
     node: machine
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      frame_1: !type:ContainerSlot
+      frame_2: !type:ContainerSlot
+      frame_3: !type:ContainerSlot
+      frame_4: !type:ContainerSlot
+      frame_5: !type:ContainerSlot
+      frame_6: !type:ContainerSlot
+      frame_7: !type:ContainerSlot
+      frame_8: !type:ContainerSlot
   - type: ItemSlots
     slots:
       frame_1:
