@@ -5,7 +5,7 @@
   parent: BaseVessel
   name: Ирида-МК2
   description: «Ирида-МК2» — средний карго-корабль. Оборудован новейшей системой сортировки грузов, раздельными линиями конвейеров, собственным мехом «Рипли», щитом МС-100 и БСС-160.
-  price: 360500
+  price: 370500
   category: Medium
   group: Shipyard
   shuttlePath: /SharedMaps/_Exodus/Shuttles/irida_mk2.yml
