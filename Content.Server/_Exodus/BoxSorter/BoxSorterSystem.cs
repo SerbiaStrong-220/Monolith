@@ -8,6 +8,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Power;
 using Content.Shared.Verbs;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -15,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server._Exodus.BoxSorter;
@@ -30,6 +32,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     private const string SorterFixture = "sorter";
 
@@ -51,6 +54,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         _mobQuery = GetEntityQuery<MobStateComponent>();
 
         SubscribeLocalEvent<BoxSorterComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<BoxSorterComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<BoxSorterComponent, ExaminedEvent>(OnSorterExamined);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, ExaminedEvent>(OnPadExamined);
         SubscribeLocalEvent<CargoBoxTeleporterComponent, GetVerbsEvent<AlternativeVerb>>(OnPadVerbs);
@@ -80,6 +84,31 @@ public sealed partial class BoxSorterSystem : EntitySystem
             return;
 
         var subject = args.OtherEntity;
+        TryTeleport(ent, subject);
+    }
+
+    private void OnPowerChanged(Entity<BoxSorterComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            return;
+
+        RescanSorter(ent);
+    }
+
+    private void RescanSorter(Entity<BoxSorterComponent> ent)
+    {
+        var intersecting = new HashSet<EntityUid>();
+        _lookup.GetEntitiesIntersecting(ent.Owner, intersecting);
+        foreach (var uid in intersecting)
+        {
+            if (uid == ent.Owner)
+                continue;
+            TryTeleport(ent, uid);
+        }
+    }
+
+    private void TryTeleport(Entity<BoxSorterComponent> ent, EntityUid subject)
+    {
         if (TerminatingOrDeleted(subject) || TerminatingOrDeleted(ent.Owner))
             return;
 
@@ -89,7 +118,11 @@ public sealed partial class BoxSorterSystem : EntitySystem
         if (!_power.IsPowered(ent.Owner))
             return;
 
-        if (Transform(subject).Anchored)
+        var subjectXform = Transform(subject);
+        if (subjectXform.Anchored)
+            return;
+
+        if (HasComp<MapGridComponent>(subject))
             return;
 
         if (_mobQuery.HasComp(subject))
@@ -201,11 +234,14 @@ public sealed partial class BoxSorterSystem : EntitySystem
 
     private bool HasMobInside(EntityUid uid)
     {
+        if (!HasComp<ContainerManagerComponent>(uid))
+            return false;
+
         foreach (var container in _container.GetAllContainers(uid))
         {
             foreach (var contained in container.ContainedEntities)
             {
-                if (_mobQuery.HasComp(contained))
+                if (_mobQuery.HasComp(contained) || HasMobInside(contained))
                     return true;
             }
         }
@@ -247,6 +283,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         ent.Comp.RouteOther = msg.Channel;
 
         _ui.SetUiState(ent.Owner, BoxSorterUiKey.Key, BuildState(ent.Comp));
+        RescanSorter(ent);
     }
 
     private void OnSetDestinationRoute(Entity<BoxSorterComponent> ent, ref BoxSorterSetDestinationRouteMessage msg)
@@ -278,6 +315,7 @@ public sealed partial class BoxSorterSystem : EntitySystem
         }
 
         _ui.SetUiState(ent.Owner, BoxSorterUiKey.Key, BuildState(ent.Comp));
+        RescanSorter(ent);
     }
 
     private bool DestinationExists(string name)
@@ -440,10 +478,9 @@ public sealed partial class BoxSorterSystem : EntitySystem
             Text = Loc.GetString("cargo-teleporter-fold"),
             Act = () =>
             {
-                if (TerminatingOrDeleted(pad))
+                if (TerminatingOrDeleted(pad) || !TryQueueDel(pad))
                     return;
                 Spawn(ent.Comp.FoldResult, Transform(pad).Coordinates);
-                QueueDel(pad);
             }
         };
         args.Verbs.Add(verb);
