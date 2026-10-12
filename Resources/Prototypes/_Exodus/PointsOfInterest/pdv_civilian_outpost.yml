@@ -5,7 +5,7 @@
   # Placement is controlled by PDVCivilianOutpostNearHelios in relative_placement.yml.
   spawnGamePreset: [ NFAdventure, NFPirate, MonoStandard, MonoRogueTSF, MonoRogueUSSP, MonoTSFUSSP, MonoADS, MonoChimera, MonoMixed, ExodusRot, MonoAllAtOnce ]
   spawnGroup: Required
-  gridPath: /Maps/_Exodus/POI/tsfmcoutpost.yml
+  gridPath: /Maps/_Exodus/POI/pdv_civilian_outpost.yml
   addComponents:
   - type: IffAffiliation
     mode: CorporateControl
@@ -24,7 +24,7 @@
 - type: gameMap
   id: PDVCivilianOutpost
   mapName: 'ДФ-ГРАЖД | Аванпост гражданских ДФ'
-  mapPath: /Maps/_Exodus/POI/tsfmcoutpost.yml
+  mapPath: /Maps/_Exodus/POI/pdv_civilian_outpost.yml
   minPlayers: 0
   randomRotation: false
   stations:
