@@ -1,0 +1,6 @@
+- type: ghostRole
+  id: MalfBorg
+  name: ghost-role-information-malf-borg
+  description: ghost-role-information-malf-borg-description
+  rules: ghost-role-information-malf-borg-rules
+  entityPrototype: PlayerBorgMalfGhostRole

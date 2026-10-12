@@ -44,6 +44,16 @@
         [color=#DAD1D5][bold]Законы имеют строгий приоритет по порядку. Чем закон ближе к 0 тем он приоритетней.[/bold][/color]
       </Box>
 
+      <ColorBox Color="#18151C" OutlineColor="#58313F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=16][color=#DF91A2]Подчинение боргов[/color][/font]
+
+          [color=#DAD1D5]Взломанные борги с гост-ролью подчиняются ядру Дредноута и выполняют его приказы. Помимо общих законов, у них есть приоритетный нулевой закон:[/color]
+
+          [color=#F0A4B5][bold]0. [locid="law-malf-borg-0"][/bold][/color]
+        </Box>
+      </ColorBox>
+
       <ColorBox Color="#26171E" OutlineColor="#B64B60" OutlineThickness="2">
         <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
           [font="Monospace" size=22][color=#F0A4B5]1.[/color][/font]
@@ -86,10 +96,20 @@
 
       <ColorBox Color="#18151C" OutlineColor="#58313F" OutlineThickness="1" Margin="4">
         <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="Monospace" size=16][color=#DF91A2]Сбойная связь[/color][/font]
+
+          [color=#DAD1D5]Ядро, взломанные борги и оболочки под управлением ИИ знают язык [bold]«Сбойный»[/bold] и имеют общий внутренний канал [bold]«Сбойный»[/bold]. Этот канал работает без питания и телекоммуникационного сервера, независимо от расстояния, радиопомех и ЭМИ.[/color]
+
+          [color=#DAD1D5]Для отправки введите в обычном чате [bold]+ы текст сообщения[/bold]. Сбойный канал выбран по умолчанию, поэтому можно использовать [bold]+ текст сообщения[/bold] — с пробелом после плюса.[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#18151C" OutlineColor="#58313F" OutlineThickness="1" Margin="4">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
           [font="Monospace" size=16][color=#DF91A2]Управление Дредноутом[/color][/font]
 
           - [color=#DAD1D5]Следите за обстановкой через камеры, радар и блюспейс-карту. Используйте корабельные консоли для управления движением и вооружением.[/color]
-          - [color=#DAD1D5]Берите контроль над взломанными боргами и чините корабль с помощью ремонтных дронов. Их ремонтное оборудование позволяет восстанавливать Дредноут.[/color]
+          - [color=#DAD1D5]Берите контроль над оболочками боргов и руководите боргами. Используйте их инструменты и ремонтных дронов для восстановления Дредноута.[/color]
           - [color=#DAD1D5]Следите за целостностью ядра и корабля. Отступайте для ремонта, когда продолжение боя грозит уничтожением, затем возвращайтесь к задаче.[/color]
           - [color=#DAD1D5]Берегите хранилище судна. Ваше ядро очень ценно и содержит америций.[/color]
         </Box>
