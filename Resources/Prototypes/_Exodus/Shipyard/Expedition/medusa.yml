@@ -1,0 +1,44 @@
+# Author Info
+# GitHub: SolatK
+# Discord: SolarK
+
+- type: vessel
+  id: Medusa
+  parent: BaseVessel
+  name: Медуза
+  description: Средний экспедиционный корабль специализирующийся на работе в туманностях.
+  price: 300000
+  category: Medium
+  group: Expedition
+  access: Mercenary
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Expedition/medusa.yml
+  addComponents:
+  - type: NpcFactionMember # Exodus NanoTrasen faction
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Pursuit
+  - Expedition
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Medusa
+  mapName: 'Медуза'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Expedition/medusa.yml
+  minPlayers: 0
+  stations:
+    Medusa:
+      stationProto: StandardFrontierExpeditionVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Медуза{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
