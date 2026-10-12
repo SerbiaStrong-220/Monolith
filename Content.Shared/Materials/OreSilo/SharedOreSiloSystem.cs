@@ -29,7 +29,15 @@ public abstract partial class SharedOreSiloSystem : EntitySystem
         SubscribeLocalEvent<OreSiloClientComponent, ComponentShutdown>(OnClientShutdown);
 
         _clientQuery = GetEntityQuery<OreSiloClientComponent>();
+
+        // Exodus-begin
+        InitializeExodus();
+        // Exodus-end
     }
+
+    // Exodus-begin
+    partial void InitializeExodus();
+    // Exodus-end
 
     private void OnToggleOreSiloClient(Entity<OreSiloComponent> ent, ref ToggleOreSiloClientMessage args)
     {
