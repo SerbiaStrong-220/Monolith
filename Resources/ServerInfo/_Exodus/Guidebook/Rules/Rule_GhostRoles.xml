@@ -1,20 +1,89 @@
 <Document>
-# Правила ролей призраков   
+  <ColorBox Color="#13171D" OutlineColor="#414C5D" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+      <ColorBox Color="#1C2633" OutlineColor="#657F9D" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="DefaultBold" size=22][color=#D2DFEF]Правила ролей призраков[/color][/font]
 
-[color=red][italic]Если какие-либо ссылки не работают, используйте версию руководства в гайдбуке через меню (ESC) или (Numpad 0).[/italic][/color]
+          [color=#B7C6D9][italic]Если какие-либо ссылки не работают, используйте версию руководства в гайдбуке через меню (ESC) или (Numpad 0).[/italic][/color]
+        </Box>
+      </ColorBox>
 
-[color=red][italic]Все перечисленные ниже правила действуют постоянно — включая время между раундами, непосредственно в игре и в других частях нашего сообщества. Ожидается, что данные правила будут прочитаны полностью.[/italic][/color]
+      <ColorBox Color="#29241D" OutlineColor="#927448" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#E6CDA6]Все перечисленные ниже правила действуют постоянно — включая время между раундами, непосредственно в игре и в других частях нашего сообщества. [bold]Ожидается, что данные правила будут прочитаны полностью.[/bold][/color]
+        </Box>
+      </ColorBox>
 
-## Ознакомиться с этими правилами можно по ссылкам ниже:
-- 1. [textlink="Борер" link="EXRuleGhostRoleBorer"]
-- 2. [textlink="Восьмой экспедиционный флот Империи Кхси'Ра" link="EXRuleGhostRoleKhsiraEighthFleet"]
-- 3. [textlink="Химера" link="EXRuleGhostRoleChimera"]
-- 4. [textlink="Борг" link="EXRuleGhostRoleBorg"]
-- 5. [textlink="Синдикат" link="EXRuleGhostRoleSyndicate"]
-- 6. [textlink="Резидент Цитадели" link="EXRuleGhostRoleCitadelService"]
-- 7. [textlink="Космический левиафан" link="EXRuleGhostRoleLeviathan"]
-- 8. [textlink="Гниль" link="EXRuleGhostRoleRot"]
-- 9. [textlink="Живой скелет" link="EXRuleGhostRoleLivingSkeleton"]
-- 10. [textlink="Оперативник АБАДДОНа" link="EXRuleGhostRoleAbaddon"]
-- 11. [textlink="Сбойный Дредноут" link="EXRuleGhostRoleMalfDreadnought"]
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [font="DefaultBold" size=16][color=#D2DFEF]Ознакомиться с этими правилами можно по ссылкам ниже:[/color][/font]
+      </Box>
+
+      <ColorBox Color="#161810" OutlineColor="#626B39" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#D9DC9B]1.[/color] [textlink="Борер" link="EXRuleGhostRoleBorer"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#15101D" OutlineColor="#67416F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E2B9EB]2.[/color] [textlink="Восьмой экспедиционный флот Империи Кхси'Ра" link="EXRuleGhostRoleKhsiraEighthFleet"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B1217" OutlineColor="#854651" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E7B5BD]3.[/color] [textlink="Химера" link="EXRuleGhostRoleChimera"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#10171D" OutlineColor="#3D5868" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#C6E5EE]4.[/color] [textlink="Борг" link="EXRuleGhostRoleBorg"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#130F12" OutlineColor="#6E2B35" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#F1B0B8]5.[/color] [textlink="Синдикат" link="EXRuleGhostRoleSyndicate"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#170F1C" OutlineColor="#67406F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#F0B8E3]6.[/color] [textlink="Резидент Цитадели" link="EXRuleGhostRoleCitadelService"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#14121D" OutlineColor="#655583" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#CDBDEB]7.[/color] [textlink="Космический левиафан" link="EXRuleGhostRoleLeviathan"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#151A14" OutlineColor="#59694A" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#C6D9AA]8.[/color] [textlink="Гниль" link="EXRuleGhostRoleRot"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#171919" OutlineColor="#666B61" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E4E5CE]9.[/color] [textlink="Живой скелет" link="EXRuleGhostRoleLivingSkeleton"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#0D141D" OutlineColor="#345873" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#B6DDF2]10.[/color] [textlink="Оперативник АБАДДОНа" link="EXRuleGhostRoleAbaddon"]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#100F14" OutlineColor="#582632" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#EEBAC4]11.[/color] [textlink="Сбойный Дредноут" link="EXRuleGhostRoleMalfDreadnought"]
+        </Box>
+      </ColorBox>
+    </Box>
+  </ColorBox>
 </Document>

@@ -1,21 +1,69 @@
 <Document>
-# Синдикат
+  <ColorBox Color="#130F12" OutlineColor="#6E2B35" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#28151B" OutlineColor="#A44350" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="DefaultBold" size=22][color=#F1B0B8]Синдикат[/color][/font]
 
-[color=#c94242]Синдикат[/color] - это теневая враждебная организация, объединяющая разрозненные группировки, корпоративных перебежчиков и иные ячейки, действующие с целью дестабилизации деятельности государств.
+          <Box Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+            <GuideEntityEmbed Entity="BannerSyndicate" Caption="" Scale="3" Interactive="false"/>
+          </Box>
 
-## Общее знание населения сектора
-[color=#c94242]Синдикат[/color] - крайне сомнительная подпольная организация. При обнаружении представителей [color=#c94242]Синдиката[/color] рекомендуется избегать контакта по возможности.
+          [color=#E0D9DC][color=#F1B0B8]Синдикат[/color] - это теневая враждебная организация, объединяющая разрозненные группировки, корпоративных перебежчиков и иные ячейки, действующие с целью дестабилизации деятельности государств.[/color]
+        </Box>
+      </ColorBox>
 
-## Общее знание для КВП ТСФ и Династии Фаэтон
-Действия [color=#c94242]Синдиката[/color] направлены на неоднократные попытки диверсии сектора. Захват точек интереса под эгидой [color=#c94242]Синдиката[/color] перебивает поставки, нарушает логистику для вне-секториальной связи.
+      <ColorBox Color="#1B151B" OutlineColor="#51303B" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=16][color=#ECA0AB]Общее знание населения сектора[/color][/font]
 
-Вам запрещено за роль синдиката нападать на наёмников без внутриигрового конфликта. Вы не получаете право на свободное пиратство, выбирая эту роль.
+          [color=#E0D9DC][color=#F1B0B8]Синдикат[/color] - крайне сомнительная подпольная организация. При обнаружении представителей [color=#F1B0B8]Синдиката[/color] рекомендуется избегать контакта по возможности.[/color]
+        </Box>
+      </ColorBox>
 
-[color=#d2b48c][bold]Династия Фаэтон[/bold][/color] по умолчанию нейтральна к [color=#c94242]Синдикату[/color], но отношение может измениться в ходе цикла.
+      <ColorBox Color="#1B151B" OutlineColor="#51303B" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=16][color=#ECA0AB]Общее знание для КВП ТСФ и Династии Фаэтон[/color][/font]
 
-Вашей основной целью должны быть диверсии и операции против доминирующих фракций в секторе.
+          [color=#E0D9DC]Действия [color=#F1B0B8]Синдиката[/color] направлены на неоднократные попытки диверсии сектора. Захват точек интереса под эгидой [color=#F1B0B8]Синдиката[/color] перебивает поставки, нарушает логистику для вне-секториальной связи.[/color]
 
-## Разделы
-- 1. [textlink="Оперативник" link="EXRuleGhostRoleSyndicateOperative"]
-- 2. [textlink="Сержант" link="EXRuleGhostRoleSyndicateSergeant"]
+          <ColorBox Color="#30191D" OutlineColor="#AC5059" OutlineThickness="1">
+            <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+              [color=#F4B7B6][bold]Вам запрещено за роль синдиката нападать на наёмников без внутриигрового конфликта. Вы не получаете право на свободное пиратство, выбирая эту роль.[/bold][/color]
+            </Box>
+          </ColorBox>
+
+          [color=#E0D9DC][color=#DCC195][bold]Династия Фаэтон[/bold][/color] по умолчанию нейтральна к [color=#F1B0B8]Синдикату[/color], но отношение может измениться в ходе цикла.[/color]
+
+          [color=#E0D9DC]Вашей основной целью должны быть диверсии и операции против доминирующих фракций в секторе.[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="6">
+        [font="Monospace" size=18][color=#ECA0AB]Разделы[/color][/font]
+      </Box>
+
+      <Box Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0">
+        <ColorBox Color="#23161D" OutlineColor="#813645" OutlineThickness="1">
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+            <Box Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+              <GuideEntityEmbed Entity="MobSyndicateGhostOperativeGuide" Caption="" Scale="2" Interactive="false"/>
+            </Box>
+
+            - 1. [textlink="Оперативник" link="EXRuleGhostRoleSyndicateOperative"]
+          </Box>
+        </ColorBox>
+
+        <ColorBox Color="#261C1B" OutlineColor="#8B6846" OutlineThickness="1">
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+            <Box Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+              <GuideEntityEmbed Entity="MobSyndicateGhostLeaderGuide" Caption="" Scale="2" Interactive="false"/>
+            </Box>
+
+            - 2. [textlink="Сержант" link="EXRuleGhostRoleSyndicateSergeant"]
+          </Box>
+        </ColorBox>
+      </Box>
+    </Box>
+  </ColorBox>
 </Document>

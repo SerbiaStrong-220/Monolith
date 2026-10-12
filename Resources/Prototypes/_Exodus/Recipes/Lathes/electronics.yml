@@ -7,6 +7,7 @@
   id: ExodusMiningBoards
   recipes:
   - OreCatcherMachineCircuitboard
+  - BoxSorterMachineCircuitboard
 
 - type: latheRecipe
   id: MedicalBiofabMachineBoard
@@ -18,3 +19,22 @@
     Glass: 2000
     Gold: 1000
     Silver: 1000
+
+- type: latheRecipe
+  id: BoxSorterMachineCircuitboard
+  parent: BaseCircuitboardRecipe
+  result: BoxSorterMachineCircuitboard
+  completetime: 10
+  materials:
+    Steel: 1000
+    Americium: 100
+
+- type: latheRecipe
+  id: CargoTeleporterFrame
+  result: CargoTeleporterFrame
+  categories:
+  - Parts
+  completetime: 2
+  materials:
+    Steel: 100
+    Glass: 50

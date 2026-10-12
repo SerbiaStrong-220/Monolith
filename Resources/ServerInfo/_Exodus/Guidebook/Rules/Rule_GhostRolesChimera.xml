@@ -1,15 +1,33 @@
 <Document>
-## Химера  
-    <Box>
-    <GuideEntityEmbed Entity="MobLetoferolHorror" Caption=""/>
+  <ColorBox Color="#1B1217" OutlineColor="#854651" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+      <ColorBox Color="#2D1B22" OutlineColor="#A55C67" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          <Box HorizontalAlignment="Center">
+            [font="DefaultBold" size=22][color=#E7B5BD]Химера[/color][/font]
+          </Box>
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="MobLetoferolHorror" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+          [color=#E4D7DA][color=#B8B8AD][italic]Результат какой-то отвратительной вспышки летоферола где-то далеко отсюда.[/italic][/color][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#281A21" OutlineColor="#854651" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#E4D7DA]Ваша цель - [color=#E7B5BD][bold]распространять инфекцию, вызываемую летоферолом[/bold][/color].[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#332019" OutlineColor="#B08150" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#E4D7DA]Прочтение руководства [color=#E7A08E][bold]ОБЯЗАТЕЛЬНО для этой роли[/bold][/color].[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#E4D7DA]Вы [color=#E7A08E]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.[/color]
+      </Box>
     </Box>
-    <Box>
-    [color=gray][italic]Результат какой-то отвратительной вспышки летоферола где-то далеко отсюда.[/italic][/color]
-    </Box>
-
-    Ваша цель - [color=#ebba34][bold]распространять инфекцию, вызываемую летоферолом[/bold][/color].
-
-    Прочтение руководства [color=red][bold]ОБЯЗАТЕЛЬНО для этой роли[/bold][/color].
-
-    Вы [color=red]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.
+  </ColorBox>
 </Document>

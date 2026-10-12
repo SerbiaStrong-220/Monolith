@@ -319,6 +319,16 @@
   name: unsa-directional-shield-generator-name
   description: unsa-directional-shield-generator-description
   components:
+  - type: ShipShieldEmitter
+    damageLimit: 75000
+    healPerSecond: 550
+    baseDraw: 30000
+    maxDraw: 70000
+    shieldColor: "#0A5DFF"
+    empProtection: true
+    rippleWidth: 8
+    rippleSpeed: 0.75
+    collisionResistanceMultiplier: 0.5 #Same as ms-100 sentiniel
   - type: Sprite
     sprite: _Exodus/Structures/ShuttleComponents/liberty_shield_generator.rsi
     snapCardinals: true

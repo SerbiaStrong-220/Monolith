@@ -229,6 +229,7 @@
 #  - ContractorFace
 #  - ContractorGlasses
 #  - ContractorBelt
+  - StationRepBelt # Exodus-add
   - MonoSecurityGuardHud
   - StationRepEars
   - MonoSecurityGuardShoes

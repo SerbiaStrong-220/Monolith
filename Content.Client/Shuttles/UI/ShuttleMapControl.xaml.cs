@@ -2,6 +2,7 @@ using System.Buffers;
 using System.Numerics;
 using Content.Shared._Exodus.StarSystem; // Exodus planet beacon labels and colors
 using Content.Client._Exodus.Nebula; // Exodus nebula-ftl-map
+using Content.Client._Exodus.Shuttles.UI; // Exodus configurable BSS map icons
 using Content.Shared._Exodus.NPC.Components; // Exodus faction AI FTL map label
 using Content.Client._Mono.Radar; // Exodus nebula-ftl-map
 using Content.Client._Exodus.Territory; // Exodus territory POI colors
@@ -47,6 +48,11 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private readonly EntityQuery<IFFComponent> _iffQuery;
     private readonly EntityQuery<MapGridComponent> _mapGridQuery;
     private readonly EntityQuery<TransformComponent> _transformQuery;
+    // Exodus-end
+
+    // Exodus-begin configurable BSS map icons
+    private readonly EntityQuery<BluespaceMapIconComponent> _mapIconQuery;
+    private readonly BluespaceMapIconRenderer _mapIconRenderer = new();
     // Exodus-end
 
     protected override bool Draggable => true;
@@ -131,6 +137,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         _mapGridQuery = EntManager.GetEntityQuery<MapGridComponent>();
         _transformQuery = EntManager.GetEntityQuery<TransformComponent>();
         // Exodus-end
+        _mapIconQuery = EntManager.GetEntityQuery<BluespaceMapIconComponent>(); // Exodus configurable BSS map icons
 
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
         OnMouseExited += _ => _medicalMousePosition = null; // Exodus medical marker hover
@@ -481,9 +488,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             if (!hideColor && _territoryPoiColors.TryGetColor(grid.Owner, out var territoryPoiColor))
                 gridColor = territoryPoiColor; // Exodus territory POI colors
 
-            var existingVerts = _verts.GetOrNew(gridColor);
-            var existingEdges = _edges.GetOrNew(gridColor);
-
             var gridPhysics = _physicsQuery.GetComponent(grid.Owner);
             var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid.Owner);
             gridPos = Maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
@@ -492,18 +496,27 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
             var gridUiPos = ScalePosition(gridRelativePos);
 
-            // Exodus-begin territory icons on the BSS map:
-            // normal grids keep the default diamond, territory grids use radius-based polygons.
-            ValueList<Vector2> mapObject;
-            if (_gridTerritoryQuery.TryGetComponent(grid.Owner, out var terr) && terr.Radius > 0)
+            // Exodus-begin configurable icons on the BSS map:
+            // Configured icons override the default diamond and radius-based territory polygons.
+            if (!hideLabel && _mapIconQuery.TryGetComponent(grid.Owner, out var icon))
             {
-                mapObject = GetTerritoryMapObject(gridRelativePos, Angle.Zero, terr.Radius, scalePosition: true);
-                AddMapPolygon(existingEdges, existingVerts, mapObject);
+                var radius = 2f * GetMapObjectRadius() * MinimapScale;
+                _mapIconRenderer.Draw(handle, gridUiPos, radius, icon.Sides, icon.InnerRadius, gridColor);
             }
             else
             {
-                mapObject = GetMapObject(gridRelativePos, Angle.Zero, scalePosition: true);
-                AddMapObject(existingEdges, existingVerts, mapObject);
+                var existingVerts = _verts.GetOrNew(gridColor);
+                var existingEdges = _edges.GetOrNew(gridColor);
+                if (_gridTerritoryQuery.TryGetComponent(grid.Owner, out var terr) && terr.Radius > 0)
+                {
+                    var mapObject = GetTerritoryMapObject(gridRelativePos, Angle.Zero, terr.Radius, scalePosition: true);
+                    AddMapPolygon(existingEdges, existingVerts, mapObject);
+                }
+                else
+                {
+                    var mapObject = GetMapObject(gridRelativePos, Angle.Zero, scalePosition: true);
+                    AddMapObject(existingEdges, existingVerts, mapObject);
+                }
             }
             // Exodus-end
 

@@ -1,0 +1,14 @@
+- type: loadoutGroup
+  id: StationRepBelt
+  name: loadout-group-contractor-belt
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ContractorClothingBeltMilitaryWebbing
+  - MonoSecurityGuardWebbing
+  - SecurityCombatWebbingMedical
+  - MonoSecurityGuardAssaultBelt
+  - MonoSecurityGuardSecurityCarrier
+  - MonoSecurityGuardSecurityCarrierLarge
+  - ContractorBoxFolderClipboard
+  - ContractorClothingBeltHolster

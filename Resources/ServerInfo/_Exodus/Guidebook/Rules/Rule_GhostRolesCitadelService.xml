@@ -1,25 +1,63 @@
 <Document>
-## Резидент Цитадели
-    <Box>
-    <GuideEntityEmbed Entity="MobCitadelServiceGhostRole" Caption=""/>
+  <ColorBox Color="#170F1C" OutlineColor="#67406F" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#2A1932" OutlineColor="#AE719F" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="DefaultBold" size=22][color=#F0B8E3]Резидент Цитадели[/color][/font]
+
+          <Box Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="2" Interactive="false"/>
+
+            <GuideEntityEmbed Entity="MobCitadelServiceGhostRole" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+
+          [color=#E2D8E6][color=#BDA8C4][italic]Обслуга-резидент Цитадели Империи Кхси'Ра, прибывший в сектор для подтверждения имперского контроля.[/italic][/color][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#201625" OutlineColor="#63466E" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E2D8E6]Вы - [color=#F0B8E3][bold]резидент Цитадели[/bold][/color]. Вы являетесь обслугой-резидентом Цитадели Империи Кхси'Ра, отбуксированной 200 лет назад силами АСЗ для подтверждения контроля Империей над этим сектором.[/color]
+
+          [color=#E2D8E6]Однако, недавно выйдя из ваших капсул крио-хранения, вы заметили, что флот, который сопровождал вас, отсутствует, а [color=#F0B8E3]Губернатор[/color], правитель Цитадели, ещё не прибыл.[/color]
+
+          [color=#E2D8E6]Прожив некоторое время в секторе, вы выучили новый язык [color=#A5D3B7]Андромеда-Стандарт[/color] и имеете базовое понимание об устройстве жизни в секторе.[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#201625" OutlineColor="#63466E" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=18][color=#E2B1DC]Ваши обязанности[/color][/font]
+
+          <ColorBox Color="#332332" OutlineColor="#A07878" OutlineThickness="1">
+            <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+              - [color=#E2D8E6]Вам [color=#F0C4B4]запрещено[/color] повреждать и уничтожать [color=#F0B8E3]Цитадель[/color]. Рекомендуется держать Цитадель в чистоте и порядке.[/color]
+            </Box>
+          </ColorBox>
+
+          - [color=#E2D8E6]Население сектора может спокойно посещать Цитадель, если не несёт ей вреда и не грабит её.[/color]
+
+          <ColorBox Color="#302139" OutlineColor="#986591" OutlineThickness="1">
+            <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+              - [color=#E2D8E6]Вы [color=#F0C4B4]не обязаны[/color] следовать приказам [textlink="Восьмого Экспедиционного Флота" link="EXRuleGhostRoleKhsiraEighthFleet"], если они подвергают опасности Цитадель или её содержимое.[/color]
+            </Box>
+          </ColorBox>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#201625" OutlineColor="#63466E" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=16][color=#CEB9DB]Свобода действий[/color][/font]
+
+          [color=#E2D8E6]В остальном вы вольны делать всё, что угодно, в том числе путешествовать по сектору, если уверены, что Цитадель под защитой.[/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#251B2B" OutlineColor="#79546F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#E2D8E6]Вы [color=#F0C4B4]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.[/color]
+        </Box>
+      </ColorBox>
     </Box>
-    <Box>
-    [color=gray][italic]Обслуга-резидент Цитадели Империи Кхси'Ра, прибывший в сектор для подтверждения имперского контроля.[/italic][/color]
-    </Box>
-
-Вы - [color=#ff3db1][bold]резидент Цитадели[/bold][/color]. Вы являетесь обслугой-резидентом Цитадели Империи Кхси'Ра, отбуксированной 200 лет назад силами АСЗ для подтверждения контроля Империей над этим сектором.
-
-Однако, недавно выйдя из ваших капсул крио-хранения, вы заметили, что флот, который сопровождал вас, отсутствует, а [color=#ff3db1]Губернатор[/color], правитель Цитадели, ещё не прибыл.
-
-Прожив некоторое время в секторе, вы выучили новый язык [color=#04bf5e]Андромеда-Стандарт[/color] и имеете базовое понимание об устройстве жизни в секторе.
-
-## Ваши обязанности
-- Вам [color=red]запрещено[/color] повреждать и уничтожать [color=#ff3db1]Цитадель[/color]. Рекомендуется держать Цитадель в чистоте и порядке.
-- Население сектора может спокойно посещать Цитадель, если не несёт ей вреда и не грабит её.
-- Вы [color=red]не обязаны[/color] следовать приказам [textlink="Восьмого Экспедиционного Флота" link="EXRuleGhostRoleKhsiraEighthFleet"], если они подвергают опасности Цитадель или её содержимое.
-
-## Свобода действий
-В остальном вы вольны делать всё, что угодно, в том числе путешествовать по сектору, если уверены, что Цитадель под защитой.
-
-Вы [color=red]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.
+  </ColorBox>
 </Document>

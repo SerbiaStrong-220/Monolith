@@ -1,16 +1,78 @@
 <Document>
-# Автоматическая Система Защиты
+  <ColorBox Color="#141219" OutlineColor="#714160" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#261B27" OutlineColor="#714160" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          <Box Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+            [font="DefaultBold" size=22][color=#E6B0D3]Автоматическая Система Защиты[/color][/font]
+          </Box>
 
-АСЗ - древние синтетики военного авангарда Империи Кхси'Ра. Их корабли оснащены редким вооружением и обслуживаются синтетиками системы защиты.
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+        </Box>
+      </ColorBox>
 
-Вы выполняете законы строго по порядку. Чем ближе к нулю закон, тем выше его приоритет.
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#DFD4DF]АСЗ - древние синтетики военного авангарда Империи Кхси'Ра. Их корабли оснащены редким вооружением и обслуживаются синтетиками системы защиты.[/color]
+      </Box>
 
-ИИ и киборги воспринимают приказы исходя из установленных границ. Если приказавшим лицом не установлены границы приказа, такие как время и количество, то граница приказа определяется игроком на Синтетике самостоятельно.
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#DFD4DF]Вы выполняете законы строго по порядку. Чем ближе к нулю закон, тем выше его приоритет.[/color]
 
-## Разделы
-- 1. [textlink="Общее положение" link="EXRuleGhostRoleADSGeneral"]
-- 2. [textlink="Оператор Системы Защиты" link="EXRuleGhostRoleOperator"]
-- 3. [textlink="Ядро Системы Защиты" link="EXRuleGhostRoleCore"]
-- 4. [textlink="Оператор Персональной защиты" link="EXRuleGhostRolePersonalProtectionOperator"]
-- 5. [textlink="Оператор Штурмовой Системы" link="EXRuleGhostRoleAssaultSystemOperator"]
+          [color=#DFD4DF]ИИ и киборги воспринимают приказы исходя из установленных границ. Если приказавшим лицом не установлены границы приказа, такие как время и количество, то граница приказа определяется игроком на Синтетике самостоятельно.[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="6">
+        [font="DefaultBold" size=17][color=#E6B0D3]Разделы[/color][/font]
+      </Box>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DFD4DF]1. [textlink="Общее положение" link="EXRuleGhostRoleADSGeneral"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="PlayerBorgRedacted" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DFD4DF]2. [textlink="Оператор Системы Защиты" link="EXRuleGhostRoleOperator"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="PlayerStationAiRedacted" Caption="" Scale="1.75" Interactive="false" Init="true"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DFD4DF]3. [textlink="Ядро Системы Защиты" link="EXRuleGhostRoleCore"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="PlayerBorgAsakimRedacted" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DFD4DF]4. [textlink="Оператор Персональной защиты" link="EXRuleGhostRolePersonalProtectionOperator"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1E1721" OutlineColor="#714160" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="PlayerBorgAsakimFighter" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DFD4DF]5. [textlink="Оператор Штурмовой Системы" link="EXRuleGhostRoleAssaultSystemOperator"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+    </Box>
+  </ColorBox>
 </Document>

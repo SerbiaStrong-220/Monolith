@@ -1,32 +1,79 @@
 <Document>
-## Оператор Штурмовой Системы (ОШС)
-    <Box>
-    <GuideEntityEmbed Entity="PlayerBorgAsakimFighter" Caption=""/>
+  <ColorBox Color="#141820" OutlineColor="#657180" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#222B37" OutlineColor="#657180" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          <Box Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+            [font="DefaultBold" size=22][color=#D3DCE5]Оператор Штурмовой Системы (ОШС)[/color][/font]
+          </Box>
+
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="PlayerBorgAsakimFighter" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+
+          [color=#AAB8C9][italic]Синтетик-штурмовик. Продвинутая пехотная единица Империи Кхси'Ра.[/italic][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [color=#D8DDE6]ОШС не является [textlink="Оператором Персональной Защиты" link="EXRuleGhostRolePersonalProtectionOperator"] и не предназначен для сопровождения отдельных офицеров. Это боевая штурмовая единица, усиление пехоты азакимов и [textlink="Автоматической Системы Защиты" link="EXRuleGhostRoleADS"]. Ваш приоритет — выполнение приказов офицерского состава, удержание занятых позиций и нанесение огневого поражения противнику.[/color]
+        </Box>
+      </ColorBox>
+
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="6">
+        [font="DefaultBold" size=17][color=#D3DCE5]Имперские директивы[/color][/font]
+      </Box>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D3DCE5]1.[/color][/font] [color=#D8DDE6][locid="law-asakim-occupant-1"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D3DCE5]2.[/color][/font] [color=#D8DDE6][locid="law-asakim-occupant-2"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D3DCE5]3.[/color][/font] [color=#D8DDE6][locid="law-asakim-occupant-3"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D3DCE5]4.[/color][/font] [color=#D8DDE6][locid="law-asakim-occupant-4"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D3DCE5]5.[/color][/font] [color=#D8DDE6][locid="law-asakim-occupant-5"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="Monospace" size=17][color=#D3DCE5]6.[/color][/font] [color=#D8DDE6][locid="law-asakim-occupant-6"][/color]
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B222D" OutlineColor="#657180" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="DefaultBold" size=17][color=#D3DCE5]Что делать[/color][/font]
+
+          - [color=#D8DDE6]Подчиняйтесь офицерскому составу по градации ранга: Легат, Трибун, [textlink="Префект" link="EXRuleGhostRolePrefectAsakim"], [textlink="Центурион" link="EXRuleGhostRoleCenturionAsakim"].[/color]
+          - [color=#D8DDE6]Участвуйте в штурме и удержании точек интереса вместе с [textlink="воинами азаким" link="EXRuleGhostRoleAsakim"], [textlink="ОСЗ" link="EXRuleGhostRoleOperator"] и силами АСЗ.[/color]
+          - [color=#D8DDE6]Подавляйте враждебные силы в рамках директив Империи, не нарушая директиву усмирения.[/color]
+          - [color=#D8DDE6]Сохраняйте целостность своего шасси и имперские технологии согласно директивам.[/color]
+          - [color=#D8DDE6]Свяжитесь с другими азакимами и силами АСЗ через радиоканал (на [color=#ff3db1]:з[/color]), если в секторе нет офицерского состава.[/color]
+          - [color=#D8DDE6]Помогайте АСЗ в выполнении их задач, если это не противоречит имперским директивам.[/color]
+        </Box>
+      </ColorBox>
     </Box>
-    <Box>
-    [color=gray][italic]Синтетик-штурмовик. Продвинутая пехотная единица Империи Кхси'Ра.[/italic][/color]
-    </Box>
-
-ОШС не является [textlink="Оператором Персональной Защиты" link="EXRuleGhostRolePersonalProtectionOperator"] и не предназначен для сопровождения отдельных офицеров. Это боевая штурмовая единица, усиление пехоты азакимов и [textlink="Автоматической Системы Защиты" link="EXRuleGhostRoleADS"]. Ваш приоритет — выполнение приказов офицерского состава, удержание занятых позиций и нанесение огневого поражения противнику.
-
-## Имперские директивы
-1. [locid="law-asakim-occupant-1"]
-
-2. [locid="law-asakim-occupant-2"]
-
-3. [locid="law-asakim-occupant-3"]
-
-4. [locid="law-asakim-occupant-4"]
-
-5. [locid="law-asakim-occupant-5"]
-
-6. [locid="law-asakim-occupant-6"]
-
-## Что делать
-- Подчиняйтесь офицерскому составу по градации ранга: Легат, Трибун, [textlink="Префект" link="EXRuleGhostRolePrefectAsakim"], [textlink="Центурион" link="EXRuleGhostRoleCenturionAsakim"].
-- Участвуйте в штурме и удержании точек интереса вместе с [textlink="воинами азаким" link="EXRuleGhostRoleAsakim"], [textlink="ОСЗ" link="EXRuleGhostRoleOperator"] и силами АСЗ.
-- Подавляйте враждебные силы в рамках директив Империи, не нарушая директиву усмирения.
-- Сохраняйте целостность своего шасси и имперские технологии согласно директивам.
-- Свяжитесь с другими азакимами и силами АСЗ через радиоканал (на [color=#ff3db1]:з[/color]), если в секторе нет офицерского состава.
-- Помогайте АСЗ в выполнении их задач, если это не противоречит имперским директивам.
+  </ColorBox>
 </Document>

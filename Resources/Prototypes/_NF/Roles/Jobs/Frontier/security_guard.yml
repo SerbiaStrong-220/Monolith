@@ -49,6 +49,7 @@
   id: SecurityGuardGear
   equipment:
     pocket1: WeaponEnergyGunLawbringer
+    neck: ClothingNeckWearableCamera # Exodus-add
   storage:
     back:
     - EncryptionKeyService

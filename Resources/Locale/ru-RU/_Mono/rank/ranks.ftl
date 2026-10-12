@@ -65,8 +65,8 @@ vg-lieutenant = Лейт.
 vg-commander = Командир
 
 ### CC/MD ranks
-cc-judge = Суд.
-cc-stc = ДКС
+cc-judge = Охран.
+cc-stc = Диспетчер
 cc-overseer = Комендант
 md-doc = Дир.мед.
-md-medic = СМП.
+md-medic = СНМП

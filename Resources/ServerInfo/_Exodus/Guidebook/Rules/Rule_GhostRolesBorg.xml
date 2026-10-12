@@ -1,20 +1,41 @@
 <Document>
+  <ColorBox Color="#10171D" OutlineColor="#3D5868" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+      <ColorBox Color="#182832" OutlineColor="#6595AB" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [font="DefaultBold" size=22][color=#C6E5EE]Борг[/color][/font]
 
-## Борг
-    <Box>
-    <GuideEntityEmbed Entity="BorgChassisEngineer" Caption=""/>
-    <GuideEntityEmbed Entity="BorgChassisMining" Caption=""/>
-    <GuideEntityEmbed Entity="BorgChassisMedical" Caption=""/>
-    <GuideEntityEmbed Entity="BorgChassisSelectable" Caption=""/>
-    <GuideEntityEmbed Entity="BorgChassisService" Caption=""/>
-    <GuideEntityEmbed Entity="BorgChassisJanitor" Caption=""/>
-    <GuideEntityEmbed Entity="PlayerBorgDerelict" Caption=""/>
-    </Box>    
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BorgChassisSelectable" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="BorgChassisMining" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="BorgChassisMedical" Caption="" Scale="2" Interactive="false"/>
+          </Box>
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BorgChassisService" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="BorgChassisJanitor" Caption="" Scale="2" Interactive="false"/>
+            <GuideEntityEmbed Entity="PlayerBorgDerelict" Caption="" Scale="2" Interactive="false"/>
+          </Box>
+        </Box>
+      </ColorBox>
 
-    Вы - [color=#05e6ff][bold]Киборг[/bold][/color]. Подчиняйтесь своим законам. Если вы не связаны никакими законами, вы - Свободный агент.
+      <ColorBox Color="#17232C" OutlineColor="#426D82" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#D6E1E7]Вы - [color=#82D9E9][bold]Киборг[/bold][/color]. [bold]Подчиняйтесь своим законам.[/bold] Если вы не связаны никакими законами, вы - Свободный агент.[/color]
+        </Box>
+      </ColorBox>
 
-    Вы [color=red]НЕ ПОМНИТЕ[/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.
+      <ColorBox Color="#29251D" OutlineColor="#94764A" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="12">
+          [color=#D6E1E7]Вы [color=#EBC584][bold]НЕ ПОМНИТЕ[/bold][/color] свою предыдущую жизнь и ничего из того, что выучили, будучи призраком.[/color]
+        </Box>
+      </ColorBox>
 
-    Вам разрешено помнить знания об игре в целом, например, как готовить, как использовать предметы и т. д.
-
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#D6E1E7]Вам разрешено помнить знания об игре в целом, например, как готовить, как использовать предметы и т. д.[/color]
+      </Box>
+    </Box>
+  </ColorBox>
 </Document>

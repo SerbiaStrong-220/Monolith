@@ -23,7 +23,7 @@
   - Medical
   - Chemistry
   engine:
-  - AME
+  - Plasma
   addComponents:
   - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:

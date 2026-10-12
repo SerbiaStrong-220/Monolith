@@ -1,17 +1,70 @@
 <Document>
-# Азакимы
+  <ColorBox Color="#15101D" OutlineColor="#67416F" OutlineThickness="1">
+    <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+      <ColorBox Color="#21162B" OutlineColor="#67416F" OutlineThickness="2">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          <Box Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+            [font="DefaultBold" size=22][color=#E2B9EB]Азакимы[/color][/font]
+          </Box>
 
-Азакимы - искусственно выведенные суперсолдаты Империи Кхси'Ра эпохи до Раскола. Они генетически родственны унатхам, но созданы для войны, захвата территории и удержания стратегических точек.
+          <Box HorizontalAlignment="Center">
+            <GuideEntityEmbed Entity="BannerKhsira" Caption="" Scale="3" Interactive="false"/>
+          </Box>
+        </Box>
+      </ColorBox>
 
-## Разделы
-- 1. [textlink="Воин Азаким" link="EXRuleGhostRoleAsakim"]
-- 2. [textlink="Центурион Азаким" link="EXRuleGhostRoleCenturionAsakim"]
-- 3. [textlink="Префект Азаким" link="EXRuleGhostRolePrefectAsakim"]
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="8">
+        [color=#DDCFDF]Азакимы - искусственно выведенные суперсолдаты Империи Кхси'Ра эпохи до Раскола. Они генетически родственны унатхам, но созданы для войны, захвата территории и удержания стратегических точек.[/color]
+      </Box>
 
-## Общие правила
-- Ваши союзники - другие азакимы и [textlink="Автоматическая Система Защиты" link="EXRuleGhostRoleADS"].
-- В первую очередь попытайтесь связаться с другими азакимами и силами АСЗ через радиоканал (на [color=#ff3db1]:з[/color]).
-- Захватывайте и удерживайте полезные точки интереса, но не трогайте безопасные зоны.
-- Не убивайте гражданских и не уничтожайте нейтральные шаттлы без причины или понятной эскалации.
-- Вы не обладаете подробными знаниями о текущем состоянии мира: вы проспали около двух веков.
+      <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="6">
+        [font="DefaultBold" size=17][color=#E2B9EB]Разделы[/color][/font]
+      </Box>
+
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="MobAsakimGhostrole" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DDCFDF]1. [textlink="Воин Азаким" link="EXRuleGhostRoleAsakim"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="MobCenturionAsakimGhostrole" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DDCFDF]2. [textlink="Центурион Азаким" link="EXRuleGhostRoleCenturionAsakim"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box HorizontalAlignment="Stretch" Margin="6">
+          <GuideEntityEmbed Entity="MobPrefectAsakimGhostrole" Caption="" Scale="1.75" Interactive="false"/>
+          <Box Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6">
+            [color=#DDCFDF]3. [textlink="Префект Азаким" link="EXRuleGhostRolePrefectAsakim"][/color]
+          </Box>
+        </Box>
+      </ColorBox>
+
+      <ColorBox Color="#1B1424" OutlineColor="#67416F" OutlineThickness="1">
+        <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+          [font="DefaultBold" size=17][color=#E2B9EB]Общие правила[/color][/font]
+
+          - [color=#DDCFDF]Ваши союзники - другие азакимы и [textlink="Автоматическая Система Защиты" link="EXRuleGhostRoleADS"].[/color]
+          - [color=#DDCFDF]В первую очередь попытайтесь связаться с другими азакимами и силами АСЗ через радиоканал (на [color=#ff3db1]:з[/color]).[/color]
+
+          <ColorBox Color="#2A1A22" OutlineColor="#966471" OutlineThickness="1">
+            <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10">
+              - [color=#DDCFDF]Захватывайте и удерживайте полезные точки интереса, но не трогайте безопасные зоны.[/color]
+              - [color=#DDCFDF]Не убивайте гражданских и не уничтожайте нейтральные шаттлы без причины или понятной эскалации.[/color]
+            </Box>
+          </ColorBox>
+
+          - [color=#DDCFDF]Вы не обладаете подробными знаниями о текущем состоянии мира: вы проспали около двух веков.[/color]
+        </Box>
+      </ColorBox>
+    </Box>
+  </ColorBox>
 </Document>
