@@ -23,8 +23,10 @@
       mobState:
       - Critical
       - Dead
+      - Alive
     - type: Rattle
       radioChannel: "Medical"
+    - type: MedicalAlertOnTrigger # Exodus-med-alert
 
 - type: entity
   parent: BaseSubdermalImplant
