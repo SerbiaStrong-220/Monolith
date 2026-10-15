@@ -235,6 +235,7 @@
       powerDraw: 0.5
       blockModifier:
         coefficients:
+          Structural: 0.05 #Exodus - Structural damage fix
           Piercing: 0.5
           Heat: 1.5
           Radiation: 2.5
@@ -317,6 +318,7 @@
       powerDraw: 0.5
       blockModifier:
         coefficients:
+          Structural: 0.25 #Exodus - Structural damage fix
           Heat: 1.25
           Radiation: 1.5
   - type: Battery

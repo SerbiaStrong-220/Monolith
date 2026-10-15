@@ -68,6 +68,9 @@
       spinupTime: 1
       breakCooldown: 30
       powerDraw: 0.5
+      blockModifier:  #Exodus - Structural damage fix
+       coefficients:  #Exodus - Structural damage fix
+         Structural: 0.05  #Exodus - Structural damage fix
   - type: Battery
     maxCharge: 60
     startingCharge: 60

@@ -215,6 +215,7 @@
       powerDraw: 1
       blockModifier:
         coefficients:
+          Structural: 0.05 #Exodus - Structural damage fix
           Piercing: 0.5
           Heat: 1.5
           Radiation: 2.5
