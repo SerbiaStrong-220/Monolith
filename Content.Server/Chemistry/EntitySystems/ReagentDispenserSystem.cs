@@ -309,7 +309,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 component.StorageSlotIds.Add(storageSlotId);
                 component.StorageSlots.Add(storageComponent);
-                component.StorageSlots[i].Name = "Storage Slot " + (i+1);
+                component.StorageSlots[i].Name = Loc.GetString("reagent-dispenser-storage-slot", ("number", i + 1)); // Exodus: localized slot name (fix warnings)
                 _itemSlotsSystem.AddItemSlot(uid, component.StorageSlotIds[i], component.StorageSlots[i]);
             }
             // Too many?

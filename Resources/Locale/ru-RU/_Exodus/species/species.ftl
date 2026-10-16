@@ -5,3 +5,4 @@ species-name-chitinid = Хитинид
 species-name-felinid = Фелинид
 species-name-hydrakin = Гидракин
 species-name-resomi = Резоми
+species-name-feroxi = Ферокси

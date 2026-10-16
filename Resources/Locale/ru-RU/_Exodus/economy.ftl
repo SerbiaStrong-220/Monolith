@@ -7,6 +7,7 @@ economy-market-trend-flat = — {$percent}%
 cargo-pallet-menu-items-label = Товары на паллетах:{" "}
 cargo-pallet-menu-item-qty = x{$qty}
 cargo-pallet-menu-item-unit = ${$price}/шт
+cargo-pallet-menu-no-goods-text = Нет товаров
 
 # Консоль заказа грузов — новый UI
 cargo-console-menu-categories-heading = Категории

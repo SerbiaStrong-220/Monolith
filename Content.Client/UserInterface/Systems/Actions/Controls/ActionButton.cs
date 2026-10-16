@@ -192,12 +192,16 @@ public sealed partial class ActionButton : Control, IEntityControl // Exodus: in
         if (!_entities.TryGetComponent(ActionId, out MetaDataComponent? metadata))
             return null;
 
-        var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
-        var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
+        // Exodus-begin: entity name and description are already localized by the engine (fix warnings)
+        var name = FormattedMessage.FromMarkupPermissive(metadata.EntityName);
+        var decr = FormattedMessage.FromMarkupPermissive(metadata.EntityDescription);
+        // Exodus-end
 
         if (_action is { Charges: not null })
         {
-            var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {_action.Charges.Value.ToString()}/{_action.MaxCharges.ToString()}"));
+            // Exodus: a literal key cannot be localized, use a real message id (fix warnings)
+            var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString("ui-actionslot-charges-total",
+                ("charges", _action.Charges.Value), ("max", _action.MaxCharges ?? _action.Charges.Value)));
             return new ActionAlertTooltip(name, decr, charges: charges) { Cooldown = DisplayedCooldown }; // Exodus
         }
 

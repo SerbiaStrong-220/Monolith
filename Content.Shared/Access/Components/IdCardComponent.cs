@@ -29,7 +29,8 @@ public sealed partial class IdCardComponent : Component
     private string? _jobTitle;
 
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string? LocalizedJobTitle { set => _jobTitle = value; get => _jobTitle ?? Loc.GetString(JobTitle ?? string.Empty); }
+    // Exodus-add cards without a job title have no localization id and must not be localized
+    public string? LocalizedJobTitle { set => _jobTitle = value; get => _jobTitle ?? (JobTitle != null ? Loc.GetString(JobTitle.Value) : string.Empty); }
 
     /// <summary>
     /// The state of the job icon rsi.

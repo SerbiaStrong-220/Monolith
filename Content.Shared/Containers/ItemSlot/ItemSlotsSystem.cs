@@ -633,6 +633,19 @@ namespace Content.Shared.Containers.ItemSlots
 
         #region Verbs
 
+        // Exodus-begin: resolve slot names as localization ids, keeping already localized names intact (fix warnings)
+        /// <summary>
+        ///     Returns the localized slot name for use as a verb subject, or null when the slot has no name set.
+        /// </summary>
+        private string? GetSlotVerbSubject(ItemSlot slot)
+        {
+            if (slot.Name == string.Empty)
+                return null;
+
+            return Loc.TryGetString(slot.Name, out var name) ? name : slot.Name;
+        }
+        // Exodus-end
+
         private void AddAlternativeVerbs(EntityUid uid,
             ItemSlotsComponent itemSlots,
             GetVerbsEvent<AlternativeVerb> args)
@@ -652,9 +665,8 @@ namespace Content.Shared.Containers.ItemSlots
                     if (slot.InsertOnInteract || !CanInsert(uid, args.Using.Value, args.User, slot))
                         continue;
 
-                    var verbSubject = slot.Name != string.Empty
-                        ? Loc.GetString(slot.Name)
-                        : Name(args.Using.Value);
+                    var verbSubject = GetSlotVerbSubject(slot) // Exodus: localization id or already localized name
+                        ?? Name(args.Using.Value);
 
                     AlternativeVerb verb = new()
                     {
@@ -706,9 +718,8 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
                     continue;
 
-                var verbSubject = slot.Name != string.Empty
-                    ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
+                var verbSubject = GetSlotVerbSubject(slot) // Exodus: localization id or already localized name
+                    ?? EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
 
                 AlternativeVerb verb = new()
                 {
@@ -747,9 +758,8 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
                     continue;
 
-                var verbSubject = slot.Name != string.Empty
-                    ? Loc.GetString(slot.Name)
-                    : Name(slot.Item!.Value);
+                var verbSubject = GetSlotVerbSubject(slot) // Exodus: localization id or already localized name
+                    ?? Name(slot.Item!.Value);
 
                 InteractionVerb takeVerb = new()
                 {
@@ -775,9 +785,8 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!slot.InsertOnInteract || !CanInsert(uid, args.Using.Value, args.User, slot))
                     continue;
 
-                var verbSubject = slot.Name != string.Empty
-                    ? Loc.GetString(slot.Name)
-                    : Name(args.Using.Value);
+                var verbSubject = GetSlotVerbSubject(slot) // Exodus: localization id or already localized name
+                    ?? Name(args.Using.Value);
 
                 InteractionVerb insertVerb = new()
                 {

@@ -16,7 +16,7 @@ public sealed partial class GeneralRecord : Control
         RecordName.Text = record.Name;
         Age.Text = Loc.GetString("general-station-record-console-record-age", ("age", record.Age.ToString()));
         Title.Text = Loc.GetString("general-station-record-console-record-title",
-            ("job", Loc.GetString(record.JobTitle)));
+            ("job", record.JobTitle)); // Exodus: job title is already localized by the server (fix warnings)
         Species.Text = Loc.GetString("general-station-record-console-record-species", ("species", record.Species));
         Gender.Text = Loc.GetString("general-station-record-console-record-gender",
             ("gender", record.Gender.ToString()));

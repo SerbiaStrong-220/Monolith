@@ -1,6 +1,6 @@
 - type: guideEntry
   id: Factions
-  name: Factions
+  name: guide-entry-factions # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/factions.xml"
   priority: 1
   children:
@@ -33,7 +33,7 @@
 
 - type: guideEntry
   id: TSFMC_Entry
-  name: TSFMC
+  name: guide-entry-tsfmc # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/TSFMC.xml"
   priority: 2
   children:
@@ -45,31 +45,31 @@
 
 - type: guideEntry
   id: PDV_Entry
-  name: PDV
+  name: guide-entry-pdv # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/PDV.xml"
   priority: 3
 
 - type: guideEntry
   id: Smuggling
-  name: Smuggling
+  name: guide-entry-smuggling # Exodus-add fix loc warnings
   text: "/ServerInfo/_NF/Guidebook/NFSD/Smuggling.xml"
   priority: 4
 
 - type: guideEntry
   id: Defusal
-  name: Defusal
+  name: guide-entry-defusal # Exodus-add fix loc warnings
   text: "/ServerInfo/Guidebook/Security/Defusal.xml"
   priority: 5
 
 - type: guideEntry
   id: TSFMC_SOP
-  name: S.O.P.
+  name: guide-entry-tsfmc-sop # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/TSFMC_SOP.xml"
   priority: 0
 
 - type: guideEntry
   id: TSFMC_org
-  name: Structure
+  name: guide-entry-tsfmc-structure # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/TSFMC_org.xml"
   priority: 3
   children:
@@ -78,25 +78,25 @@
 
 - type: guideEntry
   id: TSFMC_Brigade
-  name: 21st Brigade
+  name: guide-entry-tsfmc-21st-brigade # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/TSFMC_Brigade.xml"
   priority: 0
 
 - type: guideEntry
   id: TSFMC_Ranks
-  name: Ranks
+  name: guide-entry-tsfmc-ranks # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/TSFMC_Ranks.xml"
   priority: 0
 
 - type: guideEntry
   id: TSFMC_Culture
-  name: Culture
+  name: guide-entry-tsfmc-culture # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/TSFMC_Culture.xml"
   priority: 0
 
 - type: guideEntry
   id: USSP_Entry
-  name: USSP
+  name: guide-entry-ussp # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/USSP_Remnants.xml"
   priority: 7
   children:
@@ -105,24 +105,24 @@
 
 - type: guideEntry
   id: USSP_SoP
-  name: S.O.P
+  name: guide-entry-ussp-sop # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/USSP_SOP.xml"
   priority: 8
 
 - type: guideEntry
   id: USSP_Overview
-  name: Union of Soviet Socialist Planets
+  name: guide-entry-ussp-overview # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/USSP.xml"
   priority: 9
 
 - type: guideEntry
   id: Viper_Group
-  name: Вайперы # Exodus Viper localization
+  name: guide-entry-vipers # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/viper_group.xml"
   priority: 11
 
 - type: guideEntry
   id: MMC
-  name: Производственный концерн «Мэйё» # Exodus MMC localization
+  name: guide-entry-mmc # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/Factions/mmc.xml"
   priority: 12

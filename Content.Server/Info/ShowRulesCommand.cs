@@ -68,19 +68,22 @@ public sealed partial class ShowRulesCommand : IConsoleCommand
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.SessionNames(players: _player),
-                Loc.GetString("<username>"));
+                // Exodus: <username> is a console hint, not a localization id (fix warnings)
+                "<username>");
         }
 
         if (args.Length == 2)
         {
+            // Exodus: literal keys cannot be localized, use message ids with arguments (fix warnings)
             var durations = new CompletionOption[]
             {
-                new("300", Loc.GetString("5 minutes")),
-                new("600", Loc.GetString("10 minutes")),
-                new("1200", Loc.GetString("20 minutes")),
+                new("300", Loc.GetString("show-rules-duration-minutes", ("minutes", 5))),
+                new("600", Loc.GetString("show-rules-duration-minutes", ("minutes", 10))),
+                new("1200", Loc.GetString("show-rules-duration-minutes", ("minutes", 20))),
             };
 
-            return CompletionResult.FromHintOptions(durations, Loc.GetString("[seconds]"));
+            // Exodus: [seconds] is a console hint, not a localization id (fix warnings)
+            return CompletionResult.FromHintOptions(durations, "[seconds]");
         }
 
         return CompletionResult.Empty;
