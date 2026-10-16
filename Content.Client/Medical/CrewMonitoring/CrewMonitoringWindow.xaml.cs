@@ -167,12 +167,44 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             // Add a button that will hold a username and other details
             NavMap.LocalizedNames.TryAdd(sensor.SuitSensorUid, sensor.Name + ", " + sensor.Job);
 
+            // Exodus-begin colorful sensors
+            var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "alive");
+            var dotColor = Color.LightGray;
+
+            if (!sensor.IsAlive)
+            {
+                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "dead");
+                dotColor = Color.Violet;
+            }
+            else if (sensor.DamagePercentage != null)
+            {
+                if (sensor.DamagePercentage.Value >= 1f)
+                {
+                    specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");
+                    dotColor = Color.Red;
+                }
+                else
+                {
+                    var index = (int)MathF.Round(4f * sensor.DamagePercentage.Value);
+                    specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "health" + index);
+                    dotColor = index switch
+                    {
+                        0 or 1 => Color.LimeGreen,
+                        2 => Color.Gold,
+                        3 or 4 => Color.Crimson,
+                        _ => Color.LightGray,
+                    };
+                }
+            }
+            // Exodus-end colorful sensors
+
             var sensorButton = new CrewMonitoringButton()
             {
                 SuitSensorUid = sensor.SuitSensorUid,
                 Coordinates = coordinates,
                 Disabled = (coordinates == null),
                 HorizontalExpand = true,
+                DotColor = dotColor, // Exodus-add colorful sensors
             };
 
             if (sensor.SuitSensorUid == _trackedEntity)
@@ -210,25 +242,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             statusContainer.AddChild(suitCoordsIndicator);
-
-            // Specify texture for the user status icon
-            var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "alive");
-
-            if (!sensor.IsAlive)
-            {
-                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "dead");
-            }
-
-            else if (sensor.DamagePercentage != null)
-            {
-                var index = MathF.Round(4f * sensor.DamagePercentage.Value);
-
-                if (index >= 5)
-                    specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");
-
-                else
-                    specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "health" + index);
-            }
 
             // Status icon
             var statusIcon = new AnimatedTextureRect
@@ -294,7 +307,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                     new NavMapBlip
                     (CoordinatesToMap(coordinates.Value), // Frontier: Local<Map
                     _blipTexture,
-                    (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
+                    (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity) ? dotColor : dotColor * Color.DimGray, // Exodus-add colorful sensors
                     sensor.SuitSensorUid == _trackedEntity));
 
                 NavMap.Focus = _trackedEntity;
@@ -360,7 +373,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 data = new NavMapBlip
                     (CoordinatesToMap(data.Coordinates), // Frontier: Local<Map
                     data.Texture,
-                    (currTrackedEntity == null || castSensor.SuitSensorUid == currTrackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
+                    (currTrackedEntity == null || castSensor.SuitSensorUid == currTrackedEntity) ? castSensor.DotColor : castSensor.DotColor * Color.DimGray, // Exodus-add colorful sensors
                     castSensor.SuitSensorUid == currTrackedEntity);
 
                 NavMap.TrackedEntities[castSensor.SuitSensorUid] = data;
@@ -406,7 +419,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
     // Frontier: all crew monitoring happens in map coords.
     /// <summary>
-    /// report all 
+    /// report all
     /// </summary>
     private EntityCoordinates CoordinatesToMap(EntityCoordinates refCoords)
     {
@@ -432,4 +445,5 @@ public sealed class CrewMonitoringButton : Button
     public int IndexInTable;
     public NetEntity SuitSensorUid;
     public EntityCoordinates? Coordinates;
+    public Color DotColor; // Exodus-add colorful sensors
 }
