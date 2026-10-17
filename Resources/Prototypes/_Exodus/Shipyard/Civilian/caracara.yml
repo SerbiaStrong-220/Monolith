@@ -1,46 +1,44 @@
-# Imported ship: faction and localization adapted for Exodus.
-# Author Info
 # GitHub: UnicornOnLSD
 # Discord: unicornonlsd
 
 # Shuttle Notes: base is around 59K with 12K added markup
 #
 - type: vessel
-  id: Caracara
+  id: caracara
   parent: BaseVessel
-  name: Каракара
-  description: Утилизаторский фрегат с шахтёрским лазером Apollo, тремя 20-мм орудиями, пинч-реактором и базовым FTL-приводом.
+  name: КараКара # Ru-Localization
+  description: Утилизаторский фрегат, оснащённый Аполлоном. Носовая рубка обеспечивает отличный обзор места раскопок. Включает сверхэффективный z-пинч реактор, базовый модуль БСС и компактный камбуз для долгих смен в поясе астероидов. В паре с Аполлоном три 20-мм орудия обеспечивают адекватную оборонительную мощь. # Ru-Localization
   price: 89922 # Exodus: expected ship and contents value; no additional markup.
   category: Medium
   group: Shipyard
-  shuttlePath: /SharedMaps/_Mono/Shuttles/Civilian/caracara.yml
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/caracara.yml # Exodus
   addComponents:
-  - type: NpcFactionMember
+  - type: NpcFactionMember # Exodus NanoTrasen faction
     factions:
     - NanoTrasen
   guidebookPage: null
   class:
   - Salvage
-  - Frigate
+  - frigate
   engine:
-  - Plasma
+  - plasma
 
 - type: gameMap
-  id: Caracara
-  mapName: 'Каракара'
-  mapPath: /SharedMaps/_Mono/Shuttles/Civilian/caracara.yml
+  id: caracara
+  mapName: 'КараКара' # Ru-Localization
+  mapPath: /SharedMaps/_Exodus/Shuttles/caracara.yml #  Exodus
   minPlayers: 0
   stations:
-    Caracara:
+    caracara:
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Каракара{1}'
+          mapNameTemplate: 'КараКара{1}' # Ru-Localization
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
             Contractor: [ 0, 0 ]
-            # Pilot: [ 0, 0 ]
-            # Mercenary: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]
