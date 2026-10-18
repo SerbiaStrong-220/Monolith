@@ -180,3 +180,14 @@
   - type: Rehydratable
     possibleSpawns:
     - MobFeroxiRandom
+
+# Exodus add hydrakin cube begin
+- type: entity
+  parent: MonkeyCube
+  id: HydrakinCube
+  name: hydrakin cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobHydrakinRandom
+# Exodus add hydrakin cube end
