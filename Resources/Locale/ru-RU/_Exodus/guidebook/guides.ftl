@@ -44,3 +44,55 @@ guide-entry-ship-repair-drones = Ремонтные дроны
 guide-entry-genetics = Генетика
 guide-entry-genetics-mutations = Мутации
 guide-entry-medical-implants = Медицинские импланты
+
+# Exodus-begin: Monolith rule titles for the guidebook tree (fix warnings)
+guide-entry-monolith-rule-core-zero-age-threshold = Возрастной порог
+guide-entry-monolith-rule-core-one-common-sense = Здравый смысл
+guide-entry-monolith-rule-core-two-respect = Уважение
+guide-entry-monolith-rule-core-three-cheating-exploits = Читерство и эксплойты
+guide-entry-monolith-rule-core-four-alternative-accounts = Альтернативные аккаунты
+guide-entry-monolith-rule-core-five-languages = Языки
+guide-entry-monolith-rule-core-six-ahelp = Admin Help
+guide-entry-monolith-rule-core-seven-threaten-to-report = Угрозы пожаловаться
+guide-entry-monolith-rule-roleplay-one-break-character = Выход из образа
+guide-entry-monolith-rule-roleplay-two-text-chat = Текстовый чат
+guide-entry-monolith-rule-roleplay-three-proper-grammar = Грамматика
+guide-entry-monolith-rule-roleplay-four-character-actions = Имена персонажей
+guide-entry-monolith-rule-roleplay-five-erotic-roleplay = Эротический ролеплей
+guide-entry-monolith-rule-roleplay-six-metagame = Метагейминг
+guide-entry-monolith-rule-roleplay-seven-safe-zones = Сейфзоны
+guide-entry-monolith-rule-roleplay-eight-faction-roles = Роли фракций
+guide-entry-monolith-rule-conflict-one-random-deathmatch = Случайные убийства
+guide-entry-monolith-rule-conflict-two-new-life = Новая жизнь
+guide-entry-monolith-rule-conflict-three-fair-play = Требования и пиратство
+guide-entry-monolith-rule-conflict-four-port-striking = Удары по аванпостам
+guide-entry-monolith-rule-conflict-nine-commanding-roles = Командные роли
+# Exodus-end
+
+# Exodus-begin guide titles for entries that used literal names in prototypes
+guide-entry-flight = Полёты
+guide-entry-beginner-guide = Основы
+guide-entry-economy = Индустриальные компоненты
+guide-entry-economy-introduction = Введение
+guide-entry-economy-recipes = Рецепты компонентов
+guide-entry-arc-furnace-recipes = Рецепты дуговой печи
+guide-entry-precision-assembler-recipes = Рецепты точного сборщика
+guide-entry-factions = Фракции
+guide-entry-tsfmc = КМП ТСФ
+guide-entry-smuggling = Обращение с контрабандой
+guide-entry-tsfmc-sop = С.О.П.
+guide-entry-tsfmc-structure = Структура
+guide-entry-tsfmc-21st-brigade = 21-я бригада
+guide-entry-tsfmc-ranks = Звания
+guide-entry-tsfmc-culture = Культура
+guide-entry-ussp = СССП
+guide-entry-ussp-sop = Устав СССП
+guide-entry-ussp-overview = Обзор СССП
+guide-entry-pdv = Династия Фаэтон
+guide-entry-vipers = Вайперы
+guide-entry-mmc = Производственный концерн «Мэйё»
+# Exodus-end
+
+guide-entry-xenoborgs = Ксено-борги
+guide-entry-safety-deposit-box = Сейф-боксы
+guide-entry-stars = Звёздная система

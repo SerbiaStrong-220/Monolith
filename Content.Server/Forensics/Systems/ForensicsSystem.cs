@@ -194,8 +194,8 @@ namespace Content.Server.Forensics
             {
                 Act = () => TryStartCleaning(entity, user, target),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
-                Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
-                Message = Loc.GetString(Loc.GetString("forensics-verb-message")),
+                Text = Loc.GetString("forensics-verb-text"), // Exodus-add removed double localization
+                Message = Loc.GetString("forensics-verb-message"), // Exodus-add removed double localization
                 // This is important because if its true using the cleaning device will count as touching the object.
                 DoContactInteraction = false
             };

@@ -43,8 +43,9 @@ namespace Content.Client._NF.Kitchen.UI
                 SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.GetNetEntity(_solids[args.ItemIndex])));
             };
 
-            _menu.Title = Loc.GetString(_menuTitle ?? string.Empty);
-            _menu.LeftFooter.Text = Loc.GetString(_leftFlavorText ?? string.Empty);
+            // Exodus-add null title/flavor text is not a localization id and must not be passed to Loc
+            _menu.Title = string.IsNullOrEmpty(_menuTitle) ? string.Empty : Loc.GetString(_menuTitle);
+            _menu.LeftFooter.Text = string.IsNullOrEmpty(_leftFlavorText) ? string.Empty : Loc.GetString(_leftFlavorText);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

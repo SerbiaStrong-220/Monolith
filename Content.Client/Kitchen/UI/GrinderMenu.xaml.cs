@@ -127,7 +127,7 @@ namespace Content.Client.Kitchen.UI
                 foreach (var (reagent, quantity) in reagents)
                 {
                     var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto)
-                        ? Loc.GetString($"{quantity} {proto.LocalizedName}")
+                        ? $"{quantity} {proto.LocalizedName}" // Exodus-add composite string is not a localization id
                         : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }

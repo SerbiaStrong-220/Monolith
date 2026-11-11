@@ -1,5 +1,5 @@
 - type: guideEntry
   id: BeginnerGuide
-  name: Beginner's Guide
+  name: guide-entry-beginner-guide # Exodus-add fix loc warnings
   text: "/ServerInfo/_Mono/Guidebook/BeginnerGuide.xml"
   priority: 2

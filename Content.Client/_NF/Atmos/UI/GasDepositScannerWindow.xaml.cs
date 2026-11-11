@@ -161,7 +161,7 @@ namespace Content.Client._NF.Atmos.UI
                 // Add to the table
                 tableKey.AddChild(new Label
                 {
-                    Text = Loc.GetString(gas.Name)
+                    Text = gas.Name // Exodus: name is already localized by the server (fix warnings)
                 });
                 tableVal.AddChild(new Label
                 {

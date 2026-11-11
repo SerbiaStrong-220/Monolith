@@ -7,6 +7,7 @@ economy-market-trend-flat = — {$percent}%
 cargo-pallet-menu-items-label = Goods on pallets:{" "}
 cargo-pallet-menu-item-qty = x{$qty}
 cargo-pallet-menu-item-unit = ${$price}/ea
+cargo-pallet-menu-no-goods-text = No goods
 
 # Cargo order console redesign
 cargo-console-menu-categories-heading = Categories

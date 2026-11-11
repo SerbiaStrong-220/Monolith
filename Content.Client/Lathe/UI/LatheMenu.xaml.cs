@@ -238,7 +238,7 @@ public sealed partial class LatheMenu : FancyWindow
             if (!_prototypeManager.TryIndex(id, out var proto))
                 continue;
 
-            var name = Loc.GetString(proto.LocalizedName);
+            var name = proto.LocalizedName; // Exodus-add LocalizedName is already localized
             var currentAmount = GetReagentAmount(id);
 
             var missingAmount = amount - currentAmount;
