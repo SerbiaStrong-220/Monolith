@@ -9,3 +9,11 @@ ore-silo-ui-itemlist-entry =
         [true] { "" }
        *[false] (Вне зоны доступа)
     }
+
+# Exodus-begin
+ore-silo-client-unlink-verb-text = Отвязать от хранилища материалов
+ore-silo-client-unlink-verb-message = Отвязать это устройство от {$silo}.
+ore-silo-client-disconnected = Отвязано от {$silo}.
+ore-silo-client-examine-connected = Подключено к хранилищу материалов: [color=cyan]{$silo}[/color].
+ore-silo-client-examine-not-connected = Не подключено к хранилищу материалов.
+# Exodus-end
