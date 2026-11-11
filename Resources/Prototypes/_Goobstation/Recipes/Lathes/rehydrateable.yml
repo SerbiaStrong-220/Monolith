@@ -197,3 +197,15 @@
   materials:
     Biomass: 70
     Plasma: 250
+
+# Exodus add hydrakin cube begin
+- type: latheRecipe
+  id: HydrakinCube
+  result: HydrakinCube
+  categories:
+  - Species
+  completetime: 30
+  materials:
+    Biomass: 80
+    Plasma: 250
+# Exodus add hydrakin cube end

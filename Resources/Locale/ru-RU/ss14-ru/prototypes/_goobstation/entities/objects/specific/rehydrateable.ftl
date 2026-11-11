@@ -36,3 +36,7 @@ ent-TajaranCube = таярский кубик
     .desc = { ent-MonkeyCube.desc }
 ent-KidanCube = киданий кубик
     .desc = { ent-MonkeyCube.desc }
+ent-FeroxiCube = фероксийский кубик
+    .desc = { ent-MonkeyCube.desc }
+ent-HydrakinCube = гидракиний кубик
+    .desc = { ent-MonkeyCube.desc }
