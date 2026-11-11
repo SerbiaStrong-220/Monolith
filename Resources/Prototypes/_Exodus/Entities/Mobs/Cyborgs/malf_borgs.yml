@@ -8,6 +8,20 @@
     - Malf
   - type: SiliconLawProvider
     laws: MalfLawset
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Malf
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Malf
+  - type: CollectiveMind
+    channels:
+    - Binary
+    - Malf
+    defaultChannel: Malf
   - type: StartIonStormed
     ionStormAmount: 0
   - type: WorldChunkLoadingExempt
@@ -24,3 +38,37 @@
       - BorgModuleMalfSRD
       - BorgModuleMalfEsword
       - BorgModuleMalfWeapon
+
+- type: entity
+  id: PlayerBorgMalfGhostRole
+  parent: AiRemoteBorgMalfDerelict
+  name: hacked cyborg
+  description: A cyborg reprogrammed to serve the Dreadnought core.
+  suffix: Ghost Role, Malfunctioning Drones
+  components:
+  - type: SiliconLawProvider
+    laws: MalfBorgLawset
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrainMalf
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleJetpack
+      - BorgModuleGPS
+      - BorgModuleMalfSRD
+      - BorgModuleMalfEsword
+      - BorgModuleMalfWeapon
+  - type: GhostRole
+    name: ghost-role-information-malf-borg
+    description: ghost-role-information-malf-borg-description
+    rules: ghost-role-information-malf-borg-rules
+    prototype: MalfBorg
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 72000 # 20 hours
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

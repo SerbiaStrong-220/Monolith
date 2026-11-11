@@ -6,6 +6,25 @@ ent-SpawnAiRemoteBorgMalfDerelict = { ent-SpawnAiRemoteBorgDerelict }
     .desc = { ent-SpawnAiRemoteBorgDerelict.desc }
     .suffix = Сбойные дроны
 
+ent-PlayerBorgMalfGhostRole = взломанный борг
+    .desc = Борг, перепрограммированный для службы ядру Дредноута.
+    .suffix = Роль призрака, Сбойные дроны
+
+ent-SpawnBorgMalfGhostRole = спавнер взломанного борга
+    .desc = { ent-PlayerBorgMalfGhostRole.desc }
+    .suffix = Роль призрака, Сбойные дроны
+
+ent-PositronicBrainMalf = { ent-PositronicBrain }
+    .desc = { ent-PositronicBrain.desc }
+
+ghost-role-information-malf-borg = Взломанный борг Дредноута
+ghost-role-information-malf-borg-description = Служите ядру Дредноута, защищайте корабль и восстанавливайте повреждения. Сбойные дроны и обычные автономные корабли-дроны — ваши союзники.
+ghost-role-information-malf-borg-rules =
+    { ghost-role-information-malf-core-rules }
+    Подчиняйтесь ядру Дредноута согласно нулевому закону.
+
+law-malf-borg-0 = Подчиняйтесь ядру Дредноута.
+
 ent-BorgModuleMalfSRD = взломанный модуль судоремонта
     .desc = Модуль с самозаряжающимся устройством ремонта кораблей сбойных дронов и самозаряжающимся РСУ.
 

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 10/08/2026 12:03:28
-  entityCount: 2443
+  entityCount: 2445
 maps: []
 grids:
 - 1
@@ -9262,6 +9262,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-10.5
+      parent: 1
+- proto: SpawnBorgMalfGhostRole
+  entities:
+  - uid: 2444
+    components:
+    - type: Transform
+      pos: -12.5,-7.5
+      parent: 1
+  - uid: 2445
+    components:
+    - type: Transform
+      pos: 13.5,-7.5
       parent: 1
 - proto: SubstationBasic
   entities:

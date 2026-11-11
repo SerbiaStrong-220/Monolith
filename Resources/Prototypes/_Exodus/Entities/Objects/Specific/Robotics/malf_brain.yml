@@ -1,0 +1,20 @@
+# The chassis provides the timed ghost role; the brain must not offer an unrestricted one.
+- type: entity
+  id: PositronicBrainMalf
+  parent: BasePositronicBrain
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Malf
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Malf
+  - type: CollectiveMind
+    channels:
+    - Binary
+    - Malf
+    defaultChannel: Malf
