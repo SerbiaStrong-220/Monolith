@@ -197,6 +197,18 @@ public partial class NavMapControl : MapGridControl
         _recenter.Disabled = false;
     }
 
+    // Exodus-begin: fix track mouse position on click
+    // Remember the LMB press position, otherwise the click-vs-drag guard in KeyBindUp
+    // compares against StartDragPosition, which is only set by the RMB (UseSecondary) drag in MapGridControl.
+    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindDown(args);
+
+        if (args.Function == EngineKeyFunctions.UIClick)
+            StartDragPosition = args.PointerLocation.Position;
+    }
+    // Exodus-end
+
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
